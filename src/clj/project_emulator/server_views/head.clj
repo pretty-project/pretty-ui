@@ -1,0 +1,25 @@
+
+; WARNING! THIS IS AN OUTDATED VERSION OF A MONO-TEMPLATE FILE!
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns project-emulator.server-views.head
+    (:require [server-fruits.http :as http]))
+
+
+
+;; -- Converters --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request->head-props
+  ; @param (map) request
+  [request]
+  (let []
+      ; meta-description (request->meta-description request)
+      ; meta-keywords    (request->meta-keywords    request)
+      ;{:meta-description meta-description
+      ; :meta-keywords    meta-keywords}
+       {}))

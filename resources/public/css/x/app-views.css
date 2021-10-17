@@ -1,0 +1,125 @@
+
+
+
+/***** Playground *****/
+/* WARNING! NOT TESTED! DO NOT USE! */
+
+/***** Home screen *****/
+
+.x-home-screen--card {}
+
+.x-home-screen--card--header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100% }
+
+.x-home-screen--card--label {
+  display: flex;
+  flex-direction: row;
+  opacity: .7 }
+
+.x-home-screen--card--content {
+  width: 100% }
+
+.x-home-screen--card--last-message {
+  font-weight: 600;
+  -padding-left: var( ) }
+
+.x-home-screen--card--notifications-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end }
+
+.x-home-screen--card--errors {
+  color: var( --color-warning );
+  -padding-right: var( ) }
+
+.x-home-screen--card--notifications {
+  -padding-right: var( ) }
+
+/***** Home screen *****/
+
+/* WARNING! NOT TESTED! DO NOT USE! */
+/***** Playground *****/
+
+
+
+/***** Application menu *****/
+
+#x-app-menu {
+  width: 100% }
+
+#x-app-menu--user-info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+/***** Application menu *****/
+
+
+
+/***** Database browser *****/
+
+#x-database-browser {
+  background-color: var( --background-color );
+  color: var( --color-muted );
+  overflow-x: auto;
+  padding: 12px 6px }
+
+/***** Database browser *****/
+
+
+
+/***** Login box *****/
+
+#x-app-login-box {
+  display: flex;
+  flex-direction: column }
+
+/***** Login box *****/
+
+
+
+/***** Settings page *****/
+
+#x-settings-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100% }
+
+.x-settings-page--table-view {
+  display: flex;
+  flex-direction: row;
+  width: 100% }
+
+.x-settings-page--table-view--buttons {
+  padding-left: var( --flex-edge ) }
+
+#x-settings-page--appearance-settings,
+#x-settings-page--notification-settings,
+#x-settings-page--user-profile-settings,
+#x-settings-page--danger-zone {
+  width: 100% }
+
+/***** Settings page *****/
+
+
+
+/***** User profile *****/
+
+.x-user-profile-picture {
+  background-color: var( --background-color-highlight );
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 90%;
+  overflow: hidden;
+
+  /* Default profile picture size */
+  height: 100px;
+  width: 100px}
+
+/***** User profile *****/

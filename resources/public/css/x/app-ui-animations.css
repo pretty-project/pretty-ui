@@ -1,0 +1,299 @@
+
+/* Az elemek animált eltüntetése és megjelenítése: XXX#4116 */
+
+
+
+/***** App background *****/
+
+.x-app-background--element {
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-background--element[data-animation="reveal"] {
+  animation-duration: .3s;
+  animation-name: x-reveal }
+
+.x-app-background--element[data-animation="hide"] {
+  animation-duration: .3s;
+  animation-name: x-hide }
+
+/***** App background *****/
+
+
+
+/***** App bubbles *****/
+
+.x-app-bubbles--element {
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-bubbles--element[data-animation="reveal"] {
+  animation-duration: .1s;
+  animation-name: x-reveal }
+
+.x-app-bubbles--element[data-animation="hide"] {
+  animation-duration: .3s;
+  animation-name: x-slide-out-ltr }
+
+/***** App bubbles *****/
+
+
+
+/***** App canvas *****/
+
+.x-app-canvas--element {
+  animation-duration: .15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-canvas--element[data-animation="reveal"] {
+  animation-name: x-reveal }
+
+.x-app-canvas--element[data-animation="hide"] {
+  animation-name: x-hide }
+
+/***** App canvas *****/
+
+
+
+/***** App footer *****/
+
+.x-app-footer--element {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-footer--element[data-animation="reveal"] {
+  animation-name: x-reveal }
+
+.x-app-footer--element[data-animation="hide"] {
+  animation-name: x-hide }
+
+/***** App footer *****/
+
+
+
+/***** App header *****/
+
+.x-app-header--element {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-header--element[data-animation="reveal"] {
+  animation-name: x-slide-in-ttb }
+
+.x-app-header--element[data-animation="hide"] {
+  animation-name: x-slide-out-btt }
+
+/***** App header *****/
+
+
+
+/***** App popups *****/
+/*** Sliding boxed popup structure on XXS, XS, S viewport ***/
+
+/* Boxed popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--structure,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--structure,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--structure {
+  animation-duration: .25s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+/* Show boxed popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
+.x-app-popups--element--structure,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
+.x-app-popups--element--structure,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
+.x-app-popups--element--structure {
+  animation-name: x-slide-in-btt }
+
+/* Hide boxed popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--structure,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--structure,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--structure {
+  animation-name: x-slide-out-ttb }
+
+/* Boxed popup cover on XXS, XS, S viewport */
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--cover,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--cover,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--cover {
+  animation-delay: .25s;
+  animation-duration: .1s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+/* Show popup cover on XXS, XS, S viewport*/
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-animation="reveal"]
+.x-app-popups--element--cover,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-animation="reveal"]
+.x-app-popups--element--cover,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-animation="reveal"]
+.x-app-popups--element--cover {
+  animation-name: x-reveal }
+
+/* Hide boxed popup cover on XXS, XS, S viewport */
+[data-viewport-profile="xxs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--cover,
+[data-viewport-profile="xs"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--cover,
+[data-viewport-profile="s"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
+.x-app-popups--element--cover {
+  animation-name: x-hide }
+
+/*** Sliding boxed popup structure on XXS, XS, S viewport ***/
+
+/*** Revealing boxed popup on M, L, XL, XXL viewport ***/
+
+[data-viewport-profile="m"]
+.x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="l"]
+.x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="xl"]
+.x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="xxl"]
+.x-app-popups--element[data-layout="boxed"] {
+  animation-duration: .15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+/* Show boxed popup on M, L, XL, XXL viewport */
+[data-viewport-profile="m"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="l"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="xl"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="xxl"]
+.x-app-popups--element[data-layout="boxed"][data-animation="reveal"] {
+  animation-name: x-reveal }
+
+/* Hide boxed popup M, L, XL, XXL viewport */
+[data-viewport-profile="m"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="l"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="xl"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="xxl"]
+.x-app-popups--element[data-layout="boxed"][data-animation="hide"] {
+  animation-name: x-hide }
+
+/*** Revealing boxed popup on M, L, XL, XXL viewport ***/
+
+/*** Revealing unboxed popup on all viewport size ***/
+
+.x-app-popups--element[data-layout="unboxed"] {
+  animation-duration: .15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+/* Revealing unboxed popup on all viewport size */
+.x-app-popups--element[data-layout="unboxed"][data-animation="reveal"] {
+  animation-name: x-reveal }
+
+/* Hide unboxed popup on all viewport size */
+.x-app-popups--element[data-layout="unboxed"][data-animation="hide"] {
+  animation-name: x-hide }
+
+/*** Revealing unboxed popup on all viewport size ***/
+/***** App popups *****/
+
+
+
+/***** App shield *****/
+
+#x-app-shield {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+#x-app-shield[data-animation="reveal"] {
+  animation-name: x-reveal }
+
+#x-app-shield[data-animation="hide"] {
+  animation-name: x-hide }
+
+/***** App shield *****/
+
+
+
+/***** App sidebar *****/
+
+#x-app-sidebar,
+#x-app-sidebar--cover {
+  transition-property: transform;
+  transition-duration: .15s;
+  transition-timing-function: ease-in-out }
+
+#x-app-sidebar {
+  transition-delay: .15s }
+
+/***** App sidebar *****/
+
+
+
+/***** App surface *****/
+
+.x-app-surface--element {
+  animation-duration: .15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+.x-app-surface--element[data-animation="reveal"] {
+  animation-name: x-reveal }
+
+.x-app-surface--element[data-animation="hide"] {
+  animation-name: x-hide }
+
+/***** App surface *****/
+
+
+
+/***** App surface control-sidebar *****/
+
+.x-app-surface--element--control-sidebar {
+  transition-delay: .15s;
+  transition-duration: .15s;
+  transition-property: padding-top }
+
+/***** App surface control-sidebar *****/
+
+
+
+/***** App surface header *****/
+
+.x-app-surface-header {
+  transition-duration: .15s;
+  transition-property: height }
+
+/***** App surface header *****/

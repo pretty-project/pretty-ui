@@ -1,0 +1,194 @@
+
+;; -- Header ------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Author: bithandshake
+; Created: 2020.10.21
+; Description:
+; Version: v0.6.4
+; Compatibility: x3.9.9
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns x.app-elements.counter
+    (:require [mid-fruits.candy          :refer [param]]
+              [x.app-components.api      :as components]
+              [x.app-core.api            :as a :refer [r]]
+              [x.app-elements.engine.api :as engine]))
+
+
+
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- counter-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
+  ;
+  ; @return (map)
+  ;  {:color (keyword)
+  ;   :font-size (keyword)
+  ;   :layout (keyword)}
+  [counter-id counter-props]
+  (merge {:color     :primary
+          :font-size :s
+          :layout    :row
+          :value-path (engine/default-value-path counter-id)}
+         (param counter-props)))
+
+
+
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ;
+  ; @return (map)
+  [db [_ counter-id]]
+  (merge (r engine/get-element-view-props   db counter-id)
+         (r engine/get-countable-view-props db counter-id)))
+
+(a/reg-sub ::get-view-props get-view-props)
+
+
+
+;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- counter-reset-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;  {:resetable? (boolean)(opt)}
+  ;
+  ; @return (hiccup)
+  [counter-id {:keys [resetable?] :as view-props}]
+  (if resetable?
+      [:button.x-counter--reset-button
+        (engine/countable-reset-attributes counter-id view-props)]))
+
+(defn- counter-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;  {:label (metamorphic-content)(opt)
+  ;   :required? (boolean)(opt)}
+  ;
+  ; @return (hiccup)
+  [_ {:keys [label required?]}]
+  (if (some? label)
+      [:div.x-counter--label [components/content {:content label}]
+                             (if required? "*")]))
+
+(defn- counter-increase-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @return (hiccup)
+  [counter-id view-props]
+  [:button.x-counter--increase-button
+    (engine/countable-increase-attributes counter-id view-props)])
+
+(defn- counter-decrease-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @return (hiccup)
+  [counter-id view-props]
+  [:button.x-counter--decrease-button
+    (engine/countable-decrease-attributes counter-id view-props)])
+
+(defn- counter-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;  {:value (integer)}
+  ;
+  ; @return (hiccup)
+  [counter-id {:keys [value] :as view-props}]
+  [:div.x-counter--body
+    [counter-decrease-button counter-id view-props]
+    [:div.x-counter--value   value]
+    [counter-increase-button counter-id view-props]
+    [counter-reset-button    counter-id view-props]
+    [counter-label           counter-id view-props]])
+
+(defn- counter
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) view-props
+  ;
+  ; @return (hiccup)
+  [counter-id view-props]
+  [:div.x-counter
+    (engine/element-attributes  counter-id view-props)
+    [counter-body counter-id view-props]])
+
+(defn view
+  ; @param (keyword)(opt) counter-id
+  ; @param (map) counter-props
+  ;  {:color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    Default: :primary
+  ;   :default-value (integer)(constant)(opt)
+  ;   :disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :disabler (subscription vector)(opt)
+  ;   :font-size (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
+  ;   :helper (metamorphic-content)(opt)
+  ;   :initial-value (integer)(constant)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :layout (keyword)(opt)
+  ;    :fit, :row
+  ;    Default: :row
+  ;   :max-value (integer)(opt)
+  ;   :min-value (integer)(opt)
+  ;   :request-id (keyword)(constant)(opt)
+  ;   :resetable? (boolean)(opt)
+  ;    Default: false
+  ;   :required? (boolean)(constant)(opt)
+  ;    Default: false
+  ;   :status-animation? (boolean)(opt)
+  ;    Default: false
+  ;    Only w/ {:request-id ...}
+  ;   :style (map)(opt)
+  ;   :value-path (item-path vector)(constant)(opt)}
+  ;
+  ; @usage
+  ;  [elements/counter {...}]
+  ;
+  ; @usage
+  ;  [elements/counter :my-counter {...}]
+  ;
+  ; @return (component)
+  ([counter-props]
+   [view nil counter-props])
+
+  ([counter-id counter-props]
+   (let [counter-id    (a/id counter-id)
+         counter-props (a/prot counter-props counter-props-prototype)]
+        [engine/container counter-id
+          {:base-props counter-props
+           :component  counter
+           :initializer [:x.app-elements/init-input! counter-id]
+           :subscriber  [::get-view-props            counter-id]}])))

@@ -1,0 +1,36 @@
+
+[{:birthday "1969-04-20"
+  :id "Anonymous"
+  :first-name "Guest"
+  :last-name "User"
+  :permissions {"super" "ro" "Anonymous" "ro" "guest" "ro"}}
+
+ {:birthday "1989-11-28"
+  :first-name "Ádám"
+  :last-name "Szűcs"
+  :id "0939329d-b057-ki88-e916-0ce146714c1b"
+  :phone-number "+36302004077"
+  :permissions {"super" "ro" "0939329d-b057-ki88-e916-0ce146714c1b" "rw"}
+  :registered-at ""
+  :website-address "monotech.hu"}
+
+ {:birthday "1993-12-24"
+  :first-name "Paul Cristian"
+  :last-name "Martin"
+  :id "1259400a-x012-lw84-o987-1fg654713a3a"
+  :permissions {"super" "ro" "1259400a-x012-lw84-o987-1fg654713a3a" "rw"}
+  :registered-at ""}
+
+ {:birthday "1995-11-10"
+  :first-name "Péter"
+  :last-name "Szaniszló"
+  :id "2345011e-t112-wa50-o357-1rh344440a0w"
+  :permissions {"super" "ro" "2345011e-t112-wa50-o357-1rh344440a0w" "rw"}
+  :registered-at ""}
+
+ {:birthday "2020-04-20"
+  :first-name "Tech"
+  :last-name "Mono"
+  :id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"
+  :permissions {"super" "ro" "506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw"}
+  :registered-at ""}]

@@ -1,0 +1,97 @@
+
+/*** Position ***/
+/* A mozgató animációk 100vh és 100vw érték helyett 110vh és 110vw értékekkel
+ * mozgatják az elemet, hogy az adott elem esetleges border és más kiegészítő
+ * elemei is eltűnjenek a viewport-ból */
+
+@keyframes x-rotate {
+  to { transform: rotate( 360deg ) }}
+
+@keyframes x-rotate-clockwise {
+  to { transform: rotate( 360deg ) }}
+
+@keyframes x-rotate-counterclockwise {
+  to { transform: rotate( -360deg ) }}
+
+@keyframes x-slide-in-btt {
+  from { transform: translateY( 110vh ) }
+  to   { transform: translateY( 0 ) }}
+
+@keyframes x-slide-in-ltr {
+  from { transform: translateX( -110vw ) }
+  to   { transform: translateX( 0 ) }}
+
+@keyframes x-slide-in-rtl {
+  from { transform: translateX( 110vw ) }
+  to   { transform: translateX( 0 ) }}
+
+@keyframes x-slide-in-ttb {
+  from { transform: translateY( -110vh ) }
+  to   { transform: translateY( 0 ) }}
+
+@keyframes x-slide-out-btt {
+  from { transform: translateY( 0 ) }
+  to   { transform: translateY( -110vh ) }}
+
+@keyframes x-slide-out-ltr {
+  from { transform: translateX( 0 ) }
+  to   { transform: translateX( 110vw ) }}
+
+@keyframes x-slide-out-rtl {
+  from { transform: translateX( 0 ) }
+  to   { transform: translateX( -110vw ) }}
+
+@keyframes x-slide-out-ttb {
+  from { transform: translateY( 0 ) }
+  to   { transform: translateY( 110vh ) }}
+
+@keyframes x-floating {
+  0%   { transform: translateY(0) }
+  25%  { transform: translateY(10px) }
+  75%  { transform: translateY(-10px) }
+  100% { transform: translateY(0) }}
+
+/*** Position ***/
+
+/*** Size ***/
+
+@keyframes x-grow {
+  from { transform: scale( .9 ) }
+  to   { transform: scale( 1 ) }}
+
+@keyframes x-shrink {
+  from { transform: scale( 1.03 ) }
+  to   { transform: scale( 1 ) }}
+
+/*** Size ***/
+
+/*** Visibility ***/
+
+@keyframes x-ghost {
+  /* Recommended animation-duration: 3s */
+  0%   { opacity: 1 }
+  55%  { opacity: 1 }
+  70%  { opacity: 0 }
+  86%  { opacity: 1 }
+  100% { opacity: 1 }}
+
+@keyframes x-glow {
+  0%   { opacity: 0 }
+  5%   { opacity: 1 }
+  65%  { opacity: 1 }
+  70%  { opacity: 0 }
+  100% { opacity: 0 }}
+
+@keyframes x-hide {
+  to { opacity: 0 }}
+
+@keyframes x-reveal {
+  from { opacity: 0 }
+  to   { opacity: 1 }}
+
+@keyframes x-flash {
+  0%   { opacity: .45 }
+  50%  { opacity: .45 }
+  100% { opacity: .85 }}
+
+/*** Visibility ***/

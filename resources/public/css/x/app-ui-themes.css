@@ -1,0 +1,123 @@
+
+/***** Theme variables *****/
+
+body[data-theme="dark"] {
+  /* App background */
+  --app-background:             var( --black );
+  /* Background color */
+  --background-color:           var( --black-dark );
+  --background-color-muted:     var( --grey-x-dark );
+  --background-color-highlight: var( --black-light );
+  --background-color-primary:   var( --primary-xx-dark );
+  --background-color-secondary: var( --secondary-xx-dark );
+  --background-color-success:   var( --success-xx-dark );
+  --background-color-warning:   var( --warning-xx-dark );
+  /* Border color */
+  --border-color:               var( --black-x-light );
+  --border-color-muted:         var( --black-xx-light );
+  --border-color-highlight:     var( --grey-xx-dark );
+  --border-color-primary:       var( --primary );
+  --border-color-secondary:     var( --secondary );
+  --border-color-success:       var( --success );
+  --border-color-warning:       var( --warning );
+  /* Color */
+  --color:                      var( --white-xx-dark );
+  --color-muted:                var( --grey-light );
+  --color-highlight:            var( --grey-x-light );
+  --color-invert:               var( --black-xx-light );
+  --color-primary:              var( --primary-xx-dark );
+  --color-secondary:            var( --secondary-xx-dark );
+  --color-success:              var( --success-xx-dark );
+  --color-warning:              var( --warning-xx-dark );
+  /* Fill color */
+  --fill-color:                var( --black-x-light ) }
+
+body[data-theme="light"] {
+  /* App background */
+  --app-background:             var( --white-dark );
+  /* Background color */
+  --background-color:           var( --white-light );
+  --background-color-muted:     var( --grey-x-light );
+  --background-color-highlight: var( --white-dark );
+  --background-color-primary:   var( --primary-xx-dark );
+  --background-color-secondary: var( --secondary-xx-dark );
+  --background-color-success:   var( --success-xx-dark );
+  --background-color-warning:   var( --warning-xx-dark );
+  /* Border color */
+  --border-color:               var( --grey-x-light );
+  --border-color-muted:         var( --grey-xx-light );
+  --border-color-highlight:     var( --white-xx-dark );
+  --border-color-primary:       var( --primary );
+  --border-color-secondary:     var( --secondary );
+  --border-color-success:       var( --success );
+  --border-color-warning:       var( --warning );
+  /* Color */
+  --color:                      var( --black-xx-light );
+  --color-muted:                var( --grey );
+  --color-highlight:            var( --grey-light );
+  --color-invert:               var( --white-xx-dark );
+  --color-primary:              var( --primary-xx-dark );
+  --color-secondary:            var( --secondary-xx-dark );
+  --color-success:              var( --success-xx-dark );
+  --color-warning:              var( --warning-xx-dark );
+  /* Fill color */
+  --fill-color:                var( --white-xx-light ) }
+
+body[data-theme="high-contrast"] {}
+
+/***** Theme variables *****/
+
+
+
+/***** Body container *****/
+
+body[data-theme="dark"] {
+  background: var( --app-background );
+  color:      var( --color ) }
+
+body[data-theme="light"] {
+  background: var( --app-background );
+  color:      var( --color ) }
+
+body[data-theme="high-contrast"] {}
+
+/***** Body container *****/
+
+
+
+/***** App logo and MT logo *****/
+
+body[data-theme="dark"] .x-app-logo {
+  background-image: url('/logo/logo-dark.png') }
+
+body[data-theme="dark"] .x-mt-logo {
+  background-image: url('/logo/mt-logo-dark.png') }
+
+body[data-theme="light"] .x-app-logo {
+  background-image: url('/logo/logo-light.png') }
+
+body[data-theme="light"] .x-mt-logo {
+  background-image: url('/logo/mt-logo-light.png') }
+
+/***** App logo and MT logo *****/
+
+
+
+/***** Text *****/
+
+html {
+  /* REM
+   *
+   * Equal to the computed value of font-size on the root element.
+   * When specified on the font-size property of the root element,
+   * the rem units refer to the property’s initial value. */
+  font-size:      var( --font-size-rem ) }
+
+body {
+  font-family:    var( --font-family-default );
+  font-size:      var( --font-size-m );
+  font-weight:    400;
+  letter-spacing: var( --letter-spacing-m );
+  line-height:    var( --line-height-m ) }
+
+/***** Text *****/

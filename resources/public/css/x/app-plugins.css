@@ -1,0 +1,70 @@
+
+/***** Material icons *****/
+
+.x-sortable--sensor::before {
+  font-style: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+/***** Material icons *****/
+
+
+
+/***** Sortable *****/
+/*** Sortable sensor ***/
+
+.x-sortable--sensor {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute }
+
+.x-sortable--sensor[data-position="left"],
+.x-sortable--sensor[data-position="right"] {
+  height: 48px;
+  top: calc(50% - 24px);
+  width: 48px }
+
+.x-sortable--sensor[data-position="left"]  { left:  0 }
+.x-sortable--sensor[data-position="right"] { right: 0 }
+
+.x-sortable--sensor::before {
+  content: 'drag_indicator';
+  font-size: var( --icon-size-xs );
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  width: 24px }
+
+/*** Sortable sensor ***/
+
+/*** Drag overlay element ***/
+
+.x-sortable--drag-overlay-element {
+  cursor: grabbing;
+  height: 96px;
+  transform: translate(-25%, -25%);
+  width: 96px;
+  z-index: 9999 }
+
+/*** Drag overlay element ***/
+
+/*** Sortable element ***/
+
+.x-sortable--element[data-drag-status="inactive"]:hover .x-element-container--stickers {
+  /* XXX#0134
+   * Sortable + app-element stickers:
+   * Mivel az .x-sortable--sensor nem az .x-element-container leszármazottja,
+   * ezért az .x-sortable--sensor on-mouse-over eseménye elrejtené
+   * az .x-element-container--stickers elemet */
+  opacity: 1;
+  transform: scale( 1 ) }
+
+/*** Sortable element ***/
+/***** Sortable *****/

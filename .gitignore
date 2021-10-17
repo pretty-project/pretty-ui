@@ -1,0 +1,10 @@
+media/storage/*
+media/thumbnails/*
+!media/thumbnails/default.png
+
+.DS_Store
+node_modules
+resources/public/js/core
+Procfile
+system.properties
+log

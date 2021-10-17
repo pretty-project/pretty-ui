@@ -1,0 +1,391 @@
+
+/* XXX#3408
+ *
+ * @name app-width
+ *  ...
+ *
+ * @name app-edge
+ *  ...
+ *
+ * @name content-width
+ *  ...
+ *
+ * @name flex-edge
+ *  ...
+ */
+
+
+
+
+
+/******* ALL VIEWPORT SIZE *******/
+body {
+/***** Background, border, color and shadow *****/
+/*** Border size ***/
+
+--border-radius-default: 12px;
+--border-radius-xxs:     2px;
+--border-radius-xs:      4px;
+--border-radius-s:       6px;
+--border-radius-m:       12px;
+--border-radius-l:       18px;
+--border-radius-xl:      24px;
+--border-radius-xxl:     36px;
+
+--border-width-default:  2.000px;
+--border-width-xxs:      1.000px;
+--border-width-xs:       1.000px;
+--border-width-s:        1.000px;
+--border-width-m:        2.000px;
+--border-width-l:        2.000px;
+--border-width-xl:       2.000px;
+--border-width-xxl:      2.000px;
+
+/*** Border size ***/
+
+/*** Box shadow ***/
+
+--box-shadow-primary:        0 0 010px 0 var( --primary );
+--box-shadow-secondary:      0 0 015px 0 var( --secondary );
+--box-shadow-black-xx-light: 0 0 015px 0 rgba(030, 050, 100, 0.10);
+--box-shadow-black-x-light:  0 0 015px 0 rgba(030, 050, 100, 0.25);
+--box-shadow-black-light:    0 0 015px 0 rgba(030, 050, 100, 0.40);
+--box-shadow-black:          0 0 015px 0 rgba(030, 050, 100, 0.55);
+--box-shadow-black-dark:     0 0 015px 0 rgba(030, 050, 100, 0.70);
+--box-shadow-black-x-dark:   0 0 015px 0 rgba(030, 050, 100, 0.85);
+--box-shadow-black-xx-dark:  0 0 015px 0 rgba(030, 050, 100, 1.00);
+
+/*** Box shadow ***/
+
+/*** Color ***/
+
+/* Black */
+/* TEMP
+--black-semi-transparent: rgba(0, 0, 0, 0.850);
+--black-semi-transparent: rgba(0, 0, 0, 0.650); */
+--black-semi-transparent: rgba(0, 0, 0, 0.750);
+--black-xx-dark:  rgb(000, 000, 000);
+--black-x-dark:   rgb(010, 010, 010);
+--black-dark:     rgb(020, 020, 020);
+--black:          rgb(030, 030, 030);
+--black-light:    rgb(040, 040, 040);
+--black-x-light:  rgb(050, 050, 050);
+--black-xx-light: rgb(060, 060, 060);
+
+/* Grey */
+--grey-xx-dark:  rgb(080,  80,  80);
+--grey-x-dark:   rgb(100, 100, 100);
+--grey-dark:     rgb(120, 120, 120);
+--grey:          rgb(140, 140, 140);
+--grey-light:    rgb(160, 160, 160);
+--grey-x-light:  rgb(180, 180, 180);
+--grey-xx-light: rgb(200, 200, 200);
+
+/* White */
+--white-semi-transparent: rgba(255, 255, 255, 0.750);
+--white-xx-dark:  rgb(225, 225, 225);
+--white-x-dark:   rgb(230, 230, 230);
+--white-dark:     rgb(235, 235, 235);
+--white:          rgb(240, 240, 240);
+--white-light:    rgb(245, 245, 245);
+--white-x-light:  rgb(250, 250, 250);
+--white-xx-light: rgb(255, 255, 255);
+
+/* Primary */
+--primary-xx-dark:  rgb( 40, 180, 225);
+--primary-x-dark:   rgb( 50, 190, 235);
+--primary-dark:     rgb( 60, 200, 245);
+--primary:          rgb( 70, 210, 255);
+--primary-light:    rgb( 80, 220, 255);
+--primary-x-light:  rgb( 90, 230, 255);
+--primary-xx-light: rgb(100, 240, 255);
+
+/* Secondary */
+--secondary-xx-dark:  rgb(170, 000, 225);
+--secondary-x-dark:   rgb(180, 000, 235);
+--secondary-dark:     rgb(190, 000, 245);
+--secondary:          rgb(200, 000, 255);
+--secondary-light:    rgb(210, 010, 255);
+--secondary-x-light:  rgb(220, 020, 255);
+--secondary-xx-light: rgb(230, 030, 255);
+
+/* Success */
+--success-xx-dark:  rgb(050, 225, 000);
+--success-x-dark:   rgb(060, 235, 010);
+--success-dark:     rgb(070, 245, 020);
+--success:          rgb(080, 255, 030);
+--success-light:    rgb(090, 255, 040);
+--success-x-light:  rgb(100, 255, 050);
+--success-xx-light: rgb(110, 255, 060);
+
+/* Warning */
+--warning-xx-dark:  rgb(235, 000, 100);
+--warning-x-dark:   rgb(245, 000, 110);
+--warning-dark:     rgb(245, 000, 120);
+--warning:          rgb(255, 000, 130);
+--warning-light:    rgb(255, 010, 140);
+--warning-x-light:  rgb(255, 020, 150);
+--warning-xx-light: rgb(255, 030, 160);
+
+/*** Color ***/
+/***** Background, border, color and shadow *****/
+
+
+
+/***** Font *****/
+/* BUG#9081
+ * Google Chrome version 77.0.3
+ * macOS Mojave version 10.14.6
+ * A bongeszo a textarea elemen a line-height erteket egesz szamra kerekiti lefele.
+ * Hasznalj egesz px ertekeket mindenhol!
+ */
+
+--font-family-default: 'Montserrat';
+--font-size-rem:       16px;
+
+--font-size-default: 16.000px;
+--font-size-xxs:     10.000px;
+--font-size-xs:      12.000px;
+--font-size-s:       14.000px;
+--font-size-m:       16.000px;
+--font-size-l:       18.000px;
+--font-size-xl:      20.000px;
+--font-size-xxl:     22.000px;
+
+--letter-spacing-default: 0.800px;
+--letter-spacing-xxs:     0.500px;
+--letter-spacing-xs:      0.600px;
+--letter-spacing-s:       0.700px;
+--letter-spacing-m:       0.800px;
+--letter-spacing-l:       0.900px;
+--letter-spacing-xl:      1.000px;
+--letter-spacing-xxl:     1.100px;
+
+--line-height-default: 24.0px;
+--line-height-xxs:     15.0px;
+--line-height-xs:      18.0px;
+--line-height-s:       21.0px;
+--line-height-m:       24.0px;
+--line-height-l:       27.0px;
+--line-height-xl:      30.0px;
+--line-height-xxl:     33.0px;
+
+/***** Font *****/
+
+
+
+/***** Layout *****/
+/*** App ***/
+/* XXX#3408 */
+
+--app-edge:  12px;
+--app-width: calc(100vw - 24px);
+
+/*** App ***/
+
+/*** Flex edge ***/
+/* XXX#3408 */
+
+--flex-edge: 24px;
+
+/*** Flex edge ***/
+
+/*** Icon size ***/
+
+--icon-size-default: 24px;
+--icon-size-xxs:     15px;
+--icon-size-xs:      18px;
+--icon-size-s:       21px;
+--icon-size-m:       24px;
+--icon-size-l:       27px;
+--icon-size-xl:      30px;
+--icon-size-xxl:     33px;
+
+/*** Icon size ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* XXS VIEWPORT SIZE *******/
+body[data-viewport-profile="xxs"] {
+/***** Layout *****/
+/*** App ***/
+/* XXX#3408 */
+
+--app-edge:   2vw;
+--app-width: 96vw;
+
+/*** App ***/
+
+/*** Content width ***/
+
+  --content-width-xxs: var( --app-width );
+  --content-width-xs:  var( --app-width );
+  --content-width-s:   var( --app-width );
+  --content-width-m:   var( --app-width );
+  --content-width-l:   var( --app-width );
+  --content-width-xl:  var( --app-width );
+  --content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+
+/*** Flex edge ***/
+/* XXX#3408 */
+
+--flex-edge: 8px;
+
+/*** Flex edge ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* XS VIEWPORT SIZE *******/
+body[data-viewport-profile="xs"] {
+/***** Layout *****/
+/*** App ***/
+/* XXX#3408 */
+
+--app-edge:   2vw;
+--app-width: 96vw;
+
+/*** App ***/
+
+/*** Content width ***/
+
+--content-width-xxs: 305px;
+--content-width-xs:  var( --app-width );
+--content-width-s:   var( --app-width );
+--content-width-m:   var( --app-width );
+--content-width-l:   var( --app-width );
+--content-width-xl:  var( --app-width );
+--content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+
+/*** Flex edge ***/
+/* XXX#3408 */
+
+--flex-edge: 8px;
+
+/*** Flex edge ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* S VIEWPORT SIZE *******/
+body[data-viewport-profile="s"] {
+/***** Layout *****/
+/*** App ***/
+/* XXX#3408 */
+
+--app-edge:   2vw;
+--app-width: 96vw;
+
+/*** App ***/
+
+/*** Content width ***/
+
+--content-width-xxs: 305px;
+--content-width-xs:  345px;
+--content-width-s:   var( --app-width );
+--content-width-m:   var( --app-width );
+--content-width-l:   var( --app-width );
+--content-width-xl:  var( --app-width );
+--content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* M VIEWPORT SIZE *******/
+body[data-viewport-profile="m"] {
+/***** Layout *****/
+/*** Content width ***/
+
+--content-width-xxs: 305px;
+--content-width-xs:  345px;
+--content-width-s:   460px;
+--content-width-m:   var( --app-width );
+--content-width-l:   var( --app-width );
+--content-width-xl:  var( --app-width );
+--content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* L VIEWPORT SIZE *******/
+body[data-viewport-profile="l"] {
+/***** Layout *****/
+/*** Content width ***/
+
+--content-width-xxs: 305px;
+--content-width-xs:  345px;
+--content-width-s:   460px;
+--content-width-m:   690px;
+--content-width-l:   var( --app-width );
+--content-width-xl:  var( --app-width );
+--content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* XL VIEWPORT SIZE *******/
+body[data-viewport-profile="xl"] {
+/***** Layout *****/
+/*** Content width ***/
+
+--content-width-xxs:  305px;
+--content-width-xs:   345px;
+--content-width-s:    460px;
+--content-width-m:    690px;
+--content-width-l:    980px;
+--content-width-xl:  1440px;
+--content-width-xxl: var( --app-width );
+
+/*** Content width ***/
+/***** Layout *****/
+}
+
+
+
+
+
+/******* XXL VIEWPORT SIZE *******/
+body[data-viewport-profile="xxl"] {
+/***** Layout *****/
+/*** Content width ***/
+
+--content-width-xxs:  305px;
+--content-width-xs:   345px;
+--content-width-s:    460px;
+--content-width-m:    690px;
+--content-width-l:    980px;
+--content-width-xl:  1440px;
+--content-width-xxl: 2160px;
+
+/*** Content width ***/
+/***** Layout *****/
+}

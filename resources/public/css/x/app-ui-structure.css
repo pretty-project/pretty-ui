@@ -1,0 +1,788 @@
+
+
+
+/***** Align profiles *****/
+/*** Horizontal align ***/
+
+.x-app-popups--element[data-horizontal-align="left"]
+.x-app-popups--element--content {
+  align-items: flex-start; }
+
+.x-app-popups--element[data-horizontal-align="center"]
+.x-app-popups--element--content {
+  align-items: center }
+
+.x-app-popups--element[data-horizontal-align="right"]
+.x-app-popups--element--content {
+  align-items: flex-end }
+
+/*** Horizontal align ***/
+
+/*** Vertical align ***/
+/*** Vertical align ***/
+/***** Align profiles *****/
+
+
+/***** Color profiles *****/
+/*** Muted ***/
+
+.x-app-bubbles--element[data-color="muted"]::before {
+  background-color: var( --border-color-muted ) }
+
+/*** Muted ***/
+
+/*** Primary ***/
+
+.x-app-bubbles--element[data-color="primary"]::before {
+  background-color: var( --border-color-primary ) }
+
+/*** Primary ***/
+
+/*** Secondary ***/
+
+.x-app-bubbles--element[data-color="secondary"]::before {
+  background-color: var( --border-color-secondary ) }
+
+/*** Secondary ***/
+
+/*** Success ***/
+
+.x-app-bubbles--element[data-color="success"]::before {
+  background-color: var( --border-color-success ) }
+
+/*** Success ***/
+
+/*** Warning ***/
+
+.x-app-bubbles--element[data-color="warning"]::before {
+  background-color: var( --border-color-warning ) }
+
+/*** Warning ***/
+/***** Color profiles *****/
+
+
+
+/***** Size profiles *****/
+/*** XXS ***/
+
+.x-app-popups--element[data-min-width="xxs"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-xxs ) }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.x-app-popups--element[data-min-width="xs"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-xs ) }
+
+/*** XS ***/
+
+/*** S ***/
+
+.x-app-popups--element[data-min-width="s"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-s ) }
+
+/*** S ***/
+
+/*** M ***/
+
+.x-app-popups--element[data-min-width="m"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-m ) }
+
+/*** M ***/
+
+/*** L ***/
+
+.x-app-popups--element[data-min-width="l"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-l ) }
+
+/*** L ***/
+
+/*** XL ***/
+
+.x-app-popups--element[data-min-width="xl"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-xl ) }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.x-app-popups--element[data-min-width="xxl"]
+.x-app-popups--element--content {
+  min-width: var( --content-width-xxl ) }
+
+/*** XXL ***/
+/***** Size profiles *****/
+
+
+
+/***** Hide scrollbar *****/
+
+#x-document-element,
+#x-body-container,
+#x-app-bubbles,
+.x-app-popups--element--content,
+.x-app-popups--element--label-bar,
+.x-app-surface-header--label-bar,
+.x-app-surface-header--control-bar,
+#x-app-sidebar--surface,
+.x-app-surface--element--control-sidebar {
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none }
+
+#x-document-element::-webkit-scrollbar,
+#x-body-container::-webkit-scrollbar,
+#x-app-bubbles::-webkit-scrollbar,
+.x-app-popups--element--content::-webkit-scrollbar,
+.x-app-popups--element--label-bar::-webkit-scrollbar,
+.x-app-surface-header--label-bar::-webkit-scrollbar,
+.x-app-surface-header--control-bar::-webkit-scrollbar,
+#x-app-sidebar--surface::-webkit-scrollbar,
+.x-app-surface--element--control-sidebar::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none }
+
+/***** Hide scrollbar *****/
+
+
+
+/***** App background *****/
+/*** App background wrapper ***/
+
+#x-app-background {}
+
+/*** App background wrapper ***/
+
+/*** App background element ***/
+
+.x-app-background--element {}
+
+.x-app-background--element[data-layout="fixed"] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/*** App background element ***/
+/***** App background *****/
+
+
+
+/***** App bubbles *****/
+/*** App bubbles wrapper ***/
+
+#x-app-bubbles {
+  bottom: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  position: fixed;
+  right: 0 }
+
+[data-viewport-profile="xxs"] #x-app-bubbles,
+[data-viewport-profile="xs"] #x-app-bubbles,
+[data-viewport-profile="s"] #x-app-bubbles,
+[data-viewport-profile="m"] #x-app-bubbles {
+  width: 100% }
+
+[data-viewport-profile="l"] #x-app-bubbles,
+[data-viewport-profile="xl"] #x-app-bubbles,
+[data-viewport-profile="xxl"] #x-app-bubbles {
+  width: 420px }
+
+/*** App bubbles wrapper ***/
+
+/*** App bubbles renderer ***/
+/*** App bubbles renderer ***/
+
+/*** App bubbles element ***/
+
+.x-app-bubbles--element {
+  background-color: var( --background-color );
+  border-color: var( --border-color );
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 48px;
+  min-height: 48px;
+  padding-left: 16px;
+  width: 100% }
+
+.x-app-bubbles--element::before {
+  background-color: var( --border-color-primary );
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 8px }
+
+/* Amikor az egymás felett megjelenő bubble elemek közül egy eltűnik, akkor
+ * egy pillanatra alsó border nélkül maradna a felette elhelyezkedő bubble */
+.x-app-bubbles--element::after {
+  background-color: var( --border-color );
+  bottom: -1px;
+  content: '';
+  height: 1px;
+  left: 0;
+  position: absolute;
+  width: 100% }
+
+.x-app-bubbles--element--body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100% }
+
+.x-app-bubbles--element--buttons {
+  display: flex;
+  flex-direction: row }
+
+.x-app-bubbles--element--content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  height: 100%;
+  justify-content: center;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  overflow: hidden }
+
+.x-app-bubbles--element--close-button-placeholder {
+  width: 6px }
+
+/*** App bubbles element ***/
+/***** App bubbles *****/
+
+
+
+/***** App canvas *****/
+/*** App canvas wrapper ***/
+
+#x-app-canvas {
+  height: 0;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/***** App canvas wrapper *****/
+
+/*** App canvas renderer ***/
+/*** App canvas renderer ***/
+/***** App canvas *****/
+
+
+
+/***** App footer *****/
+/*** Footer ***/
+
+.x-app-footer--element[data-position="fixed"] {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100% }
+
+/*** Footer ***/
+/***** App footer *****/
+
+
+
+/***** App header *****/
+/*** Header ***/
+
+.x-app-header--element[data-position="fixed"] {
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/*** Header ***/
+/***** App header *****/
+
+
+
+/***** App popups *****/
+/*** Popup ***/
+
+.x-app-popups--element {
+  left: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+.x-app-popups--element[data-stretched="false"] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-app-popups--element[data-minimized="true"] {
+  transform: translateX( -100% ) }
+
+/*** Popup ***/
+
+/*** Popup cover ***/
+
+.x-app-popups--element--cover {
+
+  /* WARNING! DEPRECATED! */
+  -backdrop-filter: blur(2px);
+  --webkit-backdrop-filter: blur(2px);
+  /* WARNING! DEPRECATED! */
+
+  background-color: var( --black-semi-transparent );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+/*** Popup cover ***/
+
+/*** Popup structure ***/
+
+.x-app-popups--element--structure {
+  display: flex;
+  flex-direction: column;
+  max-width: 100% }
+
+.x-app-popups--element[data-stretched="true"]
+.x-app-popups--element--structure {
+  /* Engedi látszani az app-surface label-bar sávját */
+  height: calc(100vh - 48px);
+  left: 0;
+  position: absolute;
+  top: 48px;
+  width: 100% }
+
+.x-app-popups--element[data-stretched="false"]
+.x-app-popups--element--structure {
+  /* Engedi látszani az app-surface label-bar sávját */
+  max-height: calc(100% - 96px) }
+
+/*** Popup structure ***/
+
+/*** Popup background ***/
+
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--background {
+  background-color: var( --background-color );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+.x-app-popups--element[data-stretched="true"][data-layout="boxed"]
+.x-app-popups--element--background {
+  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0 }
+
+.x-app-popups--element[data-stretched="false"][data-layout="boxed"]
+.x-app-popups--element--background {
+  border-radius: var( --border-radius-m ) }
+
+/*** Popup background ***/
+
+/*** Popup content ***/
+
+.x-app-popups--element--content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto }
+
+.x-app-popups--element[data-layout="boxed"]
+.x-app-popups--element--content[data-autopadding="true"] {
+  padding: 0 var( --flex-edge ) 12px var( --flex-edge ) }
+
+/*** Popup content ***/
+
+/*** Popup header ***/
+
+.x-app-popups--element[data-layout="unboxed"]
+.x-app-popups--element--header {
+  color: var( --white );
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+.x-app-popups--element--header-placeholder {
+  height: 12px }
+
+/*** Popup header ***/
+
+/*** Popup touch anchor ***/
+
+.x-app-popups--element--touch-anchor {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 24px;
+  justify-content: center }
+
+.x-app-popups--element--touch-anchor::before {
+  background-color: var( --border-color-muted );
+  border-radius: 1.5px;
+  content: '';
+  height: 3px;
+  width: 50px }
+
+/*** Popup touch anchor ***/
+
+/*** Popup label-bar ***/
+
+.x-app-popups--element--label-bar {
+  overflow-x: auto;
+
+  /* XXX#3408 */
+  padding: 0 var( --app-edge );
+
+  min-height: 48px;
+  width: 100% }
+
+/*** Popup label-bar ***/
+
+/*** Popup minimize/maximize button ***/
+
+.x-app-popups--element--minimize-button {
+  position: fixed;
+  right: 0;
+  top: 0 }
+
+.x-app-popups--element--maximize-button {
+  left: 0;
+  position: fixed;
+  top: 0 }
+
+/*** Popup minimize/maximize button ***/
+/***** App popups *****/
+
+
+
+/***** App shield *****/
+/*** App shield wrapper ***/
+
+#x-app-shield {
+  background-color: var( --background-color );
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/*** App shield wrapper ***/
+
+/*** App shield header ***/
+
+#x-app-shield--header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  width: 100% }
+
+#x-app-shield--header {
+  justify-content: flex-end;
+  height: 50%;
+  padding: 12px 24px;
+  top: 0 }
+
+#x-app-shield .x-app-title {
+  margin-top: 24px }
+
+/*** App shield header ***/
+
+/*** App shield content ***/
+
+#x-app-shield--content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  width: 100% }
+
+#x-app-shield--content {
+  font-size: var( --font-size-s );
+  height: 50%;
+  justify-content: flex-start;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  padding: 12px 24px;
+  top: 50% }
+
+/*** App shield content ***/
+/***** App shield *****/
+
+
+
+/***** App sidebar *****/
+/*** App sidebar wrapper ***/
+
+#x-app-sidebar {
+  background-color: var( --app-background );
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translateX(-110%);
+  width: 320px }
+
+#x-app-sidebar[data-visible="true"] {
+  transform: translateX(0) }
+
+/*** App sidebar wrapper ***/
+
+/*** App sidebar body ***/
+
+#x-app-sidebar--body {
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
+
+/*** App sidebar body ***/
+
+/*** App sidebar surface ***/
+
+#x-app-sidebar--surface {
+  flex-grow: 0;
+  overflow: hidden auto }
+
+/*** App sidebar surface ***/
+
+/*** App sidebar placeholder ***/
+
+/* XXX#1980 */
+#x-app-sidebar--placeholder {
+  height: 72px }
+
+/*** App sidebar placeholder ***/
+
+/*** App sidebar cover ***/
+
+#x-app-sidebar--cover {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background-color: var( --black-semi-transparent );
+  content: '';
+  -display: none;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translateX(-110%);
+  width: 100% }
+
+#x-app-sidebar--cover[data-visible="true"] {
+  transform: translateX(0) }
+
+/*** App sidebar cover ***/
+
+/*** Responsive styles ***/
+
+@media only screen and (max-width: 420px) {
+  #x-app-sidebar { width: 100% }
+  #x-app-sidebar--cover[data-visible="true"] { display: none }}
+
+/*** Responsive styles ***/
+/***** App sidebar *****/
+
+
+
+/***** App sounds *****/
+/*** App sounds wrapper ***/
+
+#x-app-sounds {
+  display: none }
+
+/*** App sounds wrapper ***/
+/***** App sounds *****/
+
+
+
+/***** App surface *****/
+/*** App surface wrapper ***/
+
+#x-app-surface {
+
+  /* With {overflow-x: hidden}, too big contents won't fucks the app's structure
+   * on small screens.
+   *
+   * Az #x-app-surface felületen esetlegesen megjelenített túlméretes tartalom által
+   * okozott hibák elkerülése érdekében alkalmazott {overflow-x: hidden} tulajdonság
+   * elrontja az .x-app-surface--element--content elemben elhelyezett {position: sticky}
+   * elemek megfelelő működését!
+   *
+   * https://stackoverflow.com/questions/47095596/body-overflow-x-hidden-breaks-position-sticky
+   *
+   * A problémát a BUG#9330 módosítás oldja meg */
+   -overflow-x: hidden;
+
+  width: 100% }
+
+/*** App surface wrapper ***/
+
+/*** Surface ***/
+
+/* Website-UI-nál indokolatlanul távol kerülne a footer elem a 100vh-nál
+ * kisebb tartalomtól */
+[data-interface="application-ui"]
+.x-app-surface--element {
+  min-height: 100vh }
+
+/*** Surface ***/
+
+/*** Oversized content ***/
+
+.x-app-surface--element[data-trim-content="true"] {
+  /* BUG#9330
+   * A surface felület {:trim-content? true} tulajdonságának használata
+   * nem kompatibilis a surface felületén elhelyezett elemek {position: sticky;}
+   ; tulajdonságának használatával. */
+  overflow-x: hidden }
+
+/*** Oversized content ***/
+
+/*** Surface structure ***/
+
+.x-app-surface--element--structure {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 100% }
+
+/*** Surface structure ***/
+
+/*** Surface background ***/
+
+.x-app-surface--element--background {
+  background-color: var( --app-background );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+/*** Surface background ***/
+
+/*** Surface content ***/
+
+.x-app-surface--element--content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1 }
+
+/*** Surface content ***/
+
+/*** Surface control-sidebar ***/
+
+.x-app-surface--element--control-sidebar {
+  background-color: var( --background-color );
+  box-shadow: rgba(50, 50, 93, .25) 0 0px 10px -5px;
+  height: 100%;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden auto;
+  position: fixed;
+  top: 0 }
+
+/*** Surface control-sidebar ***/
+/***** App surface *****/
+
+
+
+/***** App surface header *****/
+/*** Surface header ***/
+
+.x-app-surface-header {
+  /* XXX#7319
+   * Az box-shadow tulajdonság eltávolítása miatt a border-color tulajdonság
+   * megváltoztatása szükséges. */
+  -border-color: var( --border-color-muted );
+  border-color: var( --border-color-highlight );
+
+  border-style: solid;
+  border-width: 1px;
+
+  /* XXX#0609 */
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+
+  /* XXX#7319
+   * A box-shadow tulajdonság magas számításigénye miatt több helyről eltávolításra
+   * kerül, hogy ne okozzon görgetés közbeni késleltetve kirajzolódást. */
+  -box-shadow: rgba(50, 50, 93, .25) 0 0px 10px -5px;
+
+  left: 0;
+  overflow-y: hidden;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/*** Surface header ***/
+
+/*** Surface header label-bar ***/
+
+.x-app-surface-header--label-bar {
+  background-color: var( --background-color );
+  height: 48px;
+  overflow-x: auto;
+
+  /* XXX#3408 */
+  padding: 0 var( --app-edge );
+
+  width: 100% }
+
+/*** Surface header label-bar ***/
+
+/*** Surface header control-bar ***/
+
+.x-app-surface-header--control-bar {
+  background-color: var( --background-color );
+  bottom: 0;
+  height: 48px;
+  left: 0;
+  overflow-x: auto;
+
+  /* XXX#3408 */
+  padding: 0 var( --app-edge );
+
+  position: absolute;
+  width: 100% }
+
+/*** Surface header control-bar ***/
+/***** App surface header *****/
+
+
+
+/***** Temporary component *****/
+
+#x-temporary-component {
+  display: none }
+
+/***** Temporary component *****/

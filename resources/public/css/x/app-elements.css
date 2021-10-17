@@ -1,0 +1,3454 @@
+
+/***** Element profiles *****/
+/***** Active state and focused state *****/
+/***** Animations *****/
+/***** Material icons *****/
+/***** Align profiles *****/
+/***** Color profiles *****/
+/***** Font-size profiles *****/
+/***** Font-weight profiles *****/
+/***** Orientation profiles *****/
+/***** Size profiles *****/
+/***** Stretch profiles *****/
+/***** Element container *****/
+/***** Elements ... *****/
+
+
+
+
+
+/***** Element profiles *****/
+
+body {
+  --element-min-width-xxs: 180px;
+  --element-min-width-xs:  240px;
+
+  /* XXX#5491 Element info-tooltip padding */
+  /* ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
+  --element-min-width-s:   calc(var( --content-width-xxs ) - 36px);
+  --element-min-width-m:   calc(var( --content-width-xs )  - 36px);
+  --element-min-width-l:   calc(var( --content-width-s )   - 36px);
+  --element-min-width-xl:  calc(var( --content-width-m )   - 36px);
+  --element-min-width-xxl: calc(var( --content-width-l )   - 36px);
+}
+
+/***** Element profiles *****/
+
+
+
+/***** Active state and focused state *****/
+
+.x-anchor:active,
+.x-anchor:focus,
+.x-button--body:active,
+.x-button--body:focus,
+.x-card--header--expand-button:active,
+.x-card--header--expand-button:focus,
+.x-checkbox--body:active
+.x-checkbox--label,
+.x-checkbox--body:focus
+.x-checkbox--label,
+.x-chip--delete-button:active,
+.x-chip--delete-button:focus,
+.x-counter--decrease-button:active,
+.x-counter--decrease-button:focus,
+.x-counter--increase-button:active,
+.x-counter--increase-button:focus,
+.x-directory--body:active,
+.x-directory--body:focus,
+.x-element-container--adornment-button:active,
+.x-element-container--adornment-button:focus,
+.x-expandable--header:active,
+.x-expandable--header:focus,
+.x-file-drop-area--body:active,
+.x-file-drop-area--body:focus,
+.x-menu-bar--anchor-item:active,
+.x-menu-bar--anchor-item:focus,
+.x-menu-bar--button-item:active,
+.x-menu-bar--button-item:focus,
+.x-menu-bar--sensor-item:active,
+.x-menu-bar--sensor-item:focus,
+.x-radio-button--unselect-button:active,
+.x-radio-button--unselect-button:focus,
+.x-radio-button--option:active
+.x-radio-button--option-label,
+.x-radio-button--option:focus
+.x-radio-button--option-label,
+.x-switch--body:active
+.x-switch--label,
+.x-switch--body:focus
+.x-switch--label,
+.x-toggle:active,
+.x-toggle:focus {
+  opacity: .5 }
+
+/***** Active state and focused state *****/
+
+
+
+/***** Hide scrollbar *****/
+
+.x-combo-box--options,
+.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items {
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+
+  overflow-x: auto }
+
+.x-combo-box--options::-webkit-scrollbar,
+.x-menu-bar[data-orientation="horizontal"]
+.x-menu-bar--items::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none }
+
+/***** Hide scrollbar *****/
+
+
+
+/***** User select *****/
+
+.x-element-container--adornment-button,
+.x-element-container--adornment-icon,
+.x-anchor,
+.x-button--icon,
+.x-button--label,
+.x-card--header--icon,
+.x-card--header--label,
+.x-chip--label,
+.x-chips--label,
+.x-chips--no-chips-label,
+.x-checkbox--label,
+.x-counter--label,
+.x-date-field--label,
+.x-directory--icon,
+.x-directory--label,
+.x-directory--content-size,
+.x-directory--timestamp,
+.x-file--icon,
+.x-file--label,
+.x-file--filesize,
+.x-file--timestamp,
+.x-file--preview-icon,
+.x-icon,
+.x-label--icon,
+.x-label--body,
+.x-line-diagram--label,
+.x-radio-button--label,
+.x-radio-button--option-label,
+.x-select--button-label,
+.x-select--button-icon,
+.x-select--option,
+.x-switch--label,
+.x-text-field--label,
+.x-toggle {
+  /* user-select not supperted properly in all browsers */
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none }
+
+.x-label[data-selectable="true"] .x-label--body {
+  /* user-select not supperted properly in all browsers */
+  -ms-user-select: auto;
+  -moz-user-select: auto;
+  -webkit-user-select: auto;
+  user-select: auto }
+
+/***** User select *****/
+
+
+
+/***** Animations *****/
+
+@keyframes hg6500 {
+  0%   { border-color: var( --border-color-muted ) }
+  20%  { border-color: var( --border-color-secondary ) }
+  100% { border-color: var( --border-color-primary ) }}
+
+/***** Animations *****/
+
+
+
+/***** Material icons *****/
+
+.x-combo-box--extender-icon,
+.x-button--icon,
+.x-card--header--icon,
+.x-card--header--expand-button-icon,
+.x-checkbox--button::after,
+.x-chip--icon,
+.x-chip--delete-button-icon,
+.x-directory--icon,
+.x-expandable--icon,
+.x-expandable--expand-icon,
+.x-file--icon,
+.x-file--preview-icon,
+.x-file-drop-area--icon,
+.x-icon,
+.x-label--icon,
+.x-element-container--adornment-button,
+.x-element-container--adornment-icon,
+.x-element-container--overlay::after,
+.x-element-container--stickers--sticker-button,
+.x-element-container--stickers--sticker-icon,
+.x-element-container--info-tooltip--icon,
+.x-select--button-icon,
+.x-select--option-icon,
+.x-slideshow--controls--go-bwd,
+.x-slideshow--controls--go-fwd {
+  font-style: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+/***** Material icons *****/
+
+
+
+/***** Align profiles *****/
+/*** Horizontal align ***/
+
+.x-button[data-horizontal-align="left"] .x-button--body,
+.x-card-desk[data-horizontal-align="left"],
+.x-label[data-horizontal-align="left"],
+.x-menu-bar[data-horizontal-align="left"],
+.x-row[data-horizontal-align="left"] .x-row--body {
+  justify-content: flex-start }
+
+.x-card[data-horizontal-align="left"] .x-card--body,
+.x-column[data-horizontal-align="left"] .x-column--body {
+  align-items: flex-start }
+
+.x-text[data-horizontal-align="left"] .x-text--body {
+  align-items: flex-start;
+  text-align: left }
+
+.x-line-diagram--label[data-position="left"],
+.x-table--header-cell[data-horizontal-align="left"],
+.x-table--body-cell[data-horizontal-align="left"] {
+  text-align: left }
+
+.x-button[data-horizontal-align="center"] .x-button--body,
+.x-card-desk[data-horizontal-align="center"],
+.x-label[data-horizontal-align="center"],
+.x-menu-bar[data-horizontal-align="center"],
+.x-row[data-horizontal-align="center"] .x-row--body {
+  justify-content: center }
+
+.x-card[data-horizontal-align="center"] .x-card--body,
+.x-column[data-horizontal-align="center"] .x-column--body {
+  align-items: center }
+
+.x-text[data-horizontal-align="center"] .x-text--body {
+  align-items: center;
+  text-align: center }
+
+.x-line-diagram--label[data-position="center"],
+.x-table--header-cell[data-horizontal-align="center"],
+.x-table--body-cell[data-horizontal-align="center"] {
+  text-align: center }
+
+.x-button[data-horizontal-align="right"] .x-button--body,
+.x-card-desk[data-horizontal-align="right"],
+.x-label[data-horizontal-align="right"],
+.x-menu-bar[data-horizontal-align="right"],
+.x-row[data-horizontal-align="right"] .x-row--body {
+  justify-content: flex-end }
+
+.x-card[data-horizontal-align="right"] .x-card--body,
+.x-column[data-horizontal-align="right"] .x-column--body {
+  align-items: flex-end }
+
+.x-text[data-horizontal-align="right"] .x-text--body {
+  align-items: flex-end;
+  text-align: right }
+
+.x-line-diagram--label[data-position="right"],
+.x-table--header-cell[data-horizontal-align="right"],
+.x-table--body-cell[data-horizontal-align="right"] {
+  text-align: right }
+
+.x-row[data-horizontal-align="space-around"] .x-row--body {
+  justify-content: space-around }
+
+.x-row[data-horizontal-align="space-between"] .x-row--body {
+  justify-content: space-between }
+
+.x-row[data-horizontal-align="space-evenly"] .x-row--body {
+  justify-content: space-evenly }
+
+/*** Horizontal align ***/
+
+/*** Vertical align ***/
+
+.x-column[data-vertical-align="top"] .x-column--body {
+  justify-content: flex-start }
+
+.x-row[data-vertical-align="top"] .x-row--body {
+  align-items: flex-start }
+
+.x-column[data-vertical-align="center"] .x-column--body {
+  justify-content: center }
+
+.x-row[data-vertical-align="center"] .x-row--body {
+  align-items: center }
+
+.x-column[data-vertical-align="bottom"] .x-column--body {
+  justify-content: flex-end }
+
+.x-row[data-vertical-align="bottom"] .x-row--body {
+  align-items: flex-end }
+
+.x-column[data-vertical-align="space-around"] .x-column--body {
+  justify-content: space-around }
+
+.x-column[data-vertical-align="space-between"] .x-column--body {
+  justify-content: space-between }
+
+.x-column[data-vertical-align="space-evenly"] .x-column--body {
+  justify-content: space-evenly }
+
+/*** Vertical align ***/
+/***** Align profiles *****/
+
+
+
+/***** Color profiles *****/
+/*** Muted ***/
+
+.x-circle-diagram--section[data-color="muted"] {
+  stroke: var( --border-color-muted ) }
+
+.x-button[data-variant="filled"][data-color="muted"] .x-button--body,
+.x-chip[data-variant="filled"][data-color="muted"] .x-chip--body,
+.x-content-bar[data-color="muted"] {
+  background-color: var( --background-color-muted );
+  color: var( --black ) }
+
+.x-button[data-variant="outlined"][data-color="muted"]
+.x-button--body,
+.x-card[data-border-color="muted"],
+.x-checkbox[data-color="muted"]
+.x-checkbox--button::before,
+.x-chip[data-variant="outlined"][data-color="muted"] .x-chip--body,
+.x-counter[data-color="muted"]
+.x-counter--decrease-button,
+.x-counter[data-color="muted"]
+.x-counter--increase-button,
+.x-radio-button[data-color="muted"]
+.x-radio-button--option-button,
+.x-switch[data-color="muted"]
+.x-switch--track {
+  border-color: var( --border-color-muted ) }
+
+.x-chip[data-variant="outlined"][data-color="muted"] .x-chip--delete-button,
+.x-horizontal-line[data-color="muted"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="muted"],
+.x-table[data-color="muted"] .x-table--header-cell,
+.x-vertical-line[data-color="muted"]
+.x-vertical-line--body {
+  background-color: var( --border-color-muted ) }
+
+.x-anchor[data-color="muted"],
+.x-button[data-variant="transparent"][data-color="muted"]
+.x-button--body,
+.x-label[data-color="muted"],
+.x-line-diagram[data-color=muted]
+.x-line-diagram--label,
+.x-text[data-color="muted"],
+.x-toggle[data-color="muted"] {
+  color: var( --color-muted ) }
+
+/*** Muted ***/
+
+/*** Highlight ***/
+
+.x-circle-diagram--section[data-color="highlight"] {
+  stroke: var( --border-color-highlight ) }
+
+.x-chip[data-variant="filled"][data-color="highlight"] .x-chip--body {
+  background-color: var( --background-color-highlight );
+  color: var( --black ) }
+
+.x-chip[data-variant="outlined"][data-color="highlight"] .x-chip--body {
+  border-color: var( --border-color-highlight ) }
+
+.x-chip[data-variant="outlined"][data-color="highlight"] .x-chip--delete-button,
+.x-horizontal-line[data-color="highlight"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="highlight"],
+.x-table[data-color="highlight"] .x-table--header-cell,
+.x-vertical-line[data-color="highlight"]
+.x-vertical-line--body {
+  background-color: var( --border-color-highlight ) }
+
+.x-label[data-color="highlight"] {
+  color: var( --color-highlight ) }
+
+/*** Highlight ***/
+
+/*** Invert ***/
+
+.x-button[data-variant="transparent"][data-color="invert"]
+.x-button--body {
+  color: var( --color-invert ) }
+
+/*** Invert ***/
+
+/*** Primary ***/
+
+.x-circle-diagram--section[data-color="primary"] {
+  stroke: var( --border-color-primary ) }
+
+.x-button[data-variant="filled"][data-color="primary"] .x-button--body,
+.x-chip[data-variant="filled"][data-color="primary"] .x-chip--body {
+  background-color: var( --primary );
+  color: var( --black ) }
+
+.x-content-bar[data-color="primary"] {
+  background-color: var( --background-color-primary );
+  color: var( --white ) }
+
+.x-button[data-variant="outlined"][data-color="primary"]
+.x-button--body,
+.x-card[data-border-color="primary"],
+.x-checkbox[data-color="primary"]
+.x-checkbox--button::before,
+.x-chip[data-variant="outlined"][data-color="primary"] .x-chip--body,
+.x-counter[data-color="primary"]
+.x-counter--decrease-button,
+.x-counter[data-color="primary"]
+.x-counter--increase-button,
+.x-radio-button[data-color="primary"]
+.x-radio-button--option-button,
+.x-switch[data-color="primary"]
+.x-switch--track,
+.x-text-field[data-color="primary"]
+.x-text-field--shield,
+.x-text-field[data-color="primary"]
+.x-text-field--input,
+.x-text-field[data-color="primary"]
+.x-text-field--textarea {
+  border-color: var( --border-color-primary ) }
+
+.x-chip[data-variant="outlined"][data-color="primary"] .x-chip--delete-button,
+.x-horizontal-line[data-color="primary"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="primary"],
+.x-table[data-color="primary"] .x-table--header-cell,
+.x-vertical-line[data-color="primary"]
+.x-vertical-line--body {
+  background-color: var( --border-color-primary ) }
+
+.x-anchor[data-color="primary"],
+.x-button[data-variant="transparent"][data-color="primary"]
+.x-button--body,
+.x-label[data-color="primary"],
+.x-line-diagram[data-color=primary]
+.x-line-diagram--label,
+.x-text[data-color="primary"],
+.x-toggle[data-color="primary"] {
+  color: var( --color-primary ) }
+
+/*** Primary ***/
+
+/*** Secondary ***/
+
+.x-circle-diagram--section[data-color="secondary"] {
+  stroke: var( --border-color-secondary ) }
+
+.x-button[data-variant="filled"][data-color="secondary"] .x-button--body,
+.x-chip[data-variant="filled"][data-color="secondary"] .x-chip--body {
+  background-color: var( --secondary );
+  color: var( --black ) }
+
+.x-content-bar[data-color="secondary"] {
+  background-color: var( --background-color-secondary );
+  color: var( --white ) }
+
+.x-button[data-variant="outlined"][data-color="secondary"]
+.x-button--body,
+.x-card[data-border-color="secondary"],
+.x-checkbox[data-color="secondary"]
+.x-checkbox--button::before,
+.x-chip[data-variant="outlined"][data-color="secondary"] .x-chip--body,
+.x-counter[data-color="secondary"]
+.x-counter--decrease-button,
+.x-counter[data-color="secondary"]
+.x-counter--increase-button,
+.x-radio-button[data-color="secondary"]
+.x-radio-button--option-button,
+.x-switch[data-color="secondary"]
+.x-switch--track,
+.x-text-field[data-color="secondary"]
+.x-text-field--shield,
+.x-text-field[data-color="secondary"]
+.x-text-field--input,
+.x-text-field[data-color="secondary"]
+.x-text-field--textarea {
+  border-color: var( --border-color-secondary ) }
+
+.x-chip[data-variant="outlined"][data-color="secondary"] .x-chip--delete-button,
+.x-horizontal-line[data-color="secondary"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="secondary"],
+.x-table[data-color="secondary"] .x-table--header-cell,
+.x-vertical-line[data-color="secondary"]
+.x-vertical-line--body {
+  background-color: var( --border-color-secondary ) }
+
+.x-anchor[data-color="secondary"],
+.x-button[data-variant="transparent"][data-color="secondary"]
+.x-button--body,
+.x-label[data-color="secondary"],
+.x-line-diagram[data-color=secondary]
+.x-line-diagram--label,
+.x-text[data-color="secondary"],
+.x-toggle[data-color="secondary"] {
+  color: var( --color-secondary ) }
+
+/*** Secondary ***/
+
+/*** Success ***/
+
+.x-circle-diagram--section[data-color="success"] {
+  stroke: var( --border-color-success ) }
+
+.x-button[data-variant="filled"][data-color="success"] .x-button--body,
+.x-chip[data-variant="filled"][data-color="success"] .x-chip--body {
+  background-color: var( --success );
+  color: var( --black ) }
+
+.x-button[data-variant="outlined"][data-color="success"]
+.x-button--body,
+.x-card[data-border-color="success"],
+.x-checkbox[data-color="success"]
+.x-checkbox--button::before,
+.x-chip[data-variant="outlined"][data-color="success"] .x-chip--body,
+.x-counter[data-color="success"]
+.x-counter--decrease-button,
+.x-counter[data-color="success"]
+.x-counter--increase-button,
+.x-radio-button[data-color="success"]
+.x-radio-button--option-button,
+.x-switch[data-color="success"]
+.x-switch--track,
+.x-text-field[data-color="success"]
+.x-text-field--shield,
+.x-text-field[data-color="success"]
+.x-text-field--input,
+.x-text-field[data-color="success"]
+.x-text-field--textarea {
+  border-color: var( --border-color-success ) }
+
+.x-chip[data-variant="outlined"][data-color="success"] .x-chip--delete-button,
+.x-horizontal-line[data-color="success"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="success"],
+.x-table[data-color="success"] .x-table--header-cell,
+.x-vertical-line[data-color="success"]
+.x-vertical-line--body {
+  background-color: var( --border-color-success ) }
+
+.x-anchor[data-color="success"],
+.x-button[data-variant="transparent"][data-color="success"]
+.x-button--body,
+.x-label[data-color="success"],
+.x-text[data-color="success"],
+.x-toggle[data-color="success"] {
+  color: var( --color-success ) }
+
+/*** Success ***/
+
+/*** Warning ***/
+
+.x-circle-diagram--section[data-color="warning"] {
+  stroke: var( --border-color-warning ) }
+
+.x-button[data-variant="filled"][data-color="warning"] .x-button--body,
+.x-chip[data-variant="filled"][data-color="warning"] .x-chip--body {
+  background-color: var( --warning );
+  color: var( --black ) }
+
+.x-button[data-variant="outlined"][data-color="warning"]
+.x-button--body,
+.x-card[data-border-color="warning"],
+.x-checkbox[data-color="warning"]
+.x-checkbox--button::before,
+.x-chip[data-variant="outlined"][data-color="warning"] .x-chip--body,
+.x-counter[data-color="warning"]
+.x-counter--decrease-button,
+.x-counter[data-color="warning"]
+.x-counter--increase-button,
+.x-radio-button[data-color="warning"]
+.x-radio-button--option-button,
+.x-switch[data-color="warning"]
+.x-switch--track,
+.x-text-field[data-color="warning"]
+.x-text-field--shield,
+.x-text-field[data-color="warning"]
+.x-text-field--input,
+.x-text-field[data-color="warning"]
+.x-text-field--textarea {
+  border-color: var( --border-color-warning ) }
+
+.x-chip[data-variant="outlined"][data-color="warning"] .x-chip--delete-button,
+.x-horizontal-line[data-color="warning"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="warning"],
+.x-table[data-color="warning"] .x-table--header-cell,
+.x-vertical-line[data-color="warning"]
+.x-vertical-line--body {
+  background-color: var( --border-color-warning ) }
+
+.x-anchor[data-color="warning"],
+.x-button[data-variant="transparent"][data-color="warning"]
+.x-button--body,
+.x-label[data-color="warning"],
+.x-text[data-color="warning"],
+.x-toggle[data-color="warning"] {
+  color: var( --color-warning ) }
+
+/*** Warning ***/
+
+/*** Default ***/
+
+.x-horizontal-line[data-color="default"]
+.x-horizontal-line--body,
+.x-line-diagram--section[data-color="default"],
+.x-vertical-line[data-color="default"]
+.x-vertical-line--body {
+  background-color: var( --border-color ) }
+
+/*** Default ***/
+/***** Color profiles *****/
+
+
+
+/***** Font-size profiles *****/
+/*** XXS ***/
+
+.x-icon[data-size="xxs"] {
+  font-size: var( --icon-size-xxs );
+
+  /* BUG#0983 */
+  height: var( --icon-size-xxs );
+  width: var( --icon-size-xxs ) }
+
+.x-anchor[data-font-size="xxs"],
+.x-button[data-font-size="xxs"],
+.x-file-drop-area[data-font-size="xxs"],
+.x-label[data-font-size="xxs"],
+.x-line-diagram[data-font-size="xxs"]
+.x-line-diagram--label,
+.x-menu-bar[data-font-size="xxs"],
+.x-table[data-font-size="xxs"],
+.x-text[data-font-size="xxs"] {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: var( --line-height-xxs ) }
+
+.x-checkbox[data-font-size="xxs"],
+.x-counter[data-font-size="xxs"],
+.x-radio-button[data-font-size="xxs"],
+.x-switch[data-font-size="xxs"] {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs ) }
+
+.x-button[data-icon-size="xxs"] .x-button--icon {
+  font-size: var( --icon-size-xxs ) }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.x-icon[data-size="xs"] {
+  font-size: var( --icon-size-xs );
+
+  /* BUG#0983 */
+  height: var( --icon-size-xs );
+  width: var( --icon-size-xs ) }
+
+.x-anchor[data-font-size="xs"],
+.x-button[data-font-size="xs"],
+.x-file-drop-area[data-font-size="xs"],
+.x-label[data-font-size="xs"],
+.x-line-diagram[data-font-size="xs"]
+.x-line-diagram--label,
+.x-menu-bar[data-font-size="xs"],
+.x-table[data-font-size="xs"],
+.x-text[data-font-size="xs"] {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs ) }
+
+.x-checkbox[data-font-size="xs"],
+.x-counter[data-font-size="xs"],
+.x-radio-button[data-font-size="xs"],
+.x-switch[data-font-size="xs"] {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs ) }
+
+.x-separator[data-orientation="horizontal"][data-size="xs"] {
+  height: 6px }
+
+.x-separator[data-orientation="vertical"][data-size="xs"] {
+  width: 6px }
+
+.x-button[data-icon-size="xs"] .x-button--icon {
+  font-size: var( --icon-size-xs ) }
+
+/*** XS ***/
+
+/*** S ***/
+
+.x-icon[data-size="s"] {
+  font-size: var( --icon-size-s );
+
+  /* BUG#0983 */
+  height: var( --icon-size-s );
+  width: var( --icon-size-s ) }
+
+.x-anchor[data-font-size="s"],
+.x-button[data-font-size="s"],
+.x-file-drop-area[data-font-size="s"],
+.x-label[data-font-size="s"],
+.x-line-diagram[data-font-size="s"]
+.x-line-diagram--label,
+.x-menu-bar[data-font-size="s"],
+.x-table[data-font-size="s"],
+.x-text[data-font-size="s"] {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.x-checkbox[data-font-size="s"],
+.x-counter[data-font-size="s"],
+.x-radio-button[data-font-size="s"],
+.x-switch[data-font-size="s"] {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s ) }
+
+.x-button[data-icon-size="s"] .x-button--icon {
+  font-size: var( --icon-size-s ) }
+
+/*** S ***/
+
+/*** M ***/
+
+.x-icon,
+.x-icon[data-size="m"] {
+  font-size: var( --icon-size-m );
+
+  /* BUG#0983 */
+  height: var( --icon-size-m );
+  width: var( --icon-size-m ) }
+
+.x-anchor[data-font-size="m"],
+.x-button[data-font-size="m"],
+.x-file-drop-area[data-font-size="m"],
+.x-label[data-font-size="m"],
+.x-line-diagram[data-font-size="m"]
+.x-line-diagram--label,
+.x-menu-bar[data-font-size="m"],
+.x-table[data-font-size="m"],
+.x-text[data-font-size="m"] {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m );
+  line-height: var( --line-height-m ) }
+
+.x-checkbox[data-font-size="m"],
+.x-counter[data-font-size="m"],
+.x-radio-button[data-font-size="m"],
+.x-switch[data-font-size="m"] {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m ) }
+
+.x-button[data-icon-size="m"] .x-button--icon {
+  font-size: var( --icon-size-m ) }
+
+/*** M ***/
+
+/*** L ***/
+
+.x-icon[data-size="l"] {
+  font-size: var( --icon-size-l );
+
+  /* BUG#0983 */
+  height: var( --icon-size-l );
+  width: var( --icon-size-l ) }
+
+.x-anchor[data-font-size="l"],
+.x-button[data-font-size="l"],
+.x-file-drop-area[data-font-size="l"],
+.x-label[data-font-size="l"],
+.x-menu-bar[data-font-size="l"],
+.x-table[data-font-size="l"],
+.x-text[data-font-size="l"] {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l );
+  line-height: var( --line-height-l ) }
+
+.x-checkbox[data-font-size="l"],
+.x-counter[data-font-size="l"],
+.x-radio-button[data-font-size="l"],
+.x-switch[data-font-size="l"] {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l ) }
+
+.x-button[data-icon-size="l"] .x-button--icon {
+  font-size: var( --icon-size-l ) }
+
+/*** L ***/
+
+/*** XL ***/
+
+.x-icon[data-size="xl"] {
+  font-size: var( --icon-size-xl );
+
+  /* BUG#0983 */
+  height: var( --icon-size-xl );
+  width: var( --icon-size-xl ) }
+
+.x-anchor[data-font-size="xl"],
+.x-button[data-font-size="xl"],
+.x-file-drop-area[data-font-size="xl"],
+.x-label[data-font-size="xl"],
+.x-menu-bar[data-font-size="xl"],
+.x-table[data-font-size="xl"],
+.x-text[data-font-size="xl"] {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl );
+  line-height: var( --line-height-xl ) }
+
+.x-checkbox[data-font-size="xl"],
+.x-counter[data-font-size="xl"],
+.x-radio-button[data-font-size="xl"],
+.x-switch[data-font-size="xl"] {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl ) }
+
+.x-button[data-icon-size="xl"] .x-button--icon {
+  font-size: var( --icon-size-xl ) }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.x-icon[data-size="xxl"] {
+  font-size: var( --icon-size-xxl );
+
+  /* BUG#0983 */
+  height: var( --icon-size-xxl );
+  width: var( --icon-size-xxl ) }
+
+.x-anchor[data-font-size="xxl"],
+.x-button[data-font-size="xxl"],
+.x-file-drop-area[data-font-size="xxl"],
+.x-label[data-font-size="xxl"],
+.x-menu-bar[data-font-size="xxl"],
+.x-table[data-font-size="xxl"],
+.x-text[data-font-size="xxl"] {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl );
+  line-height: var( --line-height-xxl ) }
+
+.x-checkbox[data-font-size="xxl"],
+.x-counter[data-font-size="xxl"],
+.x-radio-button[data-font-size="xxl"],
+.x-switch[data-font-size="xxl"] {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl ) }
+
+.x-button[data-icon-size="xxl"] .x-button--icon {
+  font-size: var( --icon-size-xxl ) }
+
+/*** XXL ***/
+/***** Font-size profiles *****/
+
+
+
+/***** Font weight profiles *****/
+/*** Normal ***/
+
+.x-label[data-font-weight="normal"] .x-label--body,
+.x-text[data-font-weight="normal"] .x-text--body {
+  font-weight: 400 }
+
+/*** Normal ***/
+
+/*** Bold ***/
+
+.x-label[data-font-weight="bold"] .x-label--body,
+.x-text[data-font-weight="bold"] .x-text--body {
+  font-weight: 500 }
+
+/*** Bold ***/
+
+/*** Extra bold ***/
+
+.x-label[data-font-weight="extra-bold"] .x-label--body,
+.x-text[data-font-weight="extra-bold"] .x-text--body {
+  font-weight: 600 }
+
+/*** Extra bold ***/
+/***** Font weight profiles *****/
+
+
+
+/***** Orientation profiles *****/
+/*** Horizontal orientation ***/
+
+.x-element-list[data-orientation="horizontal"],
+.x-menu-bar[data-orientation="horizontal"],
+.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items,
+.x-polarity[data-orientation="horizontal"],
+.x-polarity[data-orientation="horizontal"] .x-polarity--start-content,
+.x-polarity[data-orientation="horizontal"] .x-polarity--middle-content,
+.x-polarity[data-orientation="horizontal"] .x-polarity--end-content {
+  display: flex;
+  flex-direction: row }
+
+.x-menu[data-orientation="horizontal"],
+.x-tabs[data-orientation="horizontal"] {
+  display: flex;
+  flex-direction: column }
+
+/*** Horizontal orientation ***/
+
+/*** Vertical orientation ***/
+
+.x-element-list[data-orientation="vertical"],
+.x-menu-bar[data-orientation="vertical"] .x-menu-bar--items,
+.x-polarity[data-orientation="vertical"] {
+  display: flex;
+  flex-direction: column }
+
+.x-menu[data-orientation="vertical"],
+.x-tabs[data-orientation="vertical"] {
+  display: flex;
+  flex-direction: row }
+
+/*** Vertical orientation ***/
+/***** Orientation profiles *****/
+
+
+
+/***** Size profiles *****/
+/*** XXS ***/
+
+.x-card[data-min-width="xxs"] {
+  min-width: var( --content-width-xxs ) }
+
+.x-date-field[data-min-width="xxs"],
+.x-text-field[data-min-width="xxs"] {
+  min-width: var( --element-min-width-xxs ) }
+
+.x-separator[data-orientation="horizontal"][data-size="xxs"] {
+  height: 3px }
+
+.x-separator[data-orientation="vertical"][data-size="xxs"] {
+  width: 3px }
+
+.x-directory[data-size="xxs"] {
+  height: 78px;
+  width: 160px }
+
+.x-file[data-size="xxs"] {
+  height: 160px;
+  width: 160px }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+
+.x-card[data-min-width="xs"] {
+  min-width: var( --content-width-xs ) }
+
+.x-date-field[data-min-width="xs"],
+.x-text-field[data-min-width="xs"] {
+  min-width: var( --element-min-width-xs ) }
+
+.x-separator[data-orientation="horizontal"][data-size="xs"] {
+  height: 8px }
+
+.x-separator[data-orientation="vertical"][data-size="xs"] {
+  width: 8px }
+
+.x-directory[data-size="xs"] {
+  height: 78px;
+  width: 180px }
+
+.x-file[data-size="xs"] {
+  height: 160px;
+  width: 180px }
+
+/*** XS ***/
+
+/*** S ***/
+
+.x-card[data-min-width="s"] {
+  min-width: var( --content-width-s ) }
+
+.x-date-field[data-min-width="s"],
+.x-text-field[data-min-width="s"] {
+  min-width: var( --element-min-width-s ) }
+
+.x-separator[data-orientation="horizontal"][data-size="s"] {
+  height: 12px }
+
+.x-separator[data-orientation="vertical"][data-size="s"] {
+  width: 12px }
+
+.x-directory[data-size="s"] {
+  height: 78px;
+  width: 240px }
+
+.x-file[data-size="s"] {
+  height: 160px;
+  width: 240px }
+
+/*** S ***/
+
+/*** M ***/
+
+.x-card[data-min-width="m"] {
+  min-width: var( --content-width-m ) }
+
+.x-date-field[data-min-width="m"],
+.x-text-field[data-min-width="m"] {
+  min-width: var( --element-min-width-m ) }
+
+.x-separator[data-orientation="horizontal"][data-size="m"] {
+  height: 18px }
+
+.x-separator[data-orientation="vertical"][data-size="m"] {
+  width: 18px }
+
+.x-directory[data-size="m"] {
+  height: 78px;
+  width: 260px }
+
+.x-file[data-size="m"] {
+  height: 180px;
+  width: 260px }
+
+/*** M ***/
+
+/*** L ***/
+
+.x-card[data-min-width="l"] {
+  min-width: var( --content-width-l ) }
+
+.x-date-field[data-min-width="l"],
+.x-text-field[data-min-width="l"] {
+  min-width: var( --element-min-width-l ) }
+
+.x-separator[data-orientation="horizontal"][data-size="l"] {
+  height: 24px }
+
+.x-separator[data-orientation="vertical"][data-size="l"] {
+  width: 24px }
+
+.x-directory[data-size="l"] {
+  height: 78px;
+  width: 240px }
+
+.x-file[data-size="l"] {
+  height: 200px;
+  width: 240px }
+
+/*** L ***/
+
+/*** XL ***/
+
+.x-card[data-min-width="xl"] {
+  min-width: var( --content-width-xl ) }
+
+.x-date-field[data-min-width="xl"],
+.x-text-field[data-min-width="xl"] {
+  min-width: var( --element-min-width-xl ) }
+
+.x-separator[data-orientation="horizontal"][data-size="xl"] {
+  height: 36px }
+
+.x-separator[data-orientation="vertical"][data-size="xl"] {
+  width: 36px }
+
+.x-directory[data-size="xl"] {
+  height: 78px;
+  width: 240px }
+
+.x-file[data-size="xl"] {
+  height: 220px;
+  width: 240px }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.x-card[data-min-width="xxl"] {
+  min-width: var( --content-width-xxl ) }
+
+.x-date-field[data-min-width="xxl"],
+.x-text-field[data-min-width="xxl"] {
+  min-width: var( --element-min-width-xxl ) }
+
+.x-separator[data-orientation="horizontal"][data-size="xxl"] {
+  height: 48px }
+
+.x-separator[data-orientation="vertical"][data-size="xxl"] {
+  width: 48px }
+
+.x-directory[data-size="xxl"] {
+  height: 78px;
+  width: 240px }
+
+.x-file[data-size="xxl"] {
+  height: 240px;
+  width: 240px }
+
+/*** XXL ***/
+/***** Size profiles *****/
+
+
+
+/***** Stretch profiles *****/
+/* Az element-container komponenst nem használó egyszerű elemek,
+ * maguknak valósítják, meg a stretch-orientation tulajdonság alkalmazását. */
+
+.x-column[data-stretch-orientation="both"],
+.x-column[data-stretch-orientation="horizontal"],
+.x-row[data-stretch-orientation="both"],
+.x-row[data-stretch-orientation="horizontal"] {
+  width: 100% }
+
+.x-column[data-stretch-orientation="both"],
+.x-column[data-stretch-orientation="vertical"],
+.x-row[data-stretch-orientation="both"],
+.x-row[data-stretch-orientation="vertical"] {
+  height: 100% }
+
+/***** Stretch profiles *****/
+
+
+
+/***** Element container *****/
+/*** Element container wrapper ***/
+
+.x-element-container[data-position="tl"],
+.x-element-container[data-position="tr"] {
+  top: 0 }
+
+.x-element-container[data-position="bl"],
+.x-element-container[data-position="br"] {
+  bottom: 0 }
+
+.x-element-container[data-position="tl"],
+.x-element-container[data-position="bl"] {
+  left: 0 }
+
+.x-element-container[data-position="tr"],
+.x-element-container[data-position="br"] {
+  right: 0 }
+
+.x-element-container[data-floating="true"] {
+  position: absolute }
+
+.x-element-container[data-stretch-orientation="both"],
+.x-element-container[data-stretch-orientation="horizontal"] {
+  width: 100% }
+
+.x-element-container[data-stretch-orientation="both"],
+.x-element-container[data-stretch-orientation="vertical"] {
+  height: 100% }
+
+/*** Element container wrapper ***/
+
+/*** Overlay ***/
+
+.x-element-container--overlay {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+.x-element-container[data-status="success"]
+.x-element-container--overlay,
+.x-element-container[data-status="failure"]
+.x-element-container--overlay,
+.x-element-container[data-status="progress"]
+.x-element-container--overlay {
+  cursor: wait }
+
+/*** Overlay ***/
+
+/*** Status animation ***/
+
+.x-element-container[data-animation="status"][data-status="success"]
+.x-element-container--overlay::before,
+.x-element-container[data-animation="status"][data-status="failure"]
+.x-element-container--overlay::before,
+.x-element-container[data-animation="status"][data-status="progress"]
+.x-element-container--overlay::before {
+  background: var( --background-color );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  content: '';
+  height: 48px;
+  left: calc(50% - 24px);
+  position: absolute;
+  top: calc(50% - 24px);
+  width: 48px }
+
+.x-element-container[data-animation="status"][data-status="success"]
+.x-element-container--overlay::before {
+  border-color: var( --border-color-success ) }
+
+.x-element-container[data-animation="status"][data-status="failure"]
+.x-element-container--overlay::before {
+  border-color: var( --border-color-warning ) }
+
+.x-element-container[data-animation="status"][data-status="progress"]
+.x-element-container--overlay::before {
+  border-color: var( --border-color-primary ) }
+
+.x-element-container[data-animation="status"][data-status="success"]
+.x-element-container--overlay::after,
+.x-element-container[data-animation="status"][data-status="failure"]
+.x-element-container--overlay::after,
+.x-element-container[data-animation="status"][data-status="progress"]
+.x-element-container--overlay::after {
+  font-size: 24px;
+  height: 24px;
+  left: calc(50% - 12px);
+  line-height: 24px;
+  position: absolute;
+  top: calc(50% - 12px);
+  width: 24px }
+
+.x-element-container[data-animation="status"][data-status="success"]
+.x-element-container--overlay::after {
+  content: 'done' }
+
+.x-element-container[data-animation="status"][data-status="failure"]
+.x-element-container--overlay::after {
+  content: 'close' }
+
+.x-element-container[data-animation="status"][data-status="progress"]
+.x-element-container--overlay::after {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: x-rotate-counterclockwise;
+  animation-timing-function: ease-in-out;
+  content: 'sync' }
+
+/*** Status animation ***/
+
+/*** Element ***/
+
+.x-element-container--body {
+  display: flex;
+  flex-direction: row;
+
+  /* WARNING! NOT TESTED! x4.0.7 */
+  height: 100%;
+  width: 100% }
+
+.x-element-container--element {
+  width: 100% }
+
+.x-element-container[data-disabled="true"]
+.x-element-container--element,
+.x-element-container[data-status="success"]
+.x-element-container--element,
+.x-element-container[data-status="failure"]
+.x-element-container--element,
+.x-element-container[data-status="progress"]
+.x-element-container--element {
+  opacity: .5 }
+
+/*** Element ***/
+
+/*** Element adornments ***/
+
+.x-element-container--start-adornments,
+.x-element-container--end-adornments {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  top: 0 }
+
+.x-element-container--start-adornments {
+  left: 0 }
+
+.x-element-container--end-adornments {
+  right: 0 }
+
+.x-element-container--adornment-button,
+.x-element-container--adornment-icon {
+  font-size: var( --icon-size-xs );
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  width: 24px }
+
+/*** Element adornments ***/
+
+/*** Helper ***/
+
+.x-element-container--helper {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs );
+  opacity: .8;
+  padding-bottom: 12px }
+
+/*** Helper ***/
+
+/*** Context surface ***/
+
+.x-element-container--context-surface {
+  animation-name: x-grow;
+  animation-duration: .05s;
+  animation-timing-function: ease-out;
+  background: var( --fill-color );
+  border-radius: var( --border-radius-m );
+  box-shadow: var( --box-shadow-black-xx-light );
+  left: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 9999 }
+
+/*** Context surface ***/
+
+/*** Info tooltip ***/
+
+.x-element-container--info-tooltip {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 24px }
+
+.x-element-container--info-tooltip--icon {
+  font-size: var( --icon-size-s );
+  height: var( --icon-size-s );
+  line-height: var( --icon-size-s );
+  width: var( --icon-size-s ) }
+
+.x-element-container--info-tooltip--body {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  right: 24px;
+  top: 0 }
+
+.x-element-container--info-tooltip--content {
+  background-color: var( --background-color-highlight );
+  border-color: var( --border-color );
+  border-style: solid;
+  border-width: 1px;
+  border-radius: var( --border-radius-m );
+  color: var( --color );
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 18px;
+  padding: 12px;
+  width: 256px;
+  z-index: 9999 }
+
+.x-element-container--info-tooltip:hover
+.x-element-container--info-tooltip--body {
+  display: flex }
+
+/*** Info tooltip ***/
+
+/*** Stickers ***/
+
+.x-element-container--stickers {
+  display: flex;
+  flex-direction: row;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  transform: scale( .5 );
+  transition: opacity .1s, transform .1s;
+  top: 0 }
+
+/* data-viewport-profile="xxs", data-viewport-profile="xs"
+ * és data-viewport-profile="s" viewport-on az elemen megjelenő sticker-ek
+ * onmouseover esemény nélkül is láthatóak */
+[data-viewport-profile="xxs"]
+.x-element-container--stickers,
+[data-viewport-profile="xs"]
+.x-element-container--stickers,
+[data-viewport-profile="s"]
+.x-element-container--stickers,
+.x-element-container--body:hover > .x-element-container--stickers {
+  /* XXX#0134 */
+  opacity: 1;
+  transform: scale( 1 ) }
+
+.x-element-container--stickers--sticker-icon,
+.x-element-container--stickers--sticker-button {
+  align-items: center;
+  background-color: var( --fill-color );
+  border-color: var( --border-color-muted );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 1px;
+  color: var( --color );
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  height: 24px;
+  justify-content: flex-start;
+  line-height: 22px;
+  margin-right: 3px;
+  text-align: center;
+  width: 24px }
+
+.x-element-container--stickers--sticker-button:focus,
+.x-element-container--stickers--sticker-button:hover {
+  border-color: var( --border-color-primary ) }
+
+.x-element-container--stickers--sticker-button:active {
+  border-color: var( --border-color-muted ) }
+
+.x-element-container--stickers--sticker-icon[data-disabled="true"] {
+  color: var( --color-highlight ) }
+
+/*** Stickers ***/
+
+/*** Highlighter ***/
+
+.x-element-container[data-highlighted="true"] {
+  z-index: 9999 }
+
+.x-element-container[data-highlighted="true"]::before {
+  background-color: var( --black-semi-transparent );
+  content: '';
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/*** Highlighter ***/
+/***** Element container *****/
+
+
+
+/***** Anchor *****/
+/*** Anchor wrapper ***/
+
+.x-anchor {
+  cursor: pointer;
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  word-wrap: normal }
+
+/*** Anchor wrapper ***/
+
+/*** Anchor body ***/
+
+.x-anchor[data-layout="row"] {
+  line-height: 48px;
+  min-height: 48px }
+
+/*** Anchor body ***/
+/***** Anchor *****/
+
+
+
+/***** Combo-box *****/
+/*** Combo-box surface ***/
+
+.x-combo-box--surface {
+  font-size: var( --font-size-s );
+  line-height: var( --line-height-s );
+  letter-spacing: var( --letter-spacing-s ) }
+
+/*** Combo-box surface ***/
+
+/*** Combo-box extender button ***/
+
+.x-combo-box--extender-button {
+  align-items: center;
+  border-top-color: var( --border-color-highlight );
+  border-top-style: solid;
+  border-top-width: 1px;
+  color: var( --color-primary );
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+  padding: 0 8px;
+  text-align: left;
+  width: 100% }
+
+.x-combo-box--extender-button:hover {
+  background-color: var( --background-color-highlight ) }
+
+.x-combo-box--extender-icon {
+  padding-right: 8px }
+
+/*** Combo-box extender button ***/
+
+/*** Combo-box options ***/
+
+.x-combo-box--options {
+  display: flex;
+  flex-direction: column;
+  max-height: 340px;
+  overflow-y: scroll }
+
+.x-combo-box--no-options-label {
+  align-items: center;
+  color: var( --color-muted );
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+  padding: 0 8px }
+
+/*** Combo-box options ***/
+
+/*** Combo-box option ***/
+
+.x-combo-box--option {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  padding: 8px 8px;
+  text-align: left;
+  width: 100% }
+
+.x-combo-box--option[data-highlighted="true"],
+.x-combo-box--option:hover {
+  background-color: var( --background-color-highlight ) }
+
+/*** Combo-box option ***/
+
+/*** Multi combo-box field ***/
+
+.x-multi-combo-box--field {
+
+  /* WARNING! DEPRECATED!
+   * Az .x-multi-combo-box--field osztály {display: flex} tulajdonságához
+   * nem készült leírás. Nem ismert milyen indokból kapta meg ezt a tulajdonságot.
+   * Lehetséges, hogy a multi-combo-box elem így teremt flex környezetet a text-field
+   * elemnek, hogy a többi elemmel konzisztensen működhessen.
+   * Viszont az SSC/admin rendszerben a multi-combo-box elemben lévő text-field elem szélessége
+   * nem egyezett meg a hagyományos text-field elemek szélességével, ezért a {:display flex}
+   * tulajdonság kikapcsolásra került.
+   *
+   * display: flex
+   * WARNING! DEPRECATED! */
+}
+
+/*** Multi combo-box field ***/
+/***** Combo-box *****/
+
+
+
+/***** Button *****/
+/*** Button wrapper ***/
+
+.x-button[data-layout="fit"][data-variant="filled"],
+.x-button[data-layout="row"][data-variant="filled"],
+.x-button[data-layout="fit"][data-variant="outlined"],
+.x-button[data-layout="row"][data-variant="outlined"] {
+  -min-width: var( --element-min-width-xs ) }
+
+.x-button[data-layout="row"] {
+  padding-bottom: 6px;
+  padding-top: 6px }
+
+/*** Button wrapper ***/
+
+/*** Button body ***/
+
+.x-button--body {
+  align-items: center;
+  cursor: pointer;
+  display: flex }
+
+.x-button[data-layout="fit"] .x-button--body,
+.x-button[data-layout="row"] .x-button--body {
+  border-radius: 18px;
+  flex-direction: row;
+  height: 36px;
+  width: 100% }
+
+.x-button[data-layout="fit"][data-variant="outlined"] .x-button--body,
+.x-button[data-layout="row"][data-variant="outlined"] .x-button--body {
+  border-style: solid;
+  border-width: 2px;
+  padding: 0 36px }
+
+.x-button[data-layout="fit"][data-variant="filled"] .x-button--body,
+.x-button[data-layout="row"][data-variant="filled"] .x-button--body {
+  padding: 0 36px }
+
+.x-button[data-variant="outlined"] .x-button--body {
+  background-color: var( --fill-color ) }
+
+/*** Button body ***/
+
+/*** Icon button body ***/
+
+.x-button[data-layout="icon-button"] .x-button--body {
+  flex-direction: column;
+  justify-content: center;
+
+  /* A height és width tulajdonságokat nem szükséges meghatározni, a min-height
+   * és min-width tulajdonság használatakor */
+  -height: 48px;
+  -width: 60px }
+
+.x-button[data-layout="icon-button"][data-height="touch-target"] .x-button--body {
+  /* XXX#0340
+   * A min-height és min-width tulajdonságok azért szükségesek, hogy
+   * az icon-button elemet a környező tartalom ne kényszerítse méretcsökkenésre */
+  min-height: 48px }
+
+.x-button[data-layout="icon-button"][data-width="touch-target"] .x-button--body {
+  /* XXX#0340 */
+  min-width: 60px }
+
+.x-button[data-layout="icon-button"][data-height="fit"] .x-button--body {
+  /* XXX#0340 */
+  min-height: 32px }
+
+.x-button[data-layout="icon-button"][data-width="fit"] .x-button--body {
+  /* XXX#0340 */
+  min-width: 32px }
+
+.x-button[data-layout="icon-button"][data-variant="filled"] .x-button--body {
+  border-radius: var( --border-radius-xs ) }
+
+.x-button[data-layout="icon-button"][data-variant="outlined"]::before {
+  animation-timing-function: ease-in-out;
+  animation-duration: .3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  border-color: var( --border-color-muted );
+  border-radius: var( --border-radius-m );
+  border-style: solid;
+  border-width: 1px;
+  content: '';
+  height: 42px;
+  left: 3px;
+  opacity: .3;
+  position: absolute;
+  top: 3px;
+  width: 54px }
+
+.x-button[data-layout="icon-button"][data-variant="outlined"]:hover::before {
+  animation-name: hg6500 }
+
+.x-button[data-variant="placeholder"] .x-button--body {
+  cursor: default }
+
+/*** Icon button body ***/
+
+/*** Button icon ***/
+
+.x-button--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-button[data-layout="fit"] .x-button--icon,
+.x-button[data-layout="row"] .x-button--icon {
+  font-size: var( --icon-size-xs );
+  height: var( --icon-size-default );
+  margin: 0 8px;
+  width: var( --icon-size-default ) }
+
+.x-button[data-layout="icon-button"] .x-button--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  /* BUG#0983
+   * height, overflow, width:
+   * A material-icon font-készlet letöltődése előtt felvillanó FOIT/FOUT okozta méretváltozás megelőzése */
+  -height: var( --icon-size-default );
+  overflow: hidden;
+  -width: var( --icon-size-default ) }
+
+/*** Button icon ***/
+
+/*** Button label ***/
+
+.x-button[data-layout="fit"] .x-button--label,
+.x-button[data-layout="row"] .x-button--label {
+  font-weight: 500;
+  white-space: nowrap;
+  word-wrap: normal }
+
+.x-button[data-layout="icon-button"] .x-button--label {
+  bottom: 0;
+  font-size: 10px;
+  font-weight: 500;
+  height: 15px;
+  left: 0;
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 15px;
+  opacity: .75;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100% }
+
+/*** Button label ***/
+/***** Button *****/
+
+
+
+/***** Card *****/
+/*** Card wrapper ***/
+
+.x-card {
+  /* XXX#7319 */
+  -border-color: transparent;
+  border-color: var( --border-color-highlight );
+  -border-width: 2px;
+  border-width: 1px;
+
+  background-color: var( --background-color );
+  border-radius: var( --border-radius-l );
+  border-style: solid;
+
+  /* XXX#7319 */
+  -box-shadow: var( --box-shadow-black-xx-light );
+
+  /* A stretch-orientation tulajdonság használatával egyes esetekben
+   * az egymás melletti card elemek magassága megegyzik.
+   * (100% - 2x horizontal-margin) */
+  height: calc(100% - 24px);
+
+  margin: 12px var( --app-edge ) }
+
+/*** Card wrapper ***/
+
+/*** Ghost card ***/
+
+.x-card[data-ghost-view="true"] {
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-name: x-ghost;
+  background-color: var( --background-color-highlight );
+  min-height: 150px }
+
+/*** Ghost card ***/
+
+/*** Card header ***/
+
+.x-card--header {
+  display: flex;
+  flex-direction: row;
+  padding: 12px var( --flex-edge ) }
+
+.x-card--header--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-m );
+  height: 24px;
+  justify-content: center;
+  margin-right: var( --flex-edge );
+  width: 24px }
+
+.x-card--header--label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  padding-right: 8px }
+
+.x-card--header--expand-button {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 24px;
+  width: 24px }
+
+.x-card--header--expand-button-icon {
+  font-size: var( --icon-size-m );
+
+  /* BUG#0983 */
+  height: 100%;
+  width: 100% }
+
+/*** Card header ***/
+
+/*** Card body ***/
+
+.x-card--body {
+  display: flex;
+  font-size: var( --font-size-s );
+  flex-direction: column;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  padding: 0 var( --flex-edge ) }
+
+/*** Card body ***/
+/***** Card *****/
+
+
+
+/***** Card-desk *****/
+/*** Card-desk wrapper ***/
+
+.x-card-desk {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap }
+
+/*** Card-desk wrapper ***/
+/***** Card-desk *****/
+
+
+
+/***** Checkbox *****/
+/*** Checkbox wrapper ***/
+
+.x-checkbox[data-layout="row"] {
+  padding-bottom: 12px;
+  padding-top: 12px }
+
+/*** Checkbox wrapper ***/
+
+/*** Checkbox label ***/
+
+.x-checkbox--label {
+  font-weight: 500;
+  line-height: 24px }
+
+/*** Checkbox label ***/
+
+/*** Checkbox body ***/
+
+.x-checkbox--body {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start }
+
+/*** Checkbox body ***/
+
+/*** Checkbox button ***/
+
+.x-checkbox--button {
+  margin-right: var( --flex-edge );
+  height: 24px;
+  width: 24px }
+
+.x-checkbox--button::before {
+  border-radius: var( --border-radius-xs );
+  border-style: solid;
+  border-width: 2px;
+  content: '';
+  height: 20px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 20px }
+
+/*** Checkbox button ***/
+
+/*** Checkbox button body ***/
+
+.x-checkbox--button::before {
+  background-color: var( --fill-color ) }
+
+/*** Checkbox button body ***/
+
+/*** Checkbox marker ***/
+
+.x-checkbox--button::after {
+  content: '';
+  font-size: 16px;
+  height: 16px;
+  left: 4px;
+  line-height: 16px;
+  position: absolute;
+  top: 4px;
+  width: 16px }
+
+.x-checkbox[data-checked="true"]
+.x-checkbox--button::after {
+  content: 'done' }
+
+/*** Checkbox marker ***/
+/***** Checkbox *****/
+
+
+
+/***** Chip *****/
+/*** Chip wrapper ***/
+
+.x-chip[data-layout="row"] {
+  padding: 12px 0 }
+
+/*** Chip wrapper ***/
+
+/*** Chip body ***/
+
+.x-chip--body {
+  border-radius: 12px;
+  display: flex;
+  height: 24px }
+
+.x-chip[data-variant="outlined"] .x-chip--body {
+  background-color: var( --fill-color );
+  border-style: solid;
+  border-width: 2px }
+
+/*** Chip body ***/
+
+/*** Chip icon ***/
+
+.x-chip--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-xxs );
+  justify-content: center;
+  width: 24px }
+
+.x-chip[data-variant="filled"] .x-chip--icon {
+  height: 24px;
+  padding-left: 12px }
+
+.x-chip[data-variant="outlined"] .x-chip--icon {
+  height: 20px;
+  padding-left: 10px }
+
+/*** Chip icon ***/
+
+/*** Chip label ***/
+
+.x-chip--label {
+  color: var( --color );
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  padding: 0 12px;
+  white-space: nowrap }
+
+.x-chip[data-variant="filled"] .x-chip--label {
+  line-height: 24px }
+
+.x-chip[data-variant="outlined"] .x-chip--label {
+  line-height: 20px }
+
+/*** Chip label ***/
+
+/*** Chip delete button ***/
+
+.x-chip--delete-button {
+  border-radius: 10px;
+  color: var( --color );
+  margin: 2px 2px 0 0 }
+
+.x-chip[data-variant="filled"] .x-chip--delete-button {
+  background-color: rgba(255, 255, 255, .65);
+  height: 20px;
+  width: 20px }
+
+.x-chip[data-variant="outlined"] .x-chip--delete-button {
+  height: 16px;
+  width: 16px }
+
+.x-chip--delete-button-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center }
+
+.x-chip[data-variant="filled"] .x-chip--delete-button-icon {
+  line-height: 20px }
+
+.x-chip[data-variant="outlined"] .x-chip--delete-button-icon {
+  line-height: 16px }
+
+/*** Chip delete button ***/
+/***** Chip *****/
+
+
+
+/***** Chips *****/
+/*** Chips wrapper ***/
+
+.x-chips {}
+
+/*** Chips wrapper ***/
+
+/*** Chips chips ***/
+
+.x-chips--chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-gap: 12px;
+  padding: 6px 0 }
+
+/*** Chips chips ***/
+
+/*** Chips label ***/
+
+.x-chips--label {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 24px }
+
+/*** Chips label ***/
+
+/*** Chips no chips label ***/
+
+.x-chips--no-chips-label {
+  color: var( --color-highlight );
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs ) }
+
+/*** Chips no chips label ***/
+/***** Chips *****/
+
+
+
+/***** Circle diagram *****/
+/*** Circle diagram wrapper ***/
+
+.x-circle-diagram {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-circle-diagram[data-layout="row"] {
+  min-height: 48px }
+
+/*** Circle diagram wrapper ***/
+
+/*** Circle diagram label ***/
+/*** Circle diagram label ***/
+
+/*** Circle diagram sections ***/
+/*** Circle diagram sections ***/
+
+/*** Circle diagram section ***/
+
+.x-circle-diagram--section {
+  /* A transition tulajdonság használatával a szekciók darabosan
+     animálva változtatták a méretüket!
+  -transition: stroke-dasharray .5s ease-out; */
+
+  fill: transparent;
+  transform-origin: center }
+
+/*** Circle diagram section ***/
+/***** Circle diagram *****/
+
+
+
+/***** Column *****/
+/*** Column wrapper ***/
+
+.x-column--body {
+  display: flex;
+  flex-direction: column;
+  height: 100% }
+
+.x-column[data-wrap-items="true"] .x-column--body {
+  flex-wrap: wrap }
+
+/*** Column wrapper ***/
+/***** Column *****/
+
+
+
+/***** Content surface *****/
+/*** Content surface wrapper ***/
+
+.x-content-surface {
+  width: 100% }
+
+.x-menu .x-content-surface {
+  z-index: 9999 }
+
+/*** Content surface wrapper ***/
+
+/*** Content surface body ***/
+
+.x-content-surface--body {
+  width: 100% }
+
+.x-content-surface[data-position="absolute"] .x-content-surface--body {
+  left: 0;
+  position: absolute;
+  top: 0 }
+
+/*** Content surface body ***/
+/***** Content surface *****/
+
+
+
+/***** Counter *****/
+/*** Counter label ***/
+
+.x-counter--label {
+  font-weight: 500;
+  line-height: 24px;
+  margin-left: var( --flex-edge ) }
+
+/*** Counter label ***/
+
+/*** Counter body ***/
+
+.x-counter--body {
+  align-items: center;
+  display: flex;
+  flex-direction: row }
+
+.x-counter[data-layout="row"] .x-counter--body {
+  padding-bottom: 12px;
+  padding-top: 12px }
+
+/*** Counter body ***/
+
+/*** Counter value ***/
+
+.x-counter--value {
+  font-weight: 500;
+  line-height: 24px;
+  min-width: 64px;
+  text-align: center }
+
+/*** Counter value ***/
+
+/*** Counter button ***/
+
+.x-counter--decrease-button,
+.x-counter--increase-button,
+.x-counter--reset-button {
+  background-color: var( --fill-color );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  height: 20px;
+  width: 20px }
+
+.x-counter--decrease-button::before,
+.x-counter--increase-button::before,
+.x-counter--increase-button::after,
+.x-counter--reset-button::before,
+.x-counter--reset-button::after {
+  background-color: var( --color );
+  border-radius: 1px;
+  content: '';
+  position: absolute }
+
+.x-counter--decrease-button::before,
+.x-counter--increase-button::before,
+.x-counter--reset-button::before {
+  height: 2px;
+  left: 4px;
+  top: 7px;
+  width: 8px }
+
+.x-counter--increase-button::after,
+.x-counter--reset-button::after {
+  height: 8px;
+  left: 7px;
+  top: 4px;
+  width: 2px }
+
+.x-counter--reset-button {
+  border-color: var( --color );
+  margin-left: var( --flex-edge ) }
+
+.x-counter--reset-button::before,
+.x-counter--reset-button::after {
+  transform: rotateZ( -45deg ) }
+
+.x-counter--reset-button[data-state="disabled"] {
+  cursor: default;
+  opacity: .5 }
+
+/*** Counter button ***/
+/***** Counter *****/
+
+
+
+/***** Content bar *****/
+/*** Content bar wrapper ***/
+
+.x-content-bar {
+  box-shadow: var( --box-shadow-black-xx-dark );
+  margin: 36px 0;
+  padding: 36px var( --app-edge );
+  width: 100% }
+
+.x-content-bar[data-layout="header"] {
+  margin-top: 0 }
+
+.x-content-bar[data-layout="footer"] {
+  margin-bottom: 0 }
+
+.x-content-bar--body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+/*** Content bar wrapper ***/
+
+/*** Content bar bumper ***/
+
+/* XXX#0609
+ * A main tab header border-radius tulajdonsága miatt szükséges */
+.x-content-bar[data-layout="header"]::before {
+  background-color: inherit;
+  content: '';
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateY( -100% );
+  width: 100%;
+  height: 64px }
+
+/*** Content bar bumper ***/
+/***** Content bar *****/
+
+
+
+/***** Digit field *****/
+/***** Digit field wrapper *****/
+/***** Digit field wrapper *****/
+
+/***** Digit field digits *****/
+
+.x-digit-field--digits {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between }
+
+/***** Digit field digits *****/
+
+/***** Digit field digit *****/
+
+.x-digit-field--digit {
+  border-color: var( --border-color );
+  border-radius: var( --border-radius-m );
+  border-style: solid;
+  border-width: 2px;
+  height: 48px;
+  width: 36px }
+
+/***** Digit field digit *****/
+/***** Digit field *****/
+
+
+
+/***** Directory *****/
+/*** Directory wrapper ***/
+
+.x-directory {
+  padding: 8px }
+
+/*** Directory wrapper ***/
+
+/*** Directory body ***/
+
+.x-directory--body {
+  align-items: center;
+  background-color: var( --fill-color );
+  border-color: var( --border-color );
+  border-radius: var( --border-radius-m );
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100% }
+
+/*** Directory body ***/
+
+/*** Directory highlighter ***/
+
+.x-directory--highlighter {
+  border-radius: var( --border-radius-m );
+  height: calc(100% - 16px);
+  left: 0;
+  margin: 8px;
+  position: absolute;
+  width: calc(100% - 16px);
+  top: 0 }
+
+.x-directory--highlighter[data-selected="true"] {
+  box-shadow: var( --box-shadow-primary ) }
+
+/*** Directory highlighter ***/
+
+/*** Directory label ***/
+
+.x-directory--label {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  height: 28px }
+
+/*** Directory label ***/
+
+/*** Directory icon ***/
+
+.x-directory--icon {
+  flex-shrink: 0;
+  font-size: var( --icon-size-xxs );
+  margin: 0 4px 0 6px;
+  text-align: center;
+  width: 21px }
+
+/*** Directory icon ***/
+
+/*** Directory name ***/
+
+.x-directory--name {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: var( --line-height-s );
+  font-weight: 500;
+  overflow: hidden;
+  padding-right: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap }
+
+/*** Directory name ***/
+
+/*** Directory details ***/
+
+.x-directory--details {
+  width: 100% }
+
+.x-directory--items-count-and-content-size {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 12px }
+
+.x-directory--items-count,
+.x-directory--content-size {
+  color: var( --color-highlight );
+  font-size: var( --font-size-xxs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 24px;
+  text-align: right }
+
+/*** Directory details ***/
+/***** Directory *****/
+
+
+
+/***** Expandable *****/
+/*** Expandable header ***/
+
+.x-expandable--header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: left }
+
+.x-expandable[data-layout="row"] .x-expandable--header {
+  min-height: 48px }
+
+/*** Expandable header ***/
+
+/*** Expandable icon ***/
+
+.x-expandable--icon {
+  font-size: var( --icon-size-m );
+  height: 24px;
+  line-height: 24px;
+  margin-right: var( --flex-edge );
+  width: 24px }
+
+/*** Expandable icon ***/
+
+/*** Expandable label ***/
+
+.x-expandable--label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  padding-right: 8px }
+
+/*** Expandable header ***/
+
+/*** Expandable expand icon ***/
+
+.x-expandable--expand-icon {
+  align-items: center;
+  display: flex;
+  font-size: var( --icon-size-m );
+  flex-direction: column;
+  justify-content: center;
+  height: 24px;
+  width: 24px }
+
+/*** Expandable expand icon ***/
+/***** Expandable *****/
+
+
+
+/***** File *****/
+/*** File wrapper ***/
+
+.x-file {
+  padding: 8px }
+
+/*** File wrapper ***/
+
+/*** File body ***/
+
+.x-file--body {
+  background-color: var( --fill-color );
+  border-color: var( --border-color );
+  border-radius: var( --border-radius-m );
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  width: 100% }
+
+/*** File body ***/
+
+/*** File highlighter ***/
+
+.x-file--highlighter {
+  border-radius: var( --border-radius-m );
+  height: calc(100% - 16px);
+  left: 0;
+  margin: 8px;
+  position: absolute;
+  width: calc(100% - 16px);
+  top: 0 }
+
+.x-file--highlighter[data-selected="true"] {
+  box-shadow: var( --box-shadow-primary ) }
+
+/*** File highlighter ***/
+
+/*** File preview ***/
+
+.x-file--preview {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100% }
+
+/*** File preview ***/
+
+/*** File label ***/
+
+.x-file--label {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  height: 28px }
+
+/*** File label ***/
+
+/*** File preview ***/
+
+.x-file--preview {
+  -background: linear-gradient(45deg, #e66465, #9198e5);
+  background: linear-gradient(45deg, #aaffbb, #bbaaff) }
+
+.x-file--preview-icon {
+  color: white;
+  font-size: var( --icon-size-xxl );
+  line-height: 48px }
+
+/*** File preview ***/
+
+/*** File icon ***/
+
+.x-file--icon {
+  flex-shrink: 0;
+  font-size: var( --icon-size-xxs );
+  margin: 0 4px 0 6px;
+  text-align: center;
+  width: 21px }
+
+/*** File icon ***/
+
+/*** File name ***/
+
+.x-file--name {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: var( --line-height-s );
+  font-weight: 500;
+  overflow: hidden;
+  padding-right: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap }
+
+/*** File name ***/
+
+/*** File details ***/
+
+.x-file--details {
+  width: 100% }
+
+.x-file--timestamp-and-filesize {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 12px }
+
+.x-file--timestamp,
+.x-file--filesize {
+  color: var( --color-highlight );
+  font-size: var( --font-size-xxs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 24px;
+  text-align: right }
+
+/*** File details ***/
+/***** File *****/
+
+
+
+/***** File drop area *****/
+/*** File drop area wrapper ***/
+/*** File drop area wrapper ***/
+
+/*** File drop area body ***/
+
+.x-file-drop-area--body {
+  align-items: center;
+  background-color: var( --background-color-highlight );
+  border-radius: var( --border-radius-xxl );
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  justify-content: center;
+  padding: 0 var( --flex-edge );
+  width: 280px }
+
+.x-file-drop-area--label {
+  color: var( --color-muted );
+  font-weight: 500 }
+
+.x-file-drop-area--icon {
+  font-size: var( --icon-size-xxl );
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 18px }
+
+/*** File drop area body ***/
+/***** File drop area *****/
+
+
+
+/***** Horizontal line *****/
+
+.x-horizontal-line,
+.x-horizontal-line--body {
+  width: 100% }
+
+.x-horizontal-line[data-layout="row"] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 48px;
+  justify-content: center }
+
+/***** Horizontal line *****/
+
+
+
+/***** Icon *****/
+
+.x-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-default );
+  justify-content: center }
+
+/*** Icon layout ***/
+
+.x-icon[data-layout="row"] {
+  height: 48px }
+
+.x-icon[data-layout="touch-target"] {
+  height: 48px;
+  width: 60px }
+
+/*** Icon layout ***/
+/***** Icon *****/
+
+
+
+/***** Label *****/
+/*** Label wrapper ***/
+
+.x-label {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  /* Egyes esetekben nem működött megfelelően a text-overflow tulajdonság
+   * az .x-label--body osztályú elemeken, mivel az .x-label osztályú elem
+   * szélessége nagyobb volt, mint a rendelkezésre álló hely */
+  max-width: 100% }
+
+.x-label[data-layout="row"] {
+  padding-bottom: 12px;
+  padding-top: 12px }
+
+/*** Label wrapper ***/
+
+/*** Label body ***/
+
+.x-label--body {
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap }
+
+/*** Label body ***/
+
+/*** Label icon ***/
+
+.x-label--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-xs );
+  height: var( --icon-size-default );
+  margin-right: 8px;
+  justify-content: center;
+  width: var( --icon-size-default ); }
+
+/*** Label icon ***/
+/***** Label *****/
+
+
+
+/***** Line diagram *****/
+/*** Line diagram wrapper ***/
+
+.x-line-diagram {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end }
+
+.x-line-diagram[data-layout="row"] {
+  height: 48px;
+  padding-bottom: 12px }
+
+/*** Line diagram wrapper ***/
+
+/*** Line diagram label ***/
+
+.x-line-diagram--label {
+  font-weight: 500;
+  overflow: hidden;
+  padding-bottom: 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap }
+
+/*** Line diagram label ***/
+
+/*** Line diagram sections ***/
+
+.x-line-diagram--sections {
+  display: flex }
+
+/*** Line diagram sections ***/
+
+/*** Line diagram section ***/
+
+.x-line-diagram--section {
+  transition: width .5s ease-out;
+  height: 100% }
+
+/*** Line diagram section ***/
+/***** Line diagram *****/
+
+
+
+/***** Menu, tabs *****/
+/*** Menu, tabs wrapper ***/
+/*** Menu, tabs wrapper ***/
+/***** Menu, tabs *****/
+
+
+
+/***** Menu bar *****/
+/*** Menu wrapper ***/
+/*** Menu wrapper ***/
+
+/*** Menu items ***/
+/*** Menu items ***/
+
+/*** Menu item ***/
+
+.x-menu-bar--anchor-item,
+.x-menu-bar--button-item,
+.x-menu-bar--sensor-item {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  justify-content: center;
+  padding: 0 var( --flex-edge );
+  white-space: nowrap }
+
+/* XXX#7605 */
+.x-menu-bar--sensor-item {
+  cursor: default }
+
+.x-menu-bar[data-layout="row"] .x-menu-bar--anchor-item,
+.x-menu-bar[data-layout="row"] .x-menu-bar--button-item,
+.x-menu-bar[data-layout="row"] .x-menu-bar--sensor-item {
+  height: 48px }
+
+/*** Menu item ***/
+/***** Menu bar *****/
+
+
+
+/***** Radio button *****/
+/*** Radio button header ***/
+
+.x-radio-button--header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start }
+
+.x-radio-button[data-layout="row"] .x-radio-button--header {
+  padding-bottom: 6px;
+  padding-top: 6px }
+
+/*** Radio button header ***/
+
+/*** Radio button label, option label ***/
+
+.x-radio-button--label,
+.x-radio-button--option-label {
+  font-weight: 500;
+  line-height: 36px }
+
+/*** Radio button label, option label ***/
+
+/*** Radio button uncheck button ***/
+
+.x-radio-button--unselect-button {
+  background-color: var( --fill-color );
+  border-color: var( --color );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  margin-right: var( --flex-edge );
+  height: 20px;
+  width: 20px }
+
+.x-radio-button--unselect-button::before,
+.x-radio-button--unselect-button::after {
+  background-color: var( --color );
+  border-radius: 1px;
+  content: '';
+  position: absolute;
+  transform: rotateZ( -45deg ) }
+
+.x-radio-button--unselect-button::before {
+  height: 2px;
+  left: 4px;
+  top: 7px;
+  width: 8px }
+
+.x-radio-button--unselect-button::after {
+  height: 8px;
+  left: 7px;
+  top: 4px;
+  width: 2px }
+
+.x-radio-button--unselect-button[data-state="disabled"] {
+  cursor: default;
+  opacity: .5 }
+
+/*** Radio button uncheck button ***/
+
+/*** Radio button option ***/
+
+.x-radio-button--option {
+  align-items: center;
+  display: flex;
+  flex-direction: row }
+
+.x-radio-button[data-layout="row"] .x-radio-button--option {
+  padding-bottom: 6px;
+  padding-top: 6px }
+
+/*** Radio button option ***/
+
+/*** Radio button option button ***/
+
+.x-radio-button--option-button {
+  background-color: var( --fill-color );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  height: 20px;
+  margin-right: var( --flex-edge );
+  width: 20px }
+
+/*** Radio button option button ***/
+
+/*** Radio button option marker ***/
+
+.x-radio-button--option[data-selected="true"]
+.x-radio-button--option-button::before {
+  animation-name: x-reveal;
+  animation-duration: .15s;
+  background-color: var( --color );
+  border-radius: 50%;
+  content: '';
+  height: 8px;
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  width: 8px }
+
+/*** Radio button option marker ***/
+/***** Radio button *****/
+
+
+
+/***** Row *****/
+/*** Row body ***/
+
+.x-row--body {
+  display: flex;
+  flex-direction: row;
+  width: 100% }
+
+.x-row[data-wrap-items="true"] .x-row--body {
+  flex-wrap: wrap }
+
+/*** Row body ***/
+/***** Row *****/
+
+
+
+/***** Polarity *****/
+
+.x-polarity {
+  height: 100%;
+  justify-content: space-between;
+  width: 100% }
+
+/***** Polarity *****/
+
+
+
+/***** Select *****/
+/*** Select wrapper ***/
+
+.x-select[data-layout="row"] {
+  padding: 12px 0 }
+
+/*** Select wrapper ***/
+
+/*** Select label ***/
+
+.x-select--label {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 24px }
+
+/*** Select label ***/
+
+/*** Select button ***/
+
+.x-select--button-body {
+  background: var( --background-color-highlight );
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  height: 24px;
+  justify-content: space-between;
+  padding: 0 12px;
+  width: 100% }
+
+.x-select--button-label {
+  display: flex;
+  flex-direction: column;
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  height: 100%;
+  justify-content: center;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.x-select--button-icon {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  padding-left: 12px }
+
+/*** Select button ***/
+
+/*** Select options ***/
+
+.x-select--options {
+  display: flex;
+  flex-direction: column;
+  min-width: var( --element-min-width-s );
+  padding: 12px 0 }
+
+/*** Select options ***/
+
+/*** Select option ***/
+
+.x-select--option {
+  border-radius: var( --border-radius-xs );
+  display: flex;
+  padding: 0 18px;
+  width: 100% }
+
+.x-select--option:hover {
+  background-color: var( --background-color-highlight ) }
+
+/*** Select option ***/
+
+/*** Select option label ***/
+
+.x-select--option-label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 36px;
+  text-align: left }
+
+.x-select--option[data-selected="true"] .x-select--option-label {
+  font-weight: 600 }
+
+.x-select--option[data-selected="true"]::before {
+  background-color: var( --background-color-primary );
+  border-radius: 50%;
+  content: '';
+  height: 4px;
+  left: 4px;
+  position: absolute;
+  top: 16px;
+  width: 4px }
+
+/*** Select option label ***/
+
+/*** Select option icon ***/
+
+.x-select--option-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-s );
+  height: 36px;
+  margin-right: 8px;
+  justify-content: center;
+  width: 24px }
+
+/*** Select option icon ***/
+/***** Select *****/
+
+
+
+/***** Separator *****/
+
+.x-separator {
+  flex-shrink: 0;
+  width: 100% }
+
+/***** Separator *****/
+
+
+
+/***** Sidebar *****/
+
+.x-sidebar {
+  background-color: var( --background-color );
+  height: 100% }
+
+/***** Sidebar *****/
+
+
+
+/***** Slideshow *****/
+/*** Slideshow steps wrapper ***/
+
+.x-slideshow--steps {
+  height: 100%;
+  overflow: hidden;
+  width: 100% }
+
+/*** Slideshow steps wrapper ***/
+
+/*** Slideshow steps ***/
+
+.x-slideshow--prev-step,
+.x-slideshow--current-step,
+.x-slideshow--temp-step,
+.x-slideshow--next-step {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100% }
+
+.x-slideshow--prev-step,
+.x-slideshow--next-step,
+.x-slideshow--temp-step {
+  left: 0;
+  position: absolute;
+  top: 0 }
+
+.x-slideshow--prev-step,
+.x-slideshow--current-step,
+.x-slideshow--next-step {
+  transition: transform .25s ease-in-out }
+
+.x-slideshow[data-animation="slide-in-bwd"]
+.x-slideshow--prev-step,
+.x-slideshow--current-step,
+.x-slideshow[data-animation="slide-in-fwd"]
+.x-slideshow--next-step {
+  transform: translateX( 0 ) }
+
+.x-slideshow--prev-step,
+.x-slideshow[data-animation="slide-in-fwd"]
+.x-slideshow--current-step {
+  transform: translateX( -100% ) }
+
+.x-slideshow--next-step,
+.x-slideshow[data-animation="slide-in-bwd"]
+.x-slideshow--current-step {
+  transform: translateX( 100% ) }
+
+.x-slideshow[data-animation="slide-in-bwd"]
+.x-slideshow--temp-step,
+.x-slideshow[data-animation="slide-in-fwd"]
+.x-slideshow--temp-step {
+  opacity: 0 }
+
+/*** Slideshow steps ***/
+
+/*** Slideshow controls ***/
+
+.x-slideshow--controls {
+  animation-fill-mode: both;
+  animation-name: x-hide;
+  animation-duration: .3s;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+.x-slideshow--controls:hover {
+  animation-name: none }
+
+.x-slideshow--controls--go-bwd,
+.x-slideshow--controls--go-fwd {
+  height: 80px;
+  position: absolute;
+  top: calc( 50% - 40px );
+  width: 80px }
+
+.x-slideshow--controls--go-bwd {
+  left: 0 }
+
+.x-slideshow--controls--go-fwd {
+  right: 0 }
+
+.x-slideshow--controls--go-bwd::before,
+.x-slideshow--controls--go-fwd::before {
+  color: var( --white );
+  font-size: 64px;
+  height: 64px;
+  left: 8px;
+  line-height: 64px;
+  position: absolute;
+  top: 8px;
+  width: 64px }
+
+.x-slideshow--controls--go-bwd::before {
+  content: 'chevron_left' }
+
+.x-slideshow--controls--go-fwd::before {
+  content: 'chevron_right' }
+
+/*** Slideshow controls ***/
+/***** Slideshow *****/
+
+
+
+/***** Switch *****/
+/***** Switch wrapper *****/
+
+.x-switch[data-layout="row"] {
+  padding-bottom: 12px;
+  padding-top: 12px }
+
+/***** Switch wrapper *****/
+
+/*** Switch body ***/
+
+.x-switch--body {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start }
+
+/*** Switch body ***/
+
+/***** Switch label *****/
+
+.x-switch--label {
+  font-weight: 500;
+  line-height: 24px }
+
+/***** Switch label *****/
+
+/*** Switch track ***/
+
+.x-switch--track {
+  background-color: var( --fill-color );
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  height: 20px;
+  margin-right: var( --flex-edge );
+  width: 40px }
+
+/*** Switch track ***/
+
+/*** Switch thumb ***/
+
+.x-switch--thumb {
+  background-color: var( --color );
+  border-radius: 50%;
+  height: 12px;
+  left: 2px;
+  position: absolute;
+  transition: transform .1s ease-out;
+  top: 2px;
+  width: 12px }
+
+.x-switch[data-checked="true"]
+.x-switch--thumb {
+  transform: translateX( 20px ) }
+
+/*** Switch thumb ***/
+/***** Switch *****/
+
+
+
+/***** Table *****/
+/*** Table wrapper ***/
+/*** Table wrapper ***/
+
+/*** Table label ***/
+
+.x-table--label {
+  font-size: var( --font-size-m );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-m );
+  line-height: 48px }
+
+/*** Table label ***/
+
+/*** Table header ***/
+/*** Table header ***/
+
+/*** Table header row ***/
+
+/*** Table header cell label ***/
+
+.x-table--header-cell--label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-table[data-layout="row"] .x-table--header-cell--label {
+  height: 48px }
+
+/*** Table header cell label ***/
+
+/*** Table header cell ***/
+
+.x-table--header-cell {
+  font-weight: 600 }
+
+.x-table--header-cell:first-child {
+  border-radius: 8px 0 0 0 }
+
+.x-table--header-cell:last-child {
+  border-radius: 0 8px 0 0 }
+
+/*** Table header cell ***/
+
+/*** Table body ***/
+/*** Table body ***/
+
+/*** Table body row ***/
+
+.x-table[data-layout="row"] .x-table--body-row {
+  height: 48px }
+
+/*** Table body row ***/
+
+/*** Table body cell ***/
+
+.x-table--body-row[data-even="true"] .x-table--body-cell {
+  background-color: var( --background-color-highlight ) }
+
+.x-table[data-horizontal-border="normal"] .x-table--body-cell {
+  border-top-color: var( --border-color-muted );
+  border-top-style: solid;
+  border-top-width: 1px }
+
+.x-table[data-horizontal-border="normal"] .x-table--body-row:first-child .x-table--body-cell {
+  border-top-width: 0 }
+
+.x-table[data-vertical-border="normal"] .x-table--body-cell {
+  border-left-color: var( --border-color-muted );
+  border-left-style: solid;
+  border-left-width: 1px }
+
+.x-table[data-vertical-border="normal"] .x-table--body-cell:first-child {
+  border-left-width: 0 }
+
+/*** Table body cell ***/
+/***** Table *****/
+
+
+
+/***** Text *****/
+/*** Text wrapper ***/
+
+.x-text {}
+
+/*** Text wrapper ***/
+
+/*** Text body ***/
+
+.x-text--body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-text[data-layout="row"] .x-text--body {
+  min-height: 48px;
+  padding: 6px 0 }
+
+/*** Text body ***/
+/***** Text *****/
+
+
+
+/***** Text field *****/
+/*** Text field wrapper ***/
+
+.x-date-field,
+.x-text-field {
+  display: block }
+
+.x-date-field[data-layout="row"],
+.x-text-field[data-layout="row"] {
+  padding: 12px 0 }
+
+/*** Text field wrapper ***/
+
+/*** Field input ***/
+
+.x-date-field--input,
+.x-text-field--input,
+.x-text-field--textarea {
+  background-color: var( --background-color-highlight );
+  border-color: transparent;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  color: var( --color );
+  font-size: var( --font-size-s );
+  line-height: 24px;
+  letter-spacing: var( --letter-spacing-s );
+  width: 100% }
+
+.x-text-field--input,
+.x-text-field--textarea {}
+
+.x-text-field--textarea {
+  overflow: hidden;
+  resize: none }
+
+/*** Field input ***/
+
+/*** Field invalid-message ***/
+
+.x-text-field--invalid-message {
+  bottom: -12px;
+  color: var( --color-warning );
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  position: absolute;
+  right: 0 }
+
+/*** Field invalid-message ***/
+
+/*** Field label ***/
+
+.x-date-field--label,
+.x-text-field--label {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px }
+
+.x-date-field[data-highlighted="true"] .x-date-field--label,
+.x-text-field[data-highlighted="true"] .x-text-field--label {
+  color: var( --white ) }
+
+/*** Field label ***/
+
+/*** Field placeholder ***/
+
+.x-text-field--placeholder {
+  color: var( --color-muted);
+  cursor: text;
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  position: absolute;
+  top: 0 }
+
+/*** Field placeholder ***/
+
+/*** Field surface ***/
+
+.x-text-field--surface {
+  background-color: var( --background-color );
+  border-radius: 8px;
+  box-shadow: var( --box-shadow-black-xx-light );
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 32px;
+  width: 100%;
+  z-index: 9999 }
+
+/*** Field surface ***/
+
+/*** Multi field ***/
+
+.x-multi-field--text-field {
+  /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
+   * text-field alkomponensei */
+  padding: 8px 0 }
+
+/*** Multi field ***/
+/***** Text field *****/
+
+
+
+/***** Toggle *****/
+/*** Toggle wrapper ***/
+
+.x-toggle {
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  word-wrap: normal }
+
+/*** Toggle wrapper ***/
+
+/*** Toggle body ***/
+
+.x-toggle[data-layout="row"] {
+  min-height: 48px }
+
+/*** Toggle body ***/
+/***** Toggle *****/
+
+
+
+/***** Vertical line *****/
+
+.x-vertical-line,
+.x-vertical-line--body {
+  height: 100% }
+
+.x-vertical-line[data-layout="row"] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 48px;
+  justify-content: center }
+
+.x-vertical-line[data-layout="row"]
+.x-vertical-line--body {
+  height: 24px }
+
+/***** Vertical line *****/
