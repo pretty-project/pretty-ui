@@ -44,51 +44,51 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- infinite-loader-hidden?
+(defn- observer-hidden?
   ; @param (keyword) loader-id
   ;
   ; @return (boolean)
   [db [_ loader-id]]
-  (let [visible? (get-in db (db/path ::infinite-loaders loader-id :visible?))]
+  (let [visible? (get-in db (db/path ::infinite-loaders loader-id :observer-visible?))]
       ;(= visible? nil) = (= visible? true)
        (= visible? false)))
 
-(a/reg-sub :x.app-components/infinite-loader-hidden? infinite-loader-hidden?)
+(a/reg-sub :x.app-components/observer-hidden? observer-hidden?)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn hide-infinite-loader!
+(defn hide-observer!
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r components/hide-infinite-loader! db :my-loader)
+  ;  (r components/hide-observer! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :visible?)
+  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?)
                (param false)))
 
 ; @usage
-;  [:x.app-components/hide-infinite-loader! :my-loader]
-(a/reg-event-db :x.app-components/hide-infinite-loader! hide-infinite-loader!)
+;  [:x.app-components/hide-observer! :my-loader]
+(a/reg-event-db :x.app-components/hide-observer! hide-observer!)
 
-(defn show-infinite-loader!
+(defn show-observer!
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r components/show-infinite-loader! db :my-loader)
+  ;  (r components/show-observer! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :visible?)
+  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?)
                (param true)))
 
 ; @usage
-;  [:x.app-components/show-infinite-loader! :my-loader]
-(a/reg-event-db :x.app-components/show-infinite-loader! show-infinite-loader!)
+;  [:x.app-components/show-observer! :my-loader]
+(a/reg-event-db :x.app-components/show-observer! show-observer!)
 
 
 
@@ -99,8 +99,13 @@
   :x.app-components/reload-infinite-loader!
   ; @param (keyword) loader-id
   (fn [{:keys [db]} [_ loader-id]]
-      {:db (r hide-infinite-loader! db loader-id)
-       :dispatch-later [{:ms 50 :dispatch [:x.app-components/show-infinite-loader! loader-id]}]}))
+       ; Az infinite-loader komponensben elhelyezett observer viewport-on kívülre
+       ; helyezése, majd visszaállítása újra meghívja az infinite-loader komponens
+       ; számára callback paraméterként átadott függvényt.
+      {:db (r hide-observer! db loader-id)
+       ; A túlságosan rövid ideig (pl.: 5ms) a viewport-on kívülre helyezett observer
+       ; nem minden esetben hívja meg a callback függvényt.
+       :dispatch-later [{:ms 50 :dispatch [:x.app-components/show-observer! loader-id]}]}))
 
 
 
@@ -112,22 +117,21 @@
   ; @param (boolean) hidden?
   ;
   ; @return (component)
-  [loader-id hidden?]
-  (let [observer-id (loader-id->observer-id loader-id)]
-       [:div {:id    (keyword/to-dom-value observer-id)
-              :style (if (boolean hidden?)
-                         {:position :fixed :bottom "-100px"})}]))
+  [loader-id]
+  (let [observer-id (loader-id->observer-id loader-id)
+        hidden?     (a/subscribe [:x.app-components/observer-hidden? loader-id])]
+       (fn [] [:div {:id    (keyword/to-dom-value observer-id)
+                     :style (if (deref hidden?)
+                                {:position :fixed :bottom "-100px"})}])))
 
 (defn- infinite-loader
   ; @param (keyword) loader-id
   ;
   ; @return (component)
   [loader-id]
-  (let [hidden? (a/subscribe [:x.app-components/infinite-loader-hidden? loader-id])]
-       (fn []
-           [:div.x-infinite-loader {:id (keyword/to-dom-value loader-id)}
-                                   "Infinite loader"
-                                   [observer loader-id (deref hidden?)]])))
+  [:div.x-infinite-loader {:id (keyword/to-dom-value loader-id)}
+                          "Infinite loader"
+                          [observer loader-id]])
 
 (defn view
   ; @param (keyword) loader-id
