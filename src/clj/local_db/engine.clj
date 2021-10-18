@@ -302,6 +302,8 @@
    (get-document collection-id document-id {}))
 
   ([collection-id document-id context-props]
+   (println "collection-id: " collection-id)
+   (println "document-id: "   document-id)
    (let [collection (get-collection collection-id)]
         (db/get-document collection document-id context-props))))
 

@@ -377,7 +377,7 @@
                        :directory/modified-by]}
 
   (let [
-
+        _ (println (str "directory-id: " directory-id))
         directory-document    (local-db/get-document "directories" id)
         _ (println (str "directory-document: " directory-document))]
 ;        directory-items       (get directory-document :items)]
