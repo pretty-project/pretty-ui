@@ -107,7 +107,9 @@
   (if (user/request->authenticated? request)
       (let [query       (sync/request->query request)
             environment (assoc ENVIRONMENT :request request)]
-           (println "query: " (str query))
+           (println "environment: " environment)
+           (println "request: "  (str request))
+           (println "query: "  (str query))
            (println "answer: " (str (sync/process-query! environment query)))
            (sync/process-query! environment query))
       (http/error-wrap {:error-message :permission-denied :status 401})))
