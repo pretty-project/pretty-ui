@@ -24,11 +24,27 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- install-details-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  ;  {:installed-at (string)
+  ;   :installed-version (string)}
+  []
+  (let [timestamp (time/timestamp)]
+       {:installed-at      (str timestamp)
+        :installed-version (str details/app-version)}))
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn server-installed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
@@ -36,7 +52,7 @@
        (some? installed-version)))
 
 (defn- module-installed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) module-id
   ;
@@ -46,14 +62,14 @@
        (boolean installed?)))
 
 (defn get-installed-at
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (string)
   [db _]
   (r a/get-install-detail db :installed-at))
 
 (defn get-installed-version
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (string)
   [db _]
@@ -65,7 +81,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn ->module-installed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) module-id
   ;
@@ -78,12 +94,32 @@
 
 
 
+;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- ->server-installed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (println details/app-name "installed version:" details/app-version)
+  (println details/app-name "exit")
+  (let [install-details (install-details-prototype)]
+       (if (io/file-exists?       a/SERVER-CONFIG-FILEPATH)
+           (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)
+               (System/exit 0))
+           (do (io/create-file!   a/SERVER-CONFIG-FILEPATH)
+               (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)
+               (System/exit 0)))))
+
+(a/reg-handled-fx :x.server-installer/->server-installed ->server-installed)
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :x.server-installer/install-server!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       (println details/app-name "installing ...")
        ; Installing modules
@@ -95,7 +131,7 @@
 
 (a/reg-event-fx
   :x.server-installer/self-test!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "self-test install")
       (if (and (r module-installed? db :db)
@@ -103,25 +139,3 @@
                (r module-installed? db :user))
           [:x.server-installer/->server-installed]
           (println details/app-name "installation error"))))
-
-(a/reg-handled-fx
-  :mark-server-as-installed!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      (let [timestamp       (time/timestamp)
-            install-details {:installed-at      timestamp
-                             :installed-version details/app-version}]
-           [:x.app-core/swap-server-config! assoc-in :install-details install-details])))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :x.server-installer/->server-installed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      (println details/app-name "installed version:" details/app-version)
-      {:dispatch-n [[:x.boot-loader/run-app!]]}))
-                    ;[:mark-server-as-installed!]]}))
