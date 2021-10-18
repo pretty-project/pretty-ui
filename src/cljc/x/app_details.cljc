@@ -20,6 +20,7 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def app-name              "x4 | Are we alone in the universe?")
-(def app-version           "4.4.0")
+(def app-name              "x4")
+(def app-description       "Are we alone in the universe?")
+(def app-version           "4.4.1")
 (def copyright-information "2021 Monotech.hu")

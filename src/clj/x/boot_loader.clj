@@ -14,13 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader
-    (:require [x.server-router.api]
-              [mid-fruits.candy   :refer [param]]
-              [mid-fruits.map     :as map]
-              [server-fruits.http :as http]
-              [x.server-developer.api]
-              [x.server-core.api  :as a :refer [r]]
-              [x.server-db.api    :as db]))
+    (:require [x.server-developer.api]
+              [x.server-router.api]
+              [mid-fruits.candy       :refer [param]]
+              [mid-fruits.map         :as map]
+              [server-fruits.http     :as http]
+              [x.app-details          :as details]
+              [x.server-core.api      :as a :refer [r]]
+              [x.server-db.api        :as db]
+              [x.server-installer.api :as installer]))
 
 
 
@@ -77,39 +79,56 @@
   ;
   ; @param (map) server-props
   (fn [_ [_ server-props]]
-      {:dispatch-n [[:x.boot-loader/store-server-props! server-props]
-                    [:x.boot-loader/initialize-app!]]}))
+      (println details/app-name "run app")
+                       ; A szerver indítási paramétereinek eltárolása
+      {:dispatch-tick [{:tick   0 :dispatch [:x.boot-loader/store-server-props! server-props]}
+                       ; A konfigurációs fájlok tartalmának eltárolása
+                       {:tick   0 :dispatch [:x.server-core/config-app!]}
+                       ; A telepítés vizsgálata
+                       {:tick 500 :dispatch [:x.boot-loader/check-install!]}]}))
+
+(a/reg-event-fx
+  :x.boot-loader/check-install!
+  [a/self-destruct!]
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      (println details/app-name "check install")
+      (if (r installer/server-installed? db)
+          (let [installed-at (r installer/get-installed-at db)]
+               (println details/app-name "installed at:" installed-at)
+               [:x.boot-loader/initialize-app!])
+          [:x.server-installer/install-server!])))
 
 (a/reg-event-fx
   :x.boot-loader/initialize-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
+      (println details/app-name "initialize app")
        ; 1. Az inicializálási események meghívása (Dispatch on-app-init events)
       {:dispatch-n (r a/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció
        ;    betöltésének folytatása
-       :dispatch-tick [{:tick 10 :dispatch [:x.boot-loader/boot-app!]}]}))
+       :dispatch-later [{:ms 250 :dispatch [:x.boot-loader/boot-app!]}]}))
 
 (a/reg-event-fx
   :x.boot-loader/boot-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
+      (println details/app-name "boot app")
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
-                       ; 3. Az applikáció konfigurálása
-       :dispatch-tick [{:tick  0 :dispatch [:x.server-core/config-app!]}
-                       ; 4. A szerver indítása
-                       {:tick 10 :dispatch [:x.server-core/run-server! (r get-server-props db)]}
-                       ; 5. Az indítási események lefutása után az applikáció
-                       ;    betöltésének folytatása
-                       {:tick 20 :dispatch [:x.boot-loader/launch-app!]}]}))
+       :dispatch-tick [; 2. A szerver indítása
+                       {:tick  50 :dispatch [:x.server-core/run-server! (r get-server-props db)]}
+                       ; 4. Az indítási események lefutása után az applikáció betöltésének folytatása
+                       {:tick 100 :dispatch [:x.boot-loader/launch-app!]}]}))
 
 (a/reg-event-fx
   :x.boot-loader/launch-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
+      (println details/app-name "launch app")
       ; A szerver indítása utáni események meghívása (Dispatch on-app-launch events)
       {:dispatch-n (r a/get-period-events db :on-app-launch)}))

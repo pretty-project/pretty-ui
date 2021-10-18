@@ -235,7 +235,7 @@
   ; @return (hiccup)
   [_ _]
   [:div#x-app-menu--about-app
-   [elements/label {:content details/app-name
+   [elements/label {:content (str details/app-name " | " details/app-description)
                     :horizontal-align :left
                     :color            :muted
                     :icon             :grade}]

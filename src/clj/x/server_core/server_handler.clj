@@ -92,6 +92,5 @@
            (event-handler/dispatch [:x.server-core/store-server-state! server-state])
 
            ; *
-           (let [app-name    (str "x" details/app-version)
-                 server-port (get server-props :port)]
-                (println (str app-name " started on port: " server-port))))))
+           (let [server-port (get server-props :port)]
+                (println details/app-name "started on port:" server-port)))))

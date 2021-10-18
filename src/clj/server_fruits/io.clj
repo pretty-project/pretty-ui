@@ -157,8 +157,8 @@
   ; @param (string) filepath
   ;
   ; @return (?)
-  [filepath])
-  ; TODO
+  [filepath]
+  (spit filepath nil))
 
 (defn copy-uri-to-file!
   ; @param (string) uri

@@ -2,7 +2,8 @@
 (ns mongo-db.connection-handler
     (:import [com.mongodb MongoOptions ServerAddress]
              org.bson.types.BSONTimestamp)
-    (:require [monger.core :as mcr]
+    (:require [monger.core       :as mcr]
+              [x.app-details     :as details]
               [x.server-core.api :as a :refer [r]]))
 
 
@@ -46,6 +47,9 @@
       (let [database-name (r a/get-database-detail db :database-name)
             database-host (r a/get-database-detail db :database-host)
             database-port (r a/get-database-detail db :database-port)]
+           (println details/app-name "connecting to:" database-name
+                                     "database at:"   database-host
+                                     "on port:"       database-port)
            {:mongo-db/build-connection! [database-name database-host database-port]})))
 
 

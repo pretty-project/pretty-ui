@@ -1,10 +1,21 @@
+
+# uploaded files
 media/storage/*
 media/thumbnails/*
-!media/thumbnails/default.png
 
+# default thumbnail & sample file
+!media/thumbnails/default.png
+!media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png
+
+# monoset files
+x.server-details.edn
+
+# system files
 .DS_Store
 node_modules
 resources/public/js/core
 Procfile
 system.properties
 log
+.cpcache
+.shadow-cljs

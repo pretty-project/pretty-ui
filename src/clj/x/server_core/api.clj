@@ -42,6 +42,8 @@
 (def get-browser-detail     config-handler/get-browser-detail)
 (def get-database-details   config-handler/get-database-details)
 (def get-database-detail    config-handler/get-database-detail)
+(def get-install-details    config-handler/get-install-details)
+(def get-install-detail     config-handler/get-install-detail)
 (def get-site-links         config-handler/get-site-links)
 (def get-site-link          config-handler/get-site-link)
 (def get-seo-details        config-handler/get-seo-details)

@@ -57,6 +57,18 @@
   [db [_ config-item-id]]
   (get-in db [::configs :data-items :database-details config-item-id]))
 
+(defn get-install-details
+  ; @return (map)
+  [db _]
+  (get-in db [::configs :data-items :install-details]))
+
+(defn get-install-detail
+  ; @param (keyword) config-item-id
+  ;
+  ; @return (*)
+  [db [_ config-item-id]]
+  (get-in db [::configs :data-items :install-details config-item-id]))
+
 (defn get-site-links
   ; @return (map)
   [db _]

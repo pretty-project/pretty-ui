@@ -24,7 +24,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def DEFAULT-CONFIG-FILEPATH "project-details.edn")
+(def PROJECT-CONFIG-FILEPATH "x.project-details.edn")
+
+; @constant (string)
+(def SERVER-CONFIG-FILEPATH  "x.server-details.edn")
 
 
 
@@ -38,6 +41,8 @@
 (def get-browser-detail     config-handler/get-browser-detail)
 (def get-database-details   config-handler/get-database-details)
 (def get-database-detail    config-handler/get-database-detail)
+(def get-install-details    config-handler/get-install-details)
+(def get-install-detail     config-handler/get-install-detail)
 (def get-site-links         config-handler/get-site-links)
 (def get-site-link          config-handler/get-site-link)
 (def get-seo-details        config-handler/get-seo-details)
@@ -78,12 +83,25 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-handled-fx
-  :x.server-core/config-app!
+(defn- config-app!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (let [project-config-file-content (io/read-edn-file PROJECT-CONFIG-FILEPATH)
+        server-config-file-content  (io/read-edn-file SERVER-CONFIG-FILEPATH)
+        app-configs                 (merge project-config-file-content server-config-file-content)]
+       (event-handler/dispatch [:x.server-core/store-configs! app-configs])))
+
+(event-handler/reg-handled-fx :x.server-core/config-app! config-app!)
+
+(defn- swap-server-config!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) config-filepath
-  (fn [[config-filepath]]
-      (let [config-filepath     (or config-filepath DEFAULT-CONFIG-FILEPATH)
-            config-file-content (io/read-edn-file config-filepath)]
-           (event-handler/dispatch [:x.server-core/store-configs! config-file-content]))))
+  ; @param (function) f
+  ; @param (list of *) xyz
+  [[f & xyz :as params]]
+  (if (io/file-exists? SERVER-CONFIG-FILEPATH)
+      (apply io/swap-edn-file! SERVER-CONFIG-FILEPATH f xyz)
+      (do (io/create-file! SERVER-CONFIG-FILEPATH)
+          (swap-server-config! params))))
+
+(event-handler/reg-handled-fx :x.server-core/swap-server-config! swap-server-config!)

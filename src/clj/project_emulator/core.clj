@@ -23,12 +23,12 @@
   ;  {:port (integer)}
   [{:keys [port] :as server-props}]
   (x.boot-loader/run-app! server-props)
-  (println "{{namespace}} - Server started on port:" port))
+  (println "project-emulator - Server started on port:" port))
 
 (defn run-app!
   []
   (x.boot-loader/run-app!)
-  (println "{{namespace}} - Server started"))
+  (println "project-emulator - Server started"))
 
 
 
@@ -63,4 +63,4 @@
   (server/stop!)
   (server/start!)
   (shadow/watch shadow-build)
-  (println "{{namespace}} - Development mode started"))
+  (println "project-emulator - Development mode started"))

@@ -1,4 +1,10 @@
 
+# x4.4.1
+
+- BREAKING CHANGE
+  project-details.edn -> x.project-details.edn
+
+
 # x4.4.0
 
 - BREAKING CHANGE
