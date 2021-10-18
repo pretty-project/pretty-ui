@@ -134,6 +134,8 @@
        (let [filepath   (collection-id->filepath collection-id)
              collection (io/read-edn-file filepath)]
             (println "collection-exists")
+            (println "filepath: " (str filepath))
+            (println "coll: " (str collection))
             (cond (some? additional-namespace)
                   (db/collection->namespaced-collection collection additional-namespace)
                   (boolean remove-namespace?)
