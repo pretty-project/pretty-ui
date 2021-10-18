@@ -968,12 +968,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:x.app-router/add-route!
                  ::default-route
-                 {:restricted?    true
+                 {;:restricted?    true
                   :route-event    [:file-storage/load!]
                   :route-template FILE-STORAGE-HOME-URI}]
                 [:x.app-router/add-route!
                  ::extended-route
-                 {:restricted?    true
+                 {;:restricted?    true
                   :route-event    [:file-storage/load!]
                   :route-template (path-param->file-storage-uri ":directory-id")}]]})
 
