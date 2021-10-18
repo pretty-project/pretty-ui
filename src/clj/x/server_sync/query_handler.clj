@@ -84,5 +84,4 @@
   ;
   ; @return (map)
   [environment query]
-  (pathom.eql/process (param environment)
-                      (param query)))
+  (pathom.eql/process environment query))
