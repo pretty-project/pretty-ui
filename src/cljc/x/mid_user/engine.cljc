@@ -25,8 +25,8 @@
 ; @constant (string)
 (def UNIDENTIFIED-USER-ID        "Anonymous")
 
-; @constant (vector)
-(def UNIDENTIFIED-USER-ROLES     ["guest" "Anonymous"])
+; @constant (string)
+(def UNIDENTIFIED-USER-ROLE      "unidentified")
 
 ; @constant (string)
 (def DEFAULT-PROFILE-PICTURE-URL "/images/default-user-profile-picture.png")
@@ -57,7 +57,7 @@
   ;
   ; @return (boolean)
   [user-roles]
-  (vector/contains-similars? user-roles UNIDENTIFIED-USER-ROLES))
+  (vector/contains-item? user-roles UNIDENTIFIED-USER-ROLE))
 
 (defn user-roles->user-identified?
   ; @param (vector) user-roles

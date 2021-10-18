@@ -24,8 +24,7 @@
 (defn playground
   ; @param (map) request
   [request]
-  (println "Playground *A#?o%!_f")
-  (println (str request)))
+  (println "Playground *A#?o%!_f"))
 ;  (mongo-db/update-document! "abc" {:def/test "Test" :def/keyword :bbbb}))
 ;                                    :def/my-date "2020-01-01"}))
 ;                                   {:ordered? true}))

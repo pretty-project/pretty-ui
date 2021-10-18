@@ -39,7 +39,7 @@
 
 ; x.app-user.engine
 (def UNIDENTIFIED-USER-ID           engine/UNIDENTIFIED-USER-ID)
-(def UNIDENTIFIED-USER-ROLES        engine/UNIDENTIFIED-USER-ROLES)
+(def UNIDENTIFIED-USER-ROLE         engine/UNIDENTIFIED-USER-ROLE)
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
 (def user-id->user-unidentified?    engine/user-id->user-unidentified?)
 (def user-id->user-identified?      engine/user-id->user-identified?)

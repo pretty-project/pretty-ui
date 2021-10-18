@@ -11,6 +11,8 @@
 
 
 # x4.3.0
+
+
 - popup-ra nem kell padding kis képernyőn, mert máshogy indul el. Csak a resize volt becsapós
 
 - freezed-route-ra nincs szükség
@@ -18,6 +20,9 @@
 - Elméletileg nem szükséges az authenticated-home! Amilyen route-on vagy amikor bejön
   login-screen oda visz vissza a reboot után.
   Csak a /login route-on volt valami basz!
+  SSC rányomsz a logout-ra ami átdob a login screen re ami a /-re akar bejelentkezni
+  valami a logout miatt nem tud vissza menni a /admin-ra
+
 
 - Az elementeknél megérné megvizsgálni, hogy szükséges a containernek átadni a subscriber
   tulajdonságot mert sokszor tök felesleges a stated komponens nem static módban megy

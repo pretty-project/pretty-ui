@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v0.2.4
-; Compatibility: x3.9.2
+; Version: v0.2.8
+; Compatibility: x4.4.1
 
 
 
@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.login-handler
-    (:require [x.app-core.api    :as a :refer [r]]
-              [mid-fruits.vector :as vector]
+    (:require [mid-fruits.vector            :as vector]
+              [x.app-core.event-handler     :as event-handler :refer [r]]
               [x.app-core.lifecycle-handler :as lifecycle-handler]))
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(event-handler/reg-event-fx
   :x.app-core/login-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]

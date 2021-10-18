@@ -26,9 +26,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
+;  {:user-account/id (string)
+;   :user-account/roles (strings in vector)}
 (def DEFAULT-SESSION
-     {:user-account/id    engine/UNIDENTIFIED-USER-ID
-      :user-account/roles engine/UNIDENTIFIED-USER-ROLES})
+     {:user-account/id     engine/UNIDENTIFIED-USER-ID
+      :user-account/roles [engine/UNIDENTIFIED-USER-ROLE]})
 
 
 
