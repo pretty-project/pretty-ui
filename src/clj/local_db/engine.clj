@@ -133,11 +133,13 @@
    (if (collection-id->collection-exists? collection-id)
        (let [filepath   (collection-id->filepath collection-id)
              collection (io/read-edn-file filepath)]
+            (println "collection-exists")
             (cond (some? additional-namespace)
                   (db/collection->namespaced-collection collection additional-namespace)
                   (boolean remove-namespace?)
                   (db/collection->non-namespaced-collection collection)
-                  :else (return collection))))))
+                  :else (return collection)))
+       (println "collection-not-exists"))))
 
 (defn set-collection!
   ; @param (string) collection-id
@@ -305,6 +307,7 @@
    (println "collection-id: " collection-id)
    (println "document-id: "   document-id)
    (let [collection (get-collection collection-id)]
+        (println (str "collection: " (str collection)))
         (db/get-document collection document-id context-props))))
 
 (defn get-document-item
