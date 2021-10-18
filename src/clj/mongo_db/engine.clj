@@ -474,9 +474,7 @@
 
         ; Ha a dokumentum nem rendlekezik {:namespace/order ...} tulajdonsággal ...
         document-copy-dex (try (inc document-dex)
-                               (catch Exception e (do (println "Document corrupted error #981")
-                                                      (println "collection-name:" collection-name)
-                                                      (println "document-id:"     document-id))))
+                               (catch Exception e (println "Document corrupted error #981" collection-name document-id)))
 
         copy-label    (get-document-copy-label collection-name document-id options)
         document-copy (-> document ; label-suffix toldalék értékével kiegészített címke asszociálása
