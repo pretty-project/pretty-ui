@@ -383,9 +383,10 @@
         directory-items-count (count directory-items)
 
         directory-document    (assoc directory-document :items-count directory-items-count)]
-        
+
        (println (str "result: " (db/document->namespaced-document directory-document :directory)))
-       (db/document->namespaced-document directory-document :directory)))
+       (db/document->namespaced-document directory-document :directory)
+       {:a :b}))
 
 (pathom.co/defresolver get-file-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
