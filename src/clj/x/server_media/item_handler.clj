@@ -376,9 +376,11 @@
                        :directory/modified-at
                        :directory/modified-by]}
 
-  (let [directory-document    (local-db/get-document "directories" id)
-        directory-items       (get directory-document :items)
-        directory-items-count (count directory-items)]
+  (let [
+        _ (println (str id))]
+    ;directory-document    (local-db/get-document "directories" id)]
+;        directory-items       (get directory-document :items)]
+;        directory-items-count (count directory-items)]
 
 ;        directory-document    (assoc directory-document :items-count directory-items-count)]
 
