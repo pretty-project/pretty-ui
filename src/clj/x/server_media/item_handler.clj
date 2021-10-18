@@ -376,18 +376,15 @@
                        :directory/modified-at
                        :directory/modified-by]}
 
-  (let []
-       (println "resolvvvvveeeer")
-       ;directory-document    (local-db/get-document "directories" id)]
-;        _ (println (str "directory-id: " id))]
-;        _ (println (str "directory-document: " directory-document))]
-;        directory-items       (get directory-document :items)]
-;        directory-items-count (count directory-items)]
+  (let [directory-document    (local-db/get-document "directories" id)
+        directory-items       (get directory-document :items)
+        directory-items-count (count directory-items)]
 
 ;        directory-document    (assoc directory-document :items-count directory-items-count)]
 
 ;       (println (str "result: " (db/document->namespaced-document directory-document :directory)))
 ;       (db/document->namespaced-document directory-document :directory)
+       (println "ez már a fele")
        {:directory/a :b}))
 
 (pathom.co/defresolver get-file-data
