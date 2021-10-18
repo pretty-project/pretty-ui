@@ -12,9 +12,6 @@
 
 # x4.3.0
 
-
-- popup-ra nem kell padding kis képernyőn, mert máshogy indul el. Csak a resize volt becsapós
-
 - freezed-route-ra nincs szükség
 
 - Elméletileg nem szükséges az authenticated-home! Amilyen route-on vagy amikor bejön

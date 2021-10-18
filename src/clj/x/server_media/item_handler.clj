@@ -377,9 +377,14 @@
                        :directory/modified-by]}
 
   (let [directory-document    (local-db/get-document "directories" id)
+        _ (println (str "directory-id: " id))
+        _ (println (str "directory-document: " directory-document))
         directory-items       (get directory-document :items)
         directory-items-count (count directory-items)
+
         directory-document    (assoc directory-document :items-count directory-items-count)]
+        
+       (println (str "result: " (db/document->namespaced-document directory-document :directory)))
        (db/document->namespaced-document directory-document :directory)))
 
 (pathom.co/defresolver get-file-data
