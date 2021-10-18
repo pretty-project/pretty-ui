@@ -104,9 +104,11 @@
   ;
   ; @return (map)
   [request]
+  (println "Process query")
   (if (user/request->authenticated? request)
       (let [query       (sync/request->query request)
             environment (assoc ENVIRONMENT :request request)]
+           (println "request-authenticated")
            (sync/process-query! (param environment)
                                 (param query)))
       (http/error-wrap {:error-message :permission-denied :status 401})))
