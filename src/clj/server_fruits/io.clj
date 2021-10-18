@@ -82,6 +82,14 @@
        (boolean (and (.exists file)
                      (not (.isDirectory file))))))
 
+(defn file-not-exists?
+  ; @param (string) filepath
+  ;
+  ; @return (boolean)
+  [filepath]
+  (let [file-exist? (file-exists? filepath)]
+       (not file-exist?)))
+
 (defn get-filesize
   ; @param (string) filepath
   ;

@@ -30,8 +30,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "module-installed: user")
-      {:db (r engine/->module-installed db :user)
-       :dispatch [:x.server-user/add-user! :anonymous {}]}))
+      {:db (r engine/->module-installed db :user)}))
+       ;:dispatch [:x.server-user/add-user! :anonymous {}]}))
 
 
 
