@@ -377,8 +377,9 @@
                        :directory/modified-by]}
 
   (let [
-        _ (println (str id))
-        directory-document    (local-db/get-document "directories" id)]
+
+        directory-document    (local-db/get-document "directories" id)
+        _ (println (str "directory-document: " directory-document))]
 ;        directory-items       (get directory-document :items)]
 ;        directory-items-count (count directory-items)]
 
