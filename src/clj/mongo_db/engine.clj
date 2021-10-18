@@ -14,6 +14,7 @@
               [monger.core                 :as mcr]
               [monger.operators            :as mop :refer [$regex]]
               [monger.query                :as mqr]
+              [x.server-core.api           :as a]
               [x.server-db.api             :as db]
               [x.server-dictionary.api     :as dictionary]))
 
@@ -358,6 +359,17 @@
                                    (db/document->ordered-document document-dex))]
 
         (save-document! collection-name document))))
+
+(a/reg-handled-fx
+  :mongo-db/update-document!
+  ; @param (string) collection-name
+  ; @param (map) namespaced document
+  ;  {:id (string)(opt)}
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)
+  ;    Default: false}
+  (fn [[collection-name document options]]
+      (update-document! collection-name document options)))
 
 
 

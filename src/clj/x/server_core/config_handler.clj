@@ -92,16 +92,3 @@
        (event-handler/dispatch [:x.server-core/store-configs! app-configs])))
 
 (event-handler/reg-handled-fx :x.server-core/config-app! config-app!)
-
-(defn- swap-server-config!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (function) f
-  ; @param (list of *) xyz
-  [[f & xyz :as params]]
-  (if (io/file-exists? SERVER-CONFIG-FILEPATH)
-      (apply io/swap-edn-file! SERVER-CONFIG-FILEPATH f xyz)
-      (do (io/create-file! SERVER-CONFIG-FILEPATH)
-          (swap-server-config! params))))
-
-(event-handler/reg-handled-fx :x.server-core/swap-server-config! swap-server-config!)

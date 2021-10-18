@@ -18,7 +18,8 @@
               [x.server-user.engine           :as engine]
               [x.server-user.profile-handler  :as profile-handler]
               [x.server-user.session-handler  :as session-handler]
-              [x.server-user.settings-handler :as settings-handler]))
+              [x.server-user.settings-handler :as settings-handler]
+              [x.server-user.user-handler     :as user-handler]))
 
 
 

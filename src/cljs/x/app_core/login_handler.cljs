@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.login-handler
-    (:require [x.app-core.api     :as a :refer [r]]
-              [mid-fruits.vector  :as vector]
+    (:require [x.app-core.api    :as a :refer [r]]
+              [mid-fruits.vector :as vector]
               [x.app-core.lifecycle-handler :as lifecycle-handler]))
 
 
