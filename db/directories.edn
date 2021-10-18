@@ -14,89 +14,12 @@
   :tags []} 
  {:alias "Új mappa" 
   :content-size 0 
-  :created-at "2021-10-18T20:10:08.454Z" 
+  :created-at "2021-10-18T20:44:43.741Z" 
   :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
   :description "" 
-  :id "50da21fc-3d84-4348-8eb6-8cc49d70e97e" 
+  :id "3715623e-4185-4e25-b003-db8ca21d699e" 
   :items [] 
-  :modified-at "2021-10-18T20:10:08.455Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:34:14.597Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "5ecd0d3e-2299-4527-bfb5-9fcb3a2b645f" 
-  :items [] 
-  :modified-at "2021-10-18T20:34:14.597Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:34:50.279Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "e89f5272-de6d-4ac0-927f-2808b79b5f8a" 
-  :items [] 
-  :modified-at "2021-10-18T20:34:50.279Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:39:16.798Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "dae1ebc7-8813-4ae0-b142-a51a5fb4ff7f" 
-  :items [] 
-  :modified-at "2021-10-18T20:39:16.798Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:39:36.398Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "00403d19-1674-4be8-bad7-e31093d1cc63" 
-  :items [] 
-  :modified-at "2021-10-18T20:39:36.398Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:42:15.387Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "a5b93062-ddb3-49de-b1da-2c64d66b1647" 
-  :items [] 
-  :modified-at "2021-10-18T20:42:15.387Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:42:38.304Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "58fc82c8-5fd8-4295-b3a8-e66b893f391c" 
-  :items [] 
-  :modified-at "2021-10-18T20:42:38.304Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags []} 
- {:alias "Új mappa" 
-  :content-size 0 
-  :created-at "2021-10-18T20:43:36.990Z" 
-  :created-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :description "" 
-  :id "bdb0e795-9c91-4eff-9a03-942adf423564" 
-  :items [] 
-  :modified-at "2021-10-18T20:43:36.990Z" 
+  :modified-at "2021-10-18T20:44:43.741Z" 
   :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
   :path [{:directory/id "home"}] 
   :tags []} 
@@ -110,14 +33,8 @@
   [{:file/id "a725d5b9-a864-421b-88d6-4efafe12ba12"} 
    {:file/id "6e21eec5-4120-4c19-8f04-645554a3956f"} 
    {:file/id "87e9be60-8da9-4d08-85c4-b9b37cff35b4"} 
-   {:directory/id "a5b93062-ddb3-49de-b1da-2c64d66b1647"} 
-   {:modified-at "2021-10-18T20:42:15.394Z" 
-    :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
-   {:directory/id "58fc82c8-5fd8-4295-b3a8-e66b893f391c"} 
-   {:modified-at "2021-10-18T20:42:38.311Z" 
-    :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
-   {:directory/id "bdb0e795-9c91-4eff-9a03-942adf423564"}] 
-  :modified-at "2021-10-18T20:43:36.997Z" 
+   {:directory/id "3715623e-4185-4e25-b003-db8ca21d699e"}] 
+  :modified-at "2021-10-18T20:44:43.745Z" 
   :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
   :path [] 
   :permissions {"0939329d-b057-ki88-e916-0ce146714c1b" "rw" "admin" "rw"} 
