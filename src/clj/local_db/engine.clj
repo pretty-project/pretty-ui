@@ -16,9 +16,21 @@
 (ns local-db.engine
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.string :as string]
+              [mid-fruits.time   :as time]
               [mid-fruits.vector :as vector]
               [server-fruits.io  :as io]
               [x.server-db.api   :as db]))
+
+
+
+;; -- Descriptions ------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @description XXX#8075
+;  Date and time objects
+;  Az EDN alapú adattárolás nem teszi lehetővé az időbélyegzők objektumként
+;  való tárolását, ezért minden tárolási függvény string típusúvá alakítja
+;  az objektum típusú időbélyegzőket
 
 
 
@@ -133,15 +145,11 @@
    (if (collection-id->collection-exists? collection-id)
        (let [filepath   (collection-id->filepath collection-id)
              collection (io/read-edn-file filepath)]
-            (println "collection-exists")
-            (println "filepath: " (str filepath))
-            (println "coll: " (str collection))
             (cond (some? additional-namespace)
                   (db/collection->namespaced-collection collection additional-namespace)
                   (boolean remove-namespace?)
                   (db/collection->non-namespaced-collection collection)
-                  :else (return collection)))
-       (println "collection-not-exists"))))
+                  :else (return collection))))))
 
 (defn set-collection!
   ; @param (string) collection-id
@@ -306,10 +314,7 @@
    (get-document collection-id document-id {}))
 
   ([collection-id document-id context-props]
-   (println "collection-id: " collection-id)
-   (println "document-id: "   document-id)
    (let [collection (get-collection collection-id)]
-        (println (str "collection: " (str collection)))
         (db/get-document collection document-id context-props))))
 
 (defn get-document-item
@@ -328,7 +333,8 @@
   ;
   ; @return (nil)
   [collection-id document]
-  (let [collection (get-collection collection-id)]
+  (let [collection (get-collection collection-id)
+        document   (time/unparse-date-time document)]
        (set-collection! (param collection-id)
                         (db/add-document collection document))))
 
@@ -359,7 +365,8 @@
   ;
   ; @return (nil)
   [collection-id document-id document]
-  (let [collection (get-collection collection-id)]
+  (let [collection (get-collection collection-id)
+        document   (time/unparse-date-time document)]
        (set-collection! (param collection-id)
                         (-> (db/remove-document document-id)
                             (db/add-document    document)))))
@@ -379,9 +386,19 @@
   ;
   ; @return (nil)
   [collection-id document-id f & params]
-  (let [collection (get-collection collection-id)]
+  ; XXX#8075
+  ; Az x4.4.1 verzióig az update-document! függvény a db/update-document függvény
+  ; alkalmazásával volt megvalósítva, amely nem tette lehetővé a params listában
+  ; átadott anoním függvényekben lévő dátum objektumok string típussá alakítását.
+  (let [collection       (get-collection  collection-id)
+        document         (db/get-document collection document-id)
+        params           (cons document params)
+        updated-document (apply f params)
+        updated-document (time/unparse-date-time updated-document)]
        (set-collection! (param collection-id)
-                        (apply db/update-document collection document-id f params))))
+                        (-> (param collection)
+                            (db/remove-document document-id)
+                            (db/add-document    updated-document)))))
 
 (defn update-document-item!
   ; @param (string) collection-id
@@ -399,9 +416,18 @@
   ;
   ; @return (nil)
   [collection-id document-id item-key f & params]
-  (let [collection (get-collection collection-id)]
+  ; XXX#8075
+  (let [collection            (get-collection       collection-id)
+        document              (db/get-document      collection document-id)
+        document-item         (db/get-document-item collection document-id item-key)
+        params                (cons document-item params)
+        updated-document-item (apply f params)
+        updated-document      (assoc document item-key updated-document-item)
+        updated-document (time/unparse-date-time updated-document)]
        (set-collection! (param collection-id)
-                        (apply db/update-document-item collection document-id item-key f params))))
+                        (-> (param collection)
+                            (db/remove-document document-id)
+                            (db/add-document    updated-document)))))
 
 (defn document-exists?
   ; @param (string) collection-id

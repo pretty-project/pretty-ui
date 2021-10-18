@@ -6,8 +6,8 @@
               [mid-fruits.keyword          :as keyword]
               [mid-fruits.random           :as random]
               [mid-fruits.string           :as string]
+              [mid-fruits.time             :as time]
               [mid-fruits.vector           :as vector]
-              [mongo-db.date-time          :as date-time]
               [mongo-db.connection-handler :refer [DB]]
               [monger.collection           :as mcl]
               [monger.conversion           :as mcv]
@@ -129,7 +129,7 @@
   [n]
   (-> n (DBObject->edn)
         (get-in [:cursor :firstBatch])
-        (date-time/unparse-date-time)
+        (time/unparse-date-time)
         (_ids->ids)))
 
 (defn- search-aggregation
@@ -252,7 +252,7 @@
                                ; Megcsinálja a MongoDB?
                                ;(json/keywordize-keys)
                                 (json/keywordize-values)
-                                (date-time/unparse-date-time)))
+                                (time/unparse-date-time)))
                (param [])
                (param documents))))
 
@@ -268,7 +268,7 @@
                    ; Megcsinálja a MongoDB?
                    ;(json/keywordize-keys)
                     (json/keywordize-values)
-                    (date-time/unparse-date-time))))
+                    (time/unparse-date-time))))
 
 (defn find-document-by-id
   ; @param (string) collection-name
@@ -282,7 +282,7 @@
                    ; Megcsinálja a MongoDB?
                    ;(json/keywordize-keys)
                     (json/keywordize-values)
-                    (date-time/unparse-date-time))))
+                    (time/unparse-date-time))))
 
 
 
@@ -305,11 +305,11 @@
                               (json/unkeywordize-values)
                               ; A dokumentumban string típusként tárolt dátumok és idők
                               ; átalakítása objektum típusra
-                              (date-time/parse-date-time))
+                              (time/parse-date-time))
         return (mcl/save-and-return @DB collection-name document)]
        (-> return (json/keywordize-keys)
                   (json/keywordize-values)
-                  (date-time/unparse-date-time)
+                  (time/unparse-date-time)
                   (_id->id))))
 
 
@@ -599,4 +599,4 @@
                     {"$limit" max-count}]]
        (-> (search-aggregation collection-name pipeline)
            (json/keywordize-values)
-           (date-time/unparse-date-time))))
+           (time/unparse-date-time))))

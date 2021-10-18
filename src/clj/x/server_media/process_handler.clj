@@ -104,7 +104,6 @@
   ;
   ; @return (map)
   [request]
-  (println "xxxxxxxxxx")
   (if (user/request->authenticated? request)
       (let [query       (sync/request->query request)
             environment (assoc ENVIRONMENT :request request)]
