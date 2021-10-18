@@ -156,9 +156,8 @@
 (defn- playground
   []
   [:<> [elements/card {:content "HEY CARD"}]
-       [:div (str "timestamp:" (cljs-time.core/hour (cljs-time.core/now)))
-             [:br]
-             (str "timestamp:" (time/get-hours-2))]
+       [components/infinite-loader :my-loader #(println "heyho")]
+       [elements/button {:label "test infinite!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]}]
        [elements/select {:label "My select"
                          :on-select [:heyho!]
                          :options [{:label "Option #1" :value :option-1}

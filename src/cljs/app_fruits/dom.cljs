@@ -695,7 +695,7 @@
    (let [scroll-behavior   (if smooth? "smooth" "auto")
          scroll-to-options {"left" 0 "top" scroll-y "behavior" scroll-behavior}]
         (.scrollBy js/window (clj->js scroll-to-options)))
-        
+
    (set! (.-scrollTop (get-document-element)) scroll-y)))
 
 (defn scroll-to-element-top!
@@ -1212,3 +1212,27 @@
   [n]
   (let [vh (/ (get-viewport-height) 100)]
        (math/floor (* n vh))))
+
+
+
+;; -- Intersection observer ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn intersection-observer
+  ; @param (string) element-id
+  ; @param (function) callback
+  ;
+  ; @return (object)
+  [_ callback]
+  (js/IntersectionObserver. (fn [%] (let [in-viewport? (.-isIntersecting (aget % 0))]
+                                         (if (boolean in-viewport?)
+                                             (callback))))
+                            (param {})))
+
+(defn setup-intersection-observer!
+  ; @param (string) element-id
+  ; @param (function) callback
+  [element-id callback]
+  (let [observer         (intersection-observer element-id callback)
+        observer-element (get-element-by-id     element-id)]
+       (.observe observer observer-element)))

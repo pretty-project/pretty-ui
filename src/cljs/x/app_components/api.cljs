@@ -14,12 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.api
-    (:require [x.app-components.content     :as content]
-              [x.app-components.listener    :as listener]
-              [x.app-components.stated      :as stated]
-              [x.app-components.subscriber  :as subscriber]
-              [x.app-components.transmitter :as transmitter]
-              [x.app-components.value       :as value]))
+    (:require [x.app-components.content         :as content]
+              [x.app-components.infinite-loader :as infinite-loader]
+              [x.app-components.listener        :as listener]
+              [x.app-components.stated          :as stated]
+              [x.app-components.subscriber      :as subscriber]
+              [x.app-components.transmitter     :as transmitter]
+              [x.app-components.value           :as value]))
 
 
 
@@ -29,6 +30,9 @@
 ; x.app-components.content
 (def extended-props->content-props content/extended-props->content-props)
 (def content                       content/view)
+
+; x.app-components.infinite-loader
+(def infinite-loader infinite-loader/view)
 
 ; x.app-components.listener
 (def extended-props->listener-props listener/extended-props->listener-props)
