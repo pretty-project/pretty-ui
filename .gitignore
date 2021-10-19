@@ -19,3 +19,5 @@ system.properties
 log
 .cpcache
 .shadow-cljs
+.idea
+monoset.iml
