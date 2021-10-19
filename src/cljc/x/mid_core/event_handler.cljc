@@ -977,13 +977,13 @@
         (re-frame/reg-event-fx event-id interceptors
           #(metamorphic-effects->effects-map (handler-function %1 %2))))))
 
-; XXX Deprecated version of reg-handled-fx
-;
+; WARNING! DEPRECATED! DO NOT USE!
 ;(defn reg-handled-fx
 ;  [handler-id handler-function & params]
 ;  (re-frame/reg-fx handler-id handler-function)
 ;  (re-frame/reg-event-fx handler-id
 ;    (fn [_ [_ params]] {handler-id params})))
+; WARNING! DEPRECATED! DO NOT USE!
 
 (defn reg-handled-fx
   ; Kezelt mellékhatás-események (Handled side-effect events)
@@ -1007,6 +1007,14 @@
   ;   (fn [_ _]
   ;       {:you-are-awesome! [a b]
   ;        :dispatch [:you-are-awesome! a b]))
+  ;
+  ; @example
+  ;  (defn- add-fruit! [[fruit color]])
+  ;  (a/reg-handled-fx :add-fruit! #(add-fruit! %)
+  ;
+  ; @example
+  ;  (defn- add-fruit! [fruit color])
+  ;  (a/reg-handled-fx :add-fruit! #(apply add-fruit! %))
   [event-id handler-function]
   (re-frame/reg-fx event-id handler-function)
   (re-frame/reg-event-fx event-id

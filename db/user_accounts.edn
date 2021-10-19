@@ -25,8 +25,4 @@
   :password "mono"
   :pin "0000"
   :roles ["identified" "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"]
-  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw"}}
-
- {:id "Anonymous"
-  :roles ["unidentified" "Anonymous"]
-  :permissions {}}]
+  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw"}}]

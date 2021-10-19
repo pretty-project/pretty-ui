@@ -282,7 +282,7 @@
   ;  {:auto-retry? (boolean)
   ;   :response-action (keyword)
   ;   :retry-timeout (integer)
-  ;   :sent-time (string)
+  ;   :sent-time (object)
   ;   :silent-mode? (boolean)
   ;   :timeout (integer)}
   [db [_ {:keys [auto-retry? response-action] :as request-props}]]

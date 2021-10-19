@@ -16,7 +16,9 @@
 (ns x.server-user.user-handler
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.map    :as map]
-              [x.server-core.api :as a]))
+              [mongo-db.api      :as mongo-db]
+              [x.server-core.api :as a]
+              [x.server-db.api   :as db]))
 
 
 
@@ -24,9 +26,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- user-props->user-account
-  ; @return (map)
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (namespaced map)
   [user-props]
-  (map/inherit user-props [:email-address :password :pin :roles]))
+  (let [user-account (map/inherit user-props [:email-address :password :pin :roles])]
+       (db/document->namespaced-document user-account "user-account")))
 
 
 
@@ -37,28 +42,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) user-props
+  ;
+  ; @return (map)
   ;  {:roles (vector)}
-  [{:keys [roles] :as user-props}]
-  (merge (param user-props)
-         {:roles []}))
+  [{:keys [] :as user-props}]
+  (merge {:roles []}
+         (param user-props)))
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :x.server-user/add-user!
+(defn add-user!
   ; @param (map) user-props
-  ;  {:email-address (string)(opt)
-  ;   :password (string)(opt)
+  ;  {:email-address (string)
+  ;   :password (string)
   ;   :pin (string)(opt)
   ;   :roles (strings in vector)(opt)}
   ;
   ; @usage
-  ;  [:x.server-user/add-user {...}]
+  ;  (user/add-user! {...})
   ;
-  ; @usage
-  ;  [:x.server-user/add-user :my-user {...}]
-  (fn [_ [_ user-props]]
-      (let [user-props (a/prot user-props user-props-prototype)])))
+  ; @return (namespaced map)
+  ;  {}
+  [user-props]
+  (let [user-props   (a/prot user-props user-props-prototype)
+        user-account (user-props->user-account user-props)]))
+       ;(println (str user-account))
+       ;(println (str (mongo-db/add-document! "user_accounts" user-account)))))
+
+; @usage
+;  [:x.server-user/add-user! {...}]
+(a/reg-handled-fx :x.server-user/add-user! #(apply add-user! %))

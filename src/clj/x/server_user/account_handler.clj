@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.5.2
-; Compatibility: x3.9.9
+; Version: v0.6.2
+; Compatibility: x4.4.2
 
 
 
@@ -15,7 +15,7 @@
 
 (ns x.server-user.account-handler
     (:require [local-db.api       :as local-db]
-              [mid-fruits.candy   :refer [param]]
+              [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map]
               [ring.util.response :refer [redirect]]
               [server-fruits.http :as http]
@@ -31,6 +31,14 @@
 ;  a HTTP Session térképbe.
 (def USER-PUBLIC-ACCOUNT-PROPS
      [:user-account/email-address :user-account/id :user-account/roles])
+
+; @constant (map)
+;  {:user-account/email-address (nil)
+;   :user-account/id (nil)
+;   :user-account/roles (strings in vector)}
+(def ANONYMOUS-USER-ACCOUNT {:user-account/email-address (param nil)
+                             :user-account/id            (param nil)
+                             :user-account/roles         [user/UNIDENTIFIED-USER-ROLE]})
 
 
 
@@ -66,10 +74,8 @@
   ;
   ; @return (map)
   [user-account-id]
-  (merge (local-db/get-document "user_accounts" user/UNIDENTIFIED-USER-ID
-                                {:additional-namespace :user-account})
-         (local-db/get-document "user_accounts" user-account-id
-                                {:additional-namespace :user-account})))
+  (local-db/get-document "user_accounts" user-account-id
+                         {:additional-namespace :user-account}))
 
 (defn user-account->user-public-account
   ; @param (map) user-account
@@ -83,8 +89,9 @@
   ;
   ; @return (map)
   [request]
-  (let [user-account-id (http/request->session-param request :user-account/id)]
-       (user-account-id->user-account user-account-id)))
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (user-account-id->user-account user-account-id)
+          (return ANONYMOUS-USER-ACCOUNT)))
 
 (defn request->user-public-account
   ; @param (map) request
@@ -99,8 +106,9 @@
   ;
   ; @return (boolean)
   [request]
-  (let [account-id (http/request->session-param request :user-account/id)]
-       (and (user/user-id->user-identified? account-id)
+  (let [account-id (http/request->session-param request :user-account/id)
+        user-roles (http/request->session-param request :user-account/roles)]
+       (and (user/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))
 
 

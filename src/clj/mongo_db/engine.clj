@@ -40,26 +40,15 @@
   [n]
   (mcv/from-db-object n true))
 
-(defn- document<-_id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) document
-  ;
-  ; @return (map)
-  ;  {:_id (string)}
-  [document]
-  (let [document-id (random/generate-string)]
-       (assoc document :_id document-id)))
-
 (defn- id->_id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) document
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   ;
   ; @example
-  ;  (id->_id {:my-namespace/id :my-id})
-  ;  => {:_id :my-id}
+  ;  (id->_id {:my-namespace/id :my-id :my-namespace/my-key "my-value"})
+  ;  => {:_id :my-id :my-namespace/my-key "my-value"}
   ;
   ; @return (map)
   ;  {:_id (string)}
@@ -78,10 +67,10 @@
   ;
   ; @example
   ;  (_id->id {:_id :my-id :my-namespace/key :my-value})
-  ;  => {:my-namespace/id :my-id}
+  ;  => {:my-namespace/id :my-id :my-namespace/my-key "my-value"}
   ;
   ; @return (map)
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   [document]
   (let [namespace   (db/document->namespace document)
         id-key      (keyword/add-namespace  namespace :id)
@@ -89,31 +78,34 @@
        (-> document (assoc  id-key document-id)
                     (dissoc :_id))))
 
-(defn- ids->_ids
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (maps in vector) documents
-  ;
-  ; @example
-  ;  (ids->_ids [{:id "my-document"} {:id "your-document"}])
-  ;  => [{:_id "my-document"} {:_id "your-document"}]
-  ;
-  ; @return (maps in vector)
-  [documents]
-  (mapv id->_id documents))
-
 (defn- _ids->ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (maps in vector) documents
   ;
   ; @example
-  ;  (_ids->ids [{:_id "my-document"} {:_id "your-document"}])
-  ;  => [{:id "my-document"} {:id "your-document"}]
+  ;  (_ids->ids [{:_id "my-document" :my-namespace/my-key "my-value"}])
+  ;  => [{:my-namespace/id "my-document" :my-namespace/my-key "my-value"}]
   ;
   ; @return (maps in vector)
   [documents]
   (mapv _id->id documents))
+
+(defn- document<-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) document
+  ;  {:namespace/id (string)(opt)}
+  ;
+  ; @return (map)
+  ;  {:namespace/id (string)}
+  [document]
+  (let [namespace (db/document->namespace document)
+        id-key    (keyword/add-namespace  namespace :id)]
+       (if-let [document-id (get document id-key)]
+               (return document)
+               (let [document-id (random/generate-string)]
+                    (assoc document id-key document-id)))))
 
 
 
@@ -289,28 +281,88 @@
 ;; -- Saving document ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn save-document!
+(defn- save-document!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
   ; @param (map) document
-  ;  {:_id (string)
-  ;    Ha a dokumentum nem rendelkezik string típusú :_id kulcssal, akkor a MongoDB
-  ;    BSON objektum típusú :_id kulcsot társít hozzá}
+  ;  {:namespace/id (string)}
+  ;
+  ; @example
+  ;  (save-document! "my-collection" {:my-namespace/id "my-document" :my-namespace/my-key "my-value"})
   ;
   ; @return (map)
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   [collection-name document]
-  (let [document (-> document (json/unkeywordize-keys)
-                              (json/unkeywordize-values)
-                              ; A dokumentumban string típusként tárolt dátumok és idők
-                              ; átalakítása objektum típusra
-                              (time/parse-date-time))
+  (let [namespace   (db/document->namespace document)
+        id-key      (keyword/add-namespace  namespace :id)
+        document-id (get document id-key)
+        document    (-> document ; Ha a dokumentum nem rendelkezne string típusú :_id kulcssal,
+                                 ; akkor a MongoDB BSON objektum típusú :_id kulcsot társítana hozzá!
+                                 (id->_id)
+                                 (json/unkeywordize-keys)
+                                 (json/unkeywordize-values)
+                                 ; A dokumentumban string típusként tárolt dátumok és idők
+                                 ; átalakítása objektum típusra
+                                 (time/parse-date-time))
         return (mcl/save-and-return @DB collection-name document)]
        (-> return (json/keywordize-keys)
                   (json/keywordize-values)
                   (time/unparse-date-time)
                   (_id->id))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn document-exists?
+  ; @param (string) collection-name
+  ; @param (string) document-id
+  ;
+  ; @return (boolean)
+  [collection-name document-id]
+  ())
+  ; TODO ...
+
+
+
+;; -- Adding document ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn add-document!
+  ; @param (string) collection-name
+  ; @param (map) namespaced document
+  ;  {:namespace/id (string)(opt)}
+  ;
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)
+  ;    Default: false}
+  ;
+  ; @usage
+  ;  (mongo-db/add-document! "my-collection" {...})
+  ;
+  ; @return (map)
+  ;  {:id (string)}
+  ([collection-name document]
+   (add-document! collection-name document {}))
+
+  ([collection-name document {:keys [ordered?]}]
+   (let [; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
+         document-dex (get-documents-count collection-name)
+         document     (cond-> document ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
+                                       ; akkor szükséges a sorrendbeli pozícióját hozzáadni
+                                       (boolean ordered?)
+                                       (db/document->ordered-document document-dex)
+                                       ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
+                                       ; egy generált azonosítót
+                                       :assoc-id
+                                       (document<-id))]
+        (save-document! collection-name document))))
+
+; @usage
+;  [:mongo-db/add-document! "my-collection" {...}]
+(a/reg-handled-fx :mongo-db/add-document! #(apply add-document! %))
 
 
 
@@ -320,7 +372,7 @@
 (defn update-document!
   ; @param (string) collection-name
   ; @param (map) namespaced document
-  ;  {:id (string)(opt)}
+  ;  {:namespace/id (string)}
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)
   ;    Default: false}
@@ -333,43 +385,15 @@
   ([collection-name document]
    (update-document! collection-name document {}))
 
-  ([collection-name document {:keys [ordered?]}]
-   (let [; Ha a dokumentum nem rendelkezik azonosítóval, akkor új dokumentumként kerül
-         ; hozzáadásra a kollekcióhoz
-         document-exists? (db/document->identified-document? document)
-         ; Ha a dokumentum új dokumentumként kerül hozzáadásra a kollekcióhoz, akkor
-         ; a sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
-         document-dex (get-documents-count collection-name)
-         ; *
-         document (cond-> document ; Ha a dokumentum rendelkezik azonosítóval, akkor
-                                   ; szükséges az átalakítani MongoDB dokumentum-azonosítóra
-                                   ; {:id "my-document"} => {:_id "my-document"}
-                                   (boolean document-exists?)
-                                   (id->_id)
-                                   ; Ha a dokumentum nem rendelkezik azonosítóval, akkor
-                                   ; szükséges hozzáadni MongoDB dokumentum-azonsítót
-                                   ; {:_id "my-document"}
-                                   (not     document-exists?)
-                                   (document<-_id)
-                                   ; Ha a dokumentum új és rendezett dokumentumként kerül
-                                   ; hozzáadásra, akkor szükséges a sorrendbeli pozícióját
-                                   ; hozzáadni
-                                   (and (boolean ordered?)
-                                        (not     document-exists?))
-                                   (db/document->ordered-document document-dex))]
+  ([collection-name document {:keys [ordered?] :as options}]
+   (let [document-id (db/document->document-id document)]
+        (if (document-exists? document-id)
+            (save-document! collection-name document)
+            (add-document!  collection-name document options)))))
 
-        (save-document! collection-name document))))
-
-(a/reg-handled-fx
-  :mongo-db/update-document!
-  ; @param (string) collection-name
-  ; @param (map) namespaced document
-  ;  {:id (string)(opt)}
-  ; @param (map)(opt) options
-  ;  {:ordered? (boolean)
-  ;    Default: false}
-  (fn [[collection-name document options]]
-      (update-document! collection-name document options)))
+; @usage
+;  [:mongo-db/update-document! "my-collection" {:my-namespace/id "my-document"}]
+(a/reg-handled-fx :mongo-db/update-document! #(apply update-document! %))
 
 
 
@@ -433,7 +457,7 @@
   ; @param (string) collection-name
   ; @param (map) document-id
   ; @param (map) options
-  ;  {:label-key (keyword)
+  ;  {:label-key (namespaced keyword)
   ;   :language-id (keyword)}
   ;
   ; @return (string)
@@ -453,22 +477,19 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (keyword)
+  ;  {:label-key (namespaced keyword)
   ;   :language-id (keyword)}
   ;
   ; @return (map)
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   [collection-name document-id {:keys [label-key] :as options}]
-  (let [document      (get-document-by-id collection-name document-id)
+  (let [document      (get-document-by-id      collection-name document-id)
         copy-label    (get-document-copy-label collection-name document-id options)
         document-copy (-> document ; label-suffix toldalék értékével kiegészített címke asszociálása
                                    (assoc label-key copy-label)
                                    ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-                                   (dissoc :_id)
-                                   ; Új MongoDB dokumentum-azonosító hozzáadása a másolathoz
-                                   (document<-_id))]
-
-       (save-document! collection-name document-copy)))
+                                   (dissoc :_id))]
+       (add-document! collection-name document-copy)))
 
 (defn- duplicate-ordered-document!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -476,15 +497,15 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (keyword)}
+  ;  {:label-key (namespaced keyword)}
   ;
   ; @return (map)
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   [collection-name document-id {:keys [label-key] :as options}]
-  (let [document     (get-document-by-id collection-name document-id)
+  (let [document     (get-document-by-id    collection-name document-id)
         document-dex (db/get-document-value document :order)
 
-        ; Ha a dokumentum nem rendlekezik {:namespace/order ...} tulajdonsággal ...
+        ; Ha a dokumentum nem rendelkezik {:namespace/order ...} tulajdonsággal ...
         document-copy-dex (try (inc document-dex)
                                (catch Exception e (println "Document corrupted error #981" collection-name document-id)))
 
@@ -493,8 +514,6 @@
                                    (assoc label-key copy-label)
                                    ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
                                    (dissoc :_id)
-                                   ; Új MongoDB dokumentum-azonosító hozzáadása a másolathoz
-                                   (document<-_id)
                                    ; A sorrendbeli pozíció értékének hozzáadása a másolathoz
                                    (db/document->ordered-document document-copy-dex))]
 
@@ -506,25 +525,26 @@
                                             {"$inc" {order-key 1}}
                                             {:multi true}))
 
-       (save-document! collection-name document-copy)))
+       (add-document! collection-name document-copy)))
 
 (defn duplicate-document!
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (keyword)
+  ;  {:label-key (namespaced keyword)
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "copy" kifejezést
   ;   :language-id (keyword)
   ;    Milyen nyelven használja a "copy" kifejezést a névhez hozzáfűzéskor
   ;   :ordered? (boolean)(opt)
   ;    Default: false}
   ;
-  ; @usage
-  ;  (mongo-db/duplicate-document! "my-collection" "my-document" {:label-key   :name
-  ;                                                               :language-id :hu})
+  ; @example
+  ;  (mongo-db/duplicate-document! "my-collection" "my-document" {:label-key   :my-namespace/label
+  ;                                                               :language-id :en})
+  ;  => {:my-namespace/id "..." :my-namespace/label "My document copy"}
   ;
   ; @return (map)
-  ;  {:id (string)}
+  ;  {:namespace/id (string)}
   [collection-name document-id {:keys [ordered?] :as options}]
   (if (boolean ordered?)
       (duplicate-ordered-document!   collection-name document-id options)
@@ -542,7 +562,7 @@
   ;    (integer) document-dex]]
   ;
   ; @usage
-  ;  (mongo/reorder-documents "my-collection" [["my-document" 1] ["your-document" 2]])
+  ;  (mongo-db/reorder-documents "my-collection" [["my-document" 1] ["your-document" 2]])
   ;
   ; @return (vectors in vector)
   [collection-name updated-document-order]
@@ -561,8 +581,12 @@
 (defn count-documents-with-pipeline
   ; @param (string) collection-name
   ; @param (map) options
-  ;  {:search-key (keyword)
+  ;  {:search-key (namespaced keyword)
   ;   :search-term (string)}
+  ;
+  ; @usage
+  ;  (mongo-db/count-documents-with-pipeline "my-collection" {:search-key  :my-namespace/label
+  ;                                                           :search-term "My document"})
   ;
   ; @return (integer)
   [collection-name {:keys [search-key search-term]}]
@@ -576,17 +600,17 @@
   ; @param (string) collection-name
   ; @param (map) options
   ;  {:max-count (integer)
-  ;   :search-key (keyword)
+  ;   :search-key (namespaced keyword)
   ;   :search-term (string)
   ;   :skip (integer)
   ;   :sort-by (map)}
   ;
   ; @usage
-  ;  (mongo/find-documents-with-pipeline "my-collection" {:max-count 50
-  ;                                                       :search-key :my-namespace/label
-  ;                                                       :search-term "Apple"
-  ;                                                       :skip 150
-  ;                                                       :sort-by {:my-namespace/weight -1}})
+  ;  (mongo-db/find-documents-with-pipeline "my-collection" {:max-count 50
+  ;                                                          :search-key :my-namespace/label
+  ;                                                          :search-term "Apple"
+  ;                                                          :skip 150
+  ;                                                          :sort-by {:my-namespace/weight -1}})
   ;
   ; @return (maps in vector)
   [collection-name {:keys [max-count search-key search-term skip sort-by] :as options}]

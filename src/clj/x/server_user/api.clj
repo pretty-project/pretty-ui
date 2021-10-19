@@ -34,11 +34,8 @@
 (def request->authenticated?      account-handler/request->authenticated?)
 
 ; x.server-user.engine
-(def UNIDENTIFIED-USER-ID           engine/UNIDENTIFIED-USER-ID)
 (def UNIDENTIFIED-USER-ROLE         engine/UNIDENTIFIED-USER-ROLE)
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
-(def user-id->user-unidentified?    engine/user-id->user-unidentified?)
-(def user-id->user-identified?      engine/user-id->user-identified?)
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
 

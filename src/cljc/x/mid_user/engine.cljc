@@ -23,9 +23,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def UNIDENTIFIED-USER-ID        "Anonymous")
-
-; @constant (string)
 (def UNIDENTIFIED-USER-ROLE      "unidentified")
 
 ; @constant (string)
@@ -35,22 +32,6 @@
 
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn user-id->user-unidentified?
-  ; @param (keyword) user-id
-  ;
-  ; @return (boolean)
-  [user-id]
-  (= (string/lowercase user-id)
-     (string/lowercase UNIDENTIFIED-USER-ID)))
-
-(defn user-id->user-identified?
-  ; @param (keyword) user-id
-  ;
-  ; @return (boolean)
-  [user-id]
-  (and (string/nonempty? user-id)
-       (not (user-id->user-unidentified? user-id))))
 
 (defn user-roles->user-unidentified?
   ; @param (vector) user-roles

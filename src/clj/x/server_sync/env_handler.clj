@@ -94,7 +94,7 @@
   ; @param (map) env
   ;
   ; @return (map)
-  ;  {:created-at (string)
+  ;  {:created-at (object)
   ;   :created-by (map)}
   [env]
   (let [account-id   (env->user-account-id env)
@@ -109,7 +109,7 @@
   ; @param (map) env
   ;
   ; @return (map)
-  ;  {:deleted-at (string)
+  ;  {:deleted-at (object)
   ;   :deleted-by (map)}
   [env]
   (let [account-id   (env->user-account-id env)
@@ -124,7 +124,7 @@
   ; @param (map) env
   ;
   ; @return (map)
-  ;  {:uploaded-at (string)
+  ;  {:uploaded-at (object)
   ;   :uploaded-by (map)}
   [env]
   (let [account-id   (env->user-account-id env)

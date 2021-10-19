@@ -34,29 +34,3 @@
        (reset! DB database)))
 
 (a/reg-fx :mongo-db/build-connection! build-connection!)
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :mongo-db/connect!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (let [database-name (r a/get-database-detail db :database-name)
-            database-host (r a/get-database-detail db :database-host)
-            database-port (r a/get-database-detail db :database-port)]
-           (println details/app-name "connecting to:" database-name
-                                     "database at:"   database-host
-                                     "on port:"       database-port)
-           {:mongo-db/build-connection! [database-name database-host database-port]})))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-launch [:mongo-db/connect!]})

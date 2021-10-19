@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.17
 ; Description:
-; Version: v0.4.2
-; Compatibility: x3.9.9
+; Version: v0.5.2
+; Compatibility: x4.4.2
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.session-handler
-    (:require [mid-fruits.candy     :refer [return]]
+    (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.map       :as map]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
@@ -26,10 +26,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-;  {:user-account/id (string)
+;  {:user-account/id (nil)
 ;   :user-account/roles (strings in vector)}
 (def DEFAULT-SESSION
-     {:user-account/id     engine/UNIDENTIFIED-USER-ID
+     {:user-account/id    (param nil)
       :user-account/roles [engine/UNIDENTIFIED-USER-ROLE]})
 
 

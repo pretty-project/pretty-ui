@@ -79,7 +79,7 @@
   ;
   ; @param (map) server-props
   (fn [_ [_ server-props]]
-      (println details/app-name "run app")
+      (println details/app-name "running app ...")
                        ; A szerver indítási paramétereinek eltárolása
       {:dispatch-tick [{:tick   0 :dispatch [:x.boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
@@ -92,7 +92,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "check install")
+      (println details/app-name "checking installation ...")
       (if (r installer/server-installed? db)
           (let [installed-at (r installer/get-installed-at db)]
                (println details/app-name "installed at:" installed-at)
@@ -104,7 +104,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "initialize app")
+      (println details/app-name "initializing app ...")
        ; 1. Az inicializálási események meghívása (Dispatch on-app-init events)
       {:dispatch-n (r a/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció
@@ -116,7 +116,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "boot app")
+      (println details/app-name "boot app ...")
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
        :dispatch-tick [; 2. A szerver indítása
@@ -129,6 +129,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "launch app")
+      (println details/app-name "launch app ...")
       ; A szerver indítása utáni események meghívása (Dispatch on-app-launch events)
-      {:dispatch-n (r a/get-period-events db :on-app-launch)}))
+      {:dispatch-n (r a/get-period-events db :on-app-launch)
+       :dispatch   [:x.server-core/connect-to-database!]}))

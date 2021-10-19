@@ -71,8 +71,8 @@
 (defn user-identified?
   ; @return (boolean)
   [db _]
-  (let [user-id (r get-user-id db)]
-       (engine/user-id->user-identified? user-id)))
+  (let [user-roles (r get-user-roles db)]
+       (engine/user-roles->user-identified? user-roles)))
 
 (defn user-unidentified?
   ; @return (boolean)

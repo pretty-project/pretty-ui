@@ -134,12 +134,18 @@
                           [observer loader-id]])
 
 (defn view
-  ; @param (keyword) loader-id
-  ; @param (function) callback
+  ; @param (keyword)(opt) loader-id
+  ; @param (map) loader-props
+  ; {:on-viewport (metamorphic-event)}
   ;
   ; @return (component)
-  [loader-id callback]
-  (let [observer-id (loader-id->observer-id loader-id)
-        element-id  (keyword/to-dom-value   observer-id)]
-       (lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback))
+  ([loader-props]
+   [view nil loader-props])
+
+  ([loader-id {:keys [on-viewport] :as loader-props}])
+  (let [loader-id   (a/id loader-id)
+        observer-id (loader-id->observer-id loader-id)
+        element-id  (keyword/to-dom-value   observer-id)
+        callback-f  #(a/dispatch on-viewport)]
+       (lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback-f))
                     :reagent-render      (fn [] [infinite-loader loader-id])})))

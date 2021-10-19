@@ -15,14 +15,15 @@
 
 (ns x.app-core.api
     (:require [x.app-core.error-handler]
-              [x.app-core.cache-handler     :as cache-handler]
-              [x.app-core.config-handler    :as config-handler]
-              [x.app-core.debug-handler     :as debug-handler]
-              [x.app-core.engine            :as engine]
-              [x.app-core.event-handler     :as event-handler]
-              [x.app-core.lifecycle-handler :as lifecycle-handler]
-              [x.app-core.login-handler     :as login-handler]
-              [x.app-core.process-handler   :as process-handler]))
+              [x.app-core.cache-handler      :as cache-handler]
+              [x.app-core.config-handler     :as config-handler]
+              [x.app-core.connection-handler :as connection-handler]
+              [x.app-core.debug-handler      :as debug-handler]
+              [x.app-core.engine             :as engine]
+              [x.app-core.event-handler      :as event-handler]
+              [x.app-core.lifecycle-handler  :as lifecycle-handler]
+              [x.app-core.login-handler      :as login-handler]
+              [x.app-core.process-handler    :as process-handler]))
 
 
 

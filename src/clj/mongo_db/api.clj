@@ -8,6 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mongo.engine
+(def document-exists?              engine/document-exists?)
+(def add-document!                 engine/add-document!)
 (def update-document!              engine/update-document!)
 (def remove-document!              engine/remove-document!)
 (def duplicate-document!           engine/duplicate-document!)

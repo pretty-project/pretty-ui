@@ -101,7 +101,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (println details/app-name "installed version:" details/app-version)
-  (println details/app-name "exit")
+  (println details/app-name "exiting ...")
   (let [install-details (install-details-prototype)]
        (if (io/file-exists?       a/SERVER-CONFIG-FILEPATH)
            (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)
@@ -133,7 +133,7 @@
   :x.server-installer/self-test!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "self-test install")
+      (println details/app-name "self-testing installation ...")
       (if (and (r module-installed? db :db)
                (r module-installed? db :media)
                (r module-installed? db :user))
