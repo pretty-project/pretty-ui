@@ -142,10 +142,10 @@
   ([loader-props]
    [view nil loader-props])
 
-  ([loader-id {:keys [on-viewport] :as loader-props}])
-  (let [loader-id   (a/id loader-id)
-        observer-id (loader-id->observer-id loader-id)
-        element-id  (keyword/to-dom-value   observer-id)
-        callback-f  #(a/dispatch on-viewport)]
-       (lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback-f))
-                    :reagent-render      (fn [] [infinite-loader loader-id])})))
+  ([loader-id {:keys [on-viewport] :as loader-props}]
+   (let [loader-id   (a/id loader-id)
+         observer-id (loader-id->observer-id loader-id)
+         element-id  (keyword/to-dom-value   observer-id)
+         callback-f  #(a/dispatch on-viewport)]
+        (lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback-f))
+                     :reagent-render      (fn [] [infinite-loader loader-id])}))))
