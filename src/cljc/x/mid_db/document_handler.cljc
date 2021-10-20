@@ -106,6 +106,13 @@
   ;  (db/document->namespace {:foo/bar "baz"})
   ;  => :foo
   ;
+  ; @example
+  ;  (db/document->namespace {:foo     "bar"
+  ;                           :baz     "boo"
+  ;                           :bam/box "bok"
+  ;                           :kop/lok "map"})
+  ;  => :bam
+  ;
   ; @return (keyword or nil)
   [document]
   ; A MongoDB adatbázisban tárolt dokumentumoknál előfordulhat,

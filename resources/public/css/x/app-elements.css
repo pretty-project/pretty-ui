@@ -1751,7 +1751,7 @@ body {
   border-width: 1px;
 
   background-color: var( --background-color );
-  border-radius: var( --border-radius-l );
+  -border-radius: var( --border-radius-l );
   border-style: solid;
 
   /* XXX#7319 */
