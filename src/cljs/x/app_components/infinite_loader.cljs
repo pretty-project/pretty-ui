@@ -130,7 +130,7 @@
   ; @return (component)
   [loader-id]
   [:div.x-infinite-loader {:id (keyword/to-dom-value loader-id)}
-                          "Infinite loader"
+                          ;"Infinite loader"
                           [observer loader-id]])
 
 (defn view

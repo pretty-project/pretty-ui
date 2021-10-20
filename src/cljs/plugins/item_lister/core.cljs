@@ -1,9 +1,16 @@
 (ns plugins.item-lister.core
-  (:require [x.app-core.api :as a]
-            [plugins.item-lister.items :as items]
-            [plugins.item-lister.header :as header]
-            [app-fruits.reagent :refer [ratom lifecycles]]))
+  (:require
+   [app-fruits.reagent :refer [ratom lifecycles]]
+   [plugins.item-lister.engine :as engine]
+   [plugins.item-lister.items :as items]
+   [x.app-components.api :as components]
+   [x.app-elements.api :as elements]
+   [x.app-core.api :as a]))
 
+
+(defn stated-item-lister [lister-id lister-props]
+  [:<>
+   [items/view  lister-id lister-props]])
 
 (defn item-lister
   ; @param (keyword)(opt) lister-id
@@ -28,9 +35,10 @@
   ([lister-props] [item-lister nil lister-props])
   ([lister-id lister-props]
    (let [lister-id (a/id lister-id)]
-     [:<>
-         [header/view lister-id lister-props]
-         [items/view  lister-id lister-props]])))
+     [components/stated lister-id {:component           #'stated-item-lister
+                                   :initial-props       lister-props
+                                   :initial-props-path  (engine/lister-props-path lister-id)}])))
+
 
 
 
