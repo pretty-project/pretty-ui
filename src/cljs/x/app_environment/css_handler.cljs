@@ -126,35 +126,27 @@
        (if-not (source-exists? head-element filepath)
                (insert-link-element! head-element link-element context-props))))
 
-(a/reg-handled-fx
-  ::add-source!
+; @usage
+;  [:x.app-environment.css-handler/add-external-source! "/directory-name/filename.css"]
+(a/reg-handled-fx ::add-external-source! add-external-source!)
+
+(defn- add-source!
   ; @param (string) filename
-  ;  "filename.css"
   ; @param (map)(opt) context-props
   ;  {:as-first? (boolean)}
-  ;
-  ; @usage
-  ;  [:x.app-environment.css-handler/add-source! "filename.css"]
-  (fn [[filename context-props]]
-      (add-external-source! (filename->external-css-uri filename) context-props)))
+  [filename context-props]
+  (let [filepath (filename->external-css-uri filename)]
+       (add-external-source! filepath context-props)))
 
-(a/reg-handled-fx
-  ::add-external-source!
-  ; @param (string) filepath
-  ; @param (map)(opt) context-props
-  ;  {:as-first? (boolean)}
-  ;
-  ; @usage
-  ;  [:x.app-environment.css-handler/add-external-source!
-  ;   "/directory-name/filename.css"]
-  (fn [[filepath context-props]]
-      (add-external-source! filepath context-props)))
+; @usage
+;  [:x.app-environment.css-handler/add-source! "filename.css"]
+(a/reg-handled-fx ::add-source! add-source!)
 
-(a/reg-handled-fx
-  ::remove-source!
+(defn- remove-source!
   ; @param (string) filename
-  ;
-  ; @usage
-  ;  [:x.app-environment.css-handler/remove-source! "/my-style.css"]
-  (fn [[filename]]))
-  ; TODO
+  [filename])
+  ; TODO ...
+
+; @usage
+;  [:x.app-environment.css-handler/remove-source! "/my-style.css"]
+(a/reg-handled-fx ::remove-source! remove-source!)

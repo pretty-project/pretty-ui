@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.2.5
+; Version: v1.0.4
+; Compatibility: x4.4.2
 
 
 
@@ -116,7 +116,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "boot app ...")
+      (println details/app-name "booting app ...")
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
        :dispatch-tick [; 2. A szerver indítása
@@ -129,7 +129,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "launch app ...")
+      (println details/app-name "launching app ...")
       ; A szerver indítása utáni események meghívása (Dispatch on-app-launch events)
       {:dispatch-n (r a/get-period-events db :on-app-launch)
        :dispatch   [:x.server-core/connect-to-database!]}))

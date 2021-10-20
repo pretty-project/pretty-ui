@@ -93,6 +93,10 @@
   (reagent/render [app #'ui/structure]
                   (dom/get-element-by-id "x-app-container")))
 
+; @usage
+;  [:x.boot-loader/render-app! #'app]
+(a/reg-handled-fx :x.boot-loader/render-app! render-app!)
+
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -220,16 +224,6 @@
         ; 4. Curtains up!
         ; XXX#5030
         {:ms 500 :dispatch [:x.app-core/->synchron-signal]}]}))
-
-(a/reg-handled-fx
-  :x.boot-loader/render-app!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (component) app
-  ;
-  ; @usage
-  ;  [:x.boot-loader/render-app! #'app]
-  (fn [[app]] (render-app! app)))
 
 (a/reg-event-fx
   :x.boot-loader/launch-app!

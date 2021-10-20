@@ -67,98 +67,109 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::open-new-browser-tab!
+(defn- open-new-browser-tab!
   ; @param (string) uri
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/open-new-browser-tab! "www.my-site.com/my-link"]
-  (fn [[uri]]
-      (.open js/window uri "_blank")))
+  [uri]
+  (.open js/window uri "_blank"))
 
-(a/reg-handled-fx
-  ::set-title!
+; @usage
+;  [:x.app-environment.window-handler/open-new-browser-tab! "www.my-site.com/my-link"]
+(a/reg-handled-fx ::open-new-browser-tab! open-new-browser-tab!)
+
+(defn- set-title!
   ; @param (string) title
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/set-title! "My title"]
-  (fn [[title]]
-      (set! (-> js/document .-title) title)))
+  [title]
+  (set! (-> js/document .-title) title))
 
-(a/reg-handled-fx
-  ::reload!
-  #(.reload js/window.location true))
+; @usage
+;  [:x.app-environment.window-handler/set-title! "My title"]
+(a/reg-handled-fx ::set-title! set-title!)
 
-(a/reg-handled-fx
-  ::go-to-root!
-  ; @usage
-  ;  [:x.app-environment.window-handler/go-to-root!]
-  #(set! (-> js/window .-location .-href) "/"))
+(defn- reload!
+  []
+  (.reload js/window.location true))
 
-(a/reg-handled-fx
-  ::go-to!
+; @usage
+;  [:x.app-environment.window-handler/reload!]
+(a/reg-handled-fx ::reload! reload!)
+
+(defn- go-to-root!
+  []
+  (set! (-> js/window .-location .-href) "/"))
+
+; @usage
+;  [:x.app-environment.window-handler/go-to-root!]
+(a/reg-handled-fx ::go-to-root!)
+
+(defn- go-to!
   ; @param (string) uri
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/go-to! "www.my-site.com/my-link"]
-  (fn [[uri]]
-      (set! (-> js/window .-location .-href) uri)))
+  [uri]
+  (set! (-> js/window .-location .-href) uri))
 
-(a/reg-handled-fx
-  ::set-interval!
+; @usage
+;  [:x.app-environment.window-handler/go-to! "www.my-site.com/my-link"]
+(a/reg-handled-fx ::go-to! go-to!)
+
+(defn- set-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) interval-id
   ; @param (map) interval-props
   ;  {:event (metamorphic-event)
   ;   :interval (ms)}
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/set-interval! :my-interval {:event [:do-something!]
-  ;                                                                 :interval 420}]
+  [interval-id {:keys [interval event] :as interval-props}]
   (fn [[interval-id {:keys [interval event] :as interval-props}]]
       (let [js-id          (time/set-interval! interval #(a/dispatch event))
             interval-props (assoc interval-props :js-id js-id)]
+           ; TODO ...
+           ; Re-Frame DB helyett helyi atomban legyenek tárolva!
            (a/dispatch [::store-interval-props! interval-id interval-props]))))
 
-(a/reg-handled-fx
-  ::clear-interval!
+; @usage
+;  [:x.app-environment.window-handler/set-interval! :my-interval {:event [:do-something!]
+;                                                                 :interval 420}]
+(a/reg-handled-fx ::set-interval! set-interval!)
+
+(defn- clear-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) js-id
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/clear-interval! :my-interval]
-  (fn [[js-id]]
-      (time/clear-interval! js-id)))
+  [js-id]
+  (time/clear-interval! js-id))
 
-(a/reg-handled-fx
-  ::set-timeout!
+; @usage
+;  [:x.app-environment.window-handler/clear-interval! :my-interval]
+(a/reg-handled-fx ::clear-interval! clear-interval!)
+
+(defn- set-timeout!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) timeout-id
   ; @param (map) timeout-props
   ;  {:event (metamorphic-event)
   ;   :timeout (ms)}
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/set-timeout! :my-timeout {:event [:do-something!]
-  ;                                                               :timeout 420}]
-  (fn [[timeout-id {:keys [timeout event] :as timeout-props}]]
-      (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
-            timeout-props (assoc timeout-props :js-id js-id)]
-           (a/dispatch [::store-timeout-props! timeout-id timeout-props]))))
+  [timeout-id {:keys [timeout event] :as timeout-props}]
+  (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
+        timeout-props (assoc timeout-props :js-id js-id)]
+       ; TODO ...
+       ; Re-Frame DB helyett helyi atomban legyenek tárolva!
+       (a/dispatch [::store-timeout-props! timeout-id timeout-props])))
 
-(a/reg-handled-fx
-  ::clear-timeout!
+; @usage
+;  [:x.app-environment.window-handler/set-timeout! :my-timeout {:event [:do-something!]
+;                                                               :timeout 420}]
+(a/reg-handled-fx ::set-timeout!)
+
+(defn- clear-timeout!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) js-id
-  ;
-  ; @usage
-  ;  [:x.app-environment.window-handler/clear-timeout! :my-timeout]
-  (fn [[js-id]]))
-      ; TODO ...
+  [js-id])
+  ; TODO ...
+
+; @usage
+;  [:x.app-environment.window-handler/clear-timeout! :my-timeout]
+(a/reg-handled-fx ::clear-timeout! clear-timeout!)
 
 
 
@@ -253,10 +264,12 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::listen-to-connection-change!
-  #(do (dom/add-event-listener! "online"  connection-change-listener)
-       (dom/add-event-listener! "offline" connection-change-listener)))
+(defn- listen-to-connection-change!
+  []
+  (do (dom/add-event-listener! "online"  connection-change-listener)
+      (dom/add-event-listener! "offline" connection-change-listener)))
+
+(a/reg-handled-fx ::listen-to-connection-change! listen-to-connection-change!)
 
 
 

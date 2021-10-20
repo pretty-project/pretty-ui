@@ -85,7 +85,7 @@
 
 (defn- config-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   (let [project-config-file-content (io/read-edn-file PROJECT-CONFIG-FILEPATH)
         server-config-file-content  (io/read-edn-file SERVER-CONFIG-FILEPATH)
         app-configs                 (merge project-config-file-content server-config-file-content)]

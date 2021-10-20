@@ -4,6 +4,11 @@
 - NEW COMPONENT
   x.app-components.api/infinite-loader
 
+- BREAKING CHANGE
+  Az a/reg-handled-fx függvénnyel regisztrált kezelt mellékhatás események handler-function
+  függvényeinek paramtérezése megváltozott!
+  (fn [[a b c]]) => (fn [a b c])
+
 
 
 # x4.4.1

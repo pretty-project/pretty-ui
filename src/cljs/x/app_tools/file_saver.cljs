@@ -198,16 +198,17 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  :x.app-tools.file-saver/->save-accepted
+(defn- ->save-accepted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) saver-id
   ; @param (map) saver-props
-  (fn [[saver-id saver-props]]
-      (append-temporary-component! [file-saver saver-id saver-props]
-                                   (param save-file!))
-      (remove-temporary-component!)))
+  [saver-id saver-props]
+  (append-temporary-component! [file-saver saver-id saver-props]
+                               (param save-file!))
+  (remove-temporary-component!))
+
+(a/reg-handled-fx :x.app-tools.file-saver/->save-accepted ->save-accepted)
 
 (a/reg-event-fx
   :x.app-tools.file-saver/render-save-file-dialog!

@@ -26,15 +26,21 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name route-data
-;  ["/my-route" {:get #(my-handler %)}]
+;  A Reitit router számára egy kételemű vektorban adódnak át a route-ok:
+;  ["/my-route" {:get #(my-handler %) :post #(your-handler %)}]
 ;
 ; @name route-template
 ;  "/my-route"
 ;
 ; @name route-props
-;  {:get #(my-handler %)
-;   :post {...}
-;   :route-template "/my-route"}
+;  {:get            #(my-handler %)
+;   :post           {...}
+;   :js             "app.js"
+;   :client-event   [:do-something-on-client!]
+;   :server-event   [:do-something-on-server!]
+;   :restricted?    true
+;   :route-template "/my-route"
+;   :route-title    "My route"}
 ;
 ; @name structured-routes
 ;  A route-ok és azok adatai route-id - route-props kulcs-érték párokként
@@ -64,6 +70,13 @@
 ;  ["/our-route/:my-param"   ...]
 ;  ["/our-route/:your-param" ...]
 ;  ["/your-route" ...]]
+;
+; @name restricted-route
+;  A restricted route kiszolgálása, a :client-event és :server-event események megtörténése
+;  felhasználó azonosításhoz kötött.
+;
+; @name route-title
+;  ...
 
 
 
@@ -184,8 +197,8 @@
   ; @return (vector)
   ;  [(string) route-template
   ;   (map) route-props
-  ;    {:get (function or map)
-  ;     :post (function or map)}]
+  ;     {:get (function or map)
+  ;      :post (function or map)}]
   [{:keys [route-template] :as route-props}]
   [route-template (dissoc route-props :route-template)])
 
@@ -255,8 +268,8 @@
   ; @return (vectors in vector)
   ;  [[(string) route-template
   ;    (map) route-props
-  ;     {:get (function or map)
-  ;      :post (function or map)}]
+  ;      {:get (function or map)
+  ;       :post (function or map)}]
   ;   [...]
   ;   [...]]
   [db _]
@@ -269,8 +282,8 @@
   ; @return (vectors in vector)
   ;  [[(string) route-template
   ;    (map) route-props
-  ;     {:get (function or map)
-  ;      :post (function or map)}]
+  ;      {:get (function or map)
+  ;       :post (function or map)}]
   ;   [...]
   ;   [...]]
   [db _]
@@ -322,18 +335,16 @@
 (defn add-route!
   ; @param (keyword)(opt) route-id
   ; @param (map) route-props
-  ;  {:get (function or map)
-  ;    Only w/ {:route-handler :server}
-  ;   :post (function or map)
-  ;    Only w/ {:route-handler :server}
-
-  ; TEMP
-  ;   :route-handler (keyword)(opt)
-  ;    :server, :client
-  ;    Default: :server
-  ; TEMP
-
-  ;   :route-template (string)}
+  ;  {:get (function or map)(opt)
+  ;    Default: #(http/html-wrap {:body (views/main %)})
+  ;   :post (function or map)(opt)
+  ;   :js (string)(opt)
+  ;    Default: "app.js"
+  ;   :restricted? (boolean)(opt)
+  ;   :route-template (string)
+  ;   :route-title (metamorphic-content)(opt)
+  ;   :client-event (metamorphic-event)(opt)
+  ;   :server-event (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  (r router/add-route! db {...})

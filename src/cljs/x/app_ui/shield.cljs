@@ -28,7 +28,7 @@
   ;
   ; @return (boolean)
   []
-  (let [shield-element       (dom/get-element-by-id "x-app-shield")
+  (let [shield-element       (dom/get-element-by-id       "x-app-shield")
         shield-display-value (dom/get-element-style-value shield-element "display")]
        (= "none" shield-display-value)))
 
@@ -37,22 +37,24 @@
   ;
   ; @return (boolean)
   []
-  (not (shield-hidden?)))
+  (let [shield-hidden? (shield-hidden?)]
+       (not shield-hidden?)))
 
 
 
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  :x.app-ui/render-shield-content!
+(defn- render-shield-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) shield-props
   ;  {:content (*)}
-  (fn [[{:keys [content]}]]
-      (let [shield-content-element (dom/get-element-by-id "x-app-shield--content")]
-           (dom/set-element-content! shield-content-element content))))
+  [{:keys [content]}]
+  (let [shield-content-element (dom/get-element-by-id "x-app-shield--content")]
+       (dom/set-element-content! shield-content-element content)))
+
+(a/reg-handled-fx :x.app-ui/render-shield-content! render-shield-content!)
 
 
 

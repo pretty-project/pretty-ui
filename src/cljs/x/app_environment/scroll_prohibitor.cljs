@@ -120,26 +120,28 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ; Az [::enable-scroll-effects!] mellékhatás esemény működését nem lehetséges
-  ; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
-  ; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
-  ; tulajdonságának átállítása után történjen!
-  ::enable-dom-scroll!
-  #(let [body-top (dom/get-body-style-value "top")
-         scroll-y (math/positive (string/to-integer body-top))]
-        ; Engedélyezi a html elemen való görgetést
-        (dom/remove-element-style-value! (dom/get-document-element)
-                                         (param "overflow-y"))
-        ; Engedélyezi a body elemen való görgetést
-        (dom/remove-element-style!       (dom/get-body-element))
-        ; A body elem {:position ...} tulajdonságának visszaállítása miatt
-        ; szükséges a scroll-y értékét újra beállítani
-        (dom/set-scroll-y!               (param scroll-y))))
+(defn- enable-dom-scroll!
+  []
+  (let [body-top (dom/get-body-style-value "top")
+        scroll-y (math/positive (string/to-integer body-top))]
+       ; Engedélyezi a html elemen való görgetést
+       (dom/remove-element-style-value! (dom/get-document-element)
+                                        (param "overflow-y"))
+       ; Engedélyezi a body elemen való görgetést
+       (dom/remove-element-style!       (dom/get-body-element))
+       ; A body elem {:position ...} tulajdonságának visszaállítása miatt
+       ; szükséges a scroll-y értékét újra beállítani
+       (dom/set-scroll-y!               (param scroll-y))))
 
-(a/reg-handled-fx
-  ::disable-dom-scroll!
-  #(let [scroll-y (dom/get-scroll-y)
+; Az [::enable-scroll-effects!] mellékhatás esemény működését nem lehetséges
+; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
+; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
+; tulajdonságának átállítása után történjen!
+(a/reg-handled-fx ::enable-dom-scroll! enable-dom-scroll!)
+
+(defn- disable-dom-scroll!
+  []
+  (let [scroll-y (dom/get-scroll-y)
          body-top (math/negative scroll-y)
          ; A body elemen való görgetés letiltása, annak {:position "fixed"}
          ; tulajdonságának beállításával történik.
@@ -157,6 +159,8 @@
        ; Letiltja a body elemen való görgetést
        (dom/set-element-style! (dom/get-body-element)
                                (param body-style))))
+
+(a/reg-handled-fx ::disable-dom-scroll! disable-dom-scroll!)
 
 
 

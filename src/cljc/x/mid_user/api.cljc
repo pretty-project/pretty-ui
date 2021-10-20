@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-user.api
-    (:require [x.mid-user.engine :as engine]))
+    (:require [x.mid-user.engine          :as engine]
+              [x.mid-user.account-handler :as account-handler]))
 
 
 
@@ -26,3 +27,6 @@
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
+
+; x.mid-user.account-handler
+(def user-account-valid? account-handler/user-account-valid?)

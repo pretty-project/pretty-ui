@@ -39,44 +39,44 @@
 ;; -- Side effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::add-event-listener!
+(defn- add-event-listener!
   ; @param (string) type
   ; @param (function) listener
   ; @param (string)(opt) element-id
   ;  Default: js/window
-  ;
-  ; @usage
-  ;  (defn handler-f [e] (do-something!))
-  ;  [::add-event-listener! "mousemove" handler-f]}
-  (fn [[type listener element-id]]
-      (let [target (element-id->target element-id)]
-           (dom/add-event-listener! type listener target))))
+  [type listener & [element-id]]
+  (let [target (element-id->target element-id)]
+       (dom/add-event-listener! type listener target)))
 
-(a/reg-handled-fx
-  ::remove-event-listener!
+; @usage
+;  (defn handler-f [e] (do-something!))
+;  [::add-event-listener! "mousemove" handler-f]}
+(a/reg-handled-fx ::add-event-listener! add-event-listener!)
+
+(defn- remove-event-listener!
   ; @param (string) type
   ; @param (function) listener
   ; @param (string)(opt) element-id
   ;  Default: js/window
-  ;
-  ; @usage
-  ;  (defn handler-f [e] (do-something!))
-  ;  [::remove-event-listener! "mousemove" handler-f]}
-  (fn [[type listener element-id]]
-      (let [target (element-id->target element-id)]
-           (dom/remove-event-listener! type listener target))))
+  [type listener & [element-id]]
+  (let [target (element-id->target element-id)]
+       (dom/remove-event-listener! type listener target)))
 
-(a/reg-handled-fx
-  ::add-event!
+; @usage
+;  (defn handler-f [e] (do-something!))
+;  [::add-event-listener! "mousemove" handler-f]}
+(a/reg-handled-fx ::remove-event-listener! remove-event-listener!)
+
+(defn- add-event!
   ; @param (string) type
   ; @param (metamorphic-event) event
   ; @param (string)(opt) element-id
   ;  Default: js/window
-  ;
-  ; @usage
-  ;  [::add-event! "mousemove" [:do-something!]]}
-  (fn [[type event element-id]]
-      (let [listener #(a/dispatch event)
-            target    (element-id->target element-id)]
-           (dom/add-event-listener! type listener target))))
+  [type event & [element-id]]
+  (let [listener #(a/dispatch event)
+        target    (element-id->target element-id)]
+       (dom/add-event-listener! type listener target)))
+
+; @usage
+;  [::add-event! "mousemove" [:do-something!]]}
+(a/reg-handled-fx ::add-event! add-event!)

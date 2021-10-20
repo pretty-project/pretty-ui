@@ -25,6 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-user.account-handler
+(def user-account-valid?    account-handler/user-account-valid?)
 (def get-user-id            account-handler/get-user-id)
 (def get-user-email-address account-handler/get-user-email-address)
 (def get-user-roles         account-handler/get-user-roles)

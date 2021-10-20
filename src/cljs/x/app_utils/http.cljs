@@ -56,8 +56,7 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::send-request!
+(defn- send-request!
   ; @param (keyword)(opt) request-id
   ; @param (map) request-props
   ;  {:body (*)(opt)
@@ -72,24 +71,27 @@
   ;   :timeout (ms)(opt)
   ;   :uri (string)
   ;    "/sample-uri"}
-  ;
-  ; @usage
-  ;  [:x.app-utils.http/send-request! {...}]
-  ;
-  ; @usage
-  ;  [:x.app-utils.http/send-request! :my-request {...}]
-  ;
-  ; @usage
-  ;  (a/reg-event-fx ::my-error-handler    (fn [_ [_ request-id server-response]]))
-  ;  (a/reg-event-fx ::my-handler          (fn [_ [_ request-id server-response]]))
-  ;  (a/reg-event-fx ::my-progress-handler (fn [_ [_ request-id request-progress]]))
-  ;  [:x.app-utils.http/send-request! {:error-handler-event    ::my-error-handler
-  ;                                    :handler-event          ::my-handler
-  ;                                    :method                 :post
-  ;                                    :progress-handler-event ::my-progress-handler
-  ;                                    :uri                    "/my-uri"}]
-  (fn [param-vector]
-      (let [request-id    (a/param-vector->first-id    param-vector)
-            request-props (a/param-vector->first-props param-vector)
-            request-props (a/prot request-id request-props request-props-prototype)]
-           (http/send-request! request-id request-props))))
+  ([request-props]
+   (send-request! nil request-props))
+
+  ([request-id request-props]
+   (let [request-id    (a/id   request-id)
+         request-props (a/prot request-id request-props request-props-prototype)]
+        (http/send-request! request-id request-props))))
+
+; @usage
+;  [:x.app-utils.http/send-request! {...}]
+;
+; @usage
+;  [:x.app-utils.http/send-request! :my-request {...}]
+;
+; @usage
+;  (a/reg-event-fx ::my-error-handler    (fn [_ [_ request-id server-response]]))
+;  (a/reg-event-fx ::my-handler          (fn [_ [_ request-id server-response]]))
+;  (a/reg-event-fx ::my-progress-handler (fn [_ [_ request-id request-progress]]))
+;  [:x.app-utils.http/send-request! {:error-handler-event    ::my-error-handler
+;                                    :handler-event          ::my-handler
+;                                    :method                 :post
+;                                    :progress-handler-event ::my-progress-handler
+;                                    :uri                    "/my-uri"}]
+(a/reg-handled-fx ::send-request! send-request!)

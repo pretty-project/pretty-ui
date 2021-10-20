@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v1.2.0
-; Compatibility: x3.9.9
+; Version: v1.2.8
+; Compatibility: x4.4.2
 
 
 
@@ -977,14 +977,6 @@
         (re-frame/reg-event-fx event-id interceptors
           #(metamorphic-effects->effects-map (handler-function %1 %2))))))
 
-; WARNING! DEPRECATED! DO NOT USE!
-;(defn reg-handled-fx
-;  [handler-id handler-function & params]
-;  (re-frame/reg-fx handler-id handler-function)
-;  (re-frame/reg-event-fx handler-id
-;    (fn [_ [_ params]] {handler-id params})))
-; WARNING! DEPRECATED! DO NOT USE!
-
 (defn reg-handled-fx
   ; Kezelt mellékhatás-események (Handled side-effect events)
   ;
@@ -995,31 +987,24 @@
   ; @param (function) handler-function
   ;
   ; @usage
-  ;  (reg-handled-fx :my-event (fn [[a b]]))
+  ;  (a/reg-handled-fx :my-event (fn []))
+  ;
+  ; @usage
+  ;  (a/reg-handled-fx :my-event (fn [a b]))
   ;
   ; @example
   ;  (a/reg-handled-fx
   ;   :you-are-awesome!
-  ;   (fn [[a b]]))
+  ;   (fn [a b]))
   ;
-  ;  (reg-event-fx
+  ;  (a/reg-event-fx
   ;   :happy-events
   ;   (fn [_ _]
   ;       {:you-are-awesome! [a b]
   ;        :dispatch [:you-are-awesome! a b]))
-  ;
-  ; @example
-  ;  (defn- add-fruit! [[fruit color]])
-  ;  (a/reg-handled-fx :add-fruit! #(add-fruit! %)
-  ;
-  ; @example
-  ;  (defn- add-fruit! [fruit color])
-  ;  (a/reg-handled-fx :add-fruit! #(apply add-fruit! %))
   [event-id handler-function]
-  (re-frame/reg-fx event-id handler-function)
-  (re-frame/reg-event-fx event-id
-    (fn [_ event-vector]
-        {event-id (event-vector->param-vector event-vector)})))
+  (re-frame/reg-fx       event-id (fn [param-vector]   (apply handler-function param-vector)))
+  (re-frame/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
 
 
 

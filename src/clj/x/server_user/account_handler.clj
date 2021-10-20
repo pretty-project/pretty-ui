@@ -14,12 +14,21 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.account-handler
-    (:require [local-db.api       :as local-db]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :as map]
-              [ring.util.response :refer [redirect]]
-              [server-fruits.http :as http]
-              [x.mid-user.api     :as user]))
+    (:require [local-db.api               :as local-db]
+              [mid-fruits.candy           :refer [param return]]
+              [mid-fruits.map             :as map]
+              [ring.util.response         :refer [redirect]]
+              [server-fruits.http         :as http]
+              [x.mid-user.account-handler :as account-handler]
+              [x.server-user.engine       :as engine]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.mid-user.account-handler
+(def user-account-valid? account-handler/user-account-valid?)
 
 
 
@@ -38,7 +47,7 @@
 ;   :user-account/roles (strings in vector)}
 (def ANONYMOUS-USER-ACCOUNT {:user-account/email-address (param nil)
                              :user-account/id            (param nil)
-                             :user-account/roles         [user/UNIDENTIFIED-USER-ROLE]})
+                             :user-account/roles         [engine/UNIDENTIFIED-USER-ROLE]})
 
 
 
@@ -108,7 +117,7 @@
   [request]
   (let [account-id (http/request->session-param request :user-account/id)
         user-roles (http/request->session-param request :user-account/roles)]
-       (and (user/user-roles->user-identified? user-roles)
+       (and (engine/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))
 
 

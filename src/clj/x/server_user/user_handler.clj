@@ -14,11 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.user-handler
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mongo-db.api      :as mongo-db]
-              [x.server-core.api :as a]
-              [x.server-db.api   :as db]))
+    (:require [mid-fruits.candy           :refer [param return]]
+              [mid-fruits.map             :as map]
+              [mongo-db.api               :as mongo-db]
+              [x.mid-user.account-handler :as account-handler]
+              [x.server-core.api          :as a]
+              [x.server-db.api            :as db]))
 
 
 
@@ -68,10 +69,14 @@
   ;  {}
   [user-props]
   (let [user-props   (a/prot user-props user-props-prototype)
-        user-account (user-props->user-account user-props)]))
-       ;(println (str user-account))
+        user-account (user-props->user-account user-props)]
+       (if (and (account-handler/user-account-valid? user-account))
+            ; Check if email exists!!!
+           (println (str user-account)))))
+;                (mongo-db/document-not-ex)))))
+
        ;(println (str (mongo-db/add-document! "user_accounts" user-account)))))
 
 ; @usage
 ;  [:x.server-user/add-user! {...}]
-(a/reg-handled-fx :x.server-user/add-user! #(apply add-user! %))
+(a/reg-handled-fx :x.server-user/add-user! add-user!)

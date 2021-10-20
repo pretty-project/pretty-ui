@@ -20,14 +20,8 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(a/reg-handled-fx
-  :x.server-developer/write-to-console!
-  ; @param (*) content
-  (fn [[content]]
-      (debug/console content)))
 
 (a/reg-event-fx
   :x.server-developer/dump-db!

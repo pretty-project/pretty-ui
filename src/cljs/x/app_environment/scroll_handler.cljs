@@ -164,48 +164,46 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::set-scroll-y!
+(defn- set-scroll-y!
   ; @param (n) integer
-  ;
-  ; @usage
-  ; [:x.app-environment.scroll-handler/set-scroll-y! 100]
-  (fn [[n]] (dom/set-scroll-y! n)))
+  [n]
+  (dom/set-scroll-y! n))
 
-(a/reg-handled-fx
-  ::scroll-to-top!
-  ; @param (n) integer
-  ;
-  ; @usage
-  ; [:x.app-environment.scroll-handler/scroll-to-top!]
-  (fn [] (dom/set-scroll-y! 0)))
+; @usage
+; [:x.app-environment.scroll-handler/set-scroll-y! 100]
+(a/reg-handled-fx ::set-scroll-y! set-scroll-y!)
 
-(a/reg-handled-fx
-  ::scroll-to-element-top!
+(defn- scroll-to-top!
+  []
+  (dom/set-scroll-y! 0))
+
+; @usage
+; [:x.app-environment.scroll-handler/scroll-to-top!]
+(a/reg-handled-fx ::scroll-to-top! scroll-to-top!)
+
+(defn- scroll-to-element-top!
   ; @param (string) element-id
   ; @param (integer)(opt) offset
-  ;
-  ; @usage
-  ; [:x.app-environment.scroll-handler/scroll-to-element-top! "my-element" 50]
-  (fn [[element-id offset]]
-      (dom/scroll-to-element-top! (dom/get-element-by-id element-id)
-                                  (param offset))))
+  [element-id offset]
+  (dom/scroll-to-element-top! (dom/get-element-by-id element-id)
+                              (param offset)))
 
-(a/reg-handled-fx
-  ::listen-to-scroll!
-  #(dom/add-event-listener! "scroll" scroll-listener))
+; @usage
+; [:x.app-environment.scroll-handler/scroll-to-element-top! "my-element" 50]
+(a/reg-handled-fx ::scroll-to-element-top! scroll-to-element-top!)
+
+(defn- listen-to-scroll!
+  []
+  (dom/add-event-listener! "scroll" scroll-listener))
+
+(a/reg-handled-fx ::listen-to-scroll! listen-to-scroll!)
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ::initialize!
-  {:dispatch-n [[::listen-to-scroll!]
-                [::update-scroll-data!]]})
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot {:dispatch-n [[::listen-to-scroll!]
+                              [::update-scroll-data!]]}})

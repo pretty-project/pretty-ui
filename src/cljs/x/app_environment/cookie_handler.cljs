@@ -479,8 +479,7 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::store-browser-cookie!
+(defn- store-browser-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) cookie-id
@@ -492,28 +491,34 @@
   ;   :secure (boolean)
   ;   :same-site (string)
   ;   :value (*)}
-  (fn [[cookie-id {:keys [max-age path domain secure same-site value] :as cookie-props}]]
-      (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)
-            cookie-body (str {:cookie-id cookie-id :value value})]
-           (try (.set goog.net.cookies cookie-name cookie-body
-                      max-age path domain secure same-site)
-                (a/dispatch [::->cookie-set cookie-id cookie-props])))))
+  [cookie-id {:keys [max-age path domain secure same-site value] :as cookie-props}]
+  (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)
+        cookie-body (str {:cookie-id cookie-id :value value})]
+       (try (.set goog.net.cookies cookie-name cookie-body
+                  max-age path domain secure same-site)
+            (a/dispatch [::->cookie-set cookie-id cookie-props]))))
 
-(a/reg-handled-fx
-  ::remove-browser-cookie!
+(a/reg-handled-fx ::store-browser-cookie! store-browser-cookie!)
+
+(defn- remove-browser-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) cookie-id
-  (fn [[cookie-id cookie-props]]
-      (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)]
-           (try (.remove goog.net.cookies cookie-name COOKIE-PATH COOKIE-DOMAIN)
-                (a/dispatch [::->cookie-removed cookie-id])))))
+  ; @param (map) cookie-props
+  [cookie-id cookie-props]
+  (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)]
+       (try (.remove goog.net.cookies cookie-name COOKIE-PATH COOKIE-DOMAIN)
+            (a/dispatch [::->cookie-removed cookie-id]))))
 
-(a/reg-handled-fx
-  ::remove-browser-cookies!
+(a/reg-handled-fx ::remove-browser-cookie! remove-browser-cookie!)
+
+(defn- remove-browser-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  #(try (.clear goog.net.cookies)
-        (a/dispatch [::->cookies-removed])))
+  []
+  (try (.clear goog.net.cookies
+        (a/dispatch [::->cookies-removed]))))
+
+(a/reg-handled-fx ::remove-browser-cookies! remove-browser-cookies!)
 
 
 

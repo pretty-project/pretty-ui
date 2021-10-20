@@ -17,7 +17,6 @@
     (:require [local-db.api       :as local-db]
               [mid-fruits.candy   :refer [param return]]
               [server-fruits.http :as http]
-              [x.mid-user.api     :as user]
               [x.server-db.api    :as db]))
 
 

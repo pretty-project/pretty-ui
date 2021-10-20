@@ -19,7 +19,7 @@
 
 
 
-;; -- Validators --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn string->valid-string
@@ -35,6 +35,21 @@
   ; TODO Use SPEC!
   (string/trim (str n)))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn pin-valid?
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (form/pin-valid? "0000")
+  ;
+  ; @return (boolean)
+  [n]
+  (string/length? n 4))
+
 (defn password-valid?
   ; Password must contain at least 6 characters, both uppercase
   ; and lowercase letters, and a number!
@@ -47,9 +62,9 @@
   ; @return (boolean)
   [n]
   ; TODO Use SPEC!
-  (and (string/min-length?                n 6)
-       (string/contains-uppercase-letter? n)
-       (mixed/mixed->contains-number?     n)))
+  (boolean (and (string/min-length?                n 6)
+                (string/contains-uppercase-letter? n)
+                (mixed/mixed->contains-number?     n))))
 
 (defn email-address-valid?
   ; @param (string) n

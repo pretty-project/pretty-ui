@@ -99,16 +99,16 @@
 
 (defn- ->server-installed
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   (println details/app-name "installed version:" details/app-version)
-  (println details/app-name "exiting ...")
   (let [install-details (install-details-prototype)]
        (if (io/file-exists?       a/SERVER-CONFIG-FILEPATH)
-           (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)
-               (System/exit 0))
+           (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))
            (do (io/create-file!   a/SERVER-CONFIG-FILEPATH)
-               (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)
-               (System/exit 0)))))
+               (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))))
+  ;
+  (println details/app-name "exiting ...")
+  (System/exit 0))
 
 (a/reg-handled-fx :x.server-installer/->server-installed ->server-installed)
 

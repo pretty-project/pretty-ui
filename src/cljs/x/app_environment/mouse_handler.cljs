@@ -52,21 +52,31 @@
 ;; Side-effect events ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-fx
-  ::listen-to-mousemove!
-  #(dom/add-event-listener! "mousemove" mousemove-listener))
+(defn- listen-to-mousemove!
+  ; @return (?)
+  []
+  (dom/add-event-listener! "mousemove" mousemove-listener))
 
-(a/reg-fx
-  ::stop-listen-to-mousemove!
-  #(dom/remove-event-listener! "mousemove" mousemove-listener))
+(a/reg-fx ::listen-to-mousemove! listen-to-mousemove!)
 
-(a/reg-handled-fx
-  ::prevent-selecting!
+(defn- stop-listen-to-mousemove!
+  ; @return (?)
+  []
+  (dom/remove-event-listener! "mousemove" mousemove-listener))
+
+(a/reg-fx ::stop-listen-to-mousemove! stop-listen-to-mousemove!)
+
+(defn- prevent-selecting!
   ; Letiltja a mousedown eventet, a nem kivant szovegkijelolesek
   ; megakadalyozasa vegett
-  #(dom/add-event-listener! "mousedown" dom/select-preventer))
+  []
+  (dom/add-event-listener! "mousedown" dom/select-preventer))
   ; + (add-event-listener! "touchstart" #(.preventDefault %)) ?
 
-(a/reg-handled-fx
-  ::enable-selecting!
-  #(dom/remove-event-listener! "mousedown" dom/select-preventer))
+(a/reg-handled-fx ::prevent-selecting! prevent-selecting!)
+
+(defn- enable-selecting!
+  []
+  (dom/remove-event-listener! "mousedown" dom/select-preventer))
+
+(a/reg-handled-fx ::enable-selecting! enable-selecting!)

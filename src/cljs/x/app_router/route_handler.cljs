@@ -762,27 +762,38 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-fx
-  ::configure-navigation!
+(defn- configure-navigation!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  #(accountant/configure-navigation! ACCOUNTANT-CONFIG))
+  ;
+  ; @return (?)
+  []
+  (accountant/configure-navigation! ACCOUNTANT-CONFIG))
 
-(a/reg-handled-fx
-  ::navigate!
+(a/reg-fx ::configure-navigation! configure-navigation!)
+
+(defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
-  (fn [[route-string]] (accountant/navigate! route-string)))
+  [route-string]
+  (accountant/navigate! route-string))
 
-(a/reg-handled-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ::navigate-back!
-  #(.back (.-history js/window)))
+(a/reg-handled-fx ::navigate! navigate!)
 
-(a/reg-handled-fx
-  :x.app-router/dispatch-current-route!
+(defn- navigate-back!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  #(accountant/dispatch-current!))
+  []
+  (let [history (.-history js/window)]
+       (.back history)))
+
+(a/reg-handled-fx ::navigate-back! navigate-back!)
+
+(defn- dispatch-current-route!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (accountant/dispatch-current!))
+
+(a/reg-handled-fx :x.app-router/dispatch-current-route! dispatch-current-route!)
 
 
 

@@ -39,6 +39,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- server-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (map) server-props
   ;  {:port (integer or string)}
   ;
@@ -60,6 +62,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- reset-server-state!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @return (map)
   [db _]
   (dissoc-in db [::primary :meta-items :server-state]))
@@ -67,6 +71,8 @@
 (event-handler/reg-event-db :x.server-core/reset-server-state! reset-server-state!)
 
 (defn- store-server-state!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (?) server-state
   ;
   ; @return (map)
@@ -80,17 +86,22 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-handled-fx
-  :x.server-core/run-server!
+(defn- run-server!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (map) server-props
   ;  {:join? (boolean)(opt)
   ;   :port (integer)(opt)}
-  (fn [[server-props]]
-      (let [server-props (engine/prot server-props server-props-prototype)
-            server-state (run-server (ring-handler)
-                                     (param server-props))]
-           (event-handler/dispatch [:x.server-core/store-server-state! server-state])
+  [server-props]
+  (let [server-props (engine/prot server-props server-props-prototype)
+        server-state (run-server (ring-handler)
+                                 (param server-props))]
+       (event-handler/dispatch [:x.server-core/store-server-state! server-state])
 
-           ; *
-           (let [server-port (get server-props :port)]
-                (println details/app-name "started on port:" server-port)))))
+       ; *
+       (let [server-port (get server-props :port)]
+            (println details/app-name "started on port:" server-port))))
+
+; @usage
+;  [:x.server-core/run-server! {...}]
+(event-handler/reg-handled-fx :x.server-core/run-server! run-server!)

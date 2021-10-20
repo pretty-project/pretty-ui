@@ -341,21 +341,23 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
+(defn- prevent-default!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
-  ::prevent-default!
-  (fn [[key-code]]
-      (swap! PREVENTED-KEYS vector/conj-item-once key-code)))
+  [key-code]
+  (swap! PREVENTED-KEYS vector/conj-item-once key-code))
 
-(a/reg-handled-fx
+(a/reg-handled-fx ::prevent-default! prevent-default!)
+
+(defn- enable-default!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
-  ::enable-default!
-  (fn [[key-code]]
-      (swap! PREVENTED-KEYS vector/remove-item key-code)))
+  [key-code]
+  (swap! PREVENTED-KEYS vector/remove-item key-code))
+
+(a/reg-handled-fx ::enable-default! enable-default!)
 
 
 

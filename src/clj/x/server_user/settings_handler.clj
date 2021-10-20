@@ -18,7 +18,6 @@
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map]
               [server-fruits.http :as http]
-              [x.mid-user.api     :as user]
               [x.server-db.api    :as db]))
 
 

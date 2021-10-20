@@ -97,6 +97,17 @@
 
 
 
+;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- listen-to-viewport-resize!
+  []
+  (dom/add-event-listener! "resize" resize-listener))
+
+(a/reg-handled-fx ::listen-to-viewport-resize! listen-to-viewport-resize!)
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -107,10 +118,6 @@
       [:x.app-environment.element-handler/set-attribute!
        "x-body-container" "data-viewport-profile"
        (keyword/to-string (dom/get-viewport-profile))]))
-
-(a/reg-handled-fx
-  ::listen-to-viewport-resize!
-  #(dom/add-event-listener! "resize" resize-listener))
 
 
 

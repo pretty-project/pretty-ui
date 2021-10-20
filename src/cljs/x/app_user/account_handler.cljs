@@ -14,12 +14,21 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler
-    (:require [mid-fruits.candy  :refer [param]]
-              [mid-fruits.time   :as time]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-user.engine :as engine]))
+    (:require [mid-fruits.candy           :refer [param]]
+              [mid-fruits.time            :as time]
+              [mid-fruits.vector          :as vector]
+              [x.app-core.api             :as a :refer [r]]
+              [x.app-db.api               :as db]
+              [x.app-user.engine          :as engine]
+              [x.mid-user.account-handler :as account-handler]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.mid-user.account-handler
+(def user-account-valid? account-handler/user-account-valid?)
 
 
 

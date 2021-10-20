@@ -329,8 +329,7 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
-  ::handle-drag-end!
+(defn- handle-drag-end!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (?) event
@@ -341,18 +340,20 @@
   ; @param (vector) sortable-state
   ;  [(vector) data-order
   ;   (function) set-items-f)]
-  (fn [[event {:keys [on-drag-end on-order-change partition-id]}
-              [data-order set-items-f :as sortable-state]]]
-      (if (event->data-order-changed? event sortable-state)
-          ; If data-order changed ...
-          (let [updated-data-order (event->updated-data-order event sortable-state)]
-               (set-items-f updated-data-order)
-               (let [updated-data-order (mapv keyword (json/json->clj updated-data-order))]
-                    (a/dispatch [:x.app-db/update-data-order! partition-id updated-data-order])
-                    (a/dispatch-some on-drag-end)
-                    (a/dispatch-some on-order-change)))
-          ; If data-order unchanged ...
-          (a/dispatch-some on-drag-end))))
+  [event {:keys [on-drag-end on-order-change partition-id]}
+         [data-order set-items-f :as sortable-state]]
+  (if (event->data-order-changed? event sortable-state)
+      ; If data-order changed ...
+      (let [updated-data-order (event->updated-data-order event sortable-state)]
+           (set-items-f updated-data-order)
+           (let [updated-data-order (mapv keyword (json/json->clj updated-data-order))]
+                (a/dispatch [:x.app-db/update-data-order! partition-id updated-data-order])
+                (a/dispatch-some on-drag-end)
+                (a/dispatch-some on-order-change)))
+      ; If data-order unchanged ...
+      (a/dispatch-some on-drag-end)))
+
+(a/reg-handled-fx ::handle-drag-end! handle-drag-end!)
 
 
 

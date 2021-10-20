@@ -52,16 +52,16 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-handled-fx
+(defn- play-sound!
   ; @param (keyword) sound-id
-  ;
-  ; @usage
-  ;  [:x.app-ui/play-sound! :click-1]
-  :x.app-ui/play-sound!
-  (fn [[sound-id]]
-      (let [catalog-id      (sound-id->catalog-id  sound-id)
-            catalog-element (dom/get-element-by-id catalog-id)]
-           (.play catalog-element))))
+  [sound-id]
+  (let [catalog-id      (sound-id->catalog-id  sound-id)
+        catalog-element (dom/get-element-by-id catalog-id)]
+       (.play catalog-element)))
+
+; @usage
+;  [:x.app-ui/play-sound! :click-1]
+(a/reg-handled-fx :x.app-ui/play-sound! play-sound!)
 
 
 
