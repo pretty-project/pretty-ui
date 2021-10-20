@@ -1,6 +1,7 @@
 
 (ns extensions.clients.views
-    (:require [x.app-core.api :as a]))
+    (:require [x.app-core.api :as a]
+              [plugins.item-lister.core :refer [item-lister]]))
 
 
 
@@ -30,12 +31,20 @@
   :x.app-extensions.clients/render!
   [:x.app-ui/set-surface!
    ::view
-   {:content #'view
-    :layout :unboxed}])
+   {:content #'item-lister
+    :content-props {:value-path [:a-items]
+                    :download-items-event [:clients/download-clients!]}}])
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route!
-                 ::route
-                 {:route-event    [:x.app-extensions.clients/render!]
-                  :route-template "/clients/:client-id"}]})
+  {:on-app-boot
+   {:dispatch-n [[:x.app-router/add-route!
+                  ::route
+                  {:restricted?    true
+                   :route-event    [:x.app-extensions.clients/render!]
+                   :route-template "/clients"}]
+                 [:x.app-router/add-route!
+                  ::extended-route
+                  {:restricted?    true
+                   :route-event    [:x.app-extensions.clients/render!]
+                   :route-template "/clients/:client-id"}]]}})

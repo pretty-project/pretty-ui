@@ -1,19 +1,4 @@
-
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.05.08
-; Description:
-; Version: v1.6.2
-; Compatibility: x4.3.7
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(ns x.app-plugins.sortable-2
+(ns plugins.sortable.core
     (:require ["@dnd-kit/core"      :as core]
               ["@dnd-kit/sortable"  :as sortable]
               ["@dnd-kit/utilities" :as utilities]
@@ -821,21 +806,21 @@
   ;   :value-path (item-path vector)}
   ;
   ; @usage
-  ;  [plugins/sortable {...}]
+  ;  [sortable {...}]
   ;
   ; @usage
-  ;  [plugins/sortable :my-sortable {...}]
+  ;  [sortable :my-sortable {...}]
   ;
   ; @usage
   ;  (defn my-element [sortable-id item-dex item] [:div ...])
-  ;  [plugins/sortable :my-sortable {:element    #'my-element
-  ;                                  :value-path [:my :items]}]
+  ;  [sortable :my-sortable {:element    #'my-element
+  ;                          :value-path [:my :items]}]
   ;
   ; @usage
   ;  (defn my-element [sortable-id item-dex item common-props] [:div ...])
-  ;  [plugins/sortable :my-sortable {:common-props {...}
-  ;                                  :element      #'my-element
-  ;                                  :value-path   [:my :items]}]
+  ;  [sortable :my-sortable {:common-props {...}
+  ;                          :element      #'my-element
+  ;                          :value-path   [:my :items]}]
   ;
   ; @return (component)
   ([sortable-props]

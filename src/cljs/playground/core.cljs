@@ -33,7 +33,6 @@
               [x.app-developer.api   :as developer]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
-              [x.app-plugins.api     :as plugins]
               [x.app-sync.api        :as sync]
               [x.app-ui.api          :as ui]
 
@@ -230,38 +229,6 @@
                                   :options-path [:debug-mcb :options]
                                   :value-path   [:debug-mcb :value]}]])
 
-(defn hello
-  [sortable-id item-dex item]
-  [:div
-    {:style {:height "72px" :display :flex :flex-directory :column :justify-content :center
-             :align-items :center
-             :border "1px solid black"
-             :user-select :none
-             :background :white}}
-    (str "sortable-id: " sortable-id)
-    [:br] (str "render-dex: "  item-dex)
-    [:br] (str "item: "        item)])
-
-(defn- sortable
-  [_ _]
-  [:<> ;[plugins/sortable
-        ; {:element #'hello
-        ;  :partition-id ::dbg
-
-       [elements/button {:label "Add more items!"
-                         :on-click [:x.app-db/apply! [::dbg] vector/concat-items ["0000" "_____" "****"]]}]
-
-       [elements/button {:label "Add more item!"
-                         ;:on-click [:x.app-db/apply! [::dbg] vector/conj-item "p"]}]
-                         :on-click [:x.app-plugins/add-sortable-item! :my-sortable "####"]}]
-
-       [elements/button {:label "Remove 2nd item!"
-                         :on-click [:x.app-plugins/remove-sortable-item! :my-sortable 1]}]
-
-       [plugins/sortable-2
-         :my-sortable
-         {:element #'hello
-          :value-path [::dbg]}]])
 
 (defn- view
   []
@@ -289,12 +256,9 @@
                       :on-click [:x.app-ui/blow-bubble! {:content "Hey-ho"}]}]
        [elements/box {:content #'form
                       :label   "Form"
-                      :horizontal-align :left}]
+                      :horizontal-align :left}]])
                       ;:subscriber [::xxkk]}]
-       [elements/box {:content #'sortable
-                      :label   "Sortable"
-                      :horizontal-align :left
-                      :subscriber [::get-view-props]}]])
+
 
 
 
