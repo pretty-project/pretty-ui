@@ -108,15 +108,12 @@
   ;
   ; @return (keyword or nil)
   [document]
-  (let [keys     (map/get-keys document)
-        ; A MongoDB adatbázisban tárolt dokumentumoknál előfordulhat,
-        ; hogy az első vagy utolsó elem az :_id kulcs, ami nem rendelkezik névtérrel!
-        ; {:_id "..." :directory/id "..." :directory/alias "..."}
-        ; Szükséges több kulcson is vizsgálni a névteret.
-        first-key (first keys)
-        last-key  (last  keys)]
-       (or (keyword/get-namespace first-key)
-           (keyword/get-namespace last-key))))
+  ; A MongoDB adatbázisban tárolt dokumentumoknál előfordulhat,
+  ; hogy valamelyik elem az :_id kulcs, ami nem rendelkezik névtérrel!
+  ; {:_id "..." :directory/id "..." :directory/alias "..."}
+  ; Szükséges több kulcson is vizsgálni a névteret.
+  (some #(keyword/get-namespace %)
+         (map/get-keys document)))
 
 (defn document->namespace?
   ; @param (map) document

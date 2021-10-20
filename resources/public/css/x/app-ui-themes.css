@@ -34,7 +34,7 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   /* App background */
-  --app-background:             var( --white-dark );
+  --app-background:             var( --white );
   /* Background color */
   --background-color:           var( --white-light );
   --background-color-muted:     var( --grey-x-light );
