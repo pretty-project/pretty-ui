@@ -232,9 +232,9 @@
 
 (defn- view
   []
-  [:<> [:div {:style {:position :sticky :top "100px"}}]
+  [:<> [:div {:style {:position :sticky :top "100px"}}
              ;"Sticky"]
-       [elements/button {:layout :icon-button :icon :add :label :add-new! :variant :transparent}]
+        [elements/button {:layout :icon-button :icon :add :label :add-new! :variant :transparent}]]
        [elements/box {:content #'playground
                       :icon    :sports_esports
                       :label   "Playground"
@@ -269,8 +269,8 @@
    ::view
    {:content     #'view
    ;:control-sidebar {:content #'control-sidebar}
-    :control-bar   {:content #'ui/go-back-surface-label-bar
-                    :content-props {:label "Playground"}}
+    :label-bar   {:content #'ui/go-back-surface-label-bar
+                  :content-props {:label "Playground"}}
 ;    :label-bar   {:content #'ui/go-back-surface-label-bar}
 ;                  :content-props {:label "Playground"}}
     :initializer ;[:x.app-db/set-item! [:dbg] ["a" "b" "c"]]}])

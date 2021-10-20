@@ -60,7 +60,7 @@
   [db [surface-id surface-props]]
   (merge {:hide-animated?   true
           :reveal-animated? true
-          :trim-content?    true
+          :trim-content?    false
           :update-animated? false}
          (param surface-props)))
 
@@ -182,7 +182,7 @@
   ;    XXX#8711
   ;   :trim-content? (boolean)(opt)
   ;    A surface felületéről az X tengelyen túlméretes tartalom elrejtése.
-  ;    Default: true
+  ;    Default: false
   ;    BUG#9330
   ;    A surface felületén megjelenített {position: sticky;} tulajdonságú
   ;    tartalmak pozícionálása nem kompatibilis a {:trim-content? true}
