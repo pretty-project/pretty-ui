@@ -17,5 +17,5 @@
 (def remove-document!              engine/remove-document!)
 (def duplicate-document!           engine/duplicate-document!)
 (def reorder-documents!            engine/reorder-documents!)
-(def count-documents-with-pipeline engine/count-documents-with-pipeline)
-(def find-documents-with-pipeline  engine/find-documents-with-pipeline)
+(def count-documents-by-pipeline   engine/count-documents-by-pipeline)
+(def find-documents-by-pipeline    engine/find-documents-by-pipeline)
