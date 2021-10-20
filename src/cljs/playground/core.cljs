@@ -232,11 +232,9 @@
 
 (defn- view
   []
-  [:<> [:div {:style {:position :sticky :top "100px"}}
-             "Sticky"]
-       [:div "id->placeholder"
-             [:br]
-             (str (sync/id->placeholder "my-id"))]
+  [:<> [:div {:style {:position :sticky :top "100px"}}]
+             ;"Sticky"]
+       [elements/button {:layout :icon-button :icon :add :label :add-new! :variant :transparent}]
        [elements/box {:content #'playground
                       :icon    :sports_esports
                       :label   "Playground"

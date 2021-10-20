@@ -1615,7 +1615,8 @@ body {
 .x-button[data-layout="row"][data-variant="filled"] .x-button--body {
   padding: 0 36px }
 
-.x-button[data-variant="outlined"] .x-button--body {
+.x-button[data-variant="outlined"][data-layout="fit"] .x-button--body,
+.x-button[data-variant="outlined"][data-layout="row"] .x-button--body {
   background-color: var( --fill-color ) }
 
 /*** Button body ***/
