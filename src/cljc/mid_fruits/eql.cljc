@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-sync.query-handler
+(ns mid-fruits.eql
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
@@ -104,25 +104,30 @@
   ; @param (keyword, map, string or vector) query-question, query-action
   ;
   ; @example
-  ;  (sync/append-to-query nil :all-users)
-  ;  => "[:all-users]"
+  ;  (eql/append-to-query nil :all-users)
+  ;  =>
+  ;  "[:all-users]"
   ;
   ; @example
-  ;  (sync/append-to-query [] :all-users)
-  ;  => "[:all-users]"
+  ;  (eql/append-to-query [] :all-users)
+  ;  =>
+  ;  "[:all-users]"
   ;
   ; @example
-  ;  (sync/append-to-query "[]" :all-users)
-  ;  => "[:all-users]"
+  ;  (eql/append-to-query "[]" :all-users)
+  ;  =>
+  ;  "[:all-users]"
   ;
   ; @example
-  ;  (sync/append-to-query "[]" ":all-users")
-  ;  => "[:all-users]"
+  ;  (eql/append-to-query "[]" ":all-users")
+  ;  =>
+  ;  "[:all-users]"
   ;
   ; @example
-  ;  (sync/append-to-query [:all-users]
+  ;  (eql/append-to-query [:all-users]
   ;                        [:directory/id :my-directory])
-  ;  => "[:all-users [:directory/id :my-directory]]"
+  ;  =>
+  ;  "[:all-users [:directory/id :my-directory]]"
   ;
   ; @return (string)
   [query & query-questions]
@@ -142,20 +147,24 @@
   ; @param (nil, string or vector) additional-query
   ;
   ; @example
-  ;  (sync/concat-queries nil nil)
-  ;  => "[]"
+  ;  (eql/concat-queries nil nil)
+  ;  =>
+  ;  "[]"
   ;
   ; @example
-  ;  (sync/concat-queries [] [])
-  ;  => "[]"
+  ;  (eql/concat-queries [] [])
+  ;  =>
+  ;  "[]"
   ;
   ; @example
-  ;  (sync/concat-queries [:all-users] [:all-games])
-  ;  => "[:all-users :all-games]"
+  ;  (eql/concat-queries [:all-users] [:all-games])
+  ;  =>
+  ;  "[:all-users :all-games]"
   ;
   ; @example
-  ;  (sync/concat-queries [] "[:all-games]")
-  ;  => "[:all-games]"
+  ;  (eql/concat-queries [] "[:all-games]")
+  ;  =>
+  ;  "[:all-games]"
   ;
   ; @return (string)
   [base-query additional-query]
@@ -172,16 +181,19 @@
   ; @param (map or string)(opt) mutation-props
   ;
   ; @example
-  ;  (sync/query-action "media/recalculate-storage-usage!")
-  ;  => "(media/recalculate-storage-usage!)"
+  ;  (eql/query-action "media/recalculate-storage-usage!")
+  ;  =>
+  ;  "(media/recalculate-storage-usage!)"
   ;
   ; @example
-  ;  (sync/query-action "media/create-directory!" {:source-directory-id "root"})
-  ;  => "(media/create-directory! {:source-directory-id \"root\"})"
+  ;  (eql/query-action "media/create-directory!" {:source-directory-id "root"})
+  ;  =>
+  ;  "(media/create-directory! {:source-directory-id \"root\"})"
   ;
   ; @example
-  ;  (sync/query-action "media/create-directory!" "{:source-directory-id "root"}")
-  ;  => "(media/create-directory! {:source-directory-id \"root\"})"
+  ;  (eql/query-action "media/create-directory!" "{:source-directory-id "root"}")
+  ;  =>
+  ;  "(media/create-directory! {:source-directory-id \"root\"})"
   ;
   ; @return (string)
   [mutation-f-name & [mutation-props]]
@@ -199,12 +211,14 @@
   ; @param (keyword or string) id
   ;
   ; @example
-  ;  (sync/id->placeholder :my-id)
-  ;  => :>/my-id
+  ;  (eql/id->placeholder :my-id)
+  ;  =>
+  ;  :>/my-id
   ;
   ; @example
-  ;  (sync/id->placeholder "my-id")
-  ;  => :>/my-id
+  ;  (eql/id->placeholder "my-id")
+  ;  =>
+  ;  :>/my-id
   ;
   ; @return (keyword)
   [id]

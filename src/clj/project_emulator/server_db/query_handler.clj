@@ -12,7 +12,7 @@
               [mid-fruits.reader  :as reader]
               [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
-              [x.server-sync.api  :as sync]
+              [pathom.api         :as pathom]
 
               ; Pathom stuff
               [com.wsscode.pathom3.connect.indexes            :as pci]
@@ -49,7 +49,7 @@
 (defn process!
   ; @param (map) request
   [request]
-  (let [query       (sync/request->query request)
+  (let [query       (pathom/request->query request)
         environment (assoc ENVIRONMENT :request request)]
        (p.eql/process (param environment)
                       (param query))))

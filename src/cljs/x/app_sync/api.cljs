@@ -24,10 +24,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-sync.query-handler
-(def append-to-query  query-handler/append-to-query)
-(def concat-queries   query-handler/concat-queries)
-(def query-action     query-handler/query-action)
-(def id->placeholder query-handler/id->placeholder)
 (def get-query-answer query-handler/get-query-answer)
 
 ; x.app-sync.request-handler

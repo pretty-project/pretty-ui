@@ -18,8 +18,7 @@
               [mid-fruits.map              :as map]
               [x.app-core.api              :as a :refer [r]]
               [x.app-db.api                :as db]
-              [x.app-sync.response-handler :as response-handler]
-              [x.mid-sync.query-handler    :as query-handler]))
+              [x.app-sync.response-handler :as response-handler]))
 
 
 
@@ -31,17 +30,6 @@
 
 ; @constant (string)
 (def DEFAULT-URI "/db/query")
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-sync.query-handler
-(def append-to-query query-handler/append-to-query)
-(def concat-queries  query-handler/concat-queries)
-(def query-action    query-handler/query-action)
-(def id->placeholder query-handler/id->placeholder)
 
 
 

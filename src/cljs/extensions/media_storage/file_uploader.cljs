@@ -2,6 +2,7 @@
 (ns extensions.media-storage.file-uploader
     (:require [app-fruits.dom       :as dom]
               [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.eql       :as eql]
               [mid-fruits.io        :as io]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.math      :as math]
@@ -239,7 +240,7 @@
             form-data                (dom/file-selector->form-data file-selector non-aborted-files)
             directory-entity         (db/item-id->document-entity  destination-directory-id :directory)
             response-query-question  {directory-entity engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}
-            response-query           (sync/append-to-query engine/ROOT-DIRECTORY-QUERY response-query-question)
+            response-query           (eql/append-to-query engine/ROOT-DIRECTORY-QUERY response-query-question)
             mutation-props           {:destination-directory-id (name  destination-directory-id)
                                       :response-query           (param response-query)}
             form-data                (dom/merge-to-form-data! form-data mutation-props)

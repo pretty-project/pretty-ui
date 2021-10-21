@@ -1,22 +1,22 @@
 
 (ns mongo-db.engine
-    (:require [mid-fruits.candy            :refer [param return]]
-              [mid-fruits.gestures         :as gestures]
-              [mid-fruits.json             :as json]
-              [mid-fruits.keyword          :as keyword]
-              [mid-fruits.random           :as random]
-              [mid-fruits.string           :as string]
-              [mid-fruits.time             :as time]
-              [mid-fruits.vector           :as vector]
-              [mongo-db.connection-handler :refer [DB]]
-              [monger.collection           :as mcl]
-              [monger.conversion           :as mcv]
-              [monger.core                 :as mcr]
-              [monger.operators            :as mop :refer [$regex]]
-              [monger.query                :as mqr]
-              [x.server-core.api           :as a]
-              [x.server-db.api             :as db]
-              [x.server-dictionary.api     :as dictionary]))
+    (:require [mid-fruits.candy        :refer [param return]]
+              [mid-fruits.gestures     :as gestures]
+              [mid-fruits.json         :as json]
+              [mid-fruits.keyword      :as keyword]
+              [mid-fruits.random       :as random]
+              [mid-fruits.string       :as string]
+              [mid-fruits.time         :as time]
+              [mid-fruits.vector       :as vector]
+              [mongo-db.connection     :refer [DB]]
+              [monger.collection       :as mcl]
+              [monger.conversion       :as mcv]
+              [monger.core             :as mcr]
+              [monger.operators        :as mop :refer [$regex]]
+              [monger.query            :as mqr]
+              [x.server-core.api       :as a]
+              [x.server-db.api         :as db]
+              [x.server-dictionary.api :as dictionary]))
 
 
 
@@ -471,6 +471,8 @@
   ;  {:namespace/id (string)}
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)
+  ;    Ha a dokumentum nem létezik az adatbázisban, akkor hozzáadja a kollekcióhoz.
+  ;    A hozzáadás művelet paramétere az {:ordered? ...} tulajdonság.
   ;    Default: false}
   ;
   ; @example
@@ -487,11 +489,11 @@
   ([collection-name document]
    (update-document! collection-name document {}))
 
-  ([collection-name document {:keys [ordered?] :as options}]
+  ([collection-name document options]
    (let [document-id (db/document->document-id document)]
         (if (document-exists? document-id)
-            (save-document! collection-name document)
-            (add-document!  collection-name document options)))))
+            (save-document!   collection-name document)
+            (add-document!    collection-name document options)))))
 
 ; @usage
 ;  [:mongo-db/update-document! "my-collection" {:my-namespace/id "my-document"}]
@@ -664,7 +666,7 @@
 
 (defn reorder-documents!
   ; @param (string) collection-name
-  ; @param (vectors in vector) updated-document-order
+  ; @param (vectors in vector) document-order
   ;  [[(string) document-id
   ;    (integer) document-dex]]
   ;
@@ -672,13 +674,13 @@
   ;  (mongo-db/reorder-documents "my-collection" [["my-document" 1] ["your-document" 2]])
   ;
   ; @return (vectors in vector)
-  [collection-name updated-document-order]
+  [collection-name document-order]
   (let [namespace (get-collection-namespace collection-name)
         order-key (keyword/add-namespace    namespace :order)]
-       (doseq [[document-id document-dex] updated-document-order]
+       (doseq [[document-id document-dex] document-order]
               (mcl/update @DB collection-name {:_id document-id}
                                               {"$set" {(keyword/to-string order-key) document-dex}}))
-       (return updated-document-order)))
+       (return document-order)))
 
 
 
@@ -703,7 +705,7 @@
                        {search-key {"$regex" search-term "$options" "i"}})]
        (get-documents-count-by-query collection-name query)))
 
-(defn find-documents-by-pipeline
+(defn get-documents-by-pipeline
   ; @param (string) collection-name
   ; @param (map) options
   ;  {:max-count (integer)
@@ -713,11 +715,11 @@
   ;   :sort-by (map)}
   ;
   ; @usage
-  ;  (mongo-db/find-documents-by-pipeline "my-collection" {:max-count   50
-  ;                                                        :search-key  :my-namespace/label
-  ;                                                        :search-term "Apple"
-  ;                                                        :skip        150
-  ;                                                        :sort-by     {:my-namespace/weight -1}})
+  ;  (mongo-db/get-documents-by-pipeline "my-collection" {:max-count   50
+  ;                                                       :search-key  :my-namespace/label
+  ;                                                       :search-term "Apple"
+  ;                                                       :skip        150
+  ;                                                       :sort-by     {:my-namespace/weight -1}})
   ;
   ; @return (maps in vector)
   [collection-name {:keys [max-count search-key search-term skip sort-by] :as options}]

@@ -215,8 +215,8 @@ body[data-viewport-profile="xxs"] {
 /*** App ***/
 /* XXX#3408 */
 
---app-edge:   2vw;
---app-width: 96vw;
+--app-edge:    0vw;
+--app-width: 100vw;
 
 /*** App ***/
 
@@ -251,8 +251,8 @@ body[data-viewport-profile="xs"] {
 /*** App ***/
 /* XXX#3408 */
 
---app-edge:   2vw;
---app-width: 96vw;
+--app-edge:    0vw;
+--app-width: 100vw;
 
 /*** App ***/
 
@@ -303,6 +303,13 @@ body[data-viewport-profile="s"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
+
+/*** Flex edge ***/
+/* XXX#3408 */
+
+--flex-edge: 12px;
+
+/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -324,6 +331,13 @@ body[data-viewport-profile="m"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
+
+/*** Flex edge ***/
+/* XXX#3408 */
+
+--flex-edge: 16px;
+
+/*** Flex edge ***/
 /***** Layout *****/
 }
 

@@ -1,0 +1,125 @@
+
+/***** Material icons *****/
+
+.sortable--sensor::before {
+  font-style: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+/***** Material icons *****/
+
+
+
+/***** Item-lister *****/
+/*** Item-lister structure ***/
+
+.item-lister--structure {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100% }
+
+/*** Item-lister structure ***/
+
+/*** Item-lister search-bar ***/
+
+.item-lister--search-bar {
+  background-color: var( --background-color );
+  border-bottom-color: var( --border-color-highlight );
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  grid-column-gap: 64px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  position: sticky;
+  top: 50px }
+
+.item-lister--search-bar--buttons {
+  display: flex;
+  gap: 24px}
+
+.item-lister--search-bar--search-field {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  padding: 6px 0 }
+
+/*** Item-lister search-bar ***/
+
+/*** Item-lister items ***/
+
+.item-lister--items {
+  padding-bottom: 12px }
+
+.item-lister--items--request-indicator {
+  display: flex;
+  justify-content: center }
+
+/*** Item-lister items ***/
+/***** Item-lister *****/
+
+
+
+/***** Sortable *****/
+/*** Sortable sensor ***/
+
+.sortable--sensor {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute }
+
+.sortable--sensor[data-position="left"],
+.sortable--sensor[data-position="right"] {
+  height: 48px;
+  top: calc(50% - 24px);
+  width: 48px }
+
+.sortable--sensor[data-position="left"]  { left:  0 }
+.sortable--sensor[data-position="right"] { right: 0 }
+
+.sortable--sensor::before {
+  content: 'drag_indicator';
+  font-size: var( --icon-size-xs );
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  width: 24px }
+
+/*** Sortable sensor ***/
+
+/*** Drag overlay element ***/
+
+.sortable--drag-overlay-element {
+  cursor: grabbing;
+  height: 96px;
+  transform: translate(-25%, -25%);
+  width: 96px;
+  z-index: 9999 }
+
+/*** Drag overlay element ***/
+
+/*** Sortable element ***/
+
+.sortable--element[data-drag-status="inactive"]:hover .x-element-container--stickers {
+  /* XXX#0134
+   * Sortable + app-element stickers:
+   * Mivel az .x-sortable--sensor nem az .x-element-container leszármazottja,
+   * ezért az .x-sortable--sensor on-mouse-over eseménye elrejtené
+   * az .x-element-container--stickers elemet */
+  opacity: 1;
+  transform: scale( 1 ) }
+
+/*** Sortable element ***/
+/***** Sortable *****/

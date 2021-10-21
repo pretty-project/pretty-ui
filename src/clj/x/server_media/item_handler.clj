@@ -24,7 +24,7 @@
               [x.server-db.api       :as db]
               [x.server-media.engine :as engine]
               [x.server-core.api     :as a]
-              [x.server-sync.api     :as sync]
+              [x.server-user.api     :as user]
               [com.wsscode.pathom3.connect.operation :as pathom.co]
               [x.server-media.thumbnail-handler      :as thumbnail-handler]))
 
@@ -138,6 +138,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) action-props
   ;  {:source-directory-id (string)
   ;   :selected-item (map)
@@ -151,18 +152,19 @@
   ;  (detach-item! {...} {:source-directory-id "root" :selected-item {:file/id "my-file"}})
   ;
   ; @return (string)
-  [env {:keys [source-directory-id selected-item]}]
+  [{:keys [request]} {:keys [source-directory-id selected-item]}]
   (local-db/update-document! "directories" source-directory-id
                                            ; Remove file link from :items vector
                              (fn [%] (-> % (update :items vector/remove-item selected-item)
                                            ; Update modify data in source-directory document
-                                           (merge (sync/env->modify-props env)))))
+                                           (merge (user/request->modify-props request)))))
   (return "Item detached"))
 
 (defn- attach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) action-props
   ;  {:destination-directory-id (string)
   ;   :selected-item (map)
@@ -176,12 +178,12 @@
   ;  (attach-item! {...} {:destination-directory-id "root" :selected-item {:file/id "my-file"}})
   ;
   ; @return (string)
-  [env {:keys [destination-directory-id selected-item]}]
+  [{:keys [request]} {:keys [destination-directory-id selected-item]}]
   (local-db/update-document! "directories" destination-directory-id
                                            ; Add file link from :items vector
                              (fn [%] (-> % (update :items vector/conj-item selected-item)
                                            ; Update modify data in source-directory document
-                                           (merge (sync/env->modify-props env)))))
+                                           (merge (user/request->modify-props request)))))
   (return "Item attached"))
 
 
@@ -290,15 +292,14 @@
   ;   :path (vector)
   ;   :permissions (map)
   ;   :tags (keywords in vector)}
-  [env [source-directory-id file-id file-document]]
-  (let [request              (sync/env->request env)
+  [{:keys [request]} [source-directory-id file-id file-document]]
+  (let [file-path            (source-directory-id->item-path source-directory-id)]
        ;document-permissions (auth/request->document-permissions request)
-        file-path            (source-directory-id->item-path source-directory-id)]
        (merge {:description ""
                :tags        []}
               (param file-document)
-              (sync/env->modify-props env)
-              (sync/env->upload-props env)
+              (user/request->modify-props request)
+              (user/request->upload-props request)
               {:id          file-id
                :path        file-path})))
               ;:permissions document-permissions
@@ -320,15 +321,14 @@
   ;   :modified-at (string)
   ;   :modified-by (map)
   ;   :tags (keywords in vector)}
-  [env [source-directory-id directory-id directory-document]]
-  (let [request              (sync/env->request env)
+  [{:keys [request]} [source-directory-id directory-id directory-document]]
+  (let [directory-path       (source-directory-id->item-path source-directory-id)]
        ;document-permissions (auth/request->document-permissions request)
-        directory-path       (source-directory-id->item-path source-directory-id)]
        (merge {:description ""
                :tags        []}
               (param directory-document)
-              (sync/env->create-props env)
-              (sync/env->modify-props env)
+              (user/request->create-props request)
+              (user/request->modify-props request)
               {:content-size 0
                :id           directory-id
                :items        []
@@ -348,9 +348,9 @@
   ;  => {:my-key "My value" :modified-at "..." :modified-by {:user-account/id "my-user"}}
   ;
   ; @return (map)
-  [env [_ updated-props]]
+  [{:keys [request]} [_ updated-props]]
   (merge (param updated-props)
-         (sync/env->modify-props env)))
+         (user/request->modify-props request)))
 
 
 
@@ -576,6 +576,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) action-props
   ;  {:copy-item-suffix (string)
   ;   :destination-directory-id (string)
@@ -583,7 +584,8 @@
   ;    {:file/id (string)}}
   ;
   ; @return (string)
-  [env {:keys [copy-item-suffix destination-directory-id directory-files-alias-list selected-item]}]
+  [{:keys [request] :as env}
+   {:keys [copy-item-suffix destination-directory-id directory-files-alias-list selected-item]}]
 
         ; Source file details
   (let [file-id        (db/document-link->document-id selected-item)
@@ -614,7 +616,7 @@
     (update-path-content-size! destination-directory-id filesize +)
 
     ; Update file document modify data
-    (let [modify-props (sync/env->modify-props env)]
+    (let [modify-props (user/request->modify-props request)]
          (local-db/update-document! "files" file-id merge modify-props))
 
     ; Add the new file link to destination-directory document
@@ -625,6 +627,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) action-props
   ;  {:copy-item-suffix (string)
   ;   :destination-directory-id (string)
@@ -632,7 +635,9 @@
   ;    {:directory/id (string)}}
   ;
   ; @return (string)
-  [env {:keys [copy-item-suffix destination-directory-id directory-subdirectories-alias-list selected-item] :as action-props}]
+  [{:keys [request] :as env}
+   {:keys [copy-item-suffix destination-directory-id directory-subdirectories-alias-list selected-item]
+     :as   action-props}]
   (let [directory-id            (db/document-link->document-id selected-item)
         directory-document      (local-db/get-document "directories" directory-id)
         directory-alias         (get directory-document :alias)
@@ -651,7 +656,7 @@
                        :selected-item            copy-directory-link})
 
     ; Update directory document modify data
-    (let [modify-props (sync/env->modify-props env)]
+    (let [modify-props (user/request->modify-props request)]
          (local-db/update-document! "directories" destination-directory-id merge modify-props))
 
     ; Iterates through items in directory
@@ -717,13 +722,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) mutation-props
   ;  {:destination-directory-id (string)
   ;   :selected-item (map)
   ;   :source-directory-id (string)}
   ;
   ; @return (string)
-  [env {:keys [destination-directory-id selected-item source-directory-id]}]
+  [{:keys [request] :as env}
+   {:keys [destination-directory-id selected-item source-directory-id]}]
   (let [file-id  (db/document-link->document-id selected-item)
         filesize (local-db/get-document-item "files" file-id :filesize)]
 
@@ -740,7 +747,7 @@
                           :selected-item            selected-item})
 
        ; Update file document modify data
-       (let [modify-props (sync/env->modify-props env)]
+       (let [modify-props (user/request->modify-props request)]
             (local-db/update-document! "files" file-id merge modify-props))
 
        (return "File moved")))
@@ -749,13 +756,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
+  ;  {:request (map)}
   ; @param (map) mutation-props
   ;  {:destination-directory-id (string)
   ;   :selected-item (map)
   ;   :source-directory-id (string)}
   ;
   ; @return (string)
-  [env {:keys [destination-directory-id selected-item source-directory-id]}]
+  [{:keys [request] :as env}
+   {:keys [destination-directory-id selected-item source-directory-id]}]
 
   ; Remove item link from the source-directory document
   (detach-item! env {:source-directory-id source-directory-id
@@ -766,7 +775,7 @@
                      :selected-item            selected-item})
 
   ; Update directory documents modify data
-  (let [modify-props (sync/env->modify-props env)]
+  (let [modify-props (user/request->modify-props request)]
        (local-db/update-document! "directories" destination-directory-id merge modify-props)
        (local-db/update-document! "directories" source-directory-id      merge modify-props))
 

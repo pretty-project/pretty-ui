@@ -15,6 +15,7 @@
 
 (ns x.app-locales.api
     (:require [x.app-locales.currency-handler :as currency-handler]
+              [x.app-locales.name-handler     :as name-handler]
               [x.app-locales.language-handler :as language-handler]))
 
 
@@ -24,6 +25,9 @@
 
 ; x.app-locales.currency-handler
 ; ...
+
+; x.app-locales.name-handler
+(def name->ordered-name name-handler/name->ordered-name)
 
 ; x.app-locales.language-handler
 (def get-app-languages      language-handler/get-app-languages)

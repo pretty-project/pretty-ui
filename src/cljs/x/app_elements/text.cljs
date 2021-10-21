@@ -44,22 +44,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) text-id
-  ;
-  ; @return (map)
-  [db [_ text-id]]
-  (r engine/get-element-view-props db text-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -118,7 +102,4 @@
   ([text-id text-props]
    (let [text-id    (a/id   text-id)
          text-props (a/prot text-props text-props-prototype)]
-        [engine/container text-id
-          {:base-props text-props
-           :component  text
-           :subscriber [::get-view-props text-id]}])))
+        [text text-id text-props])))

@@ -15,9 +15,10 @@
 
 (ns x.server-user.session-handler
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map]
               [mid-fruits.string    :as string]
+              [mid-fruits.time      :as time]
               [mid-fruits.vector    :as vector]
+              [server-fruits.http   :as http]
               [x.server-user.engine :as engine]))
 
 
@@ -27,10 +28,10 @@
 
 ; @constant (map)
 ;  {:user-account/id (nil)
-;   :user-account/roles (strings in vector)}
-(def DEFAULT-SESSION
-     {:user-account/id    (param nil)
-      :user-account/roles [engine/UNIDENTIFIED-USER-ROLE]})
+;   :user-account/roles (vector)}
+(def ANONYMOUS-SESSION
+     {:user-account/id    nil
+      :user-account/roles []})
 
 
 
@@ -47,14 +48,59 @@
   (and (string/nonempty? id)
        (vector/nonempty? roles)))
 
-(defn request->session
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request->modify-props
   ; @param (map) request
-  ;  {:session (map)(opt)}
   ;
   ; @return (map)
-  ;  {:user-account/id (string)
-  ;   :user-account/roles (vector)}
-  [{:keys [session]}]
-  (if (session->session-valid? session)
-      (return session)
-      (return DEFAULT-SESSION)))
+  ;  {:modified-at (object)
+  ;   :modified-by (map)}
+  [request]
+  (let [account-id   (http/request->session-param request :user-account/id)
+        user-account {:user-account/id account-id}
+        timestamp    (time/timestamp)]
+       {:modified-at timestamp
+        :modified-by user-account}))
+
+(defn request->create-props
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:created-at (object)
+  ;   :created-by (map)}
+  [request]
+  (let [account-id   (http/request->session-param request :user-account/id)
+        user-account {:user-account/id account-id}
+        timestamp    (time/timestamp)]
+       {:created-at timestamp
+        :created-by user-account}))
+
+(defn request->delete-props
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:deleted-at (object)
+  ;   :deleted-by (map)}
+  [request]
+  (let [account-id   (http/request->session-param request :user-account/id)
+        user-account {:user-account/id account-id}
+        timestamp    (time/timestamp)]
+       {:deleted-at timestamp
+        :deleted-by user-account}))
+
+(defn request->upload-props
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:uploaded-at (object)
+  ;   :uploaded-by (map)}
+  [request]
+  (let [account-id   (http/request->session-param request :user-account/id)
+        user-account {:user-account/id account-id}
+        timestamp    (time/timestamp)]
+       {:uploaded-at timestamp
+        :uploaded-by user-account}))

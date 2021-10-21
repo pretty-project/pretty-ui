@@ -34,7 +34,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-;  Az elem mely tulajdonságai kerüljenek a base-props térképből a db-be
+;  Az elem mely tulajdonságai kerüljenek a base-props térképből a Re-Frame adatbázisba
 (def CONSTANT-PROP-TYPES
      [:autoclear? :default-value :disallow-empty-input-group? :emptiable?
       :keypress :get-label-f :get-value-f :group-id :initial-value :input-ids

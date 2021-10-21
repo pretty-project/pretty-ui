@@ -30,15 +30,4 @@
   :path [{:directory/id "home"}] 
   :tags [] 
   :uploaded-at "2021-10-07T19:48:49.951Z" 
-  :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
- {:alias "20210626_192205.jpg" 
-  :description "" 
-  :filename "87e9be60-8da9-4d08-85c4-b9b37cff35b4.jpg" 
-  :filesize 5314474 
-  :id "87e9be60-8da9-4d08-85c4-b9b37cff35b4" 
-  :modified-at "2021-10-08T07:45:54.939Z" 
-  :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path [{:directory/id "home"}] 
-  :tags [] 
-  :uploaded-at "2021-10-08T07:45:54.952Z" 
   :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}}]

@@ -42,7 +42,8 @@
       {:uri "/css/x/app-ui-graphics.css"   :cache-control? true}
       {:uri "/css/x/app-elements.css"      :cache-control? true}
       {:uri "/css/x/app-views.css"         :cache-control? true}
-      {:uri "/css/x/app-plugins.css"       :cache-control? true}
+      {:uri "/css/extensions.css"          :cache-control? true}
+      {:uri "/css/plugins.css"             :cache-control? true}
       ; Using self hosted Font Awesome icons
       {:uri "/icons/fontawesome-free-5.15.1-web/css/all.min.css"}
       ; XXX#8857

@@ -3,6 +3,7 @@
     (:require [app-fruits.window    :as window]
               [mid-fruits.candy     :refer [param return]]
               [mid-fruits.keyword   :as keyword]
+              [mid-fruits.eql       :as eql]
               [mid-fruits.io        :as io]
               [mid-fruits.map       :as map]
               [mid-fruits.reader    :as reader]
@@ -701,12 +702,12 @@
             updated-file-props {:alias         file-alias}
             mutation-props     {:file-id       file-id
                                 :updated-props updated-file-props}
-            query-action       (sync/query-action "media/update-file!" mutation-props)
+            query-action       (eql/query-action "media/update-file!" mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -724,12 +725,12 @@
             updated-subdirectory-props {:alias         subdirectory-alias}
             mutation-props             {:directory-id  subdirectory-id
                                         :updated-props updated-subdirectory-props}
-            query-action               (sync/query-action "media/update-directory!" mutation-props)
+            query-action               (eql/query-action "media/update-directory!" mutation-props)
             query-question             {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -744,13 +745,13 @@
             subdirectory-alias (r tools/get-editor-value db :media-storage/alias-editor)
             mutation-props     {:destination-directory-id (name  destination-directory-id)
                                 :directory-alias          (param subdirectory-alias)}
-            query-action       (sync/query-action "media/create-directory!" mutation-props)
+            query-action       (eql/query-action "media/create-directory!" mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:media-storage/test]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -767,12 +768,12 @@
       (let [directory-entity (db/item-id->document-entity source-directory-id :directory)
             mutation-props   {:source-directory-id (name source-directory-id)
                               :selected-items      [selected-item]}
-            query-action     (sync/query-action "media/delete-items!" mutation-props)
+            query-action     (eql/query-action "media/delete-items!" mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -791,12 +792,12 @@
             mutation-props   {:copy-item-suffix         (string/lowercase copy-item-suffix)
                               :destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]}
-            query-action     (sync/query-action "media/copy-items!" mutation-props)
+            query-action     (eql/query-action "media/copy-items!" mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -814,12 +815,12 @@
             mutation-props   {:destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]
                               :source-directory-id      (name source-directory-id)}
-            query-action     (sync/query-action "media/move-items!" mutation-props)
+            query-action     (eql/query-action "media/move-items!" mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
               :uri        (param "/media/query")}])))
 
 (a/reg-event-fx
@@ -839,5 +840,5 @@
              {:on-sent    (param on-sent)
               :on-success {:dispatch-n [[:media-storage/handle-request-response! query-id]
                                         (param on-success)]}
-              :query      (sync/append-to-query ROOT-DIRECTORY-QUERY query-question)
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)
               :uri        (param "/media/query")}])))

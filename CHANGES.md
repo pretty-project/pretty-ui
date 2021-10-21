@@ -9,6 +9,9 @@
   függvényeinek paramtérezése megváltozott!
   (fn [[a b c]]) => (fn [a b c])
 
+- NEW NAMESPACE
+  mid-fruits.eql  
+
 
 
 # x4.4.1

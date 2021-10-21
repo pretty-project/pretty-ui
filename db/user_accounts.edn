@@ -3,26 +3,26 @@
   :id "0939329d-b057-ki88-e916-0ce146714c1b"
   :password "ZEKwbY7l"
   :pin "0000"
-  :roles ["identified" "0939329d-b057-ki88-e916-0ce146714c1b"]
+  :roles ["0939329d-b057-ki88-e916-0ce146714c1b"]
   :permissions {"0939329d-b057-ki88-e916-0ce146714c1b" "rw"}}
 
  {:email-address "paul@monotech.hu"
   :id "1259400a-x012-lw84-o987-1fg654713a3a"
   :password "931224"
   :pin "0000"
-  :roles ["identified" "1259400a-x012-lw84-o987-1fg654713a3a"]
+  :roles ["1259400a-x012-lw84-o987-1fg654713a3a"]
   :permissions {"1259400a-x012-lw84-o987-1fg654713a3a" "rw"}}
 
  {:email-address "peter@monotech.hu"
   :id "2345011e-t112-wa50-o357-1rh344440a0w"
   :password "KolP980_"
   :pin "0000"
-  :roles ["identified" "2345011e-t112-wa50-o357-1rh344440a0w"]
+  :roles ["2345011e-t112-wa50-o357-1rh344440a0w"]
   :permissions {"2345011e-t112-wa50-o357-1rh344440a0w" "rw"}}
 
  {:email-address "demo@monotech.hu"
   :id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"
   :password "mono"
   :pin "0000"
-  :roles ["identified" "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"]
+  :roles ["506bb1e5-eecd-48ee-a30c-7b66ee2bb973"]
   :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw"}}]

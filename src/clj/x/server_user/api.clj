@@ -34,10 +34,9 @@
 (def request->authenticated?      account-handler/request->authenticated?)
 
 ; x.server-user.engine
-(def UNIDENTIFIED-USER-ROLE         engine/UNIDENTIFIED-USER-ROLE)
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
+(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 
 ; x.server-user.profile-handler
 (def request->user-profile      profile-handler/request->user-profile)
@@ -45,7 +44,10 @@
 
 ; x.server-user.session-handler
 (def session->session-valid? session-handler/session->session-valid?)
-(def request->session        session-handler/request->session)
+(def request->modify-props   session-handler/request->modify-props)
+(def request->create-props   session-handler/request->create-props)
+(def request->delete-props   session-handler/request->delete-props)
+(def request->upload-props   session-handler/request->upload-props)
 
 ; x.server-user.settings-handler
 (def request->user-settings      settings-handler/request->user-settings)

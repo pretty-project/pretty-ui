@@ -22,7 +22,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-user.engine
-(def UNIDENTIFIED-USER-ROLE         engine/UNIDENTIFIED-USER-ROLE)
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
+(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)

@@ -69,12 +69,10 @@
   ;  {}
   [user-props]
   (let [user-props   (a/prot user-props user-props-prototype)
-        user-account (user-props->user-account user-props)]
-       (if (and (account-handler/user-account-valid? user-account))
-            ; Check if email exists!!!
-           (println (str user-account)))))
-;                (mongo-db/document-not-ex)))))
-
+        user-account (user-props->user-account user-props)]))
+      ;(if (and (account-handler/user-account-valid? user-account))
+           ; Check if email exists!!!
+           ;(println (str user-account)))))
        ;(println (str (mongo-db/add-document! "user_accounts" user-account)))))
 
 ; @usage

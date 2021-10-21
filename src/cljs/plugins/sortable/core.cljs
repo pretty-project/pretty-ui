@@ -406,15 +406,15 @@
   ; @param (keyword) prop-id
   ;
   ; @usage
-  ;  (r plugins/get-sortable-prop db :my-sortable :value-path)
+  ;  (r sortable/get-sortable-prop db :my-sortable :value-path)
   ;
   ; @return (*)
   [db [_ sortable-id prop-id]]
   (get-in db (db/path ::sortables sortable-id prop-id)))
 
 ; @usage
-;  [:x.app-plugins/get-sortable-prop :my-sortable :value-path]
-(a/reg-sub :x.app-plugins/get-sortable-prop get-sortable-prop)
+;  [:sortable/get-sortable-prop :my-sortable :value-path]
+(a/reg-sub :sortable/get-sortable-prop get-sortable-prop)
 
 (defn get-sortable-items
   ; @param (keyword) sortable-id
@@ -510,7 +510,7 @@
   {:sortable-items      (r get-sortable-items      db sortable-id)
    :sortable-item-order (r get-sortable-item-order db sortable-id)})
 
-(a/reg-sub :x.app-plugins/get-view-props get-view-props)
+(a/reg-sub :sortable/get-view-props get-view-props)
 
 
 
@@ -538,7 +538,7 @@
   [db [_ sortable-id sortable-props]]
   (r store-sortable-props! db sortable-id sortable-props))
 
-(a/reg-event-db :x.app-plugins/init-sortable! init-sortable!)
+(a/reg-event-db :sortable/init-sortable! init-sortable!)
 
 (defn- destruct-sortable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -549,7 +549,7 @@
   [db [_ sortable-id]]
   (dissoc-in db (db/path ::sortables sortable-id)))
 
-(a/reg-event-db :x.app-plugins/destruct-sortable! destruct-sortable!)
+(a/reg-event-db :sortable/destruct-sortable! destruct-sortable!)
 
 (defn- update-sortable-item-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -575,7 +575,7 @@
   ; @param (*) sortable-item
   ;
   ; @usage
-  ;  (r plugins/add-sortable-item! db :my-sortable "My item")
+  ;  (r sortable/add-sortable-item! db :my-sortable "My item")
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item]]
@@ -592,22 +592,22 @@
                            (vector/conj-item sortable-item-order sortable-item-id)))))
 
 ; @usage
-;  [:x.app-plugins/add-sortable-item! :my-sortable "My item"]
-(a/reg-event-db :x.app-plugins/add-sortable-item! add-sortable-item!)
+;  [:sortable/add-sortable-item! :my-sortable "My item"]
+(a/reg-event-db :sortable/add-sortable-item! add-sortable-item!)
 
 (defn add-sortable-items!
   ; @param (keyword) sortable-id
   ; @param (vector) sortable-item
   ;
   ; @usage
-  ;  (r plugins/add-sortable-items! db :my-sortable ["My item" "Your item"])
+  ;  (r sortable/add-sortable-items! db :my-sortable ["My item" "Your item"])
   ;
   ; @return (map)
   [db [_ sortable-id sortable-items]]
   ; TODO ...
   (return db))
 
-(a/reg-event-db :x.app-plugins/add-sortable-items! add-sortable-items!)
+(a/reg-event-db :sortable/add-sortable-items! add-sortable-items!)
 
 (defn inject-sortable-item!
   ; @param (keyword) sortable-id
@@ -615,7 +615,7 @@
   ; @param (integer) target-dex
   ;
   ; @usage
-  ;  (r plugins/inject-sortable-item! db :my-sortable "My item" 5)
+  ;  (r sortable/inject-sortable-item! db :my-sortable "My item" 5)
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item target-dex]]
@@ -629,15 +629,15 @@
                            (vector/inject-item sortable-item-order sortable-item-id target-dex)))))
 
 ; @usage
-;  [:x.app-plugins/inject-sortable-item! :my-sortable "My item" 5]
-(a/reg-event-db :x.app-plugins/inject-sortable-item! inject-sortable-item!)
+;  [:sortable/inject-sortable-item! :my-sortable "My item" 5]
+(a/reg-event-db :sortable/inject-sortable-item! inject-sortable-item!)
 
 (defn remove-sortable-item!
   ; @param (keyword) sortable-id
   ; @param (integer) sortable-item-dex
   ;
   ; @usage
-  ;  (r plugins/remove-sortable-item! db :my-sortable 3)
+  ;  (r sortable/remove-sortable-item! db :my-sortable 3)
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item-dex]]
@@ -649,15 +649,15 @@
                            (vector/remove-nth-item sortable-item-order sortable-item-dex)))))
 
 ; @usage
-;  [:x.app-plugins/remove-sortable-item! :my-sortable 3]
-(a/reg-event-db :x.app-plugins/remove-sortable-item! remove-sortable-item!)
+;  [:sortable/remove-sortable-item! :my-sortable 3]
+(a/reg-event-db :sortable/remove-sortable-item! remove-sortable-item!)
 
 (defn remove-sortable-items!
   ; @param (keyword) sortable-id
   ; @param (integers in vector) sortable-item-dex-list
   ;
   ; @usage
-  ;  (r plugins/remove-sortable-items! db :my-sortable [0 3])
+  ;  (r sortable/remove-sortable-items! db :my-sortable [0 3])
   ;
   ; @return (map)
   [db [_ sortable-id sortable-item-dex-list]]
@@ -665,8 +665,8 @@
   (return db))
 
 ; @usage
-;  [:x.app-plugins/remove-sortable-items! :my-sortable [0 3]]
-(a/reg-event-db :x.app-plugins/remove-sortable-items! remove-sortable-items!)
+;  [:sortable/remove-sortable-items! :my-sortable [0 3]]
+(a/reg-event-db :sortable/remove-sortable-items! remove-sortable-items!)
 
 
 
@@ -768,7 +768,7 @@
                   [:div.x-sortable--elements (sortable-elements-attributes sortable-id view-props)]
                   (param sortable-item-order)))
 
-(defn- sortable
+(defn- sortable-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) sortable-id
@@ -790,9 +790,9 @@
   ; @return (component)
   [sortable-id view-props]
   (if (view-props->render-sortable-items? view-props)
-      [:f> sortable sortable-id view-props]))
+      [:f> sortable-structure sortable-id view-props]))
 
-(defn view
+(defn sortable
   ; @param (keyword)(opt) sortable-id
   ; @param (map) sortable-props
   ;  {:class (string or vector)(opt)
@@ -824,13 +824,13 @@
   ;
   ; @return (component)
   ([sortable-props]
-   [view nil sortable-props])
+   [sortable nil sortable-props])
 
   ([sortable-id sortable-props]
    (let [sortable-id (a/id sortable-id)]
         [components/stated sortable-id
           {:component   #'af0120
            :base-props  sortable-props
-           :destructor  [:x.app-plugins/destruct-sortable! sortable-id]
-           :initializer [:x.app-plugins/init-sortable!     sortable-id sortable-props]
-           :subscriber  [:x.app-plugins/get-view-props     sortable-id]}])))
+           :destructor  [:sortable/destruct-sortable! sortable-id]
+           :initializer [:sortable/init-sortable!     sortable-id sortable-props]
+           :subscriber  [:sortable/get-view-props     sortable-id]}])))

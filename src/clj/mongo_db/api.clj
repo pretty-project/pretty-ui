@@ -18,4 +18,4 @@
 (def duplicate-document!         engine/duplicate-document!)
 (def reorder-documents!          engine/reorder-documents!)
 (def count-documents-by-pipeline engine/count-documents-by-pipeline)
-(def find-documents-by-pipeline  engine/find-documents-by-pipeline)
+(def get-documents-by-pipeline   engine/get-documents-by-pipeline)

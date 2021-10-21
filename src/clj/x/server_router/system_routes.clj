@@ -21,7 +21,6 @@
               [x.server-db.api     :as db]
               [x.server-log.api    :as log]
               [x.server-media.api  :as media]
-              [x.server-sync.api   :as sync]
               [x.server-tools.pdf  :as pdf]
               [x.server-user.api   :as user]
               [x.server-views.api  :as views]))

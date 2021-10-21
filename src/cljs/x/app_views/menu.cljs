@@ -16,6 +16,7 @@
 (ns x.app-views.menu
     (:require [mid-fruits.candy      :refer [param]]
               [mid-fruits.css        :as css]
+              [mid-fruits.map        :refer [dissoc-in]]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -48,9 +49,7 @@
   ;
   ; @return (map)
   [selected-language]
-  {:dispatch-n
-   [[:x.app-user/set-user-settings-item!
-     :selected-language selected-language]]})
+  {:dispatch-n [[:x.app-user/set-user-settings-item! :selected-language selected-language]]})
 
 
 
@@ -62,7 +61,7 @@
   ;
   ; @return (keyword)
   [db _]
-  (let [selected-view (get-in db (db/meta-item-path ::primary :selected-view))]
+  (let [selected-view (get-in db (db/meta-item-path ::settings :selected-view))]
        (or selected-view :main)))
 
 (defn- get-view-props
@@ -391,9 +390,16 @@
   ;
   ; @return (map)
   [db [_ component-id]]
-  (assoc-in db (db/meta-item-path ::primary :selected-view) component-id))
+  (assoc-in db (db/meta-item-path ::settings :selected-view) component-id))
 
 (a/reg-event-db ::go-to! go-to!)
+
+(defn- reset-menu-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (dissoc-in db (db/meta-item-path ::settings)))
 
 
 
@@ -403,20 +409,24 @@
 (a/reg-event-fx
   ::render-as-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup!
-   ::view
-   {:content    #'view
-    :label-bar  {:content #'ui/close-popup-label-bar}
-    :layout     :boxed
-    :min-width  :s
-    :subscriber [::get-view-props]}])
+  (fn [{:keys [db]} _]
+      {:db       (r reset-menu-props! db)
+       :dispatch [:x.app-ui/add-popup!
+                  ::view
+                  {:content    #'view
+                   :label-bar  {:content #'ui/close-popup-label-bar}
+                   :layout     :boxed
+                   :min-width  :s
+                   :subscriber [::get-view-props]}]}))
 
 (a/reg-event-fx
   ::render-as-sidebar!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-sidebar!
-   {:content    #'view
-    :subscriber [::get-view-props]}])
+  (fn [{:keys [db]} _]
+      {:db       (r reset-menu-props! db)
+       :dispatch [:x.app-ui/set-sidebar!
+                  {:content    #'view
+                   :subscriber [::get-view-props]}]}))
 
 (a/reg-event-fx
   ::render!

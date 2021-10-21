@@ -1,5 +1,5 @@
 
-(ns mongo-db.connection-handler
+(ns mongo-db.connection
     (:import [com.mongodb MongoOptions ServerAddress]
              org.bson.types.BSONTimestamp)
     (:require [monger.core       :as mcr]

@@ -47,13 +47,10 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-view-props
-  [db _ a]
-  {:debug a
-   :x (r x.app-ui.surface-geometry/get-surface-header-height db ::view)})
+  [db _]
+  {})
 
 (a/reg-sub ::get-view-props get-view-props)
-
-(a/redirect-sub ::get-view-props :xxkk)
 
 
 
@@ -62,54 +59,8 @@
 
 (a/reg-event-fx
   :playground/test!
-  (fn [{:keys [db]} _]))
-
-
-
-;; -- Case A ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :handle-apple_!
-  (fn [{:keys [db]} [_ apple]]
-      {:db (r db/set-item! [:apple] apple)}))
-
-(a/reg-event-fx
-  :handle-banana_!
-  (fn [{:keys [db]} [_ banana]]
-      {:db (r db/set-item! [:banana] banana)}))
-
-(a/reg-event-fx
-  :handle-query-response_!
-  (fn [_ [_ server-response]]
-      {:dispatch-n [[:handle-apple_!  (get server-response :apple)]
-                    [:handle-banana_! (get server-response :banana)]]}))
-
-(a/reg-event-fx
-  :send-request_!
-  (fn [_ _]
-      [:x.app-sync/send-request! {:on-success [:handle-request-response_!]}]))
-
-
-
-;; -- Case B ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :handle-apple-!
-  (fn [{:keys [db]} [_ apple]]
-      {:db (r db/set-item! [:apple] apple)}))
-
-(a/reg-event-fx
-  :handle-banana-!
-  (fn [{:keys [db]} [_ banana]]
-      {:db (r db/set-item! [:banana] banana)}))
-
-(a/reg-event-fx
-  :send-request-!
-  (fn [_ _]
-      [:x.app-sync/send-request! {:target-events {:apple  [:handle-apple-!]
-                                                  :banana [:handle-banana-!]}}]))
+  (fn [{:keys [db]} _]
+      {:dispatch [:x.test!]}))
 
 
 
@@ -119,144 +70,113 @@
 (defn- local-state
   []
   (let [state (ratom 10)]
-        ;unix-timestamp (time/timestamp)]
-       (fn []
-           [:div "Here comes the sun"
-            [:div (str (vector/inject-item [] 5 "a"))]])))
+       (fn [] [:div "Here comes the sun"])))
 
-(defn xxxx
-  [my-number]
-  (if (and (integer? my-number)
-           (even?    my-number))
-      [elements/text-field ::my-number-field
-                           {:label "My even number" :value-path [:my-number]
-                            :on-blur [:x.app-ui/blow-bubble! {:content (str "My number: " my-number " is even")}]}]
-      [elements/text-field ::my-number-field
-                           {:label "My odd number" :value-path [:my-number]
-                            :on-blur [:x.app-ui/blow-bubble! {:content (str "My number: " my-number " is odd")}]}]))
-
-(defn my-number
+(defn- infinite-loader
   []
-  (let [my-number (a/subscribe [:x.app-db/get-item [:my-number]])]
-       (fn []
-           [:div (str "My number: " @my-number)
-                 [:br]
-                 (random-uuid)
-                 (if (and (integer? @my-number)
-                          (even?    @my-number))
-                     [xxxx @my-number]
-                     [xxxx @my-number])])))
+  [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs}]
+       [components/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
+       [elements/button {:label "Reload infinite loader!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]
+                         :variant :transparent :color :secondary}]])
 
-(a/reg-event-fx
-  :heyho!
-  (fn [_ v]
-      (println (str v))))
-
-(defn- playground
+(defn- form-a
   []
-  [:<> [elements/card {:content "HEY CARD"}]
-       [components/infinite-loader :my-loader #(println "heyho")]
-       [elements/button {:label "test infinite!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]}]
-       [elements/select {:label "My select"
-                         :on-select [:heyho!]
+  [:<> [elements/select {:label "My select"
+                         :on-select #(println "Selected")
                          :options [{:label "Option #1" :value :option-1}
                                    {:label "Option #2" :value :option-2}]}]
+       [elements/date-field {:label "My date field" :value-path (db/path ::stuff :my-date)}]
+       [elements/text-field {:label "My text-field w/ surface" :emptiable? true
+                             :placeholder "Placeholder"
+                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}}]
+       [elements/text-field {:label "My text-field w/ modifier" :emptiable? true
+                             :placeholder "Placeholder"
+                             :modifier #(string/starts-with! % "/")}]
+       [elements/text-field {:label "My text-field w/ validator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""}}]
+       [elements/text-field {:label "My text-field w/ prevalidator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""
+                                         :pre-validate? true}}]
+       [elements/password-field {:label "My password-field w/ adornments" :emptiable? true
+                                 :placeholder "Placeholder"
+                                 :start-adornments [{:icon :sentiment_very_satisfied}]}]
+       [elements/multiline-field {:label "My textarea" :placeholder "Placeholder"}]])
 
-       [elements/button {:label "Browse files!"
-                         :on-click [:file-browser/load! {:value-path [:tedt :a]
-                                                         :browser-mode :add-files}]}]
-
-       [elements/switch {:label "My switch"}]
-
-       [elements/separator {:size :xxl}]
-       [elements/button {:label "Inc!" :on-click [:x.app-db/apply! [:my-number] inc]}]
-       [my-number]
-       [elements/separator {:size :xxl}]
-
-       [elements/date-field {:label "My date field" :value-path [:my :value]}]
-       [elements/select {:label "My select"
-                         :options [{:label "Option #1" :value :op-1}
-                                   {:label "Option #2" :value :op-2}]}]
-       [elements/checkbox {}] ;{:label "My checkbox"}]
+(defn- form-b
+  []
+  [:<> [elements/horizontal-line {:color :highlight}]
+       [elements/separator {:orientation :horizontal :size :m}]
+       [elements/switch {:label "My switch"
+                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                         :default-value true}]
+       [elements/switch {:label "Your switch"
+                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [elements/label {:content "My label"}]
+       [elements/horizontal-line {:color :highlight}]
+       [elements/checkbox {:label "My checkbox"
+                           :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+       [elements/checkbox {:label "Your checkbox"
+                           :helper "Check it to check out!"}]
+       [elements/checkbox {:label "Our checkbox"
+                           :helper "Check it to check out!"}]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [elements/label {:content "Your label"}]
+       [elements/horizontal-line {:color :highlight}]
+       [elements/counter :my-counter {:label "My counter" :resetable? true :initial-value 420}]
        [elements/counter {:label "My counter" :resetable? true :initial-value 420}]
-       [elements/button {:label "My button" :on-click [:x.app-db/set-item! [:hu] true]}]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [elements/label {:content "Our label"}]
+       [elements/horizontal-line {:color :highlight}]
+       [elements/anchor {:href "/x" :content "My anchor"}]
+       [elements/button {:label "My button"}]
+       [elements/button {:label "Browse files!"
+                         :on-click [:file-browser/load! {:value-path (db/path ::stuff :selected-files)
+                                                         :browser-mode :add-files}]}]
+       [elements/separator {:orientation :horizontal :size :xxl}]
        [elements/radio-button {:label "My radio-button"
                                :unselectable? true
                                :options [{:label "Option #1" :value "ot-1"}
                                          {:label "Option #2" :value "ot-2"}]}]
-       [elements/anchor {:href "/x" :content "xxx"}]
-       [elements/text-field {:label "My text-field" :emptiable? true
-                             :surface {:content [:<> [:div {:style {:width "200px" :height "300px"}}]]}
-                             ;:modifier #(string/starts-with! % "/")
-                             :start-adornments [{:icon :search}]
-                             :placeholder "Placeholder"
-                             :validator {:f #(= % "x")
-                                         :invalid-message "heyho"}}]
-       [elements/multiline-field {:label "My textarea" :placeholder "Placeholder"}]
-       [elements/date-field {:label "My date field"}]
-       [elements/chip {:color :highlight :label "My chip" :variant :outlined :on-delete [:a]}]])
+       [elements/chip {:color :highlight :label "My chip" :variant :outlined :on-delete [:chip-deleted :layout :fit]}]
+       [elements/chips {:label "My chips" :chips [{:label "Chip #1" :variant :outlined}
+                                                  {:label "Chip #2" :variant :filled}]}]])
 
-(defn debug
-  [_ {:keys [debug x]}]
-  [:div (str "debug:" debug)
-        [:br]
-        [:pre (pretty/mixed->string debug)]
-        [:br]
-        "x: " (str x)])
-
-(a/reg-event-db :my-extender (fn [db [_ field-id value]]
-                                 (update-in db [:my-options] vector/conj-item {:name value})))
-
-(defn form
+(defn form-c
   [_ _]
-  [:<> [elements/text-field {:label "TF" :emptiable? true}]
-       [elements/expandable {:content "My content" :icon :apps :label "My expandable"}]
-       [elements/multi-field :mf
-                             {:label "MF"
-                              :value-path [:mf]}]
-
-       [elements/combo-box :cb
-                           {:label "CB"
-                            ;:extendable? true
+  [:<> [elements/expandable {:content "My content" :icon :apps :label "My expandable"}]
+       [elements/multi-field {:label "My multi-field"}]
+       [elements/combo-box {:label "My combobox"
+                            :extendable? true
                             :get-label-f  #(do (get % :x))
-                            :options-path [:debug-mcb :options]
-                            :value-path   [:debug-cb  :value]}]
+                            :options-path (db/path ::stuff :combobox :options)}]
 
-       [elements/multi-combo-box :mcb
-                                 {:label "MCB"
-                                  ;:extendable? true
+       [elements/multi-combo-box {:label "My multi-combobox"
+                                  :extendable? true
                                   :get-label-f #(get % :x)
-                                  :options-path [:debug-mcb :options]
-                                  :value-path   [:debug-mcb :value]}]])
-
+                                  :options-path (db/path ::stuff :multi-combobox :options)}]])
 
 (defn- view
   []
-  [:<> [:div {:style {:position :sticky :top "100px"}}
-             ;"Sticky"]
-        [elements/button {:layout :icon-button :icon :add :label :add-new! :variant :transparent}]]
-       [elements/box {:content #'playground
+  [:<> [elements/box {:content #'form-a
                       :icon    :sports_esports
-                      :label   "Playground"
+                      :label   "Form A"
                       :horizontal-align :left}]
-                      ;:border-color :primary}]
-       [elements/box {:content #'local-state
-                      ;:label   "Local state"
+       [elements/box {:content #'form-b
+                      :icon    :thumb_up_alt
+                      :label   "Form B"
+                      :horizontal-align :left}]
+       [elements/box {:content #'form-c
+                      :label   "Form C"
                       :horizontal-align :left
-                      :expandable? true}]
-       [elements/box {:content "my-card"
-                       :label "My card"}]
-                       ;:ghost-view? true}]
-       [elements/box {:content #'debug
-                      :label   "Debug"
-                      :horizontal-align :left
-                      :subscriber [::get-view-props]
-                      :on-click [:x.app-ui/blow-bubble! {:content "Hey-ho"}]}]
-       [elements/box {:content #'form
-                      :label   "Form"
-                      :horizontal-align :left}]])
-                      ;:subscriber [::xxkk]}]
-
+                      :expandable? true
+                      :expanded? true}]
+       [elements/box {:content #'infinite-loader}]
+       [elements/box {:content #'local-state}]])
 
 
 
@@ -268,20 +188,17 @@
   [:x.app-ui/set-surface!
    ::view
    {:content     #'view
-   ;:control-sidebar {:content #'control-sidebar}
     :label-bar   {:content #'ui/go-back-surface-label-bar
                   :content-props {:label "Playground"}}
 ;    :label-bar   {:content #'ui/go-back-surface-label-bar}
 ;                  :content-props {:label "Playground"}}
-    :initializer ;[:x.app-db/set-item! [:dbg] ["a" "b" "c"]]}])
-                 ;[:x.app-db/set-item! [::dbg] [{:a "0"} {:b "1"} {:c "2"}]]}])
-                 ;[:x.app-db/set-item! [:B] [{:x "a"} {:x "aa"} {:x "b"}]]}])
-                 [:x.app-db/set-item! [:debug-mcb :options] [{:x "Apple"}
-                                                             {:x "Apple juice"}
-                                                             {:x "Pineapple"}
-                                                             {:x "Banana"}
-                                                             {:x "Brown"}
-                                                             {:x "Apocalypse"}]]}])
+    :initializer [:x.app-db/set-item! (db/path ::stuff :multi-combobox :options)
+                                      [{:x "Apple"}
+                                       {:x "Apple juice"}
+                                       {:x "Pineapple"}
+                                       {:x "Banana"}
+                                       {:x "Brown"}
+                                       {:x "Apocalypse"}]]}])
 
 (a/reg-event-fx
   ::load!

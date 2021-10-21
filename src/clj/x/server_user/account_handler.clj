@@ -45,9 +45,9 @@
 ;  {:user-account/email-address (nil)
 ;   :user-account/id (nil)
 ;   :user-account/roles (strings in vector)}
-(def ANONYMOUS-USER-ACCOUNT {:user-account/email-address (param nil)
-                             :user-account/id            (param nil)
-                             :user-account/roles         [engine/UNIDENTIFIED-USER-ROLE]})
+(def ANONYMOUS-USER-ACCOUNT {:user-account/email-address nil
+                             :user-account/id            nil
+                             :user-account/roles         []})
 
 
 

@@ -54,7 +54,7 @@ body[data-theme="light"] {
   /* Color */
   --color:                      var( --black-xx-light );
   --color-muted:                var( --grey );
-  --color-highlight:            var( --grey-light );
+  --color-highlight:            var( --grey-x-light );
   --color-invert:               var( --white-xx-dark );
   --color-primary:              var( --primary-xx-dark );
   --color-secondary:            var( --secondary-xx-dark );

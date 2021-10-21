@@ -23,9 +23,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def UNIDENTIFIED-USER-ROLE      "unidentified")
-
-; @constant (string)
 (def DEFAULT-PROFILE-PICTURE-URL "/images/default-user-profile-picture.png")
 
 
@@ -33,14 +30,14 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn user-roles->user-unidentified?
+(defn user-roles->user-identified?
   ; @param (vector) user-roles
   ;
   ; @return (boolean)
   [user-roles]
-  (vector/contains-item? user-roles UNIDENTIFIED-USER-ROLE))
+  (vector/nonempty? user-roles))
 
-(defn user-roles->user-identified?
+(defn user-roles->user-unidentified?
   ; @param (vector) user-roles
   ;
   ; @return (boolean)

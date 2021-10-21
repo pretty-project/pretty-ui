@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- counter tulajdonságai nem müködnek label, initial-value
+
 - freezed-route-ra nincs szükség
 
 - Elméletileg nem szükséges az authenticated-home! Amilyen route-on vagy amikor bejön

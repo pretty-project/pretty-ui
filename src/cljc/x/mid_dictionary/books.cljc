@@ -407,10 +407,13 @@
        :hu "Biztos vagy benne, hogy szeretnéd törölni a kiválasztott elemeket?"}
       :deselect!
       {:en "Deselect"
-       :hu "Kiválasztás megszüntetése"
-       :duplicate-item!
-       {:en "Duplicate item"
-        :hu "Elem duplikálása"}}
+       :hu "Kiválasztás megszüntetése"}
+      :duplicate-item!
+      {:en "Duplicate item"
+       :hu "Elem duplikálása"}
+      :duplicate!
+      {:en "Duplicate"
+       :hu "Duplikálás"}
       :edit!
       {:en "Edit"
        :hu "Szerkesztés"}
@@ -519,6 +522,9 @@
       :select
       {:en "Select"
        :hu "Kiválasztás"}
+      :check
+      {:en "Select"
+       :hu "Kijelölés"}
       :uncheck-selected!
       {:en "Uncheck selected"
        :hu "Kiválasztás megszűntetése"}
@@ -763,6 +769,9 @@
       :by-name
       {:en "Name"
        :hu "Név szerint"}
+      :by-order
+      {:en "By order"
+       :hu "Sorrend szerint"}
       :by-size
       {:en "By size"
        :hu "Méret szerint"}

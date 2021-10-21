@@ -49,7 +49,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:request-id (keyword)(opt)}
+  ;  {:request-id (keyword)(opt)
+  ;   :stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
@@ -58,12 +59,17 @@
   ;   :min-width (keyword)
   ;   :status-animation? (boolean)
   ;   :type (keyword)}
-  [field-id {:keys [request-id] :as field-props}]
+  [field-id {:keys [request-id stretch-orientation] :as field-props}]
   (merge {:color      :default
           :layout     :row
           :min-width  :s
           :type       :text
-          :value-path (engine/default-value-path field-id)}
+          :value-path (engine/default-value-path field-id)
+
+          ; A stretch-orientation tulajdonságot szükséges az element-container komponens
+          ; számára is átadni, hogy alkalmazkodni tudjon a környezethez az elem.
+          :container-stretch-orientation stretch-orientation}
+
          (if (some? request-id) {:status-animation? true})
          (param field-props)
          {:end-adornments (end-adornments-prototype field-id field-props)}))
@@ -268,6 +274,9 @@
   ;   :status-animation? (boolean)(opt)
   ;    Default: true
   ;    Only w/ {:request-id ...}
+  ;   :stretch-orientation (keyword)(opt)
+  ;    :horizontal, :none
+  ;    Default: :none
   ;   :style (map)(opt)
   ;   :surface (map)(opt)
   ;    {:content (metamorphic-content)

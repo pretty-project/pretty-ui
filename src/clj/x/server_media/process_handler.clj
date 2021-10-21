@@ -15,11 +15,12 @@
 
 (ns x.server-media.process-handler
     (:require [mid-fruits.candy            :refer [param]]
+              [mid-fruits.eql              :as eql]
               [mid-fruits.vector           :as vector]
+              [pathom.api                  :as pathom]
               [server-fruits.http          :as http]
               [x.server-media.item-handler :as item-handler]
-              [x.server-user.api           :as user]
-              [x.server-sync.api           :as sync]))
+              [x.server-user.api           :as user]))
 
 
 
@@ -46,7 +47,7 @@
 (def REGISTRY [HANDLERS])
 
 ; @constant (map)
-(def ENVIRONMENT (sync/environment-register REGISTRY))
+(def ENVIRONMENT (pathom/environment-register REGISTRY))
 
 
 
@@ -105,9 +106,9 @@
   ; @return (map)
   [request]
   (if (user/request->authenticated? request)
-      (let [query       (sync/request->query request)
+      (let [query       (pathom/request->query request)
             environment (assoc ENVIRONMENT :request request)]
-           (sync/process-query! environment query))
+           (pathom/process-query! environment query))
       (http/error-wrap {:error-message :permission-denied :status 401})))
 
 (defn process-upload!
@@ -135,7 +136,7 @@
             mutation-props           {:destination-directory-id destination-directory-id
                                       :processed-files-data     processed-files-data}
             query-action            `(media/upload-files! ~mutation-props)
-            query                    (sync/append-to-query response-query query-action)]
-           (sync/process-query! (param environment)
-                                (sync/read-query query)))
+            query                    (eql/append-to-query response-query query-action)]
+           (pathom/process-query! (param environment)
+                                  (pathom/read-query query)))
       (http/error-wrap {:error-message :permission-denied :status 401})))

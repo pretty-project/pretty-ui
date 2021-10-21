@@ -389,7 +389,8 @@ body {
 .x-vertical-line--body {
   background-color: var( --border-color-highlight ) }
 
-.x-label[data-color="highlight"] {
+.x-label[data-color="highlight"],
+.x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
 
 /*** Highlight ***/
@@ -1694,14 +1695,19 @@ body {
   width: var( --icon-size-default ) }
 
 .x-button[data-layout="icon-button"] .x-button--icon {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  /* XXX#6914
+   * Az icon-button gombon az ikon akkor is függőlegesen középre igazítva jelent meg,
+   * amikor a gomb rendelkezett label felirattal. Így viszont a felirat és az ikon együtt
+   * már nem számított középre igazítottnak, ami más elemek mellett zavaróan nézett ki */
+  -align-items: center;
+  -display: flex;
+  -flex-direction: column;
+  -height: 100%;
+  -left: 0;
+  -position: absolute;
+  -top: 0;
+  -width: 100%;
+  /* XXX#6914 */
 
   /* BUG#0983
    * height, overflow, width:
@@ -1721,16 +1727,19 @@ body {
   word-wrap: normal }
 
 .x-button[data-layout="icon-button"] .x-button--label {
-  bottom: 0;
+  /* XXX#6914 */
+  -bottom: 0;
+  -left: 0;
+  -position: absolute;
+  /* XXX#6914 */
+
   font-size: 10px;
   font-weight: 500;
   height: 15px;
-  left: 0;
   letter-spacing: var( --letter-spacing-xs );
   line-height: 15px;
   opacity: .75;
   overflow: hidden;
-  position: absolute;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
