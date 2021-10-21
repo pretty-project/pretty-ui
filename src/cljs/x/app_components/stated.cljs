@@ -43,12 +43,12 @@
 ; @name destructor
 ;  A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
 ;  React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor
-;  megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
+;  megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
 ;
 ; @name initializer
 ;  Az {:initializer ...} tulajdonságként átadott Re-Frame esemény a komponens
 ;  React-fába történő csatolása után történik meg. A komponens újracsatolásakor
-;  (remounting) nem ismétlődik meg az initializer esemény megtörténése.
+;  (remounting) nem ismétlődik meg az initializer esemény megtörténése.
 ;
 ; @name updater
 ;  TODO ...
@@ -112,8 +112,8 @@
 ;  -csatolás saját azonosítóval rendelkezik és a destructor esemény megtörténése vagy
 ;  a komponens tulajdonságainak Re-Frame adatbázisból való eltávolítása késleltetve
 ;  történik, így lehetséges megvizsgálni, hogy ha a komponens még mindig azzal az azonosítóval
-;  van csatolva, amivel a lecsatolásai események megtörténnének, akkor azok végrehajtódhatnak,
-;  de ha azóta eltérő azonosítóval újra van csatolva a komponens, akkor a lecsatolási események
+;  van csatolva, amivel a lecsatolásai események megtörténnének, akkor azok végrehajtódhatnak,
+;  de ha azóta eltérő azonosítóval újra van csatolva a komponens, akkor a lecsatolási események
 ;  nem történnek meg.
 ;
 ; @description

@@ -68,11 +68,11 @@
   ;
   ; @example
   ;  (sequence/prev-prev-dex 10 8 20)
-  ;  => 8
+  ;  => 8
   ;
   ; @example
   ;  (sequence/prev-prev-dex 9 8 20)
-  ;  => 20
+  ;  => 20
   ;
   ; @return (integer)
   ;  A dex elotti-elotti index, ami nem lehet kisebb, mint min es nem lehet

@@ -85,7 +85,7 @@
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: true
   ;   :helper (metamorphic-content)(opt)
-  ;   :highlighted? (boolean)(opt)
+  ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)

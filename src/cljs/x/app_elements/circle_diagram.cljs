@@ -129,7 +129,7 @@
          (param diagram-props)
          (if (some? strength) {:strength (math/between! strength 1 6)})
 
-         ; A szekciók elforgatásának kiszámításához először szükséges kiszámítani
+         ; A szekciók elforgatásának kiszámításához először szükséges kiszámítani
          ; az :total-value értéket.
          (cond-> (param diagram-props)
                  (nil?  total-value)  (diagram-props<-total-value)
@@ -145,7 +145,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:diameter (px)
+  ;  {:diameter (px)
   ;   :strength (px)}
   ; @param (map) section-props
   ;
@@ -187,7 +187,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:diameter (px)}
+  ;  {:diameter (px)}
   ;
   ; @return (hiccup)
   [diagram-id {:keys [diameter] :as diagram-props}]
@@ -241,7 +241,7 @@
   ;     Min: 1
   ;     Max: 6
   ;   :total-value (integer)(opt)
-  ;    Default: A szakaszok aktuális értékének összege}
+  ;    Default: A szakaszok aktuális értékének összege}
   ;
   ; @usage
   ;  [elements/circle-diagram {...}]

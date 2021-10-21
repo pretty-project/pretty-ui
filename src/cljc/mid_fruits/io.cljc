@@ -37,7 +37,7 @@
 ;  karaktere, akkor a "." karakter után következő rész a fájl nevének tekintendő,
 ;  nem pedig a fájl kiterjesztésének!
 ;  Egyes operációs rendszerek a "." karakterrel kezdődő fájlnevű fájlokat rejtett
-;  fájloknak tekintik.
+;  fájloknak tekintik.
 ;
 ; @name basename
 ;  "my-file"

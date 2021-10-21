@@ -192,7 +192,7 @@
   ;     Min: 1
   ;     Max: 6
   ;   :total-value (integer)(opt)
-  ;    Default: A szakaszok aktuális értékének összege
+  ;    Default: A szakaszok aktuális értékének összege
   ;   :width (px)(opt)
   ;    Default: 128}
   ;

@@ -84,7 +84,7 @@
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :no-options-label (metamorphic-content)
-  ;   :on-change (metamorphic-event)
+  ;   :on-change (metamorphic-event)
   ;   :on-extend (metamorphic-event)
   ;   :select-option-event (event-vector)}
   [field-id field-props]
@@ -174,9 +174,9 @@
   ;  {:option-component (component)(opt)
   ;   :select-option-event (event-vector)}
   ; @param (map) option-data
-  ;  {:option (*)
+  ;  {:option (*)
   ;   :selected? (boolean)}
-  ; @param (integer) option-dex
+  ; @param (integer) option-dex
   ;
   ; @return (hiccup)
   [field-id {:keys [option-component select-option-event] :as view-props}
@@ -313,7 +313,7 @@
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
   ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:x.app-elements/add-option! field-id value]
+  ;    Default: [:x.app-elements/add-option! field-id value]
   ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}
@@ -350,10 +350,10 @@
   ;                       :value-path   [:my-value]}]]
   ;
   ; @usage
-  ;  (a/reg-event-db :my-extender (fn [db [_ field-id value]]
+  ;  (a/reg-event-db :my-extender (fn [db [_ field-id value]]
   ;                                   (update-in db [:my-options] vector/conj-item {:name value})))
   ;  [elements/combo-box {:extendable?  true
-  ;                       :get-label-f  #(get % :name)
+  ;                       :get-label-f  #(get % :name)
   ;                       :on-extend    [:my-extender]
   ;                       :options-path [:my-options]
   ;                       :value-path   [:my-value]}]]

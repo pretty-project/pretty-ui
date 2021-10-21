@@ -304,8 +304,8 @@
   ;   :height (px)(opt)
   ;   :icon (keyword)(opt) Material icon class
   ;    Default: DEFAULT-PREVIEW-ICON
-  ;   :label (metamorphic-content)
-  ;   :multiple-selection? (boolean)(opt)
+  ;   :label (metamorphic-content)
+  ;   :multiple-selection? (boolean)(opt)
   ;    Default: false
   ;   :on-click (metamorphic-event)(constant)(opt)
   ;    Only w {:selectable? false}
@@ -326,7 +326,7 @@
   ;      :on-click (metamorphic-event)(opt)
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :style (map)(opt)
-  ;   :thumbnail-uri (string)(opt)
+  ;   :thumbnail-uri (string)(opt)
   ;   :timestamp (string)(opt)
   ;   :value-path (item-path vector)(opt)
   ;   :width (px)(opt)}

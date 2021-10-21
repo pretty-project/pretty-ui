@@ -65,7 +65,7 @@
   ;  [{:aborted? (boolean)}]
   ;
   ; @example
-  ;  (files-data->non-aborted-files [{:filename "My file"}
+  ;  (files-data->non-aborted-files [{:filename "My file"}
   ;                                  {:filename "Your file" :aborted? true}
   ;                                  {:filename "Our file"}])
   ;  => [0 2]
@@ -463,7 +463,7 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) view-props
-  ;  {:all-files-aborted? (boolean)}
+  ;  {:all-files-aborted? (boolean)}
   ;
   ; @return (component)
   [_ {:keys [all-files-aborted?]}]
@@ -561,7 +561,7 @@
   ;
   ; @param (keyword)(opt) uploader-id
   ; @param (map) uploader-props
-  ;  {:allowed-extensions (strings in vector)(opt)
+  ;  {:allowed-extensions (strings in vector)(opt)
   ;   :destination-directory-id (keyword)
   ;   :namespace (keyword)}
   ;
@@ -572,7 +572,7 @@
   ;  [:file-uploader/load! :my-uploader {...}]
   ;
   ; @usage
-  ;  [:file-uploader/load! {:allowed-extensions ["htm" "html" "xml"]
+  ;  [:file-uploader/load! {:allowed-extensions ["htm" "html" "xml"]
   ;                         :destination-directory-id :home
   ;                         :namespace :my-namespace}]
   (fn [{:keys [db]} event-vector]

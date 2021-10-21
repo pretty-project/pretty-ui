@@ -112,7 +112,7 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   ;  {:animation-name (keyword)(opt)
-  ;    :reveal, :slide-in-rtl
+  ;    :reveal, :slide-in-rtl
   ;    Default: :slide-in-rtl
   ;   :content (metamorphic-content)
   ;   :content-props (map)(opt)}

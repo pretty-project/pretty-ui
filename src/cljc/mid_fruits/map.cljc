@@ -632,7 +632,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn any-key-match?
-  ; @param (map) n
+  ; @param (map) n
   ; @param (function) test-f
   ;
   ; @example
@@ -651,7 +651,7 @@
                    (fn [%1 _ _] (boolean %1))))
 
 (defn any-value-match?
-  ; @param (map) n
+  ; @param (map) n
   ; @param (function) test-f
   ;
   ; @example
@@ -670,7 +670,7 @@
                    (fn [%1 _ _] (boolean %1))))
 
 (defn get-first-match-key
-  ; @param (map) n
+  ; @param (map) n
   ; @param (function) test-f
   ;
   ; @example
@@ -690,7 +690,7 @@
                    (fn [%1 _ _] (some? %1))))
 
 (defn get-first-match-value
-  ; @param (map) n
+  ; @param (map) n
   ; @param (function) test-f
   ;
   ; @example

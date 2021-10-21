@@ -623,7 +623,7 @@
 
 (defn matrix
   ; @param (string) n
-  ; @param (strings in vectors in vector) character-matrix
+  ; @param (strings in vectors in vector) character-matrix
   ;
   ; @example
   ;  (string/matrix "abcd" [["a" "b" "c"]

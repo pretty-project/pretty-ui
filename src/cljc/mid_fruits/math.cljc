@@ -28,7 +28,7 @@
   ;
   ; @example
   ;  (math/percent->angle 50)
-  ;  => 180
+  ;  => 180
   ;
   ; @return (float or integer)
   [n]

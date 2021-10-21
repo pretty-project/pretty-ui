@@ -106,7 +106,7 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ;  {:minimized? (boolean)(opt)}
+  ;  {:minimized? (boolean)(opt)}
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimized?]}]

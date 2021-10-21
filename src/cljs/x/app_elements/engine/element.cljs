@@ -121,7 +121,7 @@
   ;  {:ghost-view? (boolean)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right, :space-between
-  ;   :icon-size (keyword)(opt)
+  ;   :icon-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   :layout (keyword)(opt)
   ;   :min-width (keyword)(opt)
@@ -130,7 +130,7 @@
   ;   :position (keyword)(opt)
   ;   :size (keyword)(opt)
   ;   :stretch-orientation (keyword)(opt)
-  ;    :horizontal, :vertical, :both, :none
+  ;    :horizontal, :vertical, :both, :none
   ;   :vertical-align (keyword)(opt)
   ;    :top, :center, :bottom, :space-between
   ;   :wrap-items? (boolean)(opt)}

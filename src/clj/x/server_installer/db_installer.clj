@@ -26,7 +26,7 @@
 
 (a/reg-event-fx
   :x.server-installer/install-db!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "installing module: db")
       {:db       (r engine/->module-installed db :db)

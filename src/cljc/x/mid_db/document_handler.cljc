@@ -330,7 +330,7 @@
 
                ; A dokumentum változtatásához szükséges jogosultságokot leíró térképet
                ; szükségeses eltávolítani a dokumentumból, annak szerverről kliens eszközre
-               ; történő elküldése előtt.
+               ; történő elküldése előtt.
                (dissoc :permissions)))
 
 (defn document->identified-document

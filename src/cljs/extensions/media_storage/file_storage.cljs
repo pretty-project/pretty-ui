@@ -41,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  A fájl-intéző az [:x.app-router/go-to! "/file-storage"] vagy az
+;  A fájl-intéző az [:x.app-router/go-to! "/file-storage"] vagy az
 ;  [:x.app-router/go-to! "/file-storage/directory-id"] események meghívásával
 ;  indítható.
 
@@ -241,7 +241,7 @@
   ;   :directory-path (maps in vector)
   ;   :filtered-files (maps in vector)
   ;   :filtered-subdirectories (maps in vector)
-  ;   :listening-to-request? (boolean)
+  ;   :listening-to-request? (boolean)
   ;   :order-by (keyword)
   ;   :storage-free-capacity (B)
   ;   :storage-total-capacity (B)

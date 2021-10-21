@@ -46,7 +46,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (def KEYWORD-PREFIX "*")
+  ;  (def KEYWORD-PREFIX "*")
   ;  (json/unkeywordized-string? "*:apple")
   ;  => true
   ;

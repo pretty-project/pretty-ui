@@ -62,15 +62,15 @@
   (let [params (env->params env)]
        (get params param-id)))
 
-(defn env->pipeline
+(defn env->search-props
   ; @param (map) env
   ;  {?}
   ;
   ; @example
-  ;  (env->pipeline {?})
+  ;  (env->search-props {?})
   ;  =>
-  ;  {:max-count 20
-  ;   :search-key :fruit/name
+  ;  {:max-count 20
+  ;   :search-key :fruit/name
   ;   :search-term "Apple"
   ;   :sort-pattern
   ;   [[:fruit/name 1] [:fruit/color -1]]
@@ -78,7 +78,7 @@
   ;
   ; @return (map)
   ;  {:max-count (integer)
-  ;   :search-key (namespaced keyword)
+  ;   :search-key (namespaced keyword)
   ;   :search-term (string)
   ;   :sort-pattern (vectors in vector)
   ;    [[(namespaced keyword) sort-key

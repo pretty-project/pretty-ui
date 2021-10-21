@@ -121,7 +121,7 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) view-props
-  ;  {:expanded? (boolean)}
+  ;  {:expanded? (boolean)}
   ;
   ; @return (hiccup)
   [expandable-id {:keys [expanded?] :as view-props}]
@@ -153,13 +153,13 @@
   ; @param (map) expandable-props
   ;  {:content (metamorphic-content)
   ;   :content-props (map)(opt)
-  ;   :expanded? (boolean)(opt)
+  ;   :expanded? (boolean)(opt)
   ;    Default: true
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt) Material icon class
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
+  ;    :fit, :row
+  ;    Default: :row
   ;   :subscriber (subscription vector)(opt)}
   ;
   ; @usage

@@ -33,7 +33,7 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
-  ;   :shape (keyword)}
+  ;   :shape (keyword)}
   [indicator-props]
   (merge {:color :primary
           :shape :line}
@@ -88,7 +88,7 @@
   ;    Default: 48
   ;    Only w/ {:shape :circle}
   ;   :shape (keyword)(opt)
-  ;    :circle, :line
+  ;    :circle, :line
   ;    Default: :line
   ;   :style (map)(opt)}
   ;

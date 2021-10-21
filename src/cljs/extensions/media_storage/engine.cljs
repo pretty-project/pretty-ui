@@ -39,7 +39,7 @@
 
 ; @constant (vector)
 ;  A szinkronizációk alkalmával a gyökér könyvtár adatait is szükséges frissíteni
-;  a felhasznált tárhely-kapacitás értékének esetleges változása miatt.
+;  a felhasznált tárhely-kapacitás értékének esetleges változása miatt.
 (def ROOT-DIRECTORY-QUERY [{ROOT-DIRECTORY-ENTITY DOWNLOAD-DIRECTORY-DATA-PARAMS}])
 
 
@@ -128,7 +128,7 @@
   ; @param (keyword) namespace
   ;
   ; @example
-  ;  (engine/namespace->query-id :extensions.media-storage.file-storage)
+  ;  (engine/namespace->query-id :extensions.media-storage.file-storage)
   ;  => :extensions.media-storage.file-storage/synchronize!
   ;
   ; @return (keyword)
@@ -141,7 +141,7 @@
   ; @param (keyword) namespace
   ;
   ; @example
-  ;  (engine/namespace->partition-id :extensions.media-storage.file-storage)
+  ;  (engine/namespace->partition-id :extensions.media-storage.file-storage)
   ;  => :extensions.media-storage.file-storage/primary
   ;
   ; @return (namespaced keyword)
@@ -298,7 +298,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) file-props
-  ;  {:file/filename (string)}
+  ;  {:file/filename (string)}
   ;
   ; @return (string)
   [{:file/keys [filename]}]
@@ -394,7 +394,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) directory-id
-  ; @param (string) filter-phrase
+  ; @param (string) filter-phrase
   ;
   ; @return (maps in vector)
   [db [_ directory-id filter-phrase]]
@@ -424,7 +424,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) directory-id
-  ; @param (string) filter-phrase
+  ; @param (string) filter-phrase
   ;
   ; @return (maps in vector)
   [db [_ directory-id filter-phrase]]
@@ -692,7 +692,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
-  ; @param (map) action-props
+  ; @param (map) action-props
   ;  {:source-directory-id (keyword)
   ;   :file-id (keyword)}
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id file-id]}]]
@@ -715,7 +715,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
-  ; @param (map) action-props
+  ; @param (map) action-props
   ;  {:source-directory-id (keyword)
   ;   :subdirectory-id (keyword)}
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id subdirectory-id]}]]

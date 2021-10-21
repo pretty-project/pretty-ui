@@ -99,11 +99,11 @@
   ; @param (string) suffix
   ;
   ; @example
-  ;  (file-alias->copy-file-alias "My file.txt" [] "copy")
+  ;  (file-alias->copy-file-alias "My file.txt" [] "copy")
   ;  => "My file copy.txt"
   ;
   ; @example
-  ;  (file-alias->copy-file-alias "My file" [] "copy")
+  ;  (file-alias->copy-file-alias "My file" [] "copy")
   ;  => "My file copy"
   ;
   ; @return (string)
@@ -122,7 +122,7 @@
   ; @param (string) suffix
   ;
   ; @example
-  ;  (directory-alias->copy-directory-alias "My directory" [] "copy")
+  ;  (directory-alias->copy-directory-alias "My directory" [] "copy")
   ;  => "My directory copy"
   ;
   ; @return (string)

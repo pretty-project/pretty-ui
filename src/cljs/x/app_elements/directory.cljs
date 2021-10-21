@@ -245,7 +245,7 @@
   ;   :height (px)(opt)
   ;   :items-count (integer)(opt)
   ;   :label (metamorphic-content)
-  ;   :multiple-selection? (boolean)(opt)
+  ;   :multiple-selection? (boolean)(opt)
   ;    Default: false
   ;   :on-click (metamorphic-event)(constant)(opt)
   ;   :on-right-click (metamorphic-event)(constant)(opt)
@@ -255,7 +255,7 @@
   ;    Default: false
   ;   :selectable? (boolean)(opt)
   ;    Default: false
-  ;    TODO ...
+  ;    TODO ...
   ;   :size (keyword)(opt)
   ;    :xxs, xs, :s, :m, :l, :xl, :xxl
   ;    Default: :m

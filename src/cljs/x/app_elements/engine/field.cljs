@@ -105,7 +105,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:modifier (function)(opt)
-  ;   :on-change (metamorphic-event)(opt)
+  ;   :on-change (metamorphic-event)(opt)
   ;   :on-type-ended (event-vector)(opt)
   ;   :value-path (item-path vector)}
   ;
@@ -544,4 +544,4 @@
                          (param on-focus-event)]})))
 
                          ; WARNING#9055
-                         ; [:x.app-elements/reg-change-listener?! field-id]
+                         ; [:x.app-elements/reg-change-listener?! field-id]

@@ -52,7 +52,7 @@
   ; @param (keyword) group-id
   ;
   ; @example
-  ;  (group-id->field-id :my-multi-combo-box)
+  ;  (group-id->field-id :my-multi-combo-box)
   ;  => :my-multi-combo-box--field
   ;
   ; @return (keyword)
@@ -94,7 +94,7 @@
          {:chips             (view-props->chips view-props)
           :delete-chip-event [:x.app-elements/unstack-from-group-value! group-id]
           ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
-          ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
+          ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
           ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
           ; közötti távolság.
           ; Ezért szükséges a chips elem {:no-chips-label ...} tulajdonságának használatával
@@ -250,7 +250,7 @@
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
   ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:x.app-elements/add-option! field-id value]
+  ;    Default: [:x.app-elements/add-option! field-id value]
   ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}

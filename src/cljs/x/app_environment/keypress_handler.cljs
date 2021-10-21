@@ -64,7 +64,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) event-props
-  ;  {:prevent-default? (boolean)(opt)}
+  ;  {:prevent-default? (boolean)(opt)}
   ;
   ; @return (boolean)
   [{:keys [prevent-default?]}]
@@ -372,7 +372,7 @@
   ;   :on-keydown (metamorphic-event)(opt)
   ;   :on-keyup (metamorphic-event)(opt)
   ;   :prevent-default? (boolean)(opt)
-  ;    Default: false
+  ;    Default: false
   ;   :required? (boolean)(opt)
   ;    A {:required? true} keypress eseményeket nem lehetséges inaktívvá tenni
   ;    Default: false}

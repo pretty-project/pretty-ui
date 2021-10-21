@@ -106,7 +106,7 @@
   ;    TODO ...
   ;   :date-to (string)(opt)
   ;    TODO ...
-  ;   :highlighted? (boolean)(opt)
+  ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)

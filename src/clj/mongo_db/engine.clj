@@ -649,7 +649,7 @@
   ; @example
   ;  (mongo-db/duplicate-document! "my-collection" "my-document" {:label-key   :my-namespace/label
   ;                                                               :language-id :en})
-  ;  => 
+  ;  =>
   ;  {:my-namespace/id "..." :my-namespace/label "My document copy"}
   ;
   ; @return (map)
@@ -689,13 +689,13 @@
 
 (defn count-documents-by-pipeline
   ; @param (string) collection-name
-  ; @param (map) options
+  ; @param (map) search-props
   ;  {:search-key (namespaced keyword)
   ;   :search-term (string)}
   ;
   ; @usage
   ;  (mongo-db/count-documents-by-pipeline "my-collection" {:search-key  :my-namespace/label
-  ;                                                         :search-term "My document"})
+  ;                                                         :search-term "My document"})
   ;
   ; @return (integer)
   [collection-name {:keys [search-key search-term]}]
@@ -707,7 +707,7 @@
 
 (defn get-documents-by-pipeline
   ; @param (string) collection-name
-  ; @param (map) options
+  ; @param (map) search-props
   ;  {:max-count (integer)
   ;   :search-key (namespaced keyword)
   ;   :search-term (string)

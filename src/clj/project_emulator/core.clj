@@ -20,7 +20,7 @@
 
 (defn run-targeted-app!
   ; @param (map)
-  ;  {:port (integer)}
+  ;  {:port (integer)}
   [{:keys [port] :as server-props}]
   (x.boot-loader/run-app! server-props)
   (println "project-emulator - Server started on port:" port))

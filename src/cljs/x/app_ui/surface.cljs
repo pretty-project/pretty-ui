@@ -55,7 +55,7 @@
   ; @return (map)
   ;  {:hide-animated? (boolean)
   ;   :reveal-animated? (boolean)
-  ;   :trim-content? (boolean)
+  ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
   [db [surface-id surface-props]]
   (merge {:hide-animated?   true

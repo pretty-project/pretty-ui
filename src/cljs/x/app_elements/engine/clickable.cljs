@@ -51,7 +51,7 @@
   ;   :href (string)
   ;   :id (string)
   ;   :on-click (function)
-  ;   :on-mouse-up (function)
+  ;   :on-mouse-up (function)
   ;   :title (string)}
   [element-id {:keys [disabled? href targetable? tooltip]}]
   (cond-> (param {})

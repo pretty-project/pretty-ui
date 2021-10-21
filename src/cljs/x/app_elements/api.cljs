@@ -126,7 +126,7 @@
 ; @usage
 ;  Amikor egy elem paraméterei kívülről megváltoznak, akkor az elemen lévő fókusz,
 ;  szövegkijelölés és/vagy kurzor-pozíció a paraméterváltozás miatti újrarenderelődés
-;  hatására elveszik.
+;  hatására elveszik.
 ;  Ha ez problémát jelent, akkor célszerű a paramétert Re-Frame eseménnyel
 ;  változtatni, ami nem okozza az elem konténerének újrarenderelődését.
 ;

@@ -113,7 +113,7 @@
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
   ;   :helper (metamorphic-content)(opt)
-  ;   :highlighted? (boolean)(opt)
+  ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
@@ -121,7 +121,7 @@
   ;    Only w/o {:placeholder ...}
   ;   :layout (keyword)(opt)
   ;    :fit, :row
-  ;    Default: :row
+  ;    Default: :row
   ;   :listen-to-change? (boolean)(constant)(opt)
   ;    XXX#4880
   ;    Default: false

@@ -83,7 +83,7 @@
   ;    Default: :center
   ;   :style (map)(opt)
   ;   :stretch-orientation (keyword)(opt)
-  ;    :horizontal, :vertical, :both, :none
+  ;    :horizontal, :vertical, :both, :none
   ;    Default: :vertical
   ;   :subscriber (subscription vector)(opt)
   ;   :vertical-align (keyword)(opt)

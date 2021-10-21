@@ -43,7 +43,7 @@
 ; @description
 ;  Az applikáció betöltésének folyamata:
 ;  - Az [x.boot-synchronizer/synchronize-app! ...] esemény az applikáció indításához
-;    szükséges adatokat letölti a szerverről.
+;    szükséges adatokat letölti a szerverről.
 ;  - Az applikáció indításához szükséges adatok letöltődése után az :on-app-init
 ;    események megtörténése.
 ;  - Az :on-app-init események megtörténésének kezdete után 100 ms idő elteltével
@@ -94,7 +94,7 @@
                   (dom/get-element-by-id "x-app-container")))
 
 ; @usage
-;  [:x.boot-loader/render-app! #'app]
+;  [:x.boot-loader/render-app! #'app]
 (a/reg-handled-fx :x.boot-loader/render-app! render-app!)
 
 
@@ -174,7 +174,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/initialize-app! #'app]
+  ;  [:x.boot-loader/initialize-app! #'app]
   (fn [{:keys [db]} [_ app]]
        ; 1. Debug módban indított applikáció bejegyzése
       {:db (if-let [debug-mode (a/debug-mode)]
@@ -193,7 +193,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/boot-app! #'app]
+  ;  [:x.boot-loader/boot-app! #'app]
   (fn [{:keys [db]} [_ app]]
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
@@ -209,7 +209,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/build-app! #'app]
+  ;  [:x.boot-loader/build-app! #'app]
   (fn [{:keys [db]} [_ app]]
       {:dispatch-if
        ; 1. Ha a felhasználó nem vendégként lett azonosítva, akkor
@@ -250,7 +250,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/->app-synchronized #'app]
+  ;  [:x.boot-loader/->app-synchronized #'app]
   (fn [{:keys [db]} [_ app]]
       (let [app-build (r a/get-app-detail db :app-build)]
            {:dispatch-n [; 1.

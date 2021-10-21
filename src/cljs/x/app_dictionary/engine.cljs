@@ -115,13 +115,13 @@
 ; @param (map) term
 ;
 ; @usage
-;  [:x.app-dictionary/add-term! :my-term {:en "My term"}]
+;  [:x.app-dictionary/add-term! :my-term {:en "My term"}]
 (a/reg-event-db :x.app-dictionary/add-term!  add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
-;  [:x.app-dictionary/add-terms! {:my-term {:en "My term"}}]
+;  [:x.app-dictionary/add-terms! {:my-term {:en "My term"}}]
 (a/reg-event-db :x.app-dictionary/add-terms! add-terms!)
 
 

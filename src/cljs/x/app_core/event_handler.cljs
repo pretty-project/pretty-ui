@@ -129,7 +129,7 @@
                       event-namespace (keyword/get-namespace event-id)]
                     ; TEMP
                     ; A collapsable event-log megvalósításáig az x.app-components.stated
-                    ; névtér eseményei szűrésre kerülnek, a console átláthatóságának
+                    ; névtér eseményei szűrésre kerülnek, a console átláthatóságának
                     ; érdekében.
                     (if-not (= event-namespace :x.app-components.stated)
                             (debug/console (context->event-vector %1)))

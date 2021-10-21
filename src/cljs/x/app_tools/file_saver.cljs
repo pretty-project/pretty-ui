@@ -76,7 +76,7 @@
   ; @param (map) saver-props
   ;
   ; @return (map)
-  ;  {:filename (string)}
+  ;  {:filename (string)}
   [saver-props]
   (merge {:filename DEFAULT-FILENAME}
          (param saver-props)))
@@ -166,7 +166,7 @@
   ;
   ; @param (keyword) saver-id
   ; @param (map) saver-props
-  ;  {:data-url (string)(opt)
+  ;  {:data-url (string)(opt)
   ;   :filename (string)
   ;   :uri (string)(opt)}
   ;

@@ -253,7 +253,7 @@
   ;    Only w/ {:layout :fit} or {:layout :row}
   ;   :icon (keyword)(opt) Material icon class
   ;   :icon-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :keypress (map)(constant)(opt)

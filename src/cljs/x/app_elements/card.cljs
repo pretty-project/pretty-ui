@@ -230,7 +230,7 @@
   ;    Only w/ {:expandable? true}
   ;   :ghost-view? (boolean)(opt)
   ;    Default: false
-  ;   :highlighted? (boolean)(opt)
+  ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right

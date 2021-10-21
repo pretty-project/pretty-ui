@@ -32,7 +32,7 @@
   ; @param (keyword) loader-id
   ;
   ; @example
-  ;  (loader-id->observer-id :my-loader)
+  ;  (loader-id->observer-id :my-loader)
   ;  => :my-loader--observer
   ;
   ; @return (keyword)

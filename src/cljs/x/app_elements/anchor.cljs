@@ -64,7 +64,7 @@
   ;
   ; XXX#9085
   ; Az anchor elem {:on-click [:x.app-router/go-to! "..."]} paraméterezés helyett
-  ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
+  ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
   ; történő megnyitását.
   ;
   ; @param (keyword)(opt) anchor-id

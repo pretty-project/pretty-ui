@@ -785,7 +785,7 @@
 
 (defn get-event-handlers
   ; @return (map)
-  ;  {:cofx (map)
+  ;  {:cofx (map)
   ;   :event (map)
   ;   :fx (map)
   ;   :sub (map)}

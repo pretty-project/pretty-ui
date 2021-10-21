@@ -31,7 +31,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
-  ;  {:installed-at (string)
+  ;  {:installed-at (string)
   ;   :installed-version (string)}
   []
   (let [timestamp (time/timestamp)]

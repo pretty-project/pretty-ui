@@ -1416,19 +1416,19 @@
   ; @param (function) comparator-f
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 2] <)
+  ;  (vector/compared-items-ordered? [0 1 3] [0 1 2] <)
   ;  => false
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 4] <)
+  ;  (vector/compared-items-ordered? [0 1 3] [0 1 4] <)
   ;  => true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 3] <)
+  ;  (vector/compared-items-ordered? [0 1 3] [0 1 3] <)
   ;  => true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? ["a" "b" "c"] ["d" "a"] string/abc?)
+  ;  (vector/compared-items-ordered? ["a" "b" "c"] ["d" "a"] string/abc?)
   ;  => true
   ;
   ; @return (boolean)

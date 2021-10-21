@@ -84,13 +84,13 @@
 ; @param (map) term
 ;
 ; @usage
-;  [:x.server-dictionary/add-term! :my-term {:en "My term"}]
+;  [:x.server-dictionary/add-term! :my-term {:en "My term"}]
 (a/reg-event-db :x.server-dictionary/add-term!  add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
-;  [:x.server-dictionary/add-terms! {:my-term {:en "My term"}}]
+;  [:x.server-dictionary/add-terms! {:my-term {:en "My term"}}]
 (a/reg-event-db :x.server-dictionary/add-terms! add-terms!)
 
 

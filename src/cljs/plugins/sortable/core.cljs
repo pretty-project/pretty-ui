@@ -372,7 +372,7 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) view-props
-  ;  {:sortable-item-order (strings in vector)}
+  ;  {:sortable-item-order (strings in vector)}
   ;
   ; @return (map)
   ;  {:items (strings in json array)

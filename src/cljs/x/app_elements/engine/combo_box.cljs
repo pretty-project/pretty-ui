@@ -43,7 +43,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (integer) key-code
+  ; @param (integer) key-code
   ;
   ; @example
   ;  (key-code->keypress-id :my-field 40)
@@ -70,7 +70,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) view-props
-  ;  {:options (vector)}
+  ;  {:options (vector)}
   ;
   ; @return (vector)
   [{:keys [options] :as view-props}]
@@ -209,7 +209,7 @@
   ; @return (boolean)
   [db [_ field-id option]]
   ; A combo-box elem React-fába csatolása után van olyan pillanat, amikor az elem
-  ; feliratkozása már aktív, de az elem tulajdonságai még nem elérhetők
+  ; feliratkozása már aktív, de az elem tulajdonságai még nem elérhetők
   ; a Re-Frame adatbázisban. És a get-label-f értéke nem lehet nil!
   (if-let [get-label-f (r element/get-element-prop db field-id :get-label-f)]
           (let [value (r get-combo-box-value db field-id)]
@@ -323,7 +323,7 @@
   [db [_ field-id]]
    ; XXX#8093
    ; A {:field-empty? ...} tulajdonság használatával állapítja meg a text-field
-   ; elem, hogy melyik adornment gombot szükséges megjeleníteni.
+   ; elem, hogy melyik adornment gombot szükséges megjeleníteni.
   {:field-empty?     (r combo-box-empty?               db field-id)
    :options          (r get-combo-box-options          db field-id)
    :rendered-options (r get-combo-box-rendered-options db field-id)

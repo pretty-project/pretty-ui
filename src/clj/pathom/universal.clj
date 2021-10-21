@@ -14,20 +14,21 @@
   ; @param (?) ?
   ;
   ; @return (map)
-  ;  {:documents (map)
+  ;  {:documents (map)
   ;    {:count (integer)
   ;     :result (maps in vector)}}
   [env _]
-  {:documents (let [pipeline (env/env->pipeline env)]
-                   {:count  (mongo-db/count-documents-by-pipeline pipeline)
-                    :result (mongo-db/get-documents-by-pipeline   pipeline)})})
+  {:documents (let [search-props    (env/env->search-props env)
+                    collection-name (env/env->param        env :collection-name)]
+                   {:count  (mongo-db/count-documents-by-pipeline collection-name search-props)
+                    :result (mongo-db/get-documents-by-pipeline   collection-name search-props)})})
 
 (defresolver get-document-by-id
   ; @param (map) env
   ; @param (?) ?
   ;
   ; @return (map)
-  ;  {:document (map)}
+  ;  {:document (map)}
   [env _]
   {:document (let [collection-name (env/env->param env :collection-name)
                    document-id     (env/env->param env :document-id)]

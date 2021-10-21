@@ -247,7 +247,7 @@
             ; @param (map) items
             ; @param (map) item-paths
             ; @param (vector) base-path
-            ;  Egynél nagyobb mélységű rekurzív futás esetén a source-item-key érték milyen
+            ;  Egynél nagyobb mélységű rekurzív futás esetén a source-item-key érték milyen
             ;  útvonalhoz kerüljön hozzáillesztésre.
             ;
             ; @return (map)
@@ -258,7 +258,7 @@
                            ; futása esetén az aktuális source-item-key értékéből létrejöjjön
                            ; a source-item-key item-paths térképen belüli útvonala.
                            ; Pl.: []      + :apple       = [:apple]
-                           ; Pl.: [:item] + :nested-item = [:item :nested-item]
+                           ; Pl.: [:item] + :nested-item = [:item :nested-item]
                            (let [source-item-path (vector/conj-item base-path source-item-key)]
                                       ; Ha a target-item-path értéke egy vektor, akkor a target-item-path
                                       ; útvonalra tárolja a source-item-path útvonalon talált értéket.
