@@ -32,7 +32,12 @@
 (defn select-more-button
   [lister-id lister-props]
   [elements/button {:layout :icon-button :variant :transparent :icon :radio_button_unchecked
-                    :color :none :disabled? true :label :check}])
+                    :color :none :disabled? false :label :check}])
+
+(defn delete-selected-button
+  [lister-id lister-props]
+  [elements/button {:layout :icon-button :variant :transparent :icon :delete_outline
+                    :color :warning :disabled? true :label :delete!}])
 
 (defn search-field
   [lister-id {:keys [on-search] :as lister-props}]
@@ -44,9 +49,10 @@
   [lister-id {:keys [on-search] :as lister-props}]
   [:div.item-lister--search-bar
     [:div.item-lister--search-bar--buttons
-      [add-new-button     lister-id lister-props]
-      [sort-by-button     lister-id lister-props]
-      [select-more-button lister-id lister-props]]
+      [add-new-button         lister-id lister-props]
+      [sort-by-button         lister-id lister-props]
+      [select-more-button     lister-id lister-props]
+      [delete-selected-button lister-id lister-props]]
     (if (some? on-search)
         [search-field lister-id lister-props])])
 

@@ -13,7 +13,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.name-handler)
+(ns x.app-locales.name-handler
+    (:require [x.app-core.api                 :as a :refer [r]]
+              [x.app-locales.language-handler :as language-handler]))
 
 
 
@@ -40,3 +42,15 @@
        (if (= name-order :reversed)
            (str last-name  " " first-name)
            (str first-name " " last-name))))
+
+
+
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-name-order
+  ; @return (keyword)
+  ;  :normal, :reversed
+  [db _]
+  (let [selected-language (r language-handler/get-selected-language db)]
+       (get NAME-ORDERS selected-language :normal)))

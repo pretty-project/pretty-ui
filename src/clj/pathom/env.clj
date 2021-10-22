@@ -47,6 +47,8 @@
 
 (defn env->params
   ; @param (map) env
+  ;  {:request (map)
+  ;   {:params (map)}}
   ; @param (keyword) param-id
   ;
   ; @return (map)
@@ -55,6 +57,8 @@
 
 (defn env->param
   ; @param (map) env
+  ;  {:request (map)
+  ;   {:params (map)}}
   ; @param (keyword) param-id
   ;
   ; @return (*)
@@ -64,17 +68,24 @@
 
 (defn env->search-props
   ; @param (map) env
-  ;  {?}
+  ;  {:request (map)
+  ;   {:params (map)
+  ;    {:max-count (integer)
+  ;     :search-key (namespaced keyword)
+  ;     :search-term (string)
+  ;     :sort-pattern (vectors in vector)
+  ;      [[(namespaced keyword) sort-key
+  ;        (integer) sort-direction]]
+  ;     :skip (integer)}}}
   ;
   ; @example
-  ;  (env->search-props {?})
+  ;  (env->search-props {...})
   ;  =>
-  ;  {:max-count 20
-  ;   :search-key :fruit/name
-  ;   :search-term "Apple"
-  ;   :sort-pattern
-  ;   [[:fruit/name 1] [:fruit/color -1]]
-  ;   :skip 40}
+  ;  {:max-count    20
+  ;   :search-key   :fruit/name
+  ;   :search-term  "Apple"
+  ;   :sort-pattern [[:fruit/name 1] [:fruit/color -1]]
+  ;   :skip         40}
   ;
   ; @return (map)
   ;  {:max-count (integer)
@@ -86,3 +97,13 @@
   ;   :skip (integer)}
   [env]
   (env->params env))
+
+(defn env->collection-name
+  ; @param (map) env
+  ;  {:request (map)
+  ;   {:params (map)
+  ;     {:collection-name (string)}}}
+  ;
+  ; @return (string)
+  [env]
+  (env->param env :collection-name))

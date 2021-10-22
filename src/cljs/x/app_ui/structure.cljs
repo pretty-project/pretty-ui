@@ -50,8 +50,7 @@
   ;  {:data-interface (string)}
   [{:keys [browser-online? interface]}]
   (cond-> (param {})
-          (some? interface)
-          (assoc :data-interface (keyword/to-dom-value interface))))
+          (some? interface) (assoc :data-interface (keyword/to-dom-value interface))))
 
 
 

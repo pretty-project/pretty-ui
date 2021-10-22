@@ -28,6 +28,7 @@
 
 ; x.app-locales.name-handler
 (def name->ordered-name name-handler/name->ordered-name)
+(def get-name-order     name-handler/get-name-order)
 
 ; x.app-locales.language-handler
 (def get-app-languages      language-handler/get-app-languages)

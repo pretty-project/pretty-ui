@@ -40,6 +40,7 @@
       {:uri "/css/x/app-ui-structure.css"  :cache-control? true}
       {:uri "/css/x/app-ui-animations.css" :cache-control? true}
       {:uri "/css/x/app-ui-graphics.css"   :cache-control? true}
+      {:uri "/css/x/app-layouts.css"       :cache-control? true}
       {:uri "/css/x/app-elements.css"      :cache-control? true}
       {:uri "/css/x/app-views.css"         :cache-control? true}
       {:uri "/css/extensions.css"          :cache-control? true}

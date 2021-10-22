@@ -87,8 +87,9 @@
 
 (defn view
   ; XXX#0439
-  ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely,
-  ; a text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
+  ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
+  ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
+  ; A text elemen lehetséges kijelölni a szöveget, a label elemen nem lehetséges.
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props

@@ -16,36 +16,18 @@
 
 
 /***** Item-lister *****/
-/*** Item-lister structure ***/
-
-.item-lister--structure {
-  display: flex;
-  flex-direction: column-reverse;
-  width: 100% }
-
-/*** Item-lister structure ***/
-
 /*** Item-lister search-bar ***/
 
 .item-lister--search-bar {
-  background-color: var( --background-color );
-  border-bottom-color: var( --border-color-highlight );
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap-reverse;
   grid-column-gap: 64px;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  padding-top: 6px;
-  position: sticky;
-  top: 50px }
+  justify-content: space-between }
 
 .item-lister--search-bar--buttons {
   display: flex;
-  gap: 24px}
+  gap: 18px}
 
 .item-lister--search-bar--search-field {
   align-items: center;

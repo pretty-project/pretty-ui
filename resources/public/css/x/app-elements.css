@@ -359,6 +359,7 @@ body {
 .x-anchor[data-color="muted"],
 .x-button[data-variant="transparent"][data-color="muted"]
 .x-button--body,
+.x-icon[data-color="muted"],
 .x-label[data-color="muted"],
 .x-line-diagram[data-color=muted]
 .x-line-diagram--label,
@@ -389,6 +390,7 @@ body {
 .x-vertical-line--body {
   background-color: var( --border-color-highlight ) }
 
+.x-icon[data-color="highlight"],
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
@@ -451,6 +453,7 @@ body {
 .x-anchor[data-color="primary"],
 .x-button[data-variant="transparent"][data-color="primary"]
 .x-button--body,
+.x-icon[data-color="primary"],
 .x-label[data-color="primary"],
 .x-line-diagram[data-color=primary]
 .x-line-diagram--label,
@@ -508,6 +511,7 @@ body {
 .x-anchor[data-color="secondary"],
 .x-button[data-variant="transparent"][data-color="secondary"]
 .x-button--body,
+.x-icon[data-color="secondary"],
 .x-label[data-color="secondary"],
 .x-line-diagram[data-color=secondary]
 .x-line-diagram--label,
@@ -561,6 +565,7 @@ body {
 .x-anchor[data-color="success"],
 .x-button[data-variant="transparent"][data-color="success"]
 .x-button--body,
+.x-icon[data-color="success"],
 .x-label[data-color="success"],
 .x-text[data-color="success"],
 .x-toggle[data-color="success"] {
@@ -612,6 +617,7 @@ body {
 .x-anchor[data-color="warning"],
 .x-button[data-variant="transparent"][data-color="warning"]
 .x-button--body,
+.x-icon[data-color="warning"],
 .x-label[data-color="warning"],
 .x-text[data-color="warning"],
 .x-toggle[data-color="warning"] {

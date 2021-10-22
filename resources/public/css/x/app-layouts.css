@@ -1,0 +1,31 @@
+
+/***** Layout A *****/
+/*** Header ***/
+
+.x-layout-a--header {
+  display: flex;
+  gap: 4px;
+  padding-top: 12px }
+
+/*** Header ***/
+
+/*** Body ***/
+
+.x-layout-a--body {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100% }
+
+.x-layout-a--body--header {
+  background-color: var( --background-color );
+  border-bottom-color: var( --border-color-highlight );
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  position: sticky;
+  top: 50px }
+
+/*** Body ***/
+/***** Layout A *****/

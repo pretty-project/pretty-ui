@@ -1,6 +1,9 @@
 
 # x4.4.2
 
+- NEW MODULE
+  x.app-layouts
+
 - NEW COMPONENT
   x.app-components.api/infinite-loader
 

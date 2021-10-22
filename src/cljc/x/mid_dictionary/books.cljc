@@ -598,6 +598,9 @@
      {:actions
       {:en "Actions"
        :hu "Műveletek"}
+      :add-client
+      {:en "Add client"
+       :hu "Ügyfél hozzáadása"}
       :calendar
       {:en "Calendar"
        :hu "Naptár"}
@@ -613,6 +616,9 @@
       :employees
       {:en "Employees"
        :hu "Alkamazottak"}
+      :edit-client
+      {:en "Edit client"
+       :hu "Ügyfél szerkesztése"}
       :extensions
       {:en "Extensions"
        :hu "Eszközök"}

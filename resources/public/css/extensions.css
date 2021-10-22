@@ -1,6 +1,6 @@
 
 /***** Clients *****/
-/*** Client ***/
+/*** Client-list item ***/
 
 .clients--client {
   display: block;
@@ -41,8 +41,10 @@
   color: var( --color-highlight );
   font-size: var( --font-size-xxs );
   font-weight: 600;
+  width: 36px;
   letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s ) }
+  line-height: var( --line-height-s );
+  text-align: left }
 
 .clients--client--email-address {
   color: var( --color-muted );
@@ -58,5 +60,15 @@
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
 
-/*** Client ***/
+/*** Client-list item ***/
+
+/*** Client-form ***/
+
+#clients--client-form--names {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column-gap: 24px;
+  justify-content: center }
+
+/*** Client-form ***/
 /***** Clients *****/

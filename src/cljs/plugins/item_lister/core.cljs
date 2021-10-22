@@ -5,7 +5,7 @@
                [plugins.item-lister.header :as header]
                [plugins.item-lister.items  :as items]
                [x.app-components.api       :as components]
-               [x.app-elements.api         :as elements]
+               [x.app-layouts.api          :as layouts]
                [x.app-core.api             :as a]))
 
 
@@ -14,15 +14,21 @@
 ;; ----------------------------------------------------------------------------
 
 (defn stated-item-lister
-  [lister-id lister-props]
-  [elements/box {:content [:div.item-lister--structure [items/view        lister-id lister-props]
-                                                       [header/search-bar lister-id lister-props]]}])
+  [lister-id {:keys [icon label label-suffix] :as lister-props}]
+  [layouts/layout-a lister-id{:icon icon :label label :label-suffix label-suffix
+                              :body        {:content       #'items/view
+                                            :content-props lister-props}
+                              :body-header {:content       #'header/search-bar
+                                            :content-props lister-props}}])
 
 (defn item-lister
   ; @param (keyword)(opt) lister-id
   ; @param (map) lister-props
   ;  {:common-props (map)(opt)
   ;   :element (component)
+  ;   :icon (keyword)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :label-suffix (metamorphic-content)(opt)
   ;   :on-list-ended (metamorphic-event)(opt)
   ;    Az elemeket megjelenítő lista végére érve megtörténő esemény
   ;   :on-order-change (metamorphic-event)(opt)

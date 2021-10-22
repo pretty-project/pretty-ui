@@ -8,8 +8,8 @@
 
 (ns project-emulator.server-db.env-handler
     (:require [com.wsscode.pathom3.connect.operation :as pco]
-              [mid-fruits.candy                      :refer [return]]
-              [x.server-user.api                     :as user]))
+              [mid-fruits.candy   :refer [return]]
+              [server-fruits.http :as http]))
 
 
 
@@ -32,7 +32,7 @@
   ;
   ; @return (map)
   [{:keys [request]}]
-  (let [session (user/request->session request)]
+  (let [session (http/request->session request)]
        (get session :user-account/roles)))
 
 (defn env->params

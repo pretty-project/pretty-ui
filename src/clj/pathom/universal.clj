@@ -18,8 +18,8 @@
   ;    {:count (integer)
   ;     :result (maps in vector)}}
   [env _]
-  {:documents (let [search-props    (env/env->search-props env)
-                    collection-name (env/env->param        env :collection-name)]
+  {:documents (let [search-props    (env/env->search-props    env)
+                    collection-name (env/env->collection-name env)]
                    {:count  (mongo-db/count-documents-by-pipeline collection-name search-props)
                     :result (mongo-db/get-documents-by-pipeline   collection-name search-props)})})
 
