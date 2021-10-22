@@ -110,6 +110,39 @@
                (let [document-id (random/generate-string)]
                     (assoc document id-key document-id)))))
 
+(defn- search-pattern->pipeline-query
+  ; @param (vectors in vector) search-pattern
+  ;  [[(namespaced keyword) search-key
+  ;    (string) search-term]]
+  ;
+  ; @return (map)
+  ;  {"$or" (maps in vector)}
+  [search-pattern]
+  {"$or" (reduce (fn [query [search-key search-term]]
+                     (vector/conj-item {search-key {"$regex" search-term "$options" "i"}}))
+                 (param [])
+                 (param search-pattern))})
+
+(defn- sort-pattern->pipeline-sort
+  ; @param (vectors in vector) sort-pattern
+  ;  [[(namespaced keyword) sort-key
+  ;    (integer) sort-direction]]
+  ;
+  ; @example
+  ;  (sort-pattern->pipeline-sort [[:fruit/apple -1] [...]])
+  ;  =>
+  ;  [["fruit/apple" -1] [...]]
+  ;
+  ; @return (map)
+  ;  [[(string) sort-key
+  ;    (integer) sort-direction]]
+  [sort-pattern]
+  (reduce (fn [sort [sort-key sort-direction]]
+              (let [sort-key (keyword/to-string sort-key)]
+                   (vector/conj-item [sort-key sort-direction])))
+          (param [])
+          (param sort-pattern)))
+
 
 
 ;; -- Aggregation functions ---------------------------------------------------
@@ -709,25 +742,30 @@
   ; @param (string) collection-name
   ; @param (map) search-props
   ;  {:max-count (integer)
-  ;   :search-key (namespaced keyword)
-  ;   :search-term (string)
+  ;   :search-pattern (vectors in vector)
+  ;    [[(namespaced keyword) search-key
+  ;      (string) search-term]]
   ;   :skip (integer)
-  ;   :sort-by (map)}
+  ;   :sort-pattern (vectors in vector)
+  ;    [[(namespaced keyword) sort-key
+  ;      (integer) sort-direction]]}
   ;
   ; @usage
-  ;  (mongo-db/get-documents-by-pipeline "my-collection" {:max-count   50
-  ;                                                       :search-key  :my-namespace/label
-  ;                                                       :search-term "Apple"
-  ;                                                       :skip        150
-  ;                                                       :sort-by     {:my-namespace/weight -1}})
+  ;  (mongo-db/get-documents-by-pipeline "my-collection" {:max-count      50
+  ;                                                       :search-pattern [[:fruit/label "Apple"] [...]]
+  ;                                                       :skip           150
+  ;                                                       :sort-pattern   [[:fruit/weight -1] [...]]})
   ;
   ; @return (maps in vector)
-  [collection-name {:keys [max-count search-key search-term skip sort-by] :as options}]
-  (let [search-key (keyword/to-string search-key)
-        query      (if (string/nonempty? search-term)
-                       {search-key {"$regex" search-term "$options" "i"}})
+  [collection-name {:keys [max-count search-pattern skip sort-pattern] :as options}]
+  (let [
+;        TESZTELNI! hogy mi történik üres stringel
+;        query      (if (string/nonempty? search-term)
+;                       {search-key {"$regex" search-term "$options" "i"}})
+        query      (search-pattern->pipeline-query search-pattern)
+        sort       (sort-pattern->pipeline-sort    sort-pattern)
         pipeline   [{"$match" query}
-                    {"$sort"  sort-by}
+                    {"$sort"  sort}
                     {"$skip"  skip}
                     {"$limit" max-count}]]
        (-> (search-aggregation collection-name pipeline)
