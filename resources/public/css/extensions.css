@@ -70,5 +70,9 @@
   grid-column-gap: 24px;
   justify-content: center }
 
+#clients--client-form--header {
+  display: flex;
+  gap: 12px }
+
 /*** Client-form ***/
 /***** Clients *****/

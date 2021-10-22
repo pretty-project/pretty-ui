@@ -80,6 +80,22 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- query-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) query-props
+  ;
+  ; @return (map)
+  ;  {:uri (string)}
+  [query-props]
+  (merge {:uri DEFAULT-URI}
+         (param query-props)))
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -178,6 +194,7 @@
   (fn [{:keys [db]} event-vector]
       (let [query-id      (a/event-vector->second-id   event-vector)
             query-props   (a/event-vector->first-props event-vector)
+            query-props   (a/prot query-props query-props-prototype)
             request-props (query-props->request-props  query-id query-props)]
            {:db       (r store-query-props!   db query-id query-props)
             :dispatch [:x.app-sync/send-request! query-id request-props]})))

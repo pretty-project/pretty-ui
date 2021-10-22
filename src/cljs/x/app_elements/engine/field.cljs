@@ -391,8 +391,9 @@
           :field-changed? (r field-changed?  db field-id)
           :value          (r get-field-value db field-id)}
          ; 1.
-         (if (r input/input-required-success? db field-id)
-             {:color :success})
+         ; Nem indokolt zöld színnel visszajelezni a required mezők sikeres kitöltését
+         ; (if (r input/input-required-success? db field-id)
+         ;     {:color :success}}
          ; 2.
          (if (r input/input-value-invalid-warning? db field-id)
              {:color  :warning

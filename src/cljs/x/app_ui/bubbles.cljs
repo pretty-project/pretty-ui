@@ -15,6 +15,7 @@
 
 (ns x.app-ui.bubbles
     (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.time      :as time]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
@@ -102,6 +103,17 @@
   [db _]
   (r user/get-user-settings-item db :notification-bubbles-enabled?))
 
+(defn- bubble-lifetime-elapsed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bubble-id
+  ;
+  ; @return (boolean)
+  [db [_ bubble-id]]
+  (let [initialized-at (r renderer/get-element-prop db :bubbles bubble-id :initialed-at)]
+       (> (time/elapsed)
+          (+ initialized-at BUBBLE-LIFETIME))))
+
 (defn- autopop-bubble?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -122,8 +134,8 @@
   ;
   ; @param (keyword) bubble-id
   (fn [{:keys [db]} [_ bubble-id]]
-      (if (r autopop-bubble? db bubble-id)
-          {:dispatch-later [{:ms BUBBLE-LIFETIME :dispatch [:x.app-ui/autopop-bubble?! bubble-id]}]})))
+      {:dispatch-later [(if (r autopop-bubble? db bubble-id)
+                            {:ms BUBBLE-LIFETIME :dispatch [:x.app-ui/autopop-bubble?! bubble-id]})]}))
 
 (a/reg-event-fx
   :x.app-ui/autopop-bubble?!
@@ -131,7 +143,8 @@
   ;
   ; @param (keyword) bubble-id
   (fn [{:keys [db]} [_ bubble-id]]
-      {:dispatch-if [(r autopop-bubble? db bubble-id)
+      {:dispatch-if [(and (r autopop-bubble?          db bubble-id)
+                          (r bubble-lifetime-elapsed? db bubble-id))
                      [:x.app-ui/pop-bubble! bubble-id]]}))
 
 (a/reg-event-fx
@@ -174,7 +187,11 @@
       (let [bubble-id    (a/event-vector->second-id   event-vector)
             bubble-props (a/event-vector->first-props event-vector)
             bubble-props (a/prot bubble-id bubble-props bubble-props-prototype)]
-           {:dispatch-if [(r bubbles-enabled-by-user? db)
+            ; Megjegyzi, mikor lett a bubble-id azonosítójó bubble UTOLJÁRA kirenderelve.
+            ; Ha egy bubble újra megjelenítésre kerül, akkor az élettartama újrakezdődik.
+           {:db (r renderer/set-element-prop! db :bubbles bubble-id :initialized-at (time/elapsed))
+            ; *
+            :dispatch-if [(r bubbles-enabled-by-user? db)
                           [:x.app-ui/render-element! :bubbles bubble-id bubble-props]]})))
 
 

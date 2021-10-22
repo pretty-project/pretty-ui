@@ -420,6 +420,9 @@
       :edit-content!
       {:en "Edit content"
        :hu "Tartalom szerkesztése"}
+      :edit-copy!
+      {:en "Edit copy"
+       :hu "Másolat szerkesztése"}
       :edit-description!
       {:en "Edit description"
        :hu "Leírás szerkesztése"}
@@ -531,6 +534,9 @@
       :undo!
       {:en "Undo"
        :hu "Visszavonás"}
+      :undo-delete!
+      {:en "Undo delete"
+       :hu "Törlés visszavonása"}
       :undo-all-changes?
       {:en "Are you sure you want to undo all changes?"
        :hu "Biztos vagy benne, hogy szeretnéd visszavonni a változásokat?"}

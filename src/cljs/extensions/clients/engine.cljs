@@ -1,10 +1,11 @@
 
 (ns extensions.clients.engine
-    (:require [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
+    (:require [mid-fruits.keyword :as keyword]
+              [mid-fruits.vector  :as vector]
+              [x.app-core.api     :as a :refer [r]]
+              [x.app-db.api       :as db]
               ; TEMP
-              [mid-fruits.random :as random]))
+              [mid-fruits.random  :as random]))
 
 
 
@@ -69,6 +70,12 @@
 ;; ----------------------------------------------------------------------------
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn client-id->client-uri
+  ; @param (keyword) client-id
+  [client-id]
+  (let [client-id (keyword/to-string client-id)]
+       (str "/clients/" client-id)))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Helpers -----------------------------------------------------------------
