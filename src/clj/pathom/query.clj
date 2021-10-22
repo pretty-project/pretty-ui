@@ -33,7 +33,7 @@
   ;
   ; @return (*)
   [request]
-  (let [raw-query (http/request->transit-param request :query)]
+  (let [raw-query (http/request->post-param request :query)]
        (read-query raw-query)))
 
 
