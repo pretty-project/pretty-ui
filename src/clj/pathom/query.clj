@@ -33,7 +33,7 @@
   ;
   ; @return (*)
   [request]
-  (let [raw-query (http/request->post-param request :query)]
+  (let [raw-query (http/request->param request :query)]
        (read-query raw-query)))
 
 
