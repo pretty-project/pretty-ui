@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- Legyen e layout fit a default mindenhol?
+
 - counter tulajdonságai nem müködnek label, initial-value
 
 - freezed-route-ra nincs szükség

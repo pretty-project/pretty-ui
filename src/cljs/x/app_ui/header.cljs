@@ -96,7 +96,7 @@
       (let [header-id    (a/event-vector->second-id   event-vector)
             header-props (a/event-vector->first-props event-vector)
             header-props (a/prot header-props header-props-prototype)]
-           [:x.app-ui/render-element! :header header-id header-props])))
+           [:x.app-ui/request-rendering-element! :header header-id header-props])))
 
 
 

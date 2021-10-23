@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.25
 ; Description:
-; Version: v0.2.4
-; Compatibility: x3.9.9
+; Version: v0.4.2
+; Compatibility: x4.4.2
 
 
 
@@ -46,22 +46,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) anchor-id
-  ; @param (map) view-props
+  ; @param (map) anchor-props
   ;
   ; @return (hiccup)
-  [anchor-id view-props]
-  (let [content-props (components/extended-props->content-props view-props)]
-       [:a.x-anchor (engine/element-attributes anchor-id view-props
-                      (engine/clickable-body-attributes anchor-id view-props))
+  [anchor-id anchor-props]
+  (let [content-props (components/extended-props->content-props anchor-props)]
+       [:a.x-anchor (engine/element-attributes anchor-id anchor-props
+                      (engine/clickable-body-attributes anchor-id anchor-props))
                     [components/content content-props]]))
 
 (defn view
-  ; XXX#8711
-  ; Az anchor elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content tulajdonságként átadott tartalmat.
-  ; Az anchor elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
-  ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
-  ;
   ; XXX#9085
   ; Az anchor elem {:on-click [:x.app-router/go-to! "..."]} paraméterezés helyett
   ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
@@ -74,10 +68,8 @@
   ;    Default: :primary
   ;   :class (string or vector)(opt)
   ;   :content (metamorphic-content)
-  ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :href (string)(opt)
   ;     Only w/o {:on-click ...}
   ;   :layout (keyword)(opt)
@@ -85,12 +77,7 @@
   ;    Default: :row
   ;   :on-click (metamorphic-event)(constant)
   ;     Only w/o {:href ...}
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
-  ;   :style (map)(opt)
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/anchor {...}]
@@ -105,7 +92,4 @@
   ([anchor-id anchor-props]
    (let [anchor-id    (a/id   anchor-id)
          anchor-props (a/prot anchor-props anchor-props-prototype)]
-        [engine/container anchor-id
-         {:base-props anchor-props
-          :component  anchor
-          :subscriber [:x.app-elements.button/get-view-props anchor-id]}])))
+        [anchor anchor-id anchor-props])))

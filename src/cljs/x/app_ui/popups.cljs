@@ -217,8 +217,8 @@
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   (fn [_ [_ popup-id popup-props]]
-      {:dispatch-n [[:x.app-ui/render-element! :popups  popup-id popup-props]
-                    [:x.app-ui/disable-scroll-by-popup! popup-id]]}))
+      {:dispatch-n [[:x.app-ui/request-rendering-element! :popups popup-id popup-props]
+                    [:x.app-ui/disable-scroll-by-popup!           popup-id]]}))
 
 (a/reg-event-fx
   :x.app-ui/render-popup-exclusive!

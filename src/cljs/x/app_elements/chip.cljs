@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.03
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.3.2
+; Version: v0.4.4
+; Compatibility: x4.4.2
 
 
 
@@ -52,22 +52,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chip-id
-  ;
-  ; @return (map)
-  [db [_ chip-id]]
-  (r engine/get-element-view-props db chip-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -75,7 +59,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chip-id
-  ; @param (map) view-props
+  ; @param (map) chip-props
   ;  {:icon (keyword)(opt) Material icon class}
   ;
   ; @return (hiccup)
@@ -87,7 +71,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chip-id
-  ; @param (map) view-props
+  ; @param (map) chip-props
   ;  {:label (metamorphic-content)}
   ;
   ; @return (hiccup)
@@ -98,41 +82,41 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chip-id
-  ; @param (map) view-props
+  ; @param (map) chip-props
   ;  {:delete-button-icon (keyword) Material icon class
   ;   :on-delete (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
-  [chip-id {:keys [delete-button-icon on-delete] :as view-props}]
+  [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
   (if (some? on-delete)
       [:button.x-chip--delete-button
-        (engine/deletable-body-attributes chip-id view-props)
+        (engine/deletable-body-attributes chip-id chip-props)
         [:i.x-chip--delete-button-icon (keyword/to-dom-value delete-button-icon)]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chip-id
-  ; @param (map) view-props
+  ; @param (map) chip-props
   ;
   ; @return (hiccup)
-  [chip-id view-props]
+  [chip-id chip-props]
   [:div.x-chip--body
-    [chip-icon          chip-id view-props]
-    [chip-label         chip-id view-props]
-    [chip-delete-button chip-id view-props]])
+    [chip-icon          chip-id chip-props]
+    [chip-label         chip-id chip-props]
+    [chip-delete-button chip-id chip-props]])
 
 (defn- chip
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chip-id
-  ; @param (map) view-props
+  ; @param (map) chip-props
   ;
   ; @return (hiccup)
-  [chip-id view-props]
+  [chip-id chip-props]
   [:div.x-chip
-    (engine/element-attributes chip-id view-props)
-    [chip-body                 chip-id view-props]])
+    (engine/element-attributes chip-id chip-props)
+    [chip-body                 chip-id chip-props]])
 
 (defn view
   ; @param (keyword)(opt) chip-id
@@ -171,7 +155,4 @@
   ([chip-id chip-props]
    (let [chip-id    (a/id   chip-id)
          chip-props (a/prot chip-props chip-props-prototype)]
-        [engine/container chip-id
-          {:base-props chip-props
-           :component  chip
-           :subscriber [::get-view-props chip-id]}])))
+        [chip chip-id chip-props])))

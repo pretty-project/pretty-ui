@@ -147,6 +147,9 @@
       :done!
       {:en "Done"
        :hu "Kész"}
+      :downloading-items...
+      {:en "Downloading items ..."
+       :hu "Elemek letöltése ..."}
       :exit!
       {:en "Exit"
        :hu "Kilépés"}

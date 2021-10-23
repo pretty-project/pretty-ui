@@ -18,7 +18,6 @@
               [x.app-elements.blank             :as blank]
               [x.app-elements.box               :as box]
               [x.app-elements.button            :as button]
-              [x.app-elements.button-group      :as button-group]
               [x.app-elements.card              :as card]
               [x.app-elements.card-desk         :as card-desk]
               [x.app-elements.checkbox          :as checkbox]
@@ -91,7 +90,7 @@
 ;
 ; @name ghost-view
 ;  Bizonyos elemek rendelkeznek {:ghost-view? ...} tulajdonsággal, amely true érték
-;  esetén biztosítja, hogy az elem helyett annak szellemképe jelenjen meg. 
+;  esetén biztosítja, hogy az elem helyett annak szellemképe jelenjen meg.
 ;
 ; @name initial-value
 ;  Az egyes input elemek React-fába történő csatolásakor az {:initial-value ...}
@@ -150,7 +149,6 @@
 (def blank             blank/view)
 (def box               box/view)
 (def button            button/view)
-(def button-group      button-group/view)
 (def card              card/view)
 (def card-desk         card-desk/view)
 (def checkbox          checkbox/view)

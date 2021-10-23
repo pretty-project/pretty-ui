@@ -86,7 +86,7 @@
       (let [background-id    (a/event-vector->second-id   event-vector)
             background-props (a/event-vector->first-props event-vector)
             background-props (a/prot background-props background-props-prototype)]
-           [:x.app-ui/render-element! :background background-id background-props])))
+           [:x.app-ui/request-rendering-element! :background background-id background-props])))
 
 (a/reg-event-fx
   :x.app-ui/remove-background!

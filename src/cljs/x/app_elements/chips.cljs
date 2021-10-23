@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.03
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.3.2
+; Version: v0.6.6
+; Compatibility: x4.4.2
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chips
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.loop           :refer [reduce-indexed]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -27,35 +27,22 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->on-delete
+(defn- chips-props->chip-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chips-id
-  ; @param (map) view-props
-  ;  {:delete-chip-event (event-vector)(opt)}
+  ; @param (map) chips-props
+  ;  {:on-delete (event-vector)(opt)}
   ; @param (map) chip-props
   ; @param (integer) chip-dex
   ;
   ; @return (map)
   ;  {:on-delete (metamorphic-event)}
-  [chips-id {:keys [delete-chip-event]} _ chip-dex]
-  (vector/concat-items delete-chip-event [chips-id chip-dex]))
-
-(defn- view-props->chip-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chips-id
-  ; @param (map) view-props
-  ;  {:delete-chip-event (event-vector)(opt)}
-  ; @param (map) chip-props
-  ; @param (integer) chip-dex
-  ;
-  ; @return (map)
-  ;  {:on-delete (metamorphic-event)}
-  [chips-id {:keys [delete-chip-event] :as view-props} chip-props chip-dex]
-  (if (some? delete-chip-event)
-      (let [on-delete (view-props->on-delete chips-id view-props chip-props chip-dex)]
-           (assoc chip-props :on-delete on-delete))))
+  [chips-id {:keys [on-delete] :as chips-props} chip-props chip-dex]
+  (if (some? on-delete)
+      (let [on-delete (a/metamorphic-event<-params on-delete chips-id chip-dex)]
+           (assoc chip-props :on-delete on-delete))
+      (return chip-props)))
 
 
 
@@ -85,22 +72,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) chips-id
-  ;
-  ; @return (map)
-  [db [_ chips-id]]
-  (r engine/get-element-view-props db chips-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -108,7 +79,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chips-id
-  ; @param (map) view-props
+  ; @param (map) chips-props
   ;  {:no-chips-label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -120,24 +91,24 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chips-id
-  ; @param (map) view-props
+  ; @param (map) chips-props
   ;  {:chips (* in vector)}
   ;
   ; @return (hiccup)
-  [chips-id {:keys [chips] :as view-props}]
+  [chips-id {:keys [chips] :as chips-props}]
   (if (vector/nonempty? chips)
-      (reduce-indexed #(let [chip-props (view-props->chip-props chips-id view-props %2 %3)
+      (reduce-indexed #(let [chip-props (chips-props->chip-props chips-id chips-props %2 %3)
                              chip-props (a/prot chip-props chip-props-prototype)]
                             (vector/conj-item %1 [chip chip-props]))
                        [:div.x-chips--chips]
                        (param chips))
-      [chips-no-chips-label chips-id view-props]))
+      [chips-no-chips-label chips-id chips-props]))
 
 (defn- chips-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chips-id
-  ; @param (map) view-props
+  ; @param (map) chips-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -149,14 +120,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) chips-id
-  ; @param (map) view-props
+  ; @param (map) chips-props
   ;
   ; @return (hiccup)
-  [chips-id view-props]
+  [chips-id chips-props]
   [:div.x-chips
-    (engine/element-attributes chips-id view-props)
-    [chips-label chips-id view-props]
-    [chips-chips chips-id view-props]])
+    (engine/element-attributes chips-id chips-props)
+    [chips-label chips-id chips-props]
+    [chips-chips chips-id chips-props]])
 
 (defn view
   ;  XXX#7701
@@ -169,11 +140,11 @@
   ;  {:chips (maps in vector)
   ;    [{...} {...}]
   ;   :class (string or vector)(opt)
-  ;   :delete-chip-event (event-vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;   :no-chips-label (metamorphic-content)(opt)
+  ;   :on-delete (event-vector)(opt)
   ;   :style (map)(opt)}
   ;
   ; @usage
@@ -191,7 +162,7 @@
   ;  (a/reg-event-db :delete-my-chip! [db [_ my-param chips-id chip-dex]])
   ;  [elements/chips {:chips [{:label "Chip #1" :variant :outlined}
   ;                           {:label "Chip #2" :variant :filled}]
-  ;                   :delete-chip-event [:delete-my-chip! :my-param]}]
+  ;                   :on-delete [:delete-my-chip! :my-param]}]
   ;
   ; @return (component)
   ([chips-props]
@@ -200,6 +171,4 @@
   ([chips-id chips-props]
    (let [chips-id    (a/id   chips-id)
          chips-props (a/prot chips-props chips-props-prototype)]
-        [engine/container chips-id
-          {:base-props chips-props
-           :component  chips}])))
+        [chips chips-id chips-props])))

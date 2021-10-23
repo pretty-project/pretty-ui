@@ -18,6 +18,7 @@
               [mid-fruits.keyword   :as keyword]
               [mid-fruits.loop      :refer [reduce+wormhole]]
               [mid-fruits.map       :as map]
+              [mid-fruits.time      :as time]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
@@ -750,10 +751,41 @@
                (param 0)
                (param visible-element-order))))
 
+(defn get-render-log
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) renderer-id
+  ; @param (keyword) element-id
+  ; @param (keyword) action-id
+  ;
+  ; @usage
+  ;  (r renderer/get-render-log db :bubbles :my-bubble :render-requested-at)
+  ;
+  ; @return (ms)
+  [db [_ renderer-id element-id action-id]]
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (get-in db (db/meta-item-path partition-id :render-log element-id action-id))))
+
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- update-render-log!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) renderer-id
+  ; @param (keyword) element-id
+  ; @param (keyword) action-id
+  ;
+  ; @usage
+  ;  (r update-render-log! db :bubbles :my-bubble :render-requested-at)
+  ;
+  ; @return (map)
+  [db [_ renderer-id element-id action-id]]
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (assoc-in db (db/meta-item-path partition-id :render-log element-id action-id)
+                    (time/elapsed))))
 
 (defn- reserve-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -789,9 +821,10 @@
   ; @param (map) element-props
   ;
   ; @return (map)
-  [db [_ renderer-id element-id element-props]]
+  [db [event-id renderer-id element-id element-props]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/add-data-item! db partition-id element-id element-props)))
+       (-> db (update-render-log! [event-id renderer-id  element-id :rendered-at])
+              (db/add-data-item!  [event-id partition-id element-id element-props]))))
 
 (a/reg-event-db :x.app-ui/store-element! store-element!)
 
@@ -802,9 +835,10 @@
   ; @param (keyword) element-id
   ;
   ; @return (map)
-  [db [_ renderer-id element-id]]
+  [db [event-id renderer-id element-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/remove-data-item! db partition-id element-id)))
+       (-> db (update-render-log!   [event-id renderer-id  element-id :props-removed-at])
+              (db/remove-data-item! [event-id partition-id element-id]))))
 
 (a/reg-event-db :x.app-ui/remove-element! remove-element!)
 
@@ -816,10 +850,11 @@
   ; @param (map) element-props
   ;
   ; @return (map)
-  [db [_ renderer-id element-id element-props]]
+  [db [event-id renderer-id element-id element-props]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/path partition-id element-id)
-                    (param   element-props))))
+       (-> db (update-render-log! [event-id renderer-id element-id :updated-at])
+              (assoc-in (db/path partition-id element-id)
+                        (param   element-props)))))
 
 (a/reg-event-db :x.app-ui/update-element-props! update-element-props!)
 
@@ -1052,16 +1087,17 @@
             :else [:x.app-ui/->rendering-ended renderer-id])))
 
 (a/reg-event-fx
-  :x.app-ui/render-element!
+  :x.app-ui/request-rendering-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
-  (fn [{:keys [db]} [_ renderer-id element-id element-props]]
+  (fn [{:keys [db]} [event-id renderer-id element-id element-props]]
       ;(a/console (str "Render element - " (time/elapsed)))
       (if (r render-element-now? db renderer-id element-id)
-          {:db (r reserve-renderer! db renderer-id)
+          {:db (-> db (reserve-renderer!  [event-id renderer-id])
+                      (update-render-log! [event-id renderer-id element-id :render-requested-at]))
            :dispatch [:x.app-ui/select-rendering-mode! renderer-id element-id element-props]}
           {:dispatch [:x.app-ui/render-element-later!  renderer-id element-id element-props]})))
 
@@ -1128,10 +1164,11 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ renderer-id element-id]]
       ;(a/console (str "Destroy element - " (time/elapsed)))
-      (cond (r destroy-element-animated?      db renderer-id element-id)
-            [:x.app-ui/destroy-element-animated! renderer-id element-id]
-            (r destroy-element-static?        db renderer-id element-id)
-            [:x.app-ui/destroy-element-static!   renderer-id element-id])))
+      {:db (r update-render-log! db renderer-id element-id :destroyed-at)
+       :dispatch (cond (r destroy-element-animated?      db renderer-id element-id)
+                       [:x.app-ui/destroy-element-animated! renderer-id element-id]
+                       (r destroy-element-static?        db renderer-id element-id)
+                       [:x.app-ui/destroy-element-static!   renderer-id element-id])}))
 
 (a/reg-event-fx
   :x.app-ui/destroy-all-elements!

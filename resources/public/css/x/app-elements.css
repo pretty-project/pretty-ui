@@ -1718,9 +1718,9 @@ body {
   /* BUG#0983
    * height, overflow, width:
    * A material-icon font-készlet letöltődése előtt felvillanó FOIT/FOUT okozta méretváltozás megelőzése */
-  -height: var( --icon-size-default );
+  height: var( --icon-size-default );
   overflow: hidden;
-  -width: var( --icon-size-default ) }
+  width: var( --icon-size-default ) }
 
 /*** Button icon ***/
 
@@ -1739,10 +1739,10 @@ body {
   -position: absolute;
   /* XXX#6914 */
 
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 9px;
+  font-weight: 600;
   height: 15px;
-  letter-spacing: var( --letter-spacing-xs );
+  letter-spacing: var( --letter-spacing-xxs );
   line-height: 15px;
   opacity: .75;
   overflow: hidden;

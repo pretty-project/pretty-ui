@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v0.6.4
-; Compatibility: x3.9.9
+; Version: v0.8.2
+; Compatibility: x4.4.2
 
 
 
@@ -98,10 +98,10 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->ignore-button-label?
+(defn- button-props->ignore-button-label?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;  {:content (metamorphic-content)(opt)
   ;   :height (keyword)(opt)
   ;   :layout (keyword)(opt)
@@ -158,22 +158,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ;
-  ; @return (map)
-  [db [_ button-id]]
-  (r engine/get-element-view-props db button-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -181,12 +165,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;
   ; @return (hiccup)
-  [_ view-props]
-  (if-not (view-props->ignore-button-label? view-props)
-          (let [content-props (components/extended-props->content-props view-props)]
+  [_ button-props]
+  (if-not (button-props->ignore-button-label? button-props)
+          (let [content-props (components/extended-props->content-props button-props)]
                ; XXX#0523
                [:div.x-button--label [components/content content-props]])))
 
@@ -194,7 +178,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;  {:icon (keyword)(opt) Material icon class}
   ;
   ; @return (component or nil)
@@ -206,26 +190,26 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;
   ; @return (hiccup)
-  [button-id view-props]
+  [button-id button-props]
   [:button.x-button--body
-    (engine/clickable-body-attributes button-id view-props)
-    [button-icon  button-id view-props]
-    [button-label button-id view-props]])
+    (engine/clickable-body-attributes button-id button-props)
+    [button-icon  button-id button-props]
+    [button-label button-id button-props]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;
   ; @return (hiccup)
-  [button-id view-props]
+  [button-id button-props]
   [:div.x-button
-    (engine/element-attributes button-id view-props)
-    [button-body button-id view-props]])
+    (engine/element-attributes button-id button-props)
+    [button-body               button-id button-props]])
 
 (defn view
   ; @param (keyword)(opt) button-id
@@ -270,10 +254,6 @@
   ;   :on-click (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
   ;    XXX#8671
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
@@ -305,5 +285,4 @@
           {:base-props  button-props
            :component   button
            :destructor  [:x.app-elements/destruct-clickable! button-id]
-           :initializer [:x.app-elements/init-clickable!     button-id]
-           :subscriber  [::get-view-props                    button-id]}])))
+           :initializer [:x.app-elements/init-clickable!     button-id]}])))

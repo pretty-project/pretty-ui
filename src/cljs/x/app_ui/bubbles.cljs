@@ -110,9 +110,21 @@
   ;
   ; @return (boolean)
   [db [_ bubble-id]]
-  (let [initialized-at (r renderer/get-element-prop db :bubbles bubble-id :initialed-at)]
+  (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)]
        (> (time/elapsed)
-          (+ initialized-at BUBBLE-LIFETIME))))
+          (+ render-requested-at BUBBLE-LIFETIME))))
+
+(defn- get-bubble-lifetime-left
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bubble-id
+  ;
+  ; @return (ms)
+  [db [_ bubble-id]]
+  (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)
+        bubble-pop-time     (+ render-requested-at BUBBLE-LIFETIME)]
+       (- (param bubble-pop-time)
+          (time/elapsed))))
 
 (defn- autopop-bubble?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,9 +155,18 @@
   ;
   ; @param (keyword) bubble-id
   (fn [{:keys [db]} [_ bubble-id]]
-      {:dispatch-if [(and (r autopop-bubble?          db bubble-id)
-                          (r bubble-lifetime-elapsed? db bubble-id))
-                     [:x.app-ui/pop-bubble! bubble-id]]}))
+            ; Ha a bubble rendelkezik {:autopop? true} tulajdonsággal és lejárt az ideje,
+            ; akkor megtörténik a pop esemény.
+      (cond (and (r autopop-bubble?          db bubble-id)
+                 (r bubble-lifetime-elapsed? db bubble-id))
+            [:x.app-ui/pop-bubble! bubble-id]
+            ; Ha a bubble rendelkezik {:autopop? true} tulajdonsággal és még NEM járt le az ideje,
+            ; akkor beidőzít egy autopop eseményt a bubble várható élettartamára.
+            ; Előfordulhat, hogy a bubble hátralévő idejében újra meghívásra kerül a blow esemény,
+            ; ami miatt újraindul a bubble élettartama.
+            (r autopop-bubble? db bubble-id)
+            {:dispatch-later [{:ms       (r get-bubble-lifetime-left db bubble-id)
+                               :dispatch [:x.app-ui/autopop-bubble?! bubble-id]}]})))
 
 (a/reg-event-fx
   :x.app-ui/pop-bubble!
@@ -187,12 +208,8 @@
       (let [bubble-id    (a/event-vector->second-id   event-vector)
             bubble-props (a/event-vector->first-props event-vector)
             bubble-props (a/prot bubble-id bubble-props bubble-props-prototype)]
-            ; Megjegyzi, mikor lett a bubble-id azonosítójó bubble UTOLJÁRA kirenderelve.
-            ; Ha egy bubble újra megjelenítésre kerül, akkor az élettartama újrakezdődik.
-           {:db (r renderer/set-element-prop! db :bubbles bubble-id :initialized-at (time/elapsed))
-            ; *
-            :dispatch-if [(r bubbles-enabled-by-user? db)
-                          [:x.app-ui/render-element! :bubbles bubble-id bubble-props]]})))
+           {:dispatch-if [(r bubbles-enabled-by-user? db)
+                          [:x.app-ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.26
 ; Description:
-; Version: v0.3.8
-; Compatibility: x3.9.9
+; Version: v0.5.0
+; Compatibility: x4.4.2
 
 
 
@@ -36,22 +36,6 @@
   (card/card-props-prototype (merge {:color     :default
                                      :min-width :m}
                                     (param box-props))))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) box-id
-  ;
-  ; @return (map)
-  [db [_ box-id]]
-  (r engine/get-element-view-props db box-id))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -90,7 +74,4 @@
   ([box-id box-props]
    (let [box-id    (a/id   box-id)
          box-props (a/prot box-props box-props-prototype)]
-        [engine/container box-id
-          {:base-props box-props
-           :component  card
-           :subscriber [::get-view-props box-id]}])))
+        [card box-id box-props])))

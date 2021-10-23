@@ -30,7 +30,8 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:preset   :home-icon-button
+  [elements/button ::home-icon-button
+                   {:preset   :home-icon-button
                     :disabler [:x.app-router/at-home?]
                     :on-click [:x.app-router/go-home!]}])
                    ;:icon     :dashboard
@@ -43,7 +44,8 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:color    :primary
+  [elements/button ::back-icon-button
+                   {:color    :primary
                     :preset   :back-icon-button
                     :on-click [:x.app-router/go-back!]}])
 
@@ -55,7 +57,8 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:icon      :storage
+  [elements/button ::database-browser-icon-button
+                   {:icon      :storage
                     :icon-size :xxs
                     :on-click  [:x.app-developer/render-database-browser!]
                     :preset    :default-icon-button
@@ -69,7 +72,8 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:preset   :menu-icon-button
+  [elements/button ::menu-icon-button
+                   {:preset   :menu-icon-button
                     :on-click [:x.app-views.menu/render!]}])
 
 (defn surface-label
@@ -81,7 +85,8 @@
   ;
   ; @return (component)
   [_ {:keys [label]}]
-  [elements/label {:content label}])
+  [elements/label ::label
+                  {:content label}])
 
 (defn go-back-surface-label-bar
   ; @param (keyword) surface-id
@@ -92,7 +97,8 @@
   ;
   ; @return (component)
   [surface-id {:keys [label-position] :as bar-props}]
-  [elements/polarity {:start-content  [:<> [surface-back-icon-button surface-id bar-props]
+  [elements/polarity ::go-back-label-bar
+                     {:start-content  [:<> [surface-back-icon-button surface-id bar-props]
                                            (if-not (= label-position :center)
                                                    [surface-label surface-id bar-props])]
                       :middle-content [:<> (if     (= label-position :center)
@@ -107,7 +113,8 @@
   ;
   ; @return (component)
   [surface-id bar-props]
-  [elements/polarity {:start-content [:<> [surface-home-icon-button surface-id bar-props]
+  [elements/polarity ::go-home-label-bar
+                     {:start-content [:<> [surface-home-icon-button surface-id bar-props]
                                           [surface-label            surface-id bar-props]]
                       :end-content   [:<> (if (a/debug-mode?)
                                               [database-browser-icon-button surface-id bar-props])
@@ -119,4 +126,5 @@
   ;
   ; @return (component)
   [surface-id bar-props]
-  [elements/polarity {:end-content [surface-menu-icon-button surface-id bar-props]}])
+  [elements/polarity ::debug-label-bar
+                     {:end-content [surface-menu-icon-button surface-id bar-props]}])

@@ -5,8 +5,7 @@
               [plugins.sortable.core      :refer [sortable]]
               [x.app-db.api               :as db]
               [x.app-components.api       :as components]
-              [x.app-core.api             :as a :refer [r]]
-              [x.app-ui.api               :as ui]))
+              [x.app-core.api             :as a :refer [r]]))
 
 
 
@@ -29,7 +28,7 @@
 (defn request-indicator
   [lister-id lister-props {:keys [listening-to-request?]}]
   (if (boolean listening-to-request?)
-      [:div.item-lister--items--request-indicator [ui/loading-animation-d]]))
+      [:div.item-lister--items--request-indicator [components/content {:content :downloading-items...}]]))
 
 (defn sortable-item-list
   [lister-id lister-props view-props]

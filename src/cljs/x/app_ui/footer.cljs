@@ -96,7 +96,7 @@
       (let [footer-id    (a/event-vector->second-id   event-vector)
             footer-props (a/event-vector->first-props event-vector)
             footer-props (a/prot footer-props footer-props-prototype)]
-           [:x.app-ui/render-element! :footer footer-id footer-props])))
+           [:x.app-ui/request-rendering-element! :footer footer-id footer-props])))
 
 
 

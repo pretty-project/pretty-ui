@@ -99,9 +99,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ element-id]]
-      (if-let [_ (r element/get-element-prop db element-id :keypress)]
-              [:x.app-environment.keypress-handler/remove-keypress-event! element-id])))
+  ; @param (map) element-props
+  (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
+      (if (some? keypress)
+          [:x.app-environment.keypress-handler/remove-keypress-event! element-id])))
 
 
 

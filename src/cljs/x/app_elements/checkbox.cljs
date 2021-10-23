@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.21
 ; Description:
-; Version: v0.5.2
-; Compatibility: x3.9.9
+; Version: v0.5.4
+; Compatibility: x4.4.2
 
 
 
@@ -122,12 +122,8 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;

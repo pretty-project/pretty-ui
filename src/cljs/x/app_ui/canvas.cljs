@@ -78,7 +78,7 @@
       (let [item-id    (a/event-vector->second-id   event-vector)
             item-props (a/event-vector->first-props event-vector)
             item-props (a/prot item-props item-props-prototype)]
-           [:x.app-ui/render-element! :canvas item-id item-props])))
+           [:x.app-ui/request-rendering-element! :canvas item-id item-props])))
 
 (a/reg-event-fx
   :x.app-ui/remove-item!

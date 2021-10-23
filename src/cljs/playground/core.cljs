@@ -79,6 +79,13 @@
        [elements/button {:label "Reload infinite loader!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]
                          :variant :transparent :color :secondary}]])
 
+(defn buttons
+  []
+  [:<> [elements/anchor {:content "My anchor link"   :href "/my-link"}]
+       [elements/anchor {:content "My anchor button" :on-click [:x.app-router/go-to! "/my-link"]}]
+       [elements/button {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
+                         :variant :transparent :color :none :icon :people}]])
+
 (defn- form-a
   []
   [:<> [elements/select {:label "My select"
@@ -162,7 +169,10 @@
 
 (defn- view
   []
-  [:<> [elements/box {:content #'form-a
+  [:<> [elements/box {:content #'buttons
+                      :label   "Buttons"
+                      :horizontal-align :left}]
+       [elements/box {:content #'form-a
                       :icon    :sports_esports
                       :label   "Form A"
                       :horizontal-align :left}]

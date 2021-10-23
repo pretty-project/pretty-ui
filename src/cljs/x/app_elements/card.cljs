@@ -31,16 +31,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) card-props
-  ;  {:request-id (keyword)(opt)
-  ;   :stretch-orientation (keyword)(opt)}
+  ;  {:stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :container-stretch-orientation (keyword)
   ;   :horizontal-align (keyword)
-  ;   :min-width (keyword)
-  ;   :status-animation? (boolean)}
-  [{:keys [request-id stretch-orientation] :as card-props}]
+  ;   :min-width (keyword)}
+  [{:keys [stretch-orientation] :as card-props}]
   (merge {:color            :primary
           :horizontal-align :center
           :min-width        :xxs
@@ -49,24 +47,7 @@
           ; számára is átadni, hogy alkalmazkodni tudjon a környezethez az elem.
           :container-stretch-orientation stretch-orientation}
 
-         (if (some? request-id) {:status-animation? true})
          (param card-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ;
-  ; @return (map)
-  [db [_ card-id]]
-  (r engine/get-element-view-props db card-id))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -77,7 +58,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:icon (keyword)(opt) Material icon class}
   ;
   ; @return (hiccup or nil)
@@ -89,7 +70,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup or nil)
@@ -101,7 +82,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:expandable? (boolean)(opt)
   ;   :expanded? (boolean)(opt)}
   ;
@@ -123,83 +104,80 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;
   ; @return (hiccup)
-  [card-id view-props]
+  [card-id card-props]
   [:div.x-card--header
-    [card-header-icon          card-id view-props]
-    [card-header-label         card-id view-props]
-    [card-header-expand-button card-id view-props]])
+    [card-header-icon          card-id card-props]
+    [card-header-label         card-id card-props]
+    [card-header-expand-button card-id card-props]])
 
 (defn- card-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:expanded? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [card-id {:keys [expanded?] :as view-props}]
+  [card-id {:keys [expanded?] :as card-props}]
   (if (nonfalse? expanded?)
-      (let [content-props (components/extended-props->content-props view-props)]
+      (let [content-props (components/extended-props->content-props card-props)]
            [:div.x-card--body [components/content card-id content-props]])))
 
 (defn- button-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
-  [card-id {:keys [on-click] :as view-props}]
-  [:button.x-card (engine/element-attributes card-id view-props
+  [card-id {:keys [on-click] :as card-props}]
+  [:button.x-card (engine/element-attributes card-id card-props
                                              {:on-click   #(a/dispatch on-click)
                                               :on-mouse-up (engine/blur-element-function card-id)})
-                  (if (engine/element-props->render-element-header? view-props)
-                      [card-header card-id view-props])
-                  [card-body card-id view-props]])
+                  (if (engine/element-props->render-element-header? card-props)
+                      [card-header card-id card-props])
+                  [card-body card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;
   ; @return (hiccup)
-  [card-id view-props]
-  [:div.x-card (engine/element-attributes card-id view-props)
-               (if (engine/element-props->render-element-header? view-props)
-                   [card-header card-id view-props])
-               [card-body card-id view-props]])
+  [card-id card-props]
+  [:div.x-card (engine/element-attributes card-id card-props)
+               (if (engine/element-props->render-element-header? card-props)
+                   [card-header card-id card-props])
+               [card-body card-id card-props]])
 
 (defn- ghost-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;
   ; @return (hiccup)
-  [card-id view-props]
-  [:div.x-card (engine/element-attributes card-id view-props)])
+  [card-id card-props]
+  [:div.x-card (engine/element-attributes card-id card-props)])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
-  ; @param (map) view-props
+  ; @param (map) card-props
   ;  {:ghost-view? (boolean)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
-  [card-id {:keys [ghost-view? on-click] :as view-props}]
-  (cond (boolean ghost-view?)
-        [ghost-card card-id view-props]
-        (some? on-click)
-        [button-card card-id view-props]
-        (nil? on-click)
-        [static-card card-id view-props]))
+  [card-id {:keys [ghost-view? on-click] :as card-props}]
+  (cond (boolean ghost-view?) [ghost-card  card-id card-props]
+        (some? on-click)      [button-card card-id card-props]
+        (nil? on-click)       [static-card card-id card-props]))
 
 (defn view
   ; XXX#8711
@@ -217,10 +195,6 @@
   ;   :class (string or vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
-  ;   :context-surface (map)(constant)(opt)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :expandable? (boolean)(opt)
@@ -241,10 +215,6 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :xxs
   ;   :on-click (metamorphic-event)(opt)
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :stickers (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
@@ -267,15 +237,6 @@
   ; @usage
   ;  [elements/card :my-card {...}]
   ;
-  ; @usage
-  ;  (defn my-context-surface [card-id card-props] "Context surface")
-  ;  [elements/card
-  ;    :my-card
-  ;    {:context-surface {:content       #'my-context-surface
-  ;                       :content-props card-props}
-  ;     :stickers [{:icon     :more_vert
-  ;                 :on-click [:x.app-elements/render-context-surface! :my-card]}]}]
-  ;
   ; @return (component)
   ([card-props]
    [view nil card-props])
@@ -283,7 +244,4 @@
   ([card-id card-props]
    (let [card-id    (a/id   card-id)
          card-props (a/prot card-props card-props-prototype)]
-        [engine/container card-id
-          {:base-props card-props
-           :component  card
-           :subscriber [::get-view-props card-id]}])))
+        [card card-id card-props])))

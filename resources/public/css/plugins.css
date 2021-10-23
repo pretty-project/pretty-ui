@@ -27,7 +27,7 @@
 
 .item-lister--search-bar--buttons {
   display: flex;
-  gap: 18px}
+  gap: 12px}
 
 .item-lister--search-bar--search-field {
   align-items: center;
@@ -44,8 +44,15 @@
   padding-bottom: 12px }
 
 .item-lister--items--request-indicator {
+  color: var( --color-highlight );
   display: flex;
-  justify-content: center }
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  justify-content: center;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s);
+  padding-bottom: 6px;
+  padding-top: 18px }
 
 /*** Item-lister items ***/
 /***** Item-lister *****/

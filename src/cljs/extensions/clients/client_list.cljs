@@ -72,4 +72,5 @@
                  ::route
                  {:restricted?    true
                   :route-event    [:x.app-extensions.clients/render-clients-list!]
+                  :route-title    :clients
                   :route-template "/clients"}]})

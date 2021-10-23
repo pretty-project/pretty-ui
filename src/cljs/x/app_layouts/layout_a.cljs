@@ -77,9 +77,9 @@
   ; @return (component)
   [_ {:keys [icon label label-suffix]}]
   [:div.x-layout-a--header
-    [elements/label {:content label :icon icon :color :muted :font-size :l :font-weight :extra-bold}]
+    [elements/label {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}]
     (if (some? label-suffix)
-        [elements/label {:content label-suffix :color :highlight :font-size :xxs :font-weight :bold}])])
+        [elements/label {:content label-suffix :color :highlight :font-size :xxs :font-weight :bold :layout :fit}])])
 
 (defn view
   ; @param (keyword)(opt) layout-id

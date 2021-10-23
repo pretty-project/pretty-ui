@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.26
 ; Description:
-; Version: v0.3.8
-; Compatibility: x3.9.9
+; Version: v0.4.0
+; Compatibility: x4.4.2
 
 
 
@@ -31,31 +31,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) desk-props
-  ;  {:request-id (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:horizontal-align (keyword)
-  ;   :status-animation? (boolean)}
+  ;  {:horizontal-align (keyword)}
   [{:keys [request-id] :as desk-props}]
   (merge {:horizontal-align :center}
-         (if (some? request-id) {:status-animation? true})
          (param desk-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) desk-id
-  ;
-  ; @return (map)
-  [db [_ desk-id]]
-  (r engine/get-element-view-props db desk-id))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -66,14 +47,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) desk-id
-  ; @param (map) view-props
+  ; @param (map) desk-props
   ;  {:cards (maps in vector)}
   ;
   ; @return (hiccup)
-  [desk-id {:keys [cards] :as view-props}]
+  [desk-id {:keys [cards] :as desk-props}]
   (reduce #(vector/conj-item %1 [card %2])
-           [:div.x-card-desk
-             (engine/element-attributes desk-id view-props)]
+           [:div.x-card-desk (engine/element-attributes desk-id desk-props)]
            (param cards)))
 
 (defn view
@@ -92,10 +72,6 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)}
   ;
   ; @usage
@@ -111,7 +87,4 @@
   ([desk-id desk-props]
    (let [desk-id    (a/id desk-id)
          desk-props (a/prot desk-props desk-props-prototype)]
-        [engine/container desk-id
-          {:base-props desk-props
-           :component  card-desk
-           :subscriber [::get-view-props desk-id]}])))
+        [card-desk desk-id desk-props])))

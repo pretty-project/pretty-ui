@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.0.4
-; Compatibility: x4.3.8
+; Version: v2.1.2
+; Compatibility: x4.4.2
 
 
 
@@ -44,6 +44,9 @@
 ;  A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
 ;  React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor
 ;  megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
+;  Mivel a destructor esemény megtörténésekor a Re-Frame adatbázis már nem tartalmazza
+;  az initial-props-path Re-Frame adatbázis útvonalon tárolt értéket, így azt a destructor
+;  esemény utolsó paraméterként kapja meg.
 ;
 ; @name initializer
 ;  Az {:initializer ...} tulajdonságként átadott Re-Frame esemény a komponens
@@ -230,7 +233,7 @@
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props-path]}]]
-  (if (some? initial-props-path)
+  (if (some?     initial-props-path)
       (get-in db initial-props-path)))
 
 (defn- component-mounted?
@@ -369,9 +372,11 @@
   (fn [{:keys [db]} [event-id component-id {:keys [destructor] :as context-props} mount-id]]
       (if (and (r component-unmounted?  db component-id)
                (r component-mounted-as? db component-id mount-id))
-          {:db       (-> db (remove-component-props!         [event-id component-id])
-                            (remove-component-initial-props! [event-id component-id context-props]))
-           :dispatch (param destructor)})))
+          (let [initial-props (r get-component-initial-props db component-id context-props)
+                destructor    (a/metamorphic-event<-params destructor initial-props)]
+               {:db       (-> db (remove-component-props!         [event-id component-id])
+                                 (remove-component-initial-props! [event-id component-id context-props]))
+                :dispatch (param destructor)}))))
 
 (a/reg-event-fx
   :x.app-components/unmount-component!
@@ -460,7 +465,7 @@
   ;
   ; @return (component)
   [component-id context-props]
-  (if (context-props->subscribe? context-props)
+  (if (context-props->subscribe?   context-props)
       [subscriber     component-id context-props]
       [non-subscriber component-id context-props]))
 
@@ -498,8 +503,8 @@
   ; @return (component)
   [component-id context-props]
   (if (context-props->disability? context-props)
-      [disabler     component-id context-props]
-      [non-disabler component-id context-props]))
+      [disabler     component-id  context-props]
+      [non-disabler component-id  context-props]))
 
 (defn- lifecycle-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -556,6 +561,8 @@
   ;  {:base-props (map)(opt)
   ;   :component (component)
   ;   :destructor (metamorphic-event)(opt)
+  ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props path Re-Frame adatbázis
+  ;    útvonalon tárolt értéket.
   ;   :disabler (subscription vector)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)
