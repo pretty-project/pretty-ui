@@ -7,11 +7,64 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; (ns my-handlers
+;     (:require [pathom.api         :as pathom :refer [ENVIRONMENT]]
+;               [server-fruits.http :as http]))
+;
+; (defmutation         do-something! [env] ...)
+; (pathom/reg-handler! do-something!)
+;
+; (defresolver get-anything [env] ...)
+; (defmutation do-anything! [env] ...)
+; (def HANDLERS [get-anything do-anything!])
+; (pathom/reg-handlers! HANDLERS)
+;
+; (defn process-query!
+;   [request]
+;   (let [environment (assoc @ENVIRONMENT :request request)]
+;         query       (http/request->param request :query)
+;         result (pathom/process-query! (param environment)
+;                                       (pathom/read-query query)]
+;        (http/map-wrap {:body {...}})))
+
+
+
 ;; -- State -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @atom (vector)
+(def HANDLERS    (atom []))
+
 ; @atom (map)
-(def ENVIRONMENT (atom nil))
+(def ENVIRONMENT (atom {}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reg-handler!
+  ; @param (handler function) handler-f
+  ;
+  ; @usage
+  ;  (pco/defmutation     do-something! [env] ...)
+  ;  (pathom/reg-handler! do-something!)
+  [handler-f]
+  (swap! HANDLERS vector/conj-item handler-f))
+
+(defn reg-handlers!
+  ; @param (handler functions in vector) handler-fs
+  ;
+  ; @usage
+  ;  (pco/defmutation     do-something! [env] ...)
+  ;  (pco/defmutation     do-anything! [env] ...)
+  ;  (def HANDLERS [do-something! do-anything!])
+  ;  (pathom/reg-handlers! HANDLERS)
+  [handler-fs]
+  (swap! HANDLERS vector/concat-items handler-fs))
 
 
 
@@ -19,117 +72,24 @@
 ;; ----------------------------------------------------------------------------
 
 (defn reg-environment!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (vector) registry
   ;
   ; @return (map)
-  [registry]
-  (let [environment (pathom.ci/register registry)]
+  []
+  (let [handlers    (deref HANDLERS)
+        registry    [handlers]
+        environment (pathom.ci/register registry)]
        (reset! ENVIRONMENT environment)))
 
-
 (a/reg-handled-fx :pathom/reg-environment! reg-environment!)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-mutations
-  ; @return (vector)
-  [db _]
-  (get-in db (db/path ::mutations)))
-
-(defn get-resolvers
-  ; @return (vector)
-  [db _]
-  (get-in db (db/path ::resolvers)))
-
-(defn get-handlers
-  ; @return (vector)
-  [db _]
-  (let [resolvers (get-in db (db/path ::resolvers))
-        mutations (get-in db (db/path ::mutations))]
-       (vector/concat-items resolvers mutations)))
-
-(defn get-registry
-  ; @return (vector)
-  [db _]
-  (let [handlers (r get-handlers db)]
-       [handlers]))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reg-mutation!
-  ; @param (mutation function) mutation-f
-  ;
-  ; @return (map)
-  [db [_ mutation-f]]
-  (update-in db (db/path ::mutations)
-             vector/conj-item mutation-f))
-
-; @usage
-;  (pco/defmutation do-something! [env] ...)
-;  (a/dispatch [:pathom/reg-mutation! do-something!])
-(a/reg-event-db :pathom/reg-mutation! reg-mutation!)
-
-(defn reg-mutations!
-  ; @param (mutation functions in vector) mutation-fs
-  ;
-  ; @return (map)
-  [db [_ mutation-fs]]
-  (update-in db (db/path ::mutations)
-             vector/concat-items mutation-fs))
-
-; @usage
-;  (pco/defmutation do-something! [env] ...)
-;  (pco/defmutation do-anything!  [env] ...)
-;  (a/dispatch [:pathom/reg-mutations! [do-something! try-something!]])
-(a/reg-event-db :pathom/reg-mutations! reg-mutations!)
-
-(defn reg-resolver!
-  ; @param (resolver function) resolver-f
-  ;
-  ; @return (map)
-  [db [_ resolver-f]]
-  (update-in db (db/path ::resolvers)
-             vector/conj-item resolver-f))
-
-; @usage
-;  (pco/defresolver get-something [env] ...)
-;  (a/dispatch [:pathom/reg-resolver! get-something])
-(a/reg-event-db :pathom/reg-resolver! reg-resolver!)
-
-(defn reg-resolvers!
-  ; @param (resolver functions in vector) mutation-fs
-  ;
-  ; @return (map)
-  [db [_ resolver-fs]]
-  (update-in db (db/path ::resolvers)
-             vector/conj-item resolver-fs))
-
-; @usage
-;  (pco/defresolver get-something [env] ...)
-;  (pco/defresolver get-anything  [env] ...)
-;  (a/dispatch [:pathom/reg-resolvers! [get-something get-anything]])
-(a/reg-event-db :pathom/reg-resolvers! reg-resolvers!)
-
-
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :pathom/initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (let [registry (r get-registry db)]
-           [:pathom/reg-environment! registry])))
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:pathom/initialize!]})
+  {:on-app-init [:pathom/reg-environment!]})

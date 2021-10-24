@@ -17,7 +17,7 @@
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.eql     :as eql]
               [mid-fruits.vector  :as vector]
-              [pathom.api         :as pathom]
+              [pathom.api         :as pathom :refer [ENVIRONMENT]]
               [server-fruits.http :as http]
               [x.server-user.api  :as user]))
 
@@ -79,7 +79,7 @@
   [request]
   (if (user/request->authenticated? request)
       (let [query       (pathom/request->query request)
-            environment (assoc @pathom/ENVIRONMENT :request request)]
+            environment (assoc @ENVIRONMENT :request request)]
            (pathom/process-query! environment query))
       (http/error-wrap {:error-message :permission-denied :status 401})))
 
@@ -100,7 +100,7 @@
   ; @return (map)
   [request]
   (if (user/request->authenticated? request)
-      (let [environment              (assoc @pathom/ENVIRONMENT :request request)
+      (let [environment              (assoc @ENVIRONMENT :request request)
             files-data               (request->files-data request)
             destination-directory-id (http/request->multipart-param request "destination-directory-id")
             response-query           (http/request->multipart-param request "response-query")

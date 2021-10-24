@@ -30,4 +30,6 @@
 (def process-query! query/process-query!)
 
 ; pathom.register
-(def ENVIRONMENT register/ENVIRONMENT)
+(def ENVIRONMENT   register/ENVIRONMENT)
+(def reg-handler!  register/reg-handler!)
+(def reg-handlers! register/reg-handlers!)

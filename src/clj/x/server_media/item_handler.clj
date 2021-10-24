@@ -20,6 +20,7 @@
               [mid-fruits.gestures   :as gestures]
               [mid-fruits.random     :as random]
               [mid-fruits.vector     :as vector]
+              [pathom.api            :as pathom]
               [server-fruits.io      :as io]
               [x.server-db.api       :as db]
               [x.server-media.engine :as engine]
@@ -382,7 +383,7 @@
         directory-document   (assoc directory-document :item-count directory-item-count)]
        (db/document->namespaced-document directory-document :directory)))
 
-(a/dispatch [:pathom/reg-resolver! get-directory-data])
+(pathom/reg-handler! get-directory-data)
 
 (pathom.co/defresolver get-file-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -405,7 +406,7 @@
   (let [file-document (local-db/get-document "files" id)]
        (db/document->namespaced-document file-document :file)))
 
-(a/dispatch [:pathom/reg-resolver! get-file-data])
+(pathom/reg-handler! get-file-data)
 
 
 
@@ -444,7 +445,7 @@
        (local-db/update-document! "files" file-id merge updated-props)
        (return "File updated")))
 
-(a/dispatch [:pathom/reg-mutation! update-file!])
+(pathom/reg-handler! update-file!)
 
 
 
@@ -478,7 +479,7 @@
 
        (return "Directory created")))
 
-(a/dispatch [:pathom/reg-mutation! create-directory!])
+(pathom/reg-handler! create-directory!)
 
 
 
@@ -575,7 +576,7 @@
 
   (return "Items deleted"))
 
-(a/dispatch [:pathom/reg-mutation! delete-items!])
+(pathom/reg-handler! delete-items!)
 
 
 
@@ -723,7 +724,7 @@
 
   (return "Items copied"))
 
-(a/dispatch [:pathom/reg-mutation! copy-items!])
+(pathom/reg-handler! copy-items!)
 
 
 
@@ -822,7 +823,7 @@
 
   (return "Items moved"))
 
-(a/dispatch [:pathom/reg-mutation! move-items!])
+(pathom/reg-handler! move-items!)
 
 
 
@@ -899,4 +900,4 @@
 
   (return "Files uploaded"))
 
-(a/dispatch [:pathom/reg-mutation! upload-files!])
+(pathom/reg-handler! upload-files!)
