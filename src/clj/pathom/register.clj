@@ -1,8 +1,31 @@
 
 (ns pathom.register
     (:require [mid-fruits.vector :as vector]
-              [x.server-core.api :as a]
-              [x.server-db.api   :as db]))
+              [x.server-core.api :as a :refer [r]]
+              [x.server-db.api   :as db]
+              [com.wsscode.pathom3.connect.indexes :as pathom.ci]))
+
+
+
+;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reg-environment!
+  ; @param (vector) registry
+  ;
+  ; @return (map)
+  [registry]
+  (pathom.ci/register registry))
+
+(a/reg-handled-fx :pathom/reg-environment! reg-environment!)
+
+
+
+;; -- State -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (map)
+(def ENVIRONMENT (atom nil))
 
 
 
@@ -93,5 +116,18 @@
 
 
 
+
+
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :pathom/initialize!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      (let [registry (r get-registry db)]
+           [:pathom/reg-environment! registry])))
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-init [:pathom/initialize!]})

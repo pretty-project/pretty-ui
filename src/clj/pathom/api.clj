@@ -30,3 +30,4 @@
 (def process-query! query/process-query!)
 
 ; pathom.register
+(def ENVIRONMENT register/ENVIRONMENT)

@@ -382,6 +382,8 @@
         directory-document   (assoc directory-document :item-count directory-item-count)]
        (db/document->namespaced-document directory-document :directory)))
 
+(a/dispatch [:pathom/reg-resolver! get-directory-data])
+
 (pathom.co/defresolver get-file-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -402,6 +404,8 @@
 
   (let [file-document (local-db/get-document "files" id)]
        (db/document->namespaced-document file-document :file)))
+
+(a/dispatch [:pathom/reg-resolver! get-file-data])
 
 
 
@@ -440,6 +444,8 @@
        (local-db/update-document! "files" file-id merge updated-props)
        (return "File updated")))
 
+(a/dispatch [:pathom/reg-mutation! update-file!])
+
 
 
 ;; -- Create functions --------------------------------------------------------
@@ -471,6 +477,8 @@
                           :selected-item            directory-link})
 
        (return "Directory created")))
+
+(a/dispatch [:pathom/reg-mutation! create-directory!])
 
 
 
@@ -566,6 +574,8 @@
                     :non-existing-type)))
 
   (return "Items deleted"))
+
+(a/dispatch [:pathom/reg-mutation! delete-items!])
 
 
 
@@ -713,6 +723,8 @@
 
   (return "Items copied"))
 
+(a/dispatch [:pathom/reg-mutation! copy-items!])
+
 
 
 ;; -- Move functions ----------------------------------------------------------
@@ -810,6 +822,8 @@
 
   (return "Items moved"))
 
+(a/dispatch [:pathom/reg-mutation! move-items!])
+
 
 
 ;; -- Upload functions --------------------------------------------------------
@@ -884,3 +898,5 @@
               (upload-file! env action-props)))
 
   (return "Files uploaded"))
+
+(a/dispatch [:pathom/reg-mutation! upload-files!])

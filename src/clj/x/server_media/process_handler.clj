@@ -108,6 +108,7 @@
   (if (user/request->authenticated? request)
       (let [query       (pathom/request->query request)
             environment (assoc ENVIRONMENT :request request)]
+           (println (str @pathom/ENVIRONMENT))
            (pathom/process-query! environment query))
       (http/error-wrap {:error-message :permission-denied :status 401})))
 
@@ -128,7 +129,7 @@
   ; @return (map)
   [request]
   (if (user/request->authenticated? request)
-      (let [environment              (assoc ENVIRONMENT :request request)
+      (let [environment              (assoc @pathom/ENVIRONMENT :request request)
             files-data               (request->files-data request)
             destination-directory-id (http/request->multipart-param request "destination-directory-id")
             response-query           (http/request->multipart-param request "response-query")
