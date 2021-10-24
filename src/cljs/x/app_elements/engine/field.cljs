@@ -161,7 +161,7 @@
   [{:keys [value]}]
   (string/nonempty? value))
 
-(defn view-props->lines-count
+(defn view-props->line-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) view-props
@@ -171,13 +171,13 @@
   ; @return (integer)
   [{:keys [multiline? value]}]
   (if (boolean multiline?)
-      (let [lines-count (inc (string/count-newlines value))]
+      (let [line-count (inc (string/count-newlines value))]
            ; BUG#1481
            ; A textarea element magassága minimum 2 sor magasságú kell legyen,
            ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
            ; szöveg nem törik meg automatikusan
            ; Google Chrome Version 89.0.4389.114
-           (inc lines-count))
+           (inc line-count))
       (return 1)))
 
 (defn view-props->field-height
@@ -187,7 +187,7 @@
   ;
   ; @return (integer)
   [view-props]
-  (+ (* FIELD-LINE-HEIGHT (view-props->lines-count view-props))))
+  (+ (* FIELD-LINE-HEIGHT (view-props->line-count view-props))))
     ; WARNING! DEPRECATED!
     ; Ettől 50px magas lett a search-field!
     ; (* FIELD-BORDER-WIDTH 2)

@@ -85,7 +85,7 @@
        (or (= app-status :loading)
            (= app-status nil))))
 
-(defn- get-signals-count
+(defn- get-signal-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (integer)
@@ -100,9 +100,9 @@
   ;
   ; @return (boolean)
   [db _]
-  (let [signals-count (r get-signals-count db)]
+  (let [signal-count (r get-signal-count db)]
        (and (r synchronizing? db)
-            (= 0 signals-count))))
+            (= 0 signal-count))))
 
 (defn- timeout-error?
   ; WARNING! NON-PUBLIC! DO NOT USE!

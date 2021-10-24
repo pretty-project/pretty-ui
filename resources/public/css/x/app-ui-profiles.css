@@ -100,6 +100,15 @@ body {
 --primary-x-light:  rgb( 90, 230, 255);
 --primary-xx-light: rgb(100, 240, 255);
 
+/* Primary soft */
+--primary-soft-xx-dark:  rgb(120, 180, 215);
+--primary-soft-x-dark:   rgb(130, 190, 225);
+--primary-soft-dark:     rgb(140, 200, 235);
+--primary-soft:          rgb(150, 210, 245);
+--primary-soft-light:    rgb(160, 220, 255);
+--primary-soft-x-light:  rgb(170, 230, 255);
+--primary-soft-xx-light: rgb(180, 240, 255);
+
 /* Secondary */
 --secondary-xx-dark:  rgb(170, 000, 225);
 --secondary-x-dark:   rgb(180, 000, 235);

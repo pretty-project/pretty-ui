@@ -30,7 +30,7 @@
        :js "app.js"}
 
       :db/query
-      {:route-template "/db/query"
+      {:route-template "/query"
        :post #(http/map-wrap {:body (db/process! %)})}})
 
 

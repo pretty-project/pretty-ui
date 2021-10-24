@@ -412,7 +412,7 @@ body {
 
 .x-button[data-variant="filled"][data-color="primary"] .x-button--body,
 .x-chip[data-variant="filled"][data-color="primary"] .x-chip--body {
-  background-color: var( --primary );
+  background-color: var( --primary-soft );
   color: var( --black ) }
 
 .x-content-bar[data-color="primary"] {
@@ -1700,6 +1700,10 @@ body {
   margin: 0 8px;
   width: var( --icon-size-default ) }
 
+.x-button[data-layout="fit"] .x-button--icon-placeholder,
+.x-button[data-layout="row"] .x-button--icon-placeholder {
+  width: 32px }
+
 .x-button[data-layout="icon-button"] .x-button--icon {
   /* XXX#6914
    * Az icon-button gombon az ikon akkor is függőlegesen középre igazítva jelent meg,
@@ -1982,7 +1986,6 @@ body {
 /*** Chip label ***/
 
 .x-chip--label {
-  color: var( --color );
   font-size: var( --font-size-xs );
   font-weight: 500;
   padding: 0 12px;
@@ -2385,13 +2388,13 @@ body {
 .x-directory--details {
   width: 100% }
 
-.x-directory--items-count-and-content-size {
+.x-directory--item-count-and-content-size {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 12px }
 
-.x-directory--items-count,
+.x-directory--item-count,
 .x-directory--content-size {
   color: var( --color-highlight );
   font-size: var( --font-size-xxs );
@@ -2695,6 +2698,9 @@ body {
   margin-right: 8px;
   justify-content: center;
   width: var( --icon-size-default ); }
+
+.x-label--icon-placeholder {
+  width: 32px }
 
 /*** Label icon ***/
 /***** Label *****/

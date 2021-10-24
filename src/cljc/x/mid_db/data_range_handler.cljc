@@ -47,9 +47,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-db.partition-handler
-(def get-data-items-count partition-handler/get-data-items-count)
-(def get-data-items       partition-handler/get-data-items)
-(def get-data-order       partition-handler/get-data-order)
+(def get-data-item-count partition-handler/get-data-item-count)
+(def get-data-items      partition-handler/get-data-items)
+(def get-data-order      partition-handler/get-data-order)
 
 
 
@@ -68,8 +68,8 @@
   ;  Egyik kurzor értéke sem lehet kevesebb, mint 0 és nem lehet több, mint
   ;  a partíció elemeinek száma
   [db [_ partition-id n]]
-  (let [data-items-count (r get-data-items-count db partition-id)]
-       (and (<= n data-items-count)
+  (let [data-item-count (r get-data-item-count db partition-id)]
+       (and (<= n data-item-count)
             (>  n 0))))
 
 (defn get-data-cursor-high
@@ -168,9 +168,9 @@
   ;  A high kurzor utáni elem azonosítójával tér vissza
   [db [_ partition-id]]
   (let [data-order       (r get-data-order       db partition-id)
-        data-items-count (r get-data-items-count db partition-id)
+        data-item-count  (r get-data-item-count  db partition-id)
         data-cursor-high (r get-data-cursor-high db partition-id)]
-       (if (<= data-cursor-high data-items-count)
+       (if (<= data-cursor-high data-item-count)
            (nth data-order data-cursor-high))))
 
 (defn get-first-data-item-post-range
@@ -353,11 +353,11 @@
   ; @return (map)
   [db [_ partition-id]]
   (let [data-cursor-high (r get-data-cursor-high db partition-id)
-        data-items-count (r get-data-items-count db partition-id)]
+        data-item-count  (r get-data-item-count  db partition-id)]
        (cond-> db
          ; A high érték nem lehet kisebb, mint a particióban tárolt elemek száma
-         (> data-cursor-high data-items-count)
-         (assoc-in [partition-id :data-cursor-high] data-items-count))))
+         (> data-cursor-high data-item-count)
+         (assoc-in [partition-id :data-cursor-high] data-item-count))))
 
 (defn update-data-cursor-low!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -368,12 +368,12 @@
   ;
   ; @return (map)
   [db [_ partition-id]]
-  (let [data-cursor-low  (r get-data-cursor-low  db partition-id)
-        data-items-count (r get-data-items-count db partition-id)]
+  (let [data-cursor-low (r get-data-cursor-low  db partition-id)
+        data-item-count (r get-data-item-count  db partition-id)]
        (cond-> db
          ; A low érték nem lehet kisebb, mint a particióban tárolt elemek száma
-         (> data-cursor-low data-items-count)
-         (assoc-in [partition-id :data-cursor-low] data-items-count))))
+         (> data-cursor-low data-item-count)
+         (assoc-in [partition-id :data-cursor-low] data-item-count))))
 
 (defn update-data-cursor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -400,8 +400,8 @@
   ;
   ; @return (map)
   [db [_ partition-id]]
-  (let [data-items-count (r get-data-items-count db partition-id)]
-       (-> db (assoc-in [partition-id :data-cursor-high] data-items-count)
+  (let [data-item-count (r get-data-item-count db partition-id)]
+       (-> db (assoc-in [partition-id :data-cursor-high] data-item-count)
               (assoc-in [partition-id :data-cursor-low]  0))))
 
 (defn step-data-cursor-high-bwd!

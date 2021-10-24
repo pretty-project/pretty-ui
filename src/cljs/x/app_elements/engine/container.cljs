@@ -286,7 +286,6 @@
   ; @param (keyword) element-id
   ; @param (map) context-props
   ;  {:base-props (map)
-  ;    {:disabler (subscription vector)(opt)}
   ;   :initializer (metamorphic-event)(opt)
   ;   :modifier (function)(opt)
   ;   :subscriber (subscription vector)(opt)
@@ -298,7 +297,6 @@
   [components/stated element-id
     {:base-props         base-props
      :component          #'element-container
-     :disabler           (:disabler base-props)
      :destructor         destructor
      :initial-props      (constant-props/base-props->initial-props base-props)
      :initial-props-path (element/element-props-path element-id)
@@ -333,7 +331,6 @@
   ;     :container-stretch-orientation (keyword)(opt)
   ;      :horizontal, :vertical, :both, :none
   ;      Default: :none
-  ;     :disabler (subscription vector)(opt)
   ;     :helper (metamorphic-content)(opt)
   ;     :info-tooltip (metamorphic-content)(opt)
   ;     :request-animation? (boolean)(opt)

@@ -698,10 +698,10 @@
   ; @param (map) subdirectory-props
   ;  {:directory/alias (metamorphic-value)
   ;   :directory/content-size (B)
-  ;   :directory/items-count (integer)}
+  ;   :directory/item-count (integer)}
   ;
   ; @return (component)
-  [component-id view-props subdirectory-id {:directory/keys [alias content-size items-count]
+  [component-id view-props subdirectory-id {:directory/keys [alias content-size item-count]
                                             :as subdirectory-props}]
   (let [element-id           (engine/item-id->element-id subdirectory-id :file-browser)
         stickers             (file-browser-subdirectory-stickers component-id view-props subdirectory-id subdirectory-props)
@@ -711,7 +711,7 @@
        [elements/directory element-id
                            {:content-size    content-size
                             :disabled?       disabled?
-                            :items-count     items-count
+                            :item-count      item-count
                             :label           alias
                             :on-click        on-click-event
                             :on-right-click  on-right-click-event

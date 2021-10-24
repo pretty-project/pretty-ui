@@ -1030,7 +1030,7 @@
            (param 0)
            (file-selector->file-list file-selector)))
 
-(defn file-selector->files-count
+(defn file-selector->file-count
   ; @param (DOM-element) file-selector
   ;
   ; @return (integer)
@@ -1042,8 +1042,8 @@
   ;
   ; @return (boolean)
   [file-selector]
-  (let [files-count (file-selector->files-count file-selector)]
-       (> files-count 0)))
+  (let [file-count (file-selector->file-count file-selector)]
+       (> file-count 0)))
 
 (defn file-selector->mime-types
   ; @param (DOM-element) file-selector
@@ -1068,12 +1068,12 @@
   ;
   ; @return (map)
   ;  {:any-file-selected? (boolean)
-  ;   :files-count (integer)
+  ;   :file-count (integer)
   ;   :files-data (maps in vector)
   ;   :files-size (B)}
   [file-selector]
   {:any-file-selected? (file-selector->any-file-selected? file-selector)
-   :files-count        (file-selector->files-count        file-selector)
+   :file-count         (file-selector->file-count         file-selector)
    :files-data         (file-selector->files-data         file-selector)
    :files-size         (file-selector->files-size         file-selector)})
 

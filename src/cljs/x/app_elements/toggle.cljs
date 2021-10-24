@@ -73,7 +73,6 @@
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

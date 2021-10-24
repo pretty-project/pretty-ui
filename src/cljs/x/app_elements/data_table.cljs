@@ -35,10 +35,10 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->row-attributes
+(defn- table-props->row-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)}
   ; @param (integer) row-dex
   ;
@@ -90,22 +90,6 @@
   [table-props]
   (let [data-table-props (data-table-props-prototype table-props)]
        (table/table-props-prototype data-table-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) table-id
-  ;
-  ; @return (map)
-  [db [_ table-id]]
-  (merge (r engine/get-element-view-props db table-id)))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -179,7 +163,4 @@
   ([table-id table-props]
    (let [table-id    (a/id   table-id)
          table-props (a/prot table-props table-props-prototype)]
-        [engine/container table-id
-          {:base-props table-props
-           :component  table
-           :subscriber [::get-view-props table-id]}])))
+        [table table-id table-props])))

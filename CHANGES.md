@@ -1,6 +1,12 @@
 
 # x4.4.2
 
+- BREAKING CHANGE
+  "/db/query" route átnevezve: "/query"
+
+- BREAKING CHANGE
+  A {:disabler [...]} tulajdonság nem használható ezentúl
+
 - NEW MODULE
   x.app-layouts
 

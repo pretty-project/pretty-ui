@@ -438,11 +438,11 @@
               (param {})
               (r get-data-items db partition-id)))
 
-(defn get-data-items-count
+(defn get-data-item-count
   ; @param (namespaced keyword) partition-id
   ;
   ; @usage
-  ;  (r db/get-data-items-count ::my-partition)
+  ;  (r db/get-data-item-count ::my-partition)
   ;
   ; @return (integer)
   [db [_ partition-id]]

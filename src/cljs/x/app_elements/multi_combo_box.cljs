@@ -230,7 +230,6 @@
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :get-label-f (function)(constant)(opt)

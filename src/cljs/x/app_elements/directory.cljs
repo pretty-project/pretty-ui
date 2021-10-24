@@ -124,18 +124,18 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- directory-items-count
+(defn- directory-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) directory-id
   ; @param (map) view-props
-  ;  {:items-count (integer)(opt)}
+  ;  {:item-count (integer)(opt)}
   ;
   ; @return (hiccup)
-  [_ {:keys [items-count]}]
-  (if (some? items-count)
-      [:div.x-directory--items-count (components/content {:content :n-items :replacements [items-count]})]
-      [:div.x-directory--items-count-placeholder]))
+  [_ {:keys [item-count]}]
+  (if (some? item-count)
+      [:div.x-directory--item-count (components/content {:content :n-items :replacements [item-count]})]
+      [:div.x-directory--item-count-placeholder]))
 
 (defn- directory-content-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -176,8 +176,8 @@
     (directory-body-attributes directory-id view-props)
     [directory-label directory-id view-props]
     [:div.x-directory--details
-      [:div.x-directory--items-count-and-content-size
-        [directory-items-count  directory-id view-props]
+      [:div.x-directory--item-count-and-content-size
+        [directory-item-count   directory-id view-props]
         [directory-content-size directory-id view-props]]]])
 
 (defn- directory-button-body
@@ -193,8 +193,8 @@
     (directory-body-attributes directory-id view-props)
     [:div.x-directory--details
       [directory-label directory-id view-props]
-      [:div.x-directory--items-count-and-content-size
-        [directory-items-count  directory-id view-props]
+      [:div.x-directory--item-count-and-content-size
+        [directory-item-count   directory-id view-props]
         [directory-content-size directory-id view-props]]]])
 
 (defn- directory-highlighter
@@ -243,7 +243,7 @@
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
   ;   :height (px)(opt)
-  ;   :items-count (integer)(opt)
+  ;   :item-count (integer)(opt)
   ;   :label (metamorphic-content)
   ;   :multiple-selection? (boolean)(opt)
   ;    Default: false

@@ -226,7 +226,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :end-adornments (maps in vector)(opt)
   ;    [{:icon (keyword) Material icon class
   ;      :on-click (metamorphic-event)(opt)

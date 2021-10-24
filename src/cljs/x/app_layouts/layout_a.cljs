@@ -71,15 +71,12 @@
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
   ;  {:icon (keyword)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :label-suffix (metamorphic-content)(opt)}
+  ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [_ {:keys [icon label label-suffix]}]
+  [_ {:keys [icon label]}]
   [:div.x-layout-a--header
-    [elements/label {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}]
-    (if (some? label-suffix)
-        [elements/label {:content label-suffix :color :highlight :font-size :xxs :font-weight :bold :layout :fit}])])
+    [elements/label {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}]])
 
 (defn view
   ; @param (keyword)(opt) layout-id
@@ -93,8 +90,7 @@
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
   ;   :icon (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :label-suffix (metamorphic-content)(opt)}
+  ;   :label (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]

@@ -20,47 +20,47 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn columns-count
+(defn column-count
   ; Kiszámítja hány oszlopban fér el a megadott számú elem.
   ; - Szükség szerint csökkenti az oszlopok számát aszerint, hogy az ne haladja
-  ;   meg a max-columns-count paraméterként átadott értéket.
+  ;   meg a max-column-count paraméterként átadott értéket.
   ; - Szükség szerint csökkenti az oszlopok számát aszerint, hogy az oszlopok
   ;   összeadott szélessége ne haladja meg a max-width paraméterként átadott értéket.
   ;
-  ; @param (integer) items-count
+  ; @param (integer) item-count
   ; @param (px) column-width
-  ; @param (integer) max-columns-count
+  ; @param (integer) max-column-count
   ; @param (px) max-width
   ;
   ; @example
-  ;  (geometry/columns-count 13 200 8 1980)
+  ;  (geometry/column-count 13 200 8 1980)
   ;  => 8
   ;
   ; @example
-  ;  (geometry/columns-count 13 200 8 1240)
+  ;  (geometry/column-count 13 200 8 1240)
   ;  => 6
   ;
   ; @example
-  ;  (geometry/columns-count 2 200 8 1980)
+  ;  (geometry/column-count 2 200 8 1980)
   ;  => 2
   ;
   ; @example
-  ;  (geometry/columns-count 0 200 8 1980)
+  ;  (geometry/column-count 0 200 8 1980)
   ;  => 0
   ;
   ; @return (integer)
-  [items-count column-width max-columns-count max-width]
-  (let [max-columns-fit   (math/floor (/ max-width column-width))
-        max-columns-count (math/minimum max-columns-count max-columns-fit)]
-       (math/between! items-count 0 max-columns-count)))
+  [item-count column-width max-column-count max-width]
+  (let [max-columns-fit  (math/floor (/ max-width column-width))
+        max-column-count (math/minimum max-column-count max-columns-fit)]
+       (math/between! item-count 0 max-column-count)))
 
 (defn columns-width
-  ; Kiszámítja, hogy a (geometry/columns-count ...) függvény által meghatározott
+  ; Kiszámítja, hogy a (geometry/column-count ...) függvény által meghatározott
   ; számú oszlopnak mennyi az összeadott szélessége.
   ;
-  ; @param (integer) items-count
+  ; @param (integer) item-count
   ; @param (px) column-width
-  ; @param (integer) max-columns-count
+  ; @param (integer) max-column-count
   ; @param (px) max-width
   ;
   ; @example
@@ -80,6 +80,6 @@
   ;  => 0
   ;
   ; @return (integer)
-  [items-count column-width max-columns-count max-width]
-  (let [columns-count (columns-count items-count column-width max-columns-count max-width)]
-       (* column-width columns-count)))
+  [item-count column-width max-column-count max-width]
+  (let [column-count (column-count item-count column-width max-column-count max-width)]
+       (* column-width column-count)))

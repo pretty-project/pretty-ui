@@ -63,14 +63,14 @@
   ;  {:directory/alias (metamorphic-value)
   ;   :directory/created-at (string)(opt)
   ;   :directory/description (string)(opt)
-  ;   :directory/items-count (integer)(opt)
+  ;   :directory/item-count (integer)(opt)
   ;   :directory/modified-at (string)(opt)}
   ;
   ; @return (component)
   [directory-id directory-props]
   [:<> [directory-name         directory-id directory-props]
       ;[directory-description  directory-id directory-props]])
-      ;[directory-items-count  directory-id directory-props]])
+      ;[directory-item-count   directory-id directory-props]])
        [directory-content-size directory-id directory-props]
       ;[directory-tags         directory-id directory-props]])
        [directory-modified-at  directory-id directory-props]

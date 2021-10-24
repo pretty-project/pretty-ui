@@ -220,7 +220,7 @@
   (let [filesize (get-in db (settings-item-path :files-data file-dex :filesize))]
        (-> db (assoc-in  (settings-item-path :files-data file-dex :aborted?) true)
               (update-in (settings-item-path :files-size) - filesize)
-              (update-in (settings-item-path :files-count) dec))))
+              (update-in (settings-item-path :file-count) dec))))
 
 (a/reg-event-db :file-uploader/abort-file! abort-file!)
 
@@ -442,11 +442,11 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) view-props
-  ;  {:files-count (integer)
+  ;  {:file-count (integer)
   ;   :files-data (maps in vector)}
   ;
   ; @return (component)
-  [popup-id {:keys [files-count files-data] :as view-props}]
+  [popup-id {:keys [file-count files-data] :as view-props}]
   (let [file-selector (dom/get-element-by-id "x-file-selector")]
        (reduce-indexed (fn [file-list {:keys [aborted?] :as file-props} file-dex]
                            (if (boolean aborted?)

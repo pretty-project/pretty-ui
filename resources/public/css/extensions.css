@@ -8,7 +8,7 @@
   width: 100% }
 
 .clients--client:hover {
-  background: var( --white-x-dark ) }
+  background: var( --white-dark ) }
 
 .clients--client--primary-details {
   display: flex;

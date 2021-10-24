@@ -198,7 +198,7 @@
 (def get-data-item                  partition-handler/get-data-item)
 (def data-item-exists?              partition-handler/data-item-exists?)
 (def get-filtered-data-items        partition-handler/get-filtered-data-items)
-(def get-data-items-count           partition-handler/get-data-items-count)
+(def get-data-item-count            partition-handler/get-data-item-count)
 (def get-meta-items                 partition-handler/get-meta-items)
 (def get-meta-item                  partition-handler/get-meta-item)
 (def get-data-order                 partition-handler/get-data-order)

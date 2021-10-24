@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v1.8.0
-; Compatibility: x4.2.4
+; Version: v1.8.8
+; Compatibility: x4.4.2
 
 
 
@@ -17,7 +17,7 @@
     (:require [app-fruits.dom    :as dom]
               [mid-fruits.candy  :refer [param]]
               [mid-fruits.css    :as css]
-              [mid-fruits.map    :as map]
+              [mid-fruits.map    :as map :refer [dissoc-in]]
               [mid-fruits.math   :as math]
               [mid-fruits.string :as string]
               [x.app-core.api    :as a :refer [r]]
@@ -110,10 +110,7 @@
   ;
   ; @return (map)
   [db _]
-  (assoc-in db (db/path ::prohibitions)
-               (param {})))
-
-(a/reg-event-db ::remove-scroll-prohibitions! remove-scroll-prohibitions!)
+  (dissoc-in db (db/path ::prohibitions)))
 
 
 
@@ -183,19 +180,19 @@
 (a/reg-event-fx
   ::remove-scroll-prohibition!
   ; @param (keyword) prohibition-id
-  (fn [_ [_ prohibition-id]]
-      {:x.app-db [[:remove-item! (db/path ::prohibitions prohibition-id)]]
+  (fn [{:keys [db]} [_ prohibition-id]]
+      {:db       (r db/remove-item! db (db/path ::prohibitions prohibition-id))
        :dispatch [::->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx
   ::add-scroll-prohibition!
   ; @param (keyword) prohibition-id
-  (fn [_ [_ prohibition-id]]
-      {:x.app-db [[:set-item! (db/path ::prohibitions prohibition-id)
-                              (param {})]]
+  (fn [{:keys [db]} [_ prohibition-id]]
+      {:db       (r db/set-item! db (db/path ::prohibitions prohibition-id) {})
        :dispatch [::->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx
   ::enable-scroll!
-  {:dispatch-n [[::remove-scroll-prohibitions!]
-                [::->scroll-prohibitions-changed]]})
+  (fn [{:keys [db]} _]
+      {:db       (r remove-scroll-prohibitions! db)
+       :dispatch [::->scroll-prohibitions-changed]}))

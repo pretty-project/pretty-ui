@@ -74,4 +74,5 @@
   ([box-id box-props]
    (let [box-id    (a/id   box-id)
          box-props (a/prot box-props box-props-prototype)]
-        [card box-id box-props])))
+        [engine/container box-id {:base-props box-props
+                                  :component  #'card}])))

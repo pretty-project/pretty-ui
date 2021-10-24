@@ -25,7 +25,7 @@
 (def CONTENT-VERTICAL-PADDING 12)
 
 ; @constant (integer)
-(def MAX-COLUMNS-COUNT 4)
+(def MAX-COLUMN-COUNT 4)
 
 
 
@@ -38,7 +38,7 @@
 (defn- view-props->item-list-container-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; - A view-props térképben átadott files-count és subdirectories-count értékei
+  ; - A view-props térképben átadott file-count és subdirectory-count értékei
   ;   alapján meghatározza, hogy egy popup UI-elemen kirenderelt fájl és/vagy
   ;   almappa felsorolás elemei hány oszlopba legyenek rendezve.
   ; - A konténer szélessége a kiszámított mennyiségű oszlopok összeadott szélessége.
@@ -46,17 +46,17 @@
   ;   mivel a konténer saját vertical-padding értékkel rendelkezik.
   ;
   ; @param (map) view-props
-  ;  {:files-count (integer)(opt)
-  ;   :subdirectories-count (integer)(opt)
+  ;  {:file-count (integer)(opt)
+  ;   :subdirectory-count (integer)(opt)
   ;   :viewport-width (px)}
   ;
   ; @return (map)
   ;  {:width (string)}
-  [{:keys [files-count subdirectories-count viewport-width]}]
+  [{:keys [file-count subdirectory-count viewport-width]}]
   (let [file-list-vertical-offset (* 2 CONTENT-VERTICAL-PADDING)
-        items-count   (max files-count subdirectories-count)
+        item-count    (max file-count subdirectory-count)
         max-width     (- viewport-width file-list-vertical-offset)
-        columns-width (geometry/columns-width items-count FILE-PREVIEW-CARD-WIDTH MAX-COLUMNS-COUNT max-width)
+        columns-width (geometry/columns-width item-count FILE-PREVIEW-CARD-WIDTH MAX-COLUMN-COUNT max-width)
         width         (+ columns-width file-list-vertical-offset)]
        {:padding (css/vertical-padding (css/px CONTENT-VERTICAL-PADDING))
         :width   (css/px width)}))

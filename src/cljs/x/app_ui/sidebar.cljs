@@ -134,8 +134,8 @@
   ; @return (hiccup)
   [_ _]
   [:div#x-app-sidebar--controls
-    [elements/button {:color   :primary
-                      :icon    :chevron_left
+    [elements/button {:color   :none
+                      :icon    :close
                       :layout  :icon-button
                       :variant :transparent
                       :on-click

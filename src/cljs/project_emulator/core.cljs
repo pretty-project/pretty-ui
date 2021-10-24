@@ -14,6 +14,7 @@
 (ns project-emulator.core
     (:require [x.boot-loader]
               [extensions.clients.api]
+              [extensions.home.api]
 
               ; TEMP
               [playground.api]))

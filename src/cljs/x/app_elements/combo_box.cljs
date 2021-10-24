@@ -295,7 +295,6 @@
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :get-label-f (function)(constant)(opt)
@@ -325,7 +324,6 @@
   ;   :options-path (item-path vector)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :select-option-event (event-vector)(opt)
   ;    Default: DEFAULT-SELECT-OPTION-EVENT
   ;   :style (map)(opt)

@@ -30,11 +30,18 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::home-icon-button
-                   {:preset   :home-icon-button
-                    :disabler [:x.app-router/at-home?]
-                    :on-click [:x.app-router/go-home!]}])
-                   ;:icon     :dashboard
+  [:div
+   [elements/button ::home-icon-button
+                    {:preset   :home-icon-button
+                     :disabler [:x.app-router/at-home?]
+                     :on-click [:x.app-router/go-home!]}]
+                    ;:icon     :dashboard
+   [:div {:style {:position :absolute :top "8px" :right "8px" :background "var(--primary-soft )"
+                  :width "20px" :height "20px" :border-radius "50%"
+                  :font-size "8px" :font-weight 600
+                  :display :flex :flex-direction :column :justify-content :center
+                  :align-items :center :line-height "18px"}}
+        "12"]])
 
 (defn surface-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,7 +80,7 @@
   ; @return (component)
   [_ _]
   [elements/button ::menu-icon-button
-                   {:preset   :menu-icon-button
+                   {:preset   :user-menu-icon-button
                     :on-click [:x.app-views.menu/render!]}])
 
 (defn surface-label

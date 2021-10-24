@@ -111,7 +111,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false

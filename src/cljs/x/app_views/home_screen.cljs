@@ -28,14 +28,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- extension-notifications-bar
-  [extension-id {:keys [errors-count notifications-count]}]
+  [extension-id {:keys [error-count notification-count]}]
   [:div.x-home-screen--card--notifications-bar
    [:div.x-home-screen--card--errors.x-label
-    (if (= 0 errors-count) {:style {:opacity ".5"}})
-    errors-count " errors"]
+    (if (= 0 error-count) {:style {:opacity ".5"}})
+    error-count " errors"]
    [:div.x-home-screen--card--notifications.x-label
-    (if (= 0 notifications-count) {:style {:opacity ".5"}})
-    notifications-count " notifications"]])
+    (if (= 0 notification-count) {:style {:opacity ".5"}})
+    notification-count " notifications"]])
 
 (defn- extension-last-message
   [extension-id {:keys [last-message]}]
@@ -71,11 +71,11 @@
 (defn- extension
   ; @param (keyword) extension-id
   ; @param (map) extension-data
-  ;  {:errors-count (integer)
+  ;  {:error-count (integer)
   ;   :icon (keyword) Material icon class
   ;   :label (metamorphic-content)
   ;   :latest-message (string)
-  ;   :notifications-count (integer)}
+  ;   :notification-count (integer)}
   ;
   ; @return (hiccup)
   [extension-id extension-data]
@@ -86,12 +86,12 @@
 
 (defn- extensions
   []
-  [:div {:style {:height "3000px"}}
-   [extension nil {:errors-count 3
-                   :icon :settings
-                   :label "Machines"
+  [:div {:style {:height         "3000px"}}
+   [extension nil {:error-count  3
+                   :icon         :settings
+                   :label        "Machines"
                    :last-message "\"Mákdaráló\" machine shuts down!"
-                   :notifications-count 0}]])
+                   :notification-count 0}]])
 
 (defn- view
   []

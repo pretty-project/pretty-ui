@@ -558,12 +558,22 @@
 
 /*** App sidebar wrapper ***/
 
+/*** App sidebar controls ***/
+
+#x-app-sidebar--controls {
+  position: absolute;
+  right: 0;
+  top: 0 }
+
+/*** App sidebar controls ***/
+
 /*** App sidebar body ***/
 
 #x-app-sidebar--body {
   display: flex;
   flex-direction: column;
-  height: 100%; }
+  height: 100%;
+  padding-top: 24px }
 
 /*** App sidebar body ***/
 

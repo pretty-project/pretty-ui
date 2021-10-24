@@ -57,8 +57,7 @@
   ;
   ; @return (hiccup or nil)
   [_ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-label--icon (keyword/to-dom-value icon)]))
+  [:i.x-label--icon (keyword/to-dom-value icon)])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,13 +76,17 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
+  ;  {:icon (keyword) Material icon class}
   ;
   ; @return (hiccup)
-  [label-id label-props]
+  [label-id {:keys [icon] :as label-props}]
   [:div.x-label
     (engine/element-attributes label-id label-props)
-    [label-icon label-id label-props]
-    [label-body label-id label-props]])
+    (if (some? icon)
+        [label-icon label-id label-props])
+    [label-body label-id label-props]
+    (if (some? icon)
+        [:div.x-label--icon-placeholder])])
 
 (defn view
   ; XXX#0439

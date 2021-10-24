@@ -922,8 +922,8 @@
       :uploaded-images
       {:en "Uploaded images"
        :hu "Feltöltött képek"}
-      :uploading-files-count
-      {:en "Uploading files count"
+      :uploading-file-count
+      {:en "Uploading file count"
        :hu "Feltöltésre váró fájlok száma"}
       :uploading-files-size
       {:en "Uploading files size"

@@ -334,7 +334,7 @@
         first-document (first all-documents)]
        (db/document->namespace first-document)))
 
-(defn- get-all-documents-count
+(defn- get-all-document-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -343,7 +343,7 @@
   [collection-name]
   (mcl/count @DB collection-name))
 
-(defn- get-documents-count-by-query
+(defn- get-document-count-by-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -478,7 +478,7 @@
 
   ([collection-name document {:keys [ordered?]}]
    (let [; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
-         document-dex (get-all-documents-count collection-name)
+         document-dex (get-all-document-count collection-name)
          document     (cond-> document ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
                                        ; akkor szükséges a sorrendbeli pozícióját hozzáadni
                                        (boolean ordered?)
@@ -736,7 +736,7 @@
         query      (if (string/nonempty? search-term)
                       ;{"$and" [{...} {...}]}
                        {search-key {"$regex" search-term "$options" "i"}})]
-       (get-documents-count-by-query collection-name query)))
+       (get-document-count-by-query collection-name query)))
 
 (defn get-documents-by-pipeline
   ; @param (string) collection-name

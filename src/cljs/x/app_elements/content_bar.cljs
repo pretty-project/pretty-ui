@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.14
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.3.9
+; Version: v0.4.2
+; Compatibility: x4.4.2
 
 
 
@@ -100,8 +100,6 @@
    [view nil bar-props])
 
   ([bar-id bar-props]
-   (let [bar-id    (a/id bar-id)
+   (let [bar-id    (a/id   bar-id)
          bar-props (a/prot bar-props bar-props-prototype)]
-        [engine/container bar-id
-          {:base-props bar-props
-           :component  content-bar}])))
+        [content-bar bar-id bar-props])))

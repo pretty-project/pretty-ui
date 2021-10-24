@@ -244,4 +244,5 @@
   ([card-id card-props]
    (let [card-id    (a/id   card-id)
          card-props (a/prot card-props card-props-prototype)]
-        [card card-id card-props])))
+        [engine/container card-id {:base-props card-props
+                                   :component  #'card}])))

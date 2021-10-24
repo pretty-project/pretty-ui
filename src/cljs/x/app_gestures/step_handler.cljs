@@ -137,8 +137,8 @@
   ; @return (integer)
   [db [_ stepper-id]]
   (if-let [steps (r get-steps db stepper-id)]
-          (let [steps-count (count steps)]
-               (dec steps-count))
+          (let [step-count (count steps)]
+               (dec step-count))
           (return 0)))
 
 (defn get-current-dex
@@ -212,7 +212,7 @@
   [db [_ stepper-id]]
   (r get-stepper-prop db stepper-id :paused?))
 
-(defn get-steps-count
+(defn get-step-count
   ; @param (keyword) stepper-id
   ;
   ; @return (integer)

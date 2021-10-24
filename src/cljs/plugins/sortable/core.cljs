@@ -426,7 +426,7 @@
                (mixed/mixed->vector sortable-items))
           (return [])))
 
-(defn get-sortable-items-count
+(defn get-sortable-item-count
   ; @param (keyword) sortable-id
   ;
   ; @return (integer)
@@ -579,10 +579,10 @@
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item]]
-  (let [value-path           (r get-sortable-prop        db sortable-id :value-path)
-        sortable-item-order  (r get-sortable-item-order  db sortable-id)
-        sortable-items-count (r get-sortable-items-count db sortable-id)
-        sortable-item-id     (sortable-item-dex->sortable-item-id sortable-id sortable-items-count)]
+  (let [value-path          (r get-sortable-prop       db sortable-id :value-path)
+        sortable-item-order (r get-sortable-item-order db sortable-id)
+        sortable-item-count (r get-sortable-item-count db sortable-id)
+        sortable-item-id    (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
       (-> db (db/apply!    [event-id value-path vector/conj-item sortable-item])
              ; XXX#6511
              ; Abban az esetben, ha a még nem történt elem-mozgatás, akkor az :updated-item-order
@@ -619,10 +619,10 @@
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item target-dex]]
-  (let [value-path           (r get-sortable-prop        db sortable-id :value-path)
-        sortable-item-order  (r get-sortable-item-order  db sortable-id)
-        sortable-items-count (r get-sortable-items-count db sortable-id)
-        sortable-item-id     (sortable-item-dex->sortable-item-id sortable-id sortable-items-count)]
+  (let [value-path          (r get-sortable-prop       db sortable-id :value-path)
+        sortable-item-order (r get-sortable-item-order db sortable-id)
+        sortable-item-count (r get-sortable-item-count db sortable-id)
+        sortable-item-id     (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
       (-> db (db/apply!    [event-id value-path vector/inject-item sortable-item target-dex])
              ; XXX#6511
              (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]

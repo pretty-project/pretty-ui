@@ -84,7 +84,21 @@
   [:<> [elements/anchor {:content "My anchor link"   :href "/my-link"}]
        [elements/anchor {:content "My anchor button" :on-click [:x.app-router/go-to! "/my-link"]}]
        [elements/button {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
-                         :variant :transparent :color :none :icon :people}]])
+                         :variant :transparent :color :none :icon :people}]
+       [elements/button {:label "My button" :variant :filled :color :primary :icon :people}]])
+
+(defn chips
+  []
+  [:<> [elements/chip {:label "My chip"}]
+       [elements/chip {:label "Your chip" :variant :outlined}]
+       [elements/chip {:label "Your chip" :variant :outlined :on-delete [:x.test!]}]])
+
+(defn diagrams
+  []
+  [:<> [elements/circle-diagram {:sections [{:color :primary :value 50}
+                                            {:color :muted   :value 20}]}]
+       [elements/line-diagram {:sections [{:color :primary :value 50}
+                                          {:color :muted   :value 20}]}]])
 
 (defn- form-a
   []
@@ -171,6 +185,12 @@
   []
   [:<> [elements/box {:content #'buttons
                       :label   "Buttons"
+                      :horizontal-align :left}]
+       [elements/box {:content #'chips
+                      :label   "Chips"
+                      :horizontal-align :left}]
+       [elements/box {:content #'diagrams
+                      :label   "Diagrams"
                       :horizontal-align :left}]
        [elements/box {:content #'form-a
                       :icon    :sports_esports

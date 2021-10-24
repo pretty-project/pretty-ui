@@ -38,7 +38,7 @@
 (def DEFAULT-IDLE-TIMEOUT 250)
 
 ; @constant (integer)
-(def MAX-TRIES-COUNT 3)
+(def MAX-TRY-COUNT 3)
 
 ; @constant (metamorphic-content)
 (def DEFAULT-FAILURE-MESSAGE :synchronization-error)
@@ -99,8 +99,8 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [tries-count (r get-request-prop db request-id :tries-count)]
-       (> tries-count 0)))
+  (let [try-count (r get-request-prop db request-id :try-count)]
+       (> try-count 0)))
 
 (defn request-successed?
   ; @param (keyword) request-id
@@ -178,15 +178,15 @@
   (if-let [on-responsed-event (r get-request-prop db request-id :on-responsed)]
           (a/metamorphic-event<-params on-responsed-event server-response)))
 
-(defn- max-tries-count-reached?
+(defn- max-try-count-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [tries-count (r get-request-prop db request-id :tries-count)]
-       (= MAX-TRIES-COUNT tries-count)))
+  (let [try-count (r get-request-prop db request-id :try-count)]
+       (= MAX-TRY-COUNT try-count)))
 
 (defn- retry-request?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,8 +195,8 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (and (not (r request-successed?       db request-id))
-       (not (r max-tries-count-reached? db request-id))))
+  (and (not (r request-successed?     db request-id))
+       (not (r max-try-count-reached? db request-id))))
 
 (defn- auto-retry-request?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -207,7 +207,7 @@
   [db [_ request-id]]
   (let [auto-retry? (r get-request-prop db request-id :auto-retry?)]
        (and (boolean auto-retry?)
-            (not (r max-tries-count-reached? db request-id)))))
+            (not (r max-try-count-reached? db request-id)))))
 
 (defn- get-request-retry-timeout
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -445,8 +445,8 @@
   ;
   ; @param (keyword) request-id
   (fn [{:keys [db]} [event-id request-id]]
-                  ; Increase tries-count
-      {:db (-> db (db/apply! [event-id (db/path ::requests request-id :tries-count) inc])
+                  ; Increase try-count
+      {:db (-> db (db/apply! [event-id (db/path ::requests request-id :try-count) inc])
                   ; Set request status
                   (a/set-process-status!   [event-id request-id :progress])
                   ; Set request activity

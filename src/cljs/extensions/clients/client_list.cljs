@@ -45,7 +45,6 @@
   [item-lister :clients {:common-props  view-props
                          :icon          :people
                          :label         :clients
-                         :label-suffix  "(321)"
                          :on-list-ended [:clients/download-clients-data!]
                          :element       #'client-item
                          :on-search     [:clients/download-search-data!]

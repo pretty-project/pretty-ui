@@ -27,7 +27,7 @@
 (def DOWNLOAD-DIRECTORY-DATA-PARAMS
      [:directory/alias :directory/content-size :directory/path
       {:directory/items [:directory/alias :directory/id :directory/created-at
-                         :directory/content-size :directory/items-count :directory/modified-at
+                         :directory/content-size :directory/item-count :directory/modified-at
                          :file/alias :file/id :file/filename :file/filesize
                          :file/modified-at :file/uploaded-at]}])
 
@@ -380,7 +380,7 @@
   [db [_ directory-id]]
   (r get-directory-prop db directory-id :directory/subdirectories))
 
-(defn get-directory-subdirectories-count
+(defn get-directory-subdirectory-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) directory-id
@@ -410,7 +410,7 @@
   [db [_ directory-id]]
   (r get-directory-prop db directory-id :directory/files))
 
-(defn get-directory-files-count
+(defn get-directory-file-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) directory-id

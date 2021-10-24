@@ -37,7 +37,7 @@
 (def DIGIT-SPACE 12)
 
 ; @constant (integer)
-(def DEFAULT-DIGITS-COUNT 4)
+(def DEFAULT-DIGIT-COUNT 4)
 
 
 
@@ -65,9 +65,9 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:digits-count (integer)}
+  ;  {:digit-count (integer)}
   [field-props]
-  (merge {:digits-count DEFAULT-DIGITS-COUNT}
+  (merge {:digit-count DEFAULT-DIGIT-COUNT}
          (param field-props)))
 
 
@@ -131,8 +131,8 @@
 (defn view
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:digits-count (integer)
-  ;    Default: DEFAULT-DIGITS-COUNT}
+  ;  {:digit-count (integer)
+  ;    Default: DEFAULT-DIGIT-COUNT}
   ;
   ; @usage
   ;  [elements/digit-field {...}]

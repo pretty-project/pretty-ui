@@ -91,7 +91,12 @@
                             :variant :transparent}
       :select-button       {:label   :select
                             :layout  :row
-                            :variant :transparent}})
+                            :variant :transparent}
+      :user-menu-icon-button {:color   :default
+                              :icon    :account_circle
+                              :layout  :icon-button
+                              :tooltip :app-menu
+                              :variant :transparent}})
 
 
 
@@ -183,21 +188,24 @@
   ;
   ; @return (component or nil)
   [_ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-button--icon (keyword/to-dom-value icon)]))
+  [:i.x-button--icon (keyword/to-dom-value icon)])
 
 (defn- button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ;  {:icon (keyword)(opt) Material icon class}
   ;
   ; @return (hiccup)
-  [button-id button-props]
+  [button-id {:keys [icon] :as button-props}]
   [:button.x-button--body
     (engine/clickable-body-attributes button-id button-props)
-    [button-icon  button-id button-props]
-    [button-label button-id button-props]])
+    (if (some? icon)
+        [button-icon button-id button-props])
+    [button-label button-id button-props]
+    (if (some? icon)
+        [:div.x-button--icon-placeholder])])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,7 +229,6 @@
   ;    Default: :primary
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s

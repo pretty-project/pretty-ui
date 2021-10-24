@@ -378,7 +378,6 @@
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :icon (keyword)(opt) Material icon class
   ;   :initial-value (*)(constant)(opt)

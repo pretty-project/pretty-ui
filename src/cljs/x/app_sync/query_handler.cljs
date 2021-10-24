@@ -29,7 +29,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def DEFAULT-URI "/db/query")
+(def DEFAULT-URI "/query")
 
 
 

@@ -49,5 +49,5 @@
 (def get-prev-step                 step-handler/get-prev-step)
 (def get-next-step                 step-handler/get-next-step)
 (def stepper-paused?               step-handler/stepper-paused?)
-(def get-steps-count               step-handler/get-steps-count)
+(def get-step-count                step-handler/get-step-count)
 (def get-stepper-state             step-handler/get-stepper-state)
