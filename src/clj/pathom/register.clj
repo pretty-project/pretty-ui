@@ -7,6 +7,14 @@
 
 
 
+;; -- State -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (map)
+(def ENVIRONMENT (atom nil))
+
+
+
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -15,17 +23,11 @@
   ;
   ; @return (map)
   [registry]
-  (pathom.ci/register registry))
+  (let [environment (pathom.ci/register registry)]
+       (reset! ENVIRONMENT environment)))
+
 
 (a/reg-handled-fx :pathom/reg-environment! reg-environment!)
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-(def ENVIRONMENT (atom nil))
 
 
 

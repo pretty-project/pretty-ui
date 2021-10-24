@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.21
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.3.3
+; Version: v0.3.6
+; Compatibility: x4.4.2
 
 
 
@@ -14,40 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.process-handler
-    (:require [mid-fruits.candy            :refer [param]]
-              [mid-fruits.eql              :as eql]
-              [mid-fruits.vector           :as vector]
-              [pathom.api                  :as pathom]
-              [server-fruits.http          :as http]
-              [x.server-media.item-handler :as item-handler]
-              [x.server-user.api           :as user]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (vector)
-(def RESOLVERS [item-handler/get-directory-data
-                item-handler/get-file-data])
-
-; @constant (vector)
-(def MUTATIONS [item-handler/update-directory!
-                item-handler/update-file!
-                item-handler/create-directory!
-                item-handler/delete-items!
-                item-handler/copy-items!
-                item-handler/move-items!
-                item-handler/upload-files!])
-
-; @constant (vector)
-(def HANDLERS (vector/concat-items RESOLVERS MUTATIONS))
-
-; @constant (vector)
-(def REGISTRY [HANDLERS])
-
-; @constant (map)
-(def ENVIRONMENT (pathom/environment-register REGISTRY))
+    (:require [mid-fruits.candy   :refer [param]]
+              [mid-fruits.eql     :as eql]
+              [mid-fruits.vector  :as vector]
+              [pathom.api         :as pathom]
+              [server-fruits.http :as http]
+              [x.server-user.api  :as user]))
 
 
 
@@ -107,8 +79,7 @@
   [request]
   (if (user/request->authenticated? request)
       (let [query       (pathom/request->query request)
-            environment (assoc ENVIRONMENT :request request)]
-           (println (str @pathom/ENVIRONMENT))
+            environment (assoc @pathom/ENVIRONMENT :request request)]
            (pathom/process-query! environment query))
       (http/error-wrap {:error-message :permission-denied :status 401})))
 

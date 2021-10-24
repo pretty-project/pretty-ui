@@ -25,8 +25,7 @@
 (defn playground
   ; @param (map) request
   [request]
-  (println "Playground *A#?o%!_f")
-  (a/dispatch [:x.server-developer/dump-db!]))
+  (println "Playground *A#?o%!_f"))
 
 (defn debug!
   ; @param (map) request
