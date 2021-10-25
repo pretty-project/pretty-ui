@@ -95,21 +95,6 @@
 ; @name initial-value
 ;  Az egyes input elemek React-fába történő csatolásakor az {:initial-value ...}
 ;  tulajdonságának értéke az {:value-path ...} Re-Frame DB adatbázis útvonalra íródik.
-;
-; @name request-id
-;  Bizonyos elemek esetén a {:request-id ...} tulajdonság beállításával lehetséges
-;  az elemen a request-id azonosítójú request állapotától függő animációt
-;  megjeleníteni, és / vagy az elemet a request állapotától függően
-;  {:disabled? true} állapotúra állítani.
-;  A szerver-válasz megérkezése után az elemen megjelenő success és failure
-;  animációk a request idle-timeout idejére jelennek meg, ezért célszerű
-;  a request {:idle-timeout ...} tulajdonságát az alapbeállításnál magasabb
-;  értékre módosítani.
-;
-; @name status-animation?
-;  A {:request-id ...} tulajdonsággal egy request állapotától függő elem
-;  {:status-animation? ...} tulajdonsága határozza meg, hogy az elemen
-;  megjelenjen-e a request állapotától függő animáció.
 
 
 

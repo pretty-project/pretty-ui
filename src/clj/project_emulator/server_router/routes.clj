@@ -7,10 +7,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-emulator.server-router.routes
-    (:require [server-fruits.http            :as http]
-              [project-emulator.server-db.api    :as db]
+    (:require [project-emulator.server-db.api    :as db]
               [project-emulator.server-views.api :as views]
-              [x.server-core.api             :as a]))
+              [pathom.api         :as pathom]
+              [server-fruits.http :as http]
+              [x.server-core.api  :as a]))
 
 
 
@@ -31,7 +32,7 @@
 
       :db/query
       {:route-template "/query"
-       :post #(http/map-wrap {:body (db/process! %)})}})
+       :post #(http/map-wrap {:body (pathom/process-request! %)})}})
 
 
 

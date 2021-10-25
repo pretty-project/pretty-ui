@@ -1,9 +1,12 @@
 
 (ns extensions.clients.client-form
-    (:require [mid-fruits.form    :as form]
+    (:require [mid-fruits.candy   :refer [param]]
+              [mid-fruits.form    :as form]
               [x.app-core.api     :as a :refer [r]]
+              [x.app-db.api       :as db]
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
+              [x.app-locales.api  :as locales]
               [x.app-ui.api       :as ui]
               [extensions.clients.engine :as engine]))
 
@@ -12,15 +15,10 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- save-enabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  false)
-
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:save-enabled? (r save-enabled? db)})
+  {:name-order (r locales/get-name-order db)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -63,7 +61,7 @@
 (defn- client-form-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/row {:content [:<> [:div#clients--client-form--header
+  [elements/row {:content [:<> [:div.x-icon-buttons
                                  [delete-client-button surface-id view-props]
                                  [copy-client-button   surface-id view-props]]
                                [save-client-button surface-id view-props]]
@@ -71,10 +69,12 @@
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
+  [surface-id {:keys [name-order] :as view-props}]
   [:<> [:div#clients--client-form--names
-         [elements/text-field {:label :first-name    :required? true}]
-         [elements/text-field {:label :last-name     :required? true}]
+         [locales/name-order [elements/text-field {:label :first-name :required? true}] ;(db/path ::client-form)}]
+                             [elements/text-field {:label :last-name  :required? true}]
+                             (param name-order)]]
+       [:div#clients--client-form--email-address
          [elements/text-field {:label :email-address :required? true :validator {:f form/email-address-valid?
                                                                                  :invalid-message :invalid-email-address}}]]])
 
@@ -82,8 +82,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [layouts/layout-a surface-id {:label :edit-client :icon :people
-                                :body        {:content #'client-form}
-                                :body-header {:content #'client-form-header}}])
+                                :body        {:content       #'client-form
+                                              :content-props view-props}
+                                :body-header {:content       #'client-form-header
+                                              :content-props view-props}}])
 
 
 

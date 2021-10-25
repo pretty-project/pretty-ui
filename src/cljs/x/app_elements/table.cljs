@@ -274,7 +274,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
   ;   :horizontal-border (keyword)(opt)
   ;    :normal, :none
   ;    Default: :none
@@ -337,6 +336,4 @@
   ([table-id table-props]
    (let [table-id    (a/id   table-id)
          table-props (a/prot table-props table-props-prototype)]
-        [engine/container table-id
-          {:base-props table-props
-           :component  table}])))
+        [table table-id table-props])))

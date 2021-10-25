@@ -52,29 +52,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn element-container-request-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (map) view-props
-  ;  {:request-activity (keyword)(opt)
-  ;   :request-status (keyword)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-status (string)
-  ;   "progress", "failure", "success"}
-  [_ {:keys [request-activity request-status]}]
-  (cond-> (param {})
-          (= request-status :progress)
-          (assoc :data-status (keyword/to-dom-value :progress))
-          (and (= request-status   :failure)
-               (= request-activity :idle))
-          (assoc :data-status (keyword/to-dom-value :failure))
-          (and (= request-status   :success)
-               (= request-activity :idle))
-          (assoc :data-status (keyword/to-dom-value :success))))
-
-(defn element-container-default-attributes
+(defn element-container-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -104,17 +82,6 @@
           (boolean disabled?)           (assoc :data-disabled    true)
           (boolean highlighted?)        (assoc :data-highlighted true)
           (boolean status-animation?)   (assoc :data-animation (keyword/to-dom-value :status))))
-
-(defn element-container-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (map) view-props
-  ;
-  ; @return (map)
-  [element-id view-props]
-  (merge (element-container-default-attributes element-id view-props)
-         (element-container-request-attributes element-id view-props)))
 
 (defn container-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -149,7 +116,7 @@
   ;
   ; @return (hiccup)
   [element-id {:keys [context-surface render-context-surface?]}]
-  (if render-context-surface?
+  (if (boolean render-context-surface?)
       [:div.x-element-container--context-surface
         {:on-context-menu #(.preventDefault %)}
         [components/content element-id context-surface]]))
@@ -333,8 +300,6 @@
   ;      Default: :none
   ;     :helper (metamorphic-content)(opt)
   ;     :info-tooltip (metamorphic-content)(opt)
-  ;     :request-animation? (boolean)(opt)
-  ;     :request-id (keyword)(opt)
   ;     :stickers (maps in vector)(opt)
   ;      [{:disabled? (boolean)(opt)
   ;         Default: false

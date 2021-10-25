@@ -95,12 +95,10 @@
   ;
   ; @return (map)
   ;  {:on-click (metamorphic-event)
-  ;   :size (keyword)
-  ;   :value-path (item-path vector)}
+  ;   :size (keyword)}
   [directory-id {:keys [selectable?] :as directory-props}]
   (merge {:on-click   (directory-props->on-click-event directory-id directory-props)
-          :size       :m
-          :value-path (engine/generate-value-path)}
+          :size       (param :m)}
          (param directory-props)))
 
 
@@ -115,6 +113,9 @@
   ;
   ; @return (map)
   [db [_ directory-id]]
+  ; A {:render-context-surface? ...} tulajdonság értéket a Re-Frame adatbázisból
+  ; kapja a directory elem, ezért szükséges feliratkozást használni, akkor is,
+  ; ha azt más tulajdonság nem indokolja.
   (r engine/get-element-view-props db directory-id))
 
 (a/reg-sub ::get-view-props get-view-props)
@@ -238,7 +239,7 @@
   ; @param (map) directory-props
   ;  {:class (string or vector)(opt)
   ;   :content-size (B)(opt)
-  ;   :context-surface (map)(constant)(opt)
+  ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}

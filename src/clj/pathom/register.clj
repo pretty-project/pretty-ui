@@ -10,6 +10,8 @@
 ;; -- Usage -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @usage
+;
 ; (ns my-handlers
 ;     (:require [pathom.api         :as pathom :refer [ENVIRONMENT]]
 ;               [server-fruits.http :as http]))
@@ -21,6 +23,8 @@
 ; (defmutation do-anything! [env] ...)
 ; (def HANDLERS [get-anything do-anything!])
 ; (pathom/reg-handlers! HANDLERS)
+
+; @usage
 ;
 ; (defn process-query!
 ;   [request]

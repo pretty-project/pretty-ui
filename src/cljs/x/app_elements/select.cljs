@@ -392,12 +392,8 @@
   ;      :label (metamorphic-content)
   ;      :value (*)}]
   ;   :options-label (metamorphic-content)(constant)(opt)
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :user-cancel? (boolean)(constant)(opt)
   ;    Default: false

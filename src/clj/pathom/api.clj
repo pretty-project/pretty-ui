@@ -25,9 +25,10 @@
 (def reorder-documents!        universal/reorder-documents!)
 
 ; pathom.query
-(def read-query     query/read-query)
-(def request->query query/request->query)
-(def process-query! query/process-query!)
+(def read-query       query/read-query)
+(def request->query   query/request->query)
+(def process-query!   query/process-query!)
+(def process-request! query/process-request!)
 
 ; pathom.register
 (def ENVIRONMENT   register/ENVIRONMENT)

@@ -1,5 +1,23 @@
 
 /***** Clients *****/
+/*** Client list ***/
+
+#clients--client-list--search-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  grid-column-gap: 64px;
+  justify-content: space-between }
+
+#clients--client-list--search-field {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  padding: 6px 0 }
+
+/*** Client list ***/
+
 /*** Client-list item ***/
 
 .clients--client {
@@ -69,10 +87,6 @@
   flex-wrap: wrap;
   grid-column-gap: 24px;
   justify-content: center }
-
-#clients--client-form--header {
-  display: flex;
-  gap: 12px }
 
 /*** Client-form ***/
 /***** Clients *****/

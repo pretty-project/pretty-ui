@@ -54,3 +54,20 @@
   [db _]
   (let [selected-language (r language-handler/get-selected-language db)]
        (get NAME-ORDERS selected-language :normal)))
+
+
+
+;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn name-order
+  ; @param (component, hiccup or string) first-name
+  ; @param (component, hiccup or string) last-name
+  ; @param (keyword) name-order
+  ;  :normal, :reversed
+  ;
+  ; @return (component)
+  [first-name last-name name-order]
+  (if (= name-order :reversed)
+      [:<> last-name  first-name]
+      [:<> first-name last-name]))

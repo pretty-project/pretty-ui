@@ -378,6 +378,7 @@ body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
+.x-card[data-border-color="highlight"],
 .x-chip[data-variant="outlined"][data-color="highlight"] .x-chip--body {
   border-color: var( --border-color-highlight ) }
 
@@ -416,7 +417,7 @@ body {
   color: var( --black ) }
 
 .x-content-bar[data-color="primary"] {
-  background-color: var( --background-color-primary );
+  background-color: var( --primary-soft-xx-dark );
   color: var( --white ) }
 
 .x-button[data-variant="outlined"][data-color="primary"]
@@ -1765,13 +1766,10 @@ body {
 
 .x-card {
   /* XXX#7319 */
-  -border-color: transparent;
-  border-color: var( --border-color-highlight );
-  -border-width: 2px;
   border-width: 1px;
 
   background-color: var( --background-color );
-  -border-radius: var( --border-radius-l );
+  border-radius: var( --border-radius-m );
   border-style: solid;
 
   /* XXX#7319 */
@@ -2241,9 +2239,9 @@ body {
 /*** Content bar wrapper ***/
 
 .x-content-bar {
-  box-shadow: var( --box-shadow-black-xx-dark );
+  -box-shadow: var( --box-shadow-black-xx-dark );
   margin: 36px 0;
-  padding: 36px var( --app-edge );
+  padding: 48px var( --app-edge );
   width: 100% }
 
 .x-content-bar[data-layout="header"] {

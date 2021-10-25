@@ -261,7 +261,6 @@
   ;   :options-path (item-path vector)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :style (map)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;

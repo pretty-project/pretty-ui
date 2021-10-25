@@ -29,36 +29,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) area-props
-  ;  {:request-id (keyword)(constant)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :label (metamorphic-content)
-  ;   :on-click (metamorphic-event)
-  ;   :status-animation? (boolean)}
-  [{:keys [request-id] :as area-props}]
+  ;   :on-click (metamorphic-event)}
+  [area-props]
   (merge {:color     :primary
           :font-size :s
           :label     :drop-files-here-to-upload}
-         (if (some? request-id) {:status-animation? true})
          (param area-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) area-id
-  ;
-  ; @return (map)
-  [db [_ area-id]]
-  (merge (r engine/get-element-view-props db area-id)))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -119,10 +100,6 @@
   ;   :label (metamorphic-content)(opt)
   ;    Default: :drop-files-here-to-upload
   ;   :on-click (metamorphic-event)(constant)(opt)
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :tooltip (metamorphic-content)(opt)}
   ;
@@ -139,7 +116,4 @@
   ([area-id area-props]
    (let [area-id    (a/id   area-id)
          area-props (a/prot area-props area-props-prototype)]
-        [engine/container area-id
-          {:base-props area-props
-           :component  file-drop-area
-           :subscriber [::get-view-props area-id]}])))
+        [file-drop-area area-id area-props])))

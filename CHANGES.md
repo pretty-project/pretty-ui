@@ -1,4 +1,11 @@
 
+# x4.4.3
+
+- BREAKING CHANGE
+  Az x.app-elements modul elemein ezentúl nem használható a request-id tulajdonság,
+  amivel az elemek egy request állapotától függően jelentek meg.
+
+
 # x4.4.2
 
 - BREAKING CHANGE

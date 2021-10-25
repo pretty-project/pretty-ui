@@ -105,12 +105,8 @@
   ;   :on-focus (metamorphic-event)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :validate? (boolean)(opt)
   ;    Default: false

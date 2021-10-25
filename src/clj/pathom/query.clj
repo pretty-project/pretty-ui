@@ -4,6 +4,7 @@
               [com.wsscode.pathom3.interface.eql     :as pathom.eql]
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.reader                     :as reader]
+              [pathom.register                       :as register]
               [server-fruits.http                    :as http]))
 
 
@@ -51,3 +52,14 @@
   ; @return (map)
   [environment query]
   (pathom.eql/process environment query))
+
+(defn process-request!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (let [query       (request->query request)
+        environment (assoc @register/ENVIRONMENT :request request)]
+       (process-query! environment query)))

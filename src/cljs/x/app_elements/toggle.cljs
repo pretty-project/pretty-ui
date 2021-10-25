@@ -77,10 +77,6 @@
   ;    :fit, :row
   ;    Default: :row
   ;   :on-click (metamorphic-event)(constant)
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :subscriber (subscription vector)(opt)}
   ;

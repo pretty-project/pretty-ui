@@ -49,17 +49,15 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:request-id (keyword)(opt)
-  ;   :stretch-orientation (keyword)(opt)}
+  ;  {:stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :end-adornments (maps in vector)
   ;   :layout (keyword)
   ;   :min-width (keyword)
-  ;   :status-animation? (boolean)
   ;   :type (keyword)}
-  [field-id {:keys [request-id stretch-orientation] :as field-props}]
+  [field-id {:keys [stretch-orientation] :as field-props}]
   (merge {:color      :default
           :layout     :row
           :min-width  :s
@@ -70,7 +68,6 @@
           ; számára is átadni, hogy alkalmazkodni tudjon a környezethez az elem.
           :container-stretch-orientation stretch-orientation}
 
-         (if (some? request-id) {:status-animation? true})
          (param field-props)
          {:end-adornments (end-adornments-prototype field-id field-props)}))
 
@@ -261,7 +258,6 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :resetable? (boolean)(opt)
@@ -270,9 +266,6 @@
   ;    [{:icon (keyword) Material icon class
   ;      :on-click (metamorphic-event)
   ;      :tooltip (metamorphic-content)}]
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :none
   ;    Default: :none

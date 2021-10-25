@@ -104,7 +104,6 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)

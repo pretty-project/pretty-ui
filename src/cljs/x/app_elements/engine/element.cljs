@@ -66,16 +66,6 @@
                (some?   label)
                (boolean expandable?))))
 
-(defn request-activity->element-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-activity
-  ;
-  ; @return (boolean)
-  [request-activity]
-  (boolean (or (= request-activity :active)
-               (= request-activity :idle))))
-
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -329,19 +319,8 @@
   ; @param (keyword) element-id
   ;
   ; @return (map)
-  ;  {:disabled? (boolean)
-  ;   :request-activity (keyword)
-  ;   :request-status (keyword)}
   [db [_ element-id]]
-  (let [element-props    (r get-element-props         db element-id)
-        request-id       (r get-element-prop          db element-id :request-id)
-        request-activity (r sync/get-request-activity db request-id)
-        request-status   (r sync/get-request-status   db request-id)]
-       (cond-> (param element-props)
-               (some? request-id) (assoc :request-activity request-activity)
-               (some? request-id) (assoc :request-status   request-status)
-               (request-activity->element-disabled? request-activity)
-               (assoc :disabled? true))))
+  (r get-element-props db element-id))
 
 
 

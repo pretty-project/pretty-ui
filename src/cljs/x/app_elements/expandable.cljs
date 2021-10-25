@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.08.19
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.3.7
+; Version: v0.2.8
+; Compatibility: x4.4.2
 
 
 
@@ -42,22 +42,6 @@
   (merge {:expanded? false
           :layout    :row}
          (param expandable-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ;
-  ; @return (map)
-  [db [_ expandable-id]]
-  (r engine/get-element-view-props db expandable-id))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -179,7 +163,4 @@
   ([expandable-id expandable-props]
    (let [expandable-id    (a/id   expandable-id)
          expandable-props (a/prot expandable-props expandable-props-prototype)]
-        [engine/container expandable-id
-          {:base-props expandable-props
-           :component  expandable
-           :subscriber [::get-view-props expandable-id]}])))
+        [expandable expandable-id expandable-props])))

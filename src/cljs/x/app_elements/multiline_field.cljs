@@ -30,7 +30,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:request-id (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
@@ -40,14 +39,13 @@
   ;   :min-width (keyword)
   ;   :multiline? (boolean)
   ;   :status-animation? (boolean)}
-  [field-id {:keys [request-id] :as field-props}]
+  [field-id field-props]
   (merge {:color      :default
           :layout     :row
           :max-height 32
           :min-height 1
           :min-width  :s
           :value-path (engine/default-value-path field-id)}
-         (if (some? request-id) {:status-animation? true})
          (param field-props)
          {:multiline? true}))
 
@@ -144,12 +142,8 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :unemptiable? (boolean)(opt)
   ;    Default: false

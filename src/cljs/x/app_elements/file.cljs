@@ -159,6 +159,9 @@
   ;
   ; @return (map)
   [db [_ file-id]]
+  ; A {:render-context-surface? ...} tulajdonság értéket a Re-Frame adatbázisból
+  ; kapja a directory elem, ezért szükséges feliratkozást használni, akkor is,
+  ; ha azt más tulajdonság nem indokolja.
   (r engine/get-element-view-props db file-id))
 
 (a/reg-sub ::get-view-props get-view-props)
@@ -296,7 +299,7 @@
   ; @param (keyword)(opt) file-id
   ; @param (map) file-props
   ;  {:class (string or vector)(opt)
-  ;   :context-surface (map)(constant)(opt)
+  ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}

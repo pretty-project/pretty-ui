@@ -51,7 +51,7 @@
   ; @param (map) box-props
   ;  {:border-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :default
+  ;    Default: :highlight
   ;   :expandable? (boolean)(opt)
   ;    Default: false
   ;   :expanded? (boolean)(opt)

@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- Pathom handler-ekbe user-auth-ot vizsgálni
+
 - Legyen e layout fit a default mindenhol?
 
 - counter tulajdonságai nem müködnek label, initial-value

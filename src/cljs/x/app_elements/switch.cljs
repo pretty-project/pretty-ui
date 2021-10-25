@@ -123,12 +123,8 @@
   ;    Default: :row
   ;   :on-check (metamorphic-event)(constant)(opt)
   ;   :on-uncheck (metamorphic-event)(constant)(opt)
-  ;   :request-id (keyword)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;

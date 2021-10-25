@@ -34,7 +34,7 @@
   ;
   ; @return (map)
   ;  {:horizontal-align (keyword)}
-  [{:keys [request-id] :as desk-props}]
+  [desk-props]
   (merge {:horizontal-align :center}
          (param desk-props)))
 

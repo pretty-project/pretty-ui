@@ -114,7 +114,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
   ;   :horizontal-border (keyword)(opt)
   ;    :normal, :none
   ;    Default: :normal

@@ -100,6 +100,10 @@
        [elements/line-diagram {:sections [{:color :primary :value 50}
                                           {:color :muted   :value 20}]}]])
 
+(defn content-bar
+  []
+  [elements/content-bar {}])
+
 (defn- form-a
   []
   [:<> [elements/select {:label "My select"
@@ -183,9 +187,15 @@
 
 (defn- view
   []
-  [:<> [elements/box {:content #'buttons
+  [:<> [elements/content-bar {:layout :header :content [elements/label {:content "Playground" :font-size :l
+                                                                        :icon :sports_esports :font-weight :extra-bold}]}]
+       [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [:x.app-router/go-to! "/valahol"]}
+                                        {:label "Menu item #2" :on-click [:x.app-router/go-to! "/sehol"]}
+                                        {:label "Menu item #3" :on-click [:x.app-router/go-to! "/akarhol"]}]}]
+       [elements/box {:content #'buttons
                       :label   "Buttons"
                       :horizontal-align :left}]
+
        [elements/box {:content #'chips
                       :label   "Chips"
                       :horizontal-align :left}]

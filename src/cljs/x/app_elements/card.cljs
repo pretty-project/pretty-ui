@@ -34,12 +34,12 @@
   ;  {:stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :container-stretch-orientation (keyword)
   ;   :horizontal-align (keyword)
   ;   :min-width (keyword)}
   [{:keys [stretch-orientation] :as card-props}]
-  (merge {:color            :primary
+  (merge {:border-color     :highlight
           :horizontal-align :center
           :min-width        :xxs
 
@@ -182,16 +182,16 @@
 (defn view
   ; XXX#8711
   ; A card elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content és :context-surface tulajdonságként átadott tartalmat.
+  ; a számára :content tulajdonságként átadott tartalmat.
   ; A card elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
   ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
   ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
-  ;  {:color (keyword)(opt)
+  ;  {:border-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :primary
+  ;    Default: :highlight
   ;   :class (string or vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)

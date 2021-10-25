@@ -36,7 +36,7 @@
                      :disabler [:x.app-router/at-home?]
                      :on-click [:x.app-router/go-home!]}]
                     ;:icon     :dashboard
-   [:div {:style {:position :absolute :top "8px" :right "8px" :background "var(--primary-soft )"
+   [:div {:style {:position :absolute :top "4px" :right "10px" :background "var(--primary-soft )"
                   :width "20px" :height "20px" :border-radius "50%"
                   :font-size "8px" :font-weight 600
                   :display :flex :flex-direction :column :justify-content :center

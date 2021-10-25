@@ -21,6 +21,12 @@
   border-bottom-color: var( --border-color-highlight );
   border-bottom-style: solid;
   border-bottom-width: 1px;
+
+  /* A body-header egy sticky elem ezért a szülő elemen nem alkalmazható az overflow: hidden
+   * tulajdonság, viszont a body-header rendelkezik background-color kitöltéssel, ami a felső
+   * sarkoknál kilóghat a tartalmazó box elemből. */
+  border-radius: var( --border-radius-s ) var( --border-radius-s ) 0 0;
+
   margin-bottom: 12px;
   padding-bottom: 6px;
   padding-top: 6px;
@@ -29,3 +35,9 @@
 
 /*** Body ***/
 /***** Layout A *****/
+
+
+
+.x-icon-buttons {
+  display: flex;
+  gap: 12px }

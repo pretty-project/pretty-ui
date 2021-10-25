@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.21
 ; Description:
-; Version: v0.6.4
-; Compatibility: x3.9.9
+; Version: v0.6.8
+; Compatibility: x4.4.2
 
 
 
@@ -162,14 +162,10 @@
   ;    Default: :row
   ;   :max-value (integer)(opt)
   ;   :min-value (integer)(opt)
-  ;   :request-id (keyword)(constant)(opt)
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: false
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
@@ -187,7 +183,7 @@
    (let [counter-id    (a/id counter-id)
          counter-props (a/prot counter-props counter-props-prototype)]
         [engine/container counter-id
-          {:base-props counter-props
-           :component  counter
+          {:base-props  counter-props
+           :component   counter
            :initializer [:x.app-elements/init-input! counter-id]
            :subscriber  [::get-view-props            counter-id]}])))

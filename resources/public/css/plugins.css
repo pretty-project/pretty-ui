@@ -16,28 +16,6 @@
 
 
 /***** Item-lister *****/
-/*** Item-lister search-bar ***/
-
-.item-lister--search-bar {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap-reverse;
-  grid-column-gap: 64px;
-  justify-content: space-between }
-
-.item-lister--search-bar--buttons {
-  display: flex;
-  gap: 12px}
-
-.item-lister--search-bar--search-field {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  flex-grow: 1;
-  padding: 6px 0 }
-
-/*** Item-lister search-bar ***/
-
 /*** Item-lister items ***/
 
 .item-lister--items {

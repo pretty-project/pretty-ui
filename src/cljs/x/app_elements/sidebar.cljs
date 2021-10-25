@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.25
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.3.9
+; Version: v0.4.8
+; Compatibility: x4.4.2
 
 
 
@@ -28,17 +28,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) sidebar-props
-  ;  {:request-id (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:container-floating? (boolean)
   ;   :container-position (keyword)
-  ;   :container-stretch-orientation (keyword)
-  ;   :status-animation? (boolean)}
-  [{:keys [request-id] :as sidebar-props}]
-  (merge {}
-         (if (some? request-id) {:status-animation? true})
-         (param sidebar-props)
+  ;   :container-stretch-orientation (keyword)}
+  [sidebar-props]
+  (merge (param sidebar-props)
          {:container-floating?           true
           :container-position            :tr
           :container-stretch-orientation :vertical}))
@@ -90,10 +86,6 @@
   ;  {:class (string or vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :style (map)(opt)
   ;   :subscriber (subscription vector)(opt)}
   ;
@@ -114,7 +106,4 @@
   ([sidebar-id sidebar-props]
    (let [sidebar-id    (a/id   sidebar-id)
          sidebar-props (a/prot sidebar-props sidebar-props-prototype)]
-        [engine/container sidebar-id
-          {:base-props sidebar-props
-           :component  sidebar
-           :subscriber [::get-view-props sidebar-id]}])))
+        [sidebar sidebar-id sidebar-props])))

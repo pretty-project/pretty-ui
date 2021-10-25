@@ -242,7 +242,4 @@
   ([bar-id bar-props]
    (let [bar-id    (a/id   bar-id)
          bar-props (a/prot bar-props bar-props-prototype)]
-        [engine/container bar-id
-          {:base-props bar-props
-           :component  menu-bar
-           :subscriber [::get-view-props bar-id]}])))
+        [menu-bar bar-id bar-props])))

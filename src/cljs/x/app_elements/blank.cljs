@@ -28,13 +28,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) blank-props
-  ;  {:request-id (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:status-animation? (boolean)}
-  [{:keys [request-id] :as blank-props}]
+  [blank-props]
   (merge {}
-         (if (some? request-id) {:status-animation? true})
          (param blank-props)))
 
 
@@ -84,10 +81,6 @@
   ;  {:class (string or vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
-  ;   :request-id (keyword)(constant)(opt)
-  ;   :status-animation? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:request-id ...}
   ;   :stickers (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false

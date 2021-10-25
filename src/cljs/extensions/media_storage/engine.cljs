@@ -707,8 +707,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/->subdirectory-alias-edited
@@ -730,8 +729,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/create-subdirectory!
@@ -751,8 +749,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/delete-item!
@@ -773,8 +770,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/copy-item!
@@ -797,8 +793,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/move-item!
@@ -820,8 +815,7 @@
            [:x.app-sync/send-query!
              action-id
              {:on-success [:media-storage/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media-storage/download-directory-data!
@@ -840,5 +834,4 @@
              {:on-sent    (param on-sent)
               :on-success {:dispatch-n [[:media-storage/handle-request-response! query-id]
                                         (param on-success)]}
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)
-              :uri        (param "/media/query")}])))
+              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)}])))
