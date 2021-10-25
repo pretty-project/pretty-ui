@@ -60,4 +60,4 @@
 (def HANDLERS [get-client
                get-clients])
 
-;(pathom/reg-handlers! HANDLERS)
+(pathom/reg-handlers! HANDLERS)

@@ -4,7 +4,7 @@
       [pathom.env :as env]
       [pathom.register :as register]
       [x.server-core.api :as a]
-      [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]] [pathom.register :as register]))
+      [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
 
