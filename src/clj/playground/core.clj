@@ -13,7 +13,7 @@
 
 (ns playground.core
     (:require [mongo-db.api      :as mongo-db]
-              [pathom.api        :as pathom]
+              ;[pathom.api        :as pathom]
               [x.server-core.api :as a]))
 
 

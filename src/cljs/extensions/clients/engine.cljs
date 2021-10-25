@@ -100,21 +100,33 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :clients/download-clients-data!
+  :clients/receive-clients!
   (fn [{:keys [db]} _]
+      [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items (sample-clients)]))
 
-      {:dispatch-later [; Request emulálása a UI számára
-                        {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :active]}
-                        {:ms    0 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!   0]}
-                        {:ms  100 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!  30]}
-                        {:ms  400 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!  70]}
-                        {:ms  750 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data! 100]}
-                        {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :idle]}
-                        {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :stalled]}
-                        ; Minta adatok hozzáadasa
-                        {:ms 1000 :dispatch [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items (sample-clients)]}
-                        ; Infinite loader újratöltése
-                        {:ms 1000 :dispatch [:x.app-components/reload-infinite-loader! :clients]}]}))
+(a/reg-event-fx
+  :clients/request-clients!
+  (fn [{:keys [db]} _]
+      [:x.app-sync/send-query!
+       {:on-success [:clients/receive-clients!]
+        :query [`(:clients/get-clients {:skip 0
+                                        :max-count 20
+                                        :search-pattern [[:client/full-name :client/email-address]]
+                                        :sort-pattern   [[:client/first-name 1] [:client/first-name 1]]})]}]))
+
+
+;(a/reg-event-fx
+;  :clients/download-clients-data!
+;  (fn [{:keys [db]} _]
+;
+;      {:dispatch-later [; Request emulálása a UI számára
+;                        {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :active]}
+;                        {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :idle]}
+;                        {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :stalled]}
+;                        ; Minta adatok hozzáadasa
+;                        {:ms 1000 :dispatch [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items (sample-clients)]}
+;                        ; Infinite loader újratöltése
+;                        {:ms 1000 :dispatch [:x.app-components/reload-infinite-loader! :clients]}]}))
 
 
 

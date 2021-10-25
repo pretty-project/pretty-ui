@@ -5,7 +5,7 @@
       [mid-fruits.candy :refer [param return]]
       [mid-fruits.keyword :as keyword]))
 
-(defn- search-pattern->pipeline-query
+(defn search-pattern->pipeline-query
        ; @param (vectors in vector) search-pattern
        ;  [[(namespaced keyword) search-key
        ;    (string) search-term]]
@@ -18,7 +18,7 @@
                       (param [])
                       (param search-pattern))})
 
-(defn- sort-pattern->pipeline-sort
+(defn sort-pattern->pipeline-sort
        ; @param (vectors in vector) sort-pattern
        ;  [[(namespaced keyword) sort-key
        ;    (integer) sort-direction]]

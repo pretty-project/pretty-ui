@@ -2,6 +2,7 @@
 (ns pathom.query
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co]
               [com.wsscode.pathom3.interface.eql     :as pathom.eql]
+              [extensions.clients.handlers           :as clients]
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.reader                     :as reader]
               [pathom.register                       :as register]
