@@ -1,8 +1,10 @@
 
 (ns pathom.universal
     (:require [mongo-db.api :as mongo-db]
-              [pathom.env   :as env]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+      [pathom.env :as env]
+      [pathom.register :as register]
+      [x.server-core.api :as a]
+      [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]] [pathom.register :as register]))
 
 
 
@@ -99,3 +101,5 @@
                remove-document!
                duplicate-document!
                reorder-documents!])
+
+(register/reg-handlers! HANDLERS)

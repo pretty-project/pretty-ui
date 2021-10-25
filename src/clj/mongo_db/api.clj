@@ -1,6 +1,8 @@
 
 (ns mongo-db.api
-    (:require [mongo-db.engine :as engine]))
+    (:require
+        [mongo-db.engine :as engine]
+        [mongo-db.pipelines :as pipelines]))
 
 
 
@@ -19,3 +21,4 @@
 (def reorder-documents!          engine/reorder-documents!)
 (def count-documents-by-pipeline engine/count-documents-by-pipeline)
 (def get-documents-by-pipeline   engine/get-documents-by-pipeline)
+(def search-props->pipeline      pipelines/search-props->pipeline)
