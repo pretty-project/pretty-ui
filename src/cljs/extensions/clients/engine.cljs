@@ -101,8 +101,11 @@
 
 (a/reg-event-fx
   :clients/receive-clients!
-  (fn [{:keys [db]} _]
-      [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items (sample-clients)]))
+  (fn [{:keys [db]} [_ response-value]]
+      (let [result    (:clients/get-clients response-value)
+            {:keys [documents count]} result]
+           (println result)
+           [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items documents])))
 
 (a/reg-event-fx
   :clients/request-clients!

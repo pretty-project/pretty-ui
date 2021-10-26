@@ -96,9 +96,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ view-props]
   [item-lister :clients {:common-props  view-props
-                         :on-list-ended [:clients/download-clients-data!]
+                         :on-list-ended [:clients/request-clients!]
                          :element       #'client-item
-                         :request-id    :clients/download-clients-data!
+                         :request-id    :clients/request-clients!
                          ;:sortable?     true
                          :value-path    engine/CLIENTS-DATA-PATH}])
 
