@@ -123,6 +123,7 @@
   :clients/duplicate-client!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/blow-bubble! ::duplicate-notification {:content #'edit-copy-button :color :muted}])
+  
 
 (a/reg-event-fx
   :x.app-extensions.clients/render-client-form!
@@ -154,7 +155,9 @@
 (a/reg-event-fx
   :clients/download-client-data!
   (fn [_ [_ client-id]]
-      {:dispatch-later [; Request emulálása a UI számára
+      {:dispatch-later [{:ms 0 :dispatch [:x.app-ui/listen-to-process! :clients/download-client-data!]}
+
+                        ; Request emulálása a UI számára
                         {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :active]}
                         {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :idle]}
                         {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :stalled]}

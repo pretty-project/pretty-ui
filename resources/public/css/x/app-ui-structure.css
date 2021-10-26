@@ -484,9 +484,15 @@
 /***** Process-bar *****/
 
 #x-app-process-bar {
+  height: 4px;
   left: 0;
   position: fixed;
-  top: 0 }
+  top: 0;
+  width: 100% }
+
+#x-app-process-bar--process-status {
+  background-color: var( --primary );
+  height: 100% }
 
 /***** Process-bar *****/
 

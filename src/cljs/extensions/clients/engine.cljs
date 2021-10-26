@@ -105,6 +105,10 @@
 
       {:dispatch-later [; Request emulálása a UI számára
                         {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :active]}
+                        {:ms    0 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!   0]}
+                        {:ms  100 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!  30]}
+                        {:ms  400 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data!  70]}
+                        {:ms  750 :dispatch [:x.app-core/set-process-status!   :clients/download-clients-data! 100]}
                         {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :idle]}
                         {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :stalled]}
                         ; Minta adatok hozzáadasa
