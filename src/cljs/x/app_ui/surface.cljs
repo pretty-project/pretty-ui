@@ -58,8 +58,8 @@
   ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
   [db [surface-id surface-props]]
-  (merge {:hide-animated?   true
-          :reveal-animated? true
+  (merge {:hide-animated?   false
+          :reveal-animated? false
           :trim-content?    false
           :update-animated? false}
          (param surface-props)))
@@ -116,9 +116,9 @@
           [:x.app-ui/set-header! (surface-id->header-id surface-id)
                                  {:content          #'surface-header
                                   :content-props    surface-props
-                                  :hide-animated?   true
-                                  :reveal-animated? true
-                                  :update-animated? true}])))
+                                  :hide-animated?   false
+                                  :reveal-animated? false
+                                  :update-animated? false}])))
 
 (a/reg-event-fx
   :x.app-ui/render-surface!
@@ -167,7 +167,7 @@
 
   ;   :destructor (metamorphic-event)(opt)
   ;   :hide-animated? (boolean)(opt)
-  ;    Default: true
+  ;    Default: false
   ;   :horizontal-align (keyword)(opt)
   ;    TODO ... (same as popup)
   ;   :initializer (metamorphic-event)(opt)
@@ -177,7 +177,7 @@
   ;      {:label (metamorphic-content)(opt)}
   ;     :subscriber (subscription vector)(opt)}
   ;   :reveal-animated? (boolean)(opt)
-  ;    Default: true
+  ;    Default: false
   ;   :subscriber (subscription vector)(opt)
   ;    XXX#8711
   ;   :trim-content? (boolean)(opt)

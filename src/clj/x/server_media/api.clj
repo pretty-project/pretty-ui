@@ -17,9 +17,9 @@
     (:require [x.server-media.download-handler  :as download-handler]
               [x.server-media.engine            :as engine]
               [x.server-media.item-handler      :as item-handler]
-              [x.server-media.process-handler   :as process-handler]
               [x.server-media.temporary-handler :as temporary-handler]
-              [x.server-media.thumbnail-handler :as thumbnail-handler]))
+              [x.server-media.thumbnail-handler :as thumbnail-handler]
+              [x.server-media.upload-handler    :as upload-handler]))
 
 
 
@@ -37,10 +37,6 @@
 (def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
 (def file-props->filepath               engine/file-props->filepath)
-
-; x.server-media.process-handler
-(def process-query!  process-handler/process-query!)
-(def process-upload! process-handler/process-upload!)
 
 ; x.server-media.temporary-handler
 (def download-temporary-file temporary-handler/download-temporary-file)

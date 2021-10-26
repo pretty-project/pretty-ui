@@ -61,7 +61,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (item-path vector)
-(def CLIENTS-DATA-PATH [::clients])
+(def CLIENTS-DATA-PATH [:clients :documents])
+
+; @constant (item-path vector)
+(def CLIENT-DATA-PATH  [:clients :form])
+
+; @constant (item-path vector)
+(def CLIENT-META-PATH  [:clients :form])
 
 ;; ----------------------------------------------------------------------------
 ;; -- Configuration -----------------------------------------------------------

@@ -128,6 +128,7 @@
 (def get-input-stored-value engine/get-input-stored-value)
 (def get-input-value        engine/get-input-value)
 (def get-field-value        engine/get-field-value)
+(def set-element-prop!      engine/set-element-prop!)
 
 ; x.app-elements.*
 (def anchor            anchor/view)

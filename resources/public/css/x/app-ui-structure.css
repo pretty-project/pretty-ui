@@ -481,6 +481,16 @@
 
 
 
+/***** Process-bar *****/
+
+#x-app-process-bar {
+  left: 0;
+  position: fixed;
+  top: 0 }
+
+/***** Process-bar *****/
+
+
 /***** App shield *****/
 /*** App shield wrapper ***/
 

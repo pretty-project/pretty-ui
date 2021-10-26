@@ -142,6 +142,7 @@ body {
 .x-select--option,
 .x-switch--label,
 .x-text-field--label,
+.x-text-field--invalid-message,
 .x-toggle {
   /* user-select not supperted properly in all browsers */
   -ms-user-select: none;

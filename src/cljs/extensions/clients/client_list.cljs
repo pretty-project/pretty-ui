@@ -73,8 +73,8 @@
     [:div.x-icon-buttons
       [add-new-button         lister-id lister-props]
       [sort-by-button         lister-id lister-props]
-      [select-more-button     lister-id lister-props]
-      [delete-selected-button lister-id lister-props]]
+      [select-more-button     lister-id lister-props]]
+      ;[delete-selected-button lister-id lister-props]]
     [search-field lister-id lister-props]])
 
 (defn client-item
@@ -132,10 +132,10 @@
   :x.app-extensions.clients/render-clients-list!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/set-surface!
-   :clients/view {:content   #'view
-                  :label-bar {:content       #'ui/go-home-surface-label-bar
-                              :content-props {:label :clients}}
-                  :subscriber [::get-view-props]}])
+   ::view {:content   #'view
+           :label-bar {:content       #'ui/go-home-surface-label-bar
+                       :content-props {:label :clients}}
+           :subscriber [::get-view-props]}])
 
 (a/reg-lifecycles
   ::lifecycles

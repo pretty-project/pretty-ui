@@ -42,7 +42,6 @@
 ; Namespace redirecting
 ; Event redirecting
 ; Event registrating
-; Registrating registrator events
 ; Dispatch functions
 ; Dispatch timing
 ; Dereferenced subscriptions
@@ -176,45 +175,64 @@
 ;; ----------------------------------------------------------------------------
 
 (defn event-vector?
-  ; WARNING!
-  ; Az (a/event-vector?) függvény az n paraméterként átadott hiccup formátumú
-  ; adatot is esemény vektorként ismeri fel!
-  ;
   ; @param (*) n
   ;
   ; @example
   ;  (a/event-vector? [:my-namespace/do-something! ...])
-  ;  => true
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (a/event-vector? [:my-namespace/->something-happened ...])
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (a/event-vector? [:div ...])
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n]
   (boolean (and (vector? n)
                 (let [event-id (first n)]
-                     (keyword? event-id)))))
+                     (and (keyword?                (param event-id))
+                          (or (string/starts-with? (name  event-id) "->")
+                              (string/ends-with?   (name  event-id) "!")))))))
 
 (defn subscription-vector?
-  ; WARNING!
-  ; Az (a/subscription-vector?) függvény az n paraméterként átadott hiccup formátumú
-  ; adatot is subscription vektorként ismeri fel!
-  ;
   ; @param (*) n
   ;
   ; @example
   ;  (a/subscription-vector? [:my-namespace/get-something ...])
-  ;  => true
+  ;  =>
+  ; true
+  ;
+  ; @example
+  ;  (a/subscription-vector? [:my-namespace/something-happened? ...])
+  ;  =>
+  ; true
+  ;
+  ; @example
+  ;  (a/subscription-vector? [:div ...])
+  ;  =>
+  ; false
   ;
   ; @return (boolean)
   [n]
   (boolean (and (vector? n)
                 (let [event-id (first n)]
-                     (keyword? event-id)))))
+                     (and (keyword?                (param event-id))
+                          (or (string/starts-with? (name  event-id) "get-")
+                              (string/ends-with?   (name  event-id) "?")))))))
 
 (defn event-group-vector?
   ; @param (*) n
   ;
   ; @example
   ;  (a/event-group-vector? [{:ms 500 :dispatch [:my-namespace/do-something! ...]}])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -235,7 +253,8 @@
   ;
   ; @example
   ;  (a/event-vector->param-vector [:my-event ...])
-  ;  => [...]
+  ;  =>
+  ;  [...]
   ;
   ; @return (vector)
   [event-vector]
@@ -248,7 +267,8 @@
   ;
   ; @example
   ;  (a/event-vector->event-id [:my-event ...])
-  ;  => :my-event
+  ;  =>
+  ;  :my-event
   ;
   ; @return (vector)
   [event-vector]
@@ -362,11 +382,13 @@
   ;
   ; @example
   ;  (a/param-vector->first-id [:first-id {...}])
-  ;  => :first-id
+  ;  =>
+  ;  :first-id
   ;
   ; @example
   ;  (a/param-vector->first-id [{...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @return (keyword)
   ;  Ha a param-vector legalább egy kulcsszót tartalmaz, akkor a visszatérési
@@ -381,15 +403,18 @@
   ;
   ; @example
   ;  (a/param-vector->second-id [:first-id :second-id {...}])
-  ;  => :second-id
+  ;  =>
+  ;  :second-id
   ;
   ; @example
   ;  (a/param-vector->second-id [:first-id {...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @example
   ;  (a/param-vector->second-id [{...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @return (keyword)
   ;  Ha a param-vector legalább kettő kulcsszót tartalmaz, akkor a visszatérési
@@ -407,15 +432,18 @@
   ;
   ; @example
   ;  (a/param-vector->first-props [:first-id {...}])
-  ;  => {...}
+  ;  =>
+  ;  {...}
   ;
   ; @example
   ;  (a/param-vector->first-props [:first-id {... 1} {... 2}])
-  ;  => {... 1}
+  ;  =>
+  ;  {... 1}
   ;
   ; @example
   ;  (a/param-vector->first-props [:first-id])
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   ;  Ha a param-vector egy térképet tartalmaz, akkor a visszatérési érték
@@ -432,15 +460,18 @@
   ;
   ; @example
   ;  (a/param-vector->second-props [:first-id {...}]
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @example
   ;  (a/param-vector->second-props [:first-id {... 1} {... 2}]
-  ;  => {... 2}
+  ;  =>
+  ;  {... 2}
   ;
   ; @example
   ;  (a/param-vector->second-props [:first-id]
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   ;  Ha a param-vector egy térképet tartalmaz, akkor a visszatérési érték
@@ -464,7 +495,8 @@
   ;
   ; @example
   ;  (a/event-vector->first-id [:my-event :my-id {...}])
-  ;  => :my-event
+  ;  =>
+  ;  :my-event
   ;
   ; @return (keyword)
   [event-vector]
@@ -475,11 +507,13 @@
   ;
   ; @example
   ;  (a/event-vector->second-id [:my-event :my-id {...}])
-  ;  => :my-id
+  ;  =>
+  ;  :my-id
   ;
   ; @example
   ;  (a/event-vector->second-id [:my-event {...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @return (keyword)
   ;  Ha az event-vector legalább kettő kulcsszót tartalmaz (az event-id kulcsszót
@@ -495,15 +529,18 @@
   ;
   ; @example
   ;  (a/event-vector->third-id [:my-event :my-id :your-id {...}])
-  ;  => :your-id
+  ;  =>
+  ;  :your-id
   ;
   ; @example
   ;  (a/event-vector->third-id [:my-event :my-id {...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @example
   ;  (a/event-vector->third-id [:my-event {...}])
-  ;  => :0ce14671-e916-43ab-b057-0939329d4c1b
+  ;  =>
+  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @return (keyword)
   ;  Ha az event-vector legalább három kulcsszót tartalmaz (az event-id kulcsszót
@@ -519,15 +556,18 @@
   ;
   ; @example
   ;  (a/event-vector->first-props [:my-event :my-id {...}])
-  ;  => {...}
+  ;  =>
+  ;  {...}
   ;
   ; @example
   ;  (a/event-vector->first-props [:my-event :my-id {... 1} {... 2}])
-  ;  => {... 1}
+  ;  =>
+  ;  {... 1}
   ;
   ; @example
   ;  (a/event-vector->first-props [:my-event :my-id])
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   ;  Ha az event-vector egy térképet tartalmaz, akkor a visszatérési érték
@@ -545,15 +585,18 @@
   ;
   ; @example
   ;  (a/event-vector->second-props [:my-event :my-id {...}]
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @example
   ;  (a/event-vector->second-props [:my-event :my-id {... 1} {... 2}]
-  ;  => {... 2}
+  ;  =>
+  ;  {... 2}
   ;
   ; @example
   ;  (a/event-vector->second-props [:my-event :my-id]
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   ;  Ha az event-vector egy térképet tartalmaz, akkor a visszatérési érték
@@ -651,11 +694,13 @@
   ;
   ; @example
   ;  (a/metamorphic-event<-params [:my-event] :my-param-1 "my-param-2")
-  ;  => [:my-event :my-param-1 "my-param-2"]
+  ;  =>
+  ;  [:my-event :my-param-1 "my-param-2"]
   ;
   ; @usage
   ;  (a/metamorphic-event<-params {:dispatch [:my-event]} :my-param-1 "my-param-2")
-  ;  => {:dispatch [:my-event :my-param-1 "my-param-2"]}
+  ;  =>
+  ;  {:dispatch [:my-event :my-param-1 "my-param-2"]}
   ;
   ; @return (metamorphic-event)
   [n & xyz]
@@ -731,11 +776,13 @@
   ;
   ; @example
   ;  (a/metamorphic-effects->effects-map [:do-something!])
-  ;  => {:dispatch [:do-something!]}
+  ;  =>
+  ;  {:dispatch [:do-something!]}
   ;
   ; @example
   ;  (a/metamorphic-effects->effects-map {:dispatch [:do-something!])
-  ;  => {:dispatch [:do-something!]}
+  ;  =>
+  ;  {:dispatch [:do-something!]}
   ;
   ; @return (map)
   [n]
@@ -1008,55 +1055,6 @@
 
 
 
-;; -- Registrating registrator events -----------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az itt felsorolt regisztrátorok eseményként is meghívhatók.
-;
-; Pl.:
-; (reg-event-fx
-;  ::example
-;  (fn [_ _]
-;   {:dispatch [:reg-event-db ::db-event-id (fn [_ _])]}))
-
-(re-frame/reg-fx
-  :reg-event-db
-  ; @param (keyword) event-id
-  ; @param (function) event-handler
-  (fn [[event-id event-handler]]
-      (reg-event-db event-id event-handler)))
-
-(re-frame/reg-event-fx
-  :reg-event-db
-  (fn [_ [_ event-id event-handler]]
-      {:reg-event-db [event-id event-handler]}))
-
-(re-frame/reg-fx
-  :reg-event-fx
-  ; @param (keyword) event-id
-  ; @param (metamorphic-event) event-handler
-  (fn [[event-id event-handler]]
-      (reg-event-fx event-id event-handler)))
-
-(re-frame/reg-event-fx
-  :reg-event-fx
-  (fn [_ [_ event-id event-handler]]
-      {:reg-event-fx [event-id event-handler]}))
-
-(re-frame/reg-fx
-  :reg-sub
-  ; @param (keyword) event-id
-  ; @param (function) subscription-handler
-  (fn [[event-id subscription-handler]]
-      (re-frame/reg-sub event-id subscription-handler)))
-
-(re-frame/reg-event-fx
-  :reg-sub
-  (fn [_ [_ event-id subscription-handler]]
-      {:reg-sub [event-id subscription-handler]}))
-
-
-
 ;; -- Dispatch functions ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -1308,7 +1306,7 @@
 ;
 ; Esztétikusabb ha nem kell ezzel a vektorral baszakodni, ezért létezik
 ; az r nevű függvény, amelynek az egyetlen feladata, hogy egy másik
-; formula szerint is használhatóvá teszi a re-frame események függvényeit.
+; formula szerint is használhatóvá teszi a Re-frame események függvényeit.
 ;
 ; (r db/trim-partition! db partition-id)
 
@@ -1318,7 +1316,8 @@
   ;
   ; @example
   ;  (r db/trim-partition! db partition-id)
-  ;  => (db/trim-partition! db [_ partition-id])
+  ;  =>
+  ;  (db/trim-partition! db [_ partition-id])
   ;
   ; @return (*)
   [f & params]

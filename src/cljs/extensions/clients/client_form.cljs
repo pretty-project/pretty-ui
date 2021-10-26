@@ -18,7 +18,8 @@
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order (r locales/get-name-order db)})
+  {:name-order (r locales/get-name-order db)
+   :client-no  "608030"})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -69,22 +70,31 @@
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [name-order] :as view-props}]
-  [:<> [:div#clients--client-form--names
-         [locales/name-order [elements/text-field {:label :first-name :required? true}] ;(db/path ::client-form)}]
-                             [elements/text-field {:label :last-name  :required? true}]
-                             (param name-order)]]
-       [:div#clients--client-form--email-address
-         [elements/text-field {:label :email-address :required? true :validator {:f form/email-address-valid?
-                                                                                 :invalid-message :invalid-email-address}}]]])
+  [surface-id {:keys [client-no name-order] :as view-props}]
+  [:div#clients--client-form
+    [:div#clients--client-form--client-no
+      [elements/label {:content :client-id :font-size :xxs :color :highlight :font-weight :bold       :layout :fit}]
+      [elements/text  {:content client-no  :font-size :xs  :color :muted     :font-weight :extra-bold :layout :fit :prefix "#"}]]
+    [:div#clients--client-form--first-name-and-last-name
+      [locales/name-order [elements/text-field {:label :first-name :required? true :value-path (db/path ::client-form :first-name)}]
+                          [elements/text-field {:label :last-name  :required? true :value-path (db/path ::client-form :last-name)}]
+                          (param name-order)]]
+    [:div#clients--client-form--email-address-and-phone-number
+      [elements/text-field {:label :email-address :required? true :value-path (db/path ::client-form :email-address)
+                            :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}}]
+      [elements/text-field {:label :phone-number :required? true :value-path (db/path ::client-form :phone-number)
+                            :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
+                            :modifier form/valid-phone-number}]]
+
+    [elements/separator {:orientation :horizontal :size :xxl}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [layouts/layout-a surface-id {:label :edit-client :icon :people
-                                :body        {:content       #'client-form
+                                :body        {:content     #'client-form
                                               :content-props view-props}
-                                :body-header {:content       #'client-form-header
+                                :body-header {:content     #'client-form-header
                                               :content-props view-props}}])
 
 
@@ -118,10 +128,10 @@
   :x.app-extensions.clients/render-client-form!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/set-surface!
-   :clients/view {:content   #'view
-                  :label-bar {:content       #'ui/go-back-surface-label-bar
-                              :content-props {:label :clients}}
-                  :subscriber [::get-view-props]}])
+   ::view {:content   #'view
+           :label-bar {:content       #'ui/go-back-surface-label-bar
+                       :content-props {:label :clients}}
+           :subscriber [::get-view-props]}])
 
 (a/reg-lifecycles
   ::lifecycles
@@ -131,3 +141,28 @@
                   :route-event    [:x.app-extensions.clients/render-client-form!]
                   :route-title    :clients
                   :route-template "/clients/:client-id"}]})
+
+
+
+
+
+
+
+
+; Ezt majd tedd át az ...clients.engine.cljs-be
+;
+(a/reg-event-fx
+  :clients/download-client-data!
+  (fn [_ [_ client-id]]
+      {:dispatch-later [; Request emulálása a UI számára
+                        {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :active]}
+                        {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :idle]}
+                        {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :stalled]}
+                        ; Minta adatok hozzáadasa
+                        {:ms 1000 :dispatch [:x.app-db/set-item! [:clients :form]
+                                             {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
+                                              :client/client-no     "051301"
+                                              :client/first-name    "Debil"
+                                              :client/last-name     "Duck"
+                                              :client/email-address "debil-duck@gmail.com"
+                                              :client/added-at      "2020-04-10T16:20:00.123Z"}]}]}))

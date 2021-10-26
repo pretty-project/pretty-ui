@@ -9,23 +9,12 @@
   :tags [] 
   :uploaded-at "2021-08-15T22:08:57.692Z" 
   :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
- {:alias "1.html" 
-  :description "" 
-  :filename "a725d5b9-a864-421b-88d6-4efafe12ba12.html" 
-  :filesize 2652 
-  :id "a725d5b9-a864-421b-88d6-4efafe12ba12" 
-  :modified-at "2021-08-15T22:08:57.654Z" 
-  :modified-by {:user-account/id "1259400a-x012-lw84-o987-1fg654713a3a"} 
-  :path [{:directory/id "home"}] 
-  :tags [] 
-  :uploaded-at "2021-08-15T22:08:57.692Z" 
-  :uploaded-by {:user-account/id "1259400a-x012-lw84-o987-1fg654713a3a"}} 
  {:alias "20191117_012753.jpg" 
   :description "" 
   :filename "6e21eec5-4120-4c19-8f04-645554a3956f.jpg" 
   :filesize 7639377 
   :id "6e21eec5-4120-4c19-8f04-645554a3956f" 
-  :modified-at "2021-10-07T19:48:49.938Z" 
+  :modified-at "2021-10-26T13:30:58.368Z" 
   :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
   :path [{:directory/id "home"}] 
   :tags [] 

@@ -91,8 +91,8 @@
   ; @return (map)
   [extended-props]
   (map/inherit (param extended-props)
-               [:base-props :content :content-path :content-props :replacements
-                :subscriber :suffix]))
+               [:base-props :content :content-path :content-props :prefix
+                :replacements :subscriber :suffix]))
 
 (defn- context-props->subscribe?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -163,12 +163,13 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:content (keyword)
+  ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
   ;   :suffix (string)(opt)}
   ;
   ; @return (string)
-  [_ {:keys [content replacements suffix]}]
-  (string/use-replacements (str content suffix)
+  [_ {:keys [content prefix replacements suffix]}]
+  (string/use-replacements (str prefix content suffix)
                            (param replacements)))
 
 (defn- dictionary-content
@@ -239,9 +240,9 @@
   [component-id {:keys [subscriber] :as context-props}]
   (let [subscribed-props (a/subscribe subscriber)]
        (fn [_ {:keys [base-props content content-props]}]
-           [transmitter component-id {:base-props       base-props
-                                      :component        content
-                                      :static-props     content-props
+           [transmitter component-id {:base-props        base-props
+                                      :component         content
+                                      :static-props      content-props
                                       :subscribed-props @subscribed-props}])))
 
 (defn- component-content
@@ -295,6 +296,7 @@
   ;   :content-path (item-path vector)(opt)
   ;   :content-props (map)(opt)
   ;    Only w/ {:content (component)}
+  ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
   ;    XXX#4509
   ;    Only w/ {:content (keyword or string)}

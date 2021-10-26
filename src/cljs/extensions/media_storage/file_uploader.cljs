@@ -252,8 +252,7 @@
               :method       :post
               :on-failure   [:file-uploader/->upload-failure]
               :on-success   {:dispatch-n [[:media-storage/handle-request-response! action-id]
-                                          [:file-uploader/->files-uploaded]]}
-              :uri          "/media/upload"}])))
+                                          [:file-uploader/->files-uploaded]]}}])))
 
 
 

@@ -56,7 +56,7 @@
         request-id       (get element-props :request-id)
         request-progress (r sync/get-request-progress db request-id)]
        (merge (param element-props)
-              {:sections [{:color :primary   :value request-progress}
+              {:sections [{:color :primary   :value (param request-progress)}
                           {:color :highlight :value (- 100 request-progress)}]})))
 
 (a/reg-sub ::get-view-props get-view-props)

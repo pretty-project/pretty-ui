@@ -81,6 +81,7 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :disabler (subscription vector)(opt)
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: true
   ;   :helper (metamorphic-content)(opt)

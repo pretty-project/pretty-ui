@@ -316,3 +316,36 @@
   ; @return (boolean)
   [n x]
   (not (starts-with? n x)))
+
+(defn ends-with?
+  ; @param (keyword) n
+  ; @param (keyword) x
+  ;
+  ; @example
+  ;  (keyword/ends-with? :foo :oo)
+  ;  => true
+  ;
+  ; @example
+  ;  (keyword/ends-with? :foo/bar :ar)
+  ;  => true
+  ;
+  ; @example
+  ;  (keyword/ends-with? :foo/bar :ba)
+  ;  => false
+  ;
+  ; @example
+  ;  (keyword/ends-with? :foo/bar :o/bar)
+  ;  => true
+  ;
+  ; @return (boolean)
+  [n x]
+  (string/ends-with? (str n)
+                     (str x)))
+
+(defn not-ends-with?
+  ; @param (keyword) n
+  ; @param (keyword) x
+  ;
+  ; @return (boolean)
+  [n x]
+  (not (ends-with? n x)))

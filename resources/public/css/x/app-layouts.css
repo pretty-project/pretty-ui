@@ -33,6 +33,10 @@
   position: sticky;
   top: 50px }
 
+.x-layout-a--body--content {
+  display: flex;
+  justify-content: center }  
+
 /*** Body ***/
 /***** Layout A *****/
 

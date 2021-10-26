@@ -7,8 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-emulator.server-router.routes
-    (:require [project-emulator.server-db.api    :as db]
-              [project-emulator.server-views.api :as views]
+    (:require [project-emulator.server-views.api :as views]
               [pathom.api         :as pathom]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]))
@@ -39,10 +38,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ::on-app-init-events
-  [:x.server-router/add-routes! ROUTES])
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [::on-app-init-events]})
+  {:on-app-init [:x.server-router/add-routes! ROUTES]})

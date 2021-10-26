@@ -619,6 +619,9 @@
       :clients
       {:en "Clients"
        :hu "Ügyfelek"}
+      :client-id
+      {:en "Client ID"
+       :hu "Ügyfél azonosító"}
       :devices
       {:en "Devices"
        :hu "Eszközök"}
@@ -1036,6 +1039,9 @@
       :invalid-email-address
       {:en "Invalid email address"
        :hu "Érvénytelen email cím"}
+      :invalid-phone-number
+      {:en "Invalid phone number"
+       :hu "Érvénytelen telefonszám"}
       :login!
       {:en "Login"
        :hu "Bejelentkezés"}

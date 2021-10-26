@@ -97,7 +97,4 @@
   ([toggle-id toggle-props]
    (let [toggle-id    (a/id   toggle-id)
          toggle-props (a/prot toggle-props toggle-props-prototype)]
-        [engine/container toggle-id
-         {:base-props toggle-props
-          :component  toggle
-          :subscriber [:x.app-elements.button/get-view-props toggle-id]}])))
+        [toggle toggle-id toggle-props])))

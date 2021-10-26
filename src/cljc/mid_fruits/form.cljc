@@ -22,8 +22,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn string->valid-string
-  ; WARNING! INCOMPLETE!
+(defn valid-string
+  ; WARNING! INCOMPLETE! DO NOT USE!
   ;
   ; @param (string) n
   ;
@@ -32,8 +32,16 @@
   ;
   ; @return (string)
   [n]
-  ; TODO Use SPEC!
   (string/trim (str n)))
+
+(defn valid-phone-number
+  ; @param (string) n
+  ;
+  ; @return (string)
+  [n]
+  (-> n (string/filter-characters ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"])
+        (string/starts-with!      "+")
+        (string/not-ends-with!    "+")))
 
 
 
@@ -61,7 +69,6 @@
   ;
   ; @return (boolean)
   [n]
-  ; TODO Use SPEC!
   (boolean (and (string/min-length?                n 6)
                 (string/contains-uppercase-letter? n)
                 (mixed/mixed->contains-number?     n))))
@@ -74,8 +81,25 @@
   ;
   ; @return (boolean)
   [n]
-  ; TODO Use SPEC!
   (let [pattern #"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"]
        ; Ha n valid email cím, akkor a re-matches függvény visszatérési értéke n
        (boolean (and (string/nonempty? n)
                      (re-matches       pattern n)))))
+
+;#"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}\+\d{2}:\d{2}"
+
+(defn phone-number-valid?
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (form/phone-number-valid? "+36301234567")
+  ;
+  ; @return (boolean)
+  [n]
+  ; Ha n valid telefonszám, akkor a re-matches függvény visszatérési értéke n
+  (boolean (and (string/nonempty? n)
+                (or (re-matches #"\+\d{10}" n)
+                    (re-matches #"\+\d{11}" n)
+                    (re-matches #"\+\d{12}" n)
+                    (re-matches #"\+\d{13}" n)
+                    (re-matches #"\+\d{14}" n)))))

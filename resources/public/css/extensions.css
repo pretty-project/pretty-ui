@@ -82,11 +82,19 @@
 
 /*** Client-form ***/
 
-#clients--client-form--names {
+#clients--client-form--first-name-and-last-name,
+#clients--client-form--email-address-and-phone-number {
   display: flex;
   flex-wrap: wrap;
   grid-column-gap: 24px;
   justify-content: center }
+
+#clients--client-form--client-no {
+  align-items: center;
+  display: flex;
+  grid-column-gap: 6px;
+  justify-content: flex-end;
+  padding-bottom: 12px }
 
 /*** Client-form ***/
 /***** Clients *****/

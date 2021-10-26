@@ -94,6 +94,7 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :disabler (subscription vector)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :initial-value (string)(constant)(opt)

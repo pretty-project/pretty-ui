@@ -26,16 +26,20 @@
 
 (defn request->query
   ; @param (map) request
-  ;  {:transit-params (map)
-  ;   {:query (string)}}
+  ;  {:multipart-params (map)
+  ;    {:query (string)(opt)}
+  ;   :params (map)
+  ;    {:query (string)(opt)}}
   ;
   ; @usage
   ;  (pathom/request->query {...})
   ;
   ; @return (*)
   [request]
-  (let [raw-query (http/request->param request :query)]
-       (read-query raw-query)))
+  (if-let [raw-query (http/request->param request :query)]
+          (read-query raw-query)
+          (if-let [raw-query (http/request->multipart-param request :query)]
+                  (read-query raw-query))))
 
 
 

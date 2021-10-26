@@ -21,7 +21,6 @@
               [x.server-db.api     :as db]
               [x.server-log.api    :as log]
               [x.server-media.api  :as media]
-              [x.server-tools.pdf  :as pdf]
               [x.server-user.api   :as user]
               [x.server-views.api  :as views]))
 
@@ -39,14 +38,6 @@
       {:route-template "/synchronize-app"
        :get {:handler boot-synchronizer/download-sync-data}}
 
-      :media/query
-      {:route-template "/media/query"
-       :post #(http/map-wrap {:body (media/process-query! %)})}
-
-      :media/upload-files
-      {:route-template "/media/upload"
-       :post #(http/map-wrap {:body (media/process-upload! %)})}
-
       :media/download-file
       {:route-template "/media/storage/:filename"
        :get {:handler media/download-file}}
@@ -54,14 +45,6 @@
       :media/download-thumbnail
       {:route-template "/media/thumbnails/:filename"
        :get {:handler media/download-thumbnail}}
-
-      :pdf/generate-pdf
-      {:route-template "/pdf/generate-pdf"
-       :post {:handler pdf/generate-pdf!}}
-
-      :pdf/temporary-file
-      {:route-template "/pdf/:temporary-filename/:filename"
-       :get {:handler pdf/download-generated-pdf}}
 
       :user/authenticate
       {:route-template "/user/authenticate"

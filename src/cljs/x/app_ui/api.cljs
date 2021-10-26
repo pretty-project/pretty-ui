@@ -22,6 +22,7 @@
               [x.app-ui.notification-sounds]
               [x.app-ui.popups]
               [x.app-ui.presets]
+              [x.app-ui.process-bar]
               [x.app-ui.shield]
               [x.app-ui.sidebar]
               [x.app-ui.surface]
