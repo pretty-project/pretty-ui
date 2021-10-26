@@ -100,7 +100,7 @@
                          :element       #'client-item
                          :request-id    :clients/request-clients!
                          ;:sortable?     true
-                         :value-path    engine/CLIENTS-DATA-PATH}])
+                         :value-path    :clients }])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
