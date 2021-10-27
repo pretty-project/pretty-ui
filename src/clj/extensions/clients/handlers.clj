@@ -21,13 +21,9 @@
       [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
       (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
             sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
-           (comment (println [{"$project" {"clients/full-name" {"$concat" ["$clients/first-name" " " "$clients/last-name"]}}}
-                              {"$match" query}
-                              {"$sort"  sort}
-                              {"$skip"  skip}
-                              {"$limit" max-count}]))
-           [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}]))
-            ;{"$match" query}]))
+           (println query)
+           [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
+            {"$match" query}]))
             ;{"$sort"  sort}
             ;{"$skip"  skip}
             ;{"$limit" max-count}]))
@@ -37,12 +33,6 @@
 ;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-clients-fn [env query]
-      (let [search-props (pathom/env->params env)
-            pipeline     (search-props->pipeline search-props)]
-        {:documents      (mongo-db/get-documents-by-pipeline    collection-name pipeline)
-         :document-count (mongo-db/count-documents-by-pipeline  collection-name pipeline)}))
 
 (defresolver get-clients
              ; @param (map) env
@@ -54,7 +44,10 @@
              ;     :items (maps in vector)}}
              [env _]
              {:clients/get-clients
-              (get-clients-fn env nil)})
+               (let [search-props (pathom/env->params env)
+                     pipeline     (search-props->pipeline search-props)]
+                    {:documents      (mongo-db/get-documents-by-pipeline    collection-name pipeline)
+                     :document-count (mongo-db/count-documents-by-pipeline  collection-name pipeline)})})
 
 (defresolver get-client
              ; @param (map) env

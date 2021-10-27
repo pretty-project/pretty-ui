@@ -189,7 +189,7 @@
         :query [`(:clients/get-clients
                    {:skip 0
                     :max-count 20
-                    :search-pattern [[:client/full-name :client/email-address]]
+                    :search-pattern [[:client/full-name ""] [:client/email-address ""]]
                     :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
 
 ;; ----------------------------------------------------------------------------
