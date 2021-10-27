@@ -656,10 +656,13 @@
   ;
   ; @return (map)
   ;  {:namespace/id (string)}
-  [collection-name document-id {:keys [ordered?] :as options}]
-  (if (boolean ordered?)
-      (duplicate-ordered-document!   collection-name document-id options)
-      (duplicate-unordered-document! collection-name document-id options)))
+  ([collection-name document-id]
+   (duplicate-document! collection-name document-id {:ordered? false}))
+
+  ([collection-name document-id {:keys [ordered?] :as options}]
+   (if (boolean ordered?)
+       (duplicate-ordered-document!   collection-name document-id options)
+       (duplicate-unordered-document! collection-name document-id options))))
 
 
 
