@@ -12,11 +12,11 @@
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn search-props->pipeline
-      ; Example: (search-props->pipeline
+(defn search-props->search-pipeline
+      ; Example: (search-props->search-pipeline
       ;             {:skip 0
       ;              :max-count 20
-      ;              :search-pattern [[:clients/first-name "sad"
+      ;              :search-pattern [[:clients/first-name "sad"]]
       ;              :sort-pattern   [[:clients/first-name 1]]}
       [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
       (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
@@ -27,7 +27,13 @@
             {"$skip"  skip}
             {"$limit" max-count}]))
 
-;This needs tweaking, something is not okay.
+(defn search-props->count-pipeline
+      ; Example: (search-props->count-pipeline
+      ;             {:search-pattern [[:clients/first-name "sad"]]}
+      [{:keys [search-pattern] :as search-props}]
+      (let [query (mongo-db/search-pattern->pipeline-query search-pattern)]
+           [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
+            {"$match" query}]))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------
@@ -39,22 +45,21 @@
              ;
              ; @return (map)
              ;  {:clients/get-clients (map)
-             ;    {:item-count (integer)
-             ;     :items (maps in vector)}}
+             ;    {:document-count (integer)
+             ;     :documents (maps in vector)}}
              [env _]
              {:clients/get-clients
                (let [search-props (pathom/env->params env)
                      pipeline     (search-props->pipeline search-props)]
-                    {:documents      (mongo-db/get-documents-by-pipeline    collection-name pipeline)
-                     :document-count (mongo-db/count-documents-by-pipeline  collection-name pipeline)})})
+                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name pipeline)
+                     :document-count (mongo-db/count-documents-by-pipeline collection-name pipeline)})})
 
 (defresolver get-client
              ; @param (map) env
              ; @param (?) ?
              ;
              ; @return (map)
-             ;  {:clients/get-client (map)
-             ;    (map)}}
+             ;  {:clients/get-client (map)}
              [env {:keys [client/id]}]
              {:clients/get-client (mongo-db/get-document-by-id collection-name id)})
 
@@ -74,20 +79,19 @@
              {::pco/op-name 'clients/add-client!}
              (mongo-db/add-document! collection-name client))
 
-(defmutation delete-client! [{:keys [id]}]
+(defmutation delete-client! [{:keys [client-id]}]
              {::pco/op-name 'clients/delete-client!}
-             (mongo-db/remove-document! collection-name id))
+             (mongo-db/remove-document! collection-name client-id))
 
-(defmutation duplicate-client! [{:keys [id]}]
+(defmutation duplicate-client! [{:keys [client-id]}]
              {::pco/op-name 'clients/duplicate-client!}
-             (mongo-db/duplicate-document! collection-name id))
+             (mongo-db/duplicate-document! collection-name client-id))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-
 (def HANDLERS [get-client
                get-clients
 

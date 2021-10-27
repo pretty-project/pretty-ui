@@ -213,7 +213,7 @@
        (local-db/update-document! "files" file-id merge updated-props)
        (return "File updated")))
 
-(pathom/reg-handler! :update-file update-file!)
+(pathom/reg-handler! :update-file! update-file!)
 
 
 

@@ -124,11 +124,11 @@
 
 (a/reg-event-fx
   :clients/request-delete-client!
-  (fn [{:keys [db]} [event-id id]]
+  (fn [{:keys [db]} [event-id client-id]]
       [:x.app-sync/send-query!
        :clients/request-delete-client!
        {:on-success [:clients/receive-delete-client!]
-        :query [`(clients/delete-client! {:id ~id})]}]))
+        :query [`(clients/delete-client! {:client-id ~client-id})]}]))
 
 
 ; Duplicate client
@@ -140,11 +140,11 @@
 
 (a/reg-event-fx
   :clients/request-duplicate-client!
-  (fn [{:keys [db]} [event-id id]]
+  (fn [{:keys [db]} [event-id client-id]]
       [:x.app-sync/send-query!
        :clients/request-duplicate-client!
        {:on-success [:clients/receive-duplicate-client!]
-        :query [`(clients/duplicate-client! {:id ~id})]}]))
+        :query [`(clients/duplicate-client! {:client-id ~client-id})]}]))
 
 
 ; Download client for the form
@@ -164,11 +164,11 @@
 
 (a/reg-event-fx
   :clients/request-client!
-  (fn [{:keys [db]} [event-id id]]
+  (fn [{:keys [db]} [event-id client-id]]
       [:x.app-sync/send-query!
        :clients/request-client!
        {:on-success [:clients/receive-clients!]
-        :query [`(:clients/get-client {:id ~id})]}]))
+        :query [`(:clients/get-client {:client-id ~client-id})]}]))
 
 
 ; Download clients for the client-list

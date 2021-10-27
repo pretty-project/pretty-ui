@@ -729,29 +729,3 @@
       ; @return (integer)
       [collection-name pipeline]
       (count (get-documents-by-pipeline collection-name pipeline)))
-
-(defn get-documents-by-pipeline-and-count
-      ; @param (string) collection-name
-      ; @param (map) search-props
-      ;  {:max-count (integer)
-      ;   :search-pattern (vectors in vector)
-      ;   [[(namespaced keyword) search-key
-      ;      (string) search-term]]
-      ;   :skip (integer)
-      ;   :sort-pattern (vectors in vector)
-      ;    [[(namespaced keyword) sort-key
-      ;      (integer) sort-direction]]}
-      ;
-      ; @usage
-      ;  (mongo-db/get-documents-by-pipeline "my-collection" {:max-count      50
-      ;                                                       :search-pattern [[:fruit/label "Apple"] [...]]
-      ;                                                       :skip           150
-      ;                                                       :sort-pattern   [[:fruit/weight -1] [...]]})
-      ;
-      ; @return (maps in vector)
-      [collection-name pipeline]
-      (let [documents (-> (aggregation collection-name pipeline nil)
-                          (json/keywordize-values)
-                          (time/unparse-date-time))]
-           {:count      (count documents)
-            :documents  documents}))
