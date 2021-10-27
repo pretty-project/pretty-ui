@@ -21,10 +21,9 @@
       [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
       (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
             sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
-           (println query)
            [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
             {"$match" query}
-            ;{"$sort"  sort}
+            {"$sort"  sort}
             {"$skip"  skip}
             {"$limit" max-count}]))
 

@@ -41,8 +41,8 @@
        [sort-pattern]
        (reduce (fn [sort [sort-key sort-direction]]
                    (let [str-sort-key (namespace-and-name sort-key)]
-                        (vector/conj-item sort [str-sort-key sort-direction])))
-               (param [])
+                        (assoc sort str-sort-key sort-direction)))
+               (param {})
                (param sort-pattern)))
 
 
