@@ -57,23 +57,6 @@
 ;; ----------------------------------------------------------------------------
 
 ;; ----------------------------------------------------------------------------
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (item-path vector)
-(def CLIENTS-DATA-PATH [:clients :documents])
-
-; @constant (item-path vector)
-(def CLIENT-DATA-PATH  [:clients :form])
-
-; @constant (item-path vector)
-(def CLIENT-META-PATH  [:clients :form])
-
-;; ----------------------------------------------------------------------------
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-;; ----------------------------------------------------------------------------
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -99,39 +82,115 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; Save client
+
+(a/reg-event-fx
+  :clients/receive-save-client!
+  {:dispatch-n [[:x.app-router/go-to! "/clients"]
+                [:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
+                                                            :color :muted}]]})
+
+(a/reg-event-fx
+  :clients/request-save-client!
+  (fn [{:keys [db]} [event-id client]]
+    [:x.app-sync/send-query!
+     :clients/request-save-client!
+     {:on-success [:clients/receive-save-client!]
+      :query [`(clients/add-client! ~client)]}]))
+
+; Add client
+
+(a/reg-event-fx
+  :clients/receive-add-client!
+  {:dispatch-n [[:x.app-router/go-to! "/clients"]
+                [:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
+                                                            :color :muted}]]})
+
+(a/reg-event-fx
+  :clients/request-add-client!
+  (fn [{:keys [db]} [event-id client]]
+      [:x.app-sync/send-query!
+       :clients/request-add-client!
+       {:on-success [:clients/receive-add-client!]
+        :query [`(clients/add-client! ~client)]}]))
+
+; Delete client
+
+(a/reg-event-fx
+  :clients/receive-delete-client!
+  {:dispatch-n [[:x.app-router/go-to! "/clients"]
+                [:x.app-ui/blow-bubble! ::delete-notification {:content "Client deleted.";#'undo-delete-button
+                                                               :color :muted}]]})
+
+(a/reg-event-fx
+  :clients/request-delete-client!
+  (fn [{:keys [db]} [event-id id]]
+      [:x.app-sync/send-query!
+       :clients/request-delete-client!
+       {:on-success [:clients/receive-delete-client!]
+        :query [`(clients/delete-client! {:id ~id})]}]))
+
+
+; Duplicate client
+
+(a/reg-event-fx
+  :clients/receive-duplicate-client!
+  [:x.app-ui/blow-bubble! ::duplicate-notification {:content "Client duplicated." ;#'edit-copy-button
+                                                    :color :muted}])
+
+(a/reg-event-fx
+  :clients/request-duplicate-client!
+  (fn [{:keys [db]} [event-id id]]
+      [:x.app-sync/send-query!
+       :clients/request-duplicate-client!
+       {:on-success [:clients/receive-duplicate-client!]
+        :query [`(clients/duplicate-client! {:id ~id})]}]))
+
+
+; Download client for the form
+
+(a/reg-event-fx
+  :clients/receive-client!
+  (fn [{:keys [db]} [_ response-value]]
+      (let [result    (:clients/get-client response-value)
+            {:keys [documents count]} result]
+           [:x.app-db/set-item! [:clients :form]
+            {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
+             :client/client-no     "051301"
+             :client/first-name    "Debil"
+             :client/last-name     "Duck"
+             :client/email-address "debil-duck@gmail.com"
+             :client/added-at      "2020-04-10T16:20:00.123Z"}])))
+
+(a/reg-event-fx
+  :clients/request-client!
+  (fn [{:keys [db]} [event-id id]]
+      [:x.app-sync/send-query!
+       :clients/request-client!
+       {:on-success [:clients/receive-clients!]
+        :query [`(:clients/get-client {:id ~id})]}]))
+
+
+; Download clients for the client-list
+
 (a/reg-event-fx
   :clients/receive-clients!
   (fn [{:keys [db]} [_ response-value]]
       (let [result    (:clients/get-clients response-value)
             {:keys [documents count]} result]
-           (println result)
-           [:x.app-db/apply! [:clients] vector/concat-items documents])))
+           [:x.app-db/apply! [:clients :documents] vector/concat-items documents])))
 
 (a/reg-event-fx
   :clients/request-clients!
   (fn [{:keys [db]} _]
       [:x.app-sync/send-query!
+       :clients/request-clients!
        {:on-success [:clients/receive-clients!]
-        :query [`(:clients/get-clients {:skip 0
-                                        :max-count 20
-                                        :search-pattern [[:client/full-name :client/email-address]]
-                                        :sort-pattern   [[:client/first-name 1] [:client/first-name 1]]})]}]))
-
-
-;(a/reg-event-fx
-;  :clients/download-clients-data!
-;  (fn [{:keys [db]} _]
-;
-;      {:dispatch-later [; Request emulálása a UI számára
-;                        {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :active]}
-;                        {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :idle]}
-;                        {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-clients-data! :stalled]}
-;                        ; Minta adatok hozzáadasa
-;                        {:ms 1000 :dispatch [:x.app-db/apply! CLIENTS-DATA-PATH vector/concat-items (sample-clients)]}
-;                        ; Infinite loader újratöltése
-;                        {:ms 1000 :dispatch [:x.app-components/reload-infinite-loader! :clients]}]}))
-
-
+        :query [`(:clients/get-clients
+                   {:skip 0
+                    :max-count 20
+                    :search-pattern [[:client/full-name :client/email-address]]
+                    :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Effect events -----------------------------------------------------------

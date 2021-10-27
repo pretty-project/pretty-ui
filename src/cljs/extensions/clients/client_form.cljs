@@ -44,18 +44,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/button {:label :delete! :variant :transparent :color :warning
-                    :layout :icon-button :icon :delete_outline :on-click [:clients/delete-client!]}])
+                    :layout :icon-button :icon :delete_outline :on-click [:clients/request-delete-client! "client-id"]}])
 
 (defn- copy-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/button {:label :duplicate! :variant :transparent :layout :icon-button
-                    :icon :content_copy :color :none :on-click [:clients/duplicate-client!]}])
+                    :icon :content_copy :color :none :on-click [:clients/request-duplicate-client! "client-id"]}])
 
 (defn- save-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:label :save! :variant :transparent :layout :icon-button :icon :save}])
+  [elements/button {:label :save! :variant :transparent :layout :icon-button :icon :save
+                    :on-click [:clients/request-save-client! "client-id"]}])
   ; Ne legyen disabled állapota a mentés gombnak, inkább a gomb megnyomása jelölje warning
   ; színnel a nem megfelelően kitöltött mezőket és esetleg írja ki, hogy hol a hiba
 
@@ -113,17 +114,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :clients/delete-client!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-router/go-to! "/clients"]
-                [:x.app-ui/blow-bubble! ::delete-notification {:content #'undo-delete-button :color :muted}]]})
-
-(a/reg-event-fx
-  :clients/duplicate-client!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/blow-bubble! ::duplicate-notification {:content #'edit-copy-button :color :muted}])
-  
 
 (a/reg-event-fx
   :x.app-extensions.clients/render-client-form!
@@ -142,30 +132,3 @@
                   :route-event    [:x.app-extensions.clients/render-client-form!]
                   :route-title    :clients
                   :route-template "/clients/:client-id"}]})
-
-
-
-
-
-
-
-
-; Ezt majd tedd át az ...clients.engine.cljs-be
-;
-(a/reg-event-fx
-  :clients/download-client-data!
-  (fn [_ [_ client-id]]
-      {:dispatch-later [{:ms 0 :dispatch [:x.app-ui/listen-to-process! :clients/download-client-data!]}
-
-                        ; Request emulálása a UI számára
-                        {:ms    0 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :active]}
-                        {:ms  750 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :idle]}
-                        {:ms 1000 :dispatch [:x.app-core/set-process-activity! :clients/download-client-data! :stalled]}
-                        ; Minta adatok hozzáadasa
-                        {:ms 1000 :dispatch [:x.app-db/set-item! [:clients :form]
-                                             {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
-                                              :client/client-no     "051301"
-                                              :client/first-name    "Debil"
-                                              :client/last-name     "Duck"
-                                              :client/email-address "debil-duck@gmail.com"
-                                              :client/added-at      "2020-04-10T16:20:00.123Z"}]}]}))

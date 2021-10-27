@@ -45,7 +45,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [lister-id lister-props]
   [elements/button {:layout :icon-button :icon :add :variant :transparent
-                    :label :add-new! :on-click [:x.app-router/go-to! "új elem és új kategória"]}])
+                    :label :add-new! :on-click [:x.app-router/go-to! "/clients/new-client"]}])
 
 (defn select-more-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,7 +100,7 @@
                          :element       #'client-item
                          :request-id    :clients/request-clients!
                          ;:sortable?     true
-                         :value-path    [:clients]}])
+                         :value-path    [:clients :documents]}])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,10 +123,8 @@
     ::order-by-select-options
     {:default-value DEFAULT-SORT-BY
      :options-label :order-by
-     :options [{:label :by-name  :value :by-name}
-               {:label :by-date  :value :by-date}
-               {:label :by-size  :value :by-size}
-               {:label :by-order :value :by-order}]}])
+     :options [{:label :by-name  :value :client/full-name}
+               {:label :by-date  :value :client/created-at}]}])
 
 (a/reg-event-fx
   :x.app-extensions.clients/render-clients-list!

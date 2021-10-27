@@ -21,11 +21,11 @@
       [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
       (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
             sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
-           (println [{"$project" {"clients/full-name" {"$concat" ["$clients/first-name" " " "$clients/last-name"]}}}
-                     {"$match" query}
-                     {"$sort"  sort}
-                     {"$skip"  skip}
-                     {"$limit" max-count}])
+           (comment (println [{"$project" {"clients/full-name" {"$concat" ["$clients/first-name" " " "$clients/last-name"]}}}
+                              {"$match" query}
+                              {"$sort"  sort}
+                              {"$skip"  skip}
+                              {"$limit" max-count}]))
            [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}]))
             ;{"$match" query}]))
             ;{"$sort"  sort}
@@ -34,14 +34,15 @@
 
 ;This needs tweaking, something is not okay.
 
-
+;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-clients-fn [env query]
       (let [search-props (pathom/env->params env)
             pipeline     (search-props->pipeline search-props)]
-        (mongo-db/get-documents-by-pipeline-and-count collection-name pipeline)))
+        {:documents      (mongo-db/get-documents-by-pipeline    collection-name pipeline)
+         :document-count (mongo-db/count-documents-by-pipeline  collection-name pipeline)}))
 
 (defresolver get-clients
              ; @param (map) env
@@ -65,9 +66,42 @@
              [env {:keys [client/id]}]
              {:clients/get-client (mongo-db/get-document-by-id collection-name id)})
 
+;; ----------------------------------------------------------------------------
+;; -- Resolvers ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+;; ----------------------------------------------------------------------------
+;; -- Mutations ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defmutation save-client! [client]
+             {::pco/op-name 'clients/save-client!}
+             (mongo-db/add-document! collection-name client))
+
+(defmutation add-client! [client]
+             {::pco/op-name 'clients/add-client!}
+             (mongo-db/add-document! collection-name client))
+
+(defmutation delete-client! [{:keys [id]}]
+             {::pco/op-name 'clients/delete-client!}
+             (mongo-db/remove-document! collection-name id))
+
+(defmutation duplicate-client! [{:keys [id]}]
+             {::pco/op-name 'clients/duplicate-client!}
+             (mongo-db/duplicate-document! collection-name id))
+
+;; ----------------------------------------------------------------------------
+;; -- Mutations ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-(def HANDLERS [get-client
-               get-clients])
 
-(pathom/reg-handlers! HANDLERS)
+(def HANDLERS [get-client
+               get-clients
+
+               save-client!
+               add-client!
+               delete-client!
+               duplicate-client!])
+
+(pathom/reg-handlers! :clients HANDLERS)
