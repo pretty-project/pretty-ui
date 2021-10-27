@@ -187,8 +187,8 @@
        :clients/request-clients!
        {:on-success [:clients/receive-clients!]
         :query [`(:clients/get-clients
-                   {:skip 0
-                    :max-count 20
+                   {:skip 1
+                    :max-count 3
                     :search-pattern [[:client/full-name ""] [:client/email-address ""]]
                     :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
 

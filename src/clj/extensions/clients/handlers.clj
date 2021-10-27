@@ -23,10 +23,10 @@
             sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
            (println query)
            [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" query}]))
+            {"$match" query}
             ;{"$sort"  sort}
-            ;{"$skip"  skip}
-            ;{"$limit" max-count}]))
+            {"$skip"  skip}
+            {"$limit" max-count}]))
 
 ;This needs tweaking, something is not okay.
 
