@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- A select popup-on ha elkezdesz beirni valamit, akkor arra reagaljon
+
 - Element container DOM wrapper helyett raw-element handling
 
 - Pathom handler-ekbe user-auth-ot vizsgálni

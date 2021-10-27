@@ -50,7 +50,7 @@
              [env _]
              {:clients/get-clients
                (let [search-props (pathom/env->params env)
-                     pipeline     (search-props->pipeline search-props)]
+                     pipeline     (search-props->search-pipeline search-props)]
                     {:documents      (mongo-db/get-documents-by-pipeline   collection-name pipeline)
                      :document-count (mongo-db/count-documents-by-pipeline collection-name pipeline)})})
 
