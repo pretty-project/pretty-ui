@@ -35,7 +35,7 @@
 (def DEFAULT-REQUEST-TIMEOUT 15000)
 
 ; @constant (ms)
-(def DEFAULT-IDLE-TIMEOUT 250)
+(def DEFAULT-IDLE-TIMEOUT 500)
 
 ; @constant (integer)
 (def MAX-TRY-COUNT 3)
@@ -358,6 +358,9 @@
   ;    Only w/ {:response-action :save}
   ;   :idle-timeout (ms)(opt)
   ;    Default: DEFAULT-IDLE-TIMEOUT
+  ;    A szerver-válasz megérkezése után mennyi ideig maradjon a request-et kezelő process
+  ;    :idle állapotban. Idle állapotban a request már újraindítható de még UI-on megjelenített
+  ;    process állapotát visszajelző elemek aktívak.
   ;   :method (keyword)
   ;    :post, :get
   ;   :modifier (database function)(opt)

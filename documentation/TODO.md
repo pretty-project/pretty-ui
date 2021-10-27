@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- Element container DOM wrapper helyett raw-element handling
+
 - Pathom handler-ekbe user-auth-ot vizsgálni
 
 - Legyen e layout fit a default mindenhol?
@@ -33,8 +35,6 @@
 - A re-frame-be is lehetne tenni a :require :as -hez hasonló dolgot.
   Meg lehetne mondani a re-frame-nek, hogy pölö az :x.app-router névteret :router névterként
   is elérje.
-
-- Most már nyugodtan bekerülhet a pathom és a mongodb az x-be
 
 - Fájlkezelőben lecsekkolni, h ne lehessen egy mappát saját magába move-olni vagy (?másolni?)
 

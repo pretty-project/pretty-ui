@@ -233,23 +233,26 @@
   :file-uploader/upload-files!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [namespace                (get-in db (settings-item-path :namespace))
+      (let [; *
+            namespace                (get-in db (settings-item-path :namespace))
             destination-directory-id (get-in db (settings-item-path :destination-directory-id))
-            non-aborted-files        (r get-non-aborted-files db)
+            ; EQL query
+            directory-entity         (db/item-id->document-entity destination-directory-id :directory)
+            mutation-props           {:destination-directory-id (name destination-directory-id)}
+            query-action             (eql/query-action "media/upload-files!" mutation-props)
+            query-question           {directory-entity engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}
+            query                    (eql/append-to-query engine/ROOT-DIRECTORY-QUERY query-action query-question)
+            ; Form data
             file-selector            (dom/get-element-by-id "x-file-selector")
+            non-aborted-files        (r get-non-aborted-files db)
             form-data                (dom/file-selector->form-data file-selector non-aborted-files)
-            directory-entity         (db/item-id->document-entity  destination-directory-id :directory)
-            response-query-question  {directory-entity engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}
-            response-query           (eql/append-to-query engine/ROOT-DIRECTORY-QUERY response-query-question)
-            mutation-props           {:destination-directory-id (name  destination-directory-id)
-                                      :response-query           (param response-query)}
-            form-data                (dom/merge-to-form-data! form-data mutation-props)
-            action-id                (engine/namespace->query-id namespace)]
-           [:x.app-sync/send-request!
+            ; Request details
+            action-id                (engine/namespace->query-id namespace)
+            body                     (dom/merge-to-form-data!      form-data {:query query})]
+           [:x.app-sync/send-query!
              action-id
-             {:body         (param form-data)
-              :idle-timeout 1000
-              :method       :post
+             {:body         (param body)
+              :idle-timeout (param 1000)
               :on-failure   [:file-uploader/->upload-failure]
               :on-success   {:dispatch-n [[:media-storage/handle-request-response! action-id]
                                           [:file-uploader/->files-uploaded]]}}])))

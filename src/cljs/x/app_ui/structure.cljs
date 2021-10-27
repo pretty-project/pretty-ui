@@ -28,7 +28,7 @@
               [x.app-ui.interface    :as interface]
               [x.app-ui.locker       :refer [view] :rename {view app-locker}]
               [x.app-ui.popups       :refer [view] :rename {view app-popups}]
-              [x.app-ui.process-bar  :refer [view] :rename {view process-bar}]
+              [x.app-ui.progress-bar :refer [view] :rename {view progress-bar}]
               [x.app-ui.surface      :refer [view] :rename {view app-surface}]
               [x.app-ui.sidebar      :refer [view] :rename {view app-sidebar}]
               [x.app-user.api        :as user]))
@@ -106,7 +106,7 @@
     [app-sidebar]
     [app-canvas]
     [app-bubbles]
-    [process-bar]])
+    [progress-bar]])
 
 (defn- client-lock-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!

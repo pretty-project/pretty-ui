@@ -33,7 +33,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn request-response->query-answer
@@ -66,17 +66,32 @@
   ;
   ; @param (keyword) query-id
   ; @param (map) query-props
-  ;  {:query (string or vector)}
+  ;  {:body (map)(opt)
+  ;   {:query (string or vector)}
+  ;   :query (string or vector)(opt)}
+  ;
+  ; @example
+  ;  (query-props->request-props {:query [:all-users]})
+  ;  =>
+  ;  {:method :post :query "[:all-users]"}
+  ;
+  ; @example
+  ;  (query-props->request-props {:body {:query [:all-users] :my-body-param "My value"}})
+  ;  =>
+  ;  {:method :post :body {:query "[:all-users]" :my-body-param "My value"}}
   ;
   ; @return (map)
-  ;  {:method (keyword)
+  ;  {:body (map)
+  ;    {:query (string)}
+  ;   :method (keyword)
   ;   :params (map)
   ;    {:query (string)}}
-  [query-id {:keys [query] :as query-props}]
-  (let [request-props (map/inherit query-props [:modifier :on-failure :on-sent :on-success
+  [query-id {:keys [body query] :as query-props}]
+  (let [request-props (map/inherit query-props [:body :modifier :on-failure :on-sent :on-success
                                                 :target-path :target-paths :uri])]
-       (merge request-props {:method :post
-                             :params {:query (str query)}})))
+       (merge request-props {:method :post}
+                            (if (some? query)
+                                {:params {:query query}}))))
 
 
 
@@ -157,14 +172,18 @@
   :x.app-sync/send-query!
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
-  ;  {:modifier (function)(opt)
+  ;  {:body (map)(opt)
+  ;    {:query (string or vector)}
+  ;    Only w/o {:query ...}
+  ;   :modifier (function)(opt)
   ;    A szerver-válasz értéket eltárolása előtt módosító függvény.
   ;   :on-failure (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
-  ;   :query (string or vector)
+  ;   :query (string or vector)(opt)
+  ;    Only w/o {:body {...}}
   ;   :target-path (item-path vector)(opt)
   ;   :target-paths (map)(opt)
   ;   :uri (string)
@@ -177,19 +196,22 @@
   ;  [:x.app-sync/send-query! :my-query {...}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query "[:all-users]" :uri "/users"}]
+  ;  [:x.app-sync/send-query! {:query "[:all-users]"}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users] :uri "/users"}]
+  ;  [:x.app-sync/send-query! {:query [:all-users]}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users] :uri "/users"}]
+  ;  [:x.app-sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
+  ;
+  ; @usage
+  ;  [:x.app-sync/send-query! {:query [:all-users]}]
   ;                            :target-paths {:my-data-item   [:db :my   :data :item :path]
   ;                                           :your-data-item [:db :your :data :item :path]
   ;                                           :my-item {:my-nested-item [:db :my :nested :item]}}
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users] :uri "/users"}]
+  ;  [:x.app-sync/send-query! {:query [:all-users]}]
   ;                            :target-path [:my :response :path]}
   (fn [{:keys [db]} event-vector]
       (let [query-id      (a/event-vector->second-id   event-vector)

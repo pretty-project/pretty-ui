@@ -723,7 +723,22 @@
        {:en "What cookies are?"
         :hu "Mik azok a sütik?"}})
 
+;; -- Locale ------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
+(def locale
+     {:address
+      {:en "Address"
+       :hu "Cím"}
+      :city
+      {:en "City"
+       :hu "Város"}
+      :country
+      {:en "Country"
+       :hu "Ország"}
+      :zip-code
+      {:en "ZIP code"
+       :hu "Irányítószám"}})
 
 ;; -- Locales -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -1120,6 +1135,7 @@
                   errors
                   extensions
                   law
+                  locale
                   locales
                   media
                   notifications

@@ -28,9 +28,7 @@
 
 (defn request->query
   ; @param (map) request
-  ;  {:multipart-params (map)
-  ;    {:query (string)(opt)}
-  ;   :params (map)
+  ;  {:params (map)
   ;    {:query (string)(opt)}}
   ;
   ; @usage
@@ -39,9 +37,7 @@
   ; @return (*)
   [request]
   (if-let [raw-query (http/request->param request :query)]
-          (read-query raw-query)
-          (if-let [raw-query (http/request->multipart-param request :query)]
-                  (read-query raw-query))))
+          (read-query raw-query)))
 
 
 

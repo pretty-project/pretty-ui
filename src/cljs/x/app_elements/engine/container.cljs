@@ -247,6 +247,15 @@
     [element-container-body       element-id context-props view-props]
     [element-helper               element-id view-props]])
 
+
+
+(defn raw-element
+  ; W/o element-container DOM wrapper
+  [a {:keys [component]} c]
+  [component a c])
+
+
+
 (defn- stated-engine
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -264,7 +273,7 @@
                       subscriber updater] :as context-props}]
   [components/stated element-id
     {:base-props         base-props
-     :component          #'element-container
+     :component          #'element-container ; #'raw-element
      :destructor         destructor
      :disabler           (get base-props :disabler)
      :initial-props      (constant-props/base-props->initial-props base-props)

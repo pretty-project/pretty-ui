@@ -69,25 +69,49 @@
                                [save-client-button surface-id view-props]]
                  :horizontal-align :space-between}])
 
+(defn- client-secondary-contacts
+  [_ _]
+ [:div
+  [:div#clients--client-form--secondary-contacts
+    [elements/text-field ::country {:label :country}]
+    [elements/text-field ::city    {:label :city}]]
+  [:div#clients--client-form--secondary-contacts
+    [elements/text-field ::city {:label :zip-code :min-width :xxs}]
+    [elements/text-field ::city {:label :address :min-width :grow}]]])
+
+
+(defn- client-primary-contacts
+  [_ _]
+  [:div#clients--client-form--primary-contacts
+    [elements/text-field ::email-address {:label :email-address :required? true :value-path (db/path ::client-form :email-address)
+                                          :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}}]
+    [elements/text-field :phone-number {:label :phone-number :required? true :value-path (db/path ::client-form :phone-number)
+                                        :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
+                                        :modifier form/valid-phone-number}]])
+
+(defn- client-name
+  [_ {:keys [name-order]}]
+  [:div#clients--client-form--client-name
+    [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true :value-path (db/path ::client-form :first-name)}]
+                        [elements/text-field ::last-name  {:label :last-name  :required? true :value-path (db/path ::client-form :last-name)}]
+                        (param name-order)]])
+
+(defn- client-no
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [client-no]}]
+  [:div#clients--client-form--client-no
+    [elements/label {:content :client-id :font-size :xxs :color :highlight :font-weight :bold       :layout :fit}]
+    [elements/text  {:content client-no  :font-size :xs  :color :muted     :font-weight :extra-bold :layout :fit :prefix "#"}]])
+
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [client-no name-order] :as view-props}]
+  [surface-id {:keys [] :as view-props}]
   [:div#clients--client-form
-    [:div#clients--client-form--client-no
-      [elements/label {:content :client-id :font-size :xxs :color :highlight :font-weight :bold       :layout :fit}]
-      [elements/text  {:content client-no  :font-size :xs  :color :muted     :font-weight :extra-bold :layout :fit :prefix "#"}]]
-    [:div#clients--client-form--first-name-and-last-name
-      [locales/name-order [elements/text-field {:label :first-name :required? true :value-path (db/path ::client-form :first-name)}]
-                          [elements/text-field {:label :last-name  :required? true :value-path (db/path ::client-form :last-name)}]
-                          (param name-order)]]
-    [:div#clients--client-form--email-address-and-phone-number
-      [elements/text-field {:label :email-address :required? true :value-path (db/path ::client-form :email-address)
-                            :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}}]
-      [elements/text-field {:label :phone-number :required? true :value-path (db/path ::client-form :phone-number)
-                            :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
-                            :modifier form/valid-phone-number}]]
-
-    [elements/separator {:orientation :horizontal :size :xxl}]])
+    [client-no                 surface-id view-props]
+    [client-name               surface-id view-props]
+    [client-primary-contacts   surface-id view-props]
+    [client-secondary-contacts surface-id view-props]
+    [elements/separator {:orientation :horizontal :size :l}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!

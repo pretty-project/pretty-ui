@@ -82,8 +82,9 @@
 
 /*** Client-form ***/
 
-#clients--client-form--first-name-and-last-name,
-#clients--client-form--email-address-and-phone-number {
+#clients--client-form--client-name,
+#clients--client-form--primary-contacts,
+#clients--client-form--secondary-contacts {
   display: flex;
   flex-wrap: wrap;
   grid-column-gap: 24px;

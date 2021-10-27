@@ -481,20 +481,23 @@
 
 
 
-/***** Process-bar *****/
+/***** Progress-bar *****/
 
-#x-app-process-bar {
+#x-app-progress-bar {
   height: 4px;
   left: 0;
   position: fixed;
   top: 0;
   width: 100% }
 
-#x-app-process-bar--process-status {
+#x-app-progress-bar--process-progress {
   background-color: var( --primary );
-  height: 100% }
+  height: 100%;
+  transition: width .2s ease-in-out;
+  width: 0% }
 
-/***** Process-bar *****/
+/***** Progress-bar *****/
+
 
 
 /***** App shield *****/

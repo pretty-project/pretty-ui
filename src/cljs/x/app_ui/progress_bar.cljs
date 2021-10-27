@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.process-bar
+(ns x.app-ui.progress-bar
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.css       :as css]
               [x.app-components.api :as components]
@@ -30,13 +30,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
-  ;  {:process-status (integer)
-  ;   :render-process-bar? (boolean)}
+  ;  {:process-progress (integer)
+  ;   :render-progress-bar? (boolean)}
   [db _]
-  (if-let [process-id (db/meta-item-path ::primary :process-id)]
-          (let [process-status (r a/get-process-status db process-id)]
-               {:process-status      (param process-status)
-                :render-process-bar? (> process-status 0)})))
+  (if-let [process-id (get-in db (db/meta-item-path ::primary :process-id))]
+          (let [process-progress (r a/get-process-progress db process-id)
+                process-activity (r a/get-process-activity db process-id)]
+               {:process-progress     (param process-progress)
+                :render-progress-bar? (or (= :active process-activity)
+                                          (= :idle   process-activity))})))
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -61,24 +63,24 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- process-bar
+(defn- progress-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
   ; @param (map) view-props
-  ;  {:process-status (integer)(opt)
-  ;   :render-process-bar? (boolean)(opt)}
+  ;  {:process-progress (integer)(opt)
+  ;   :render-progress-bar? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [component-id {:keys [process-status render-process-bar?]}]
-  (if (boolean render-process-bar?)
-      [:div#x-app-process-bar
-        [:div#x-app-process-bar--process-status {:style {:width (css/percent process-status)}}]]))
+  [component-id {:keys [process-progress render-progress-bar?] :as view-props}]
+  (if (boolean render-progress-bar?)
+      [:div#x-app-progress-bar
+        [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (component)
   []
-  [components/subscriber ::view {:component  #'process-bar
+  [components/subscriber ::view {:component  #'progress-bar
                                  :subscriber [::get-view-props]}])

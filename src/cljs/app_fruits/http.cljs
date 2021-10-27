@@ -27,12 +27,12 @@
 (defn- progress-event->request-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) progress-event
+  ; @param (object) progress-event
   ;
   ; @return (integer)
   [progress-event]
   (let [loaded (.-loaded progress-event)
-        total  (.-total progress-event)]
+        total  (.-total  progress-event)]
        (math/percent total loaded)))
 
 
@@ -56,11 +56,11 @@
   [request-id {:keys [error-handler handler progress-handler]}]
   (cond-> (param {})
           (some? error-handler)
-          (assoc :error-handler (fn [server-response]
-                                    (error-handler request-id server-response)))
+          (assoc :error-handler    (fn [server-response]
+                                       (error-handler request-id server-response)))
           (some? handler)
-          (assoc :handler (fn [server-response]
-                              (handler request-id server-response)))
+          (assoc :handler          (fn [server-response]
+                                       (handler request-id server-response)))
           (some? progress-handler)
           (assoc :progress-handler (fn [progress-event]
                                        (let [request-progress (progress-event->request-progress progress-event)]

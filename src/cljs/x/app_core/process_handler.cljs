@@ -35,7 +35,7 @@
 ; @name process-activity
 ;  :inactive - Folyamattal kapcsolatos aktivitás nem történt (folyamat indítható)
 ;  :active   - Folyamatban (folyamat nem újraindítható)
-;  :idle     - Folyamat befejezve (üresjárati idő – folyamat nem újraindítható)
+;  :idle     - Folyamat befejezve (üresjárati idő – folyamat újraindítható)
 ;  :stalled  - Folyamat befejezve (lezárva        – folyamat újraindítható)
 ;
 ; @name process-progress
@@ -224,7 +224,6 @@
   ; @return (boolean)
   [db [_ process-id]]
   (not (or (r process-active?  db process-id)
-           (r process-idle?    db process-id)
            (r process-blocked? db process-id))))
 
 
