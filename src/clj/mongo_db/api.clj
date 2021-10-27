@@ -9,18 +9,19 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mongo.engine
-(def get-documents-by-query                engine/get-documents-by-query)
-(def get-document-by-query                 engine/get-document-by-query)
-(def get-document-by-id                    engine/get-document-by-id)
-(def document-exists?                      engine/document-exists?)
-(def add-document!                         engine/add-document!)
-(def update-document!                      engine/update-document!)
-(def remove-document!                      engine/remove-document!)
-(def duplicate-document!                   engine/duplicate-document!)
-(def reorder-documents!                    engine/reorder-documents!)
-(def count-documents-by-pipeline           engine/count-documents-by-pipeline)
-(def get-documents-by-pipeline             engine/get-documents-by-pipeline)
-(def get-documents-by-pipeline-and-count   engine/get-documents-by-pipeline-and-count)
-(def search-pattern->pipeline-query        pipelines/search-pattern->pipeline-query)
-(def sort-pattern->pipeline-sort           pipelines/sort-pattern->pipeline-sort)
+; mongo-db.engine
+(def get-documents-by-query      engine/get-documents-by-query)
+(def get-document-by-query       engine/get-document-by-query)
+(def get-document-by-id          engine/get-document-by-id)
+(def document-exists?            engine/document-exists?)
+(def add-document!               engine/add-document!)
+(def update-document!            engine/update-document!)
+(def remove-document!            engine/remove-document!)
+(def duplicate-document!         engine/duplicate-document!)
+(def reorder-documents!          engine/reorder-documents!)
+(def count-documents-by-pipeline engine/count-documents-by-pipeline)
+(def get-documents-by-pipeline   engine/get-documents-by-pipeline)
+
+; mongo-db.pipelines
+(def search-pattern->pipeline-query pipelines/search-pattern->pipeline-query)
+(def sort-pattern->pipeline-sort    pipelines/sort-pattern->pipeline-sort)

@@ -65,6 +65,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- reset-environment!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [handlers    (vals (deref HANDLERS))
+        registry    [handlers]
+        environment (pathom.ci/register registry)]
+       (reset! ENVIRONMENT environment)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn reg-handler!
   ; @param (keyword) handler-id
   ; @param (handler function) handler-f
@@ -96,16 +109,3 @@
   ; ujra lefuto reg-handlers! fuggvenyek regisztralhassak az esetlegesen megvaltozott
   ; handler-fuggvenycsoportokat.
   (reset-environment!))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- reset-environment!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [handlers    (vals (deref HANDLERS))
-        registry    [handlers]
-        environment (pathom.ci/register registry)]
-       (reset! ENVIRONMENT environment)))
