@@ -151,7 +151,7 @@
         directory-document   (assoc directory-document :item-count directory-item-count)]
        (db/document->namespaced-document directory-document :directory)))
 
-(pathom/reg-handler! get-directory-data)
+(pathom/reg-handler! :get-directory-data get-directory-data)
 
 (pathom.co/defresolver get-file-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,7 +174,7 @@
   (let [file-document (local-db/get-document "files" id)]
        (db/document->namespaced-document file-document :file)))
 
-(pathom/reg-handler! get-file-data)
+(pathom/reg-handler! :get-file-data get-file-data)
 
 
 
@@ -213,7 +213,7 @@
        (local-db/update-document! "files" file-id merge updated-props)
        (return "File updated")))
 
-(pathom/reg-handler! update-file!)
+(pathom/reg-handler! :update-file update-file!)
 
 
 
@@ -247,7 +247,7 @@
 
        (return "Directory created")))
 
-(pathom/reg-handler! create-directory!)
+(pathom/reg-handler! :create-directory! create-directory!)
 
 
 
@@ -344,7 +344,7 @@
 
   (return "Items deleted"))
 
-(pathom/reg-handler! delete-items!)
+(pathom/reg-handler! :delete-items! delete-items!)
 
 
 
@@ -492,7 +492,7 @@
 
   (return "Items copied"))
 
-(pathom/reg-handler! copy-items!)
+(pathom/reg-handler! :copy-items! copy-items!)
 
 
 
@@ -591,4 +591,4 @@
 
   (return "Items moved"))
 
-(pathom/reg-handler! move-items!)
+(pathom/reg-handler! :move-items! move-items!)

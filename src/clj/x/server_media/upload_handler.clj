@@ -180,4 +180,4 @@
 
   (return "Files uploaded"))
 
-(pathom/reg-handler! upload-files!)
+(pathom/reg-handler! :upload-files upload-files!)

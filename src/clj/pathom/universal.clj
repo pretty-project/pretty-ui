@@ -102,4 +102,4 @@
                duplicate-document!
                reorder-documents!])
 
-(register/reg-handlers! HANDLERS)
+(register/reg-handlers! :universal HANDLERS)

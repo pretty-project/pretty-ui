@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (vector)
-(def HANDLERS    (atom []))
+(def HANDLERS    (atom {}))
 
 ; @atom (map)
 (def ENVIRONMENT (atom {}))
@@ -56,8 +56,9 @@
   ; @usage
   ;  (pco/defmutation     do-something! [env] ...)
   ;  (pathom/reg-handler! do-something!)
-  [handler-f]
-  (swap! HANDLERS vector/conj-item handler-f))
+  [handler-key handler-f]
+  (swap! HANDLERS assoc handler-key handler-f)
+  (a/dispatch [:pathom/reg-environment!]))
 
 (defn reg-handlers!
   ; @param (handler functions in vector) handler-fs
@@ -67,8 +68,10 @@
   ;  (pco/defmutation     do-anything! [env] ...)
   ;  (def HANDLERS [do-something! do-anything!])
   ;  (pathom/reg-handlers! HANDLERS)
-  [handler-fs]
-  (swap! HANDLERS vector/concat-items handler-fs))
+  [handlers-key handler-fs]
+  (swap! HANDLERS assoc handlers-key handler-fs)
+  (a/dispatch [:pathom/reg-environment!]))
+
 
 
 
@@ -82,7 +85,7 @@
   ;
   ; @return (map)
   []
-  (let [handlers    (deref HANDLERS)
+  (let [handlers    (vals (deref HANDLERS))
         registry    [handlers]
         environment (pathom.ci/register registry)]
        (reset! ENVIRONMENT environment)))
@@ -90,10 +93,9 @@
 (a/reg-handled-fx :pathom/reg-environment! reg-environment!)
 
 
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-init [:pathom/reg-environment!]})
+;(a/reg-lifecycles
+;  ::lifecycles
+;  {:on-app-init [:pathom/reg-environment!]})
