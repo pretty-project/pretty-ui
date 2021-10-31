@@ -1238,9 +1238,11 @@ body {
   top: 0 }
 
 .x-element--start-adornments {
-  left: 0 }
+  left: 0;
+  padding-left: 4px }
 
 .x-element--end-adornments {
+  padding-right: 4px;
   right: 0 }
 
 .x-element--adornment-button,
@@ -1716,6 +1718,14 @@ body {
   height: calc(100% - 24px);
 
   margin: 12px var( --app-edge ) }
+
+/* XXX#8607
+ * XXS és XS méretű viewport-on az app-edge értéke 0, ezért a card elem szélei közvetlenül
+ * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot. */
+body[data-viewport-profile="xxs"] .x-card,
+body[data-viewport-profile="xs"]  .x-card,
+body[data-viewport-profile="s"]   .x-card {
+  border-radius: 0 }
 
 /*** Card wrapper ***/
 

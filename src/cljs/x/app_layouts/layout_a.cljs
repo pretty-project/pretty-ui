@@ -14,10 +14,27 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.layout-a
-    (:require [mid-fruits.keyword   :as keyword]
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.keyword   :as keyword]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
               [x.app-elements.api   :as elements]))
+
+
+
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) layout-props
+  ;
+  ; @return (map)
+  ;  {:min-width (keyword)}
+  [layout-props]
+  (merge {:min-width :l}
+         (param layout-props)))
 
 
 
@@ -78,6 +95,21 @@
   [:div.x-layout-a--header
     [elements/label {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}]])
 
+(defn- layout
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword)(opt) layout-id
+  ; @param (map) layout-props
+  ;  {:label (metamorphic-content)(opt)
+  ;   :min-width (keyword)}
+  ;
+  ; @return (component)
+  [layout-id {:keys [label min-width] :as layout-props}]
+  [:<> (if (some? label)
+           [layout-header layout-id layout-props])
+       [elements/box {:content   [layout-body layout-id layout-props]
+                      :min-width min-width}]])
+
 (defn view
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
@@ -90,6 +122,9 @@
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
   ;   :icon (metamorphic-content)(opt)
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :l
   ;   :label (metamorphic-content)(opt)}
   ;
   ; @usage
@@ -103,7 +138,6 @@
    (let [layout-id (a/id)]
         [view layout-id layout-props]))
 
-  ([layout-id {:keys [label] :as layout-props}]
-   [:<> (if (some? label)
-            [layout-header layout-id layout-props])
-        [elements/box {:content [layout-body layout-id layout-props]}]]))
+  ([layout-id layout-props]
+   (let [layout-props (a/prot layout-props layout-props-prototype)]
+        [layout layout-id layout-props])))

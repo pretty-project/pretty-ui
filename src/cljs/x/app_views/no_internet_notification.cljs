@@ -34,9 +34,7 @@
     :primary-button
     {:label    :refresh!
      :on-click [:x.boot-loader/refresh-app!]
-     :layout   :row
-     :color    :primary
-     :variant  :transparent}}])
+     :preset   :action-button}}])
 
 (a/reg-event-fx
   ::blow-bubble?!

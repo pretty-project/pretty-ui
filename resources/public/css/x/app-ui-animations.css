@@ -103,6 +103,12 @@
 [data-viewport-profile="s"]
 .x-app-popups--element[data-layout="boxed"]
 .x-app-popups--element--structure {
+
+  /* BUG#4701
+   * Késleltetés nélkül nem minden esetben látszódott a lejátszódó animáció
+   * iPhone 6s - Google Chrome 95.0.4638.50 */
+  animation-delay: .1s;
+
   animation-duration: .25s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }
@@ -141,7 +147,11 @@
 [data-viewport-profile="s"]
 .x-app-popups--element[data-layout="boxed"]
 .x-app-popups--element--cover {
-  animation-delay: .25s;
+
+  /* BUG#4701
+  animation-delay: .25s */
+  animation-delay: .35s;
+
   animation-duration: .1s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }

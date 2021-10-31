@@ -190,10 +190,6 @@
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning, :muted
   ;   :primary-button (map)(opt)
-  ;    {:icon (string)(opt)
-  ;      Material icon class
-  ;     :on-click (metamorphic-event)(opt)
-  ;     :tooltip (metamorphic-content)(opt)}
   ;   :update-animated? (boolean)(opt)
   ;    Default: false
   ;   :user-close? (boolean)(opt)
@@ -230,11 +226,7 @@
   ; @return (component)
   [bubble-id {:keys [primary-button] :as bubble-props}]
   (let [on-click (primary-button-on-click bubble-id bubble-props)]
-       [elements/button (merge {:color   :none
-                                :layout  :icon-button
-                                :variant :transparent}
-                               (param primary-button)
-                               {:on-click on-click})]))
+       [elements/button (assoc primary-button :on-click on-click)]))
 
 (defn- bubble-close-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

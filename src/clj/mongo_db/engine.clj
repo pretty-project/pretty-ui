@@ -446,6 +446,7 @@
    (add-document! collection-name document {}))
 
   ([collection-name document {:keys [ordered?]}]
+   (println (str document))
    (let [; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
          document-dex (get-all-document-count collection-name)
          document     (cond-> document ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,

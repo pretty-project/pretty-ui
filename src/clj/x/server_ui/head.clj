@@ -113,7 +113,10 @@
   (vector/concat-items (param head)
     [[:title (str app-title)]
      [:meta {:charset "utf-8"}]
-     [:meta {:content "width=320, initial-scale=1" :name "viewport"}]
+     ; maximum-scale=1
+     ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
+     ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
+     [:meta {:content "width=320, initial-scale=1 maximum-scale=1" :name "viewport"}]
      [:meta {:content (str theme-color)            :name "theme-color"}]
      [:meta {:content (str selected-language)      :http-equiv "content-language"}]]))
 

@@ -85,19 +85,15 @@
 ; Save client
 
 (a/reg-event-fx
-  :clients/receive-save-client!
-  {:dispatch-n []});[:x.app-router/go-to! "/clients"]
-                ;[:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
-                ;                                            :color :muted]})
-
-(a/reg-event-fx
   :clients/request-save-client!
   (fn [{:keys [db]} [event-id]]
-      (let [client-props (get-in db [:clients :form])]
+      (let [client-props (get-in db [:clients :form-data])]
            [:x.app-sync/send-query!
             :clients/synchronize-client-form!
             {:on-stalled [:clients/receive-save-client!]
-             :query      [`(clients/add-client! ~client-props)]}])))
+             :on-success [:x.app-router/go-to! "/clients"]
+             :on-failure [:x.app-ui/blow-bubble! ::failure-notification {:content :saving-error :color :warning}]
+             :query      [`(clients/save-client! ~client-props)]}])))
 
 ; Add client
 
@@ -177,9 +173,9 @@
 
 (a/reg-event-fx
   :clients/receive-clients!
-  (fn [{:keys [db]} [_ response-value]]
-      (let [result    (:clients/get-clients response-value)
-            {:keys [documents count]} result]
+  (fn [{:keys [db]} [_ {:clients/keys [result]}]]
+      (let [documents      (get result :documents)
+            document-count (get result :document-count)]
            [:x.app-db/apply! [:clients :documents] vector/concat-items documents])))
 
 (a/reg-event-fx
@@ -188,11 +184,11 @@
       [:x.app-sync/send-query!
        :clients/request-clients!
        {:on-success [:clients/receive-clients!]
-        :query [`(:clients/get-clients
-                   {:skip 1
-                    :max-count 3
-                    :search-pattern [[:client/full-name ""] [:client/email-address ""]]
-                    :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
+        :query      [`(:clients/get-clients
+                        {:skip      1
+                         :max-count 3
+                         :search-pattern [[:client/full-name ""] [:client/email-address ""]]
+                         :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Effect events -----------------------------------------------------------

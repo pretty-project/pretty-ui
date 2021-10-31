@@ -49,7 +49,7 @@
   ; @example
   ;  (engine/apply-preset {:preset-name {...}}
   ;                       {:preset :preset-name ...})
-  ; 
+  ;
   ; @return (map)
   [presets {:keys [preset] :as element-props}]
   (if (some? preset)

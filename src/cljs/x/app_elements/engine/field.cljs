@@ -47,6 +47,9 @@
 (def FIELD-VERTICAL-PADDING 4)
 
 ; @constant (px)
+(def ADORNMENTS-HORIZONTAL-PADDING 4)
+
+; @constant (px)
 (def FIELD-BORDER-WIDTH 1)
 
 ; @constant (ms)
@@ -90,7 +93,7 @@
   [field-id]
   {:icon :undo :on-click [:x.app-elements/reset-input! field-id]
    ; XXX#8073
-   :preset :reset-field-adornment
+   :preset  :reset-field-adornment
    :tooltip :reset-field!})
 
 
@@ -139,7 +142,8 @@
   ; @return (integer)
   [{:keys [start-adornments]}]
   (if (vector/nonempty? start-adornments)
-      (* (count start-adornments) ADORNMENT-WIDTH)
+      (+ (* (count start-adornments) ADORNMENT-WIDTH)
+         (param ADORNMENTS-HORIZONTAL-PADDING))
       (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
 
 (defn field-props->end-adornments-padding
@@ -151,7 +155,8 @@
   ; @return (integer)
   [{:keys [end-adornments]}]
   (if (vector/nonempty? end-adornments)
-      (* (count end-adornments) ADORNMENT-WIDTH)
+      (+ (* (count end-adornments) ADORNMENT-WIDTH)
+         (param ADORNMENTS-HORIZONTAL-PADDING))
       (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
 
 (defn view-props->field-filled?

@@ -29,7 +29,8 @@
 
 - counter tulajdonságai nem müködnek label, initial-value
 
-- freezed-route-ra nincs szükség
+- freezed-route-ra nincs szükség, ha a felület inicializálásakor letárolod a szükséges
+  path-param-ot és query-param-ot előre.
 
 - Elméletileg nem szükséges az authenticated-home! Amilyen route-on vagy amikor bejön
   login-screen oda visz vissza a reboot után.

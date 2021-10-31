@@ -105,6 +105,9 @@
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button
+                              :variant :transparent}
+      :warning-button        {:color   :warning
+                              :layout  :row
                               :variant :transparent}})
 
 

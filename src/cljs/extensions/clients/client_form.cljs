@@ -18,28 +18,34 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- new-client?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [client-id (get-in db [:clients :form-meta :client-id])]
+       (= client-id "new-client")))
+
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order      (r locales/get-name-order           db)
-   :new-client?     (r router/current-route-path-param? db :client-id "new-client")
-   :synchronizing?  (r sync/listening-to-request?       db :clients/synchronize-client-form!)})
+  {:name-order      (r locales/get-name-order     db)
+   :new-client?     (r new-client?                db)
+   :synchronizing?  (r sync/listening-to-request? db :clients/synchronize-client-form!)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:form-completed? (r elements/form-completed?         db ::client-form)
-   :new-client?     (r router/current-route-path-param? db :client-id "new-client")
-   :synchronizing?  (r sync/listening-to-request?       db :clients/synchronize-client-form!)})
+  {:form-completed? (r elements/form-completed?   db ::client-form)
+   :new-client?     (r new-client?                db)
+   :synchronizing?  (r sync/listening-to-request? db :clients/synchronize-client-form!)})
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:new-client? (r router/current-route-path-param? db :client-id "new-client")})
+  {:new-client? (r new-client? db)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -108,14 +114,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
  [:div
-  [:div#clients--client-form--secondary-contacts
+  [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
     [elements/select    ::country {:label :country :min-width :xxs ; :default-value {:label "Magyarország"}
                                    :options [{:value "Magyarország"
                                               :label "Magyarország"}]
-                                   :value-path [:clients :form :country]}]
-    [elements/combo-box ::city    {:label :city :options-path [:clients :form :suggestions :cities]}]]
-  [:div#clients--client-form--secondary-contacts
+                                   :value-path [:clients :form-data :country]}]
     [elements/text-field ::zip-code {:label :zip-code :min-width :xxs}]
+    [elements/combo-box ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
+                                   :style {:flex-grow 1}}]]
+  [:div
     [elements/text-field ::address  {:label :address :min-width :grow}]]])
 
 (defn- client-primary-contacts
@@ -123,27 +130,31 @@
   [surface-id body-props]
   [:div#clients--client-form--primary-contacts
     [elements/text-field ::email-address {:label :email-address :required? true
-                                          :value-path [:clients :form :email-address]
+                                          :value-path [:clients :form-data :email-address]
                                           :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
-                                          :form-id ::client-form}]
+                                          :form-id ::client-form
+                                          :min-width :l}]
     [elements/text-field ::phone-number {:label :phone-number :required? true
-                                         :value-path [:clients :form :phone-number]
+                                         :value-path [:clients :form-data :phone-number]
                                          :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
                                          ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
                                          ;:modifier form/valid-phone-number
                                          :modifier #(string/starts-with! % "+")
-                                         :form-id ::client-form}]])
+                                         :form-id ::client-form
+                                         :min-width :l}]])
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
     [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true
-                                                           :value-path [:clients :form :first-name]
-                                                           :form-id ::client-form}]
+                                                           :value-path [:clients :form-data :first-name]
+                                                           :form-id ::client-form
+                                                           :min-width :l}]
                         [elements/text-field ::last-name  {:label :last-name  :required? true
-                                                           :value-path [:clients :form :last-name]
-                                                           :form-id ::client-form}]
+                                                           :value-path [:clients :form-data :last-name]
+                                                           :form-id ::client-form
+                                                           :min-width :l}]
                         (param name-order)]])
 
 (defn- client-no
@@ -192,26 +203,34 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(a/reg-event-fx
+  :clients/render-client-form!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:x.app-ui/set-surface!
+   ::view {:content   #'view
+           :label-bar {:content       #'ui/go-back-surface-label-bar
+                       :content-props {:label :clients}}
+           :subscriber [::get-view-props]}])
+
 
 (a/reg-event-fx
-  :x.app-extensions.clients/render-client-form!
+  :clients/load-client-form!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
-                [:x.app-db/set-item! [:clients :form :suggestions :cities]
-                                     ["Szeged"]]
-                [:x.app-db/set-item! [:clients :form :suggestions :countries]
-                                     ["Magyarország"]]
-                [:x.app-ui/set-surface!
-                 ::view {:content   #'view
-                         :label-bar {:content       #'ui/go-back-surface-label-bar
-                                     :content-props {:label :clients}}
-                         :subscriber [::get-view-props]}]]})
+  (fn [{:keys [db]} _]
+      (let [client-id (r router/get-current-route-path-param db :client-id)]
+           {:db         (assoc-in db [:clients :form-meta :client-id] client-id)
+            :dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
+                         [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
+                                              ["Szeged"]]
+                         [:x.app-db/set-item! [:clients :form-meta :suggestions :countries]
+                                              ["Magyarország"]]
+                         [:clients/render-client-form!]]})))
 
 (a/reg-lifecycles
   ::lifecycles
   {:on-app-boot [:x.app-router/add-route!
                  ::extended-route
                  {:restricted?    true
-                  :route-event    [:x.app-extensions.clients/render-client-form!]
+                  :route-event    [:clients/load-client-form!]
                   :route-title    :clients
                   :route-template "/clients/:client-id"}]})

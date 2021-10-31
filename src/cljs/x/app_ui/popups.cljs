@@ -197,8 +197,8 @@
   ; @param (keyword) popup-id
   ;
   ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
-  (fn [_ [_ popup-id]]
-      [:x.app-environment.scroll-prohibitor/remove-scroll-prohibition! popup-id]))
+  (fn [_ [_ popup-id]]))
+      ;[:x.app-environment.scroll-prohibitor/remove-scroll-prohibition! popup-id]))
 
 (a/reg-event-fx
   :x.app-ui/disable-scroll-by-popup!
@@ -207,8 +207,8 @@
   ; @param (keyword) popup-id
   ;
   ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
-  (fn [_ [_ popup-id]]
-      [:x.app-environment.scroll-prohibitor/add-scroll-prohibition! popup-id]))
+  (fn [_ [_ popup-id]]))
+      ;[:x.app-environment.scroll-prohibitor/add-scroll-prohibition! popup-id]))
 
 (a/reg-event-fx
   :x.app-ui/render-popup!

@@ -456,8 +456,10 @@
 .x-app-popups--element--label-bar {
   overflow-x: auto;
 
+  /* WARNING DEPRECATED! */
   /* XXX#3408 */
-  padding: 0 var( --app-edge );
+  -padding: 0 var( --app-edge );
+  /* WARNING DEPRECATED! */
 
   min-height: 48px;
   width: 100% }
@@ -767,8 +769,10 @@
   border-style: solid;
   border-width: 1px;
 
+  /* WARNING! DEPRECATED! */
   /* XXX#0609 */
-  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  -border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  /* WARNING! DEPRECATED! */
 
   /* XXX#7319
    * A box-shadow tulajdonság magas számításigénye miatt több helyről eltávolításra
@@ -790,8 +794,10 @@
   height: 48px;
   overflow-x: auto;
 
+  /* WARNING DEPRECATED! */
   /* XXX#3408 */
-  padding: 0 var( --app-edge );
+  -padding: 0 var( --app-edge );
+  /* WARNING DEPRECATED! */
 
   width: 100% }
 
@@ -806,8 +812,10 @@
   left: 0;
   overflow-x: auto;
 
+  /* WARNING DEPRECATED! */
   /* XXX#3408 */
-  padding: 0 var( --app-edge );
+  -padding: 0 var( --app-edge );
+  /* WARNING DEPRECATED! */
 
   position: absolute;
   width: 100% }

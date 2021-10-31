@@ -224,8 +224,10 @@ body[data-viewport-profile="xxs"] {
 /*** App ***/
 /* XXX#3408 */
 
+/* XXX#8607 */
 --app-edge:    0vw;
 --app-width: 100vw;
+/* XXX#8607 */
 
 /*** App ***/
 
@@ -260,8 +262,10 @@ body[data-viewport-profile="xs"] {
 /*** App ***/
 /* XXX#3408 */
 
+/* XXX#8607 */
 --app-edge:    0vw;
 --app-width: 100vw;
+/* XXX#8607 */
 
 /*** App ***/
 
@@ -296,8 +300,10 @@ body[data-viewport-profile="s"] {
 /*** App ***/
 /* XXX#3408 */
 
---app-edge:   2vw;
---app-width: 96vw;
+/* XXX#8607 */
+--app-edge:    0vw;
+--app-width: 100vw;
+/* XXX#8607 */
 
 /*** App ***/
 
