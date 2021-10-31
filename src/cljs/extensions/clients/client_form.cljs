@@ -2,6 +2,7 @@
 (ns extensions.clients.client-form
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.form    :as form]
+              [mid-fruits.map     :refer [dissoc-in]]
               [mid-fruits.string  :as string]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
@@ -218,7 +219,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [client-id (r router/get-current-route-path-param db :client-id)]
-           {:db         (assoc-in db [:clients :form-meta :client-id] client-id)
+           {:db         (-> db (assoc-in  [:clients :form-meta :client-id] client-id))
+;                               (dissoc-in [:clients :form-data]))
             :dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
                                               ["Szeged"]]
