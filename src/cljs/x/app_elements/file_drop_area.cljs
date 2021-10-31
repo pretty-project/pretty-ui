@@ -50,7 +50,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) area-id
-  ; @param (map) view-props
+  ; @param (map) area-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -62,14 +62,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) area-id
-  ; @param (map) view-props
+  ; @param (map) area-props
   ;
   ; @return (hiccup)
-  [area-id view-props]
+  [area-id area-props]
   [:button.x-file-drop-area--body
-    (engine/clickable-body-attributes area-id view-props)
+    (engine/clickable-body-attributes area-id area-props)
     [:i.x-file-drop-area--icon (keyword/to-dom-value :cloud_upload)]
-    [file-drop-area-label area-id view-props]])
+    [file-drop-area-label area-id area-props]])
 
 (defn- file-drop-area
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,10 +78,12 @@
   ; @param (map) area-props
   ;
   ; @return (hiccup)
-  [area-id view-props]
+  [area-id area-props]
   [:div.x-file-drop-area
-    (engine/element-attributes area-id view-props)
-    [file-drop-area-body area-id view-props]])
+    (engine/element-attributes   area-id area-props)
+    [file-drop-area-body         area-id area-props]
+    [engine/element-helper       area-id area-props]
+    [engine/element-info-tooltip area-id area-props]])
 
 (defn view
   ; @param (keyword)(opt) area-id

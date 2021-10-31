@@ -292,11 +292,11 @@
   ;
   ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
-  [engine/container options-id
-    {:base-props  options-props
-     :component   ab7081
-     :initializer [:x.app-elements/init-input! options-id]
-     :subscriber  [::get-view-props            options-id]}])
+  [engine/stated-element options-id
+    {:component     #'ab7081
+     :element-props options-props
+     :initializer   [:x.app-elements/init-input! options-id]
+     :subscriber    [::get-view-props            options-id]}])
 
 (defn- select-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -341,7 +341,8 @@
   ; @return (hiccup)
   [select-id view-props]
   [:div.x-select--button
-    [select-button-body select-id view-props]])
+    [select-button-body    select-id view-props]
+    [engine/element-helper select-id view-props]])
 
 (defn- select-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -355,7 +356,8 @@
   [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-select--label [components/content {:content label}]
-                            (if required? "*")]))
+                            (if (boolean required?)
+                                [:span.x-select--label-asterisk "*"])]))
 
 (defn- select
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -379,6 +381,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :icon (keyword)(opt) Material icon class
   ;   :initial-value (*)(constant)(opt)
@@ -414,10 +417,10 @@
   ([select-id select-props]
    (let [select-id    (a/id   select-id)
          select-props (a/prot select-id select-props select-props-prototype)]
-        [engine/container select-id
-          {:base-props select-props
-           :component  select
-           :subscriber [::get-view-props select-id]}])))
+        [engine/stated-element select-id
+          {:component     #'select
+           :element-props select-props
+           :subscriber    [::get-view-props select-id]}])))
 
 
 
@@ -437,6 +440,7 @@
   ;  {:autoclear? (boolean)(opt)
   ;    Default: false
   ;   :default-value (*)(constant)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a kiválasztott értéket.

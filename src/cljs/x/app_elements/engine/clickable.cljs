@@ -116,7 +116,7 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (if-let [on-click-event (r element/get-element-prop db element-id :on-click)]
-              {:dispatch-n [on-click-event]})))
+              {:dispatch on-click-event})))
 
 (a/reg-event-fx
   :x.app-elements/->key-pressed

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.17
 ; Description:
-; Version: v0.3.4
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.4.3
 
 
 
@@ -94,9 +94,9 @@
   ([button-id button-props]
    (let [button-id    (a/id   button-id)
          button-props (a/prot button-props button-props-prototype)]
-        [engine/container button-id
-          {:base-props  button-props
-           :component   button
-           :destructor  [:x.app-elements/destruct-clickable! button-id]
-           :initializer [:x.app-elements/init-clickable!     button-id]
-           :subscriber  [::get-view-props                    button-id]}])))
+        [engine/stated-element button-id
+          {:component     #'button
+           :element-props button-props
+           :destructor    [:x.app-elements/destruct-clickable! button-id]
+           :initializer   [:x.app-elements/init-clickable!     button-id]
+           :subscriber    [::get-view-props                    button-id]}])))

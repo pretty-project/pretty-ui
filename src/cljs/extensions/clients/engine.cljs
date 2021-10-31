@@ -86,25 +86,27 @@
 
 (a/reg-event-fx
   :clients/receive-save-client!
-  {:dispatch-n [[:x.app-router/go-to! "/clients"]
-                [:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
-                                                            :color :muted}]]})
+  {:dispatch-n []});[:x.app-router/go-to! "/clients"]
+                ;[:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
+                ;                                            :color :muted]})
 
 (a/reg-event-fx
   :clients/request-save-client!
-  (fn [{:keys [db]} [event-id client]]
-    [:x.app-sync/send-query!
-     :clients/request-save-client!
-     {:on-success [:clients/receive-save-client!]
-      :query [`(clients/add-client! ~client)]}]))
+  (fn [{:keys [db]} [event-id]]
+      (let [client-props (get-in db [:clients :form])]
+           [:x.app-sync/send-query!
+            :clients/synchronize-client-form!
+            {:on-stalled [:clients/receive-save-client!]
+             :query      [`(clients/add-client! ~client-props)]}])))
 
 ; Add client
 
 (a/reg-event-fx
   :clients/receive-add-client!
-  {:dispatch-n [[:x.app-router/go-to! "/clients"]
-                [:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
-                                                            :color :muted}]]})
+  {:dispatch-n []})
+              ;[:x.app-router/go-to! "/clients"]
+                ;[:x.app-ui/blow-bubble! ::add-notification {:content "Client added."
+                ;                                            :color :muted]})
 
 (a/reg-event-fx
   :clients/request-add-client!

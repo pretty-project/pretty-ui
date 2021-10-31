@@ -140,8 +140,6 @@
   ;  {:chips (maps in vector)
   ;    [{...} {...}]
   ;   :class (string or vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;   :no-chips-label (metamorphic-content)(opt)
   ;   :on-delete (event-vector)(opt)
@@ -169,6 +167,6 @@
    [view nil chips-props])
 
   ([chips-id chips-props]
-   (let [chips-id    (a/id   chips-id)
-         chips-props (a/prot chips-props chips-props-prototype)]
+   (let [chips-id    (a/id   chips-id)]
+        ;chips-props (a/prot chips-props chips-props-prototype)
         [chips chips-id chips-props])))

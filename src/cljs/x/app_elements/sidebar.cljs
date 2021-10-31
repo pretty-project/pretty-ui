@@ -30,14 +30,9 @@
   ; @param (map) sidebar-props
   ;
   ; @return (map)
-  ;  {:container-floating? (boolean)
-  ;   :container-position (keyword)
-  ;   :container-stretch-orientation (keyword)}
   [sidebar-props]
-  (merge (param sidebar-props)
-         {:container-floating?           true
-          :container-position            :tr
-          :container-stretch-orientation :vertical}))
+  (merge {}
+         (param sidebar-props)))
 
 
 
@@ -104,6 +99,6 @@
    [view nil sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-id    (a/id   sidebar-id)
-         sidebar-props (a/prot sidebar-props sidebar-props-prototype)]
+   (let [sidebar-id    (a/id   sidebar-id)]
+        ;sidebar-props (a/prot sidebar-props sidebar-props-prototype)
         [sidebar sidebar-id sidebar-props])))

@@ -15,6 +15,19 @@
 
 
 
+/***** User select *****/
+
+.item-lister--items--no-items-to-show,
+.item-lister--items--request-indicator {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none }
+
+/***** User select *****/
+
+
+
 /***** Item-lister *****/
 /*** Item-lister items ***/
 
@@ -22,6 +35,7 @@
   padding-bottom: 12px;
   width: 100% }
 
+.item-lister--items--no-items-to-show,
 .item-lister--items--request-indicator {
   color: var( --color-highlight );
   display: flex;

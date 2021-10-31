@@ -81,10 +81,12 @@
                        :horizontal-align :center
                        :layout           :fit}]
        (cond (= action :go-back!)
-             [elements/button {:preset  :back-icon-button
-                               :variant :transparent
-                               :on-click
-                               [:x.app-router/go-back!]}])])
+             [:<> [elements/separator {:orientation :horizontal :size :l}]
+                  [elements/button {:label   :back!
+                                    :preset  :back-icon-button
+                                    :variant :transparent
+                                    :on-click
+                                    [:x.app-router/go-back!]}]])])
 
 
 
@@ -100,9 +102,9 @@
   (fn [_ [_ error-id]]
       [:x.app-ui/set-surface!
        ::view
-       {:content          #'view
-        :content-props    (error-id->content-props error-id)
-        :label-bar {:content #'ui/go-back-surface-label-bar}}]))
+       {:content       #'view
+        :content-props (error-id->content-props error-id)
+        :label-bar     {:content #'ui/go-back-surface-label-bar}}]))
 
 (a/reg-event-fx
   ::initialize!

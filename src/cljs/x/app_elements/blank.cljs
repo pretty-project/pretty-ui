@@ -36,22 +36,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) blank-id
-  ;
-  ; @return (map)
-  [db [_ blank-id]]
-  (r engine/get-element-view-props db blank-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -59,15 +43,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) blank-id
-  ; @param (map) view-props
+  ; @param (map) blank-props
   ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [blank-id view-props]
-  (let [content-props (components/extended-props->content-props view-props)]
+  [blank-id blank-props]
+  (let [content-props (components/extended-props->content-props blank-props)]
        [:div.x-blank
-         (engine/element-attributes blank-id view-props)
-         [components/content blank-id content-props]]))
+         (engine/element-attributes blank-id blank-props)
+         [components/content      blank-id content-props]
+         [engine/element-stickers blank-id blank-props]]))
 
 (defn view
   ; XXX#8711
@@ -119,9 +104,6 @@
    [view nil blank-props])
 
   ([blank-id blank-props]
-   (let [blank-id    (a/id   blank-id)
-         blank-props (a/prot blank-props blank-props-prototype)]
-        [engine/container blank-id
-          {:base-props blank-props
-           :component  blank
-           :subscriber [::get-view-props blank-id]}])))
+   (let [blank-id    (a/id   blank-id)]
+        ;blank-props (a/prot blank-props blank-props-prototype
+        [blank blank-id blank-props])))

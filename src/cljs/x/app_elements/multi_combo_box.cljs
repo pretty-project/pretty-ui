@@ -216,8 +216,10 @@
   ; @return (component)
   [group-id view-props]
   [:div.x-multi-combo-box
-    [multi-combo-box-chips group-id view-props]
-    [multi-combo-box-field group-id view-props]])
+    [multi-combo-box-chips       group-id view-props]
+    [multi-combo-box-field       group-id view-props]
+    [engine/element-helper       group-id view-props]
+    [engine/element-info-tooltip group-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) group-id
@@ -231,6 +233,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :get-label-f (function)(constant)(opt)
@@ -278,7 +281,7 @@
   ([group-id group-props]
    (let [group-id    (a/id   group-id)
          group-props (a/prot group-id group-props group-props-prototype)]
-        [engine/container group-id
-          {:base-props group-props
-           :component  multi-combo-box
-           :subscriber [::get-view-props group-id]}])))
+        [engine/stated-element group-id
+          {:component     #'multi-combo-box
+           :element-props group-props
+           :subscriber    [::get-view-props group-id]}])))

@@ -30,12 +30,10 @@
   ; @param (map) bar-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :container-stretch-orientation (keyword)}
+  ;  {:color (keyword)}
   [bar-props]
   (merge {:color :primary}
-         (param bar-props)
-         {:container-stretch-orientation :horizontal}))
+         (param bar-props)))
 
 
 

@@ -68,11 +68,11 @@
   ; @param (map) view-props
   ;  {:any-file-selected? (boolean)
   ;   :browser-mode (keyword)
-  ;   :listening-to-request? (boolean)}
+  ;   :synchronizing? (boolean)}
   ;
   ; @return (boolean)
-  [{:keys [any-file-selected? browser-mode listening-to-request?]}]
-  (and (not listening-to-request?)
+  [{:keys [any-file-selected? browser-mode synchronizing?]}]
+  (and (not synchronizing?)
        (or (and (or (= browser-mode :select-file)
                     (= browser-mode :select-files)
                     (= browser-mode :add-files))
@@ -316,16 +316,16 @@
   ;  {:any-file-selected? (boolean)
   ;   :directory-alias (string)
   ;   :directory-path (maps in vector)
-  ;   :listening-to-request? (boolean)}
+  ;   :synchronizing? (boolean)}
   [db _]
   (let [namespace             (a/get-namespace ::this)
         query-id              (engine/namespace->query-id namespace)
         rendered-directory-id (r get-rendered-directory-id db)]
        (merge (get-in db (settings-item-path))
-              {:any-file-selected?    (r any-file-selected?         db)
-               :directory-alias       (r engine/get-directory-alias db rendered-directory-id)
-               :directory-path        (r engine/get-directory-path  db rendered-directory-id)
-               :listening-to-request? (r sync/listening-to-request? db query-id)})))
+              {:any-file-selected? (r any-file-selected?         db)
+               :directory-alias    (r engine/get-directory-alias db rendered-directory-id)
+               :directory-path     (r engine/get-directory-path  db rendered-directory-id)
+               :synchronizing?     (r sync/listening-to-request? db query-id)})))
 
 (a/reg-sub :file-browser/get-label-bar-view-props get-label-bar-view-props)
 
@@ -659,11 +659,11 @@
   ; @param (keyword) popup-id
   ; @param (map) view-props
   ;  {:directory-empty? (boolean)
-  ;   :listening-to-request? (boolean)}
+  ;   :synchronizing? (boolean)}
   ;
   ; @return (component)
-  [popup-id {:keys [directory-empty? listening-to-request?]}]
-  (let [field-disabled? (or directory-empty? listening-to-request?)]
+  [popup-id {:keys [directory-empty? synchronizing?]}]
+  (let [field-disabled? (or directory-empty? synchronizing?)]
        [elements/text-field ::filter-items-field
                             {:auto-focus? true
                              :disabled?   field-disabled?

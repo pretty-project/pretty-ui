@@ -105,7 +105,7 @@
   ([indicator-id indicator-props]
    (let [indicator-id    (a/id   indicator-id)
          indicator-props (a/prot indicator-props indicator-props-prototype)]
-        [engine/container indicator-id
-          {:base-props indicator-props
-           :component  scroll-indicator
-           :subscriber [::get-view-props indicator-id]}])))
+        [engine/stated-element indicator-id
+          {:component     #'scroll-indicator
+           :element-props indicator-props
+           :subscriber   [::get-view-props indicator-id]}])))

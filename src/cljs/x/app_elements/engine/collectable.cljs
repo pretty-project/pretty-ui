@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.01
 ; Description:
-; Version: v0.3.2
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.4.3
 
 
 
@@ -18,6 +18,7 @@
               [mid-fruits.map                   :as map]
               [mid-fruits.vector                :as vector]
               [x.app-core.api                   :as a :refer [r]]
+              [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.input      :as input]
               [x.app-elements.engine.focusable  :as focusable]
@@ -136,12 +137,12 @@
   ;
   ; @param (keyword) input-id
   ; @param (keyword) option-id
-  (fn [{:keys [db]} [_ input-id option-id]]
+  (fn [{:keys [db]} [event-id input-id option-id]]
       (let [on-collect-event (r element/get-element-prop db input-id :on-collect)
             value-path       (r element/get-element-prop db input-id :value-path)]
-           {:dispatch-n [[:x.app-db/apply! value-path vector/conj-item option-id]
-                         [:x.app-elements/mark-input-as-visited! input-id]
-                         (param on-collect-event)]})))
+           {:db (-> db (db/apply!                    [event-id value-path vector/conj-item option-id])
+                       (input/mark-input-as-visited! [event-id input-id]))
+            :dispatch on-collect-event})))
 
 (a/reg-event-fx
   :x.app-elements/->option-uncollected
@@ -149,6 +150,6 @@
   ;
   ; @param (keyword) input-id
   ; @param (keyword) option-id
-  (fn [{:keys [db]} [_ input-id option-id]]
+  (fn [{:keys [db]} [event-id input-id option-id]]
       (let [value-path (r element/get-element-prop db input-id :value-path)]
-           [:x.app-db/apply! value-path vector/remove-item option-id])))
+           {:db (-> db (db/apply! [event-id value-path vector/remove-item option-id]))})))

@@ -116,6 +116,6 @@
    [view nil image-props])
 
   ([image-id image-props]
-   (let [image-id    (a/id   image-id)
-         image-props (a/prot image-id image-props image-props-prototype)]
+   (let [image-id    (a/id   image-id)]
+        ;image-props (a/prot image-id image-props image-props-prototype)
         [image image-id image-props])))

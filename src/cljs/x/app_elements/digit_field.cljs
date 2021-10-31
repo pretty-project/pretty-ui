@@ -147,7 +147,7 @@
   ([field-id field-props]
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-props field-props-prototype)]
-        [engine/container field-id
-          {:base-props field-props
-           :component  digit-field
-           :subscriber [::get-view-props field-id]}])))
+        [engine/stated-element field-id
+          {:component     #'digit-field
+           :element-props field-props
+           :subscriber    [::get-view-props field-id]}])))

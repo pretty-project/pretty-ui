@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.27
 ; Description:
-; Version: v0.8.6
-; Compatibility: x4.2.8
+; Version: v0.8.8
+; Compatibility: x4.4.3
 
 
 
@@ -108,14 +108,14 @@
   ;   :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  (elements/polarity {...})
+  ;  [elements/polarity {...}]
   ;
   ; @usage
-  ;  (elements/polarity :my-polarity {...})
+  ;  [elements/polarity :my-polarity {...}]
   ;
   ; @usage
-  ;  (elements/polarity {:start-content [:<> [elements/label {:content "My label"}]
-  ;                                          [elements/label {:content "My label"}]]})
+  ;  [elements/polarity {:start-content [:<> [elements/label {:content "My label"}]
+  ;                                          [elements/label {:content "My label"}]]}]
   ;
   ; @return (component)
   ([polarity-props]

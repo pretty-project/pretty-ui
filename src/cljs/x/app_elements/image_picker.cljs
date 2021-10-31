@@ -10,8 +10,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.26
 ; Description:
-; Version: v0.1.8
-; Compatibility: x3.9.9
+; Version: v0.2.6
+; Compatibility: x4.4.3
 
 
 
@@ -87,9 +87,9 @@
    [view nil picker-props])
 
   ([picker-id picker-props]
-   (let [picker-id    (a/id   picker-id)
-         picker-props (a/prot picker-props picker-props-prototype)]
-        [engine/container picker-id
-          {:base-props picker-props
-           :component  image-picker
-           :subscriber [::get-view-props picker-id]}])))
+   (let [picker-id    (a/id   picker-id)]
+        ;picker-props (a/prot picker-props picker-props-prototype)
+        [engine/stated-element picker-id
+          {:component     #'image-picker
+           :element-props picker-props
+           :subscriber    [::get-view-props picker-id]}])))

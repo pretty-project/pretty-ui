@@ -28,6 +28,9 @@
 
 ; @constant (map)
 ;  XXX#8671
+;
+; A {:layout :icon-button} presetek nem tartalmazzák a :tooltip és :label tulajdonságokat,
+; mert az a felhasználás helyén dől el, hogy egy ikon gomb felirattal vagy anélkül jelenik meg.
 (def BUTTON-PROPS-PRESETS
      {:accept-button       {:color   :primary
                             :label   :accept!
@@ -43,11 +46,14 @@
       :back-icon-button    {:color   :default
                             :icon    :arrow_back
                             :layout  :icon-button
-                            :tooltip :back!
                             :variant :transparent}
       :cancel-button       {:color   :default
                             :label   :cancel!
                             :layout  :row
+                            :variant :transparent}
+      :cancel-icon-button  {:color   :default
+                            :icon    :close
+                            :layout  :icon-button
                             :variant :transparent}
       :close-button        {:label   :close!
                             :layout  :row
@@ -55,7 +61,6 @@
       :close-icon-button   {:color   :default
                             :icon    :close
                             :layout  :icon-button
-                            :tooltip :close!
                             :variant :transparent}
       :default-icon-button {:color   :default
                             :layout  :icon-button
@@ -67,10 +72,17 @@
                             :label   :delete!
                             :layout  :row
                             :variant :transparent}
+      :delete-icon-button  {:color   :warning
+                            :icon    :delete_outline
+                            :layout  :icon-button
+                            :variant :transparent}
+      :duplicate-icon-button {:color   :default
+                              :icon    :content_copy
+                              :layout  :icon-button
+                              :variant :transparent}
       :home-icon-button    {:color   :default
                             :icon    :apps
                             :layout  :icon-button
-                            :tooltip :back-to-home!
                             :variant :transparent}
       :logout-button       {:color   :warning
                             :label   :logout!
@@ -79,15 +91,13 @@
       :menu-icon-button    {:color   :default
                             :icon    :more_vert
                             :layout  :icon-button
-                            :tooltip :app-menu
                             :variant :transparent}
       :save-button         {:label   :save!
                             :layout  :row
                             :variant :transparent}
-      :save-icon-button    {:color   :default
+      :save-icon-button    {:color   :primary
                             :icon    :save
                             :layout  :icon-button
-                            :tooltip :save!
                             :variant :transparent}
       :select-button       {:label   :select
                             :layout  :row
@@ -95,7 +105,6 @@
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button
-                              :tooltip :app-menu
                               :variant :transparent}})
 
 
@@ -216,8 +225,10 @@
   ; @return (hiccup)
   [button-id button-props]
   [:div.x-button
-    (engine/element-attributes button-id button-props)
-    [button-body               button-id button-props]])
+    (engine/element-attributes   button-id button-props)
+    [button-body                 button-id button-props]
+    [engine/element-helper       button-id button-props]
+    [engine/element-info-tooltip button-id button-props]])
 
 (defn view
   ; @param (keyword)(opt) button-id
@@ -289,8 +300,8 @@
    (let [button-id    (a/id button-id)
          button-props (engine/apply-preset BUTTON-PROPS-PRESETS button-props)
          button-props (a/prot button-props button-props-prototype)]
-        [engine/container button-id
-          {:base-props  button-props
-           :component   button
-           :destructor  [:x.app-elements/destruct-clickable! button-id]
-           :initializer [:x.app-elements/init-clickable!     button-id]}])))
+        [engine/stated-element button-id
+          {:component     #'button
+           :element-props button-props
+           :destructor    [:x.app-elements/destruct-clickable! button-id]
+           :initializer   [:x.app-elements/init-clickable!     button-id]}])))

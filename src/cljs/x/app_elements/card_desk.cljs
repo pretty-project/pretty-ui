@@ -67,8 +67,6 @@
   ;  {:cards (maps in vector)
   ;    [{...} {...}]
   ;   :class (string or vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center

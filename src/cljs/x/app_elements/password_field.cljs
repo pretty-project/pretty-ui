@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v0.5.4
-; Compatibility: x3.9.9
+; Version: v0.5.8
+; Compatibility: x4.4.3
 
 
 
@@ -95,6 +95,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :initial-value (string)(constant)(opt)
@@ -126,8 +127,8 @@
   ([field-id field-props]
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-id field-props field-props-prototype)]
-        [engine/container field-id
-         {:base-props  field-props
-          :component   text-field
-          :initializer [:x.app-elements/init-input! field-id]
-          :subscriber  [::get-view-props            field-id]}])))
+        [engine/stated-element field-id
+         {:component     #'text-field
+          :element-props field-props
+          :initializer   [:x.app-elements/init-input! field-id]
+          :subscriber    [::get-view-props            field-id]}])))

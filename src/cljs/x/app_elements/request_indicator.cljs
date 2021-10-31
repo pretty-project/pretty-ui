@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.10
 ; Description:
-; Version: v0.2.6
-; Compatibility: x3.9.9
+; Version: v0.2.8
+; Compatibility: x4.4.3
 
 
 
@@ -108,7 +108,7 @@
   ([indicator-id indicator-props]
    (let [indicator-id    (a/id   indicator-id)
          indicator-props (a/prot indicator-props indicator-props-prototype)]
-        [engine/container indicator-id
-          {:base-props indicator-props
-           :component  request-indicator
-           :subscriber [::get-view-props indicator-id]}])))
+        [engine/stated-element indicator-id
+          {:component     #'request-indicator
+           :element-props indicator-props
+           :subscriber    [::get-view-props indicator-id]}])))

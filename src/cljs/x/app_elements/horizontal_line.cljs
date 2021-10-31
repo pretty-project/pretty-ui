@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description:
-; Version: v0.2.8
-; Compatibility: x3.9.9
+; Version: v0.3.6
+; Compatibility: x4.4.3
 
 
 
@@ -63,6 +63,19 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- horizontal-line
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) line-id
+  ; @param (map) line-props
+  ;
+  ; @return (hiccup)
+  [line-id line-props]
+  [:div.x-horizontal-line
+    (engine/element-attributes line-id line-props)
+    [:div.x-horizontal-line--body
+      (line-body-attributes line-id line-props)]])
+
 (defn view
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
@@ -88,7 +101,4 @@
   ([line-id line-props]
    (let [line-id    (a/id line-id)
          line-props (a/prot line-props line-props-prototype)]
-        [:div.x-horizontal-line
-          (engine/element-attributes line-id line-props)
-          [:div.x-horizontal-line--body
-            (line-body-attributes line-id line-props)]])))
+        [horizontal-line line-id line-props])))

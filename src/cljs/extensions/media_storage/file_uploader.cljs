@@ -248,7 +248,7 @@
             form-data                (dom/file-selector->form-data file-selector non-aborted-files)
             ; Request details
             action-id                (engine/namespace->query-id namespace)
-            body                     (dom/merge-to-form-data!      form-data {:query query})]
+            body                     (dom/merge-to-form-data!    form-data {:query query})]
            [:x.app-sync/send-query!
              action-id
              {:body         (param body)

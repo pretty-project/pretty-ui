@@ -35,10 +35,14 @@
   [db _]
   (if-let [process-id (get-in db (db/meta-item-path ::primary :process-id))]
           (let [process-progress (r a/get-process-progress db process-id)
-                process-activity (r a/get-process-activity db process-id)]
-               {:process-progress     (param process-progress)
-                :render-progress-bar? (or (= :active process-activity)
-                                          (= :idle   process-activity))})))
+                process-activity (r a/get-process-activity db process-id)
+                overlay-screen?  (get-in db (db/meta-item-path ::primary :overlay-screen?))]
+               {:process-progress       (param process-progress)
+                :render-progress-bar?   (or (= :active process-activity)
+                                            (= :idle   process-activity))
+                :render-screen-overlay? (and (boolean overlay-screen?)
+                                             (or (= :active process-activity)
+                                                 (= :idle   process-activity)))})))
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -51,11 +55,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) process-id
+  ; @param (map) options
+  ;  {:overlay-screen? (boolean)(opt)
+  ;    Default: false}
+  ;
+  ; @usage
+  ;  (r ui/listen-to-process! db :my-request)
+  ;
+  ; @usage
+  ;  (r ui/listen-to-process! db :my-request {...})
   ;
   ; @return (map)
-  [db [_ process-id]]
-  (assoc-in db (db/meta-item-path ::primary :process-id) process-id))
+  [db [_ process-id options]]
+  (assoc-in db (db/meta-item-path ::primary)
+               (merge {:process-id process-id}
+                      (param       options))))
 
+; @usage
+;  [:x.app-ui/listen-to-process! :my-request]
+;
+; @usage
+;  [:x.app-ui/listen-to-process! :my-request {...}]
 (a/reg-event-db :x.app-ui/listen-to-process! listen-to-process!)
 
 
@@ -69,12 +89,15 @@
   ; @param (keyword) component-id
   ; @param (map) view-props
   ;  {:process-progress (integer)(opt)
-  ;   :render-progress-bar? (boolean)(opt)}
+  ;   :render-progress-bar? (boolean)(opt)
+  ;   :render-screen-overlay? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [component-id {:keys [process-progress render-progress-bar?] :as view-props}]
+  [component-id {:keys [process-progress render-progress-bar? render-screen-overlay?] :as view-props}]
   (if (boolean render-progress-bar?)
       [:div#x-app-progress-bar
+        (if (boolean render-screen-overlay?)
+            [:div#x-app-progress-bar--screen-overlay])
         [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
 
 (defn view

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.0.8
-; Compatibility: x3.9.9
+; Version: v1.1.4
+; Compatibility: x4.4.3
 
 
 
@@ -96,7 +96,9 @@
      (engine/element-attributes field-id view-props)
      [text-field/text-field-label           field-id view-props]
      [multiline-field-textarea-container    field-id view-props]
-     [text-field/text-field-invalid-message field-id view-props]])
+     [text-field/text-field-invalid-message field-id view-props]
+     [engine/element-helper                 field-id view-props]
+     [engine/element-info-tooltip           field-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) field-id
@@ -110,6 +112,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false
@@ -184,8 +187,8 @@
   ([field-id field-props]
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-id field-props field-props-prototype)]
-        [engine/container field-id
-          {:base-props  field-props
-           :component   multiline-field
-           :initializer [:x.app-elements/init-input! field-id]
-           :subscriber  [::get-view-props            field-id]}])))
+        [engine/stated-element field-id
+          {:component     #'multiline-field
+           :element-props field-props
+           :initializer   [:x.app-elements/init-input! field-id]
+           :subscriber    [::get-view-props            field-id]}])))

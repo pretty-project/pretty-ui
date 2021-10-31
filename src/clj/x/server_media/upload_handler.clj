@@ -22,8 +22,8 @@
               [pathom.api         :as pathom]
               [x.server-core.api  :as a]
               [x.server-db.api    :as db]
-              [x.server-media.engine            :as engine]
-              [x.server-media.thumbnail-handler :as thumbnail-handler]
+              [x.server-media.engine                 :as engine]
+              [x.server-media.thumbnail-handler      :as thumbnail-handler]
               [com.wsscode.pathom3.connect.operation :as pathom.co]))
 
 
@@ -36,7 +36,8 @@
   ;
   ; @example
   ;  (process-files-data {"0" {:tempfile #object[java.io.File 0x4571e67a "/my-path/my-tempfile.tmp"]}})
-  ;  => {"0" {:tempfile "/my-path/my-tempfile.tmp"}})
+  ;  =>
+  ;  {"0" {:tempfile "/my-path/my-tempfile.tmp"}}
   ;
   ; @return (map)
   [files-data]
@@ -51,15 +52,6 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn multipart-params->files-data
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) multipart-params
-  ;
-  ; @return (map)
-  [multipart-params]
-  (dissoc multipart-params "destination-directory-id" "response-query"))
-
 (defn request->files-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -67,8 +59,8 @@
   ;
   ; @return (map)
   [request]
-  (let [multipart-params (http/request->multipart-params request)]
-       (multipart-params->files-data multipart-params)))
+  (let [params (http/request->params request)]
+       (dissoc params :query)))
 
 
 
@@ -147,36 +139,32 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ;  {:request (map)}
-  ; @param (map) mutation-props
-  ;  {:destination-directory-id (string)
-  ;   :processed-files-data (map)
-  ;    {"0" (map)
-  ;     {:content-type (string)
-  ;      :filename (string)
-  ;      :size (B)
-  ;      :tempfile (string)}
+  ;  {:request
+  ;   {:params (map)
+  ;    {:query (string)
+  ;     "0" (map)
+  ;      {:content-type (string)
+  ;       :filename (string)
+  ;       :size (B)
+  ;       :tempfile (string)}
   ;     "1" (map)
   ;     "2" (map)
-  ;     ...}}
+  ;     ...}}}
+  ; @param (map) mutation-props
+  ;  {:destination-directory-id (string)}
   ;
   ; @return (string)
-  [{:keys [request] :as env} _]
+  [{:keys [request] :as env} {:keys [destination-directory-id]}]
   {::pathom.co/op-name 'media/upload-files!}
 
-  (println (str "valami!!!"))
-
-;  (let [files-data               (request->files-data request)])
-;        destination-directory-id (http/request->multipart-param request "destination-directory-id")])
-;        response-query           (http/request->multipart-param request "response-query")])
-;        processed-files-data     (process-files-data files-data)]
-;       (println (str processed-files-data)))
-;       (doseq [[_ {:keys [filename size tempfile] :as file}] processed-files-data]
-;              (let [action-props {:destination-directory-id destination-directory-id
-;                                  :filename                 filename
-;                                  :filesize                 size
-;                                  :temp-filepath            tempfile)
-;                   (upload-file! env action-props)])
+  (let [files-data           (request->files-data request)
+        processed-files-data (process-files-data files-data)]
+       (doseq [[_ {:keys [filename size tempfile] :as file}] processed-files-data]
+              (let [action-props {:destination-directory-id destination-directory-id
+                                  :filename                 filename
+                                  :filesize                 size
+                                  :temp-filepath            tempfile}]
+                   (upload-file! env action-props))))
 
   (return "Files uploaded"))
 

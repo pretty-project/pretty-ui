@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.13
 ; Description:
-; Version: v0.5.8
-; Compatibility: x3.9.9
+; Version: v0.6.4
+; Compatibility: x4.4.3
 
 
 
@@ -104,7 +104,6 @@
   ;
   ; @return (map)
   ;  {:bar-id (keyword)
-  ;   :container-stretch-orientation (keyword)
   ;   :orientation (keyword)
   ;   :selected-content-id (keyword)
   ;   :surface-id (keyword)}
@@ -114,8 +113,7 @@
           ; XXX#4339 Default selected content-id
           :selected-content-id (engine/visible-items->first-content-id tab-items)
           :orientation :horizontal}
-         (param tabs-props)
-         {:container-stretch-orientation :horizontal}))
+         (param tabs-props)))
 
 
 
@@ -198,7 +196,7 @@
   ([tabs-id tabs-props]
    (let [tabs-id    (a/id   tabs-id)
          tabs-props (a/prot tabs-props tabs-props-prototype)]
-        [engine/container tabs-id
-          {:base-props tabs-props
-           :component  tabs
-           :subscriber [::get-view-props tabs-id]}])))
+        [engine/stated-element tabs-id
+          {:component     #'tabs
+           :element-props tabs-props
+           :subscriber    [::get-view-props tabs-id]}])))

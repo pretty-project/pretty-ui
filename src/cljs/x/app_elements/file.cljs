@@ -287,7 +287,8 @@
                [:<> [file-highlighter file-id view-props]
                     (if (some? on-click)
                         [file-button-body file-id view-props]
-                        [file-static-body file-id view-props])]])
+                        [file-static-body file-id view-props])
+                    [engine/element-stickers file-id view-props]]])
 
 (defn view
   ; XXX#8711
@@ -356,7 +357,7 @@
   ([file-id file-props]
    (let [file-id    (a/id   file-id)
          file-props (a/prot file-id file-props file-props-prototype)]
-        [engine/container file-id
-          {:base-props file-props
-           :component  file
-           :subscriber [::get-view-props file-id]}])))
+        [engine/stated-element file-id
+          {:component     #'file
+           :element-props file-props
+           :subscriber    [::get-view-props file-id]}])))

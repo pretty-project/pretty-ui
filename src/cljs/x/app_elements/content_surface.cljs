@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v0.3.8
-; Compatibility: x3.9.9
+; Version: v0.4.2
+; Compatibility: x4.4.3
 
 
 
@@ -115,7 +115,7 @@
   ([surface-id surface-props]
    (let [surface-id    (a/id   surface-id)
          surface-props (a/prot surface-props surface-props-prototype)]
-        [engine/container surface-id
-          {:base-props surface-props
-           :component  content-surface
-           :subscriber [::get-view-props surface-id]}])))
+        [engine/stated-element surface-id
+          {:component     #'content-surface
+           :element-props surface-props
+           :subscriber    [::get-view-props surface-id]}])))

@@ -43,21 +43,11 @@
   ;  A formhoz tartozó inputok értékei nem NIL, FALSE vagy "" értékek
   [db [_ form-id]]
   (let [input-ids (r get-input-ids db form-id)]
-       (vector/all-items-match? input-ids #(r input/input-value-passed? db %1))))
+       (vector/all-items-match? input-ids #(r input/input-passed? db %1))))
 
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reg-input!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn form-completed?
   ; @param (keyword) form-id
-  ; @param (keyword) input-id
   ;
-  ; @return (map)
-  [db [_ form-id input-id]]
-  (let [input-ids (r get-input-ids db form-id)]
-       (r element/set-element-prop! db form-id :input-ids
-          (vector/conj-item input-ids input-id))))
+  ; @return (boolean)
+  [db [_ form-id]]
+  (r inputs-passed? db form-id))

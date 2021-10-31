@@ -4,6 +4,8 @@
 body[data-theme="dark"] {
   /* App background */
   --app-background:             var( --black );
+  /* App overlay */
+  --app-overlay:                var( --black-semi-transparent );
   /* Background color */
   --background-color:           var( --black-dark );
   --background-color-muted:     var( --grey-x-dark );
@@ -34,9 +36,13 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   /* App background */
-  --app-background:             var( --white );
+  --app-background:             #f9f7fb;
+  /* App overlay */
+  --app-overlay:                var( --white-semi-transparent );
+  /* Fill color */
+  --fill-color:                 var( --white-xx-light );
   /* Background color */
-  --background-color:           var( --white-light );
+  --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );
   --background-color-highlight: var( --white-dark );
   --background-color-primary:   var( --primary-xx-dark );
@@ -59,9 +65,7 @@ body[data-theme="light"] {
   --color-primary:              var( --primary-xx-dark );
   --color-secondary:            var( --secondary-xx-dark );
   --color-success:              var( --success-xx-dark );
-  --color-warning:              var( --warning-xx-dark );
-  /* Fill color */
-  --fill-color:                var( --white-xx-light ) }
+  --color-warning:              var( --warning-xx-dark ) }
 
 body[data-theme="high-contrast"] {}
 

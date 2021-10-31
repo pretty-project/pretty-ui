@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v0.9.4
-; Compatibility: x4.1.7
+; Version: v1.0.6
+; Compatibility: x4.4.3
 
 
 
@@ -49,7 +49,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
@@ -57,17 +56,12 @@
   ;   :layout (keyword)
   ;   :min-width (keyword)
   ;   :type (keyword)}
-  [field-id {:keys [stretch-orientation] :as field-props}]
+  [field-id field-props]
   (merge {:color      :default
           :layout     :row
           :min-width  :s
           :type       :text
-          :value-path (engine/default-value-path field-id)
-
-          ; A stretch-orientation tulajdonságot szükséges az element-container komponens
-          ; számára is átadni, hogy alkalmazkodni tudjon a környezethez az elem.
-          :container-stretch-orientation stretch-orientation}
-
+          :value-path (engine/default-value-path field-id)}
          (param field-props)
          {:end-adornments (end-adornments-prototype field-id field-props)}))
 
@@ -142,7 +136,8 @@
   [field-id {:keys [label required?]}]
   (if (some? label)
       [:div.x-text-field--label [components/content {:content label}]
-                                (if required? "*")]))
+                                (if (boolean required?)
+                                    [:span.x-text-field--label-asterisk "*"])]))
 
 (defn- text-field-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -207,10 +202,12 @@
   ; @return (hiccup)
   [field-id view-props]
   [:label.x-text-field
-    (engine/element-attributes  field-id view-props)
-    [text-field-label           field-id view-props]
-    [text-field-input-container field-id view-props]
-    [text-field-invalid-message field-id view-props]])
+    (engine/element-attributes   field-id view-props)
+    [text-field-label            field-id view-props]
+    [text-field-input-container  field-id view-props]
+    [text-field-invalid-message  field-id view-props]
+    [engine/element-helper       field-id view-props]
+    [engine/element-info-tooltip field-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) field-id
@@ -230,6 +227,7 @@
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: false
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false
@@ -328,9 +326,9 @@
   ([field-id field-props]
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-id field-props field-props-prototype)]
-        [engine/container field-id
-          {:base-props  field-props
-           :component   text-field
-           :modifier    view-props-modifier
-           :initializer [:x.app-elements/init-input! field-id]
-           :subscriber  [::get-view-props            field-id]}])))
+        [engine/stated-element field-id
+          {:component     text-field
+           :element-props field-props
+           :modifier      view-props-modifier
+           :initializer   [:x.app-elements/init-input! field-id]
+           :subscriber    [::get-view-props            field-id]}])))

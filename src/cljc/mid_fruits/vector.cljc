@@ -1360,10 +1360,7 @@
   ;
   ; @return (boolean)
   [n test-f]
-  (reduce-while (fn [_ %2] (test-f %2))
-                (param false)
-                (param n)
-                (fn [%1 _] (boolean %1))))
+  (every? test-f n))
 
 (defn get-first-match-item
   ; @param (vector) n

@@ -24,15 +24,44 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-view-props
+(defn get-common-props
   [db _]
   {:selected-language (r locales/get-selected-language db)})
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub ::get-common-props get-common-props)
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Client-item components --------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- client-item-secondary-details
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _ {:keys [added-at email-address]} _]
+  (let [added-at (time/timestamp->date-and-time added-at :yyyymmdd :hhmm)]
+       [:div.clients--client--secondary-details
+          [:div.clients--client--email-address email-address]
+          [:div.clients--client--added-at      added-at]]))
+
+(defn- client-item-primary-details
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _ {:keys [client-no first-name last-name]} {:keys [selected-language]}]
+  (let [full-name (locales/name->ordered-name first-name last-name selected-language)]
+       [:div.clients--client--primary-details
+          [:div.clients--client--full-name full-name]
+          [:div.clients--client--client-no "#" client-no]]))
+
+(defn client-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [lister-id item-dex {:keys [id] :as client-props} common-props]
+  (let [client-uri (str "/clients/" id)]
+       [:button.clients--client {:on-click #(a/dispatch [:x.app-router/go-to! client-uri])}
+          [client-item-primary-details   lister-id item-dex client-props common-props]
+          [client-item-secondary-details lister-id item-dex client-props common-props]]))
+
+
+
+;; -- Client-list components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn sort-by-button
@@ -77,39 +106,22 @@
       ;[delete-selected-button lister-id lister-props]]
     [search-field lister-id lister-props]])
 
-(defn client-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [lister-id item-dex {:client/keys [added-at client-no id first-name last-name email-address]}
-                      {:keys [selected-language]}]
-  (let [full-name  (locales/name->ordered-name first-name last-name selected-language)
-        added-at   (time/timestamp->date-and-time added-at :yyyymmdd :hhmm)
-        client-uri (str "/clients/" id)]
-       [:button.clients--client {:on-click #(a/dispatch [:x.app-router/go-to! client-uri])}
-          [:div.clients--client--primary-details
-             [:div.clients--client--full-name full-name]
-             [:div.clients--client--client-no "#" client-no]]
-          [:div.clients--client--secondary-details
-             [:div.clients--client--email-address email-address]
-             [:div.clients--client--added-at      added-at]]]))
-
 (defn- client-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ view-props]
-  [item-lister :clients {:common-props  view-props
-                         :on-list-ended [:clients/request-clients!]
+  [_]
+  [item-lister :clients {:on-list-ended [:clients/request-clients!]
                          :element       #'client-item
                          :request-id    :clients/request-clients!
                          ;:sortable?     true
+                         :subscriber    [::get-common-props]
                          :value-path    [:clients :documents]}])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
+  [surface-id]
   [layouts/layout-a surface-id {:label :clients :icon :people
-                                :body        {:content       #'client-list
-                                              :content-props view-props}
-                                :body-header {:content       #'search-bar
-                                              :content-props view-props}}])
+                                :body        {:content #'client-list}
+                                :body-header {:content #'search-bar}}])
 
 
 
@@ -132,8 +144,7 @@
   [:x.app-ui/set-surface!
    ::view {:content   #'view
            :label-bar {:content       #'ui/go-home-surface-label-bar
-                       :content-props {:label :clients}}
-           :subscriber [::get-view-props]}])
+                       :content-props {:label :clients}}}])
 
 (a/reg-lifecycles
   ::lifecycles

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.6.2
-; Compatibility: x3.9.9
+; Version: v0.6.8
+; Compatibility: x4.4.3
 
 
 
@@ -17,6 +17,7 @@
     (:require [mid-fruits.candy                 :refer [param]]
               [mid-fruits.map                   :as map]
               [x.app-core.api                   :as a :refer [r]]
+              [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.input      :as input]
               [x.app-elements.engine.focusable  :as focusable]
@@ -137,21 +138,21 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  (fn [{:keys [db]} [_ input-id]]
+  (fn [{:keys [db]} [event-id input-id]]
       (let [on-check-event (r element/get-element-prop db input-id :on-check)
             value-path     (r element/get-element-prop db input-id :value-path)]
-           {:dispatch-n [[:x.app-db/set-item! value-path true]
-                         [:x.app-elements/mark-input-as-visited! input-id]
-                         (param on-check-event)]})))
+           {:db (-> db (db/set-item!                 [event-id value-path true])
+                       (input/mark-input-as-visited! [event-id input-id]))
+            :dispatch on-check-event})))
 
 (a/reg-event-fx
   :x.app-elements/->input-unchecked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  (fn [{:keys [db]} [_ input-id]]
+  (fn [{:keys [db]} [event-id input-id]]
       (let [on-uncheck-event (r element/get-element-prop db input-id :on-uncheck)
             value-path       (r element/get-element-prop db input-id :value-path)]
-           {:dispatch-n [[:x.app-db/set-item! value-path false]
-                         [:x.app-elements/mark-input-as-visited! input-id]
-                         (param on-uncheck-event)]})))
+           {:db (-> db (db/set-item!                 [event-id value-path false])
+                       (input/mark-input-as-visited! [event-id input-id]))
+            :dispatch on-uncheck-event})))

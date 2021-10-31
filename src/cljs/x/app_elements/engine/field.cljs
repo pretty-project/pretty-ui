@@ -41,7 +41,10 @@
 (def ADORNMENT-WIDTH 24)
 
 ; @constant (px)
-(def DEFAULT-FIELD-PADDING 12)
+(def DEFAULT-FIELD-HORIZONTAL-PADDING 12)
+
+; @constant (px)
+(def FIELD-VERTICAL-PADDING 4)
 
 ; @constant (px)
 (def FIELD-BORDER-WIDTH 1)
@@ -72,7 +75,7 @@
   {:icon :clear :on-click [:x.app-elements/empty-field! field-id]
    ; XXX#8073
    ; Az adornment a {:preset ...} tulajdonság értékével azonosítható
-   :preset :empty-field-adornment
+   :preset  :empty-field-adornment
    :tooltip :empty-field!})
 
 (defn reset-field-adornment-preset
@@ -137,7 +140,7 @@
   [{:keys [start-adornments]}]
   (if (vector/nonempty? start-adornments)
       (* (count start-adornments) ADORNMENT-WIDTH)
-      (return DEFAULT-FIELD-PADDING)))
+      (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
 
 (defn field-props->end-adornments-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -149,7 +152,7 @@
   [{:keys [end-adornments]}]
   (if (vector/nonempty? end-adornments)
       (* (count end-adornments) ADORNMENT-WIDTH)
-      (return DEFAULT-FIELD-PADDING)))
+      (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
 
 (defn view-props->field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,7 +190,8 @@
   ;
   ; @return (integer)
   [view-props]
-  (+ (* FIELD-LINE-HEIGHT (view-props->line-count view-props))))
+  (+ (* FIELD-LINE-HEIGHT (view-props->line-count view-props))
+     (* FIELD-VERTICAL-PADDING 2)))
     ; WARNING! DEPRECATED!
     ; Ettől 50px magas lett a search-field!
     ; (* FIELD-BORDER-WIDTH 2)

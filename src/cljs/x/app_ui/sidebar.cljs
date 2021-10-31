@@ -180,8 +180,8 @@
   ; @return (hiccup)
   [sidebar-id view-props]
   [:div#x-app-sidebar--body
-    [sidebar-controls sidebar-id view-props]
-    [sidebar-surface  sidebar-id view-props]])
+    [sidebar-surface  sidebar-id view-props]
+    [sidebar-controls sidebar-id view-props]])
 
 (defn- sidebar
   ; WARNING! NON-PUBLIC! DO NOT USE!

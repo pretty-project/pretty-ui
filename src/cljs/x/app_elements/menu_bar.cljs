@@ -74,8 +74,7 @@
   ;    :horizontal, :vertical}
   ;
   ; @return (map)
-  ;  {:container-stretch-orientation (keyword)
-  ;   :font-size (keyword)
+  ;  {:font-size (keyword)
   ;   :horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :menu-items (map)
@@ -86,9 +85,7 @@
           :orientation :horizontal}
          (if-not (= orientation :vertical)
                  {:horizontal-align :center})
-         (param bar-props)
-         (if-not (= orientation :vertical)
-                 {:container-stretch-orientation :horizontal})))
+         (param bar-props)))
 
 
 

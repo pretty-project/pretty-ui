@@ -18,12 +18,13 @@
               [x.app-elements.engine.clickable          :as clickable]
               [x.app-elements.engine.collectable        :as collectable]
               [x.app-elements.engine.combo-box          :as combo-box]
-              [x.app-elements.engine.container          :as container]
               [x.app-elements.engine.context-surface    :as context-surface]
               [x.app-elements.engine.countable          :as countable]
               [x.app-elements.engine.deletable          :as deletable]
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-adornments :as element-adornments]
+              [x.app-elements.engine.element-info       :as element-info]
+              [x.app-elements.engine.element-stickers   :as element-stickers]
               [x.app-elements.engine.expandable         :as expandable]
               [x.app-elements.engine.field              :as field]
               [x.app-elements.engine.focusable          :as focusable]
@@ -33,6 +34,7 @@
               [x.app-elements.engine.passfield          :as passfield]
               [x.app-elements.engine.preset             :as preset]
               [x.app-elements.engine.selectable         :as selectable]
+              [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]
               [x.app-elements.engine.surface            :as surface]
               [x.app-elements.engine.targetable         :as targetable]
@@ -62,9 +64,6 @@
 ; x.app-elements.engine.clickable
 (def clickable-body-attributes clickable/clickable-body-attributes)
 
-; x.app-elements.engine.container
-(def container container/view)
-
 ; x.app-elements.engine.countable
 (def countable-decrease-attributes countable/countable-decrease-attributes)
 (def countable-increase-attributes countable/countable-increase-attributes)
@@ -84,11 +83,19 @@
 (def get-element-props                     element/get-element-props)
 (def get-element-view-props                element/get-element-view-props)
 (def set-element-prop!                     element/set-element-prop!)
+(def update-element-prop!                  element/update-element-prop!)
 (def remove-element-prop!                  element/remove-element-prop!)
 
 ; x.app-elements.engine.element-adornments
 (def element-end-adornments   element-adornments/element-end-adornments)
 (def element-start-adornments element-adornments/element-start-adornments)
+
+; x.app-elements.engine.element-info
+(def element-helper       element-info/element-helper)
+(def element-info-tooltip element-info/element-info-tooltip)
+
+; x.app-elements.engine.element-stickers
+(def element-stickers element-stickers/element-stickers)
 
 ; x.app-elements.engine.field
 (def empty-field-adornment-preset          field/empty-field-adornment-preset)
@@ -105,7 +112,8 @@
 (def blur-element-function focusable/blur-element-function)
 
 ; x.app-elements.engine.form
-(def inputs-passed? form/inputs-passed?)
+(def inputs-passed?  form/inputs-passed?)
+(def form-completed? form/form-completed?)
 
 ; x.app-elements.engine.input
 (def default-value-path     input/default-value-path)
@@ -131,6 +139,9 @@
 (def selectable-unselect-attributes selectable/selectable-unselect-attributes)
 (def view-props->selected-option    selectable/view-props->selected-option)
 (def get-selectable-view-props      selectable/get-selectable-view-props)
+
+; x.app-elements.engine.stated-element
+(def stated-element stated-element/view)
 
 ; x.app-elements.engine.steppable
 (def steppable-attributes     steppable/steppable-attributes)

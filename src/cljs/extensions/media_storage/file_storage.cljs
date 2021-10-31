@@ -241,11 +241,11 @@
   ;   :directory-path (maps in vector)
   ;   :filtered-files (maps in vector)
   ;   :filtered-subdirectories (maps in vector)
-  ;   :listening-to-request? (boolean)
   ;   :order-by (keyword)
   ;   :storage-free-capacity (B)
   ;   :storage-total-capacity (B)
-  ;   :storage-used-capacity (B)}
+  ;   :storage-used-capacity (B)
+  ;   :synchronizing? (boolean)}
   [db _]
   (let [namespace               (a/get-namespace ::this)
         query-id                (engine/namespace->query-id namespace)
@@ -257,11 +257,11 @@
         :directory-alias                  (r engine/get-directory-alias        db rendered-directory-id)
         :directory-empty?                 (r engine/directory-empty?           db rendered-directory-id)
         :directory-path                   (r engine/get-directory-path         db rendered-directory-id)
-        :listening-to-request?            (r sync/listening-to-request?        db query-id)
         :order-by                         (r get-order-by                      db)
         :storage-free-capacity            (r engine/get-storage-free-capacity  db)
         :storage-total-capacity           (r engine/get-storage-total-capacity db)
         :storage-used-capacity            (r engine/get-storage-used-capacity  db)
+        :synchronizing?                   (r sync/listening-to-request?        db query-id)
         :directory-render-files?          (map/nonempty? filtered-files)
         :directory-render-subdirectories? (map/nonempty? filtered-subdirectories)
         :filtered-files                   (param filtered-files)
@@ -463,11 +463,11 @@
   ; @param (keyword) component-id
   ; @param (map) view-props
   ;  {:directory-empty? (boolean)
-  ;   :listening-to-request? (boolean)}
+  ;   :synchronizing? (boolean)}
   ;
   ; @return (component)
-  [_ {:keys [directory-empty? listening-to-request?]}]
-  (let [field-disabled? (or directory-empty? listening-to-request?)]
+  [_ {:keys [directory-empty? synchronizing?]}]
+  (let [field-disabled? (or directory-empty? synchronizing?)]
        [elements/text-field ::filter-items-field
                             {:auto-focus? true
                              :disabled?   field-disabled?
@@ -561,10 +561,10 @@
   [_ {:keys [directory-exists?] :as view-props}]
   [elements/button ::home-button
                    {:color     :default
-                    :disabled? (or (engine/view-props->root-level? view-props)
-                                   (boolean directory-exists?))
+                    :disabled? (engine/view-props->root-level? view-props)
                     :icon      :home
                     :layout    :icon-button
+                    :on-click  [:file-storage/go-home!]
                     :tooltip   :my-storage
                     :variant   :transparent
                     :width     :fit}])
@@ -606,10 +606,10 @@
   ;  {:directory-empty? (boolean)}
   ;
   ; @return (component)
-  [_ {:keys [directory-empty? listening-to-request?]}]
+  [_ {:keys [directory-empty? synchronizing?]}]
   [elements/button ::order-by-select-button
                    {:color     :default
-                    :disabled? (or directory-empty? listening-to-request?)
+                    :disabled? (or directory-empty? synchronizing?)
                     :icon      :sort
                     :label     :order-by
                     :layout    :icon-button

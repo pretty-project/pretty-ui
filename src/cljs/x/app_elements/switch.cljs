@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.9.0
-; Compatibility: x3.9.9
+; Version: v0.9.6
+; Compatibility: x4.4.3
 
 
 
@@ -74,7 +74,8 @@
   ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-switch--label [components/content {:content label}]
-                        (if required? "*")])
+                        (if (boolean required?)
+                            [:span.x-switch--label-asterisk "*"])])
 
 (defn- switch-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,7 +101,9 @@
   [switch-id view-props]
   [:div.x-switch
     (engine/checkable-attributes switch-id view-props)
-    [switch-body switch-id view-props]])
+    [switch-body                 switch-id view-props]
+    [engine/element-helper       switch-id view-props]
+    [engine/element-info-tooltip switch-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) switch-id
@@ -116,6 +119,7 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :initial-value (boolean)(constant)(opt)
   ;   :label (metamorphic-content)
@@ -142,8 +146,8 @@
   ([switch-id switch-props]
    (let [switch-id    (a/id   switch-id)
          switch-props (a/prot switch-id switch-props switch-props-prototype)]
-        [engine/container switch-id
-          {:base-props  switch-props
-           :component   switch
-           :initializer [:x.app-elements/init-input! switch-id]
-           :subscriber  [::get-view-props            switch-id]}])))
+        [engine/stated-element switch-id
+          {:component     #'switch
+           :element-props switch-props
+           :initializer   [:x.app-elements/init-input! switch-id]
+           :subscriber    [::get-view-props            switch-id]}])))

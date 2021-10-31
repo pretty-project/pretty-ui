@@ -75,7 +75,8 @@
   [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-checkbox--label [components/content {:content label}]
-                              (if required? "*")]))
+                              (if (boolean required?)
+                                  [:span.x-checkbox--label-asterisk "*"])]))
 
 (defn- checkbox-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,7 +101,8 @@
   [checkbox-id view-props]
   [:div.x-checkbox
     (engine/checkable-attributes checkbox-id view-props)
-    [checkbox-body checkbox-id view-props]])
+    [checkbox-body         checkbox-id view-props]
+    [engine/element-helper checkbox-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) checkbox-id
@@ -115,6 +117,7 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :initial-value (boolean)(constant)(opt)
   ;   :on-check (metamorphic-event)(opt)
@@ -140,8 +143,8 @@
   ([checkbox-id checkbox-props]
    (let [checkbox-id    (a/id   checkbox-id)
          checkbox-props (a/prot checkbox-id checkbox-props checkbox-props-prototype)]
-        [engine/container checkbox-id
-          {:base-props  checkbox-props
-           :component   checkbox
-           :initializer [:x.app-elements/init-input! checkbox-id]
-           :subscriber  [::get-view-props            checkbox-id]}])))
+        [engine/stated-element checkbox-id
+          {:component     #'checkbox
+           :element-props checkbox-props
+           :initializer   [:x.app-elements/init-input! checkbox-id]
+           :subscriber    [::get-view-props            checkbox-id]}])))

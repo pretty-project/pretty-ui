@@ -32,7 +32,8 @@
   [_ _]
   [:div
    [elements/button ::home-icon-button
-                    {:preset   :home-icon-button
+                    {:tooltip  :back-to-home!
+                     :preset   :home-icon-button
                      :disabler [:x.app-router/at-home?]
                      :on-click [:x.app-router/go-home!]}]
                     ;:icon     :dashboard
@@ -52,7 +53,8 @@
   ; @return (component)
   [_ _]
   [elements/button ::back-icon-button
-                   {:color    :primary
+                   {:tooltip  :back!
+                    :color    :primary
                     :preset   :back-icon-button
                     :on-click [:x.app-router/go-back!]}])
 
@@ -81,7 +83,8 @@
   [_ _]
   [elements/button ::menu-icon-button
                    {:preset   :user-menu-icon-button
-                    :on-click [:x.app-views.menu/render!]}])
+                    :on-click [:x.app-views.menu/render!]
+                    :tooltip  :app-menu}])
 
 (defn surface-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

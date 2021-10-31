@@ -66,7 +66,8 @@
   [_ _]
   [elements/button {:color    :primary
                     :on-click [:x.app-router/go-back!]
-                    :preset   :back-icon-button}])
+                    :preset   :back-icon-button
+                    :tooltip  :back!}])
 
 (defn- popup-close-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,7 +79,8 @@
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
                     :on-click [:x.app-ui/close-popup! popup-id]
-                    :preset   :close-icon-button}])
+                    :preset   :close-icon-button
+                    :tooltip  :close!}])
 
 (defn- popup-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,7 +113,6 @@
 (defn close-popup-label-bar
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
-
   ;
   ; @return (component)
   [popup-id bar-props]

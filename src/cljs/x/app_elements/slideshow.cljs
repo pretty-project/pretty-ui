@@ -9,8 +9,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.09
 ; Description:
-; Version: v0.1.0
-; Compatibility: x3.9.9
+; Version: v0.1.8
+; Compatibility: x4.4.3
 
 
 
@@ -227,8 +227,8 @@
    (let [slideshow-id    (a/id   slideshow-id)
          slideshow-props (a/prot slideshow-props slideshow-props-prototype)
          stepper-props   (gestures/extended-props->stepper-props slideshow-props)]
-        [engine/container slideshow-id
-          {:base-props  slideshow-props
-           :component   slideshow
-           :initializer [:x.app-gestures/init-stepper! slideshow-id stepper-props]
-           :subscriber  [::get-view-props              slideshow-id]}])))
+        [engine/stated-element slideshow-id
+          {:component     #'slideshow
+           :element-props slideshow-props
+           :initializer   [:x.app-gestures/init-stepper! slideshow-id stepper-props]
+           :subscriber    [::get-view-props              slideshow-id]}])))

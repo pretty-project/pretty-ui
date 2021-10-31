@@ -257,8 +257,9 @@
   [field-id view-props]
   [:div.x-combo-box--surface
     (if (engine/view-props->render-options?  view-props)
-        [combo-box-options          field-id view-props]
-        [combo-box-no-options-label field-id view-props])
+        [combo-box-options          field-id view-props])
+       ; Szükségtelen megjeleníteni a no-options-label feliratot.
+       ;[combo-box-no-options-label field-id view-props]
     (if (engine/view-props->render-extender? view-props)
         [combo-box-extender         field-id view-props])])
 
@@ -298,6 +299,7 @@
   ;   :disabler (subscription vector)(opt)
   ;   :extendable? (boolean)(opt)
   ;    Default: false
+  ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: str
   ;   :helper (metamorphic-content)(opt)
@@ -365,8 +367,8 @@
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-id field-props field-props-prototype)
          field-props (field-props<-surface field-id field-props)]
-        [engine/container field-id
-          {:base-props field-props
-           :component  text-field/text-field
-           :modifier   text-field/view-props-modifier
-           :subscriber [::get-view-props field-id]}])))
+        [engine/stated-element field-id
+          {:component     #'text-field/text-field
+           :element-props field-props
+           :modifier      text-field/view-props-modifier
+           :subscriber    [::get-view-props field-id]}])))

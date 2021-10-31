@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.4.2
-; Compatibility: x3.9.9
+; Version: v0.4.8
+; Compatibility: x4.4.3
 
 
 
@@ -286,12 +286,13 @@
   ; @param (keyword) input-id
   ;
   ; @return (boolean)
-  ;  Az input-value értéke nem NIL, FALSE vagy "",
+  ;  Az input-value értéke nem NIL, FALSE vagy "" (vagy nem required),
   ;  és ha az inputot validálni kell, akkor az input-value értéke valid-e
   [db [_ input-id]]
-  (boolean (and (r input-value-passed? db input-id)
+  (boolean (and (or (r input-value-passed?        db input-id)
+                    (not (r input-required?       db input-id)))
                 (or (not (r validate-input-value? db input-id))
-                    (r input-value-valid? db input-id)))))
+                    (r input-value-valid?         db input-id)))))
 
 (defn input-required-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -374,6 +375,18 @@
 
 (a/reg-event-db :x.app-elements/mark-input-as-visited! mark-input-as-visited!)
 
+(defn reg-form-input!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (map)
+  [db [_ input-id]]
+  (if-let [form-id (r element/get-element-prop db input-id :form-id)]
+          (r element/update-element-prop! db form-id :input-ids
+             vector/conj-item input-id)
+          (return db)))
+
 (defn init-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -382,7 +395,8 @@
   ; @return (map)
   [db [event-id input-id]]
   (-> db (use-input-initial-value!  [event-id input-id])
-         (store-input-backup-value! [event-id input-id])))
+         (store-input-backup-value! [event-id input-id])
+         (reg-form-input!           [event-id input-id])))
 
 (a/reg-event-db :x.app-elements/init-input! init-input!)
 
@@ -445,8 +459,8 @@
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ input-id]]
       (let [on-reset-event (r element/get-element-prop db input-id :on-reset)]
-           {:dispatch-n [[:x.app-elements/reset-input-value! input-id]
-                         (param on-reset-event)]})))
+           {:db (r reset-input-value! db input-id)
+            :dispatch on-reset-event})))
 
 (a/reg-event-fx
   :x.app-elements/reg-change-listener?!
@@ -456,9 +470,9 @@
   (fn [{:keys [db]} [_ input-id]]
       ; WARNING#9055
       ; Az :x.app-db/reg-change-listener! esemény nem létezik!
-      (let [value-path (r element/get-element-prop db input-id :value-path)]
-           {:dispatch-if [(r input-listen-to-change? db input-id)
-                          [:x.app-db/reg-change-listener! value-path]]})))
+      (let [value-path (r element/get-element-prop db input-id :value-path)])))
+          ;(if (r input-listen-to-change? db input-id)
+          ;    {:db (r db/reg-change-listener! value-path)})
 
 (a/reg-event-fx
   :x.app-elements/resolve-change-listener?!
@@ -468,6 +482,6 @@
   (fn [{:keys [db]} [_ input-id]]
       ; WARNING#9055
       ; Az :x.app-db/resolve-change-listener! esemény nem létezik!
-      (let [value-path (r element/get-element-prop db input-id :value-path)]
-           {:dispatch-if [(r input-listen-to-change? db input-id)
-                          [:x.app-db/resolve-change-listener! value-path]]})))
+      (let [value-path (r element/get-element-prop db input-id :value-path)])))
+          ;(if (r input-listen-to-change? db input-id)
+          ;    {:db (r db/resolve-change-listener! value-path)})

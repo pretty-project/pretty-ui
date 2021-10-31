@@ -96,9 +96,9 @@
 (defn diagrams
   []
   [:<> [elements/circle-diagram {:sections [{:color :primary :value 50}
-                                            {:color :muted   :value 20}]}]
+                                            {:color :highlight :value 20}]}]
        [elements/line-diagram {:sections [{:color :primary :value 50}
-                                          {:color :muted   :value 20}]}]])
+                                          {:color :highlight :value 20}]}]])
 
 (defn content-bar
   []
@@ -113,7 +113,8 @@
        [elements/date-field {:label "My date field" :value-path (db/path ::stuff :my-date)}]
        [elements/text-field {:label "My text-field w/ surface" :emptiable? true
                              :placeholder "Placeholder"
-                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}}]
+                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
+                             :helper "My helper"}]
        [elements/text-field {:label "My text-field w/ modifier" :emptiable? true
                              :placeholder "Placeholder"
                              :modifier #(string/starts-with! % "/")}]
@@ -123,6 +124,7 @@
                                          :invalid-message "Type \"x\""}}]
        [elements/text-field {:label "My text-field w/ prevalidator" :emptiable? true
                              :placeholder "Placeholder"
+                             :initial-value "x"
                              :validator {:f #(= % "x")
                                          :invalid-message "Type \"x\""
                                          :pre-validate? true}}]
@@ -153,12 +155,14 @@
        [elements/label {:content "Your label"}]
        [elements/horizontal-line {:color :highlight}]
        [elements/counter :my-counter {:label "My counter" :resetable? true :initial-value 420}]
-       [elements/counter {:label "My counter" :resetable? true :initial-value 420}]
+       [elements/counter {:label "My counter" :resetable? true :initial-value 420
+                          :helper "Your helper"}]
        [elements/separator {:orientation :horizontal :size :l}]
        [elements/label {:content "Our label"}]
        [elements/horizontal-line {:color :highlight}]
        [elements/anchor {:href "/x" :content "My anchor"}]
-       [elements/button {:label "My button"}]
+       [elements/button {:label "My button"
+                         :helper "Your helper"}]
        [elements/button {:label "Browse files!"
                          :on-click [:file-browser/load! {:value-path (db/path ::stuff :selected-files)
                                                          :browser-mode :add-files}]}]
@@ -194,7 +198,8 @@
                                         {:label "Menu item #3" :on-click [:x.app-router/go-to! "/akarhol"]}]}]
        [elements/box {:content #'buttons
                       :label   "Buttons"
-                      :horizontal-align :left}]
+                      :horizontal-align :left
+                      :stickers [{:icon :apps}]}]
 
        [elements/box {:content #'chips
                       :label   "Chips"

@@ -110,6 +110,7 @@
   ;    TODO ...
   ;   :disabler (subscription vector)(opt)
   ;    TODO ...
+  ;   :form-id (keyword)(opt)
   ;   :highlighted? (boolean)(opt)
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
@@ -135,8 +136,8 @@
   ([field-id field-props]
    (let [field-id    (a/id   field-id)
          field-props (a/prot field-id field-props field-props-prototype)]
-        [engine/container field-id
-          {:base-props  field-props
-           :component   date-field
-           :initializer [:x.app-elements/init-input! field-id]
-           :subscriber  [::get-view-props            field-id]}])))
+        [engine/stated-element field-id
+          {:component     #'date-field
+           :element-props field-props
+           :initializer   [:x.app-elements/init-input! field-id]
+           :subscriber    [::get-view-props            field-id]}])))

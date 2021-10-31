@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.3.6
-; Compatibility: x3.9.9
+; Version: v0.4.2
+; Compatibility: x4.4.3
 
 
 
@@ -18,6 +18,7 @@
               [mid-fruits.keyword              :as keyword]
               [x.app-components.api            :as components]
               [x.app-core.api                  :as a :refer [r]]
+              [x.app-db.api                    :as db]
               [x.app-elements.engine.element   :as element]
               [x.app-elements.engine.input     :as input]
               [x.app-elements.engine.focusable :as focusable]))
@@ -128,9 +129,10 @@
       (let [min-value  (r element/get-element-prop db input-id :min-value)
             value-path (r element/get-element-prop db input-id :value-path)
             value      (get-in db value-path)]
-           (if (some? min-value)
-               {:dispatch-if [(> min-value value) [:x.app-db/apply! value-path dec]]}
-               {:dispatch [:x.app-db/apply! value-path dec]}))))
+           (if (or (nil? min-value)
+                   (and (some? min-value)
+                        (>     min-value value)))
+               {:db (r db/apply! db value-path dec)}))))
 
 (a/reg-event-fx
   :x.app-elements/->input-increased
@@ -141,6 +143,7 @@
       (let [max-value  (r element/get-element-prop db input-id :max-value)
             value-path (r element/get-element-prop db input-id :value-path)
             value      (get-in db value-path)]
-           (if (some? max-value)
-               {:dispatch-if [(> max-value value) [:x.app-db/apply! value-path inc]]}
-               {:dispatch [:x.app-db/apply! value-path inc]}))))
+           (if (or (nil? max-value)
+                   (and (some? max-value)
+                        (> max-value value)))
+               {:db (r db/apply! db value-path inc)}))))

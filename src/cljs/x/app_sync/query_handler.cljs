@@ -88,7 +88,7 @@
   ;    {:query (string)}}
   [query-id {:keys [body query] :as query-props}]
   (let [request-props (map/inherit query-props [:body :modifier :on-failure :on-sent :on-success
-                                                :target-path :target-paths :uri])]
+                                                :on-stalled :target-path :target-paths :uri])]
        (merge request-props {:method :post}
                             (if (some? query)
                                 {:params {:query query}}))))
@@ -180,6 +180,8 @@
   ;   :on-failure (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
+  ;   :on-stalled (metamorphic-event)(opt)
+  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)

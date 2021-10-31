@@ -213,6 +213,9 @@
       :no-items-found
       {:en ""
        :hu "Nincs találat"}
+      :no-items-to-show
+      {:en "No items to show"
+       :hu "Nincsenek megjeleníthető elemek"}
       :need-help?
       {:en "Need help?"
        :hu "Súgó"}
@@ -372,7 +375,10 @@
 ;; ----------------------------------------------------------------------------
 
 (def edit
-     {:add-field!
+     {:add!
+      {:en "Add"
+       :hu "Hozzáadás"}
+      :add-field!
       {:en "Add field"
        :hu "Mező hozzáadása"}
       :add-item!
@@ -723,6 +729,8 @@
        {:en "What cookies are?"
         :hu "Mik azok a sütik?"}})
 
+
+
 ;; -- Locale ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -739,6 +747,8 @@
       :zip-code
       {:en "ZIP code"
        :hu "Irányítószám"}})
+
+
 
 ;; -- Locales -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -1119,7 +1129,10 @@
        :hu "Felhasználónév"}
       :valid-password-rules
       {:en "Password must contain at least 6 characters, both uppercase and lowercase letters, and a number!"
-       :hu "A jelszó legyen legalább 6 karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}})
+       :hu "A jelszó legyen legalább 6 karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}
+      :vat-no
+      {:en "VAT number"
+       :hu "Adószám"}})
 
 
 

@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def DROPDOWN-CLASS ".x-element-container--context-surface")
+(def DROPDOWN-CLASS ".x-element--context-surface")
 
 ; @constant (function)
 (def CLOSE-ON-CLICK-LISTENER

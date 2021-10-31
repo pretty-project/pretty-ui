@@ -484,7 +484,7 @@
 /***** Progress-bar *****/
 
 #x-app-progress-bar {
-  height: 4px;
+  height: 6px;
   left: 0;
   position: fixed;
   top: 0;
@@ -495,6 +495,14 @@
   height: 100%;
   transition: width .2s ease-in-out;
   width: 0% }
+
+#x-app-progress-bar--screen-overlay {
+  background-color: var( --app-overlay );
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
 
 /***** Progress-bar *****/
 
@@ -591,8 +599,7 @@
 #x-app-sidebar--body {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding-top: 24px }
+  height: 100% }
 
 /*** App sidebar body ***/
 
@@ -600,7 +607,8 @@
 
 #x-app-sidebar--surface {
   flex-grow: 0;
-  overflow: hidden auto }
+  overflow: hidden auto;
+  padding-top: 24px }
 
 /*** App sidebar surface ***/
 

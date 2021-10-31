@@ -88,7 +88,8 @@
   [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-counter--label [components/content {:content label}]
-                             (if required? "*")]))
+                             (if (boolean required?)
+                                 [:span.x-counter--label-asterisk "*"])]))
 
 (defn- counter-increase-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -139,8 +140,9 @@
   ; @return (hiccup)
   [counter-id view-props]
   [:div.x-counter
-    (engine/element-attributes  counter-id view-props)
-    [counter-body counter-id view-props]])
+    (engine/element-attributes counter-id view-props)
+    [counter-body              counter-id view-props]
+    [engine/element-helper     counter-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) counter-id
@@ -155,6 +157,7 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :initial-value (integer)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
@@ -181,10 +184,10 @@
    [view nil counter-props])
 
   ([counter-id counter-props]
-   (let [counter-id    (a/id counter-id)
-         counter-props (a/prot counter-props counter-props-prototype)]
-        [engine/container counter-id
-          {:base-props  counter-props
-           :component   counter
-           :initializer [:x.app-elements/init-input! counter-id]
-           :subscriber  [::get-view-props            counter-id]}])))
+   (let [counter-id    (a/id   counter-id)
+         counter-props (a/prot counter-id counter-props counter-props-prototype)]
+        [engine/stated-element counter-id
+          {:component     #'counter
+           :element-props counter-props
+           :initializer   [:x.app-elements/init-input! counter-id]
+           :subscriber    [::get-view-props            counter-id]}])))

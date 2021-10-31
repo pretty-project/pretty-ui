@@ -5,6 +5,10 @@
   Az x.app-elements modul elemein ezentúl nem használható a request-id tulajdonság,
   amivel az elemek egy request állapotától függően jelentek meg.
 
+- BREAKING CHANGE
+  Az x.app-elements modul elemen ezentúl nem használnak element-container komponenst.
+
+
 
 # x4.4.2
 

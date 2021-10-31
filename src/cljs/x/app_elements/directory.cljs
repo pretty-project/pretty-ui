@@ -226,7 +226,8 @@
     [:<> [directory-highlighter directory-id view-props]
          (if (some? on-click)
              [directory-button-body directory-id view-props]
-             [directory-static-body directory-id view-props])]])
+             [directory-static-body directory-id view-props])
+         [engine/element-stickers directory-id view-props]]])
 
 (defn view
   ; XXX#8711
@@ -291,7 +292,7 @@
   ([directory-id directory-props]
    (let [directory-id    (a/id   directory-id)
          directory-props (a/prot directory-id directory-props directory-props-prototype)]
-        [engine/container directory-id
-          {:base-props directory-props
-           :component  directory
-           :subscriber [::get-view-props directory-id]}])))
+        [engine/stated-element directory-id
+          {:component     #'directory
+           :element-props directory-props
+           :subscriber    [::get-view-props directory-id]}])))

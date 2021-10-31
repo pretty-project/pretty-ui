@@ -37,6 +37,7 @@
 (def get-freezed-route-template     route-handler/get-freezed-route-template)
 (def get-freezed-route-path-params  route-handler/get-freezed-route-path-params)
 (def get-freezed-route-path-param   route-handler/get-freezed-route-path-param)
+(def current-route-path-param?      route-handler/current-route-path-param?)
 (def get-freezed-route-query-params route-handler/get-freezed-route-query-params)
 (def get-freezed-route-query-param  route-handler/get-freezed-route-query-param)
 (def get-freezed-route-fragment     route-handler/get-freezed-route-fragment)

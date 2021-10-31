@@ -269,8 +269,11 @@
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:class (string or vector)(opt)
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
+  ;    TODO ...
   ;   :info-tooltip (metamorphic-content)(opt)
+  ;    TODO ...
   ;   :label (metamorphic-content)(opt)
   ;   :max-field-count (integer)(opt)
   ;    Default: DEFAULT-MAX-FIELD-COUNT
@@ -291,7 +294,7 @@
   ([group-id group-props]
    (let [group-id    (a/id   group-id)
          group-props (a/prot group-id group-props group-props-prototype)]
-        [engine/container group-id
-          {:base-props group-props
-           :component  multi-field
-           :subscriber [::get-view-props group-id]}])))
+        [engine/stated-element group-id
+          {:component     #'multi-field
+           :element-props group-props
+           :subscriber    [::get-view-props group-id]}])))

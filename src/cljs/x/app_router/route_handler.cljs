@@ -337,6 +337,19 @@
 
 (a/reg-sub :x.app-router/get-current-route-path-param get-current-route-path-param)
 
+(defn current-route-path-param?
+  ; @param (keyword) param-id
+  ;
+  ; @usage
+  ;  (r router/current-route-path-param? db :my-param "my-value")
+  ;
+  ; @return (boolean)
+  [db [_ param-id param-value]]
+  (let [current-route-path-param (r get-current-route-path-param db param-id)]
+       (= current-route-path-param param-value)))
+
+(a/reg-sub :x.app-router/current-route-path-param? current-route-path-param?)
+
 (defn get-current-route-query-params
   ; @usage
   ;  (r router/get-current-route-query-params db)

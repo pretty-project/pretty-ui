@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.20
 ; Description:
-; Version: v0.7.0
-; Compatibility: x3.9.9
+; Version: v0.7.8
+; Compatibility: x4.4.3
 
 
 
@@ -75,7 +75,8 @@
   ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-radio-button--label [components/content {:content label}]
-                              (if required? "*")])
+                              (if (boolean required?)
+                                  [:span.x-radio-button--label-asterisk "*"])])
 
 (defn- radio-button-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,7 +161,9 @@
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
+  ;    TODO ...
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)
@@ -191,8 +194,8 @@
   ([button-id button-props]
    (let [button-id    (a/id   button-id)
          button-props (a/prot button-id button-props button-props-prototype)]
-        [engine/container button-id
-          {:base-props  button-props
-           :component   radio-button
-           :initializer [:x.app-elements/init-input! button-id]
-           :subscriber  [::get-view-props button-id]}])))
+        [engine/stated-element button-id
+          {:component     #'radio-button
+           :element-props button-props
+           :initializer   [:x.app-elements/init-input! button-id]
+           :subscriber    [::get-view-props            button-id]}])))

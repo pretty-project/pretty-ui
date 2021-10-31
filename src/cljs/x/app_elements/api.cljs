@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.1.0
-; Compatibility: x3.9.9
+; Version: v1.1.8
+; Compatibility: x4.4.3
 
 
 
@@ -47,6 +47,7 @@
               [x.app-elements.multiline-field   :as multiline-field]
               [x.app-elements.multi-combo-box   :as multi-combo-box]
               [x.app-elements.multi-field       :as multi-field]
+              [x.app-elements.overlay           :as overlay]
               [x.app-elements.password-field    :as password-field]
               [x.app-elements.polarity          :as polarity]
               [x.app-elements.request-indicator :as request-indicator]
@@ -125,10 +126,13 @@
 (def field-empty?           engine/field-empty?)
 (def field-filled?          engine/field-filled?)
 (def inputs-passed?         engine/inputs-passed?)
+(def form-completed?        engine/form-completed?)
 (def get-input-stored-value engine/get-input-stored-value)
 (def get-input-value        engine/get-input-value)
 (def get-field-value        engine/get-field-value)
 (def set-element-prop!      engine/set-element-prop!)
+(def update-element-prop!   engine/update-element-prop!)
+(def remove-element-prop!   engine/remove-element-prop!)
 
 ; x.app-elements.*
 (def anchor            anchor/view)
@@ -163,6 +167,7 @@
 (def multiline-field   multiline-field/view)
 (def multi-combo-box   multi-combo-box/view)
 (def multi-field       multi-field/view)
+(def overlay           overlay/view)
 (def password-field    password-field/view)
 (def polarity          polarity/view)
 (def request-indicator request-indicator/view)

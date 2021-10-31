@@ -12,6 +12,13 @@
 
 # x4.3.0
 
+- Input validálás egy input több validátort is fogadjon több hibaüzenettel és néha több input egymástól
+  függ pl. password összehasonlító
+
+- Az infinite-loader komponensben az intersection-observer objektumbol minden ujrarenderelessel
+  leterjon egy uj intersection-observe object? És ha már nincs a komponens a react-faban, akkor
+  mi lesz az observer-el?
+
 - A select popup-on ha elkezdesz beirni valamit, akkor arra reagaljon
 
 - Element container DOM wrapper helyett raw-element handling

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.18
 ; Description:
-; Version: v0.3.0
-; Compatibility: x4.3.9
+; Version: v0.3.8
+; Compatibility: x4.4.3
 
 
 
@@ -35,18 +35,12 @@
   ;
   ; @return (map)
   ;  {:border-color (keyword)
-  ;   :container-stretch-orientation (keyword)
   ;   :horizontal-align (keyword)
   ;   :min-width (keyword)}
   [{:keys [stretch-orientation] :as card-props}]
   (merge {:border-color     :highlight
           :horizontal-align :center
-          :min-width        :xxs
-
-          ; A stretch-orientation tulajdonságot szükséges az element-container komponens
-          ; számára is átadni, hogy alkalmazkodni tudjon a környezethez az elem.
-          :container-stretch-orientation stretch-orientation}
-
+          :min-width        :xxs}
          (param card-props)))
 
 
@@ -153,7 +147,8 @@
   [:div.x-card (engine/element-attributes card-id card-props)
                (if (engine/element-props->render-element-header? card-props)
                    [card-header card-id card-props])
-               [card-body card-id card-props]])
+               [card-body               card-id card-props]
+               [engine/element-stickers card-id card-props]])
 
 (defn- ghost-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,8 +190,6 @@
   ;   :class (string or vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
   ;   :expandable? (boolean)(opt)
   ;    Default: false
   ;   :expanded? (boolean)(opt)
@@ -244,5 +237,4 @@
   ([card-id card-props]
    (let [card-id    (a/id   card-id)
          card-props (a/prot card-props card-props-prototype)]
-        [engine/container card-id {:base-props card-props
-                                   :component  #'card}])))
+        [card card-id card-props])))

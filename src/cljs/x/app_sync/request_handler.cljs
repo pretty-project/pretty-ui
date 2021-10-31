@@ -178,6 +178,17 @@
   (if-let [on-responsed-event (r get-request-prop db request-id :on-responsed)]
           (a/metamorphic-event<-params on-responsed-event server-response)))
 
+(defn- get-request-on-stalled-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (*) server-response
+  ;
+  ; @return (metamorphic-event)
+  [db [_ request-id server-response]]
+  (if-let [on-stalled-event (r get-request-prop db request-id :on-stalled)]
+          (a/metamorphic-event<-params on-stalled-event server-response)))
+
 (defn- max-try-count-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -371,6 +382,9 @@
   ;   :on-responsed (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
+  ;   :on-stalled (metamorphic-event)(opt)
+  ;    A szerver-válasz visszaérkezése utáni idle-timeout időtartam lejárta után megtörténő esemény.
+  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :params (map)(opt)
@@ -453,7 +467,11 @@
                   ; Set request status
                   (a/set-process-status!   [event-id request-id :progress])
                   ; Set request activity
-                  (a/set-process-activity! [event-id request-id :active]))
+                  (a/set-process-activity! [event-id request-id :active])
+                  ; Set request progress
+                  ; Szükséges a process-progress értékét nullázni!
+                  ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
+                  (a/set-process-progress! [event-id request-id 0]))
       ; Dispatch request on-sent event
        :dispatch (r get-request-on-sent-event db request-id)}))
 
@@ -473,8 +491,10 @@
              (r get-request-on-success-event   db  request-id server-response)
              (r get-request-on-responsed-event db  request-id server-response)]
             :dispatch-later
-            [{:ms (r get-request-idle-timeout db request-id)
-              :dispatch [:x.app-core/set-process-activity! request-id :stalled]}]})))
+            [{:ms       (r get-request-idle-timeout     db request-id)
+              :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
+             {:ms       (r get-request-idle-timeout     db request-id)
+              :dispatch (r get-request-on-stalled-event db request-id server-response)}]})))
 
 (a/reg-event-fx
   ::->request-failure
@@ -490,8 +510,8 @@
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
       {:dispatch-n
-       [[:x.app-core/set-process-status!   request-id :failure]
-        [:x.app-core/set-process-activity! request-id :idle]
+       [[:x.app-core/set-process-status!     request-id :failure]
+        [:x.app-core/set-process-activity!   request-id :idle]
         (r get-request-on-failure-event   db request-id server-response)
         (r get-request-on-responsed-event db request-id server-response)
         (if-not (r silent-mode? db request-id)
@@ -499,13 +519,17 @@
        :dispatch-later
        (if (r auto-retry-request? db request-id)
            ; Auto retry
-           [{:ms (r get-request-retry-timeout db request-id)
+           [{:ms       (r get-request-retry-timeout    db request-id)
              :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
-            {:ms (r get-request-retry-timeout db request-id)
-             :dispatch [:x.app-sync/retry-request! request-id]}]
+            {:ms       (r get-request-retry-timeout    db request-id)
+             :dispatch [:x.app-sync/retry-request!        request-id]}
+            {:ms       (r get-request-idle-timeout     db request-id)
+             :dispatch (r get-request-on-stalled-event db request-id server-response)}]
            ; No auto retry
-           [{:ms (r get-request-idle-timeout db request-id)
-             :dispatch [:x.app-core/set-process-activity! request-id :stalled]}])}))
+           [{:ms       (r get-request-idle-timeout     db request-id)
+             :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
+            {:ms       (r get-request-idle-timeout     db request-id)
+             :dispatch (r get-request-on-stalled-event db request-id server-response)}])}))
 
 (a/reg-event-fx
   ::->request-progressed

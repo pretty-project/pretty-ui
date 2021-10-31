@@ -14,8 +14,7 @@
 (defn item-lister
   ; @param (keyword)(opt) lister-id
   ; @param (map) lister-props
-  ;  {:common-props (map)(opt)
-  ;   :element (component)
+  ;  {:element (component)
   ;   :icon (keyword)(opt)
   ;   :on-list-ended (metamorphic-event)(opt)
   ;    Az elemeket megjelenítő lista végére érve megtörténő esemény
@@ -27,6 +26,8 @@
   ;    azonosítójú request aktivitását jelezze vissza
   ;   :sortable? (boolean)(opt)
   ;    Default: false
+  ;   :subscriber (subscription vector)(opt)
+  ;    A feliratkozás visszatérési értékét a lista minden eleme egyaránt megkapja paraméterként.
   ;   :value-path (items-path vector)}
   ;
   ; @usage
@@ -38,6 +39,12 @@
   ; @usage
   ;  (defn my-element [lister-id item-dex item] [:div ...])
   ;  [item-lister :my-item-lister {:element    #'my-element
+  ;                                :value-path [:my :items]}]
+  ;
+  ; @usage
+  ;  (defn my-element [lister-id item-dex item common-props] [:div ...])
+  ;  [item-lister :my-item-lister {:element    #'my-element
+  ;                                :subscriber [::get-common-props]
   ;                                :value-path [:my :items]}]
   ;
   ; @return (component)

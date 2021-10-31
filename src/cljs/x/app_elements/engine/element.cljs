@@ -236,25 +236,24 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:alt (string)(opt)
+  ;   :disabled? (boolean)(opt)
   ;   :highlighted? (boolean)(opt)
   ;   :selectable? (boolean)(opt)
   ;   :src (string)(opt)}
   ;
   ; @return
   ;  {:alt (string)
+  ;   :data-disabled (boolean)
   ;   :data-highlighted (boolean)
   ;   :data-selectable (boolean)
   ;   :src (string)}
-  [_ {:keys [alt highlighted? selectable? src]}]
+  [_ {:keys [alt disabled? highlighted? selectable? src]}]
   (cond-> (param {})
-          (some? alt)
-          (assoc :alt alt)
-          (boolean highlighted?)
-          (assoc :data-highlighted (param true))
-          (boolean selectable?)
-          (assoc :data-selectable  (param true))
-          (some? src)
-          (assoc :src src)))
+          (some? alt)            (assoc :alt alt)
+          (some? src)            (assoc :src src)
+          (boolean disabled?)    (assoc :data-disabled    true)
+          (boolean highlighted?) (assoc :data-highlighted true)
+          (boolean selectable?)  (assoc :data-selectable  true)))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -342,6 +341,20 @@
 ; @usage
 ;  [:x.app-elements/set-element-prop! :my-element :my-prop "My value"]
 (a/reg-event-db :x.app-elements/set-element-prop! set-element-prop!)
+
+(defn update-element-prop!
+  ; @param (keyword) element-id
+  ; @param (keyword) prop-id
+  ; @param (*) prop-value
+  ;
+  ; @usage
+  ;  (r element/update-element-prop! db :my-element :my-prop vector/conj-item "My value" "Your value")
+  ;
+  ; @return (map)
+  [db [_ element-id prop-id f & params]]
+  (let [value         (r get-element-prop db element-id prop-id)
+        updated-value (apply f value params)]
+       (r set-element-prop! db element-id prop-id updated-value)))
 
 (defn set-element-subprop!
   ; @param (keyword) element-id

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.13
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.3.9
+; Version: v0.6.8
+; Compatibility: x4.4.3
 
 
 
@@ -108,7 +108,6 @@
   ; @return (map)
   ;  {:bar-id (keyword)
   ;   :orientation (keyword)
-  ;   :container-stretch-orientation (keyword)
   ;   :selected-content-id (keyword)
   ;   :surface-id (keyword)}
   [{:keys [always-expanded? menu-items] :as menu-props}]
@@ -118,8 +117,7 @@
          (if always-expanded?
              ; XXX#4339 Default selected content-id
              {:selected-content-id (engine/visible-items->first-content-id menu-items)})
-         (param menu-props)
-         {:container-stretch-orientation :horizontal}))
+         (param menu-props)))
 
 
 
@@ -216,7 +214,7 @@
   ([menu-id menu-props]
    (let [menu-id    (a/id   menu-id)
          menu-props (a/prot menu-props menu-props-prototype)]
-        [engine/container menu-id
-          {:base-props menu-props
-           :component  menu
-           :subscriber [::get-view-props menu-id]}])))
+        [engine/stated-element menu-id
+          {:component     #'menu
+           :element-props menu-props
+           :subscriber    [::get-view-props menu-id]}])))
