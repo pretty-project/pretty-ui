@@ -201,8 +201,8 @@
           (assoc :data-background-color (keyword/to-dom-value background-color))
           (some? border-color)
           (assoc :data-border-color     (keyword/to-dom-value border-color))
-          (some? class)
-          (assoc :class                 (param class))
+          :use-class
+          (assoc :class                 (css/class "x-element" class))
           (some? color)
           (assoc :data-color            (keyword/to-dom-value color))
           (some? font-size)

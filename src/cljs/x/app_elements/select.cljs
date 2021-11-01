@@ -357,7 +357,7 @@
   (if (some? label)
       [:div.x-select--label [components/content {:content label}]
                             (if (boolean required?)
-                                [:span.x-select--label-asterisk "*"])]))
+                                [:span.x-input--label-asterisk "*"])]))
 
 (defn- select
   ; WARNING! NON-PUBLIC! DO NOT USE!

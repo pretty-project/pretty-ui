@@ -28,25 +28,24 @@
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order      (r locales/get-name-order     db)
-   :new-client?     (r new-client?                db)
-   :synchronizing?  (r sync/listening-to-request? db :clients/synchronize-client-form!)})
+  {:name-order  (r locales/get-name-order db)
+   :new-client? (r new-client?            db)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:form-completed? (r elements/form-completed?   db ::client-form)
-   :new-client?     (r new-client?                db)
-   :synchronizing?  (r sync/listening-to-request? db :clients/synchronize-client-form!)})
+  {:form-completed? true ;(r elements/form-completed?   db ::client-form)
+   :new-client?     (r new-client? db)})
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:new-client? (r new-client? db)})
+  {:new-client?    (r new-client?                db)
+   :synchronizing? (r sync/listening-to-request? db :clients/synchronize-client-form!)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -97,13 +96,12 @@
 
 (defn- client-form-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [new-client? synchronizing?] :as header-props}]
-  [elements/overlay {:disabled? synchronizing?
-                     :content   [elements/row {:content [:<> (if (boolean new-client?)
-                                                                 [cancel-client-button   surface-id header-props]
-                                                                 [client-actions-buttons surface-id header-props])
-                                                             [save-client-button surface-id header-props]]
-                                               :horizontal-align :space-between}]}])
+  [surface-id {:keys [new-client?] :as header-props}]
+  [elements/row {:content [:<> (if (boolean new-client?)
+                                   [cancel-client-button   surface-id header-props]
+                                   [client-actions-buttons surface-id header-props])
+                               [save-client-button surface-id header-props]]
+                 :horizontal-align :space-between}])
 
 (defn- client-legal-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,26 +165,27 @@
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [new-client? synchronizing?] :as body-props}]
-  [elements/overlay {:disabled? synchronizing?
-                     :content   [:div#clients--client-form
-                                  (if-not (boolean new-client?)
-                                          [client-no surface-id body-props])
-                                  [client-name               surface-id body-props]
-                                  [client-primary-contacts   surface-id body-props]
-                                  [client-secondary-contacts surface-id body-props]
-                                  [client-legal-details      surface-id body-props]
-                                  [elements/separator {:orientation :horizontal :size :l}]]}])
+  [surface-id {:keys [new-client?] :as body-props}]
+  [:div#clients--client-form
+    (if-not (boolean new-client?)
+            [client-no surface-id body-props])
+    [client-name               surface-id body-props]
+    [client-primary-contacts   surface-id body-props]
+    [client-secondary-contacts surface-id body-props]
+    [client-legal-details      surface-id body-props]
+    [elements/separator {:orientation :horizontal :size :l}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [new-client?] :as view-props}]
+  [surface-id {:keys [new-client? synchronizing?] :as view-props}]
   [layouts/layout-a surface-id {:label (if new-client? :add-client :edit-client)
                                 :icon :people
-                                :body        {:content    #'client-form
-                                              :subscriber [::get-body-props]}
-                                :body-header {:content    #'client-form-header
-                                              :subscriber [::get-header-props]}}])
+                                :disabled? synchronizing?
+                                :body {:content    #'client-form
+                                       :subscriber [::get-body-props]}
+                                :header {:content    #'client-form-header
+                                         :sticky?    true
+                                         :subscriber [::get-header-props]}}])
 
 
 

@@ -863,9 +863,9 @@
   ;
   ; @return (component)
   [_]
-  [elements/box {:content    #'ghost-file-storage
-                 :min-width  :xxl
-                 :subscriber [:file-storage/get-view-props]}])
+  [elements/box {:body       {:content    #'ghost-file-storage
+                              :subscriber [:file-storage/get-view-props]}
+                 :min-width  :xxl}])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -874,10 +874,10 @@
   ;
   ; @return (component)
   [_]
-  [elements/box {:content          #'file-storage
+  [elements/box {:body             {:content    #'file-storage
+                                    :subscriber [:file-storage/get-view-props]}
                  :horizontal-align :left
-                 :min-width        :xxl
-                 :subscriber       [:file-storage/get-view-props]}])
+                 :min-width        :xxl}])
 
 (defn- listener
   ; WARNING! NON-PUBLIC! DO NOT USE!

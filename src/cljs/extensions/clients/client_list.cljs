@@ -92,7 +92,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [lister-id {:keys [on-search] :as lister-props}]
   [:div#clients--client-list--search-field
-    [elements/search-field {:placeholder :search :layout :fit :stretch-orientation :horizontal
+    [elements/search-field {:placeholder :search :layout :row :stretch-orientation :horizontal
                             :on-type-ended on-search}]])
 
 (defn search-bar
@@ -120,8 +120,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a surface-id {:label :clients :icon :people
-                                :body        {:content #'client-list}
-                                :body-header {:content #'search-bar}}])
+                                :body   {:content #'client-list}
+                                :header {:content #'search-bar
+                                         :sticky? true}}])  
 
 
 

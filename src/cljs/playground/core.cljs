@@ -196,32 +196,36 @@
        [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [:x.app-router/go-to! "/valahol"]}
                                         {:label "Menu item #2" :on-click [:x.app-router/go-to! "/sehol"]}
                                         {:label "Menu item #3" :on-click [:x.app-router/go-to! "/akarhol"]}]}]
-       [elements/box {:content #'buttons
-                      :label   "Buttons"
+       [elements/box {:body   {:content #'buttons}
+                      :header {:content "Buttons"
+                               :sticky? true}
                       :horizontal-align :left
                       :stickers [{:icon :apps}]}]
 
-       [elements/box {:content #'chips
-                      :label   "Chips"
+       [elements/box {:body   {:content #'chips}
+                      :header {:content "Chips"
+                               :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:content #'diagrams
-                      :label   "Diagrams"
+       [elements/box {:body   {:content #'diagrams}
+                      :header {:content "Diagrams"
+                               :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:content #'form-a
-                      :icon    :sports_esports
-                      :label   "Form A"
+       [elements/box {:body   {:content #'form-a}
+                      :header {:content "Form A"
+                               :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:content #'form-b
-                      :icon    :thumb_up_alt
-                      :label   "Form B"
+       [elements/box {:body   {:content #'form-b}
+                      :header {:content "Form B"
+                               :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:content #'form-c
-                      :label   "Form C"
+       [elements/box {:body   {:content #'form-c}
+                      :header {:content "Form C"
+                               :sticky? true}
                       :horizontal-align :left
                       :expandable? true
                       :expanded? true}]
-       [elements/box {:content #'infinite-loader}]
-       [elements/box {:content #'local-state}]])
+       [elements/box {:body   {:content #'infinite-loader}}]
+       [elements/box {:body   {:content #'local-state}}]])
 
 
 

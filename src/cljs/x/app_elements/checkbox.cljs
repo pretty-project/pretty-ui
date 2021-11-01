@@ -76,7 +76,7 @@
   (if (some? label)
       [:div.x-checkbox--label [components/content {:content label}]
                               (if (boolean required?)
-                                  [:span.x-checkbox--label-asterisk "*"])]))
+                                  [:span.x-input--label-asterisk "*"])]))
 
 (defn- checkbox-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -89,7 +89,7 @@
   (if (some? label)
       [:div.x-counter--label [components/content {:content label}]
                              (if (boolean required?)
-                                 [:span.x-counter--label-asterisk "*"])]))
+                                 [:span.x-input--label-asterisk "*"])]))
 
 (defn- counter-increase-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

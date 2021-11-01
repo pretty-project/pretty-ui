@@ -15,12 +15,45 @@
 
 (ns x.app-elements.card
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.css            :as css]
               [mid-fruits.keyword        :as keyword]
               [mid-fruits.logical        :refer [nonfalse?]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
+
+
+
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (px)
+(def DEFAULT-HEADER-OFFSET 50)
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- card-header-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) card-id
+  ; @param (map) card-props
+  ;  {:header (map)
+  ;   {:offset (px)(opt)
+  ;    :sticky? (boolean)(opt)}}
+  ;
+  ; @result (map)
+  ;  {:data-sticky (boolean)
+  ;   :style (map)
+  ;    {:top (string)}}
+  [_ {:keys [header]}]
+  (if (get header :sticky?)
+      (let [offset (get header :offset)]
+           {:data-sticky (param true)
+            :style {:top (css/px offset)}})))
 
 
 
@@ -31,46 +64,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) card-props
-  ;  {:stretch-orientation (keyword)(opt)}
+  ;  {:header (map)(opt)
+  ;   {:sticky? (boolean)(opt)}}
   ;
   ; @return (map)
   ;  {:border-color (keyword)
   ;   :horizontal-align (keyword)
   ;   :min-width (keyword)}
-  [{:keys [stretch-orientation] :as card-props}]
+  [{:keys [header] :as card-props}]
   (merge {:border-color     :highlight
           :horizontal-align :center
           :min-width        :xxs}
-         (param card-props)))
+         (param card-props)
+         (if (get header :sticky?)
+             {:header (merge {:offset DEFAULT-HEADER-OFFSET} header)})))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- card-header-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ;  {:icon (keyword)(opt) Material icon class}
-  ;
-  ; @return (hiccup or nil)
-  [_ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-card--header--icon (keyword/to-dom-value icon)]))
-
-(defn- card-header-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup or nil)
-  [card-id {:keys [label]}]
-  (if (some? label)
-      [:div.x-card--header--label [components/content {:content label}]]))
 
 (defn- card-header-expand-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,11 +113,10 @@
   ; @param (map) card-props
   ;
   ; @return (hiccup)
-  [card-id card-props]
+  [card-id {:keys [header] :as card-props}]
   [:div.x-card--header
-    [card-header-icon          card-id card-props]
-    [card-header-label         card-id card-props]
-    [card-header-expand-button card-id card-props]])
+    (card-header-attributes card-id card-props)
+    [components/content     card-id header]])
 
 (defn- card-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,39 +126,50 @@
   ;  {:expanded? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [card-id {:keys [expanded?] :as card-props}]
+  [card-id {:keys [body expanded?] :as card-props}]
   (if (nonfalse? expanded?)
-      (let [content-props (components/extended-props->content-props card-props)]
-           [:div.x-card--body [components/content card-id content-props]])))
+      [:div.x-card--body [components/content card-id body]]))
 
 (defn- button-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {:on-click (metamorphic-event)(opt)}
+  ;  {:header (map)(opt)
+  ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
-  [card-id {:keys [on-click] :as card-props}]
+  [card-id {:keys [header on-click] :as card-props}]
   [:button.x-card (engine/element-attributes card-id card-props
                                              {:on-click   #(a/dispatch on-click)
                                               :on-mouse-up (engine/blur-element-function card-id)})
-                  (if (engine/element-props->render-element-header? card-props)
-                      [card-header card-id card-props])
-                  [card-body card-id card-props]])
+                  [:div.x-card--structure
+                    [card-body card-id card-props]
+                    (if (some? header)
+                        [card-header card-id card-props])]
+                  ; XXX#0093
+                  ; A card elem sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
+                  ; a sticky header alsó sarkai kilógnának, ha a sticky header lecsúszna a card elem
+                  ; aljáig.
+                  ; overflow: hidden tulajdonságú elemben nem működik a position: sticky tulajdonság
+                  [:div.x-card--tail]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
+  ;  {:header (map)(opt)}
   ;
   ; @return (hiccup)
-  [card-id card-props]
+  [card-id {:keys [header] :as card-props}]
   [:div.x-card (engine/element-attributes card-id card-props)
-               (if (engine/element-props->render-element-header? card-props)
-                   [card-header card-id card-props])
-               [card-body               card-id card-props]
+               [:div.x-card--structure
+                 [card-body card-id card-props]
+                 (if (some? header)
+                     [card-header card-id card-props])]
+               ; XXX#0093
+               [:div.x-card--tail]
                [engine/element-stickers card-id card-props]])
 
 (defn- ghost-card
@@ -172,7 +194,7 @@
   [card-id {:keys [ghost-view? on-click] :as card-props}]
   (cond (boolean ghost-view?) [ghost-card  card-id card-props]
         (some? on-click)      [button-card card-id card-props]
-        (nil? on-click)       [static-card card-id card-props]))
+        (nil?  on-click)      [static-card card-id card-props]))
 
 (defn view
   ; XXX#8711
@@ -184,26 +206,35 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
-  ;  {:border-color (keyword)(opt)
+  ;  {:body (map)
+  ;    {:content (metamorphic-content)(opt)
+  ;     :content-props (map)(opt)
+  ;     :subscriber (subscription vector)(opt)}
+  ;   :border-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
   ;    Default: :highlight
   ;   :class (string or vector)(opt)
-  ;   :content (metamorphic-content)(opt)
-  ;   :content-props (map)(opt)
+  ;   :disabled? (boolean)(opt)
+  ;    Default: false
   ;   :expandable? (boolean)(opt)
+  ;    TODO ...
   ;    Default: false
   ;   :expanded? (boolean)(opt)
   ;    Default: false
   ;    Only w/ {:expandable? true}
   ;   :ghost-view? (boolean)(opt)
   ;    Default: false
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :header (map)(opt)
+  ;    {:content (metamorphic-content)
+  ;     :content-props (map)(opt)
+  ;     :offset (px)(opt)
+  ;      Default: DEFAULT-HEADER-OFFSET
+  ;     :sticky? (boolean)(opt)
+  ;      Default: false
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;   :icon (keyword)(opt) Material icon class
-  ;   :label (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :xxs
@@ -217,8 +248,7 @@
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :vertical
-  ;   :style (map)(opt)
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  XXX#7610

@@ -32,7 +32,7 @@
 /*** Item-lister items ***/
 
 .item-lister--items {
-  padding-bottom: 12px;
+  -padding-bottom: 12px;
   width: 100% }
 
 .item-lister--items--no-items-to-show,
@@ -43,9 +43,7 @@
   font-weight: 500;
   justify-content: center;
   letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s);
-  padding-bottom: 6px;
-  padding-top: 18px }
+  line-height: 24px }
 
 /*** Item-lister items ***/
 /***** Item-lister *****/

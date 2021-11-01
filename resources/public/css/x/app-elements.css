@@ -87,26 +87,7 @@ body {
 
 /***** Disabled state *****/
 
-.x-anchor[data-disabled="true"]::after,
-.x-blank[data-disabled="true"]::after,
-.x-button[data-disabled="true"]::after,
-.x-checkbox[data-disabled="true"]::after,
-.x-chip[data-disabled="true"]::after,
-.x-combo-box[data-disabled="true"]::after,
-.x-counter[data-disabled="true"]::after,
-.x-date-field[data-disabled="true"]::after,
-.x-file-drop-area[data-disabled="true"]::after,
-.x-multi-combo-box[data-disabled="true"]::after,
-.x-multiline-field[data-disabled="true"]::after,
-.x-overlay[data-disabled="true"]::after,
-.x-password-field[data-disabled="true"]::after,
-.x-radio-button[data-disabled="true"]::after,
-.x-search-field[data-disabled="true"]::after,
-.x-select[data-disabled="true"]::after,
-.x-submit-button[data-disabled="true"]::after,
-.x-switch[data-disabled="true"]::after,
-.x-text-field[data-disabled="true"]::after,
-.x-toggle[data-disabled="true"]::after {
+.x-element[data-disabled="true"]::after {
   content: '';
   height: 100%;
   left: 0;
@@ -114,26 +95,7 @@ body {
   top: 0;
   width: 100% }
 
-.x-anchor[data-disabled="true"],
-.x-blank[data-disabled="true"],
-.x-button[data-disabled="true"],
-.x-checkbox[data-disabled="true"],
-.x-chip[data-disabled="true"],
-.x-combo-box[data-disabled="true"],
-.x-counter[data-disabled="true"],
-.x-date-field[data-disabled="true"],
-.x-file-drop-area[data-disabled="true"],
-.x-multi-combo-box[data-disabled="true"],
-.x-multiline-field[data-disabled="true"],
-.x-overlay[data-disabled="true"],
-.x-password-field[data-disabled="true"],
-.x-radio-button[data-disabled="true"],
-.x-search-field[data-disabled="true"],
-.x-select[data-disabled="true"],
-.x-submit-button[data-disabled="true"],
-.x-switch[data-disabled="true"],
-.x-text-field[data-disabled="true"],
-.x-toggle[data-disabled="true"] {
+.x-element[data-disabled="true"] {
   opacity: .5 }
 
 /***** Disabled state *****/
@@ -168,8 +130,7 @@ body {
 .x-anchor,
 .x-button--icon,
 .x-button--label,
-.x-card--header--icon,
-.x-card--header--label,
+.x-card--header,
 .x-chip--label,
 .x-chips--label,
 .x-chips--no-chips-label,
@@ -192,11 +153,12 @@ body {
 .x-line-diagram--label,
 .x-radio-button--label,
 .x-radio-button--option-label,
-.x-select--button-label,
+.x-select--label,
 .x-select--button-icon,
 .x-select--option,
 .x-switch--label,
 .x-text-field--label,
+.x-text-field--placeholder,
 .x-text-field--invalid-message,
 .x-toggle {
   /* user-select not supperted properly in all browsers */
@@ -268,12 +230,7 @@ body {
 
 /***** Label asterisk *****/
 
-.x-checkbox--label-asterisk,
-.x-counter--label-asterisk,
-.x-radio-button--label-asterisk,
-.x-select--label-asterisk,
-.x-switch--label-asterisk,
-.x-text-field--label-asterisk {
+.x-input--label-asterisk {
   color: var( --color-warning );
   font-weight: 600;
   padding-left: 2px }
@@ -1357,16 +1314,14 @@ body {
 /* data-viewport-profile="xxs", data-viewport-profile="xs"
  * és data-viewport-profile="s" viewport-on az elemen megjelenő sticker-ek
  * onmouseover esemény nélkül is láthatóak */
-[data-viewport-profile="xxs"]
+body[data-viewport-profile="xxs"]
 .x-element--stickers,
-[data-viewport-profile="xs"]
+body[data-viewport-profile="xs"]
 .x-element--stickers,
-[data-viewport-profile="s"]
+body[data-viewport-profile="s"]
 .x-element--stickers,
-.x-blank:hover > .x-element--stickers,
-.x-card:hover > .x-element--stickers,
-.x-directory:hover > .x-element--stickers,
-.x-file:hover > .x-element--stickers {
+
+.x-element:hover > .x-element--stickers {
   /* XXX#0134 */
   opacity: 1;
   transform: scale( 1 ) }
@@ -1740,29 +1695,42 @@ body[data-viewport-profile="s"]   .x-card {
 
 /*** Ghost card ***/
 
+/*** Card structure ***/
+
+.x-card--structure {
+   display: flex;
+   flex-direction: column-reverse }
+
+/*** Card structure ***/
+
+/*** Card tail ***/
+
+.x-card--tail {
+  height: var( --border-radius-m ) }
+
+/*** Card tail ***/
+
 /*** Card header ***/
 
 .x-card--header {
+  align-items: center;
+  border-bottom-color: var( --border-color-highlight);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
   display: flex;
   flex-direction: row;
-  padding: 12px var( --flex-edge ) }
-
-.x-card--header--icon {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: var( --icon-size-m );
-  height: 24px;
-  justify-content: center;
-  margin-right: var( --flex-edge );
-  width: 24px }
-
-.x-card--header--label {
   font-size: var( --font-size-s );
   font-weight: 500;
+  justify-content: flex-start;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 24px;
-  padding-right: 8px }
+  line-height: var( --line-height-s );
+  min-height: 48px;
+  padding: 0 var( --bar-edge ) }
+
+.x-card--header[data-sticky="true"] {
+  background-color: var( --background-color );
+  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
+  position: sticky }
 
 .x-card--header--expand-button {
   align-items: center;
@@ -1789,7 +1757,9 @@ body[data-viewport-profile="s"]   .x-card {
   flex-direction: column;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
-  padding: 0 var( --flex-edge ) }
+  padding-left: var( --flex-edge );
+  padding-right: var( --flex-edge );
+  padding-top: var( --border-radius-m ) }
 
 /*** Card body ***/
 /***** Card *****/
@@ -3294,7 +3264,7 @@ body[data-viewport-profile="s"]   .x-card {
 
 .x-date-field[data-layout="row"],
 .x-text-field[data-layout="row"] {
-  padding: 12px 0 }
+  padding: 8px 0 }
 
 /*** Text field wrapper ***/
 

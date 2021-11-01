@@ -222,16 +222,12 @@
   justify-content: center;
   height: 48px;
   min-height: 48px;
-  padding-left: 16px;
   width: 100% }
 
 .x-app-bubbles--element::before {
   background-color: var( --border-color-primary );
   content: '';
   height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
   width: 8px }
 
 /* Amikor az egymás felett megjelenő bubble elemek közül egy eltűnik, akkor
@@ -249,6 +245,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-left: var( --bar-edge );
   width: 100% }
 
 .x-app-bubbles--element--buttons {
@@ -268,7 +265,7 @@
   overflow: hidden }
 
 .x-app-bubbles--element--close-button-placeholder {
-  width: 6px }
+  width: var( --bar-edge ) }
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
@@ -455,12 +452,7 @@
 
 .x-app-popups--element--label-bar {
   overflow-x: auto;
-
-  /* XXX#3408
-   * A popup label-bar szélső gombjai gyakran szöveges gombok, amelyek megjelenítéséhez
-   * szükséges padding-et alkalmazni */
-  padding: 0 12px;
-
+  padding: 0 var( --bar-edge );
   min-height: 48px;
   width: 100% }
 
@@ -793,12 +785,7 @@
   background-color: var( --background-color );
   height: 48px;
   overflow-x: auto;
-
-  /* XXX#3408
-   * A surface label-bar szélső gombjai kizárólag ikon gombok, amelyek megjelenítéséhez
-   * NEM szükséges padding-et alkalmazni */
-  -padding: 0 0;
-
+  padding: 0 var( --bar-edge );
   width: 100% }
 
 /*** Surface header label-bar ***/
@@ -811,12 +798,7 @@
   height: 48px;
   left: 0;
   overflow-x: auto;
-
-  /* XXX#3408
-   * A surface control-bar szélső gombjai gyakran szöveges gombok, amelyek megjelenítéséhez 
-   * szükséges padding-et alkalmazni */
-  -padding: 0 0;
-
+  padding: 0 var( --bar-edge);
   position: absolute;
   width: 100% }
 

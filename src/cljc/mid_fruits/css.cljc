@@ -13,21 +13,40 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.css
-    (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.loop  :refer [reduce-kv+last?]]
-              [mid-fruits.map   :as map]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.loop   :refer [reduce-kv+last?]]
+              [mid-fruits.map    :as map]
+              [mid-fruits.vector :as vector]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn class
+  ; @param (list of string or vector)
+  ;
+  ; @example
+  ;  (css/class "my-class" ["your-class"] "our-class")
+  ;  =>
+  ;  ["my-class" "your-class" "our-class"]
+  ;
+  ; @return (vector)
+  [& xyz]
+  (reduce (fn [result x]
+              (cond (vector? x) (vector/concat-items result x)
+                    (string? x) (vector/conj-item    result x)
+                    :else       (return              result)))
+          (param [])
+          (param xyz)))
 
 (defn calc
   ; @param (string) n
   ;
   ; @example
   ;  (css/calc "100% - 100px")
-  ;  => "calc(100% - 100px)"
+  ;  =>
+  ;  "calc(100% - 100px)"
   ;
   ; @return (string)
   [n]
@@ -38,7 +57,8 @@
   ;
   ; @example
   ;  (css/percent "100")
-  ;  => "100%"
+  ;  =>
+  ;  "100%"
   ;
   ; @return (string)
   [n]
@@ -49,7 +69,8 @@
   ;
   ; @example
   ;  (css/px "100")
-  ;  => "100px"
+  ;  =>
+  ;  "100px"
   ;
   ; @return (string)
   [n]
@@ -60,7 +81,8 @@
   ;
   ; @example
   ;  (css/rotate "120")
-  ;  => "rotate(120deg)"
+  ;  =>
+  ;  "rotate(120deg)"
   ;
   ; @return (string)
   [n]
@@ -71,7 +93,8 @@
   ;
   ; @example
   ;  (css/rotate-x "120")
-  ;  => "rotateX(120deg)"
+  ;  =>
+  ;  "rotateX(120deg)"
   ;
   ; @return (string)
   [n]
@@ -82,7 +105,8 @@
   ;
   ; @example
   ;  (css/rotate-y "120")
-  ;  => "rotateY(120deg)"
+  ;  =>
+  ;  "rotateY(120deg)"
   ;
   ; @return (string)
   [n]
@@ -93,7 +117,8 @@
   ;
   ; @example
   ;  (css/rotate-z "120")
-  ;  => "rotateZ(120deg)"
+  ;  =>
+  ;  "rotateZ(120deg)"
   ;
   ; @return (string)
   [n]
@@ -104,7 +129,8 @@
   ;
   ; @example
   ;  (css/scale "1.1")
-  ;  => "scale(1.1)"
+  ;  =>
+  ;  "scale(1.1)"
   ;
   ; @return (string)
   [n]
@@ -116,11 +142,13 @@
   ;
   ; @example
   ;  (css/translate "120" "px")
-  ;  => "translate(120px)"
+  ;  =>
+  ;  "translate(120px)"
   ;
   ; @example
   ;  (css/translate "120px")
-  ;  => "translate(120px)"
+  ;  =>
+  ;  "translate(120px)"
   ;
   ; @return (string)
   [n & [suffix]]
@@ -132,11 +160,13 @@
   ;
   ; @example
   ;  (css/translate-x "120" "px")
-  ;  => "translateX(120px)"
+  ;  =>
+  ;  "translateX(120px)"
   ;
   ; @example
   ;  (css/translate-x "120px")
-  ;  => "translateX(120px)"
+  ;  =>
+  ;  "translateX(120px)"
   ;
   ; @return (string)
   [n & [suffix]]
@@ -148,11 +178,13 @@
   ;
   ; @example
   ;  (css/translate-y "120" "px")
-  ;  => "translateY(120px)"
+  ;  =>
+  ;  "translateY(120px)"
   ;
   ; @example
   ;  (css/translate-y "120px")
-  ;  => "translateY(120px)"
+  ;  =>
+  ;  "translateY(120px)"
   ;
   ; @return (string)
   [n & [suffix]]
@@ -164,11 +196,13 @@
   ;
   ; @example
   ;  (css/translate-z "120" "px")
-  ;  => "translateZ(120px)"
+  ;  =>
+  ;  "translateZ(120px)"
   ;
   ; @example
   ;  (css/translate-z "120px")
-  ;  => "translateZ(120px)"
+  ;  =>
+  ;  "translateZ(120px)"
   ;
   ; @return (string)
   [n & [suffix]]
@@ -179,7 +213,8 @@
   ;
   ; @example
   ;  (css/url "/my-file.ext")
-  ;  => "url(/my-file.ext)"
+  ;  =>
+  ;  "url(/my-file.ext)"
   ;
   ; @return (string)
   [n]
@@ -192,7 +227,8 @@
   ;
   ; @example
   ;  (css/value 180 "%")
-  ;  => "180%"
+  ;  =>
+  ;  "180%"
   ;
   ; @return (string)
   [n unit]
@@ -203,7 +239,8 @@
   ;
   ; @example
   ;  (css/var "my-var")
-  ;  => "var( --my-var )"
+  ;  =>
+  ;  "var( --my-var )"
   ;
   ; @return (string)
   [n]
@@ -214,7 +251,8 @@
   ;
   ; @example
   ;  (css/horizontal-padding "12px")
-  ;  => "12px 0"
+  ;  =>
+  ;  "12px 0"
   ;
   ; @return (string)
   [n]
@@ -225,7 +263,8 @@
   ;
   ; @example
   ;  (css/vertical-padding "12px")
-  ;  => "0 12px"
+  ;  =>
+  ;  "0 12px"
   ;
   ; @return (string)
   [n]
@@ -236,7 +275,8 @@
   ;
   ; @example
   ;  (css/horizontal-margin "12px")
-  ;  => "12px 0"
+  ;  =>
+  ;  "12px 0"
   ;
   ; @return (string)
   [n]
@@ -247,7 +287,8 @@
   ;
   ; @example
   ;  (css/vertical-margin "12px")
-  ;  => "0 12px"
+  ;  =>
+  ;  "0 12px"
   ;
   ; @return (string)
   [n]
@@ -263,7 +304,8 @@
   ;
   ; @example
   ;  (css/parse {:opacity 1 :width "100%"})
-  ;  => "opacity: 1; width: 100%"
+  ;  =>
+  ;  "opacity: 1; width: 100%"
   ;
   ; @return (string)
   [n]

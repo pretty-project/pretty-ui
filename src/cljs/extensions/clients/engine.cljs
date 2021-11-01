@@ -90,8 +90,8 @@
       (let [client-props (get-in db [:clients :form-data])]
            [:x.app-sync/send-query!
             :clients/synchronize-client-form!
-            {:on-stalled [:clients/receive-save-client!]
-             :on-success [:x.app-router/go-to! "/clients"]
+            {
+             ;:on-success [:x.app-router/go-to! "/clients"]
              :on-failure [:x.app-ui/blow-bubble! ::failure-notification {:content :saving-error :color :warning}]
              :query      [`(clients/save-client! ~client-props)]}])))
 

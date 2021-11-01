@@ -76,7 +76,7 @@
   [_ {:keys [label required?]}]
   [:div.x-radio-button--label [components/content {:content label}]
                               (if (boolean required?)
-                                  [:span.x-radio-button--label-asterisk "*"])])
+                                  [:span.x-input--label-asterisk "*"])])
 
 (defn- radio-button-option
   ; WARNING! NON-PUBLIC! DO NOT USE!

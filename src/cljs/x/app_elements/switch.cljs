@@ -75,7 +75,7 @@
   [_ {:keys [label required?]}]
   [:div.x-switch--label [components/content {:content label}]
                         (if (boolean required?)
-                            [:span.x-switch--label-asterisk "*"])])
+                            [:span.x-input--label-asterisk "*"])])
 
 (defn- switch-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
