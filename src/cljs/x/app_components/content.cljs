@@ -50,7 +50,7 @@
 ;  (az XXX#0001 logika szerint)
 ;
 ; @name content-path
-;  A {:content-path [...]} tulajdonságként átadott Re-Frame DB adatbázis útvonalon
+;  A {:content-path [...]} tulajdonságként átadott Re-Frame adatbázis útvonalon
 ;  talált érték (metamorphic-content) típusként kiértékelve a content komponensnek
 ;  {:content ...} tulajdonságként átadódik.
 ;

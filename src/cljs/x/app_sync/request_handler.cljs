@@ -270,7 +270,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Ha a (POST) request tartalmazza a :source-path tulajdonságot, akkor
-  ; hozzáfűzi a request-hez paraméterként a :source-path Re-Frame DB adatbázis
+  ; hozzáfűzi a request-hez paraméterként a :source-path Re-Frame adatbázis
   ; útvonalon található adatot.
   ;
   ; @param (map) request-props
@@ -402,13 +402,13 @@
   ;    hibaüzenet.
   ;    Default: true
   ;   :source-path (item-path vector)(opt)
-  ;    Milyen Re-Frame DB adatbázis útvonalon tárolt adatot küldjön el paraméterként
+  ;    Milyen Re-Frame adatbázis útvonalon tárolt adatot küldjön el paraméterként
   ;    Only w/ {:method :post}
   ;   :target-path (item-path vector)(opt)
-  ;    Milyen Re-Frame DB adatbázis útvonalra mentse el a szerver válaszát
+  ;    Milyen Re-Frame adatbázis útvonalra mentse el a szerver válaszát
   ;    Only w/ {:response-action :store :target-paths nil}
   ;   :target-paths (map)(opt)
-  ;    Milyen Re-Frame DB adatbázis útvonalakra mentse el a szerver válaszának elemeit
+  ;    Milyen Re-Frame adatbázis útvonalakra mentse el a szerver válaszának elemeit
   ;    Only w/ {:response-action :store :target-path nil}
   ;   :uri (string)
   ;    "/sample-uri"}

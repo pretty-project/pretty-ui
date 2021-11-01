@@ -384,6 +384,7 @@
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :icon (keyword)(opt) Material icon class
+  ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
@@ -391,11 +392,8 @@
   ;    Default: :row
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(constant)(opt)
-  ;   :options (maps in vector)(constant)
-  ;    [{:icon (keyword)(opt) Material icon class
-  ;      :label (metamorphic-content)
-  ;      :value (*)}]
   ;   :options-label (metamorphic-content)(constant)(opt)
+  ;   :options-path (item-path vector)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)

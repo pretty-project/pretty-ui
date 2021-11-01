@@ -15,9 +15,8 @@
 
 (ns x.app-elements.engine.stated-element
     (:require [mid-fruits.map :as map]
-              [x.app-components.api                 :as components]
-              [x.app-elements.engine.constant-props :as constant-props]
-              [x.app-elements.engine.element        :as element]))
+              [x.app-components.api          :as components]
+              [x.app-elements.engine.element :as element]))
 
 
 
@@ -39,10 +38,10 @@
 ;  Az elem mely tulajdonságai kerüljenek a Re-Frame adatbázisba
 (def CONSTANT-PROPS-KEYS
      [:autoclear? :default-value :disallow-empty-input-group? :emptiable? :form-id
-      :keypress :get-label-f :get-value-f :group-id :initial-value :input-ids
-      :max-input-count :min-input-count :listen-to-change? :on-blur :on-change
-      :on-check :on-click :on-delete :on-empty :on-enter :on-extend :on-focus
-      :on-reset :on-select :on-uncheck :options-path :required? :validator
+      :keypress :get-label-f :get-value-f :group-id :initial-options :initial-value
+      :input-ids :max-input-count :min-input-count :listen-to-change? :on-blur
+      :on-change :on-check :on-click :on-delete :on-empty :on-enter :on-extend
+      :on-focus :on-reset :on-select :on-uncheck :options-path :required? :validator
       :value-path])
 
 

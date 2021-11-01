@@ -91,7 +91,7 @@
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
           :on-extend           [:x.app-elements/add-option!]
-          :options-path        (engine/default-value-path field-id)
+          :options-path        (engine/default-options-path field-id)
 
           ; A combo-box elem használatakor nem elérhető az {:on-blur ...}
           ; és {:on-focus ...} tulajdonság, mivel a combo-box elem saját
@@ -293,6 +293,7 @@
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
+  ;   :default-value (*)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
@@ -303,6 +304,8 @@
   ;    Default: str
   ;   :helper (metamorphic-content)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :initial-options (vector)(constant)(opt)
+  ;   :initial-value (*)(constant)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :s
@@ -323,7 +326,7 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
-  ;   :options-path (item-path vector)(opt)
+  ;   :options-path (item-path vector)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
   ;   :select-option-event (event-vector)(opt)
@@ -370,4 +373,5 @@
           {:component     #'text-field/text-field
            :element-props field-props
            :modifier      text-field/view-props-modifier
-           :subscriber    [::get-view-props field-id]}])))
+           :initializer   [:x.app-elements/init-selectable! field-id]
+           :subscriber    [::get-view-props                 field-id]}])))

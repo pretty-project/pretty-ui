@@ -36,7 +36,7 @@
 ;    {:value {:en [:data :in :english] :hu [:adatok :magyarul]}}
 ;  - Értéke lehet egy egyszerű string
 ;    {:value "My value"}
-;  - Értéke lehet egy Re-Frame DB adatbázis útvonal, amelyen talált értéket
+;  - Értéke lehet egy Re-Frame adatbázis útvonal, amelyen talált értéket
 ;    kiértékeli metamorphic-value típusként.
 ;
 ; @name suffix

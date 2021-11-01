@@ -45,7 +45,7 @@
 ;
 ; @name initial-props
 ;  A komponens csatolásakor annak az {:initial-props-path [...]} tulajdonságaként
-;  átadott Re-Frame DB adatbázis útvonalra rögzített térkép, ami az XXX#0069 logika
+;  átadott Re-Frame adatbázis útvonalra rögzített térkép, ami az XXX#0069 logika
 ;  szerint adódik át a komponens számára, addig a pillanatig, amíg subscribed-props
 ;  értéke nil.
 ;

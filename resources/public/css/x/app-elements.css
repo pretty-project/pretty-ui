@@ -355,7 +355,7 @@ body {
   stroke: var( --border-color-muted ) }
 
 .x-button[data-variant="filled"][data-color="muted"] .x-button--body,
-.x-chip[data-variant="filled"][data-color="muted"] .x-chip--body,
+.x-chip[data-color="muted"] .x-chip--body,
 .x-content-bar[data-color="muted"] {
   background-color: var( --background-color-muted );
   color: var( --black ) }
@@ -365,7 +365,6 @@ body {
 .x-card[data-border-color="muted"],
 .x-checkbox[data-color="muted"]
 .x-checkbox--button::before,
-.x-chip[data-variant="outlined"][data-color="muted"] .x-chip--body,
 .x-counter[data-color="muted"]
 .x-counter--decrease-button,
 .x-counter[data-color="muted"]
@@ -376,7 +375,6 @@ body {
 .x-switch--track {
   border-color: var( --border-color-muted ) }
 
-.x-chip[data-variant="outlined"][data-color="muted"] .x-chip--delete-button,
 .x-horizontal-line[data-color="muted"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="muted"],
@@ -403,15 +401,13 @@ body {
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
 
-.x-chip[data-variant="filled"][data-color="highlight"] .x-chip--body {
+.x-chip[data-color="highlight"] .x-chip--body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
-.x-card[data-border-color="highlight"],
-.x-chip[data-variant="outlined"][data-color="highlight"] .x-chip--body {
+.x-card[data-border-color="highlight"] {
   border-color: var( --border-color-highlight ) }
 
-.x-chip[data-variant="outlined"][data-color="highlight"] .x-chip--delete-button,
 .x-horizontal-line[data-color="highlight"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="highlight"],
@@ -441,7 +437,7 @@ body {
   stroke: var( --border-color-primary ) }
 
 .x-button[data-variant="filled"][data-color="primary"] .x-button--body,
-.x-chip[data-variant="filled"][data-color="primary"] .x-chip--body {
+.x-chip[data-color="primary"] .x-chip--body {
   background-color: var( --primary-soft );
   color: var( --black ) }
 
@@ -454,7 +450,6 @@ body {
 .x-card[data-border-color="primary"],
 .x-checkbox[data-color="primary"]
 .x-checkbox--button::before,
-.x-chip[data-variant="outlined"][data-color="primary"] .x-chip--body,
 .x-counter[data-color="primary"]
 .x-counter--decrease-button,
 .x-counter[data-color="primary"]
@@ -471,7 +466,6 @@ body {
 .x-text-field--textarea {
   border-color: var( --border-color-primary ) }
 
-.x-chip[data-variant="outlined"][data-color="primary"] .x-chip--delete-button,
 .x-horizontal-line[data-color="primary"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="primary"],
@@ -499,7 +493,7 @@ body {
   stroke: var( --border-color-secondary ) }
 
 .x-button[data-variant="filled"][data-color="secondary"] .x-button--body,
-.x-chip[data-variant="filled"][data-color="secondary"] .x-chip--body {
+.x-chip[data-color="secondary"] .x-chip--body {
   background-color: var( --secondary );
   color: var( --black ) }
 
@@ -512,7 +506,6 @@ body {
 .x-card[data-border-color="secondary"],
 .x-checkbox[data-color="secondary"]
 .x-checkbox--button::before,
-.x-chip[data-variant="outlined"][data-color="secondary"] .x-chip--body,
 .x-counter[data-color="secondary"]
 .x-counter--decrease-button,
 .x-counter[data-color="secondary"]
@@ -529,7 +522,6 @@ body {
 .x-text-field--textarea {
   border-color: var( --border-color-secondary ) }
 
-.x-chip[data-variant="outlined"][data-color="secondary"] .x-chip--delete-button,
 .x-horizontal-line[data-color="secondary"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="secondary"],
@@ -557,7 +549,7 @@ body {
   stroke: var( --border-color-success ) }
 
 .x-button[data-variant="filled"][data-color="success"] .x-button--body,
-.x-chip[data-variant="filled"][data-color="success"] .x-chip--body {
+.x-chip[data-color="success"] .x-chip--body {
   background-color: var( --success );
   color: var( --black ) }
 
@@ -566,7 +558,6 @@ body {
 .x-card[data-border-color="success"],
 .x-checkbox[data-color="success"]
 .x-checkbox--button::before,
-.x-chip[data-variant="outlined"][data-color="success"] .x-chip--body,
 .x-counter[data-color="success"]
 .x-counter--decrease-button,
 .x-counter[data-color="success"]
@@ -583,7 +574,6 @@ body {
 .x-text-field--textarea {
   border-color: var( --border-color-success ) }
 
-.x-chip[data-variant="outlined"][data-color="success"] .x-chip--delete-button,
 .x-horizontal-line[data-color="success"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="success"],
@@ -609,7 +599,7 @@ body {
   stroke: var( --border-color-warning ) }
 
 .x-button[data-variant="filled"][data-color="warning"] .x-button--body,
-.x-chip[data-variant="filled"][data-color="warning"] .x-chip--body {
+.x-chip[data-color="warning"] .x-chip--body {
   background-color: var( --warning );
   color: var( --black ) }
 
@@ -618,7 +608,6 @@ body {
 .x-card[data-border-color="warning"],
 .x-checkbox[data-color="warning"]
 .x-checkbox--button::before,
-.x-chip[data-variant="outlined"][data-color="warning"] .x-chip--body,
 .x-counter[data-color="warning"]
 .x-counter--decrease-button,
 .x-counter[data-color="warning"]
@@ -635,7 +624,6 @@ body {
 .x-text-field--textarea {
   border-color: var( --border-color-warning ) }
 
-.x-chip[data-variant="outlined"][data-color="warning"] .x-chip--delete-button,
 .x-horizontal-line[data-color="warning"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="warning"],
@@ -1870,11 +1858,6 @@ body[data-viewport-profile="s"]   .x-card {
   display: flex;
   height: 24px }
 
-.x-chip[data-variant="outlined"] .x-chip--body {
-  background-color: var( --fill-color );
-  border-style: solid;
-  border-width: 2px }
-
 /*** Chip body ***/
 
 /*** Chip icon ***/
@@ -1884,16 +1867,10 @@ body[data-viewport-profile="s"]   .x-card {
   display: flex;
   flex-direction: column;
   font-size: var( --icon-size-xxs );
-  justify-content: center;
-  width: 24px }
-
-.x-chip[data-variant="filled"] .x-chip--icon {
   height: 24px;
-  padding-left: 12px }
-
-.x-chip[data-variant="outlined"] .x-chip--icon {
-  height: 20px;
-  padding-left: 10px }
+  justify-content: center;
+  padding-left: 12px;
+  width: 24px }
 
 /*** Chip icon ***/
 
@@ -1902,45 +1879,29 @@ body[data-viewport-profile="s"]   .x-card {
 .x-chip--label {
   font-size: var( --font-size-xs );
   font-weight: 500;
+  line-height: 24px;
   padding: 0 12px;
   white-space: nowrap }
-
-.x-chip[data-variant="filled"] .x-chip--label {
-  line-height: 24px }
-
-.x-chip[data-variant="outlined"] .x-chip--label {
-  line-height: 20px }
 
 /*** Chip label ***/
 
 /*** Chip delete button ***/
 
 .x-chip--delete-button {
+  background-color: rgba(255, 255, 255, .65);
   border-radius: 10px;
   color: var( --color );
-  margin: 2px 2px 0 0 }
-
-.x-chip[data-variant="filled"] .x-chip--delete-button {
-  background-color: rgba(255, 255, 255, .65);
   height: 20px;
+  margin: 2px 2px 0 0;
   width: 20px }
-
-.x-chip[data-variant="outlined"] .x-chip--delete-button {
-  height: 16px;
-  width: 16px }
 
 .x-chip--delete-button-icon {
   align-items: center;
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  justify-content: center }
-
-.x-chip[data-variant="filled"] .x-chip--delete-button-icon {
+  justify-content: center;
   line-height: 20px }
-
-.x-chip[data-variant="outlined"] .x-chip--delete-button-icon {
-  line-height: 16px }
 
 /*** Chip delete button ***/
 /***** Chip *****/

@@ -23,6 +23,7 @@
               [x.app-elements.engine.field       :as field]
               [x.app-elements.engine.input       :as input]
               [x.app-elements.engine.input-group :as input-group]
+              [x.app-elements.engine.selectable  :as selectable]
               [x.app-elements.engine.surface     :as surface]))
 
 
@@ -47,7 +48,8 @@
   ;
   ; @example
   ;  (key-code->keypress-id :my-field 40)
-  ;  => :my-field--40
+  ;  =>
+  ;  :my-field--40
   ;
   ; @return (keyword)
   [field-id key-code]
@@ -95,7 +97,8 @@
   ;     :options     [{:label "Apple juice"   :value "apple-juice"}
   ;                   {:label "Avocado juice" :value "avocado-juice"}]
   ;     :value       "apple-juice"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (combo-box/view-props->value-extendable?
@@ -103,7 +106,8 @@
   ;     :options     [{:label "Apple juice"   :value "apple-juice"}
   ;                   {:label "Avocado juice" :value "avocado-juice"}]
   ;     :value       "mango-juice"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [{:keys [get-label-f options value]}]
@@ -190,16 +194,6 @@
   (let [combo-box-filled? (r combo-box-filled? db field-id)]
        (not combo-box-filled?)))
 
-(defn get-combo-box-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (vector)
-  [db [_ field-id]]
-  (let [options-path (r element/get-element-prop db field-id :options-path)]
-       (get-in db options-path)))
-
 (defn render-combo-box-option?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -267,7 +261,7 @@
   ; A combo-box elem option listájában megjelenített értékeket a Re-Frame
   ; feliratkozásban szükséges szűrni, hogy az [:x.app-elements/highlight-prev-option! ...]
   ; és [:x.app-elements/highlight-next-option! ...] események is ki tudják olvasni
-  ; a Re-Frame adatbázisból, hogy melyik értékek vannak és hány érték kerül kirenderelésre.
+  ; a Re-Frame adatbázisból, hogy összese hány és melyik értékek kerülnek kirenderelésre.
   ;
   ; @param (keyword) field-id
   ;
@@ -277,7 +271,7 @@
   ;    :rendered? (boolean)
   ;    :selected? (boolean)}]
   [db [_ field-id]]
-  (let [options (r get-combo-box-options db field-id)]
+  (let [options (r selectable/get-selectable-options db field-id)]
        (reduce (fn [rendered-options option]
                    ; render-dex: A combo-box elem surface felületén hányadik elemként
                    ; kerül kirenderelésre az opció (az opciók listájának szűrése után)
@@ -324,10 +318,10 @@
    ; XXX#8093
    ; A {:field-empty? ...} tulajdonság használatával állapítja meg a text-field
    ; elem, hogy melyik adornment gombot szükséges megjeleníteni.
-  {:field-empty?     (r combo-box-empty?               db field-id)
-   :options          (r get-combo-box-options          db field-id)
-   :rendered-options (r get-combo-box-rendered-options db field-id)
-   :value            (r get-combo-box-value            db field-id)})
+  {:field-empty?     (r combo-box-empty?                  db field-id)
+   :options          (r selectable/get-selectable-options db field-id)
+   :rendered-options (r get-combo-box-rendered-options    db field-id)
+   :value            (r get-combo-box-value               db field-id)})
 
 
 

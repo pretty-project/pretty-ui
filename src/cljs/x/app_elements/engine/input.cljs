@@ -37,6 +37,15 @@
   [input-id]
   #(a/dispatch [:x.app-elements/reset-input! input-id]))
 
+(defn default-options-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ;
+  ; @return (item-path vector)
+  [element-id]
+  (db/path ::options element-id))
+
 (defn default-value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

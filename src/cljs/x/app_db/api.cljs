@@ -45,7 +45,7 @@
 
 ; A) Item
 ;
-; Item megnevezéssel az Re-Frame DB adatbázis bármely elemére lehet hivatkozni.
+; Item megnevezéssel az Re-Frame adatbázis bármely elemére lehet hivatkozni.
 ; Az item elérési útvonala az adatbázisban az item-path.
 ;
 ; @example

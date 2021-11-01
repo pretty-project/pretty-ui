@@ -86,16 +86,20 @@
 ;
 ; @name default-value
 ;  Az egyes input elemek értéke a {:default-value ...} tulajdonságukkal kerül
-;  behelyettesítésre amíg a {:value-path ...} Re-Frame DB adatbázis útvonalon
-;  található érték nil.
+;  behelyettesítésre amíg a {:value-path ...} Re-Frame adatbázis útvonalon
+;  található érték nil. A default-value értéke NEM íródik a {:value-path ...}
+;  adatbázis útvonlra.
+;
+; @name initial-value
+;  Az egyes input elemek React-fába történő csatolásakor az {:initial-value ...}
+;  tulajdonságának értéke az {:value-path ...} Re-Frame adatbázis útvonalra íródik.
+;
+; @name initial-options
+;  TODO ...
 ;
 ; @name ghost-view
 ;  Bizonyos elemek rendelkeznek {:ghost-view? ...} tulajdonsággal, amely true érték
 ;  esetén biztosítja, hogy az elem helyett annak szellemképe jelenjen meg.
-;
-; @name initial-value
-;  Az egyes input elemek React-fába történő csatolásakor az {:initial-value ...}
-;  tulajdonságának értéke az {:value-path ...} Re-Frame DB adatbázis útvonalra íródik.
 
 
 

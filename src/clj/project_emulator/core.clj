@@ -12,7 +12,6 @@
               [shadow.cljs.devtools.api    :as shadow]
               [extensions.clients.api]
               [x.boot-loader])
-
     (:gen-class))
 
 

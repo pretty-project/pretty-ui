@@ -115,12 +115,35 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn increase-input-count!
+(defn- conj-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ; @param (map) context-props
   ;  {:initial-value (*)}
+  ;
+  ; @return (map)
+  [db [_ group-id {:keys [initial-value]}]]
+  (let [group-value-path (r element/get-element-prop db group-id :value-path)
+        group-value      (get-in db group-value-path)]
+       (if (vector/nonempty? group-value)
+           (update-in db group-value-path vector/conj-item initial-value)
+
+           ; A {:disallow-empty-input-group? true} tulajdonságú input csoportokban
+           ; az inputok számának növelése üres group-value érték esetén:
+           ;
+           ; Pl. ha egy multi-field group-value értéke nil, akkor EGY field
+           ; jelenik meg, amely esetben a mezők számának növelése után
+           ; kettő darab mezőnek kell megjelenjen, amihez szükséges, hogy group-value
+           ; kettő értéket tartalmazzon.
+           (assoc-in db group-value-path [initial-value initial-value]))))
+
+(defn increase-input-count!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) context-props
+
   ;
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
@@ -128,11 +151,11 @@
   ;  => {:my-value ["First value" "Second value" "Apple"]}
   ;
   ; @return (map)
-  [db [event-id group-id {:keys [initial-value]}]]
+  [db [event-id group-id context-props]]
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (if (r max-input-count-reached? db group-id)
            (return db)
-           (-> db (update-in group-value-path vector/conj-item initial-value)
+           (-> db (conj-initial-value!       [event-id group-id context-props])
                   (element/set-element-prop! [event-id group-id :input-count-increased? true])))))
 
 (a/reg-event-db :x.app-elements/increase-input-count! increase-input-count!)

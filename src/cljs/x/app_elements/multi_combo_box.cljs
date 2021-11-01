@@ -71,8 +71,7 @@
   ;    :variant (keyword)}]
   [{:keys [get-label-f group-value]}]
   (reduce (fn [result value]
-              (vector/conj-item result {:label   (get-label-f value)
-                                        :variant :outlined}))
+              (vector/conj-item result {:label (get-label-f value)}))
           (param [])
           (param group-value)))
 
@@ -91,15 +90,15 @@
   [group-id {:keys [no-options-selected-label] :as view-props}]
   (merge {}
          (param view-props)
-         {:chips             (view-props->chips view-props)
-          :delete-chip-event [:x.app-elements/unstack-from-group-value! group-id]
+         {:chips     (view-props->chips view-props)
+          :on-delete [:x.app-elements/unstack-from-group-value! group-id]
           ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
           ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
           ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
           ; közötti távolság.
           ; Ezért szükséges a chips elem {:no-chips-label ...} tulajdonságának használatával
           ; megjelenített szöveggel megtörni ezt a távolságot.
-          :no-chips-label    (param no-options-selected-label)}))
+          :no-chips-label (param no-options-selected-label)}))
 
 
 
@@ -115,11 +114,13 @@
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :no-options-selected-label (metamorphic-content)
+  ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [group-id group-props]
   (merge {:get-label-f               str
           :no-options-selected-label DEFAULT-NO-OPTIONS-SELECTED-LABEL
-          :value-path                (engine/default-value-path group-id)}
+          :options-path              (engine/default-options-path group-id)
+          :value-path                (engine/default-value-path   group-id)}
          (param group-props)))
 
 (defn field-props-prototype
@@ -129,7 +130,9 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {:select-option-event (event-vector)}
+  ;  {:on-focus (metamorphic-event)
+  ;   :group-id (keyword)
+  ;   :select-option-event (event-vector)}
   [group-id group-props]
   (let [field-id (group-id->field-id group-id)]
        (merge {}
@@ -239,6 +242,8 @@
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: str
   ;   :helper (metamorphic-content)(opt)
+  ;   :initial-options (vector)(constant)(opt)
+  ;   :initial-value (*)(constant)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
@@ -262,7 +267,7 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
-  ;   :options-path (item-path vector)
+  ;   :options-path (item-path vector)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
   ;   :style (map)(opt)
@@ -284,4 +289,5 @@
         [engine/stated-element group-id
           {:component     #'multi-combo-box
            :element-props group-props
+           :initializer   [:x.app-elements/init-selectable! group-id]
            :subscriber    [::get-view-props group-id]}])))

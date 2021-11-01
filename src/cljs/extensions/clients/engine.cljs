@@ -164,15 +164,15 @@
   :clients/receive-client!
   (fn [{:keys [db]} [_ server-response]]
       (println (str server-response))
-      (let [];result    (:clients/get-client response-value)]
+      (let [])));result    (:clients/get-client response-value)]
             ;{:keys [documents count]} result]
-           [:x.app-db/set-item!    [:clients :form-data]
-            {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
-             :client/client-no     "051301"
-             :client/first-name    "Debil"
-             :client/last-name     "Duck"
-             :client/email-address "debil-duck@gmail.com"
-             :client/added-at      "2020-04-10T16:20:00.123Z"}])))
+;           [:x.app-db/set-item!    [:clients :form-data]
+;            {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
+;             :client/client-no     "051301"
+;             :client/first-name    "Debil"
+;             :client/last-name     "Duck"
+;             :client/email-address "debil-duck@gmail.com"
+;             :client/added-at      "2020-04-10T16:20:00.123Z"])))
 
 (a/reg-event-fx
   :clients/request-client!

@@ -41,13 +41,11 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :delete-button-icon (keyword)
-  ;   :layout (keyword)
-  ;   :variant (keyword)}
+  ;   :layout (keyword)}
   [chip-props]
   (merge {:color              :primary
-          :delete-button-icon DEFAULT-DELETE-BUTTON-ICON
           :layout             :row
-          :variant            :filled}
+          :delete-button-icon DEFAULT-DELETE-BUTTON-ICON}
          (param chip-props)))
 
 
@@ -137,10 +135,7 @@
   ;   :on-click (metamorphic-event)(constant)(opt)
   ;    TODO ... A chip elem egésze kattintható
   ;   :on-delete (metamorphic-event)(constant)(opt)
-  ;   :style (map)(opt)
-  ;   :variant (keyword)(opt)
-  ;    :filled, :outlined
-  ;    Default :filled}
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/chip {...}]

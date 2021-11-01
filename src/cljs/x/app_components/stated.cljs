@@ -57,7 +57,7 @@
 ;  TODO ...
 ;
 ; @name initial-props-path
-;  Az {:initial-props-path [...]} tulajdonságként átadott Re-Frame DB adatbázis
+;  Az {:initial-props-path [...]} tulajdonságként átadott Re-Frame adatbázis
 ;  útvonal megadásával határozható meg, a komponens React-fába csatolásakor az
 ;  {:initial-props {...}} tulajdonságként átadott térkép elérési útvonala.
 ;

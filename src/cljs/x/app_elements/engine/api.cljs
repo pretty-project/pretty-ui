@@ -116,6 +116,7 @@
 (def form-completed? form/form-completed?)
 
 ; x.app-elements.engine.input
+(def default-options-path   input/default-options-path)
 (def default-value-path     input/default-value-path)
 (def generate-value-path    input/generate-value-path)
 (def get-input-stored-value input/get-input-stored-value)

@@ -122,7 +122,7 @@
       (let [js-id          (time/set-interval! interval #(a/dispatch event))
             interval-props (assoc interval-props :js-id js-id)]
            ; TODO ...
-           ; Re-Frame DB helyett helyi atomban legyenek tárolva!
+           ; Re-Frame adatbázis helyett helyi atomban legyenek tárolva!
            (a/dispatch [::store-interval-props! interval-id interval-props]))))
 
 ; @usage
@@ -152,7 +152,7 @@
   (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
         timeout-props (assoc timeout-props :js-id js-id)]
        ; TODO ...
-       ; Re-Frame DB helyett helyi atomban legyenek tárolva!
+       ; Re-Frame adatbázis helyett helyi atomban legyenek tárolva!
        (a/dispatch [::store-timeout-props! timeout-id timeout-props])))
 
 ; @usage

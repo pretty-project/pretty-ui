@@ -153,13 +153,12 @@
   ;
   ;
   ; @usage
-  ;  [elements/chips {:chips [{:label "Chip #1" :variant :outlined}
-  ;                           {:label "Chip #2" :variant :filled}]}]
+  ;  [elements/chips {:chips [{:label "Chip #1"}]}]
   ;
   ; @usage
   ;  (a/reg-event-db :delete-my-chip! [db [_ my-param chips-id chip-dex]])
-  ;  [elements/chips {:chips [{:label "Chip #1" :variant :outlined}
-  ;                           {:label "Chip #2" :variant :filled}]
+  ;  [elements/chips {:chips [{:label "Chip #1"}
+  ;                           {:label "Chip #2"}]
   ;                   :on-delete [:delete-my-chip! :my-param]}]
   ;
   ; @return (component)

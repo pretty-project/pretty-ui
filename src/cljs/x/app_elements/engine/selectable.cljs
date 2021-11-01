@@ -34,11 +34,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (keyword) option-value
+  ; @param (*) option
   ;
   ; @return (function)
-  [input-id option-value]
-  #(a/dispatch [:x.app-elements/select-option! input-id option-value]))
+  [input-id option]
+  #(a/dispatch [:x.app-elements/select-option! input-id option]))
 
 (defn on-unselect-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,24 +69,22 @@
   ; @param (map) input-props
   ;  {:disabled? (boolean)(opt)
   ;   :value (keyword)(opt)}
-  ; @param (map) option-props
-  ;  {:value (*)}
+  ; @param (*) option
   ;
   ; @return (map)
   ;  {:data-selected (boolean)
   ;   :disabled (boolean)
   ;   :on-click (function)}
-  [input-id {:keys [disabled?] :as input-props} option-props]
+  [input-id {:keys [disabled?] :as input-props} option]
   (let [selected-value (:value input-props)
-        option-value   (:value option-props)
-        selected?      (= selected-value option-value)]
+        selected?      (= selected-value option)]
        (cond-> (param {})
                (boolean disabled?)
                (merge {:data-selected (param selected?)
                        :disabled      (param true)})
                (not disabled?)
                (merge {:data-selected (param selected?)
-                       :on-click      (on-select-function              input-id option-value)
+                       :on-click      (on-select-function              input-id option)
                        :on-mouse-up   (focusable/blur-element-function input-id)}))))
 
 (defn selectable-unselect-attributes
@@ -140,6 +138,16 @@
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-selectable-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (vector)
+  [db [_ input-id]]
+  (let [options-path (r element/get-element-prop db input-id :options-path)]
+       (get-in db options-path)))
 
 (defn get-option-stack
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -207,11 +215,13 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :helper (keyword)
+  ;   :options (vector)
   ;   :selected? (boolean)
   ;   :value (keyword)}
   [db [_ input-id]]
-  (merge {:selected? (r selectable-selected?  db input-id)
-          :value     (r input/get-input-value db input-id)}
+  (merge {:options   (r get-selectable-options db input-id)
+          :selected? (r selectable-selected?   db input-id)
+          :value     (r input/get-input-value  db input-id)}
          (if (r input/input-required-warning? db input-id)
              {:color  :warning
               :helper :please-select-an-option})))
@@ -220,6 +230,30 @@
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn use-selectable-initial-options!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (map)
+  [db [_ input-id]]
+  (if-let [initial-options (r element/get-element-prop db input-id :initial-options)]
+          (let [options-path (r element/get-element-prop db input-id :options-path)]
+               (assoc-in db options-path initial-options))
+          (return db)))
+
+(defn- init-selectable!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (map)
+  [db [event-id input-id]]
+  (-> db (input/init-input!               [event-id input-id])
+         (use-selectable-initial-options! [event-id input-id])))
+
+(a/reg-event-db :x.app-elements/init-selectable! init-selectable!)
 
 (defn- add-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!

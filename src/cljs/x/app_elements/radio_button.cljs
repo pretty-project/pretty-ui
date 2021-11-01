@@ -34,12 +34,17 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
-  ;   :layout (keyword)}
+  ;   :get-label-f (function)
+  ;   :layout (keyword)
+  ;   :options-path (item-path vector)
+  ;   :value-path (item-path vector)}
   [button-id button-props]
-  (merge {:color      :primary
-          :font-size  :s
-          :layout     :row
-          :value-path (engine/default-value-path button-id)}
+  (merge {:color        :primary
+          :font-size    :s
+          :layout       :row
+          :options-path (engine/default-options-path button-id)
+          :value-path   (engine/default-value-path   button-id)
+          :get-label-f  str}
          (param button-props)))
 
 
@@ -83,16 +88,15 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) view-props
-  ; @param (map) option-props
-  ;  {:label (metamorphic-content)
-  ;   :value (*)}
+  ; @param (*) option
   ;
   ; @return (hiccup)
-  [button-id view-props {:keys [label] :as option-props}]
-  [:button.x-radio-button--option
-    (engine/selectable-option-attributes button-id view-props option-props)
-    [:div.x-radio-button--option-button]
-    [:div.x-radio-button--option-label [components/content {:content label}]]])
+  [button-id {:keys [get-label-f] :as view-props} option]
+  (let [option-label (get-label-f option)]
+       [:button.x-radio-button--option
+         (engine/selectable-option-attributes button-id view-props option)
+         [:div.x-radio-button--option-button]
+         [:div.x-radio-button--option-label [components/content {:content option-label}]]]))
 
 (defn- radio-button-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,17 +166,18 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :form-id (keyword)(opt)
+  ;   :get-label-f (function)(constant)(opt)
+  ;    Default: str
   ;   :helper (metamorphic-content)(opt)
   ;    TODO ...
+  ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
   ;   :on-select (metamorphic-event)(constant)(opt)
-  ;   :options (maps in vector)
-  ;    [{:label (metamorphic-content)
-  ;      :value (*)}]
+  ;   :options-path (item-path vector)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)
@@ -197,5 +202,5 @@
         [engine/stated-element button-id
           {:component     #'radio-button
            :element-props button-props
-           :initializer   [:x.app-elements/init-input! button-id]
-           :subscriber    [::get-view-props            button-id]}])))
+           :initializer   [:x.app-elements/init-selectable! button-id]
+           :subscriber    [::get-view-props                 button-id]}])))

@@ -76,16 +76,19 @@
   []
   [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs}]
        [components/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
-       [elements/button {:label "Reload infinite loader!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]
+       [elements/button ::reload-infinite-loader-button
+                        {:label "Reload infinite loader!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]
                          :variant :transparent :color :secondary}]])
 
 (defn buttons
   []
   [:<> [elements/anchor {:content "My anchor link"   :href "/my-link"}]
        [elements/anchor {:content "My anchor button" :on-click [:x.app-router/go-to! "/my-link"]}]
-       [elements/button {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
+       [elements/button ::pres-esc-button
+                        {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
                          :variant :transparent :color :none :icon :people}]
-       [elements/button {:label "My button" :variant :filled :color :primary :icon :people}]])
+       [elements/button ::my-button
+                        {:label "My button" :variant :filled :color :primary :icon :people}]])
 
 (defn chips
   []
@@ -106,86 +109,114 @@
 
 (defn- form-a
   []
-  [:<> [elements/select {:label "My select"
+  [:<> [elements/select ::my-select
+                        {:label "My select"
                          :on-select #(println "Selected")
                          :options [{:label "Option #1" :value :option-1}
                                    {:label "Option #2" :value :option-2}]}]
-       [elements/date-field {:label "My date field" :value-path (db/path ::stuff :my-date)}]
-       [elements/text-field {:label "My text-field w/ surface" :emptiable? true
+       [elements/date-field ::my-date-field
+                            {:label "My date field" :value-path (db/path ::stuff :my-date)}]
+       [elements/text-field ::my-text-field-w-surface
+                            {:label "My text-field w/ surface" :emptiable? true
                              :placeholder "Placeholder"
                              :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
                              :helper "My helper"}]
-       [elements/text-field {:label "My text-field w/ modifier" :emptiable? true
+       [elements/text-field ::my-text-field-w-modifier
+                            {:label "My text-field w/ modifier" :emptiable? true
                              :placeholder "Placeholder"
                              :modifier #(string/starts-with! % "/")}]
-       [elements/text-field {:label "My text-field w/ validator" :emptiable? true
+       [elements/text-field ::my-text-field-w-validator
+                            {:label "My text-field w/ validator" :emptiable? true
                              :placeholder "Placeholder"
                              :validator {:f #(= % "x")
                                          :invalid-message "Type \"x\""}}]
-       [elements/text-field {:label "My text-field w/ prevalidator" :emptiable? true
+       [elements/text-field ::my-text-field-w-prevalidator
+                            {:label "My text-field w/ prevalidator" :emptiable? true
                              :placeholder "Placeholder"
                              :initial-value "x"
                              :validator {:f #(= % "x")
                                          :invalid-message "Type \"x\""
                                          :pre-validate? true}}]
-       [elements/password-field {:label "My password-field w/ adornments" :emptiable? true
+       [elements/password-field ::my-password-field-w-adornments
+                                {:label "My password-field w/ adornments" :emptiable? true
                                  :placeholder "Placeholder"
                                  :start-adornments [{:icon :sentiment_very_satisfied}]}]
-       [elements/multiline-field {:label "My textarea" :placeholder "Placeholder"}]])
+       [elements/multiline-field ::my-multiline-field
+                                 {:label "My multiline-field" :placeholder "Placeholder"}]])
 
 (defn- form-b
   []
-  [:<> [elements/switch {:label "My switch"
+  [:<> [elements/switch ::my-switch
+                        {:label "My switch"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                          :default-value true}]
-       [elements/switch {:label "Your switch"
+       [elements/switch ::your-switch
+                        {:label "Your switch"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
        [elements/separator {:orientation :horizontal :size :l}]
        [elements/label {:content "My label"}]
        [elements/horizontal-line {:color :highlight}]
-       [elements/checkbox {:label "My checkbox"
+       [elements/checkbox ::my-checkbox
+                          {:label "My checkbox"
                            :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
-       [elements/checkbox {:label "Your checkbox"
+       [elements/checkbox ::your-checkbox
+                          {:label "Your checkbox"
                            :helper "Check it to check out!"}]
-       [elements/checkbox {:label "Our checkbox"
+       [elements/checkbox ::our-checkbox
+                          {:label "Our checkbox"
                            :helper "Check it to check out!"}]
        [elements/separator {:orientation :horizontal :size :l}]
        [elements/label {:content "Your label"}]
        [elements/horizontal-line {:color :highlight}]
-       [elements/counter :my-counter {:label "My counter" :resetable? true :initial-value 420}]
-       [elements/counter {:label "My counter" :resetable? true :initial-value 420
+       [elements/counter ::my-counter
+                         {:label "My counter" :resetable? true :initial-value 420}]
+       [elements/counter ::your-counter
+                         {:label "Your counter" :resetable? true :initial-value 420
                           :helper "Your helper"}]
        [elements/separator {:orientation :horizontal :size :l}]
        [elements/label {:content "Our label"}]
        [elements/horizontal-line {:color :highlight}]
        [elements/anchor {:href "/x" :content "My anchor"}]
-       [elements/button {:label "My button"
+       [elements/button ::my-button-w-helper
+                        {:label "My button"
                          :helper "Your helper"}]
-       [elements/button {:label "Browse files!"
+       [elements/button ::browse-files-button
+                        {:label "Browse files!"
                          :on-click [:file-browser/load! {:value-path (db/path ::stuff :selected-files)
                                                          :browser-mode :add-files}]}]
        [elements/separator {:orientation :horizontal :size :xxl}]
-       [elements/radio-button {:label "My radio-button"
+       [elements/radio-button ::my-radio-button
+                              {:label "My radio-button"
                                :unselectable? true
-                               :options [{:label "Option #1" :value "ot-1"}
-                                         {:label "Option #2" :value "ot-2"}]}]
-       [elements/chip {:color :highlight :label "My chip" :variant :outlined :on-delete [:chip-deleted :layout :fit]}]
-       [elements/chips {:label "My chips" :chips [{:label "Chip #1" :variant :outlined}
-                                                  {:label "Chip #2" :variant :filled}]}]])
+                               :get-label-f :label
+                               :initial-options [{:label "Option #1" :value "ot-1"}
+                                                 {:label "Option #2" :value "ot-2"}]}]
+       [elements/chip  {:color :highlight :label "My chip" :variant :outlined :on-delete [:chip-deleted :layout :fit]}]
+       [elements/chips ::my-chips
+                       {:label "My chips" :chips [{:label "Chip #1" :variant :outlined}
+                                                  {:label "Chip #2" :variant :filled}]
+                                          :on-delete []}]])
 
 (defn form-c
   [_ _]
-  [:<> [elements/expandable {:content "My content" :icon :apps :label "My expandable"}]
-       [elements/multi-field {:label "My multi-field"}]
-       [elements/combo-box {:label "My combobox"
+  [:<> [elements/expandable  {:content "My content" :icon :apps :label "My expandable"}]
+       [elements/multi-field ::my-multi-field
+                             {:label "My multi-field"
+                              :value-path [:x :y]}]
+       [elements/combo-box ::my-combo-box
+                           {:label "My combo-box"
                             :extendable? true
                             :get-label-f  #(do (get % :x))
-                            :options-path (db/path ::stuff :combobox :options)}]
+                            :options-path (db/path ::stuff :combo-box :options)
+                            :initial-options [{:x "A"} {:x "B"}]
+                            :initial-value {:x "B"}}]
 
-       [elements/multi-combo-box {:label "My multi-combobox"
+       [elements/multi-combo-box ::my-multi-combo-box
+                                 {:label "My multi-combo-box"
                                   :extendable? true
                                   :get-label-f #(get % :x)
-                                  :options-path (db/path ::stuff :multi-combobox :options)}]])
+                                  ;:options-path (db/path ::stuff :multi-combo-box :options)
+                                  :initial-options [{:x "A"} {:x "B"}]}]])
 
 (defn- view
   []

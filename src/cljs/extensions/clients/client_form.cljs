@@ -108,8 +108,6 @@
   [:div#clients--client-form--legal-details
     [elements/text-field ::vat-no {:label :vat-no}]])
 
-(def abc [0 1 2 3 4 5 6 7 8])
-
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
@@ -120,10 +118,13 @@
                                               :label "Magyarország"}]
                                    :value-path [:clients :form-data :client/country]}]
     [elements/text-field ::zip-code {:label :zip-code :min-width :xxs}]
-    [elements/combo-box ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
-                                   :style {:flex-grow 1}}]]
+    [elements/combo-box  ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
+                                    :style {:flex-grow 1}
+                                    :value-path [:clients :form-data :client/city]
+                                    :initial-value "Makó"
+                                    :initial-options ["HMVH" "BP"]}]]
   [:div
-    [elements/text-field ::address  {:label :address :min-width :grow}]]])
+    [elements/text-field ::address  {:label :address :min-width :grow :value-path [:clients :form-data :client/address]}]]])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -213,8 +214,8 @@
                                (dissoc-in [:clients :form-data]))
             :dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
                          [:clients/request-client! client-id]
-                         [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
-                                              ["Szeged"]]
+;                         [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
+;                                              ["Szeged"]]
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :countries]
                                               locales/COUNTRY-LIST]
                          [:clients/render-client-form!]]})))
