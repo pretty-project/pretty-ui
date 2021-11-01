@@ -202,7 +202,7 @@
           (some? border-color)
           (assoc :data-border-color     (keyword/to-dom-value border-color))
           :use-class
-          (assoc :class                 (css/class "x-element" class))
+          (assoc :class                 (css/join-class "x-element" class))
           (some? color)
           (assoc :data-color            (keyword/to-dom-value color))
           (some? font-size)

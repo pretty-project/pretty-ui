@@ -23,8 +23,7 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.text-field :as text-field :refer [text-field]]
-              [x.app-elements.horizontal-line :refer [view] :rename {view horizontal-line}]))
+              [x.app-elements.text-field :as text-field :refer [text-field]]))
 
 
 

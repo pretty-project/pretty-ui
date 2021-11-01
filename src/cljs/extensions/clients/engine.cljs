@@ -74,6 +74,20 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-downloaded-clients
+  [db _]
+  (get-in db [:clients :documents]))
+
+(defn get-downloaded-client-count
+  [db _]
+  (let [downloaded-clients (r get-downloaded-clients db)]
+       (count downloaded-clients)))
+
+(defn all-documents-downloaded?
+  [db _]
+  (let [client-count            (get-in db [:clients :document-count])
+        downloaded-client-count (r get-downloaded-client-count db)]))
+
 ;; ----------------------------------------------------------------------------
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -90,8 +104,7 @@
       (let [client-props (get-in db [:clients :form-data])]
            [:x.app-sync/send-query!
             :clients/synchronize-client-form!
-            {
-             ;:on-success [:x.app-router/go-to! "/clients"]
+            {:on-success [:x.app-router/go-to! "/clients"]
              :on-failure [:x.app-ui/blow-bubble! ::failure-notification {:content :saving-error :color :warning}]
              :query      [`(clients/save-client! ~client-props)]}])))
 
@@ -149,10 +162,11 @@
 
 (a/reg-event-fx
   :clients/receive-client!
-  (fn [{:keys [db]} [_ response-value]]
-      (let [result    (:clients/get-client response-value)
-            {:keys [documents count]} result]
-           [:x.app-db/set-item! [:clients :form]
+  (fn [{:keys [db]} [_ server-response]]
+      (println (str server-response))
+      (let [];result    (:clients/get-client response-value)]
+            ;{:keys [documents count]} result]
+           [:x.app-db/set-item!    [:clients :form-data]
             {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
              :client/client-no     "051301"
              :client/first-name    "Debil"
@@ -164,31 +178,40 @@
   :clients/request-client!
   (fn [{:keys [db]} [event-id client-id]]
       [:x.app-sync/send-query!
-       :clients/request-client!
-       {:on-success [:clients/receive-clients!]
-        :query [`(:clients/get-client {:client-id ~client-id})]}]))
-
+       :clients/synchronize-client-form!
+       {:on-stalled [:clients/receive-client!]
+        :query      [[:client/id client-id]]}]))
 
 ; Download clients for the client-list
 
 (a/reg-event-fx
   :clients/receive-clients!
-  (fn [{:keys [db]} [_ {:clients/keys [result]}]]
-      (let [documents      (get result :documents)
-            document-count (get result :document-count)]
-           [:x.app-db/apply! [:clients :documents] vector/concat-items documents])))
+  (fn [{:keys [db]} [_ server-response]]
+      (let [documents      (get-in server-response [:clients/get-clients :documents])
+            document-count (get-in server-response [:clients/get-clients :document-count])]
+           {:db       (-> db (update-in [:clients :documents] vector/concat-items documents)
+                             ; Szükséges frissíteni a keresési feltételeknek megfelelő
+                             ; dokumentumok számát, mert változhat
+                             (assoc-in  [:clients :document-count] document-count))
+            :dispatch-if [(r all-documents-downloaded? db)
+                          [:x.app-components/reload-infinite-loader! :clients]]})))
 
 (a/reg-event-fx
   :clients/request-clients!
   (fn [{:keys [db]} _]
       [:x.app-sync/send-query!
        :clients/request-clients!
-       {:on-success [:clients/receive-clients!]
+        ; A letöltött dokumentumok on-success helyett on-stalled időpontban kerülnek tárolásra
+        ; a Re-Frame adatbázisba, így elkerülhető, hogy a request idle-timeout ideje alatt
+        ; az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
+        ; felirat még megjelenik a lista végén.
+       {:on-stalled [:clients/receive-clients!]
         :query      [`(:clients/get-clients
-                        {:skip      1
-                         :max-count 3
+                        {:skip      ~(r get-downloaded-client-count db)
+                         :max-count 10
                          :search-pattern [[:client/full-name ""] [:client/email-address ""]]
                          :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
+
 
 ;; ----------------------------------------------------------------------------
 ;; -- Effect events -----------------------------------------------------------

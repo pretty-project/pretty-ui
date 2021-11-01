@@ -28,27 +28,7 @@
   ; @param (boolean)
   []
   (= (rand-int 2)
-     (param 0)))
-
-(defn generate-integer
-  ; @param (integer)(opt) length
-  ;
-  ; @usage
-  ;  (generate-integer)
-  ;  (random/generate-integer)
-  ;
-  ; @example
-  ;  (generate-integer 4)
-  ;  => 5406
-  ;
-  ; @param (integer)
-  ([]
-   (generate-integer 1))
-
-  ([length]
-   (reduce (fn [%1 _] (str %1 (rand-int 10)))
-           (param nil)
-           (range 1 (inc length)))))
+     (param    0)))
 
 
 
@@ -115,7 +95,7 @@
                    (vec (conj generated-keywords generated-keyword))))
           (param [])
           (range n)))
-          
+
 (defn generate-namespaced-keyword
   ; @return (namespaced keyword)
   []

@@ -10,7 +10,7 @@
     (:require [project-emulator.server-router.api]
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
-              [extensions.clients.handlers]
+              [extensions.clients.api]
               [x.boot-loader])
 
     (:gen-class))

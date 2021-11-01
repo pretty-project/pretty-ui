@@ -37,7 +37,7 @@
 
 (defn- client-item-secondary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [added-at email-address]} _]
+  [_ _ {:client/keys [added-at email-address]} _]
   (let [added-at (time/timestamp->date-and-time added-at :yyyymmdd :hhmm)]
        [:div.clients--client--secondary-details
           [:div.clients--client--email-address email-address]
@@ -45,7 +45,7 @@
 
 (defn- client-item-primary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [client-no first-name last-name]} {:keys [selected-language]}]
+  [_ _ {:client/keys [client-no first-name last-name]} {:keys [selected-language]}]
   (let [full-name (locales/name->ordered-name first-name last-name selected-language)]
        [:div.clients--client--primary-details
           [:div.clients--client--full-name full-name]
@@ -53,7 +53,7 @@
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [lister-id item-dex {:keys [id] :as client-props} common-props]
+  [lister-id item-dex {:client/keys [id] :as client-props} common-props]
   (let [client-uri (str "/clients/" id)]
        [:button.clients--client {:on-click #(a/dispatch [:x.app-router/go-to! client-uri])}
           [client-item-primary-details   lister-id item-dex client-props common-props]
@@ -122,7 +122,7 @@
   [layouts/layout-a surface-id {:label :clients :icon :people
                                 :body   {:content #'client-list}
                                 :header {:content #'search-bar
-                                         :sticky? true}}])  
+                                         :sticky? true}}])
 
 
 

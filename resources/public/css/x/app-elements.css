@@ -154,6 +154,7 @@ body {
 .x-radio-button--label,
 .x-radio-button--option-label,
 .x-select--label,
+.x-select--button-label,
 .x-select--button-icon,
 .x-select--option,
 .x-switch--label,
@@ -1725,7 +1726,7 @@ body[data-viewport-profile="s"]   .x-card {
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
   min-height: 48px;
-  padding: 0 var( --bar-edge ) }
+  padding: 0 var( --flex-edge ) }
 
 .x-card--header[data-sticky="true"] {
   background-color: var( --background-color );
@@ -2851,7 +2852,7 @@ body[data-viewport-profile="s"]   .x-card {
 /*** Select wrapper ***/
 
 .x-select[data-layout="row"] {
-  padding: 12px 0 }
+  padding: 8px 0 }
 
 /*** Select wrapper ***/
 

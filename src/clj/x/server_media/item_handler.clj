@@ -146,7 +146,7 @@
                        :directory/modified-by]}
 
   (let [directory-document   (local-db/get-document "directories" id)
-        directory-items      (get directory-document :items)
+        directory-items      (get   directory-document :items)
         directory-item-count (count directory-items)
         directory-document   (assoc directory-document :item-count directory-item-count)]
        (db/document->namespaced-document directory-document :directory)))

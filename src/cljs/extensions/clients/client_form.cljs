@@ -28,16 +28,15 @@
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order  (r locales/get-name-order db)
-   :new-client? (r new-client?            db)})
+  {:name-order (r locales/get-name-order db)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:form-completed? true ;(r elements/form-completed?   db ::client-form)
-   :new-client?     (r new-client? db)})
+  {:form-completed? (r elements/form-completed? db ::client-form)
+   :new-client?     (r new-client?              db)})
 
 (a/reg-sub ::get-header-props get-header-props)
 
@@ -83,7 +82,7 @@
 
 (defn- save-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [form-completed? new-client?] :as header-props}]
+  [surface-id {:keys [form-completed?] :as header-props}]
   [elements/button {:label :save! :preset :save-icon-button :disabled? (not form-completed?)
                     :on-click [:clients/request-save-client!]}])
 
@@ -109,6 +108,8 @@
   [:div#clients--client-form--legal-details
     [elements/text-field ::vat-no {:label :vat-no}]])
 
+(def abc [0 1 2 3 4 5 6 7 8])
+
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
@@ -117,7 +118,7 @@
     [elements/select    ::country {:label :country :min-width :xxs ; :default-value {:label "Magyarország"}
                                    :options [{:value "Magyarország"
                                               :label "Magyarország"}]
-                                   :value-path [:clients :form-data :country]}]
+                                   :value-path [:clients :form-data :client/country]}]
     [elements/text-field ::zip-code {:label :zip-code :min-width :xxs}]
     [elements/combo-box ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
                                    :style {:flex-grow 1}}]]
@@ -129,12 +130,12 @@
   [surface-id body-props]
   [:div#clients--client-form--primary-contacts
     [elements/text-field ::email-address {:label :email-address :required? true
-                                          :value-path [:clients :form-data :email-address]
+                                          :value-path [:clients :form-data :client/email-address]
                                           :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                                           :form-id ::client-form
                                           :min-width :l}]
     [elements/text-field ::phone-number {:label :phone-number :required? true
-                                         :value-path [:clients :form-data :phone-number]
+                                         :value-path [:clients :form-data :client/phone-number]
                                          :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
                                          ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
                                          ;:modifier form/valid-phone-number
@@ -147,28 +148,19 @@
   [surface-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
     [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true
-                                                           :value-path [:clients :form-data :first-name]
+                                                           :value-path [:clients :form-data :client/first-name]
                                                            :form-id ::client-form
                                                            :min-width :l}]
                         [elements/text-field ::last-name  {:label :last-name  :required? true
-                                                           :value-path [:clients :form-data :last-name]
+                                                           :value-path [:clients :form-data :client/last-name]
                                                            :form-id ::client-form
                                                            :min-width :l}]
                         (param name-order)]])
 
-(defn- client-no
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [client-no] :as body-props}]
-  [:div#clients--client-form--client-no
-    [elements/label {:content :client-id :font-size :xxs :color :highlight :font-weight :bold       :layout :fit}]
-    [elements/text  {:content client-no  :font-size :xs  :color :muted     :font-weight :extra-bold :layout :fit :prefix "#"}]])
-
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [new-client?] :as body-props}]
+  [surface-id body-props]
   [:div#clients--client-form
-    (if-not (boolean new-client?)
-            [client-no surface-id body-props])
     [client-name               surface-id body-props]
     [client-primary-contacts   surface-id body-props]
     [client-secondary-contacts surface-id body-props]
@@ -217,9 +209,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [client-id (r router/get-current-route-path-param db :client-id)]
-           {:db         (-> db (assoc-in  [:clients :form-meta :client-id] client-id))
-;                               (dissoc-in [:clients :form-data]))
+           {:db         (-> db (assoc-in  [:clients :form-meta :client-id] client-id)
+                               (dissoc-in [:clients :form-data]))
             :dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
+                         [:clients/request-client! client-id]
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
                                               ["Szeged"]]
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :countries]

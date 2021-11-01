@@ -158,7 +158,7 @@
   {::pathom.co/op-name 'media-storage/upload-files!}
 
   (let [files-data           (request->files-data request)
-        processed-files-data (process-files-data files-data)]
+        processed-files-data (process-files-data  files-data)]
        (doseq [[_ {:keys [filename size tempfile] :as file}] processed-files-data]
               (let [action-props {:destination-directory-id destination-directory-id
                                   :filename                 filename

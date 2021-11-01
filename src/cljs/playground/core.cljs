@@ -135,9 +135,7 @@
 
 (defn- form-b
   []
-  [:<> [elements/horizontal-line {:color :highlight}]
-       [elements/separator {:orientation :horizontal :size :m}]
-       [elements/switch {:label "My switch"
+  [:<> [elements/switch {:label "My switch"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                          :default-value true}]
        [elements/switch {:label "Your switch"

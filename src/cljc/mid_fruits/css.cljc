@@ -23,11 +23,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn class
+(defn join-class
   ; @param (list of string or vector)
   ;
   ; @example
-  ;  (css/class "my-class" ["your-class"] "our-class")
+  ;  (css/join-class "my-class" ["your-class"] "our-class")
   ;  =>
   ;  ["my-class" "your-class" "our-class"]
   ;

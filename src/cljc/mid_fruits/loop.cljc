@@ -43,7 +43,8 @@
   ;                   {}
   ;                   [:a :b :c :d]
   ;                   10
-  ;  => {:a 10 :b 11 :c 12 :d 13}
+  ;  =>
+  ;  {:a 10 :b 11 :c 12 :d 13}
   ;
   ; @return (*)
   [f initial coll wormhole]
@@ -69,7 +70,8 @@
   ;                   [:a]
   ;                   [:b :c :d :e]
   ;                   (fn [%1 _ %3] (= (count %1) 3)))
-  ;  => [:a :b :c :d]
+  ;  =>
+  ;  [:a :b :c :d]
   ;
   ; @return (*)
   [f initial coll test-f]
@@ -100,7 +102,8 @@
   ;                [:a]
   ;                [:b :c :d :e]
   ;                (fn [%1 _] (= (count %1) 3)))
-  ;  => [:a :b :c]
+  ;  =>
+  ;  [:a :b :c]
   ;
   ; @return (*)
   [f initial coll test-f]
@@ -139,7 +142,8 @@
   ;                        [:a]
   ;                        [:b :c :d :e]
   ;                        (fn [%1 _ dex] (= (count %1) 3)))
-  ;  => [:a :b :c]
+  ;  =>
+  ;  [:a :b :c]
   ;
   ; @return (*)
   [f initial coll test-f]
@@ -170,7 +174,8 @@
   ;                      {:a "a"}
   ;                      {:b "b" :c "c" :d "d" :e "e"}
   ;                      (fn [%1 _ _] (= (count %1) 3)))
-  ;  => {:a "a" :b "b" :c "c" :d "d"}
+  ;  =>
+  ;  {:a "a" :b "b" :c "c" :d "d"}
   ;
   ; XXX#7500
   ; TODO, WARNING
@@ -215,7 +220,8 @@
   ;                   {:a "a"}
   ;                   {:b "b" :c "c" :d "d" :e "e"}
   ;                   (fn [%1 _ _] (= (count %1) 3)))
-  ;  => {:a "a" :b "b" :c "c" :d "d"}
+  ;  =>
+  ;  {:a "a" :b "b" :c "c" :d "d"}
   ;
   ; XXX#7500
   ;
@@ -408,7 +414,7 @@
                       (inc (second %1))])
                  [initial 0]
                  (param coll))))
- 
+
 (defn reduce-maptor
   ; A reduce ciklus maptor típuson végigiteráló változata
   ;
@@ -464,7 +470,15 @@
   ;            {:my-numbers [0 1 2 4]
   ;             :x 0}
   ;            (fn [%] (= (count (:my-numbers %1)) 5))))
-  ;  => {:my-numbers [0 1 2 4 3] :x 3}
+  ;  =>
+  ;  {:my-numbers [0 1 2 4 3] :x 3}
+  ;
+  ; @example
+  ;  (do-while #(inc %)
+  ;             0
+  ;            #(> % 3))
+  ;  =>
+  ;  4
   ;
   ; @return (*)
   [f n test-f]

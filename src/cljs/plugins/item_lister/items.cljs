@@ -72,12 +72,13 @@
   ; komponens újratöltését okozná.
   [lister-id {:keys [subscriber] :as lister-props} view-props]
   (let [common-props (a/subscribe subscriber)]
-       (fn [] (let [lister-props (assoc lister-props :common-props @common-props)]
-                   [item-list lister-id lister-props view-props]))))
+       (fn [_ _ view-props] (let [lister-props (assoc lister-props :common-props @common-props)]
+                                 [item-list lister-id lister-props view-props]))))
 
 (defn items
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [lister-id {:keys [on-list-ended request-id sortable? subscriber] :as lister-props} view-props]
+  [lister-id {:keys [on-list-ended request-id sortable? subscriber] :as lister-props}
+             {:keys [items]                                         :as view-props}]
   [:div.item-lister--items
     (if (some? subscriber)
         [subscriber-item-list lister-id lister-props view-props]
@@ -86,7 +87,8 @@
         [components/infinite-loader lister-id {:on-viewport on-list-ended}])
     (if (some? request-id)
         [request-indicator lister-id lister-props view-props])
-    [no-items-to-show-label lister-id lister-props view-props]])
+    (if (empty? items)
+        [no-items-to-show-label lister-id lister-props view-props])])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

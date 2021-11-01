@@ -19,6 +19,7 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
               [x.app-elements.api   :as elements]
+              [x.app-sync.api       :as sync]
               [x.app-ui.api         :as ui]
               [x.app-user.api       :as user]))
 
@@ -50,9 +51,10 @@
   ;   :user-identified? (boolean)
   ;   :username (string)}
   [db _]
-  {:login-attempted? (r user/login-attempted? db)
-   :user-identified? (r user/user-identified? db)
-   :username         (r user/get-user-name db)})
+  {:login-attempted? (r user/login-attempted?      db)
+   :user-identified? (r user/user-identified?      db)
+   :username         (r user/get-user-name         db)
+   :synchronizing?   (r sync/listening-to-request? db :x.app-user/authenticate!)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -102,17 +104,18 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) view-props
+  ;  {:synchronizing? (boolean)}
   ;
   ; @return (component)
-  [_ _]
+  [_ {:keys [synchronizing?]}]
   [elements/submit-button
    {:color      :primary
+    :disabled?  synchronizing?
     :input-ids  [::email-address-field ::password-field]
     :keypress   {:key-code 13 :required? true}
     :label      :login!
     :layout     :fit
     :on-click   [:x.app-user/authenticate!]
-    :request-id :x.app-user/authenticate!
     :variant    :outlined}])
 
 (defn- forgot-password-button

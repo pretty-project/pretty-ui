@@ -1,14 +1,22 @@
 
 (ns extensions.clients.handlers
-    (:require
-      [mongo-db.api :as mongo-db]
-      [x.server-core.api :as a]
-      [pathom.api   :as pathom]
-      [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+    (:require [mid-fruits.loop   :refer [do-while]]
+              [mongo-db.api      :as mongo-db]
+              [pathom.api        :as pathom]
+              [x.server-core.api :as a]
+              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (def collection-name "clients")
 
+
+
+;; ----------------------------------------------------------------------------
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -36,12 +44,16 @@
             {"$match" query}]))
 
 ;; ----------------------------------------------------------------------------
+;; -- Pipelines ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defresolver get-clients
              ; @param (map) env
-             ; @param (?) ?
+             ; @param (map) resolver-props
              ;
              ; @return (map)
              ;  {:clients/get-clients (map)
@@ -49,19 +61,25 @@
              ;     :documents (maps in vector)}}
              [env _]
              {:clients/get-clients
-               (let [search-props (pathom/env->params env)
-                     pipeline     (search-props->search-pipeline search-props)]
-                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name pipeline)
-                     :document-count (mongo-db/count-documents-by-pipeline collection-name pipeline)})})
+               (let [search-props    (pathom/env->params            env)
+                     search-pipeline (search-props->search-pipeline search-props)
+                     count-pipeline  (search-props->count-pipeline  search-props)]
+                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
+                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
+                     ; A keresési feltételeknek megfelelő dokumentumok száma
+                     :document-count (mongo-db/count-documents-by-pipeline collection-name count-pipeline)})})
 
 (defresolver get-client
              ; @param (map) env
-             ; @param (?) ?
+             ; @param (map) resolver-props
+             ;  {:client/id (string)}
              ;
              ; @return (map)
              ;  {:clients/get-client (map)}
              [env {:keys [client/id]}]
-             {:clients/get-client (mongo-db/get-document-by-id collection-name id)})
+             {::pco/output [:client/id :client/email-address]}
+             (println "sdfdsfsd"))
+             ;(mongo-db/get-document-by-id collection-name id))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------
