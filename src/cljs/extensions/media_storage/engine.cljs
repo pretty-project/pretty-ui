@@ -702,7 +702,7 @@
             updated-file-props {:alias         file-alias}
             mutation-props     {:file-id       file-id
                                 :updated-props updated-file-props}
-            query-action       (eql/query-action "media/update-file!" mutation-props)
+            query-action      `(media-storage/update-file! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
@@ -724,7 +724,7 @@
             updated-subdirectory-props {:alias         subdirectory-alias}
             mutation-props             {:directory-id  subdirectory-id
                                         :updated-props updated-subdirectory-props}
-            query-action               (eql/query-action "media/update-directory!" mutation-props)
+            query-action              `(media-storage/update-directory! ~mutation-props)
             query-question             {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
@@ -743,7 +743,7 @@
             subdirectory-alias (r tools/get-editor-value db :media-storage/alias-editor)
             mutation-props     {:destination-directory-id (name  destination-directory-id)
                                 :directory-alias          (param subdirectory-alias)}
-            query-action       (eql/query-action "media/create-directory!" mutation-props)
+            query-action      `(media-storage/create-directory! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:media-storage/test]
            [:x.app-sync/send-query!
@@ -765,7 +765,7 @@
       (let [directory-entity (db/item-id->document-entity source-directory-id :directory)
             mutation-props   {:source-directory-id (name source-directory-id)
                               :selected-items      [selected-item]}
-            query-action     (eql/query-action "media/delete-items!" mutation-props)
+            query-action    `(media-storage/delete-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
@@ -788,7 +788,7 @@
             mutation-props   {:copy-item-suffix         (string/lowercase copy-item-suffix)
                               :destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]}
-            query-action     (eql/query-action "media/copy-items!" mutation-props)
+            query-action    `(media-storage/copy-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
@@ -810,7 +810,7 @@
             mutation-props   {:destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]
                               :source-directory-id      (name source-directory-id)}
-            query-action     (eql/query-action "media/move-items!" mutation-props)
+            query-action    `(media-storage/move-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id

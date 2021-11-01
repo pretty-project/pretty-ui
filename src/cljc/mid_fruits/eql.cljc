@@ -17,8 +17,7 @@
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
-              [mid-fruits.mixed   :as mixed]
-              [mid-fruits.string  :as string]))
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -85,122 +84,63 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def QUERY-OPENING "[")
-
-; @constant (string)
-(def QUERY-CLOSING "]")
-
-
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn append-to-query
-  ; @param (nil, string or vector) query
-  ; @param (keyword, map, string or vector) query-question, query-action
+  ; @param (nil vector) query
+  ; @param (keyword, map, string or vector) query-parts
   ;
   ; @example
   ;  (eql/append-to-query nil :all-users)
   ;  =>
-  ;  "[:all-users]"
+  ;  [:all-users]
   ;
   ; @example
   ;  (eql/append-to-query [] :all-users)
   ;  =>
-  ;  "[:all-users]"
-  ;
-  ; @example
-  ;  (eql/append-to-query "[]" :all-users)
-  ;  =>
-  ;  "[:all-users]"
-  ;
-  ; @example
-  ;  (eql/append-to-query "[]" ":all-users")
-  ;  =>
-  ;  "[:all-users]"
+  ;  [:all-users]
   ;
   ; @example
   ;  (eql/append-to-query [:all-users]
-  ;                        [:directory/id :my-directory])
+  ;                       [:directory/id :my-directory])
   ;  =>
-  ;  "[:all-users [:directory/id :my-directory]]"
+  ;  [:all-users [:directory/id :my-directory]]
   ;
-  ; @return (string)
-  [query & query-questions]
-  (let [query        (or query [])
-        query        (mixed/mixed->string query)
-        opened-query (string/before-last-occurence query QUERY-CLOSING)]
-       (str (reduce (fn [result query-question]
-                        (if (string/ends-with? result QUERY-OPENING)
-                            (str result     query-question)
-                            (str result " " query-question)))
-                    (param opened-query)
-                    (param query-questions))
-            (param QUERY-CLOSING))))
+  ; @return (vector)
+  [query & query-parts]
+  (let [query (or query [])]
+       (vector/concat-items query query-parts)))
 
 (defn concat-queries
-  ; @param (nil, string or vector) base-query
-  ; @param (nil, string or vector) additional-query
+  ; @param (nil, vector) base-query
+  ; @param (nil, vector) additional-query
   ;
   ; @example
   ;  (eql/concat-queries nil nil)
   ;  =>
-  ;  "[]"
+  ;  []
   ;
   ; @example
   ;  (eql/concat-queries [] [])
   ;  =>
-  ;  "[]"
+  ;  []
   ;
   ; @example
   ;  (eql/concat-queries [:all-users] [:all-games])
   ;  =>
-  ;  "[:all-users :all-games]"
+  ;  [:all-users :all-games]
   ;
   ; @example
-  ;  (eql/concat-queries [] "[:all-games]")
+  ;  (eql/concat-queries [] [:all-games])
   ;  =>
-  ;  "[:all-games]"
+  ;  [:all-games]
   ;
-  ; @return (string)
+  ; @return (vector)
   [base-query additional-query]
-  (let [base-query              (or base-query       [])
-        additional-query        (or additional-query [])
-        base-query              (mixed/mixed->string base-query)
-        additional-query        (mixed/mixed->string additional-query)
-        opened-base-query       (string/before-last-occurence base-query QUERY-CLOSING)
-        opened-additional-query (string/between-occurences additional-query QUERY-OPENING QUERY-CLOSING)]
-       (str opened-base-query opened-additional-query QUERY-CLOSING)))
-
-(defn query-action
-  ; @param (string) mutation-f-name
-  ; @param (map or string)(opt) mutation-props
-  ;
-  ; @example
-  ;  (eql/query-action "media/recalculate-storage-usage!")
-  ;  =>
-  ;  "(media/recalculate-storage-usage!)"
-  ;
-  ; @example
-  ;  (eql/query-action "media/create-directory!" {:source-directory-id "root"})
-  ;  =>
-  ;  "(media/create-directory! {:source-directory-id \"root\"})"
-  ;
-  ; @example
-  ;  (eql/query-action "media/create-directory!" "{:source-directory-id "root"}")
-  ;  =>
-  ;  "(media/create-directory! {:source-directory-id \"root\"})"
-  ;
-  ; @return (string)
-  [mutation-f-name & [mutation-props]]
-  (if (or (map/nonempty?    mutation-props)
-          (string/nonempty? mutation-props))
-      (str "(" mutation-f-name " " mutation-props ")")
-      (str "(" mutation-f-name ")")))
+  (let [base-query       (or base-query       [])
+        additional-query (or additional-query [])]
+       (vector/concat-items base-query additional-query)))
 
 
 

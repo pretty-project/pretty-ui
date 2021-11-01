@@ -191,7 +191,7 @@
   ;
   ; @return (string)
   [env {:keys [directory-id updated-props]}]
-  {::pathom.co/op-name 'media/update-directory!}
+  {::pathom.co/op-name 'media-storage/update-directory!}
 
   (let [updated-props (a/sub-prot env [directory-id updated-props] engine/updated-props-prototype)]
        (local-db/update-document! "directories" directory-id merge updated-props)
@@ -207,7 +207,7 @@
   ;
   ; @return (string)
   [env {:keys [file-id updated-props]}]
-  {::pathom.co/op-name 'media/update-file!}
+  {::pathom.co/op-name 'media-storage/update-file!}
 
   (let [updated-props (a/sub-prot env [file-id updated-props] engine/updated-props-prototype)]
        (local-db/update-document! "files" file-id merge updated-props)
@@ -230,7 +230,7 @@
   ;
   ; @return (string)
   [env {:keys [destination-directory-id directory-alias]}]
-  {::pathom.co/op-name 'media/create-directory!}
+  {::pathom.co/op-name 'media-storage/create-directory!}
 
   (let [directory-id       (random/generate-string)
         directory-link     (db/document-id->document-link directory-id :directory)
@@ -331,7 +331,7 @@
   ;
   ; @return (string)
   [env {:keys [source-directory-id selected-items] :as mutation-props}]
-  {::pathom.co/op-name 'media/delete-items!}
+  {::pathom.co/op-name 'media-storage/delete-items!}
 
   ; If it is directory, or contains a directory it should be recursive!
   (doseq [selected-item selected-items]
@@ -472,7 +472,7 @@
   ;
   ; @return (string)
   [env {:keys [copy-item-suffix destination-directory-id selected-items] :as mutation-props}]
-  {::pathom.co/op-name 'media/copy-items!}
+  {::pathom.co/op-name 'media-storage/copy-items!}
 
   ; Iterates through selected items
   (let [directory-items-alias-list          (get-directory-items-alias-list destination-directory-id)
@@ -579,7 +579,7 @@
   ;
   ; @return (string)
   [env {:keys [destination-directory-id selected-items source-directory-id] :as mutation-props}]
-  {::pathom.co/op-name 'media/move-items!}
+  {::pathom.co/op-name 'media-storage/move-items!}
 
   (doseq [selected-item selected-items]
          (let [selected-item-type (db/document-link->namespace selected-item)

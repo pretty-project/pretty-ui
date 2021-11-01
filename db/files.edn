@@ -11,14 +11,12 @@
   :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
  {:alias "381232.jpg" 
   :description "" 
-  :filename "6ea1a881-d645-4efa-854d-bc362a1290c8.jpg" 
+  :filename "6e9973ec-d982-48ca-8aff-f0efe4b721bb.jpg" 
   :filesize 2369407 
-  :id "6ea1a881-d645-4efa-854d-bc362a1290c8" 
-  :modified-at "2021-10-27T21:41:27.287Z" 
+  :id "6e9973ec-d982-48ca-8aff-f0efe4b721bb" 
+  :modified-at "2021-11-01T00:41:37.498Z" 
   :modified-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"} 
-  :path 
-  [{:directory/id "home"} 
-   {:directory/id "98b6927f-aefc-4708-ab0f-393764147f9b"}] 
+  :path [{:directory/id "home"}] 
   :tags [] 
-  :uploaded-at "2021-10-27T21:35:36.152Z" 
+  :uploaded-at "2021-11-01T00:41:37.498Z" 
   :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}}]

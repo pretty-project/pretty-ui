@@ -2,24 +2,11 @@
 (ns pathom.query
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co]
               [com.wsscode.pathom3.interface.eql     :as pathom.eql]
-              [pathom.env :as env]
-
-              [mid-fruits.candy                      :refer [param]]
+              [pathom.env                            :as env]
+              [mid-fruits.candy                      :refer [param return]]
               [mid-fruits.reader                     :as reader]
               [pathom.register                       :as register]
               [server-fruits.http                    :as http]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn read-query
-  ; @param (string or vector) query
-  ;
-  ; @return (vector)
-  [query]
-  (reader/string->mixed query))
 
 
 
@@ -29,15 +16,18 @@
 (defn request->query
   ; @param (map) request
   ;  {:params (map)
-  ;    {:query (string)(opt)}}
+  ;    {:query (vector)(opt)}}
   ;
   ; @usage
   ;  (pathom/request->query {...})
   ;
   ; @return (*)
   [request]
-  (if-let [raw-query (http/request->param request :query)]
-          (read-query raw-query)))
+  (let [query (http/request->param request :query)]
+       ; Fájlfeltöltéskor a request törzse egy FormData objektum, amiből string típusként
+       ; olvasható ki a query értéke ...
+       (cond (string? query) (reader/string->mixed query)
+             (vector? query) (return               query))))
 
 
 

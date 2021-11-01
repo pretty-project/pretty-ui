@@ -155,7 +155,7 @@
   ;
   ; @return (string)
   [{:keys [request] :as env} {:keys [destination-directory-id]}]
-  {::pathom.co/op-name 'media/upload-files!}
+  {::pathom.co/op-name 'media-storage/upload-files!}
 
   (let [files-data           (request->files-data request)
         processed-files-data (process-files-data files-data)]

@@ -1,5 +1,5 @@
 
-(ns x.app-controller.controll-handler
+(ns x.app-controller.control-handler
     (:require []))
 
 
@@ -20,7 +20,7 @@
 ;
 ; 1. Átváltja a route-ot a címsorban (opt)
 ; 2. A request-indicator-t átállítja a request-id-ra (opt)
-; 3. Ha nincs request 
+; 3. Ha nincs request
 
 
 

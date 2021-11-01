@@ -239,7 +239,7 @@
             ; EQL query
             directory-entity         (db/item-id->document-entity destination-directory-id :directory)
             mutation-props           {:destination-directory-id (name destination-directory-id)}
-            query-action             (eql/query-action "media/upload-files!" mutation-props)
+            query-action            `(media-storage/upload-files! ~mutation-props)
             query-question           {directory-entity engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}
             query                    (eql/append-to-query engine/ROOT-DIRECTORY-QUERY query-action query-question)
             ; Form data

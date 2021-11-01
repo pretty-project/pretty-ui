@@ -538,7 +538,7 @@
   [elements/polarity ::control-bar
                      {:start-content [:<> [file-storage-directory-actions component-id view-props]
                                          ;[elements/vertical-line {:color :default :layout :row}]
-                                         ;[elements/separator     {:orientation :vertical :size :m}]
+                                          [elements/separator     {:orientation :vertical :size :m}]
                                           [file-storage-filter-items-field component-id view-props]]
                       :end-content   [:<> [elements/separator {:orientation :vertical :size :m}]
                                           [file-storage-capacity-indicator component-id view-props]

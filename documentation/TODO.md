@@ -12,6 +12,12 @@
 
 # x4.3.0
 
+- A server-media modul pathom handler-ei media/xyz elnevezésről media-storage/xyz elnevezésre
+  lettek cserélve, hogy az extensions.media-storage.engine névtérben ne legyen névültközés
+  a most már nem stringként átadott mutation nevekben mert a media/xyz ütközött a behívott
+  x.app-media.api :as media behívással. Emiatt és amugy is a server-media modul kiköltözhet az
+  x-ből az extensions/media-storage modulba
+
 - Input validálás egy input több validátort is fogadjon több hibaüzenettel és néha több input egymástól
   függ pl. password összehasonlító
 

@@ -86,8 +86,6 @@
        (boolean (and (string/nonempty? n)
                      (re-matches       pattern n)))))
 
-;#"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}\+\d{2}:\d{2}"
-
 (defn phone-number-valid?
   ; @param (string) n
   ;
@@ -98,8 +96,10 @@
   [n]
   ; Ha n valid telefonszám, akkor a re-matches függvény visszatérési értéke n
   (boolean (and (string/nonempty? n)
-                (or (re-matches #"\+\d{10}" n)
+                (or (re-matches #"\+\d{9}"  n)
+                    (re-matches #"\+\d{10}" n)
                     (re-matches #"\+\d{11}" n)
                     (re-matches #"\+\d{12}" n)
                     (re-matches #"\+\d{13}" n)
-                    (re-matches #"\+\d{14}" n)))))
+                    (re-matches #"\+\d{14}" n)
+                    (re-matches #"\+\d{15}" n)))))

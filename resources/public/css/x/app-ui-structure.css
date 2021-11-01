@@ -456,10 +456,10 @@
 .x-app-popups--element--label-bar {
   overflow-x: auto;
 
-  /* WARNING DEPRECATED! */
-  /* XXX#3408 */
-  -padding: 0 var( --app-edge );
-  /* WARNING DEPRECATED! */
+  /* XXX#3408
+   * A popup label-bar szélső gombjai gyakran szöveges gombok, amelyek megjelenítéséhez
+   * szükséges padding-et alkalmazni */
+  padding: 0 12px;
 
   min-height: 48px;
   width: 100% }
@@ -794,10 +794,10 @@
   height: 48px;
   overflow-x: auto;
 
-  /* WARNING DEPRECATED! */
-  /* XXX#3408 */
-  -padding: 0 var( --app-edge );
-  /* WARNING DEPRECATED! */
+  /* XXX#3408
+   * A surface label-bar szélső gombjai kizárólag ikon gombok, amelyek megjelenítéséhez
+   * NEM szükséges padding-et alkalmazni */
+  -padding: 0 0;
 
   width: 100% }
 
@@ -812,10 +812,10 @@
   left: 0;
   overflow-x: auto;
 
-  /* WARNING DEPRECATED! */
-  /* XXX#3408 */
-  -padding: 0 var( --app-edge );
-  /* WARNING DEPRECATED! */
+  /* XXX#3408
+   * A surface control-bar szélső gombjai gyakran szöveges gombok, amelyek megjelenítéséhez 
+   * szükséges padding-et alkalmazni */
+  -padding: 0 0;
 
   position: absolute;
   width: 100% }
