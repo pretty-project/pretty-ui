@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.api
-    (:require [x.app-locales.currency-handler :as currency-handler]
+    (:require [x.app-locales.country-list     :as country-list]
+              [x.app-locales.currency-handler :as currency-handler]
               [x.app-locales.name-handler     :as name-handler]
               [x.app-locales.language-handler :as language-handler]))
 
@@ -22,6 +23,9 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.app-locales.country-list
+(def COUNTRY-LIST country-list/COUNTRY-LIST)
 
 ; x.app-locales.currency-handler
 ; ...

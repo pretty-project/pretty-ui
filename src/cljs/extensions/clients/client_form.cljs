@@ -212,7 +212,6 @@
                        :content-props {:label :clients}}
            :subscriber [::get-view-props]}])
 
-
 (a/reg-event-fx
   :clients/load-client-form!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -224,7 +223,7 @@
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
                                               ["Szeged"]]
                          [:x.app-db/set-item! [:clients :form-meta :suggestions :countries]
-                                              ["Magyarország"]]
+                                              locales/COUNTRY-LIST]
                          [:clients/render-client-form!]]})))
 
 (a/reg-lifecycles

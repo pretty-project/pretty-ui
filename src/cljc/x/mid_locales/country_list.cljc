@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def COUNTRIES
+(def COUNTRY-LIST
      {:AD
       {:capital "Andorra la Vella"
        :continent "EU"
