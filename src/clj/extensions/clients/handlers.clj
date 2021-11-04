@@ -93,9 +93,18 @@
              ; @return (map)
              ;  {:clients/get-client (map)}
              [env {:keys [client/id]}]
-             {::pco/output [:client/id :client/email-address]}
-             (println "sdfdsfsd"))
-             ;(mongo-db/get-document-by-id collection-name id))
+             {::pco/output [:client/id
+                            :client/last-name
+                            :client/first-name
+                            :client/added-at
+                            :client/phone-number
+                            :client/country
+                            :client/zip-code
+                            :client/city
+                            :client/address
+                            :client/vat-no
+                            :client/email-address]}
+             (mongo-db/get-document-by-id collection-name id))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Resolvers ---------------------------------------------------------------

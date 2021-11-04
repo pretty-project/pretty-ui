@@ -54,4 +54,5 @@
   [request]
   (let [query       (request->query request)
         environment (assoc @register/ENVIRONMENT :request request)]
+       (println (str query))
        (process-query! environment query)))

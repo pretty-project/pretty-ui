@@ -162,25 +162,18 @@
 
 (a/reg-event-fx
   :clients/receive-client!
-  (fn [{:keys [db]} [_ server-response]]
-      (println (str server-response))
-      (let [])));result    (:clients/get-client response-value)]
-            ;{:keys [documents count]} result]
-;           [:x.app-db/set-item!    [:clients :form-data]
-;            {:client/id            "9b2f16b0-bb4c-46fe-95c0-a6879e4cb8de"
-;             :client/client-no     "051301"
-;             :client/first-name    "Debil"
-;             :client/last-name     "Duck"
-;             :client/email-address "debil-duck@gmail.com"
-;             :client/added-at      "2020-04-10T16:20:00.123Z"])))
+  (fn [{:keys [db]} [_ entity server-response]]
+      (let [client    (get server-response entity)]
+           [:x.app-db/set-item! [:clients :form-data] client])))
+
 
 (a/reg-event-fx
   :clients/request-client!
   (fn [{:keys [db]} [event-id client-id]]
       [:x.app-sync/send-query!
        :clients/synchronize-client-form!
-       {:on-stalled [:clients/receive-client!]
-        :query      [[:client/id client-id]]}]))
+       {:on-stalled [:clients/receive-client! [:client/id client-id]]
+        :query      [{[:client/id client-id] [:client/last-name '*]}]}]))
 
 ; Download clients for the client-list
 
