@@ -5,15 +5,16 @@
 ; Author: bithandshake
 ; Created: 2021.08.01
 ; Description:
-; Version: v1.5.8
-; Compatibility: x4.3.5
+; Version: v1.7.2
+; Compatibility: x4.4.4
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books)
+(ns x.mid-dictionary.books
+    (:require [x.mid-dictionary.extension-books :refer [EXTENSION-BOOKS]]))
 
 
 
@@ -37,6 +38,7 @@
 ;  Notifications
 ;  Units
 ;  User
+;  Website
 
 
 
@@ -156,6 +158,9 @@
       :expand!
       {:en "Expand"
        :hu "Lenyit"}
+      :extensions
+      {:en "Extensions"
+       :hu "Eszközök"}
       :filter!
       {:en "Filter"
        :hu "Szűrés"}
@@ -609,88 +614,6 @@
 
 
 
-;; -- Extensions --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def extensions
-     {:actions
-      {:en "Actions"
-       :hu "Műveletek"}
-      :add-client
-      {:en "Add client"
-       :hu "Ügyfél hozzáadása"}
-      :calendar
-      {:en "Calendar"
-       :hu "Naptár"}
-      :charts
-      {:en "Charts"
-       :hu "Charts"}
-      :clients
-      {:en "Clients"
-       :hu "Ügyfelek"}
-      :client-id
-      {:en "Client ID"
-       :hu "Ügyfél azonosító"}
-      :devices
-      {:en "Devices"
-       :hu "Eszközök"}
-      :employees
-      {:en "Employees"
-       :hu "Alkamazottak"}
-      :edit-client
-      {:en "Edit client"
-       :hu "Ügyfél szerkesztése"}
-      :extensions
-      {:en "Extensions"
-       :hu "Eszközök"}
-      :inventories
-      {:en "Inventories"
-       :hu "Raktárkészlet"}
-      :jobs
-      {:en "Jobs"
-       :hu "Munkák"}
-      :machines
-      {:en "Machines"
-       :hu "Gépek"}
-      :price-quote
-      {:en "Price quote"
-       :hu "Árajánlat"}
-      :products
-      {:en "Products"
-       :hu "Termékek"}
-      :services
-      {:en "Services"
-       :hu "Szolgáltatások"}
-      :show-extensions!
-      {:en "Show extensions"
-       :hu "Kiegészítők"}
-      :show-extensions!_
-      {:en "Show extensions (e)"
-       :hu "Kiegészítők (e)"}
-      :unit-price
-      {:en "Unit price"
-       :hu "Egységár"}
-      :unit-quantity
-      {:en "Unit quantity"
-       :hu "Mennyiségi egység"}
-      :vehicles
-      {:en "Vehicles"
-       :hu "Járművek"}
-      :webshop
-      {:en "Webshop"
-       :hu "Webshop"}
-      :webshops
-      {:en "Webshops"
-       :hu "Webshopok"}
-      :website-menu
-      {:en "Website menu"
-       :hu "Weboldal menu"}
-      :websites
-      {:en "Websites"
-       :hu "Weboldalak"}})
-
-
-
 ;; -- Law ---------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -1006,12 +929,18 @@
       :second
       {:en "Second"
        :hu "Másodperc"}
-      :year
-      {:en "Year"
-       :hu "Év"}
+      :unit-price
+      {:en "Unit price"
+       :hu "Egységár"}
+      :unit-quantity
+      {:en "Unit quantity"
+       :hu "Mennyiségi egység"}
       :weight
       {:en "Weight"
-       :hu "Tömeg"}})
+       :hu "Tömeg"}
+      :year
+      {:en "Year"
+       :hu "Év"}})
 
 
 
@@ -1142,6 +1071,16 @@
 
 
 
+;; -- Website -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def website
+     {:website-menu
+      {:en "Website menu"
+       :hu "Weboldal menu"}})
+
+
+
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -1152,11 +1091,12 @@
                   developer
                   edit
                   errors
-                  extensions
                   law
                   locale
                   locales
                   media
                   notifications
                   units
-                  user))
+                  user
+                  website
+                  EXTENSION-BOOKS))

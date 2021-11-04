@@ -6,7 +6,7 @@
 ; Created: 2021.07.07
 ; Description:
 ; Version: v0.9.2
-; Compatibility: x4.3.7
+; Compatibility: x4.4.4
 
 
 
@@ -236,9 +236,11 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :form-id (keyword)(opt)
+  ;   :emptiable? (boolean)(opt)
+  ;    Default: true
   ;   :extendable? (boolean)(opt)
   ;    Default: false
+  ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)

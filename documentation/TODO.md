@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- db/id-handler mehet mid-fruits/eql-be
+
 - Az elementek action-jei ne kizárólag Re-Frame alapon menjenek. felesleges események.
   Az on-delete pl egyált nem használ már re-frame-et az on-click pedig elérhető re-frame-ből is,
   de sima függvényként van meghívva

@@ -614,7 +614,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 /*** App sidebar wrapper ***/
 
 #x-app-sidebar {
-  background-color: var( --app-background );
+  background-color: var( --background-color );
   display: flex;
   flex-direction: column;
   height: 100vh;

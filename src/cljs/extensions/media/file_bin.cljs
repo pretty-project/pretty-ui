@@ -1,11 +1,11 @@
 
-(ns extensions.media-storage.file-bin
+(ns extensions.media.file-bin
     (:require [mid-fruits.candy     :refer [param]]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
-              [extensions.media-storage.engine       :as engine]
-              [extensions.media-storage.file-storage :as file-storage]))
+              [extensions.media.engine       :as engine]
+              [extensions.media.file-storage :as file-storage]))
 
 
 
@@ -102,7 +102,7 @@
   [_]
   [components/listener {:content         #'view
                         :pending-content #'ghost-view
-                        :request-id      :media-storage/synchronize!}])
+                        :request-id      :media/synchronize!}])
 
 
 
@@ -119,5 +119,5 @@
             bin-props (a/event-vector->first-props event-vector)
             bin-props (a/prot bin-props bin-props-prototype)]
            [:x.app-ui/set-surface!
-             :media-storage/view
+             :media/view
              {:content #'view}])))

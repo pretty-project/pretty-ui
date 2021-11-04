@@ -108,7 +108,7 @@
   [surface-id body-props]
   [:div#clients--client-form--legal-details
     [elements/text-field ::vat-no-field
-                         {:label :vat-no :value-path [:client :form-data :client/vat-no] :emptiable? true}]])
+                         {:label :vat-no :value-path [:client :form-data :client/vat-no]}]])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,36 +116,39 @@
  [:div
   [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
     [elements/select ::country-field
-                     {:label :country :min-width :xxs :emptiable? true
+                     {:label :country :min-width :xxs
                       :initial-value   (locales/country-native-name selected-language)
                       :initial-options (param locales/EU-COUNTRY-NAMES)
                       :value-path [:clients :form-data :client/country]}]
 
     [elements/text-field ::zip-code-field
-                         {:label :zip-code :min-width :xxs :emptiable? true}]
+                         {:label :zip-code :min-width :xxs}]
     [elements/combo-box ::city-field
                         {:label :city :options-path [:clients :form-meta :suggestions :cities]
                          :style {:flex-grow 1}
                          :value-path [:clients :form-data :client/city]
                          :initial-value "Makó"
-                         :initial-options ["HMVH" "BP"]}]]
+                         :initial-options ["HMVH" "BP"]
+
+                         ; TODO BUG
+                         ; Ez why nem megy?
+                         :emptiable? false}]]
   [:div
     [elements/text-field ::address-field
-                         {:label :address :min-width :grow :value-path [:clients :form-data :client/address]
-                          :emptiable? true}]]])
+                         {:label :address :min-width :grow :value-path [:clients :form-data :client/address]}]]])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
   [:div#clients--client-form--primary-contacts
     [elements/text-field ::email-address-field
-                         {:label :email-address :required? true :emptiable? true
+                         {:label :email-address :required? true
                           :value-path [:clients :form-data :client/email-address]
                           :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                           :form-id ::client-form
                           :min-width :l}]
     [elements/text-field ::phone-number-field
-                         {:label :phone-number :required? true :emptiable? true
+                         {:label :phone-number :required? true
                           :value-path [:clients :form-data :client/phone-number]
                           :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
                           ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
@@ -159,12 +162,12 @@
   [surface-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
     [locales/name-order [elements/text-field ::first-name-field
-                                             {:label :first-name :required? true :emptiable? true
+                                             {:label :first-name :required? true
                                               :value-path [:clients :form-data :client/first-name]
                                               :form-id ::client-form
                                               :min-width :l}]
                         [elements/text-field ::last-name-field
-                                             {:label :last-name :required? true :emptiable? true
+                                             {:label :last-name :required? true
                                               :value-path [:clients :form-data :client/last-name]
                                               :form-id ::client-form
                                               :min-width :l}]
@@ -176,6 +179,7 @@
   [:div#clients--client-form
     [client-name               surface-id body-props]
     [client-primary-contacts   surface-id body-props]
+    [elements/separator {:orientation :horizontal :size :xxl}]
     [client-secondary-contacts surface-id body-props]
     [client-legal-details      surface-id body-props]
     [elements/separator {:orientation :horizontal :size :l}]])

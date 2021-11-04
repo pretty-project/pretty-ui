@@ -31,9 +31,10 @@
 
 (a/reg-event-fx
   ::render!
-  [:x.app-ui/set-surface! {:content #'view}])
+  [:x.app-ui/set-surface! ::view {:content #'view}])
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! {:route-template "/docs"
+  {:on-app-boot [:x.app-router/add-route! ::route
+                                          {:route-template "/docs"
                                            :route-event    [::render!]}]})

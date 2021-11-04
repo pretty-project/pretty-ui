@@ -1,22 +1,26 @@
 
-(ns extensions.media-storage.file-storage
-    (:require [mid-fruits.candy      :refer [param return]]
+(ns extensions.media.file-storage
+    (:require [extensions.pattern    :as pattern]
+              [mid-fruits.candy      :refer [param return]]
               [mid-fruits.io         :as io]
               [mid-fruits.map        :as map]
               [mid-fruits.time       :as time]
               [mid-fruits.vector     :as vector]
+              [plugins.item-lister.core :refer [item-lister]]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
               [x.app-dictionary.api  :as dictionary]
               [x.app-elements.api    :as elements]
+              [x.app-environment.api :as environment]
+              [x.app-layouts.api     :as layouts]
               [x.app-media.api       :as media]
               [x.app-router.api      :as router]
               [x.app-sync.api        :as sync]
               [x.app-ui.api          :as ui]
-              [extensions.media-storage.context-menu      :as context-menu]
-              [extensions.media-storage.directory-actions :as directory-actions]
-              [extensions.media-storage.engine            :as engine]))
+              [extensions.media.context-menu      :as context-menu]
+              [extensions.media.directory-actions :as directory-actions]
+              [extensions.media.engine            :as engine]))
 
 
 
@@ -265,13 +269,14 @@
 (a/reg-sub :file-storage/get-body-view-props get-body-view-props)
 
 (defn- get-header-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [rendered-directory-id   (r get-rendered-directory-id db)]
-       {:directory-exists?                (r engine/directory-exists?          db rendered-directory-id)}))
+  (r pattern/get-item-browser-header-view-props db "media"))
 
-(a/reg-sub :file-storage/get-header-view-props get-header-view-props)
+(a/reg-sub ::get-header-view-props get-header-view-props)
 
 (defn- get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:storage-free-capacity            (r engine/get-storage-free-capacity  db)
    :storage-total-capacity           (r engine/get-storage-total-capacity db)
@@ -360,10 +365,10 @@
             action-props          {:source-directory-id rendered-directory-id
                                    :file-id             file-id}]
            [:x.app-tools.editor/edit!
-            :media-storage/alias-editor
+            :media/alias-editor
             {:initial-value file-alias
              :label         :filename
-             :on-save       [:media-storage/->file-alias-edited action-id action-props]
+             :on-save       [:media/->file-alias-edited action-id action-props]
              :validator     {:f io/filename-valid?
                              :invalid-message :invalid-filename
                              :pre-validate? true}}])))
@@ -381,10 +386,10 @@
             action-props          {:source-directory-id rendered-directory-id
                                    :subdirectory-id     subdirectory-id}]
            [:x.app-tools.editor/edit!
-            :media-storage/alias-editor
+            :media/alias-editor
             {:initial-value subdirectory-alias
              :label         :directory-name
-             :on-save       [:media-storage/->subdirectory-alias-edited action-id action-props]
+             :on-save       [:media/->subdirectory-alias-edited action-id action-props]
              :validator     {:f io/directory-name-valid?
                              :invalid-message :invalid-directory-name
                              :pre-validate? true}}])))
@@ -402,7 +407,7 @@
             rendered-directory-id (r get-rendered-directory-id db)
             action-id             (engine/namespace->query-id namespace)
             action-props          (assoc action-props :source-directory-id rendered-directory-id)]
-           [:media-storage/delete-item! action-id action-props])))
+           [:media/delete-item! action-id action-props])))
 
 (a/reg-event-fx
   :file-storage/copy-rendered-item!
@@ -417,7 +422,7 @@
             destination-directory-id (get-in db (settings-item-path :destination-directory-id))
             action-id                (engine/namespace->query-id namespace)
             action-props             (assoc action-props :destination-directory-id destination-directory-id)]
-           [:media-storage/copy-item! action-id action-props])))
+           [:media/copy-item! action-id action-props])))
 
 (a/reg-event-fx
   :file-storage/move-rendered-item!
@@ -434,7 +439,7 @@
             action-id                (engine/namespace->query-id namespace)
             action-props             (assoc action-props :destination-directory-id destination-directory-id
                                                          :source-directory-id      source-directory-id)]
-           [:media-storage/move-item! action-id action-props])))
+           [:media/move-item! action-id action-props])))
 
 (a/reg-event-fx
   :file-storage/save-rendered-file!
@@ -843,21 +848,82 @@
        [file-storage-no-filtered-items-match component-id view-props]
        [elements/separator {:orientation :horizontal :size :xs}]])
 
+
+
+;; -- Media item components ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- media-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [lister-id item-dex item-props common-props]
+  [:div "item"])
+
+
+
+;; -- Directory-browser header components -------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- item-browser-mobile-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [elements/polarity ::desktop-header
+                     {:start-content [:<> [pattern/item-browser-new-item-button   "media" {:options [:create-directory! :upload-files!]}]
+                                          [pattern/item-browser-home-button       "media" view-props]
+                                          [pattern/item-browser-up-button         "media" view-props]
+                                          [pattern/item-browser-sort-items-button "media" {:options [:by-name :by-date]}]]
+                      :end-content   [:<> [pattern/item-browser-search-button     "media"]]}])
+
+(defn- item-browser-desktop-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [elements/polarity ::desktop-header
+                     {:start-content [:<> [pattern/item-browser-new-item-button   "media" {:options [:create-directory! :upload-files!]}]
+                                          [pattern/item-browser-home-button       "media" view-props]
+                                          [pattern/item-browser-up-button         "media" view-props]
+                                          [pattern/item-browser-sort-items-button "media" {:options [:by-name :by-date]}]]
+                      :end-content   [:<> [pattern/item-browser-search-field      "media"]]}])
+
+(defn- item-browser-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
+  (cond ; search-mode & small viewport
+        (and viewport-small? search-mode?)
+        [pattern/item-browser-search-header "media"]
+        ; small viewport
+        (boolean viewport-small?)
+        [item-browser-mobile-header  surface-id view-props]
+        ; large viewport
+        :desktop-header
+        [item-browser-desktop-header surface-id view-props]))
+
+
+
+;; -- Directory-browser body components ---------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- item-browser-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id]
+  [item-lister :media {:on-list-ended [:extensions/request-browser-items! "media" "directory"
+                                                                          {:base-query  engine/ROOT-DIRECTORY-QUERY
+                                                                           :item-params engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}]
+                       :element       #'media-item
+                       :request-id    :extensions/request-browser-items!
+                       ;:sortable?     true
+                       ;:subscriber    [::get-common-props]
+                       :value-path    [:media :browser-data]}])
+
+
+
+;; -- Directory-browser components --------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [surface-id view-props]
-  [:<> [elements/box {:body             {:content    #'file-storage-body
-                                         :subscriber [:file-storage/get-body-view-props]}
-                      :header           {:content #'file-storage-header
-                                         :subscriber [:file-storage/get-header-view-props]
-                                         :sticky? true}
-                      :horizontal-align :left
-                      :min-width        :xxl}]
-       [file-storage-footer surface-id view-props]])
+  [surface-id]
+  [layouts/layout-a surface-id {:body   {:content    #'item-browser-body}
+                                :header {:content    #'item-browser-header
+                                         :subscriber [::get-header-view-props]}}])
 
 
 
@@ -865,50 +931,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :file-storage/render!
+  :media/render-directory-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) storage-id
-  (fn [{:keys [db]} [_ storage-id]]
-      [:x.app-ui/set-surface!
-        :file-storage/view
-        {:content    #'view
-         :subscriber [:file-storage/get-view-props]}]))
+  [:x.app-ui/set-surface! ::view {:content #'view}])
 
-(a/reg-event-fx
-  :file-storage/initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) storage-id
-  (fn [{:keys [db]} [_ storage-id]]
-      (let [directory-id     (r get-current-route-directory-id db)
-            namespace        (a/get-namespace ::this)
-            on-success-event [:file-storage/->directory-data-downloaded directory-id]]
-           [:media-storage/download-directory-data!
-             (engine/namespace->query-id namespace)
-             {:directory-id directory-id
-              :on-success   on-success-event}])))
 
-(a/reg-event-fx
-  :file-storage/load!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword)(opt) storage-id
-  ; @param (map) storage-props
-  ;
-  ; @usage
-  ;  [:file-storage/load! {...}]
-  ;
-  ; @usage
-  ;  [:file-storage/load! :my-storage {...}]
-  (fn [{:keys [db]} event-vector]
-      (let [storage-id    (a/event-vector->second-id   event-vector)
-            storage-props (a/event-vector->first-props event-vector)]
 
-           ;:db (r store-storage-props! db storage-id storage-props)
-           {:dispatch-n [[:file-storage/initialize! storage-id]
-                         [:file-storage/render!     storage-id]]})))
-
+; WARNING! DEPRECATED?
 (a/reg-event-fx
   :file-storage/render-rendered-subdirectory-properties!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -916,8 +945,10 @@
   ; @param (keyword) subdirectory-id
   (fn [{:keys [db]} [_ subdirectory-id]]
       (let [rendered-directory-id (r get-rendered-directory-id db)]
-           [:media-storage/render-subdirectory-properties! rendered-directory-id subdirectory-id])))
+           [:media/render-subdirectory-properties! rendered-directory-id subdirectory-id])))
+; WARNING! DEPRECATED?
 
+; WARNING! DEPRECATED?
 (a/reg-event-fx
   :file-storage/render-rendered-file-properties!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -925,22 +956,11 @@
   ; @param (keyword) file-id
   (fn [{:keys [db]} [_ file-id]]
       (let [rendered-directory-id (r get-rendered-directory-id db)]
-           [:media-storage/render-file-properties! rendered-directory-id file-id])))
+           [:media/render-file-properties! rendered-directory-id file-id])))
+; WARNING! DEPRECATED?
 
-(a/reg-event-fx
-  :file-storage/add-routes!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-router/add-route!
-                 ::route
-                 {:restricted?    true
-                  :route-event    [:file-storage/load!]
-                  :route-template "/media"}]
-                [:x.app-router/add-route!
-                 ::extended-route
-                 {:restricted?    true
-                  :route-event    [:file-storage/load!]
-                  :route-template "/media/:directory-id"}]]})
+
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:file-storage/add-routes!]})
+  {:on-app-init [:extensions/add-item-browser-routes! "media" "directory" {:default-item-id "home"}]})

@@ -6,7 +6,7 @@
 ; Created: 2021.07.02
 ; Description:
 ; Version: v0.8.8
-; Compatibility: x4.3.7
+; Compatibility: x4.4.4
 
 
 
@@ -87,12 +87,12 @@
   ;   :on-extend (metamorphic-event)
   ;   :select-option-event (event-vector)}
   [field-id field-props]
-  (merge {:get-label-f         return
+  (merge {:emptiable?          true
+          :get-label-f         return
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
           :on-extend           [:x.app-elements/add-option!]
           :options-path        (engine/default-options-path field-id)
-
           ; A combo-box elem használatakor nem elérhető az {:on-blur ...}
           ; és {:on-focus ...} tulajdonság, mivel a combo-box elem saját
           ; használatra lefoglalja ezeket. Szükség esetén megoldható
@@ -101,10 +101,8 @@
           ; a multi-combo-box elem a combo-box elem integrálásakor felülírja.
           :on-blur  [:x.app-elements/remove-combo-box-controllers! field-id]
           :on-focus [:x.app-elements/reg-combo-box-controllers!    field-id]}
-
          (param field-props)
-         {:emptiable? true
-          :on-change  [:x.app-elements/->combo-box-changed         field-id]}))
+         {:on-change  [:x.app-elements/->combo-box-changed         field-id]}))
 
 (defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -297,6 +295,8 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :emptiable? (boolean)(opt)
+  ;    Default: true
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :form-id (keyword)(opt)

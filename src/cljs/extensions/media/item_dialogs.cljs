@@ -1,13 +1,13 @@
 
-(ns extensions.media-storage.item-dialogs
+(ns extensions.media.item-dialogs
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.io      :as io]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-elements.api :as elements]
               [x.app-ui.api       :as ui]
-              [extensions.media-storage.engine       :as engine]
-              [extensions.media-storage.file-storage :as file-storage]))
+              [extensions.media.engine       :as engine]
+              [extensions.media.file-storage :as file-storage]))
 
 
 

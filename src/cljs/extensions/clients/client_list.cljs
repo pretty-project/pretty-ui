@@ -1,6 +1,7 @@
 
 (ns extensions.clients.client-list
     (:require [extensions.clients.engine :as engine]
+              [extensions.pattern        :as pattern]
               [mid-fruits.candy         :refer [param return]]
               [mid-fruits.random        :as random]
               [mid-fruits.time          :as time]
@@ -35,22 +36,9 @@
 (defn- get-header-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:search-mode?    (get-in db [:clients :list-meta :search-mode?])
-   :viewport-small? (r environment/viewport-small? db)})
+  (r pattern/get-item-list-header-view-props db "clients"))
 
 (a/reg-sub ::get-header-view-props get-header-view-props)
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- toggle-search-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (update-in db [:clients :list-meta :search-mode?] not))
-
-(a/reg-event-db :clients/toggle-search-mode! toggle-search-mode!)
 
 
 
@@ -88,88 +76,32 @@
 ;; -- Client-list header components -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- quit-search-mode-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/button ::quit-search-mode-button
-                   {:preset :close-icon-button :on-click [:clients/toggle-search-mode!]}])
-
-(defn- sort-by-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/select ::sort-by-button
-                   {:layout :icon-button :icon :sort :variant :transparent :color :none
-                    :tooltip :sort-by :as-button? true
-                    :initial-options [:by-name :by-date]
-                    :options-label :order-by
-                    :value-path [:clients :list-meta :sort-by]}])
-
-(defn- add-new-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/button ::add-new-button
-                   {:preset :add-icon-button :tooltip :add-new!
-                    :on-click [:x.app-router/go-to! "/clients/new-client"]}])
-
-(defn- select-more-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/button ::select-more-button
-                   {:preset :select-more-icon-button :label :check}])
-
-(defn- delete-selected-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/button ::delete-selected-button
-                   {:preset :delete-icon-button :disabled? true :label :delete!}])
-
-(defn- search-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/button ::search-button
-                   {:tooltip :search :preset :search-icon-button
-                    :on-click [:clients/toggle-search-mode!]}])
-
-(defn- search-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/search-field ::search-field
-                         {:placeholder :search :layout :row :auto-focus? true :min-width :xs}])
-
 (defn- client-list-desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/polarity ::desktop-header
-                     {:start-content [:<> [add-new-button         surface-id view-props]
-                                          [sort-by-button         surface-id view-props]]
-                                         ;[select-more-button     surface-id view-props]
-                                         ;[delete-selected-button surface-id view-props]
-                      :end-content   [search-field surface-id view-props]}])
-
-(defn- client-list-search-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [:div.x-search-bar-a
-        [:div.x-search-bar-a--search-field
-          [search-field surface-id view-props]]
-        [quit-search-mode-button surface-id view-props]])
+                     {:start-content [:<> [pattern/item-list-add-new-item-button "clients" "client"]
+                                          [pattern/item-list-sort-items-button   "clients" {:options [:by-name :by-date]}]]
+                                         ;[pattern/item-list-select-multiple-items-button "clients"]
+                                         ;[pattern/item-list-delete-selected-items-button "clients"]
+                      :end-content   [:<> [pattern/item-list-search-items-field  "clients"]]}])
 
 (defn- client-list-mobile-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/polarity ::mobile-header
-                     {:start-content [:<> [add-new-button         surface-id view-props]
-                                          [sort-by-button         surface-id view-props]]
-                                         ;[select-more-button     surface-id view-props]
-                                         ;[delete-selected-button surface-id view-props]
-                      :end-content   [search-button surface-id view-props]}])
+                     {:start-content [:<> [pattern/item-list-add-new-item-button "clients" "client"]
+                                          [pattern/item-list-sort-items-button   "clients" {:options [:by-name :by-date]}]]
+                                         ;[pattern/item-list-select-multiple-items-button "clients"]
+                                         ;[pattern/item-list-delete-selected-items-button "clients"]
+                      :end-content   [:<> [pattern/item-list-search-mode-button  "clients"]]}])
 
 (defn- client-list-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
   (cond ; search-mode & small viewport
         (and viewport-small? search-mode?)
-        [client-list-search-header  surface-id view-props]
+        [pattern/item-list-search-header "clients"]
         ; small viewport
         (boolean viewport-small?)
         [client-list-mobile-header  surface-id view-props]

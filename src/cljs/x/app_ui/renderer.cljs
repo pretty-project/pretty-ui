@@ -132,7 +132,9 @@
 
 ; @constant (ms)
 ;  A UI elem animált eltűntetésére rendelkezésre álló idő.
-(def HIDE-ANIMATION-TIMEOUT 350)
+;
+; BUG#4701 (def HIDE-ANIMATION-TIMEOUT 350)
+(def HIDE-ANIMATION-TIMEOUT 450)
 
 ; DEBUG
 ; @constant (ms)

@@ -1,5 +1,5 @@
 
-(ns extensions.media-storage.file-uploader
+(ns extensions.media.file-uploader
     (:require [app-fruits.dom       :as dom]
               [mid-fruits.candy     :refer [param return]]
               [mid-fruits.eql       :as eql]
@@ -19,9 +19,9 @@
               [x.app-media.api      :as media]
               [x.app-sync.api       :as sync]
               [x.app-ui.api         :as ui]
-              [extensions.media-storage.context-menu   :as context-menu]
-              [extensions.media-storage.engine         :as engine]
-              [extensions.media-storage.popup-geometry :as popup-geometry]
+              [extensions.media.context-menu   :as context-menu]
+              [extensions.media.engine         :as engine]
+              [extensions.media.popup-geometry :as popup-geometry]
               [x.app-tools.temporary-component
                :refer [append-temporary-component! remove-temporary-component!]]))
 
@@ -239,7 +239,7 @@
             ; EQL query
             directory-entity         (db/item-id->document-entity destination-directory-id :directory)
             mutation-props           {:destination-directory-id (name destination-directory-id)}
-            query-action            `(media-storage/upload-files! ~mutation-props)
+            query-action            `(media/upload-files! ~mutation-props)
             query-question           {directory-entity engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}
             query                    (eql/append-to-query engine/ROOT-DIRECTORY-QUERY query-action query-question)
             ; Form data
@@ -254,7 +254,7 @@
              {:body         (param body)
               :idle-timeout (param 1000)
               :on-failure   [:file-uploader/->upload-failure]
-              :on-success   {:dispatch-n [[:media-storage/handle-request-response! action-id]
+              :on-success   {:dispatch-n [[:media/handle-request-response! action-id]
                                           [:file-uploader/->files-uploaded]]}}])))
 
 

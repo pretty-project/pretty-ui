@@ -50,7 +50,8 @@
   ;
   ; @example
   ;  (db/document-entity? [:directory/id "my-directory"])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -64,7 +65,8 @@
   ;
   ; @example
   ;  (db/document-link? {:directory/id "my-directory"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -84,11 +86,13 @@
   ;
   ; @example
   ;  (db/document-id->document-link "my-directory")
-  ;  => {:id "my-directory"}
+  ;  =>
+  ;  {:id "my-directory"}
   ;
   ; @example
   ;  (db/document-id->document-link "my-directory" :directory)
-  ;  => {:directory/id "my-directory"}
+  ;  =>
+  ;  {:directory/id "my-directory"}
   ;
   ; @return (map)
   [document-id & [namespace]]
@@ -102,11 +106,13 @@
   ;
   ; @example
   ;  (db/item-id->document-link :my-directory)
-  ;  => {:id "my-directory"}
+  ;  =>
+  ;  {:id "my-directory"}
   ;
   ; @example
   ;  (db/item-id->document-link :my-directory :directory)
-  ;  => {:directory/id "my-directory"}
+  ;  =>
+  ;  {:directory/id "my-directory"}
   ;
   ; @return (map)
   [item-id & [namespace]]
@@ -118,7 +124,8 @@
   ;
   ; @example
   ;  (db/document-link->document-id {:id "my-directory"})
-  ;  => "my-directory"
+  ;  =>
+  ;  "my-directory"
   ;
   ; @return (string)
   [document-link]
@@ -129,7 +136,8 @@
   ;
   ; @example
   ;  (db/document-link->item-id {:id "my-directory"})
-  ;  => :my-directory
+  ;  =>
+  ;  :my-directory
   ;
   ; @return (keyword)
   [document-link]
@@ -141,11 +149,13 @@
   ;
   ; @example
   ;  (db/document-link->namespace {:id "my-directory"})
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (db/document-link->namespace {:directory/id "my-directory"})
-  ;  => :directory
+  ;  =>
+  ;  :directory
   ;
   ; @return (keyword)
   [document-link]
@@ -158,11 +168,13 @@
   ;
   ; @example
   ;  (db/document-link->namespace {:file/id "my-file"} :directory)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/document-link->namespace {:directory/id "my-directory"} :directory)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [document-link namespace]
@@ -175,11 +187,13 @@
   ;
   ; @example
   ;  (db/document-id->document-entity "my-directory")
-  ;  => [:id "my-directory"]
+  ;  =>
+  ;  [:id "my-directory"]
   ;
   ; @example
   ;  (db/document-id->document-entity "my-directory" :directory)
-  ;  => [:directory/id "my-directory"]
+  ;  =>
+  ;  [:directory/id "my-directory"]
   ;
   ; @return (vector)
   [document-id & [namespace]]
@@ -193,11 +207,13 @@
   ;
   ; @example
   ;  (db/item-id->document-entity :my-directory)
-  ;  => [:id "my-directory"]
+  ;  =>
+  ;  [:id "my-directory"]
   ;
   ; @example
   ;  (db/item-id->document-entity :my-directory :directory)
-  ;  => [:directory/id "my-directory"]
+  ;  =>
+  ;  [:directory/id "my-directory"]
   ;
   ; @return (vector)
   [item-id & [namespace]]
@@ -209,7 +225,8 @@
   ;
   ; @example
   ;  (db/document-entity->document-id [:directory/id "my-directory"])
-  ;  => "my-directory"
+  ;  =>
+  ;  "my-directory"
   ;
   ; @return (string)
   [document-entity]
@@ -220,7 +237,8 @@
   ;
   ; @example
   ;  (db/document-entity->item-id [:directory/id "my-directory"])
-  ;  => :my-directory
+  ;  =>
+  ;  :my-directory
   ;
   ; @return (keyword)
   [document-entity]

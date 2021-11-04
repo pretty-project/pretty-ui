@@ -26,8 +26,6 @@
               [x.app-ui.api          :as ui]
 
               ; TEMP
-              ;[extensions.clients.api]
-              [extensions.media-storage.api]
               [cljs-time.core :as cljs-time.core]))
 
 

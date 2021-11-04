@@ -138,18 +138,21 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:value-path (item-path vector)}
+  ;  {:as-button? (boolean)(opt)
+  ;   :value-path (item-path vector)}
   ;
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
-  [select-id select-props]
+  [select-id {:keys [as-button?] :as select-props}]
   (let [options-props (param select-props)]
        (merge {:get-label-f  return
-               :layout       :row
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
+              ; A button elemnél is alkalmazott tulajdonságok csak akkor részei a select elem
+              ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
+              (if-not as-button? {:layout :row})
               (param select-props)
               {:on-click [:x.app-elements/render-select-options! select-id options-props]})))
 
@@ -352,7 +355,8 @@
   ; @return (hiccup)
   [select-id {:keys [as-button?] :as view-props}]
   (if (boolean as-button?)
-      (let [button-props (a/prot view-props button/button-props-prototype)]
+      (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS view-props)
+            button-props (a/prot button-props button/button-props-prototype)]
            [button/button select-id button-props])
       [select-layout select-id view-props]))
 

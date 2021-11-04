@@ -1,5 +1,5 @@
 
-(ns extensions.media-storage.file-browser
+(ns extensions.media.file-browser
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.map       :as map :refer [dissoc-in]]
               [mid-fruits.time      :as time]
@@ -10,9 +10,9 @@
               [x.app-elements.api   :as elements]
               [x.app-media.api      :as media]
               [x.app-sync.api       :as sync]
-              [extensions.media-storage.context-menu      :as context-menu]
-              [extensions.media-storage.directory-actions :as directory-actions]
-              [extensions.media-storage.engine            :as engine]))
+              [extensions.media.context-menu      :as context-menu]
+              [extensions.media.directory-actions :as directory-actions]
+              [extensions.media.engine            :as engine]))
 
 
 
@@ -494,9 +494,9 @@
   (fn [_ [_ directory-id]]
       (let [namespace        (a/get-namespace ::this)
             on-success-event [:file-browser/->directory-data-downloaded directory-id]]
-           [:media-storage/download-directory-data! (engine/namespace->query-id namespace)
-                                                    {:directory-id directory-id
-                                                     :on-success   on-success-event}])))
+           [:media/download-directory-data! (engine/namespace->query-id namespace)
+                                            {:directory-id directory-id
+                                             :on-success   on-success-event}])))
 
 (a/reg-event-fx
   :file-browser/go-home!

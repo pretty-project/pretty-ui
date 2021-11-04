@@ -87,6 +87,21 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn entity?
+  ; @param (vector) n
+  ;
+  ; @example
+  ;  (eql/entity? [:directory/id "my-directory"])
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (boolean (and (vector? n)
+                (= 2 (count n))
+                (keyword? (first  n))
+                (string?  (second n)))))
+
 (defn append-to-query
   ; @param (nil vector) query
   ; @param (keyword, map, string or vector) query-parts
@@ -142,11 +157,6 @@
         additional-query (or additional-query [])]
        (vector/concat-items base-query additional-query)))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn id->placeholder
   ; @param (keyword or string) id
   ;
@@ -163,3 +173,35 @@
   ; @return (keyword)
   [id]
   (keyword/join ">/" id))
+
+(defn id->entity
+  ; @param (string) id
+  ; @param (keyword)(opt) namespace
+  ;
+  ; @example
+  ;  (eql/id->entity "my-directory")
+  ;  =>
+  ;  [:id "my-directory"]
+  ;
+  ; @example
+  ;  (eql/id->entity "my-directory" :directory)
+  ;  =>
+  ;  [:directory/id "my-directory"]
+  ;
+  ; @return (vector)
+  [document-id & [namespace]]
+  (if (some? namespace)
+      [(keyword/add-namespace namespace :id) document-id]
+      [(param                           :id) document-id]))
+      
+(defn entity->id
+  ; @param (vector) entity
+  ;
+  ; @example
+  ;  (eql/entity->id [:directory/id "my-directory"])
+  ;  =>
+  ;  "my-directory"
+  ;
+  ; @return (string)
+  [document-entity]
+  (second document-entity))

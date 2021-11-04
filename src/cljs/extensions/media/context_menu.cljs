@@ -1,8 +1,8 @@
 
-(ns extensions.media-storage.context-menu
-    (:require [mid-fruits.candy   :refer [param]]
-              [x.app-elements.api :as elements]
-              [extensions.media-storage.engine :as engine]))
+(ns extensions.media.context-menu
+    (:require [mid-fruits.candy        :refer [param]]
+              [x.app-elements.api      :as elements]
+              [extensions.media.engine :as engine]))
 
 
 
@@ -231,7 +231,7 @@
             [context-menu-button
               element-id
               {:label :copy-link!
-               :on-click [:media-storage/copy-file-link! filename]}]
+               :on-click [:media/copy-file-link! filename]}]
             ; Properties button
             [context-menu-button
               element-id
@@ -278,7 +278,7 @@
             [context-menu-button
               element-id
               {:label :copy-link!
-               :on-click [:media-storage/copy-file-link! filename]}]
+               :on-click [:media/copy-file-link! filename]}]
             ; Properties button
             [context-menu-button
               element-id

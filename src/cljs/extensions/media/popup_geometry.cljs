@@ -1,5 +1,5 @@
 
-(ns extensions.media-storage.popup-geometry
+(ns extensions.media.popup-geometry
     (:require [mid-fruits.candy    :refer [param return]]
               [mid-fruits.css      :as css]
               [mid-fruits.geometry :as geometry]))

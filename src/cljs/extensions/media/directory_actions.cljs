@@ -1,12 +1,12 @@
 
-(ns extensions.media-storage.directory-actions
+(ns extensions.media.directory-actions
     (:require [mid-fruits.candy     :refer [param]]
               [mid-fruits.io        :as io]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
               [x.app-dictionary.api :as dictionary]
               [x.app-elements.api   :as elements]
-              [extensions.media-storage.engine :as engine]))
+              [extensions.media.engine :as engine]))
 
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :media-storage/create-edited-subdirectory!
+  :media/create-edited-subdirectory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -37,17 +37,17 @@
             action-id             (engine/namespace->query-id namespace)
             action-props          {:destination-directory-id rendered-directory-id}]
            [:x.app-tools.editor/edit!
-            :media-storage/alias-editor
+            :media/alias-editor
             {:initial-value (r dictionary/look-up db :new-directory)
              :label         :directory-name
-             :on-save       [:media-storage/create-subdirectory! action-id action-props]
+             :on-save       [:media/create-subdirectory! action-id action-props]
              :validator     {:f io/directory-name-valid?
                              :invalid-message :invalid-directory-name
                              :pre-validate? true}
              :primary-button-label :create!}])))
 
 (a/reg-event-fx
-  :media-storage/upload-files!
+  :media/upload-files!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -60,17 +60,17 @@
            [:file-uploader/load! uploader-props])))
 
 (a/reg-event-fx
-  :media-storage/->directory-action-selected
+  :media/->directory-action-selected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:namespace (keyword)}
   (fn [{:keys [db]} [_ component-id context-props]]
-      (let [action-type (r elements/get-input-value db :media-storage/directory-action-select)]
+      (let [action-type (r elements/get-input-value db :media/directory-action-select)]
            (case action-type
-                 :upload-files-from-device [:media-storage/upload-files!               component-id context-props]
-                 :create-directory         [:media-storage/create-edited-subdirectory! component-id context-props]))))
+                 :upload-files-from-device [:media/upload-files!               component-id context-props]
+                 :create-directory         [:media/create-edited-subdirectory! component-id context-props]))))
 
 
 
@@ -91,7 +91,7 @@
   [component-id button-props]
   [elements/button (merge {:color    :default
                            :icon     :upload_file
-                           :on-click [:media-storage/upload-files! component-id button-props]
+                           :on-click [:media/upload-files! component-id button-props]
                            :tooltip  :upload-files!
                            :layout   :icon-button
                            :variant  :transparent}
@@ -111,7 +111,7 @@
   [component-id button-props]
   [elements/button (merge {:color    :default
                            :icon     :create_new_folder
-                           :on-click [:media-storage/create-edited-subdirectory! component-id button-props]
+                           :on-click [:media/create-edited-subdirectory! component-id button-props]
                            :layout   :icon-button
                            :tooltip  :create-directory!
                            :variant  :transparent}
@@ -136,8 +136,8 @@
   ;
   ; @return (component)
   [component-id button-props]
-  (let [on-click-event [:media-storage/render-directory-action-select! component-id button-props]]
-       [elements/button :media-storage/directory-action-select
+  (let [on-click-event [:media/render-directory-action-select! component-id button-props]]
+       [elements/button :media/directory-action-select
                         (merge {:color      :secondary
                                 :icon       :add
                                 :layout     :icon-button
@@ -154,7 +154,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :media-storage/render-directory-action-select!
+  :media/render-directory-action-select!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -162,9 +162,9 @@
   ;  {:namespace (keyword)}
   (fn [_ [_ component-id context-props]]
       [:x.app-elements/render-select-options!
-        :media-storage/directory-action-select-options
+        :media/directory-action-select-options
         {:autoclear?      true
-         :on-popup-closed [:media-storage/->directory-action-selected component-id context-props]
+         :on-popup-closed [:media/->directory-action-selected component-id context-props]
          :options         [{:label :create-directory!         :value :create-directory}
                            {:label :upload-files-from-device! :value :upload-files-from-device}]
          :user-cancel?    true

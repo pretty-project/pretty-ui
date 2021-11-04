@@ -43,6 +43,10 @@
                             :icon    :add
                             :layout  :icon-button
                             :variant :transparent}
+      :apps-icon-button    {:color   :default
+                            :icon    :apps
+                            :layout  :icon-button
+                            :variant :transparent}
       :back-button         {:color   :default
                             :icon    :arrow_back
                             :layout  :row
@@ -85,7 +89,7 @@
                               :layout  :icon-button
                               :variant :transparent}
       :home-icon-button    {:color   :default
-                            :icon    :apps
+                            :icon    :home
                             :layout  :icon-button
                             :variant :transparent}
       :logout-button       {:color   :warning
@@ -114,6 +118,14 @@
                                 :icon    :radio_button_unchecked
                                 :layout  :icon-button
                                 :variant :transparent}
+      :sort-by-icon-button     {:color   :default
+                                :icon    :sort
+                                :layout  :icon-button
+                                :variant :transparent}
+      :up-icon-button        {:color   :default
+                              :icon    :chevron_left
+                              :layout  :icon-button
+                              :variant :transparent}
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button

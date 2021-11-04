@@ -1,5 +1,5 @@
 
-(ns extensions.media-storage.engine
+(ns extensions.media.engine
     (:require [app-fruits.window    :as window]
               [mid-fruits.candy     :refer [param return]]
               [mid-fruits.keyword   :as keyword]
@@ -128,8 +128,8 @@
   ; @param (keyword) namespace
   ;
   ; @example
-  ;  (engine/namespace->query-id :extensions.media-storage.file-storage)
-  ;  => :extensions.media-storage.file-storage/synchronize!
+  ;  (engine/namespace->query-id :extensions.media.file-storage)
+  ;  => :extensions.media.file-storage/synchronize!
   ;
   ; @return (keyword)
   [namespace]
@@ -141,8 +141,8 @@
   ; @param (keyword) namespace
   ;
   ; @example
-  ;  (engine/namespace->partition-id :extensions.media-storage.file-storage)
-  ;  => :extensions.media-storage.file-storage/primary
+  ;  (engine/namespace->partition-id :extensions.media.file-storage)
+  ;  => :extensions.media.file-storage/primary
   ;
   ; @return (namespaced keyword)
   [namespace]
@@ -668,7 +668,7 @@
                   (param db)
                   (param request-response))))
 
-(a/reg-event-db :media-storage/handle-request-response! handle-request-response!)
+(a/reg-event-db :media/handle-request-response! handle-request-response!)
 
 
 
@@ -676,7 +676,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :media-storage/copy-file-link!
+  :media/copy-file-link!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) filename
@@ -688,7 +688,7 @@
            [:x.app-tools.clipboard/copy-to! (str uri-base file-link)])))
 
 (a/reg-event-fx
-  :media-storage/->file-alias-edited
+  :media/->file-alias-edited
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -698,19 +698,19 @@
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id file-id]}]]
       (let [directory-entity   (db/item-id->document-entity source-directory-id :directory)
             file-id            (name file-id)
-            file-alias         (r tools/get-editor-value db :media-storage/alias-editor)
+            file-alias         (r tools/get-editor-value db :media/alias-editor)
             updated-file-props {:alias         file-alias}
             mutation-props     {:file-id       file-id
                                 :updated-props updated-file-props}
-            query-action      `(media-storage/update-file! ~mutation-props)
+            query-action      `(media/update-file! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/->subdirectory-alias-edited
+  :media/->subdirectory-alias-edited
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -720,19 +720,19 @@
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id subdirectory-id]}]]
       (let [directory-entity           (db/item-id->document-entity source-directory-id :directory)
             subdirectory-id            (name subdirectory-id)
-            subdirectory-alias         (r tools/get-editor-value db :media-storage/alias-editor)
+            subdirectory-alias         (r tools/get-editor-value db :media/alias-editor)
             updated-subdirectory-props {:alias         subdirectory-alias}
             mutation-props             {:directory-id  subdirectory-id
                                         :updated-props updated-subdirectory-props}
-            query-action              `(media-storage/update-directory! ~mutation-props)
+            query-action              `(media/update-directory! ~mutation-props)
             query-question             {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/create-subdirectory!
+  :media/create-subdirectory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -740,19 +740,19 @@
   ;  {:destination-directory-id (keyword)}
   (fn [{:keys [db]} [_ action-id {:keys [destination-directory-id]}]]
       (let [directory-entity   (db/item-id->document-entity destination-directory-id :directory)
-            subdirectory-alias (r tools/get-editor-value db :media-storage/alias-editor)
+            subdirectory-alias (r tools/get-editor-value db :media/alias-editor)
             mutation-props     {:destination-directory-id (name  destination-directory-id)
                                 :directory-alias          (param subdirectory-alias)}
-            query-action      `(media-storage/create-directory! ~mutation-props)
+            query-action      `(media/create-directory! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:media-storage/test]
+           [:media/test]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/delete-item!
+  :media/delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -765,15 +765,15 @@
       (let [directory-entity (db/item-id->document-entity source-directory-id :directory)
             mutation-props   {:source-directory-id (name source-directory-id)
                               :selected-items      [selected-item]}
-            query-action    `(media-storage/delete-items! ~mutation-props)
+            query-action    `(media/delete-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/copy-item!
+  :media/copy-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -788,15 +788,15 @@
             mutation-props   {:copy-item-suffix         (string/lowercase copy-item-suffix)
                               :destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]}
-            query-action    `(media-storage/copy-items! ~mutation-props)
+            query-action    `(media/copy-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/move-item!
+  :media/move-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) action-id
@@ -810,28 +810,177 @@
             mutation-props   {:destination-directory-id (name destination-directory-id)
                               :selected-items           [selected-item]
                               :source-directory-id      (name source-directory-id)}
-            query-action    `(media-storage/move-items! ~mutation-props)
+            query-action    `(media/move-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              action-id
-             {:on-success [:media-storage/handle-request-response! action-id]
+             {:on-success [:media/handle-request-response! action-id]
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
-  :media-storage/download-directory-data!
+  :media/download-directory-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) query-id
   ; @param (map) query-props
   ;  {:directory-id (keyword)
-  ;   :on-sent (metamorphic-event)(opt)
   ;   :on-success (metamorphic-event)(opt)}
-  (fn [{:keys [db]} [_ query-id {:keys [directory-id on-sent on-success]}]]
+  (fn [{:keys [db]} [_ query-id {:keys [directory-id on-success]}]]
       (let [directory-entity (db/item-id->document-entity directory-id :directory)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:x.app-sync/send-query!
              query-id
-             {:on-sent    (param on-sent)
-              :on-success {:dispatch-n [[:media-storage/handle-request-response! query-id]
+             {:on-success {:dispatch-n [[:media/handle-request-response! query-id]
                                         (param on-success)]}
               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)}])))
+
+
+
+
+
+
+
+(a/reg-event-fx
+  :extensions/request-browser-items!
+  ; @param (string) extension-name
+  ; @param (map) request-props
+  ;  {:base-query (vector)(opt)
+  ;   :item-params (vector)}
+  ;
+  ; @usage
+  ;  [:extensions/request-browser-items! "media" "directory" {:item-params [:directory/alias :directory/size ...]}]
+  ;
+  ; @usage
+  ;  [:extensions/request-browser-items! "media" "directory" {:base-query  [...]
+  ;                                                           :item-params [:directory/alias :directory/size ...]}]
+  (fn [{:keys [db]} [_ extension-name item-name {:keys [base-query item-params]}]]
+           ;extension-id   :media
+      (let [extension-id   (keyword extension-name)
+           ;item-namespace :directory
+            item-namespace (keyword item-name)
+           ;item-id-key    :directory-id
+            item-id-key    (keyword/join item-name "-id")
+           ;item-id        (get-in db [:media :browser-meta :directory-id])
+            item-id        (get-in db [extension-id :browser-meta item-id-key])
+           ;item-entity    (eql/id->entity "my-directory" :directory)
+            item-entity    (eql/id->entity item-id item-namespace)
+           ;query-question {[:directory/id "my-directory"] [...]}
+            query-question {item-entity item-params}]
+           [:x.app-sync/send-query! :extensions/request-browser-items!
+                                    ;:on-success [:extensions/receive-browser-items! "media"]
+                                    {:on-success [:extensions/receive-browser-items! extension-name item-name]
+                                     :query      (eql/append-to-query base-query query-question)}])))
+
+(a/reg-event-fx
+  :extensions/receive-browser-items!
+  (fn [{:keys [db]} [_ extension-name]]))
+
+(a/reg-event-fx
+  :extensions/request-browser-item!
+  (fn [_ [_]]))
+;
+
+
+(defn- explode-received-browser-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) received-browser-item
+  ;
+  ; @example
+  ;  (explode-received-browser-item {:directory/alias ":my-storage"
+  ;                                  :directory/path  []
+  ;                                  :directory/items [{...} {...}]})
+  ;  =>
+  ;  {:directory/alias          ":my-storage"
+  ;   :directory/path           []
+  ;   :directory/files          {:my-file {...}}
+  ;   :directory/subdirectories {:my-subdirectory {...}}}
+  ;
+  ; @return (map)
+  [received-browser-item]
+  (let []))
+;        subitems          (get directory-data :directory/items)
+;        exploded-items           (db/explode-collection directory-items)
+;        directory-files          (get exploded-items :file)
+;        directory-subdirectories (get exploded-items :directory)]
+;       (-> (param directory-data)
+;           (assoc  :directory/files          (db/collection->map directory-files))
+;           (assoc  :directory/subdirectories (db/collection->map directory-subdirectories))
+;           (dissoc :directory/items)]))
+
+
+(defn- handle-directory-items!___
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) directory-id
+  ; @param (map) directory-data
+  ;  {:directory/items (maps in vector)}
+  ;
+  ; @return (map)
+  [db [_ directory-id directory-data]])
+;  (if-let [directory-items (get directory-data :directory/items)]
+;          (reduce (fn [db directory-item]
+;                      (let [document-id  (db/document->document-id     directory-item)
+;                            data-item-id (db/document-id->data-item-id document-id)
+;                            data-item    (db/document->data-item       directory-item)
+;                           (if (db/document->namespace? directory-item :file)
+;;                               (assoc-in db (db/path ::files data-item-id)
+  ;                                          (param data-item)
+  ;                             (assoc-in db (db/path ::directories data-item-id)
+  ;                                          (param data-item)
+  ;                (param db)
+  ;                (param directory-items)
+  ;        (return db)]])
+
+(defn- receive-browser-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) extension-name
+  ; @param (string) item-name
+  ; @param (vector) query-key
+  ; @param (map) query-answer
+  ;
+  ; @usage
+  ;  (r receive-browser-item! db "media" "directory")
+  ;
+  ; @return (map)
+  [db [_ extension-name item-name query-key query-answer]]
+  (let [item-id (eql/entity->id query-key)]))
+
+  ; @sample (map) directory-data
+  ;  {:directory/alias ":my-storage"
+  ;   :directory/path  []
+  ;   :directory/items [{...} {...}]}
+  ;
+  ; @sample (map) modified-directory-data
+  ;  {:directory/alias ":my-storage"
+  ;   :directory/path  []
+  ;   :directory/files {:my-file {...}}
+  ;   :directory/subdirectories {:my-directory {...}}}
+;  (let [modified-directory-data (directory-data->modified-directory-data directory-data)]))
+;       (assoc-in db (db/path ::directories directory-id))))
+;                    (param modified-directory-data))))
+
+(defn receive-browser-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) extension-name
+  ; @param (string) item-name
+  ; @param (map) server-response
+  ;
+  ; @usage
+  ;  (r receive-browser-items! db "media" "directory"
+  ;                            {[:directory/id "home"] {:directory/alias ":my-storage"
+  ;                                                     :directory/path  []
+  ;                                                     :directory/items [{...} {...}]}})
+  ;
+  ; @return (map)
+  [db [_ extension-name item-name server-response]]
+  (reduce-kv (fn [db query-key query-answer]
+                 (if (eql/entity? query-key)
+                     (r receive-browser-item! db extension-name item-name query-key query-answer)
+                     (return db)))
+             (param db)
+             (param server-response)))
+
+(a/reg-event-db :extensions/receive-browser-items! receive-browser-items!)

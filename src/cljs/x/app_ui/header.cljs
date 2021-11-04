@@ -75,7 +75,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header-home-icon-button-badge
+(defn- header-apps-icon-button-badge
   ; TEMP
   []
   [:div {:style {:position :absolute :top "4px" :right "10px" :background "var( --soft-blue )"
@@ -84,7 +84,7 @@
                  :display :flex :flex-direction :column :justify-content :center}}
         (param "12")])
 
-(defn- header-home-icon-button
+(defn- header-apps-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
@@ -93,14 +93,14 @@
   ;
   ; @return (component)
   [_ {:keys [at-home?]}]
-  [:div [elements/button ::home-icon-button
+  [:div [elements/button ::apps-icon-button
                          {:disabled? (param at-home?)
                           :on-click  [:x.app-router/go-home!]
-                          :preset    :home-icon-button}]
+                          :preset    :apps-icon-button}]
                          ;:tooltip   :back-to-home!
                          ;:icon      :dashboard
         (if-not (boolean at-home?)
-                [header-home-icon-button-badge])])
+                [header-apps-icon-button-badge])])
 
 (defn- header-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -179,7 +179,7 @@
   ; @return (component)
   [header-id {:keys [header-title parent-path] :as view-props}]
   [:<> [:div.x-app-header--block (if (some? parent-path)  [header-up-icon-button         header-id view-props]
-                                                          [header-home-icon-button       header-id view-props])]
+                                                          [header-apps-icon-button       header-id view-props])]
        [:div.x-app-header--block (if (some? header-title) [header-label                  header-id view-props])]
        [:div.x-app-header--block (if (a/debug-mode?) [:<> [header-db-browser-icon-button header-id view-props]
                                                           [header-menu-icon-button       header-id view-props]]

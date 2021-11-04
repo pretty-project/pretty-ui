@@ -1,12 +1,12 @@
 
-(ns extensions.media-storage.item-properties
+(ns extensions.media.item-properties
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.io      :as io]
               [mid-fruits.time    :as time]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
               [x.app-ui.api       :as ui]
-              [extensions.media-storage.engine :as engine]))
+              [extensions.media.engine :as engine]))
 
 
 
@@ -158,7 +158,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :media-storage/render-subdirectory-properties!
+  :media/render-subdirectory-properties!
   ; @param (keyword) directory-id
   ; @param (keyword) subdirectory-id
   (fn [{:keys [db]} [_ directory-id subdirectory-id]]
@@ -172,7 +172,7 @@
               :min-width     :xs}])))
 
 (a/reg-event-fx
-  :media-storage/render-file-properties!
+  :media/render-file-properties!
   ; @param (keyword) directory-id
   ; @param (keyword) file-id
   (fn [{:keys [db]} [_ directory-id file-id]]
