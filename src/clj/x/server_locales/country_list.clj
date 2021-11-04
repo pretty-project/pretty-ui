@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.country-list
+(ns x.server-locales.country-list
     (:require [x.mid-locales.country-list :as country-list]))
 
 

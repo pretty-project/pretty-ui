@@ -94,8 +94,7 @@
                            :on-click [:media-storage/upload-files! component-id button-props]
                            :tooltip  :upload-files!
                            :layout   :icon-button
-                           :variant  :transparent
-                           :label    :upload!}
+                           :variant  :transparent}
                           (param button-props))])
 
 (defn create-directory-button
@@ -115,8 +114,7 @@
                            :on-click [:media-storage/create-edited-subdirectory! component-id button-props]
                            :layout   :icon-button
                            :tooltip  :create-directory!
-                           :variant  :transparent
-                           :label    :new-directory}
+                           :variant  :transparent}
                           (param button-props))])
 
 (defn multi-action-button

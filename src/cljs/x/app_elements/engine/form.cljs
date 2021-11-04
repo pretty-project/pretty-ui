@@ -50,4 +50,5 @@
   ;
   ; @return (boolean)
   [db [_ form-id]]
-  (r inputs-passed? db form-id))
+  (or (r inputs-passed?         db form-id)
+      (r a/debug-mode-detected? db)))

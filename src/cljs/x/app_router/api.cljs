@@ -31,6 +31,7 @@
 (def get-current-route-query-params route-handler/get-current-route-query-params)
 (def get-current-route-query-param  route-handler/get-current-route-query-param)
 (def get-current-route-fragment     route-handler/get-current-route-fragment)
+(def get-current-route-parent       route-handler/get-current-route-parent)
 (def get-freezed-route-string       route-handler/get-freezed-route-string)
 (def get-freezed-route-id           route-handler/get-freezed-route-id)
 (def get-freezed-route-path         route-handler/get-freezed-route-path)

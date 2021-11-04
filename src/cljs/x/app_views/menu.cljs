@@ -432,6 +432,6 @@
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-if [(r environment/viewport-profiles-match? db [:xxs :xs :s])
+      {:dispatch-if [(r environment/viewport-small? db)
                      [::render-as-sidebar!]
                      [::render-as-popup!]]}))

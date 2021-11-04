@@ -76,7 +76,7 @@
 
 (defn get-downloaded-clients
   [db _]
-  (get-in db [:clients :documents]))
+  (get-in db [:clients :list-data]))
 
 (defn get-downloaded-client-count
   [db _]
@@ -85,7 +85,7 @@
 
 (defn all-documents-downloaded?
   [db _]
-  (let [client-count            (get-in db [:clients :document-count])
+  (let [client-count            (get-in db [:clients :list-meta :document-count])
         downloaded-client-count (r get-downloaded-client-count db)]))
 
 ;; ----------------------------------------------------------------------------
@@ -189,10 +189,10 @@
   (fn [{:keys [db]} [_ server-response]]
       (let [documents      (get-in server-response [:clients/get-clients :documents])
             document-count (get-in server-response [:clients/get-clients :document-count])]
-           {:db       (-> db (update-in [:clients :documents] vector/concat-items documents)
+           {:db       (-> db (update-in [:clients :list-data] vector/concat-items documents)
                              ; Szükséges frissíteni a keresési feltételeknek megfelelő
                              ; dokumentumok számát, mert változhat
-                             (assoc-in  [:clients :document-count] document-count))
+                             (assoc-in  [:clients :list-meta :document-count] document-count))
             :dispatch-if [(r all-documents-downloaded? db)
                           [:x.app-components/reload-infinite-loader! :clients]]})))
 
@@ -200,7 +200,7 @@
   :clients/request-clients!
   (fn [{:keys [db]} _]
       [:x.app-sync/send-query!
-       :clients/request-clients!
+       :clients/synchronize-client-list!
         ; A letöltött dokumentumok on-success helyett on-stalled időpontban kerülnek tárolásra
         ; a Re-Frame adatbázisba, így elkerülhető, hogy a request idle-timeout ideje alatt
         ; az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző

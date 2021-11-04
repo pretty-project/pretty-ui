@@ -20,10 +20,10 @@
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.button     :refer [view] :rename {view button}]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.label      :refer [view] :rename {view label}]
-              [x.app-elements.polarity   :refer [view] :rename {view polarity}]))
+              [x.app-elements.button     :as button   :refer [view] :rename {view button}]
+              [x.app-elements.label      :as label    :refer [view] :rename {view label}]
+              [x.app-elements.polarity   :as polarity :refer [view] :rename {view polarity}]))
 
 
 
@@ -91,20 +91,6 @@
 ;; -- Converters --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- select-props->value-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; XXX#2043
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ;  {:value-path (item-path vector)}
-  ;
-  ; @return (item-path vector)
-  [select-id {:keys [value-path]}]
-  (or (param value-path)
-      (engine/default-value-path select-id)))
-
 (defn- options-props->render-popup-label-bar?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -129,12 +115,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) view-props
-  ;  {:select-button-label (metamorphic-content)(opt)}
+  ;  {:get-label-f (function)
+  ;   :select-button-label (metamorphic-content)(opt)
+  ;   :value (*)}
   ;
   ; @return (metamorphic-content)
-  [{:keys [select-button-label] :as view-props}]
-  (if-let [selected-option (engine/view-props->selected-option view-props)]
-          (:label selected-option)
+  [{:keys [get-label-f select-button-label] :as view-props}]
+  (if-let [selected-option (get view-props :value)]
+          (get-label-f selected-option)
           (or select-button-label DEFAULT-SELECT-BUTTON-LABEL)))
 
 
@@ -148,25 +136,20 @@
   ; A select-button elem {:on-click ...} eseménye kirendereli
   ; a select-options elemet tartalmazó popup UI elemet.
   ;
-  ; XXX#2043
-  ;  Ha a select-button elem nem kap paraméterként {:value-path [...]}
-  ;  tulajdonságot, akkor generál egyet magának.
-  ;  Fontos, hogy a generált {:value-path [...]} tulajdonság megegyezzen
-  ;  a select-button és select-options elemeknél!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {:value-path (item-path vector)}
   ;
   ; @return (map)
-  ;  {:layout (keyword)
+  ;  {:get-label-f (function)
+  ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id select-props]
-        ; XXX#2043
-  (let [value-path    (select-props->value-path select-id select-props)
-        options-props (assoc select-props :value-path value-path)]
-       (merge {:layout     :row
-               :value-path value-path}
+  (let [options-props (param select-props)]
+       (merge {:get-label-f  return
+               :layout       :row
+               :options-path (engine/default-options-path select-id)
+               :value-path   (engine/default-value-path   select-id)}
               (param select-props)
               {:on-click [:x.app-elements/render-select-options! select-id options-props]})))
 
@@ -178,12 +161,16 @@
   ;  {:on-select (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:on-select (metamorphic-event)
-  ;   :select-id (keyword)
+  ;  {:get-label-f (function)
+  ;   :on-select (metamorphic-event)
+  ;   :options-id (keyword)
+  ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [select-id options-props]
   (let [on-select (on-select-events select-id options-props)]
-       (merge {:value-path (engine/default-value-path select-id)}
+       (merge {:get-label-f  return
+               :options-path (engine/default-options-path select-id)
+               :value-path   (engine/default-value-path   select-id)}
               (param options-props)
               {:on-select  on-select
                :options-id (engine/element-id->extended-id select-id :options)})))
@@ -209,7 +196,7 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Select options components -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- popup-label-bar
@@ -229,46 +216,21 @@
   [polarity {:start-content [button {:preset   :cancel-button
                                      :on-click [:x.app-ui/close-popup! popup-id]}]}])
 
-(defn- select-option-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) view-props
-  ; @param (map) option-props
-  ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (hiccup or nil)
-  [_ _ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-select--option-icon (keyword/to-dom-value icon)]))
-
-(defn- select-option-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) view-props
-  ; @param (map) option-props
-  ;  {:label (metamorphic-content)}
-  ;
-  ; @return (hiccup)
-  [_ _ {:keys [label]}]
-  [:div.x-select--option-label [components/content {:content label}]])
-
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) view-props
-  ;  {:select-id (keyword)
-  ; @param (map) option-props
-  ;  {:label (metamorphic-content)}
+  ;  {:get-label-f (function)
+  ;   :options-id (keyword)}
+  ; @param (*) option
   ;
   ; @return (hiccup)
-  [popup-id {:keys [options-id] :as view-props} {:keys [label] :as option-props}]
-  [:button.x-select--option
-    (engine/selectable-option-attributes options-id view-props option-props)
-    [select-option-icon  popup-id view-props option-props]
-    [select-option-label popup-id view-props option-props]])
+  [popup-id {:keys [get-label-f options-id] :as view-props} option]
+  (let [option-label (get-label-f option)]
+       [:button.x-select--option
+         (engine/selectable-option-attributes options-id view-props option)
+         [components/content {:content option-label}]]))
 
 (defn- ab7081
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -295,8 +257,16 @@
   [engine/stated-element options-id
     {:component     #'ab7081
      :element-props options-props
-     :initializer   [:x.app-elements/init-input! options-id]
-     :subscriber    [::get-view-props            options-id]}])
+     ; XXX#5051
+     ; Ha nem select-button gomb használatával, hanem esemény meghívásával történik a select
+     ; 
+     :initializer   [:x.app-elements/init-selectable! options-id]
+     :subscriber    [::get-view-props                 options-id]}])
+
+
+
+;; -- Select button components ------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- select-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -359,7 +329,7 @@
                             (if (boolean required?)
                                 [:span.x-input--label-asterisk "*"])]))
 
-(defn- select
+(defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -372,16 +342,37 @@
     [select-label  select-id view-props]
     [select-button select-id view-props]])
 
+(defn- select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) view-props
+  ;  {}
+  ;
+  ; @return (hiccup)
+  [select-id {:keys [as-button?] :as view-props}]
+  (if (boolean as-button?)
+      (let [button-props (a/prot view-props button/button-props-prototype)]
+           [button/button select-id button-props])
+      [select-layout select-id view-props]))
+
 (defn view
+  ; A select elem gombja helyett lehetséges button elemet megjeleníteni az {:as-button? true}
+  ; tulajdonság használatával.
+  ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
-  ;  {:autoclear? (boolean)(opt)
+  ;  {:as-button? (boolean)(opt)
+  ;    Default: false
+  ;   :autoclear? (boolean)(opt)
   ;    Default: false
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
   ;   :form-id (keyword)(opt)
+  ;   :get-label-f (function)(constant)(opt)
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :icon (keyword)(opt) Material icon class
   ;   :initial-options (vector)(constant)(opt)
@@ -408,6 +399,14 @@
   ; @usage
   ;  [elements/select :my-select {...}]
   ;
+  ; @usage
+  ;  [elements/select {:as-button? true
+  ;                    :icon       :sort
+  ;                    :label      :sort-by
+  ;                    :layout     :icon-button
+  ;                    :options-path [:my :options]
+  ;                    :value-path   [:my :selected :option]}]
+  ;
   ; @return (hiccup)
   ([select-props]
    [view nil select-props])
@@ -418,7 +417,10 @@
         [engine/stated-element select-id
           {:component     #'select
            :element-props select-props
-           :subscriber    [::get-view-props select-id]}])))
+           ; XXX#5051
+           ; A gomb kirenderelésekor inicializálja az elemet
+           :initializer   [:x.app-elements/init-selectable! select-id]
+           :subscriber    [::get-view-props                 select-id]}])))
 
 
 
@@ -427,6 +429,8 @@
 
 (a/reg-event-fx
   :x.app-elements/render-select-options!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; WARNING#0134
   ;  A [select-options] elem az opció kiválasztása után lecsatolódik a React-fából,
   ;  ezért a tulajdonságai sem maradnak elérhetők a Re-Frame adatbázisban!
@@ -435,38 +439,17 @@
   ;
   ; @param (keyword)(opt) select-id
   ; @param (map) options-props
-  ;  {:autoclear? (boolean)(opt)
-  ;    Default: false
-  ;   :default-value (*)(constant)(opt)
-  ;   :form-id (keyword)(opt)
-  ;   :initial-value (*)(constant)(opt)
-  ;   :on-popup-closed (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a kiválasztott értéket.
-  ;   :on-select (metamorphic-event)(constant)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a kiválasztott értéket.
-  ;   :options-label (metamorphic-content)(constant)(opt)
-  ;   :options (maps in vector)(constant)
-  ;    [{:icon (keyword)(opt) Material icon class
-  ;      :label (metamorphic-content)
-  ;      :value (*)}]
-  ;   :required? (boolean)(constant)(opt)
-  ;    Default: false
-  ;   :select-button-label (metamorphic-content)(opt)
-  ;    Default: DEFAULT-SELECT-BUTTON-LABEL
-  ;   :user-cancel? (boolean)(constant)(opt)
-  ;    Default: false
-  ;    Only w/o {:options-label ...}
-  ;   :value-path (item-path vector)(constant)(opt)}
   (fn [_ event-vector]
       (let [select-id     (a/event-vector->second-id   event-vector)
             options-props (a/event-vector->first-props event-vector)
+            options-id    (engine/element-id->extended-id select-id :popup)
             options-props (a/prot select-id options-props options-props-prototype)]
            [:x.app-ui/add-popup!
-             (engine/element-id->extended-id select-id :popup)
+             options-id
              {:content       #'select-options
               :content-props options-props
               :layout        :boxed
-              :min-width     :xxs
+              :min-width     :xs
 
               ; Select options popup's label-bar
               :label-bar (cond (options-props->render-popup-label-bar?  options-props)

@@ -26,7 +26,7 @@
 
       :admin
       {:route-template "/admin"
-       :get #(http/html-wrap {:body (views/admin %)})
+       :get #(http/html-wrap {:body (views/main %)})
        :js "app.js"}
 
       :db/query

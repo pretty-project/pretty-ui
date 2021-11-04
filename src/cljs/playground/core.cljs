@@ -1,16 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.07.18
-; Description:
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns playground.core
     (:require [app-fruits.dom        :as dom]
               [app-fruits.reagent    :as reagent :refer [ratom]]
@@ -33,6 +21,7 @@
               [x.app-developer.api   :as developer]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
+              [x.app-locales.api     :as locales]
               [x.app-sync.api        :as sync]
               [x.app-ui.api          :as ui]
 
@@ -266,10 +255,6 @@
   [:x.app-ui/set-surface!
    ::view
    {:content     #'view
-    :label-bar   {:content #'ui/go-back-surface-label-bar
-                  :content-props {:label "Playground"}}
-;    :label-bar   {:content #'ui/go-back-surface-label-bar}
-;                  :content-props {:label "Playground"}}
     :initializer [:x.app-db/set-item! (db/path ::stuff :multi-combobox :options)
                                       [{:x "Apple"}
                                        {:x "Apple juice"}
@@ -280,7 +265,8 @@
 
 (a/reg-event-fx
   ::load!
-  {:dispatch-n [[::render!]]})
+  {:dispatch-n [[:x.app-ui/set-window-title! "Playground"]
+                [::render!]]})
 
 (a/reg-event-fx
   ::initialize!
@@ -288,8 +274,7 @@
                  ::route
                  {:route-event    [::load!]
                   :route-template "/playground"
-                  :restricted?    true
-                  :route-title    "Playground"}]]})
+                  :restricted?    true}]]})
 ;               [:x.app-environment.css-handler/add-external-source! "css/playground/site.css"]
 
 (a/reg-lifecycles

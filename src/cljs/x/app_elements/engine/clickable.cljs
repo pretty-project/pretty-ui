@@ -47,19 +47,20 @@
   ;   :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ;  {:disabled (boolean)
+  ;  {:data-tooltip (string)
+  ;   :disabled (boolean)
   ;   :href (string)
   ;   :id (string)
   ;   :on-click (function)
-  ;   :on-mouse-up (function)
-  ;   :title (string)}
+  ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href targetable? tooltip]}]
   (cond-> (param {})
-          (boolean disabled?)   (merge {:disabled true})
-          (not     disabled?)   (merge {:href        (param href)
-                                        :on-click    (on-click-function               element-id)
-                                        :on-mouse-up (focusable/blur-element-function element-id)
-                                        :title       (components/content              {:content tooltip})})
+          (boolean disabled?)   (merge {:disabled     true
+                                        :data-tooltip (components/content {:content tooltip})})
+          (not     disabled?)   (merge {:data-tooltip (components/content {:content tooltip})
+                                        :href         (param href)
+                                        :on-click     (on-click-function               element-id)
+                                        :on-mouse-up  (focusable/blur-element-function element-id)})
           (boolean targetable?) (merge {:id (targetable/element-id->target-id element-id)})))
 
 

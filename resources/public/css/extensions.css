@@ -1,43 +1,45 @@
 
+
 /***** Clients *****/
 /*** Client list ***/
-
-#clients--client-list--search-bar {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap-reverse;
-  grid-column-gap: 64px;
-  justify-content: space-between;
-  width: 100% }
-
-#clients--client-list--search-field {
-  -align-items: center;
-  -display: flex;
-  -justify-content: flex-end;
-  flex-grow: 1;
-  -padding: 6px 0 }
 
 /*** Client list ***/
 
 /*** Client-list item ***/
 
 .clients--client {
-  display: block;
+  border-radius: var( --border-radius-xs );
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 4px 8px;
   width: 100% }
 
 .clients--client:hover {
-  background: var( --white-dark ) }
+  background: var( --background-color-highlight ) }
 
 .clients--client--primary-details {
-  display: flex;
-  justify-content: space-between }
+  text-align: left }
 
 .clients--client--secondary-details {
-  text-align: left }
+  -text-align: left }
 
 .clients--client--full-name {
   font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.clients--client--email-address {
+  color: var( --color-muted );
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.clients--client--added-at {
+  color: var( --color-highlight );
+  font-size: var( --font-size-xxs );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
@@ -55,29 +57,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap }
-
-.clients--client--client-no {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xxs );
-  font-weight: 600;
-  width: 36px;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  text-align: left }
-
-.clients--client--email-address {
-  color: var( --color-muted );
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s ) }
-
-.clients--client--added-at {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s ) }
 
 /*** Client-list item ***/
 

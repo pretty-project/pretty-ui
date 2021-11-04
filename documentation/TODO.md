@@ -12,6 +12,11 @@
 
 # x4.3.0
 
+- A go-back-surface-label-bar és go-back-popup-label-bar nem jo, hogy browser-back-et használ!
+
+- Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)
+- Text-field szélessége megváltozik az emptiable? true adornment (és más adornment) ki-bekapcsolásakor
+
 - A server-media modul pathom handler-ei media/xyz elnevezésről media-storage/xyz elnevezésre
   lettek cserélve, hogy az extensions.media-storage.engine névtérben ne legyen névültközés
   a most már nem stringként átadott mutation nevekben mert a media/xyz ütközött a behívott

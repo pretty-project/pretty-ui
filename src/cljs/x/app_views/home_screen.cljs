@@ -117,4 +117,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {})
+ ;{:on-app-boot [::initialize!]}

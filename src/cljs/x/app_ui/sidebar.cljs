@@ -204,8 +204,6 @@
   ;
   ; @return (component)
   []
-  ; Mivel a sidebar a többi ui-rendererrel ellentétben nem komponenseket,
-  ; hanem tartalmat jelenít meg, ezért nem használ ui-renderer komponenst.
   [components/subscriber ::view
                          {:component  #'sidebar
                           :subscriber [::get-view-props]}])

@@ -3,25 +3,25 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.11.01
+; Created: 2020.01.21
 ; Description:
-; Version: v0.1.2
-; Compatibility: x4.4.4
+; Version: v0.2.8
+; Compatibility: x3.9.9
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.country-list
-    (:require [x.mid-locales.country-list :as country-list]))
+(ns x.server-locales.api
+    (:require [x.server-locales.country-list :as country-list]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-locales.country-list
+; x.server-locales.country-list
 (def COUNTRY-NAMES        country-list/COUNTRY-NAMES)
 (def EU-COUNTRY-NAMES     country-list/EU-COUNTRY-NAMES)
 (def COUNTRY-LIST         country-list/COUNTRY-LIST)

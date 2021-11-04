@@ -29,7 +29,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (px)
-(def DEFAULT-HEADER-OFFSET 50)
+(def DEFAULT-HEADER-OFFSET 47)
 
 
 
@@ -68,12 +68,10 @@
   ;   {:sticky? (boolean)(opt)}}
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
-  ;   :horizontal-align (keyword)
+  ;  {:horizontal-align (keyword)
   ;   :min-width (keyword)}
   [{:keys [header] :as card-props}]
-  (merge {:border-color     :highlight
-          :horizontal-align :center
+  (merge {:horizontal-align :center
           :min-width        :xxs}
          (param card-props)
          (if (get header :sticky?)
@@ -210,9 +208,6 @@
   ;    {:content (metamorphic-content)(opt)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
-  ;   :border-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :highlight
   ;   :class (string or vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

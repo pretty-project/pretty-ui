@@ -74,18 +74,6 @@
 
 
 /***** App header *****/
-
-.x-app-header--element {
-  animation-duration: .3s;
-  animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
-
-.x-app-header--element[data-animation="reveal"] {
-  animation-name: x-slide-in-ttb }
-
-.x-app-header--element[data-animation="hide"] {
-  animation-name: x-slide-out-btt }
-
 /***** App header *****/
 
 
@@ -286,24 +274,3 @@
   animation-name: x-hide }
 
 /***** App surface *****/
-
-
-
-/***** App surface control-sidebar *****/
-
-.x-app-surface--element--control-sidebar {
-  transition-delay: .15s;
-  transition-duration: .15s;
-  transition-property: padding-top }
-
-/***** App surface control-sidebar *****/
-
-
-
-/***** App surface header *****/
-
-.x-app-surface-header {
-  transition-duration: .15s;
-  transition-property: height }
-
-/***** App surface header *****/

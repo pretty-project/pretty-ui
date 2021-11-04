@@ -32,7 +32,6 @@
 /*** Item-lister items ***/
 
 .item-lister--items {
-  -padding-bottom: 12px;
   width: 100% }
 
 .item-lister--items--no-items-to-show,

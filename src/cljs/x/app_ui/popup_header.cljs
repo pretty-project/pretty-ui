@@ -31,7 +31,8 @@
   ; @return (map)
   ;  {:render-touch-anchor? (boolean)}
   [db [_ popup-id]]
-  {:render-touch-anchor? (r geometry/render-touch-anchor? db popup-id)})
+  {:render-touch-anchor? false})
+  ;:render-touch-anchor? (r geometry/render-touch-anchor? db popup-id)
 
 (a/reg-sub ::get-popup-header-view-props get-popup-header-view-props)
 

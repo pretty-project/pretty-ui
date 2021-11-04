@@ -26,15 +26,14 @@
               [x.app-ui.shield]
               [x.app-ui.sidebar]
               [x.app-ui.surface]
-              [x.app-ui.graphics          :as graphics]
-              [x.app-ui.interface         :as interface]
-              [x.app-ui.popup-label-bar   :as popup-label-bar]
-              [x.app-ui.renderer          :as renderer]
-              [x.app-ui.surface-geometry  :as surface-geometry]
-              [x.app-ui.surface-label-bar :as surface-label-bar]
-              [x.app-ui.structure         :as structure]
-              [x.app-ui.themes            :as themes]
-              [x.app-ui.title             :as title]))
+              [x.app-ui.graphics        :as graphics]
+              [x.app-ui.header          :as header]
+              [x.app-ui.interface       :as interface]
+              [x.app-ui.popup-label-bar :as popup-label-bar]
+              [x.app-ui.renderer        :as renderer]
+              [x.app-ui.structure       :as structure]
+              [x.app-ui.themes          :as themes]
+              [x.app-ui.title           :as title]))
 
 
 
@@ -51,6 +50,9 @@
 (def success-animation-a graphics/success-animation-a)
 (def failure-animation-a graphics/failure-animation-a)
 
+; x.app-ui.header
+(def set-header-title! header/set-header-title!)
+
 ; x.app-ui.interface
 (def get-interface          interface/get-interface)
 (def application-interface? interface/application-interface?)
@@ -60,6 +62,7 @@
 (def accept-popup-label-bar  popup-label-bar/accept-popup-label-bar)
 (def cancel-popup-label-bar  popup-label-bar/cancel-popup-label-bar)
 (def close-popup-label-bar   popup-label-bar/close-popup-label-bar)
+(def go-up-popup-label-bar   popup-label-bar/go-up-popup-label-bar)
 (def go-back-popup-label-bar popup-label-bar/go-back-popup-label-bar)
 
 ; x.app-ui.renderer
@@ -74,14 +77,6 @@
 
 ; x.app-ui.structure
 (def structure structure/view)
-
-; x.app-ui.surface-geometry
-(def get-surface-header-height surface-geometry/get-surface-header-height)
-
-; x.app-ui.surface-label-bar
-(def go-back-surface-label-bar surface-label-bar/go-back-surface-label-bar)
-(def go-home-surface-label-bar surface-label-bar/go-home-surface-label-bar)
-(def debug-surface-label-bar   surface-label-bar/debug-surface-label-bar)
 
 ; x.app-ui.themes
 (def get-selected-theme themes/get-selected-theme)

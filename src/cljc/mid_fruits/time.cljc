@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.time
-    (:import #?(:clj org.joda.time.DateTime))
+    (:import #?(:clj org.joda.time.DateTime)
+             #?(:clj org.bson.types.BSONTimestamp))
+
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]

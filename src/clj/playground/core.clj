@@ -12,9 +12,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.core
-    (:require [mongo-db.api      :as mongo-db]
-              ;[pathom.api        :as pathom]
-              [x.server-core.api :as a]))
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.vector    :as vector]
+              [mongo-db.api         :as mongo-db]
+              [pathom.api           :as pathom]
+              [x.server-locales.api :as locales]
+              [x.server-core.api    :as a]))
 
 
 
@@ -24,8 +27,8 @@
 
 (defn playground
   ; @param (map) request
-  [request])
-  ;(println "Playground *A#?o%!_f"))
+  [request]
+  (println "Playground *A#?o%!_f"))
 
 (defn debug!
   ; @param (map) request

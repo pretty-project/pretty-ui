@@ -1,5 +1,7 @@
 
 (ns mongo-db.engine
+    (:import org.bson.types.BSONTimestamp)
+
     (:require [mid-fruits.candy        :refer [param return]]
               [mid-fruits.gestures     :as gestures]
               [mid-fruits.json         :as json]

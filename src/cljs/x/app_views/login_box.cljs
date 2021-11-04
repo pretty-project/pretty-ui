@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v0.6.8
-; Compatibility: x3.9.8
+; Version: v0.7.2
+; Compatibility: x4.4.4
 
 
 
@@ -38,9 +38,7 @@
   ; akkor a login-box label-bar sávjában "bezárás gomb", ellenkező esetben
   ; "vissza gomb" jelenik meg.
   (if (r ui/any-element-rendered? db :surfaces)
-      {:content #'ui/close-popup-label-bar
-       :content-props {:label (r a/get-app-detail db :app-title)}}
-      {:content #'ui/go-back-popup-label-bar
+      {:content       #'ui/close-popup-label-bar
        :content-props {:label (r a/get-app-detail db :app-title)}}))
 
 (defn- get-view-props
@@ -81,11 +79,12 @@
   ; @param (map) view-props
   ;
   ; @return (component)
-  [_ _]
+  [_ {:keys [synchronizing?]}]
   [elements/text-field
    ::email-address-field
    {:label      :email-address
-    :value-path (db/meta-item-path ::primary :email-address)}])
+    :value-path (db/meta-item-path ::primary :email-address)
+    :disabled?  synchronizing?}])
 
 (defn- password-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,10 +93,11 @@
   ; @param (map) view-props
   ;
   ; @return (component)
-  [_ _]
+  [_ {:keys [synchronizing?]}]
   [elements/password-field
    ::password-field
-   {:value-path (db/meta-item-path ::primary :password)}])
+   {:value-path (db/meta-item-path ::primary :password)
+    :disabled?  synchronizing?}])
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +116,7 @@
     :label      :login!
     :layout     :fit
     :on-click   [:x.app-user/authenticate!]
-    :variant    :outlined}])
+    :variant    :filled}])
 
 (defn- forgot-password-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -172,7 +172,7 @@
    {:on-click [:x.app-user/logout!]
     :color    :none
     :label    :logout!
-    :layout   :fit
+    :layout   :row
     :variant  :transparent}])
 
 (defn- continue-as-button
@@ -188,9 +188,9 @@
    {:keypress {:key-code 13}
     :on-click [:x.app-router/go-home!]
     :label    :continue-as
-    :layout   :fit
+    :layout   :row
     :suffix   username
-    :variant  :outlined}])
+    :variant  :filled}])
 
 (defn- signed-in-as-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -201,7 +201,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [username]}]
-  [elements/label {:content :signed-in-as :suffix username}])
+  [elements/label {:content :signed-in-as :suffix username
+                   :horizontal-align :center}])
 
 (defn- logged-in-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -211,7 +212,7 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [:<> [elements/separator {:size :m}]
+  [:<> ;[elements/separator {:size :m}]
        [signed-in-as-label component-id view-props]
        [elements/separator {:size :m}]
        [continue-as-button component-id view-props]
@@ -260,14 +261,9 @@
         :subscriber        [::get-view-props]
         :user-close?       false}]))
 
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-router/add-route!
-   ::route
-   {:route-event    [::render!]
-    :route-template "/login"}])
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route!
+                 ::route
+                 {:route-event    [::render!]
+                  :route-template "/login"}]})

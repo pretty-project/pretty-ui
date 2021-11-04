@@ -137,6 +137,7 @@
 (def set-element-prop!      engine/set-element-prop!)
 (def update-element-prop!   engine/update-element-prop!)
 (def remove-element-prop!   engine/remove-element-prop!)
+(def blur-element-function  engine/blur-element-function)
 
 ; x.app-elements.*
 (def anchor            anchor/view)

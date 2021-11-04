@@ -25,7 +25,16 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-locales.country-list
-(def COUNTRY-LIST country-list/COUNTRY-LIST)
+(def COUNTRY-NAMES        country-list/COUNTRY-NAMES)
+(def EU-COUNTRY-NAMES     country-list/EU-COUNTRY-NAMES)
+(def COUNTRY-LIST         country-list/COUNTRY-LIST)
+(def country-capital-city country-list/country-capital-city)
+(def country-currencies   country-list/country-currencies)
+(def country-currency     country-list/country-currency)
+(def country-languages    country-list/country-languages)
+(def country-language     country-list/country-language)
+(def country-name         country-list/country-name)
+(def country-native-name  country-list/country-native-name)
 
 ; x.app-locales.currency-handler
 ; ...

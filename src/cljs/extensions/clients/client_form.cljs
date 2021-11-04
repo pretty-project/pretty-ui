@@ -11,24 +11,19 @@
               [x.app-locales.api  :as locales]
               [x.app-router.api   :as router]
               [x.app-sync.api     :as sync]
-              [x.app-ui.api       :as ui]
-              [extensions.clients.engine :as engine]))
+              [extensions.clients.engine :as engine]
+              [extensions.pattern :as pattern]))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- new-client?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [client-id (get-in db [:clients :form-meta :client-id])]
-       (= client-id "new-client")))
-
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order (r locales/get-name-order db)})
+  {:name-order        (r locales/get-name-order        db)
+   :selected-language (r locales/get-selected-language db)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -36,14 +31,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:form-completed? (r elements/form-completed? db ::client-form)
-   :new-client?     (r new-client?              db)})
+   :new-client?     (r pattern/new-item?        db "clients" "client")})
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:new-client?    (r new-client?                db)
+  {:new-client?    (r pattern/new-item?          db "clients" "client")
    :synchronizing? (r sync/listening-to-request? db :clients/synchronize-client-form!)})
 
 (a/reg-sub ::get-view-props get-view-props)
@@ -68,74 +63,76 @@
 (defn- cancel-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:label :cancel! :preset :cancel-icon-button :on-click [:x.app-router/go-to! "/clients"]}])
+  [elements/button {:tooltip :cancel! :preset :cancel-icon-button :on-click [:x.app-router/go-to! "/clients"]}])
 
 (defn- delete-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:label :delete! :preset :delete-icon-button :on-click [:clients/request-delete-client! "client-id"]}])
+  [elements/button {:tooltip :delete! :preset :delete-icon-button :on-click [:clients/request-delete-client! "client-id"]}])
 
 (defn- copy-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:label :duplicate! :preset :duplicate-icon-button :on-click [:clients/request-duplicate-client! "client-id"]}])
+  [elements/button {:tooltip :duplicate! :preset :duplicate-icon-button :on-click [:clients/request-duplicate-client! "client-id"]}])
 
 (defn- save-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [form-completed?] :as header-props}]
-  [elements/button {:label :save! :preset :save-icon-button :disabled? (not form-completed?)
+  [elements/button {:tooltip :save! :preset :save-icon-button :disabled? (not form-completed?)
                     :on-click [:clients/request-save-client!]}])
 
 (defn- client-actions-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [:div.x-icon-buttons
-    [delete-client-button surface-id header-props]
-    [copy-client-button   surface-id header-props]])
+  [:<> [delete-client-button surface-id header-props]
+       [copy-client-button   surface-id header-props]])
 
 (defn- client-form-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [new-client?] :as header-props}]
-  [elements/row {:content [:<> (if (boolean new-client?)
-                                   [cancel-client-button   surface-id header-props]
-                                   [client-actions-buttons surface-id header-props])
-                               [save-client-button surface-id header-props]]
-                 :horizontal-align :space-between}])
+  [elements/polarity {:start-content [:<> (if (boolean new-client?)
+                                              ;[cancel-client-button   surface-id header-props])
+                                              nil
+                                              [client-actions-buttons surface-id header-props])]
+                      :end-content [save-client-button surface-id header-props]}])
 
 (defn- client-legal-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
   [:div#clients--client-form--legal-details
-    [elements/text-field ::vat-no {:label :vat-no}]])
+    [elements/text-field ::vat-no {:label :vat-no :value-path [:client :form-data :client/vat-no]
+                                   :emptiable? true}]])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id body-props]
+  [surface-id {:keys [selected-language] :as body-props}]
  [:div
   [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
-    [elements/select    ::country {:label :country :min-width :xxs ; :default-value {:label "Magyarország"}
-                                   :options [{:value "Magyarország"
-                                              :label "Magyarország"}]
-                                   :value-path [:clients :form-data :client/country]}]
-    [elements/text-field ::zip-code {:label :zip-code :min-width :xxs}]
+    [elements/select    ::country {:label :country :min-width :xxs
+                                   :initial-value   (locales/country-native-name selected-language)
+                                   :initial-options (param locales/EU-COUNTRY-NAMES)
+                                   :value-path [:clients :form-data :client/country]
+                                   :emptiable? true}]
+    [elements/text-field ::zip-code {:label :zip-code :min-width :xxs :emptiable? true}]
     [elements/combo-box  ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
                                     :style {:flex-grow 1}
                                     :value-path [:clients :form-data :client/city]
                                     :initial-value "Makó"
                                     :initial-options ["HMVH" "BP"]}]]
   [:div
-    [elements/text-field ::address  {:label :address :min-width :grow :value-path [:clients :form-data :client/address]}]]])
+    [elements/text-field ::address  {:label :address :min-width :grow :value-path [:clients :form-data :client/address]
+                                     :emptiable? true}]]])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
   [:div#clients--client-form--primary-contacts
-    [elements/text-field ::email-address {:label :email-address :required? true
+    [elements/text-field ::email-address {:label :email-address :required? true :emptiable? true
                                           :value-path [:clients :form-data :client/email-address]
                                           :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                                           :form-id ::client-form
                                           :min-width :l}]
-    [elements/text-field ::phone-number {:label :phone-number :required? true
+    [elements/text-field ::phone-number {:label :phone-number :required? true :emptiable? true
                                          :value-path [:clients :form-data :client/phone-number]
                                          :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
                                          ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
@@ -148,11 +145,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
-    [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true
+    [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true :emptiable? true
                                                            :value-path [:clients :form-data :client/first-name]
                                                            :form-id ::client-form
                                                            :min-width :l}]
-                        [elements/text-field ::last-name  {:label :last-name  :required? true
+                        [elements/text-field ::last-name  {:label :last-name  :required? true :emptiable? true
                                                            :value-path [:clients :form-data :client/last-name]
                                                            :form-id ::client-form
                                                            :min-width :l}]
@@ -171,9 +168,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [new-client? synchronizing?] :as view-props}]
-  [layouts/layout-a surface-id {:label (if new-client? :add-client :edit-client)
-                                :icon :people
-                                :disabled? synchronizing?
+  [layouts/layout-a surface-id {:disabled? synchronizing?
                                 :body {:content    #'client-form
                                        :subscriber [::get-body-props]}
                                 :header {:content    #'client-form-header
@@ -199,32 +194,8 @@
 (a/reg-event-fx
   :clients/render-client-form!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface!
-   ::view {:content   #'view
-           :label-bar {:content       #'ui/go-back-surface-label-bar
-                       :content-props {:label :clients}}
-           :subscriber [::get-view-props]}])
-
-(a/reg-event-fx
-  :clients/load-client-form!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (let [client-id (r router/get-current-route-path-param db :client-id)]
-           {:db         (-> db (assoc-in  [:clients :form-meta :client-id] client-id)
-                               (dissoc-in [:clients :form-data]))
-            :dispatch-n [[:x.app-ui/listen-to-process! :clients/synchronize-client-form!]
-                         [:clients/request-client! client-id]
-;                         [:x.app-db/set-item! [:clients :form-meta :suggestions :cities]
-;                                              ["Szeged"]]
-                         [:x.app-db/set-item! [:clients :form-meta :suggestions :countries]
-                                              locales/COUNTRY-LIST]
-                         [:clients/render-client-form!]]})))
+  [:x.app-ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route!
-                 ::extended-route
-                 {:restricted?    true
-                  :route-event    [:clients/load-client-form!]
-                  :route-title    :clients
-                  :route-template "/clients/:client-id"}]})
+  {:on-app-boot [:extensions/add-item-form-route! "clients" "client"]})

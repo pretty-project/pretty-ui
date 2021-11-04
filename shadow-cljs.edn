@@ -4,7 +4,7 @@
  {:app
   {:asset-path "/js/core"
    :output-dir "resources/public/js/core"
-   :compiler-options {:infer-externs :auto}
+   :compiler-options {:infer-externs true}
    :modules {:app {:init-fn project-emulator.core/boot-app!}}
    :devtools {:watch-dir "resources/public"
               :after-load project-emulator.core/render-app!}
@@ -14,4 +14,5 @@
   {:modules {:app {:init-fn project-emulator.core/boot-app!}}
    :optimizations :advanced
    :output-dir    "resources/public/js/core"
+   :compiler-options {:infer-externs true}
    :target        :browser}}}

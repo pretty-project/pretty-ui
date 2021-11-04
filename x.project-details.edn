@@ -1,23 +1,29 @@
 
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name cache-control?
+;  TODO ...
+
+
+
 {; @param (map) app-details
  ;  {:author (string)
  ;   :app-build (string)
  ;   :app-codename (string)
+ ;   :app-home (string)
  ;   :app-languages (strings in vector)
- ;   :app-title (string)
- ;   :authenticated-home (string)}
+ ;   :app-title (string)}
  ;
  ; @usage
- ;  Az applikáció bejelentkezés utáni kezdő útvonala az :authenticated-home
- ;  tulajdonság beállításával módosítható.
- ;  {:app-details {:authenticated-home "/admin"}}
+ ;  {:app-details {:app-home "/admin"}}
  :app-details
- {:author             "bithandshake"
-  :app-build          "0.0.1"
-  :app-codename       "x4"
-  :app-languages      ["en" "hu"]
-  :app-title          "x4"
-  :authenticated-home "/"}
+ {:author        "bithandshake"
+  :app-build     "0.0.1"
+  :app-codename  "x4"
+  :app-home      "/admin"
+  :app-languages ["en" "hu"]
+  :app-title     "x4"}
 
 
  ; @param (map) browser-details
@@ -91,10 +97,10 @@
  ;     Default: false
  ;    :uri (string)}]
  :favicon-paths
- [{:uri "/favicon/purple/favicon-16.png"  :cache-control? true :size "16x16"}
-  {:uri "/favicon/purple/favicon-32.png"  :cache-control? true :size "32x32"}
-  {:uri "/favicon/purple/favicon-96.png"  :cache-control? true :size "96x96"}
-  {:uri "/favicon/purple/favicon-144.png" :cache-control? true :size "144x144"}]
+ [{:uri "/favicon/blue/favicon-16.png"  :cache-control? true :size "16x16"}
+  {:uri "/favicon/blue/favicon-32.png"  :cache-control? true :size "32x32"}
+  {:uri "/favicon/blue/favicon-96.png"  :cache-control? true :size "96x96"}
+  {:uri "/favicon/blue/favicon-144.png" :cache-control? true :size "144x144"}]
 
 
  ; @param (map) js-details

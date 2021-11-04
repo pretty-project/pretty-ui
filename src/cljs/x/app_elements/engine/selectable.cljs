@@ -109,33 +109,6 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn view-props->selected-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) view-props
-  ;  {:options (maps in vector)
-  ;   :selected? (boolean)(opt)
-  ;   :value (keyword)(opt)}
-  ;
-  ; @example
-  ;  (selectable/view-props->selected-option
-  ;    {:options [{:label "Apple juice"   :value "apple-juice"}
-  ;               {:label "Avocado juice" :value "avocado-juice"}]
-  ;     :selected? true
-  ;     :value "apple-juice"})
-  ;  => {:label "Apple juice" :value "apple-juice"}
-  ;
-  ; @return (map or nil)
-  [{:keys [options selected?] :as view-props}]
-  (if (boolean selected?)
-      (let [selected-value (:value view-props)]
-           (vector/get-first-match-item options #(= selected-value (:value %1))))))
-
-
-
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -146,8 +119,9 @@
   ;
   ; @return (vector)
   [db [_ input-id]]
-  (let [options-path (r element/get-element-prop db input-id :options-path)]
-       (get-in db options-path)))
+  ; BUG#7633
+  (if-let [options-path (r element/get-element-prop db input-id :options-path)]
+          (get-in db options-path)))
 
 (defn get-option-stack
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.keyword        :as keyword]
               [mid-fruits.map            :as map]
               [mid-fruits.vector         :as vector]
@@ -117,7 +117,7 @@
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [group-id group-props]
-  (merge {:get-label-f               str
+  (merge {:get-label-f               return
           :no-options-selected-label DEFAULT-NO-OPTIONS-SELECTED-LABEL
           :options-path              (engine/default-options-path group-id)
           :value-path                (engine/default-value-path   group-id)}
@@ -240,7 +240,7 @@
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :get-label-f (function)(constant)(opt)
-  ;    Default: str
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)

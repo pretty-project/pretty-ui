@@ -19,8 +19,18 @@
 /***** Element profiles *****/
 
 body {
-  --element-min-width-xxs: 180px;
-  --element-min-width-xs:  240px;
+
+  /* XXX#2981
+  *  320px (legkisebb támogatott képernyő-szélesség)
+  * -120px (kettő ikon-gomb szélessége)
+  * - 24px (bar-edge x2) */
+  --element-min-width-xxs: 176px;
+
+  /* XXX#2981
+   *  320px (legkisebb támogatott képernyő-szélesség)
+   * - 60px (egy ikon-gomb szélessége)
+   * - 24px (bar-edge x2) */
+  --element-min-width-xs:  236px;
 
   /* XXX#5491 Element info-tooltip padding */
   /* ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
@@ -41,6 +51,8 @@ body {
 .x-anchor:focus,
 .x-button--body:active,
 .x-button--body:focus,
+button.x-card:active,
+button.x-card:focus,
 .x-card--header--expand-button:active,
 .x-card--header--expand-button:focus,
 .x-checkbox--body:active
@@ -362,7 +374,6 @@ body {
 
 .x-button[data-variant="outlined"][data-color="muted"]
 .x-button--body,
-.x-card[data-border-color="muted"],
 .x-checkbox[data-color="muted"]
 .x-checkbox--button::before,
 .x-counter[data-color="muted"]
@@ -405,9 +416,6 @@ body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
-.x-card[data-border-color="highlight"] {
-  border-color: var( --border-color-highlight ) }
-
 .x-horizontal-line[data-color="highlight"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="highlight"],
@@ -438,16 +446,15 @@ body {
 
 .x-button[data-variant="filled"][data-color="primary"] .x-button--body,
 .x-chip[data-color="primary"] .x-chip--body {
-  background-color: var( --primary-soft );
+  background-color: var( --soft-blue );
   color: var( --black ) }
 
 .x-content-bar[data-color="primary"] {
-  background-color: var( --primary-soft-xx-dark );
+  background-color: var( --soft-blue-xx-dark );
   color: var( --white ) }
 
 .x-button[data-variant="outlined"][data-color="primary"]
 .x-button--body,
-.x-card[data-border-color="primary"],
 .x-checkbox[data-color="primary"]
 .x-checkbox--button::before,
 .x-counter[data-color="primary"]
@@ -503,7 +510,6 @@ body {
 
 .x-button[data-variant="outlined"][data-color="secondary"]
 .x-button--body,
-.x-card[data-border-color="secondary"],
 .x-checkbox[data-color="secondary"]
 .x-checkbox--button::before,
 .x-counter[data-color="secondary"]
@@ -555,7 +561,6 @@ body {
 
 .x-button[data-variant="outlined"][data-color="success"]
 .x-button--body,
-.x-card[data-border-color="success"],
 .x-checkbox[data-color="success"]
 .x-checkbox--button::before,
 .x-counter[data-color="success"]
@@ -605,7 +610,6 @@ body {
 
 .x-button[data-variant="outlined"][data-color="warning"]
 .x-button--body,
-.x-card[data-border-color="warning"],
 .x-checkbox[data-color="warning"]
 .x-checkbox--button::before,
 .x-counter[data-color="warning"]
@@ -1155,16 +1159,12 @@ body {
 
 /***** Stretch profiles *****/
 
-.x-column[data-stretch-orientation="both"],
-.x-column[data-stretch-orientation="horizontal"],
-.x-row[data-stretch-orientation="both"],
-.x-row[data-stretch-orientation="horizontal"] {
+.x-element[data-stretch-orientation="both"],
+.x-element[data-stretch-orientation="horizontal"] {
   width: 100% }
 
-.x-column[data-stretch-orientation="both"],
-.x-column[data-stretch-orientation="vertical"],
-.x-row[data-stretch-orientation="both"],
-.x-row[data-stretch-orientation="vertical"] {
+.x-element[data-stretch-orientation="both"],
+.x-element[data-stretch-orientation="vertical"] {
   height: 100% }
 
 /***** Stretch profiles *****/
@@ -1204,6 +1204,30 @@ body {
 
 
 /***** Element info *****/
+/*** Tooltip ***/
+
+[data-tooltip]::after {
+  align-items: center;
+  background-color: var( --background-color );
+  content: attr(data-tooltip);
+  display: flex;
+  flex-direction: column;
+  font-size: var( --font-size-xxs );
+  font-weight: 500;
+  height: 100%;
+  justify-content: center;
+  line-height: var( --line-height-xxs);
+  letter-spacing: var( --letter-spacing-xxs);
+  min-width: 100%;
+  opacity: 0;
+  position: absolute;
+  transition: .1s opacity .35s }
+
+[data-touch-detected="false"] [data-tooltip]:hover::after {
+  opacity: 1 }
+
+/*** Tooltip ***/
+
 /*** Helper ***/
 
 .x-element--helper {
@@ -1647,11 +1671,11 @@ body[data-viewport-profile="s"]
 
 .x-card {
   /* XXX#7319 */
-  border-width: 1px;
+  -border-width: 1px;
 
   background-color: var( --background-color );
   border-radius: var( --border-radius-m );
-  border-style: solid;
+  -border-style: solid;
 
   /* XXX#7319 */
   -box-shadow: var( --box-shadow-black-xx-light );
@@ -1665,11 +1689,26 @@ body[data-viewport-profile="s"]
 
 /* XXX#8607
  * XXS és XS méretű viewport-on az app-edge értéke 0, ezért a card elem szélei közvetlenül
- * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot. */
-body[data-viewport-profile="xxs"] .x-card,
-body[data-viewport-profile="xs"]  .x-card,
-body[data-viewport-profile="s"]   .x-card {
-  border-radius: 0 }
+ * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot
+ * és a szélső border-eket */
+body[data-viewport-profile="xxs"] .x-card[data-min-width="s"],
+body[data-viewport-profile="xxs"] .x-card[data-min-width="m"],
+body[data-viewport-profile="xxs"] .x-card[data-min-width="l"],
+body[data-viewport-profile="xxs"] .x-card[data-min-width="xl"],
+body[data-viewport-profile="xxs"] .x-card[data-min-width="xxl"],
+body[data-viewport-profile="xs"]  .x-card[data-min-width="s"],
+body[data-viewport-profile="xs"]  .x-card[data-min-width="m"],
+body[data-viewport-profile="xs"]  .x-card[data-min-width="l"],
+body[data-viewport-profile="xs"]  .x-card[data-min-width="xl"],
+body[data-viewport-profile="xs"]  .x-card[data-min-width="xxl"],
+body[data-viewport-profile="s"]   .x-card[data-min-width="s"],
+body[data-viewport-profile="s"]   .x-card[data-min-width="m"],
+body[data-viewport-profile="s"]   .x-card[data-min-width="l"],
+body[data-viewport-profile="s"]   .x-card[data-min-width="xl"],
+body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
+  border-radius: 0;
+  border-left-style: none;
+  border-right-style: none }
 
 /*** Card wrapper ***/
 
@@ -1714,7 +1753,8 @@ body[data-viewport-profile="s"]   .x-card {
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
   min-height: 48px;
-  padding: 0 var( --flex-edge ) }
+  /* XXX#2981 */
+  padding: 0 var( --bar-edge ) }
 
 .x-card--header[data-sticky="true"] {
   background-color: var( --background-color );
@@ -2885,12 +2925,11 @@ body[data-viewport-profile="s"]   .x-card {
 
 /*** Select option label ***/
 
-.x-select--option-label {
+.x-select--option {
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 36px;
-  text-align: left }
+  line-height: 36px }
 
 .x-select--option[data-selected="true"] .x-select--option-label {
   font-weight: 600 }
@@ -3327,6 +3366,7 @@ body[data-viewport-profile="s"]   .x-card {
 
 .x-toggle {
   cursor: pointer;
+  display: block;
   font-weight: 500;
   white-space: nowrap;
   word-wrap: normal }

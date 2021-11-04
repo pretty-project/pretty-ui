@@ -72,8 +72,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; XXX#3806
-  ;  {:viewport-profile :xxs}, {:viewport-profile :xs}, {:viewport-profile :s}
-  ;  viewport-on a {:stretched? false :layout :boxed} popup felületek
+  ;  XXS, XS, S viewport-on a {:stretched? false :layout :boxed} popup felületek
   ;  {:stretched? true} popup felületként jelennek meg.
   ;
   ; @param (keyword) popup-id
@@ -82,7 +81,7 @@
   ;
   ; @return (boolean)
   [db [_ _ {:keys [layout]}]]
-  (and (r environment/viewport-profiles-match? db [:xxs :xs :s])
+  (and (r environment/viewport-small? db)
        (= layout :boxed)))
 
 (defn- get-upper-popup-id

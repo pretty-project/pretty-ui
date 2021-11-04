@@ -1,25 +1,20 @@
 
-; PDF formátumú letölthető fájl lesz ez a view helyett
-
-
-
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.02.11
+; Created: 2021.11.02
 ; Description:
-; Version: v0.1.0
-; Compatibility: x3.9.9
+; Version: v0.2.0
+; Compatibility: x4.4.4
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-views.terms-of-service
-    (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]))
+(ns x.app-developer.source-reader
+    (:require [x.app-core.api :as a]))
 
 
 
@@ -27,11 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (hiccup)
-  []
-  [elements/box {:content "Coming soon..."}])
+  [])
 
 
 
@@ -40,19 +31,9 @@
 
 (a/reg-event-fx
   ::render!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content #'view}])
-
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-router/add-route!
-   ::route
-   {:route-event    [::render!]
-    :route-template "/terms-of-service"}])
+  [:x.app-ui/set-surface! {:content #'view}])
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route! {:route-template "/docs"
+                                           :route-event    [::render!]}]})

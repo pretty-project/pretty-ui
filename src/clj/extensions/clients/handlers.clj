@@ -1,9 +1,10 @@
 
 (ns extensions.clients.handlers
-    (:require [mid-fruits.loop   :refer [do-while]]
+    (:require [mid-fruits.candy  :refer [param return]]
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
+              [x.server-user.api :as user]
               [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
@@ -14,7 +15,22 @@
 
 (def collection-name "clients")
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
+;; ----------------------------------------------------------------------------
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- client-props-prototype
+  [{:keys [request]} client-props]
+  (merge (param client-props)
+         (user/request->add-props request)))
+
+;; ----------------------------------------------------------------------------
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ;; ----------------------------------------------------------------------------
 ;; -- Pipelines ---------------------------------------------------------------
@@ -89,9 +105,10 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation save-client! [client]
+(defmutation save-client! [env client-props]
              {::pco/op-name 'clients/save-client!}
-             (mongo-db/add-document! collection-name client))
+             (let [client-props (a/sub-prot env client-props client-props-prototype)]
+                  (mongo-db/add-document! collection-name client-props)))
 
 (defmutation add-client! [client]
              {::pco/op-name 'clients/add-client!}

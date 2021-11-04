@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.1.2
-; Compatibility: x4.2.8
+; Version: v2.6.0
+; Compatibility: x4.4.4
 
 
 
@@ -30,6 +30,17 @@
 ;; -- Names -------------------------------------------------------------------
 ;; -- XXX#3387 ----------------------------------------------------------------
 
+; @name app-home
+;  "/admin"
+;
+; @name abs-route-string
+;  "/admin/clients"
+;
+; @name rel-route-string
+;  "/clients"
+
+
+
 ; @name route-string
 ;  "/products/big-green-bong?type=hit#order"
 ;
@@ -52,10 +63,14 @@
 ;  "order"
 ;
 ; @name route-event
-;  [:products.views/render!]
+;  [:products/render!]
 ;
 ; @name route-id
 ;  :products
+;
+; @name restricted?
+;  A {:restricted? true} tulajdonságú útvonalak az applikáció belső útvonalai, amelyek
+;  használata kizárólag azonosított felhasználók számára lehetséges.
 ;
 ; @name freezed-route
 ;  Az [:x.app-router/freeze-current-route!] esemény meghívásával lehetséges
@@ -77,11 +92,30 @@
 ;; -- Usage -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; Az egyes útvonalakhoz tartozó beállításokban az route-template tulajdonságnak relatív útvonalat
+; szükséges átadni.
+; Pl.: {:route-template "/my-route"}
+;
+; A {:restricted? true} tulajdonságú útvonalak applikáció módban, a {:restricted? false}
+; tulajdonságú útvonalak pedig weboldal módban indítják el az útvonalkezelőt.
+;
+; Az applikáció módban elindított útvonalkezelő eltávolítja az applikáció elérési útvonalát
+; az útvonal elejéről, hogy az így kapott relatív útvonalhoz tartozó útvonal-beállításokat
+; alkalmazhassa.
+;
 ; @usage
 ;  (a/reg-lifecycles {:on-app-boot {:dispatch-n [[:x.app-router/add-route! {...}]
 ;                                                [:x.app-router/add-route! :my-route {...}]
-;                                                [:x.app-router/add-route! :page-not-found {...}]
-;                                                [:x.app-router/set-home! {...}]]}})
+;                                                [:x.app-router/add-route! :page-not-found {...}]]}})
+;
+; @usage
+;  x.app-details.edn: {:app-details {:app-home "/admin"}}
+;  (a/reg-lifecycles {:on-app-boot {:dispatch-n [[:x.app-router/add-route! {:route-template "/my-route"}]
+;                                                [:x.app-router/add-route! {:route-template "/your-route"
+;                                                                           :restricted?    true}]]})
+;
+;  (a/dispatch [:x.app-router/go-to! "/my-route"])     =>   "/my-route" útvonalra vezet
+;  (a/dispatch [:x.app-router/go-to! "/your-route"])   =>   "/admin/your-route" útvonalra vezet
 
 
 
@@ -100,8 +134,7 @@
 ; @constant (map)
 (def DEFAULT-ROUTES
      {:reboot {:route-event    [:x.boot-loader/reboot-app!]
-               :route-template "/reboot"}
-      :home   {:route-template "/"}})
+               :route-template "/reboot"}})
 
 ; @constant (map)
 (def ACCOUNTANT-CONFIG
@@ -111,7 +144,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- fragment-id->dom-id
@@ -123,15 +156,6 @@
   [fragment-id]
   (str "x-fragment-marker--" (name fragment-id)))
 
-(defn- route-id->at-home?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) route-id
-  ;
-  ; @return (boolean)
-  [route-id]
-  (= route-id :home))
-
 (defn- routes->router-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -139,7 +163,8 @@
   ;
   ; @example
   ;  (routes->router-routes {:route-id {:route-template "/"}})
-  ;  => [["/" :route-id]]
+  ;  =>
+  ;  [["/" :route-id]]
   ;
   ; @return (vector)
   [routes]
@@ -148,9 +173,60 @@
               (param [])
               (param routes)))
 
+(defn- route-string->rel-route-string
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-string
+  ; @param (string) app-home
+  ;
+  ; @example
+  ;  (relative-route-string "/my-route" "/admin")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @example
+  ;  (relative-route-string "/admin/my-route" "/admin")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @example
+  ;  (relative-route-string "/my-route" "/")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @return (string)
+  [route-string app-home]
+  (let [rel-route-string (string/not-starts-with! route-string app-home)]
+       (string/starts-with! rel-route-string "/")))
+
+(defn- route-string->abs-route-string
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-string
+  ; @param (string) app-home
+  ;
+  ; @example
+  ;  (relative-route-string "/my-route" "/admin")
+  ;  =>
+  ;  "/admin/my-route"
+  ;
+  ; @example
+  ;  (relative-route-string "/admin/my-route" "/admin")
+  ;  =>
+  ;  "/admin/my-route"
+  ;
+  ; @example
+  ;  (relative-route-string "/my-route" "/")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @return (string)
+  [route-string app-home]
+  (string/starts-with! route-string app-home))
 
 
-;; -- Subscriptions -----------------------------------------------------------
+
+;; -- Debug subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- get-debug-route-string
@@ -163,6 +239,11 @@
   (if-let [debug-mode (r a/get-debug-mode db)]
           (uri/uri<-query-param route-string debug-mode)
           (param                route-string)))
+
+
+
+;; -- Router subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- get-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -210,16 +291,10 @@
 
 (a/reg-sub ::route-path-exists? route-path-exists?)
 
-(defn- get-route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) route-path
-  ;
-  ; @return (keyword)
-  [db [_ route-path]]
-  (if (r route-path-exists? db route-path)
-      (get-in (r get-route-match db route-path) [:data :name])
-      (return :page-not-found)))
+
+
+;; -- Route subscriptions -----------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- get-route-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -268,6 +343,25 @@
   (let [route-restricted? (r get-route-prop db route-id :restricted?)]
        (boolean route-restricted?)))
 
+(defn- application-route?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ;
+  ; @return (boolean)
+  [db [_ route-id]]
+  (r route-restricted? db route-id))
+
+(defn- website-route?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ;
+  ; @return (boolean)
+  [db [_ route-id]]
+  (let [application-route? (r application-route? db route-id)]
+       (not application-route?)))
+
 (defn- require-authentication?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -277,6 +371,62 @@
   [db [_ route-id]]
   (and (r route-restricted?       db route-id)
        (r user/user-unidentified? db)))
+
+
+
+;; -- Match subscriptions -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- match-route-id-by-rel-route-string
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) rel-route-string
+  ;  A relatív útvonal
+  ;  Pl.: "/my-route"
+  ;
+  ; @return (keyword)
+  [db [_ rel-route-string]]
+  (if (r route-path-exists? db rel-route-string)
+      (get-in (r get-route-match db rel-route-string) [:data :name])
+      (return :page-not-found)))
+
+(defn- match-route-id-by-abs-route-string
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) abs-route-string
+  ;  A címsorba írt útvonal
+  ;  Pl.: "/admin/my-route"
+  ;
+  ; @return (keyword)
+  [db [_ abs-route-string]]
+        ; Az applikáció relatív elérési útvonala
+        ; "/admin"
+  (let [app-home (r a/get-app-detail db :app-home)
+        ; Levágja a route-string elejéről az applikáció elérési útvonalát
+        ; "/my-route"
+        rel-route-string (route-string->rel-route-string abs-route-string app-home)]
+           ; Ha van "/my-route" útvonal beállítva ...
+       (if (r route-path-exists? db rel-route-string)
+                 ; A "/my-route" útvonalhoz tartozó azonosító
+           (let [route-id (get-in (r get-route-match db rel-route-string) [:data :name])]
+                      ; Ha abs-route-string applikáció útvonal, és abszólút útvonalként lett átadva ...
+                (cond (and (r application-route? db route-id)
+                           (not= abs-route-string rel-route-string))
+                      (return route-id)
+                      ; Ha abs-route-string applikáció útvonal, de nem abszólút útvonalként lett átadva ...
+                      (and (r application-route? db route-id)
+                           (= abs-route-string rel-route-string))
+                      (return :page-not-found)
+                      ; Ha abs-route-string weboldal útvonal ...
+                      (r website-route? db route-id)
+                      (return route-id)))
+           ; Ha nincs "/my-route" útvonal beállítva ...
+           (return :page-not-found))))
+
+
+
+;; -- Current route subscriptions ---------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-current-route-string
   ; @usage
@@ -292,7 +442,7 @@
   ; @return (keyword)
   [db _]
   (let [current-route-string (r get-current-route-string db)]
-       (r get-route-id db current-route-string)))
+       (r match-route-id-by-abs-route-string db current-route-string)))
 
 (defn get-current-route-path
   ; @usage
@@ -319,8 +469,10 @@
   ; @return (map)
   [db _]
   (let [current-route-string   (r get-current-route-string   db)
-        current-route-template (r get-current-route-template db)]
-       (uri/uri->path-params current-route-string current-route-template)))
+        current-route-template (r get-current-route-template db)
+        app-home               (r a/get-app-detail           db :app-home)
+        rel-route-string       (route-string->rel-route-string current-route-string app-home)]
+       (uri/uri->path-params rel-route-string current-route-template)))
 
 (a/reg-sub :x.app-router/get-current-route-path-params get-current-route-path-params)
 
@@ -379,6 +531,20 @@
   (let [current-route-string (r get-current-route-string db)]
        (uri/uri->fragment current-route-string)))
 
+(defn get-current-route-parent
+  ; @usage
+  ;  (r router/get-current-route-parent db)
+  ;
+  ; @return (string)
+  [db _]
+  (let [current-route-id (r get-current-route-id db)]
+       (get-in db (db/path ::routes current-route-id :route-parent))))
+
+
+
+;; -- Freezed route subscriptions ---------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-freezed-route-string
   ; @usage
   ;  (r router/get-freezed-route-string db)
@@ -394,7 +560,7 @@
   ; @return (keyword)
   [db _]
   (let [freezed-route-string (r get-freezed-route-string db)]
-       (r get-route-id db freezed-route-string)))
+       (r match-route-id-by-abs-route-string db freezed-route-string)))
 
 (defn get-freezed-route-path
   ; @usage
@@ -464,14 +630,20 @@
   (let [freezed-route-string (r get-freezed-route-string db)]
        (uri/uri->fragment freezed-route-string)))
 
+
+
+;; -- Handle subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn at-home?
   ; @usage
   ;  (r router/at-home? db)
   ;
   ; @return (boolean)
   [db _]
-  (let [current-route-id (r get-current-route-id db)]
-       (route-id->at-home? current-route-id)))
+  (let [app-home           (r a/get-app-detail       db :app-home)
+        current-route-path (r get-current-route-path db)]
+       (= current-route-path app-home)))
 
 (a/reg-sub :x.app-router/at-home? at-home?)
 
@@ -570,8 +742,7 @@
   ;
   ; @return (map)
   [db [_ route-string]]
-  (-> db (assoc-in (db/meta-item-path ::routes :route-string) route-string)
-         (assoc-in (db/meta-item-path ::routes :debug) [:x.app-router/get-router-data])))
+  (assoc-in db (db/meta-item-path ::routes :route-string) route-string))
 
 (defn- store-current-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -582,32 +753,12 @@
   [db [event-id route-string]]
   (r store-current-route-string! db route-string))
 
-(a/reg-event-db ::store-current-route! store-current-route!)
-
 (defn- set-default-routes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
   (assoc-in db (db/path ::routes) DEFAULT-ROUTES))
-
-(defn- set-home!
-  ; @param (map) route-props
-  ;  {:on-leave-event (metamorphic-event)(opt)
-  ;   :restricted? (boolean)(opt)
-  ;    Default: false
-  ;   :route-event (metamorphic-event)
-  ;   :route-title (metamorphic-value)(opt)
-  ;   :scroll-to-fragment? (boolean)(opt)
-  ;    Default: false}
-  ;
-  ; @return (map)
-  [db [_ route-props]]
-  (update-in db (db/path ::routes :home) merge route-props))
-
-; @usage
-;  [:x.app-router/set-home! {:route-event [:render-homepage!]}]
-(a/reg-event-db :x.app-router/set-home! set-home!)
 
 (defn- add-route!
   ; @param (keyword)(opt) route-id
@@ -616,9 +767,8 @@
   ;   :restricted? (boolean)(opt)
   ;    Default: false
   ;   :route-event (metamorphic-event)
+  ;   :route-parent (string)(opt)
   ;   :route-template (string)
-  ;    Not allowed: {:route-template "/"}
-  ;   :route-title (metamorphic-value)(opt)
   ;   :scroll-to-fragment? (boolean)(opt)
   ;    Default: false}
   ;
@@ -657,8 +807,6 @@
   [db [_ route-id]]
   (r db/apply! db (db/meta-item-path ::routes :history) vector/conj-item route-id))
 
-(a/reg-event-db ::reg-to-history! reg-to-history!)
-
 (defn- freeze-current-route-string!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -668,89 +816,64 @@
        (assoc-in db (db/meta-item-path ::routes :freezed-route-string)
                     (param current-route-string))))
 
+(defn freeze-current-route!
+  ; @return (map)
+  [db]
+  (r freeze-current-route-string! db))
+
+; @usage
+;  [:x.app-router/freeze-current-route!]
+(a/reg-event-db :x.app-router/freeze-current-route! freeze-current-route!)
+
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::scroll-to-fragment?!
+  ::scroll-to-fragment!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
   (fn [{:keys [db]} [_ route-id]]
-      (if (r scroll-to-fragment? db route-id)
-          (let [route-fragment (r get-current-route-fragment db)
-                dom-id         (fragment-id->dom-id route-fragment)]
-               [:x.app-environment.scroll-handler/scroll-to-element-top!
-                dom-id SCROLL-TO-FRAGMENT-OFFSET]))))
-
-(a/reg-event-fx
-  ::dispatch-on-leave-event?!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  (fn [{:keys [db]} [_ route-id]]
-      {:dispatch-some (r get-on-leave-event db route-id)}))
-
-(a/reg-event-fx
-  ::dispatch-route-event?!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  (fn [{:keys [db]} [_ route-id]]
-      (if (r require-authentication? db route-id)
-          {:dispatch-n [[:x.app-views.login-box/render! {:render-exclusive? true}]
-                        [:x.boot-loader/set-restart-target! (r get-current-route-string db)]]}
-          {:dispatch-some (r get-route-event db route-id)})))
-
-(a/reg-event-fx
-  ::set-route-title!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  (fn [{:keys [db]} [_ route-id]]
-      (if-let [route-title (r get-route-prop db route-id :route-title)]
-              [:x.app-ui/set-title! route-title]
-              [:x.app-ui/restore-default-title!])))
+      (let [route-fragment (r get-current-route-fragment db)
+            dom-id         (fragment-id->dom-id route-fragment)]
+           [:x.app-environment.scroll-handler/scroll-to-element-top!
+            dom-id SCROLL-TO-FRAGMENT-OFFSET])))
 
 (a/reg-event-fx
   ::handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
-  (fn [{:keys [db]} [_ route-string]]
-      (let [route-id          (r get-route-id db route-string)
-            previous-route-id (r get-current-route-id db)]
-           {; Dispatch on-leave event if ...
-            :dispatch-if [(r route-id-changed? db route-id)
-                          [::dispatch-on-leave-event?! previous-route-id]]
-                         ; Store the current route
-            :dispatch-n [[::store-current-route!   route-string]
-                         ; Dispatch route-event if exists
-                         [::dispatch-route-event?! route-id]
-                         ; Set the route title
-                         [::set-route-title!       route-id]
-                         ; Make history
-                         [::reg-to-history!        route-id route-string]]
-            ; Scroll to fragment
-            :dispatch-later [{:ms SCROLL-TO-FRAGMENT-DELAY
-                              :dispatch [::scroll-to-fragment?! route-id]}]})))
-
-(a/reg-event-fx
-  :x.app-router/freeze-current-route!
-  ; @usage
-  ;  [:x.app-router/freeze-current-route!]
-  (fn [{:keys [db]} _]
-      {:db (r freeze-current-route-string! db)}))
+  (fn [{:keys [db]} [event-id route-string]]
+      (let [route-id          (r match-route-id-by-abs-route-string db route-string)
+            previous-route-id (r get-current-route-id db)
+            on-leave-event    (r get-on-leave-event   db previous-route-id)]
+                       ; Store the current route
+           {:db (-> db (store-current-route! [event-id route-string])
+                       ; Make history
+                       (reg-to-history!      [event-id route-id]))
+                         ; Dispatch on-leave event if ...
+            :dispatch-n [(if-let [on-leave-event (r get-on-leave-event db previous-route-id)]
+                                 (if (r route-id-changed? db route-id) on-leave-event))
+                         ; Render login screen if ...
+                         (if (r require-authentication? db route-id)
+                             [:x.app-views.login-box/render! {:render-exclusive? true}])
+                         ; Set restart-target if ...
+                         (if (r require-authentication? db route-id)
+                             [:x.boot-loader/set-restart-target! route-string])
+                         ; Dispatch route-event if ...
+                         (if-let [route-event (r get-route-event db route-id)]
+                                 (if-not (r require-authentication? db route-id) route-event))]})))
 
 (a/reg-event-fx
   :x.app-router/go-home!
   ; @usage
   ;  [:x.app-router/go-home!]
   (fn [{:keys [db]} _]
-      (let [route-template (r get-route-template db :home)]
-           [:x.app-router/go-to! route-template])))
+      (let [app-home (r a/get-app-detail db :app-home)]
+           [:x.app-router/go-to! app-home])))
 
 (a/reg-event-fx
   :x.app-router/go-back!
@@ -759,16 +882,30 @@
   [::navigate-back!])
 
 (a/reg-event-fx
+  :x.app-router/go-up!
+  ; @usage
+  ;  [:x.app-router/go-up!]
+  (fn [{:keys [db]} _]
+      (let [route-parent (r get-current-route-parent db)]
+           [:x.app-router/go-to! route-parent])))
+
+(a/reg-event-fx
   :x.app-router/go-to!
-  ; @param (string) route-string
+  ; @param (string) rel-route-string
   ;
   ; @usage
   ;  [:x.app-router/go-to! "/products/big-green-bong?type=hit#order"]
-  (fn [{:keys [db]} [_ route-string]]
-      (let [route-string (r get-debug-route-string db route-string)]
-           (if (r reload-same-path? db route-string)
-               [::handle-route! route-string]
-               [::navigate!     route-string]))))
+  (fn [{:keys [db]} [_ rel-route-string]]
+      (let [app-home          (r a/get-app-detail                   db :app-home)
+            route-id          (r match-route-id-by-rel-route-string db rel-route-string)
+            route-restricted? (r route-restricted?                  db route-id)
+            abs-route-string  (if route-restricted? (route-string->abs-route-string rel-route-string app-home)
+                                                    (param rel-route-string))
+            ; Az applikáció az útvonalváltás után is debug módban marad
+            abs-route-string (r get-debug-route-string db abs-route-string)]
+           (if (r reload-same-path? db abs-route-string)
+               [::handle-route! abs-route-string]
+               [::navigate!     abs-route-string]))))
 
 
 
@@ -777,8 +914,6 @@
 
 (defn- configure-navigation!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (?)
   []
   (accountant/configure-navigation! ACCOUNTANT-CONFIG))
 
@@ -829,9 +964,11 @@
   ::initialize!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-       ; Set default routes
-      {:db (r set-default-routes! db)
+  (fn [{:keys [db]} [event-id]]
+                  ; Set default routes
+      {:db (-> db (set-default-routes! [event-id DEFAULT-ROUTES])
+                  ; Store debug subscriber
+                  (assoc-in (db/meta-item-path ::routes :debug) [:x.app-router/get-router-data]))
        ; Configure navigation
        ::configure-navigation! nil}))
 

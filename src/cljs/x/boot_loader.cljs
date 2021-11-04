@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v1.6.8
-; Compatibility: x4.3.8
+; Version: v1.7.2
+; Compatibility: x4.4.4
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader
-    (:require [x.app-components.api]
+    (:require [extensions.api]
+              [x.app-components.api]
               [x.app-developer.api]
               [x.app-dictionary.api]
               [x.app-environment.api]
@@ -27,7 +28,7 @@
               [x.boot-synchronizer]
               [app-fruits.dom     :as dom]
               [app-fruits.reagent :as reagent]
-              [mid-fruits.candy   :refer [param]]
+              [mid-fruits.candy   :refer [param return]]
               [mid-fruits.string  :as string]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
@@ -105,8 +106,9 @@
 (defn- get-restart-target
   ; @return (string)
   [db _]
-  (get-in db (db/path ::primary :restart-target)
-             (param DEFAULT-RESTART-TARGET)))
+  (if-let [restart-target (get-in db (db/path ::primary :restart-target))]
+          (return restart-target)
+          (r a/get-app-detail db :app-home)))
 
 
 
@@ -154,10 +156,11 @@
   ;
   ; @usage
   ;  [:x.boot-loader/restart-app! {:restart-target "/my-route?var=value"}]
-  (fn [_ [_ {:keys [restart-target]}]]
-      {:dispatch-if [(string/nonempty? restart-target)
-                     [:x.boot-loader/set-restart-target! restart-target]]
-       :dispatch [:x.app-router/go-to! "/reboot"]}))
+  (fn [{:keys [db]} [_ {:keys [restart-target]}]]
+      (if (string/nonempty? restart-target)
+          {:db (r set-restart-target! db restart-target)
+           :dispatch [:x.app-router/go-to! "/reboot"]}
+          {:dispatch [:x.app-router/go-to! "/reboot"]})))
 
 (a/reg-event-fx
   :x.boot-loader/reboot-app!

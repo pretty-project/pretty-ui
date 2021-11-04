@@ -30,11 +30,9 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :min-width (keyword)}
+  ;  {:min-width (keyword)}
   [box-props]
-  (card/card-props-prototype (merge {:color     :default
-                                     :min-width :m}
+  (card/card-props-prototype (merge {:min-width :m}
                                     (param box-props))))
 
 
@@ -49,10 +47,7 @@
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ;  {:border-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :highlight
-  ;   :expandable? (boolean)(opt)
+  ;  {:expandable? (boolean)(opt)
   ;    Default: false
   ;   :expanded? (boolean)(opt)
   ;    Default: false

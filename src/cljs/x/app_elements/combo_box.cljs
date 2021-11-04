@@ -87,7 +87,7 @@
   ;   :on-extend (metamorphic-event)
   ;   :select-option-event (event-vector)}
   [field-id field-props]
-  (merge {:get-label-f         str
+  (merge {:get-label-f         return
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
           :on-extend           [:x.app-elements/add-option!]
@@ -301,7 +301,7 @@
   ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
-  ;    Default: str
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)

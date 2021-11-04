@@ -70,6 +70,9 @@
   ; Ha az item-lister paraméterként kapná meg a common-props értékét, akkor a common-props
   ; megváltozása az item-lister újrarendelődésével járna, ami az infinite-loader
   ; komponens újratöltését okozná.
+  ;
+  ; Pl.: clients modul, client-list nézet
+  ;      Megváltozik a kiválasztott nyelv -> újrarenderelődne a lista
   [lister-id {:keys [subscriber] :as lister-props} view-props]
   (let [common-props (a/subscribe subscriber)]
        (fn [_ _ view-props] (let [lister-props (assoc lister-props :common-props @common-props)]

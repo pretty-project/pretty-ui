@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.16
 ; Description:
-; Version: v1.4.2
-; Compatibility: x4.3.2
+; Version: v1.6.0
+; Compatibility: x4.4.4
 
 
 
@@ -83,7 +83,7 @@
           (let [group-value (get-in db group-value-path)]
                      ; Group-value is nonempty vector
                (cond (vector/nonempty? group-value)
-                     (return group-value)
+                     (return           group-value)
                      ; Group-value is empty vector & allow empty input-group
                      (and (vector? group-value)
                           (r allow-empty-input-group? db group-id))
@@ -93,11 +93,10 @@
                      (let [initial-value (r element/get-element-prop db group-id :initial-value)]
                           (return [initial-value]))
                      ; Group-value is not vector & allow empty input group
-                     (and (not (vector? group-value))
-                          (r allow-empty-input-group? db group-id))
+                     (r allow-empty-input-group? db group-id)
                      (return [])
                      ; Group-value is not vector & disallow empty input group
-                     (not (vector? group-value))
+                     :disallow-empty-input-group?
                      (return [nil])))))
 
 (defn get-input-group-view-props
@@ -126,17 +125,21 @@
   [db [_ group-id {:keys [initial-value]}]]
   (let [group-value-path (r element/get-element-prop db group-id :value-path)
         group-value      (get-in db group-value-path)]
-       (if (vector/nonempty? group-value)
-           (update-in db group-value-path vector/conj-item initial-value)
-
-           ; A {:disallow-empty-input-group? true} tulajdonságú input csoportokban
-           ; az inputok számának növelése üres group-value érték esetén:
-           ;
-           ; Pl. ha egy multi-field group-value értéke nil, akkor EGY field
-           ; jelenik meg, amely esetben a mezők számának növelése után
-           ; kettő darab mezőnek kell megjelenjen, amihez szükséges, hogy group-value
-           ; kettő értéket tartalmazzon.
-           (assoc-in db group-value-path [initial-value initial-value]))))
+             ; Group value is nonempty vector & allow empty input-group
+             ; Group value is nonempty vector & disallow empty input-group
+       (cond (vector/nonempty? group-value)
+             (update-in db group-value-path vector/conj-item initial-value)
+             ; Group value is NOT nonempty vector & disallow empty input-group
+             ;
+             ; Pl. ha egy multi-field group-value értéke nil, akkor EGY field
+             ; jelenik meg, amely esetben a mezők számának növelése után
+             ; kettő darab mezőnek kell megjelenjen, amihez szükséges, hogy group-value
+             ; kettő értéket tartalmazzon.
+             (r disallow-empty-input-group? db group-id)
+             (assoc-in db group-value-path [initial-value initial-value])
+             ; Group value is NOT nonempty vector & allow empty input-group
+             (r allow-empty-input-group? db group-id)
+             (assoc-in db group-value-path [initial-value]))))
 
 (defn increase-input-count!
   ; WARNING! NON-PUBLIC! DO NOT USE!

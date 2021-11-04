@@ -16,8 +16,7 @@
 (ns x.app-views.error-page
     (:require [mid-fruits.candy   :refer [param]]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [x.app-ui.api       :as ui]))
+              [x.app-elements.api :as elements]))
 
 
 
@@ -82,11 +81,9 @@
                        :layout           :fit}]
        (cond (= action :go-back!)
              [:<> [elements/separator {:orientation :horizontal :size :l}]
-                  [elements/button {:label   :back!
-                                    :preset  :back-icon-button
-                                    :variant :transparent
-                                    :on-click
-                                    [:x.app-router/go-back!]}]])])
+                  [elements/button {:label    :back!
+                                    :variant  :transparent
+                                    :on-click [:x.app-router/go-back!]}]])])
 
 
 
@@ -103,8 +100,7 @@
       [:x.app-ui/set-surface!
        ::view
        {:content       #'view
-        :content-props (error-id->content-props error-id)
-        :label-bar     {:content #'ui/go-back-surface-label-bar}}]))
+        :content-props (error-id->content-props error-id)}]))
 
 (a/reg-event-fx
   ::initialize!

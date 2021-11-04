@@ -44,6 +44,7 @@
 
 ; x.server-user.session-handler
 (def session->session-valid? session-handler/session->session-valid?)
+(def request->add-props      session-handler/request->add-props)
 (def request->modify-props   session-handler/request->modify-props)
 (def request->create-props   session-handler/request->create-props)
 (def request->delete-props   session-handler/request->delete-props)

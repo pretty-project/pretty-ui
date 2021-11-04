@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -44,7 +44,7 @@
           :layout       :row
           :options-path (engine/default-options-path button-id)
           :value-path   (engine/default-value-path   button-id)
-          :get-label-f  str}
+          :get-label-f  return}
          (param button-props)))
 
 
@@ -167,7 +167,7 @@
   ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
-  ;    Default: str
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;    TODO ...
   ;   :initial-options (vector)(constant)(opt)

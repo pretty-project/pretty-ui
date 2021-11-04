@@ -54,9 +54,6 @@
 ;  :by-date, :by-name, :by-size
 (def DEFAULT-ORDER-BY :by-name)
 
-; @constant (string)
-(def FILE-STORAGE-HOME-URI "/admin/fajlkezelo")
-
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -125,7 +122,7 @@
   ;
   ; @return (string)
   [path-param]
-  (str FILE-STORAGE-HOME-URI "/" path-param))
+  (str "/media/" path-param))
 
 (defn directory-id->file-storage-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -229,7 +226,7 @@
   (get-in db (settings-item-path :order-by)
              (param DEFAULT-ORDER-BY)))
 
-(defn- get-view-props
+(defn- get-body-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -258,14 +255,27 @@
         :directory-empty?                 (r engine/directory-empty?           db rendered-directory-id)
         :directory-path                   (r engine/get-directory-path         db rendered-directory-id)
         :order-by                         (r get-order-by                      db)
-        :storage-free-capacity            (r engine/get-storage-free-capacity  db)
-        :storage-total-capacity           (r engine/get-storage-total-capacity db)
-        :storage-used-capacity            (r engine/get-storage-used-capacity  db)
+
         :synchronizing?                   (r sync/listening-to-request?        db query-id)
         :directory-render-files?          (map/nonempty? filtered-files)
         :directory-render-subdirectories? (map/nonempty? filtered-subdirectories)
         :filtered-files                   (param filtered-files)
         :filtered-subdirectories          (param filtered-subdirectories)}))
+
+(a/reg-sub :file-storage/get-body-view-props get-body-view-props)
+
+(defn- get-header-view-props
+  [db _]
+  (let [rendered-directory-id   (r get-rendered-directory-id db)]
+       {:directory-exists?                (r engine/directory-exists?          db rendered-directory-id)}))
+
+(a/reg-sub :file-storage/get-header-view-props get-header-view-props)
+
+(defn- get-view-props
+  [db _]
+  {:storage-free-capacity            (r engine/get-storage-free-capacity  db)
+   :storage-total-capacity           (r engine/get-storage-total-capacity db)
+   :storage-used-capacity            (r engine/get-storage-used-capacity  db)})
 
 (a/reg-sub :file-storage/get-view-props get-view-props)
 
@@ -293,7 +303,7 @@
   :file-storage/go-home!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
-                [:x.app-router/go-to!         FILE-STORAGE-HOME-URI]]})
+                [:x.app-router/go-to!         "/media"]]})
 
 (a/reg-event-fx
   :file-storage/go-up!
@@ -328,13 +338,14 @@
      :value-path (settings-item-path :order-by)}])
 
 (a/reg-event-fx
-  :file-storage/set-window-title!
+  :file-storage/set-title!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [rendered-directory-id (r get-rendered-directory-id  db)]
            (if (r engine/directory-exists? db rendered-directory-id)
                (let [rendered-directory-alias (r engine/get-directory-alias db rendered-directory-id)]
-                    [:x.app-ui/set-title! rendered-directory-alias])))))
+                    {:dispatch-n [[:x.app-ui/set-header-title! rendered-directory-alias]
+                                  [:x.app-ui/set-window-title! rendered-directory-alias]]})))))
 
 (a/reg-event-fx
   :file-storage/edit-rendered-file-alias!
@@ -450,7 +461,7 @@
   (fn [{:keys [db]} [_ directory-id]]
       (let [namespace (a/get-namespace ::this)]
            {:db (r engine/set-rendered-directory-id! db namespace directory-id)
-            :dispatch [:file-storage/set-window-title!]})))
+            :dispatch [:file-storage/set-title!]})))
 
 
 
@@ -473,27 +484,6 @@
                              :disabled?   field-disabled?
                              :emptiable?  true
                              :placeholder :filter-items!}]))
-
-(defn- file-storage-capacity-indicator
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:storage-free-capacity (B)
-  ;   :storage-used-capacity (B)}
-  ;
-  ; @return (component)
-  [_ {:keys [storage-free-capacity storage-used-capacity] :as view-props}]
-  (let [capacity-indicator-label    (view-props->capacity-indicator-label view-props)
-        capacity-indicator-sections [{:value storage-used-capacity :color :primary}
-                                     {:value storage-free-capacity :color :highlight}]]
-       [elements/line-diagram ::capacity-indicator
-                              {:color          :muted
-                               :font-size      :xxs
-                               :label          capacity-indicator-label
-                               :label-position :center
-                               :sections       capacity-indicator-sections
-                               :width          112}]))
 
 (defn- file-storage-bin-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -541,7 +531,7 @@
                                           [elements/separator     {:orientation :vertical :size :m}]
                                           [file-storage-filter-items-field component-id view-props]]
                       :end-content   [:<> [elements/separator {:orientation :vertical :size :m}]
-                                          [file-storage-capacity-indicator component-id view-props]
+                                          ;[file-storage-capacity-indicator component-id view-props]
                                           [elements/separator {:orientation :vertical :size :m}]]}])
                                          ;[file-storage-bin-button component-id view-props]
                                          ;[elements/separator {:orientation :vertical :size :m}]
@@ -565,9 +555,9 @@
                     :icon      :home
                     :layout    :icon-button
                     :on-click  [:file-storage/go-home!]
-                    :tooltip   :my-storage
-                    :variant   :transparent
-                    :width     :fit}])
+                    ;:tooltip   :my-storage
+                    :variant   :transparent}])
+                    ;:width     :fit}])
 
 (defn file-storage-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -582,9 +572,9 @@
                     :icon      :chevron_left
                     :layout    :icon-button
                     :on-click  [:file-storage/go-up!]
-                    :tooltip   :back!
-                    :variant   :transparent
-                    :width     :fit}])
+                    ;:tooltip   :back!
+                    :variant   :transparent}])
+                    ;:width     :fit}])
 
 (defn file-storage-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -611,7 +601,7 @@
                    {:color     :default
                     :disabled? (or directory-empty? synchronizing?)
                     :icon      :sort
-                    :label     :order-by
+                    :tooltip   :order-by
                     :layout    :icon-button
                     :variant   :transparent
                     :on-click  [:file-storage/render-order-by-select!]}])
@@ -624,18 +614,38 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [:<> [elements/polarity ::label-bar
-                          {:start-content [:<> [file-storage-home-button     component-id view-props]
-                                               [file-storage-up-button       component-id view-props]
-                                               [elements/separator {:orientation :vertical :size :s}]
-                                               [file-storage-label           component-id view-props]]
-                           :end-content   [:<> [file-storage-order-by-select component-id view-props]]}]
-       [elements/separator {:orientation :horizontal :size :s}]])
+  [elements/polarity ::label-bar
+                     {:start-content [:<> [file-storage-home-button     component-id view-props]
+                                          [file-storage-up-button       component-id view-props]]
+                                          ;[elements/separator {:orientation :vertical :size :s}]
+                                          ;[file-storage-label           component-id view-props]]
+                      :end-content   [:<> [file-storage-filter-items-field component-id view-props]
+                                          [elements/separator {:orientation :vertical :size :xxs}]
+                                          [file-storage-directory-actions component-id view-props]
+                                          ;[file-storage-filter-items-field component-id view-props]
+
+                                          [file-storage-order-by-select    component-id view-props]]}])
+
+(defn- file-storage-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) component-id
+  ; @param (map) view-props
+  ;
+  ; @return (component)
+  [component-id view-props]
+  [:<> [file-storage-label-bar component-id view-props]])
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- file-storage-footer
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [elements/label {:content (view-props->capacity-indicator-label view-props)
+                   :color :muted :font-size :xxs :layout :fit}])
 
 (defn- file-storage-subdirectory
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -817,7 +827,7 @@
       [elements/polarity ::no-filtered-items-match
                          {:middle-content [elements/label {:content :no-items-found :color :highlight}]}]))
 
-(defn- file-storage
+(defn- file-storage-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -833,69 +843,37 @@
        [file-storage-no-filtered-items-match component-id view-props]
        [elements/separator {:orientation :horizontal :size :xs}]])
 
-(defn ghost-file-storage-label-bar
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;
-  ; @return (component)
-  [component-id view-props]
-  [elements/polarity ::ghost-label-bar
-                     {:end-content [file-storage-order-by-select component-id view-props]}])
-
-(defn- ghost-file-storage
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;
-  ; @return (component)
-  [component-id view-props]
-  [:<> [ghost-file-storage-label-bar component-id view-props]
-       [elements/polarity  {:middle-content [ui/loading-animation-d]}]
-       [elements/separator {:orientation :horizontal :size :s}]])
-
-(defn- ghost-view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:body       {:content    #'ghost-file-storage
-                              :subscriber [:file-storage/get-view-props]}
-                 :min-width  :xxl}])
-
 (defn- view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:body             {:content    #'file-storage
-                                    :subscriber [:file-storage/get-view-props]}
-                 :horizontal-align :left
-                 :min-width        :xxl}])
-
-(defn- listener
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
   ;
   ; @return (component)
-  [_]
-  (let [namespace (a/get-namespace ::this)
-        query-id  (engine/namespace->query-id namespace)]
-       [components/listener {:content         #'view
-                             :pending-content #'ghost-view
-                             :request-id      query-id}]))
+  [surface-id view-props]
+  [:<> [elements/box {:body             {:content    #'file-storage-body
+                                         :subscriber [:file-storage/get-body-view-props]}
+                      :header           {:content #'file-storage-header
+                                         :subscriber [:file-storage/get-header-view-props]
+                                         :sticky? true}
+                      :horizontal-align :left
+                      :min-width        :xxl}]
+       [file-storage-footer surface-id view-props]])
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :file-storage/render!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) storage-id
+  (fn [{:keys [db]} [_ storage-id]]
+      [:x.app-ui/set-surface!
+        :file-storage/view
+        {:content    #'view
+         :subscriber [:file-storage/get-view-props]}]))
 
 (a/reg-event-fx
   :file-storage/initialize!
@@ -950,33 +928,19 @@
            [:media-storage/render-file-properties! rendered-directory-id file-id])))
 
 (a/reg-event-fx
-  :file-storage/render!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) storage-id
-  (fn [{:keys [db]} [_ storage-id]]
-      [:x.app-ui/set-surface!
-        :file-storage/view
-        {:content     #'listener
-         :label-bar   {:content       #'ui/go-home-surface-label-bar
-                       :content-props {:label (r get-surface-label db)}}
-         :control-bar {:content       #'file-storage-control-bar
-                       :subscriber    [:file-storage/get-view-props]}}]))
-
-(a/reg-event-fx
-  :file-storage/on-app-init
+  :file-storage/add-routes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:x.app-router/add-route!
-                 ::default-route
+                 ::route
                  {:restricted?    true
                   :route-event    [:file-storage/load!]
-                  :route-template FILE-STORAGE-HOME-URI}]
+                  :route-template "/media"}]
                 [:x.app-router/add-route!
                  ::extended-route
                  {:restricted?    true
                   :route-event    [:file-storage/load!]
-                  :route-template (path-param->file-storage-uri ":directory-id")}]]})
+                  :route-template "/media/:directory-id"}]]})
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:file-storage/on-app-init]})
+  {:on-app-init [:file-storage/add-routes!]})

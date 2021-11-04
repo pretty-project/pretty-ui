@@ -318,6 +318,9 @@
       :view
       {:en "View"
        :hu "Nézet"}
+      :welcome-n
+      {:en "Welcome %"
+       :hu "Üdv %"}
       :yes
       {:en "Yes"
        :hu "Igen"}})
@@ -652,6 +655,9 @@
       :price-quote
       {:en "Price quote"
        :hu "Árajánlat"}
+      :products
+      {:en "Products"
+       :hu "Termékek"}
       :services
       {:en "Services"
        :hu "Szolgáltatások"}

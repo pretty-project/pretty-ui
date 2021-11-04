@@ -4,7 +4,6 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
-              [x.app-ui.api         :as ui]
               [extensions.media-storage.engine       :as engine]
               [extensions.media-storage.file-storage :as file-storage]))
 
@@ -121,7 +120,4 @@
             bin-props (a/prot bin-props bin-props-prototype)]
            [:x.app-ui/set-surface!
              :media-storage/view
-             {:content     #'view
-              :control-bar {:content       #'file-storage/file-storage-control-bar}
-              :label-bar   {:content       #'ui/go-home-surface-label-bar
-                            :content-props {:label (r file-storage/get-surface-label db)}}}])))
+             {:content #'view}])))

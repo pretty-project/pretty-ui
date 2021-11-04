@@ -39,6 +39,10 @@
       :action-button       {:color   :primary
                             :layout  :row
                             :variant :transparent}
+      :add-icon-button     {:color   :primary
+                            :icon    :add
+                            :layout  :icon-button
+                            :variant :transparent}
       :back-button         {:color   :default
                             :icon    :arrow_back
                             :layout  :row
@@ -99,9 +103,17 @@
                             :icon    :save
                             :layout  :icon-button
                             :variant :transparent}
+      :search-icon-button  {:color   :default
+                            :icon    :search
+                            :layout  :icon-button
+                            :variant :transparent}
       :select-button       {:label   :select
                             :layout  :row
                             :variant :transparent}
+      :select-more-icon-button {:color   :default
+                                :icon    :radio_button_unchecked
+                                :layout  :icon-button
+                                :variant :transparent}
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button

@@ -53,6 +53,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn request->add-props
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:modified-at (object)
+  ;   :modified-by (map)}
+  [request]
+  (let [account-id   (http/request->session-param request :user-account/id)
+        user-account {:user-account/id account-id}
+        timestamp    (time/timestamp)]
+       {:added-at timestamp
+        :added-by user-account}))
+
 (defn request->modify-props
   ; @param (map) request
   ;

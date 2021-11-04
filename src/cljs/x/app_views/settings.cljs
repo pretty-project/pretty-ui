@@ -23,7 +23,6 @@
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
               [x.app-router.api      :as router]
-              [x.app-ui.api          :as ui]
               [x.app-user.api        :as user]))
 
 
@@ -509,12 +508,11 @@
 (a/reg-event-fx
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content #'view
-    :content-label :settings
-    :label-bar {:content #'ui/go-back-surface-label-bar
-                :content-props {:label :settings}}}])
+  {:dispatch-n [[:x.app-ui/set-window-title! :settings]
+                [:x.app-ui/set-surface!
+                 ::view
+                 {:content #'view
+                  :content-label :settings}]]})
 
 (a/reg-event-fx
   ::initialize!
@@ -525,7 +523,6 @@
      {:restricted?         true
       :route-event         [::render!]
       :route-template      "/settings"
-      :route-title         :settings
       :scroll-to-fragment? true}]]})
 
 (a/reg-lifecycles

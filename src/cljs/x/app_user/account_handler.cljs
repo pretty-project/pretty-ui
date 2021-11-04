@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.5.8
-; Compatibility: x3.9.9
+; Version: v0.6.2
+; Compatibility: x4.4.4
 
 
 
@@ -137,20 +137,15 @@
   ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
   (fn [{:keys [db]} _]
-
-            ; WARNING! DEPRECATED!
-      (let [restart-target (r a/get-app-detail db :authenticated-home)]
-            ; WARNING! DEPRECATED!
-
-           [:x.app-sync/send-request!
-            :x.app-user/authenticate!
-            {:method       :post
-             :on-success   [:x.boot-loader/restart-app!] ;{:restart-target restart-target}
-             :on-failure   [:x.app-user/reg-last-login-attempt!]
-             :silent-mode? true
-             :source-path  (db/meta-item-path :x.app-views.login-box/primary)
-             :uri          "/user/authenticate"
-             :idle-timeout 3000}])))
+      [:x.app-sync/send-request!
+       :x.app-user/authenticate!
+       {:method       :post
+        :on-success   [:x.boot-loader/restart-app!]
+        :on-failure   [:x.app-user/reg-last-login-attempt!]
+        :silent-mode? true
+        :source-path  (db/meta-item-path :x.app-views.login-box/primary)
+        :uri          "/user/authenticate"
+        :idle-timeout 3000}]))
 
 (a/reg-event-fx
   :x.app-user/logout!

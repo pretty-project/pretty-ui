@@ -39,13 +39,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/restore-default-title!
+  :x.app-ui/restore-default-window-title!
   (fn [{:keys [db]} _]
       (let [window-title (r a/get-app-detail db :app-title)]
            [:x.app-environment.window-handler/set-title! window-title])))
 
 (a/reg-event-fx
-  :x.app-ui/set-title!
+  :x.app-ui/set-window-title!
   ; @param (metamorphic-value) window-title
   (fn [{:keys [db]} [_ window-title]]
       (let [window-title (r get-window-title db window-title)]

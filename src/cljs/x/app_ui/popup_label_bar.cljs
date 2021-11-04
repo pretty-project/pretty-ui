@@ -56,6 +56,18 @@
                     :on-click [:x.app-ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
+(defn- popup-up-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map)(opt) bar-props
+  ;
+  ; @return (component)
+  [_ _]
+  [elements/button {:on-click [:x.app-router/go-up!]
+                    :preset   :back-icon-button}])
+                   ;:tooltip  :back!
+
 (defn- popup-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -64,10 +76,9 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:color    :primary
-                    :on-click [:x.app-router/go-back!]
-                    :preset   :back-icon-button
-                    :tooltip  :back!}])
+  [elements/button {:on-click [:x.app-router/go-back!]
+                    :preset   :back-icon-button}])
+                   ;:tooltip  :back!
 
 (defn- popup-close-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,8 +90,8 @@
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
                     :on-click [:x.app-ui/close-popup! popup-id]
-                    :preset   :close-icon-button
-                    :tooltip  :close!}])
+                    :preset   :close-icon-button}])
+                   ;:tooltip  :close!
 
 (defn- popup-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,6 +130,16 @@
   [elements/polarity {:start-content  [popup-icon-button-placeholder popup-id bar-props]
                       :middle-content [popup-label                   popup-id bar-props]
                       :end-content    [popup-close-icon-button       popup-id bar-props]}])
+
+(defn go-up-popup-label-bar
+  ; @param (keyword) popup-id
+  ; @param (map)(opt) bar-props
+  ;  {:label (metamorphic-content)(opt)}
+  ;
+  ; @return (component)
+  [popup-id bar-props]
+  [elements/polarity {:start-content [:<> [popup-up-icon-button popup-id bar-props]
+                                          [popup-label          popup-id bar-props]]}])
 
 (defn go-back-popup-label-bar
   ; @param (keyword) popup-id

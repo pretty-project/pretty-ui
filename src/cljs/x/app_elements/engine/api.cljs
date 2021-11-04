@@ -138,7 +138,6 @@
 (def selectable-attributes          selectable/selectable-attributes)
 (def selectable-option-attributes   selectable/selectable-option-attributes)
 (def selectable-unselect-attributes selectable/selectable-unselect-attributes)
-(def view-props->selected-option    selectable/view-props->selected-option)
 (def get-selectable-view-props      selectable/get-selectable-view-props)
 
 ; x.app-elements.engine.stated-element

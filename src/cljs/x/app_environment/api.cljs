@@ -75,6 +75,7 @@
 (def get-viewport-profile     viewport-handler/get-viewport-profile)
 (def viewport-profile-match?  viewport-handler/viewport-profile-match?)
 (def viewport-profiles-match? viewport-handler/viewport-profiles-match?)
+(def viewport-small?          viewport-handler/viewport-small?)
 (def get-viewport-orientation viewport-handler/get-viewport-orientation)
 
 ; x.app-environment.window-handler

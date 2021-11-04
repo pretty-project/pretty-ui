@@ -241,7 +241,7 @@
   ;
   ; @return (hiccup)
   [{:keys [current-path]}]
-  [icon-button {:icon "Add" :label "Inc" :on-click [:x.app-db/apply! current-path inc]}])
+  [icon-button {:icon "add" :label "Inc" :on-click [:x.app-db/apply! current-path inc]}])
 
 (defn- swap-boolean-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

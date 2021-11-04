@@ -1,4 +1,20 @@
 
+# x4.4.4
+
+- BREAKING CHANGE
+  Az x.app-router.api/set-route! {:route-title ...} tulajdonsága megszűnt.
+
+- BREAKING CHANGE
+  Az x.app-ui.api/surface felületeken megszűnt a control-bar, control-sidebar, label-bar
+
+- BREAKING CHANGE
+  Az x.app-elements.api/card elemen megszűnt a border-color tulajdonság
+
+- NEW RENDERER
+  x.app-ui/header
+
+
+
 # x4.4.3
 
 - BREAKING CHANGE

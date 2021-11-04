@@ -71,6 +71,11 @@
   [db [_ n]]
   (vector/contains-item? n (r get-viewport-profile db)))
 
+(defn viewport-small?
+  ; @return (boolean)
+  [db _]
+  (r viewport-profiles-match? db [:xxs :xs :s]))
+
 (defn get-viewport-orientation
   ; @return (keyword)
   ;  :landscape, :portrait

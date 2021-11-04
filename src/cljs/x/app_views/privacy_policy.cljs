@@ -62,8 +62,7 @@
 
 (ns x.app-views.privacy-policy
     (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-ui.api       :as ui]))
+              [x.app-elements.api :as elements]))
 
 
 
@@ -87,9 +86,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/set-surface!
    ::view
-   {:content #'view
-    :label-bar {:content #'ui/go-back-surface-label-bar
-                :content-props {:label :privacy-policy}}}])
+   {:content #'view}])
 
 (a/reg-event-fx
   ::initialize!

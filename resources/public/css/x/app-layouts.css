@@ -1,21 +1,37 @@
 
-/***** Layout A *****/
-/*** Header ***/
 
-.x-layout-a--header {
+/***** Header A *****/
+
+.x-header-a {
   display: flex;
   gap: 4px;
   padding-top: 12px }
 
 /*** Header ***/
-
-/*** Body ***/
-
-/*** Body ***/
-/***** Layout A *****/
+/***** Header A *****/
 
 
 
-.x-icon-buttons {
+/***** Search bar A *****/
+
+.x-search-bar-a {
   display: flex;
-  gap: 12px }
+  width: 100% }
+
+.x-search-bar-a--search-field {
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-duration: .5s;
+  animation-name: x-reveal;
+
+  flex-grow: 1;
+  /* A search-bar jobb szélén található ikon-gomb jobb oldalán egy bar-edge méretű padding van,
+   * ezt szükséges ellensúlyozni */
+  padding-right: var( --bar-edge ) }
+
+/***** Search bar A *****/
+
+
+
+/***** Layout A *****/
+/***** Layout A *****/

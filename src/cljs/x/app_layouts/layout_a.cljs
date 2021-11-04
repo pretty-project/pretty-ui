@@ -14,11 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.layout-a
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.keyword   :as keyword]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]))
+    (:require [mid-fruits.candy      :refer [param return]]
+              [mid-fruits.keyword    :as keyword]
+              [x.app-components.api  :as components]
+              [x.app-core.api        :as a]
+              [x.app-elements.api    :as elements]
+              [x.app-layouts.headers :as headers]))
 
 
 
@@ -41,19 +42,6 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword)(opt) layout-id
-  ; @param (map) layout-props
-  ;  {:icon (keyword)(opt)
-  ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
-  [_ {:keys [icon label]}]
-  [:div.x-layout-a--header
-    [elements/label {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}]])
-
 (defn- layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -66,13 +54,11 @@
   ;   :min-width (keyword)}
   ;
   ; @return (component)
-  [layout-id {:keys [body disabled? header label min-width] :as layout-props}]
-  [:<> (if (some? label)
-           [layout-header layout-id layout-props])
-       [elements/box {:body      body
-                      :disabled? disabled?
-                      :header    header
-                      :min-width min-width}]])
+  [layout-id {:keys [body disabled? header min-width] :as layout-props}]
+  [elements/box {:body      body
+                 :disabled? disabled?
+                 :header    header
+                 :min-width min-width}])
 
 (defn view
   ; @param (keyword)(opt) layout-id
@@ -89,11 +75,9 @@
   ;     :sticky? (boolean)(opt)
   ;      Default: false
   ;     :subscriber (subscription vector)(opt)}
-  ;   :icon (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :l
-  ;   :label (metamorphic-content)(opt)}
+  ;    Default: :l}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]

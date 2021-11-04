@@ -1,6 +1,18 @@
 
 
 
+/***** User select *****/
+
+#x-app-header--title {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none }
+
+/***** User select *****/
+
+
+
 /***** Align profiles *****/
 /*** Horizontal align ***/
 
@@ -129,8 +141,6 @@
 #x-app-bubbles,
 .x-app-popups--element--content,
 .x-app-popups--element--label-bar,
-.x-app-surface-header--label-bar,
-.x-app-surface-header--control-bar,
 #x-app-sidebar--surface,
 .x-app-surface--element--control-sidebar {
   /* Hide scrollbar for IE and Edge */
@@ -143,10 +153,7 @@
 #x-app-bubbles::-webkit-scrollbar,
 .x-app-popups--element--content::-webkit-scrollbar,
 .x-app-popups--element--label-bar::-webkit-scrollbar,
-.x-app-surface-header--label-bar::-webkit-scrollbar,
-.x-app-surface-header--control-bar::-webkit-scrollbar,
-#x-app-sidebar--surface::-webkit-scrollbar,
-.x-app-surface--element--control-sidebar::-webkit-scrollbar {
+#x-app-sidebar--surface::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
 
@@ -245,6 +252,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  /* XXX#2981 */
   padding-left: var( --bar-edge );
   width: 100% }
 
@@ -265,6 +273,7 @@
   overflow: hidden }
 
 .x-app-bubbles--element--close-button-placeholder {
+  /* XXX#2981 */
   width: var( --bar-edge ) }
 
 /*** App bubbles element ***/
@@ -307,11 +316,51 @@
 /***** App header *****/
 /*** Header ***/
 
-.x-app-header--element[data-position="fixed"] {
+#x-app-header {
+  background-color: var( --background-color );
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   left: 0;
+  padding: 0 var( --bar-edge );
   position: fixed;
   top: 0;
   width: 100% }
+
+#x-app-header--title {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  justify-content: center;
+  height: 48px;
+  max-width: 50vw;
+  overflow: hidden }
+
+body[data-viewport-profile="xxs"] #x-app-header--title,
+body[data-viewport-profile="xs"]  #x-app-header--title,
+body[data-viewport-profile="s"]   #x-app-header--title {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs ) }
+
+body[data-viewport-profile="m"]   #x-app-header--title,
+body[data-viewport-profile="l"]   #x-app-header--title,
+body[data-viewport-profile="xl"]  #x-app-header--title,
+body[data-viewport-profile="xxl"] #x-app-header--title {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.x-app-header--block {
+  display: flex }
+
+/* XXX#8607 */
+body[data-viewport-profile="xxs"] #x-app-header,
+body[data-viewport-profile="xs"]  #x-app-header,
+body[data-viewport-profile="s"]   #x-app-header {
+  border-radius: 0 }
 
 /*** Header ***/
 /***** App header *****/
@@ -452,6 +501,7 @@
 
 .x-app-popups--element--label-bar {
   overflow-x: auto;
+  /* XXX#2981 */
   padding: 0 var( --bar-edge );
   min-height: 48px;
   width: 100% }
@@ -707,6 +757,9 @@
   max-height: 100%;
   max-width: 100% }
 
+#x-app-ui-structure[data-interface="application-ui"] .x-app-surface--element--structure {
+  padding-top: 48px }
+
 /*** Surface structure ***/
 
 /*** Surface background ***/
@@ -730,80 +783,7 @@
   flex-grow: 1 }
 
 /*** Surface content ***/
-
-/*** Surface control-sidebar ***/
-
-.x-app-surface--element--control-sidebar {
-  background-color: var( --background-color );
-  box-shadow: rgba(50, 50, 93, .25) 0 0px 10px -5px;
-  height: 100%;
-  left: 0;
-  max-width: 100%;
-  overflow: hidden auto;
-  position: fixed;
-  top: 0 }
-
-/*** Surface control-sidebar ***/
 /***** App surface *****/
-
-
-
-/***** App surface header *****/
-/*** Surface header ***/
-
-.x-app-surface-header {
-  /* XXX#7319
-   * Az box-shadow tulajdonság eltávolítása miatt a border-color tulajdonság
-   * megváltoztatása szükséges. */
-  -border-color: var( --border-color-muted );
-  border-color: var( --border-color-highlight );
-
-  border-style: solid;
-  border-width: 1px;
-
-  /* WARNING! DEPRECATED! */
-  /* XXX#0609 */
-  -border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
-  /* WARNING! DEPRECATED! */
-
-  /* XXX#7319
-   * A box-shadow tulajdonság magas számításigénye miatt több helyről eltávolításra
-   * kerül, hogy ne okozzon görgetés közbeni késleltetve kirajzolódást. */
-  -box-shadow: rgba(50, 50, 93, .25) 0 0px 10px -5px;
-
-  left: 0;
-  overflow-y: hidden;
-  position: fixed;
-  top: 0;
-  width: 100% }
-
-/*** Surface header ***/
-
-/*** Surface header label-bar ***/
-
-.x-app-surface-header--label-bar {
-  background-color: var( --background-color );
-  height: 48px;
-  overflow-x: auto;
-  padding: 0 var( --bar-edge );
-  width: 100% }
-
-/*** Surface header label-bar ***/
-
-/*** Surface header control-bar ***/
-
-.x-app-surface-header--control-bar {
-  background-color: var( --background-color );
-  bottom: 0;
-  height: 48px;
-  left: 0;
-  overflow-x: auto;
-  padding: 0 var( --bar-edge);
-  position: absolute;
-  width: 100% }
-
-/*** Surface header control-bar ***/
-/***** App surface header *****/
 
 
 

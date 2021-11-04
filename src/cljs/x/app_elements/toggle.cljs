@@ -33,8 +33,8 @@
   ;  {:color (keyword)
   ;   :layout (keyword)}
   [toggle-props]
-  (merge {:color  :primary
-          :layout :row}
+  (merge {:color  :default
+          :layout :fit}
          (param toggle-props)))
 
 
@@ -52,7 +52,7 @@
   [toggle-id view-props]
   (let [content-props (components/extended-props->content-props view-props)]
        [:button.x-toggle
-         (engine/element-attributes toggle-id view-props
+         (engine/element-attributes          toggle-id view-props
            (engine/clickable-body-attributes toggle-id view-props))
          [components/content content-props]]))
 
@@ -67,7 +67,7 @@
   ; @param (map) toggle-props
   ;  {:color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :primary
+  ;    Default: :default
   ;   :class (string or vector)(opt)
   ;   :content (metamorphic-content)
   ;   :content-props (map)(opt)
@@ -75,14 +75,14 @@
   ;    Default: false
   ;   :layout (keyword)(opt)
   ;    :fit, :row
-  ;    Default: :row
+  ;    Default: :fit
   ;   :on-click (metamorphic-event)(constant)
   ;   :style (map)(opt)
   ;   :subscriber (subscription vector)(opt)}
   ;
   ; @usage
   ;  XXX#7610
-  ;  A row elemen megjelenő tartalom használatának leírását a blank elem dokumentációjában találod.
+  ;  A toggle elemen megjelenő tartalom használatának leírását a blank elem dokumentációjában találod.
   ;
   ; @usage
   ;  [elements/toggle {...}]

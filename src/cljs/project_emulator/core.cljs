@@ -1,20 +1,9 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author:
-; Created:
-; Description:
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns project-emulator.core
     (:require [x.boot-loader]
               [extensions.clients.api]
               [extensions.home.api]
+              [extensions.products.api]
 
               ; TEMP
               [playground.api]))

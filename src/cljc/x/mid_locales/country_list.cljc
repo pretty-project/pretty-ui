@@ -13,24 +13,33 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.country-list)
+(ns x.mid-locales.country-list
+    (:require [mid-fruits.string :as string]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @constant (strings in vector)
+(def COUNTRY-NAMES
+     ["American Samoa" "Andorra" "Angola" "Anguilla" "Antarctica" "Antigua and Barbuda" "Argentina" "Aruba" "Australia" "Azərbaycan" "Bahamas" "Bangladesh" "Barbados" "België" "Belize" "Bermuda" "Bolivia" "Bonaire" "Bosna i Hercegovina" "Botswana" "Bouvetøya" "Brasil" "British Indian Ocean Territory" "British Virgin Islands" "Burkina Faso" "Burundi" "Bénin" "Cabo Verde" "Cameroon" "Canada" "Cayman Islands" "Chile" "Christmas Island" "Cocos (Keeling) Islands" "Colombia" "Cook Islands" "Costa Rica" "Cuba" "Curaçao" "Côte d'Ivoire" "Danmark" "Deutschland" "Djibouti" "Dominica" "Ecuador" "Eesti" "El Salvador" "España" "Falkland Islands" "Fiji" "France" "Føroyar" "Gabon" "Gambia" "Ghana" "Gibraltar" "Grenada" "Guadeloupe" "Guam" "Guatemala" "Guernsey" "Guinea Ecuatorial" "Guiné-Bissau" "Guinée" "Guyana" "Guyane française" "Haïti" "Heard Island and McDonald Islands" "Honduras" "Hrvatska" "Indonesia" "Isle of Man" "Italia" "Jamaica" "Jersey" "Kalaallit Nunaat" "Kenya" "Kiribati" "Komori" "Kâmpŭchéa" "Ködörösêse tî Bêafrîka" "La Réunion" "Latvija" "Lesotho" "Liberia" "Liechtenstein" "Lietuva" "Luxembourg" "Madagasikara" "Magyarország" "Malawi" "Malaysia" "Maldives" "Mali" "Malta" "Martinique" "Maurice" "Mayotte" "Micronesia" "Moldova" "Monaco" "Montserrat" "Moçambique" "México" "M̧ajeļ" "Namibia" "Nauru" "Nederland" "Negara Brunei Darussalam" "New Zealand" "Nicaragua" "Niger" "Nigeria" "Niuē" "Norfolk Island" "Norge" "Northern Mariana Islands" "Nouvelle-Calédonie" "O‘zbekiston" "Pakistan" "Palau" "Panamá" "Papua Niugini" "Paraguay" "Perú" "Pilipinas" "Pitcairn Islands" "Polska" "Polynésie française" "Portugal" "Puerto Rico" "Republika e Kosovës" "República Dominicana" "România" "Rwanda" "République du Congo" "République démocratique du Congo" "Saint Helena" "Saint Kitts and Nevis" "Saint Lucia" "Saint Vincent and the Grenadines" "Saint-Barthélemy" "Saint-Martin" "Saint-Pierre-et-Miquelon" "Samoa" "San Marino" "Schweiz" "Seychelles" "Shqipëria" "Sierra Leone" "Singapore" "Sint Maarten" "Slovenija" "Slovensko" "Solomon Islands" "Soomaaliya" "South Africa" "South Georgia" "South Sudan" "Suomi" "Suriname" "Svalbard og Jan Mayen" "Sverige" "Swaziland" "São Tomé e Príncipe" "Sénégal" "Tanzania" "Tchad" "Territoire des Terres australes et antarctiques fr" "Timor-Leste" "Togo" "Tokelau" "Tonga" "Trinidad and Tobago" "Turks and Caicos Islands" "Tuvalu" "Türkiye" "Türkmenistan" "Uganda" "United Kingdom" "United States" "United States Minor Outlying Islands" "United States Virgin Islands" "Uruguay" "Vanuatu" "Vaticano" "Venezuela" "Việt Nam" "Wallis et Futuna" "Zambia" "Zimbabwe" "Åland" "Éire" "Ísland" "Österreich" "Česká republika" "śrī laṃkāva" "ʼbrug-yul" "Ελλάδα" "Κύπρος" "Белару́сь" "България" "Кыргызстан" "Монгол улс" "Россия" "Северна Македонија" "Србија" "Тоҷикистон" "Україна" "Црна Гора" "Қазақстан" "Հայաստան" "יִשְׂרָאֵל" "افغانستان" "الأردن" "الجزائر" "السودان" "الصحراء الغربية" "العراق" "العربية السعودية" "الكويت" "المغرب" "اليَمَن" "ایران" "تونس" "دولة الإمارات العربية المتحدة" "سوريا" "عمان" "فلسطين" "قطر" "لبنان" "مصر‎" "موريتانيا" "नपल" "भारत" "ประเทศไทย" "ສປປລາວ" "မြန်မာ" "საქართველო" "ኢትዮጵያ" "ኤርትራ" "‏البحرين" "‏ليبيا" "中国" "日本" "澳門" "臺灣" "香港" "대한민국" "북한"])
+
+; @constant (strings in vector)
+(def EU-COUNTRY-NAMES
+     ["Andorra" "België" "Bosna i Hercegovina" "Danmark" "Deutschland" "Eesti" "España" "France" "Føroyar" "Gibraltar" "Guernsey" "Hrvatska" "Isle of Man" "Italia" "Jersey" "Latvija" "Liechtenstein" "Lietuva" "Luxembourg" "Magyarország" "Malta" "Moldova" "Monaco" "Nederland" "Norge" "Polska" "Portugal" "Republika e Kosovës" "România" "San Marino" "Schweiz" "Shqipëria" "Slovenija" "Slovensko" "Suomi" "Svalbard og Jan Mayen" "Sverige" "United Kingdom" "Vaticano" "Åland" "Éire" "Ísland" "Österreich" "Česká republika" "Ελλάδα" "Κύπρος" "Белару́сь" "България" "Россия" "Северна Македонија" "Србија" "Україна" "Црна Гора"])
 
 ; @constant (map)
 (def COUNTRY-LIST
-     {:AD
+     {:ad
       {:capital "Andorra la Vella"
        :continent "EU"
        :currency "EUR"
        :languages ["ca"]
        :name "Andorra"
-       :native "Andorra"
+       :native "Andorra" 
        :phone "376"}
-      :AE
+      :ae
       {:capital "Abu Dhabi"
        :continent "AS"
        :currency "AED"
@@ -38,7 +47,7 @@
        :name "United Arab Emirates"
        :native "دولة الإمارات العربية المتحدة"
        :phone "971"}
-      :AF
+      :af
       {:capital "Kabul"
        :continent "AS"
        :currency "AFN"
@@ -46,7 +55,7 @@
        :name "Afghanistan"
        :native "افغانستان"
        :phone "93"}
-      :AG
+      :ag
       {:capital "Saint John's"
        :continent "NA"
        :currency "XCD"
@@ -54,7 +63,7 @@
        :name "Antigua and Barbuda"
        :native "Antigua and Barbuda"
        :phone "1268"}
-      :AI
+      :ai
       {:capital "The Valley"
        :continent "NA"
        :currency "XCD"
@@ -62,7 +71,7 @@
        :name "Anguilla"
        :native "Anguilla"
        :phone "1264"}
-      :AL
+      :al
       {:capital "Tirana"
        :continent "EU"
        :currency "ALL"
@@ -70,7 +79,7 @@
        :name "Albania"
        :native "Shqipëria"
        :phone "355"}
-      :AM
+      :am
       {:capital "Yerevan"
        :continent "AS"
        :currency "AMD"
@@ -78,7 +87,7 @@
        :name "Armenia"
        :native "Հայաստան"
        :phone "374"}
-      :AO
+      :ao
       {:capital "Luanda"
        :continent "AF"
        :currency "AOA"
@@ -86,7 +95,7 @@
        :name "Angola"
        :native "Angola"
        :phone "244"}
-      :AQ
+      :aq
       {:capital ""
        :continent "AN"
        :currency ""
@@ -94,7 +103,7 @@
        :name "Antarctica"
        :native "Antarctica"
        :phone "672"}
-      :AR
+      :ar
       {:capital "Buenos Aires"
        :continent "SA"
        :currency "ARS"
@@ -102,7 +111,7 @@
        :name "Argentina"
        :native "Argentina"
        :phone "54"}
-      :AS
+      :as
       {:capital "Pago Pago"
        :continent "OC"
        :currency "USD"
@@ -110,7 +119,7 @@
        :name "American Samoa"
        :native "American Samoa"
        :phone "1684"}
-      :AT
+      :at
       {:capital "Vienna"
        :continent "EU"
        :currency "EUR"
@@ -118,7 +127,7 @@
        :name "Austria"
        :native "Österreich"
        :phone "43"}
-      :AU
+      :au
       {:capital "Canberra"
        :continent "OC"
        :currency "AUD"
@@ -126,7 +135,7 @@
        :name "Australia"
        :native "Australia"
        :phone "61"}
-      :AW
+      :aw
       {:capital "Oranjestad"
        :continent "NA"
        :currency "AWG"
@@ -134,7 +143,7 @@
        :name "Aruba"
        :native "Aruba"
        :phone "297"}
-      :AX
+      :ax
       {:capital "Mariehamn"
        :continent "EU"
        :currency "EUR"
@@ -142,7 +151,7 @@
        :name "Åland"
        :native "Åland"
        :phone "358"}
-      :AZ
+      :az
       {:capital "Baku"
        :continent "AS"
        :currency "AZN"
@@ -150,7 +159,7 @@
        :name "Azerbaijan"
        :native "Azərbaycan"
        :phone "994"}
-      :BA
+      :ba
       {:capital "Sarajevo"
        :continent "EU"
        :currency "BAM"
@@ -158,7 +167,7 @@
        :name "Bosnia and Herzegovina"
        :native "Bosna i Hercegovina"
        :phone "387"}
-      :BB
+      :bb
       {:capital "Bridgetown"
        :continent "NA"
        :currency "BBD"
@@ -166,7 +175,7 @@
        :name "Barbados"
        :native "Barbados"
        :phone "1246"}
-      :BD
+      :bd
       {:capital "Dhaka"
        :continent "AS"
        :currency "BDT"
@@ -174,7 +183,7 @@
        :name "Bangladesh"
        :native "Bangladesh"
        :phone "880"}
-      :BE
+      :be
       {:capital "Brussels"
        :continent "EU"
        :currency "EUR"
@@ -182,7 +191,7 @@
        :name "Belgium"
        :native "België"
        :phone "32"}
-      :BF
+      :bf
       {:capital "Ouagadougou"
        :continent "AF"
        :currency "XOF"
@@ -190,7 +199,7 @@
        :name "Burkina Faso"
        :native "Burkina Faso"
        :phone "226"}
-      :BG
+      :bg
       {:capital "Sofia"
        :continent "EU"
        :currency "BGN"
@@ -198,7 +207,7 @@
        :name "Bulgaria"
        :native "България"
        :phone "359"}
-      :BH
+      :bh
       {:capital "Manama"
        :continent "AS"
        :currency "BHD"
@@ -206,7 +215,7 @@
        :name "Bahrain"
        :native "‏البحرين"
        :phone "973"}
-      :BI
+      :bi
       {:capital "Bujumbura"
        :continent "AF"
        :currency "BIF"
@@ -214,7 +223,7 @@
        :name "Burundi"
        :native "Burundi"
        :phone "257"}
-      :BJ
+      :bj
       {:capital "Porto-Novo"
        :continent "AF"
        :currency "XOF"
@@ -222,7 +231,7 @@
        :name "Benin"
        :native "Bénin"
        :phone "229"}
-      :BL
+      :bl
       {:capital "Gustavia"
        :continent "NA"
        :currency "EUR"
@@ -230,7 +239,7 @@
        :name "Saint Barthélemy"
        :native "Saint-Barthélemy"
        :phone "590"}
-      :BM
+      :bm
       {:capital "Hamilton"
        :continent "NA"
        :currency "BMD"
@@ -238,7 +247,7 @@
        :name "Bermuda"
        :native "Bermuda"
        :phone "1441"}
-      :BN
+      :bn
       {:capital "Bandar Seri Begawan"
        :continent "AS"
        :currency "BND"
@@ -246,7 +255,7 @@
        :name "Brunei"
        :native "Negara Brunei Darussalam"
        :phone "673"}
-      :BO
+      :bo
       {:capital "Sucre"
        :continent "SA"
        :currency "BOB,BOV"
@@ -254,7 +263,7 @@
        :name "Bolivia"
        :native "Bolivia"
        :phone "591"}
-      :BQ
+      :bq
       {:capital "Kralendijk"
        :continent "NA"
        :currency "USD"
@@ -262,7 +271,7 @@
        :name "Bonaire"
        :native "Bonaire"
        :phone "5997"}
-      :BR
+      :br
       {:capital "Brasília"
        :continent "SA"
        :currency "BRL"
@@ -270,7 +279,7 @@
        :name "Brazil"
        :native "Brasil"
        :phone "55"}
-      :BS
+      :bs
       {:capital "Nassau"
        :continent "NA"
        :currency "BSD"
@@ -278,7 +287,7 @@
        :name "Bahamas"
        :native "Bahamas"
        :phone "1242"}
-      :BT
+      :bt
       {:capital "Thimphu"
        :continent "AS"
        :currency "BTN,INR"
@@ -286,7 +295,7 @@
        :name "Bhutan"
        :native "ʼbrug-yul"
        :phone "975"}
-      :BV
+      :bv
       {:capital ""
        :continent "AN"
        :currency "NOK"
@@ -294,7 +303,7 @@
        :name "Bouvet Island"
        :native "Bouvetøya"
        :phone "47"}
-      :BW
+      :bw
       {:capital "Gaborone"
        :continent "AF"
        :currency "BWP"
@@ -302,7 +311,7 @@
        :name "Botswana"
        :native "Botswana"
        :phone "267"}
-      :BY
+      :by
       {:capital "Minsk"
        :continent "EU"
        :currency "BYN"
@@ -310,7 +319,7 @@
        :name "Belarus"
        :native "Белару́сь"
        :phone "375"}
-      :BZ
+      :bz
       {:capital "Belmopan"
        :continent "NA"
        :currency "BZD"
@@ -318,7 +327,7 @@
        :name "Belize"
        :native "Belize"
        :phone "501"}
-      :CA
+      :ca
       {:capital "Ottawa"
        :continent "NA"
        :currency "CAD"
@@ -326,7 +335,7 @@
        :name "Canada"
        :native "Canada"
        :phone "1"}
-      :CC
+      :cc
       {:capital "West Island"
        :continent "AS"
        :currency "AUD"
@@ -334,7 +343,7 @@
        :name "Cocos [Keeling] Islands"
        :native "Cocos (Keeling) Islands"
        :phone "61"}
-      :CD
+      :cd
       {:capital "Kinshasa"
        :continent "AF"
        :currency "CDF"
@@ -342,7 +351,7 @@
        :name "Democratic Republic of the Congo"
        :native "République démocratique du Congo"
        :phone "243"}
-      :CF
+      :cf
       {:capital "Bangui"
        :continent "AF"
        :currency "XAF"
@@ -350,7 +359,7 @@
        :name "Central African Republic"
        :native "Ködörösêse tî Bêafrîka"
        :phone "236"}
-      :CG
+      :cg
       {:capital "Brazzaville"
        :continent "AF"
        :currency "XAF"
@@ -358,7 +367,7 @@
        :name "Republic of the Congo"
        :native "République du Congo"
        :phone "242"}
-      :CH
+      :ch
       {:capital "Bern"
        :continent "EU"
        :currency "CHE,CHF,CHW"
@@ -366,7 +375,7 @@
        :name "Switzerland"
        :native "Schweiz"
        :phone "41"}
-      :CI
+      :ci
       {:capital "Yamoussoukro"
        :continent "AF"
        :currency "XOF"
@@ -374,7 +383,7 @@
        :name "Ivory Coast"
        :native "Côte d'Ivoire"
        :phone "225"}
-      :CK
+      :ck
       {:capital "Avarua"
        :continent "OC"
        :currency "NZD"
@@ -382,7 +391,7 @@
        :name "Cook Islands"
        :native "Cook Islands"
        :phone "682"}
-      :CL
+      :cl
       {:capital "Santiago"
        :continent "SA"
        :currency "CLF,CLP"
@@ -390,7 +399,7 @@
        :name "Chile"
        :native "Chile"
        :phone "56"}
-      :CM
+      :cm
       {:capital "Yaoundé"
        :continent "AF"
        :currency "XAF"
@@ -398,7 +407,7 @@
        :name "Cameroon"
        :native "Cameroon"
        :phone "237"}
-      :CN
+      :cn
       {:capital "Beijing"
        :continent "AS"
        :currency "CNY"
@@ -406,7 +415,7 @@
        :name "China"
        :native "中国"
        :phone "86"}
-      :CO
+      :co
       {:capital "Bogotá"
        :continent "SA"
        :currency "COP"
@@ -414,7 +423,7 @@
        :name "Colombia"
        :native "Colombia"
        :phone "57"}
-      :CR
+      :cr
       {:capital "San José"
        :continent "NA"
        :currency "CRC"
@@ -422,7 +431,7 @@
        :name "Costa Rica"
        :native "Costa Rica"
        :phone "506"}
-      :CU
+      :cu
       {:capital "Havana"
        :continent "NA"
        :currency "CUC,CUP"
@@ -430,7 +439,7 @@
        :name "Cuba"
        :native "Cuba"
        :phone "53"}
-      :CV
+      :cv
       {:capital "Praia"
        :continent "AF"
        :currency "CVE"
@@ -438,7 +447,7 @@
        :name "Cape Verde"
        :native "Cabo Verde"
        :phone "238"}
-      :CW
+      :cw
       {:capital "Willemstad"
        :continent "NA"
        :currency "ANG"
@@ -446,7 +455,7 @@
        :name "Curacao"
        :native "Curaçao"
        :phone "5999"}
-      :CX
+      :cx
       {:capital "Flying Fish Cove"
        :continent "AS"
        :currency "AUD"
@@ -454,7 +463,7 @@
        :name "Christmas Island"
        :native "Christmas Island"
        :phone "61"}
-      :CY
+      :cy
       {:capital "Nicosia"
        :continent "EU"
        :currency "EUR"
@@ -462,7 +471,7 @@
        :name "Cyprus"
        :native "Κύπρος"
        :phone "357"}
-      :CZ
+      :cz
       {:capital "Prague"
        :continent "EU"
        :currency "CZK"
@@ -470,7 +479,7 @@
        :name "Czech Republic"
        :native "Česká republika"
        :phone "420"}
-      :DE
+      :de
       {:capital "Berlin"
        :continent "EU"
        :currency "EUR"
@@ -478,7 +487,7 @@
        :name "Germany"
        :native "Deutschland"
        :phone "49"}
-      :DJ
+      :dj
       {:capital "Djibouti"
        :continent "AF"
        :currency "DJF"
@@ -486,7 +495,7 @@
        :name "Djibouti"
        :native "Djibouti"
        :phone "253"}
-      :DK
+      :dk
       {:capital "Copenhagen"
        :continent "EU"
        :currency "DKK"
@@ -494,7 +503,7 @@
        :name "Denmark"
        :native "Danmark"
        :phone "45"}
-      :DM
+      :dm
       {:capital "Roseau"
        :continent "NA"
        :currency "XCD"
@@ -502,7 +511,7 @@
        :name "Dominica"
        :native "Dominica"
        :phone "1767"}
-      :DO
+      :do
       {:capital "Santo Domingo"
        :continent "NA"
        :currency "DOP"
@@ -510,7 +519,7 @@
        :name "Dominican Republic"
        :native "República Dominicana"
        :phone "1809,1829,1849"}
-      :DZ
+      :dz
       {:capital "Algiers"
        :continent "AF"
        :currency "DZD"
@@ -518,7 +527,7 @@
        :name "Algeria"
        :native "الجزائر"
        :phone "213"}
-      :EC
+      :ec
       {:capital "Quito"
        :continent "SA"
        :currency "USD"
@@ -526,7 +535,7 @@
        :name "Ecuador"
        :native "Ecuador"
        :phone "593"}
-      :EE
+      :ee
       {:capital "Tallinn"
        :continent "EU"
        :currency "EUR"
@@ -534,7 +543,7 @@
        :name "Estonia"
        :native "Eesti"
        :phone "372"}
-      :EG
+      :eg
       {:capital "Cairo"
        :continent "AF"
        :currency "EGP"
@@ -542,7 +551,7 @@
        :name "Egypt"
        :native "مصر‎"
        :phone "20"}
-      :EH
+      :eh
       {:capital "El Aaiún"
        :continent "AF"
        :currency "MAD,DZD,MRU"
@@ -550,7 +559,7 @@
        :name "Western Sahara"
        :native "الصحراء الغربية"
        :phone "212"}
-      :ER
+      :er
       {:capital "Asmara"
        :continent "AF"
        :currency "ERN"
@@ -558,7 +567,7 @@
        :name "Eritrea"
        :native "ኤርትራ"
        :phone "291"}
-      :ES
+      :es
       {:capital "Madrid"
        :continent "EU"
        :currency "EUR"
@@ -566,7 +575,7 @@
        :name "Spain"
        :native "España"
        :phone "34"}
-      :ET
+      :et
       {:capital "Addis Ababa"
        :continent "AF"
        :currency "ETB"
@@ -574,7 +583,7 @@
        :name "Ethiopia"
        :native "ኢትዮጵያ"
        :phone "251"}
-      :FI
+      :fi
       {:capital "Helsinki"
        :continent "EU"
        :currency "EUR"
@@ -582,7 +591,7 @@
        :name "Finland"
        :native "Suomi"
        :phone "358"}
-      :FJ
+      :fj
       {:capital "Suva"
        :continent "OC"
        :currency "FJD"
@@ -590,7 +599,7 @@
        :name "Fiji"
        :native "Fiji"
        :phone "679"}
-      :FK
+      :fk
       {:capital "Stanley"
        :continent "SA"
        :currency "FKP"
@@ -598,7 +607,7 @@
        :name "Falkland Islands"
        :native "Falkland Islands"
        :phone "500"}
-      :FM
+      :fm
       {:capital "Palikir"
        :continent "OC"
        :currency "USD"
@@ -606,7 +615,7 @@
        :name "Micronesia"
        :native "Micronesia"
        :phone "691"}
-      :FO
+      :fo
       {:capital "Tórshavn"
        :continent "EU"
        :currency "DKK"
@@ -614,7 +623,7 @@
        :name "Faroe Islands"
        :native "Føroyar"
        :phone "298"}
-      :FR
+      :fr
       {:capital "Paris"
        :continent "EU"
        :currency "EUR"
@@ -622,7 +631,7 @@
        :name "France"
        :native "France"
        :phone "33"}
-      :GA
+      :ga
       {:capital "Libreville"
        :continent "AF"
        :currency "XAF"
@@ -630,7 +639,7 @@
        :name "Gabon"
        :native "Gabon"
        :phone "241"}
-      :GB
+      :gb
       {:capital "London"
        :continent "EU"
        :currency "GBP"
@@ -638,7 +647,7 @@
        :name "United Kingdom"
        :native "United Kingdom"
        :phone "44"}
-      :GD
+      :gd
       {:capital "St. George's"
        :continent "NA"
        :currency "XCD"
@@ -646,7 +655,7 @@
        :name "Grenada"
        :native "Grenada"
        :phone "1473"}
-      :GE
+      :ge
       {:capital "Tbilisi"
        :continent "AS"
        :currency "GEL"
@@ -654,7 +663,7 @@
        :name "Georgia"
        :native "საქართველო"
        :phone "995"}
-      :GF
+      :gf
       {:capital "Cayenne"
        :continent "SA"
        :currency "EUR"
@@ -662,7 +671,7 @@
        :name "French Guiana"
        :native "Guyane française"
        :phone "594"}
-      :GG
+      :gg
       {:capital "St. Peter Port"
        :continent "EU"
        :currency "GBP"
@@ -670,7 +679,7 @@
        :name "Guernsey"
        :native "Guernsey"
        :phone "44"}
-      :GH
+      :gh
       {:capital "Accra"
        :continent "AF"
        :currency "GHS"
@@ -678,7 +687,7 @@
        :name "Ghana"
        :native "Ghana"
        :phone "233"}
-      :GI
+      :gi
       {:capital "Gibraltar"
        :continent "EU"
        :currency "GIP"
@@ -686,7 +695,7 @@
        :name "Gibraltar"
        :native "Gibraltar"
        :phone "350"}
-      :GL
+      :gl
       {:capital "Nuuk"
        :continent "NA"
        :currency "DKK"
@@ -694,7 +703,7 @@
        :name "Greenland"
        :native "Kalaallit Nunaat"
        :phone "299"}
-      :GM
+      :gm
       {:capital "Banjul"
        :continent "AF"
        :currency "GMD"
@@ -702,7 +711,7 @@
        :name "Gambia"
        :native "Gambia"
        :phone "220"}
-      :GN
+      :gn
       {:capital "Conakry"
        :continent "AF"
        :currency "GNF"
@@ -710,7 +719,7 @@
        :name "Guinea"
        :native "Guinée"
        :phone "224"}
-      :GP
+      :gp
       {:capital "Basse-Terre"
        :continent "NA"
        :currency "EUR"
@@ -718,7 +727,7 @@
        :name "Guadeloupe"
        :native "Guadeloupe"
        :phone "590"}
-      :GQ
+      :gq
       {:capital "Malabo"
        :continent "AF"
        :currency "XAF"
@@ -726,7 +735,7 @@
        :name "Equatorial Guinea"
        :native "Guinea Ecuatorial"
        :phone "240"}
-      :GR
+      :gr
       {:capital "Athens"
        :continent "EU"
        :currency "EUR"
@@ -734,7 +743,7 @@
        :name "Greece"
        :native "Ελλάδα"
        :phone "30"}
-      :GS
+      :gs
       {:capital "King Edward Point"
        :continent "AN"
        :currency "GBP"
@@ -742,7 +751,7 @@
        :name "South Georgia and the South Sandwich Islands"
        :native "South Georgia"
        :phone "500"}
-      :GT
+      :gt
       {:capital "Guatemala City"
        :continent "NA"
        :currency "GTQ"
@@ -750,7 +759,7 @@
        :name "Guatemala"
        :native "Guatemala"
        :phone "502"}
-      :GU
+      :gu
       {:capital "Hagåtña"
        :continent "OC"
        :currency "USD"
@@ -758,7 +767,7 @@
        :name "Guam"
        :native "Guam"
        :phone "1671"}
-      :GW
+      :gw
       {:capital "Bissau"
        :continent "AF"
        :currency "XOF"
@@ -766,7 +775,7 @@
        :name "Guinea-Bissau"
        :native "Guiné-Bissau"
        :phone "245"}
-      :GY
+      :gy
       {:capital "Georgetown"
        :continent "SA"
        :currency "GYD"
@@ -774,7 +783,7 @@
        :name "Guyana"
        :native "Guyana"
        :phone "592"}
-      :HK
+      :hk
       {:capital "City of Victoria"
        :continent "AS"
        :currency "HKD"
@@ -782,7 +791,7 @@
        :name "Hong Kong"
        :native "香港"
        :phone "852"}
-      :HM
+      :hm
       {:capital ""
        :continent "AN"
        :currency "AUD"
@@ -790,7 +799,7 @@
        :name "Heard Island and McDonald Islands"
        :native "Heard Island and McDonald Islands"
        :phone "61"}
-      :HN
+      :hn
       {:capital "Tegucigalpa"
        :continent "NA"
        :currency "HNL"
@@ -798,7 +807,7 @@
        :name "Honduras"
        :native "Honduras"
        :phone "504"}
-      :HR
+      :hr
       {:capital "Zagreb"
        :continent "EU"
        :currency "HRK"
@@ -806,7 +815,7 @@
        :name "Croatia"
        :native "Hrvatska"
        :phone "385"}
-      :HT
+      :ht
       {:capital "Port-au-Prince"
        :continent "NA"
        :currency "HTG,USD"
@@ -814,7 +823,7 @@
        :name "Haiti"
        :native "Haïti"
        :phone "509"}
-      :HU
+      :hu
       {:capital "Budapest"
        :continent "EU"
        :currency "HUF"
@@ -822,7 +831,7 @@
        :name "Hungary"
        :native "Magyarország"
        :phone "36"}
-      :ID
+      :id
       {:capital "Jakarta"
        :continent "AS"
        :currency "IDR"
@@ -830,7 +839,7 @@
        :name "Indonesia"
        :native "Indonesia"
        :phone "62"}
-      :IE
+      :ie
       {:capital "Dublin"
        :continent "EU"
        :currency "EUR"
@@ -838,7 +847,7 @@
        :name "Ireland"
        :native "Éire"
        :phone "353"}
-      :IL
+      :il
       {:capital "Jerusalem"
        :continent "AS"
        :currency "ILS"
@@ -846,7 +855,7 @@
        :name "Israel"
        :native "יִשְׂרָאֵל"
        :phone "972"}
-      :IM
+      :im
       {:capital "Douglas"
        :continent "EU"
        :currency "GBP"
@@ -854,7 +863,7 @@
        :name "Isle of Man"
        :native "Isle of Man"
        :phone "44"}
-      :IN
+      :in
       {:capital "New Delhi"
        :continent "AS"
        :currency "INR"
@@ -862,7 +871,7 @@
        :name "India"
        :native "भारत"
        :phone "91"}
-      :IO
+      :io
       {:capital "Diego Garcia"
        :continent "AS"
        :currency "USD"
@@ -870,7 +879,7 @@
        :name "British Indian Ocean Territory"
        :native "British Indian Ocean Territory"
        :phone "246"}
-      :IQ
+      :iq
       {:capital "Baghdad"
        :continent "AS"
        :currency "IQD"
@@ -878,7 +887,7 @@
        :name "Iraq"
        :native "العراق"
        :phone "964"}
-      :IR
+      :ir
       {:capital "Tehran"
        :continent "AS"
        :currency "IRR"
@@ -886,7 +895,7 @@
        :name "Iran"
        :native "ایران"
        :phone "98"}
-      :IS
+      :is
       {:capital "Reykjavik"
        :continent "EU"
        :currency "ISK"
@@ -894,7 +903,7 @@
        :name "Iceland"
        :native "Ísland"
        :phone "354"}
-      :IT
+      :it
       {:capital "Rome"
        :continent "EU"
        :currency "EUR"
@@ -902,7 +911,7 @@
        :name "Italy"
        :native "Italia"
        :phone "39"}
-      :JE
+      :je
       {:capital "Saint Helier"
        :continent "EU"
        :currency "GBP"
@@ -910,7 +919,7 @@
        :name "Jersey"
        :native "Jersey"
        :phone "44"}
-      :JM
+      :jm
       {:capital "Kingston"
        :continent "NA"
        :currency "JMD"
@@ -918,7 +927,7 @@
        :name "Jamaica"
        :native "Jamaica"
        :phone "1876"}
-      :JO
+      :jo
       {:capital "Amman"
        :continent "AS"
        :currency "JOD"
@@ -926,7 +935,7 @@
        :name "Jordan"
        :native "الأردن"
        :phone "962"}
-      :JP
+      :jp
       {:capital "Tokyo"
        :continent "AS"
        :currency "JPY"
@@ -934,7 +943,7 @@
        :name "Japan"
        :native "日本"
        :phone "81"}
-      :KE
+      :ke
       {:capital "Nairobi"
        :continent "AF"
        :currency "KES"
@@ -942,7 +951,7 @@
        :name "Kenya"
        :native "Kenya"
        :phone "254"}
-      :KG
+      :kg
       {:capital "Bishkek"
        :continent "AS"
        :currency "KGS"
@@ -950,7 +959,7 @@
        :name "Kyrgyzstan"
        :native "Кыргызстан"
        :phone "996"}
-      :KH
+      :kh
       {:capital "Phnom Penh"
        :continent "AS"
        :currency "KHR"
@@ -958,7 +967,7 @@
        :name "Cambodia"
        :native "Kâmpŭchéa"
        :phone "855"}
-      :KI
+      :ki
       {:capital "South Tarawa"
        :continent "OC"
        :currency "AUD"
@@ -966,7 +975,7 @@
        :name "Kiribati"
        :native "Kiribati"
        :phone "686"}
-      :KM
+      :km
       {:capital "Moroni"
        :continent "AF"
        :currency "KMF"
@@ -974,7 +983,7 @@
        :name "Comoros"
        :native "Komori"
        :phone "269"}
-      :KN
+      :kn
       {:capital "Basseterre"
        :continent "NA"
        :currency "XCD"
@@ -982,7 +991,7 @@
        :name "Saint Kitts and Nevis"
        :native "Saint Kitts and Nevis"
        :phone "1869"}
-      :KP
+      :kp
       {:capital "Pyongyang"
        :continent "AS"
        :currency "KPW"
@@ -990,7 +999,7 @@
        :name "North Korea"
        :native "북한"
        :phone "850"}
-      :KR
+      :kr
       {:capital "Seoul"
        :continent "AS"
        :currency "KRW"
@@ -998,7 +1007,7 @@
        :name "South Korea"
        :native "대한민국"
        :phone "82"}
-      :KW
+      :kw
       {:capital "Kuwait City"
        :continent "AS"
        :currency "KWD"
@@ -1006,7 +1015,7 @@
        :name "Kuwait"
        :native "الكويت"
        :phone "965"}
-      :KY
+      :ky
       {:capital "George Town"
        :continent "NA"
        :currency "KYD"
@@ -1014,7 +1023,7 @@
        :name "Cayman Islands"
        :native "Cayman Islands"
        :phone "1345"}
-      :KZ
+      :kz
       {:capital "Astana"
        :continent "AS"
        :currency "KZT"
@@ -1022,7 +1031,7 @@
        :name "Kazakhstan"
        :native "Қазақстан"
        :phone "76,77"}
-      :LA
+      :la
       {:capital "Vientiane"
        :continent "AS"
        :currency "LAK"
@@ -1030,7 +1039,7 @@
        :name "Laos"
        :native "ສປປລາວ"
        :phone "856"}
-      :LB
+      :lb
       {:capital "Beirut"
        :continent "AS"
        :currency "LBP"
@@ -1038,7 +1047,7 @@
        :name "Lebanon"
        :native "لبنان"
        :phone "961"}
-      :LC
+      :lc
       {:capital "Castries"
        :continent "NA"
        :currency "XCD"
@@ -1046,7 +1055,7 @@
        :name "Saint Lucia"
        :native "Saint Lucia"
        :phone "1758"}
-      :LI
+      :li
       {:capital "Vaduz"
        :continent "EU"
        :currency "CHF"
@@ -1054,7 +1063,7 @@
        :name "Liechtenstein"
        :native "Liechtenstein"
        :phone "423"}
-      :LK
+      :lk
       {:capital "Colombo"
        :continent "AS"
        :currency "LKR"
@@ -1062,7 +1071,7 @@
        :name "Sri Lanka"
        :native "śrī laṃkāva"
        :phone "94"}
-      :LR
+      :lr
       {:capital "Monrovia"
        :continent "AF"
        :currency "LRD"
@@ -1070,7 +1079,7 @@
        :name "Liberia"
        :native "Liberia"
        :phone "231"}
-      :LS
+      :ls
       {:capital "Maseru"
        :continent "AF"
        :currency "LSL,ZAR"
@@ -1078,7 +1087,7 @@
        :name "Lesotho"
        :native "Lesotho"
        :phone "266"}
-      :LT
+      :lt
       {:capital "Vilnius"
        :continent "EU"
        :currency "EUR"
@@ -1086,7 +1095,7 @@
        :name "Lithuania"
        :native "Lietuva"
        :phone "370"}
-      :LU
+      :lu
       {:capital "Luxembourg"
        :continent "EU"
        :currency "EUR"
@@ -1094,7 +1103,7 @@
        :name "Luxembourg"
        :native "Luxembourg"
        :phone "352"}
-      :LV
+      :lv
       {:capital "Riga"
        :continent "EU"
        :currency "EUR"
@@ -1102,7 +1111,7 @@
        :name "Latvia"
        :native "Latvija"
        :phone "371"}
-      :LY
+      :ly
       {:capital "Tripoli"
        :continent "AF"
        :currency "LYD"
@@ -1110,7 +1119,7 @@
        :name "Libya"
        :native "‏ليبيا"
        :phone "218"}
-      :MA
+      :ma
       {:capital "Rabat"
        :continent "AF"
        :currency "MAD"
@@ -1118,7 +1127,7 @@
        :name "Morocco"
        :native "المغرب"
        :phone "212"}
-      :MC
+      :mc
       {:capital "Monaco"
        :continent "EU"
        :currency "EUR"
@@ -1126,7 +1135,7 @@
        :name "Monaco"
        :native "Monaco"
        :phone "377"}
-      :MD
+      :md
       {:capital "Chișinău"
        :continent "EU"
        :currency "MDL"
@@ -1134,7 +1143,7 @@
        :name "Moldova"
        :native "Moldova"
        :phone "373"}
-      :ME
+      :me
       {:capital "Podgorica"
        :continent "EU"
        :currency "EUR"
@@ -1142,7 +1151,7 @@
        :name "Montenegro"
        :native "Црна Гора"
        :phone "382"}
-      :MF
+      :mf
       {:capital "Marigot"
        :continent "NA"
        :currency "EUR"
@@ -1150,7 +1159,7 @@
        :name "Saint Martin"
        :native "Saint-Martin"
        :phone "590"}
-      :MG
+      :mg
       {:capital "Antananarivo"
        :continent "AF"
        :currency "MGA"
@@ -1158,7 +1167,7 @@
        :name "Madagascar"
        :native "Madagasikara"
        :phone "261"}
-      :MH
+      :mh
       {:capital "Majuro"
        :continent "OC"
        :currency "USD"
@@ -1166,7 +1175,7 @@
        :name "Marshall Islands"
        :native "M̧ajeļ"
        :phone "692"}
-      :MK
+      :mk
       {:capital "Skopje"
        :continent "EU"
        :currency "MKD"
@@ -1174,7 +1183,7 @@
        :name "North Macedonia"
        :native "Северна Македонија"
        :phone "389"}
-      :ML
+      :ml
       {:capital "Bamako"
        :continent "AF"
        :currency "XOF"
@@ -1182,7 +1191,7 @@
        :name "Mali"
        :native "Mali"
        :phone "223"}
-      :MM
+      :mm
       {:capital "Naypyidaw"
        :continent "AS"
        :currency "MMK"
@@ -1190,7 +1199,7 @@
        :name "Myanmar [Burma]"
        :native "မြန်မာ"
        :phone "95"}
-      :MN
+      :mn
       {:capital "Ulan Bator"
        :continent "AS"
        :currency "MNT"
@@ -1198,7 +1207,7 @@
        :name "Mongolia"
        :native "Монгол улс"
        :phone "976"}
-      :MO
+      :mo
       {:capital ""
        :continent "AS"
        :currency "MOP"
@@ -1206,7 +1215,7 @@
        :name "Macao"
        :native "澳門"
        :phone "853"}
-      :MP
+      :mp
       {:capital "Saipan"
        :continent "OC"
        :currency "USD"
@@ -1214,7 +1223,7 @@
        :name "Northern Mariana Islands"
        :native "Northern Mariana Islands"
        :phone "1670"}
-      :MQ
+      :mq
       {:capital "Fort-de-France"
        :continent "NA"
        :currency "EUR"
@@ -1222,7 +1231,7 @@
        :name "Martinique"
        :native "Martinique"
        :phone "596"}
-      :MR
+      :mr
       {:capital "Nouakchott"
        :continent "AF"
        :currency "MRU"
@@ -1230,7 +1239,7 @@
        :name "Mauritania"
        :native "موريتانيا"
        :phone "222"}
-      :MS
+      :ms
       {:capital "Plymouth"
        :continent "NA"
        :currency "XCD"
@@ -1238,7 +1247,7 @@
        :name "Montserrat"
        :native "Montserrat"
        :phone "1664"}
-      :MT
+      :mt
       {:capital "Valletta"
        :continent "EU"
        :currency "EUR"
@@ -1246,7 +1255,7 @@
        :name "Malta"
        :native "Malta"
        :phone "356"}
-      :MU
+      :mu
       {:capital "Port Louis"
        :continent "AF"
        :currency "MUR"
@@ -1254,7 +1263,7 @@
        :name "Mauritius"
        :native "Maurice"
        :phone "230"}
-      :MV
+      :mv
       {:capital "Malé"
        :continent "AS"
        :currency "MVR"
@@ -1262,7 +1271,7 @@
        :name "Maldives"
        :native "Maldives"
        :phone "960"}
-      :MW
+      :mw
       {:capital "Lilongwe"
        :continent "AF"
        :currency "MWK"
@@ -1270,7 +1279,7 @@
        :name "Malawi"
        :native "Malawi"
        :phone "265"}
-      :MX
+      :mx
       {:capital "Mexico City"
        :continent "NA"
        :currency "MXN"
@@ -1278,7 +1287,7 @@
        :name "Mexico"
        :native "México"
        :phone "52"}
-      :MY
+      :my
       {:capital "Kuala Lumpur"
        :continent "AS"
        :currency "MYR"
@@ -1286,7 +1295,7 @@
        :name "Malaysia"
        :native "Malaysia"
        :phone "60"}
-      :MZ
+      :mz
       {:capital "Maputo"
        :continent "AF"
        :currency "MZN"
@@ -1294,7 +1303,7 @@
        :name "Mozambique"
        :native "Moçambique"
        :phone "258"}
-      :NA
+      :na
       {:capital "Windhoek"
        :continent "AF"
        :currency "NAD,ZAR"
@@ -1302,7 +1311,7 @@
        :name "Namibia"
        :native "Namibia"
        :phone "264"}
-      :NC
+      :nc
       {:capital "Nouméa"
        :continent "OC"
        :currency "XPF"
@@ -1310,7 +1319,7 @@
        :name "New Caledonia"
        :native "Nouvelle-Calédonie"
        :phone "687"}
-      :NE
+      :ne
       {:capital "Niamey"
        :continent "AF"
        :currency "XOF"
@@ -1318,7 +1327,7 @@
        :name "Niger"
        :native "Niger"
        :phone "227"}
-      :NF
+      :nf
       {:capital "Kingston"
        :continent "OC"
        :currency "AUD"
@@ -1326,7 +1335,7 @@
        :name "Norfolk Island"
        :native "Norfolk Island"
        :phone "672"}
-      :NG
+      :ng
       {:capital "Abuja"
        :continent "AF"
        :currency "NGN"
@@ -1334,7 +1343,7 @@
        :name "Nigeria"
        :native "Nigeria"
        :phone "234"}
-      :NI
+      :ni
       {:capital "Managua"
        :continent "NA"
        :currency "NIO"
@@ -1342,7 +1351,7 @@
        :name "Nicaragua"
        :native "Nicaragua"
        :phone "505"}
-      :NL
+      :nl
       {:capital "Amsterdam"
        :continent "EU"
        :currency "EUR"
@@ -1350,7 +1359,7 @@
        :name "Netherlands"
        :native "Nederland"
        :phone "31"}
-      :NO
+      :no
       {:capital "Oslo"
        :continent "EU"
        :currency "NOK"
@@ -1358,7 +1367,7 @@
        :name "Norway"
        :native "Norge"
        :phone "47"}
-      :NP
+      :np
       {:capital "Kathmandu"
        :continent "AS"
        :currency "NPR"
@@ -1366,7 +1375,7 @@
        :name "Nepal"
        :native "नपल"
        :phone "977"}
-      :NR
+      :nr
       {:capital "Yaren"
        :continent "OC"
        :currency "AUD"
@@ -1374,7 +1383,7 @@
        :name "Nauru"
        :native "Nauru"
        :phone "674"}
-      :NU
+      :nu
       {:capital "Alofi"
        :continent "OC"
        :currency "NZD"
@@ -1382,7 +1391,7 @@
        :name "Niue"
        :native "Niuē"
        :phone "683"}
-      :NZ
+      :nz
       {:capital "Wellington"
        :continent "OC"
        :currency "NZD"
@@ -1390,7 +1399,7 @@
        :name "New Zealand"
        :native "New Zealand"
        :phone "64"}
-      :OM
+      :om
       {:capital "Muscat"
        :continent "AS"
        :currency "OMR"
@@ -1398,7 +1407,7 @@
        :name "Oman"
        :native "عمان"
        :phone "968"}
-      :PA
+      :pa
       {:capital "Panama City"
        :continent "NA"
        :currency "PAB,USD"
@@ -1406,7 +1415,7 @@
        :name "Panama"
        :native "Panamá"
        :phone "507"}
-      :PE
+      :pe
       {:capital "Lima"
        :continent "SA"
        :currency "PEN"
@@ -1414,7 +1423,7 @@
        :name "Peru"
        :native "Perú"
        :phone "51"}
-      :PF
+      :pf
       {:capital "Papeetē"
        :continent "OC"
        :currency "XPF"
@@ -1422,7 +1431,7 @@
        :name "French Polynesia"
        :native "Polynésie française"
        :phone "689"}
-      :PG
+      :pg
       {:capital "Port Moresby"
        :continent "OC"
        :currency "PGK"
@@ -1430,7 +1439,7 @@
        :name "Papua New Guinea"
        :native "Papua Niugini"
        :phone "675"}
-      :PH
+      :ph
       {:capital "Manila"
        :continent "AS"
        :currency "PHP"
@@ -1438,7 +1447,7 @@
        :name "Philippines"
        :native "Pilipinas"
        :phone "63"}
-      :PK
+      :pk
       {:capital "Islamabad"
        :continent "AS"
        :currency "PKR"
@@ -1446,7 +1455,7 @@
        :name "Pakistan"
        :native "Pakistan"
        :phone "92"}
-      :PL
+      :pl
       {:capital "Warsaw"
        :continent "EU"
        :currency "PLN"
@@ -1454,7 +1463,7 @@
        :name "Poland"
        :native "Polska"
        :phone "48"}
-      :PM
+      :pm
       {:capital "Saint-Pierre"
        :continent "NA"
        :currency "EUR"
@@ -1462,7 +1471,7 @@
        :name "Saint Pierre and Miquelon"
        :native "Saint-Pierre-et-Miquelon"
        :phone "508"}
-      :PN
+      :pn
       {:capital "Adamstown"
        :continent "OC"
        :currency "NZD"
@@ -1470,7 +1479,7 @@
        :name "Pitcairn Islands"
        :native "Pitcairn Islands"
        :phone "64"}
-      :PR
+      :pr
       {:capital "San Juan"
        :continent "NA"
        :currency "USD"
@@ -1478,7 +1487,7 @@
        :name "Puerto Rico"
        :native "Puerto Rico"
        :phone "1787,1939"}
-      :PS
+      :ps
       {:capital "Ramallah"
        :continent "AS"
        :currency "ILS"
@@ -1486,7 +1495,7 @@
        :name "Palestine"
        :native "فلسطين"
        :phone "970"}
-      :PT
+      :pt
       {:capital "Lisbon"
        :continent "EU"
        :currency "EUR"
@@ -1494,7 +1503,7 @@
        :name "Portugal"
        :native "Portugal"
        :phone "351"}
-      :PW
+      :pw
       {:capital "Ngerulmud"
        :continent "OC"
        :currency "USD"
@@ -1502,7 +1511,7 @@
        :name "Palau"
        :native "Palau"
        :phone "680"}
-      :PY
+      :py
       {:capital "Asunción"
        :continent "SA"
        :currency "PYG"
@@ -1510,7 +1519,7 @@
        :name "Paraguay"
        :native "Paraguay"
        :phone "595"}
-      :QA
+      :qa
       {:capital "Doha"
        :continent "AS"
        :currency "QAR"
@@ -1518,7 +1527,7 @@
        :name "Qatar"
        :native "قطر"
        :phone "974"}
-      :RE
+      :re
       {:capital "Saint-Denis"
        :continent "AF"
        :currency "EUR"
@@ -1526,7 +1535,7 @@
        :name "Réunion"
        :native "La Réunion"
        :phone "262"}
-      :RO
+      :ro
       {:capital "Bucharest"
        :continent "EU"
        :currency "RON"
@@ -1534,7 +1543,7 @@
        :name "Romania"
        :native "România"
        :phone "40"}
-      :RS
+      :rs
       {:capital "Belgrade"
        :continent "EU"
        :currency "RSD"
@@ -1542,7 +1551,7 @@
        :name "Serbia"
        :native "Србија"
        :phone "381"}
-      :RU
+      :ru
       {:capital "Moscow"
        :continent "EU"
        :currency "RUB"
@@ -1550,7 +1559,7 @@
        :name "Russia"
        :native "Россия"
        :phone "7"}
-      :RW
+      :rw
       {:capital "Kigali"
        :continent "AF"
        :currency "RWF"
@@ -1558,7 +1567,7 @@
        :name "Rwanda"
        :native "Rwanda"
        :phone "250"}
-      :SA
+      :sa
       {:capital "Riyadh"
        :continent "AS"
        :currency "SAR"
@@ -1566,7 +1575,7 @@
        :name "Saudi Arabia"
        :native "العربية السعودية"
        :phone "966"}
-      :SB
+      :sb
       {:capital "Honiara"
        :continent "OC"
        :currency "SBD"
@@ -1574,7 +1583,7 @@
        :name "Solomon Islands"
        :native "Solomon Islands"
        :phone "677"}
-      :SC
+      :sc
       {:capital "Victoria"
        :continent "AF"
        :currency "SCR"
@@ -1582,7 +1591,7 @@
        :name "Seychelles"
        :native "Seychelles"
        :phone "248"}
-      :SD
+      :sd
       {:capital "Khartoum"
        :continent "AF"
        :currency "SDG"
@@ -1590,7 +1599,7 @@
        :name "Sudan"
        :native "السودان"
        :phone "249"}
-      :SE
+      :se
       {:capital "Stockholm"
        :continent "EU"
        :currency "SEK"
@@ -1598,7 +1607,7 @@
        :name "Sweden"
        :native "Sverige"
        :phone "46"}
-      :SG
+      :sg
       {:capital "Singapore"
        :continent "AS"
        :currency "SGD"
@@ -1606,7 +1615,7 @@
        :name "Singapore"
        :native "Singapore"
        :phone "65"}
-      :SH
+      :sh
       {:capital "Jamestown"
        :continent "AF"
        :currency "SHP"
@@ -1614,7 +1623,7 @@
        :name "Saint Helena"
        :native "Saint Helena"
        :phone "290"}
-      :SI
+      :si
       {:capital "Ljubljana"
        :continent "EU"
        :currency "EUR"
@@ -1622,7 +1631,7 @@
        :name "Slovenia"
        :native "Slovenija"
        :phone "386"}
-      :SJ
+      :sj
       {:capital "Longyearbyen"
        :continent "EU"
        :currency "NOK"
@@ -1630,7 +1639,7 @@
        :name "Svalbard and Jan Mayen"
        :native "Svalbard og Jan Mayen"
        :phone "4779"}
-      :SK
+      :sk
       {:capital "Bratislava"
        :continent "EU"
        :currency "EUR"
@@ -1638,7 +1647,7 @@
        :name "Slovakia"
        :native "Slovensko"
        :phone "421"}
-      :SL
+      :sl
       {:capital "Freetown"
        :continent "AF"
        :currency "SLL"
@@ -1646,7 +1655,7 @@
        :name "Sierra Leone"
        :native "Sierra Leone"
        :phone "232"}
-      :SM
+      :sm
       {:capital "City of San Marino"
        :continent "EU"
        :currency "EUR"
@@ -1654,7 +1663,7 @@
        :name "San Marino"
        :native "San Marino"
        :phone "378"}
-      :SN
+      :sn
       {:capital "Dakar"
        :continent "AF"
        :currency "XOF"
@@ -1662,7 +1671,7 @@
        :name "Senegal"
        :native "Sénégal"
        :phone "221"}
-      :SO
+      :so
       {:capital "Mogadishu"
        :continent "AF"
        :currency "SOS"
@@ -1670,7 +1679,7 @@
        :name "Somalia"
        :native "Soomaaliya"
        :phone "252"}
-      :SR
+      :sr
       {:capital "Paramaribo"
        :continent "SA"
        :currency "SRD"
@@ -1678,7 +1687,7 @@
        :name "Suriname"
        :native "Suriname"
        :phone "597"}
-      :SS
+      :ss
       {:capital "Juba"
        :continent "AF"
        :currency "SSP"
@@ -1686,7 +1695,7 @@
        :name "South Sudan"
        :native "South Sudan"
        :phone "211"}
-      :ST
+      :st
       {:capital "São Tomé"
        :continent "AF"
        :currency "STN"
@@ -1694,7 +1703,7 @@
        :name "São Tomé and Príncipe"
        :native "São Tomé e Príncipe"
        :phone "239"}
-      :SV
+      :sv
       {:capital "San Salvador"
        :continent "NA"
        :currency "SVC,USD"
@@ -1702,7 +1711,7 @@
        :name "El Salvador"
        :native "El Salvador"
        :phone "503"}
-      :SX
+      :sx
       {:capital "Philipsburg"
        :continent "NA"
        :currency "ANG"
@@ -1710,7 +1719,7 @@
        :name "Sint Maarten"
        :native "Sint Maarten"
        :phone "1721"}
-      :SY
+      :sy
       {:capital "Damascus"
        :continent "AS"
        :currency "SYP"
@@ -1718,7 +1727,7 @@
        :name "Syria"
        :native "سوريا"
        :phone "963"}
-      :SZ
+      :sz
       {:capital "Lobamba"
        :continent "AF"
        :currency "SZL"
@@ -1726,7 +1735,7 @@
        :name "Swaziland"
        :native "Swaziland"
        :phone "268"}
-      :TC
+      :tc
       {:capital "Cockburn Town"
        :continent "NA"
        :currency "USD"
@@ -1734,7 +1743,7 @@
        :name "Turks and Caicos Islands"
        :native "Turks and Caicos Islands"
        :phone "1649"}
-      :TD
+      :td
       {:capital "N'Djamena"
        :continent "AF"
        :currency "XAF"
@@ -1742,7 +1751,7 @@
        :name "Chad"
        :native "Tchad"
        :phone "235"}
-      :TF
+      :tf
       {:capital "Port-aux-Français"
        :continent "AN"
        :currency "EUR"
@@ -1750,7 +1759,7 @@
        :name "French Southern Territories"
        :native "Territoire des Terres australes et antarctiques fr"
        :phone "262"}
-      :TG
+      :tg
       {:capital "Lomé"
        :continent "AF"
        :currency "XOF"
@@ -1758,7 +1767,7 @@
        :name "Togo"
        :native "Togo"
        :phone "228"}
-      :TH
+      :th
       {:capital "Bangkok"
        :continent "AS"
        :currency "THB"
@@ -1766,7 +1775,7 @@
        :name "Thailand"
        :native "ประเทศไทย"
        :phone "66"}
-      :TJ
+      :tj
       {:capital "Dushanbe"
        :continent "AS"
        :currency "TJS"
@@ -1774,7 +1783,7 @@
        :name "Tajikistan"
        :native "Тоҷикистон"
        :phone "992"}
-      :TK
+      :tk
       {:capital "Fakaofo"
        :continent "OC"
        :currency "NZD"
@@ -1782,7 +1791,7 @@
        :name "Tokelau"
        :native "Tokelau"
        :phone "690"}
-      :TL
+      :tl
       {:capital "Dili"
        :continent "OC"
        :currency "USD"
@@ -1790,7 +1799,7 @@
        :name "East Timor"
        :native "Timor-Leste"
        :phone "670"}
-      :TM
+      :tm
       {:capital "Ashgabat"
        :continent "AS"
        :currency "TMT"
@@ -1798,7 +1807,7 @@
        :name "Turkmenistan"
        :native "Türkmenistan"
        :phone "993"}
-      :TN
+      :tn
       {:capital "Tunis"
        :continent "AF"
        :currency "TND"
@@ -1806,7 +1815,7 @@
        :name "Tunisia"
        :native "تونس"
        :phone "216"}
-      :TO
+      :to
       {:capital "Nuku'alofa"
        :continent "OC"
        :currency "TOP"
@@ -1814,7 +1823,7 @@
        :name "Tonga"
        :native "Tonga"
        :phone "676"}
-      :TR
+      :tr
       {:capital "Ankara"
        :continent "AS"
        :currency "TRY"
@@ -1822,7 +1831,7 @@
        :name "Turkey"
        :native "Türkiye"
        :phone "90"}
-      :TT
+      :tt
       {:capital "Port of Spain"
        :continent "NA"
        :currency "TTD"
@@ -1830,7 +1839,7 @@
        :name "Trinidad and Tobago"
        :native "Trinidad and Tobago"
        :phone "1868"}
-      :TV
+      :tv
       {:capital "Funafuti"
        :continent "OC"
        :currency "AUD"
@@ -1838,7 +1847,7 @@
        :name "Tuvalu"
        :native "Tuvalu"
        :phone "688"}
-      :TW
+      :tw
       {:capital "Taipei"
        :continent "AS"
        :currency "TWD"
@@ -1846,7 +1855,7 @@
        :name "Taiwan"
        :native "臺灣"
        :phone "886"}
-      :TZ
+      :tz
       {:capital "Dodoma"
        :continent "AF"
        :currency "TZS"
@@ -1854,7 +1863,7 @@
        :name "Tanzania"
        :native "Tanzania"
        :phone "255"}
-      :UA
+      :ua
       {:capital "Kyiv"
        :continent "EU"
        :currency "UAH"
@@ -1862,7 +1871,7 @@
        :name "Ukraine"
        :native "Україна"
        :phone "380"}
-      :UG
+      :ug
       {:capital "Kampala"
        :continent "AF"
        :currency "UGX"
@@ -1870,7 +1879,7 @@
        :name "Uganda"
        :native "Uganda"
        :phone "256"}
-      :UM
+      :um
       {:capital ""
        :continent "OC"
        :currency "USD"
@@ -1878,7 +1887,7 @@
        :name "U.S. Minor Outlying Islands"
        :native "United States Minor Outlying Islands"
        :phone "1"}
-      :US
+      :us
       {:capital "Washington D.C."
        :continent "NA"
        :currency "USD,USN,USS"
@@ -1886,7 +1895,7 @@
        :name "United States"
        :native "United States"
        :phone "1"}
-      :UY
+      :uy
       {:capital "Montevideo"
        :continent "SA"
        :currency "UYI,UYU"
@@ -1894,7 +1903,7 @@
        :name "Uruguay"
        :native "Uruguay"
        :phone "598"}
-      :UZ
+      :uz
       {:capital "Tashkent"
        :continent "AS"
        :currency "UZS"
@@ -1902,7 +1911,7 @@
        :name "Uzbekistan"
        :native "O‘zbekiston"
        :phone "998"}
-      :VA
+      :va
       {:capital "Vatican City"
        :continent "EU"
        :currency "EUR"
@@ -1910,7 +1919,7 @@
        :name "Vatican City"
        :native "Vaticano"
        :phone "379"}
-      :VC
+      :vc
       {:capital "Kingstown"
        :continent "NA"
        :currency "XCD"
@@ -1918,7 +1927,7 @@
        :name "Saint Vincent and the Grenadines"
        :native "Saint Vincent and the Grenadines"
        :phone "1784"}
-      :VE
+      :ve
       {:capital "Caracas"
        :continent "SA"
        :currency "VES"
@@ -1926,7 +1935,7 @@
        :name "Venezuela"
        :native "Venezuela"
        :phone "58"}
-      :VG
+      :vg
       {:capital "Road Town"
        :continent "NA"
        :currency "USD"
@@ -1934,7 +1943,7 @@
        :name "British Virgin Islands"
        :native "British Virgin Islands"
        :phone "1284"}
-      :VI
+      :vi
       {:capital "Charlotte Amalie"
        :continent "NA"
        :currency "USD"
@@ -1942,7 +1951,7 @@
        :name "U.S. Virgin Islands"
        :native "United States Virgin Islands"
        :phone "1340"}
-      :VN
+      :vn
       {:capital "Hanoi"
        :continent "AS"
        :currency "VND"
@@ -1950,7 +1959,7 @@
        :name "Vietnam"
        :native "Việt Nam"
        :phone "84"}
-      :VU
+      :vu
       {:capital "Port Vila"
        :continent "OC"
        :currency "VUV"
@@ -1958,7 +1967,7 @@
        :name "Vanuatu"
        :native "Vanuatu"
        :phone "678"}
-      :WF
+      :wf
       {:capital "Mata-Utu"
        :continent "OC"
        :currency "XPF"
@@ -1966,7 +1975,7 @@
        :name "Wallis and Futuna"
        :native "Wallis et Futuna"
        :phone "681"}
-      :WS
+      :ws
       {:capital "Apia"
        :continent "OC"
        :currency "WST"
@@ -1974,7 +1983,7 @@
        :name "Samoa"
        :native "Samoa"
        :phone "685"}
-      :XK
+      :xk
       {:capital "Pristina"
        :continent "EU"
        :currency "EUR"
@@ -1982,7 +1991,7 @@
        :name "Kosovo"
        :native "Republika e Kosovës"
        :phone "377,381,383,386"}
-      :YE
+      :ye
       {:capital "Sana'a"
        :continent "AS"
        :currency "YER"
@@ -1990,7 +1999,7 @@
        :name "Yemen"
        :native "اليَمَن"
        :phone "967"}
-      :YT
+      :yt
       {:capital "Mamoudzou"
        :continent "AF"
        :currency "EUR"
@@ -1998,7 +2007,7 @@
        :name "Mayotte"
        :native "Mayotte"
        :phone "262"}
-      :ZA
+      :za
       {:capital "Pretoria"
        :continent "AF"
        :currency "ZAR"
@@ -2006,7 +2015,7 @@
        :name "South Africa"
        :native "South Africa"
        :phone "27"}
-      :ZM
+      :zm
       {:capital "Lusaka"
        :continent "AF"
        :currency "ZMW"
@@ -2014,7 +2023,7 @@
        :name "Zambia"
        :native "Zambia"
        :phone "260"}
-      :ZW
+      :zw
       {:capital "Harare"
        :continent "AF"
        :currency "USD,ZAR,BWP,GBP,AUD,CNY,INR,JPY"
@@ -2022,3 +2031,94 @@
        :name "Zimbabwe"
        :native "Zimbabwe"
        :phone "263"}})
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn country-capital-city
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-native-name :hu)
+  ;  =>
+  ;  "Budapest"
+  ;
+  ; @return (string)
+  [country-code]
+  (get-in COUNTRY-LIST [country-code :capital]))
+
+(defn country-currencies
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-currencies :hu)
+  ;  =>
+  ;  "HUF"
+  ;
+  ; @return (string)
+  [country-code]
+  (get-in COUNTRY-LIST [country-code :currency]))
+
+(defn country-currency
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-currency :hu)
+  ;  =>
+  ;  "HUF"
+  ;
+  ; @return (string)
+  [country-code]
+  (let [country-currencies (country-currencies country-code)]
+       (string/before-first-occurence country-currencies ",")))
+
+(defn country-languages
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-languages :hu)
+  ;  =>
+  ;  ["hu"]
+  ;
+  ; @return (vector)
+  [country-code]
+  (get-in COUNTRY-LIST [country-code :languages]))
+
+(defn country-language
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-language :hu)
+  ;  =>
+  ;  "hu"
+  ;
+  ; @return (string)
+  [country-code]
+  (let [country-languages (country-languages country-code)]
+       (first country-languages)))
+
+(defn country-name
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-name :hu)
+  ;  =>
+  ;  "Magyarország"
+  ;
+  ; @return (string)
+  [country-code]
+  (get-in COUNTRY-LIST [country-code :name]))
+
+(defn country-native-name
+  ; @param (keyword)
+  ;
+  ; @example
+  ;  (locales/country-native-name :hu)
+  ;  =>
+  ;  "Magyarország"
+  ;
+  ; @return (string)
+  [country-code]
+  (get-in COUNTRY-LIST [country-code :native]))
