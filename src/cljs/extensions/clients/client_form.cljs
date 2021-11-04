@@ -51,34 +51,40 @@
 (defn- undo-delete-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/button {:label :undo-delete! :variant :transparent :horizontal-align :left :color :warning
+  [elements/button ::undo-delete-button
+                   {:label :undo-delete! :variant :transparent :horizontal-align :left :color :warning
                     :on-click [:clients/undo-last-deleted!]}])
 
 (defn- edit-copy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/button {:label :edit-copy! :variant :transparent :horizontal-align :left :color :primary
+  [elements/button ::edit-copy-button
+                   {:label :edit-copy! :variant :transparent :horizontal-align :left :color :primary
                     :on-click [:clients/edit-last-duplicated!]}])
 
 (defn- cancel-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:tooltip :cancel! :preset :cancel-icon-button :on-click [:x.app-router/go-to! "/clients"]}])
+  [elements/button ::cancel-client-button
+                   {:tooltip :cancel! :preset :cancel-icon-button :on-click [:x.app-router/go-to! "/clients"]}])
 
 (defn- delete-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:tooltip :delete! :preset :delete-icon-button :on-click [:clients/request-delete-client! "client-id"]}])
+  [elements/button ::delete-client-button
+                   {:tooltip :delete! :preset :delete-icon-button :on-click [:clients/request-delete-client! "client-id"]}])
 
 (defn- copy-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id header-props]
-  [elements/button {:tooltip :duplicate! :preset :duplicate-icon-button :on-click [:clients/request-duplicate-client! "client-id"]}])
+  [elements/button ::copy-client-button
+                   {:tooltip :duplicate! :preset :duplicate-icon-button :on-click [:clients/request-duplicate-client! "client-id"]}])
 
 (defn- save-client-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [form-completed?] :as header-props}]
-  [elements/button {:tooltip :save! :preset :save-icon-button :disabled? (not form-completed?)
+  [elements/button ::save-client-button
+                   {:tooltip :save! :preset :save-icon-button :disabled? (not form-completed?)
                     :on-click [:clients/request-save-client!]}])
 
 (defn- client-actions-buttons
@@ -90,7 +96,8 @@
 (defn- client-form-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [new-client?] :as header-props}]
-  [elements/polarity {:start-content [:<> (if (boolean new-client?)
+  [elements/polarity ::form-header
+                     {:start-content [:<> (if (boolean new-client?)
                                               ;[cancel-client-button   surface-id header-props])
                                               nil
                                               [client-actions-buttons surface-id header-props])]
@@ -100,59 +107,67 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
   [:div#clients--client-form--legal-details
-    [elements/text-field ::vat-no {:label :vat-no :value-path [:client :form-data :client/vat-no]
-                                   :emptiable? true}]])
+    [elements/text-field ::vat-no-field
+                         {:label :vat-no :value-path [:client :form-data :client/vat-no] :emptiable? true}]])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [selected-language] :as body-props}]
  [:div
   [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
-    [elements/select    ::country {:label :country :min-width :xxs
-                                   :initial-value   (locales/country-native-name selected-language)
-                                   :initial-options (param locales/EU-COUNTRY-NAMES)
-                                   :value-path [:clients :form-data :client/country]
-                                   :emptiable? true}]
-    [elements/text-field ::zip-code {:label :zip-code :min-width :xxs :emptiable? true}]
-    [elements/combo-box  ::city    {:label :city :options-path [:clients :form-meta :suggestions :cities]
-                                    :style {:flex-grow 1}
-                                    :value-path [:clients :form-data :client/city]
-                                    :initial-value "Makó"
-                                    :initial-options ["HMVH" "BP"]}]]
+    [elements/select ::country-field
+                     {:label :country :min-width :xxs :emptiable? true
+                      :initial-value   (locales/country-native-name selected-language)
+                      :initial-options (param locales/EU-COUNTRY-NAMES)
+                      :value-path [:clients :form-data :client/country]}]
+
+    [elements/text-field ::zip-code-field
+                         {:label :zip-code :min-width :xxs :emptiable? true}]
+    [elements/combo-box ::city-field
+                        {:label :city :options-path [:clients :form-meta :suggestions :cities]
+                         :style {:flex-grow 1}
+                         :value-path [:clients :form-data :client/city]
+                         :initial-value "Makó"
+                         :initial-options ["HMVH" "BP"]}]]
   [:div
-    [elements/text-field ::address  {:label :address :min-width :grow :value-path [:clients :form-data :client/address]
-                                     :emptiable? true}]]])
+    [elements/text-field ::address-field
+                         {:label :address :min-width :grow :value-path [:clients :form-data :client/address]
+                          :emptiable? true}]]])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id body-props]
   [:div#clients--client-form--primary-contacts
-    [elements/text-field ::email-address {:label :email-address :required? true :emptiable? true
-                                          :value-path [:clients :form-data :client/email-address]
-                                          :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
-                                          :form-id ::client-form
-                                          :min-width :l}]
-    [elements/text-field ::phone-number {:label :phone-number :required? true :emptiable? true
-                                         :value-path [:clients :form-data :client/phone-number]
-                                         :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
-                                         ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
-                                         ;:modifier form/valid-phone-number
-                                         :modifier #(string/starts-with! % "+")
-                                         :form-id ::client-form
-                                         :min-width :l}]])
+    [elements/text-field ::email-address-field
+                         {:label :email-address :required? true :emptiable? true
+                          :value-path [:clients :form-data :client/email-address]
+                          :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
+                          :form-id ::client-form
+                          :min-width :l}]
+    [elements/text-field ::phone-number-field
+                         {:label :phone-number :required? true :emptiable? true
+                          :value-path [:clients :form-data :client/phone-number]
+                          :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
+                          ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
+                          ;:modifier form/valid-phone-number
+                          :modifier #(string/starts-with! % "+")
+                          :form-id ::client-form
+                          :min-width :l}]])
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
-    [locales/name-order [elements/text-field ::first-name {:label :first-name :required? true :emptiable? true
-                                                           :value-path [:clients :form-data :client/first-name]
-                                                           :form-id ::client-form
-                                                           :min-width :l}]
-                        [elements/text-field ::last-name  {:label :last-name  :required? true :emptiable? true
-                                                           :value-path [:clients :form-data :client/last-name]
-                                                           :form-id ::client-form
-                                                           :min-width :l}]
+    [locales/name-order [elements/text-field ::first-name-field
+                                             {:label :first-name :required? true :emptiable? true
+                                              :value-path [:clients :form-data :client/first-name]
+                                              :form-id ::client-form
+                                              :min-width :l}]
+                        [elements/text-field ::last-name-field
+                                             {:label :last-name :required? true :emptiable? true
+                                              :value-path [:clients :form-data :client/last-name]
+                                              :form-id ::client-form
+                                              :min-width :l}]
                         (param name-order)]])
 
 (defn- client-form

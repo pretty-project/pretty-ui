@@ -91,12 +91,14 @@
 (defn- quit-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:preset :close-icon-button :on-click [:clients/toggle-search-mode!]}])
+  [elements/button ::quit-search-mode-button
+                   {:preset :close-icon-button :on-click [:clients/toggle-search-mode!]}])
 
 (defn- sort-by-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/select {:layout :icon-button :icon :sort :variant :transparent :color :none
+  [elements/select ::sort-by-button
+                   {:layout :icon-button :icon :sort :variant :transparent :color :none
                     :tooltip :sort-by :as-button? true
                     :initial-options [:by-name :by-date]
                     :options-label :order-by
@@ -105,34 +107,40 @@
 (defn- add-new-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:preset :add-icon-button :tooltip :add-new!
+  [elements/button ::add-new-button
+                   {:preset :add-icon-button :tooltip :add-new!
                     :on-click [:x.app-router/go-to! "/clients/new-client"]}])
 
 (defn- select-more-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:preset :select-more-icon-button :label :check}])
+  [elements/button ::select-more-button
+                   {:preset :select-more-icon-button :label :check}])
 
 (defn- delete-selected-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:preset :delete-icon-button :disabled? true :label :delete!}])
+  [elements/button ::delete-selected-button
+                   {:preset :delete-icon-button :disabled? true :label :delete!}])
 
 (defn- search-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/button {:tooltip :search :preset :search-icon-button
+  [elements/button ::search-button
+                   {:tooltip :search :preset :search-icon-button
                     :on-click [:clients/toggle-search-mode!]}])
 
 (defn- search-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/search-field {:placeholder :search :layout :row :auto-focus? true :min-width :xs}])
+  [elements/search-field ::search-field
+                         {:placeholder :search :layout :row :auto-focus? true :min-width :xs}])
 
 (defn- client-list-desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/polarity {:start-content [:<> [add-new-button         surface-id view-props]
+  [elements/polarity ::desktop-header
+                     {:start-content [:<> [add-new-button         surface-id view-props]
                                           [sort-by-button         surface-id view-props]]
                                          ;[select-more-button     surface-id view-props]
                                          ;[delete-selected-button surface-id view-props]
@@ -149,7 +157,8 @@
 (defn- client-list-mobile-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [elements/polarity {:start-content [:<> [add-new-button         surface-id view-props]
+  [elements/polarity ::mobile-header
+                     {:start-content [:<> [add-new-button         surface-id view-props]
                                           [sort-by-button         surface-id view-props]]
                                          ;[select-more-button     surface-id view-props]
                                          ;[delete-selected-button surface-id view-props]

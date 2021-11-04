@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.27
 ; Description:
-; Version: v0.3.0
-; Compatibility: x3.9.9
+; Version: v0.3.4
+; Compatibility: x4.4.4
 
 
 
@@ -24,20 +24,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn merge-actions
-  ; @param (map) preset-props
-  ;  {:on-click (metamorphic-event)(opt)}
-  ; @param (map) element-props
-  ;  {:on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (map)
-  ;  {:on-click (map)
-  ;   {:dispatch-n (vector)}}
-  [preset-props element-props]
-  (if-let [on-click (get element-props :on-click)]
-          (let [preset-on-click (get preset-props :on-click)]
-               {:on-click {:dispatch-n [on-click preset-on-click]}})))
-
 (defn apply-preset
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,7 +40,5 @@
   [presets {:keys [preset] :as element-props}]
   (if (some? preset)
       (let [preset-props (get presets preset)]
-           (-> (param preset-props)
-               (merge element-props)
-               (merge (merge-actions preset-props element-props))))
+           (merge preset-props element-props))
       (return element-props)))

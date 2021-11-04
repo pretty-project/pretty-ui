@@ -12,6 +12,10 @@
 
 # x4.3.0
 
+- Az elementek action-jei ne kizárólag Re-Frame alapon menjenek. felesleges események.
+  Az on-delete pl egyált nem használ már re-frame-et az on-click pedig elérhető re-frame-ből is,
+  de sima függvényként van meghívva
+
 - A go-back-surface-label-bar és go-back-popup-label-bar nem jo, hogy browser-back-et használ!
 
 - Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)

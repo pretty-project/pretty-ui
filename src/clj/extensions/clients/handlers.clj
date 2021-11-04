@@ -25,8 +25,8 @@
 
 (defn- client-props-prototype
   [{:keys [request]} client-props]
-  (merge (param client-props)
-         (user/request->add-props request)))
+  (let [add-props (user/request->add-props request)]
+       (merge client-props add-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Prototypes --------------------------------------------------------------

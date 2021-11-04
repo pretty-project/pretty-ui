@@ -43,6 +43,7 @@
   ; @param (map) element-props
   ;  {:disabled? (boolean)(opt)
   ;   :href (string)(opt)
+  ;   :on-click (metamorphic-event)(opt)
   ;   :targetable? (boolean)(opt)
   ;   :tooltip (metamorphic-content)(opt)}
   ;
@@ -53,13 +54,19 @@
   ;   :id (string)
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
-  [element-id {:keys [disabled? href targetable? tooltip]}]
+  [element-id {:keys [disabled? href on-click targetable? tooltip]}]
   (cond-> (param {})
           (boolean disabled?)   (merge {:disabled     true
                                         :data-tooltip (components/content {:content tooltip})})
           (not     disabled?)   (merge {:data-tooltip (components/content {:content tooltip})
                                         :href         (param href)
-                                        :on-click     (on-click-function               element-id)
+                                        ; A stated & clickable elemek on-click eseménye elérhető a Re-Frame
+                                        ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
+                                        ; a keypress-handler által is vezérelhetővé tenni a clickable
+                                        ; elemeket.
+                                        ; A static & clickable elemek on-click esemény kizárólag függvényként
+                                        ; hívható meg.
+                                        :on-click    #(a/dispatch on-click)
                                         :on-mouse-up  (focusable/blur-element-function element-id)})
           (boolean targetable?) (merge {:id (targetable/element-id->target-id element-id)})))
 
