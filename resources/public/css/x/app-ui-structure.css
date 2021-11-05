@@ -542,7 +542,7 @@ body[data-viewport-profile="s"]   #x-app-header {
   width: 0% }
 
 #x-app-progress-bar--screen-overlay {
-  background-color: var( --app-overlay );
+  background-color: var( --app-overlay-color );
   height: 100%;
   left: 0;
   position: fixed;
@@ -766,7 +766,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 /*** Surface background ***/
 
 .x-app-surface--element--background {
-  background-color: var( --app-background );
+  background-color: var( --app-background-color );
   height: 100%;
   left: 0;
   position: absolute;

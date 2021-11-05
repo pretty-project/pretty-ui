@@ -45,8 +45,12 @@
 (defn- layout-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword)(opt) layout-id
+  ; @param (keyword) layout-id
   ; @param (map) layout-props
+  ;  {:body (map)
+  ;   :disabled? (boolean)(opt)
+  ;   :header (map)(opt)
+  ;   :min-width (keyword)}
   ;
   ; @return (component)
   [layout-id {:keys [body disabled? header min-width]}]
@@ -59,8 +63,10 @@
 (defn- layout-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword)(opt) layout-id
+  ; @param (keyword) layout-id
   ; @param (map) layout-props
+  ;  {:description (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (component)
   [_ {:keys [description label]}]
@@ -72,16 +78,13 @@
 (defn- layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword)(opt) layout-id
+  ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {:body (map)
-  ;   :disabled? (boolean)(opt)
-  ;   :header (map)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :min-width (keyword)}
+  ;  {:description (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [layout-id {:keys [body description disabled? header label min-width] :as layout-props}]
+  [layout-id {:keys [description label] :as layout-props}]
   [:<> (if (or (some? description)
                (some? label))
            [layout-header layout-id layout-props])

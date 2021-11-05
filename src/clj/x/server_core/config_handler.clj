@@ -24,13 +24,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def PROJECT-CONFIG-FILEPATH "x.project-details.edn")
+(def PROJECT-CONFIG-FILEPATH "x.project-config.edn")
 
 ; @constant (string)
-(def SITE-CONFIG-FILEPATH    "x.site-details.edn")
+(def SITE-CONFIG-FILEPATH    "x.site-config.edn")
 
 ; @constant (string)
-(def SERVER-CONFIG-FILEPATH  "x.server-details.edn")
+(def SERVER-CONFIG-FILEPATH  "x.server-config.edn")
 
 
 

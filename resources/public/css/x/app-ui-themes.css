@@ -3,9 +3,9 @@
 
 body[data-theme="dark"] {
   /* App background */
-  --app-background:             var( --black );
+  --app-background-color:       var( --black );
   /* App overlay */
-  --app-overlay:                var( --black-semi-transparent );
+  --app-overlay-color:          var( --black-semi-transparent );
   /* Background color */
   --background-color:           var( --black-dark );
   --background-color-muted:     var( --grey-x-dark );
@@ -36,9 +36,10 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   /* App background */
-  --app-background:             #d7dde8;
+  --app-background-color:       #d7dde8;
+  --app-background-image:       url('/images/app-background.png');
   /* App overlay */
-  --app-overlay:                var( --white-semi-transparent );
+  --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --white-xx-light );
   /* Background color */
@@ -76,12 +77,18 @@ body[data-theme="high-contrast"] {}
 /***** Body container *****/
 
 body[data-theme="dark"] {
-  background: var( --app-background );
-  color:      var( --color ) }
+  background-color: var( --app-background-color );
+  color:            var( --color ) }
 
 body[data-theme="light"] {
-  background: var( --app-background );
-  color:      var( --color ) }
+  background-color: var( --app-background-color );
+  color:            var( --color );
+
+  /*  */
+  background-image: var( --app-background-image );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover }
 
 body[data-theme="high-contrast"] {}
 

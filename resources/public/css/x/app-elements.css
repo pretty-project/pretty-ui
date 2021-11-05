@@ -191,17 +191,6 @@ button.x-card:focus,
 
 
 
-/***** Animations *****/
-
-@keyframes hg6500 {
-  0%   { border-color: var( --border-color-muted ) }
-  20%  { border-color: var( --border-color-secondary ) }
-  100% { border-color: var( --border-color-primary ) }}
-
-/***** Animations *****/
-
-
-
 /***** Material icons *****/
 
 .x-combo-box--extender-icon,
@@ -366,7 +355,8 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
-.x-button[data-variant="filled"][data-color="muted"] .x-button--body,
+.x-button[data-variant="filled"][data-color="muted"]
+.x-button--body,
 .x-chip[data-color="muted"] .x-chip--body,
 .x-content-bar[data-color="muted"] {
   background-color: var( --background-color-muted );
@@ -450,7 +440,8 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
-.x-button[data-variant="filled"][data-color="primary"] .x-button--body,
+.x-button[data-variant="filled"][data-color="primary"]
+.x-button--body,
 .x-chip[data-color="primary"] .x-chip--body {
   background-color: var( --soft-blue );
   color: var( --black ) }
@@ -1568,46 +1559,18 @@ body[data-viewport-profile="s"]
   -height: 48px;
   -width: 60px }
 
-.x-button[data-layout="icon-button"][data-height="touch-target"] .x-button--body {
+.x-button[data-layout="icon-button"] .x-button--body {
   /* XXX#0340
    * A min-height és min-width tulajdonságok azért szükségesek, hogy
    * az icon-button elemet a környező tartalom ne kényszerítse méretcsökkenésre */
   min-height: 48px }
 
-.x-button[data-layout="icon-button"][data-width="touch-target"] .x-button--body {
+.x-button[data-layout="icon-button"] .x-button--body {
   /* XXX#0340 */
   min-width: 60px }
 
-.x-button[data-layout="icon-button"][data-height="fit"] .x-button--body {
-  /* XXX#0340 */
-  min-height: 32px }
-
-.x-button[data-layout="icon-button"][data-width="fit"] .x-button--body {
-  /* XXX#0340 */
-  min-width: 32px }
-
 .x-button[data-layout="icon-button"][data-variant="filled"] .x-button--body {
   border-radius: var( --border-radius-xs ) }
-
-.x-button[data-layout="icon-button"][data-variant="outlined"]::before {
-  animation-timing-function: ease-in-out;
-  animation-duration: .3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  border-color: var( --border-color-muted );
-  border-radius: var( --border-radius-m );
-  border-style: solid;
-  border-width: 1px;
-  content: '';
-  height: 42px;
-  left: 3px;
-  opacity: .3;
-  position: absolute;
-  top: 3px;
-  width: 54px }
-
-.x-button[data-layout="icon-button"][data-variant="outlined"]:hover::before {
-  animation-name: hg6500 }
 
 .x-button[data-variant="placeholder"] .x-button--body {
   cursor: default }

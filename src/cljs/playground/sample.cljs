@@ -22,7 +22,9 @@
 (defn- view
   [_]
   [layouts/layout-a {:body   {:content #'sample-body}
-                     :header {:content #'sample-header}}])
+                     :header {:content #'sample-header}
+                     :description "Description"
+                     :label       "My sample page"}])
 
 
 

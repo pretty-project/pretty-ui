@@ -21,6 +21,7 @@
               [x.app-developer.api   :as developer]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
+              [x.app-layouts.api     :as layouts]
               [x.app-locales.api     :as locales]
               [x.app-sync.api        :as sync]
               [x.app-ui.api          :as ui]
@@ -205,13 +206,17 @@
                                   ;:options-path (db/path ::stuff :multi-combo-box :options)
                                   :initial-options [{:x "A"} {:x "B"}]}]])
 
+(defn- menu-bar
+  []
+  [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [] :color :default}
+                                   {:label "Menu item #2" :on-click [] :color :muted}
+                                   {:label "Menu item #3" :on-click [] :color :muted}]}])
+
 (defn- view
   []
-  [:<> [elements/content-bar {:layout :header :content [elements/label {:content "Playground" :font-size :l
-                                                                        :icon :sports_esports :font-weight :extra-bold}]}]
-       [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [:x.app-router/go-to! "/valahol"]}
-                                        {:label "Menu item #2" :on-click [:x.app-router/go-to! "/sehol"]}
-                                        {:label "Menu item #3" :on-click [:x.app-router/go-to! "/akarhol"]}]}]
+  [:<> [elements/box {:body   {:content "Menu"}
+                      :header {:content #'menu-bar
+                               :sticky? true}}]
        [elements/box {:body   {:content #'buttons}
                       :header {:content "Buttons"
                                :sticky? true}

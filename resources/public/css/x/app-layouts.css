@@ -1,5 +1,18 @@
 
 
+
+/***** User select *****/
+
+.x-header-a {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none }
+
+/***** User select *****/
+
+
+
 /***** Header A *****/
 
 .x-header-a {

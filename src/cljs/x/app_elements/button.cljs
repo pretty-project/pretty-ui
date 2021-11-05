@@ -173,20 +173,14 @@
   ;
   ; @param (map) button-props
   ;  {:content (metamorphic-content)(opt)
-  ;   :height (keyword)(opt)
-  ;   :layout (keyword)(opt)
-  ;   :width (keyword)(opt)}
+  ;   :layout (keyword)(opt)}
   ;
   ; @return (boolean)
-  [{:keys [content height layout variant width]}]
+  [{:keys [content layout variant]}]
                ; XXX#0523
   (boolean (or (nil? content)
                (and (= layout  :icon-button)
-                    (= variant :outlined))
-               (and (= layout  :icon-button)
-                    (= height  :fit))
-               (and (= layout  :icon-button)
-                    (= width   :fit)))))
+                    (= variant :outlined)))))
 
 
 
@@ -202,20 +196,16 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
-  ;   :height (keyword)
   ;   :horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :targetable? (boolean)
-  ;   :variant (keyword)
-  ;   :width (keyword)}
+  ;   :variant (keyword)}
   [{:keys [keypress label layout] :as button-props}]
   (merge {:color     :primary
           :icon-size :s
           :layout    :row
           :variant   :outlined}
-         (if (= layout :icon-button)
-             {:height :touch-target
-              :width  :touch-target}
+         (if (not= layout :icon-button)
              {:font-size        :s
               :horizontal-align :center})
          (if (some? keypress)
@@ -301,10 +291,6 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;    Only w/ {:layout :fit} or {:layout :row}
-  ;   :height (keyword)(opt)
-  ;    :fit, :touch-target
-  ;    Default: touch-target
-  ;    Only w/ {:layout :icon-button}
   ;   :helper (metamorphic-content)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
@@ -321,8 +307,6 @@
   ;      Default: false}
   ;   :label (metamorphic-content)(opt)
   ;    Not w/ {:layout :icon-button :variant :outlined}
-  ;    Not w/ {:layout :icon-button :height  :fit}
-  ;    Not w/ {:layout :icon-button :width   :fit}
   ;   :layout (keyword)(opt)
   ;    :fit, :icon-button, :row
   ;    Default: :row
@@ -333,11 +317,7 @@
   ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
   ;    :outlined, :filled, :transparent, :placeholder
-  ;    Default: :outlined
-  ;   :width (keyword)(opt)
-  ;    :fit, :touch-target
-  ;    Default: touch-target
-  ;    Only w/ {:layout :icon-button}}
+  ;    Default: :outlined}
   ;
   ; @usage
   ;  [elements/button {...}]

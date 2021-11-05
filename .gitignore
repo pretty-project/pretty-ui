@@ -8,7 +8,7 @@ media/thumbnails/*
 !media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png
 
 # monoset files
-x.server-details.edn
+x.server-config.edn
 
 # system files
 .DS_Store

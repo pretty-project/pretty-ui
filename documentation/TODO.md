@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- icon-button külön element lehet ujra
+
 - db/id-handler mehet mid-fruits/eql-be
 
 - Az elementek action-jei ne kizárólag Re-Frame alapon menjenek. felesleges események.

@@ -98,6 +98,16 @@
 ; @name ghost-view
 ;  Bizonyos elemek rendelkeznek {:ghost-view? ...} tulajdonsággal, amely true érték
 ;  esetén biztosítja, hogy az elem helyett annak szellemképe jelenjen meg.
+;
+; @name element-height
+;  Egységes element magasságok:
+;  XXS:  6px
+;  XS:  12px
+;  S:   18px
+;  M:   24px
+;  L:   30px
+;  XL:  36px
+;  XXL: 48px
 
 
 
