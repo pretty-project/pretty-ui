@@ -398,14 +398,19 @@
   ;  Pl.: "/admin/my-route"
   ;
   ; @return (keyword)
-  [db [_ abs-route-string]]
+  [db [_ abs-route-string debug]]
         ; Az applikáció relatív elérési útvonala
         ; "/admin"
+
   (let [app-home (r a/get-app-detail db :app-home)
         ; Levágja a route-string elejéről az applikáció elérési útvonalát
         ; "/my-route"
         rel-route-string (route-string->rel-route-string abs-route-string app-home)]
            ; Ha van "/my-route" útvonal beállítva ...
+;       (if debug (do (println (str abs-route-string))))
+;                     (println (str app-home))))
+;                     (println (str rel-route-string))))
+;                     (println (str (r route-path-exists? db rel-route-string)))))
        (if (r route-path-exists? db rel-route-string)
                  ; A "/my-route" útvonalhoz tartozó azonosító
            (let [route-id (get-in (r get-route-match db rel-route-string) [:data :name])]
@@ -423,6 +428,8 @@
            ; Ha nincs "/my-route" útvonal beállítva ...
            (return :page-not-found))))
 
+(defn- abs-route-string=rel-route-string?
+  [abs-route-string rel-route-string])
 
 
 ;; -- Current route subscriptions ---------------------------------------------
@@ -847,7 +854,7 @@
   ;
   ; @param (string) route-string
   (fn [{:keys [db]} [event-id route-string]]
-      (let [route-id          (r match-route-id-by-abs-route-string db route-string)
+      (let [route-id          (r match-route-id-by-abs-route-string db route-string :debug)
             previous-route-id (r get-current-route-id db)
             on-leave-event    (r get-on-leave-event   db previous-route-id)]
                        ; Store the current route
