@@ -1,6 +1,7 @@
 
 (ns extensions.home.views
-    (:require [x.app-core.api       :as a :refer [r]]
+    (:require [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
               [x.app-details        :as details]
               [x.app-elements.api   :as elements]
               [x.app-user.api       :as user]))
@@ -26,8 +27,7 @@
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [user-name]}]
-  [:<> [elements/separator {:orientation :horizontal :size :s}]
-       [elements/label {:content :welcome-n :replacements [user-name]}]])
+  [:div.x-header-a (components/content {:content :welcome-n :replacements [user-name]})])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

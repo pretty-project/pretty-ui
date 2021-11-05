@@ -42,6 +42,33 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- layout-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword)(opt) layout-id
+  ; @param (map) layout-props
+  ;
+  ; @return (component)
+  [layout-id {:keys [body disabled? header min-width]}]
+  [elements/box layout-id
+                {:body      body
+                 :disabled? disabled?
+                 :header    header
+                 :min-width min-width}])
+
+(defn- layout-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword)(opt) layout-id
+  ; @param (map) layout-props
+  ;
+  ; @return (component)
+  [_ {:keys [description label]}]
+  [:div.x-header-a (if (some? label)
+                       (components/content {:content label}))
+                   (if (some? description)
+                       [:div.x-header-a--description (components/content {:content description})])])
+
 (defn- layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,11 +81,11 @@
   ;   :min-width (keyword)}
   ;
   ; @return (component)
-  [layout-id {:keys [body disabled? header min-width] :as layout-props}]
-  [elements/box {:body      body
-                 :disabled? disabled?
-                 :header    header
-                 :min-width min-width}])
+  [layout-id {:keys [body description disabled? header label min-width] :as layout-props}]
+  [:<> (if (or (some? description)
+               (some? label))
+           [layout-header layout-id layout-props])
+       [layout-body layout-id layout-props]])
 
 (defn view
   ; @param (keyword)(opt) layout-id
@@ -67,6 +94,7 @@
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
+  ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :header (map)(opt)
@@ -75,6 +103,7 @@
   ;     :sticky? (boolean)(opt)
   ;      Default: false
   ;     :subscriber (subscription vector)(opt)}
+  ;   :label (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :l}

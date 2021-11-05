@@ -135,7 +135,8 @@
   [layouts/layout-a surface-id {:body   {:content    #'client-list-body}
                                 :header {:content    #'client-list-header
                                          :sticky?    true
-                                         :subscriber [::get-header-view-props]}}])
+                                         :subscriber [::get-header-view-props]}
+                                :description "10 / 78 elem letöltve"}])
 
 
 

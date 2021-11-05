@@ -921,19 +921,11 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [:<> [:div {:style {:padding "16px 0 0 0"}}
-         [:div {:style {:font-size "var(--font-size-l)"
-                        :font-weight 500
-                        :color "var(--color-muted)"
-                        :line-height "36px"}}
-               "Saját tárhely"
-               [:span {:style {:font-size "var(--font-size-xs)" :padding-left "12px" :line-height "36px"}}
-                      "34 elem"]]]
-         ;[:div {:style {:font-size "var(--font-size-xxs)" :color "var(--color-muted)" :text-align :center}}
-          ;     "0.01 GB / 5.0 GB"]]
-       [layouts/layout-a surface-id {:body   {:content    #'item-browser-body}
-                                     :header {:content    #'item-browser-header
-                                              :subscriber [::get-header-view-props]}}]])
+  [layouts/layout-a surface-id {:body   {:content    #'item-browser-body}
+                                :header {:content    #'item-browser-header
+                                         :subscriber [::get-header-view-props]}
+                                :label       "Saját tárhely"
+                                :description "10 / 104 elem letöltve"}])
 
 
 

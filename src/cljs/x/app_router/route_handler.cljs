@@ -147,6 +147,17 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- valid-route-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-path
+  ;
+  ; @return (string)
+  [route-path]   ; 1.
+  (-> route-path (string/not-ends-with! "/")
+                 ; 2.
+                 (string/starts-with!   "/")))
+
 (defn- fragment-id->dom-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -244,6 +255,22 @@
 
 ;; -- Router subscriptions ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-app-home
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (let [app-home (r a/get-app-detail db :app-home)]
+       (valid-route-path app-home)))
+
+(defn app-home-specific?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (boolean)
+  [db _]
+  (let [app-home (r get-app-home db)]
+       (not= app-home "/")))
 
 (defn- get-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -399,37 +426,36 @@
   ;
   ; @return (keyword)
   [db [_ abs-route-string debug]]
-        ; Az applikáció relatív elérési útvonala
-        ; "/admin"
+  (if (r app-home-specific? db)
 
-  (let [app-home (r a/get-app-detail db :app-home)
-        ; Levágja a route-string elejéről az applikáció elérési útvonalát
-        ; "/my-route"
-        rel-route-string (route-string->rel-route-string abs-route-string app-home)]
-           ; Ha van "/my-route" útvonal beállítva ...
-;       (if debug (do (println (str abs-route-string))))
-;                     (println (str app-home))))
-;                     (println (str rel-route-string))))
-;                     (println (str (r route-path-exists? db rel-route-string)))))
-       (if (r route-path-exists? db rel-route-string)
-                 ; A "/my-route" útvonalhoz tartozó azonosító
-           (let [route-id (get-in (r get-route-match db rel-route-string) [:data :name])]
-                      ; Ha abs-route-string applikáció útvonal, és abszólút útvonalként lett átadva ...
-                (cond (and (r application-route? db route-id)
-                           (not= abs-route-string rel-route-string))
-                      (return route-id)
-                      ; Ha abs-route-string applikáció útvonal, de nem abszólút útvonalként lett átadva ...
-                      (and (r application-route? db route-id)
-                           (= abs-route-string rel-route-string))
-                      (return :page-not-found)
-                      ; Ha abs-route-string weboldal útvonal ...
-                      (r website-route? db route-id)
-                      (return route-id)))
-           ; Ha nincs "/my-route" útvonal beállítva ...
-           (return :page-not-found))))
+      ; If app-home is "/something" ...
+      (let [app-home         (r get-app-home db)
+            rel-route-string (route-string->rel-route-string abs-route-string app-home)]
+           (if (r route-path-exists? db rel-route-string)
+               ; If route-path exists ...
+               (let [route-id (get-in (r get-route-match db rel-route-string) [:data :name])]
+                          ; If route is application-route and it starts with app-home ...
+                    (cond (and (r application-route?  db route-id)
+                               (not= abs-route-string rel-route-string))
+                          (return route-id)
+                          ; If route is application-route but not starts with app-home ...
+                          (and (r application-route?  db route-id)
+                               (=    abs-route-string rel-route-string))
+                          (return :page-not-found)
+                          ; If route is website-route ...
+                          (r website-route? db route-id)
+                          (return route-id)))
 
-(defn- abs-route-string=rel-route-string?
-  [abs-route-string rel-route-string])
+               ; If route-path not exists ...
+               (return :page-not-found)))
+
+      ; If app-home is "/" ...
+      (if (r route-path-exists? db abs-route-string)
+          ; If route-path exists ...
+          (get-in (r get-route-match db abs-route-string) [:data :name])
+          ; If route-path not exists ...
+          (return :page-not-found))))
+
 
 
 ;; -- Current route subscriptions ---------------------------------------------
@@ -477,7 +503,7 @@
   [db _]
   (let [current-route-string   (r get-current-route-string   db)
         current-route-template (r get-current-route-template db)
-        app-home               (r a/get-app-detail           db :app-home)
+        app-home               (r get-app-home               db)
         rel-route-string       (route-string->rel-route-string current-route-string app-home)]
        (uri/uri->path-params rel-route-string current-route-template)))
 
@@ -648,7 +674,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (let [app-home           (r a/get-app-detail       db :app-home)
+  (let [app-home           (r get-app-home           db)
         current-route-path (r get-current-route-path db)]
        (= current-route-path app-home)))
 
@@ -879,7 +905,7 @@
   ; @usage
   ;  [:x.app-router/go-home!]
   (fn [{:keys [db]} _]
-      (let [app-home (r a/get-app-detail db :app-home)]
+      (let [app-home (r get-app-home db)]
            [:x.app-router/go-to! app-home])))
 
 (a/reg-event-fx
@@ -903,7 +929,7 @@
   ; @usage
   ;  [:x.app-router/go-to! "/products/big-green-bong?type=hit#order"]
   (fn [{:keys [db]} [_ rel-route-string]]
-      (let [app-home          (r a/get-app-detail                   db :app-home)
+      (let [app-home          (r get-app-home                       db)
             route-id          (r match-route-id-by-rel-route-string db rel-route-string)
             route-restricted? (r route-restricted?                  db route-id)
             abs-route-string  (if route-restricted? (route-string->abs-route-string rel-route-string app-home)

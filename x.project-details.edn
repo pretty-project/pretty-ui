@@ -16,6 +16,9 @@
  ;   :app-title (string)}
  ;
  ; @usage
+ ;  {:app-details {:app-home "/"}}
+ ;
+ ; @usage
  ;  {:app-details {:app-home "/admin"}}
  :app-details
  {:author        "bithandshake"
