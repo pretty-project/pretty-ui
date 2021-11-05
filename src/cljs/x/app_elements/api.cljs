@@ -42,7 +42,6 @@
               [x.app-elements.image             :as image]
               [x.app-elements.label             :as label]
               [x.app-elements.line-diagram      :as line-diagram]
-              [x.app-elements.menu              :as menu]
               [x.app-elements.menu-bar          :as menu-bar]
               [x.app-elements.multiline-field   :as multiline-field]
               [x.app-elements.multi-combo-box   :as multi-combo-box]
@@ -62,7 +61,6 @@
               [x.app-elements.submit-button     :as submit-button]
               [x.app-elements.switch            :as switch]
               [x.app-elements.table             :as table]
-              [x.app-elements.tabs              :as tabs]
               [x.app-elements.text              :as text]
               [x.app-elements.text-field        :as text-field]
               [x.app-elements.toggle            :as toggle]
@@ -167,7 +165,6 @@
 (def image             image/view)
 (def label             label/view)
 (def line-diagram      line-diagram/view)
-(def menu              menu/view)
 (def menu-bar          menu-bar/view)
 (def multiline-field   multiline-field/view)
 (def multi-combo-box   multi-combo-box/view)
@@ -187,7 +184,6 @@
 (def submit-button     submit-button/view)
 (def switch            switch/view)
 (def table             table/view)
-(def tabs              tabs/view)
 (def text              text/view)
 (def text-field        text-field/view)
 (def toggle            toggle/view)

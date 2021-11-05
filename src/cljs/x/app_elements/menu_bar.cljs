@@ -53,8 +53,9 @@
   ;   :on-click (function)
   ;   :on-focus (function)
   ;   :on-mouse-over (function)}
-  [bar-id {:keys [selected-content-id]} {:keys [content-id href on-click on-mouse-over]}]
-  (cond-> {:data-selected (= selected-content-id content-id)
+  [bar-id {:keys [selected-content-id]} {:keys [color content-id href on-click on-mouse-over]}]
+  (cond-> {:data-color    (keyword/to-dom-value color)
+           :data-selected (= selected-content-id content-id)
            :on-mouse-up   (engine/blur-element-function bar-id)}
           (some? href) (assoc :href href)
           (nil?  href) (merge {:on-click      #(a/dispatch-some on-click)
@@ -212,7 +213,10 @@
   ;    :fit, :row
   ;    Default: :row
   ;   :menu-items (maps in vector)
-  ;    [{:href (string)(opt)
+  ;    [{:color (keyword)(opt)
+  ;       :primary, :secondary, :default, :muted, :highlight
+  ;       Default: :default
+  ;      :href (string)(opt)
   ;       XXX#7004
   ;       A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
   ;       renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}

@@ -1,3 +1,4 @@
 
 (ns playground.api
-    (:require [playground.core]))
+    (:require [playground.core]
+              [playground.sample]))

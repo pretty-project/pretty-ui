@@ -63,7 +63,7 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [lister-id item-dex {:client/keys [id] :as client-props} common-props]
-  (let [client-uri (str "/clients/" id)]
+  (let [client-uri      (pattern/item-id->item-uri "clients" id)]
        [elements/toggle {:on-click [:x.app-router/go-to! client-uri]
                          :stretch-orientation :horizontal
                          :content

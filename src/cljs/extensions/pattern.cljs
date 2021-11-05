@@ -55,6 +55,19 @@
       (keyword/join "add-"  item-name)
       (keyword/join "edit-" item-name)))
 
+(defn item-id->item-uri
+  ; @param (string) extension-name
+  ; @param (string) item-id
+  ;
+  ; @example
+  ;  (pattern/item-id->item-uri "products" "my-product")
+  ;  =>
+  ;  "/products/my-product"
+  ;
+  ; @return (string)
+  [extension-name item-id]
+  (str "/" extension-name "/" item-id))
+
 
 
 ;; -- Item-form subscriptions -------------------------------------------------

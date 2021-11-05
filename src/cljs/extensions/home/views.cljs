@@ -42,7 +42,10 @@
                          :on-click [:x.app-router/go-to! "/products"]}]
          [elements/card {:body {:content [elements/label {:content :file-storage :icon :folder}]}
                          :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/media"]}]]])
+                         :on-click [:x.app-router/go-to! "/media"]}]
+         [elements/card {:body {:content [elements/label {:content :sample :icon :folder}]}
+                         :horizontal-align :left
+                         :on-click [:x.app-router/go-to! "/sample"]}]]])
 
 
 

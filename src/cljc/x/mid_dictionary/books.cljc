@@ -272,6 +272,9 @@
       :retry!
       {:en "Retry"
        :hu "Újra"}
+      :sample
+      {:en "Sample"
+       :hu "Minta"}
       :search
       {:en "Search"
        :hu "Keresés"}

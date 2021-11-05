@@ -19,15 +19,4 @@
   :path [{:directory/id "home"}] 
   :tags [] 
   :uploaded-at "2021-11-01T00:41:37.498Z" 
-  :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}} 
- {:alias "Screenshot 2021-10-25 at 0.43.18.png" 
-  :description "" 
-  :filename "17a6b703-8e8c-4b1e-b083-8ede3059e021.png" 
-  :filesize 373109 
-  :id "17a6b703-8e8c-4b1e-b083-8ede3059e021" 
-  :modified-at "2021-11-04T21:28:00.268Z" 
-  :modified-by {:user-account/id "1259400a-x012-lw84-o987-1fg654713a3a"} 
-  :path [{:directory/id "home"}] 
-  :tags [] 
-  :uploaded-at "2021-11-04T21:28:00.268Z" 
-  :uploaded-by {:user-account/id "1259400a-x012-lw84-o987-1fg654713a3a"}}]
+  :uploaded-by {:user-account/id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"}}]

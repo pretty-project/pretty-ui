@@ -263,18 +263,13 @@
 
 (a/reg-event-fx
   ::load!
-  {:dispatch-n [[:x.app-ui/set-window-title! "Playground"]
+  {:dispatch-n [[:x.app-ui/set-header-title! "Playground"]
+                [:x.app-ui/set-window-title! "Playground"]
                 [::render!]]})
-
-(a/reg-event-fx
-  ::initialize!
-  {:dispatch-n [[:x.app-router/add-route!
-                 ::route
-                 {:route-event    [::load!]
-                  :route-template "/playground"
-                  :restricted?    true}]]})
-;               [:x.app-environment.css-handler/add-external-source! "css/playground/site.css"]
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route! ::route
+                                          {:route-event    [::load!]
+                                           :route-template "/playground"
+                                           :restricted?    true}]})

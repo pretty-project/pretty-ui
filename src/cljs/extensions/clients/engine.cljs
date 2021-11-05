@@ -10,67 +10,6 @@
 
 
 ;; ----------------------------------------------------------------------------
-;; -- Sample data -------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn sample-clients
-      []
-      [{:client/id (random/generate-string)
-        :client/client-no "051"
-        :client/first-name "Debil"
-        :client/last-name "Duck"
-        :client/email-address "debil-duck@gmail.com"
-        :client/added-at "2020-04-10T16:20:00.123Z"}
-       {:client/id (random/generate-string)
-        :client/client-no "112"
-        :client/first-name "Addicted"
-        :client/last-name "Alligator"
-        :client/email-address "addicted-alligator@gmail.com"
-        :client/added-at "2020-03-21T10:01:00.123Z"}
-       {:client/id (random/generate-string)
-        :client/client-no "941"
-        :client/first-name "Monoton"
-        :client/last-name "Monkey"
-        :client/email-address "debil-duck@gmail.com"
-        :client/added-at "2020-04-14T09:41:00.123Z"}
-       {:client/id (random/generate-string)
-        :client/client-no "415"
-        :client/first-name "Baffling"
-        :client/last-name "Badger"
-        :client/email-address "baffling-badger@gmail.com"
-        :client/added-at "2021-08-01T08:20:00.123Z"}
-       {:client/id (random/generate-string)
-        :client/client-no "515"
-        :client/first-name "Paranormal"
-        :client/last-name "Penguin"
-        :client/email-address "paranormal-penguin@gmail.com"
-        :client/added-at "2021-05-01T14:32:00.123Z"}
-       {:client/id (random/generate-string)
-        :client/client-no "612"
-        :client/first-name "Promising"
-        :client/last-name "Panda"
-        :client/email-address "promising-panda@gmail.com"
-        :client/added-at "2019-02-20T06:53:00.123Z"}])
-
-;; ----------------------------------------------------------------------------
-;; -- Sample data -------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-;; ----------------------------------------------------------------------------
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn client-id->client-uri
-  ; @param (keyword) client-id
-  [client-id]
-  (let [client-id (keyword/to-string client-id)]
-       (str "/clients/" client-id)))
-
-;; ----------------------------------------------------------------------------
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-;; ----------------------------------------------------------------------------
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
