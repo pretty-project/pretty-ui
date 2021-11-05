@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.5.4
-; Compatibility: x3.9.9
+; Version: v0.5.8
+; Compatibility: x4.4.4
 
 
 
@@ -56,6 +56,10 @@
                     (param string/tab)
                     (r get-user-last-name db))))
 
+(defn get-user-phone-number
+  [db _]
+  (r get-user-profile-item db :phone-number))
+
 (defn get-user-profile-picture-url
   ; @return (string)
   [db _]
@@ -71,7 +75,9 @@
   ; @param (keyword) item-id
   ; @param (*) item
   ;
+  ; @usage
+  ;  (r set-user-profile-item! db :last-name "Roger")
+  ;
   ; @return (map)
   [db [_ item-id item]]
-  (assoc-in db (db/path ::profile item-id)
-               (param item)))
+  (assoc-in db (db/path ::profile item-id) item))

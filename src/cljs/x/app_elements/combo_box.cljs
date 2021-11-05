@@ -82,6 +82,7 @@
   ;
   ; @return (map)
   ;  {:get-label-f (function)
+  ;   :get-value-f (function)
   ;   :no-options-label (metamorphic-content)
   ;   :on-change (metamorphic-event)
   ;   :on-extend (metamorphic-event)
@@ -89,6 +90,7 @@
   [field-id field-props]
   (merge {:emptiable?          true
           :get-label-f         return
+          :get-value-f         return
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
           :on-extend           [:x.app-elements/add-option!]
@@ -301,6 +303,8 @@
   ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
+  ;    Default: return
+  ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)

@@ -69,7 +69,8 @@
   ;
   ; @return (hiccup)
   [_ _]
-  [elements/label {:content :incorrect-email-address-or-password
+  [elements/label ::login-error-message
+                  {:content :incorrect-email-address-or-password
                    :color   :warning}])
 
 (defn- email-address-field
@@ -80,11 +81,10 @@
   ;
   ; @return (component)
   [_ {:keys [synchronizing?]}]
-  [elements/text-field
-   ::email-address-field
-   {:label      :email-address
-    :value-path (db/meta-item-path ::primary :email-address)
-    :disabled?  synchronizing?}])
+  [elements/text-field ::email-address-field
+                       {:label      :email-address
+                        :value-path (db/meta-item-path ::primary :email-address)
+                        :disabled?  synchronizing?}])
 
 (defn- password-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,10 +94,9 @@
   ;
   ; @return (component)
   [_ {:keys [synchronizing?]}]
-  [elements/password-field
-   ::password-field
-   {:value-path (db/meta-item-path ::primary :password)
-    :disabled?  synchronizing?}])
+  [elements/password-field ::password-field
+                           {:value-path (db/meta-item-path ::primary :password)
+                            :disabled?  synchronizing?}])
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -108,15 +107,15 @@
   ;
   ; @return (component)
   [_ {:keys [synchronizing?]}]
-  [elements/submit-button
-   {:color      :primary
-    :disabled?  synchronizing?
-    :input-ids  [::email-address-field ::password-field]
-    :keypress   {:key-code 13 :required? true}
-    :label      :login!
-    :layout     :fit
-    :on-click   [:x.app-user/authenticate!]
-    :variant    :filled}])
+  [elements/submit-button ::login-button
+                          {:color      :primary
+                           :disabled?  synchronizing?
+                           :input-ids  [::email-address-field ::password-field]
+                           :keypress   {:key-code 13 :required? true}
+                           :label      :login!
+                           :layout     :fit
+                           :on-click   [:x.app-user/authenticate!]
+                           :variant    :filled}])
 
 (defn- forgot-password-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,14 +125,14 @@
   ;
   ; @return (hiccup)
   [_ _]
-  [elements/button
-   {:color    :muted
-    :label    :forgot-password
-    :layout   :fit
-    :on-click [:x.app-ui/blow-bubble!
-               ::service-not-available
-               {:content :service-not-available :color :warning}]
-    :variant  :transparent}])
+  [elements/button ::forgot-password-button
+                   {:color    :muted
+                    :label    :forgot-password
+                    :layout   :fit
+                    :on-click [:x.app-ui/blow-bubble!
+                               ::service-not-available
+                               {:content :service-not-available :color :warning}]
+                    :variant  :transparent}])
 
 (defn- login-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -144,14 +143,13 @@
   ;
   ; @return (component)
   [component-id {:keys [login-attempted?] :as view-props}]
-  [:<> (if login-attempted? [login-error-message component-id view-props])
+  [:<> (if login-attempted?    [login-error-message component-id view-props])
        [elements/separator     {:size :m}]
        [email-address-field    component-id view-props]
        [elements/separator     {:size :m}]
        [password-field         component-id view-props]
        [elements/separator     {:size :xl}]
        [login-button           component-id view-props]
-
       ;[forgot-password-button component-id view-props]
        [elements/separator     {:size :m}]])
 
@@ -168,12 +166,12 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button
-   {:on-click [:x.app-user/logout!]
-    :color    :none
-    :label    :logout!
-    :layout   :row
-    :variant  :transparent}])
+  [elements/button ::logout-button
+                   {:on-click [:x.app-user/logout!]
+                    :color    :none
+                    :label    :logout!
+                    :layout   :row
+                    :variant  :transparent}])
 
 (defn- continue-as-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -184,13 +182,13 @@
   ;
   ; @return (component)
   [_ {:keys [username]}]
-  [elements/button
-   {:keypress {:key-code 13}
-    :on-click [:x.app-router/go-home!]
-    :label    :continue-as
-    :layout   :row
-    :suffix   username
-    :variant  :filled}])
+  [elements/button ::continue-as-button
+                   {:keypress {:key-code 13}
+                    :on-click [:x.app-router/go-home!]
+                    :label    :continue-as
+                    :layout   :row
+                    :suffix   username
+                    :variant  :filled}])
 
 (defn- signed-in-as-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -201,7 +199,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [username]}]
-  [elements/label {:content :signed-in-as :suffix username
+  [elements/label ::signed-in-as-label
+                  {:content :signed-in-as :suffix username
                    :horizontal-align :center}])
 
 (defn- logged-in-form
@@ -212,7 +211,7 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [:<> ;[elements/separator {:size :m}]
+  [:<> [elements/separator {:size :xs}]
        [signed-in-as-label component-id view-props]
        [elements/separator {:size :m}]
        [continue-as-button component-id view-props]
@@ -231,10 +230,10 @@
   ;  {:user-identified? (boolean)}
   ; @param (vector) subscriber
   ;
-  ; @return (hiccup)
+  ; @return (component)
   [component-id {:keys [user-identified?] :as view-props}]
-  [:div#x-app-login-box
-    (if user-identified?
+  [:div#x-login-box
+    (if (boolean user-identified?)
         [logged-in-form component-id view-props]
         [login-form     component-id view-props])])
 
@@ -251,19 +250,17 @@
   ;  {:render-exclusive? (boolean)(opt)
   ;    Default: false}
   (fn [{:keys [db]} [_ {:keys [render-exclusive?]}]]
-      [:x.app-ui/add-popup!
-       ::view
-       {:content           #'view
-        :layout            :boxed
-        :label-bar         (r get-label-bar-props db)
-        :min-width         :xs
-        :render-exclusive? render-exclusive?
-        :subscriber        [::get-view-props]
-        :user-close?       false}]))
+      [:x.app-ui/add-popup! ::view
+                            {:content           #'view
+                             :layout            :boxed
+                             :label-bar         (r get-label-bar-props db)
+                             :min-width         :xs
+                             :render-exclusive? render-exclusive?
+                             :subscriber        [::get-view-props]
+                             :user-close?       false}]))
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route!
-                 ::route
-                 {:route-event    [::render!]
-                  :route-template "/login"}]})
+  {:on-app-boot [:x.app-router/add-route! ::route
+                                          {:route-event    [::render!]
+                                           :route-template "/login"}]})

@@ -74,6 +74,7 @@
                             :layout  :icon-button
                             :variant :transparent}
       :default-button      {:color   :default
+                            :horizontal-align :left
                             :layout  :row
                             :variant :transparent}
       :delete-button       {:color   :warning
@@ -88,17 +89,35 @@
                               :icon    :content_copy
                               :layout  :icon-button
                               :variant :transparent}
+      :help-button         {:color   :default
+                            :horizontal-align :left
+                            :icon    :help_outline
+                            :label   :help
+                            :layout  :row
+                            :variant :transparent}
       :home-icon-button    {:color   :default
                             :icon    :home
                             :layout  :icon-button
                             :variant :transparent}
+      :language-button     {:color   :default
+                            :horizontal-align :left
+                            :icon    :translate
+                            :label   :language
+                            :layout  :row
+                            :variant :transparent}
       :logout-button       {:color   :warning
+                            :horizontal-align :left
+                            :icon    :logout
                             :label   :logout!
                             :layout  :row
                             :variant :transparent}
       :menu-icon-button    {:color   :default
                             :icon    :more_vert
                             :layout  :icon-button
+                            :variant :transparent}
+      :primary-button      {:color   :primary
+                            :horizontal-align :left
+                            :layout  :row
                             :variant :transparent}
       :save-button         {:label   :save!
                             :layout  :row
@@ -111,6 +130,10 @@
                             :icon    :search
                             :layout  :icon-button
                             :variant :transparent}
+      :secondary-button    {:color   :secondary
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
       :select-button       {:label   :select
                             :layout  :row
                             :variant :transparent}
@@ -118,6 +141,12 @@
                                 :icon    :radio_button_unchecked
                                 :layout  :icon-button
                                 :variant :transparent}
+      :settings-button     {:color   :default
+                            :horizontal-align :left
+                            :icon    :settings
+                            :label   :settings
+                            :layout  :row
+                            :variant :transparent}
       :sort-by-icon-button     {:color   :default
                                 :icon    :sort
                                 :layout  :icon-button

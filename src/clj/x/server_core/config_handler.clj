@@ -27,6 +27,9 @@
 (def PROJECT-CONFIG-FILEPATH "x.project-details.edn")
 
 ; @constant (string)
+(def SITE-CONFIG-FILEPATH    "x.site-details.edn")
+
+; @constant (string)
 (def SERVER-CONFIG-FILEPATH  "x.server-details.edn")
 
 

@@ -35,6 +35,7 @@
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :get-label-f (function)
+  ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
@@ -44,7 +45,8 @@
           :layout       :row
           :options-path (engine/default-options-path button-id)
           :value-path   (engine/default-value-path   button-id)
-          :get-label-f  return}
+          :get-label-f  return
+          :get-value-f  return}
          (param button-props)))
 
 
@@ -167,6 +169,8 @@
   ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
+  ;    Default: return
+  ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;    TODO ...

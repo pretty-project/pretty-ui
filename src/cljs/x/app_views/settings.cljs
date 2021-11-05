@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.27
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.3.3
+; Version: v1.0.2
+; Compatibility: x4.4.4
 
 
 
@@ -27,41 +27,33 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keyword)
+(def DEFAULT-VIEW :personal)
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-header-bar-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  ;  {:user-name (string)
-  ;   :user-profile-picture-url (string)}
+(defn- get-selected-view
   [db _]
-  {:user-name                (r user/get-user-name                db)
-   :user-profile-picture-url (r user/get-user-profile-picture-url db)})
+  (get-in db (db/meta-item-path ::primary :selected-view) DEFAULT-VIEW))
 
-(a/reg-sub ::get-header-bar-view-props get-header-bar-view-props)
-
-(defn- get-user-profile-box-view-props
+(defn- get-personal-settings-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
   [db _]
-  {
-   :user-email-address (r user/get-user-email-address db)
-   :user-first-name    (r user/get-user-first-name    db)
-   :user-last-name     (r user/get-user-last-name     db)
-   :user-phone-number  (r user/get-user-profile-item  db :phone-number)})
-
-(a/reg-sub ::get-user-profile-box-view-props get-user-profile-box-view-props)
+  {:user-email-address       (r user/get-user-email-address       db)
+   :user-first-name          (r user/get-user-first-name          db)
+   :user-last-name           (r user/get-user-last-name           db)
+   :user-name                (r user/get-user-name                db)
+   :user-profile-picture-url (r user/get-user-profile-picture-url db)
+   :user-phone-number        (r user/get-user-phone-number        db)})
 
 (defn- get-privacy-settings-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return
-  ;  {:privacy-policy-link (string)
-  ;   :terms-of-service-link (string)
-  ;   :what-cookies-are-link (string)}
   [db _]
   (let [privacy-policy-link   (r a/get-site-link db :privacy-policy)
         terms-of-service-link (r a/get-site-link db :terms-of-service)
@@ -70,58 +62,33 @@
         :terms-of-service-link (r dictionary/translate db terms-of-service-link)
         :what-cookies-are-link (r dictionary/translate db what-cookies-are-link)}))
 
-(a/reg-sub ::get-privacy-settings-view-props get-privacy-settings-view-props)
+(defn- get-body-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (merge {:selected-view (r get-selected-view db)}
+         (r get-personal-settings-view-props db)
+         (r get-privacy-settings-view-props  db)))
+
+(a/reg-sub ::get-body-view-props get-body-view-props)
+
+(defn- get-header-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  {:selected-view (r get-selected-view db)})
+
+(a/reg-sub ::get-header-view-props get-header-view-props)
 
 
 
-;; -- Setting components ------------------------------------------------------
+;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- setting-label
+(defn- change-view!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) label-props
-  ;
-  ; @return (component)
-  [label-props]
-  [elements/label (merge {:color            :muted
-                          :font-weight      :bold
-                          :horizontal-align :left
-                          :size             :xs}
-                         (param label-props))])
+  [db [_ view-id]]
+  (assoc-in db (db/meta-item-path ::primary :selected-view) view-id))
 
-(defn- setting-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) button-props
-  ;  {:label (metamorphic-content)(opt)
-  ;   :password? (boolean)(opt)
-  ;    Default: false
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   :value-path (item-path vector)}
-  ;
-  ; @return (component)
-  [{:keys [label password? placeholder value-path] :as button-props}]
-  [elements/button (merge {:color            :none
-                           :horizontal-align :left
-                           :on-click [:x.app-tools.editor/render!
-                                      {:label placeholder :password? password? :value-path value-path}]
-                           :size    :xs
-                           :variant :transparent}
-                          (param button-props)
-                          (if (nil? label)
-                              {:color :muted
-                               :label placeholder}))])
-
-(defn- setting-switch
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) switch-props
-  ;
-  ; @return (component)
-  [switch-props]
-  [elements/switch (merge {:size :xs}
-                          (param switch-props))])
+(a/reg-event-db :settings/change-view! change-view!)
 
 
 
@@ -137,368 +104,289 @@
   ;
   ; @return (hiccup)
   [_ {:keys [user-profile-picture-url]}]
-  [:div.x-user-profile-picture
-     {:style {:backgroundImage (css/url user-profile-picture-url)
-              :height "120px" :width "120px"}}])
-
-(defn- user-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:user-name (string)}
-  ;
-  ; @return (hiccup)
-  [_ {:keys [user-name]}]
-  [elements/label {:content user-name :size :xl}])
-
-(defn- header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;
-  ; @return (hiccup)
-  [component-id view-props]
-  [:<> [user-profile-picture component-id view-props]
-       [user-name            component-id view-props]])
-
-(defn- header-bar
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/content-bar {:content    #'header
-                         :layout     :header
-                         :subscriber [::get-header-bar-view-props]}])
+ [:div.x-user-card
+   [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
+   [elements/button ::change-profile-picture-button
+                    {:color     :muted
+                     :label     :change-profile-picture
+                     :preset    :default-button
+                     :font-size :xs}]])
 
 
 
-;; -- User profile settings components ----------------------------------------
+;; -- Personal view components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- user-profile-settings
+(defn- settings-user-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:user-email-address (string)
-  ;   :user-first-name (string)
-  ;   :user-last-name (string)
-  ;   :user-phone-number (string)}
-  ;
-  ; @return (hiccup)
-  [_ {:keys [user-email-address user-first-name user-last-name user-phone-number]}]
-  [:div#x-settings-page--user-profile-settings
-    [elements/horizontal-line {:color :highlight}]
+  []
+  [:<> [elements/label ::user-name-label
+                       {:content   :name
+                        :color     :muted
+                        :layout    :fit
+                        :font-size :xs}]
+       [elements/button ::user-name-button
+                        {:label  "Tech Mono"
+                         :preset :default-button
+                         :layout :fit}]])
 
-    ; TODO! ...
-    ; Használj x.app-elements/table elemet!
-    ; TODO! ...
-
-    [:div.x-settings-page--table-view
-      ; Labels
-      [:div.x-settings-page--table-view--labels
-        [setting-label {:content :first-name}]
-        [setting-label {:content :last-name}]
-        [setting-label {:content :email}]
-        [setting-label {:content :phone}]
-        [setting-label {:content :password}]
-        [setting-label {:content :pin}]]
-      ; Buttons
-      [:div.x-settings-page--table-view--buttons
-        [setting-button {:label       user-first-name
-                         :placeholder :first-name
-                         :value-path  (db/path :x.app-user.profile-handler/profile :first-name)}]
-        [setting-button {:label       user-last-name
-                         :placeholder :last-name
-                         :value-path  (db/path :x.app-user.profile-handler/profile :last-name)}]
-        [setting-button {:label       user-email-address
-                         :placeholder :email-address
-                         :value-path  (db/path :x.app-user.account-handler/account :email-address)}]
-        [setting-button {:label       user-phone-number
-                         :placeholder :phone-number
-                         :value-path (db/path :x.app-user.profile-handler/profile :phone-number)}]
-        [setting-button {:label "••••••••"
-                         :placeholder :new-password
-                         :password? true
-                         :value-path (db/path :x.app-user.account-handler/account :new-password)}]
-        [setting-button {:label "••••"
-                         :placeholder :new-pin
-                         :password? true
-                         :value-path (db/path :x.app-user.account-handler/account :new-pin)}]]]
-    ; Change user profile picture
-    [setting-button {:label :change-profile-picture
-                     :color :primary}]])
-
-(defn- user-profile-box
+(defn- settings-user-email-address
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) view-props
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:content          #'user-profile-settings
-                 :horizontal-align :left
-                 :icon             :account_circle
-                 :label            :my-profile
-                 :subscriber       [::get-user-profile-box-view-props]}])
+  []
+  [:<> [elements/label ::user-email-address-label
+                       {:content   :email-address
+                        :color     :muted
+                        :layout    :fit
+                        :font-size :xs}]
+       [elements/button ::user-email-address-button
+                        {:label  "demo@monotech.hu"
+                         :preset :default-button
+                         :layout :fit}]])
+
+(defn- settings-user-phone-number
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [elements/label ::user-phone-number-label
+                       {:content   :phone-number
+                        :color     :muted
+                        :layout    :fit
+                        :font-size :xs}]
+       [elements/button ::user-phone-number-button
+                        {:label  "+36301234567"
+                         :preset :default-button
+                         :layout :fit}]])
+
+(defn- settings-user-password
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [elements/label ::user-password-label
+                       {:content   :password
+                        :color     :muted
+                        :layout    :fit
+                        :font-size :xs}]
+       [elements/button ::user-password-button
+                        {:label  "••••••••"
+                         :preset :default-button
+                         :layout :fit}]])
+
+(defn- settings-user-pin
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [elements/label ::user-pin-label
+                       {:content   :pin
+                        :color     :muted
+                        :layout    :fit
+                        :font-size :xs}]
+       [elements/button ::user-pin-button
+                        {:label  "••••"
+                         :preset :default-button
+                         :layout :fit}]])
+
+(defn- settings-personal-view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [:<> [elements/separator {:orientation :horizontal :size :s}]
+       [user-profile-picture surface-id view-props]
+       [elements/separator {:orientation :horizontal :size :s}]
+       [elements/horizontal-line {:color :highlight}]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [settings-user-name surface-id]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [settings-user-email-address surface-id]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [settings-user-phone-number surface-id]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [settings-user-password surface-id]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [settings-user-pin surface-id]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [elements/button {:label :delete-user-account!
+                         :preset :secondary-button}]
+       [elements/button {:label :clear-user-data!
+                         :preset :secondary-button}]])
 
 
 
-;; -- Privacy settings components ---------------------------------------------
+;; -- Notifications view components -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- privacy-policy-button
+(defn- settings-privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:privacy-policy-link (string)}
-  ;
-  ; @return (component)
   [_ {:keys [privacy-policy-link]}]
   (if (some? privacy-policy-link)
-      [setting-button {:label :privacy-policy :color :primary :layout :fit
-                       :on-click [:x.app-router/go-to! privacy-policy-link]}]))
+      [elements/button {:label :privacy-policy :preset :primary-button :layout :row
+                        :on-click [:x.app-router/go-to! privacy-policy-link]}]))
 
-(defn- terms-of-service-button
+(defn- settings-terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:terms-of-service-link (string)}
-  ;
-  ; @return (component)
   [_ {:keys [terms-of-service-link]}]
-  (if (some? terms-of-service-link)
-      [setting-button {:label :terms-of-service :color :primary :layout :fit
-                       :on-click [:x.app-router/go-to! terms-of-service-link]}]))
+  (if (nil? terms-of-service-link)
+      [elements/button {:label :terms-of-service :preset :primary-button :layout :row
+                        :on-click [:x.app-router/go-to! terms-of-service-link]}]))
 
-(defn- what-cookies-are-button
+(defn- settings-what-cookies-are-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;  {:what-cookies-are-link (string)}
-  ;
-  ; @return (component)
   [_ {:keys [what-cookies-are-link]}]
-  (if (some? what-cookies-are-link)
-      [setting-button {:label :what-cookies-are? :color :primary :layout :fit
-                       :on-click [:x.app-router/go-to! what-cookies-are-link]}]))
+  (if (nil? what-cookies-are-link)
+      [elements/button {:label :what-cookies-are? :preset :primary-button :layout :row
+                        :on-click [:x.app-router/go-to! what-cookies-are-link]}]))
 
-(defn- ku8701
+(defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
-  ;
-  ; @return (component)
   [component-id view-props]
   [:<> ; This website uses cookies
        [elements/separator {:size :s}]
        [elements/text {:content :this-website-uses-cookies
-                       :size :xs :layout :row :font-weight :bold}]
+                       :font-size :xs :layout :row :font-weight :bold}]
        ; Legal links
        [elements/separator {:size :xxs}]
-       [privacy-policy-button   component-id view-props]
-       [terms-of-service-button component-id view-props]
-       [what-cookies-are-button component-id view-props]
+       [settings-privacy-policy-button   component-id view-props]
+       [settings-terms-of-service-button component-id view-props]
+       [settings-what-cookies-are-button component-id view-props]
        ; Cookie settings
-       [elements/separator {:size :l}]
-       [elements/horizontal-line {:color :highlight :layout :fit}]
-       [elements/separator {:size :l}]
-       [setting-switch {:disabled? true
-                        :initial-value true
-                        :label :necessary-cookies
-                        :value-path (environment/cookie-setting-path :necessary-cookies-enabled?)}]
-       [setting-switch {:initial-value true
-                        :label :user-experience-cookies
-                        :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
-                        :on-check [:x.app-environment.cookie-handler/->settings-changed]
-                        :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
-       [setting-switch {:initial-value true
-                        :label :analytics-cookies
-                        :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
-                        :on-check [:x.app-environment.cookie-handler/->settings-changed]
-                        :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
+       [elements/horizontal-line {:color :highlight :layout :row}]
+       [elements/switch ::necessary-cookies-switch
+                        {:disabled?     true
+                         :initial-value true
+                         :label         :necessary-cookies
+                         :value-path (environment/cookie-setting-path :necessary-cookies-enabled?)}]
+       [elements/switch ::user-experience-cookies-switch
+                        {:initial-value true
+                         :label         :user-experience-cookies
+                         :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
+                         :on-check   [:x.app-environment.cookie-handler/->settings-changed]
+                         :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
+       [elements/switch ::analytics-cookies-switch
+                        {:initial-value true
+                         :label         :analytics-cookies
+                         :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
+                         :on-check   [:x.app-environment.cookie-handler/->settings-changed]
+                         :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
        ; Remove stored cookies
-       [elements/separator {:size :l}]
-       [setting-button {:label :remove-stored-cookies!
-                        :icon  :delete :layout  :fit
-                        :on-click [:x.app-views.remove-stored-cookies/render-dialog!]}]
-       [elements/separator {:size :xs}]])
+       [elements/separator {:size :s}]
+       [elements/button {:label :remove-stored-cookies! :preset :secondary-button :layout :row
+                         :on-click [:x.app-views.remove-stored-cookies/render-dialog!]}]
+       [elements/separator {:size :s}]])
 
-(defn cookie-settings
+(defn- settings-privacy-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (component)
-  [_]
-  [components/subscriber {:component #'ku8701
-                          :subscriber [::get-privacy-settings-view-props]}])
-
-(defn- privacy-settings
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (hiccup)
-  [component-id]
-  [:div#x-settings-page--privacy-settings
-    [elements/horizontal-line {:color :highlight :layout :fit}]
-    [cookie-settings component-id]])
-
-(defn- privacy-box
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:content          #'privacy-settings
-                 :horizontal-align :left
-                 :icon             :security
-                 :label            :privacy}])
+  [surface-id view-props]
+  [cookie-settings surface-id view-props])
 
 
 
-;; -- Notification settings components ----------------------------------------
+;; -- Notifications view components -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- notification-settings
+(defn- settings-notifications-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (hiccup)
-  [_]
-  [:div#x-settings-page--notification-settings
-    [elements/horizontal-line {:color :highlight :layout :fit}]
-    ; Notification settings
-    [setting-switch {:label :notification-bubbles
-                     :value-path [:a1]}]
-    [setting-switch {:label :notification-sounds
-                     :value-path [:a2]}]])
-
-(defn- notification-box
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:content          #'notification-settings
-                 :horizontal-align :left
-                 :icon             :circle_notifications
-                 :label            :notifications}])
+  [surface-id view-props]
+  [:<> [elements/separator {:orientation :horizontal :size :s}]
+       [elements/switch ::notification-bubbles-switch
+                        {:helper     "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                         :label      :notification-bubbles
+                         :layout     :fit
+                         :value-path [:a1]}]
+       [elements/separator {:orientation :horizontal :size :l}]
+       [elements/switch ::notification-sounds-switch
+                        {:helper     "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                         :label      :notification-sounds
+                         :layout     :fit
+                         :value-path [:a2]}]
+       [elements/separator {:orientation :horizontal :size :s}]])
 
 
 
-;; -- Appearance settings components ------------------------------------------
+;; -- Appearance view components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- appearance-settings
+(defn- settings-appearance-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (hiccup)
-  [_]
-  [:div#x-settings-page--appearance-settings
-    [elements/horizontal-line {:color :highlight :layout :fit}]
-    ; Theme selector
-    [elements/radio-button
-      {:label      :selected-theme
-       :layout     :fit
-       :options    [{:label :dark-theme  :value "dark"}
-                    {:label :light-theme :value "light"}]
-       :on-select  [:x.app-ui/->theme-changed]
-       :size       :xs
-       :value-path (db/path :x.app-user.settings-handler/settings :selected-theme)}]
-    [elements/separator {:size :xs}]])
-
-(defn- appearance-box
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:content          #'appearance-settings
-                 :horizontal-align :left
-                 :icon             :monitor
-                 :label            :appearance}])
+  [surface-id view-props]
+  [:<> [elements/radio-button ::selected-theme-radio-button
+                              {:helper      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                               :label       :selected-theme
+                               :layout      :fit
+                               :get-label-f :label
+                               :get-value-f :value
+                               :initial-options [{:label :dark-theme  :value "dark"}
+                                                 {:label :light-theme :value "light"}]
+                               :on-select  [:x.app-ui/set-theme!]}]
+       [elements/separator {:orientation :horizontal :size :s}]])
 
 
 
-;; -- Danger zone components --------------------------------------------------
+;; -- Settings body components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- danger-zone
+(defn- settings-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (hiccup)
-  [_]
-  [:div#x-settings-page--danger-zone
-    [elements/horizontal-line {:color :highlight :layout :fit}]
-    ; Danger buttons
-    [setting-button {:label :delete-user-account!
-                     :color :secondary :layout  :fit}]
-    [setting-button {:label :clear-user-data!
-                     :color :secondary :layout  :fit}]
-    [elements/separator {:size :xs}]])
+  [surface-id {:keys [selected-view] :as view-props}]
+  (case selected-view :personal      [settings-personal-view      surface-id view-props]
+                      :privacy       [settings-privacy-view       surface-id view-props]
+                      :notifications [settings-notifications-view surface-id view-props]
+                      :appearance    [settings-appearance-view    surface-id view-props]))
 
-(defn- danger-zone-box
+
+
+;; -- Settings header components ----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn settings-personal-view-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
-  [_]
-  [elements/box {:color            :secondary
-                 :content          #'danger-zone
-                 :horizontal-align :left
-                 :icon             :error_outline
-                 :label            :danger-zone}])
+  [surface-id {:keys [selected-view]}]
+  [elements/button {:color    (if (= selected-view :personal) :default :muted)
+                    :icon     :person
+                    :on-click [:settings/change-view! :personal]
+                    :preset   :default-icon-button}])
+
+(defn settings-privacy-view-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id {:keys [selected-view]}]
+  [elements/button {:color    (if (= selected-view :privacy) :default :muted)
+                    :icon     :security
+                    :on-click [:settings/change-view! :privacy]
+                    :preset   :default-icon-button}])
+
+(defn settings-notifications-view-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id {:keys [selected-view]}]
+  [elements/button {:color    (if (= selected-view :notifications) :default :muted)
+                    :icon     :notifications
+                    :on-click [:settings/change-view! :notifications]
+                    :preset   :default-icon-button}])
+
+(defn settings-appearance-view-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id {:keys [selected-view]}]
+  [elements/button {:color    (if (= selected-view :appearance) :default :muted)
+                    :icon     :auto_awesome
+                    :on-click [:settings/change-view! :appearance]
+                    :preset   :default-icon-button}])
+
+(defn- settings-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [elements/polarity ::settings-header
+                     {:middle-content [:<> [settings-personal-view-button      surface-id view-props]
+                                           [settings-privacy-view-button       surface-id view-props]
+                                           [settings-notifications-view-button surface-id view-props]
+                                           [settings-appearance-view-button    surface-id view-props]]}])
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Settings components -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ;
-  ; @return (component)
   [surface-id]
-  [:div#x-settings-page
-    ; Header bar
-    [header-bar       surface-id]
-    ; User settings
-    [router/fragment-marker :user]
-    [user-profile-box surface-id]
-    ; Privacy settings
-    [router/fragment-marker :privacy]
-    [privacy-box      surface-id]
-    ; Notification settings
-    [router/fragment-marker :notifications]
-    [notification-box surface-id]
-    ; Appearance settings
-    [router/fragment-marker :appearance]
-    [appearance-box   surface-id]
-    ; Danger zone
-    [danger-zone-box  surface-id]
-    [elements/separator {:size :xl}]])
+  [elements/box surface-id {:body   {:content    #'settings-body
+                                     :subscriber [::get-body-view-props]}
+                            :header {:content    #'settings-header
+                                     :subscriber [::get-header-view-props]
+                                     :sticky?    true}
+                            :horizontal-align :left}])
 
 
 
@@ -506,25 +394,17 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  ::load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-ui/set-window-title! :settings]
-                [:x.app-ui/set-surface!
-                 ::view
-                 {:content #'view
-                  :content-label :settings}]]})
-
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n
-   [[:x.app-router/add-route!
-     ::route
-     {:restricted?         true
-      :route-event         [::render!]
-      :route-template      "/settings"
-      :scroll-to-fragment? true}]]})
+  {:dispatch-n [[:x.app-ui/set-header-title! :settings]
+                [:x.app-ui/set-window-title! :settings]
+                [:x.app-ui/set-surface! ::view
+                                        {:content #'view
+                                         :content-label :settings}]]})
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route! ::route
+                                          {:restricted?    true
+                                           :route-event    [::load!]
+                                           :route-template "/settings"}]})

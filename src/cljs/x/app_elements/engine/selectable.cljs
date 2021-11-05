@@ -250,8 +250,10 @@
   ;
   ; @return (map)
   [db [event-id input-id option]]
-  (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (-> db (db/set-item!                 [event-id value-path option])
+  (let [value-path  (r element/get-element-prop db input-id :value-path)
+        get-value-f (r element/get-element-prop db input-id :get-value-f)
+        value       (get-value-f option)]
+       (-> db (db/set-item!                 [event-id value-path value])
               (input/mark-input-as-visited! [event-id input-id]))))
 
 (defn unselect-option!
@@ -333,6 +335,8 @@
   ; @param (keyword) input-id
   ; @param (*) option
   (fn [{:keys [db]} [event-id input-id option]]
-      (let [on-select-event (r element/get-element-prop db input-id :on-select)]
+      (let [on-select-event (r element/get-element-prop db input-id :on-select)
+            get-value-f     (r element/get-element-prop db input-id :get-value-f)
+            value           (get-value-f option)]
            {:db       (r select-option! db input-id option)
-            :dispatch (a/metamorphic-event<-params on-select-event option)})))
+            :dispatch (a/metamorphic-event<-params on-select-event value)})))

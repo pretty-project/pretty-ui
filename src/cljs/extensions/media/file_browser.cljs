@@ -557,7 +557,7 @@
                    (merge {:keypress {:key-code 13}
                            :on-click {:dispatch-n [[:x.app-ui/close-popup! popup-id]
                                                    [:file-browser/->browse-done]]}
-                           :preset   :action-button
+                           :preset   :primary-button
                            :label    (view-props->done-button-label view-props)}
                           (if (view-props->done-button-disabled? view-props)
                               {:color     :muted

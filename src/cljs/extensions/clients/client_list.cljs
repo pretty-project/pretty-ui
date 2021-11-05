@@ -67,7 +67,7 @@
        [elements/toggle {:on-click [:x.app-router/go-to! client-uri]
                          :stretch-orientation :horizontal
                          :content
-                         [:button.clients--client
+                         [:div.clients--client
                             [client-item-primary-details   lister-id item-dex client-props common-props]
                             [client-item-secondary-details lister-id item-dex client-props common-props]]}]))
 

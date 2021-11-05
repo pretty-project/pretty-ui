@@ -352,7 +352,7 @@
                                                                       :content-props view-props
                                                                       :user-close?   false}]
                                              [:file-uploader/upload-files!]]}
-                    :preset    :action-button}])
+                    :preset    :primary-button}])
 
 (defn- file-uploader-available-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!

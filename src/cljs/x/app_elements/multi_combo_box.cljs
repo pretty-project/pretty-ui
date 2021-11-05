@@ -32,7 +32,7 @@
 ; @constant (keywords in vector)
 ;  A multi-combo-box elem mely paramétereit örökölje a combo-box elem
 (def INHERITED-FIELD-PROPS
-     [:auto-focus? :color :extendable? :min-width :get-label-f
+     [:auto-focus? :color :extendable? :min-width :get-label-f :get-value-f
       :group-value :no-options-label :max-length :on-blur :on-empty
       :on-focus :on-reset :on-select :on-type-ended :option-component
       :options-path :placeholder
@@ -113,11 +113,13 @@
   ;
   ; @return (map)
   ;  {:get-label-f (function)
+  ;   :get-value-f (function)
   ;   :no-options-selected-label (metamorphic-content)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [group-id group-props]
   (merge {:get-label-f               return
+          :get-value-f  return
           :no-options-selected-label DEFAULT-NO-OPTIONS-SELECTED-LABEL
           :options-path              (engine/default-options-path group-id)
           :value-path                (engine/default-value-path   group-id)}
@@ -242,6 +244,8 @@
   ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
+  ;    Default: return
+  ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)

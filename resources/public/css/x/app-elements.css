@@ -1231,11 +1231,14 @@ button.x-card:focus,
 /*** Helper ***/
 
 .x-element--helper {
+  color: var( --color-highlight );
   font-size: var( --font-size-xs );
+  font-weight: 500;
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs );
   opacity: .8;
-  padding-bottom: 12px }
+  padding-bottom: 12px;
+  padding-top: 6px }
 
 /*** Helper ***/
 
@@ -1499,8 +1502,7 @@ body[data-viewport-profile="s"]
   -min-width: var( --element-min-width-xs ) }
 
 .x-button[data-layout="row"] {
-  padding-bottom: 6px;
-  padding-top: 6px }
+  min-height: 48px }
 
 /*** Button wrapper ***/
 
@@ -1517,6 +1519,15 @@ body[data-viewport-profile="s"]
   flex-direction: row;
   height: 36px;
   width: 100% }
+
+.x-button[data-variant="transparent"][data-layout="row"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+.x-button[data-variant="transparent"] .x-button--body {
+  /* A transparent gombok magassága a beállított betűmérettől függ */
+  height: auto }
 
 .x-button[data-layout="fit"][data-variant="outlined"] .x-button--body,
 .x-button[data-layout="row"][data-variant="outlined"] .x-button--body {
@@ -2586,19 +2597,21 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
    * szélessége nagyobb volt, mint a rendelkezésre álló hely */
   max-width: 100% }
 
-.x-label[data-layout="row"] {
-  padding-bottom: 12px;
-  padding-top: 12px }
-
 /*** Label wrapper ***/
 
 /*** Label body ***/
 
 .x-label--body {
-  line-height: 24px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap }
+
+.x-label[data-layout="row"] .x-label--body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 48px;
+  padding: 6px 0 }
 
 /*** Label body ***/
 

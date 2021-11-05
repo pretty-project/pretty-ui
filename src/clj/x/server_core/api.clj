@@ -38,6 +38,7 @@
 
 ; x.server-core.config-handler
 (def PROJECT-CONFIG-FILEPATH config-handler/PROJECT-CONFIG-FILEPATH)
+(def SITE-CONFIG-FILEPATH    config-handler/SITE-CONFIG-FILEPATH)
 (def SERVER-CONFIG-FILEPATH  config-handler/SERVER-CONFIG-FILEPATH)
 (def get-app-details         config-handler/get-app-details)
 (def get-app-detail          config-handler/get-app-detail)

@@ -49,6 +49,7 @@
 (def get-user-first-name          profile-handler/get-user-first-name)
 (def get-user-last-name           profile-handler/get-user-last-name)
 (def get-user-name                profile-handler/get-user-name)
+(def get-user-phone-number        profile-handler/get-user-phone-number)
 (def get-user-profile-picture-url profile-handler/get-user-profile-picture-url)
 (def set-user-profile-item!       profile-handler/set-user-profile-item!)
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.28
 ; Description:
-; Version: v0.1.4
-; Compatibility: x3.9.8
+; Version: v0.1.6
+; Compatibility: x4.4.4
 
 
 
@@ -23,4 +23,5 @@
               [x.app-views.privacy-policy]
               [x.app-views.remove-stored-cookies]
               [x.app-views.settings]
+              [x.app-views.user-card]
               [x.app-views.terms-of-service]))

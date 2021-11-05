@@ -143,11 +143,13 @@
   ;
   ; @return (map)
   ;  {:get-label-f (function)
+  ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id {:keys [as-button?] :as select-props}]
   (let [options-props (param select-props)]
        (merge {:get-label-f  return
+               :get-value-f  return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
               ; A button elemnél is alkalmazott tulajdonságok csak akkor részei a select elem
@@ -188,7 +190,6 @@
   ;
   ; @param (keyword) element-id
   ;  select-id or options-id
-  ;
   ;
   ; @return (map)
   [db [_ element-id]]
@@ -262,9 +263,8 @@
      :element-props options-props
      ; XXX#5051
      ; Ha nem select-button gomb használatával, hanem esemény meghívásával történik a select
-     ; 
-     :initializer   [:x.app-elements/init-selectable! options-id]
-     :subscriber    [::get-view-props                 options-id]}])
+     :initializer [:x.app-elements/init-selectable! options-id]
+     :subscriber  [::get-view-props                 options-id]}])
 
 
 
@@ -377,6 +377,8 @@
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
+  ;   :get-value-f (function)(opt)
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :icon (keyword)(opt) Material icon class
   ;   :initial-options (vector)(constant)(opt)
@@ -423,8 +425,8 @@
            :element-props select-props
            ; XXX#5051
            ; A gomb kirenderelésekor inicializálja az elemet
-           :initializer   [:x.app-elements/init-selectable! select-id]
-           :subscriber    [::get-view-props                 select-id]}])))
+           :initializer [:x.app-elements/init-selectable! select-id]
+           :subscriber  [::get-view-props                 select-id]}])))
 
 
 
