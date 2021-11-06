@@ -32,6 +32,7 @@
 (def request->user-account        account-handler/request->user-account)
 (def request->user-public-account account-handler/request->user-public-account)
 (def request->authenticated?      account-handler/request->authenticated?)
+(def request->user-link           account-handler/request->user-link)
 
 ; x.server-user.engine
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)

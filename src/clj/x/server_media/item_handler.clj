@@ -126,7 +126,7 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(pathom.co/defresolver get-directory-data
+(pathom.co/defresolver get-directory-data_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -151,7 +151,35 @@
         directory-document   (assoc directory-document :item-count directory-item-count)]
        (db/document->namespaced-document directory-document :directory)))
 
+;(pathom/reg-handler! :get-directory-data get-directory-data)
+
+
+
+
+
+(defn- get-directory-data_
+  [directory-id])
+
+(pathom.co/defresolver get-directory-data
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ;  {}
+  ;
+  ; @return (map)
+  [env _]
+  {:media/get-directory-data
+   (let [directory-id (pathom/env->param env :directory-id)]
+        [{:directory/alias "Home"}])})
+
 (pathom/reg-handler! :get-directory-data get-directory-data)
+
+
+
+
+
+
+
 
 (pathom.co/defresolver get-file-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

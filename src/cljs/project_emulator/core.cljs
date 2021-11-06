@@ -3,8 +3,8 @@
     (:require [x.boot-loader]
               [extensions.clients.api]
               [extensions.home.api]
-              [extensions.media.api]
-              [extensions.products.api]
+              ;[extensions.media.api]
+              ;[extensions.products.api]
 
               ; TEMP
               [playground.api]))

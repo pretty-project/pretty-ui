@@ -107,8 +107,7 @@
  [:div.x-user-card
    [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
    [elements/button ::change-profile-picture-button
-                    {:color     :muted
-                     :label     :change-profile-picture
+                    {:label     :change-profile-picture
                      :preset    :default-button
                      :font-size :xs}]])
 
@@ -207,7 +206,7 @@
 
 
 
-;; -- Notifications view components -------------------------------------------
+;; -- Privacy view components -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- settings-privacy-policy-button
@@ -281,7 +280,14 @@
 (defn- settings-notifications-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [:<> [elements/separator {:orientation :horizontal :size :s}]
+  [:<> [elements/separator {:orientation :horizontal :size :l}]
+       [elements/switch ::warning-bubbles-switch
+                        {:helper     "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                         :label      :warning-bubbles
+                         :layout     :fit
+                         :disabled?  true
+                         :default-value true}]
+       [elements/separator {:orientation :horizontal :size :s}]
        [elements/switch ::notification-bubbles-switch
                         {:helper     "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                          :label      :notification-bubbles

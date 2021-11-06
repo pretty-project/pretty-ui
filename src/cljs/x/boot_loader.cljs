@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader
-    (:require [extensions.api]
-              [x.app-components.api]
+    (:require [x.app-components.api]
               [x.app-developer.api]
               [x.app-dictionary.api]
               [x.app-environment.api]

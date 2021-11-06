@@ -28,6 +28,7 @@
 ; Books:
 ;  Appearance
 ;  Application
+;  Contacts
 ;  Database
 ;  Edit
 ;  Errors
@@ -36,9 +37,9 @@
 ;  Locales
 ;  Media
 ;  Notifications
+;  Social media
 ;  Units
 ;  User
-;  Website
 
 
 
@@ -248,6 +249,12 @@
       :no-internet-connection
       {:en "No internet connection"
        :hu "Nincs internet kapcsolat"}
+      :n-items-downloaded
+      {:en "% item(s) downloaded"
+       :hu "% elem letöltve"}
+      :npn-items-downloaded
+      {:en "%1 / %2 item(s) downloaded"
+       :hu "%1 / %2 elem letöltve"}
       :open!
       {:en "Open"
        :hu "Megnyitás"}
@@ -327,11 +334,51 @@
       {:en "View"
        :hu "Nézet"}
       :welcome-n
-      {:en "Welcome %"
-       :hu "Üdv %"}
+      {:en "Welcome %!"
+       :hu "Üdv %!"}
       :yes
       {:en "Yes"
        :hu "Igen"}})
+
+
+
+;; -- Contacts ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def contacts
+     {:contacts
+      {:en "Contacts"
+       :hu "Kapcsolat"}
+      :contacts-data
+      {:en "Contacts data"
+       :hu "Kapcsolati adatok"}
+      :email-address
+      {:en "Email address"
+       :hu "Email cím"}
+      :email
+      {:en "Email"
+       :hu "Email"}
+      :first-name
+      {:en "First name"
+       :hu "Keresztnév"}
+      :google-maps-link
+      {:en "Google Maps link"
+       :hu "Google Térkép hivatkozás"}
+      :last-name
+      {:en "Last name"
+       :hu "Vezetéknév"}
+      :name
+      {:en "Name"
+       :hu "Név"}
+      :phone
+      {:en "Phone"
+       :hu "Telefon"}
+      :phone-number
+      {:en "Phone number"
+       :hu "Telefonszám"}
+      :vat-no
+      {:en "VAT number"
+       :hu "Adószám"}})
 
 
 
@@ -384,6 +431,9 @@
 
 ;; -- Edit --------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(def actions
+     {})
 
 (def edit
      {:add!
@@ -539,12 +589,13 @@
       :select-all-items!
       {:en "Select all items"
        :hu "Összes elem kiválasztása"}
-      :select!
-      {:en "Select"
-       :hu "Válassz"}
+
       :select
       {:en "Select"
        :hu "Kiválasztás"}
+      :select!
+      {:en "Select"
+       :hu "Válassz"}
       :check
       {:en "Select"
        :hu "Kijelölés"}
@@ -837,6 +888,9 @@
       :last-modified
       {:en "Last modified"
        :hu "Utoljára módosítva"}
+      :last-modified-at-n
+      {:en "Last modified at: %"
+       :hu "Utoljára módosítva: %"}
       :new-directory
       {:en "New directory"
        :hu "Új mappa"}
@@ -906,7 +960,71 @@
       :hu "Értesítési üzenetek"}
      :notification-sounds
      {:en "Notification sounds"
-      :hu "Hangjelzések"}})
+      :hu "Hangjelzések"}
+     :warning-bubbles
+     {:en "Warning bubbles"
+      :hu "Figyelmeztető buborékok"}})
+
+
+
+;; -- Social media ------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(def social-media
+     {:awwwards-link
+      {:en "Awwwards link"
+       :hu "Awwwards hivatkozás"}
+      :behance-link
+      {:en "Behance link"
+       :hu "Behance hivatkozás"}
+      :facebook-link
+      {:en "Facebook link"
+       :hu "Facebook hivatkozás"}
+      :instagram-link
+      {:en "Instagram link"
+       :hu "Instagram hivatkozás"}
+      :linkedin-link
+      {:en "Linkedin link"
+       :hu "Linkedin hivatkozás"}
+      :pinterest-link
+      {:en "Pinterest link"
+       :hu "Pinterest hivatkozás"}
+      :reddit-link
+      {:en "Reddit link"
+       :hu "Reddit hivatkozás"}
+      :snapchat-link
+      {:en "Snapchat link"
+       :hu "Snapchat hivatkozás"}
+      :social-media
+      {:en "Social media"
+       :hu "Közösségi média"}
+      :social-media-link
+      {:en "Social media link"
+       :hu "Közösségi média hivatkozás"}
+      :social-media-links
+      {:en "Social media links"
+       :hu "Közösségi média hivatkozások"}
+      :skype-link
+      {:en "Skype link"
+       :hu "Skype hivatkozás"}
+      :tiktok-link
+      {:en "TikTok link"
+       :hu "TikTok hivatkozás"}
+      :twitter-link
+      {:en "Twitter link"
+       :hu "Twitter hivatkozás"}
+      :viber-link
+      {:en "Viber link"
+       :hu "Viber hivatkozás"}
+      :vimeo-link
+      {:en "Vimeo link"
+       :hu "Vimeo hivatkozás"}
+      :whatsapp-link
+      {:en "WhatsApp link"
+       :hu "WhatsApp hivatkozás"}
+      :youtube-link
+      {:en "Youtube link"
+       :hu "Youtube hivatkozás"}})
 
 
 
@@ -932,6 +1050,9 @@
       :second
       {:en "Second"
        :hu "Másodperc"}
+      :today
+      {:en "Today"
+       :hu "Ma"}
       :unit-price
       {:en "Unit price"
        :hu "Egységár"}
@@ -978,18 +1099,6 @@
       :delete-user-account!
       {:en "Delete user account"
        :hu "Felhasználói fiók törlése"}
-      :email-address
-      {:en "Email address"
-       :hu "Email cím"}
-      :email
-      {:en "Email"
-       :hu "Email"}
-      :first-name
-      {:en "First name"
-       :hu "Keresztnév"}
-      :last-name
-      {:en "Last name"
-       :hu "Vezetéknév"}
       :forgot-password
       {:en "Forgot password"
        :hu "Elfelejtettem a jelszavam"}
@@ -1017,9 +1126,6 @@
       :my-profile
       {:en "My profile"
        :hu "Profilom"}
-      :name
-      {:en "Name"
-       :hu "Név"}
       :new-password
       {:en "New password"
        :hu "Új jelszó"}
@@ -1047,12 +1153,6 @@
       :permission-denied
       {:en "Permission denied!"
        :hu "Hozzáférés megtagadva!"}
-      :phone
-      {:en "Phone"
-       :hu "Telefon"}
-      :phone-number
-      {:en "Phone number"
-       :hu "Telefonszám"}
       :pin
       {:en "PIN"
        :hu "PIN"}
@@ -1067,20 +1167,7 @@
        :hu "Felhasználónév"}
       :valid-password-rules
       {:en "Password must contain at least 6 characters, both uppercase and lowercase letters, and a number!"
-       :hu "A jelszó legyen legalább 6 karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}
-      :vat-no
-      {:en "VAT number"
-       :hu "Adószám"}})
-
-
-
-;; -- Website -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def website
-     {:website-menu
-      {:en "Website menu"
-       :hu "Weboldal menu"}})
+       :hu "A jelszó legyen legalább 6 karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}})
 
 
 
@@ -1090,6 +1177,7 @@
 ; @constant (map)
 (def BOOKS (merge appearance
                   application
+                  contacts
                   database
                   developer
                   edit
@@ -1099,7 +1187,7 @@
                   locales
                   media
                   notifications
+                  social-media
                   units
                   user
-                  website
                   EXTENSION-BOOKS))

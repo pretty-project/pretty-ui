@@ -1,5 +1,5 @@
 
 (ns extensions.clients.api
-    (:require [extensions.clients.client-form]
-              [extensions.clients.client-list]
+    (:require [extensions.clients.client-editor]
+              [extensions.clients.client-lister]
               [extensions.clients.engine]))

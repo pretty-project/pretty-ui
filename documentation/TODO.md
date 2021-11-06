@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- request->added-prop, modified-prop, ... törölhető
+
 - icon-button külön element lehet ujra
 
 - db/id-handler mehet mid-fruits/eql-be

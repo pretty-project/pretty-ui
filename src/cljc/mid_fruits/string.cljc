@@ -569,11 +569,15 @@
 (defn replace-part
   ; @param (string) n
   ; @param (function or string) x
-  ; @param (function, nil or string) y
+  ; @param (function or string) y
   ;
   ; @example
   ;  (string/replace-part "ABC" #"B" "X")
   ;  => "AXC"
+  ;
+  ; @example
+  ;  (string/replace-part "ABC" #"B" nil)
+  ;  => ""
   ;
   ; @return (string)
   [n x y]
@@ -595,6 +599,10 @@
   ; @example
   ;  (string/use-replacements "My favorite colors are: %1, %2 and %3" ["red" "green" "blue"])
   ;  => "My favorite colors are: red, green and blue"
+  ;
+  ; @example
+  ;  (string/use-replacements "%1 / %2 items downloaded" [nil nil])
+  ;  => ""
   ;
   ; @return (string)
   [n replacements]

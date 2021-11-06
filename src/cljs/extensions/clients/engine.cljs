@@ -13,20 +13,6 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-downloaded-clients
-  [db _]
-  (get-in db [:clients :list-data]))
-
-(defn get-downloaded-client-count
-  [db _]
-  (let [downloaded-clients (r get-downloaded-clients db)]
-       (count downloaded-clients)))
-
-(defn all-documents-downloaded?
-  [db _]
-  (let [client-count            (get-in db [:clients :list-meta :document-count])
-        downloaded-client-count (r get-downloaded-client-count db)]))
-
 ;; ----------------------------------------------------------------------------
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,17 +21,18 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+
 ; Save client
 
 (a/reg-event-fx
   :clients/request-save-client!
   (fn [{:keys [db]} [event-id]]
-      (let [client-props (get-in db [:clients :form-data])]
+      (let [client-props (get-in db [:clients :editor-data])]
            [:x.app-sync/send-query!
             :clients/synchronize-client-form!
-            {:on-success [:x.app-router/go-to! "/clients"]
+            {:on-stalled [:x.app-router/go-to! "/clients"]
              :on-failure [:x.app-ui/blow-bubble! ::failure-notification {:content :saving-error :color :warning}]
-             :query      [`(clients/save-client! ~client-props)]}])))
+             :query      [`(~(symbol "clients/save-client!") ~client-props)]}])))
 
 ; Add client
 
@@ -115,35 +102,6 @@
         :query      [{[:client/id client-id] [:client/last-name '*]}]}]))
 
 ; Download clients for the client-list
-
-(a/reg-event-fx
-  :clients/receive-clients!
-  (fn [{:keys [db]} [_ server-response]]
-      (let [documents      (get-in server-response [:clients/get-clients :documents])
-            document-count (get-in server-response [:clients/get-clients :document-count])]
-           {:db       (-> db (update-in [:clients :list-data] vector/concat-items documents)
-                             ; Szükséges frissíteni a keresési feltételeknek megfelelő
-                             ; dokumentumok számát, mert változhat
-                             (assoc-in  [:clients :list-meta :document-count] document-count))
-            :dispatch-if [(r all-documents-downloaded? db)
-                          [:x.app-components/reload-infinite-loader! :clients]]})))
-
-(a/reg-event-fx
-  :clients/request-clients!
-  (fn [{:keys [db]} _]
-      [:x.app-sync/send-query!
-       :clients/synchronize-client-list!
-        ; A letöltött dokumentumok on-success helyett on-stalled időpontban kerülnek tárolásra
-        ; a Re-Frame adatbázisba, így elkerülhető, hogy a request idle-timeout ideje alatt
-        ; az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
-        ; felirat még megjelenik a lista végén.
-       {:on-stalled [:clients/receive-clients!]
-        :query      [`(:clients/get-clients
-                        {:skip      ~(r get-downloaded-client-count db)
-                         :max-count 10
-                         :search-pattern [[:client/full-name ""] [:client/email-address ""]]
-                         :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]})]}]))
-
 
 ;; ----------------------------------------------------------------------------
 ;; -- Effect events -----------------------------------------------------------

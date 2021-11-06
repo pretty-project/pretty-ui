@@ -20,9 +20,10 @@
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]
 
-              #?(:clj  [clj-time.core   :as clj-time.core])
-              #?(:clj  [clj-time.format :as clj-time.format])
-              #?(:cljs [cljs-time.core  :as cljs-time.core])))
+              #?(:clj  [clj-time.core    :as clj-time.core])
+              #?(:clj  [clj-time.format  :as clj-time.format])
+              #?(:cljs [cljs-time.core   :as cljs-time.core])
+              #?(:cljs [cljs-time.format :as cljs-time.format])))
 
 
 
@@ -38,16 +39,18 @@
      ; The returned value represents the time elapsed since the document's lifetime.
      :cljs (.now js/performance)))
 
-(defn timestamp
+(defn timestamp-object
   ; @param (string)(opt) time-zone
   ;
   ; @example (clj)
-  ;  (time/timestamp)
-  ;  => #<DateTime 2020-04-20T16:20:00.123Z>
+  ;  (time/timestamp-object)
+  ;  =>
+  ;  #<DateTime 2020-04-20T16:20:00.123Z>
   ;
   ; @example (clj)
-  ;  (time/timestamp "Europe/Budapest")
-  ;  => #<DateTime 2020-04-20T16:20:00.123+02:00>
+  ;  (time/timestamp-object "Europe/Budapest")
+  ;  =>
+  ;  #<DateTime 2020-04-20T16:20:00.123+02:00>
   ;
   ; @return (object)
   [& [time-zone]]
@@ -55,8 +58,15 @@
                (if (some? time-zone)
                    (let [time-zone (clj-time.core/time-zone-for-id time-zone)]
                         (clj-time.core/to-time-zone timestamp time-zone))
-                   (return timestamp)))
-     :cljs (cljs-time.core/now)))
+                   (return timestamp)))))
+
+(defn timestamp-string
+  ; @return (string)
+  []
+  ; Java időbélyegző-objektum string típussá alakításának formátuma: "2020-04-20T16:20:00.123Z"
+  #?(:cljs (let [formatter (cljs-time.format/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                 timestamp (cljs-time.core/now)]
+                (cljs-time.format/unparse formatter timestamp))))
 
 
 
@@ -68,15 +78,18 @@
   ;
   ; @example
   ;  (time/timestamp-string? "2020-04-20T20:00.123+00:00")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (time/timestamp-string? "2020-04-20T16:20:00.123Z")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (time/timestamp-string? "2020-04-20T16:20:00.123")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -98,12 +111,13 @@
   ;
   ; @example
   ;  (time/date-string? "2020-04-20")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
-  (and (string? n)
-       (re-matches #"\d{4}[-|.]\d{2}[-|.]\d{2}" n)))
+  (boolean (and (string? n)
+                (re-matches #"\d{4}[-|.]\d{2}[-|.]\d{2}" n))))
 
 
 
@@ -115,7 +129,8 @@
   ;
   ; @example
   ;  (time/timestamp-part<-leading-zero 1)
-  ;  => "01"
+  ;  =>
+  ;  "01"
   ;
   ; @return (string)
   [n]
@@ -129,204 +144,236 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn timestamp->year
-  ; @param (object or string) n
+(defn timestamp-string->year
+  ; @param (string) n
   ;
   ; @example
-  ;  (time/timestamp->year "2020-04-20T16:20:00.123Z")
-  ;  => "2020"
+  ;  (time/timestamp-string->year "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "2020"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 0 4))
+
+(defn timestamp-object->year
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->year #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 2020
+  ;  =>
+  ;  2020
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 0 4)
-      #?(:clj  (clj-time.core/year  n)
-         :cljs (cljs-time.core/year n))))
+  #?(:clj  (clj-time.core/year  n)
+     :cljs (cljs-time.core/year n)))
 
-(defn timestamp->month
-  ; @param (object or string) n
+(defn timestamp-string->month
+  ; @param (string) n
   ;
   ; @example
-  ;  (time/timestamp->month "2020-04-20T16:20:00.123Z")
-  ;  => "04"
+  ;  (time/timestamp-string->month "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "04"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 5 7))
+
+(defn timestamp-object->month
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->month #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 4
+  ;  =>
+  ;  4
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 5 7)
-      #?(:clj  (clj-time.core/month  n)
-         :cljs (cljs-time.core/month n))))
+  #?(:clj  (clj-time.core/month  n)
+     :cljs (cljs-time.core/month n)))
 
-(defn timestamp->day
-  ; @param (object or string) n
+(defn timestamp-string->day
+  ; @param (string) n
   ;
   ; @example
-  ;  (time/timestamp->day "2020-04-20T16:20:00.123Z")
-  ;  => "20"
+  ;  (time/timestamp-string->day "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "20"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 8 10))
+
+(defn timestamp-object->day
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->day #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 20
+  ;  =>
+  ;  20
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 8 10)
-      #?(:clj  (clj-time.core/day  n)
-         :cljs (cljs-time.core/day n))))
+  #?(:clj  (clj-time.core/day  n)
+     :cljs (cljs-time.core/day n)))
 
-(defn timestamp->hours
-  ; @param (object or string) n
+(defn timestamp-string->hours
+  ; @param (string) n
   ;
   ; @example
-  ;  (time/timestamp->hours "2020-04-20T16:20:00.123Z")
-  ;  => "16"
+  ;  (time/timestamp-string->hours "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "16"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 11 13))
+
+(defn timestamp-object->hours
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->hours #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 16
+  ;  =>
+  ;  16
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 11 13)
-      #?(:clj  (clj-time.core/hours  n)
-         :cljs (cljs-time.core/hours n))))
-
-(defn timestamp->hours-2
-  ; @param (object or string) n
-  ;
-  ; @example
-  ;  (time/timestamp->hours "2020-04-20T16:20:00.123Z")
-  ;  => "16"
-  ;
-  ; @example
-  ;  (time/timestamp->hours #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 16
-  ;
-  ; @return (integer or string)
-  [n]
-  (if (string?     n)
-      (string/part n 11 13))
   #?(:clj  (clj-time.core/hours  n)
-     :cljs (cljs-time.core/hours (cljs-time.core/now))))
+     :cljs (cljs-time.core/hours n)))
 
-(defn timestamp->minutes
-  ; @param (object or string) n
+(defn timestamp-string->minutes
+  ; @param (string) n
   ;
   ; @example
-  ;  (time/timestamp->minutes "2020-04-20T16:20:00.123Z")
-  ;  => "20"
+  ;  (time/timestamp-string->minutes "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "20"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 14 16))
+
+(defn timestamp-object->minutes
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->minutes #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 20
+  ;  =>
+  ;  20
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 14 16)
-      #?(:clj  (clj-time.core/minutes  n)
-         :cljs (cljs-time.core/minutes n))))
+  #?(:clj  (clj-time.core/minutes  n)
+     :cljs (cljs-time.core/minutes n)))
 
-(defn timestamp->seconds
-  ; @param (object or string) n
+(defn timestamp-string->seconds
+  ; @param (string) n
   ;
   ; @example
   ;  (time/timestamp->seconds "2020-04-20T16:20:00.123Z")
-  ;  => "00"
+  ;  =>
+  ;  "00"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 17 19))
+
+(defn timestamp-object->seconds
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->seconds #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 0
+  ;  =>
+  ;  0
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 17 19)
-      #?(:clj  (clj-time.core/seconds  n)
-         :cljs (cljs-time.core/seconds n))))
+  #?(:clj  (clj-time.core/seconds  n)
+     :cljs (cljs-time.core/seconds n)))
 
-(defn timestamp->milliseconds
-  ; @param (object or string) n
+(defn timestamp-string->milliseconds
+  ; @param (string) n
   ;
   ; @example
   ;  (time/timestamp->milliseconds "2020-04-20T16:20:00.123Z")
-  ;  => "123"
+  ;  =>
+  ;  "123"
+  ;
+  ; @return (string)
+  [n]
+  (string/part n 20 23))
+
+(defn timestamp-object->milliseconds
+  ; @param (object) n
   ;
   ; @example
   ;  (time/timestamp->milliseconds #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => 123
+  ;  =>
+  ;  123
   ;
-  ; @return (integer or string)
+  ; @return (integer)
   [n]
-  (if (string?     n)
-      (string/part n 20 23)
-      #?(:clj  (clj-time.core/milli  n)
-         :cljs (cljs-time.core/milli n))))
+  #?(:clj  (clj-time.core/milli  n)
+     :cljs (cljs-time.core/milli n)))
 
-(defn timestamp->date
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn timestamp-string->date
   ; @param (string) n
   ; @param (keyword)(opt) format
   ;  :yyyymmdd, :yymmdd
   ;  Default: :yyyymmdd
   ;
   ; @example
-  ;  (time/timestamp->date "2020-04-20T16:20:00.123Z" :yyyymmdd)
-  ;  => "2020. 04. 20."
-  ;
-  ; @example
-  ;  (time/timestamp->date #<DateTime 2020-04-20T16:20:00.123Z> :yyyymmdd)
-  ;  => "2020. 04. 20."
+  ;  (time/timestamp-string->date "2020-04-20T16:20:00.123Z" :yyyymmdd)
+  ;  =>
+  ;  "2020/04/20"
   ;
   ; @return (string)
   ([n]
-   (timestamp->date n :yyyymmdd))
+   (timestamp-string->date n :yyyymmdd))
 
   ([n format]
-   (let [year  (timestamp->year n)
-         month (timestamp-part<-leading-zero (timestamp->month n))
-         day   (timestamp-part<-leading-zero (timestamp->day   n))]
-        (case format :yyyymmdd (str year ". " month ". " day ".")
-                     :yymmdd   (let [year (string/part year 2 2)]
-                                    (str year ". " month ". " day "."))
-                     (return n)))))
+   (if (string/nonempty? n)
+       (let [year  (timestamp-string->year n)
+             month (timestamp-part<-leading-zero (timestamp-string->month n))
+             day   (timestamp-part<-leading-zero (timestamp-string->day   n))]
+            (case format :yyyymmdd (str year "/" month "/" day)
+                         :yymmdd   (let [year (string/part year 2 2)]
+                                        (str year "/" month "/" day))
+                         (return n))))))
 
-(defn timestamp->time
+(defn timestamp-string->time
   ; @param (string) n
   ; @param (keyword)(opt) format
   ;  :hhmmss, :hhmm
   ;  Default: :hhmmss
   ;
   ; @example
-  ;  (time/timestamp->time "2020-04-20T16:20:00.123Z" :hhmmss)
-  ;  => "16:20:00"
-  ;
-  ; @example
-  ;  (time/timestamp->time #<DateTime 2020-04-20T16:20:00.123Z> :hhmmss)
-  ;  => "16:20:00"
+  ;  (time/timestamp-string->time "2020-04-20T16:20:00.123Z" :hhmmss)
+  ;  =>
+  ;  "16:20:00"
   ;
   ; @return (string)
   ([n]
-   (timestamp->time n :hhmmss))
+   (timestamp-string->time n :hhmmss))
 
   ([n format]
-   (let [hours   (timestamp-part<-leading-zero (timestamp->hours   n))
-         minutes (timestamp-part<-leading-zero (timestamp->minutes n))
-         seconds (timestamp-part<-leading-zero (timestamp->seconds n))]
-        (case format :hhmmss (str hours ":" minutes ":" seconds)
-                     :hhmm   (str hours ":" minutes)
-                     (return n)))))
+   (if (string/nonempty? n)
+       (let [hours   (timestamp-part<-leading-zero (timestamp-string->hours   n))
+             minutes (timestamp-part<-leading-zero (timestamp-string->minutes n))
+             seconds (timestamp-part<-leading-zero (timestamp-string->seconds n))]
+            (case format :hhmmss (str hours ":" minutes ":" seconds)
+                         :hhmm   (str hours ":" minutes)
+                         (return n))))))
 
-(defn timestamp->date-and-time
+(defn timestamp-string->date-and-time
   ; @param (string) n
   ; @param (keyword)(opt) date-format
   ;  :yyyymmdd, :yymmdd
@@ -337,24 +384,35 @@
   ;
   ; @example
   ;  (time/timestamp->date-and-time "2020-04-20T16:20:00.123Z" :yyyymmdd :hhmmss)
-  ;  => "2020. 04. 20. - 16:20:00"
-  ;
-  ; @example
-  ;  (time/timestamp->date-and-time #<DateTime 2020-04-20T16:20:00.123Z> :yyyymmdd :hhmmss)
-  ;  => "2020. 04. 20. - 16:20:00"
+  ;  =>
+  ;  "2020/04/20 - 16:20:00"
   ;
   ; @return (string)
   ([n]
-   (timestamp->date-and-time n :yyyymmdd :hhmmss))
+   (timestamp-string->date-and-time n :yyyymmdd :hhmmss))
 
   ([n time-format]
-   (timestamp->date-and-time n :yyyymmdd time-format))
+   (timestamp-string->date-and-time n :yyyymmdd time-format))
 
   ([n date-format time-format]
    (if (string/nonempty? n)
-       (let [date (timestamp->date n date-format)
-             time (timestamp->time n time-format)]
+       (let [date (timestamp-string->date n date-format)
+             time (timestamp-string->time n time-format)]
             (str date " - " time)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn timestamp-string->today?
+  ; @param (string) n
+  ;
+  ; @return (boolean)
+  [n]
+  #?(:cljs (let [x (timestamp-string)]
+                (= (string/part n 0 10)
+                   (string/part x 0 10)))))
 
 
 
@@ -363,32 +421,19 @@
 
 (defn get-year
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->year timestamp)))
+  [])
 
 (defn get-month
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->month timestamp)))
+  [])
 
 (defn get-day
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->day timestamp)))
+  [])
 
 (defn get-hours
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->hours timestamp)))
-
-(defn get-hours-2
-  ; @return (integer)
-  []
-  #?(:cljs (cljs-time.core/hours (cljs-time.core/now))))
+  [])
 
 (defn get-hours-left-from-this-day
   ; @return (integer)
@@ -398,9 +443,7 @@
 
 (defn get-minutes
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->minutes timestamp)))
+  [])
 
 (defn get-minutes-left-from-this-hour
   ; @return (integer)
@@ -410,9 +453,7 @@
 
 (defn get-seconds
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->seconds timestamp)))
+  [])
 
 (defn get-seconds-left-from-this-minute
   ; @return (integer)
@@ -422,9 +463,7 @@
 
 (defn get-milliseconds
   ; @return (integer)
-  []
-  (let [timestamp (timestamp)]
-       (timestamp->milliseconds timestamp)))
+  [])
 
 (defn get-milliseconds-left-from-this-second
   ; @return (integer)
@@ -480,7 +519,8 @@
   ;
   ; @example
   ;  (time/reduce-interval my-function [:a :b :c] 500)
-  ;  => (time/set-timeout!    0 #(my-function :a))
+  ;  =>
+  ;  (time/set-timeout!    0 #(my-function :a))
   ;     (time/set-timeout!  500 #(my-function :b))
   ;     (time/set-timeout! 1000 #(my-function :c))
   ;
@@ -503,7 +543,8 @@
   ;
   ; @example
   ;  (time/parse-date "2020-04-20")
-  ;  => #<DateTime 2020-04-20T00:00:00.000Z>
+  ;  =>
+  ;  #<DateTime 2020-04-20T00:00:00.000Z>
   ;
   ; @return (object)
   [n]
@@ -515,7 +556,8 @@
   ;
   ; @example
   ;  (time/parse-timestamp "2020-04-20T16:20:00.123")
-  ;  => #<DateTime 2020-04-20T16:20:00.123Z>
+  ;  =>
+  ;  #<DateTime 2020-04-20T16:20:00.123Z>
   ;
   ; @return (object)
   [n]
@@ -527,7 +569,8 @@
   ;
   ; @example
   ;  (time/parse-timestamp #<DateTime 2020-04-20T16:20:00.123Z>)
-  ;  => "2020-04-20T16:20:00.123"
+  ;  =>
+  ;  "2020-04-20T16:20:00.123"
   ;
   ; @return (string)
   [n]
@@ -543,7 +586,8 @@
   ;
   ; @example
   ;  (time/parse-date-time {:my-timestamp "2020-04-20T16:20:00.123Z"})
-  ;  => {:my-timestamp #<DateTime 2020-04-20T16:20:00.123Z>}
+  ;  =>
+  ;  {:my-timestamp #<DateTime 2020-04-20T16:20:00.123Z>}
   ;
   ; @return (*)
   [n]

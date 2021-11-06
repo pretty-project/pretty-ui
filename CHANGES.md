@@ -2,6 +2,9 @@
 # x4.4.4
 
 - BREAKING CHANGE
+  x.project-details.edn -> x.project-config.edn
+
+- BREAKING CHANGE
   Az x.app-router.api/set-route! {:route-title ...} tulajdonsága megszűnt.
 
 - BREAKING CHANGE

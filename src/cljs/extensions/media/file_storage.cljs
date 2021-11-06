@@ -271,7 +271,8 @@
 (defn- get-header-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r pattern/get-item-browser-header-view-props db "media"))
+  (merge (r pattern/get-item-list-header-view-props    db "media")
+         (r pattern/get-item-browser-header-view-props db "media")))
 
 (a/reg-sub ::get-header-view-props get-header-view-props)
 
@@ -867,28 +868,28 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/polarity ::desktop-header
-                     {:start-content [:<> [pattern/item-browser-new-item-button   "media" {:options [:create-directory! :upload-files!]}]
-                                          [pattern/item-browser-home-button       "media" view-props]
-                                          [pattern/item-browser-up-button         "media" view-props]
-                                          [pattern/item-browser-sort-items-button "media" {:options [:by-name :by-date]}]]
-                      :end-content   [:<> [pattern/item-browser-search-button     "media"]]}])
+                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]
+                                          [pattern/item-browser-home-button     "media" view-props]
+                                          [pattern/item-browser-up-button       "media" view-props]
+                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]
+                      :end-content   [:<> [pattern/item-list-search-mode-button "media"]]}])
 
 (defn- item-browser-desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
   [elements/polarity ::desktop-header
-                     {:start-content [:<> [pattern/item-browser-new-item-button   "media" {:options [:create-directory! :upload-files!]}]
-                                          [pattern/item-browser-home-button       "media" view-props]
-                                          [pattern/item-browser-up-button         "media" view-props]
-                                          [pattern/item-browser-sort-items-button "media" {:options [:by-name :by-date]}]]
-                      :end-content   [:<> [pattern/item-browser-search-field      "media"]]}])
+                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]
+                                          [pattern/item-browser-home-button     "media" view-props]
+                                          [pattern/item-browser-up-button       "media" view-props]
+                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]
+                      :end-content   [:<> [pattern/item-list-search-items-field "media"]]}])
 
 (defn- item-browser-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
   (cond ; search-mode & small viewport
         (and viewport-small? search-mode?)
-        [pattern/item-browser-search-header "media"]
+        [pattern/item-list-search-header "media"]
         ; small viewport
         (boolean viewport-small?)
         [item-browser-mobile-header  surface-id view-props]
@@ -925,7 +926,8 @@
                                 :header {:content    #'item-browser-header
                                          :subscriber [::get-header-view-props]}
                                 :label       "Saját tárhely"
-                                :description "10 / 104 elem letöltve"}])
+                                :description (components/content {:content :npn-items-downloaded
+                                                                  :replacements [10 104]})}])
 
 
 

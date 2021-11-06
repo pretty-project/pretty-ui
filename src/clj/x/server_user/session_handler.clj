@@ -35,7 +35,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn session->session-valid?
@@ -62,7 +62,7 @@
   [request]
   (let [account-id   (http/request->session-param request :user-account/id)
         user-account {:user-account/id account-id}
-        timestamp    (time/timestamp)]
+        timestamp    (time/timestamp-object)]
        {:added-at timestamp
         :added-by user-account}))
 
@@ -75,7 +75,7 @@
   [request]
   (let [account-id   (http/request->session-param request :user-account/id)
         user-account {:user-account/id account-id}
-        timestamp    (time/timestamp)]
+        timestamp    (time/timestamp-object)]
        {:modified-at timestamp
         :modified-by user-account}))
 
@@ -88,7 +88,7 @@
   [request]
   (let [account-id   (http/request->session-param request :user-account/id)
         user-account {:user-account/id account-id}
-        timestamp    (time/timestamp)]
+        timestamp    (time/timestamp-object)]
        {:created-at timestamp
         :created-by user-account}))
 
@@ -101,7 +101,7 @@
   [request]
   (let [account-id   (http/request->session-param request :user-account/id)
         user-account {:user-account/id account-id}
-        timestamp    (time/timestamp)]
+        timestamp    (time/timestamp-object)]
        {:deleted-at timestamp
         :deleted-by user-account}))
 
@@ -114,6 +114,6 @@
   [request]
   (let [account-id   (http/request->session-param request :user-account/id)
         user-account {:user-account/id account-id}
-        timestamp    (time/timestamp)]
+        timestamp    (time/timestamp-object)]
        {:uploaded-at timestamp
         :uploaded-by user-account}))

@@ -51,7 +51,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- request->authenticator-pattern
@@ -119,6 +119,15 @@
         user-roles (http/request->session-param request :user-account/roles)]
        (and (engine/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))
+
+(defn request->user-link
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:user-account/id (string)}
+  [request]
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          {:user-account/id user-account-id}))
 
 
 

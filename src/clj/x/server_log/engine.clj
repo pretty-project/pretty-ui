@@ -41,12 +41,12 @@
   ; @return (map)
   ;  {:app-build (string)
   ;   :app-name (string)
-  ;   :time (object)}
+  ;   :time (string)}
   [entry-props]
   (merge (param entry-props)
          {:app-name  (a/subscribed [:x.server-core/get-config-item :app-name])
           :app-build (a/subscribed [:x.server-core/get-config-item :app-build])
-          :time      (time/timestamp)}))
+          :time      (time/timestamp-string)}))
 
 
 

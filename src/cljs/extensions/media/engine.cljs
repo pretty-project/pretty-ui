@@ -839,9 +839,19 @@
 
 
 
+(defn flatten-collection
+  ; [{:directory/alias "My directory"
+  ;   :directory/items [{:directory/id :your-directory}
+  ;                     {:file/id :our-file}]}
+  ;  {...}]
+  [data]
+  (reduce (fn [result document])
+          {}
+          data))
+
 
 (a/reg-event-fx
-  :extensions/request-browser-items!
+  :extensions/request-list-items!
   ; @param (string) extension-name
   ; @param (map) request-props
   ;  {:base-query (vector)(opt)
@@ -866,10 +876,21 @@
             item-entity    (eql/id->entity item-id item-namespace)
            ;query-question {[:directory/id "my-directory"] [...]}
             query-question {item-entity item-params}]
+           (println "sdfsdfsdf")
            [:x.app-sync/send-query! :extensions/request-browser-items!
                                     ;:on-success [:extensions/receive-browser-items! "media"]
                                     {:on-success [:extensions/receive-browser-items! extension-name item-name]
-                                     :query      (eql/append-to-query base-query query-question)}])))
+                                     ;:query      (eql/append-to-query base-query query-question)}])))
+
+
+                                     :query [`(:media/get-directory-data {:directory-id ~item-id})]}])))
+
+
+
+
+
+
+
 
 (a/reg-event-fx
   :extensions/receive-browser-items!

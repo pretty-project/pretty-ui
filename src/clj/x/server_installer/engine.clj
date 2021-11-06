@@ -34,7 +34,7 @@
   ;  {:installed-at (string)
   ;   :installed-version (string)}
   []
-  (let [timestamp (time/timestamp)]
+  (let [timestamp (time/timestamp-string)]
        {:installed-at      (str timestamp)
         :installed-version (str details/app-version)}))
 

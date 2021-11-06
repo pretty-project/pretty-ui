@@ -112,7 +112,10 @@
        :hu "Árajánlatok"}})
 
 (def products
-     {:products
+     {:product
+      {:en "Product"
+       :hu "Termék"}
+      :products
       {:en "Products"
        :hu "Termékek"}})
 
@@ -127,7 +130,13 @@
        :hu "Járművek"}})
 
 (def websites
-     {:websites
+     {:website-configuration
+      {:en "Website configuration"
+       :hu "Webhely beállításai"}
+      :website-menu
+       {:en "Website menu"
+        :hu "Webhely menu"}
+      :websites
       {:en "Websites"
        :hu "Weboldalak"}})
 

@@ -308,7 +308,7 @@
          ; 3.
          (r request-props<-source-data db request-props)
          ; 4.
-         {:sent-time (time/timestamp)}))
+         {:sent-time (time/timestamp-string)}))
 
 
 

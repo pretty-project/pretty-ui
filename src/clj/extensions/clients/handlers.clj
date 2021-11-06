@@ -1,6 +1,7 @@
 
 (ns extensions.clients.handlers
     (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.time   :as time]
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
@@ -24,9 +25,17 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request]} client-props]
-  (let [add-props (user/request->add-props request)]
-       (merge client-props add-props)))
+  (let [timestamp (time/timestamp-object)
+        user-link (user/request->user-link request)]
+       (merge (param client-props)
+              {:client/added-at    timestamp
+               :client/added-by    user-link
+               :client/modified-at timestamp
+               :client/modified-by user-link})))
+
+
 
 ;; ----------------------------------------------------------------------------
 ;; -- Prototypes --------------------------------------------------------------
@@ -67,43 +76,51 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defresolver get-clients
+(defresolver get-client-items
              ; @param (map) env
+             ;  {}
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:clients/get-clients (map)
+             ;  {:clients/get-client-items (map)
              ;    {:document-count (integer)
              ;     :documents (maps in vector)}}
              [env _]
-             {:clients/get-clients
-               (let [search-props    (pathom/env->params            env)
-                     search-pipeline (search-props->search-pipeline search-props)
-                     count-pipeline  (search-props->count-pipeline  search-props)]
-                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
-                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
-                     ; A keresési feltételeknek megfelelő dokumentumok száma
-                     :document-count (mongo-db/count-documents-by-pipeline collection-name count-pipeline)})})
+             {:clients/get-client-items
+              (let [resolver-props  (pathom/env->params env)
 
-(defresolver get-client
+                    search-props    {:max-count      10
+                                     :skip           (get resolver-props :downloaded-item-count)
+                                     :search-pattern [[:clients/full-name     (get resolver-props :search-term)]
+                                                      [:clients/email-address (get resolver-props :search-term)]]
+                                     :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]}
+                    search-pipeline (search-props->search-pipeline search-props)
+                    count-pipeline  (search-props->count-pipeline  search-props)]
+                    ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
+                   {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
+                    ; A keresési feltételeknek megfelelő dokumentumok száma
+                    :document-count (mongo-db/count-documents-by-pipeline collection-name count-pipeline)})})
+
+(defresolver get-client-item
              ; @param (map) env
              ; @param (map) resolver-props
              ;  {:client/id (string)}
              ;
              ; @return (map)
-             ;  {:clients/get-client (map)}
+             ;  {:clients/get-client-item (map)}
              [env {:keys [client/id]}]
              {::pco/output [:client/id
-                            :client/last-name
-                            :client/first-name
                             :client/added-at
-                            :client/phone-number
-                            :client/country
-                            :client/zip-code
-                            :client/city
                             :client/address
+                            :client/city
+                            :client/country
+                            :client/email-address
+                            :client/first-name
+                            :client/last-name
+                            :client/modified-at
+                            :client/phone-number
                             :client/vat-no
-                            :client/email-address]}
+                            :client/zip-code]}
              (mongo-db/get-document-by-id collection-name id))
 
 ;; ----------------------------------------------------------------------------
@@ -114,21 +131,21 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation save-client! [env client-props]
-             {::pco/op-name 'clients/save-client!}
+(defmutation save-client-item! [env client-props]
+             {::pco/op-name 'clients/save-client-item!}
              (let [client-props (a/sub-prot env client-props client-props-prototype)]
                   (mongo-db/add-document! collection-name client-props)))
 
-(defmutation add-client! [client]
-             {::pco/op-name 'clients/add-client!}
+(defmutation add-client-item! [client]
+             {::pco/op-name 'clients/add-client-item!}
              (mongo-db/add-document! collection-name client))
 
-(defmutation delete-client! [{:keys [client-id]}]
-             {::pco/op-name 'clients/delete-client!}
+(defmutation delete-client-item! [{:keys [client-id]}]
+             {::pco/op-name 'clients/delete-client-item!}
              (mongo-db/remove-document! collection-name client-id))
 
-(defmutation duplicate-client! [{:keys [client-id]}]
-             {::pco/op-name 'clients/duplicate-client!}
+(defmutation duplicate-client-item! [{:keys [client-id]}]
+             {::pco/op-name 'clients/duplicate-client-item!}
              (mongo-db/duplicate-document! collection-name client-id))
 
 ;; ----------------------------------------------------------------------------
@@ -136,12 +153,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-(def HANDLERS [get-client
-               get-clients
+(def HANDLERS [get-client-item
+               get-client-items
 
-               save-client!
-               add-client!
-               delete-client!
-               duplicate-client!])
+               save-client-item!
+               add-client-item!
+               delete-client-item!
+               duplicate-client-item!])
 
 (pathom/reg-handlers! :clients HANDLERS)
