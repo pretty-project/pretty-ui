@@ -67,7 +67,7 @@
   ;
   ; @return (component)
   [_ {:keys [action helper icon title]}]
-  [:<> [elements/separator {:size :m}]
+  [:<> [elements/separator {:size :xxl :orientation :horizontal}]
        (if (some? icon)
            [elements/icon {:icon icon
                            :size :xxl}])
@@ -80,7 +80,7 @@
                        :horizontal-align :center
                        :layout           :fit}]
        (cond (= action :go-back!)
-             [:<> [elements/separator {:orientation :horizontal :size :l}]
+             [:<> [elements/separator {:orientation :horizontal :size :m}]
                   [elements/button {:label    :back!
                                     :variant  :transparent
                                     :on-click [:x.app-router/go-back!]}]])])

@@ -139,7 +139,8 @@
   [:div#clients--client-form
     [client-name               surface-id body-props]
     [client-primary-contacts   surface-id body-props]
-    [elements/separator {:orientation :horizontal :size :xxl}]
+    [elements/separator {:orientation :horizontal :size :xl}]
+    [elements/separator {:orientation :horizontal :size :xl}]
     [client-secondary-contacts surface-id body-props]
     [client-legal-details      surface-id body-props]
     [elements/separator {:orientation :horizontal :size :l}]])

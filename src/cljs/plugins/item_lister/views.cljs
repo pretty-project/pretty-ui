@@ -155,21 +155,24 @@
 (defn- sort-items-button
   ; @param (string) extension-name
   ; @param (map) element-props
-  ;  {:options (vector)}
+  ;  {:initial-value (keyword)
+  ;   :options (vector)}
   ;
   ; @usage
-  ;  [item-lister/sort-items-button "products" {:options [:by-name :by-date]}]
+  ;  [item-lister/sort-items-button "products" {:options [:by-name :by-date]
+  ;                                             :initial-value :by-name}]
   ;
   ; @return (component)
-  [extension-name {:keys [options]}]
+  [extension-name {:keys [initial-value options]}]
   (let [extension-id (keyword extension-name)]
        [elements/select ::sort-items-button
                         {:as-button?      true
                          :options-label   :order-by
                          :preset          :sort-by-icon-button
                          :tooltip         :sort-by
+                         :initial-value   initial-value
                          :initial-options options
-                         :value-path      [extension-id :list-meta :sort-by]}]))
+                         :value-path      [extension-id :lister-meta :sort-by]}]))
 
 
 

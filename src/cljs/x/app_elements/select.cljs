@@ -174,6 +174,7 @@
   [select-id options-props]
   (let [on-select (on-select-events select-id options-props)]
        (merge {:get-label-f  return
+               :get-value-f  return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
               (param options-props)
@@ -261,10 +262,7 @@
   [engine/stated-element options-id
     {:component     #'ab7081
      :element-props options-props
-     ; XXX#5051
-     ; Ha nem select-button gomb használatával, hanem esemény meghívásával történik a select
-     :initializer [:x.app-elements/init-selectable! options-id]
-     :subscriber  [::get-view-props                 options-id]}])
+     :subscriber  [::get-view-props options-id]}])
 
 
 
@@ -423,8 +421,6 @@
         [engine/stated-element select-id
           {:component     #'select
            :element-props select-props
-           ; XXX#5051
-           ; A gomb kirenderelésekor inicializálja az elemet
            :initializer [:x.app-elements/init-selectable! select-id]
            :subscriber  [::get-view-props                 select-id]}])))
 
@@ -436,6 +432,11 @@
 (a/reg-event-fx
   :x.app-elements/render-select-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; Az [:x.app-elements/render-select-options!] esemény használatával nem lehetséges
+  ; megfelően inicializálni a select elemet, mert a select-options elem nem használhatja
+  ; az [:x.app-elements/init-selectable!] esemény initializer-ként, ugyanis az opciók minden
+  ; kirenderelésekor újrainicializálná az elemet.
   ;
   ; WARNING#0134
   ;  A [select-options] elem az opció kiválasztása után lecsatolódik a React-fából,
