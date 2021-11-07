@@ -134,8 +134,8 @@
       {:en "Website configuration"
        :hu "Webhely beállításai"}
       :website-menu
-       {:en "Website menu"
-        :hu "Webhely menu"}
+      {:en "Website menu"
+       :hu "Webhely menu"}
       :websites
       {:en "Websites"
        :hu "Weboldalak"}})

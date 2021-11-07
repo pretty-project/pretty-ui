@@ -224,6 +224,8 @@
   ;   :end-adornments (maps in vector)(opt)
   ;    [{:icon (keyword) Material icon class
   ;      :on-click (metamorphic-event)(opt)
+  ;      :tab-indexed? (boolean)(opt)
+  ;       Default: true
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: false
@@ -264,6 +266,8 @@
   ;   :start-adornments (maps in vector)(opt)
   ;    [{:icon (keyword) Material icon class
   ;      :on-click (metamorphic-event)
+  ;      :tab-indexed? (boolean)(opt)
+  ;       Default: true
   ;      :tooltip (metamorphic-content)}]
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :none

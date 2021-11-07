@@ -79,6 +79,11 @@
    ; XXX#8073
    ; Az adornment a {:preset ...} tulajdonság értékével azonosítható
    :preset  :empty-field-adornment
+   ; A mező kiürítése az ESC billentyű lenyomásával is vezérelhető, ezért nem szükséges indexelni.
+   ; XXX#6054
+   ; Az indexelt adornment gombok a TAB billentyűvel való mezők közötti váltást nehezítik!
+   ; A specifikusan billentyűvel is vezérelt adornment gombokon ezért célszerű az indexelést kikapcsolni.
+   :tab-indexed? false
    :tooltip :empty-field!})
 
 (defn reset-field-adornment-preset
@@ -509,10 +514,12 @@
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
-      (let [on-empty-event (r element/get-element-prop db field-id :on-empty)
-            field-value    (r get-field-value          db field-id)]
+      (let [on-empty    (r element/get-element-prop db field-id :on-empty)
+            field-value (r get-field-value          db field-id)]
            {:db       (r empty-field-value! db field-id)
-            :dispatch (a/metamorphic-event<-params on-empty-event field-value)})))
+            :dispatch (a/metamorphic-event<-params on-empty field-value)})))
+            ;:dispatch-n (if-let [on-type-ended])})))
+            ; on-type-ended ...
 
 
 

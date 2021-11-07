@@ -135,7 +135,7 @@
   ; @return (component)
   [extension-name]
   [elements/button ::select-multiple-items-button
-                   {:on-click [:plugins/toggle-item-lister-select-mode! extension-name]
+                   {:on-click [:item-lister/toggle-select-mode! extension-name]
                     :preset  :select-more-icon-button
                     :tooltip :check}])
 
@@ -148,12 +148,13 @@
   ; @return (component)
   [extension-name]
   [elements/button ::delete-selected-items-button
-                   {:on-click [:plugins/delete-selected-items! extension-name]
+                   {:on-click [:item-lister/delete-selected-items! extension-name]
                     :preset   :delete-icon-button
                     :tooltip  :delete!}])
 
 (defn- sort-items-button
   ; @param (string) extension-name
+  ; @param (string) item-name
   ; @param (map) element-props
   ;  {:initial-value (keyword)
   ;   :options (vector)}
@@ -163,16 +164,17 @@
   ;                                             :initial-value :by-name}]
   ;
   ; @return (component)
-  [extension-name {:keys [initial-value options]}]
+  [extension-name item-name {:keys [initial-value options]}]
   (let [extension-id (keyword extension-name)]
        [elements/select ::sort-items-button
                         {:as-button?      true
+                         :on-select       [:item-lister/order-items! extension-name item-name]
                          :options-label   :order-by
-                         :preset          :sort-by-icon-button
-                         :tooltip         :sort-by
+                         :preset          :order-by-icon-button
+                         :tooltip         :order-by
                          :initial-value   initial-value
                          :initial-options options
-                         :value-path      [extension-id :lister-meta :sort-by]}]))
+                         :value-path      [extension-id :lister-meta :order-by]}]))
 
 
 

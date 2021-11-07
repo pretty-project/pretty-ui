@@ -9,6 +9,21 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keyword)
+;  Ha az item-lister komponenst alkalmazó extension nem gondoskodik időben
+;  az [extension-name :lister-meta :order-by] értékének beállításáról,
+;  akkor az item-lister az elemek letöltésekor a DEFAULT-ORDER-BY értékét alkalmazza.
+(def DEFAULT-ORDER-BY :by-date-descending)
+
+; @constant (keywords in vector)
+(def DEFAULT-ORDER-BY-OPTIONS
+     [:by-date-descending :by-date-ascending :by-name-descending :by-name-ascending])
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -61,13 +76,13 @@
         search-term  (get-in db [extension-id :lister-meta :search-term])]
        (str search-term)))
 
-(defn get-sort-by
+(defn get-order-by
   ; @param (string) extension-name
   ;
   ; @return (keyword)
   [db [_ extension-name]]
   (let [extension-id (keyword extension-name)]
-       (get-in db [extension-id :lister-meta :sort-by])))
+       (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY)))
 
 (defn get-header-view-props
   ; @param (string) extension-name
@@ -145,6 +160,19 @@
             :dispatch [:item-lister/request-items! extension-name item-name]})))
 
 (a/reg-event-fx
+  :item-lister/order-items!
+  ; @param (string) extension-name
+  ; @param (string) item-name
+  ;
+  ; @usage
+  ;  [:item-lister/order-items! "products" "product"]
+  (fn [{:keys [db]} [_ extension-name item-name]]
+      (let [extension-id (keyword extension-name)]
+           {:db       (-> db (dissoc-in [extension-id :lister-data])
+                             (dissoc-in [extension-id :lister-meta :document-count]))
+            :dispatch [:item-lister/request-items! extension-name item-name]})))
+
+(a/reg-event-fx
   :item-lister/receive-items!
   ; @param (string) extension-name
   ; @param (string) item-name
@@ -184,7 +212,7 @@
       (let [resolver-id    (keyword extension-name (str "get-" item-name "-items"))
             resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-name)
                             :search-term           (r get-search-term           db extension-name)
-                            :sort-by               (r get-sort-by               db extension-name)}]
+                            :order-by              (r get-order-by              db extension-name)}]
            [:x.app-sync/send-query! :item-lister/synchronize!
                                     ;:on-stalled [:item-lister/receive-items! "products"]
                                     {:on-stalled [:item-lister/receive-items! extension-name item-name]
@@ -208,7 +236,9 @@
                         ;[:x.app-ui/set-window-title!  :products]
                          [:x.app-ui/set-window-title!  extension-id]
                         ;[:products/render-product-lister!]
-                         [render-event]]})))
+                         [render-event]
+
+                         [:x.app-sync/send-query! {:query [:my-resolve]}]]})))
 
 (a/reg-event-fx
   :item-lister/add-route!

@@ -24,11 +24,24 @@
   ;
   ; @example
   ;  (nonfalse? nil)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
   (not (= n false)))
+
+(defn nontrue?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (nontrue? nil)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (not (= n true)))
 
 (defn =?
   ; @param (*) a
@@ -38,7 +51,8 @@
   ;
   ; @example
   ;  (=? "A" "B" "equal" "not equal")
-  ;  => "not equal"
+  ;  =>
+  ;  "not equal"
   ;
   ; @return (*)
   ;  Ha a egyenlő b, akkor c különben d
@@ -53,7 +67,8 @@
   ;
   ; @example
   ;  (not=? "A" "B" "not equal" "equal")
-  ;  => "not equal"
+  ;  =>
+  ;  "not equal"
   ;
   ; @return (*)
   ;  Ha a nem egyenlő b, akkor c különben d
@@ -68,7 +83,8 @@
   ;
   ; @example
   ;  (if-or true false "C" "D")
-  ;  => "C"
+  ;  =>
+  ;  "C"
   ;
   ; @return (*)
   ;  Ha a vagy b igaz, akkor c különben d
@@ -83,7 +99,8 @@
   ;
   ; @example
   ;  (if-and true false "C" "D")
-  ;  => "D"
+  ;  =>
+  ;  "D"
   ;
   ; @return (*)
   ;  Ha a és b igaz, akkor c különben d

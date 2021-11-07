@@ -33,19 +33,24 @@
   ; @param (map) adornment-props
   ;  {:icon (keyword) Material icon class
   ;   :on-click (metamorphic-event)
+  ;   :tab-indexed? (boolean)(opt)
+  ;    False érték esetén az adornment gomb nem indexelődik tabolható elemként.
+  ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [element-id _ {:keys [icon on-click tooltip]}]
+  [element-id _ {:keys [icon on-click tab-indexed? tooltip]}]
   [:button.x-element--adornment-button
      ; BUG#2105
      ;  A *-field elemhez adott element-adornment-button gombon történő on-mouse-down esemény
      ;  a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
      ;  felület React-fából történő lecsatolását okozná.
-    {:on-mouse-down #(do (.preventDefault %))
-     :on-mouse-up   #(do (a/dispatch on-click)
-                         (focusable/blur-element-function element-id))
-     :title       (components/content {:content tooltip})}
+    (merge {:on-mouse-down #(do (.preventDefault %))
+            :on-mouse-up   #(do (a/dispatch on-click)
+                                (focusable/blur-element-function element-id))
+            :title       (components/content {:content tooltip})}
+           (if (false? tab-indexed?) {:tab-index "-1"}))
+
     (param icon)])
 
 (defn- element-adornment-icon

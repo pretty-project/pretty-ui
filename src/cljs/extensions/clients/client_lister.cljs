@@ -88,7 +88,9 @@
   [surface-id view-props]
   [elements/polarity ::desktop-header
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
-                                          [item-lister/sort-items-button  "clients" {:options [:by-name :by-date] :initial-value :by-name}]]
+                                          [item-lister/sort-items-button  "clients" "client"
+                                                                          {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
+                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]]
                                          ;[item-lister/select-multiple-items-button "clients"]
                                          ;[item-lister/delete-selected-items-button "clients"]
                       :end-content   [:<> [item-lister/search-items-field "clients" "client"]]}])
@@ -98,7 +100,9 @@
   [surface-id view-props]
   [elements/polarity ::mobile-header
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
-                                          [item-lister/sort-items-button  "clients" {:options [:by-name :by-date] :initial-value :by-name}]]
+                                          [item-lister/sort-items-button  "clients" "client"
+                                                                          {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
+                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]]
                                          ;[item-lister/select-multiple-items-button "clients"]
                                          ;[item-lister/delete-selected-items-button "clients"]
                       :end-content   [:<> [item-lister/search-mode-button "clients"]]}])

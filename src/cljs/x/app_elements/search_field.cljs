@@ -41,8 +41,8 @@
   [_ {:keys [on-enter] :as field-props}]
   (merge {:color      :default
           :emptiable? true}
-         (if (some? on-enter)
-             {:start-adornments [{:icon :search :on-click on-enter}]}
+         (if (some? on-enter)   ; XXX#6054
+             {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false}]}
              {:start-adornments [{:icon :search}]})
          (param field-props)))
 

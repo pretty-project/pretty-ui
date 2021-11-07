@@ -147,7 +147,7 @@
                             :label   :settings
                             :layout  :row
                             :variant :transparent}
-      :sort-by-icon-button     {:color   :default
+      :order-by-icon-button    {:color   :default
                                 :icon    :sort
                                 :layout  :icon-button
                                 :variant :transparent}

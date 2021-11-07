@@ -23,7 +23,14 @@
   ;
   ; @return (*)
   [request]
-  (let [query (http/request->param request :query)]
+  ; BUG#4509
+  ; A transit-params térkép helyett params térképből kiolvasott query hibás, abban az esetben
+  ; ha a query értéke egy darab kulcsszó egy vektorban.
+  ; Pl.: [:my-resolver]
+  ;      =>
+  ;      {:transit-params {:query [:my-resolver]}
+  ;       :params         {:query :my-resolver}}
+  (let [query (http/request->transit-param request :query)]
        ; Fájlfeltöltéskor a request törzse egy FormData objektum, amiből string típusként
        ; olvasható ki a query értéke ...
        (cond (string? query) (reader/string->mixed query)

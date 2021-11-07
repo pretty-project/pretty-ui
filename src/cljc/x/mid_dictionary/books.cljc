@@ -37,6 +37,7 @@
 ;  Locales
 ;  Media
 ;  Notifications
+;  Order
 ;  Social media
 ;  Units
 ;  User
@@ -258,9 +259,6 @@
       :open!
       {:en "Open"
        :hu "Megnyitás"}
-      :order-by
-      {:en "Order by"
-       :hu "Rendezés"}
       :packages
       {:en "Packages"
        :hu "Csomagok"}
@@ -297,9 +295,6 @@
       :show-more!
       {:en "Show more"
        :hu "Mutass többet"}
-      :sort-by
-      {:en "Sort by"
-       :hu "Rendezés"}
       :status
       {:en "Status"
        :hu "Állapot"}
@@ -786,24 +781,6 @@
       :attach-selected-files!
       {:en "Attach selected files"
        :hu "Kiválasztott fájlok csatolása"}
-      :by-created-at
-      {:en "Created at"
-       :hu "Létrehozás dátuma szerint"}
-      :by-date
-      {:en "By date"
-       :hu "Dátum szerint"}
-      :by-name
-      {:en "Name"
-       :hu "Név szerint"}
-      :by-order
-      {:en "By order"
-       :hu "Sorrend szerint"}
-      :by-size
-      {:en "By size"
-       :hu "Méret szerint"}
-      :by-uploaded-at
-      {:en "Uploaded at"
-       :hu "Feltöltés ideje szerint"}
       :content-size
       {:en "Content size"
        :hu "Tartalom"}
@@ -964,6 +941,74 @@
      :warning-bubbles
      {:en "Warning bubbles"
       :hu "Figyelmeztető buborékok"}})
+
+
+
+;; -- Order --------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (map)
+(def order-by
+    {:by-created-at
+     {:en "By created at"
+      :hu "Létrehozás ideje szerint"}
+     :by-created-at-ascending
+     {:en "By created at (ascending)"
+      :hu "Létrehozás ideje szerint (növekvő)"}
+     :by-created-at-descending
+     {:en "By created at (descending)"
+      :hu "Létrehozás ideje szerint (csökkenő)"}
+     :by-date
+     {:en "By date"
+      :hu "Dátum szerint"}
+     :by-date-ascending
+     {:en "By date (ascending)"
+      :hu "Dátum szerint (növekvő)"}
+     :by-date-descending
+     {:en "By date (descending)"
+      :hu "Dátum szerint (csökkenő)"}
+     :by-name
+     {:en "By name"
+      :hu "Név szerint"}
+     :by-name-ascending
+     {:en "By name (ascending)"
+      :hu "Név szerint (növekvő)"}
+     :by-name-descending
+     {:en "By name (descending)"
+      :hu "Név szerint (csökkenő)"}
+     :by-order
+     {:en "By order"
+      :hu "Sorrend szerint"}
+     :by-order-ascending
+     {:en "By order (ascending)"
+      :hu "Sorrend szerint (növekvő)"}
+     :by-order-descending
+     {:en "By order (descending)"
+      :hu "Sorrend szerint (csökkenő)"}
+     :by-size
+     {:en "By size"
+      :hu "Méret szerint"}
+     :by-size-ascending
+     {:en "By size (ascending)"
+      :hu "Méret szerint (növekvő)"}
+     :by-size-descending
+     {:en "By size (descending)"
+      :hu "Méret szerint (csökkenő)"}
+     :by-uploaded-at
+     {:en "By uploaded at"
+      :hu "Feltöltés ideje szerint"}
+     :by-uploaded-at-ascending
+     {:en "By uploaded at (ascending)"
+      :hu "Feltöltés ideje szerint (növekvő)"}
+     :by-uploaded-at-descending
+     {:en "By uploaded at (descending)"
+      :hu "Feltöltés ideje szerint (csökkenő)"}
+     :order-by
+     {:en "Order by"
+      :hu "Rendezés"}
+     :sort-by
+     {:en "Sort by"
+      :hu "Rendezés"}})
 
 
 
@@ -1187,6 +1232,7 @@
                   locales
                   media
                   notifications
+                  order-by
                   social-media
                   units
                   user

@@ -406,7 +406,7 @@
   ; @usage
   ;  [elements/select {:as-button? true
   ;                    :icon       :sort
-  ;                    :label      :sort-by
+  ;                    :label      :order-by
   ;                    :layout     :icon-button
   ;                    :options-path [:my :options]
   ;                    :value-path   [:my :selected :option]}]

@@ -45,6 +45,20 @@
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn env->search-props
+  [env]
+  (let [resolver-props        (pathom/env->params env)
+        downloaded-item-count (get resolver-props :downloaded-item-count)
+        search-term           (get resolver-props :search-term)
+        order-by              (get resolver-props :order-by)]
+       {:max-count      10
+        :skip           downloaded-item-count
+        :search-pattern [[:clients/full-name search-term] [:clients/email-address search-term]]
+        :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name  1] [:client/last-name  1]]
+                                       :by-name-descending [[:client/first-name -1] [:client/last-name -1]]
+                                       :by-date-ascending  [[:client/modified-at  1]]
+                                       :by-date-descending [[:client/modified-at -1]])}))
+
 (defn search-props->search-pipeline
       ; Example: (search-props->search-pipeline
       ;             {:skip 0
@@ -88,14 +102,10 @@
              [env _]
              {:clients/get-client-items
               (let [resolver-props  (pathom/env->params env)
-
-                    search-props    {:max-count      10
-                                     :skip           (get resolver-props :downloaded-item-count)
-                                     :search-pattern [[:clients/full-name     (get resolver-props :search-term)]
-                                                      [:clients/email-address (get resolver-props :search-term)]]
-                                     :sort-pattern   [[:client/first-name 1] [:client/last-name 1]]}
+                    search-props    (env->search-props  env)
                     search-pipeline (search-props->search-pipeline search-props)
                     count-pipeline  (search-props->count-pipeline  search-props)]
+                   (println (str resolver-props))
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
                     ; A keresési feltételeknek megfelelő dokumentumok száma

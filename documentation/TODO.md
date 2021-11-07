@@ -12,6 +12,12 @@
 
 # x4.3.0
 
+- params helyett transit-paramsbol szedi ki a query-t a pathom, le kell tesztelni fájlefeltöltésre is!
+
+- A text-field mérete megnő ha elég hosszu a helper alatta
+
+- A timestamp->today? nem veszi figyelmbe az időzonat ezért éjfél és egy között a tegnapit mainak hiszi
+
 - request->added-prop, modified-prop, ... törölhető
 
 - icon-button külön element lehet ujra
