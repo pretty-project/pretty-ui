@@ -76,6 +76,16 @@
   [db _]
   (r viewport-profiles-match? db [:xxs :xs :s]))
 
+(defn viewport-medium?
+  ; @return (boolean)
+  [db _]
+  (r viewport-profile-match? db :m))
+
+(defn viewport-large?
+  ; @return (boolean)
+  [db _]
+  (r viewport-profiles-match? db [:l :xl :xxl]))
+
 (defn get-viewport-orientation
   ; @return (keyword)
   ;  :landscape, :portrait

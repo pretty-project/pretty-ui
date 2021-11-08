@@ -562,7 +562,7 @@
   ;   :component (component)
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props path Re-Frame adatbázis
-  ;    útvonalon tárolt értéket.
+  ;    útvonalon tárolt értéket.
   ;   :disabler (subscription vector)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)

@@ -298,7 +298,7 @@
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
   ;   :emptiable? (boolean)(opt)
-  ;    Default: true
+  ;    Default: true
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :form-id (keyword)(opt)

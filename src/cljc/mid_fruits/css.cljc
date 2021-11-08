@@ -27,9 +27,9 @@
   ; @param (list of string or vector)
   ;
   ; @example
-  ;  (css/join-class "my-class" ["your-class"] "our-class")
+  ;  (css/join-class "my-class" ["your-class"] "our-class")
   ;  =>
-  ;  ["my-class" "your-class" "our-class"]
+  ;  ["my-class" "your-class" "our-class"]
   ;
   ; @return (vector)
   [& xyz]

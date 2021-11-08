@@ -1,7 +1,6 @@
 
 (ns extensions.clients.client-lister
-    (:require [extensions.clients.engine :as engine]
-              [mid-fruits.candy          :refer [param return]]
+    (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.random         :as random]
               [mid-fruits.time           :as time]
               [plugins.item-editor.api   :as item-editor]
@@ -90,9 +89,9 @@
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
                                           [item-lister/sort-items-button  "clients" "client"
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
-                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]]
-                                         ;[item-lister/select-multiple-items-button "clients"]
-                                         ;[item-lister/delete-selected-items-button "clients"]
+                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]
+                                          [item-lister/select-multiple-items-button "clients"]
+                                          [item-lister/delete-selected-items-button "clients" view-props]]
                       :end-content   [:<> [item-lister/search-items-field "clients" "client"]]}])
 
 (defn- client-list-mobile-header
@@ -102,9 +101,9 @@
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
                                           [item-lister/sort-items-button  "clients" "client"
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
-                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]]
-                                         ;[item-lister/select-multiple-items-button "clients"]
-                                         ;[item-lister/delete-selected-items-button "clients"]
+                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]
+                                          [item-lister/select-multiple-items-button "clients"]
+                                          [item-lister/delete-selected-items-button "clients" view-props]]
                       :end-content   [:<> [item-lister/search-mode-button "clients"]]}])
 
 (defn- client-list-header

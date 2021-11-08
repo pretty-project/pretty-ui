@@ -2043,7 +2043,7 @@
   ; @example
   ;  (locales/country-native-name :hu)
   ;  =>
-  ;  "Budapest"
+  ;  "Budapest"
   ;
   ; @return (string)
   [country-code]
@@ -2055,7 +2055,7 @@
   ; @example
   ;  (locales/country-currencies :hu)
   ;  =>
-  ;  "HUF"
+  ;  "HUF"
   ;
   ; @return (string)
   [country-code]
@@ -2067,7 +2067,7 @@
   ; @example
   ;  (locales/country-currency :hu)
   ;  =>
-  ;  "HUF"
+  ;  "HUF"
   ;
   ; @return (string)
   [country-code]
@@ -2080,7 +2080,7 @@
   ; @example
   ;  (locales/country-languages :hu)
   ;  =>
-  ;  ["hu"]
+  ;  ["hu"]
   ;
   ; @return (vector)
   [country-code]
@@ -2092,7 +2092,7 @@
   ; @example
   ;  (locales/country-language :hu)
   ;  =>
-  ;  "hu"
+  ;  "hu"
   ;
   ; @return (string)
   [country-code]
@@ -2105,7 +2105,7 @@
   ; @example
   ;  (locales/country-name :hu)
   ;  =>
-  ;  "Magyarország"
+  ;  "Magyarország"
   ;
   ; @return (string)
   [country-code]
@@ -2117,7 +2117,7 @@
   ; @example
   ;  (locales/country-native-name :hu)
   ;  =>
-  ;  "Magyarország"
+  ;  "Magyarország"
   ;
   ; @return (string)
   [country-code]

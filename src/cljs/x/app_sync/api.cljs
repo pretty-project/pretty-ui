@@ -24,9 +24,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-sync.query-handler
+(def get-queries      query-handler/get-queries)
 (def get-query-answer query-handler/get-query-answer)
 
 ; x.app-sync.request-handler
+(def get-requests-history  request-handler/get-requests-history)
+(def get-request-history   request-handler/get-request-history)
+(def get-requests          request-handler/get-requests)
 (def get-request-status    request-handler/get-request-status)
 (def get-request-activity  request-handler/get-request-activity)
 (def get-request-progress  request-handler/get-request-progress)
@@ -37,4 +41,7 @@
 (def clear-request!        request-handler/clear-request!)
 
 ; x.app-sync.response-handler
-(def get-request-response response-handler/get-request-response)
+(def get-responses-history response-handler/get-responses-history)
+(def get-response-history  response-handler/get-response-history)
+(def get-responses         response-handler/get-responses)
+(def get-request-response  response-handler/get-request-response)

@@ -151,7 +151,7 @@
   ;     "2" (map)
   ;     ...}}}
   ; @param (map) mutation-props
-  ;  {:destination-directory-id (string)}
+  ;  {:destination-directory-id (string)}
   ;
   ; @return (string)
   [{:keys [request] :as env} {:keys [destination-directory-id]}]

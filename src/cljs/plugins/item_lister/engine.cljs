@@ -187,14 +187,14 @@
            {:db       (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
                              ; Szükséges frissíteni a keresési feltételeknek megfelelő
                              ; dokumentumok számát, mert változhat az értéke
-                             (assoc-in  [extension-id :lister-meta :document-count] document-count))})))
+                             (assoc-in  [extension-id :lister-meta :document-count] document-count))
 
-; Ez a rész miért van itt?
-;                         ;(not (r all-items-downloaded? db "products")
-;            :dispatch-if [(not (r all-items-downloaded? db extension-name))
-;                         ;[:x.app-components/reload-infinite-loader! :products]
-;                          [:x.app-components/reload-infinite-loader! extension-id])})))
-
+            ; Az elemek letöltődése után, ha maradt még a szerveren letöltendő elem, akkor újratölti
+            ; az infinite-loader komponenst, hogy megállapítsa, hogy az a viewport területén van-e még.
+                         ;(not (r all-items-downloaded? db "products")
+            :dispatch-if [(not (r all-items-downloaded? db extension-name))
+                         ;[:x.app-components/reload-infinite-loader! :products]
+                          [:x.app-components/reload-infinite-loader! extension-id]]})))
 
 (a/reg-event-fx
   :item-lister/request-items!
@@ -209,15 +209,18 @@
   ; @usage
   ;  [:item-lister/request-items! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [resolver-id    (keyword extension-name (str "get-" item-name "-items"))
-            resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-name)
-                            :search-term           (r get-search-term           db extension-name)
-                            :order-by              (r get-order-by              db extension-name)}]
-           [:x.app-sync/send-query! :item-lister/synchronize!
-                                    ;:on-stalled [:item-lister/receive-items! "products"]
-                                    {:on-stalled [:item-lister/receive-items! extension-name item-name]
-                                    ;:query      [`(:products/get-product-items {...})]
-                                     :query      [`(~resolver-id ~resolver-props)]}])))
+      ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
+      ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
+      (if-not (r all-items-downloaded? db extension-name)
+              (let [resolver-id    (keyword extension-name (str "get-" item-name "-items"))
+                    resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-name)
+                                    :search-term           (r get-search-term           db extension-name)
+                                    :order-by              (r get-order-by              db extension-name)}]
+                   [:x.app-sync/send-query! :item-lister/synchronize!
+                                            ;:on-stalled [:item-lister/receive-items! "products"]
+                                            {:on-stalled [:item-lister/receive-items! extension-name item-name]
+                                            ;:query      [`(:products/get-product-items {...})]
+                                             :query      [`(~resolver-id ~resolver-props)]}]))))
 
 (a/reg-event-fx
   :item-lister/load!
@@ -236,9 +239,7 @@
                         ;[:x.app-ui/set-window-title!  :products]
                          [:x.app-ui/set-window-title!  extension-id]
                         ;[:products/render-product-lister!]
-                         [render-event]
-
-                         [:x.app-sync/send-query! {:query [:my-resolve]}]]})))
+                         [render-event]]})))
 
 (a/reg-event-fx
   :item-lister/add-route!

@@ -90,26 +90,28 @@
            [layout-header layout-id layout-props])
        [layout-body layout-id layout-props]])
 
+
+
 (defn view
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
   ;  {:body (map)
-  ;    {:content (metamorphic-content)
+  ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription vector)(opt)}
   ;   :description (metamorphic-content)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
+  ;   :disabled? (boolean)(opt)
+  ;    Default: false
   ;   :header (map)(opt)
-  ;    {:content (metamorphic-content)
+  ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :sticky? (boolean)(opt)
   ;      Default: false
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription vector)(opt)}
   ;   :label (metamorphic-content)(opt)
-  ;   :min-width (keyword)(opt)
+  ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :l}
+  ;    Default: :l}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]

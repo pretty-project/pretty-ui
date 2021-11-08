@@ -175,7 +175,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn event-vector?
+  ; Strict-mode:
+  ;  Az esemény azonsítójának szintaxisa alapján képes megkülönböztetni az esemény-vektort
+  ;  más vektoroktól (pl.: hiccup, subscription vektor, ...)
+  ;
   ; @param (*) n
+  ; @param (options)(opt)
+  ;  {:strict-mode? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  (a/event-vector? [:my-namespace/do-something! ...])
@@ -188,17 +195,24 @@
   ;  true
   ;
   ; @example
-  ;  (a/event-vector? [:div ...])
+  ;  (a/event-vector? [:div ...] {:strict-mode? true})
   ;  =>
   ;  false
   ;
+  ; @example
+  ;  (a/event-vector? [:div ...] {:strict-mode? false})
+  ;  =>
+  ;  true
+  ;
   ; @return (boolean)
-  [n]
+  [n {:keys [strict-mode?]}]
   (boolean (and (vector? n)
                 (let [event-id (first n)]
-                     (and (keyword?                (param event-id))
-                          (or (string/starts-with? (name  event-id) "->")
-                              (string/ends-with?   (name  event-id) "!")))))))
+                     (if (boolean strict-mode?)
+                         (and (keyword?                (param event-id))
+                              (or (string/starts-with? (name  event-id) "->")
+                                  (string/ends-with?   (name  event-id) "!")))
+                         (keyword? event-id))))))
 
 (defn subscription-vector?
   ; @param (*) n
@@ -708,7 +722,7 @@
         ; esemény csoport vektortól!
         ; [:do-something! ...]
         ; [{:ms 500 :dispatch [:do-something! ...]}]
-  (cond (event-vector?       n)
+  (cond (event-vector?       n {:strict-mode? false})
         (vector/concat-items n xyz)
         (map?                n)
         (reduce-kv (fn [result k v]

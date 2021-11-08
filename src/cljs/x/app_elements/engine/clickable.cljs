@@ -64,7 +64,7 @@
                                         ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
                                         ; a keypress-handler által is vezérelhetővé tenni a clickable
                                         ; elemeket.
-                                        ; A static & clickable elemek on-click esemény kizárólag függvényként
+                                        ; A static & clickable elemek on-click esemény kizárólag függvényként
                                         ; hívható meg.
                                         :on-click    #(a/dispatch on-click)
                                         :on-mouse-up  (focusable/blur-element-function element-id)})

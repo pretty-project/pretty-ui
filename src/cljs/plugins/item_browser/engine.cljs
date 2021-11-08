@@ -1,6 +1,10 @@
 
 (ns plugins.item-browser.engine
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :refer [dissoc-in]]
+              [x.app-core.api     :as a :refer [r]]
+              [x.app-router.api   :as router]))
 
 
 

@@ -41,7 +41,7 @@
   ; @return (component)
   [extension-name]
   [elements/button ::quit-search-mode-button
-                   {:on-click [:plugins/toggle-item-lister-search-mode! extension-name]
+                   {:on-click [:item-lister/toggle-search-mode! extension-name]
                     :preset   :close-icon-button}])
 
 (defn search-mode-button
@@ -53,7 +53,7 @@
   ; @return (component)
   [extension-name]
   [elements/button ::search-button
-                   {:on-click [:plugins/toggle-item-lister-search-mode! extension-name]
+                   {:on-click [:item-lister/toggle-search-mode! extension-name]
                     :preset   :search-icon-button
                     :tooltip  :search}])
 
@@ -71,8 +71,9 @@
                               {:auto-focus?   true
                                :layout        :row
                                :min-width     :xs
-                               :placeholder   :search
+                               :on-empty      [:item-lister/search-items! extension-name item-name]
                                :on-type-ended [:item-lister/search-items! extension-name item-name]
+                               :placeholder   :search
                                :value-path    [extension-id :lister-meta :search-term]}]))
 
 (defn search-header
@@ -285,7 +286,7 @@
   ; komponens újratöltését okozná.
   ;
   ; Pl.: clients modul, client-list nézet
-  ;      Megváltozik a kiválasztott nyelv -> újrarenderelődne a lista
+  ;      Megváltozik a kiválasztott nyelv -> újrarenderelődne a lista
   ;
   ; @param (string) extension-name
   ; @param (string) item-name

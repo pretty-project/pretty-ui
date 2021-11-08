@@ -24,8 +24,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
-              [x.app-elements.api   :as elements]
-              [x.app-ui.api         :as ui]))
+              [x.app-elements.api   :as elements]))
 
 
 
@@ -608,17 +607,17 @@
   ;
   ; @return (component)
   [{:keys [current-item] :as view-props}]
-  (cond (map? current-item)                   [map-item                 view-props]
-        (a/event-vector? current-item)        [event-vector-item        view-props]
-        (a/subscription-vector? current-item) [subscription-vector-item view-props]
-        (vector? current-item)                [vector-item              view-props]
-        (boolean? current-item)               [boolean-item             view-props]
-        (integer? current-item)               [integer-item             view-props]
-        (string? current-item)                [string-item              view-props]
-        (keyword? current-item)               [keyword-item             view-props]
-        (var? current-item)                   [component-item           view-props]
-        (nil? current-item)                   [nil-item                 view-props]
-        :else                                 [unknown-item             view-props]))
+  (cond (map? current-item)                                 [map-item                 view-props]
+        (a/event-vector? current-item {:strict-mode? true}) [event-vector-item        view-props]
+        (a/subscription-vector? current-item)               [subscription-vector-item view-props]
+        (vector? current-item)                              [vector-item              view-props]
+        (boolean? current-item)                             [boolean-item             view-props]
+        (integer? current-item)                             [integer-item             view-props]
+        (string? current-item)                              [string-item              view-props]
+        (keyword? current-item)                             [keyword-item             view-props]
+        (var? current-item)                                 [component-item           view-props]
+        (nil? current-item)                                 [nil-item                 view-props]
+        :else                                               [unknown-item             view-props]))
 
 (defn database-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -635,18 +634,6 @@
 (defn- view
   ; @return (component)
   []
-  [components/subscriber
-    {:component  #'database-browser
-     :subscriber [::get-view-props]}])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :x.app-developer/render-database-browser!
-  [:x.app-ui/add-popup! ::view {:content #'view
-                                :label-bar {:content #'ui/close-popup-label-bar
-                                            :content-props {:label :application-database-browser}}
-                                :layout :boxed}])
+  [components/subscriber ::view
+                         {:component  #'database-browser
+                          :subscriber [::get-view-props]}])

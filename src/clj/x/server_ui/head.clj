@@ -33,7 +33,7 @@
 ; @constant (vector)
 (def SYSTEM-CSS-PATHS
      [{:uri "/css/x/app-fonts.css"         :cache-control? true}
-      {:uri "/css/x/normalize.css"         :cache-control? true}
+      {:uri "/css/normalize.css"           :cache-control? true}
       {:uri "/css/x/animations.css"        :cache-control? true}
       {:uri "/css/x/app-ui-profiles.css"   :cache-control? true}
       {:uri "/css/x/app-ui-themes.css"     :cache-control? true}
@@ -115,7 +115,7 @@
      [:meta {:charset "utf-8"}]
      ; maximum-scale=1
      ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
-     ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
+     ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
      [:meta {:content "width=320, initial-scale=1 maximum-scale=1" :name "viewport"}]
      [:meta {:content (str theme-color)            :name "theme-color"}]
      [:meta {:content (str selected-language)      :http-equiv "content-language"}]]))

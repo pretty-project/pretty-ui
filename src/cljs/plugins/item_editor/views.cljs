@@ -63,10 +63,11 @@
   ;  {:form-completed? (boolean)}
   ;
   ; @return (component)
-  [extension-name item-name {:keys [form-completed?]}]
+  [extension-name item-name {:keys [form-completed? new-item?]}]
   [elements/button ::save-item-button
                    {:tooltip :save! :preset :save-icon-button :disabled? (not form-completed?)
-                    :on-click [:item-editor/save-item! extension-name item-name]}])
+                    :on-click (if new-item? [:item-editor/add-item!    extension-name item-name]
+                                            [:item-editor/update-item! extension-name item-name])}])
 
 
 

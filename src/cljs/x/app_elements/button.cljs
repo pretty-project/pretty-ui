@@ -89,6 +89,10 @@
                               :icon    :content_copy
                               :layout  :icon-button
                               :variant :transparent}
+      :forward-icon-button {:color   :default
+                            :icon    :arrow_forward
+                            :layout  :icon-button
+                            :variant :transparent}
       :help-button         {:color   :default
                             :horizontal-align :left
                             :icon    :help_outline
@@ -113,6 +117,14 @@
                             :variant :transparent}
       :menu-icon-button    {:color   :default
                             :icon    :more_vert
+                            :layout  :icon-button
+                            :variant :transparent}
+      :next-icon-button    {:color   :default
+                            :icon    :arrow_forward_ios
+                            :layout  :icon-button
+                            :variant :transparent}
+      :prev-icon-button    {:color   :default
+                            :icon    :arrow_back_ios
                             :layout  :icon-button
                             :variant :transparent}
       :primary-button      {:color   :primary

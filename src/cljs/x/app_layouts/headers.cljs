@@ -26,7 +26,7 @@
   ;
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
-  ;  {:icon (keyword)(opt)
+  ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (component)

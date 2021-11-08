@@ -28,6 +28,6 @@
 ;
 ; 1. Route-ot beirod (Enter)
 ; 2. indicator beállítása
-; 3. Indul a request
+; 3. Indul a request
 ; 4. Render surface (A surface en megjelenik a ghost view)
 ; 5. Itt a valasz (nem on-success-re renderel! vagy igen és ignorálja?)

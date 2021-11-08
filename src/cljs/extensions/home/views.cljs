@@ -24,6 +24,13 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- card-badge
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:div {:style {:width "8px" :height "8px" :background-color "var( --secondary )"
+                 :border-radius "50%" :position "absolute" :top "44px" :right "24px"}}])
+
+
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [user-name]}]
@@ -34,18 +41,24 @@
   [surface-id view-props]
   [:<> [header surface-id view-props]
        [:div {:style {:display :flex :flex-wrap :wrap :justify-content :center}}
+        [:div
          [elements/card {:body {:content [elements/label {:content :clients :icon :people}]}
                          :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/clients"]}]
+                         :on-click [:x.app-router/go-to! "/clients"]}]]
+        [:div
          [elements/card {:body {:content [elements/label {:content :products :icon :category}]}
                          :horizontal-align :left
                          :on-click [:x.app-router/go-to! "/products"]}]
+         [card-badge]]
+        [:div
          [elements/card {:body {:content [elements/label {:content :file-storage :icon :folder}]}
                          :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/media"]}]
+                         :on-click [:x.app-router/go-to! "/media"]}]]
+        [:div
          [elements/card {:body {:content [elements/label {:content :sample :icon :folder}]}
                          :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/sample"]}]]])
+                         :on-click [:x.app-router/go-to! "/sample"]}]
+         [card-badge]]]])
 
 
 

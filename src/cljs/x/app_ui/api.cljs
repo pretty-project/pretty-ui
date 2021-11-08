@@ -59,11 +59,18 @@
 (def website-interface?     interface/website-interface?)
 
 ; x.app-ui.popup-label-bar
-(def accept-popup-label-bar  popup-label-bar/accept-popup-label-bar)
-(def cancel-popup-label-bar  popup-label-bar/cancel-popup-label-bar)
-(def close-popup-label-bar   popup-label-bar/close-popup-label-bar)
-(def go-up-popup-label-bar   popup-label-bar/go-up-popup-label-bar)
-(def go-back-popup-label-bar popup-label-bar/go-back-popup-label-bar)
+(def popup-icon-button-placeholder popup-label-bar/popup-icon-button-placeholder)
+(def popup-accept-button           popup-label-bar/popup-accept-button)
+(def popup-cancel-button           popup-label-bar/popup-cancel-button)
+(def popup-up-icon-button          popup-label-bar/popup-up-icon-button)
+(def popup-back-icon-button        popup-label-bar/popup-back-icon-button)
+(def popup-close-icon-button       popup-label-bar/popup-close-icon-button)
+(def popup-label                   popup-label-bar/popup-label)
+(def accept-popup-label-bar        popup-label-bar/accept-popup-label-bar)
+(def cancel-popup-label-bar        popup-label-bar/cancel-popup-label-bar)
+(def close-popup-label-bar         popup-label-bar/close-popup-label-bar)
+(def go-up-popup-label-bar         popup-label-bar/go-up-popup-label-bar)
+(def go-back-popup-label-bar       popup-label-bar/go-back-popup-label-bar)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

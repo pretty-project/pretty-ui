@@ -140,11 +140,11 @@
 ; @constant (ms)
 (def RENDER-DELAY-OFFSET 0)
 ; - Ha a render-delay 100 ms várakozásra volt állítva, akkor az egymás után különböző azonosítóval
-;   kirenderelt surface elemek villanva jelentek meg (100 ms különbséggel).
+;   kirenderelt surface elemek villanva jelentek meg (100 ms különbséggel).
 ; - Ha pedig különböző surface-ek ugyanazt az azonosítót használták, ami több okból sem jó, akkor
 ;   nem jelentkezett ez a jelenség, mivel nem történt re-render, csak update-elte a surface a tartalmát.
 ; - Próbaképpen át lett állítva 0 ms várakozásra 2021. 10. 26.
-;   Ha ez nem okoz semmilyen problémát hosszútávon, akkor maradjon az új érték megtartva.
+;   Ha ez nem okoz semmilyen problémát hosszútávon, akkor maradjon az új érték megtartva.
 ;(def RENDER-DELAY-OFFSET 100)
 
 ; @constant (ms)

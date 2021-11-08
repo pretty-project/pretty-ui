@@ -2,18 +2,13 @@
 (ns extensions.clients.client-editor
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.form    :as form]
-              [mid-fruits.map     :refer [dissoc-in]]
               [mid-fruits.string  :as string]
-              [x.app-components.api :as components]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
               [x.app-locales.api  :as locales]
-              [x.app-router.api   :as router]
-              [x.app-sync.api     :as sync]
-              [extensions.clients.engine :as engine]
-              [plugins.item-editor.api   :as item-editor]))
+              [plugins.item-editor.api :as item-editor]))
 
 
 
@@ -58,7 +53,7 @@
   [surface-id {:keys [new-item?] :as header-props}]
   [elements/polarity ::form-header
                      {:start-content [:<> (if (boolean new-item?)
-                                             ;[item-editor/cancel-item-button "clients" "client"])
+                                             ;[item-editor/cancel-item-button "clients" "client"]
                                               nil
                                               [client-actions-buttons surface-id header-props])]
                       :end-content [item-editor/save-item-button "clients" "client" header-props]}])
@@ -148,13 +143,13 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description synchronizing?] :as view-props}]
-  [layouts/layout-a surface-id {:disabled? synchronizing?
+  [layouts/layout-a surface-id {:description description
+                                :disabled?   synchronizing?
                                 :body {:content    #'client-form
                                        :subscriber [::get-body-props]}
                                 :header {:content    #'client-form-header
                                          :sticky?    true
-                                         :subscriber [::get-header-props]}
-                                :description description}])
+                                         :subscriber [::get-header-props]}}])
 
 
 

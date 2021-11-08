@@ -35,7 +35,7 @@
   ; @return (component)
   [_ {:directory/keys [modified-at]}]
   (if (some? modified-at)
-      (let [modified-at (time/timestamp->date-and-time modified-at :yyyymmdd :hhmm)]
+      (let [modified-at (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)]
            [:<> [elements/horizontal-line {:color :highlight :layout :row}]
                 [elements/label {:content :last-modified :layout :fit :color :muted}]
                 [elements/label {:content modified-at :layout :fit :selectable? true}]])))
@@ -86,7 +86,7 @@
   ; @return (component)
   [_ {:file/keys [modified-at]}]
   (if (some? modified-at)
-      (let [modified-at (time/timestamp->date-and-time modified-at :yyyymmdd :hhmm)]
+      (let [modified-at (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)]
            [:<> [elements/horizontal-line {:color :highlight :layout :row}]
                 [elements/label {:content :last-modified :layout :fit :color :muted}]
                 [elements/label {:content modified-at :layout :fit :selectable? true}]])))

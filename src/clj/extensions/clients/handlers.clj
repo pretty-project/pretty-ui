@@ -24,7 +24,27 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-props-prototype
+(defn- added-client-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [request]} client-props]
+  (let [timestamp (time/timestamp-object)
+        user-link (user/request->user-link request)]
+       (merge {:client/added-at    timestamp
+               :client/added-by    user-link}
+              (param client-props)
+              {:client/modified-at timestamp
+               :client/modified-by user-link})))
+
+(defn- updated-client-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [request]} client-props]
+  (let [timestamp (time/timestamp-object)
+        user-link (user/request->user-link request)]
+       (merge (param client-props)
+              {:client/modified-at timestamp
+               :client/modified-by user-link})))
+
+(defn- duplicated-client-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request]} client-props]
   (let [timestamp (time/timestamp-object)
@@ -33,9 +53,8 @@
               {:client/added-at    timestamp
                :client/added-by    user-link
                :client/modified-at timestamp
-               :client/modified-by user-link})))
-
-
+               :client/modified-by user-link
+               :xxxx :yyyyy})))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Prototypes --------------------------------------------------------------
@@ -54,8 +73,8 @@
        {:max-count      10
         :skip           downloaded-item-count
         :search-pattern [[:clients/full-name search-term] [:clients/email-address search-term]]
-        :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name  1] [:client/last-name  1]]
-                                       :by-name-descending [[:client/first-name -1] [:client/last-name -1]]
+        :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
+                                       :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
                                        :by-date-ascending  [[:client/modified-at  1]]
                                        :by-date-descending [[:client/modified-at -1]])}))
 
@@ -105,7 +124,6 @@
                     search-props    (env->search-props  env)
                     search-pipeline (search-props->search-pipeline search-props)
                     count-pipeline  (search-props->count-pipeline  search-props)]
-                   (println (str resolver-props))
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
                    {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
                     ; A keresési feltételeknek megfelelő dokumentumok száma
@@ -141,32 +159,32 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation save-client-item! [env client-props]
-             {::pco/op-name 'clients/save-client-item!}
-             (let [client-props (a/sub-prot env client-props client-props-prototype)]
-                  (mongo-db/add-document! collection-name client-props)))
+(defmutation update-client-item! [env client-props]
+             {::pco/op-name 'clients/update-client-item!}
+             (mongo-db/add-document! collection-name client-props
+                                     {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
 
-(defmutation add-client-item! [client]
+(defmutation add-client-item! [env client-props]
              {::pco/op-name 'clients/add-client-item!}
-             (mongo-db/add-document! collection-name client))
+             (mongo-db/add-document! collection-name client-props
+                                     {:prototype-f #(a/sub-prot env % added-client-props-prototype)}))
 
 (defmutation delete-client-item! [{:keys [client-id]}]
              {::pco/op-name 'clients/delete-client-item!}
              (mongo-db/remove-document! collection-name client-id))
 
-(defmutation duplicate-client-item! [{:keys [client-id]}]
+(defmutation duplicate-client-item! [env {:keys [client-id]}]
              {::pco/op-name 'clients/duplicate-client-item!}
-             (mongo-db/duplicate-document! collection-name client-id))
+             (mongo-db/duplicate-document! collection-name client-id
+                                           {:prototype-f #(a/sub-prot env % duplicated-client-props-prototype)}))
 
 ;; ----------------------------------------------------------------------------
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
 (def HANDLERS [get-client-item
                get-client-items
-
-               save-client-item!
+               update-client-item!
                add-client-item!
                delete-client-item!
                duplicate-client-item!])

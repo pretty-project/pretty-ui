@@ -78,11 +78,11 @@
 (defn- header-apps-icon-button-badge
   ; TEMP
   []
-  [:div {:style {:position :absolute :top "4px" :right "10px" :background "var( --soft-blue )"
-                 :width "20px" :height "20px" :border-radius "50%"
+  [:div {:style {:position :absolute :top "12px" :right "18px" :background "var( --secondary )"
+                 :width "8px" :height "8px" :border-radius "50%"
                  :font-size "8px" :font-weight 600 :align-items :center :line-height "18px"
-                 :display :flex :flex-direction :column :justify-content :center}}
-        (param "12")])
+                 :display :flex :flex-direction :column :justify-content :center}}])
+        ;(param "12")])
 
 (defn- header-apps-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,7 +128,7 @@
                     :on-click [:x.app-router/go-back!]}])
                    ;:tooltip  :back!
 
-(defn- header-db-browser-icon-button
+(defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
@@ -136,12 +136,11 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::db-browser-icon-button
-                   {:icon      :storage
-                    :icon-size :xxs
-                    :on-click  [:x.app-developer/render-database-browser!]
-                    :preset    :default-icon-button}])
-                   ;:tooltip   :application-database-browser
+  [elements/button ::dev-tools-icon-button
+                   {:icon     :auto_fix_high
+                    :on-click [:x.app-developer/render-developer-tools!]
+                    :preset   :default-icon-button}])
+                   ;:tooltip  :developer-tools
 
 (defn- header-menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -178,12 +177,12 @@
   ;
   ; @return (component)
   [header-id {:keys [header-title parent-path] :as view-props}]
-  [:<> [:div.x-app-header--block (if (some? parent-path)  [header-up-icon-button         header-id view-props]
-                                                          [header-apps-icon-button       header-id view-props])]
-       [:div.x-app-header--block (if (some? header-title) [header-label                  header-id view-props])]
-       [:div.x-app-header--block (if (a/debug-mode?) [:<> [header-db-browser-icon-button header-id view-props]
-                                                          [header-menu-icon-button       header-id view-props]]
-                                                     [:<> [header-menu-icon-button       header-id view-props]])]])
+  [:<> [:div.x-app-header--block (if (some? parent-path)  [header-up-icon-button        header-id view-props]
+                                                          [header-apps-icon-button      header-id view-props])]
+       [:div.x-app-header--block (if (some? header-title) [header-label                 header-id view-props])]
+       [:div.x-app-header--block (if (a/debug-mode?) [:<> [header-dev-tools-icon-button header-id view-props]
+                                                          [header-menu-icon-button      header-id view-props]]
+                                                     [:<> [header-menu-icon-button      header-id view-props]])]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

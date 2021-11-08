@@ -181,11 +181,15 @@
 
 (a/reg-event-fx
   :x.app-ui/blow-bubble!
+  ; XXX#3044
+  ; Ha a button elem nem jelenít meg {:content ...} tulajdonságként átadott tartalmat,
+  ; akkor a primary-button a button elem bal oldalán jelenik meg.
+  ;
   ; @param (keyword)(opt) bubble-id
   ; @param (map) bubble-props
   ;  {:autopop? (boolean)(opt)
   ;    Default: true
-  ;   :content (metamorphic-content)
+  ;   :content (metamorphic-content)(opt)
   ;    XXX#8711
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning, :muted
@@ -236,12 +240,8 @@
   ;
   ; @return (component)
   [bubble-id _]
-  [elements/button {:color    :none
-                    :icon     :close
-                    :layout   :icon-button
-                    :on-click [:x.app-ui/pop-bubble! bubble-id]
-                    :tooltip  :close!
-                    :variant  :transparent}])
+  [elements/button {:on-click [:x.app-ui/pop-bubble! bubble-id]
+                    :preset   :close-icon-button}])
 
 (defn- bubble-close-button-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -287,11 +287,13 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
+  ;  {:content (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [bubble-id bubble-props]
+  [bubble-id {:keys [content] :as bubble-props}]
   [:div.x-app-bubbles--element--body
-    [bubble-content bubble-id bubble-props]
+    (if (some? content)
+        [bubble-content bubble-id bubble-props])
     [bubble-buttons bubble-id bubble-props]])
 
 (defn- bubble-element

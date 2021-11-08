@@ -134,12 +134,8 @@
   ; @return (hiccup)
   [_ _]
   [:div#x-app-sidebar--controls
-    [elements/button {:color   :none
-                      :icon    :close
-                      :layout  :icon-button
-                      :variant :transparent
-                      :on-click
-                      [:x.app-ui/hide-sidebar!]}]])
+    [elements/button {:preset   :prev-icon-button
+                      :on-click [:x.app-ui/hide-sidebar!]}]])
 
 (defn- sidebar-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!

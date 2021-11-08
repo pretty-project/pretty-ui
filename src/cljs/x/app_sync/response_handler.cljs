@@ -27,6 +27,29 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-responses-history
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (r db/get-partition-history db ::responses))
+
+(defn get-response-history
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ;
+  ; @return (map)
+  [db [_ request-id]]
+  (r db/get-data-history db ::responses request-id))  
+
+(defn get-responses
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (get-in db (db/path ::responses)))
+
 (defn- get-response-target-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -119,7 +142,10 @@
                (db/distribute-items! [event-id modified-response target-paths])
                ; Store modified response
                (r store-response-to-target? db request-id)
-               (db/set-item! [event-id target-path modified-response]))))
+               (db/set-item! [event-id target-path modified-response])
+               ; DEBUG
+               :update-response-history!
+               (db/update-data-history! [event-id ::responses request-id]))))
 
 
 

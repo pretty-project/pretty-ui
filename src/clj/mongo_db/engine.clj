@@ -423,8 +423,10 @@
   ; @param (map) namespaced document
   ;  {:namespace/id (string)(opt)}
   ; @param (map)(opt) options
-  ;  {:ordered? (boolean)
-  ;    Default: false}
+  ;  {:modifier-f (function)(opt)
+  ;   :ordered? (boolean)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/add-document! "my-collection" {:my-namespace/my-keyword  :my-value
@@ -448,17 +450,30 @@
   ([collection-name document]
    (add-document! collection-name document {}))
 
-  ([collection-name document {:keys [ordered?]}]
-   (let [; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
-         document-dex (get-all-document-count collection-name)
-         document     (cond-> document ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
-                                       ; akkor szükséges a sorrendbeli pozícióját hozzáadni
-                                       (boolean ordered?)
-                                       (db/document->ordered-document document-dex)
-                                       ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
-                                       ; egy generált azonosítót
-                                       :assoc-id
-                                       (document<-id))]
+  ([collection-name document {:keys [ordered? modifier-f prototype-f]}]
+         ; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
+   (let [document-dex (get-all-document-count collection-name)
+
+         ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt az add-document! függvény
+         ; végrehajtana rajta bármilyen változtatást.
+         document (if (some?       prototype-f)
+                      (prototype-f document)
+                      (return      document))
+
+                                   ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
+                                   ; akkor szükséges a sorrendbeli pozícióját hozzáadni
+         document (cond-> document (boolean ordered?)
+                                   (db/document->ordered-document document-dex)
+                                   ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
+                                   ; egy generált azonosítót
+                                   :assoc-id
+                                   (document<-id))
+
+         ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
+         document (if (some?      modifier-f)
+                      (modifier-f document)
+                      (return     document))]
+
         (save-document! collection-name document))))
 
 ; @usage
@@ -478,7 +493,8 @@
   ;  {:ordered? (boolean)
   ;    Ha a dokumentum nem létezik az adatbázisban, akkor hozzáadja a kollekcióhoz.
   ;    A hozzáadás művelet paramétere az {:ordered? ...} tulajdonság.
-  ;    Default: false}
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/update-document! "my-collection" {:my-namespace/my-keyword  :my-value
@@ -494,11 +510,18 @@
   ([collection-name document]
    (update-document! collection-name document {}))
 
-  ([collection-name document options]
+  ([collection-name document {:keys [prototype-f] :as options}]
    (let [document-id (db/document->document-id document)]
         (if (document-exists? document-id)
-            (save-document!   collection-name document)
-            (add-document!    collection-name document options)))))
+
+            ; If document exists ...
+            (let [document (if (some?       prototype-f)
+                               (prototype-f document)
+                               (return      document))]
+                 (save-document! collection-name document))
+
+            ; If document not exists ...
+            (add-document! collection-name document options)))))
 
 ; @usage
 ;  [:mongo-db/update-document! "my-collection" {:my-namespace/id "my-document"}]
@@ -587,19 +610,37 @@
   ; @param (string) document-id
   ; @param (map) options
   ;  {:label-key (namespaced keyword)
-  ;   :language-id (keyword)}
+  ;   :language-id (keyword)
+  ;   :modifier-f (function)(opt)
+  ;   :prototype-f (function)(opt)}
   ;
   ; @return (map)
   ;  {:namespace/id (string)}
-  [collection-name document-id {:keys [label-key] :as options}]
-  (let [document      (get-document-by-id      collection-name document-id)
-        copy-label    (get-document-copy-label collection-name document-id options)
-        namespace     (db/document->namespace  document)
-        id-key        (keyword/add-namespace   namespace :id)
-        document-copy (-> document ; label-suffix toldalék értékével kiegészített címke asszociálása
-                                   (assoc label-key copy-label)
-                                   ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-                                   (dissoc id-key))]
+  [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
+  (let [document  (get-document-by-id     collection-name document-id)
+        namespace (db/document->namespace document)
+        id-key    (keyword/add-namespace  namespace :id)
+
+        ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt a duplicate-ordered-document!
+        ; függvény végrehajtana rajta bármilyen változtatást.
+        document-copy (if (some?       prototype-f)
+                          (prototype-f document)
+                          (return      document))
+
+        ; A label-suffix toldalék értékével kiegészített címke asszociálása
+        document-copy (if (some? label-key)
+                          (let [copy-label (get-document-copy-label collection-name document-id options)]
+                               (assoc document-copy label-key copy-label))
+                          (return document-copy))
+
+        ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
+        document-copy (dissoc document-copy id-key)
+
+        ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
+        document-copy (if (some?      modifier-f)
+                          (modifier-f document-copy)
+                          (return     document-copy))]
+
        (add-document! collection-name document-copy)))
 
 (defn- duplicate-ordered-document!
@@ -608,27 +649,44 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (namespaced keyword)}
+  ;  {:label-key (namespaced keyword)
+  ;   :modifier-f (function)(opt)
+  ;   :prototype-f (function)(opt)}
   ;
   ; @return (map)
   ;  {:namespace/id (string)}
-  [collection-name document-id {:keys [label-key] :as options}]
-  (let [document     (get-document-by-id    collection-name document-id)
-        document-dex (db/get-document-value document :order)
-        namespace     (db/document->namespace  document)
-        id-key        (keyword/add-namespace   namespace :id)
+  [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
+  (let [document     (get-document-by-id     collection-name document-id)
+        document-dex (db/get-document-value  document :order)
+        namespace    (db/document->namespace document)
+        id-key       (keyword/add-namespace  namespace :id)
 
         ; Ha a dokumentum nem rendelkezik {:namespace/order ...} tulajdonsággal ...
         document-copy-dex (try (inc document-dex)
                                (catch Exception e (println "Document corrupted error #981" collection-name document-id)))
 
-        copy-label    (get-document-copy-label collection-name document-id options)
-        document-copy (-> document ; label-suffix toldalék értékével kiegészített címke asszociálása
-                                   (assoc label-key copy-label)
+        ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt a duplicate-ordered-document!
+        ; függvény végrehajtana rajta bármilyen változtatást.
+        document-copy (if (some?       prototype-f)
+                          (prototype-f document)
+                          (return      document))
+
+        ; A label-suffix toldalék értékével kiegészített címke asszociálása
+        document-copy (if (some? label-key)
+                          (let [copy-label (get-document-copy-label collection-name document-id options)]
+                               (assoc document-copy label-key copy-label))
+                          (return document-copy))
+
                                    ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-                                   (dissoc id-key)
+        document-copy (-> document (dissoc id-key)
                                    ; A sorrendbeli pozíció értékének hozzáadása a másolathoz
-                                   (db/document->ordered-document document-copy-dex))]
+                                   (db/document->ordered-document document-copy-dex))
+
+        ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
+        document-copy (if (some?      modifier-f)
+                          (modifier-f document-copy)
+                          (return     document-copy))]
+
 
        (let [namespace (db/document->namespace document)
              order-key (keyword/add-namespace  namespace :order)]
@@ -644,12 +702,21 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (namespaced keyword)
+  ;  {:label-key (namespaced keyword)(opt)
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "copy" kifejezést
-  ;   :language-id (keyword)
+  ;    Only w/ {:language-id ...}
+  ;   :language-id (keyword)(opt)
   ;    Milyen nyelven használja a "copy" kifejezést a névhez hozzáfűzéskor
+  ;    Only w/ {:label-key ...}
+  ;   :modifier-f (function)(opt)
   ;   :ordered? (boolean)(opt)
-  ;    Default: false}
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/duplicate-document! "my-collection" "my-document")
+  ;  =>
+  ;  {:my-namespace/id "..." :my-namespace/label "My document"}
   ;
   ; @example
   ;  (mongo-db/duplicate-document! "my-collection" "my-document" {:label-key   :my-namespace/label

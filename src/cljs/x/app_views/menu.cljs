@@ -255,4 +255,5 @@
       {:db          (r reset-menu-props! db)
        :dispatch-if [(r environment/viewport-small? db)
                      [::render-as-sidebar!]
-                     [::render-as-popup!]]}))
+                     [::render-as-sidebar!]]}))
+                     ;[::render-as-popup!]]}))

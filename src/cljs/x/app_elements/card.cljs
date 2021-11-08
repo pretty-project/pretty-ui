@@ -205,7 +205,7 @@
   ; @param (map) card-props
   ;  XXX#3240
   ;  {:body (map)
-  ;    {:content (metamorphic-content)(opt)
+  ;    {:content (metamorphic-content)(opt)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
   ;   :class (string or vector)(opt)

@@ -58,7 +58,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn document-id->data-item-id
@@ -66,7 +66,8 @@
   ;
   ; @example
   ;  (db/document-id->data-item-id "my-id")
-  ;  => :my-id
+  ;  =>
+  ;  :my-id
   ;
   ; @return (keyword)
   [n]
@@ -77,11 +78,13 @@
   ;
   ; @example
   ;  (db/data-item-value->document-item-value "my-value")
-  ;  => "my-value"
+  ;  =>
+  ;  "my-value"
   ;
   ; @example
   ;  (db/data-item-value->document-item-value :my-value)
-  ;  => "my-value"
+  ;  =>
+  ;  "my-value"
   ;
   ; @return (*)
   [n]
@@ -94,7 +97,8 @@
   ;
   ; @example
   ;  (db/document-item-value->data-item-value "my-value")
-  ;  => "my-value"
+  ;  =>
+  ;  "my-value"
   ;
   ; @return (*)
   [n]
@@ -109,8 +113,9 @@
   ;
   ; @example
   ;  (db/data-item->document :my-data-item {:foo/bar :baz})
-  ;  => {:foo/bar "baz"
-  ;      :foo/id "my-data-item"}
+  ;  =>
+  ;  {:foo/bar "baz"
+  ;   :foo/id "my-data-item"}
   ;
   ; @return (map)
   [data-item-id data-item {:keys [additional-namespace remove-namespace?]}]
@@ -137,11 +142,13 @@
   ;
   ; @example
   ;  (db/document->data-item {:foo/bar "baz" :foo/id "my-document"})
-  ;  => {:foo/bar "baz" :foo/id "my-document"}
+  ;  =>
+  ;  {:foo/bar "baz" :foo/id "my-document"}
   ;
   ; @example
   ;  (db/document->data-item {:foo/bar "baz" :foo/id "my-document"} {:remove-namespace? true})
-  ;  => {:bar "baz"}
+  ;  =>
+  ;  {:bar "baz"}
   ;
   ; @return (map)
   [document {:keys [additional-namespace remove-namespace?]}]
@@ -176,7 +183,8 @@
   ;
   ; @example
   ;  (db/unordered-partition->collection {:data-items {:a {} :b {} :c {}}})
-  ;  => [{:id "a"} {:id "b"} {:id "c"}]
+  ;  =>
+  ;  [{:id "a"} {:id "b"} {:id "c"}]
   ;
   ;
   ; @return (maps in vector)
@@ -199,7 +207,8 @@
   ; @example
   ;  (db/ordered-partition->collection {:data-items {:a {} :b {} :c {}}
   ;                                     :data-order [:a :b :c]})
-  ;  => [{:id "a" :order "0"} {:id "b" :order "1"} {:id "c" :order "2"}]
+  ;  =>
+  ;  [{:id "a" :order "0"} {:id "b" :order "1"} {:id "c" :order "2"}]
   ;
   ; @return (maps in vector)
   [partition context-props]
@@ -235,7 +244,8 @@
   ;
   ; @example
   ;  (db/collection->data-items [{:foo/bar "baz" :foo/id "az0323"}])
-  ;  => {:az0323 {:foo/bar "baz" :foo/id "az0323"}}}
+  ;  =>
+  ;  {:az0323 {:foo/bar "baz" :foo/id "az0323"}}}
   ;
   ; @return (map)
   ([collection]
@@ -262,7 +272,8 @@
   ;
   ; @example
   ;  (db/unordered-collection->data-order [{:foo/bar "baz" :foo/id "az0323"}])
-  ;  => [:az0323]
+  ;  =>
+  ;  [:az0323]
   ;
   ; @return (vector)
   [collection {:keys [keywordize?]}]
@@ -286,7 +297,8 @@
   ; @example
   ;  (db/ordered-collection->data-order [{:foo/bar "baz #2" :foo/id "az0323" :foo/order 2}
   ;                                      {:foo/bar "baz #1" :foo/id "xs0301" :foo/order 1}])
-  ;  => [:xs0301 :az0323]
+  ;  =>
+  ;  [:xs0301 :az0323]
   ;
   ; @return (vector)
   [collection {:keys [keywordize?]}]
@@ -308,7 +320,8 @@
   ;
   ; @example
   ;  (db/collection->data-order [{:foo/bar "baz" :foo/id "az0323"}])
-  ;  => [:az0323]
+  ;  =>
+  ;  [:az0323]
   ;
   ; @return (vector)
   ([collection]
@@ -331,8 +344,9 @@
   ;
   ; @example
   ;  (db/collection->partition [{:foo/bar "baz" :foo/id "az0323"}])
-  ;  => {:data-items {:az0323 {:foo/bar "baz" :foo/id "az0323"}}
-  ;      :data-order [:az0323]}
+  ;  =>
+  ;  {:data-items {:az0323 {:foo/bar "baz" :foo/id "az0323"}}
+  ;   :data-order [:az0323]}
   ;
   ; @return (map)
   ;  {:data-items (map)
@@ -354,7 +368,8 @@
   ;
   ; @example
   ;  (db/collection->map [{:foo/bar "baz" :foo/id "az0323"}])
-  ;  => {:az0323 {:foo/bar "baz" :foo/id "az0323"}}
+  ;  =>
+  ;  {:az0323 {:foo/bar "baz" :foo/id "az0323"}}
   ;
   ; @return (map)
   ([collection]

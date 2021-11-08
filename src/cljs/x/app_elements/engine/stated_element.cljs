@@ -37,12 +37,12 @@
 ; @constant (keywords in vector)
 ;  Az elem mely tulajdonságai kerüljenek a Re-Frame adatbázisba
 (def CONSTANT-PROPS-KEYS
-     [:autoclear? :default-value :disallow-empty-input-group? :emptiable? :form-id
-      :keypress :get-label-f :get-value-f :group-id :initial-options :initial-value
-      :input-ids :max-input-count :min-input-count :listen-to-change? :on-blur
-      :on-change :on-check :on-click :on-delete :on-empty :on-enter :on-extend
-      :on-focus :on-reset :on-select :on-uncheck :options-path :required? :validator
-      :value-path])
+     [:autoclear? :auto-focus? :default-value :disallow-empty-input-group? :emptiable?
+      :form-id :keypress :get-label-f :get-value-f :group-id :initial-options 
+      :initial-value :input-ids :max-input-count :min-input-count :listen-to-change?
+      :on-blur :on-change :on-check :on-click :on-delete :on-empty :on-enter :on-extend
+      :on-focus :on-reset :on-select :on-type-ended :on-uncheck :options-path
+      :required? :validator :value-path])
 
 
 

@@ -35,13 +35,13 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn partition-state->data-order
   ; @param (map) partition-state
   ;  {:data-order (vector)(opt)}
-  ; 
+  ;
   ; @return (vector)
   [partition-state]
   (partition->data-order partition-state))

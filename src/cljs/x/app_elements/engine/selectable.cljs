@@ -189,7 +189,7 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :helper (keyword)
-  ;   :options (vector)
+  ;   :options (vector)
   ;   :selected? (boolean)
   ;   :value (keyword)}
   [db [_ input-id]]

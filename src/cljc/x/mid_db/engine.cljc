@@ -23,7 +23,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn item-path->cofx-path
@@ -31,7 +31,8 @@
   ;
   ; @example
   ;  (db/item-path->cofx-path [:my :item :path])
-  ;  => [:db :my :item :path]
+  ;  => 
+  ;  [:db :my :item :path]
   ;
   ; @return (item-path vector)
   [item-path]
@@ -115,27 +116,32 @@
   ; @example
   ;  (def db {})
   ;  (r db/set-vector-item! [:my :item :path 0] :item-value)
-  ;  => {:my {:item {:path [:item-value]}}}
+  ;  =>
+  ;  {:my {:item {:path [:item-value]}}}
   ;
   ; @example
   ;  (def db {})
   ;  (r db/set-vector-item! [:my :item :path 2] :item-value)
-  ;  => {:my {:item {:path [:item-value]}}}
+  ;  =>
+  ;  {:my {:item {:path [:item-value]}}}
   ;
   ; @example
   ;  (def db {:my :item :path {}})
   ;  (r db/set-vector-item! [:my :item :path 0] :item-value)
-  ;  => {:my {:item {:path [:item-value]}}}
+  ;  =>
+  ;  {:my {:item {:path [:item-value]}}}
   ;
   ; @example
   ;  (def db {:my :item :path [])
   ;  (r db/set-vector-item! [:my :item :path 0] :item-value)
-  ;  => {:my {:item {:path [:item-value]}}}
+  ;  =>
+  ;  {:my {:item {:path [:item-value]}}}
   ;
   ; @example
   ;  (def db {:my :item :path [:first-value :second-value])
   ;  (r db/set-vector-item! [:my :item :path 0] :item-value)
-  ;  => {:my {:item {:path [:item-value :second-value]}}}
+  ;  =>
+  ;  {:my {:item {:path [:item-value :second-value]}}}
   ;
   ; @return (map)
   [db [_ item-path item]]

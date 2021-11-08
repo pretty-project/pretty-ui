@@ -62,7 +62,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn remote-path->collection-id
@@ -73,7 +73,8 @@
   ;
   ; @example
   ;  (db/remote-path/collection-id ["my-collection" "my-document" :my-item])
-  ;  => "my-collection"
+  ;  =>
+  ;  "my-collection"
   ;
   ; @return (string)
   [[collection-id _ _]]
@@ -87,7 +88,8 @@
   ;
   ; @example
   ;  (db/remote-path/document-id ["my-collection" "my-document" :my-item])
-  ;  => "my-document"
+  ;  =>
+  ;  "my-document"
   ;
   ; @return (string)
   [[_ document-id _]]
@@ -101,7 +103,8 @@
   ;
   ; @example
   ;  (db/remote-path/item-key ["my-collection" "my-document" :my-item])
-  ;  => :my-item
+  ;  =>
+  ;  :my-item
   ;
   ; @return (string)
   [[_ _ item-key]]
@@ -144,7 +147,8 @@
   ;
   ; @example
   ;  (db/collection->namespaced-collection [{:foo "bar"} {:foo "boo"}] :baz)
-  ;  => [{:baz/foo "bar"} {:baz/foo "boo"}]
+  ;  =>
+  ;  [{:baz/foo "bar"} {:baz/foo "boo"}]
   ;
   ; @return (maps in  vector)
   [collection namespace]
@@ -159,7 +163,8 @@
   ;
   ; @example
   ;  (db/collection->namespaced-collection [{:baz/foo "bar"} {:baz/foo "boo"}])
-  ;  => [{:foo "bar"} {:foo "boo"}]
+  ;  =>
+  ;  [{:foo "bar"} {:foo "boo"}]
   ;
   ; @return (maps in  vector)
   [collection]
@@ -174,15 +179,18 @@
   ;
   ; @example
   ;  (db/collection->collection-ordered? [{:id "1"} {:id "2"}])
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/collection->collection-ordered? [{:id "1" :order 1} {:id "2" :order 0}])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/collection->collection-ordered? [{:foo/id "1" :foo/order 1} {:foo/id "2" :foo/order 0}])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [collection]
@@ -203,15 +211,18 @@
   ;
   ; @example
   ;  (db/trim-collection [{:id "1"} {:id "2"} {:id "3"} {:id "4"} {:id "5"}] 2)
-  ;  => [{:id "1"} {:id "2"}]
+  ;  =>
+  ;  [{:id "1"} {:id "2"}]
   ;
   ; @example
   ;  (db/trim-collection [{:id "1"} {:id "2"} {:id "3"} {:id "4"} {:id "5"}] 2 1)
-  ;  => [{:id "2"} {:id "3"} {:id "4"}]
+  ;  =>
+  ;  [{:id "2"} {:id "3"} {:id "4"}]
   ;
   ; @example
   ;  (db/trim-collection [{:id "1"} {:id "2"} {:id "3"} {:id "4"} {:id "5"}] 2 4)
-  ;  => [{:id "5"}]
+  ;  =>
+  ;  [{:id "5"}]
   ;
   ; @return (maps in vector)
   ([collection max-count]
@@ -229,11 +240,13 @@
   ;
   ; @example
   ;  (db/sort-collection [{:name "avocado"} {:name "apple"} {:name "banana"}] :name)
-  ;  => [{:name "apple"} {:name "avocado"} {:name "banana"}]
+  ;  =>
+  ;  [{:name "apple"} {:name "avocado"} {:name "banana"}]
   ;
   ; @example
   ;  (db/sort-collection [{:foo/name "avocado"} {:foo/name "apple"} {:foo/name "banana"}] :name)
-  ;  => [{:foo/name "apple"} {:foo/name "avocado"} {:foo/name "banana"}]
+  ;  =>
+  ;  [{:foo/name "apple"} {:foo/name "avocado"} {:foo/name "banana"}]
   ;
   ; @return (maps in vector)
   ([collection sort-key]
@@ -317,7 +330,8 @@
   ;
   ; @example
   ;  (db/match-documents [{:foo "bar"} {...} {:foo "bar"}] {:foo "bar"})
-  ;  => [{:foo "bar"} {:foo "bar"}]
+  ;  =>
+  ;  [{:foo "bar"} {:foo "bar"}]
   ;
   ; @return (maps in vector)
   ([collection pattern]
@@ -349,7 +363,8 @@
   ;
   ; @example
   ;  (db/match-document [{:foo "bar"} {...} {:foo "bar"}] {:foo "bar"})
-  ;  => {:foo "bar"}
+  ;  =>
+  ;  {:foo "bar"}
   ;
   ; @return (map)
   ([collection pattern]
@@ -380,7 +395,8 @@
   ;
   ; @example
   ;  (db/get-documents-kv [{:foo "bar"} {...} {:foo "bar"}] :foo "bar")
-  ;  => [{:foo "bar"} {:foo "bar"}]
+  ;  =>
+  ;  [{:foo "bar"} {:foo "bar"}]
   ;
   ; @return (maps in vector)
   ([collection item-key item-value]
@@ -416,7 +432,8 @@
   ;
   ; @example
   ;  (db/get-document-kv [{...} {...} {:foo "bar"}] :foo "bar")
-  ;  => {:foo "bar"}
+  ;  =>
+  ;  {:foo "bar"}
   ;
   ; @return (map)
   ([collection item-key item-value]
@@ -469,7 +486,8 @@
   ; @example
   ;  (db/get-document-item [{:id "my-document" :label "My document"} {...} {...}]
   ;                        "my-document" :label)
-  ;  => "My document"
+  ;  =>
+  ;  "My document"
   ;
   ; @return (*)
   [collection document-id item-key]
@@ -508,15 +526,18 @@
   ;
   ; @example
   ;  (db/add-document [{:foo "bar"}] {:baz "boo"})
-  ;  => [{:foo "bar"} {:baz "boo"}]
+  ;  =>
+  ;  [{:foo "bar"} {:baz "boo"}]
   ;
   ; @example
   ;  (db/add-document [{:foo "bar"}] {:bam/baz "boo"})
-  ;  => [{:foo "bar"} {:baz "boo"}]
+  ;  =>
+  ;  [{:foo "bar"} {:baz "boo"}]
   ;
   ; @example
   ;  (db/add-document [{:bam/foo "bar"}] {:baz "boo"})
-  ;  => [{:bam/foo "bar"} {:bam/baz "boo"}]
+  ;  =>
+  ;  [{:bam/foo "bar"} {:bam/baz "boo"}]
   ;
   ; @return (maps in vector)
   [collection document]
@@ -535,7 +556,8 @@
   ;
   ; @example
   ;  (db/remove-document [{:id "1"} {:id "2"}] "2")
-  ;  => [{:id "1"}]
+  ;  =>
+  ;  [{:id "1"}]
   ;
   ; @return (maps in vector)
   [collection document-id]
@@ -551,7 +573,8 @@
   ;
   ; @example
   ;  (db/remove-documents [{:id "1"} {:id "2"} {:id "3"}] ["1" "3"])
-  ;  => [{:id "2"}]
+  ;  =>
+  ;  [{:id "2"}]
   ;
   ; @return (maps in vector)
   [collection document-ids]
@@ -626,9 +649,10 @@
   ;  (db/explode-collection [{:foo/id 1} {:foo/id 2}
   ;                          {:bar/id 1} {:bar/id 2}
   ;                          {:id     1} {:id     2}])
-  ;  => {:foo [{:foo/id 1} {:foo/id 2}]
-  ;      :bar [{:bar/id 1} {:bar/id 2}]
-  ;      nil  [{:id     1} {:id     2}]}
+  ;  =>
+  ;  {:foo [{:foo/id 1} {:foo/id 2}]
+  ;   :bar [{:bar/id 1} {:bar/id 2}]
+  ;   nil  [{:id     1} {:id     2}]}
   ;
   ; @return (map)
   [collection]

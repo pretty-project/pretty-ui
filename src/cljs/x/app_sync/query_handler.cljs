@@ -71,13 +71,13 @@
   ;   :query (string or vector)(opt)}
   ;
   ; @example
-  ;  (query-props->request-props {:query [:all-users]})
-  ;  =>
+  ;  (query-props->request-props {:query [:all-users]})
+  ;  =>
   ;  {:method :post :query "[:all-users]"}
   ;
   ; @example
-  ;  (query-props->request-props {:body {:query [:all-users] :my-body-param "My value"}})
-  ;  =>
+  ;  (query-props->request-props {:body {:query [:all-users] :my-body-param "My value"}})
+  ;  =>
   ;  {:method :post :body {:query "[:all-users]" :my-body-param "My value"}}
   ;
   ; @return (map)
@@ -113,6 +113,13 @@
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-queries
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (get-in db (db/path ::queries)))
 
 (defn- get-query-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -185,7 +192,7 @@
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)
-  ;    Only w/o {:body {...}}
+  ;    Only w/o {:body {...}}
   ;   :target-path (item-path vector)(opt)
   ;   :target-paths (map)(opt)
   ;   :uri (string)

@@ -20,7 +20,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn data-item->namespace
@@ -28,11 +28,13 @@
   ;
   ; @example
   ;  (db/data-item->namespace {:bar "baz"})
-  ;  => nil
+  ;  => 
+  ;  nil
   ;
   ; @example
   ;  (db/data-item->namespace {:foo/bar "baz"})
-  ;  => :foo
+  ;  =>
+  ;  :foo
   ;
   ; @return (keyword or nil)
   [data-item]
@@ -44,11 +46,13 @@
   ;
   ; @example
   ;  (db/data-item->namespaced? {:foo "bar"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/data-item->namespaced? {:foo/bar "baz"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [data-item]
@@ -61,11 +65,13 @@
   ;
   ; @example
   ;  (db/data-item<-id :my-data-item {:bar "baz"})
-  ;  => {:bar "baz" :id :my-data-item}
+  ;  =>
+  ;  {:bar "baz" :id :my-data-item}
   ;
   ; @example
   ;  (db/data-item<-id :my-data-item {:foo/bar "baz"})
-  ;  => {:foo/bar "baz" :foo/id :my-data-item}
+  ;  =>
+  ;  {:foo/bar "baz" :foo/id :my-data-item}
   ;
   ; @return (map)
   [data-item-id data-item]

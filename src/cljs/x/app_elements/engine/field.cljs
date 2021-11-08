@@ -471,6 +471,17 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :x.app-elements/init-field!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  (fn [{:keys [db]} [_ field-id x]]
+      (if-let [auto-focus? (r element/get-element-prop db field-id :auto-focus?)]
+              {:db       (r input/init-input!          db field-id)
+               :dispatch [:x.app-elements/->field-focused field-id]}
+              {:db       (r input/init-input!          db field-id)})))
+
+(a/reg-event-fx
   :x.app-elements/reg-field-keypress-events?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -516,10 +527,8 @@
   (fn [{:keys [db]} [_ field-id]]
       (let [on-empty    (r element/get-element-prop db field-id :on-empty)
             field-value (r get-field-value          db field-id)]
-           {:db       (r empty-field-value! db field-id)
+           {:db         (r empty-field-value! db field-id)
             :dispatch (a/metamorphic-event<-params on-empty field-value)})))
-            ;:dispatch-n (if-let [on-type-ended])})))
-            ; on-type-ended ...
 
 
 

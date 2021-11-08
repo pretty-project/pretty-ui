@@ -54,6 +54,29 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-requests-history
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (r db/get-partition-history db ::requests))
+
+(defn get-request-history
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ;
+  ; @return (map)
+  [db [_ request-id]]
+  (r db/get-data-history db ::requests request-id))
+
+(defn get-requests
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (get-in db (db/path ::requests)))
+
 (defn get-request-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -322,11 +345,13 @@
   ; @param (map) request-props
   ;
   ; @return (map)
-  [db [_ request-id request-props]]
+  [db [event-id request-id request-props]]
   (-> db (assoc-in (db/path ::requests request-id) request-props)
          ; DEBUG
          (assoc-in (db/path ::requests request-id :debug)
-                   [:x.app-sync/get-request-state request-id])))
+                   [:x.app-sync/get-request-state request-id])
+         ; DEBUG
+         (db/update-data-history! [event-id ::requests request-id])))
 
 (defn clear-request!
   ; @param (keyword) request-id
@@ -438,7 +463,7 @@
             request-props (a/event-vector->first-props event-vector)
             request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
-               {:db         (r store-request-props!   db request-id request-props)
+               {:db         (r store-request-props! db request-id request-props)
                 :dispatch-n [[:x.app-sync/->request-sent request-id]
                              (let [request-props (merge request-props REQUEST-HANDLERS)]
                                   [:x.app-utils.http/send-request! request-id request-props])]}))))

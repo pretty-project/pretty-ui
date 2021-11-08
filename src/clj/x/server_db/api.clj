@@ -14,17 +14,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-db.api
-    (:require [x.server-db.backup-handler     :as backup-handler]
-              [x.server-db.collection-handler :as collection-handler]
-              [x.server-db.data-item-handler  :as data-item-handler]
-              [x.server-db.data-order-handler :as data-order-handler]
-              [x.server-db.data-range-handler :as data-range-handler]
-              [x.server-db.document-handler   :as document-handler]
-              [x.server-db.engine             :as engine]
-              [x.server-db.id-handler         :as id-handler]
-              [x.server-db.partition-handler  :as partition-handler]
-              [x.server-db.partition-state    :as partition-state]
-              [x.server-db.transfer-handler   :as transfer-handler]))
+    (:require [x.server-db.backup-handler       :as backup-handler]
+              [x.server-db.collection-handler   :as collection-handler]
+              [x.server-db.data-history-handler :as data-history-handler]
+              [x.server-db.data-item-handler    :as data-item-handler]
+              [x.server-db.data-order-handler   :as data-order-handler]
+              [x.server-db.data-range-handler   :as data-range-handler]
+              [x.server-db.document-handler     :as document-handler]
+              [x.server-db.engine               :as engine]
+              [x.server-db.id-handler           :as id-handler]
+              [x.server-db.partition-handler    :as partition-handler]
+              [x.server-db.partition-state      :as partition-state]
+              [x.server-db.transfer-handler     :as transfer-handler]))
 
 
 
@@ -69,6 +70,14 @@
 (def document-exists?                       collection-handler/document-exists?)
 (def explode-collection                     collection-handler/explode-collection)
 (def store-collection!                      collection-handler/store-collection!)
+
+; x.server-db.data-history-handler
+(def get-partition-history      data-history-handler/get-partition-history)
+(def get-data-history           data-history-handler/get-data-history)
+(def get-last-data-history-item data-history-handler/get-last-data-history-item)
+(def get-data-history-result    data-history-handler/get-data-history-result)
+(def clear-data-history!        data-history-handler/clear-data-history!)
+(def update-data-history!       data-history-handler/update-data-history!)
 
 ; x.server-db.data-item-handler
 (def data-item->namespace   data-item-handler/data-item->namespace)
@@ -184,6 +193,9 @@
 (def meta-item-path                 partition-handler/meta-item-path)
 (def meta-item-cofx-path            partition-handler/meta-item-cofx-path)
 (def data-index-path                partition-handler/data-index-path)
+(def data-index-cofx-path           partition-handler/data-index-cofx-path)
+(def data-history-path              partition-handler/data-history-path)
+(def data-history-cofx-path         partition-handler/data-history-cofx-path)
 (def partition->data-items          partition-handler/partition->data-items)
 (def partition->data-item           partition-handler/partition->data-item)
 (def partition->data-order          partition-handler/partition->data-order)

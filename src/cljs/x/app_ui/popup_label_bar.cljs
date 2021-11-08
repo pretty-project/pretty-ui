@@ -21,9 +21,7 @@
 ;; -- Presets -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- popup-icon-button-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-icon-button-placeholder
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -32,9 +30,7 @@
   [elements/button {:layout  :icon-button
                     :variant :placeholder}])
 
-(defn- popup-accept-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-accept-button
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -44,9 +40,7 @@
                     :on-click [:x.app-ui/close-popup! popup-id]
                     :preset   :accept-button}])
 
-(defn- popup-cancel-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-cancel-button
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -56,9 +50,7 @@
                     :on-click [:x.app-ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
-(defn- popup-up-icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-up-icon-button
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -68,9 +60,7 @@
                     :preset   :back-icon-button}])
                    ;:tooltip  :back!
 
-(defn- popup-back-icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-back-icon-button
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -80,9 +70,7 @@
                     :preset   :back-icon-button}])
                    ;:tooltip  :back!
 
-(defn- popup-close-icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-close-icon-button
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -93,9 +81,7 @@
                     :preset   :close-icon-button}])
                    ;:tooltip  :close!
 
-(defn- popup-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn popup-label
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;  {:label (metamorphic-content)(opt)}

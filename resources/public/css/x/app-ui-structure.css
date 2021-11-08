@@ -163,28 +163,14 @@
 
 
 /***** App background *****/
-/*** App background wrapper ***/
 
-#x-app-background {}
-
-/*** App background wrapper ***/
-
-/*** App background element ***/
-
-.x-app-background--element {}
-
-.x-app-background--element[data-layout="fixed"] {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
+#x-app-background {
   height: 100vh;
-  justify-content: center;
   left: 0;
   position: fixed;
   top: 0;
   width: 100% }
 
-/*** App background element ***/
 /***** App background *****/
 
 
@@ -230,7 +216,45 @@
   justify-content: center;
   height: 48px;
   min-height: 48px;
-  width: 100% }
+  width: 100%;
+
+  -height: 48px;
+  -color: white;
+  -background-color: var( --soft-blue-x-light );
+  -background-color: #cbcecd;
+  -border-radius: var( --border-radius-m );
+  -position: fixed;
+  -border: none;
+  -left: calc(50vw - 210px);
+  -bottom: 24px;
+  -width: 420px
+ }
+
+.x-app-bubbles--element--content {
+  -display: none;
+}
+
+.x-app-bubbles--element--buttons {
+  -display: none;
+}
+
+.x-app-bubbles--element--buttons::after {
+  font-style: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+
+  -content: 'arrow_forward_ios';
+  position: absolute;
+  right: 68px;
+  z-index: 9999;
+  top: 14px;
+  font-size: 16px;
+}
 
 .x-app-bubbles--element::before {
   background-color: var( --border-color-primary );
@@ -247,7 +271,27 @@
   height: 1px;
   left: 0;
   position: absolute;
-  width: 100% }
+  width: 100%;
+
+  -border-radius: 10px;
+  -background-color: var(--soft-blue-xx-dark );
+  -background-color: var( --primary-xx-light );
+  -background-color: var( --background-color-highlight );
+  -background: white;
+  -content: 'Másolat szerkesztése';
+  -color: var( --color-primary );
+  -color: white;
+  -position: absolute;
+  -top: 0px;
+  -right: 0px;
+  -width: calc(100% - 60px );
+  -height: 48px;
+  -display: flex;
+  -justify-content: center;
+  -align-items: center;
+  -font-weight: 500;
+  -font-size: var(--font-size-s);
+ }
 
 .x-app-bubbles--element--body {
   display: flex;
@@ -257,9 +301,26 @@
   padding-left: var( --bar-edge );
   width: 100% }
 
+#x-app-bubbles [data-layout="row"] {-display: none;}
+
+#x-app-bubbles [data-layout="icon-button"] {
+  -border-radius: 10px;
+  -background-color: white;
+  -position: absolute;
+  -top: 2px;
+  -left: -8px;
+  -border: 2px solid var( --soft-blue-x-light );
+  -height: 46px;
+}
+
 .x-app-bubbles--element--buttons {
+
   display: flex;
-  flex-direction: row }
+  flex-direction: row;
+
+  /* XXX#3044 */
+  flex-grow: 1;
+  justify-content: space-between }
 
 .x-app-bubbles--element--content {
   display: flex;
@@ -327,7 +388,18 @@
   padding: 0 var( --bar-edge );
   position: fixed;
   top: 0;
-  width: 100% }
+  width: 100%;
+
+  /* Floating header, while scrolled-to-top? = true */
+  -border-radius: var( --border-radius-m );
+  -top: 12px;
+
+  left: var( --app-edge );
+  width: var( --app-width );
+
+  /* Content-sized header */
+  -left: calc((100% - var( --content-width-l )) / 2);
+  -width: var( --content-width-l ) }
 
 #x-app-header--title {
   align-items: center;
@@ -361,7 +433,10 @@ body[data-viewport-profile="xxl"] #x-app-header--title {
 body[data-viewport-profile="xxs"] #x-app-header,
 body[data-viewport-profile="xs"]  #x-app-header,
 body[data-viewport-profile="s"]   #x-app-header {
-  border-radius: 0 }
+  border-radius: 0;
+  left: 0;
+  top: 0;
+  width: 100% }
 
 /*** Header ***/
 /***** App header *****/
@@ -759,7 +834,8 @@ body[data-viewport-profile="s"]   #x-app-header {
   max-width: 100% }
 
 #x-app-ui-structure[data-interface="application-ui"] .x-app-surface--element--structure {
-  padding-top: 48px }
+  padding-top: 48px;
+  -padding-top: 60px }
 
 /*** Surface structure ***/
 

@@ -76,13 +76,16 @@
 ;  függvény.
 ;
 ;  (db/path ::primary :my-data)
-;  => [:my-partition/primary :data-items :my-data]
+;  =>
+;  [:my-partition/primary :data-items :my-data]
 ;
 ;  (db/path ::primary :my-data :my-prop)
-;  => [:my-partition/primary :data-items :my-data :my-prop]
+;  =>
+;  [:my-partition/primary :data-items :my-data :my-prop]
 ;
 ;  (db/path ::primary :my-data :my-prop :my-subprop)
-;  => [:my-partition/primary :data-items :my-data :my-prop :my-subprop]
+;  =>
+;  [:my-partition/primary :data-items :my-data :my-prop :my-subprop]
 ;
 ;  ...
 ;
@@ -109,7 +112,8 @@
 ;  megadhatók.
 ;
 ;  (db/meta-item-path ::primary :my-meta)
-;  => [:my-partition/primary :meta-items :my-meta]
+;  =>
+;  [:my-partition/primary :meta-items :my-meta]
 ;
 ;  ...
 
@@ -128,29 +132,31 @@
 
 (defn data-item-path
   ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) n
+  ; @param (list of keywords) xyz
   ;
   ; @example
   ;  (db/data-item-path ::my-partition :a :b :c)
-  ;  => [::my-partition :data-items :a :b :c]
+  ;  =>
+  ;  [::my-partition :data-items :a :b :c]
   ;
   ; @return (data-item-path vector)
-  [partition-id & n]
-  (vector/concat-items [partition-id :data-items] n))
+  [partition-id & xyz]
+  (vector/concat-items [partition-id :data-items] xyz))
 
 (def path data-item-path)
 
 (defn data-item-cofx-path
   ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) n
+  ; @param (list of keywords) xyz
   ;
   ; @example
   ;  (db/data-item-path ::my-partition :a :b :c)
-  ;  => [:db ::my-partition :data-items :a :b :c]
+  ;  =>
+  ;  [:db ::my-partition :data-items :a :b :c]
   ;
   ; @return (data-item-path vector)
-  [partition-id & n]
-  (vector/concat-items [:db partition-id :data-items] n))
+  [partition-id & xyz]
+  (vector/concat-items [:db partition-id :data-items] xyz))
 
 (def cofx-path data-item-cofx-path)
 
@@ -160,6 +166,7 @@
   ;
   ; @example
   ;  (db/meta-item-path ::my-partition :a :b :c)
+  ;  =>
   ;  [::my-partition :meta-items :a :b :c]
   ;
   ; @return (meta-item-path vector)
@@ -168,15 +175,16 @@
 
 (defn meta-item-cofx-path
   ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) n
+  ; @param (list of keywords) xyz
   ;
   ; @example
   ;  (db/meta-item-path ::my-partition :a :b :c)
+  ;  =>
   ;  [:db ::my-partition :meta-items :a :b :c]
   ;
   ; @return (meta-item-path vector)
-  [partition-id & n]
-  (vector/concat-items [:db partition-id :meta-items] n))
+  [partition-id & xyz]
+  (vector/concat-items [:db partition-id :meta-items] xyz))
 
 (defn data-index-path
   ; @param (namespaced keyword) partition-id
@@ -186,10 +194,39 @@
   [partition-id _])
   ; TODO ...
 
+(defn data-index-cofx-path
+  ; @param (namespaced keyword) partition-id
+  ; @param (?) _
+  ;
+  ; @return (data-index-path vector)
+  [partition-id _])
+  ; TODO ...
 
+(defn data-history-path
+  ; @param (namespaced keyword) partition-id
+  ; @param (list of keywords) xyz
+  ;
+  ; @example
+  ;  (db/data-history-path ::my-partition :a :b :c)
+  ;  =>
+  ;  [::my-partition :data-history :a :b :c]
+  ;
+  ; @return (meta-item-path vector)
+  [partition-id & xyz]
+  (vector/concat-items [partition-id :data-history] xyz))
 
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+(defn data-history-cofx-path
+  ; @param (namespaced keyword) partition-id
+  ; @param (list of keywords) xyz
+  ;
+  ; @example
+  ;  (db/data-history-cofx-path ::my-partition :a :b :c)
+  ;  =>
+  ;  [:db ::my-partition :data-history :a :b :c]
+  ;
+  ; @return (meta-item-path vector)
+  [partition-id & xyz]
+  (vector/concat-items [:db partition-id :data-history] xyz))
 
 (defn partition->data-items
   ; @param (map) partition
@@ -424,11 +461,13 @@
   ; @example
   ;  (def db {::my-partition :data-items {:a "Foo" :b "Bar"}})
   ;  (r db/get-filtered-data-items #(= %2 "Foo"))
-  ;  => {:a "Foo"}
+  ;  =>
+  ;  {:a "Foo"}
   ;
   ;  (def db {::my-partition :data-items {:a "Foo" :b "Bar"}})
   ;  (r db/get-filtered-data-items #(= %1 :b))
-  ;  => {:b "Bar"}
+  ;  =>
+  ;  {:b "Bar"}
   ;
   ; @return (map)
   [db [_ partition-id filter-f]]
@@ -536,8 +575,9 @@
   ;  (def db {:my-partition/primary {:data-items {...}
   ;                                  :data-order [:a :b :c]}})
   ;  (r db/update-data-order! db :my-partition/primary [:d :n :c])
-  ;  => {:my-partition/primary {:data-items {...}
-  ;                             :data-order [:a :b :d :n :c]}})
+  ;  =>
+  ;  {:my-partition/primary {:data-items {...}
+  ;                          :data-order [:a :b :d :n :c]}})
   ;
   ; @return (map)
   [db [_ partition-id data-order]]

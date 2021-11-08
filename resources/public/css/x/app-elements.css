@@ -110,6 +110,11 @@ button.x-card:focus,
 .x-element[data-disabled="true"] {
   opacity: .5 }
 
+.x-card.x-element[data-disabled="true"]       { opacity: 1 }
+.x-card[data-disabled="true"] .x-card--body   { opacity: .5 }
+.x-card[data-disabled="true"] .x-card--header { opacity: .5 }
+
+
 /***** Disabled state *****/
 
 

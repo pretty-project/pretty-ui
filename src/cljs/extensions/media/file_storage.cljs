@@ -1,12 +1,13 @@
 
 (ns extensions.media.file-storage
-    (:require [extensions.pattern    :as pattern]
+    (:require
               [mid-fruits.candy      :refer [param return]]
               [mid-fruits.io         :as io]
               [mid-fruits.map        :as map]
               [mid-fruits.time       :as time]
               [mid-fruits.vector     :as vector]
-              [plugins.item-lister.core :refer [item-lister]]
+              [plugins.item-lister.api  :as item-lister :refer [item-lister]]
+              [plugins.item-browser.api :as item-browser]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
@@ -270,9 +271,9 @@
 
 (defn- get-header-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (merge (r pattern/get-item-list-header-view-props    db "media")
-         (r pattern/get-item-browser-header-view-props db "media")))
+  [db _])
+;  (merge (r pattern/get-item-list-header-view-props    db "media")))
+;         (r pattern/get-item-browser-header-view-props db "media")))
 
 (a/reg-sub ::get-header-view-props get-header-view-props)
 
@@ -731,7 +732,7 @@
   [component-id view-props file-id {:file/keys [alias filesize modified-at] :as file-props}]
   (let [element-id           (engine/item-id->element-id file-id :file-storage)
         stickers             (file-storage-file-stickers component-id view-props file-id file-props)
-        timestamp            (time/timestamp->date-and-time modified-at :yyyymmdd :hhmm)
+        timestamp            (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)
         on-right-click-event [:x.app-elements/render-context-surface! element-id]
         thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
        [elements/file element-id
@@ -866,30 +867,30 @@
 
 (defn- item-browser-mobile-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/polarity ::desktop-header
-                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]
-                                          [pattern/item-browser-home-button     "media" view-props]
-                                          [pattern/item-browser-up-button       "media" view-props]
-                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]
-                      :end-content   [:<> [pattern/item-list-search-mode-button "media"]]}])
+  [surface-id view-props])
+;  [elements/polarity ::desktop-header])
+;                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]]}])
+;                                          [pattern/item-browser-home-button     "media" view-props]]}])
+;                                          [pattern/item-browser-up-button       "media" view-props]]}])
+;                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]}])
+;                      :end-content   [:<> [pattern/item-list-search-mode-button "media"]]}])
 
 (defn- item-browser-desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/polarity ::desktop-header
-                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]
-                                          [pattern/item-browser-home-button     "media" view-props]
-                                          [pattern/item-browser-up-button       "media" view-props]
-                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]
-                      :end-content   [:<> [pattern/item-list-search-items-field "media"]]}])
+  [surface-id view-props])
+;  [elements/polarity ::desktop-header])
+;                     {:start-content [:<> [pattern/item-list-new-item-select    "media" {:options [:create-directory! :upload-files!]}]]}])
+;                                          [pattern/item-browser-home-button     "media" view-props]]}])
+;                                          [pattern/item-browser-up-button       "media" view-props]]}])
+;                                          [pattern/item-list-sort-items-button  "media" {:options [:by-name :by-date]}]]}])
+;                      :end-content   [:<> [pattern/item-list-search-items-field "media"]]}])
 
 (defn- item-browser-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
   (cond ; search-mode & small viewport
-        (and viewport-small? search-mode?)
-        [pattern/item-list-search-header "media"]
+;        (and viewport-small? search-mode?)
+;        [pattern/item-list-search-header "media"]
         ; small viewport
         (boolean viewport-small?)
         [item-browser-mobile-header  surface-id view-props]
@@ -967,4 +968,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:extensions/add-item-browser-routes! "media" "directory" {:default-item-id "home"}]})
+  {:on-app-init [:item-browser/add-routes! "media" "directory"]}) ;{:default-item-id "home"}]})

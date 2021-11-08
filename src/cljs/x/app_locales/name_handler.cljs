@@ -50,7 +50,7 @@
 
 (defn get-name-order
   ; @return (keyword)
-  ;  :normal, :reversed
+  ;  :normal, :reversed
   [db _]
   (let [selected-language (r language-handler/get-selected-language db)]
        (get NAME-ORDERS selected-language :normal)))
@@ -64,7 +64,7 @@
   ; @param (component, hiccup or string) first-name
   ; @param (component, hiccup or string) last-name
   ; @param (keyword) name-order
-  ;  :normal, :reversed
+  ;  :normal, :reversed
   ;
   ; @return (component)
   [first-name last-name name-order]

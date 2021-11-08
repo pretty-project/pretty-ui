@@ -33,7 +33,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn document-path->collection-name
@@ -44,7 +44,8 @@
   ;
   ; @example
   ;  (db/document-path->collection-name ["my-collection" "my-document" :my-item])
-  ;  => "my-collection"
+  ;  => 
+  ;  "my-collection"
   ;
   ; @return (string)
   [document-path]
@@ -58,7 +59,8 @@
   ;
   ; @example
   ;  (db/document-path->document-id ["my-collection" "my-document" :my-item])
-  ;  => "my-document"
+  ;  =>
+  ;  "my-document"
   ;
   ; @return (string)
   [document-path]
@@ -69,11 +71,13 @@
   ;
   ; @example
   ;  (db/item-key->non-namespaced-item-key :bar)
-  ;  => :bar
+  ;  =>
+  ;  :bar
   ;
   ; @example
   ;  (db/item-key->non-namespaced-item-key :foo/bar)
-  ;  => :bar
+  ;  =>
+  ;  :bar
   ;
   ; @return (keyword)
   [item-key]
@@ -85,11 +89,13 @@
   ;
   ; @example
   ;  (db/item-key->namespaced-item-key :foo :bar)
-  ;  => :bar/foo
+  ;  =>
+  ;  :bar/foo
   ;
   ; @example
   ;  (db/item-key->namespaced-item-key :bar/foo :bar)
-  ;  => :bar/foo
+  ;  =>
+  ;  :bar/foo
   ;
   ; @return (keyword)
   [item-key namespace]
@@ -100,18 +106,21 @@
   ;
   ; @example
   ;  (db/document->namespace {:bar "baz"})
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (db/document->namespace {:foo/bar "baz"})
-  ;  => :foo
+  ;  =>
+  ;  :foo
   ;
   ; @example
   ;  (db/document->namespace {:foo     "bar"
   ;                           :baz     "boo"
   ;                           :bam/box "bok"
   ;                           :kop/lok "map"})
-  ;  => :bam
+  ;  =>
+  ;  :bam
   ;
   ; @return (keyword or nil)
   [document]
@@ -128,11 +137,13 @@
   ;
   ; @example
   ;  (db/document->namespace? {:bar "baz"} :foo)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/document->namespace {:foo/bar "baz"} :foo)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [document namespace]
@@ -144,11 +155,13 @@
   ;
   ; @example
   ;  (db/document->document-namespaced? {:foo "bar"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/document->document-namespaced? {:foo/bar "baz"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [document]
@@ -160,11 +173,13 @@
   ;
   ; @example
   ;  (db/document->document-non-namespaced? {:foo "bar"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document->document-non-namespaced? {:foo/bar "baz"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [document]
@@ -177,7 +192,8 @@
   ;
   ; @example
   ;  (db/document->namespaced-document {:foo "bar"} :baz)
-  ;  => {:baz/foo "bar"}
+  ;  =>
+  ;  {:baz/foo "bar"}
   ;
   ; @return (map)
   [document namespace]
@@ -192,7 +208,8 @@
   ;
   ; @example
   ;  (db/document->non-namespaced-document {:baz/foo "bar"})
-  ;  => {:foo "bar"}
+  ;  =>
+  ;  {:foo "bar"}
   ;
   ; @return (map)
   [document]
@@ -207,15 +224,18 @@
   ;
   ; @example
   ;  (db/document-contains-key? {:bar "baz"} :bar)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document-contains-key? {:foo/bar "baz"} :bar)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document-contains-key {:bar "baz"} :foo)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (map)
   [document key]
@@ -230,11 +250,13 @@
   ;
   ; @example
   ;  (db/assoc-document-value {:bar "baz"} :boo "bam")
-  ;  => {:bar "baz" :boo "bam"}
+  ;  =>
+  ;  {:bar "baz" :boo "bam"}
   ;
   ; @example
   ;  (db/assoc-document-value {:foo/bar "baz"} :boo "bam")
-  ;  => {:foo/bar "baz" :foo/boo "bam"}
+  ;  =>
+  ;  {:foo/bar "baz" :foo/boo "bam"}
   ;
   ; @return (map)
   [document k v]
@@ -249,11 +271,13 @@
   ;
   ; @example
   ;  (db/assoc-document-value {:bar "baz"} :bar)
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @example
   ;  (db/assoc-document-value {:foo/bar "baz"} :bar)
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   [document k]
@@ -267,11 +291,13 @@
   ;
   ; @example
   ;  (db/get-document-value {:bar "baz"} :bar)
-  ;  => "baz"
+  ;  =>
+  ;  "baz"
   ;
   ; @example
   ;  (db/get-document-value {:foo/bar "baz"} :bar)
-  ;  => "baz"
+  ;  =>
+  ;  "baz"
   ;
   ; @return (map)
   [document k]
@@ -286,15 +312,18 @@
   ;
   ; @example
   ;  (db/document->document-id {:bar "baz"})
-  ;  => "i5o28977-d2310-k5432-lk98u784k819"
+  ;  =>
+  ;  "i5o28977-d2310-k5432-lk98u784k819"
   ;
   ; @example
   ;  (db/document->document-id {:bar "baz" :id "my-document"})
-  ;  => "my-document"
+  ;  =>
+  ;  "my-document"
   ;
   ; @example
   ;  (db/document->document-id {:foo/bar "baz" :foo/id "my-document"})
-  ;  => "my-document"
+  ;  =>
+  ;  "my-document"
   ;
   ; @return (string)
   [document]
@@ -307,7 +336,8 @@
   ;
   ; @example
   ;  (db/document->unidentified-document {:foo/bar "baz" :foo/id "my-document"})
-  ;  => {:foo/bar "baz"}
+  ;  =>
+  ;  {:foo/bar "baz"}
   ;
   ; @return (map)
   [document]
@@ -321,7 +351,8 @@
   ;
   ; @example
   ;  (db/document->unidentified-document {:foo/bar "baz" :foo/id "my-document" :foo/permissions {...}})
-  ;  => {:bar "baz"}
+  ;  =>
+  ;  {:bar "baz"}
   ;
   ; @return (map)
   [document]
@@ -338,19 +369,23 @@
   ;
   ; @example
   ;  (db/document->identified-document {:bar "baz" :id "my-document"})
-  ;  => {:bar "baz" :id "my-document"}
+  ;  =>
+  ;  {:bar "baz" :id "my-document"}
   ;
   ; @example
   ;  (db/document->identified-document {:foo/bar "baz" :foo/id "my-document"})
-  ;  => {:foo/bar "baz" :foo/id "my-document"}
+  ;  =>
+  ;  {:foo/bar "baz" :foo/id "my-document"}
   ;
   ; @example
   ;  (db/document->identified-document {:bar "baz"})
-  ;  => {:bar "baz" :id "0ce14671-e916-43ab-b057-0939329d4c1b"}
+  ;  =>
+  ;  {:bar "baz" :id "0ce14671-e916-43ab-b057-0939329d4c1b"}
   ;
   ; @example
   ;  (db/document->identified-document {:foo/bar "baz"})
-  ;  => {:foo/bar "baz" :foo/id "0ce14671-e916-43ab-b057-0939329d4c1b"}
+  ;  =>
+  ;  {:foo/bar "baz" :foo/id "0ce14671-e916-43ab-b057-0939329d4c1b"}
   ;
   ; @return (map)
   [document]
@@ -369,15 +404,18 @@
   ;
   ; @example
   ;  (db/document->identified-document? {:bar "baz" :id "my-document"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document->identified-document? {:foo/bar "baz" :foo/id "my-document"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document->identified-document {:bar "baz"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (map)
   [document]
@@ -388,15 +426,18 @@
   ;
   ; @example
   ;  (db/document->non-identified-document? {:bar "baz" :id "my-document"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/document->non-identified-document? {:foo/bar "baz" :foo/id "my-document"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (db/document->non-identified-document {:bar "baz"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (map)
   [document]
@@ -409,7 +450,8 @@
   ;
   ; @example
   ;  (db/document->ordered-document {:id "1"} 7)
-  ;  => {:id "1" :order "7"}
+  ;  =>
+  ;  {:id "1" :order "7"}
   ;
   ; @return (map)
   ;  {:order (string)}
@@ -421,15 +463,18 @@
   ;
   ; @example
   ;  (db/document->ordered-document? {:bar "baz" :order "my-document"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document->ordered-document? {:foo/bar "baz" :foo/order "my-document"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (db/document->ordered-document {:bar "baz"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (map)
   [document]
@@ -448,11 +493,13 @@
   ;
   ; @usage
   ;  (db/document->item-value {:foo/bar "baz"} :bar)
-  ;  => "baz"
+  ;  =>
+  ;  "baz"
   ;
   ; @usage
   ;  (db/document->item-value {:foo/bar "baz"} :foo/bar)
-  ;  => "baz"
+  ;  =>
+  ;  "baz"
   ;
   ; @return (*)
   [document item-key]
@@ -466,15 +513,18 @@
   ;
   ; @example
   ;  (db/document->item-key {:id 1} :id)
-  ;  => :id
+  ;  =>
+  ;  :id
   ;
   ; @example
   ;  (db/document->item-key {:id 1} :foo/id)
-  ;  => :id
+  ;  =>
+  ;  :id
   ;
   ; @example
   ;  (db/document->item-key {:foo/id 1} :id)
-  ;  => :foo/id
+  ;  =>
+  ;  :foo/id
   ;
   ; @return (keyword)
   ;  A dokumentum névterével látja el a megadott item-key paraméter értékét

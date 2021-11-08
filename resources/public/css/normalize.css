@@ -88,6 +88,9 @@ button:-moz-focusring,
  * textarea { overflow: auto } */
 
 
+/* */
+pre {
+  margin: 0 }
 
 
 html {

@@ -6,7 +6,8 @@
               [mid-fruits.candy                      :refer [param return]]
               [mid-fruits.reader                     :as reader]
               [pathom.register                       :as register]
-              [server-fruits.http                    :as http]))
+              [server-fruits.http                    :as http]
+              [x.server-core.api                     :as a]))
 
 
 
@@ -24,11 +25,11 @@
   ; @return (*)
   [request]
   ; BUG#4509
-  ; A transit-params térkép helyett params térképből kiolvasott query hibás, abban az esetben
-  ; ha a query értéke egy darab kulcsszó egy vektorban.
+  ; Abban az esetben ha a query értéke egy darab kulcsszó egy vektorban, akkor a transit-params
+  ; térkép helyett params térképből kiolvasott query hibás lenne!
   ; Pl.: [:my-resolver]
   ;      =>
-  ;      {:transit-params {:query [:my-resolver]}
+  ;      {:transit-params {:query [:my-resolver]}
   ;       :params         {:query :my-resolver}}
   (let [query (http/request->transit-param request :query)]
        ; Fájlfeltöltéskor a request törzse egy FormData objektum, amiből string típusként
@@ -61,4 +62,5 @@
   [request]
   (let [query       (request->query request)
         environment (assoc @register/ENVIRONMENT :request request)]
+       (println (str "query: " query))
        (process-query! environment query)))

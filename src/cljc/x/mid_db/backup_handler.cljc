@@ -56,7 +56,8 @@
   ;
   ; @example
   ;  (db/item-path->backup-item-path [:my :item :path])
-  ;  => [::backups :data-items :my :item :path]
+  ;  => 
+  ;  [::backups :data-items :my :item :path]
   ;
   ; @return (data-item-path vector)
   [item-path]
