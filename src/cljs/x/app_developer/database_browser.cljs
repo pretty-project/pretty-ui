@@ -188,12 +188,12 @@
   [{:keys [disabled? icon label on-click]}]
   (if (boolean disabled?)
       [:div {:style {:padding "0 12px" :min-width "48px"}}
-        [:i.x-icon {:style {:opacity ".5" :width "100%"}}
+        [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label true]]
       [:div.x-toggle {:on-click #(a/dispatch on-click)
                       :style {:padding "0 12px" :min-width "48px"}}
-        [:i.x-icon {:style {:width "100%"}}
+        [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label]]))
 

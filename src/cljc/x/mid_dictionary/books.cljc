@@ -166,6 +166,9 @@
       :filter!
       {:en "Filter"
        :hu "Szűrés"}
+      :filters
+      {:en "Filters"
+       :hu "Szűrők"}
       :filter-conditions
       {:en "Filter conditions"
        :hu "Szűrési feltételek"}

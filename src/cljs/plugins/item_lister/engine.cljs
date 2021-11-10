@@ -65,7 +65,9 @@
   [db [_ extension-name]]
   (let [all-item-count        (r get-all-item-count        db extension-name)
         downloaded-item-count (r get-downloaded-item-count db extension-name)]
-       (= all-item-count downloaded-item-count)))
+       ; = All item count reached
+       ;>= Exception handling (necessary to handle exceptions)
+       (>= downloaded-item-count all-item-count)))
 
 (defn get-search-term
   ; @param (string) extension-name
@@ -83,6 +85,15 @@
   [db [_ extension-name]]
   (let [extension-id (keyword extension-name)]
        (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY)))
+
+(defn- download-more-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) extension-name
+  ;
+  ; @return (boolean)
+  [db [_ extension-name]]
+  (not (r all-items-downloaded? db extension-name)))
 
 (defn get-header-view-props
   ; @param (string) extension-name
@@ -183,7 +194,12 @@
       (let [extension-id   (keyword extension-name)
             resolver-id    (keyword extension-name (str "get-" item-name "-items"))
             documents      (get-in server-response [resolver-id :documents])
-            document-count (get-in server-response [resolver-id :document-count])]
+            document-count (get-in server-response [resolver-id :document-count])
+            ; Ha a szerver-válasz nem tartalmazza a document-count értékét, akkor szükséges
+            ; helyette 0 értéket eltárolni a Re-Frame adatbázisban, ellenkező esetben az újratöltődő
+            ; infinit-loader komponens által indított [:item-lister/request-items! ...] esemény
+            ; újra és újra megpróbálná letölteni az elemeket.
+            document-count (or document-count 0)]
            {:db       (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
                              ; Szükséges frissíteni a keresési feltételeknek megfelelő
                              ; dokumentumok számát, mert változhat az értéke
@@ -191,8 +207,8 @@
 
             ; Az elemek letöltődése után, ha maradt még a szerveren letöltendő elem, akkor újratölti
             ; az infinite-loader komponenst, hogy megállapítsa, hogy az a viewport területén van-e még.
-                         ;(not (r all-items-downloaded? db "products")
-            :dispatch-if [(not (r all-items-downloaded? db extension-name))
+                         ;(r download-more-items? db "products")
+            :dispatch-if [(r download-more-items? db extension-id)
                          ;[:x.app-components/reload-infinite-loader! :products]
                           [:x.app-components/reload-infinite-loader! extension-id]]})))
 
@@ -232,7 +248,8 @@
   (fn [{:keys [db]} [_ extension-name item-name]]
       (let [render-event (keyword extension-name (str "render-" item-name "-lister!"))
             extension-id (keyword extension-name)]
-           {:db         (dissoc-in db [extension-id :lister-data])
+           {:db         (-> db (dissoc-in [extension-id :lister-data])
+                               (dissoc-in [extension-id :lister-meta]))
             :dispatch-n [[:x.app-ui/listen-to-process! :item-lister/synchronize!]
                         ;[:x.app-ui/set-header-title!  :products]
                          [:x.app-ui/set-header-title!  extension-id]

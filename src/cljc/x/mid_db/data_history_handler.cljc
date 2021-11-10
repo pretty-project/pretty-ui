@@ -110,6 +110,8 @@
   (let [data-history       (r get-data-history db partition-id data-item-id)
         data-history-count (count data-history)
         max-history-count  (or max-history-count DEFAULT-MAX-HISTORY-COUNT)]
+       ; = History count reached
+       ;>= Exception handling (necessary to handle exceptions)
        (>= data-history-count max-history-count)))
 
 

@@ -137,14 +137,16 @@
   ;
   ; @return (map)
   ;  {:icon (keyword)
+  ;   :icon-family (keyword)
   ;   :on-click (metamorphic-event)
   ;   :size (keyword)
   ;   :value-path (item-path vector)}
   [file-id {:keys [selectable?] :as file-props}]
-  (merge {:icon       DEFAULT-PREVIEW-ICON
-          :on-click   (file-props->on-click-event file-id file-props)
-          :size       :m
-          :value-path (engine/default-value-path file-id)}
+  (merge {:icon        DEFAULT-PREVIEW-ICON
+          :icon-family :material-icons-filled
+          :on-click    (file-props->on-click-event file-id file-props)
+          :size        :m
+          :value-path  (engine/default-value-path file-id)}
          (param file-props)))
 
 
@@ -306,8 +308,12 @@
   ;     :subscriber (subscription vector)(opt)}
   ;   :filesize (B)(opt)
   ;   :height (px)(opt)
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
   ;    Default: DEFAULT-PREVIEW-ICON
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :label (metamorphic-content)
   ;   :multiple-selection? (boolean)(opt)
   ;    Default: false
@@ -326,7 +332,10 @@
   ;   :stickers (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
-  ;      :icon (keyword) Material icon class}]
+  ;      :icon (keyword)
+  ;      :icon-family (keyword)(opt)
+  ;       :material-icons-filled, :material-icons-outlined
+  ;       Default: :material-icons-filled
   ;      :on-click (metamorphic-event)(opt)
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :style (map)(opt)

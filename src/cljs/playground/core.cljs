@@ -80,7 +80,7 @@
 
 (defn chips
   []
-  [:<> [elements/chip {:label "My chip"}]
+  [:<> [elements/chip {:label "My chip" :icon :apps}]
        [elements/chip {:label "Your chip" :variant :outlined}]
        [elements/chip {:label "Your chip" :variant :outlined :on-delete [:x.test!]}]])
 
@@ -128,7 +128,7 @@
        [elements/password-field ::my-password-field-w-adornments
                                 {:label "My password-field w/ adornments" :emptiable? true
                                  :placeholder "Placeholder"
-                                 :start-adornments [{:icon :sentiment_very_satisfied}]}]
+                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [] :tooltip "Hello"}]}]
        [elements/multiline-field ::my-multiline-field
                                  {:label "My multiline-field" :placeholder "Placeholder"}]])
 
@@ -221,7 +221,7 @@
                       :header {:content "Buttons"
                                :sticky? true}
                       :horizontal-align :left
-                      :stickers [{:icon :apps}]}]
+                      :stickers [{:icon :apps :tooltip :filters :on-click []}]}]
 
        [elements/box {:body   {:content #'chips}
                       :header {:content "Chips"

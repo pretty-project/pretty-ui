@@ -127,7 +127,7 @@
                     :on-select       [(keyword extension-name "add-new-item!")]
                     :preset          :add-icon-button}])
 
-(defn- select-multiple-items-button
+(defn select-multiple-items-button
   ; @param (string) extension-name
   ;
   ; @usage
@@ -140,7 +140,7 @@
                     :preset  :select-more-icon-button
                     :tooltip :check}])
 
-(defn- delete-selected-items-button
+(defn delete-selected-items-button
   ; @param (string) extension-name
   ;
   ; @usage
@@ -153,7 +153,20 @@
                     :preset   :delete-icon-button
                     :tooltip  :delete!}])
 
-(defn- sort-items-button
+(defn toggle-item-filter-visibility-button
+  ; @param (string) extension-name
+  ;
+  ; @usage
+  ;  [item-lister/toggle-item-filter-visibility-button "products"]
+  ;
+  ; @return (component)
+  [extension-name]
+  [elements/button ::toggle-item-filter-visibility-button
+                   {:on-click [:item-lister/toggle-item-filter-visibility! extension-name]
+                    :preset   :filters-icon-button
+                    :tooltip  :filters}])
+
+(defn sort-items-button
   ; @param (string) extension-name
   ; @param (string) item-name
   ; @param (map) element-props
@@ -161,8 +174,8 @@
   ;   :options (vector)}
   ;
   ; @usage
-  ;  [item-lister/sort-items-button "products" {:options [:by-name :by-date]
-  ;                                             :initial-value :by-name}]
+  ;  [item-lister/sort-items-button "products" "product" {:options [:by-name :by-date]
+  ;                                                       :initial-value :by-name}]
   ;
   ; @return (component)
   [extension-name item-name {:keys [initial-value options]}]
@@ -234,8 +247,8 @@
   ;  {:downloaded-items (vector)}
   ;
   ; @return (hiccup)
-  [extension-name item-name {:keys [list-element] :as lister-props}
-                            {:keys [downloaded-items]          :as   view-props}]
+  [extension-name item-name {:keys [list-element]     :as lister-props}
+                            {:keys [downloaded-items] :as   view-props}]
   [:div.item-lister--item-list
     (map-indexed (fn [item-dex item]
                     ^{:key (db/document->document-id item)}

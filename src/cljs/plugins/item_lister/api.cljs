@@ -29,5 +29,6 @@
 (def new-item-select              views/new-item-select)
 (def select-multiple-items-button views/select-multiple-items-button)
 (def delete-selected-items-button views/delete-selected-items-button)
+(def toggle-item-filter-visibility-button views/toggle-item-filter-visibility-button)
 (def sort-items-button            views/sort-items-button)
 (def item-lister                  views/view)

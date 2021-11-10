@@ -90,8 +90,6 @@
            [layout-header layout-id layout-props])
        [layout-body layout-id layout-props]])
 
-
-
 (defn view
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props

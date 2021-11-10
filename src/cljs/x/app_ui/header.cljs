@@ -78,11 +78,11 @@
 (defn- header-apps-icon-button-badge
   ; TEMP
   []
-  [:div {:style {:position :absolute :top "12px" :right "18px" :background "var( --secondary )"
+  [:div {:style {:position :absolute :top "12px" :right "12px" :background "var( --secondary )"
                  :width "8px" :height "8px" :border-radius "50%"
                  :font-size "8px" :font-weight 600 :align-items :center :line-height "18px"
                  :display :flex :flex-direction :column :justify-content :center}}])
-        ;(param "12")])
+        ;(param "12")
 
 (defn- header-apps-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -91,7 +91,8 @@
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
                                                                            :initial-value item-lister/DEFAULT-ORDER-BY}]
                                           [item-lister/select-multiple-items-button "clients"]
-                                          [item-lister/delete-selected-items-button "clients" view-props]]
+                                          [item-lister/toggle-item-filter-visibility-button "clients"]]
+                                          ;[item-lister/delete-selected-items-button "clients" view-props]]
                       :end-content   [:<> [item-lister/search-items-field "clients" "client"]]}])
 
 (defn- client-list-mobile-header
@@ -128,8 +129,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-lister "clients" "client"
-               {:list-element #'client-item
-                :subscriber   [::get-common-props]}])
+               {:list-element #'client-item}])
 
 
 

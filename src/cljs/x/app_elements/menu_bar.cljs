@@ -221,7 +221,10 @@
   ;       A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
   ;       renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}
   ;       tulajdonságok figyelmen kívűl hagyódnak!
-  ;      :icon (keyword)(opt) Material icon class
+  ;      :icon (keyword)(opt)
+  ;      :icon-family (keyword)(opt)
+  ;       :material-icons-filled, :material-icons-outlined
+  ;       Default: :material-icons-filled
   ;      :label (metamorphic-content)
   ;      :on-click (metamorphic-event)(opt)
   ;      :on-mouse-over (metamorphic-event)(opt)}]

@@ -80,11 +80,24 @@
             item-id-key  (keyword/join item-name "-id")
             item-id      (or (r router/get-current-route-path-param db item-id-key)
                              (param default-item-id))]
+                              ;(dissoc-in [:media :browser-data])
+           {:db         (-> db (dissoc-in [extension-id :browser-data])
+                              ;(dissoc-in [:media :browser-meta])
+                               (dissoc-in [extension-id :browser-meta])
                               ;(assoc-in  [:media :browser-meta :directory-id] "my-directory")
-           {:db         (-> db (assoc-in  [extension-id :browser-meta item-id-key] item-id)
-                              ;(dissoc-in [:meda :browser-data])
-                               (dissoc-in [extension-id :browser-data]))
-            :dispatch-n [[:x.app-ui/listen-to-process! :extensions/request-browser-items!]
+                               (assoc-in  [extension-id :browser-meta item-id-key] item-id)
+
+                              ; Ha az item-browser tényleg az item-listerre épül, akkor az
+                              ; item-lister infinite-loader komponense által indított request
+                              ; a :lister-data és :lister-meta db elemeket tölti fel, szóval
+                              ; azokat is nullázni kéne itt, amikor betölt a browser,
+                              ; mert az item-lister is nullázza őket magának.
+                              ; Pl.: Ha 0 elem van a kollekcioban, akkor az újabb load eseménynél
+                              ; nem próbálná meg újra megnézni a szerón, hogy vannak-e elemek
+                              ; mert emlékezne, hogy utoljára nulla volt, és ilyenek, stb.
+                               (dissoc-in [extension-id :lister-meta]))
+
+            :dispatch-n [[:x.app-ui/listen-to-process! :item-lister/synchronize!]
                         ;[:x.app-ui/set-header-title!  :media]
                          [:x.app-ui/set-header-title!  extension-id]
                         ;[:x.app-ui/set-window-title!  :media]

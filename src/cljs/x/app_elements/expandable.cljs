@@ -34,13 +34,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) expandable-props
+  ;  {:icon (keyword)}
   ;
   ; @return (map)
   ;  {:expanded? (boolean)
   ;   :row (keyword)}
-  [expandable-props]
+  [{:keys [icon] :as expandable-props}]
   (merge {:expanded? false
           :layout    :row}
+         (if (some? icon) {:icon-family :material-icons-filled})
          (param expandable-props)))
 
 
@@ -139,7 +141,11 @@
   ;   :content-props (map)(opt)
   ;   :expanded? (boolean)(opt)
   ;    Default: true
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

@@ -30,11 +30,13 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ;  {:layout (keyword)
+  ;  {:icon-family
+  ;   :layout (keyword)
   ;   :size (keyword)}
   [icon-props]
-  (merge {:layout :fit
-          :size   :m}
+  (merge {:icon-family :material-icons-filled
+          :layout      :fit
+          :size        :m}
          (param icon-props)))
 
 
@@ -47,7 +49,7 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ;  {:icon (keyword) Material icon class}
+  ;  {:icon (keyword)}
   ;
   ; @return (hiccup)
   [icon-id {:keys [icon] :as icon-props}]
@@ -59,7 +61,11 @@
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ;  {:class (string or vector)(opt)
-  ;   :icon (keyword) Material icon class
+  ;   :icon (keyword)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :layout (keyword)(opt)
   ;    :fit Az ikont tartalmazó elem méretei megegyeznek az ikon méreteivel
   ;    :row ...

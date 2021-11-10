@@ -237,7 +237,10 @@
   ;   :stickers (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
-  ;      :icon (keyword) Material icon class
+  ;      :icon (keyword)
+  ;      :icon-family (keyword)(opt)
+  ;       :material-icons-filled, :material-icons-outlined
+  ;       Default: :material-icons-filled
   ;      :on-click (metamorphic-event)(opt)
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :stretch-orientation (keyword)(opt)

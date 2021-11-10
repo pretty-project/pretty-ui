@@ -23,6 +23,22 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- sticker-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) sticker-props
+  ;
+  ; @return (map)
+  ;  {:icon-family (keyword)}
+  [sticker-props]
+  (merge {:icon-family :material-icons-filled}
+         (param sticker-props)))
+
+
+
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -32,16 +48,20 @@
   ; @param (keyword) element-id
   ; @param (map) view-props
   ; @param (map) sticker-props
-  ;  {:icon (keyword) Material icon class
+  ;  {:icon (keyword)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
   ;   :on-click (metamorphic-event)
   ;   :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [element-id _ {:keys [icon on-click tooltip]}]
+  [element-id _ {:keys [icon icon-family on-click tooltip]}]
   [:button.x-element--sticker-button
     {:on-click   #(a/dispatch on-click)
      :on-mouse-up (focusable/blur-element-function element-id)
-     :title       (components/content {:content tooltip})}
+     :title            (components/content {:content tooltip})
+     :data-icon-family (keyword/to-dom-value icon-family)}
     (keyword/to-dom-value icon)])
 
 (defn- element-sticker-icon
@@ -51,13 +71,18 @@
   ; @param (map) view-props
   ; @param (map) sticker-props
   ;  {:disabled? (boolean)(opt)
-  ;   :icon (keyword) Material icon class}
+  ;   :icon (keyword)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled}
   ;
   ; @return (hiccup)
-  [_ _ {:keys [disabled? icon]}]
+  [_ _ {:keys [disabled? icon icon-family]}]
   [:i.x-element--sticker-icon
     (if (boolean disabled?)
-        {:data-disabled true})
+        {:data-disabled true
+         :data-icon-family (keyword/to-dom-value icon-family)}
+        {:data-icon-family (keyword/to-dom-value icon-family)})
     (keyword/to-dom-value icon)])
 
 (defn- element-sticker
@@ -86,5 +111,7 @@
   ; @return (hiccup)
   [element-id {:keys [stickers] :as view-props}]
   (if (vector/nonempty? stickers)
-      (reduce #(vector/conj-item %1 [element-sticker element-id view-props %2])
-               [:div.x-element--stickers] stickers)))
+      (reduce (fn [%1 %2]
+                  (let [%2 (a/prot %2 sticker-props-prototype)]
+                       (vector/conj-item %1 [element-sticker element-id view-props %2])))                   
+              [:div.x-element--stickers] stickers)))

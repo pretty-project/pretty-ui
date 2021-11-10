@@ -89,6 +89,11 @@
                               :icon    :content_copy
                               :layout  :icon-button
                               :variant :transparent}
+      :filters-icon-button  {:color   :default
+                             :icon    :filter_alt
+                             :icon-family :material-icons-outlined
+                             :layout  :icon-button
+                             :variant :transparent}
       :forward-icon-button {:color   :default
                             :icon    :arrow_forward
                             :layout  :icon-button
@@ -203,25 +208,29 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ;  {:icon (keyword)(opt)
+  ;   :keypress (map)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :horizontal-align (keyword)
+  ;   :icon-family (keyword)
   ;   :layout (keyword)
   ;   :targetable? (boolean)
   ;   :variant (keyword)}
-  [{:keys [keypress label layout] :as button-props}]
-  (merge {:color     :primary
-          :icon-size :s
-          :layout    :row
-          :variant   :outlined}
+  [{:keys [icon keypress label layout] :as button-props}]
+  (merge {:color   :primary
+          :layout  :row
+          :variant :outlined}
          (if (not= layout :icon-button)
              {:font-size        :s
               :horizontal-align :center})
          (if (some? keypress)
              {:targetable? true})
+         (if (some? icon)
+             {:icon-size   :s
+              :icon-family :material-icons-filled})
          ; XXX#0523
          ; A button elemet {:layout :icon-button} beállítással használva,
          ; a {:content ...} tulajdonság neve nehezen értelmezhető,
@@ -251,7 +260,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon (keyword)(opt) Material icon class}
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (component or nil)
   [_ {:keys [icon]}]
@@ -262,7 +271,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon (keyword)(opt) Material icon class}
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (hiccup)
   [button-id {:keys [icon] :as button-props}]
@@ -308,10 +317,15 @@
   ;    :left, :center, :right
   ;    Default: :center
   ;    Only w/ {:layout :fit} or {:layout :row}
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :icon-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;    Only w/ {:icon ...}
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :keypress (map)(constant)(opt)
   ;    {:key-code (integer)

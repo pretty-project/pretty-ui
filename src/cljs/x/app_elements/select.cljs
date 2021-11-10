@@ -52,7 +52,7 @@
 ; @constant (metamorphic-content)
 (def DEFAULT-SELECT-BUTTON-LABEL :select!)
 
-; @constant (keyword) Material icon class
+; @constant (keyword)
 (def SELECT-BUTTON-ICON :unfold_more)
 
 
@@ -378,7 +378,6 @@
   ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
-  ;   :icon (keyword)(opt) Material icon class
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

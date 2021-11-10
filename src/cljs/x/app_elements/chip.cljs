@@ -25,7 +25,7 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword) Material icon class
+; @constant (keyword)
 (def DEFAULT-DELETE-BUTTON-ICON :close)
 
 
@@ -37,15 +37,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) chip-props
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :delete-button-icon (keyword)
+  ;   :icon-family (keyword)
   ;   :layout (keyword)}
-  [chip-props]
+  [{:keys [icon] :as chip-props}]
   (merge {:color              :primary
           :layout             :row
           :delete-button-icon DEFAULT-DELETE-BUTTON-ICON}
+         (if (some? icon) {:icon-family :material-icons-filled})
          (param chip-props)))
 
 
@@ -58,7 +61,7 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:icon (keyword)(opt) Material icon class}
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (hiccup)
   [_ {:keys [icon]}]
@@ -81,7 +84,7 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:delete-button-icon (keyword) Material icon class
+  ;  {:delete-button-icon (keyword)
   ;   :on-delete (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
@@ -124,10 +127,14 @@
   ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
   ;    Default: :primary
   ;   :class (string or vector)(opt)
-  ;   :delete-button-icon (keyword)(opt) Material icon class
+  ;   :delete-button-icon (keyword)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

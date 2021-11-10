@@ -144,10 +144,14 @@ button.x-card:focus,
 
 .x-element--adornment-button,
 .x-element--adornment-icon,
+.x-element--sticker-button,
+.x-element--sticker-icon,
 .x-anchor,
 .x-button--icon,
 .x-button--label,
 .x-card--header,
+.x-chip--icon,
+.x-chip--delete-button-icon,
 .x-chip--label,
 .x-chips--label,
 .x-chips--no-chips-label,
@@ -200,31 +204,52 @@ button.x-card:focus,
 /***** Material icons *****/
 
 .x-combo-box--extender-icon,
-.x-button--icon,
-.x-card--header--icon,
 .x-card--header--expand-button-icon,
 .x-checkbox--button::after,
-.x-chip--icon,
 .x-chip--delete-button-icon,
-.x-directory--icon,
-.x-expandable--icon,
 .x-expandable--expand-icon,
-.x-file--icon,
-.x-file--preview-icon,
 .x-file-drop-area--icon,
-.x-icon,
-.x-label--icon,
-.x-element--adornment-button,
-.x-element--adornment-icon,
-.x-element--sticker-button,
-.x-element--sticker-icon,
 .x-element--info-tooltip--icon,
 .x-select--button-icon,
-.x-select--option-icon,
 .x-slideshow--controls--go-bwd,
-.x-slideshow--controls--go-fwd {
+.x-slideshow--controls--go-fwd,
+.x-button[data-icon-family="material-icons-filled"] .x-button--icon,
+.x-card[data-icon-family="material-icons-filled"] .x-card--header--icon,
+.x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
+.x-directory[data-icon-family="material-icons-filled"] .x-directory--icon,
+.x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
+.x-file[data-icon-family="material-icons-filled"] .x-file--icon,
+.x-file[data-icon-family="material-icons-filled"] .x-file--preview-icon,
+.x-icon[data-icon-family="material-icons-filled"],
+.x-label[data-icon-family="material-icons-filled"] .x-label--icon,
+.x-element--adornment-button[data-icon-family="material-icons-filled"],
+.x-element--adornment-icon[data-icon-family="material-icons-filled"],
+.x-element--sticker-button[data-icon-family="material-icons-filled"],
+.x-element--sticker-icon[data-icon-family="material-icons-filled"] {
   font-style: normal;
   font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+.x-button[data-icon-family="material-icons-outlined"] .x-button--icon,
+.x-card[data-icon-family="material-icons-outlined"] .x-card--header--icon,
+.x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
+.x-directory[data-icon-family="material-icons-outlined"] .x-directory--icon,
+.x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
+.x-file[data-icon-family="material-icons-outlined"] .x-file--icon,
+.x-file[data-icon-family="material-icons-outlined"] .x-file--preview-icon,
+.x-icon[data-icon-family="material-icons-outlined"],
+.x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
+.x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-button,
+.x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-icon,
+.x-label[data-icon-family="material-icons-outlined"] .x-element--sticker-button,
+.x-label[data-icon-family="material-icons-outlined"] .x-element--sticker-icon {
+  font-style: normal;
+  font-family: 'Material Icons Outlined';
   font-weight: normal;
   letter-spacing: normal;
   overflow: hidden;
@@ -1232,6 +1257,13 @@ button.x-card:focus,
   position: absolute;
   transition: .1s opacity .35s }
 
+.x-button [data-tooltip]::after {
+  /* Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
+   * sarkú menükön elhelyezett ikon-gombokon a tooltip pszeudo-elem sarka ne lógjon túl
+   * a menü lekerekített sarkán.
+   * 36px elég, hogy eltakaraja a gomb ikonját  */
+  height: 36px }
+
 [data-touch-detected="false"] [data-tooltip]:hover::after {
   opacity: 1 }
 
@@ -1563,7 +1595,7 @@ body[data-viewport-profile="s"]
   /* A height és width tulajdonságokat nem szükséges meghatározni, a min-height
    * és min-width tulajdonság használatakor */
   -height: 48px;
-  -width: 60px }
+  -width: 48px }
 
 .x-button[data-layout="icon-button"] .x-button--body {
   /* XXX#0340
@@ -1573,7 +1605,7 @@ body[data-viewport-profile="s"]
 
 .x-button[data-layout="icon-button"] .x-button--body {
   /* XXX#0340 */
-  min-width: 60px }
+  min-width: 48px }
 
 .x-button[data-layout="icon-button"][data-variant="filled"] .x-button--body {
   border-radius: var( --border-radius-xs ) }
@@ -2558,7 +2590,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 .x-icon[data-layout="touch-target"] {
   height: 48px;
-  width: 60px }
+  width: 48px }
 
 /*** Icon layout ***/
 /***** Icon *****/

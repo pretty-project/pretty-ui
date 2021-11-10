@@ -29,18 +29,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) label-props
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)}
-  [label-props]
+  [{:keys [icon] :as label-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :left
           :layout           :row}
+         (if (some? icon) {:icon-family :material-icons-filled})
          (param label-props)))
 
 
@@ -53,11 +55,13 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:icon (keyword) Material icon class}
+  ;  {:icon (keyword)
+  ;   :icon-family (keyword)}
   ;
   ; @return (hiccup or nil)
-  [_ {:keys [icon]}]
-  [:i.x-label--icon (keyword/to-dom-value icon)])
+  [_ {:keys [icon icon-family]}]
+  [:i.x-label--icon {:data-icon-family (keyword/to-dom-value icon-family)}
+                    (keyword/to-dom-value icon)])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,7 +80,7 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:icon (keyword) Material icon class}
+  ;  {:icon (keyword)}
   ;
   ; @return (hiccup)
   [label-id {:keys [icon] :as label-props}]
@@ -110,7 +114,11 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :left
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

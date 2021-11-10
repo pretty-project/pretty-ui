@@ -103,8 +103,7 @@
   ;   :label (metamorphic-content)(opt)
   ;    Default: :drop-files-here-to-upload
   ;   :on-click (metamorphic-event)(constant)(opt)
-  ;   :style (map)(opt)
-  ;   :tooltip (metamorphic-content)(opt)}
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/file-drop-area {...}]

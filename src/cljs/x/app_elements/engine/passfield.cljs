@@ -85,8 +85,7 @@
   ; @return (map)
   ;  {:icon (keyword)}
   [db [_ field-id]]
-  (visibility-toggle-props-prototype field-id
-    {:icon (r get-visibility-toggle-icon db field-id)}))
+  (visibility-toggle-props-prototype field-id {:icon (r get-visibility-toggle-icon db field-id)}))
 
 (defn get-passfield-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

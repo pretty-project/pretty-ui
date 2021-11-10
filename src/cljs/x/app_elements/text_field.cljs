@@ -222,7 +222,10 @@
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
   ;   :end-adornments (maps in vector)(opt)
-  ;    [{:icon (keyword) Material icon class
+  ;    [{:icon (keyword)
+  ;      :icon-family (keyword)(opt)
+  ;       :material-icons-filled, :material-icons-outlined
+  ;       Default: :material-icons-filled
   ;      :on-click (metamorphic-event)(opt)
   ;      :tab-indexed? (boolean)(opt)
   ;       Default: true
@@ -264,7 +267,10 @@
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :start-adornments (maps in vector)(opt)
-  ;    [{:icon (keyword) Material icon class
+  ;    [{:icon (keyword)
+  ;      :icon-family (keyword)(opt)
+  ;       :material-icons-filled, :material-icons-outlined
+  ;       Default: :material-icons-filled
   ;      :on-click (metamorphic-event)
   ;      :tab-indexed? (boolean)(opt)
   ;       Default: true

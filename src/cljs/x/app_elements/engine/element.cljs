@@ -57,7 +57,7 @@
   ;
   ; @param (map) element-props
   ;  {:expandable? (boolean)(opt)
-  ;   :icon (keyword)(opt) Material icon class
+  ;   :icon (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (boolean)
@@ -175,6 +175,7 @@
   ;   :font-size (keyword)(opt)
   ;   :font-weight (keyword)(opt)
   ;   :height (keyword, px or string)(opt)
+  ;   :icon-family (keyword)(opt)
   ;   :horizontal-border (keyword)(opt)
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)
@@ -188,6 +189,7 @@
   ;   :data-font-weight (string)
   ;   :data-height (string)
   ;   :data-horizontal-border (string)
+  ;   :data-icon-family (string)
   ;   :data-variant (string)
   ;   :style (map)
   ;    {:height (string)
@@ -195,7 +197,7 @@
   ;   :data-vertical-border (string)
   ;   :data-width (string)}
   [_ {:keys [class background-color border-color color font-size font-weight height
-             horizontal-border style variant vertical-border width]}]
+             horizontal-border icon-family style variant vertical-border width]}]
   (cond-> (param {})
           (some? background-color)
           (assoc :data-background-color (keyword/to-dom-value background-color))
@@ -209,6 +211,8 @@
           (assoc :data-font-size        (keyword/to-dom-value font-size))
           (some? font-weight)
           (assoc :data-font-weight      (keyword/to-dom-value font-weight))
+          (some? icon-family)
+          (assoc :data-icon-family      (keyword/to-dom-value icon-family))
           (some? style)
           (assoc :style                 (param style))
           (integer? height)
