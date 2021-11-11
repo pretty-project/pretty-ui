@@ -1,6 +1,7 @@
 
 (ns plugins.item-lister.engine
-    (:require [mid-fruits.map        :refer [dissoc-in]]
+    (:require [mid-fruits.candy      :refer [param return]]
+              [mid-fruits.map        :refer [dissoc-in]]
               [mid-fruits.vector     :as vector]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
@@ -34,6 +35,16 @@
   [db [_ extension-name]]
   (r sync/listening-to-request? db :item-lister/synchronize!))
 
+(defn handshaked?
+  ; @param (string) extension-name
+  ;
+  ; @return (boolean)
+  [db [_ extension-name]]
+  (let [extension-id (keyword extension-name)
+        handshaked?  (get-in db [extension-id :lister-meta :handshaked?])]
+       ; Megtörtént-e az első kommunikáció a szerverrel?
+       (boolean handshaked?)))
+
 (defn get-downloaded-items
   ; @param (string) extension-name
   ;
@@ -56,7 +67,20 @@
   ; @return (integer)
   [db [_ extension-name]]
   (let [extension-id (keyword extension-name)]
-       (get-in db [extension-id :lister-meta :document-count])))
+       ; XXX#0791
+       ; - Ha a tárolt érték nil, akkor a visszatérési érték 0
+       ; - Ha a szerver hibásan nil értéket küld le, akkor a 0 visszatérési érték miatt
+       ;   az all-items-downloaded? függvény visszatérési értéke true lesz ezért megáll
+       ;   az újabb elemek letöltése.
+       ; - Hibás szerver-működés esetén szükséges, hogy az infinite-loader komponens
+       ;   ne próbálja újra és újra letölteni a további feltételezett elemeket.
+       ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
+       ;   függvény visszatérési értéke nem tekinthető mérvadónak!
+       ;   Az első kommunikáció megtörténtét, ezért szükséges külön vizsgálni!
+       (let [all-item-count (get-in db [extension-id :lister-meta :document-count])]
+            (if (integer? all-item-count)
+                (return   all-item-count)
+                (return   0)))))
 
 (defn all-items-downloaded?
   ; @param (string) extension-name
@@ -65,8 +89,13 @@
   [db [_ extension-name]]
   (let [all-item-count        (r get-all-item-count        db extension-name)
         downloaded-item-count (r get-downloaded-item-count db extension-name)]
-       ; = All item count reached
-       ;>= Exception handling (necessary to handle exceptions)
+       ; XXX#0791
+       ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
+       ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
+       ;   akkor ne próbáljon további feltételezett elemeket letölteni.
+       ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
+       ;   függvény visszatérési értéke nem tekinthető mérvadónak!
+       ;   Az első kommunikáció megtörténtét, ezért szükséges külön vizsgálni!
        (>= downloaded-item-count all-item-count)))
 
 (defn get-search-term
@@ -93,7 +122,11 @@
   ;
   ; @return (boolean)
   [db [_ extension-name]]
-  (not (r all-items-downloaded? db extension-name)))
+      ; XXX#0791
+      ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
+      ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
+  (or (not (r handshaked?           db extension-name))
+      (not (r all-items-downloaded? db extension-name))))
 
 (defn get-header-view-props
   ; @param (string) extension-name
@@ -203,12 +236,13 @@
            {:db       (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
                              ; Szükséges frissíteni a keresési feltételeknek megfelelő
                              ; dokumentumok számát, mert változhat az értéke
-                             (assoc-in  [extension-id :lister-meta :document-count] document-count))
-
+                             (assoc-in  [extension-id :lister-meta :document-count] document-count)
+                             ; Eltárolja, hogy megtörtént-e az első kommunikáció a szerverrel
+                             (assoc-in  [extension-id :lister-meta :handshaked?]    true))
             ; Az elemek letöltődése után, ha maradt még a szerveren letöltendő elem, akkor újratölti
             ; az infinite-loader komponenst, hogy megállapítsa, hogy az a viewport területén van-e még.
                          ;(r download-more-items? db "products")
-            :dispatch-if [(r download-more-items? db extension-id)
+            :dispatch-if [(r download-more-items? db extension-name)
                          ;[:x.app-components/reload-infinite-loader! :products]
                           [:x.app-components/reload-infinite-loader! extension-id]]})))
 
@@ -227,16 +261,16 @@
   (fn [{:keys [db]} [_ extension-name item-name]]
       ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
       ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
-      (if-not (r all-items-downloaded? db extension-name)
-              (let [resolver-id    (keyword extension-name (str "get-" item-name "-items"))
-                    resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-name)
-                                    :search-term           (r get-search-term           db extension-name)
-                                    :order-by              (r get-order-by              db extension-name)}]
-                   [:x.app-sync/send-query! :item-lister/synchronize!
-                                            ;:on-stalled [:item-lister/receive-items! "products"]
-                                            {:on-stalled [:item-lister/receive-items! extension-name item-name]
-                                            ;:query      [`(:products/get-product-items {...})]
-                                             :query      [`(~resolver-id ~resolver-props)]}]))))
+      (if (r download-more-items? db extension-name)
+          (let [resolver-id    (keyword extension-name (str "get-" item-name "-items"))
+                resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-name)
+                                :search-term           (r get-search-term           db extension-name)
+                                :order-by              (r get-order-by              db extension-name)}]
+               [:x.app-sync/send-query! :item-lister/synchronize!
+                                        ;:on-stalled [:item-lister/receive-items! "products"]
+                                        {:on-stalled [:item-lister/receive-items! extension-name item-name]
+                                        ;:query      [`(:products/get-product-items {...})]
+                                         :query      [`(~resolver-id ~resolver-props)]}]))))
 
 (a/reg-event-fx
   :item-lister/load!

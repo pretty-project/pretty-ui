@@ -110,8 +110,10 @@
   (let [data-history       (r get-data-history db partition-id data-item-id)
         data-history-count (count data-history)
         max-history-count  (or max-history-count DEFAULT-MAX-HISTORY-COUNT)]
-       ; = History count reached
-       ;>= Exception handling (necessary to handle exceptions)
+       ; = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
+       ; nagyobb a data-history-count értéke, mint a max-history-count értéke,
+       ; akkor ne tároljon több elemet a data-history, mert az az adatbázis folyamatos
+       ; méretnövekedéséhez vezethet.
        (>= data-history-count max-history-count)))
 
 
