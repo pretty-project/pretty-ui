@@ -1,18 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.07
-; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.5
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns x.app-developer.request-browser
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.pretty    :as pretty]
@@ -51,7 +37,7 @@
                (let [request-history (r sync/get-request-history db selected-view)]
                     (vector/last-dex request-history)))))
 
-(defn- get-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [selected-view (r get-selected-view db)]
@@ -63,7 +49,7 @@
             :response-history (r sync/get-response-history db selected-view)
             :selected-view    (param selected-view)})))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub ::get-body-props get-body-props)
 
 
 
@@ -128,16 +114,16 @@
 
 (defn- request-data-control-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [history-dex request-history] :as view-props}]
+  [body-id {:keys [history-dex request-history] :as body-props}]
   [:div {:style {:display "flex" :align-items "center" :justify-content "flex-start"}}
-        [go-bwd-button component-id view-props]
+        [go-bwd-button body-id body-props]
         [:pre {:style {:font-weight "600" :color "var( --soft-blue-xx-dark )" :font-size "14px"}}
               (get-in request-history [history-dex :sent-time])]
-        [go-fwd-button component-id view-props]])
+        [go-fwd-button body-id body-props]])
 
 (defn- request-data-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [selected-view] :as view-props}]
+  [body-id {:keys [selected-view] :as body-props}]
   [:div {:style {:display "flex" :align-items "center" :justify-content "flex-start"}}
         [go-up-button]
         [:div {:style {:font-weight "500"}}
@@ -145,13 +131,13 @@
 
 (defn- request-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [selected-view] :as view-props}]
+  [body-id {:keys [selected-view] :as body-props}]
   [:div {:style {:width "100%"}}
-        [request-data-label-bar   component-id view-props]
-        [request-data-control-bar component-id view-props]
+        [request-data-label-bar   body-id body-props]
+        [request-data-control-bar body-id body-props]
         [:div {:style {:height "24px"}}]
-        [request-data             component-id view-props]
-        [response-data            component-id view-props]])
+        [request-data             body-id body-props]
+        [response-data            body-id body-props]])
 
 
 
@@ -160,7 +146,7 @@
 
 (defn- request-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [request-id {:keys [sent-time] :as request-props} {:keys [request-failured? request-successed?] :as debug-props} view-props]
+  [request-id {:keys [sent-time] :as request-props} {:keys [request-failured? request-successed?]} body-props]
   [:div.x-toggle
         {:style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                  :margin "4px 0"}
@@ -176,28 +162,28 @@
 
 (defn- xxx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [request-id {:keys [debug] :as request-props} view-props]
+  [request-id {:keys [debug] :as request-props} body-props]
   (let [debug-props (a/subscribe debug)]
-       (fn [] [request-list-item request-id request-props @debug-props view-props])))
+       (fn [] [request-list-item request-id request-props @debug-props body-props])))
 
 (defn- request-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [requests] :as view-props}]
+  [body-id {:keys [requests] :as body-props}]
   (reduce-kv (fn [%1 %2 %3]
-                 (vector/conj-item %1 [xxx %2 %3 view-props]))
+                 (vector/conj-item %1 [xxx %2 %3 body-props]))
              [:<>]
              (param requests)))
 
 (defn- request-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [selected-view] :as view-props}]
+  [body-id {:keys [selected-view] :as body-props}]
   (if (= selected-view :requests)
-      [request-list component-id view-props]
-      [request-view component-id view-props]))
+      [request-list body-id body-props]
+      [request-view body-id body-props]))
 
-(defn view
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [components/subscriber ::view
+  [components/subscriber ::body
                          {:component  #'request-browser
-                          :subscriber [::get-view-props]}])
+                          :subscriber [::get-body-props]}])

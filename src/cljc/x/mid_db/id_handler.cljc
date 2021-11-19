@@ -75,11 +75,6 @@
                 (keyword? (first (keys n)))
                 (string?  (first (vals n))))))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn document-id->document-link
   ; @param (string) document-id
   ; @param (keyword)(opt) namespace

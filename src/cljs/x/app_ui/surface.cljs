@@ -17,9 +17,9 @@
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.keyword       :as keyword]
               [x.app-core.api           :as a :refer [r]]
-              [x.app-ui.renderer        :as renderer :refer [view] :rename {view renderer}]
+              [x.app-ui.renderer        :as renderer :rename {component renderer}]
               [x.app-ui.sidebar         :as sidebar]
-              [x.app-ui.surface-layouts :refer [view] :rename {view surface-element}]))
+              [x.app-ui.surface-layouts :refer [surface-element]]))
 
 
 

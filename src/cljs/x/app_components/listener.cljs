@@ -6,7 +6,7 @@
 ; Created: 2021.06.21
 ; Description:
 ; Version: v0.6.2
-; Compatibility: x4.3.3
+; Compatibility: x4.4.6
 
 
 
@@ -16,7 +16,7 @@
 (ns x.app-components.listener
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.map           :as map]
-              [x.app-components.content :rename {view content}]
+              [x.app-components.content :rename {component content}]
               [x.app-core.api           :as a]
               [x.mid-ui.api             :as ui]))
 
@@ -59,7 +59,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn extended-props->listener-props
@@ -189,7 +189,7 @@
            (let [context-props (request-state->context-props context-props @request-state)]
                 [content component-id context-props]))))
 
-(defn view
+(defn component
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:content (metamorphic-content)
@@ -252,7 +252,7 @@
   ;
   ; @return (component)
   ([context-props]
-   [view nil context-props])
+   [component nil context-props])
 
   ([component-id context-props]
    (let [component-id  (a/id   component-id)

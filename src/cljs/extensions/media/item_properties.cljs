@@ -167,7 +167,7 @@
              directory-id
              {:content       #'directory-properties
               :content-props subdirectory-props
-              :label-bar     {:content #'ui/close-popup-label-bar}
+              :label-bar     {:content #'ui/close-popup-header}
               :layout        :boxed
               :min-width     :xs}])))
 
@@ -181,6 +181,6 @@
              file-id
              {:content       #'file-properties
               :content-props file-props
-              :label-bar     {:content #'ui/close-popup-label-bar}
+              :label-bar     {:content #'ui/close-popup-header}
               :layout        :boxed
               :min-width     :xs}])))

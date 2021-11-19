@@ -24,10 +24,19 @@
               [x.app-layouts.api     :as layouts]
               [x.app-locales.api     :as locales]
               [x.app-sync.api        :as sync]
+              [x.app-tools.api       :as tools]
               [x.app-ui.api          :as ui]
 
               ; TEMP
-              [cljs-time.core :as cljs-time.core]))
+              [cljs-time.core :as cljs-time.core]
+
+              ; A project-emulator.core fájl közös használatának mellőzése miatt a fejlesztés alatt
+              ; lévő modulok behívása a playground.core névtérben történik.
+              [extensions.clients.api]
+              [extensions.home.api]
+              [extensions.media.api]
+              [extensions.products.api]
+              [extensions.settings.api]))
 
 
 
@@ -63,9 +72,9 @@
 (defn- infinite-loader
   []
   [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs}]
-       [components/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
+       [tools/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
        [elements/button ::reload-infinite-loader-button
-                        {:label "Reload infinite loader!" :on-click [:x.app-components/reload-infinite-loader! :my-loader]
+                        {:label "Reload infinite loader!" :on-click [:x.app-tools/reload-infinite-loader! :my-loader]
                          :variant :transparent :color :secondary}]])
 
 (defn buttons

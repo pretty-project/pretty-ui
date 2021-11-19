@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.4.4
+; Version: v0.6.8
+; Compatibility: x4.4.6
 
 
 
@@ -15,6 +15,7 @@
 
 (ns x.app-user.account-handler
     (:require [mid-fruits.candy           :refer [param]]
+              [mid-fruits.map             :refer [dissoc-in]]
               [mid-fruits.time            :as time]
               [mid-fruits.vector          :as vector]
               [x.app-core.api             :as a :refer [r]]
@@ -105,20 +106,32 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :x.app-user/reg-last-login-attempt!
+(defn- reg-last-login-attempt!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      [:x.app-db/set-item! (db/path ::account :last-login-attempt)
-                           (time/elapsed)]))
+  ;
+  ; @return (map)
+  [db _]
+  (assoc-in db (db/path ::account :last-login-attempt)
+               (time/elapsed)))
 
-(a/reg-event-fx
-  :x.app-user/clear-last-login-attempt!
+(a/reg-event-db :x.app-user/reg-last-login-attempt! reg-last-login-attempt!)
+
+(defn- clear-last-login-attempt!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-db/remove-item! (db/path ::account :last-login-attempt)])
+  ;
+  ; @return (map)
+  [db _]
+  (dissoc-in db (db/path ::account :last-login-attempt)))
+
+(a/reg-event-db :x.app-user/clear-last-login-attempt! clear-last-login-attempt!)
+
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :x.app-user/authenticate!
@@ -136,22 +149,19 @@
   ;    egy hibaüzenet jelenik meg a bejelentkező felületen.
   ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
-  (fn [{:keys [db]} _]
-      [:x.app-sync/send-request!
-       :x.app-user/authenticate!
-       {:method       :post
-        :on-success   [:x.boot-loader/restart-app!]
-        :on-failure   [:x.app-user/reg-last-login-attempt!]
-        :silent-mode? true
-        :source-path  (db/meta-item-path :x.app-views.login-box/primary)
-        :uri          "/user/authenticate"
-        :idle-timeout 3000}]))
+  [:x.app-sync/send-request! :x.app-user/authenticate!
+                             {:method       :post
+                              :on-success   [:x.boot-loader/restart-app!]
+                              :on-failure   [:x.app-user/reg-last-login-attempt!]
+                              :silent-mode? true
+                              :source-path  (db/meta-item-path :x.app-views.login-box/primary)
+                              :uri          "/user/authenticate"
+                              :idle-timeout 3000}])
 
 (a/reg-event-fx
   :x.app-user/logout!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-sync/send-request!
-   :x.app-user/logout!
-   {:method :post :uri "/user/logout"
-    :on-failure [:x.app-ui/blow-bubble!      {:content :logout-failed :color :warning}]
-    :on-success [:x.boot-loader/restart-app! {:restart-target "/login"}]}])
+  [:x.app-sync/send-request! :x.app-user/logout!
+                             {:method :post :uri "/user/logout"
+                              :on-failure [:x.app-ui/blow-bubble!      {:content :logout-failed :color :warning}]
+                              :on-success [:x.boot-loader/restart-app! {:restart-target "/login"}]}])

@@ -6,7 +6,7 @@
 ; Created: 2020.03.01
 ; Description:
 ; Version: v0.3.0
-; Compatibility: x3.9.9
+; Compatibility: x4.4.6
 
 
 
@@ -42,6 +42,7 @@
 (def get-storage-detail  config-handler/get-storage-detail)
 
 ; x.app-core.debug-handler
+(def console                   debug-handler/console)
 (def query-string->debug-mode? debug-handler/query-string->debug-mode?)
 (def query-string->debug-mode  debug-handler/query-string->debug-mode)
 (def debug-mode?               debug-handler/debug-mode?)
@@ -55,7 +56,6 @@
 (def prot               engine/prot)
 (def sub-prot           engine/sub-prot)
 (def get-namespace      engine/get-namespace)
-(def console            engine/console)
 
 ; x.app-core.event-handler
 (def event-vector?                    event-handler/event-vector?)

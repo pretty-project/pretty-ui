@@ -361,20 +361,6 @@
 
 
 
-/***** App footer *****/
-/*** Footer ***/
-
-.x-app-footer--element[data-position="fixed"] {
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  width: 100% }
-
-/*** Footer ***/
-/***** App footer *****/
-
-
-
 /***** App header *****/
 /*** Header ***/
 

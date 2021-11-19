@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.2.5
+; Version: v0.3.8
+; Compatibility: x4.4.5
 
 
 
@@ -26,15 +26,14 @@
 (a/reg-event-fx
   ::blow-bubble!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/blow-bubble!
-   ::notification
-   {:content     :no-internet-connection
-    :autopop?    false
-    :user-close? false
-    :primary-button
-    {:label    :refresh!
-     :on-click [:x.boot-loader/refresh-app!]
-     :preset   :primary-button}}])
+  [:x.app-ui/blow-bubble! ::notification
+                          {:content     :no-internet-connection
+                           :autopop?    false
+                           :user-close? false
+                           :primary-button
+                           {:label    :refresh!
+                            :on-click [:x.boot-loader/refresh-app!]
+                            :preset   :primary-button}}])
 
 (a/reg-event-fx
   ::blow-bubble?!

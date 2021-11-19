@@ -29,7 +29,7 @@
               [x.app-ui.graphics        :as graphics]
               [x.app-ui.header          :as header]
               [x.app-ui.interface       :as interface]
-              [x.app-ui.popup-label-bar :as popup-label-bar]
+              [x.app-ui.popup-header-presets :as popup-header-presets]
               [x.app-ui.renderer        :as renderer]
               [x.app-ui.structure       :as structure]
               [x.app-ui.themes          :as themes]
@@ -58,19 +58,19 @@
 (def application-interface? interface/application-interface?)
 (def website-interface?     interface/website-interface?)
 
-; x.app-ui.popup-label-bar
-(def popup-icon-button-placeholder popup-label-bar/popup-icon-button-placeholder)
-(def popup-accept-button           popup-label-bar/popup-accept-button)
-(def popup-cancel-button           popup-label-bar/popup-cancel-button)
-(def popup-up-icon-button          popup-label-bar/popup-up-icon-button)
-(def popup-back-icon-button        popup-label-bar/popup-back-icon-button)
-(def popup-close-icon-button       popup-label-bar/popup-close-icon-button)
-(def popup-label                   popup-label-bar/popup-label)
-(def accept-popup-label-bar        popup-label-bar/accept-popup-label-bar)
-(def cancel-popup-label-bar        popup-label-bar/cancel-popup-label-bar)
-(def close-popup-label-bar         popup-label-bar/close-popup-label-bar)
-(def go-up-popup-label-bar         popup-label-bar/go-up-popup-label-bar)
-(def go-back-popup-label-bar       popup-label-bar/go-back-popup-label-bar)
+; x.app-ui.popup-header-presets
+(def popup-icon-button-placeholder popup-header-presets/popup-icon-button-placeholder)
+(def popup-accept-button           popup-header-presets/popup-accept-button)
+(def popup-cancel-button           popup-header-presets/popup-cancel-button)
+(def popup-up-icon-button          popup-header-presets/popup-up-icon-button)
+(def popup-back-icon-button        popup-header-presets/popup-back-icon-button)
+(def popup-close-icon-button       popup-header-presets/popup-close-icon-button)
+(def popup-label                   popup-header-presets/popup-label)
+(def accept-popup-header           popup-header-presets/accept-popup-header)
+(def cancel-popup-header           popup-header-presets/cancel-popup-header)
+(def close-popup-header            popup-header-presets/close-popup-header)
+(def go-up-popup-header            popup-header-presets/go-up-popup-header)
+(def go-back-popup-header          popup-header-presets/go-back-popup-header)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

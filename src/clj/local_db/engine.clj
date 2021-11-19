@@ -66,11 +66,6 @@
   [collection-id]
   (string/nonempty? collection-id))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- collection-id->filepath
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

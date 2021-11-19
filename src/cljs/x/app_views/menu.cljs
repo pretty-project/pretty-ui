@@ -24,10 +24,10 @@
               [x.app-details         :as details]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
+              [x.app-gestures.api    :as gestures]
               [x.app-locales.api     :as locales]
               [x.app-ui.api          :as ui]
-              [x.app-user.api        :as user]
-              [x.app-views.user-card :refer [view] :rename {view user-card}]))
+              [x.app-user.api        :as user]))
 
 
 
@@ -36,6 +36,9 @@
 
 ; @constant (boolean)
 (def DISPLAY-LEGAL-LINKS? false)
+
+; @constant (keyword)
+(def DEFAULT-VIEW :main)
 
 
 
@@ -52,24 +55,18 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-selected-view-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [selected-view (get-in db (db/meta-item-path ::settings :selected-view))]
-       (or selected-view :main)))
-
-(defn- get-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:app-languages            (r locales/get-app-languages         db)
    :app-multilingual?        (r locales/app-multilingual?         db)
    :selected-language        (r locales/get-selected-language     db)
-   :selected-view            (r get-selected-view-id              db)
+   :selected-view            (r gestures/get-selected-view        db ::handler)
    :user-email-address       (r user/get-user-email-address       db)
    :user-name                (r user/get-user-name                db)
    :user-profile-picture-url (r user/get-user-profile-picture-url db)})
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub ::get-body-props get-body-props)
 
 
 
@@ -102,11 +99,11 @@
 
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id view-props]
-  (vector/conj-item (language-selector-languages component-id view-props)
+  [popup-id body-props]
+  (vector/conj-item (language-selector-languages popup-id body-props)
                     [elements/button ::back-button
                                      {:label    :back!
-                                      :on-click [::go-to! :main]
+                                      :on-click [:x.app-gestures/change-view! ::handler :main]
                                       :preset   :back-button}]))
 
 (defn- language-selector-button
@@ -115,7 +112,15 @@
   [elements/button ::language-selector-button
                    {:disabled? (not app-multilingual?)
                     :preset    :language-button
-                    :on-click  [::go-to! :language-selector]}])
+                    :on-click  [:x.app-gestures/change-view! ::handler :language-selector]}])
+
+(defn user-card
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [user-email-address user-name user-profile-picture-url]}]
+  [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
+       [elements/separator {:size :s :orientation :horizontal}]
+       [elements/label     {:content user-name :layout :fit :size :xl :font-weight :extra-bold}]
+       [elements/label     {:content user-email-address :color :highlight :layout :fit :font-size :xs}]])
 
 (defn- settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,7 +167,7 @@
                         :icon             :copyright}]
        [elements/button ::back-button
                         {:label    :back!
-                         :on-click [::go-to! :main]
+                         :on-click [:x.app-gestures/change-view! ::handler  :main]
                          :preset :back-button}]])
 
 (defn- about-app-button
@@ -171,7 +176,7 @@
   [elements/button ::about-app-button
                    {:icon     :copyright
                     :label    :about-app
-                    :on-click [::go-to! :about-app]
+                    :on-click [:x.app-gestures/change-view! ::handler :about-app]
                     :preset   :default-button}])
 
 (defn- logout-button
@@ -183,47 +188,30 @@
 
 (defn- main
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id view-props]
+  [popup-id body-props]
   [:div#x-app-menu--main
-    [language-selector-button component-id view-props]
-    [settings-button          component-id view-props]
-   ;[help-button              component-id view-props]
+    [language-selector-button popup-id body-props]
+    [settings-button          popup-id body-props]
+   ;[help-button              popup-id body-props]
     (if DISPLAY-LEGAL-LINKS?
-        [legal-links component-id view-props])
-    [about-app-button        component-id view-props]
-    [logout-button           component-id view-props]])
+        [legal-links popup-id body-props])
+    [about-app-button        popup-id body-props]
+    [logout-button           popup-id body-props]])
 
 (defn- app-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id {:keys [selected-view] :as view-props}]
+  [popup-id {:keys [selected-view] :as body-props}]
   (case selected-view
-        :about-app         [about-app         component-id view-props]
-        :language-selector [language-selector component-id view-props]
-        :main              [main              component-id view-props]))
+        :about-app         [about-app         popup-id body-props]
+        :language-selector [language-selector popup-id body-props]
+        :main              [main              popup-id body-props]))
 
-(defn- view
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [component-id view-props]
-  [:<> [user-card          component-id view-props]
+  [popup-id body-props]
+  [:<> [user-card          popup-id body-props]
        [elements/separator {:size :l :orientation :horizontal}]
-       [app-menu           component-id view-props]])
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- go-to!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ component-id]]
-  (assoc-in db (db/meta-item-path ::settings :selected-view) component-id))
-
-(a/reg-event-db ::go-to! go-to!)
-
-(defn- reset-menu-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (dissoc-in db (db/meta-item-path ::settings)))
+       [app-menu           popup-id body-props]])
 
 
 
@@ -234,25 +222,25 @@
   ::render-as-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/add-popup! ::view
-                        {:content          #'view
-                         :label-bar        {:content #'ui/close-popup-label-bar}
+                        {:content          #'body
+                         :label-bar        {:content #'ui/close-popup-header}
                          :horizontal-align :left
                          :layout           :boxed
                          :min-width        :xs
-                         :subscriber       [::get-view-props]}])
+                         :subscriber       [::get-body-props]}])
 
 (a/reg-event-fx
   ::render-as-sidebar!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/set-sidebar! ::view
-                          {:content    #'view
-                           :subscriber [::get-view-props]}])
+                          {:content    #'body
+                           :subscriber [::get-body-props]}])
 
 (a/reg-event-fx
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db          (r reset-menu-props! db)
+      {:db          (r gestures/init-view-handler!  db ::handler {:default-view DEFAULT-VIEW})
        :dispatch-if [(r environment/viewport-small? db)
                      [::render-as-sidebar!]
                      [::render-as-sidebar!]]}))

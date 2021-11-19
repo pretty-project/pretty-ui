@@ -28,20 +28,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-label-bar-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  ; XXX#1450
-  ; Ha a :surfaces UI renderer legalább egy surface elemet kirenderel,
-  ; akkor a login-box label-bar sávjában "bezárás gomb", ellenkező esetben
-  ; "vissza gomb" jelenik meg.
-  (if (r ui/any-element-rendered? db :surfaces)
-      {:content       #'ui/close-popup-label-bar
-       :content-props {:label (r a/get-app-detail db :app-title)}}))
-
-(defn- get-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -54,7 +41,7 @@
    :username         (r user/get-user-name         db)
    :synchronizing?   (r sync/listening-to-request? db :x.app-user/authenticate!)})
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub ::get-body-props get-body-props)
 
 
 
@@ -64,8 +51,8 @@
 (defn- login-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (hiccup)
   [_ _]
@@ -76,8 +63,8 @@
 (defn- email-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (component)
   [_ {:keys [synchronizing?]}]
@@ -89,8 +76,8 @@
 (defn- password-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (component)
   [_ {:keys [synchronizing?]}]
@@ -101,8 +88,8 @@
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;  {:synchronizing? (boolean)}
   ;
   ; @return (component)
@@ -120,8 +107,8 @@
 (defn- forgot-password-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (hiccup)
   [_ _]
@@ -137,20 +124,20 @@
 (defn- login-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;  {:login-attempted? (boolean)}
   ;
   ; @return (component)
-  [component-id {:keys [login-attempted?] :as view-props}]
-  [:<> (if login-attempted?    [login-error-message component-id view-props])
+  [popup-id {:keys [login-attempted?] :as body-props}]
+  [:<> (if login-attempted?    [login-error-message popup-id body-props])
        [elements/separator     {:size :m}]
-       [email-address-field    component-id view-props]
+       [email-address-field    popup-id body-props]
        [elements/separator     {:size :m}]
-       [password-field         component-id view-props]
+       [password-field         popup-id body-props]
        [elements/separator     {:size :xl}]
-       [login-button           component-id view-props]
-      ;[forgot-password-button component-id view-props]
+       [login-button           popup-id body-props]
+      ;[forgot-password-button popup-id body-props]
        [elements/separator     {:size :m}]])
 
 
@@ -161,8 +148,8 @@
 (defn- logout-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (component)
   [_ _]
@@ -176,8 +163,8 @@
 (defn- continue-as-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;  {:username (string)}
   ;
   ; @return (component)
@@ -193,8 +180,8 @@
 (defn- signed-in-as-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;  {:username (string)}
   ;
   ; @return (hiccup)
@@ -206,36 +193,34 @@
 (defn- logged-in-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;
   ; @return (component)
-  [component-id view-props]
+  [popup-id body-props]
   [:<> [elements/separator {:size :xs}]
-       [signed-in-as-label component-id view-props]
+       [signed-in-as-label popup-id body-props]
        [elements/separator {:size :m}]
-       [continue-as-button component-id view-props]
-       [logout-button      component-id view-props]])
+       [continue-as-button popup-id body-props]
+       [logout-button      popup-id body-props]])
 
 
 
-;; -- Login box components ----------------------------------------------------
+;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) popup-id
+  ; @param (map) body-props
   ;  {:user-identified? (boolean)}
-  ; @param (vector) subscriber
   ;
   ; @return (component)
-  [component-id {:keys [user-identified?] :as view-props}]
-  [:div#x-login-box
-    (if (boolean user-identified?)
-        [logged-in-form component-id view-props]
-        [login-form     component-id view-props])])
+  [popup-id {:keys [user-identified?] :as body-props}]
+  [:div#x-login-box (if (boolean user-identified?)
+                        [logged-in-form popup-id body-props]
+                        [login-form     popup-id body-props])])
 
 
 
@@ -245,19 +230,13 @@
 (a/reg-event-fx
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map)(opt) login-box-props
-  ;  {:render-exclusive? (boolean)(opt)
-  ;    Default: false}
-  (fn [{:keys [db]} [_ {:keys [render-exclusive?]}]]
-      [:x.app-ui/add-popup! ::view
-                            {:content           #'view
-                             :layout            :boxed
-                             :label-bar         (r get-label-bar-props db)
-                             :min-width         :xs
-                             :render-exclusive? render-exclusive?
-                             :subscriber        [::get-view-props]
-                             :user-close?       false}]))
+  [:x.app-ui/add-popup! ::view
+                        {:content           #'body
+                         :layout            :boxed
+                         :min-width         :xs
+                         :render-exclusive? true
+                         :subscriber        [::get-body-props]
+                         :user-close?       false}])
 
 (a/reg-lifecycles
   ::lifecycles

@@ -21,7 +21,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view-props->step-animation-name
@@ -36,11 +36,6 @@
   (if (and (some? step-animation)
            (some? step-direction))
       (keyword/join step-animation "-" step-direction)))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn steppable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,4 +64,4 @@
   ;
   ; @return (map)
   [db [_ steppable-id]]
-  (r gestures/get-stepper-state db steppable-id))
+  (r gestures/get-step-handler-state db steppable-id))

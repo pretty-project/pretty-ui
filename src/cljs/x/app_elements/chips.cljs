@@ -20,11 +20,11 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.chip       :refer [view] :rename {view chip}]))
+              [x.app-elements.chip       :rename {view chip}]))
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- chips-props->chip-props

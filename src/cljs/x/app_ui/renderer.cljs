@@ -158,11 +158,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn renderer-props->db-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -1277,7 +1272,7 @@
   (if (db/partition->partition-nonempty? renderer-state)
       [elements renderer-id renderer-props renderer-state]))
 
-(defn view
+(defn component
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1295,17 +1290,13 @@
   ;   :rerender-same? (boolean)(opt)
   ;    Default: false}
   ;
-  ; @usage
-  ;  (defn my-element [element-id element-props}])
-  ;  [ui/renderer :my-renderer {:element #'my-element}]
-  ;
   ; @return (component)
   [renderer-id renderer-props]
   (let [dom-id         (engine/renderer-id->dom-id renderer-id)
         renderer-props (a/prot renderer-props renderer-props-prototype)]
        [components/stated dom-id
-         {:component    #'renderer
-          :static-props renderer-props
-          :destructor   [:x.app-ui/destruct-renderer! renderer-id renderer-props]
-          :initializer  [:x.app-ui/init-renderer!     renderer-id renderer-props]
-          :subscriber   [::get-renderer-state         renderer-id]}]))
+                          {:component    #'renderer
+                           :static-props renderer-props
+                           :destructor   [:x.app-ui/destruct-renderer! renderer-id renderer-props]
+                           :initializer  [:x.app-ui/init-renderer!     renderer-id renderer-props]
+                           :subscriber   [::get-renderer-state         renderer-id]}]))

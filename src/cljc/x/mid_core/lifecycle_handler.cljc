@@ -57,11 +57,6 @@
   []
   (keyword (random/generate-string) "lifecycles"))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- life-id->namespace
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -5,15 +5,15 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v3.0.8
-; Compatibility: x3.9.9
+; Version: v3.2.0
+; Compatibility: x4.4.6
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-specials.position-signal
+(ns x.app-tools.position-signal
     (:require [mid-fruits.keyword    :as keyword]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -21,10 +21,21 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (defn my-component [component-id {:keys [position-signal] :as component-props}])
+;  [tools/position-signal :my-component {:component #'my-component}]
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-context-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;
@@ -35,13 +46,15 @@
   (let [position-signal (r environment/get-element-position db component-id)]
        (assoc-in context-props [:component-props :position-signal] position-signal)))
 
+(a/reg-sub ::get-context-props get-context-props)
+
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::init-component!
+  :x.app-tools/init-position-signal!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -64,9 +77,9 @@
   ; @return (hiccup)
   [component-id {:keys [component component-props]}]
   [:div.x-position-signal {:id (keyword/to-dom-value component-id)}
-    [component component-id component-props]])
+                          [component component-id component-props]])
 
-(defn view
+(defn component
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:component (component)
@@ -74,16 +87,14 @@
   ;
   ; @usage
   ;  (defn my-component [component-id {:keys [position-signal] :as component-props}])
-  ;  [components/position-signal :my-component {:component #'my-component}]
+  ;  [tools/position-signal :my-component {:component #'my-component}]
   ;
   ; @return (component)
   ([context-props]
-   [view nil context-props])
+   [component (a/id) context-props])
 
   ([component-id context-props]
-   (let [component-id (a/id component-id)]
-        [components/stated
-         component-id
-         {:component   position-signal-component
-          :initializer [::init-component! component-id]
-          :subscriber  [::get-view-props  component-id context-props]}])))
+   [components/stated component-id
+                      {:component   position-signal-component
+                       :initializer [:x.app-tools/init-position-signal! component-id]
+                       :subscriber  [::get-context-props                component-id context-props]}]))

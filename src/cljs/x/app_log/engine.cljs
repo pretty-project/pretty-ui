@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.1.0
-; Compatibility: x3.9.9
+; Version: v0.1.8
+; Compatibility: x4.4.6
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-log.engine
-    (:require [mid-fruits.random :as random]
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.random :as random]
               [x.app-core.api    :as a :refer [r]]
               [x.app-router.api  :as router]))
 
@@ -31,7 +32,7 @@
   ; @return (map)
   ;  {:route-path (string)}
   [db [_ entry-props]]
-  (merge entry-props
+  (merge (param entry-props)
          {:route-path (r router/get-current-route-path db)}))
 
 
@@ -41,15 +42,17 @@
 
 (a/reg-event-fx
   :x.app-log/add-entry!
+  ; @param (keyword)(opt) entry-id
   ; @param (map) entry-props
   ;  {:entry-type (keyword)(opt)
   ;    XXX#4982
   ;    :db, :error, :user
   ;    Default: :error}
-  (fn [{:keys [db]} [_ entry-props]]
-      (let [entry-props (r entry-props-prototype db entry-props)]
-           {:dispatch [:x.app-sync/send-request!
-                       (random/generate-keyword)
-                       {:method :post
-                        :params {:entry-props entry-props}
-                        :uri "/log/upload-entry"}]})))
+  (fn [{:keys [db]} event-vector]
+      (let [entry-id    (a/event-vector->second-id   event-vector)
+            entry-props (a/event-vector->first-props event-vector)
+            entry-props (r entry-props-prototype db entry-props)]
+           [:x.app-sync/send-request! ::synchronize!
+                                      {:method :post
+                                       :params {:entry-props entry-props}
+                                       :uri    "/log/upload-entry"}])))

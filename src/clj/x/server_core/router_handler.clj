@@ -52,7 +52,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn route-template->route-match
@@ -60,7 +60,8 @@
   ;
   ; @param (string) route-template
   ;
-  ; @return (?)
+  ; @return (reitit.core.Match class)
+  ;  {:data (map)}
   [route-template]
   (let [router (router)]
        (reitit/match-by-path router route-template)))
@@ -70,6 +71,11 @@
   ;
   ; @param (string) route-template
   ; @param (keyword) param-id
+  ;
+  ; @example
+  ;  (a/route-template->route-param "/my-route" :get)
+  ;  =>
+  ;  {:handler my-route-handler}
   ;
   ; @return (*)
   [route-template param-id]
@@ -81,7 +87,8 @@
   ;
   ; @param (map) request
   ;
-  ; @return (?)
+  ; @return (reitit.core.Match class)
+  ;  {:data (map)}
   [request]
   (let [route-template (http/request->route-template request)]
        (route-template->route-match route-template)))
@@ -90,8 +97,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
-  ;  {}
   ; @param (keyword) param-id
+  ;
+  ; @example
+  ;  (a/request->route-param {...} :get)
+  ;  =>
+  ;  {:handler my-route-handler}
   ;
   ; @return (*)
   [request param-id]

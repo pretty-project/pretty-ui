@@ -9,14 +9,14 @@
               [mid-fruits.reader    :as reader]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
+              [plugins.value-editor.api :as value-editor]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
               [x.app-dictionary.api :as dictionary]
               [x.app-elements.api   :as elements]
               [x.app-media.api      :as media]
-              [x.app-sync.api       :as sync]
-              [x.app-tools.api      :as tools]))
+              [x.app-sync.api       :as sync]))
 
 
 
@@ -116,11 +116,6 @@
   [directory-files filter-phrase]
   (map/filter-values-by directory-files #(string/starts-with? % filter-phrase {:case-sensitive? false})
                                         #(get % :file/alias)))
-
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn namespace->query-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -698,7 +693,7 @@
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id file-id]}]]
       (let [directory-entity   (db/item-id->document-entity source-directory-id :directory)
             file-id            (name file-id)
-            file-alias         (r tools/get-editor-value db :media/alias-editor)
+            file-alias         (r value-editor/get-editor-value db :media/alias-editor)
             updated-file-props {:alias         file-alias}
             mutation-props     {:file-id       file-id
                                 :updated-props updated-file-props}
@@ -720,7 +715,7 @@
   (fn [{:keys [db]} [_ action-id {:keys [source-directory-id subdirectory-id]}]]
       (let [directory-entity           (db/item-id->document-entity source-directory-id :directory)
             subdirectory-id            (name subdirectory-id)
-            subdirectory-alias         (r tools/get-editor-value db :media/alias-editor)
+            subdirectory-alias         (r value-editor/get-editor-value db :media/alias-editor)
             updated-subdirectory-props {:alias         subdirectory-alias}
             mutation-props             {:directory-id  subdirectory-id
                                         :updated-props updated-subdirectory-props}
@@ -740,7 +735,7 @@
   ;  {:destination-directory-id (keyword)}
   (fn [{:keys [db]} [_ action-id {:keys [destination-directory-id]}]]
       (let [directory-entity   (db/item-id->document-entity destination-directory-id :directory)
-            subdirectory-alias (r tools/get-editor-value db :media/alias-editor)
+            subdirectory-alias (r value-editor/get-editor-value db :media/alias-editor)
             mutation-props     {:destination-directory-id (name  destination-directory-id)
                                 :directory-alias          (param subdirectory-alias)}
             query-action      `(media/create-directory! ~mutation-props)

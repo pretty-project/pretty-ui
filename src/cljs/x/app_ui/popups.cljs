@@ -17,8 +17,8 @@
     (:require [mid-fruits.candy       :refer [param return]]
               [x.app-core.api         :as a :refer [r]]
               [x.app-environment.api  :as environment]
-              [x.app-ui.popup-layouts :refer [view] :rename {view popup-element}]
-              [x.app-ui.renderer      :as renderer :refer [view] :rename {view renderer}]))
+              [x.app-ui.popup-layouts :rename {view popup-element}]
+              [x.app-ui.renderer      :as renderer :rename {component renderer}]))
 
 
 
@@ -50,7 +50,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- popup-props->render-popup-exclusive?

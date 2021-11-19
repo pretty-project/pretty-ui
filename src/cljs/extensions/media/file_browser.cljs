@@ -44,7 +44,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view-props->done-button-label
@@ -155,11 +155,6 @@
         (or (= browser-mode :copy-to-directory)
             (= browser-mode :move-to-directory))
         #'context-menu/directory-selector-file-context-menu))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn settings-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -68,6 +68,19 @@
   [extension-name item-id]
   (str "/" extension-name "/" item-id))
 
+(defn request-id
+  ; @param (string) extension-name
+  ; @param (string) item-name
+  ;
+  ; @example
+  ;  (item-editor/request-id "products" "product")
+  ;  =>
+  ;  :product-editor/synchronize!
+  ;
+  ; @return (keyword)
+  [extension-name item-name]
+  (keyword (str item-name "-editor") "synchronize!"))
+
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -75,10 +88,12 @@
 
 (defn synchronizing?
   ; @param (string) extension-name
+  ; @param (string) item-name
   ;
   ; @return (boolean)
-  [db [_ _]]
-  (r sync/listening-to-request? db :item-editor/synchronize!))
+  [db [_ extension-name item-name]]
+  (let [request-id (request-id extension-name item-name)]
+       (r sync/listening-to-request? db request-id)))
 
 (defn new-item?
   ; @param (string) extension-name
@@ -108,7 +123,7 @@
             modified-at     (r activities/get-actual-timestamp db modified-at)]
            (components/content {:content :last-modified-at-n :replacements [modified-at]}))))
 
-(defn get-body-view-props
+(defn get-body-props
   ; @param (string) extension-name
   ; @param (string) item-name
   ;
@@ -117,7 +132,7 @@
   [db [_ extension-name item-name]]
   {:new-item? (r new-item? db extension-name item-name)})
 
-(defn get-header-view-props
+(defn get-header-props
   ; @param (string) extension-name
   ; @param (string) item-name
   ;
@@ -139,7 +154,7 @@
   [db [_ extension-name item-name]]
   {:description    (r get-description db extension-name item-name)
    :new-item?      (r new-item?       db extension-name item-name)
-   :synchronizing? (r synchronizing?  db extension-name)})
+   :synchronizing? (r synchronizing?  db extension-name item-name)})
 
 
 
@@ -154,11 +169,13 @@
   ; @usage
   ;  [:item-editor/add-item! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id  (keyword extension-name)
+      (let [request-id    (request-id extension-name item-name)
+            extension-id  (keyword extension-name)
             item-props    (get-in db [extension-id :editor-data])
             parent-path   (str "/" extension-name)
             mutation-name (str extension-name "/add-" item-name "-item!")]
-           [:x.app-sync/send-query! :item-editor/synchronize!
+          ;[:x.app-sync/send-query! :product-editor/synchronize!
+           [:x.app-sync/send-query! request-id
                                     {:on-stalled [:x.app-router/go-to! parent-path]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
@@ -171,11 +188,13 @@
   ; @usage
   ;  [:item-editor/update-item! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id  (keyword extension-name)
+      (let [request-id    (request-id extension-name item-name)
+            extension-id  (keyword extension-name)
             item-props    (get-in db [extension-id :editor-data])
             parent-path   (str "/" extension-name)
             mutation-name (str extension-name "/update-" item-name "-item!")]
-           [:x.app-sync/send-query! :item-editor/synchronize!
+          ;[:x.app-sync/send-query! :product-editor/synchronize!
+           [:x.app-sync/send-query! request-id
                                     {:on-stalled [:x.app-router/go-to! parent-path]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
@@ -188,12 +207,14 @@
   ; @usage
   ;  [:item-editor/delete-item! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id  (keyword extension-name)
+      (let [request-id    (request-id extension-name item-name)
+            extension-id  (keyword extension-name)
             item-id-key   (keyword/join item-name "-id")
             item-id       (get-in db [extension-id :editor-meta :item-id])
             parent-path   (str "/" extension-name)
             mutation-name (str extension-name "/delete-" item-name "-item!")]
-           [:x.app-sync/send-query! :item-editor/synchronize!
+          ;[:x.app-sync/send-query! :product-editor/synchronize!
+           [:x.app-sync/send-query! request-id
                                     {:on-stalled [:x.app-router/go-to! parent-path]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
@@ -206,11 +227,13 @@
   ; @usage
   ;  [:item-editor/duplicate-item! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id  (keyword extension-name)
+      (let [request-id    (request-id extension-name item-name)
+            extension-id  (keyword extension-name)
             item-id-key   (keyword/join item-name "-id")
             item-id       (get-in db [extension-id :editor-meta :item-id])
             mutation-name (str extension-name "/duplicate-" item-name "-item!")]
-           [:x.app-sync/send-query! :item-editor/synchronize!
+          ;[:x.app-sync/send-query! :product-editor/synchronize!
+           [:x.app-sync/send-query! request-id
                                     {:on-stalled [:item-editor/->item-duplicated extension-name item-name]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :copying-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
@@ -260,11 +283,13 @@
   ; @usage
   ;  [:item-editor/request-item! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id (keyword extension-name)
+      (let [request-id   (request-id extension-name item-name)
+            extension-id (keyword extension-name)
             item-id      (get-in db [extension-id :editor-meta :item-id])
             namespace    (keyword item-name)
             entity       (eql/id->entity item-id namespace)]
-           [:x.app-sync/send-query! :item-editor/synchronize!
+          ;[:x.app-sync/send-query! product-editor/synchronize!
+           [:x.app-sync/send-query! request-id
                                     {:on-stalled [:item-editor/receive-item! extension-name item-name]
                                      :query      [{entity [:client/last-name '*]}]}])))
 
@@ -276,7 +301,8 @@
   ; @usage
   ;  [:item-editor/load! "products" "product"]
   (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [extension-id (keyword extension-name)
+      (let [request-id   (request-id extension-name item-name)
+            extension-id (keyword extension-name)
             item-id-key  (keyword/join item-name "-id")
             item-id      (r router/get-current-route-path-param db item-id-key)
             new-item?    (item-id->new-item?  item-id item-name)
@@ -288,7 +314,8 @@
                                (dissoc-in [extension-id :editor-meta])
                               ;(assoc-in  [:products :editor-meta :product-id] "my-product")
                                (assoc-in  [extension-id :editor-meta :item-id] item-id))
-            :dispatch-n [[:x.app-ui/listen-to-process! :item-editor/synchronize!]
+                        ;[:x.app-ui/listen-to-process! :product-editor/synchronize!]
+            :dispatch-n [[:x.app-ui/listen-to-process! request-id]
                         ;[:x.app-ui/set-header-title!  :edit-product]
                          [:x.app-ui/set-header-title!  header-label]
                         ;[:x.app-ui/set-header-title!  :edit-product]

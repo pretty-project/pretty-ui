@@ -5,7 +5,7 @@
 ; Created: 2021.02.06
 ; Description:
 ; Version: v0.4.4
-; Compatibility: x4.3.7
+; Compatibility: x4.4.6
 
 
 
@@ -73,6 +73,6 @@
   ;
   ; @param (keyword) error-props
   (fn [{:keys [db]} [event-id error-props]]
-      {:db (-> db (store-error-props!               [event-id error-props])
-                  (load-handler/stop-synchronizing! [event-id]))
+      {:db       (-> db (store-error-props!               [event-id error-props])
+                        (load-handler/stop-synchronizing! [event-id]))
        :dispatch [:x.app-ui/set-shield! {:content (r get-error-message db)}]}))

@@ -34,11 +34,11 @@
   (let [current-path (r get-current-path db extension-name)]
        (empty? current-path)))
 
-(defn get-header-view-props
+(defn get-header-props
   ; @param (string) extension-name
   ;
   ; @usage
-  ;  (r item-browser/get-header-view-props db "media")
+  ;  (r item-browser/get-header-props db "media")
   ;
   ; @return (map)
   ;  {:at-home? (boolean)}
@@ -112,17 +112,17 @@
   ; @param (map) browser-props
   ;
   ; @usage
-  ;  [:item-browser/add-routes! "media" "directory"]
+  ;  [:item-browser/add-routes! "media" "directory" {...}]
   (fn [_ [_ extension-name item-name browser-props]]
-           ;route-id          :media/route
       (let [route-id          (keyword extension-name "route")
-           ;extended-route-id :media/extended-route
             extended-route-id (keyword extension-name "extended-route")]
+                        ;[:x.app-router/add-route! :media/route
            {:dispatch-n [[:x.app-router/add-route! route-id
                                                    {:route-event    [:item-browser/load! extension-name item-name browser-props]
                                                    ;:route-template "/media"
                                                     :route-template (str "/" extension-name)
                                                     :restricted?    true}]
+                        ;[:x.app-router/add-route! :media/extended-route
                          [:x.app-router/add-route! extended-route-id
                                                    {:route-event    [:item-browser/load! extension-name item-name browser-props]
                                                    ;:route-template "/media/:directory-id"

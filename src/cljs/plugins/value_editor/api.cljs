@@ -1,31 +1,26 @@
 
-; WARNING! EXPIRED! DO NOT USE!
-
-
-
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2020.02.19
+; Created: 2021.11.17
 ; Description:
-; Version: v0.1.0
-; Compatibility:
+; Version: v0.2.8
+; Compatibility: x4.4.6
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-tools.help-center.help-book
-    (:require [x.app-core.api :as a]))
+(ns plugins.value-editor.api
+    (:require [plugins.value-editor.engine :as engine]
+              [plugins.value-editor.views]))
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ::render!
-  [:x.app-ui/blow-bubble!
-   {:content :service-not-available :color :warning}])
+; plugins.value-editor.api
+(def get-editor-value engine/get-editor-value)

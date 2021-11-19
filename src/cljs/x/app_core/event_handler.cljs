@@ -6,7 +6,7 @@
 ; Created: 2020.01.20
 ; Description:
 ; Version: v1.4.2
-; Compatibility: x4.3.6
+; Compatibility: x4.4.6
 
 
 
@@ -22,7 +22,6 @@
               [re-frame.core            :as re-frame]
               [re-frame.registrar       :as registrar]
               [x.app-core.debug-handler :as debug-handler]
-              [x.app-developer.debug    :as debug]
               [x.mid-core.event-handler :as event-handler]))
 
 
@@ -122,9 +121,9 @@
 (def log-event!
      (->interceptor
        :id ::log-event!
-       :before ;(debug/console (context->empty-event-vector %1)
-               ;               (string/join (context->event-props %1)
-               ;                            (str string/break string/break)))
+       :before ;(debug-handler/console (context->empty-event-vector %1)
+               ;                       (string/join (context->event-props %1)
+               ;                                    (str string/break string/break)))
                #(let [event-id        (context->event-id %1)
                       event-namespace (keyword/get-namespace event-id)]
                     ; TEMP
@@ -132,8 +131,8 @@
                     ; névtér eseményei szűrésre kerülnek, a console átláthatóságának
                     ; érdekében.
                     (if-not (= event-namespace :x.app-components.stated)
-                            (debug/console (context->event-vector %1)))
-                           ;(debug/console (context->event-vector %1)
+                            (debug-handler/console (context->event-vector %1)))
+                           ;(debug-handler/console (context->event-vector %1)
                     (return %1))))
 
 (def check-db!

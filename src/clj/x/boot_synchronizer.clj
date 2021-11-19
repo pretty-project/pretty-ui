@@ -44,6 +44,4 @@
                               :reserved-routes (param reserved-routes)
                               :user-account    (db/document->non-namespaced-document user-account)
                               :user-profile    (db/document->pure-document           user-profile)
-                              :user-settings   (db/document->pure-document           user-settings)
-                              ; DEBUG
-                              :debug           {}}})))
+                              :user-settings   (db/document->pure-document           user-settings)}})))

@@ -6,7 +6,7 @@
 ; Created: 2020.02.13
 ; Description:
 ; Version: v0.9.4
-; Compatibility: x4.3.7
+; Compatibility: x4.4.6
 
 
 
@@ -30,10 +30,10 @@
 ;  inicializására.
 ;
 ; @description
-;  Az elem inicializálásának kezdetekor az [::synchronize-loading!]
+;  Az elem inicializálásának kezdetekor az [:x.app-core/synchronize-loading!]
 ;  eseménnyel lehet jelezni az app-loader számára, hogy addig ne tekintse
 ;  befejezettnek az applikáció betöltését, amíg ugyanez az elem nem indítja
-;  el a [::->synchron-signal] eseményt.
+;  el a [:x.app-core/->synchron-signal] eseményt.
 
 
 
@@ -42,7 +42,7 @@
 
 ; @constant (ms)
 ;  App loading timeout
-(def LOAD-TIMEOUT       30000)
+(def LOAD-TIMEOUT 30000)
 
 ; @constant (string)
 (def LOAD-TIMEOUT-ERROR "Load timeout error")
@@ -182,21 +182,21 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
-          {:db (update-in db [::primary :data-items :signals] dec)
+          {:db       (update-in db [::primary :data-items :signals] dec)
            :dispatch [:x.app-core/self-test!]})))
 
 (event-handler/reg-event-fx
   :x.app-core/->app-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r set-app-status! db :loaded)
+      {:db       (r set-app-status! db :loaded)
        :dispatch [:x.app-ui/hide-shield!]}))
 
 (event-handler/reg-event-fx
   :x.app-core/->timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r set-app-status! db :loaded)
+      {:db       (r set-app-status! db :loaded)
        :dispatch [:x.app-ui/set-shield! {:content LOAD-TIMEOUT-ERROR}]}))
 
 

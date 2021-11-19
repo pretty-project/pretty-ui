@@ -6,7 +6,7 @@
 ; Created: 2020.10.15
 ; Description:
 ; Version: v0.1.2
-; Compatibility: x3.9.8
+; Compatibility: x4.4.6
 
 
 
@@ -26,6 +26,3 @@
 (def prot          engine/prot)
 (def sub-prot      engine/sub-prot)
 (def get-namespace engine/get-namespace)
-
-; js/console
-(def console js/console.log)

@@ -34,6 +34,7 @@
 (def get-request-status    request-handler/get-request-status)
 (def get-request-activity  request-handler/get-request-activity)
 (def get-request-progress  request-handler/get-request-progress)
+(def request-sent?         request-handler/request-sent?)
 (def request-successed?    request-handler/request-successed?)
 (def request-failured?     request-handler/request-failured?)
 (def listening-to-request? request-handler/listening-to-request?)

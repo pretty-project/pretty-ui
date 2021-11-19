@@ -91,6 +91,9 @@
       :accept!
       {:en "Accept"
        :hu "Rendben"}
+      :active
+      {:en "Active"
+       :hu "Aktív"}
       :app-menu
       {:en "App menu"
        :hu "Alkalmazás menü"}
@@ -449,6 +452,9 @@
       :add-title!
       {:en "Add title"
        :hu "Címke hozzáadása"}
+      :archive!
+      {:en "Archive"
+       :hu "Arhiválás"}
       :copy
       {:en "Copy"
        :hu "Másolat"}
@@ -476,6 +482,9 @@
       :deselect!
       {:en "Deselect"
        :hu "Kiválasztás megszüntetése"}
+      :draft
+      {:en "Draft"
+       :hu "Vázlat"}
       :duplicate-item!
       {:en "Duplicate item"
        :hu "Elem duplikálása"}

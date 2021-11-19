@@ -38,7 +38,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn uploader-props->allowed-extensions-list
@@ -88,11 +88,6 @@
   ; @return (boolean)
   [{:keys [all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?]}]
   (boolean (or all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?)))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn settings-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

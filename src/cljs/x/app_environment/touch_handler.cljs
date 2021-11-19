@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.2.8
-; Compatibility: x3.9.9
+; Version: v0.3.0
+; Compatibility: x4.4.6
 
 
 
@@ -49,20 +49,18 @@
 (a/reg-event-fx
   ::->touch-events-api-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n
-   [[:x.app-environment.element-handler/set-attribute!
-     "x-body-container" "data-touch-detected" true]
-    [:x.app-db/set-item! (db/meta-item-path ::primary :touch-events-api.detected?)
-                         (param true)]]})
+  (fn [{:keys [db]} _]
+      {:db (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) true)
+       :dispatch-n [:x.app-environment.element-handler/set-attribute!
+                    "x-body-container" "data-touch-detected" true]}))
 
 (a/reg-event-fx
   ::->touch-events-api-not-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n
-   [[:x.app-environment.element-handler/set-attribute!
-     "x-body-container" "data-touch-detected" false]
-    [:x.app-db/set-item! (db/meta-item-path ::primary :touch-events-api.detected?)
-                         (param false)]]})
+  (fn [{:keys [db]} _]
+      {:db (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) false)
+       :dispatch [:x.app-environment.element-handler/set-attribute!
+                  "x-body-container" "data-touch-detected" false]}))
 
 
 

@@ -6,7 +6,7 @@
 ; Created: 2021.03.16
 ; Description:
 ; Version: v0.6.2
-; Compatibility: x4.1.7
+; Compatibility: x4.4.6
 
 
 
@@ -61,7 +61,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- context-props->dynamic-props
@@ -107,7 +107,7 @@
         (str "static-props: "  static-props)
         (str "dynamic-props: " dynamic-props)])
 
-(defn view
+(defn component
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) component-id
@@ -144,22 +144,19 @@
   ;
   ; @return (component)
   ([context-props]
-   [view nil context-props])
+   [component nil context-props])
 
   ([component-id {:keys [component static-props] :as context-props}]
    (let [dynamic-props (context-props->dynamic-props component-id context-props)]
-        [:<> (cond ; Both static-props and dynamic-props
-                   (and (map/nonempty? static-props)
-                        (map/nonempty? dynamic-props))
-                   [component component-id static-props dynamic-props]
+                   ; Both static-props and dynamic-props
+        [:<> (cond (and (map/nonempty? static-props)
+                        (map/nonempty? dynamic-props)) [component component-id static-props dynamic-props]
                    ; Only static-props
-                   (map/nonempty? static-props)
-                   [component component-id static-props]
+                   (map/nonempty? static-props)        [component component-id static-props]
                    ; Only dynamic-props
-                   (map/nonempty? dynamic-props)
-                   [component component-id dynamic-props]
-                   :else
-                   [component component-id])
+                   (map/nonempty? dynamic-props)       [component component-id dynamic-props]
+                   ; *
+                   :else                               [component component-id])])))
 
              ; DEBUG
-             [debug component-id static-props dynamic-props]])))
+             ;[debug component-id static-props dynamic-props]

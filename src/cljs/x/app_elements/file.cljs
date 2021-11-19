@@ -67,11 +67,6 @@
           (assoc :on-context-menu #(do (.preventDefault %)
                                        (a/dispatch on-right-click)))))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- view-props->file-preview-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

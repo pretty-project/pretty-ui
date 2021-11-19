@@ -23,7 +23,7 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.text-field :refer [view] :rename {view text-field}]))
+              [x.app-elements.text-field :rename {view text-field}]))
 
 
 
@@ -35,7 +35,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view-props->single-field?

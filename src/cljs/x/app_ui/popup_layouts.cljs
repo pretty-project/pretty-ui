@@ -23,12 +23,12 @@
               [x.app-environment.api   :as environment]
               [x.app-ui.element        :as element]
               [x.app-ui.popup-geometry :as geometry]
-              [x.app-ui.popup-header   :refer [view] :rename {view popup-header}]
+              [x.app-ui.popup-header   :rename {view popup-header}]
               [x.app-ui.renderer       :as renderer]))
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- popup-props->cover-on-click-event
@@ -40,11 +40,6 @@
   ; @return (function)
   [{:keys [user-close?]}]
   (if user-close? #(a/dispatch [:x.app-ui/close-upper-popup!])))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn- popup-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

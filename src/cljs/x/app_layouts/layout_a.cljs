@@ -14,12 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.layout-a
-    (:require [mid-fruits.candy      :refer [param return]]
-              [mid-fruits.keyword    :as keyword]
-              [x.app-components.api  :as components]
-              [x.app-core.api        :as a]
-              [x.app-elements.api    :as elements]
-              [x.app-layouts.headers :as headers]))
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.keyword   :as keyword]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a]
+              [x.app-elements.api   :as elements]))
 
 
 
@@ -75,7 +74,7 @@
                    (if (some? description)
                        [:div.x-header-a--description (components/content {:content description})])])
 
-(defn- layout
+(defn- layout-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) layout-id
@@ -90,7 +89,7 @@
            [layout-header layout-id layout-props])
        [layout-body layout-id layout-props]])
 
-(defn view
+(defn layout
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
   ;  {:body (map)
@@ -120,8 +119,8 @@
   ; @return (component)
   ([layout-props]
    (let [layout-id (a/id)]
-        [view layout-id layout-props]))
+        [layout layout-id layout-props]))
 
   ([layout-id layout-props]
    (let [layout-props (a/prot layout-props layout-props-prototype)]
-        [layout layout-id layout-props])))
+        [layout-a layout-id layout-props])))

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.2.5
+; Version: v0.7.2
+; Compatibility: x4.4.6
 
 
 
@@ -20,6 +20,21 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]))
+
+
+
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (a/dispatch [:x.app-tools/reg-schedule! {:minute 10 :event [:do-something!]}])
+
+; @usage
+;  (a/dispatch [:x.app-tools/reg-schedule! {:hour 3 :minute 10 :event [:do-something!]}])
+
+; @usage
+;  (a/dispatch [:x.app-tools/reg-schedule!    :my-schedule {...}])
+;  (a/dispatch [:x.app-tools/remove-schedule! :my-schedule])
 
 
 
@@ -39,11 +54,6 @@
         minutes (time/get-minutes)]
        (and (or (nil? hour)   (= hour hours))
             (or (nil? minute) (= minute minutes)))))
-
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn- schedules->actual-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,10 +102,7 @@
   ;
   ; @return (map)
   [db [_ schedule-id schedule-props]]
-  (assoc-in db (db/path ::schedules schedule-id)
-               (param schedule-props)))
-
-(a/reg-event-db ::store-schedule-props! store-schedule-props!)
+  (assoc-in db (db/path ::schedules schedule-id) schedule-props))
 
 (defn- remove-schedule-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,12 +113,12 @@
   [db [_ schedule-id]]
   (dissoc-in db (db/path ::schedules schedule-id)))
 
-(a/reg-event-db ::remove-schedule-props! remove-schedule-props!)
-
 (defn- ->scheduler-inited
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
   [db _]
-  (assoc-in db (db/meta-item-path ::schedules :scheduler-inited?)
-               (param true)))
+  (assoc-in db (db/meta-item-path ::schedules :scheduler-inited?) true))
 
 
 
@@ -119,37 +126,34 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::reg-scheduler-interval!
+  :x.app-tools/reg-scheduler-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
-      {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute) :dispatch
-                         [:x.app-environment.window-handler/set-interval!
-                          ::interval {:event [::watch-time!] :interval 60000}]}]}))
+      {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute)}
+                        :dispatch [:x.app-environment.window-handler/set-interval! ::interval
+                                   {:event [:x.app-tools/watch-scheduler-time!] :interval 60000}]]}))
 
 (a/reg-event-fx
-  ::init-scheduler!
+  :x.app-tools/init-scheduler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r scheduler-inited? db)
-
-               ; A ->scheduler-inited státusz esemény az adatbázisba ír, hogy
-               ; a közvetlenül egymás után megtörténő [::reg-schedule!]
-               ; események ne tudjanak egyszerre több scheduler-interval
-               ; időzítőt regisztrálni
-              {:db (r ->scheduler-inited db)
-
-               :dispatch-n [[::watch-time!]
-                            [::reg-scheduler-interval!]]})))
+               ; A ->scheduler-inited státusz esemény az adatbázisba ír,
+               ; hogy a közvetlenül egymás után megtörténő [::x.app-tools/reg-schedule!]
+               ; események ne tudjanak egyszerre több scheduler-interval időzítőt regisztrálni
+              {:db         (r ->scheduler-inited db)
+               :dispatch-n [[:x.app-tools/watch-scheduler-time!]
+                            [:x.app-tools/reg-scheduler-interval!]]})))
 
 (a/reg-event-fx
-  ::watch-time!
+  :x.app-tools/watch-scheduler-time!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [schedules (get-in db (db/path ::schedules))]
            {:dispatch-n (schedules->actual-events schedules)})))
 
 (a/reg-event-fx
-  ::reg-schedule!
+  :x.app-tools/reg-schedule!
   ; @param (keyword)(opt) schedule-id
   ; @param (map) schedule-props
   ;  {:hour (integer)(opt)
@@ -157,20 +161,22 @@
   ;   :event (metamorphic-event)}
   ;
   ; @usage
-  ;  [::reg-schedule! {:minute 10 :event [:do-something!]}]
-  ;  [::reg-schedule! {:hour 3 :minute 10 :event [:do-something!]}]
-  (fn [_ event-vector]
+  ;  [:x.app-tools/reg-schedule! {:minute 10 :event [:do-something!]}]
+
+  ; @usage
+  ;  [:x.app-tools/reg-schedule! {:hour 3 :minute 10 :event [:do-something!]}]
+  (fn [{:keys [db]} event-vector]
       (let [schedule-id    (a/event-vector->second-id   event-vector)
             schedule-props (a/event-vector->first-props event-vector)]
-           {:dispatch-n [[::store-schedule-props! schedule-id schedule-props]
-                         [::init-scheduler!]]})))
+           {:db       (r store-schedule-props! db schedule-id schedule-props)
+            :dispatch [:x.app-tools/init-scheduler!]})))
 
 (a/reg-event-fx
-  ::remove-schedule!
+  :x.app-tools/remove-schedule!
   ; @param (keyword) schedule-id
-  (fn [_ [_ schedule-id]]
-      {:dispatch-n [[::remove-schedule-props! schedule-id]
-                    [::->schedule-removed]]}))
+  (fn [{:keys [db]} [_ schedule-id]]
+      {:db       (r remove-schedule-props! db schedule-id)
+       :dispatch [:x.app-tools/->schedule-removed]}))
 
 
 
@@ -178,7 +184,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->schedule-removed
+  :x.app-tools/->schedule-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-if [(not (r any-schedule-registered? db))

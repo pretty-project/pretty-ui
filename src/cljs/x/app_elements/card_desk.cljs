@@ -19,7 +19,7 @@
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.card       :refer [view] :rename {view card}]
+              [x.app-elements.card       :rename {view card}]
               [x.app-elements.engine.api :as engine]))
 
 

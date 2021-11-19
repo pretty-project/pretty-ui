@@ -1,10 +1,6 @@
 
 (ns project-emulator.core
     (:require [x.boot-loader]
-              [extensions.clients.api]
-              [extensions.home.api]
-              [extensions.media.api]
-              ;[extensions.products.api]
 
               ; TEMP
               [playground.api]))
@@ -23,6 +19,7 @@
   ;
   ; @return (component or hiccup)
   [ui-structure]
+ ;[:div#your-app [ui-structure]]
   [ui-structure])
 
 

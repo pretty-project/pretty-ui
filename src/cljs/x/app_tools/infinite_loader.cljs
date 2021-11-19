@@ -5,15 +5,15 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.4.1
+; Version: v0.3.2
+; Compatibility: x4.4.6
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-components.infinite-loader
+(ns x.app-tools.infinite-loader
     (:require [app-fruits.dom     :as dom]
               [app-fruits.reagent :refer [ratom lifecycles]]
               [mid-fruits.candy   :refer [param return]]
@@ -25,15 +25,35 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;
+;  [tools/infinite-loader {:on-viewport [:do-something!]}]
+
+; @usage
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;
+;  [tools/infinite-loader :my-infinite-loader {:on-viewport [:do-something!]}]
+;
+;  (a/dispatch [:x.app-tools/reload-infinite-loader! :my-infinite-loader])
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- loader-id->observer-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) loader-id
   ;
   ; @example
   ;  (loader-id->observer-id :my-loader)
-  ;  => :my-loader--observer
+  ;  =>
+  ;  :my-loader--observer
   ;
   ; @return (keyword)
   [loader-id]
@@ -44,7 +64,9 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- observer-hidden?
+(defn- infinite-observer-hidden?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) loader-id
   ;
   ; @return (boolean)
@@ -53,42 +75,34 @@
       ;(= visible? nil) = (= visible? true)
        (= visible? false)))
 
-(a/reg-sub :x.app-components/observer-hidden? observer-hidden?)
+(a/reg-sub ::infinite-observer-hidden? infinite-observer-hidden?)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn hide-observer!
-  ; @param (keyword) loader-id
+(defn hide-infinite-observer!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r components/hide-observer! db :my-loader)
+  ; @param (keyword) loader-id
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?)
-               (param false)))
+  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) false))
 
-; @usage
-;  [:x.app-components/hide-observer! :my-loader]
-(a/reg-event-db :x.app-components/hide-observer! hide-observer!)
+(a/reg-event-db :x.app-tools/hide-infinite-observer! hide-infinite-observer!)
 
-(defn show-observer!
-  ; @param (keyword) loader-id
+(defn show-infinite-observer!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r components/show-observer! db :my-loader)
+  ; @param (keyword) loader-id
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?)
-               (param true)))
+  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) true))
 
-; @usage
-;  [:x.app-components/show-observer! :my-loader]
-(a/reg-event-db :x.app-components/show-observer! show-observer!)
+(a/reg-event-db :x.app-tools/show-infinite-observer! show-infinite-observer!)
 
 
 
@@ -96,30 +110,33 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-components/reload-infinite-loader!
+  :x.app-tools/reload-infinite-loader!
   ; @param (keyword) loader-id
+  ;
+  ; @usage
+  ;  [:x.app-tools/reload-infinite-loader! :my-loader]
   (fn [{:keys [db]} [_ loader-id]]
        ; Az infinite-loader komponensben elhelyezett observer viewport-on kívülre
        ; helyezése, majd visszaállítása újra meghívja az infinite-loader komponens
        ; számára callback paraméterként átadott függvényt.
-      {:db (r hide-observer! db loader-id)
+      {:db (r hide-infinite-observer! db loader-id)
        ; A túlságosan rövid ideig (pl.: 5ms) a viewport-on kívülre helyezett observer
        ; nem minden esetben hívja meg a callback függvényt.
-       :dispatch-later [{:ms 50 :dispatch [:x.app-components/show-observer! loader-id]}]}))
+       :dispatch-later [{:ms 50 :dispatch [:x.app-tools/show-infinite-observer! loader-id]}]}))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- observer
+(defn- infinite-observer
   ; @param (keyword) loader-id
   ; @param (boolean) hidden?
   ;
   ; @return (component)
   [loader-id]
   (let [observer-id (loader-id->observer-id loader-id)
-        hidden?     (a/subscribe [:x.app-components/observer-hidden? loader-id])]
+        hidden?     (a/subscribe [::infinite-observer-hidden? loader-id])]
        (fn [] [:div {:id    (keyword/to-dom-value observer-id)
                      :style (if (deref hidden?)
                                 {:position :fixed :bottom "-100px"})}])))
@@ -130,17 +147,19 @@
   ; @return (component)
   [loader-id]
   [:div.x-infinite-loader {:id (keyword/to-dom-value loader-id)}
-                          ;"Infinite loader"
-                          [observer loader-id]])
+                          [infinite-observer loader-id]])
 
-(defn view
+(defn component
   ; @param (keyword)(opt) loader-id
   ; @param (map) loader-props
   ; {:on-viewport (metamorphic-event)}
   ;
+  ; @usage
+  ;  [tools/infinite-loader {:on-viewport ...}]
+  ;
   ; @return (component)
   ([loader-props]
-   [view nil loader-props])
+   [component nil loader-props])
 
   ([loader-id {:keys [on-viewport] :as loader-props}]
    (let [loader-id    (a/id                   loader-id)

@@ -255,11 +255,6 @@
                      (and (map? event-map)
                           (map/contains-key? event-map :dispatch))))))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn event-vector->param-vector
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

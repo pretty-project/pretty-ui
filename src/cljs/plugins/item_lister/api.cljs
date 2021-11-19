@@ -11,11 +11,12 @@
 ; plugins.item-lister.engine
 (def DEFAULT-ORDER-BY          engine/DEFAULT-ORDER-BY)
 (def DEFAULT-ORDER-BY-OPTIONS  engine/DEFAULT-ORDER-BY-OPTIONS)
+(def request-id                engine/request-id)
 (def synchronizing?            engine/synchronizing?)
 (def get-downloaded-items      engine/get-downloaded-items)
 (def get-downloaded-item-count engine/get-downloaded-item-count)
 (def get-all-item-count        engine/get-all-item-count)
-(def get-header-view-props     engine/get-header-view-props)
+(def get-header-props          engine/get-header-props)
 (def get-view-props            engine/get-view-props)
 (def toggle-search-mode!       engine/toggle-search-mode!)
 (def toggle-select-mode!       engine/toggle-select-mode!)

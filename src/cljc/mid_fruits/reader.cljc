@@ -33,11 +33,6 @@
   #?(:cljs (try (reader/read-string n) (catch :default  e (str "Reader error #510")))
      :clj  (try (edn/read-string    n) (catch Exception e (str "Reader error #509")))))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn mixed->string
   ; @param (*) n
   ;

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.03.23
 ; Description:
-; Version: v0.6.2
-; Compatibility: x3.9.9
+; Version: v0.6.8
+; Compatibility: x4.4.6
 
 
 
@@ -42,8 +42,6 @@
   [db [_ theme-name]]
   (r user/set-user-settings-item! db :selected-theme theme-name))
 
-(a/reg-event-db :x.app-ui/store-selected-theme! store-selected-theme!)
-
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -52,9 +50,12 @@
 (a/reg-event-fx
   :x.app-ui/set-theme!
   ; @param (string) theme-name
-  (fn [_ [_ theme-name]]
-      {:dispatch-n [[:x.app-ui/store-selected-theme! theme-name]
-                    [:x.app-ui/->theme-changed]]}))
+  ;
+  ; @usage
+  ;  [:x.app-ui/set-theme! "light"]
+  (fn [{:keys [db]} [_ theme-name]]
+      {:db       (r store-selected-theme! db theme-name)
+       :dispatch [:x.app-ui/->theme-changed]}))
 
 
 

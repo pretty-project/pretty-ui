@@ -27,12 +27,12 @@
 
 (a/reg-sub ::get-item-view-props get-item-view-props)
 
-(defn- get-header-view-props
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-lister/get-header-view-props db "clients"))
+  (r item-lister/get-header-props db "clients"))
 
-(a/reg-sub ::get-header-view-props get-header-view-props)
+(a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,7 +43,7 @@
 
 
 
-;; -- Client-item components --------------------------------------------------
+;; -- List-item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- client-item-secondary-details
@@ -79,73 +79,71 @@
 
 
 
-;; -- Client-list header components -------------------------------------------
+;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-list-desktop-header
+(defn- desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
+  [header-id header-props]
   [elements/polarity ::desktop-header
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
                                           [item-lister/sort-items-button  "clients" "client"
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
                                                                            :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button "clients"]
+                                          [item-lister/select-multiple-items-button         "clients"]
                                           [item-lister/toggle-item-filter-visibility-button "clients"]]
-                                          ;[item-lister/delete-selected-items-button "clients" view-props]]
+                                          ;[item-lister/delete-selected-items-button "clients" header-props]]
                       :end-content   [:<> [item-lister/search-items-field "clients" "client"]]}])
 
-(defn- client-list-mobile-header
+(defn- mobile-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
+  [header-id header-props]
   [elements/polarity ::mobile-header
                      {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
                                           [item-lister/sort-items-button  "clients" "client"
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
                                                                            :initial-value item-lister/DEFAULT-ORDER-BY}]
                                           [item-lister/select-multiple-items-button "clients"]
-                                          [item-lister/delete-selected-items-button "clients" view-props]]
+                                          [item-lister/delete-selected-items-button "clients" header-props]]
                       :end-content   [:<> [item-lister/search-mode-button "clients"]]}])
 
-(defn- client-list-header
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
+  [header-id {:keys [search-mode? viewport-small?] :as header-props}]
   (cond ; search-mode & small viewport
         (and viewport-small? search-mode?)
         [item-lister/search-header "clients" "client"]
         ; small viewport
         (boolean viewport-small?)
-        [client-list-mobile-header  surface-id view-props]
+        [mobile-header  header-id header-props]
         ; large viewport
         :desktop-header
-        [client-list-desktop-header surface-id view-props]))
+        [desktop-header header-id header-props]))
 
 
 
-;; -- Client-list body components ---------------------------------------------
+;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-list-body
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id]
+  [body-id]
   [item-lister "clients" "client"
                {:list-element #'client-item}])
 
 
 
-;; -- Client-list components --------------------------------------------------
+;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [all-item-count downloaded-item-count]}]
-  (let [description (components/content {:content :npn-items-downloaded
-                                         :replacements [downloaded-item-count all-item-count]})]
-       [layouts/layout-a surface-id {:body   {:content    #'client-list-body}
-                                     :header {:content    #'client-list-header
-                                              :sticky?    true
-                                              :subscriber [::get-header-view-props]}
-                                     :description description}]))
+  [surface-id {:keys [description]}]
+  [layouts/layout-a surface-id {:body   {:content    #'body}
+                                :header {:content    #'header
+                                         :sticky?    true
+                                         :subscriber [::get-header-props]}
+                                :description description}])
 
 
 

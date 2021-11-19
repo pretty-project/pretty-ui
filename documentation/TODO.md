@@ -12,6 +12,19 @@
 
 # x4.3.0
 
+- Ha kész a media, lehet hogy a listener komponensre sem lesz szükség
+
+- popup és surface elemeken body és header elnevés content és label-bar helyett
+
+- Amikor egy formot töltesz ki és van el nem mentett változás, akkor ha el akarod hagyni
+  az oldalt, akkor kérdezze meg, hogy biztos eldobod a nem mentett változásokat?
+  És nyugodtan legyn warning a gomb ami eldobja és továbbvisz máshova, mert ez oylan mint egy törlés
+
+- Multi-combobox elembe igy nézzen ki egy placeholder: "green, red, purple"
+  Szóval vesszővel lehet elválasztani a tag-eket és a vessző billentyű leütése is viselkedjen
+  ugyanugy mint az enter (kiüriti a mezőt és hozzáad egy chip-et)
+
+
 - params helyett transit-paramsbol szedi ki a query-t a pathom, le kell tesztelni fájlefeltöltésre is!
 
 - A text-field mérete megnő ha elég hosszu a helper alatta

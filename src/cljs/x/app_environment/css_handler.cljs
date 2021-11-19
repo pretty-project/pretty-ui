@@ -94,11 +94,6 @@
   (if as-first? (insert-link-element-as-first! head-element link-element)
                 (insert-link-element-as-last!  head-element link-element)))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- filename->external-css-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

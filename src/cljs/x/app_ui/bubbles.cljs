@@ -20,7 +20,7 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-ui.element     :as element]
-              [x.app-ui.renderer    :as renderer :refer [view] :rename {view renderer}]
+              [x.app-ui.renderer    :as renderer :rename {component renderer}]
               [x.app-user.api       :as user]))
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v0.6.8
-; Compatibility: x3.9.9
+; Version: v0.8.2
+; Compatibility: x4.4.6
 
 
 
@@ -33,10 +33,10 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn extended-props->stepper-props
+(defn extended-props->step-handler-props
   ; @param (map) extended-props
   ;
   ; @return (map)
@@ -49,10 +49,10 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- stepper-props-prototype
+(defn- handler-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) stepper-props
+  ; @param (map) handler-props
   ;  {:autostep? (boolean)(opt)}
   ;
   ; @return (map)
@@ -61,173 +61,173 @@
   ;   :paused? (boolean)
   ;   :step-duration (integer)
   ;   :step-interval (integer)}
-  [{:keys [autostep?] :as stepper-props}]
+  [{:keys [autostep?] :as handler-props}]
   (merge {:autostep?          false
           :infinite-stepping? true
           :step-duration      DEFAULT-STEP-DURATION}
          (if autostep? {:paused?       false
                         :step-interval DEFAULT-STEP-INTERVAL})
-         (param stepper-props)))
+         (param handler-props)))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn stepper-inited?
-  ; @param (keyword) stepper-id
+(defn step-handler-inited?
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (map/nonempty? (get-in db (db/path ::steppers stepper-id))))
+  [db [_ handler-id]]
+  (map/nonempty? (get-in db (db/path ::step-handlers handler-id))))
 
-(defn- get-stepper-prop
+(defn- get-step-handler-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ; @param (keyword) prop-id
   ;
   ; @return (*)
-  [db [_ stepper-id prop-id]]
-  (get-in db (db/path ::steppers stepper-id prop-id)))
+  [db [_ handler-id prop-id]]
+  (get-in db (db/path ::step-handlers handler-id prop-id)))
 
 (defn autostep?
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (and (r get-stepper-prop db stepper-id :autostep?)
-       (not (r get-stepper-prop db stepper-id :paused?))))
+  [db [_ handler-id]]
+  (and (r get-step-handler-prop      db handler-id :autostep?)
+       (not (r get-step-handler-prop db handler-id :paused?))))
 
 (defn progressive-stepping?
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (let [step-duration (r get-stepper-prop db stepper-id :step-duration)]
+  [db [_ handler-id]]
+  (let [step-duration (r get-step-handler-prop db handler-id :step-duration)]
        (> step-duration 0)))
 
 (defn get-step-timeout
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (let [step-duration (r get-stepper-prop db stepper-id :step-duration)
-        step-interval (r get-stepper-prop db stepper-id :step-interval)]
+  [db [_ handler-id]]
+  (let [step-duration (r get-step-handler-prop db handler-id :step-duration)
+        step-interval (r get-step-handler-prop db handler-id :step-interval)]
        (+ step-duration step-interval)))
 
 (defn get-steps
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ stepper-id]]
-  (r get-stepper-prop db stepper-id :steps))
+  [db [_ handler-id]]
+  (r get-step-handler-prop db handler-id :steps))
 
 (defn get-step
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ; @param (integer) dex
   ;
   ; @return (*)
-  [db [_ stepper-id dex]]
-  (nth (r get-steps db stepper-id) dex))
+  [db [_ handler-id dex]]
+  (nth (r get-steps db handler-id) dex))
 
 (defn get-max-dex
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (if-let [steps (r get-steps db stepper-id)]
+  [db [_ handler-id]]
+  (if-let [steps (r get-steps db handler-id)]
           (let [step-count (count steps)]
                (dec step-count))
           (return 0)))
 
 (defn get-current-dex
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (or (r get-stepper-prop db stepper-id :current-dex)
+  [db [_ handler-id]]
+  (or (r get-step-handler-prop db handler-id :current-dex)
       (return 0)))
 
 (defn max-dex-reached?
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (= (r get-max-dex     db stepper-id)
-     (r get-current-dex db stepper-id)))
+  [db [_ handler-id]]
+  (= (r get-max-dex     db handler-id)
+     (r get-current-dex db handler-id)))
 
 (defn get-prev-dex
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (let [steps       (r get-steps       db stepper-id)
-        current-dex (r get-current-dex db stepper-id)]
-       (if (r get-stepper-prop db stepper-id :infinite-stepping?)
+  [db [_ handler-id]]
+  (let [steps       (r get-steps       db handler-id)
+        current-dex (r get-current-dex db handler-id)]
+       (if (r get-step-handler-prop db handler-id :infinite-stepping?)
            (vector/prev-dex steps current-dex)
            (vector/dec-dex  steps current-dex))))
 
 (defn get-next-dex
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (let [steps       (r get-steps       db stepper-id)
-        current-dex (r get-current-dex db stepper-id)]
-       (if (r get-stepper-prop db stepper-id :infinite-stepping?)
+  [db [_ handler-id]]
+  (let [steps       (r get-steps       db handler-id)
+        current-dex (r get-current-dex db handler-id)]
+       (if (r get-step-handler-prop db handler-id :infinite-stepping?)
            (vector/next-dex steps current-dex)
-           (if (r max-dex-reached? db stepper-id)
+           (if (r max-dex-reached? db handler-id)
                (return current-dex)
                (vector/inc-dex steps current-dex)))))
 
 (defn get-current-step
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (*)
-  [db [_ stepper-id]]
-  (let [current-dex (r get-current-dex db stepper-id)]
-       (r get-step db stepper-id current-dex)))
+  [db [_ handler-id]]
+  (let [current-dex (r get-current-dex db handler-id)]
+       (r get-step db handler-id current-dex)))
 
 (defn get-prev-step
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (*)
-  [db [_ stepper-id]]
-  (let [prev-dex (r get-prev-dex db stepper-id)]
-       (r get-step db stepper-id prev-dex)))
+  [db [_ handler-id]]
+  (let [prev-dex (r get-prev-dex db handler-id)]
+       (r get-step db handler-id prev-dex)))
 
 (defn get-next-step
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (*)
-  [db [_ stepper-id]]
-  (let [next-dex (r get-next-dex db stepper-id)]
-       (r get-step db stepper-id next-dex)))
+  [db [_ handler-id]]
+  (let [next-dex (r get-next-dex db handler-id)]
+       (r get-step db handler-id next-dex)))
 
-(defn stepper-paused?
-  ; @param (keyword) stepper-id
+(defn stepping-paused?
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (r get-stepper-prop db stepper-id :paused?))
+  [db [_ handler-id]]
+  (r get-step-handler-prop db handler-id :paused?))
 
 (defn get-step-count
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (integer)
-  [db [_ stepper-id]]
-  (count (r get-steps db stepper-id)))
+  [db [_ handler-id]]
+  (count (r get-steps db handler-id)))
 
 (defn step-in-progress?
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ stepper-id]]
-  (some? (r get-stepper-prop db stepper-id :step-direction)))
+  [db [_ handler-id]]
+  (some? (r get-step-handler-prop db handler-id :step-direction)))
 
-(defn get-stepper-state
-  ; @param (keyword) stepper-id
+(defn get-step-handler-state
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
   ;  {:current-dex (integer)
@@ -238,75 +238,75 @@
   ;   :prev-dex (integer)
   ;   :prev-step (*)
   ;   :step-direction (keyword)}
-  [db [_ stepper-id]]
-  {:current-dex    (r get-current-dex  db stepper-id)
-   :current-step   (r get-current-step db stepper-id)
-   :next-dex       (r get-next-dex     db stepper-id)
-   :next-step      (r get-next-step    db stepper-id)
-   :paused?        (r stepper-paused?  db stepper-id)
-   :prev-dex       (r get-prev-dex     db stepper-id)
-   :prev-step      (r get-prev-step    db stepper-id)
-   :step-direction (r get-stepper-prop db stepper-id :step-direction)})
+  [db [_ handler-id]]
+  {:current-dex    (r get-current-dex  db handler-id)
+   :current-step   (r get-current-step db handler-id)
+   :next-dex       (r get-next-dex     db handler-id)
+   :next-step      (r get-next-step    db handler-id)
+   :paused?        (r stepping-paused? db handler-id)
+   :prev-dex       (r get-prev-dex     db handler-id)
+   :prev-step      (r get-prev-step    db handler-id)
+   :step-direction (r get-step-handler-prop db handler-id :step-direction)})
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-stepper-prop!
+(defn- set-step-handler-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ; @param (keyword) prop-id
   ; @param (*) prop-value
   ;
   ; @return (map)
-  [db [_ stepper-id prop-id prop-value]]
-  (assoc-in db (db/path ::steppers stepper-id prop-id) prop-value))
+  [db [_ handler-id prop-id prop-value]]
+  (assoc-in db (db/path ::step-handlers handler-id prop-id) prop-value))
 
-(a/reg-event-db :x.app-gestures/set-stepper-prop! set-stepper-prop!)
+(a/reg-event-db :x.app-gestures/set-step-handler-prop! set-step-handler-prop!)
 
-(defn- remove-stepper-prop!
+(defn- remove-step-handler-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) stepper-id
+  ; @param (keyword) handler-id
   ; @param (keyword) prop-id
   ;
   ; @return (map)
-  [db [_ stepper-id prop-id]]
-  (dissoc-in db (db/path ::steppers stepper-id prop-id)))
+  [db [_ handler-id prop-id]]
+  (dissoc-in db (db/path ::step-handlers handler-id prop-id)))
 
-(a/reg-event-db :x.app-gestures/remove-stepper-prop! remove-stepper-prop!)
+(a/reg-event-db :x.app-gestures/remove-step-handler-prop! remove-step-handler-prop!)
 
-(defn- store-stepper-props!
+(defn- store-step-handler-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) stepper-id
-  ; @param (map) stepper-props
+  ; @param (keyword) handler-id
+  ; @param (map) handler-props
   ;
   ; @return (map)
-  [db [_ stepper-id stepper-props]]
-  (assoc-in db (db/path ::steppers stepper-id) stepper-props))
+  [db [_ handler-id handler-props]]
+  (assoc-in db (db/path ::step-handlers handler-id) handler-props))
 
-(a/reg-event-db :x.app-gestures/store-stepper-props! store-stepper-props!)
+(a/reg-event-db :x.app-gestures/store-step-handler-props! store-step-handler-props!)
 
-(defn pause-stepper!
-  ; @param (keyword) stepper-id
+(defn pause-stepping!
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
-  [db [_ stepper-id]]
-  (r set-stepper-prop! db stepper-id :paused? true))
+  [db [_ handler-id]]
+  (r set-step-handler-prop! db handler-id :paused? true))
 
-(a/reg-event-db :x.app-gestures/pause-stepper! pause-stepper!)
+(a/reg-event-db :x.app-gestures/pause-stepping! pause-stepping!)
 
-(defn run-stepper!
-  ; @param (keyword) stepper-id
+(defn run-stepping!
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
-  [db [_ stepper-id]]
-  (r set-stepper-prop! db stepper-id :paused? false))
+  [db [_ handler-id]]
+  (r set-step-handler-prop! db handler-id :paused? false))
 
-(a/reg-event-db :x.app-gestures/run-stepper! run-stepper!)
+(a/reg-event-db :x.app-gestures/run-stepping! run-stepping!)
 
 
 
@@ -315,52 +315,52 @@
 
 (a/reg-event-fx
   :x.app-gestures/step-backward!
-  (fn [{:keys [db]} [_ stepper-id]]
-      (let [prev-dex              (r get-prev-dex          db stepper-id)
-            progressive-stepping? (r progressive-stepping? db stepper-id)
-            step-duration         (r get-stepper-prop      db stepper-id :step-duration)
-            step-in-progress?     (r step-in-progress?     db stepper-id)]
+  (fn [{:keys [db]} [_ handler-id]]
+      (let [prev-dex              (r get-prev-dex          db handler-id)
+            progressive-stepping? (r progressive-stepping? db handler-id)
+            step-duration         (r get-step-handler-prop db handler-id :step-duration)
+            step-in-progress?     (r step-in-progress?     db handler-id)]
            (cond (and (not   step-in-progress?)
                       (param progressive-stepping?))
                  {:dispatch-later
-                  [{:ms 0             :dispatch [:x.app-gestures/set-stepper-prop!    stepper-id :step-direction :bwd]}
-                   {:ms step-duration :dispatch [:x.app-gestures/set-stepper-prop!    stepper-id :current-dex prev-dex]}
-                   {:ms step-duration :dispatch [:x.app-gestures/remove-stepper-prop! stepper-id :step-direction]}]}
+                  [{:ms 0             :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :step-direction :bwd]}
+                   {:ms step-duration :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :current-dex prev-dex]}
+                   {:ms step-duration :dispatch [:x.app-gestures/remove-step-handler-prop! handler-id :step-direction]}]}
                  (and (not step-in-progress?)
                       (not progressive-stepping?))
-                 [:x.app-gestures/set-stepper-prop! stepper-id :current-dex prev-dex]))))
+                 [:x.app-gestures/set-step-handler-prop! handler-id :current-dex prev-dex]))))
 
 (a/reg-event-fx
   :x.app-gestures/step-forward!
-  (fn [{:keys [db]} [_ stepper-id]]
-      (let [next-dex              (r get-next-dex          db stepper-id)
-            progressive-stepping? (r progressive-stepping? db stepper-id)
-            step-duration         (r get-stepper-prop      db stepper-id :step-duration)
-            step-in-progress?     (r step-in-progress?     db stepper-id)]
+  (fn [{:keys [db]} [_ handler-id]]
+      (let [next-dex              (r get-next-dex          db handler-id)
+            progressive-stepping? (r progressive-stepping? db handler-id)
+            step-duration         (r get-step-handler-prop db handler-id :step-duration)
+            step-in-progress?     (r step-in-progress?     db handler-id)]
            (cond (and (not   step-in-progress?)
                       (param progressive-stepping?))
                  {:dispatch-later
-                  [{:ms 0             :dispatch [:x.app-gestures/set-stepper-prop!    stepper-id :step-direction :fwd]}
-                   {:ms step-duration :dispatch [:x.app-gestures/set-stepper-prop!    stepper-id :current-dex next-dex]}
-                   {:ms step-duration :dispatch [:x.app-gestures/remove-stepper-prop! stepper-id :step-direction]}]}
+                  [{:ms 0             :dispatch [:x.app-gestures/set-ste-handler-prop!     handler-id :step-direction :fwd]}
+                   {:ms step-duration :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :current-dex next-dex]}
+                   {:ms step-duration :dispatch [:x.app-gestures/remove-step-handler-prop! handler-id :step-direction]}]}
                  (and (not step-in-progress?)
                       (not progressive-stepping?))
-                 [:x.app-gestures/set-stepper-prop! stepper-id :current-dex next-dex]))))
+                 [:x.app-gestures/set-step-handler-prop! handler-id :current-dex next-dex]))))
 
 (a/reg-event-fx
   :x.app-gestures/run-autostep?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ stepper-id]]
-      (if (r autostep? db stepper-id)
-          (let [step-timeout (r get-step-timeout db stepper-id)]
+  (fn [{:keys [db]} [_ handler-id]]
+      (if (r autostep? db handler-id)
+          (let [step-timeout (r get-step-timeout db handler-id)]
                {:dispatch-later
-                [{:ms step-timeout :dispatch [:x.app-gestures/step-forward!  stepper-id]}
-                 {:ms step-timeout :dispatch [:x.app-gestures/run-autostep?! stepper-id]}]}))))
+                [{:ms step-timeout :dispatch [:x.app-gestures/step-forward!  handler-id]}
+                 {:ms step-timeout :dispatch [:x.app-gestures/run-autostep?! handler-id]}]}))))
 
 (a/reg-event-fx
-  :x.app-gestures/init-stepper!
-  ; @param (keyword)(opt) stepper-id
-  ; @param (map) stepper-props
+  :x.app-gestures/init-step-handler!
+  ; @param (keyword)(opt) handler-id
+  ; @param (map) handler-props
   ;  {:autostep? (boolean)(opt)
   ;    Default: false
   ;   :infinite-stepping? (boolean)(opt)
@@ -376,9 +376,9 @@
   ;    Default: DEFAULT-STEP-INTERVAL
   ;    Only w/ {:autostep? true}}
   (fn [{:keys [db]} event-vector]
-      (let [stepper-id    (a/event-vector->second-id   event-vector)
-            stepper-props (a/event-vector->first-props event-vector)
-            stepper-props (a/prot stepper-props stepper-props-prototype)]
-           (if-not (r stepper-inited? db stepper-id)
-                   {:dispatch-n [[:x.app-gestures/store-stepper-props! stepper-id stepper-props]
-                                 [:x.app-gestures/run-autostep?!       stepper-id]]}))))
+      (let [handler-id    (a/event-vector->second-id   event-vector)
+            handler-props (a/event-vector->first-props event-vector)
+            handler-props (a/prot handler-props handler-props-prototype)]
+           (if-not (r step-handler-inited? db handler-id)
+                   {:dispatch-n [[:x.app-gestures/store-step-handler-props! handler-id handler-props]
+                                 [:x.app-gestures/run-autostep?!            handler-id]]}))))

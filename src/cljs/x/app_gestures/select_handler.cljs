@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.23
 ; Description:
-; Version: v0.4.2
-; Compatibility: x3.9.9
+; Version: v0.6.0
+; Compatibility: x4.4.6
 
 
 
@@ -24,10 +24,10 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- selector-props-prototype
+(defn- handler-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) selector-props
+  ; @param (map) handler-props
   ;  {:enabled? (boolean)(opt)
   ;   :max-selected-count (integer)(opt)
   ;   :selected-items (vector)(opt)}
@@ -36,11 +36,11 @@
   ;  {:enabled? (boolean)
   ;   :max-selected-count (integer)
   ;   :selected-items (vector)}
-  [selector-props]
+  [handler-props]
   (merge {:enabled?           true
           :max-selected-count 256
           :selected-items     []}
-         (param selector-props)))
+         (param handler-props)))
 
 
 
@@ -48,47 +48,47 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-selected-item-ids
-  ; @param (keyword) selector-id
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ selector-id]]
-  (get-in db (db/path ::selectors selector-id :selected-items)))
+  [db [_ handler-id]]
+  (get-in db (db/path ::select-handlers handler-id :selected-items)))
 
-(defn selector-nonempty?
-  ; @param (keyword) selector-id
+(defn select-handler-nonempty?
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ selector-id]]
-  (vector/nonempty? (r get-selected-item-ids db selector-id)))
+  [db [_ handler-id]]
+  (vector/nonempty? (r get-selected-item-ids db handler-id)))
 
-(defn selector-empty?
-  ; @param (keyword) selector-id
+(defn select-handler-empty?
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ selector-id]]
-  (not (r selector-nonempty? db selector-id)))
+  [db [_ handler-id]]
+  (not (r select-handler-nonempty? db handler-id)))
 
-(defn selector-enabled?
-  ; @param (keyword) selector-id
+(defn select-handler-enabled?
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ selector-id]]
-  (boolean (get-in db (db/path ::selectors selector-id :enabled?))))
+  [db [_ handler-id]]
+  (boolean (get-in db (db/path ::select-handlers handler-id :enabled?))))
 
-(defn selector-disabled?
-  ; @param (keyword) selector-id
+(defn select-handler-disabled?
+  ; @param (keyword) handler-id
   ;
   ; @return (vector)
-  [db [_ selector-id]]
-  (not (r selector-enabled? db selector-id)))
+  [db [_ handler-id]]
+  (not (r select-handler-enabled? db handler-id)))
 
 (defn item-selected?
-  ; @param (keyword) selector-id
+  ; @param (keyword) handler-id
   ; @param (keyword) item-id
   ;
   ; @return (boolean)
-  [db [_ selector-id item-id]]
-  (let [selected-item-ids (r get-selected-item-ids db selector-id)]
+  [db [_ handler-id item-id]]
+  (let [selected-item-ids (r get-selected-item-ids db handler-id)]
        (vector/contains-item? selected-item-ids item-id)))
 
 
@@ -96,9 +96,9 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-selector!
-  ; @param (keyword) selector-id
-  ; @param (map)(opt) selector-props
+(defn init-select-handler!
+  ; @param (keyword) handler-id
+  ; @param (map) handler-props
   ;  {:enabled? (boolean)(opt)
   ;    Default: true
   ;   :max-selected-count (integer)(opt)
@@ -107,47 +107,47 @@
   ;    Default: []}
   ;
   ; @return (map)
-  [db [_ selector-id selector-props]]
-  (let [selector-props (a/prot selector-props selector-props-prototype)]
-       (assoc-in db (db/path ::selectors selector-id) selector-props)))
+  [db [_ handler-id handler-props]]
+  (let [handler-props (a/prot handler-props handler-props-prototype)]
+       (assoc-in db (db/path ::select-handlers handler-id) handler-props)))
 
-(a/reg-event-db :x.app-gestures/init-selector! init-selector!)
+(a/reg-event-db :x.app-gestures/init-select-handler! init-select-handler!)
 
-(defn empty-selector!
-  ; @param (keyword) selector-id
+(defn empty-select-handler!
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
-  [db [_ selector-id]]
-  (assoc-in db (db/path ::selectors selector-id :selected-items)
+  [db [_ handler-id]]
+  (assoc-in db (db/path ::select-handlers handler-id :selected-items)
                (param [])))
 
-(a/reg-event-db :x.app-gestures/empty-selector! empty-selector!)
+(a/reg-event-db :x.app-gestures/empty-select-handler! empty-select-handler!)
 
-(defn enable-selector!
-  ; @param (keyword) selector-id
+(defn enable-select-handler!
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
-  [db [_ selector-id]]
-  (assoc-in db (db/path ::selectors selector-id :enabled?) true))
+  [db [_ handler-id]]
+  (assoc-in db (db/path ::select-handlers handler-id :enabled?) true))
 
-(a/reg-event-db :x.app-gestures/enable-selector! enable-selector!)
+(a/reg-event-db :x.app-gestures/enable-select-handler! enable-select-handler!)
 
-(defn disable-selector!
-  ; @param (keyword) selector-id
+(defn disable-select-handler!
+  ; @param (keyword) handler-id
   ;
   ; @return (map)
-  [db [_ selector-id]]
-  (assoc-in db (db/path ::selectors selector-id :enabled?) false))
+  [db [_ handler-id]]
+  (assoc-in db (db/path ::select-handlers handler-id :enabled?) false))
 
-(a/reg-event-db :x.app-gestures/disable-selector! disable-selector!)
+(a/reg-event-db :x.app-gestures/disable-select-handler! disable-select-handler!)
 
 (defn select-item!
-  ; @param (keyword) selector-id
+  ; @param (keyword) handler-id
   ; @param (keyword) item-id
   ;
   ; @return (map)
-  [db [_ selector-id item-id]]
-  (update-in db (db/path ::selectors selector-id :selected-items)
-                vector/conj-item item-id))
+  [db [_ handler-id item-id]]
+  (update-in db (db/path ::select-handlers handler-id :selected-items)
+             vector/conj-item item-id))
 
 (a/reg-event-db :x.app-gestures/select-item! select-item!)

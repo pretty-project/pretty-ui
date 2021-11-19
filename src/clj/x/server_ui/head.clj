@@ -14,15 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head
-    (:require [hiccup.page             :refer [include-js include-css]]
-              [mid-fruits.candy        :refer [param return]]
+    (:require [mid-fruits.candy        :refer [param return]]
               [mid-fruits.string       :as string]
               [mid-fruits.vector       :as vector]
               [server-fruits.http      :as http]
               [x.app-details           :as details]
               [x.server-core.api       :as a :refer [cache-control-uri]]
               [x.server-user.api       :as user]
-              [x.server-ui.engine      :refer [include-favicon include-font]]
+              [x.server-ui.engine      :refer [include-css include-favicon include-font]]
               [x.server-utils.crawlers :refer [crawler-rules]]))
 
 
@@ -54,7 +53,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- meta-keywords->formatted-meta-keywords
@@ -75,11 +74,6 @@
   (if (string?     meta-keywords)
       (return      meta-keywords)
       (string/join meta-keywords ", ")))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn- head<-crawler-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -172,13 +166,12 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-build css-paths]}]
-  (reduce (fn [head {:keys [cache-control? size uri]}]
+  (reduce (fn [head {:keys [cache-control? uri] :as css-props}]
               (if cache-control?
-                  (let [uri (cache-control-uri uri app-build)]
-                       (vector/conj-item (param head)
-                                         (include-css uri)))
-                  (vector/conj-item (param head)
-                                    (include-css uri))))
+                  (let [cache-control-uri (cache-control-uri uri app-build)
+                        css-props         (assoc css-props :uri cache-control-uri)]
+                       (vector/conj-item head (include-css css-props)))
+                  (vector/conj-item      head (include-css css-props))))
           (param head)
           (vector/concat-items css-paths SYSTEM-CSS-PATHS)))
 
@@ -197,13 +190,12 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-build favicon-paths]}]
-  (reduce (fn [head {:keys [cache-control? size uri]}]
+  (reduce (fn [head {:keys [cache-control? uri] :as favicon-props}]
               (if cache-control?
-                  (let [uri (cache-control-uri uri app-build)]
-                       (vector/conj-item (param head)
-                                         (include-favicon uri size)))
-                  (vector/conj-item (param head)
-                                    (include-favicon uri size))))
+                  (let [cache-control-uri (cache-control-uri uri app-build)
+                        favicon-props     (assoc favicon-props :uri cache-control-uri)]
+                       (vector/conj-item head (include-favicon favicon-props)))
+                  (vector/conj-item      head (include-favicon favicon-props))))
           (param head)
           (param favicon-paths)))
 

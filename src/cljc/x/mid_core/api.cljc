@@ -111,7 +111,6 @@
 (def reg-event-db                     event-handler/reg-event-db)
 (def reg-event-fx                     event-handler/reg-event-fx)
 (def reg-handled-fx                   event-handler/reg-handled-fx)
-(def self-destruct!                   event-handler/self-destruct!)
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)

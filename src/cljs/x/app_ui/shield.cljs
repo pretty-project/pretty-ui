@@ -92,10 +92,9 @@
   (fn [_ event-vector]
       (let [shield-id    (a/event-vector->second-id   event-vector)
             shield-props (a/event-vector->first-props event-vector)]
-           {:dispatch-later
-            [{:ms   0 :dispatch [:x.app-ui/empty-shield!]}
-             {:ms  50 :dispatch [:x.app-ui/render-shield-content! shield-props]}
-             {:ms 100 :dispatch [:x.app-ui/show-shield!]}]})))
+           {:dispatch-later [{:ms   0 :dispatch [:x.app-ui/empty-shield!]}
+                             {:ms  50 :dispatch [:x.app-ui/render-shield-content! shield-props]}
+                             {:ms 100 :dispatch [:x.app-ui/show-shield!]}]})))
 
 (a/reg-event-fx
   :x.app-ui/remove-shield!

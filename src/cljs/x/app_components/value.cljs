@@ -6,7 +6,7 @@
 ; Created: 2021.06.08
 ; Description:
 ; Version: v0.4.2
-; Compatibility: x4.2.8
+; Compatibility: x4.4.6
 
 
 
@@ -44,7 +44,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn extended-props->value-props
@@ -125,7 +125,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn component
   ; @param (keyword)(opt) value-id
   ; @param (map) value-props
   ;  {:suffix (string)(opt)
@@ -139,7 +139,7 @@
   ;
   ; @return (string)
   ([value-props]
-   (view nil value-props))
+   (component nil value-props))
 
   ([value-id value-props]
    (let [value-id (a/id value-id)]

@@ -46,7 +46,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- cookie-type->cookie-name-prefix
@@ -170,11 +170,6 @@
   (if (cookie-name->system-cookie? cookie-name)
       (keyword (string/after-first-occurence cookie-name "-"))
       (keyword (param cookie-name))))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn cookie-setting-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

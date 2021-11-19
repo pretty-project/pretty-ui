@@ -6,7 +6,7 @@
 ; Created: 2021.01.10
 ; Description:
 ; Version: v2.1.2
-; Compatibility: x4.4.2
+; Compatibility: x4.4.6
 
 
 
@@ -18,8 +18,8 @@
               [mid-fruits.candy    :refer [param return]]
               [mid-fruits.map      :as map :refer [dissoc-in]]
               [mid-fruits.vector   :as vector]
-              [x.app-components.subscriber  :rename {view subscriber}]
-              [x.app-components.transmitter :rename {view transmitter}]
+              [x.app-components.subscriber  :rename {component subscriber}]
+              [x.app-components.transmitter :rename {component transmitter}]
               [x.app-core.api      :as a :refer [r]]
               [x.app-db.api        :as db]))
 
@@ -137,7 +137,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn extended-props->stated-props
@@ -554,7 +554,7 @@
       [unmountable-component     component-id context-props]
       [non-unmountable-component component-id context-props]))
 
-(defn view
+(defn component
   ; @param (keyword)(opt) component-id
   ;  XXX#4882
   ; @param (map) context-props
@@ -604,7 +604,7 @@
   ;
   ; @return (component)
   ([context-props]
-   [view (a/id) context-props])
+   [component (a/id) context-props])
 
   ([component-id context-props]
    [unmount-controller component-id context-props]))

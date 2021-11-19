@@ -9,8 +9,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.11
 ; Description:
-; Version: v0.1.0
-; Compatibility: x3.9.9
+; Version: v0.1.2
+; Compatibility: x4.4.5
 
 
 
@@ -29,8 +29,10 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (hiccup)
-  []
+  ; @param (keyword) surface-id
+  ;
+  ; @return (component)
+  [surface-id]
   [elements/box {:content "Coming soon..."}])
 
 
@@ -41,18 +43,11 @@
 (a/reg-event-fx
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content #'view}])
-
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-router/add-route!
-   ::route
-   {:route-event    [::render!]
-    :route-template "/terms-of-service"}])
+  [:x.app-ui/set-surface! ::view
+                          {:content #'view}])
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route! ::route
+                                          {:route-event    [::render!]
+                                           :route-template "/terms-of-service"}]})

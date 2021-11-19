@@ -79,6 +79,6 @@
   ; @return (component)
   [popup-id popup-props]
   [components/subscriber popup-id
-    {:component    #'popup-header
-     :static-props popup-props
-     :subscriber   [::get-popup-header-view-props popup-id]}])
+                         {:component    #'popup-header
+                          :static-props popup-props
+                          :subscriber   [::get-popup-header-view-props popup-id]}])

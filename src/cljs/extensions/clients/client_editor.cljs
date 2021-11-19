@@ -1,4 +1,7 @@
 
+; Kezelni kell a "/clients/nincs-ilyen-client-id" esetet!
+
+
 (ns extensions.clients.client-editor
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.form    :as form]
@@ -26,7 +29,7 @@
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-editor/get-header-view-props db "clients" "client"))
+  (r item-editor/get-header-props db "clients" "client"))
 
 (a/reg-sub ::get-header-props get-header-props)
 
@@ -39,35 +42,40 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-actions-buttons
+(defn- action-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> [item-editor/delete-item-button "clients" "client"]
        [item-editor/copy-item-button   "clients" "client"]])
 
-(defn- client-form-header
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [new-item?] :as header-props}]
+  [header-id {:keys [new-item?] :as header-props}]
   [elements/polarity ::form-header
                      {:start-content [:<> (if (boolean new-item?)
                                              ;[item-editor/cancel-item-button "clients" "client"]
                                               nil
-                                              [client-actions-buttons surface-id header-props])]
+                                              [action-buttons header-id header-props])]
                       :end-content [item-editor/save-item-button "clients" "client" header-props]}])
+
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- client-legal-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id body-props]
+  [body-id body-props]
   [:div#clients--client-form--legal-details
     [elements/text-field ::vat-no-field
                          {:label :vat-no :value-path [:clients :editor-data :client/vat-no]}]])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [selected-language] :as body-props}]
+  [body-id {:keys [selected-language] :as body-props}]
  [:div
   [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
     [elements/select ::country-field
@@ -94,7 +102,7 @@
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id body-props]
+  [body-id body-props]
   [:div#clients--client-form--primary-contacts
     [elements/text-field ::email-address-field
                          {:label :email-address :required? true
@@ -114,7 +122,7 @@
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [name-order] :as body-props}]
+  [body-id {:keys [name-order] :as body-props}]
   [:div#clients--client-form--client-name
     [locales/name-order [elements/text-field ::first-name-field
                                              {:label :first-name :required? true
@@ -128,26 +136,31 @@
                                               :min-width :l}]
                         (param name-order)]])
 
-(defn- client-form
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id body-props]
+  [body-id body-props]
   [:div#clients--client-form
-    [client-name               surface-id body-props]
-    [client-primary-contacts   surface-id body-props]
+    [client-name               body-id body-props]
+    [client-primary-contacts   body-id body-props]
     [elements/separator {:orientation :horizontal :size :xl}]
     [elements/separator {:orientation :horizontal :size :xl}]
-    [client-secondary-contacts surface-id body-props]
-    [client-legal-details      surface-id body-props]
+    [client-secondary-contacts body-id body-props]
+    [client-legal-details      body-id body-props]
     [elements/separator {:orientation :horizontal :size :l}]])
+
+
+
+;; -- View components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description synchronizing?] :as view-props}]
   [layouts/layout-a surface-id {:description description
                                 :disabled?   synchronizing?
-                                :body {:content    #'client-form
-                                       :subscriber [::get-body-props]}
-                                :header {:content    #'client-form-header
+                                :body {:content      #'body
+                                       :subscriber   [::get-body-props]}
+                                :header {:content    #'header
                                          :sticky?    true
                                          :subscriber [::get-header-props]}}])
 

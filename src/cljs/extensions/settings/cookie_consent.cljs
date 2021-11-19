@@ -1,23 +1,9 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.02.29
-; Description:
-; Version: v1.6.8
-; Compatibility: x4.2.6
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(ns x.app-views.cookie-consent
+(ns extensions.settings.cookie-consent
     (:require [x.app-core.api        :as a :refer [r]]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
-              [x.app-views.settings  :as settings]))
+              [extensions.settings.cookie-settings :rename {body cookie-settings}]))
 
 
 
@@ -43,30 +29,24 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- cookie-consent-got-it-button
+(defn- got-it-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ;
-  ; @return (component)
-  [popup-id]
-  [elements/button {:label   :got-it!
+  [header-id]
+  [elements/button ::got-it-button
+                   {:label   :got-it!
                     :preset  :close-button
                     :variant :transparent
-                    :on-click {:dispatch-n [[:x.app-ui/close-popup! popup-id]
+                    :on-click {:dispatch-n [[:x.app-ui/close-popup! header-id]
                                             [::accept-cookie-settings!]]}}])
 
-(defn- cookie-consent-label-bar
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ;
-  ; @return (component)
-  [popup-id]
-  [elements/polarity {:end-content [cookie-consent-got-it-button popup-id]}])
+  [header-id]
+  [elements/polarity ::header
+                     {:end-content [got-it-button header-id]}])
 
 
 
@@ -86,13 +66,12 @@
 (a/reg-event-fx
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup!
-   ::view
-   {:content          #'settings/cookie-settings
-    :horizontal-align :left
-    :label-bar        {:content #'cookie-consent-label-bar}
-    :layout           :boxed
-    :user-close?      false}])
+  [:x.app-ui/add-popup! ::view
+                        {:content          #'cookie-settings
+                         :horizontal-align :left
+                         :label-bar        {:content #'header}
+                         :layout           :boxed
+                         :user-close?      false}])
 
 (a/reg-event-fx
   ::initialize!

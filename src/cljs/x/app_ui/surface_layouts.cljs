@@ -61,7 +61,7 @@
    ;[:div.x-app-surface--element--background]
     [surface-content surface-id surface-props]])
 
-(defn view
+(defn surface-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id

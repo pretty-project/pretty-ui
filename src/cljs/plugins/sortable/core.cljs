@@ -113,11 +113,6 @@
           (some? class) (assoc :class class)
           (some? style) (assoc :style style)))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- sortable-item-dex->sortable-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.09
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.2.8
+; Version: v0.6.8
+; Compatibility: x4.4.6
 
 
 
@@ -22,16 +22,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-window-title
+(defn- get-window-title-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) route-id
+  ; @param (metamorphic-value) window-title
   ;
   ; @return (string)
   [db [_ window-title]]
-  (let [app-title (r a/get-app-detail db :app-title)]
-       (let [window-title (r components/get-metamorphic-value db {:value window-title})]
-            (str window-title " - " app-title))))
+  (if-let [window-title (r components/get-metamorphic-value db {:value window-title})]
+          (let [app-title (r a/get-app-detail db :app-title)]
+               (str window-title " - " app-title))))
 
 
 
@@ -48,5 +48,6 @@
   :x.app-ui/set-window-title!
   ; @param (metamorphic-value) window-title
   (fn [{:keys [db]} [_ window-title]]
-      (let [window-title (r get-window-title db window-title)]
-           [:x.app-environment.window-handler/set-title! window-title])))
+      (if-let [window-title (r get-window-title-value db window-title)]
+              [:x.app-environment.window-handler/set-title! window-title]
+              [:x.app-ui/restore-default-window-title!])))

@@ -46,6 +46,16 @@
                    {:tooltip :delete! :preset :delete-icon-button
                     :on-click [:item-editor/delete-item! extension-name item-name]}])
 
+(defn archive-item-button
+  ; @param (string) extension-name
+  ; @param (string) item-name
+  ;
+  ; @return (component)
+  [extension-name item-name]
+  [elements/button ::archive-item-button
+                   {:tooltip :archive! :preset :archive-icon-button
+                    :on-click [:item-editor/archive-item! extension-name item-name]}])
+
 (defn copy-item-button
   ; @param (string) extension-name
   ; @param (string) item-name

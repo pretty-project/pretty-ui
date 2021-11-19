@@ -62,11 +62,6 @@
   []
   (db/path ::values (random/generate-keyword)))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

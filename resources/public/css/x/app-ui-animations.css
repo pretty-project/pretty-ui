@@ -38,23 +38,6 @@
 
 
 
-/***** App footer *****/
-
-.x-app-footer--element {
-  animation-duration: .3s;
-  animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
-
-.x-app-footer--element[data-animation="reveal"] {
-  animation-name: x-reveal }
-
-.x-app-footer--element[data-animation="hide"] {
-  animation-name: x-hide }
-
-/***** App footer *****/
-
-
-
 /***** App header *****/
 /***** App header *****/
 

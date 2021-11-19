@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.31
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.3.4
+; Version: v0.7.2
+; Compatibility: x4.4.6
 
 
 
@@ -19,7 +19,32 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @usage W/o callback
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;
+;  (defn my-component [props])
+;  (tools/append-temporary-component! [my-component {...}])
+
+; @usage W/ callback
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;
+;  (defn my-button [my-props] [:a {:href "foo/bar"}])
+;  (defn click-my-button! [] ...)
+;  (tools/append-temporary-component! [my-button {...}] click-my-button!)
+
+; @usage
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;
+;  (defn my-component [props])
+;  (tools/append-temporary-component! [my-component {...}])
+;  (tools/remove-temporary-component!)
+
+
+
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
@@ -63,16 +88,14 @@
   ; @param (component) component
   ; @param (function)(opt) render-callback
   ;
-  ; @usage
-  ;  W/o callback
+  ; @usage W/o callback
   ;  (defn my-component [props])
-  ;  (append-temporary-component! [my-component {...}])
+  ;  (tools/append-temporary-component! [my-component {...}])
   ;
-  ; @usage
-  ;  W/ callback
+  ; @usage W/ callback
   ;  (defn my-button [my-props] [:a {:href "foo/bar"}])
   ;  (defn click-my-button! [] ...)
-  ;  (append-temporary-component! [my-button {...}] click-my-button!)
+  ;  (tools/append-temporary-component! [my-button {...}] click-my-button!)
   ;
   ; @return (component)
   [component & [render-callback]]
@@ -83,6 +106,6 @@
 
 (defn remove-temporary-component!
   ; @usage
-  ;  (remove-temporary-component!)
+  ;  (tools/remove-temporary-component!)
   []
   (remove-temporary-container!))

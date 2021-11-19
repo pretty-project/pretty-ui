@@ -6,7 +6,7 @@
 ; Created: 2020.10.23
 ; Description:
 ; Version: v0.8.2
-; Compatibility: x4.3.6
+; Compatibility: x4.4.6
 
 
 
@@ -16,7 +16,7 @@
 (ns x.app-components.subscriber
     (:require [mid-fruits.candy             :refer [param]]
               [mid-fruits.map               :as map]
-              [x.app-components.transmitter :rename {view transmitter}]
+              [x.app-components.transmitter :rename {component transmitter}]
               [x.app-core.api               :as a]))
 
 
@@ -49,7 +49,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn extended-props->subscriber-props
@@ -65,7 +65,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn component
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
@@ -97,12 +97,14 @@
   ;
   ; @return (*)
   ([context-props]
-   [view nil context-props])
+   [component nil context-props])
 
   ([component-id {:keys [component initial-props subscriber test-f] :as context-props}]
    (let [component-id     (a/id component-id)
          subscribed-props (a/subscribe subscriber)]
         (fn [_ context-props]
+            [:div "a"
+             (str context-props)]
             (if (or (nil?   test-f)
                     (test-f @subscribed-props))
                 (let [context-props (assoc context-props :subscribed-props @subscribed-props)]

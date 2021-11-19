@@ -81,7 +81,7 @@
   ; 1. Let's start!
   (a/dispatch-sync [:x.boot-synchronizer/synchronize-app! app])
   ; 2. A load-handler várjon az XXX#5030 jelre!
-  (a/dispatch-sync [:x.app-core/synchronize-loading!]))
+  (a/dispatch-sync [:x.app-core/synchronize-loading! :x.boot-loader/build-app!]))
 
 (defn render-app!
   ; @param (component) app
@@ -225,7 +225,7 @@
         {:ms 100 :dispatch [:x.boot-loader/launch-app!]}
         ; 4. Curtains up!
         ; XXX#5030
-        {:ms 500 :dispatch [:x.app-core/->synchron-signal]}]}))
+        {:ms 500 :dispatch [:x.app-core/->synchron-signal :x.boot-loader/build-app!]}]}))
 
 (a/reg-event-fx
   :x.boot-loader/launch-app!
@@ -246,7 +246,6 @@
 
 (a/reg-event-fx
   :x.boot-loader/->app-synchronized
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -255,8 +254,7 @@
   ;  [:x.boot-loader/->app-synchronized #'app]
   (fn [{:keys [db]} [_ app]]
       (let [app-build (r a/get-app-detail db :app-build)]
-           {:dispatch-n [; 1.
-                         [:x.app-environment.cookie-handler/set-cookie!
-                          :x-app-build {:value app-build}]
+                         ; 1.
+           {:dispatch-n [[:x.app-environment.cookie-handler/set-cookie! :x-app-build {:value app-build}]
                          ; 2.
                          [:x.boot-loader/initialize-app! app]]})))

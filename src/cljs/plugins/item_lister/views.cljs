@@ -6,7 +6,8 @@
               [x.app-db.api               :as db]
               [x.app-components.api       :as components]
               [x.app-core.api             :as a :refer [r]]
-              [x.app-elements.api         :as elements]))
+              [x.app-elements.api         :as elements]
+              [x.app-tools.api            :as tools]))
 
 
 
@@ -67,7 +68,7 @@
   ; @return (component)
   [extension-name item-name]
   (let [extension-id (keyword extension-name)]
-       [elements/search-field ::search-field
+       [elements/search-field ::search-items-field
                               {:auto-focus?   true
                                :layout        :row
                                :min-width     :xs
@@ -284,9 +285,9 @@
                             {:keys [downloaded-items] :as   view-props}]
   (let [extension-id (keyword extension-name)]
        [:div.item-lister--list-items
-         [item-list                  extension-name item-name lister-props view-props]
-         [components/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-name item-name]}]
-         [request-indicator          extension-name item-name lister-props view-props]
+         [item-list             extension-name item-name lister-props view-props]
+         [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-name item-name]}]
+         [request-indicator     extension-name item-name lister-props view-props]
          ; "No items to show" label
          (if (empty? downloaded-items)
              [no-items-to-show-label extension-name item-name lister-props view-props])]))

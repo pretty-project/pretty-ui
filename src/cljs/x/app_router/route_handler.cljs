@@ -892,7 +892,7 @@
                                  (if (r route-id-changed? db route-id) on-leave-event))
                          ; Render login screen if ...
                          (if (r require-authentication? db route-id)
-                             [:x.app-views.login-box/render! {:render-exclusive? true}])
+                             [:x.app-views.login-box/render!])
                          ; Set restart-target if ...
                          (if (r require-authentication? db route-id)
                              [:x.boot-loader/set-restart-target! route-string])

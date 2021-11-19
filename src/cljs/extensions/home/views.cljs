@@ -1,4 +1,12 @@
 
+
+
+
+; EZ LEGYEN A LAYOUT-B!
+
+
+
+
 (ns extensions.home.views
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
@@ -29,7 +37,6 @@
   []
   [:div {:style {:width "8px" :height "8px" :background-color "var( --secondary )"
                  :border-radius "50%" :position "absolute" :top "44px" :right "24px"}}])
-
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!

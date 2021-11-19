@@ -23,8 +23,14 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def mousemove-listener
-     #(a/dispatch-once 500 [::update-mouse-position! %]))
+(defn- mousemove-listener
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (DOM-Event) event
+  ;
+  ; @return (function)
+  [event]
+  (a/dispatch-once 500 [::update-mouse-position! event]))
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.5.2
-; Compatibility: x3.9.9
+; Version: v0.5.6
+; Compatibility: x4.4.6
 
 
 
@@ -25,8 +25,12 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def scroll-listener
-     #(a/dispatch-once 250 [::->scrolled]))
+(defn- scroll-listener
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (function)
+  []
+  (a/dispatch-once 250 [::->scrolled]))
 
 
 
@@ -139,8 +143,8 @@
   ;
   ; @return (map)
   [db [event-id]]
-  (-> db ; 1.
-         (update-scroll-direction! [event-id])
+         ; 1.
+  (-> db (update-scroll-direction! [event-id])
          ; 2.
          (update-scroll-position!  [event-id])
          ; 3.
@@ -193,6 +197,7 @@
 (a/reg-handled-fx ::scroll-to-element-top! scroll-to-element-top!)
 
 (defn- listen-to-scroll!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (dom/add-event-listener! "scroll" scroll-listener))
 

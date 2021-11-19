@@ -20,21 +20,17 @@
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-environment.api :as environment]
-              [x.app-ui.background   :refer [view] :rename {view app-background}]
-              [x.app-ui.bubbles      :refer [view] :rename {view app-bubbles}]
-              [x.app-ui.canvas       :refer [view] :rename {view app-canvas}]
-              [x.app-ui.footer       :refer [view] :rename {view app-footer}]
-              [x.app-ui.header       :refer [view] :rename {view app-header}]
+              [x.app-ui.background   :rename {view app-background}]
+              [x.app-ui.bubbles      :rename {view app-bubbles}]
+              [x.app-ui.canvas       :rename {view app-canvas}]
+              [x.app-ui.header       :rename {view app-header}]
               [x.app-ui.interface    :as interface]
-              [x.app-ui.locker       :refer [view] :rename {view app-locker}]
-              [x.app-ui.popups       :refer [view] :rename {view app-popups}]
-              [x.app-ui.progress-bar :refer [view] :rename {view progress-bar}]
-              [x.app-ui.surface      :refer [view] :rename {view app-surface}]
-              [x.app-ui.sidebar      :refer [view] :rename {view app-sidebar}]
+              [x.app-ui.locker       :rename {view app-locker}]
+              [x.app-ui.popups       :rename {view app-popups}]
+              [x.app-ui.progress-bar :rename {view progress-bar}]
+              [x.app-ui.surface      :rename {view app-surface}]
+              [x.app-ui.sidebar      :rename {view app-sidebar}]
               [x.app-user.api        :as user]))
-
-            ; TEMP
-            ; [x.app-developer.api :as developer]
 
 
 
@@ -78,7 +74,7 @@
 (defn- locked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
+  ; @param (keyword) view-id
   ; @param (map) view-props
   ;
   ; @return (hiccup)
@@ -90,7 +86,7 @@
 (defn- unlocked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
+  ; @param (keyword) view-id
   ; @param (map) view-props
   ;
   ; @return (hiccup)
@@ -100,7 +96,6 @@
    ;[app-sounds]
     [app-background]
     [app-surface]
-    [app-footer]
     [app-header]
     [app-popups]
     [app-sidebar]
@@ -111,22 +106,20 @@
 (defn- client-lock-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
+  ; @param (keyword) view-id
   ; @param (map) view-props
   ;  {:client-locked? (boolean)}
   ;
   ; @return (hiccup)
-  [component-id {:keys [client-locked?] :as view-props}]
-  (if client-locked? [locked-ui-structure   component-id view-props]
-                     [unlocked-ui-structure component-id view-props]))
+  [view-id {:keys [client-locked?] :as view-props}]
+  (if client-locked? [locked-ui-structure   view-id view-props]
+                     [unlocked-ui-structure view-id view-props]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (component)
   []
-  [components/subscriber {:component  #'client-lock-controller
+  [components/subscriber ::view
+                         {:component  #'client-lock-controller
                           :subscriber [::get-view-props]}])
-
-  ; TEMP
-  ; [developer/database-screen]

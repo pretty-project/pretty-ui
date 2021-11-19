@@ -21,7 +21,7 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.chips      :refer [view] :rename {view chips}]
+              [x.app-elements.chips      :rename {view chips}]
               [x.app-elements.combo-box  :as combo-box]))
 
 
@@ -43,7 +43,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- group-id->field-id

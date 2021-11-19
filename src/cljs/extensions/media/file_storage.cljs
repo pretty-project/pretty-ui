@@ -115,11 +115,6 @@
          :on-click [:x.app-elements/render-context-surface! element-id]
          :tooltip  :more-options}]))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- path-param->file-storage-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -231,7 +226,7 @@
   (get-in db (settings-item-path :order-by)
              (param DEFAULT-ORDER-BY)))
 
-(defn- get-body-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -267,15 +262,15 @@
         :filtered-files                   (param filtered-files)
         :filtered-subdirectories          (param filtered-subdirectories)}))
 
-(a/reg-sub :file-storage/get-body-view-props get-body-view-props)
+(a/reg-sub :file-storage/get-body-props get-body-props)
 
-(defn- get-header-view-props
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _])
 ;  (merge (r pattern/get-item-list-header-view-props    db "media")))
 ;         (r pattern/get-item-browser-header-view-props db "media")))
 
-(a/reg-sub ::get-header-view-props get-header-view-props)
+(a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.3.2
-; Compatibility: x3.9.9
+; Version: v2.4.0
+; Compatibility: x4.4.5
 
 
 
@@ -27,18 +27,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (ms)
-;  Mennyi idő után probálkozzon a hibásan teljesített request-et újraküldeni
-(def DEFAULT-RETRY-TIMEOUT 5000)
-
-; @constant (ms)
 ;  Mennyi ideig várjon a szerver válaszára
 (def DEFAULT-REQUEST-TIMEOUT 15000)
 
 ; @constant (ms)
 (def DEFAULT-IDLE-TIMEOUT 500)
-
-; @constant (integer)
-(def MAX-TRY-COUNT 3)
 
 ; @constant (metamorphic-content)
 (def DEFAULT-FAILURE-MESSAGE :synchronization-error)
@@ -122,8 +115,8 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [try-count (r get-request-prop db request-id :try-count)]
-       (> try-count 0)))
+  (let [sent-time (r get-request-prop db request-id :sent-time)]
+       (some? sent-time)))
 
 (defn request-successed?
   ; @param (keyword) request-id
@@ -212,46 +205,6 @@
   (if-let [on-stalled-event (r get-request-prop db request-id :on-stalled)]
           (a/metamorphic-event<-params on-stalled-event server-response)))
 
-(defn- max-try-count-reached?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (boolean)
-  [db [_ request-id]]
-  (let [try-count (r get-request-prop db request-id :try-count)]
-       (= MAX-TRY-COUNT try-count)))
-
-(defn- retry-request?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (boolean)
-  [db [_ request-id]]
-  (and (not (r request-successed?     db request-id))
-       (not (r max-try-count-reached? db request-id))))
-
-(defn- auto-retry-request?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (boolean)
-  [db [_ request-id]]
-  (let [auto-retry? (r get-request-prop db request-id :auto-retry?)]
-       (and (boolean auto-retry?)
-            (not (r max-try-count-reached? db request-id)))))
-
-(defn- get-request-retry-timeout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (integer)
-  [db [_ request-id]]
-  (r get-request-prop db request-id :retry-timeout))
-
 (defn- get-request-idle-timeout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -313,24 +266,18 @@
   ; @param (map) request-props
   ;
   ; @return (map)
-  ;  {:auto-retry? (boolean)
-  ;   :response-action (keyword)
-  ;   :retry-timeout (integer)
+  ;  {:response-action (keyword)
   ;   :sent-time (object)
   ;   :silent-mode? (boolean)
   ;   :timeout (integer)}
-  [db [_ {:keys [auto-retry? response-action] :as request-props}]]
+  [db [_ {:keys [response-action] :as request-props}]]
          ; 1.
-  (merge {:auto-retry?     false
-          :response-action :store
+  (merge {:response-action :store
           :silent-mode?    true
           :timeout DEFAULT-REQUEST-TIMEOUT}
          ; 2.
-         (if (= auto-retry? true)
-             {:retry-timeout DEFAULT-RETRY-TIMEOUT})
-         ; 3.
          (r request-props<-source-data db request-props)
-         ; 4.
+         ; 3.
          {:sent-time (time/timestamp-string)}))
 
 
@@ -387,9 +334,7 @@
   ;  és folyamatállapotát lehetséges ellenőrizni a request azonosítójára
   ;  {:process-id ...} tulajdonságként hivatkozva.
   ; @param (map) request-props
-  ;  {:auto-retry? (boolean)(opt)
-  ;    Default: false
-  ;   :body (*)(opt)
+  ;  {:body (*)(opt)
   ;   :filename (string)(opt)
   ;    Only w/ {:response-action :save}
   ;   :idle-timeout (ms)(opt)
@@ -417,11 +362,6 @@
   ;   :response-action (keyword)(opt)
   ;    :save (save to file), :store (store to db)
   ;    Default: :store
-  ;   :retry-timeout (integer)(opt)
-  ;    Milyen időközönként próbálja meg újra elküldeni a hibásan teljesített
-  ;    request-et.
-  ;    Only w/ {:auto-retry? true}
-  ;    Default: DEFAULT-RETRY-TIMEOUT
   ;   :silent-mode? (boolean)(opt)
   ;    A csendes mód jelentése, hogy hibás teljesítés esetén nem jelenik meg
   ;    hibaüzenet.
@@ -468,14 +408,6 @@
                              (let [request-props (merge request-props REQUEST-HANDLERS)]
                                   [:x.app-utils.http/send-request! request-id request-props])]}))))
 
-(a/reg-event-fx
-  :x.app-sync/retry-request!
-  ; @param (keyword) request-id
-  (fn [{:keys [db]} [_ request-id]]
-      {:dispatch-if
-       [(r retry-request? db request-id)
-        [:x.app-sync/send-request! request-id (r get-request-props db request-id)]]}))
-
 
 
 ;; -- Status events -----------------------------------------------------------
@@ -487,10 +419,8 @@
   ;
   ; @param (keyword) request-id
   (fn [{:keys [db]} [event-id request-id]]
-                  ; Increase try-count
-      {:db (-> db (db/apply! [event-id (db/path ::requests request-id :try-count) inc])
                   ; Set request status
-                  (a/set-process-status!   [event-id request-id :progress])
+      {:db (-> db (a/set-process-status!   [event-id request-id :progress])
                   ; Set request activity
                   (a/set-process-activity! [event-id request-id :active])
                   ; Set request progress
@@ -542,19 +472,10 @@
         (if-not (r silent-mode? db request-id)
                 [:x.app-sync/show-request-failure-message! request-id status-text])]
        :dispatch-later
-       (if (r auto-retry-request? db request-id)
-           ; Auto retry
-           [{:ms       (r get-request-retry-timeout    db request-id)
-             :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
-            {:ms       (r get-request-retry-timeout    db request-id)
-             :dispatch [:x.app-sync/retry-request!        request-id]}
-            {:ms       (r get-request-idle-timeout     db request-id)
-             :dispatch (r get-request-on-stalled-event db request-id server-response)}]
-           ; No auto retry
-           [{:ms       (r get-request-idle-timeout     db request-id)
-             :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
-            {:ms       (r get-request-idle-timeout     db request-id)
-             :dispatch (r get-request-on-stalled-event db request-id server-response)}])}))
+       [{:ms       (r get-request-idle-timeout     db request-id)
+         :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
+        {:ms       (r get-request-idle-timeout     db request-id)
+         :dispatch (r get-request-on-stalled-event db request-id server-response)}]}))
 
 (a/reg-event-fx
   ::->request-progressed

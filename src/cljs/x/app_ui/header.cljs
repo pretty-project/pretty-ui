@@ -138,7 +138,7 @@
   [_ _]
   [elements/button ::dev-tools-icon-button
                    {:icon     :auto_fix_high
-                    :on-click [:x.app-developer/render-developer-tools!]
+                    :on-click [:developer/render-developer-tools!]
                     :preset   :default-icon-button}])
                    ;:tooltip  :developer-tools
 

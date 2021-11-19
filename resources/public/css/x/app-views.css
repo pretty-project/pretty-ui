@@ -16,13 +16,6 @@
 
 /***** User info *****/
 
-.x-user-card {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100% }
-
 .x-user-profile-picture {
   background-color: var( --background-color-highlight );
   border-radius: 50%;

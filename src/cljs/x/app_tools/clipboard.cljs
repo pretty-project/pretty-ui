@@ -4,9 +4,9 @@
 
 ; Author: bithandshake
 ; Created: 2020.01.31
-; Description:
-; Version: v0.3.2
-; Compatibility: x4.3.4
+; Description: Szöveg másolása a vágólapra
+; Version: v0.4.2
+; Compatibility: x4.4.6
 
 
 
@@ -22,13 +22,26 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (a/dispatch [:x.app-tools/copy-to-clipboard! "My text"])
+;
+; @usage
+;  (reg-event-fx :my-event {:x.app-tools/copy-to-clipboard! "My text"})
+;
+; @usage
+;  (ns my-namespace (:require [x.app-tools.api :as tools]))
+;  (tools/copy-to-clipboard! "My text")
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- copy-to-clipboard!
+(defn- copy-to-clipboard-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (?)
   []
   (let [clipboard (dom/get-element-by-id "x-app-clipboard")]
        (js/navigator.clipboard.writeText (.-value clipboard))))
@@ -39,14 +52,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-tools.clipboard/copy-to!
+  :x.app-tools/copy-to-clipboard!
   ; @param (string) text
   ;
   ; @usage
-  ;  [:x.app-tools.clipboard/copy-to! "Copy my value to clipboard"]
+  ;  [:x.app-tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
-      {:dispatch  [:x.app-ui/blow-bubble! {:content :copied-to-clipboard}]
-       ::copy-to! (param text)}))
+      {:dispatch [:x.app-ui/blow-bubble! {:content :copied-to-clipboard}]
+       :x.app-tools/copy-to-clipboard! (param text)}))
 
 
 
@@ -67,12 +80,15 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-fx
-  :x.app-tools.clipboard/copy-to!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn copy-to-clipboard!
+  ; @usage
+  ;  (tools/copy-to-clipboard! "My text")
   ;
   ; @param (string) text
-  (fn [text]
-      (append-temporary-component! [clipboard text]
-                                   (param copy-to-clipboard!))
-      (remove-temporary-component!)))
+  [text]
+  (append-temporary-component! [clipboard text] copy-to-clipboard-f)
+  (remove-temporary-component!))
+
+; @usage
+;  {:x.app-tools/copy-to-clipboard! "My text"}
+(a/reg-fx :x.app-tools/copy-to-clipboard! copy-to-clipboard!)

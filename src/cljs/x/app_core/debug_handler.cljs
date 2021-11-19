@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.16
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.0
+; Version: v0.2.8
+; Compatibility: x4.4.6
 
 
 
@@ -15,6 +15,9 @@
 
 (ns x.app-core.debug-handler
     (:require [app-fruits.window        :as window]
+              [mid-fruits.candy         :refer [param return]]
+              [mid-fruits.string        :as string]
+              [mid-fruits.time          :as time]
               [mid-fruits.uri           :as uri]
               [x.mid-core.debug-handler :as debug-handler]))
 
@@ -33,6 +36,98 @@
 
 (def query-string->debug-mode? debug-handler/query-string->debug-mode?)
 (def query-string->debug-mode  debug-handler/query-string->debug-mode)
+
+
+
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (ms)
+(def DEBUG-STARTED (time/elapsed))
+
+; @constant (ms)
+(def SEPARATOR-DELAY 2000)
+
+
+
+;; -- State -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (ms)
+(def separated-at (atom DEBUG-STARTED))
+
+; @atom (integer)
+(def separator-no (atom 0))
+
+
+
+;; -- Separate event-stacks ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A console könnyebb átláthatósága érdekében * ms-onként egy szeparátor üzenetettel
+; választja el az üzenetfolyamot
+
+(defn- separate?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (boolean)
+  []
+  (let [elapsed-time (time/elapsed)]
+       (> (- elapsed-time @separated-at)
+          (param SEPARATOR-DELAY))))
+
+(defn- separate!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (?)
+  []
+  (let [elapsed-time (time/elapsed)]
+       ; *
+       (reset! separated-at elapsed-time)
+       (swap!  separator-no inc)
+       ; *
+       (.log js/console (str "%c * Thin red line #" @separator-no " *") "color: red")))
+
+
+
+;; -- Console functions -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn elapsed-time
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (integer)
+  []
+  (let [elapsed-time (time/elapsed)]
+       (- elapsed-time DEBUG-STARTED)))
+
+(defn timestamp
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  []
+;  (string/bracket (str (time/get-hours) ":" (time/get-minutes) ":" (time/get-seconds)))
+;                       (elapsed-timestamp)))
+  "00:00:21.132 elapsed")
+
+(defn console
+  ; @param (string) group-label
+  ; @param (*) n
+  ;
+  ; @return (?)
+  ([n]
+   (if (separate?)
+       (separate!))
+   (let [timestamp (timestamp)]
+        (.log js/console (str timestamp string/break n))))
+
+  ([group-label n]
+   (if (separate?)
+       (separate!))
+   (let [timestamp (timestamp)]
+        (.groupCollapsed js/console (str timestamp string/break group-label))
+        (.log js/console (str n))
+        (.groupEnd js/console))))
 
 
 
@@ -79,5 +174,4 @@
   ;
   ; @return (map)
   [db [_ debug-mode]]
-  (assoc-in db [::primary :meta-items :debug-mode]
-            debug-mode))
+  (assoc-in db [::primary :meta-items :debug-mode] debug-mode))

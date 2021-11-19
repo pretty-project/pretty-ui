@@ -27,8 +27,8 @@
 
 (defn playground
   ; @param (map) request
-  [request]
-  (println "Playground *A#?o%!_f"))
+  [request])
+ ;(println "Playground *A#?o%!_f")
 
 (defn debug!
   ; @param (map) request

@@ -21,9 +21,9 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.button     :as button   :refer [view] :rename {view button}]
-              [x.app-elements.label      :as label    :refer [view] :rename {view label}]
-              [x.app-elements.polarity   :as polarity :refer [view] :rename {view polarity}]))
+              [x.app-elements.button     :as button   :rename {view button}]
+              [x.app-elements.label      :as label    :rename {view label}]
+              [x.app-elements.polarity   :as polarity :rename {view polarity}]))
 
 
 
@@ -85,11 +85,6 @@
                          (when (some? on-popup-closed)
                                {:ms       ON-POPUP-CLOSED-DELAY
                                 :dispatch on-popup-closed})]}))
-
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn- options-props->render-popup-label-bar?
   ; WARNING! NON-PUBLIC! DO NOT USE!

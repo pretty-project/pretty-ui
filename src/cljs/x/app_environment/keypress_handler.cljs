@@ -55,11 +55,6 @@
                (.preventDefault %))
            (a/dispatch [::->key-released key-code])))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- event-props->prevent-default?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

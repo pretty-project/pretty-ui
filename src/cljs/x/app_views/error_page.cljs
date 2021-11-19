@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.8.8
-; Compatibility: x3.9.9
+; Version: v0.9.8
+; Compatibility: x4.4.6
 
 
 
@@ -35,7 +35,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- error-id->content-props
@@ -54,36 +54,70 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- error-title
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  ;  {:title (metamorphic-content)}
+  ;
+  ; @return (component)
+  [_ {:keys [title]}]
+  [elements/text ::error-title
+                 {:content title :font-size :xxl :horizontal-align :center :layout :fit}])
+
+(defn- error-helper
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  ;  {:helper (metamorphic-content)}
+  ;
+  ; @return (component)
+  [_ {:keys [helper]}]
+  [elements/text ::error-helper
+                 {:content helper :font-size :s :horizontal-align :center :layout :fit}])
+
+(defn- error-icon
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  ;  {:icon (keyword)(opt)}
+  ;
+  ; @return (component)
+  [_ {:keys [icon]}]
+  (if (some? icon)
+      [elements/icon ::error-icon
+                     {:icon icon :size :xxl}]))
+
+(defn- go-back-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  ;
+  ; @return (component)
+  [_ _]
+  [elements/button ::go-back-button
+                   {:label    :back!
+                    :variant  :transparent
+                    :on-click [:x.app-router/go-back!]}])
+
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
   ; @param (map) content-props
-  ;  {:action (keyword)(opt)
-  ;    :go-back!, :go-to-main!
-  ;   :helper (metamorphic-content)
-  ;   :icon (keyword)(opt)
-  ;   :title (metamorphic-content)}
   ;
   ; @return (component)
-  [_ {:keys [action helper icon title]}]
+  [surface-id content-props]
   [:<> [elements/separator {:size :xxl :orientation :horizontal}]
-       (if (some? icon)
-           [elements/icon {:icon icon
-                           :size :xxl}])
-       [elements/text {:content          title
-                       :font-size        :xxl
-                       :horizontal-align :center
-                       :layout           :fit}]
-       [elements/text {:content          helper
-                       :font-size        :s
-                       :horizontal-align :center
-                       :layout           :fit}]
-       (cond (= action :go-back!)
-             [:<> [elements/separator {:orientation :horizontal :size :m}]
-                  [elements/button {:label    :back!
-                                    :variant  :transparent
-                                    :on-click [:x.app-router/go-back!]}]])])
+       [error-icon     surface-id content-props]
+       [error-title    surface-id content-props]
+       [error-helper   surface-id content-props]
+       [elements/separator {:orientation :horizontal :size :m}]
+       [go-back-button surface-id content-props]])
 
 
 
@@ -97,22 +131,15 @@
   ; @param (keyword) error-id
   ;  :no-connection, :page-not-found, ...
   (fn [_ [_ error-id]]
-      [:x.app-ui/set-surface!
-       ::view
-       {:content       #'view
-        :content-props (error-id->content-props error-id)}]))
-
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-router/add-route!
-   :page-not-found
-   {:route-event    [::render! :page-not-found]
-    :route-template "/page-not-found"}])
+      [:x.app-ui/set-surface! ::view
+                              {:content       #'view
+                               :content-props (error-id->content-props error-id)}]))
 
 (a/reg-lifecycles
   ::lifecycles
   ; Ha az error-handler {:on-app-init [...]} időzítéssel adja hozzá a :page-not-found
   ; route eseményt a rendszerhez, akkor azt lehetőség van {:on-app-boot [...]}
   ; időzítéssel felülírni.
-  {:on-app-init [::initialize!]})
+  {:on-app-boot [:x.app-router/add-route! :page-not-found
+                                          {:route-event    [::render! :page-not-found]
+                                           :route-template "/page-not-found"}]})

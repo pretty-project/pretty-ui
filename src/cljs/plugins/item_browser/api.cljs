@@ -9,8 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-browser.engine
-;(def get-body-view-props   engine/get-body-view-props)
-(def get-header-view-props engine/get-header-view-props)
+;(def get-body-props   engine/get-body-props)
+(def get-header-props engine/get-header-props)
 ;(def get-view-props        engine/get-view-props)
 
 ; plugins.item-browser.views

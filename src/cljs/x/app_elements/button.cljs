@@ -47,6 +47,11 @@
                             :icon    :apps
                             :layout  :icon-button
                             :variant :transparent}
+      :archive-icon-button {:color   :default
+                            :icon    :inventory_2
+                            :icon-family :material-icons-outlined
+                            :layout  :icon-button
+                            :variant :transparent}
       :back-button         {:color   :default
                             :icon    :arrow_back
                             :layout  :row
@@ -182,7 +187,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- button-props->ignore-button-label?

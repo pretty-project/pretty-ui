@@ -6,7 +6,7 @@
 ; Created: 2020.10.23
 ; Description:
 ; Version: v2.1.6
-; Compatibility: x4.3.3
+; Compatibility: x4.4.6
 
 
 
@@ -18,7 +18,7 @@
               [mid-fruits.map               :as map]
               [mid-fruits.string            :as string]
               [mid-fruits.vector            :as vector]
-              [x.app-components.transmitter :rename {view transmitter}]
+              [x.app-components.transmitter :rename {component transmitter}]
               [x.app-core.api               :as a :refer [r]]
               [x.app-dictionary.api         :as dictionary]))
 
@@ -82,7 +82,7 @@
 
 
 
-;; -- Converters --------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn extended-props->content-props
@@ -125,35 +125,6 @@
 
 
 
-; WARNING! DEPRECATED!
-(defn get-metamorphic-content
-  ; @param (map) context-props
-  ;  {:content (keyword, map or string)
-  ;   :suffix (string)(opt)}
-  ;
-  ; @example (dictionary term as keyword)
-  ;  (r components/get-metamorphic-content db {:content :username})
-  ;  => "Username"
-
-  ; @example (string)
-  ;  (r components/get-metamorphic-content db {:content "Hakuna Matata"})
-  ;  => "Hakuna Matata"
-  ;
-  ; @example (multilingual-item as map)
-  ;  (r components/get-metamorphic-content db {:content {:en "Window" :hu "Ablak"}})
-  ;  => "Window"
-  ;
-  ; @return (string)
-  [db [_ {:keys [content suffix]}]]
-  (cond (string?  content) (str content suffix)
-        (keyword? content) (str (r dictionary/look-up   db content) suffix)
-        (map?     content) (str (r dictionary/translate db content) suffix)))
-
-(a/reg-sub :x.app-components/get-metamorphic-content get-metamorphic-content)
-; WARNING! DEPRECATED!
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -169,8 +140,7 @@
   ;
   ; @return (string)
   [_ {:keys [content prefix replacements suffix]}]
-  (string/use-replacements (str prefix content suffix)
-                           (param replacements)))
+  (string/use-replacements (str prefix content suffix) replacements))
 
 (defn- dictionary-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,8 +165,7 @@
   ;
   ; @return (string)
   [_ {:keys [content suffix]}]
-  (str (dictionary/translated content)
-       (param suffix)))
+  (str (dictionary/translated content) suffix))
 
 (defn- nil-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -286,7 +255,7 @@
   (let [content (a/subscribe [::get-db-item content-path])]
        (fn [] [non-db-item component-id (assoc context-props :content @content)])))
 
-(defn view
+(defn component
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  XXX#8711
@@ -367,7 +336,7 @@
   ;
   ; @return (component or string)
   ([context-props]
-   (view nil context-props))
+   (component nil context-props))
 
   ([component-id {:keys [content-path] :as context-props}]
    (let [component-id (a/id component-id)]

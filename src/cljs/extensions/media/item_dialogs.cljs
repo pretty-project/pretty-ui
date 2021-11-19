@@ -151,7 +151,7 @@
         ::not-enough-space-to-copy
         {:content       #'not-enough-space-to-copy-dialog
          :content-props {:space-needed space-needed}
-         :label-bar     {:content #'ui/accept-popup-label-bar}
+         :label-bar     {:content #'ui/accept-popup-header}
          :layout        :boxed}]))
 
 (a/reg-event-fx

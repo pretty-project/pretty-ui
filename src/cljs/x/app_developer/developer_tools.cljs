@@ -1,25 +1,12 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.07
-; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.5
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns x.app-developer.developer-tools
     (:require [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-elements.api :as elements]
+              [x.app-gestures.api :as gestures]
               [x.app-ui.api       :as ui]
-              [x.app-developer.database-browser :refer [view] :rename {view database-browser}]
-              [x.app-developer.request-browser  :refer [view] :rename {view request-browser}]))
+              [x.app-developer.database-browser :rename {view database-browser}]
+              [x.app-developer.request-browser  :rename {view request-browser}]))
 
 
 
@@ -34,54 +21,37 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-selected-view
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (get-in db (db/path ::primary :selected-view) DEFAULT-VIEW))
+  {:selected-view (r gestures/get-selected-view db ::handler)})
 
-(defn- get-header-view-props
+(a/reg-sub ::get-header-props get-header-props)
+
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:selected-view (r get-selected-view db)})
+  {:selected-view (r gestures/get-selected-view db ::handler)})
 
-(a/reg-sub ::get-header-view-props get-header-view-props)
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  {:selected-view (r get-selected-view db)})
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- change-view!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ view-id]]
-  (assoc-in db (db/path ::primary :selected-view) view-id))
-
-(a/reg-event-db ::change-view! change-view!)
+(a/reg-sub ::get-body-props get-body-props)
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- label-bar
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id {:keys [selected-view] :as view-props}]
+  [header-id {:keys [selected-view] :as header-props}]
   [elements/polarity {:start-content [elements/menu-bar {:menu-items [{:label "DB"
-                                                                       :on-click [::change-view! :database-browser]
+                                                                       :on-click [:x.app-gestures/change-view! ::handler :database-browser]
                                                                        :color (if (not= selected-view :database-browser) :muted)}
                                                                       {:label "Requests"
-                                                                       :on-click [::change-view! :request-browser]
+                                                                       :on-click [:x.app-gestures/change-view! ::handler :request-browser]
                                                                        :color (if (not= selected-view :request-browser)  :muted)}]}]
-                      :end-content   [ui/popup-close-icon-button popup-id view-props]}])
+                      :end-content   [ui/popup-close-icon-button header-id header-props]}])
 
-(defn- view
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [selected-view]}]
   (case selected-view :database-browser [database-browser]
@@ -95,8 +65,11 @@
 (a/reg-event-fx
   :x.app-developer/render-developer-tools!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view {:content    #'view
-                                :label-bar  {:content    #'label-bar
-                                             :subscriber [::get-header-view-props]}
-                                :layout     :boxed
-                                :subscriber [::get-view-props]}])
+  (fn [{:keys [db]} _]
+      {:db       (r gestures/init-view-handler! db ::handler {:default-view DEFAULT-VIEW})
+       :dispatch [:x.app-ui/add-popup! ::view
+                                       {:content    #'body
+                                        :label-bar  {:content    #'header
+                                                     :subscriber [::get-header-props]}
+                                        :layout     :boxed
+                                        :subscriber [::get-body-props]}]}))

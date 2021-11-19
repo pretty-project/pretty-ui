@@ -17,7 +17,7 @@
    (:require [mid-fruits.candy  :refer [param]]
              [x.app-core.api    :as a]
              [x.app-ui.element  :as element]
-             [x.app-ui.renderer :refer [view] :rename {view renderer}]))
+             [x.app-ui.renderer :rename {component renderer}]))
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.8
-; Compatibility: x3.9.9
+; Version: v0.4.2
+; Compatibility: x4.4.6
 
 
 
@@ -25,8 +25,12 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def resize-listener
-     #(a/dispatch-once 250 [::->viewport-resized]))
+(defn- resize-listener
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (function)
+  []
+  (a/dispatch-once 250 [::->viewport-resized]))
 
 
 
@@ -116,6 +120,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- listen-to-viewport-resize!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (dom/add-event-listener! "resize" resize-listener))
 
@@ -142,24 +147,17 @@
 (a/reg-event-fx
   ::->viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n
-   [[:x.app-environment.position-handler/update-stored-positions!]
-    [::update-viewport-data!]
-    [::detect-viewport-profile!]]})
+  {:dispatch-n [[:x.app-environment.position-handler/update-stored-positions!]
+                [::update-viewport-data!]
+                [::detect-viewport-profile!]]})
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ::initialize!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n
-   [[::update-viewport-data!]
-    [::detect-viewport-profile!]
-    [::listen-to-viewport-resize!]]})
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [::initialize!]})
+  {:on-app-init {:dispatch-n [[::update-viewport-data!]
+                              [::detect-viewport-profile!]
+                              [::listen-to-viewport-resize!]]}})

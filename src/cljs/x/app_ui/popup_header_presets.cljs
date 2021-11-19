@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.popup-label-bar
+(ns x.app-ui.popup-header-presets
     (:require [x.app-elements.api :as elements]))
 
 
@@ -91,7 +91,7 @@
   (if (some? label)
       [elements/label {:content label}]))
 
-(defn accept-popup-label-bar
+(defn accept-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -99,7 +99,7 @@
   [popup-id bar-props]
   [elements/polarity {:end-content [popup-accept-button popup-id bar-props]}])
 
-(defn cancel-popup-label-bar
+(defn cancel-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -107,7 +107,7 @@
   [popup-id bar-props]
   [elements/polarity {:start-content [popup-cancel-button popup-id bar-props]}])
 
-(defn close-popup-label-bar
+(defn close-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;
@@ -117,7 +117,7 @@
                       :middle-content [popup-label                   popup-id bar-props]
                       :end-content    [popup-close-icon-button       popup-id bar-props]}])
 
-(defn go-up-popup-label-bar
+(defn go-up-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;  {:label (metamorphic-content)(opt)}
@@ -127,7 +127,7 @@
   [elements/polarity {:start-content [:<> [popup-up-icon-button popup-id bar-props]
                                           [popup-label          popup-id bar-props]]}])
 
-(defn go-back-popup-label-bar
+(defn go-back-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
   ;  {:label (metamorphic-content)(opt)}
