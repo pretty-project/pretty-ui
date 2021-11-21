@@ -163,10 +163,10 @@
   [slideshow-id view-props]
   [:div.x-slideshow--controls
     [:button.x-slideshow--controls--go-bwd
-      {:on-click   #(a/dispatch [:x.app-gestures/step-backward! slideshow-id])
+      {:on-click   #(a/dispatch [:gestures/step-backward! slideshow-id])
        :on-mouse-up (engine/blur-element-function slideshow-id)}]
     [:button.x-slideshow--controls--go-fwd
-      {:on-click   #(a/dispatch [:x.app-gestures/step-forward! slideshow-id])
+      {:on-click   #(a/dispatch [:gestures/step-forward! slideshow-id])
        :on-mouse-up (engine/blur-element-function slideshow-id)}]])
 
 (defn- slideshow
@@ -230,5 +230,5 @@
         [engine/stated-element slideshow-id
           {:component     #'slideshow
            :element-props slideshow-props
-           :initializer   [:x.app-gestures/init-step-handler! slideshow-id step-handler-props]
-           :subscriber    [::get-view-props                   slideshow-id]}])))
+           :initializer   [:gestures/init-step-handler! slideshow-id step-handler-props]
+           :subscriber    [::get-view-props             slideshow-id]}])))

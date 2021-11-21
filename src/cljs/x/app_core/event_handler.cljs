@@ -130,7 +130,7 @@
                     ; A collapsable event-log megvalósításáig az x.app-components.stated
                     ; névtér eseményei szűrésre kerülnek, a console átláthatóságának
                     ; érdekében.
-                    (if-not (= event-namespace :x.app-components.stated)
+                    (if-not (= event-namespace :components)
                             (debug-handler/console (context->event-vector %1)))
                            ;(debug-handler/console (context->event-vector %1)
                     (return %1))))

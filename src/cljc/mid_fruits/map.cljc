@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v0.9.8
+; Version: v1.0.2
 
 
 
@@ -35,7 +35,8 @@
   ;
   ; @example
   ;  (map/map->vector {0 :x 1 :y 2 :z})
-  ;  => [:x :y :z]
+  ;  =>
+  ;  [:x :y :z]
   ;
   ; @return (map)
   [n]
@@ -64,7 +65,8 @@
   ;
   ; @example
   ;  (map/get-keys {:a {:b "a/b"}})
-  ;  => [:a]
+  ;  =>
+  ;  [:a]
   ;
   ; @return (vector)
   [n]
@@ -75,7 +77,8 @@
   ;
   ; @example
   ;  (map/get-first-key {:a {:b "a/b"} :c "xyz"})
-  ;  => :a
+  ;  =>
+  ;  :a
   ;
   ; @return (*)
   [n]
@@ -98,7 +101,8 @@
   ;
   ; @example
   ;  (map/get-first-value {:a "abc" :c "xyz"})
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @return (*)
   [n]
@@ -112,7 +116,8 @@
   ;
   ; @example
   ;  (map/assoc-ns {:fruit/apple "red"} :banana "yellow")
-  ;  => {:fruit/apple "red" :fruit/banana "yellow"}
+  ;  =>
+  ;  {:fruit/apple "red" :fruit/banana "yellow"}
   ;
   ; @return (map)
   [n k v])
@@ -164,7 +169,8 @@
   ;
   ; @example
   ;  (map/difference {:a "a" :b "b"} {:a "a"})
-  ;  => {:b "b"}
+  ;  =>
+  ;  {:b "b"}
   ;
   ; @return (map)
   [a b]
@@ -176,7 +182,8 @@
   ;
   ; @example
   ;  (map/inherit {:a "a" :b "b" :c "c"} [:a :c :d])
-  ;  => {:a "a" :c "c"}
+  ;  =>
+  ;  {:a "a" :c "c"}
   ;
   ; @return (map)
   [n keys]
@@ -193,7 +200,8 @@
   ;
   ; @example
   ;  (map/swap {:a "a" :b "b"})
-  ;  => {"a" :a "b" :b}
+  ;  =>
+  ;  {"a" :a "b" :b}
   ;
   ; @return (map)
   [n]
@@ -237,7 +245,8 @@
   ;
   ; @example
   ;  (map/inject-in {} [:a :b] :c "x")
-  ;  => {:a {:b {:c "x"}}}
+  ;  =>
+  ;  {:a {:b {:c "x"}}}
   ;
   ; @return (*)
   [n parent-path key value]
@@ -249,7 +258,8 @@
   ;
   ; @example
   ;  (map/contains-key? {:a {:b "a/b"}} :a)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n x]
@@ -261,15 +271,18 @@
   ;
   ; @example
   ;  (map/contains-of-keys? {:a {:b "a/b"}} [:a])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (map/contains-of-keys? {:a {:b "a/b"}} [:a :b :c])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (map/contains-of-keys? {:a {:b "a/b"}} [:b :c :d])
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n xyz]
@@ -284,12 +297,14 @@
   ;
   ; @example
   ;  (map/contains-value? {} "x")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ;
   ; @example
   ;  (map/contains-value? {:x "x"} "x")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n x]
@@ -305,21 +320,23 @@
   ;  (map/values-equal? {:a {:b "FOO"}
   ;                     :c {:d "FOO"}}
   ;                     [:a :b] [:c :d])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n a-path b-path]
   (= (get-in n a-path)
      (get-in n b-path)))
 
-(defn rekey-value
+(defn rekey-item
   ; @param (map) n
   ; @param (*) from
   ; @param (*) to
   ;
   ; @example
-  ;  (map/rekey-value {:a "x"} :a :b)
-  ;  => {:b "x"}
+  ;  (map/rekey-item {:a "x"} :a :b)
+  ;  =>
+  ;  {:b "x"}
   ;
   ; @return (*)
   [n from to]
@@ -335,11 +352,13 @@
   ;
   ; @example
   ;  (map/update-some {:a [:x :y]} :a vector/conj-item :z)
-  ;  => {:a [:x :y :z]}
+  ;  =>
+  ;  {:a [:x :y :z]}
   ;
   ; @example
   ;  (map/update-some {:a [:x :y]} :a vector/conj-item nil)
-  ;  => {:a [:x :y]}
+  ;  =>
+  ;  {:a [:x :y]}
   ;
   ; @return (map)
   [n x f v]
@@ -357,11 +376,13 @@
   ;
   ; @example
   ;  (map/update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item :z)
-  ;  => {:a {:b [:x :y :z]}}
+  ;  =>
+  ;  {:a {:b [:x :y :z]}}
   ;
   ; @example
   ;  (map/update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item nil)
-  ;  => {:a {:b [:x :y]}}
+  ;  =>
+  ;  {:a {:b [:x :y]}}
   ;
   ; @return (map)
   [n value-path update-f value]
@@ -378,11 +399,13 @@
   ;
   ; @example
   ;  (map/assoc-some {:a [:x :y]} :b :z)
-  ;  => {:a [:x :y] :b :z}
+  ;  =>
+  ;  {:a [:x :y] :b :z}
   ;
   ; @example
   ;  (map/assoc-some {:a [:x :y]} :b nil)
-  ;  => {:a [:x :y]}
+  ;  =>
+  ;  {:a [:x :y]}
   ;
   ; @return (map)
   [n key value]
@@ -399,11 +422,13 @@
   ;
   ; @example
   ;  (map/assoc-in-some {:a [:x :y]} [:b :c] :z)
-  ;  => {:a [:x :y] :b {:c :z}}
+  ;  =>
+  ;  {:a [:x :y] :b {:c :z}}
   ;
   ; @example
   ;  (map/assoc-in-some {:a [:x :y]} [:b :c] nil)
-  ;  => {:a [:x :y]}
+  ;  =>
+  ;  {:a [:x :y]}
   ;
   ; @return (map)
   [n value-path value]
@@ -420,11 +445,13 @@
   ;
   ; @example
   ;  (map/assoc-or {:a :b} :a :c)
-  ;  => {:a :b}
+  ;  =>
+  ;  {:a :b}
   ;
   ; @example
   ;  (map/assoc-or {:a nil} :a :c)
-  ;  => {:a :c}
+  ;  =>
+  ;  {:a :c}
   ;
   ; @return (map)
   [n key value]
@@ -439,11 +466,13 @@
   ;
   ; @example
   ;  (map/assoc-in-or {:a {:b :c}} [:a :b] :d)
-  ;  => {:a {:b :c}}
+  ;  =>
+  ;  {:a {:b :c}}
   ;
   ; @example
   ;  (map/assoc-in-or {:a {:b nil}} [:a :b] :d)
-  ;  => {:a {:b :d}}
+  ;  =>
+  ;  {:a {:b :d}}
   ;
   ; @return (map)
   [n value-path value]
@@ -458,19 +487,23 @@
   ;
   ; @example
   ;  (map/match-pattern? {:a "a" :b "b"} {:a "a"})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (map/match-pattern? {:a "a" :b "b"} {:a "a" :c "c"})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (map/match-pattern? {:a "a" :b "b"} {:a "a"} {:strict-matching? true})
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (map/match-pattern? {:a "a" :b "b"} {:a "a" :b "b"} {:strict-matching? true})
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   ([n pattern]
@@ -494,7 +527,8 @@
   ;
   ; @example
   ;  (map/keywordize {"my-key" "my-value"})
-  ;  => {:my-key "my-value"}
+  ;  =>
+  ;  {:my-key "my-value"}
   ;
   ; @return (map)
   [n]
@@ -587,11 +621,13 @@
   ;
   ; @example
   ;  (map/filter-values {:a 0 :b 1 :c 2} even?)
-  ;  => {:a 0 :c 2}
+  ;  =>
+  ;  {:a 0 :c 2}
   ;
   ; @example
   ;  (map/filter-values {:a "abc" :b "def" :c "ghi"} #(string/starts-with? % "a"))
-  ;  => {:a "abc"}
+  ;  =>
+  ;  {:a "abc"}
   ;
   ; @return (map)
   [n filter-f]
@@ -610,12 +646,14 @@
   ; @example
   ;  (map/filter-values-by {:a {:value "abc"} :b {:value "def"}}
   ;                        #(string/starts-with? % "a") :value)
-  ;  => {:a {:value "abc"}}
+  ;  =>
+  ;  {:a {:value "abc"}}
   ;
   ; @example
   ;  (map/filter-values-by {:a {:value "abc"} :b {:value "def"}}
   ;                        #(string/starts-with? % "a") (get % :value))
-  ;  => {:a {:value "abc"}}
+  ;  =>
+  ;  {:a {:value "abc"}}
   ;
   ; @return (map)
   [n filter-f value-f]
@@ -637,11 +675,13 @@
   ;
   ; @example
   ;  (map/any-key-match? {:a 1 :b 2} string?)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (map/any-key-match? {:a 1 "b" 2} string?)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n test-f]
@@ -656,11 +696,13 @@
   ;
   ; @example
   ;  (map/any-value-match? {:a 1 :b 2} string?)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (map/any-value-match? {:a 1 :b "2"} string?)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n test-f]
@@ -675,11 +717,13 @@
   ;
   ; @example
   ;  (map/get-first-match-key {:a 1 :b 2} string?)
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (map/get-first-match-key {:a 1 "b" 2} string?)
-  ;  => "b"
+  ;  =>
+  ;  "b"
   ;
   ; @return (*)
   [n test-f]
@@ -695,15 +739,18 @@
   ;
   ; @example
   ;  (map/get-first-match-value {:a 1 :b 2} string?)
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (map/get-first-match-value {:a 1 :b "2"} string?)
-  ;  => "2"
+  ;  =>
+  ;  "2"
   ;
   ; @example
   ;  (map/get-first-match-value {:a {:id "apple"} :b {:id "banana"}} #(= "apple" (:id %)))
-  ;  => {:id "apple"}
+  ;  =>
+  ;  {:id "apple"}
   ;
   ; @return (*)
   [n test-f]

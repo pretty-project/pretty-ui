@@ -23,6 +23,7 @@
               [x.app-elements.engine.deletable          :as deletable]
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-adornments :as element-adornments]
+              [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.element-stickers   :as element-stickers]
               [x.app-elements.engine.expandable         :as expandable]
@@ -89,6 +90,9 @@
 ; x.app-elements.engine.element-adornments
 (def element-end-adornments   element-adornments/element-end-adornments)
 (def element-start-adornments element-adornments/element-start-adornments)
+
+; x.app-elements.engine.element-badge
+(def element-badge element-badge/element-badge)
 
 ; x.app-elements.engine.element-info
 (def element-helper       element-info/element-helper)

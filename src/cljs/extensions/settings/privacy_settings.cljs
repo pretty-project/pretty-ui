@@ -1,7 +1,7 @@
 
 (ns extensions.settings.privacy-settings
     (:require [x.app-elements.api :as elements]
-              [extensions.settings.cookie-settings :rename {view cookie-settings}]))
+              [extensions.settings.cookie-settings :rename {body cookie-settings}]))
 
 
 

@@ -252,11 +252,10 @@
   ;
   ; @return (component)
   ([context-props]
-   [component nil context-props])
+   [component (a/id) context-props])
 
   ([component-id context-props]
-   (let [component-id  (a/id   component-id)
-         context-props (a/prot context-props context-props-prototype)]
+   (let [context-props (a/prot context-props context-props-prototype)]
         (if (context-props->listen-to-request? context-props)
             [listener component-id context-props]
             [content  component-id context-props]))))

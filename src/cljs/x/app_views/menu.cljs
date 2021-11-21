@@ -103,7 +103,7 @@
   (vector/conj-item (language-selector-languages popup-id body-props)
                     [elements/button ::back-button
                                      {:label    :back!
-                                      :on-click [:x.app-gestures/change-view! ::handler :main]
+                                      :on-click [:gestures/change-view! ::handler :main]
                                       :preset   :back-button}]))
 
 (defn- language-selector-button
@@ -112,7 +112,7 @@
   [elements/button ::language-selector-button
                    {:disabled? (not app-multilingual?)
                     :preset    :language-button
-                    :on-click  [:x.app-gestures/change-view! ::handler :language-selector]}])
+                    :on-click  [:gestures/change-view! ::handler :language-selector]}])
 
 (defn user-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,7 +167,7 @@
                         :icon             :copyright}]
        [elements/button ::back-button
                         {:label    :back!
-                         :on-click [:x.app-gestures/change-view! ::handler  :main]
+                         :on-click [:gestures/change-view! ::handler  :main]
                          :preset :back-button}]])
 
 (defn- about-app-button
@@ -176,7 +176,7 @@
   [elements/button ::about-app-button
                    {:icon     :copyright
                     :label    :about-app
-                    :on-click [:x.app-gestures/change-view! ::handler :about-app]
+                    :on-click [:gestures/change-view! ::handler :about-app]
                     :preset   :default-button}])
 
 (defn- logout-button

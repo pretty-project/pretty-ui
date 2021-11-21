@@ -109,7 +109,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-db-item
+(defn- get-db-item-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (vector) db-item-path
@@ -121,7 +121,7 @@
              (keyword? db-item) (r dictionary/get-term  db db-item)
              :else              (str db-item))))
 
-(a/reg-sub ::get-db-item get-db-item)
+(a/reg-sub :components/get-db-item-content get-db-item-content)
 
 
 
@@ -252,7 +252,7 @@
   ;
   ; @return (component)
   [component-id {:keys [content-path] :as context-props}]
-  (let [content (a/subscribe [::get-db-item content-path])]
+  (let [content (a/subscribe [:components/get-db-item-content content-path])]
        (fn [] [non-db-item component-id (assoc context-props :content @content)])))
 
 (defn component
@@ -336,10 +336,9 @@
   ;
   ; @return (component or string)
   ([context-props]
-   (component nil context-props))
+   (component (a/id) context-props))
 
   ([component-id {:keys [content-path] :as context-props}]
-   (let [component-id (a/id component-id)]
-        (if (vector/nonempty? content-path)
-            [db-item     component-id context-props]
-            (non-db-item component-id context-props)))))
+   (if (vector/nonempty? content-path)
+       [db-item     component-id context-props]
+       (non-db-item component-id context-props))))

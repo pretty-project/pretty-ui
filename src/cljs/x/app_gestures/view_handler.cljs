@@ -48,7 +48,7 @@
   [db [_ handler-id {:keys [default-view]}]]
   (assoc-in db (db/path ::view-handlers handler-id :selected-view) default-view))
 
-(a/reg-event-db :x.app-gestures/init-view-handler! init-view-handler!)
+(a/reg-event-db :gestures/init-view-handler! init-view-handler!)
 
 (defn change-view!
   ; @param (keyword) handler-id
@@ -58,4 +58,4 @@
   [db [_ handler-id view-id]]
   (assoc-in db (db/path ::view-handlers handler-id :selected-view) view-id))
 
-(a/reg-event-db :x.app-gestures/change-view! change-view!)
+(a/reg-event-db :gestures/change-view! change-view!)

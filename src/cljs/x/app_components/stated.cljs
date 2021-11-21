@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.1.2
+; Version: v2.2.4
 ; Compatibility: x4.4.6
 
 
@@ -18,6 +18,7 @@
               [mid-fruits.candy    :refer [param return]]
               [mid-fruits.map      :as map :refer [dissoc-in]]
               [mid-fruits.vector   :as vector]
+              [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
               [x.app-components.transmitter :rename {component transmitter}]
               [x.app-core.api      :as a :refer [r]]
@@ -31,14 +32,6 @@
 ; @name stated
 ;  A stated komponens a Reagent életciklusait valósítja meg a {:component #'xyz}
 ;  tulajdonságként átadott komponens számára.
-;
-; @name lifetime
-;  A {:lifetime ...} tulajdonság használatával a stated komponens a megadott
-;  idő elteltével automatikusan lecsatolódik a React-fáról.
-;
-; @name unmountable?
-;  Az {:unmountable? true} tulajdonság használatával a stated komponens
-;  lecsatolása Re-Frame esemény meghívásával is lehetségessé válik.
 ;
 ; @name destructor
 ;  A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
@@ -112,14 +105,12 @@
 ;  vagy több remounting, akkor az unmount-(re)mount eseménypárok néha összekeveredtek
 ;  és ez hibákhoz vezetett.
 ;  Ennek kiküszöbölésére került bevezetésre, hogy minden React-fába történe komponens-
-;  -csatolás saját azonosítóval rendelkezik és a destructor esemény megtörténése vagy
+;  -csatolás saját azonosítóval rendelkezik (mount-id) és a destructor esemény megtörténése vagy
 ;  a komponens tulajdonságainak Re-Frame adatbázisból való eltávolítása késleltetve
 ;  történik, így lehetséges megvizsgálni, hogy ha a komponens még mindig azzal az azonosítóval
 ;  van csatolva, amivel a lecsatolásai események megtörténnének, akkor azok végrehajtódhatnak,
 ;  de ha azóta eltérő azonosítóval újra van csatolva a komponens, akkor a lecsatolási események
 ;  nem történnek meg.
-;
-; @description
 
 
 
@@ -132,8 +123,7 @@
 ; @constant (keywords in vector)
 (def STATED-PROPS
      [:component :destructor :disabler :initializer :initial-props
-      :initial-props-path :lifetime :static-props :subscriber
-      :unmountable? :updater])
+      :initial-props-path :static-props :subscriber :updater])
 
 
 
@@ -155,18 +145,6 @@
   ; Ha egy térkép tartalmazza a :component kulcsot, attól még nem számít stated-props térképnek.
   (map/contains-of-keys? (param extended-props)
                          (vector/remove-item STATED-PROPS :component)))
-
-(defn- context-props->component-unmountable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context-props
-  ;  {:lifetime (integer)(opt)
-  ;   :unmountable? (boolean)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [lifetime unmountable?]}]
-  (or (integer? lifetime)
-      (boolean  unmountable?)))
 
 (defn- context-props->initialize?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -198,31 +176,10 @@
   [{:keys [disabler]}]
   (some? disabler))
 
-(defn- component-status->component-mounted?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-status
-  ;
-  ; @return (boolean)
-  [component-status]
-  (not= component-status :unmount!))
-
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- get-component-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (keyword) prop-id
-  ;
-  ; @return (*)
-  [db [_ component-id prop-id]]
-  (get-in db (db/path ::components component-id prop-id)))
-
-(a/reg-sub ::get-component-prop get-component-prop)
 
 (defn- get-component-initial-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -243,7 +200,7 @@
   ;
   ; @return (boolean)
   [db [_ component-id]]
-  (let [component-status (r get-component-prop db component-id :status)]
+  (let [component-status (r engine/get-component-prop db component-id :status)]
        (or (= component-status :mounted)
            (= component-status :remounting)
            (= component-status :remounted)
@@ -266,7 +223,7 @@
   ;
   ; @return (boolean)
   [db [_ component-id]]
-  (let [component-status (r get-component-prop db component-id :status)]
+  (let [component-status (r engine/get-component-prop db component-id :status)]
        (= component-status :remounting)))
 
 (defn- component-mounted-as?
@@ -277,7 +234,7 @@
   ;
   ; @return (boolean)
   [db [_ component-id mount-id]]
-  (let [mounted-as (r get-component-prop db component-id :mount-id)]
+  (let [mounted-as (r engine/get-component-prop db component-id :mount-id)]
        (= mounted-as mount-id)))
 
 (defn- component-initialized?
@@ -287,33 +244,13 @@
   ;
   ; @return (boolean)
   [db [_ component-id]]
-  (let [component-initialized? (r get-component-prop db component-id :initialized?)]
+  (let [component-initialized? (r engine/get-component-prop db component-id :initialized?)]
        (boolean component-initialized?)))
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- set-component-prop!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (keyword) prop-id
-  ; @param (*) prop-value
-  ;
-  ; @return (map)
-  [db [_ component-id prop-id prop-value]]
-  (assoc-in db (db/path ::components component-id prop-id) prop-value))
-
-(defn- remove-component-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ;
-  ; @return (map)
-  [db [_ component-id]]
-  (dissoc-in db (db/path ::components component-id)))
 
 (defn- store-component-initial-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -348,7 +285,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::initialize-component!
+  :components/initialize-component!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -358,11 +295,11 @@
   (fn [{:keys [db]} [event-id component-id {:keys [initializer] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
               {:db       (-> db (store-component-initial-props! [event-id component-id context-props])
-                                (set-component-prop!            [event-id component-id :initialized? true]))
+                                (engine/set-component-prop!     [event-id component-id :initialized? true]))
                :dispatch (param initializer)})))
 
 (a/reg-event-fx
-  ::destruct-component!
+  :components/destruct-component!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -374,25 +311,9 @@
                (r component-mounted-as? db component-id mount-id))
           (let [initial-props (r get-component-initial-props db component-id context-props)
                 destructor    (a/metamorphic-event<-params destructor initial-props)]
-               {:db       (-> db (remove-component-props!         [event-id component-id])
+               {:db       (-> db (engine/remove-component-props!  [event-id component-id])
                                  (remove-component-initial-props! [event-id component-id context-props]))
                 :dispatch (param destructor)}))))
-
-(a/reg-event-fx
-  :x.app-components/unmount-component!
-  ; WARNING! NOT TESTED!
-  ;
-  ; @param (keyword) component-id
-  (fn [{:keys [db]} [_ component-id]]
-      {:db (r set-component-prop! db component-id :status :unmount!)}))
-
-(a/reg-event-fx
-  :x.app-components/remount-component!
-  ; WARNING! NOT TESTED!
-  ;
-  ; @param (keyword) component-id
-  (fn [{:keys [db]} [_ component-id]]
-      {:db (r set-component-prop! db component-id :status :remount!)}))
 
 
 
@@ -400,26 +321,19 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->component-mounted
+  :components/->component-mounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:lifetime (ms)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [event-id component-id {:keys [lifetime] :as context-props} mount-id]]
-      {:db (-> db (set-component-prop! [event-id component-id :status :mounted])
-                  (set-component-prop! [event-id component-id :mount-id mount-id]))
-
-       :dispatch [::initialize-component! component-id context-props mount-id]
-
-       ; Self destruction
-       :dispatch-later [(if (some? lifetime)
-                            {:ms       (param lifetime)
-                             :dispatch [:x.app-components/unmount-component! component-id]})]}))
+  (fn [{:keys [db]} [event-id component-id context-props mount-id]]
+      {:db       (-> db (engine/set-component-prop! [event-id component-id :status :mounted])
+                        (engine/set-component-prop! [event-id component-id :mount-id mount-id]))
+       :dispatch [:components/initialize-component! component-id context-props mount-id]}))
 
 (a/reg-event-fx
-  ::->component-updated
+  :components/->component-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -427,20 +341,20 @@
   ;  {:updater (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id {:keys [updater] :as context-props} _]]
-      {:db       (r set-component-prop! db component-id :status :updated)
+      {:db       (r engine/set-component-prop! db component-id :status :updated)
        :dispatch (param updater)}))
 
 (a/reg-event-fx
-  ::->component-unmounted
+  :components/->component-unmounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id context-props mount-id]]
-      {:db (r set-component-prop! db component-id :status :unmounted)
+      {:db (r engine/set-component-prop! db component-id :status :unmounted)
        :dispatch-later [{:ms       (param COMPONENT-DESTRUCTION-DELAY)
-                         :dispatch [::destruct-component! component-id context-props mount-id]}]}))
+                         :dispatch [:components/destruct-component! component-id context-props mount-id]}]}))
 
 
 
@@ -515,44 +429,10 @@
   ; @return (component)
   [component-id context-props]
   (let [mount-id (a/id)]
-       (reagent/lifecycles {:component-did-mount    #(a/dispatch [::->component-mounted   component-id context-props mount-id])
-                            :component-did-update   #(a/dispatch [::->component-updated   component-id context-props mount-id])
-                            :component-will-unmount #(a/dispatch [::->component-unmounted component-id context-props mount-id])
+       (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/->component-mounted   component-id context-props mount-id])
+                            :component-did-update   #(a/dispatch [:components/->component-updated   component-id context-props mount-id])
+                            :component-will-unmount #(a/dispatch [:components/->component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [disable-controller component-id context-props])})))
-
-(defn- non-unmountable-component
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;
-  ; @return (component)
-  [component-id context-props]
-  [lifecycle-controller component-id context-props])
-
-(defn- unmountable-component
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;
-  ; @return (component)
-  [component-id context-props]
-  (let [component-status (a/subscribe [::get-component-prop component-id :status])]
-       (fn [_ context-props] (if (component-status->component-mounted? @component-status)
-                                 [lifecycle-controller component-id context-props]))))
-
-(defn- unmount-controller
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;
-  ; @return (component)
-  [component-id context-props]
-  (if (context-props->component-unmountable? context-props)
-      [unmountable-component     component-id context-props]
-      [non-unmountable-component component-id context-props]))
 
 (defn component
   ; @param (keyword)(opt) component-id
@@ -568,11 +448,9 @@
   ;   :initial-props (map)(opt)
   ;   :initial-props-path (item-path vector)(opt)
   ;   :modifier (function)(opt)
-  ;   :lifetime (ms)(opt)
   ;   :static-props (map)(opt)
   ;   :subscriber (subscription vector)(opt)
   ;    Return value must be a map!
-  ;   :unmountable? (boolean)(opt)
   ;   :updater (metamorphic-event)(opt)}
   ;
   ; @usage
@@ -607,4 +485,4 @@
    [component (a/id) context-props])
 
   ([component-id context-props]
-   [unmount-controller component-id context-props]))
+   [lifecycle-controller component-id context-props]))

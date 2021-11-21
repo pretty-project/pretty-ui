@@ -28,7 +28,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ;  {:helper (metamorphic-content)}
   ;
   ; @return (hiccup)
@@ -40,7 +40,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ;  {:info-tooltip (metamorphic-content)}
   ;
   ; @return (hiccup)

@@ -147,10 +147,14 @@
                         [card-header card-id card-props])]
                   ; XXX#0093
                   ; A card elem sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
-                  ; a sticky header alsó sarkai kilógnának, ha a sticky header lecsúszna a card elem
-                  ; aljáig.
-                  ; overflow: hidden tulajdonságú elemben nem működik a position: sticky tulajdonság
-                  [:div.x-card--tail]])
+                  ; a {position: sticky} card-header alsó sarkai kilógnának, amikor a card-header
+                  ; lecsúszik a card elem aljáig.
+                  ; Azért szükséges a card-tail spacert alkalmazni, hogy a {position: sticky} card-header
+                  ; ne tudjon a card elem aljái lecsúszni.
+                  ; {overflow: hidden} tulajdonsággal nem lehet eltűntetni a card-header kilógó sarkait,
+                  ; mert {overflow: hidden} elemben nem működne a {position: sticky} tulajdonság.
+                  [:div.x-card--tail]
+                  [engine/element-badge card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,6 +172,7 @@
                      [card-header card-id card-props])]
                ; XXX#0093
                [:div.x-card--tail]
+               [engine/element-badge    card-id card-props]
                [engine/element-stickers card-id card-props]])
 
 (defn- ghost-card
@@ -204,7 +209,9 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
-  ;  {:body (map)
+  ;  {:badge-color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success
+  ;   :body (map)
   ;    {:content (metamorphic-content)(opt)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}

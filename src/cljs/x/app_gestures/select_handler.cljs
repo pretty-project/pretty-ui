@@ -111,7 +111,7 @@
   (let [handler-props (a/prot handler-props handler-props-prototype)]
        (assoc-in db (db/path ::select-handlers handler-id) handler-props)))
 
-(a/reg-event-db :x.app-gestures/init-select-handler! init-select-handler!)
+(a/reg-event-db :gestures/init-select-handler! init-select-handler!)
 
 (defn empty-select-handler!
   ; @param (keyword) handler-id
@@ -121,7 +121,7 @@
   (assoc-in db (db/path ::select-handlers handler-id :selected-items)
                (param [])))
 
-(a/reg-event-db :x.app-gestures/empty-select-handler! empty-select-handler!)
+(a/reg-event-db :gestures/empty-select-handler! empty-select-handler!)
 
 (defn enable-select-handler!
   ; @param (keyword) handler-id
@@ -130,7 +130,7 @@
   [db [_ handler-id]]
   (assoc-in db (db/path ::select-handlers handler-id :enabled?) true))
 
-(a/reg-event-db :x.app-gestures/enable-select-handler! enable-select-handler!)
+(a/reg-event-db :gestures/enable-select-handler! enable-select-handler!)
 
 (defn disable-select-handler!
   ; @param (keyword) handler-id
@@ -139,7 +139,7 @@
   [db [_ handler-id]]
   (assoc-in db (db/path ::select-handlers handler-id :enabled?) false))
 
-(a/reg-event-db :x.app-gestures/disable-select-handler! disable-select-handler!)
+(a/reg-event-db :gestures/disable-select-handler! disable-select-handler!)
 
 (defn select-item!
   ; @param (keyword) handler-id
@@ -150,4 +150,4 @@
   (update-in db (db/path ::select-handlers handler-id :selected-items)
              vector/conj-item item-id))
 
-(a/reg-event-db :x.app-gestures/select-item! select-item!)
+(a/reg-event-db :gestures/select-item! select-item!)

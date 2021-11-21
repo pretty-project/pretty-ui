@@ -8,6 +8,21 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (a/dispatch [:view-selector/initialize! :settings])
+;
+; @usage
+;  (a/dispatch [:view-selector/initialize! :settings {:default-view :privacy}])
+;
+; @usage
+;  (a/dispatch [:view-selector/initialize! :settings {:default-view  :privacy
+;                                                     :allowed-views [:privacy :personal :appearance]}])
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -27,6 +42,28 @@
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- get-derived-view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (map) selector-props
+  ;  {:allowed-views (keywords in vector)(opt)
+  ;   :default-view (keyword)(opt)}
+  ;
+  ; @return (keyword)
+  ;  A view-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-view.
+  [db [_ extension-id {:keys [allowed-views default-view]}]]
+  (if-let [derived-view (r router/get-current-route-path-param db :selected-view)]
+          (let [derived-view (keyword derived-view)]
+               (if (or (not (vector?          allowed-views))
+                       (vector/contains-item? allowed-views derived-view))
+                   ; If allowed-views is NOT in use,
+                   ; or allowed-views is in use & derived-view is allowed ...
+                   (return derived-view)
+                   ; If allowed-views is in use & derived view is NOT allowed ...
+                   (return default-view)))
+          (return default-view)))
 
 (defn get-selected-view
   ; @param (keyword) extension-id
@@ -76,6 +113,10 @@
   [db [_ extension-id view-id]]
   (assoc-in db [extension-id :selector-meta :selected-view] view-id))
 
+; @usage
+;  [:view-selector/change-view! :settings :privacy]
+(a/reg-event-db :view-selector/change-view! change-view!)
+
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -83,20 +124,19 @@
 
 (a/reg-event-fx
   :view-selector/load!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (map) selector-props
-  ;  {:default-view (keyword)(opt)}
-  ;
-  ; @usage
-  ;  [:view-selector/load! :settings {:default-view :privacy}]
-  (fn [{:keys [db]} [_ extension-id {:keys [default-view]}]]
-      (let [request-id    (request-id extension-id)
-            render-event  (keyword    extension-id :render!)
-            selected-view (or (r router/get-current-route-path-param db :selected-view)
-                              (param default-view))]
+  ;  {:allowed-views (keywords in vector)(opt)
+  ;   :default-view (keyword)(opt)}
+  (fn [{:keys [db]} [_ extension-id selector-props]]
+      (let [request-id   (request-id extension-id)
+            render-event (keyword    extension-id :render!)
+            derived-view (r get-derived-view db extension-id selector-props)]
            {:db         (-> db (dissoc-in [extension-id :selector-meta])
-                              ;(assoc-in  [:settings :selector-meta :selected-view] :privacy)
-                               (assoc-in  [extension-id :selector-meta :selected-view] selected-view))
+                              ;(assoc-in  [:settings    :selector-meta :selected-view] :privacy)
+                               (assoc-in  [extension-id :selector-meta :selected-view] derived-view))
                         ;[:x.app-ui/listen-to-process! :settings/synchronize!]
             :dispatch-n [[:x.app-ui/listen-to-process! request-id]
                         ;[:x.app-ui/set-header-title!  :settings]
@@ -107,24 +147,35 @@
                          [render-event]]})))
 
 (a/reg-event-fx
-  :view-selector/add-routes!
+  :view-selector/initialize!
   ; @param (keyword) extension-id
   ; @param (map) selector-props
+  ;  {:allowed-views (keywords in vector)(opt)
+  ;    Ha a selected-view értéke nem található meg az allowed-views felsorolásban,
+  ;    akkor behelyettesítésre kerül a default-view értékével.
+  ;   :default-view (keyword)(opt)}
   ;
   ; @usage
-  ;  [:view-selector/add-routes! :settings {...}]
+  ;  [:view-selector/initialize! :settings]
+  ;
+  ; @usage
+  ;  [:view-selector/initialize! :settings {:default-view :privacy}]
+  ;
+  ; @usage
+  ;  [:view-selector/initialize! :settings {:default-view  :privacy
+  ;                                         :allowed-views [:privacy :personal :appearance]}]
   (fn [_ [_ extension-id selector-props]]
       (let [route-id          (keyword extension-id :route)
             extended-route-id (keyword extension-id :extended-route)
             extension-name    (name    extension-id)]
-                        ;[:x.app-router/add-route! :settings/route
+                        ;[:x.app-router/add-route! :settings/route {...}]
            {:dispatch-n [[:x.app-router/add-route! route-id
                                                    ;:route-template "/settings"
                                                    {:route-template (str "/" extension-name)
                                                    ;:route-event    [:view-selector/load! :settings {...}]
                                                     :route-event    [:view-selector/load! extension-id selector-props]
                                                     :restricted?    true}]
-                        ;[:x.app-router/add-route! :settings/extended-route
+                        ;[:x.app-router/add-route! :settings/extended-route {...}]
                          [:x.app-router/add-route! extended-route-id
                                                    ;:route-template "/settings/:selected-view"
                                                    {:route-template (str "/" extension-name "/:selected-view")

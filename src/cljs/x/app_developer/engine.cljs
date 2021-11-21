@@ -8,5 +8,5 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :developer.test!
+  :developer/test!
   [:x.app-ui/blow-bubble! {:content "It works!"}])

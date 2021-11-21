@@ -144,7 +144,7 @@
   ;
   ; @return (component)
   ([context-props]
-   [component nil context-props])
+   [component (a/id) context-props])
 
   ([component-id {:keys [component static-props] :as context-props}]
    (let [dynamic-props (context-props->dynamic-props component-id context-props)]

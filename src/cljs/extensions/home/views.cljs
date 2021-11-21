@@ -1,18 +1,20 @@
 
-
-
-
-; EZ LEGYEN A LAYOUT-B!
-
-
-
-
 (ns extensions.home.views
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-details        :as details]
-              [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
               [x.app-user.api       :as user]))
+
+
+
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (maps in vector)
+(def CARDS [{:label :clients      :icon :people   :on-click [:x.app-router/go-to! "/clients"]  :badge-color :secondary}
+            {:label :products     :icon :category :on-click [:x.app-router/go-to! "/products"] :badge-color :secondary}
+            {:label :file-storage :icon :folder   :on-click [:x.app-router/go-to! "/media"]}
+            {:label :sample       :icon :none     :on-click [:x.app-router/go-to! "/sample"]}])
 
 
 
@@ -22,8 +24,7 @@
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:user-name                (r user/get-user-name                db)
-   :user-profile-picture-url (r user/get-user-profile-picture-url db)})
+  {:user-name (r user/get-user-name db)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -32,40 +33,11 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- card-badge
+(defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [:div {:style {:width "8px" :height "8px" :background-color "var( --secondary )"
-                 :border-radius "50%" :position "absolute" :top "44px" :right "24px"}}])
-
-(defn header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [user-name]}]
-  [:div.x-header-a (components/content {:content :welcome-n :replacements [user-name]})])
-
-(defn view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [:<> [header surface-id view-props]
-       [:div {:style {:display :flex :flex-wrap :wrap :justify-content :center}}
-        [:div
-         [elements/card {:body {:content [elements/label {:content :clients :icon :people}]}
-                         :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/clients"]}]]
-        [:div
-         [elements/card {:body {:content [elements/label {:content :products :icon :category}]}
-                         :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/products"]}]
-         [card-badge]]
-        [:div
-         [elements/card {:body {:content [elements/label {:content :file-storage :icon :folder}]}
-                         :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/media"]}]]
-        [:div
-         [elements/card {:body {:content [elements/label {:content :sample :icon :folder}]}
-                         :horizontal-align :left
-                         :on-click [:x.app-router/go-to! "/sample"]}]
-         [card-badge]]]])
+  [surface-id {:keys [user-name] :as view-props}]
+  (let [label (components/content {:content :welcome-n :replacements [user-name]})]
+       [layouts/layout-b surface-id {:cards CARDS :label label}]))
 
 
 
@@ -79,7 +51,7 @@
                                   :subscriber [::get-view-props]}])
 
 (a/reg-event-fx
-  :home/load-home!
+  :home/load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-detail db :app-title)]
@@ -91,5 +63,5 @@
   ::lifecycles
   {:on-app-boot [:x.app-router/add-route! ::route
                                           {:route-template "/"
-                                           :route-event    [:home/load-home!]
+                                           :route-event    [:home/load!]
                                            :restricted?    true}]})

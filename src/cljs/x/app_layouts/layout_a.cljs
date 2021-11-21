@@ -69,10 +69,8 @@
   ;
   ; @return (component)
   [_ {:keys [description label]}]
-  [:div.x-header-a (if (some? label)
-                       (components/content {:content label}))
-                   (if (some? description)
-                       [:div.x-header-a--description (components/content {:content description})])])
+  [:div.x-header-a (if (some? label)       [:div.x-header-a--label       (components/content {:content label})])
+                   (if (some? description) [:div.x-header-a--description (components/content {:content description})])])
 
 (defn- layout-a
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -53,7 +53,7 @@
         extended-item-path (conj item-path language-id)]
        (get-in db extended-item-path)))
 
-(a/reg-sub :x.app-locales/get-multilingual-item get-multilingual-item)
+(a/reg-sub :locales/get-multilingual-item get-multilingual-item)
 
 (defn translate
   ; @param (map) n
@@ -66,7 +66,7 @@
   (let [selected-language (r get-selected-language db)]
        (selected-language n)))
 
-(a/reg-sub :x.app-locales/translate translate)
+(a/reg-sub :locales/translate translate)
 
 
 
@@ -96,4 +96,4 @@
   ; @usage
   ;  (translated {:en "Foo" :hu "Fú"})
   [n]
-  (a/subscribed [:x.app-locales/translate n]))
+  (a/subscribed [:locales/translate n]))

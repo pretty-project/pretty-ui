@@ -32,7 +32,7 @@
   ; @param (map) sticker-props
   ;
   ; @return (map)
-  ;  {:icon-family (keyword)}
+  ;  {:icon-family (keyword)}
   [sticker-props]
   (merge {:icon-family :material-icons-filled}
          (param sticker-props)))
@@ -46,7 +46,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) sticker-props
   ;  {:icon (keyword)
   ;   :icon-family (keyword)(opt)
@@ -68,7 +68,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) sticker-props
   ;  {:disabled? (boolean)(opt)
   ;   :icon (keyword)
@@ -89,29 +89,29 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) sticker-props
   ;  {:disabled? (boolean)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (component)
-  [element-id view-props {:keys [disabled? on-click] :as sticker-props}]
+  [element-id element-props {:keys [disabled? on-click] :as sticker-props}]
   (if (and (some? on-click)
            (not   disabled?))
-      [element-sticker-button element-id view-props sticker-props]
-      [element-sticker-icon   element-id view-props sticker-props]))
+      [element-sticker-button element-id element-props sticker-props]
+      [element-sticker-icon   element-id element-props sticker-props]))
 
 (defn element-stickers
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ;  {:stickers (maps in vector)(opt)}
   ;
   ; @return (hiccup)
-  [element-id {:keys [stickers] :as view-props}]
+  [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
       (reduce (fn [%1 %2]
                   (let [%2 (a/prot %2 sticker-props-prototype)]
-                       (vector/conj-item %1 [element-sticker element-id view-props %2])))                   
+                       (vector/conj-item %1 [element-sticker element-id element-props %2])))
               [:div.x-element--stickers] stickers)))

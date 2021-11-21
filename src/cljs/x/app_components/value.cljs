@@ -118,7 +118,9 @@
         value-props (a/event-vector->first-props event-vector)]
        (r ab7800 db value-id value-props)))
 
-(a/reg-sub :x.app-components/get-metamorphic-value get-metamorphic-value)
+; @usage
+;  [:components/get-metamorphic-value ...]
+(a/reg-sub :components/get-metamorphic-value get-metamorphic-value)
 
 
 
@@ -139,8 +141,7 @@
   ;
   ; @return (string)
   ([value-props]
-   (component nil value-props))
+   (component (a/id) value-props))
 
   ([value-id value-props]
-   (let [value-id (a/id value-id)]
-        (a/subscribed [:x.app-components/get-metamorphic-value value-id value-props]))))
+   (a/subscribed [:components/get-metamorphic-value value-id value-props])))

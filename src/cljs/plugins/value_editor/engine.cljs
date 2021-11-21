@@ -20,6 +20,15 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (ns my-namespace (:require [plugins.value-editor.api :as value-editor]))
+;  (r value-editor/get-editor-value db :my-editor)
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -137,8 +146,6 @@
                 (assoc-in db value-path value))
            (return db))))
 
-(a/reg-event-db :value-editor/save-value! save-value!)
-
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -159,6 +166,6 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      {:db         (r save-value!        db editor-id)
+      {:db          (r save-value!       db editor-id)
        :dispatch-n [(r get-editor-prop   db editor-id :on-save)
                     [:x.app-ui/close-popup! editor-id]]}))

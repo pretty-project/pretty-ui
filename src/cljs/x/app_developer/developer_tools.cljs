@@ -44,10 +44,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id {:keys [selected-view] :as header-props}]
   [elements/polarity {:start-content [elements/menu-bar {:menu-items [{:label "DB"
-                                                                       :on-click [:x.app-gestures/change-view! ::handler :database-browser]
+                                                                       :on-click [:gestures/change-view! ::handler :database-browser]
                                                                        :color (if (not= selected-view :database-browser) :muted)}
                                                                       {:label "Requests"
-                                                                       :on-click [:x.app-gestures/change-view! ::handler :request-browser]
+                                                                       :on-click [:gestures/change-view! ::handler :request-browser]
                                                                        :color (if (not= selected-view :request-browser)  :muted)}]}]
                       :end-content   [ui/popup-close-icon-button header-id header-props]}])
 
@@ -63,7 +63,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-developer/render-developer-tools!
+  :developer/render-developer-tools!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view DEFAULT-VIEW})

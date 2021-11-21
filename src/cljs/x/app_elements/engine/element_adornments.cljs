@@ -32,7 +32,7 @@
   ; @param (map) adornment-props
   ;
   ; @return (map)
-  ;  {:icon-family (keyword)}
+  ;  {:icon-family (keyword)}
   [adornment-props]
   (merge {:icon-family :material-icons-filled}
          (param adornment-props)))
@@ -46,7 +46,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) adornment-props
   ;  {:icon (keyword)
   ;   :icon-family (keyword)(opt)
@@ -77,7 +77,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) adornment-props
   ;  {:icon (keyword)
   ;   :icon-family (keyword)(opt)
@@ -93,42 +93,42 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ; @param (map) adornment-props
   ;  {:on-click (metamorphic-event)(opt)}
   ;
   ; @return (component)
-  [element-id view-props {:keys [on-click] :as adornment-props}]
+  [element-id element-props {:keys [on-click] :as adornment-props}]
   (if (some? on-click)
-      [element-adornment-button element-id view-props adornment-props]
-      [element-adornment-icon   element-id view-props adornment-props]))
+      [element-adornment-button element-id element-props adornment-props]
+      [element-adornment-icon   element-id element-props adornment-props]))
 
 (defn- element-end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ;  {:end-adornments (maps in vector)(opt)}
   ;
   ; @return (hiccup)
-  [element-id {:keys [end-adornments] :as view-props}]
+  [element-id {:keys [end-adornments] :as element-props}]
   (if (vector/nonempty? end-adornments)
       (reduce (fn [%1 %2]
                   (let [%2 (a/prot %2 adornment-props-prototype)]
-                       (vector/conj-item %1 [element-adornment element-id view-props %2])))
+                       (vector/conj-item %1 [element-adornment element-id element-props %2])))
               [:div.x-element--end-adornments] end-adornments)))
 
 (defn- element-start-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (map) view-props
+  ; @param (map) element-props
   ;  {:start-adornments (maps in vector)(opt)}
   ;
   ; @return (hiccup)
-  [element-id {:keys [start-adornments] :as view-props}]
+  [element-id {:keys [start-adornments] :as element-props}]
   (if (vector/nonempty? start-adornments)
       (reduce (fn [%1 %2]
                   (let [%2 (a/prot %2 adornment-props-prototype)]
-                       (vector/conj-item %1 [element-adornment element-id view-props %2])))
+                       (vector/conj-item %1 [element-adornment element-id element-props %2])))
               [:div.x-element--start-adornments] start-adornments)))

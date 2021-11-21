@@ -8,6 +8,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [])
 
 
@@ -16,7 +17,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  :developer/render-source-reader!
   [:x.app-ui/set-surface! ::view {:content #'view}])
 
 (a/reg-lifecycles

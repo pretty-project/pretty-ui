@@ -75,15 +75,6 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header-apps-icon-button-badge
-  ; TEMP
-  []
-  [:div {:style {:position :absolute :top "12px" :right "12px" :background "var( --secondary )"
-                 :width "8px" :height "8px" :border-radius "50%"
-                 :font-size "8px" :font-weight 600 :align-items :center :line-height "18px"
-                 :display :flex :flex-direction :column :justify-content :center}}])
-        ;(param "12")
-
 (defn- header-apps-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -93,14 +84,12 @@
   ;
   ; @return (component)
   [_ {:keys [at-home?]}]
-  [:div [elements/button ::apps-icon-button
-                         {:disabled? (param at-home?)
-                          :on-click  [:x.app-router/go-home!]
-                          :preset    :apps-icon-button}]
-                         ;:tooltip   :back-to-home!
-                         ;:icon      :dashboard
-        (if-not (boolean at-home?)
-                [header-apps-icon-button-badge])])
+  [elements/button ::apps-icon-button
+                   {:badge-color (if-not at-home? :secondary)
+                    :disabled?   (param at-home?)
+                    :on-click    [:x.app-router/go-home!]
+                    :preset      :apps-icon-button}])
+                   ;:icon        :dashboard
 
 (defn- header-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,7 +102,6 @@
   [elements/button ::up-icon-button
                    {:preset   :back-icon-button
                     :on-click [:x.app-router/go-up!]}])
-                   ;:tooltip  :back!
 
 (defn- header-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,7 +114,6 @@
   [elements/button ::back-icon-button
                    {:preset   :back-icon-button
                     :on-click [:x.app-router/go-back!]}])
-                   ;:tooltip  :back!
 
 (defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -140,7 +127,6 @@
                    {:icon     :auto_fix_high
                     :on-click [:developer/render-developer-tools!]
                     :preset   :default-icon-button}])
-                   ;:tooltip  :developer-tools
 
 (defn- header-menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,7 +139,6 @@
   [elements/button ::menu-icon-button
                    {:preset   :user-menu-icon-button
                     :on-click [:x.app-views.menu/render!]}])
-                   ;:tooltip  :app-menu}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

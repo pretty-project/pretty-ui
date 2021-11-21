@@ -11,7 +11,10 @@
 ; plugins.item-lister.engine
 (def DEFAULT-ORDER-BY          engine/DEFAULT-ORDER-BY)
 (def DEFAULT-ORDER-BY-OPTIONS  engine/DEFAULT-ORDER-BY-OPTIONS)
+(def extension-namespace       engine/extension-namespace)
 (def request-id                engine/request-id)
+(def resolver-id               engine/resolver-id)
+(def new-item-uri              engine/new-item-uri)
 (def synchronizing?            engine/synchronizing?)
 (def get-downloaded-items      engine/get-downloaded-items)
 (def get-downloaded-item-count engine/get-downloaded-item-count)

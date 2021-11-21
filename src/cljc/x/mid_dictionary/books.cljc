@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.08.01
 ; Description:
-; Version: v1.7.2
-; Compatibility: x4.4.4
+; Version: v1.7.8
+; Compatibility: x4.4.6
 
 
 
@@ -1213,6 +1213,9 @@
       :pin
       {:en "PIN"
        :hu "PIN"}
+      :registered-at-n
+      {:en "registered at: %"
+       :hu "Regisztráció ideje: %"}
       :show-password!
       {:en "Show password"
        :hu "Jelszó mutatása"}

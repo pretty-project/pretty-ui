@@ -68,12 +68,14 @@
 
  ; @param (map) seo-details
  ;  {:meta-description (string)
- ;   :meta-keywords (strings in vector)
+ ;   :meta-keywords (strings in vector or string)
  ;   :og-preview-path (string)
  ;    Recommended preview-size: 1200x630px}
  :seo-details
  {:meta-description "The Matrix is everywhere. It is all around us."
-  :meta-keywords    ["Follow" "the" "white" "rabbit!"]
+ ;:meta-keywords    ["a" "b" "c"]
+ ;:meta-keywords     "a, b, c"
+  :meta-keywords    ["Follow the white rabbit!"]
   :og-preview-path  "/og/og-preview-1200x630.png"}
 
 

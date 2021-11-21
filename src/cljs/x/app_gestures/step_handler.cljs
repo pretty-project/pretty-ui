@@ -264,7 +264,7 @@
   [db [_ handler-id prop-id prop-value]]
   (assoc-in db (db/path ::step-handlers handler-id prop-id) prop-value))
 
-(a/reg-event-db :x.app-gestures/set-step-handler-prop! set-step-handler-prop!)
+(a/reg-event-db :gestures/set-step-handler-prop! set-step-handler-prop!)
 
 (defn- remove-step-handler-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -276,7 +276,7 @@
   [db [_ handler-id prop-id]]
   (dissoc-in db (db/path ::step-handlers handler-id prop-id)))
 
-(a/reg-event-db :x.app-gestures/remove-step-handler-prop! remove-step-handler-prop!)
+(a/reg-event-db :gestures/remove-step-handler-prop! remove-step-handler-prop!)
 
 (defn- store-step-handler-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -288,7 +288,7 @@
   [db [_ handler-id handler-props]]
   (assoc-in db (db/path ::step-handlers handler-id) handler-props))
 
-(a/reg-event-db :x.app-gestures/store-step-handler-props! store-step-handler-props!)
+(a/reg-event-db :gestures/store-step-handler-props! store-step-handler-props!)
 
 (defn pause-stepping!
   ; @param (keyword) handler-id
@@ -297,7 +297,7 @@
   [db [_ handler-id]]
   (r set-step-handler-prop! db handler-id :paused? true))
 
-(a/reg-event-db :x.app-gestures/pause-stepping! pause-stepping!)
+(a/reg-event-db :gestures/pause-stepping! pause-stepping!)
 
 (defn run-stepping!
   ; @param (keyword) handler-id
@@ -306,7 +306,7 @@
   [db [_ handler-id]]
   (r set-step-handler-prop! db handler-id :paused? false))
 
-(a/reg-event-db :x.app-gestures/run-stepping! run-stepping!)
+(a/reg-event-db :gestures/run-stepping! run-stepping!)
 
 
 
@@ -314,7 +314,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-gestures/step-backward!
+  :gestures/step-backward!
   (fn [{:keys [db]} [_ handler-id]]
       (let [prev-dex              (r get-prev-dex          db handler-id)
             progressive-stepping? (r progressive-stepping? db handler-id)
@@ -323,15 +323,15 @@
            (cond (and (not   step-in-progress?)
                       (param progressive-stepping?))
                  {:dispatch-later
-                  [{:ms 0             :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :step-direction :bwd]}
-                   {:ms step-duration :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :current-dex prev-dex]}
-                   {:ms step-duration :dispatch [:x.app-gestures/remove-step-handler-prop! handler-id :step-direction]}]}
+                  [{:ms 0             :dispatch [:gestures/set-step-handler-prop!    handler-id :step-direction :bwd]}
+                   {:ms step-duration :dispatch [:gestures/set-step-handler-prop!    handler-id :current-dex prev-dex]}
+                   {:ms step-duration :dispatch [:gestures/remove-step-handler-prop! handler-id :step-direction]}]}
                  (and (not step-in-progress?)
                       (not progressive-stepping?))
-                 [:x.app-gestures/set-step-handler-prop! handler-id :current-dex prev-dex]))))
+                 [:gestures/set-step-handler-prop! handler-id :current-dex prev-dex]))))
 
 (a/reg-event-fx
-  :x.app-gestures/step-forward!
+  :gestures/step-forward!
   (fn [{:keys [db]} [_ handler-id]]
       (let [next-dex              (r get-next-dex          db handler-id)
             progressive-stepping? (r progressive-stepping? db handler-id)
@@ -340,25 +340,25 @@
            (cond (and (not   step-in-progress?)
                       (param progressive-stepping?))
                  {:dispatch-later
-                  [{:ms 0             :dispatch [:x.app-gestures/set-ste-handler-prop!     handler-id :step-direction :fwd]}
-                   {:ms step-duration :dispatch [:x.app-gestures/set-step-handler-prop!    handler-id :current-dex next-dex]}
-                   {:ms step-duration :dispatch [:x.app-gestures/remove-step-handler-prop! handler-id :step-direction]}]}
+                  [{:ms 0             :dispatch [:gestures/set-ste-handler-prop!     handler-id :step-direction :fwd]}
+                   {:ms step-duration :dispatch [:gestures/set-step-handler-prop!    handler-id :current-dex next-dex]}
+                   {:ms step-duration :dispatch [:gestures/remove-step-handler-prop! handler-id :step-direction]}]}
                  (and (not step-in-progress?)
                       (not progressive-stepping?))
-                 [:x.app-gestures/set-step-handler-prop! handler-id :current-dex next-dex]))))
+                 [:gestures/set-step-handler-prop! handler-id :current-dex next-dex]))))
 
 (a/reg-event-fx
-  :x.app-gestures/run-autostep?!
+  :gestures/run-autostep?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ handler-id]]
       (if (r autostep? db handler-id)
           (let [step-timeout (r get-step-timeout db handler-id)]
                {:dispatch-later
-                [{:ms step-timeout :dispatch [:x.app-gestures/step-forward!  handler-id]}
-                 {:ms step-timeout :dispatch [:x.app-gestures/run-autostep?! handler-id]}]}))))
+                [{:ms step-timeout :dispatch [:gestures/step-forward!  handler-id]}
+                 {:ms step-timeout :dispatch [:gestures/run-autostep?! handler-id]}]}))))
 
 (a/reg-event-fx
-  :x.app-gestures/init-step-handler!
+  :gestures/init-step-handler!
   ; @param (keyword)(opt) handler-id
   ; @param (map) handler-props
   ;  {:autostep? (boolean)(opt)
@@ -380,5 +380,5 @@
             handler-props (a/event-vector->first-props event-vector)
             handler-props (a/prot handler-props handler-props-prototype)]
            (if-not (r step-handler-inited? db handler-id)
-                   {:dispatch-n [[:x.app-gestures/store-step-handler-props! handler-id handler-props]
-                                 [:x.app-gestures/run-autostep?!            handler-id]]}))))
+                   {:dispatch-n [[:gestures/store-step-handler-props! handler-id handler-props]
+                                 [:gestures/run-autostep?!            handler-id]]}))))

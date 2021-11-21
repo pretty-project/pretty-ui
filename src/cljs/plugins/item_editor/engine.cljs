@@ -17,69 +17,127 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn item-id->new-item?
-  ; @param (string) item-id
-  ; @param (string) item-name
+(defn extension-namespace
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-editor/item-id->new-item? "new-product" "product")
+  ;  (item-editor/extension-namespace :products :product)
+  ;  =>
+  ;  :product-editor
+  ;
+  ; @return (keyword)
+  [_ item-namespace]
+  (keyword/join item-namespace "-editor"))
+
+(defn item-id->new-item?
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-id
+  ;
+  ; @example
+  ;  (item-editor/item-id->new-item? :products :product :new-product)
   ;  =>
   ; true
   ;
   ; @example
-  ;  (item-editor/item-id->new-item? "my-product" "product")
+  ;  (item-editor/item-id->new-item? :products :product :my-product)
   ;  =>
   ; false
   ;
   ; @return (boolean)
-  [item-id item-name]
-  (= item-id (str "new-" item-name)))
+  [_ item-namespace item-id]
+  (= item-id (keyword/join "new-" item-namespace)))
 
 (defn item-id->form-label
-  ; @param (string) item-id
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-id
   ;
   ; @example
-  ;  (item-editor/item-id->form-label "new-product" "product")
+  ;  (item-editor/item-id->form-label :products :product :new-product)
   ;  =>
   ; :add-product
   ;
   ; @example
-  ;  (item-editor/item-id->form-label "my-product" "product")
+  ;  (item-editor/item-id->form-label :products :product :my-product)
   ;  =>
   ; :edit-product
   ;
   ; @return (metamorphic-content)
-  [item-id item-name]
-  (if (item-id->new-item? item-id item-name)
-      (keyword/join "add-"  item-name)
-      (keyword/join "edit-" item-name)))
+  [extension-id item-namespace item-id]
+  (if (new-item? extension-id item-namespace item-id)
+      (keyword/join "add-"    item-namespace)
+      (keyword/join "edit-"   item-namespace)))
 
 (defn item-id->item-uri
-  ; @param (string) extension-name
-  ; @param (string) item-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-id
   ;
   ; @example
-  ;  (item-editor/item-id->item-uri "products" "my-product")
+  ;  (item-editor/item-id->item-uri :products :product :my-product)
   ;  =>
   ;  "/products/my-product"
   ;
   ; @return (string)
-  [extension-name item-id]
-  (str "/" extension-name "/" item-id))
+  [extension-id _ item-id]
+  (str "/" (name extension-id) "/" (name item-id)))
 
-(defn request-id
-  ; @param (string) extension-name
-  ; @param (string) item-name
+(defn- parent-uri
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-editor/request-id "products" "product")
+  ;  (item-editor/parent-uri :products :product)
+  ;  =>
+  ;  "/products"
+  ;
+  ; @return (string)
+  [extension-id _]
+  (str "/" (name extension-id)))
+
+(defn request-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-editor/request-id :products :product)
   ;  =>
   ;  :product-editor/synchronize!
   ;
   ; @return (keyword)
-  [extension-name item-name]
-  (keyword (str item-name "-editor") "synchronize!"))
+  [extension-id item-namespace]
+  (keyword (str (name item-namespace) "-editor") "synchronize!"))
+
+(defn mutation-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ;
+  ; @example
+  ;  (item-editor/mutation-name :products :product :add)
+  ;  =>
+  ;  "products/add-product-item!"
+  ;
+  ; @return (string)
+  [extension-id item-namespace action-id]
+  (str (name extension-id) "/" (name action-id) "-" (name item-namespace) "-item!"))
+
+(defn form-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-editor/form-id :products :product)
+  ;  =>
+  ;  :product-editor/form
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (str (name item-namespace) "-editor") "form"))
 
 
 
@@ -87,74 +145,76 @@
 ;; ----------------------------------------------------------------------------
 
 (defn synchronizing?
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (boolean)
-  [db [_ extension-name item-name]]
-  (let [request-id (request-id extension-name item-name)]
+  [db [_ extension-id item-namespace]]
+  (let [request-id (request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
 (defn new-item?
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  (r item-editor/new-item? db "products" "product")
+  ;  (r item-editor/new-item? db :products :product)
   ;
   ; @return (boolean)
-  [db [_ extension-name item-name]]
-  (let [extension-id (keyword extension-name)
-        item-id      (get-in db [extension-id :editor-meta :item-id])]
-       (item-id->new-item? item-id item-name)))
+  [db [_ extension-id item-namespace]]
+  (let [item-id (get-in db [extension-id :editor-meta :item-id])]
+       (item-id->new-item?  extension-id item-namespace item-id)))
 
 (defn get-description
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-description db :products :product)
   ;
   ; @return (string)
-  [db [_ extension-name item-name]]
-  (if (r new-item? db extension-name item-name)
-      (str "")
-      (let [extension-id    (keyword extension-name)
-            namespace       (keyword item-name)
-            modified-at-key (keyword namespace "modified-at")
+  [db [_ extension-id item-namespace]]
+  (if (r new-item? db extension-id item-namespace)
+      (return "")
+      (let [modified-at-key (keyword item-namespace "modified-at")
+           ;modified-at     (get-in db [:products    :editor-data :product/modified-at])
             modified-at     (get-in db [extension-id :editor-data modified-at-key])
             modified-at     (r activities/get-actual-timestamp db modified-at)]
            (components/content {:content :last-modified-at-n :replacements [modified-at]}))))
 
 (defn get-body-props
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
   ;  {:new-item? (boolean)}
-  [db [_ extension-name item-name]]
-  {:new-item? (r new-item? db extension-name item-name)})
+  [db [_ extension-id item-namespace]]
+  {:new-item? (r new-item? db extension-id item-namespace)})
 
 (defn get-header-props
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
   ;  {:form-completed? (boolean)
   ;   :new-item? (boolean)}
-  [db [_ extension-name item-name]]
-  {:form-completed? (r elements/form-completed? db :item-editor)
-   :new-item?       (r new-item?                db extension-name item-name)})
+  [db [_ extension-id item-namespace]]
+  (let [form-id (form-id extension-id item-namespace)]
+       {:form-completed? (r elements/form-completed? db form-id)
+        :new-item?       (r new-item?                db extension-id item-namespace)}))
 
 (defn get-view-props
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)
   ;   :new-item? (boolean)
   ;   :synchronizing? (boolean)}
-  [db [_ extension-name item-name]]
-  {:description    (r get-description db extension-name item-name)
-   :new-item?      (r new-item?       db extension-name item-name)
-   :synchronizing? (r synchronizing?  db extension-name item-name)})
+  [db [_ extension-id item-namespace]]
+  {:description    (r get-description db extension-id item-namespace)
+   :new-item?      (r new-item?       db extension-id item-namespace)
+   :synchronizing? (r synchronizing?  db extension-id item-namespace)})
 
 
 
@@ -163,145 +223,146 @@
 
 (a/reg-event-fx
   :item-editor/add-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/add-item! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id    (request-id extension-name item-name)
-            extension-id  (keyword extension-name)
-            item-props    (get-in db [extension-id :editor-data])
-            parent-path   (str "/" extension-name)
-            mutation-name (str extension-name "/add-" item-name "-item!")]
-          ;[:x.app-sync/send-query! :product-editor/synchronize!
+  ;  [:item-editor/add-item! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id    (request-id    extension-id item-namespace)
+            parent-uri    (parent-uri    extension-id item-namespace)
+            mutation-name (mutation-name extension-id item-namespace :add)
+            item-props    (get-in    db [extension-id :editor-data])]
+          ;[:x.app-sync/send-query! :product-editor/synchronize! {...}]
            [:x.app-sync/send-query! request-id
-                                    {:on-stalled [:x.app-router/go-to! parent-path]
+                                    ;:on-stalled [:x.app-router/go-to! "/products"]
+                                    {:on-stalled [:x.app-router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                                    ;:query      [`(~(symbol "products/add-product-item!") ~{...})]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
   :item-editor/update-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/update-item! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id    (request-id extension-name item-name)
-            extension-id  (keyword extension-name)
-            item-props    (get-in db [extension-id :editor-data])
-            parent-path   (str "/" extension-name)
-            mutation-name (str extension-name "/update-" item-name "-item!")]
-          ;[:x.app-sync/send-query! :product-editor/synchronize!
+  ;  [:item-editor/update-item! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id    (request-id    extension-id item-namespace)
+            parent-uri    (parent-uri    extension-id item-namespace)
+            mutation-name (mutation-name extension-id item-namespace :update)
+            item-props    (get-in    db [extension-id :editor-data])]
+          ;[:x.app-sync/send-query! :product-editor/synchronize! {...}]
            [:x.app-sync/send-query! request-id
-                                    {:on-stalled [:x.app-router/go-to! parent-path]
+                                    ;:on-stalled [:x.app-router/go-to! "/products"]
+                                    {:on-stalled [:x.app-router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                                    ;:query      [`(~(symbol "products/update-product-item!") ~{...})]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
   :item-editor/delete-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/delete-item! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id    (request-id extension-name item-name)
-            extension-id  (keyword extension-name)
-            item-id-key   (keyword/join item-name "-id")
-            item-id       (get-in db [extension-id :editor-meta :item-id])
-            parent-path   (str "/" extension-name)
-            mutation-name (str extension-name "/delete-" item-name "-item!")]
-          ;[:x.app-sync/send-query! :product-editor/synchronize!
+  ;  [:item-editor/delete-item! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id    (request-id    extension-id item-namespace)
+            parent-uri    (parent-uri    extension-id item-namespace)
+            mutation-name (mutation-name extension-id item-namespace "delete")
+            item-id       (get-in    db [extension-id :editor-meta :item-id])
+            item-id-key   (keyword/join item-namespace "-id")]
+          ;[:x.app-sync/send-query! :product-editor/synchronize! {...}]
            [:x.app-sync/send-query! request-id
-                                    {:on-stalled [:x.app-router/go-to! parent-path]
+                                    ;:on-stalled [:x.app-router/go-to! "/products"]
+                                    {:on-stalled [:x.app-router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
+                                    ;:query      [`(~(symbol "products/delete-product-item!") ~{:product-id :my-product})]
                                      :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
   :item-editor/duplicate-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/duplicate-item! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id    (request-id extension-name item-name)
-            extension-id  (keyword extension-name)
-            item-id-key   (keyword/join item-name "-id")
-            item-id       (get-in db [extension-id :editor-meta :item-id])
-            mutation-name (str extension-name "/duplicate-" item-name "-item!")]
-          ;[:x.app-sync/send-query! :product-editor/synchronize!
+  ;  [:item-editor/duplicate-item! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id    (request-id    extension-id item-namespace)
+            mutation-name (mutation-name extension-id item-namespace "duplicate")
+            item-id       (get-in    db [extension-id :editor-meta :item-id])
+            item-id-key   (keyword/join item-namespace "-id")]
+          ;[:x.app-sync/send-query! :product-editor/synchronize! {...}]
            [:x.app-sync/send-query! request-id
-                                    {:on-stalled [:item-editor/->item-duplicated extension-name item-name]
+                                    ;:on-stalled [:item-editor/->item-duplicated :products :product]
+                                    {:on-stalled [:item-editor/->item-duplicated extension-id item-namespace]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :copying-error :color :warning}]
+                                    ;:query      [`(~(symbol "products/duplicate-product-item!") ~{:product-id :my-product})]
                                      :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
   :item-editor/edit-copy!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn []))
 
 (a/reg-event-fx
-  :item-editor/->item-duplicated
-  ; @param (string) extension-name
-  ; @param (string) item-name
-  ; @param (map) server-response
-  ;
-  ; @usage
-  ;  [:item-editor/->item-duplicated "products" "product" {...}]
-  (fn [{:keys [db]} [_ extension-name item-name server-response]]
-      (let [extension-id  (keyword extension-name)
-            namespace     (keyword extension-name)
-            item-id-key   (keyword item-name "id")
-            mutation-name (symbol (str extension-name "/duplicate-" item-name "-item!"))
-            item-id       (get-in server-response [mutation-name item-id-key])
-            edit-copy-uri (str "/" extension-name "/" item-id)]
-           [:x.app-ui/blow-bubble! {}])))
-
-(a/reg-event-fx
   :item-editor/receive-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) server-response
   ;
   ; @usage
-  ;  [:item-editor/receive-item! "products" "product" {...}]
-  (fn [{:keys [db]} [_ extension-name item-name server-response]]
-      (let [extension-id (keyword extension-name)
-            item-id      (get-in db [extension-id :editor-meta :item-id])
-            namespace    (keyword item-name)
-            entity       (eql/id->entity item-id namespace)
-            document     (get server-response entity)]
+  ;  [:item-editor/receive-item! :products :product {...}]
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [item-id     (get-in db [extension-id :editor-meta :item-id])
+            item-entity (eql/id->entity item-id item-namespace)
+            document    (get server-response item-entity)]
+           ;:db (assoc-in db [:products    :editor-data] {...})
            {:db (assoc-in db [extension-id :editor-data] document)})))
 
 (a/reg-event-fx
   :item-editor/request-item!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/request-item! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id   (request-id extension-name item-name)
-            extension-id (keyword extension-name)
-            item-id      (get-in db [extension-id :editor-meta :item-id])
-            namespace    (keyword item-name)
-            entity       (eql/id->entity item-id namespace)]
-          ;[:x.app-sync/send-query! product-editor/synchronize!
+  ;  [:item-editor/request-item! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id (request-id extension-id item-namespace)
+            item-id    (get-in db [extension-id :editor-meta :item-id])
+            entity     (eql/id->entity item-id item-namespace)]
+          ;[:x.app-sync/send-query! product-editor/synchronize! {...}]
            [:x.app-sync/send-query! request-id
-                                    {:on-stalled [:item-editor/receive-item! extension-name item-name]
+                                    ;:on-stalled [:item-editor/receive-item! :products :product]
+                                    {:on-stalled [:item-editor/receive-item! extension-id item-namespace]
+                                    ;:query      [{[:product/id :my-product] [:client/last-name '*]}]
                                      :query      [{entity [:client/last-name '*]}]}])))
 
 (a/reg-event-fx
   :item-editor/load!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/load! "products" "product"]
-  (fn [{:keys [db]} [_ extension-name item-name]]
-      (let [request-id   (request-id extension-name item-name)
+  ;  [:item-editor/load! :products :product]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [request-id   (request-id extension-id item-namespace)
             extension-id (keyword extension-name)
             item-id-key  (keyword/join item-name "-id")
             item-id      (r router/get-current-route-path-param db item-id-key)
@@ -321,25 +382,47 @@
                         ;[:x.app-ui/set-header-title!  :edit-product]
                          [:x.app-ui/set-window-title!  header-label]
                                           ;[:products/request-product!]
-                         (if-not new-item? [:item-editor/request-item! extension-name item-name])
+                         (if-not new-item? [:item-editor/request-item! extension-id item-namespace])
                         ;[:product/render-product-editor!]
                          [render-event]]})))
 
 (a/reg-event-fx
-  :item-editor/add-route!
-  ; @param (string) extension-name
-  ; @param (string) item-name
+  :item-editor/initialize!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-editor/add-route! "products" "product"]
-  (fn [_ [_ extension-name item-name]]
-           ;route-id :products/form-route
+  ;  [:item-editor/initialize! :products :product]
+  (fn [_ [_ extension-id item-namespace]]
       (let [route-id (keyword extension-name "form-route")]
+          ;[:x.app-router/add-route! :products/form-route {...}]
            [:x.app-router/add-route! route-id
                                      ;:route-template "/products/:product-id"
                                      {:route-template (str "/" extension-name "/:" item-name "-id")
                                      ;:route-parent   "/products"
                                       :route-parent   (str "/" extension-name)
-                                     ;:route-event    [:item-editor/load! "products" "product"]
-                                      :route-event    [:item-editor/load! extension-name item-name]
+                                     ;:route-event    [:item-editor/load! :products :product]
+                                      :route-event    [:item-editor/load! extension-id item-namespace]
                                       :restricted?    true}])))
+;
+
+
+
+(a/reg-event-fx
+  :item-editor/->item-duplicated
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @usage
+  ;  [:item-editor/->item-duplicated :products :product {...}]
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [extension-id  (keyword extension-name)
+            namespace     (keyword extension-name)
+            item-id-key   (keyword item-name "id")
+            mutation-name (symbol (str extension-name "/duplicate-" item-name "-item!"))
+            item-id       (get-in server-response [mutation-name item-id-key])
+            edit-copy-uri (str "/" extension-name "/" item-id)]
+           [:x.app-ui/blow-bubble! {}])))

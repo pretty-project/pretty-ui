@@ -240,7 +240,7 @@
          ; A button elemet {:layout :icon-button} beállítással használva,
          ; a {:content ...} tulajdonság neve nehezen értelmezhető,
          ; ezért {:label ...} tulajdonságként kell használni
-         (map/rekey-value button-props :label :content)))
+         (map/rekey-item button-props :label :content)))
 
 
 
@@ -286,7 +286,8 @@
         [button-icon button-id button-props])
     [button-label button-id button-props]
     (if (some? icon)
-        [:div.x-button--icon-placeholder])])
+        [:div.x-button--icon-placeholder])
+    [engine/element-badge        button-id button-props]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -306,7 +307,9 @@
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ;  XXX#0714
-  ;  {:class (string or vector)(opt)
+  ;  {:badge-color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success
+  ;   :class (string or vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default, :invert
   ;    Default: :primary

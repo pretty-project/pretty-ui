@@ -49,6 +49,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keywords in vector)
+(def SUBSRIBER-PROPS [:base-props :component :initial-props :static-props :subscriber :test-f])
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -57,8 +65,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit (param extended-props)
-               [:base-props :component :initial-props :static-props :subscriber :test-f]))
+  (map/inherit extended-props SUBSRIBER-PROPS))
 
 
 
@@ -97,14 +104,11 @@
   ;
   ; @return (*)
   ([context-props]
-   [component nil context-props])
+   [component (a/id) context-props])
 
   ([component-id {:keys [component initial-props subscriber test-f] :as context-props}]
-   (let [component-id     (a/id component-id)
-         subscribed-props (a/subscribe subscriber)]
+   (let [subscribed-props (a/subscribe subscriber)]
         (fn [_ context-props]
-            [:div "a"
-             (str context-props)]
             (if (or (nil?   test-f)
                     (test-f @subscribed-props))
                 (let [context-props (assoc context-props :subscribed-props @subscribed-props)]

@@ -20,18 +20,21 @@
   color: var( --color-muted );
   display: flex;
   flex-direction: column;
-  font-size: var( --font-size-m );
-  font-weight: 500;
   justify-content: center;
-  letter-spacing: var( --letter-spacing-m );
-  line-height: var( --line-height-m );
   min-height: 48px;
 
   /* A header alatt esetlegesen elhelyezett card elem felső margójának ellensúlyozása */
   margin-top: 12px }
 
+.x-header-a--label {
+  font-size: var( --font-size-m );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-m );
+  line-height: var( --line-height-m ) }
+
 .x-header-a--description {
   font-size: var( --font-size-xxs );
+  font-weight: 500;
   letter-spacing: var( --letter-spacing-xxs );
   line-height: var( --line-height-xxs ) }
 
@@ -63,3 +66,16 @@
 
 /***** Layout A *****/
 /***** Layout A *****/
+
+
+
+/***** Layout B *****/
+/*** Card list ***/
+
+.x-layout-b--card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center }
+
+/*** Card list ***/
+/***** Layout B *****/

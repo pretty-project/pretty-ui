@@ -38,12 +38,12 @@
   ;
   ; @return (hiccup)
   [_ {:keys [user-profile-picture-url]}]
- [:div
-   [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
-   [elements/button ::change-profile-picture-button
-                    {:label     :change-profile-picture
-                     :preset    :default-button
-                     :font-size :xs}]])
+ [elements/column ::user-profile-picture
+                  {:content [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
+                                 [elements/button ::change-profile-picture-button
+                                                  {:label     :change-profile-picture
+                                                   :preset    :default-button
+                                                   :font-size :xs}]]}])
 
 (defn- user-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -118,6 +118,7 @@
        [elements/separator   {:orientation :horizontal :size :s}]
        [elements/horizontal-line {:color :highlight}]
        [elements/separator   {:orientation :horizontal :size :l}]
+      [:div {:style {:width "100%"}}
        [user-name            body-id]
        [elements/separator   {:orientation :horizontal :size :l}]
        [user-email-address   body-id]
@@ -133,7 +134,7 @@
                               :preset :secondary-button}]
        [elements/button      ::clear-user-data-button
                              {:label :clear-user-data!
-                              :preset :secondary-button}]])
+                              :preset :secondary-button}]]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
