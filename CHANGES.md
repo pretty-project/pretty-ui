@@ -1,4 +1,19 @@
 
+# x4.4.6
+- BREAKING CHANGE
+  X Modulok Re-Frame esemény elnevezései megváltoznak:
+  Pl.:
+  [:x.app-router/...] -> [:router/...]
+  ...
+
+
+
+# x4.4.5
+- BREAKING CHANGE
+  Full refactor, sry!
+
+
+
 # x4.4.4
 
 - BREAKING CHANGE

@@ -12,6 +12,9 @@
 
 # x4.3.0
 
+- x.server-media modul kerüljön ki media extension-be???
+  (ha igen, akkor a route-jai se system-route-ok legyenek!)
+
 - Ha kész a media, lehet hogy a listener komponensre sem lesz szükség
 
 - popup és surface elemeken body és header elnevés content és label-bar helyett

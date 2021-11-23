@@ -1,7 +1,8 @@
 
-{:paths ["src/clj" "src/cljc" "src/cljs" "resources"]
+ ; Paths
+{:paths ["source-code/clj" "source-code/cljc" "source-code/cljs" "resources"]
 
- ; Dependecies
+ ; Dependecies
  :deps  {buddy/buddy-auth                                {:mvn/version "2.1.0"}
          cljs-ajax/cljs-ajax                             {:mvn/version "0.8.0"}
          clj-pdf/clj-pdf                                 {:mvn/version "2.5.5"}
