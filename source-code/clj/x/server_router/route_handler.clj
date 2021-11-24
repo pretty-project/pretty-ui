@@ -93,11 +93,12 @@
 ; @name client-routes
 ;  A szerver által az egyes kliensekre elküldött útvonalak, amelykből a szerveroldali
 ;  route-tulajdonságok eltávolításra kerülnek.
-;  A szerver a {:client-event ...} tulajdonságú útvonalakat küldi el a klienseknek.
+;  A szerver a {:client-event ...} és/vagy {:on-leave-event ...} tulajdonságú útvonalakat
+;  küldi el a klienseknek.
 ;
 ; @name server-routes
-;  A {:client-event ...} tulajdonságú útvonalak, amelyek adatait a szerver nem küldi el
-;  az egyes klienseknek.
+;  A {:client-event ...} vagy {:on-leave-event ...} tulajdonságot nem tartalmazó útvonalak,
+;  amelyek adatait a szerver nem küldi el az egyes klienseknek.
 ;
 ; @name restricted-route
 ;  Az egyes restricted útvonalak kiszolgálása, a :client-event és :server-event események
@@ -178,6 +179,18 @@
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- route-props->client-route?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) route-props
+  ;  {:client-event (metamorphic-event)(opt)
+  ;   :on-leave-event (metamorphic-event)(opt)}
+  ;
+  ; @return (boolean)
+  [{:keys [client-event on-leave-event]}]
+  (or (some? client-event)
+      (some? on-leave-event)))
 
 (defn- route-props->route-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -366,7 +379,6 @@
   ;   :route-title (metamorphic-content)(opt)
   ;   :client-event (metamorphic-event)(opt)
   ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény.
-  ;    A {:client-event ...} tulajdonságú útvonalakat küldi el a szerver a klienseknek.
   ;   :on-leave-event (metamorphic-event)(opt)
   ;    Az útvonal elhagyásakor a kliens-oldalon megtörténő esemény.
   ;   :server-event (metamorphic-event)(opt)}
@@ -387,10 +399,10 @@
   (let [event-id    (a/event-vector->first-id    event-vector)
         route-id    (a/event-vector->second-id   event-vector)
         route-props (a/event-vector->first-props event-vector)]
-       (if-let [client-event (get route-props :client-event)]
-               (-> db (add-server-route! [event-id route-id route-props])
-                      (add-client-route! [event-id route-id route-props]))
-               (r add-server-route! db route-id route-props))))
+       (if (route-props->client-route? route-props)
+           (-> db (add-server-route! [event-id route-id route-props])
+                  (add-client-route! [event-id route-id route-props]))
+           (r add-server-route! db route-id route-props))))
 
 ; @usage
 ;  [:router/add-route! {...}]
