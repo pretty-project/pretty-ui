@@ -34,7 +34,7 @@
 (a/reg-event-fx
   ::initialize!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-router/add-route!
+  [:router/add-route!
    {:route-event    [:extensions.services/render!]
     :route-template "/services"}])
 

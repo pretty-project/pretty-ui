@@ -1,5 +1,5 @@
 
-(ns extensions.clients.engine
+(ns extensions.home.engine
     (:require [x.server-core.api :as a]))
 
 
@@ -9,7 +9,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
+  {:on-app-boot [:router/add-route! :home/route
                                     {:route-template "/"
                                      :client-event   [:home/load!]
                                      :restricted?    true}]})

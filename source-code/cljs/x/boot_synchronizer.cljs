@@ -30,28 +30,25 @@
       :client-routes   (db/path :x.app-router.route-handler/client-routes)
       :user-account    (db/path :x.app-user.account-handler/account)
       :user-profile    (db/path :x.app-user.profile-handler/profile)
-      :user-settings   (db/path :x.app-user.settings-handler/settings)
+      :user-settings   (db/path :x.app-user.settings-handler/settings)})
 
-      ; WARNING! DEPRECATED!
-      :reserved-routes (db/meta-item-path :x.app-router.route-handler/routes :reserved-server-routes)})
-      ; WARNING! DEPRECATED!
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.boot-synchronizer/synchronize-app!
+  :boot-synchronizer/synchronize-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-synchronizer/synchronize-app! #'app]
+  ;  [:boot-synchronizer/synchronize-app! #'app]
   (fn [_ [_ app]]
       [:x.app-sync/send-request! ::synchronize-app!
                                  {:method       :get
                                   :on-failure   [:x.app-core/->error-catched]
-                                  :on-success   [:x.boot-loader/->app-synchronized app]
+                                  :on-success   [:boot-loader/->app-synchronized app]
                                   :target-paths TARGET-PATHS
                                   :uri          "/synchronize-app"}]))

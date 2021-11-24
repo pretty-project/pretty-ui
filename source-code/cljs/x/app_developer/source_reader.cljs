@@ -22,6 +22,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-template "/docs"
-                                           :route-event    [::render!]}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-template "/docs"
+                                     :route-event    [::render!]}]})

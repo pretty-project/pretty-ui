@@ -171,7 +171,7 @@
   [_ {:keys [username]}]
   [elements/button ::continue-as-button
                    {:keypress {:key-code 13}
-                    :on-click [:x.app-router/go-home!]
+                    :on-click [:router/go-home!]
                     :label    :continue-as
                     :layout   :row
                     :suffix   username
@@ -240,6 +240,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-event    [::render!]
-                                           :route-template "/login"}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-event    [::render!]
+                                     :route-template "/login"}]})

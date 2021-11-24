@@ -102,7 +102,7 @@
   [elements/button ::go-back-button
                    {:label    :back!
                     :variant  :transparent
-                    :on-click [:x.app-router/go-back!]}])
+                    :on-click [:router/go-back!]}])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -140,6 +140,6 @@
   ; Ha az error-handler {:on-app-init [...]} időzítéssel adja hozzá a :page-not-found
   ; route eseményt a rendszerhez, akkor azt lehetőség van {:on-app-boot [...]}
   ; időzítéssel felülírni.
-  {:on-app-boot [:x.app-router/add-route! :page-not-found
-                                          {:route-event    [::render! :page-not-found]
-                                           :route-template "/page-not-found"}]})
+  {:on-app-boot [:router/add-route! :page-not-found
+                                    {:route-event    [::render! :page-not-found]
+                                     :route-template "/page-not-found"}]})

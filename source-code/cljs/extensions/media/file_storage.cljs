@@ -45,9 +45,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  A fájl-intéző az [:x.app-router/go-to! "/file-storage"] vagy az
-;  [:x.app-router/go-to! "/file-storage/directory-id"] események meghívásával
-;  indítható.
+;  A fájl-intéző az [:router/go-to! "/file-storage"] vagy az
+;  [:router/go-to! "/file-storage/directory-id"] események meghívásával indítható.
 
 
 
@@ -304,7 +303,7 @@
   :file-storage/go-home!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
-                [:x.app-router/go-to!         "/media"]]})
+                [:router/go-to! "/media"]]})
 
 (a/reg-event-fx
   :file-storage/go-up!
@@ -314,7 +313,7 @@
             parent-directory-id (r engine/get-parent-directory-id db namespace)
             file-storage-uri    (directory-id->file-storage-uri parent-directory-id)]
            {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
-                         [:x.app-router/go-to!         file-storage-uri]]})))
+                         [:router/go-to! file-storage-uri]]})))
 
 (a/reg-event-fx
   :file-storage/go-to!
@@ -324,7 +323,7 @@
   (fn [_ [_ subdirectory-id]]
       (let [file-storage-uri (directory-id->file-storage-uri subdirectory-id)]
            {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
-                         [:x.app-router/go-to!         file-storage-uri]]})))
+                         [:router/go-to! file-storage-uri]]})))
 
 (a/reg-event-fx
   :file-storage/render-order-by-select!
@@ -498,7 +497,7 @@
                    {:color    :default
                     :icon     :delete_outline
                     :layout   :icon-button
-                    :on-click [:x.app-router/go-to! (path-param->file-storage-uri "bin")]
+                    :on-click [:router/go-to! (path-param->file-storage-uri "bin")]
                     :variant  :transparent}])
 
 (defn- file-storage-directory-actions

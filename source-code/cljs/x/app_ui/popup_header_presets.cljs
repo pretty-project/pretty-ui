@@ -56,7 +56,7 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:on-click [:x.app-router/go-up!]
+  [elements/button {:on-click [:router/go-up!]
                     :preset   :back-icon-button}])
                    ;:tooltip  :back!
 
@@ -66,7 +66,7 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button {:on-click [:x.app-router/go-back!]
+  [elements/button {:on-click [:router/go-back!]
                     :preset   :back-icon-button}])
                    ;:tooltip  :back!
 

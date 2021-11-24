@@ -14,16 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.api
-    (:require [x.server-views.admin :as admin]
-              [x.server-views.main  :as main]))
+    (:require [x.server-views.main :as main]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; x.server-views.admin
-(def app-admin admin/view)
 
 ; x.server-views.main
 (def app-main main/view)

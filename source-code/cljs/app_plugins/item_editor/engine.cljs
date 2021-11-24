@@ -152,7 +152,7 @@
             mutation-name (mutation-name extension-id item-namespace :add)
             item-props    (get-in    db [extension-id :editor-data])]
            [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:x.app-router/go-to! parent-uri]
+                                    {:on-stalled [:router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
@@ -170,7 +170,7 @@
             mutation-name (mutation-name extension-id item-namespace :update)
             item-props    (get-in    db [extension-id :editor-data])]
            [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:x.app-router/go-to! parent-uri]
+                                    {:on-stalled [:router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
@@ -189,7 +189,7 @@
             item-id-key   (item-id-key   extension-id item-namespace)
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
            [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:x.app-router/go-to! parent-uri]
+                                    {:on-stalled [:router/go-to! parent-uri]
                                      :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
                                      :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 

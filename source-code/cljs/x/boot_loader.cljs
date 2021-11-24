@@ -79,9 +79,9 @@
   ;  (x.boot-loader/boot-app! #'app)
   [app]
   ; 1. Let's start!
-  (a/dispatch-sync [:x.boot-synchronizer/synchronize-app! app])
+  (a/dispatch-sync [:boot-synchronizer/synchronize-app! app])
   ; 2. A load-handler várjon az XXX#5030 jelre!
-  (a/dispatch-sync [:x.app-core/synchronize-loading! :x.boot-loader/build-app!]))
+  (a/dispatch-sync [:x.app-core/synchronize-loading! :boot-loader/build-app!]))
 
 (defn render-app!
   ; @param (component) app
@@ -94,8 +94,8 @@
                   (dom/get-element-by-id "x-app-container")))
 
 ; @usage
-;  [:x.boot-loader/render-app! #'app]
-(a/reg-handled-fx :x.boot-loader/render-app! render-app!)
+;  [:boot-loader/render-app! #'app]
+(a/reg-handled-fx :boot-loader/render-app! render-app!)
 
 
 
@@ -126,8 +126,8 @@
                (param restart-target)))
 
 ; @usage
-;  [:x.boot-loader/set-restart-target! "/my-route?var=value"]
-(a/reg-event-db :x.boot-loader/set-restart-target! set-restart-target!)
+;  [:boot-loader/set-restart-target! "/my-route?var=value"]
+(a/reg-event-db :boot-loader/set-restart-target! set-restart-target!)
 
 
 
@@ -135,15 +135,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.boot-loader/refresh-app!
+  :boot-loader/refresh-app!
   ; Az aktuális route-ot újraindítás utáni útvonalként használva, elindítja
-  ; az [:x.boot-loader/restart-app!] eseményt.
+  ; az [:boot-loader/restart-app!] eseményt.
   (fn [{:keys [db]} _]
       (let [current-route-string (r router/get-current-route-string db)]
-           [:x.boot-loader/restart-app! {:restart-target current-route-string}])))
+           [:boot-loader/restart-app! {:restart-target current-route-string}])))
 
 (a/reg-event-fx
-  :x.boot-loader/restart-app!
+  :boot-loader/restart-app!
   ; A {:restart-target ...} tulajdonságként átadott újraindítás utáni útvonalat
   ; eltárolja majd átirányít a "/reboot" útvonalra.
   ;
@@ -151,32 +151,32 @@
   ;  {:restart-target (string)(opt)}
   ;
   ; @usage
-  ;  [:x.boot-loader/restart-app!]
+  ;  [:boot-loader/restart-app!]
   ;
   ; @usage
-  ;  [:x.boot-loader/restart-app! {:restart-target "/my-route?var=value"}]
+  ;  [:boot-loader/restart-app! {:restart-target "/my-route?var=value"}]
   (fn [{:keys [db]} [_ {:keys [restart-target]}]]
       (if (string/nonempty? restart-target)
           {:db (r set-restart-target! db restart-target)
-           :dispatch [:x.app-router/go-to! "/reboot"]}
-          {:dispatch [:x.app-router/go-to! "/reboot"]})))
+           :dispatch [:router/go-to! "/reboot"]}
+          {:dispatch [:router/go-to! "/reboot"]})))
 
 (a/reg-event-fx
-  :x.boot-loader/reboot-app!
+  :boot-loader/reboot-app!
   (fn [{:keys [db]} _]
       (let [restart-target (r get-restart-target db)]
            {:dispatch-later [{:ms RESTART-TIMEOUT :dispatch
                               [:x.app-environment.window-handler/go-to! restart-target]}]})))
 
 (a/reg-event-fx
-  :x.boot-loader/initialize-app!
+  :boot-loader/initialize-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/initialize-app! #'app]
+  ;  [:boot-loader/initialize-app! #'app]
   (fn [{:keys [db]} [_ app]]
        ; 1. Debug módban indított applikáció bejegyzése
       {:db (if-let [debug-mode (a/debug-mode)]
@@ -185,33 +185,33 @@
        :dispatch-n (r a/get-period-events db :on-app-init)
        ; 3. Az inicializálási események lefutása után az applikáció
        ;    betöltésének folytatása
-       :dispatch-later [{:ms 100 :dispatch [:x.boot-loader/boot-app! app]}]}))
+       :dispatch-later [{:ms 100 :dispatch [:boot-loader/boot-app! app]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/boot-app!
+  :boot-loader/boot-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/boot-app! #'app]
+  ;  [:boot-loader/boot-app! #'app]
   (fn [{:keys [db]} [_ app]]
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
        ; 2. Az indítási események lefutása után az applikáció
        ;    betöltésének folytatása
-       :dispatch-later [{:ms 100 :dispatch [:x.boot-loader/build-app! app]}]}))
+       :dispatch-later [{:ms 100 :dispatch [:boot-loader/build-app! app]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/build-app!
+  :boot-loader/build-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/build-app! #'app]
+  ;  [:boot-loader/build-app! #'app]
   (fn [{:keys [db]} [_ app]]
       {:dispatch-if
        ; 1. Ha a felhasználó nem vendégként lett azonosítva, akkor
@@ -220,21 +220,21 @@
        ;
        :dispatch-later
        [; 2. Az applikáció renderelése
-        {:ms   0 :dispatch [:x.boot-loader/render-app! app]}
+        {:ms   0 :dispatch [:boot-loader/render-app! app]}
         ; 3. Az applikáció renderelése utáni események meghívása
-        {:ms 100 :dispatch [:x.boot-loader/launch-app!]}
+        {:ms 100 :dispatch [:boot-loader/launch-app!]}
         ; 4. Curtains up!
         ; XXX#5030
-        {:ms 500 :dispatch [:x.app-core/->synchron-signal :x.boot-loader/build-app!]}]}))
+        {:ms 500 :dispatch [:x.app-core/->synchron-signal :boot-loader/build-app!]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/launch-app!
+  :boot-loader/launch-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {; Az útvonalhoz tartozó esemény meghívása
        ; (Dispatch the current route-event)
-       :dispatch [:x.app-router/dispatch-current-route!]
+       :dispatch [:router/dispatch-current-route!]
        ; Az applikáció renderelése utáni események meghívása
        ; (Dispatch on-app-launch events)
        :dispatch-n (r a/get-period-events db :on-app-launch)}))
@@ -245,16 +245,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.boot-loader/->app-synchronized
+  :boot-loader/->app-synchronized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ;
   ; @usage
-  ;  [:x.boot-loader/->app-synchronized #'app]
+  ;  [:boot-loader/->app-synchronized #'app]
   (fn [{:keys [db]} [_ app]]
       (let [app-build (r a/get-app-detail db :app-build)]
                          ; 1.
            {:dispatch-n [[:x.app-environment.cookie-handler/set-cookie! :x-app-build {:value app-build}]
                          ; 2.
-                         [:x.boot-loader/initialize-app! app]]})))
+                         [:boot-loader/initialize-app! app]]})))

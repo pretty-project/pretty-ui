@@ -32,7 +32,7 @@
                            :user-close? false
                            :primary-button
                            {:label    :refresh!
-                            :on-click [:x.boot-loader/refresh-app!]
+                            :on-click [:boot-loader/refresh-app!]
                             :preset   :primary-button}}])
 
 (a/reg-event-fx

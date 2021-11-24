@@ -78,7 +78,7 @@
   (if (some? privacy-policy-link)
       [elements/button ::policy-button
                        {:label :privacy-policy :preset :primary-button :layout :row
-                        :on-click [:x.app-router/go-to! privacy-policy-link]}]))
+                        :on-click [:router/go-to! privacy-policy-link]}]))
 
 (defn- terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,7 +86,7 @@
   (if (nil? terms-of-service-link)
       [elements/button ::terms-of-service-button
                        {:label :terms-of-service :preset :primary-button :layout :row
-                        :on-click [:x.app-router/go-to! terms-of-service-link]}]))
+                        :on-click [:router/go-to! terms-of-service-link]}]))
 
 (defn- what-cookies-are-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,7 +94,7 @@
   (if (nil? what-cookies-are-link)
       [elements/button ::what-cookies-are-button
                        {:label :what-cookies-are? :preset :primary-button :layout :row
-                        :on-click [:x.app-router/go-to! what-cookies-are-link]}]))
+                        :on-click [:router/go-to! what-cookies-are-link]}]))
 
 (defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!

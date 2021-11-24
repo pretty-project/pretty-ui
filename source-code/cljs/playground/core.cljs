@@ -80,7 +80,7 @@
 (defn buttons
   []
   [:<> [elements/anchor {:content "My anchor link"   :href "/my-link"}]
-       [elements/anchor {:content "My anchor button" :on-click [:x.app-router/go-to! "/my-link"]}]
+       [elements/anchor {:content "My anchor button" :on-click [:router/go-to! "/my-link"]}]
        [elements/button ::pres-esc-button
                         {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
                          :variant :transparent :color :none :icon :people}]
@@ -283,7 +283,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-event    [::load!]
-                                           :route-template "/playground"
-                                           :restricted?    true}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-event    [::load!]
+                                     :route-template "/playground"
+                                     :restricted?    true}]})

@@ -61,7 +61,7 @@
       (let [message (r dictionary/look-up db :just-a-moment)]
            {:dispatch-later [{:ms   0 :dispatch [:x.app-environment.cookie-handler/remove-browser-cookies!]}
                              {:ms   0 :dispatch [:x.app-ui/set-shield! {:content message}]}
-                             {:ms 500 :dispatch [:x.boot-loader/refresh-app!]}]})))
+                             {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
 
 
 

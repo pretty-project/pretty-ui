@@ -51,7 +51,7 @@
   (let [current-path (get-in db (db/path ::settings :current-path))]
        (mixed/mixed->vector current-path)))
 
-(defn- get-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [current-path (r get-current-path db)]
@@ -64,7 +64,7 @@
         :show-original? (get-in db (db/path ::settings :show-original?))
         :subscribe?     (get-in db (db/path ::settings :subscribe?))}))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub ::get-body-props get-body-props)
 
 
 
@@ -247,7 +247,7 @@
 
 (defn- toggle-visibility-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item current-path show-hidden?]}]
+  [body-id {:keys [current-item current-path show-hidden?]}]
   (cond (and (item-path->root-level? current-path)
              (boolean show-hidden?))
         [icon-button {:icon "visibility_off" :label "Hide hidden" :on-click [::toggle-visibility!]}]
@@ -257,8 +257,8 @@
 
 (defn- toolbar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id view-props & tools]
-  (reduce (fn [%1 %2] (vector/conj-item %1 [%2 view-id view-props]))
+  [body-id body-props & tools]
+  (reduce (fn [%1 %2] (vector/conj-item %1 [%2 body-id body-props]))
           [:div.x-database-browser--toolbar
             {:style {:display "flex" :margin-bottom "12px"}}]
           (param tools)))
@@ -272,7 +272,7 @@
 
 (defn- map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-path]} map-key]
+  [body-id {:keys [current-path]} map-key]
   [:div.x-toggle
     {:on-click #(a/dispatch [::navigate! (vector/conj-item current-path map-key)])
      :style (if (map-item-hidden? map-key) {:opacity ".65"})}
@@ -282,17 +282,17 @@
 
 (defn- map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item show-original?] :as view-props}]
+  [body-id {:keys [current-item show-original?] :as body-props}]
   (let [map-keys (vector/abc (map/get-keys current-item))]
        [:div.x-database-browser--map-item
-         [header          view-id view-props "map"]
-         [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button
+         [header          body-id body-props "map"]
+         [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
                                              toggle-original-view-button toggle-visibility-button]
-         [horizontal-line view-id view-props]
+         [horizontal-line body-id body-props]
          (if-not (map/nonempty? current-item)
                  (str "Empty"))
-         (reduce (fn [%1 %2] (if (render-map-item? %2 view-props)
-                                 (vector/conj-item %1 [map-key view-id view-props %2])
+         (reduce (fn [%1 %2] (if (render-map-item? %2 body-props)
+                                 (vector/conj-item %1 [map-key body-id body-props %2])
                                  (return           %1)))
                  [:div.x-database-browser--map-item--keys]
                  (param map-keys))
@@ -302,136 +302,136 @@
 
 (defn- vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   (reduce (fn [%1 %2] (vector/conj-item %1 [:div (if (string? %2)
                                                      (string/quotes %2)
                                                      (str           %2))]))
           [:div.x-database-browser--vector-item
-            [header          view-id view-props "vector"]
-            [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button]
-            [horizontal-line view-id view-props]
+            [header          body-id body-props "vector"]
+            [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
+            [horizontal-line body-id body-props]
             (if-not (vector/nonempty? current-item)
                     (str "Empty"))]
           (param current-item)))
 
 (defn- boolean-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item current-path] :as view-props}]
+  [body-id {:keys [current-item current-path] :as body-props}]
   [:div.x-database-browser--boolean-item
-    [header          view-id view-props "boolean"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button swap-boolean-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "boolean"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button swap-boolean-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- integer-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--integer-item
-    [header          view-id view-props "integer"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button
+    [header          body-id body-props "integer"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
                                         decrease-integer-button increase-integer-button]
-    [horizontal-line view-id view-props]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- string-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item current-path edit-string?] :as view-props}]
+  [body-id {:keys [current-item current-path edit-string?] :as body-props}]
   [:div.x-database-browser--string-item
-    [header          view-id view-props "string"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button
+    [header          body-id body-props "string"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
                                         edit-string-button]
-    [horizontal-line view-id view-props]
+    [horizontal-line body-id body-props]
     (if (boolean edit-string?)
         [elements/text-field {:value-path current-path}]
         [:div.x-database-browser--item (string/quotes current-item)])])
 
 (defn- keyword-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--keyword-item
-    [header          view-id view-props "keyword"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "keyword"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- component-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--component-item
-    [header          view-id view-props "component"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "component"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- nil-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id view-props]
+  [body-id body-props]
   [:div.x-database-browser--nil-item
-    [header          view-id view-props "nil"]
-    [toolbar         view-id view-props go-home-button navigate-up-button recycle-item-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "nil"]
+    [toolbar         body-id body-props go-home-button navigate-up-button recycle-item-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str "nil")]])
 
 (defn- event-vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--event-vector-item
-    [header          view-id view-props "event-vector"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button dispatch-event-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "event-vector"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button dispatch-event-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- subscribed-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--subscribed-value
     {:style {:color "var( --color-highlight )" :margin-top "24px"}}
     [components/content {:subscriber current-item}]])
 
 (defn- subscription-vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item subscribe?] :as view-props}]
+  [body-id {:keys [current-item subscribe?] :as body-props}]
   [:div.x-database-browser--subscription-vector-item
-    [header          view-id view-props "subscription-vector"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button toggle-subscription-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "subscription-vector"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button toggle-subscription-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]
-    (if subscribe? [subscribed-value view-id view-props])])
+    (if subscribe? [subscribed-value body-id body-props])])
 
 (defn- unknown-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
+  [body-id {:keys [current-item] :as body-props}]
   [:div.x-database-browser--unknown-item
-    [header          view-id view-props "unknown"]
-    [toolbar         view-id view-props go-home-button navigate-up-button remove-item-button]
-    [horizontal-line view-id view-props]
+    [header          body-id body-props "unknown"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
+    [horizontal-line body-id body-props]
     [:div.x-database-browser--item (str current-item)]])
 
 (defn- database-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id {:keys [current-item] :as view-props}]
-  (cond (map? current-item)                                 [map-item                 view-id view-props]
-        (a/event-vector? current-item {:strict-mode? true}) [event-vector-item        view-id view-props]
-        (a/subscription-vector? current-item)               [subscription-vector-item view-id view-props]
-        (vector? current-item)                              [vector-item              view-id view-props]
-        (boolean? current-item)                             [boolean-item             view-id view-props]
-        (integer? current-item)                             [integer-item             view-id view-props]
-        (string? current-item)                              [string-item              view-id view-props]
-        (keyword? current-item)                             [keyword-item             view-id view-props]
-        (var? current-item)                                 [component-item           view-id view-props]
-        (nil? current-item)                                 [nil-item                 view-id view-props]
-        :else                                               [unknown-item             view-id view-props]))
+  [body-id {:keys [current-item] :as body-props}]
+  (cond (map? current-item)                                 [map-item                 body-id body-props]
+        (a/event-vector? current-item {:strict-mode? true}) [event-vector-item        body-id body-props]
+        (a/subscription-vector? current-item)               [subscription-vector-item body-id body-props]
+        (vector? current-item)                              [vector-item              body-id body-props]
+        (boolean? current-item)                             [boolean-item             body-id body-props]
+        (integer? current-item)                             [integer-item             body-id body-props]
+        (string? current-item)                              [string-item              body-id body-props]
+        (keyword? current-item)                             [keyword-item             body-id body-props]
+        (var? current-item)                                 [component-item           body-id body-props]
+        (nil? current-item)                                 [nil-item                 body-id body-props]
+        :else                                               [unknown-item             body-id body-props]))
 
 (defn database-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id view-props]
+  [body-id body-props]
   [:div#x-database-browser
     {:style {:width "100%"}}
-    [database-item view-id view-props]])
+    [database-item body-id body-props]])
 
-(defn- view
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [components/subscriber ::view
+  [components/subscriber ::body
                          {:component  #'database-browser
-                          :subscriber [::get-view-props]}])
+                          :subscriber [::get-body-props]}])

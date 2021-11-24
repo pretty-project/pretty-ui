@@ -36,7 +36,7 @@
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
   ([]             (run-app! {}))
-  ([server-props] (a/dispatch [:x.boot-loader/run-app! server-props])))
+  ([server-props] (a/dispatch [:boot-loader/run-app! server-props])))
 
 
 
@@ -65,7 +65,7 @@
   (assoc-in db (db/path ::primary :server-props)
                (param server-props)))
 
-(a/reg-event-db :x.boot-loader/store-server-props! store-server-props!)
+(a/reg-event-db :boot-loader/store-server-props! store-server-props!)
 
 
 
@@ -73,7 +73,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.boot-loader/run-app!
+  :boot-loader/run-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -81,14 +81,14 @@
   (fn [_ [_ server-props]]
       (println details/app-name "running app ...")
                        ; A szerver indítási paramétereinek eltárolása
-      {:dispatch-tick [{:tick   0 :dispatch [:x.boot-loader/store-server-props! server-props]}
+      {:dispatch-tick [{:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
                        {:tick   0 :dispatch [:x.server-core/config-app!]}
                        ; A telepítés vizsgálata
-                       {:tick 500 :dispatch [:x.boot-loader/check-install!]}]}))
+                       {:tick 500 :dispatch [:boot-loader/check-install!]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/check-install!
+  :boot-loader/check-install!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
@@ -96,11 +96,11 @@
       (if (r installer/server-installed? db)
           (let [installed-at (r installer/get-installed-at db)]
                (println details/app-name "installed at:" installed-at)
-               [:x.boot-loader/initialize-app!])
+               [:boot-loader/initialize-app!])
           [:x.server-installer/install-server!])))
 
 (a/reg-event-fx
-  :x.boot-loader/initialize-app!
+  :boot-loader/initialize-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
@@ -109,10 +109,10 @@
       {:dispatch-n (r a/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció
        ;    betöltésének folytatása
-       :dispatch-later [{:ms 250 :dispatch [:x.boot-loader/boot-app!]}]}))
+       :dispatch-later [{:ms 250 :dispatch [:boot-loader/boot-app!]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/boot-app!
+  :boot-loader/boot-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
@@ -122,10 +122,10 @@
        :dispatch-tick [; 2. A szerver indítása
                        {:tick  50 :dispatch [:x.server-core/run-server! (r get-server-props db)]}
                        ; 4. Az indítási események lefutása után az applikáció betöltésének folytatása
-                       {:tick 100 :dispatch [:x.boot-loader/launch-app!]}]}))
+                       {:tick 100 :dispatch [:boot-loader/launch-app!]}]}))
 
 (a/reg-event-fx
-  :x.boot-loader/launch-app!
+  :boot-loader/launch-app!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]

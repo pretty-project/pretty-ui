@@ -50,7 +50,7 @@
   (let [parent-uri (engine/parent-uri extension-id item-namespace)]
        [elements/button ::cancel-item-button
                         {:tooltip :cancel! :preset :cancel-icon-button
-                         :on-click [:x.app-router/go-to! parent-uri]}]))
+                         :on-click [:router/go-to! parent-uri]}]))
 
 (defn delete-item-button
   ; @param (keyword) extension-id

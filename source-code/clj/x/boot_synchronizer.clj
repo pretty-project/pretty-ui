@@ -35,11 +35,6 @@
         site-links      (a/subscribed [:x.server-core/get-site-links])
         storage-details (a/subscribed [:x.server-core/get-storage-details])
         client-routes   (a/subscribed [:router/get-client-routes])
-
-        ; WARNING! DEPRECATED!
-        reserved-routes (a/subscribed [:router/get-reserved-routes])
-        ; WARNING! DEPRECATED!
-
         user-account    (user/request->user-public-account request)
         user-profile    (user/request->user-profile        request)
         user-settings   (user/request->user-settings       request)]
@@ -47,11 +42,6 @@
                               :site-links      (param site-links)
                               :storage-details (param storage-details)
                               :client-routes   (param client-routes)
-
-                              ; WARNING! DEPRECATED!
-                              :reserved-routes (param reserved-routes)
-                              ; WARNING! DEPRECATED!
-
                               :user-account    (db/document->non-namespaced-document user-account)
                               :user-profile    (db/document->pure-document           user-profile)
                               :user-settings   (db/document->pure-document           user-settings)}})))

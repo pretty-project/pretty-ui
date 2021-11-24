@@ -1,5 +1,5 @@
 
-(ns extensions.clients.engine
+(ns extensions.clients.client-editor
     (:require [x.server-core.api :as a]
               [server-plugins.item-editor.api :as item-editor]))
 

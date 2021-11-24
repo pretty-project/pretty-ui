@@ -62,7 +62,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:client/keys [id] :as client-props} view-props]
   (let [client-uri      (item-editor/item-id->item-uri "clients" id)]
-       [elements/toggle {:on-click [:x.app-router/go-to! client-uri]
+       [elements/toggle {:on-click [:router/go-to! client-uri]
                          :stretch-orientation :horizontal
                          :content
                          [:div.clients--client

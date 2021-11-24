@@ -151,7 +151,7 @@
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
   [:x.app-sync/send-request! :x.app-user/authenticate!
                              {:method       :post
-                              :on-success   [:x.boot-loader/restart-app!]
+                              :on-success   [:boot-loader/restart-app!]
                               :on-failure   [:x.app-user/reg-last-login-attempt!]
                               :silent-mode? true
                               :source-path  (db/meta-item-path :x.app-views.login-box/primary)
@@ -163,5 +163,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-sync/send-request! :x.app-user/logout!
                              {:method :post :uri "/user/logout"
-                              :on-failure [:x.app-ui/blow-bubble!      {:content :logout-failed :color :warning}]
-                              :on-success [:x.boot-loader/restart-app! {:restart-target "/login"}]}])
+                              :on-failure [:x.app-ui/blow-bubble!    {:content :logout-failed :color :warning}]
+                              :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])

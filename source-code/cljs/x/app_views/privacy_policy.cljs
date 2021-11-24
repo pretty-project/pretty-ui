@@ -16,7 +16,7 @@
 
 ; Az oldal elején mindjárt egy toggle!
 ; "Az adatvédelmi beállításokat itt találád"
-; {:dispatch [:x.app-router/go-to! "/privacy-settings"]}
+; {:dispatch [:router/go-to! "/privacy-settings"]}
 ;
 
 ; Statisztikai adatgyüjtés, amikor nincs hozzákötve felhasználóhoz az adat. (anonimizált adat)
@@ -90,6 +90,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-event    [::render!]
-                                           :route-template "/privacy-policy"}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-event    [::render!]
+                                     :route-template "/privacy-policy"}]})

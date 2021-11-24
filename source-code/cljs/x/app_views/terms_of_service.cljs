@@ -48,6 +48,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-event    [::render!]
-                                           :route-template "/terms-of-service"}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-event    [::render!]
+                                     :route-template "/terms-of-service"}]})

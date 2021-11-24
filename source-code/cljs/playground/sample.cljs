@@ -43,7 +43,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:x.app-router/add-route! ::route
-                                          {:route-event    [::load!]
-                                           :route-template "/sample"
-                                           :restricted?    true}]})
+  {:on-app-boot [:router/add-route! ::route
+                                    {:route-event    [::load!]
+                                     :route-template "/sample"
+                                     :restricted?    true}]})

@@ -38,7 +38,7 @@
 (def DISPLAY-LEGAL-LINKS? false)
 
 ; @constant (keyword)
-(def DEFAULT-VIEW :main)
+(def DEFAULT-VIEW-ID :main)
 
 
 
@@ -61,7 +61,7 @@
   {:app-languages            (r locales/get-app-languages         db)
    :app-multilingual?        (r locales/app-multilingual?         db)
    :selected-language        (r locales/get-selected-language     db)
-   :selected-view            (r gestures/get-selected-view        db ::handler)
+   :view-id                  (r gestures/get-selected-view-id     db ::handler)
    :user-email-address       (r user/get-user-email-address       db)
    :user-name                (r user/get-user-name                db)
    :user-profile-picture-url (r user/get-user-profile-picture-url db)})
@@ -126,14 +126,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::settings-button
-                   {:on-click [:x.app-router/go-to! "/settings"]
+                   {:on-click [:router/go-to! "/settings"]
                     :preset   :settings-button}])
 
 (defn- help-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::help-button
-                   {:on-click [:x.app-router/go-to! "/help"]
+                   {:on-click [:router/go-to! "/help"]
                     :preset   :help-button}])
 
 (defn- legal-links
@@ -142,12 +142,12 @@
   [:<> [elements/button ::terms-of-service-button
                         {:icon     :subject
                          :label    :terms-of-service
-                         :on-click [:x.app-router/go-to! "/terms-of-service"]
+                         :on-click [:router/go-to! "/terms-of-service"]
                          :preset   :default-button}]
        [elements/button ::privacy-policy-button
                         {:icon     :subject
                          :label    :privacy-policy
-                         :on-click [:x.app-router/go-to! "/privacy-policy"]
+                         :on-click [:router/go-to! "/privacy-policy"]
                          :preset   :default-button}]])
 
 (defn- about-app
@@ -200,11 +200,10 @@
 
 (defn- app-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id {:keys [selected-view] :as body-props}]
-  (case selected-view
-        :about-app         [about-app         popup-id body-props]
-        :language-selector [language-selector popup-id body-props]
-        :main              [main              popup-id body-props]))
+  [popup-id {:keys [view-id] :as body-props}]
+  (case view-id :about-app         [about-app         popup-id body-props]
+                :language-selector [language-selector popup-id body-props]
+                :main              [main              popup-id body-props]))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -240,7 +239,7 @@
   ::render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db          (r gestures/init-view-handler!  db ::handler {:default-view DEFAULT-VIEW})
+      {:db          (r gestures/init-view-handler!  db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch-if [(r environment/viewport-small? db)
                      [::render-as-sidebar!]
                      [::render-as-sidebar!]]}))

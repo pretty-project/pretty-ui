@@ -49,7 +49,7 @@
    :debug-mode?     (r a/debug-mode?                    db)
    :header-title    (r get-header-title                 db)
    :parent-path     (r router/get-current-route-parent  db)
-   :render-header?  true ;(r interface/application-interface? db)
+   :render-header?  (r interface/application-interface? db)
    :viewport-small? (r environment/viewport-small?      db)})
 
 (a/reg-sub ::get-view-props get-view-props)
@@ -87,7 +87,7 @@
   [elements/button ::apps-icon-button
                    {:badge-color (if-not at-home? :secondary)
                     :disabled?   (param at-home?)
-                    :on-click    [:x.app-router/go-home!]
+                    :on-click    [:router/go-home!]
                     :preset      :apps-icon-button}])
                    ;:icon        :dashboard
 
@@ -101,7 +101,7 @@
   [_ _]
   [elements/button ::up-icon-button
                    {:preset   :back-icon-button
-                    :on-click [:x.app-router/go-up!]}])
+                    :on-click [:router/go-up!]}])
 
 (defn- header-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,7 +113,7 @@
   [_ _]
   [elements/button ::back-icon-button
                    {:preset   :back-icon-button
-                    :on-click [:x.app-router/go-back!]}])
+                    :on-click [:router/go-back!]}])
 
 (defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

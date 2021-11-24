@@ -57,7 +57,7 @@
 
 (defn view
   ; XXX#9085
-  ; Az anchor elem {:on-click [:x.app-router/go-to! "..."]} paraméterezés helyett
+  ; Az anchor elem {:on-click [:router/go-to! "..."]} paraméterezés helyett
   ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
   ; történő megnyitását.
   ;

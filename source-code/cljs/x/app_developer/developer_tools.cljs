@@ -5,8 +5,8 @@
               [x.app-elements.api :as elements]
               [x.app-gestures.api :as gestures]
               [x.app-ui.api       :as ui]
-              [x.app-developer.database-browser :rename {view database-browser}]
-              [x.app-developer.request-browser  :rename {view request-browser}]))
+              [x.app-developer.database-browser :rename {body database-browser}]
+              [x.app-developer.request-browser  :rename {body request-browser}]))
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
-(def DEFAULT-VIEW :database-browser)
+(def DEFAULT-VIEW-ID :database-browser)
 
 
 
@@ -24,14 +24,14 @@
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:selected-view (r gestures/get-selected-view db ::handler)})
+  {:view-id (r gestures/get-selected-view-id db ::handler)})
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:selected-view (r gestures/get-selected-view db ::handler)})
+  {:view-id (r gestures/get-selected-view-id db ::handler)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -53,9 +53,9 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [selected-view]}]
-  (case selected-view :database-browser [database-browser]
-                      :request-browser  [request-browser]))
+  [_ {:keys [view-id]}]
+  (case view-id :database-browser [database-browser]
+                :request-browser  [request-browser]))
 
 
 
@@ -66,7 +66,7 @@
   :developer/render-developer-tools!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (r gestures/init-view-handler! db ::handler {:default-view DEFAULT-VIEW})
+      {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:x.app-ui/add-popup! ::view
                                        {:content    #'body
                                         :label-bar  {:content    #'header

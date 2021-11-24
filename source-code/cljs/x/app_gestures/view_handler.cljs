@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.2.2
+; Version: v0.3.4
 ; Compatibility: x4.4.6
 
 
@@ -42,20 +42,30 @@
 (defn init-view-handler!
   ; @param (keyword) handler-id
   ; @param (map) handler-props
-  ;  {:default-view (keyword)}
+  ;  {:default-view-id (keyword)}
+  ;
+  ; @usage
+  ;  (r gestures/init-view-handler! db :my-view-handler {:default-view-id :my-view})
   ;
   ; @return (map)
-  [db [_ handler-id {:keys [default-view]}]]
-  (assoc-in db (db/path ::view-handlers handler-id :view-id) default-view))
+  [db [_ handler-id {:keys [default-view-id]}]]
+  (assoc-in db (db/path ::view-handlers handler-id :view-id) default-view-id))
 
+; @usage
+;  [:gestures/init-view-handler! :my-view-handler {:default-view-id :my-view}]
 (a/reg-event-db :gestures/init-view-handler! init-view-handler!)
 
 (defn change-view!
   ; @param (keyword) handler-id
   ; @param (keyword) view-id
   ;
+  ; @usage
+  ;  (r gestures/change-view! db :my-view-handler :my-view)
+  ;
   ; @return (map)
   [db [_ handler-id view-id]]
   (assoc-in db (db/path ::view-handlers handler-id :view-id) view-id))
 
+; @usage
+;  [:gestures/change-view! :my-view-handler :my-view]
 (a/reg-event-db :gestures/change-view! change-view!)

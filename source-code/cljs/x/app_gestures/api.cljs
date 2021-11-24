@@ -53,6 +53,6 @@
 (def get-step-handler-state step-handler/get-step-handler-state)
 
 ; x.app-gestures.view-handler
-(def get-selected-view  view-handler/get-selected-view)
-(def init-view-handler! view-handler/init-view-handler!)
-(def change-view!       view-handler/change-view!)
+(def get-selected-view-id view-handler/get-selected-view-id)
+(def init-view-handler!   view-handler/init-view-handler!)
+(def change-view!         view-handler/change-view!)

@@ -11,10 +11,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (maps in vector)
-(def CARDS [{:label :clients      :icon :people   :on-click [:x.app-router/go-to! "/clients"]  :badge-color :secondary}
-            {:label :products     :icon :category :on-click [:x.app-router/go-to! "/products"] :badge-color :secondary}
-            {:label :file-storage :icon :folder   :on-click [:x.app-router/go-to! "/media"]}
-            {:label :sample       :icon :none     :on-click [:x.app-router/go-to! "/sample"]}])
+(def CARDS [{:label :clients      :icon :people   :on-click [:router/go-to! "/clients"]  :badge-color :secondary}
+            {:label :products     :icon :category :on-click [:router/go-to! "/products"] :badge-color :secondary}
+            {:label :file-storage :icon :folder   :on-click [:router/go-to! "/media"]}
+            {:label :sample       :icon :none     :on-click [:router/go-to! "/sample"]}])
 
 
 

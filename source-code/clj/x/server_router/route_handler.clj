@@ -24,6 +24,20 @@
 
 
 
+;; -- WARNING -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Az x4.4.6 verzió óta a szerver nem küldi el a kliens számára a server-routes
+; útvonalak adatait.
+;
+; Bizonyos esetekben szükséges lehet a kliens számára megállapítani, hogy egy
+; új útvonalat konfliktus nélkül képes-e hozzáadni a rendszerhez.
+; Pl.: új aloldal létrehozásakor.
+; Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
+; hogy az megválaszolja, hogy konfliktus nélkül hozzáadható-e az új útvonal.
+
+
+
 ;; -- Names -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -77,16 +91,50 @@
 ;   ["/your-route" ...]]
 ;
 ; @name client-routes
-;  A szerver által a kliensekre elküldött útvonalak, amelykből a szerveroldali route
-;  tulajdonságok eltávolításra kerültek. A szerver a {:client-event ...} tulajdonságú
-;  útvonalakat küldi el a klienseknek.
+;  A szerver által az egyes kliensekre elküldött útvonalak, amelykből a szerveroldali
+;  route-tulajdonságok eltávolításra kerülnek.
+;  A szerver a {:client-event ...} tulajdonságú útvonalakat küldi el a klienseknek.
+;
+; @name server-routes
+;  A {:client-event ...} tulajdonságú útvonalak, amelyek adatait a szerver nem küldi el
+;  az egyes klienseknek.
 ;
 ; @name restricted-route
 ;  Az egyes restricted útvonalak kiszolgálása, a :client-event és :server-event események
 ;  megtörténése felhasználó azonosításhoz kötött.
 ;
+; @name route-parent
+;  A route-parent útvonalat a kliens-oldali applikáció a "Vissza" gomb célpontjaként alkalmazza.
+;
 ; @name route-title
 ;  ...
+;
+; @name restricted?
+;  A {:restricted? true} tulajdonságú útvonalak az applikáció belső útvonalai, amelyek
+;  használata kizárólag azonosított felhasználók számára lehetséges.
+
+
+
+;; -- Description -------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @description
+;  Az egyes útvonalakhoz tartozó beállításokban az route-template tulajdonságnak relatív útvonalat
+;  szükséges átadni.
+;  Pl.: {:route-template "/my-route"}
+;
+; @description
+;  A {:restricted? true} tulajdonságú útvonalak applikáció módban, a {:restricted? false}
+;  tulajdonságú útvonalak pedig weboldal módban indítják el a kliens-oldali útvonalkezelőt.
+;
+; @description
+;  Az applikáció módban elindított kliens-oldali útvonalkezelő eltávolítja az applikáció elérési
+;  útvonalát az útvonal elejéről, hogy az így kapott relatív útvonalhoz tartozó útvonal-beállításokat
+;  alkalmazhassa.
+;  Pl.:
+;  app-home:                      "/admin"
+;  böngészőben meghívott útvonal: "/admin/my-route"
+;  relatív-útvonal:               "/my-route"
 
 
 
@@ -96,8 +144,25 @@
 ; @usage
 ;  (a/reg-lifecycles
 ;   ::lifecycles
-;   {:on-app-boot [:router/add-route! ::route
-;                                     {:route-template "/my-route"]))
+;   {:on-app-boot {:dispatch-n [[:router/add-route! {...}]
+;                               [:router/add-route! :my-route {...}]
+;                               [:router/add-route! :page-not-found {...}]]}})
+;
+; @usage
+;  x.project-config.edn: {:app-details {:app-home "/admin"}}
+;  (a/reg-lifecycles
+;   ::lifecycles
+;   {:on-app-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
+;                               [:router/add-route! {:route-template "/your-route"
+;                                                    :restricted?    true}]]})
+;
+;  (a/dispatch [:router/go-to! "/my-route"])     =>   "/my-route" útvonalra vezet
+;  (a/dispatch [:router/go-to! "/your-route"])   =>   "/admin/your-route" útvonalra vezet
+;
+; @usage
+;  (a/dispatch [:router/add-route! {:client-event   [:render-my-view!]
+;                                   :route-template "/my-route"
+;                                   :route-parent   "/home-page"}])
 
 
 
@@ -107,7 +172,7 @@
 ; @constant (keywords in vector)
 ;  Az egyes útvonalak mely tulajdonságait küldje el a szerver a klienseknek
 (def CLIENT-ROUTE-PARAMS
-     [:restricted? :route-template :route-title :client-event])
+     [:client-event :on-leave-event :restricted? :route-parent :route-template :route-title])
 
 
 
@@ -262,26 +327,6 @@
 
 
 
-; WARNING! DEPRECATED! DO NOT USE!
-(defn get-reserved-routes
-  ; @example
-  ;  (r router/get-reserved-routes db)
-  ;  =>
-  ;  ["/my-route" "/your-route" "/:my-route-param" ...]
-  ;
-  ; @return (strings in vector)
-  [db _]
-  (let [server-routes (r get-server-routes db)]
-       (reduce-kv (fn [route-templates route-id {:keys [route-template]}]
-                      (vector/conj-item route-templates route-template))
-                  (param [])
-                  (param server-routes))))
-
-(a/reg-sub :router/get-reserved-routes get-reserved-routes)
-; WARNING! DEPRECATED! DO NOT USE!
-
-
-
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -316,11 +361,16 @@
   ;    Default: "app.js"
   ;   :restricted? (boolean)(opt)
   ;    Default: false
+  ;   :route-parent (string)(opt)
   ;   :route-template (string)
   ;   :route-title (metamorphic-content)(opt)
   ;   :client-event (metamorphic-event)(opt)
+  ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény.
   ;    A {:client-event ...} tulajdonságú útvonalakat küldi el a szerver a klienseknek.
+  ;   :on-leave-event (metamorphic-event)(opt)
+  ;    Az útvonal elhagyásakor a kliens-oldalon megtörténő esemény.
   ;   :server-event (metamorphic-event)(opt)}
+  ;    Az útvonal meghívásakor a szerver-oldalon megtörténő esemény.
   ;
   ; @usage
   ;  (r router/add-route! db {...})

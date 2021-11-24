@@ -119,7 +119,7 @@
   [extension-id item-namespace]
   (let [new-item-uri (engine/new-item-uri extension-id item-namespace)]
        [elements/button ::new-item-button
-                        {:on-click [:x.app-router/go-to! new-item-uri]
+                        {:on-click [:router/go-to! new-item-uri]
                          :preset   :add-icon-button
                          :tooltip  :add-new!}]))
 
