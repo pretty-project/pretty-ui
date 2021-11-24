@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.2.0
+; Version: v0.3.2
 ; Compatibility: x4.4.6
 
 
@@ -33,7 +33,7 @@
 ;  (defn get-header-props [db _] (r view-selector/get-header-props db))
 ;  (a/reg-sub ::get-header-props get-header-props)
 ;
-;  (defn body [_ {:keys [selected-view]}] ...)
+;  (defn body [_ {:keys [view-id]}] ...)
 ;
 ;  (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:content    #'body
 ;                                                           :subscriber [::get-body-props]}]))
@@ -44,6 +44,9 @@
 ;  (a/dispatch [:router/go-to! "/my-extension/my-view"])
 ;
 ;  (a/dispatch [:view-selector/change-view! :my-extension :my-view])
+;
+;  (defn my-event [db _] (r view-selector/change-view! db :my-extension :my-view))
+;  (a/reg-event-db :my-event my-event)
 
 
 
@@ -51,8 +54,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.view-selector.engine
-(def request-id        engine/request-id)
-(def get-selected-view engine/get-selected-view)
-(def get-header-props  engine/get-header-props)
-(def get-body-props    engine/get-body-props)
-(def change-view!      engine/change-view!)
+(def request-id           engine/request-id)
+(def get-selected-view-id engine/get-selected-view-id)
+(def get-header-props     engine/get-header-props)
+(def get-body-props       engine/get-body-props)
+(def change-view!         engine/change-view!)

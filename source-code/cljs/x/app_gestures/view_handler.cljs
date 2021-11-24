@@ -24,15 +24,15 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-selected-view
+(defn get-selected-view-id
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-selected-view db :my-view-handler)
+  ;  (r gestures/get-selected-view-id db :my-view-handler)
   ;
   ; @return (keyword)
   [db [_ handler-id]]
-  (get-in db (db/path ::view-handlers handler-id :selected-view)))
+  (get-in db (db/path ::view-handlers handler-id :view-id)))
 
 
 
@@ -46,7 +46,7 @@
   ;
   ; @return (map)
   [db [_ handler-id {:keys [default-view]}]]
-  (assoc-in db (db/path ::view-handlers handler-id :selected-view) default-view))
+  (assoc-in db (db/path ::view-handlers handler-id :view-id) default-view))
 
 (a/reg-event-db :gestures/init-view-handler! init-view-handler!)
 
@@ -56,6 +56,6 @@
   ;
   ; @return (map)
   [db [_ handler-id view-id]]
-  (assoc-in db (db/path ::view-handlers handler-id :selected-view) view-id))
+  (assoc-in db (db/path ::view-handlers handler-id :view-id) view-id))
 
 (a/reg-event-db :gestures/change-view! change-view!)

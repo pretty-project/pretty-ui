@@ -31,28 +31,28 @@
 
 (defn home-button
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:at-home? (boolean)}
   ;
   ; @usage
-  ;  [item-browser/home-button :my-extension {:at-home? false}]
+  ;  [item-browser/home-button :my-extension :my-type {:at-home? false}]
   ;
   ; @return (component)
-  [extension-id {:keys [at-home?]}]
+  [extension-id item-namespace {:keys [at-home?]}]
   [elements/button ::home-button
                    {:disabled? (param at-home?)
-
-                  ;:on-click  [:media/go-home!]
                     :on-click  (engine/go-home-event extension-id item-namespace)
                     :preset    :home-icon-button}])
 
 (defn up-button
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:at-home? (boolean)}
   ;
   ; @usage
-  ;  [item-browser/up-button :my-extension {:at-home? false}]
+  ;  [item-browser/up-button :my-extension :my-type {:at-home? false}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [at-home?]}]

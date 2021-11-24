@@ -18,21 +18,18 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Description -------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def extension-namespace
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (item-lister/extension-namespace :my-extension :my-type)
-  ;  =>
-  ;  :my-type-lister
-  ;
-  ; @return (keyword)
-  [_ item-namespace]
-  (keyword/join item-namespace "-lister"))
+; @description
+;  Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
+;  Pl.: :my-extension/synchronize-item-lister! => :my-extension/synchronize-my-type-lister!
+;  Így biztosítható, hogy egy névtér több különböző item-lister listázót tudjon megvalósítani.
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn request-id
   ; @param (keyword) extension-id
@@ -41,12 +38,12 @@
   ; @example
   ;  (item-lister/request-id :my-extension :my-type)
   ;  =>
-  ;  :my-type-lister/synchronize!
+  ;  :my-extension/synchronize-my-type-lister!
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (let [extension-namespace (extension-namespace extension-id item-namespace)]
-       (keyword/add-namespace extension-namespace :synchronize!)))
+  (keyword (name extension-id)
+           (str "synchronize-" (name item-namespace) "-lister!")))
 
 (defn resolver-id
   ; @param (keyword) extension-id
@@ -76,21 +73,6 @@
   (str "/"     (name extension-id)
        "/new-" (name item-namespace)))
 
-(defn add-new-item-event-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (item-lister/add-new-item-event-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension/add-new-item!
-  ;
-  ; @return (keyword)
-  [extension-id _]
-  (keyword/add-namespace extension-id :add-new-item!))
-
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,24 +82,43 @@
   ; @example
   ;  (item-lister/route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/route
+  ;  :my-extension/lister-route
   ;
   ; @return (keyword)
-  [extension-id _]
-  (keyword/add-namespace extension-id :route))
+  [extension-id item-namespace]
+  (keyword (name extension-id)
+           (str (name item-namespace) "-lister-route")))
 
-(defn render-event-id
+(defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/render-event-id :my-extension :my-type)
+  ;  (item-lister/add-new-item-event :my-extension :my-type)
   ;  =>
-  ;  :my-extension/render-my-type-lister!
+  ;  [:my-extension/add-new-my-type!]
   ;
-  ; @return (keyword)
+  ; @return (event-vector)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "render-" (name item-namespace) "-lister!")))
+  (let [event-id (keyword (name extension-id)
+                          (str "add-new-" (name item-namespace) "!"))]
+       [event-id]))
+
+(defn render-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-lister/render-event :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension/render-my-type-lister!]
+  ;
+  ; @return (event-vector)
+  [extension-id item-namespace]
+  (let [event-id (keyword (name extension-id)
+                          (str "render-" (name item-namespace) "-lister!"))]
+       [event-id]))

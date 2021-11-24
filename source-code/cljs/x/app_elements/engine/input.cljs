@@ -405,9 +405,10 @@
 (a/reg-event-db :x.app-elements/init-input! init-input!)
 
 (defn reset-input-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) input-id
+  ;
+  ; @usage
+  ;  (r elements/reset-input-value! db :my-input)
   ;
   ; @return (map)
   [db [_ input-id]]
@@ -415,6 +416,8 @@
         value-path   (r element/get-element-prop db input-id :value-path)]
        (assoc-in db value-path backup-value)))
 
+; @usage
+;  [:elements/reset-input-value! :my-input]
 (a/reg-event-db :x.app-elements/reset-input-value! reset-input-value!)
 
 (defn clear-input-value!

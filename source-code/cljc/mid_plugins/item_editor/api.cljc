@@ -34,12 +34,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.engine
-(def extension-namespace engine/extension-namespace)
-(def item-id->new-item?  engine/item-id->new-item?)
-(def item-id->form-label engine/item-id->form-label)
-(def item-id->item-uri   engine/item-id->item-uri)
-(def request-id          engine/request-id)
-(def mutation-name       engine/mutation-name)
-(def form-id             engine/form-id)
-(def route-id            engine/route-id)
-(def route-template      engine/route-template)
+(def item-id->new-item?      engine/item-id->new-item?)
+(def item-id->form-label     engine/item-id->form-label)
+(def item-id->item-uri       engine/item-id->item-uri)
+(def request-id              engine/request-id)
+(def mutation-name           engine/mutation-name)
+(def form-id                 engine/form-id)

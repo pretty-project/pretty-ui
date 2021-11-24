@@ -22,14 +22,13 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-plugins.item-editor.engine
-(def extension-namespace   engine/extension-namespace)
-(def request-id            engine/request-id)
-(def resolver-id           engine/resolver-id)
-(def new-item-uri          engine/new-item-uri)
-(def add-new-item-event-id engine/add-new-item-event-id)
-(def route-id              engine/route-id)
-(def render-event-id       engine/render-event-id)
+; mid-plugins.item-lister.engine
+(def request-id         engine/request-id)
+(def resolver-id        engine/resolver-id)
+(def new-item-uri       engine/new-item-uri)
+(def add-new-item-event engine/add-new-item-event)
+(def route-id           engine/route-id)
+(def render-event       engine/render-event)
 
 
 

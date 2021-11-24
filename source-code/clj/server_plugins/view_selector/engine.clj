@@ -23,8 +23,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
-(def request-id      engine/request-id)
-(def render-event-id engine/render-event-id)
+(def request-id              engine/request-id)
+(def route-id                engine/route-id)
+(def extended-route-id       engine/extended-route-id)
+(def route-template          engine/route-template)
+(def extended-route-template engine/extended-route-template)
+(def render-event            engine/render-event)
 
 
 
@@ -41,26 +45,20 @@
   ;   :default-view (keyword)(opt)}
   ;
   ; @usage
-  ;  [:view-selector/initialize! :settings]
+  ;  [:view-selector/initialize! :my-extension]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :settings {:default-view :privacy}]
+  ;  [:view-selector/initialize! :my-extension {:default-view :my-view}]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :settings {:default-view  :privacy
-  ;                                         :allowed-views [:privacy :personal :appearance]}]
+  ;  [:view-selector/initialize! :my-extension {:default-view  :my-view
+  ;                                             :allowed-views [:my-view :your-view :our-view]}]
   (fn [_ [_ extension-id selector-props]]
-                   ;[:router/add-route! :settings/route {...}]
-      {:dispatch-n [[:router/add-route! (keyword extension-id :route)
-                                        ;:route-template "/settings"
+      {:dispatch-n [[:router/add-route! (route-id extension-id)
                                         {:route-template (route-template extension-id)
-                                        ;:client-event   [:view-selector/load! :settings {...}]
                                          :client-event   [:view-selector/load! extension-id selector-props]
                                          :restricted?    true}]
-                   ;[:router/add-route! :settings/extended-route {...}]
-                    [:router/add-route! (keyword extension-id :extended-route)
-                                        ;:route-template "/settings/:selected-view"
+                    [:router/add-route! (extended-route-id extension-id)
                                         {:route-template (extended-route-template extension-id)
-                                        ;:client-event   [:view-selector/load! :settings {...}]
                                          :client-event   [:view-selector/load! extension-id selector-props]
                                          :restricted?    true}]]}))

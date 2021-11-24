@@ -1,8 +1,6 @@
 
 ; WARNING! THIS IS AN OUTDATED VERSION OF A MONO-TEMPLATE FILE!
 
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -11,6 +9,7 @@
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
               [extensions.clients.api]
+              [extensions.home.api]
               [x.boot-loader])
     (:gen-class))
 

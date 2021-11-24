@@ -13,8 +13,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-plugins.item-lister.api
-    (:require [server-plugins.item-lister.engine :as engine]))
+(ns mid-plugins.item-browser.api
+    (:require [mid-plugins.item-browser.engine :as engine]))
 
 
 
@@ -22,20 +22,20 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  More info: app-plugins.item-lister.api
+;  More info: app-plugins.item-browser.api
+;             server-plugins.item-browser.api
 ;
 ; @usage
-;  (ns my-namespace (:require [server-plugins.item-lister.api :as item-lister]))
-;
-; @usage
-;  (defresolver get-my-type-items [_] ...)
+;  (ns my-namespace (:require [mid-plugins.item-browser.api :as item-browser]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; server-plugins.item-lister.engine
-(def request-id   engine/request-id)
-(def resolver-id  engine/resolver-id)
-(def new-item-uri engine/new-item-uri)
+; mid-plugins.item-browser.engine
+(def request-id              engine/request-id)
+(def route-id                engine/route-id)
+(def extended-route-id       engine/extended-route-id)
+(def route-template          engine/route-template)
+(def extended-route-template engine/extended-route-template)

@@ -27,7 +27,8 @@
   ;
   ; @example
   ;  (keyword/to-string :foo.bar/baz)
-  ;  => "foo.bar/baz"
+  ;  =>
+  ;  "foo.bar/baz"
   ;
   ; @return (string)
   [n]
@@ -45,18 +46,25 @@
   ;
   ; @example
   ;  (keyword/to-dom-value :foo.bar/baz.boo)
-  ;  => "foo--bar--baz--boo"
+  ;  =>
+  ;  "foo--bar--baz--boo"
   ;
   ; @example
   ;  (keyword/to-dom-value :foo.bar/baz.boo :bam)
-  ;  => "foo--bar--baz--boo--bam"
+  ;  =>
+  ;  "foo--bar--baz--boo--bam"
   ;
   ; @return (string)
   [n & [flag]]
   (let [string-n    (cond (keyword? n) (to-string n)
                           (string?  n) (return    n))]
        (string/lowercase (str (-> (param string-n)
-                                  (string/replace-part "x." "x-")
+
+                                 ; WARNING! DEPRECATED!
+                                 ; A mid-fruits modul független az X-től!
+                                 ; (string/replace-part "x." "x-")
+                                 ; WARNING! DEPRECATED!
+
                                   (string/replace-part "."  "--")
                                   (string/replace-part "/"  "--")
                                   (string/remove-part  "?")
@@ -70,7 +78,8 @@
   ;
   ; @example
   ;  (keyword/to-react-key :foo :bar :baz.boo)
-  ;  => "foobarbaz--boo"
+  ;  =>
+  ;  "foobarbaz--boo"
   ;
   ; @return (string)
   [& ids]
@@ -90,11 +99,13 @@
   ;
   ; @example
   ;  (keyword/namespaced :foo)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (keyword/namespaced :foo/bar)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -106,28 +117,34 @@
   ;
   ; @example
   ;  (keyword/namespaced! :foo/bar)
-  ;  => :foo/bar
+  ;  =>
+  ;  :foo/bar
   ;
   ; @example
   ;  (keyword/namespaced! :bar)
-  ;  => :ko4983l3-i8790-j93l3-lk8385u591o2/bar
+  ;  =>
+  ;  :ko4983l3-i8790-j93l3-lk8385u591o2/bar
   ;
   ; @return (keyword)
   [n]
+        ; If n is keyword and namespaced ...
   (cond (and (keyword? n)
              (some? (namespace n)))
         (return n)
-        (and (keyword? n)
-             (nil? (namespace n)))
+        ; If n is keyword and not namespaced ...
+        (and (keyword? n))
         (let [namespace (random/generate-string)]
              (keyword namespace (name n)))))
+        ; If n is not keyword ...
+        ; ... returning w/ nil
 
 (defn split-namespace
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/split-name :foo.bar/bar)
-  ;  => [:foo :bar]
+  ;  (keyword/split-namespace :foo.bar/bar)
+  ;  =>
+  ;  [:foo :bar]
   ;
   ; @return (vector)
   [n]
@@ -142,13 +159,14 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/split-name :foo/bar.baz)
-  ;  => [:bar :baz]
+  ;  (keyword/split-name :foo.nat/bar.baz)
+  ;  =>
+  ;  [:bar :baz]
   ;
   ; @return (vector)
   [n]
   (if-not (keyword? n)
-          (return  [])
+          (return   [])
           (reduce (fn [%1 %2] (conj %1 (keyword %2)))
                   (param [])
                   (string/split (name n) #"."))))
@@ -157,14 +175,24 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/split :foo)         => [:foo]
-  ;  (keyword/split :foo.bar)     => [:foo :bar]
-  ;  (keyword/split :foo.bar/baz) => [:foo :bar :baz]
+  ;  (keyword/split :foo)
+  ;  =>
+  ;  [:foo]
+  ;
+  ; @example
+  ;  (keyword/split :foo.bar)
+  ;  =>
+  ;  [:foo :bar]
+  ;
+  ; @example
+  ;  (keyword/split :foo.bar/baz)
+  ;  =>
+  ;  [:foo :bar :baz]
   ;
   ; @return (vector)
   [n]
   (if-not (keyword? n)
-          (return  [])
+          (return   [])
           (vec (concat (split-namespace n)
                        (split-name      n)))))
 
@@ -173,11 +201,13 @@
   ;
   ; @example
   ;  (keyword/join :a :b "c" :d)
-  ;  => :abcd
+  ;  =>
+  ;  :abcd
   ;
   ; @example
   ;  (keyword/join :x/a :x/b "c" :d)
-  ;  => :abcd
+  ;  =>
+  ;  :abcd
   ;
   ; @return (keyword)
   [& abc]
@@ -186,7 +216,7 @@
                              (string?  %2) (str %1 %2)
                              (integer? %2) (str %1 %2)
                              :else         (return %1)))
-                   (str nil)
+                   (str   nil)
                    (param abc))))
 
 (defn append
@@ -196,15 +226,18 @@
   ;
   ; @example
   ;  (keyword/append :bar :baz)
-  ;  => :barbaz
+  ;  =>
+  ;  :barbaz
   ;
   ; @example
   ;  (keyword/append :foo/bar :baz)
-  ;  => :foo/barbaz
+  ;  =>
+  ;  :foo/barbaz
   ;
   ; @example
   ;  (keyword/append :foo/bar :baz "--")
-  ;  => :foo/bar--baz
+  ;  =>
+  ;  :foo/bar--baz
   ;
   ; @return (keyword)
   [n x & [separator]]
@@ -222,7 +255,8 @@
   ;
   ; @example
   ;  (keyword/add-namespace :foo :bar)
-  ;  => :foo/bar
+  ;  =>
+  ;  :foo/bar
   ;
   ; @return (keyword)
   [x n]
@@ -234,11 +268,13 @@
   ;
   ; @example
   ;  (keyword/get-namespace :bar)
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (keyword/get-namespace :foo/bar)
-  ;  => :foo
+  ;  =>
+  ;  :foo
   ;
   ; @return (keyword or nil)
   [n]
@@ -251,7 +287,8 @@
   ;
   ; @example
   ;  (keyword/get-namespace :foo/bar)
-  ;  => :bar
+  ;  =>
+  ;  :bar
   ;
   ; @return (keyword)
   [n]
@@ -264,7 +301,8 @@
   ;
   ; @example
   ;  (keyword/before-last-occurence :foo/bar :ar)
-  ;  => :foo/b
+  ;  =>
+  ;  :foo/b
   ;
   ; @return (keyword or nil)
   [n x]
@@ -277,7 +315,8 @@
   ;
   ; @example
   ;  (keyword/after-last-occurence :foo/bar :fo)
-  ;  => :o/bar
+  ;  =>
+  ;  :o/bar
   ;
   ; @return (keyword or nil)
   [n x]
@@ -290,19 +329,23 @@
   ;
   ; @example
   ;  (keyword/starts-with? :foo :fo)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (keyword/starts-with? :foo/bar :fo)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (keyword/starts-with? :foo/bar :ba)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (keyword/starts-with? :foo/bar :foo/b)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n x]
@@ -323,19 +366,23 @@
   ;
   ; @example
   ;  (keyword/ends-with? :foo :oo)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (keyword/ends-with? :foo/bar :ar)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (keyword/ends-with? :foo/bar :ba)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (keyword/ends-with? :foo/bar :o/bar)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n x]

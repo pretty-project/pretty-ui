@@ -46,13 +46,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.engine
-(def extension-namespace   engine/extension-namespace)
-(def request-id            engine/request-id)
-(def resolver-id           engine/resolver-id)
-(def new-item-uri          engine/new-item-uri)
-(def add-new-item-event-id engine/add-new-item-event-id)
-(def route-id              engine/route-id)
-(def render-event-id       engine/render-event-id)
+(def request-id         engine/request-id)
+(def resolver-id        engine/resolver-id)
+(def new-item-uri       engine/new-item-uri)
+(def add-new-item-event engine/add-new-item-event)
+(def route-id           engine/route-id)
+(def render-event       engine/render-event)
 
 
 
@@ -266,7 +265,7 @@
             document-count (get-in server-response [resolver-id :document-count])]
            {:db       (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
                              ; Szükséges frissíteni a keresési feltételeknek megfelelő
-                             ; dokumentumok számát, mert változhat az értéke
+                             ; dokumentumok számát, mert megváltozhat az értéke!
                              (assoc-in  [extension-id :lister-meta :document-count] document-count))
             ; Az elemek letöltődése után, ha maradt még a szerveren letöltendő elem, akkor újratölti
             ; az infinite-loader komponenst, hogy megállapítsa, hogy az a viewport területén van-e még.

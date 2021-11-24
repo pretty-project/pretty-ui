@@ -34,22 +34,33 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.engine
-(def extension-namespace engine/extension-namespace)
-(def item-id->new-item?  engine/item-id->new-item?)
-(def item-id->form-label engine/item-id->form-label)
-(def item-id->item-uri   engine/item-id->item-uri)
-(def request-id          engine/request-id)
-(def mutation-name       engine/mutation-name)
-(def form-id             engine/form-id)
-(def route-id            engine/route-id)
-(def route-template      engine/route-template)
-(def parent-uri          engine/parent-uri)
-(def render-event-id     engine/render-event-id)
+(def item-id->new-item?      engine/item-id->new-item?)
+(def item-id->form-label     engine/item-id->form-label)
+(def item-id->item-uri       engine/item-id->item-uri)
+(def item-id-key             engine/item-id-key)
+(def request-id              engine/request-id)
+(def mutation-name           engine/mutation-name)
+(def form-id                 engine/form-id)
+(def route-id                engine/route-id)
+(def extended-route-id       engine/extended-route-id)
+(def route-template          engine/route-template)
+(def extended-route-template engine/extended-route-template)
+(def parent-uri              engine/parent-uri)
+(def render-event            engine/render-event)
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-derived-item-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (keyword)
+  [db [_ extension-id item-namespace]]
+  (let [item-id-key (item-id-key extension-id item-namespace)]
+       (r router/get-current-route-path-param db item-id-key)))
 
 (defn synchronizing?
   ; @param (keyword) extension-id
@@ -248,12 +259,12 @@
   ; @usage
   ;  [:item-editor/load! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [derived-item (r get-derived-item db extension-id item-namespace)
-            new-item?    (item-id->new-item?    extension-id item-namespace derived-item)
-            header-label (item-id->form-label   extension-id item-namespace derived-item)]
+      (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)
+            new-item?       (item-id->new-item?       extension-id item-namespace derived-item-id)
+            header-label    (item-id->form-label      extension-id item-namespace derived-item-id)]
            {:db         (-> db (dissoc-in [extension-id :editor-data])
                                (dissoc-in [extension-id :editor-meta])
-                               (assoc-in  [extension-id :editor-meta :item-id] derived-item))
+                               (assoc-in  [extension-id :editor-meta :item-id] derived-item-id))
             :dispatch-n [[:x.app-ui/listen-to-process! (request-id extension-id item-namespace)]
                          [:x.app-ui/set-header-title!  (param      header-label)]
                          [:x.app-ui/set-window-title!  (param      header-label)]
@@ -276,7 +287,7 @@
   ; @usage
   ;  [:item-editor/->item-duplicated :my-extension :my-type {...}]
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [item-id-key   (item-id-key   extension-id item-namespace)
+      (let [item-id-key   (keyword item-namespace "id")
             mutation-name (mutation-name extension-id item-namespace :duplicate)
             mutation-name (symbol mutation-name)
             item-id       (get-in server-response [mutation-name item-id-key])

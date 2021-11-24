@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.2.9
+; Version: v0.6.4
+; Compatibility: x4.4.6
 
 
 
@@ -126,6 +126,7 @@
 (def get-input-stored-value input/get-input-stored-value)
 (def get-input-value        input/get-input-value)
 (def get-input-view-props   input/get-input-view-props)
+(def reset-input-value!     input/reset-input-value!)
 
 ; x.app-elements.engine.input-group
 (def get-input-group-view-props input-group/get-input-group-view-props)

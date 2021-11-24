@@ -49,7 +49,7 @@
    :debug-mode?     (r a/debug-mode?                    db)
    :header-title    (r get-header-title                 db)
    :parent-path     (r router/get-current-route-parent  db)
-   :render-header?  (r interface/application-interface? db)
+   :render-header?  true ;(r interface/application-interface? db)
    :viewport-small? (r environment/viewport-small?      db)})
 
 (a/reg-sub ::get-view-props get-view-props)

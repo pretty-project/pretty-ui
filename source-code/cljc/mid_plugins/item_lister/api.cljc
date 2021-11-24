@@ -34,9 +34,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.engine
-(def extension-namespace   engine/extension-namespace)
-(def request-id            engine/request-id)
-(def resolver-id           engine/resolver-id)
-(def new-item-uri          engine/new-item-uri)
-(def add-new-item-event-id engine/add-new-item-event-id)
-(def route-id              engine/route-id)
+(def request-id   engine/request-id)
+(def resolver-id  engine/resolver-id)
+(def new-item-uri engine/new-item-uri)

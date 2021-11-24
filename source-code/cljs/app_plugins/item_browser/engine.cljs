@@ -18,12 +18,43 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :refer [dissoc-in]]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-router.api   :as router]))
+              [x.app-router.api   :as router]
+              [mid-plugins.item-browser.engine :as engine]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-browser.engine
+(def request-id              engine/request-id)
+(def route-id                engine/route-id)
+(def extended-route-id       engine/extended-route-id)
+(def route-template          engine/route-template)
+(def extended-route-template engine/extended-route-template)
+(def go-up-event             engine/go-up-event)
+(def go-home-event           engine/go-home-event)
+(def render-event            engine/render-event)
 
 
 
 ;; -- Item-browser subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (map) selector-props
+  ;  {:default-item-id (keyword)(opt)}
+  ;
+  ; @return (keyword)
+  ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id
+  [db [_ extension-id {:keys [default-item-id]}]]
+  (if-let [derived-item-id (r router/get-current-route-path-param db :item-id)]
+          (let [derived-item-id (keyword derived-item-id)]
+               (return derived-item-id))
+          (return default-item-id)))
 
 (defn get-current-path
   ; @param (keyword) extension-id
@@ -88,10 +119,10 @@
   ; @usage
   ;  [:item-browser/load! :my-extension :my-type {:default-item-id :my-item}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
-      (let [derived-item (r get-derived-item db extension-id browser-props)]
+      (let [derived-item-id (r get-derived-item-id db extension-id browser-props)]
            {:db         (-> db (dissoc-in [extension-id :browser-data])
                                (dissoc-in [extension-id :browser-meta])
-                               (assoc-in  [extension-id :browser-meta :item-id] derived-item)
+                               (assoc-in  [extension-id :browser-meta :item-id] derived-item-id)
 
                               ; Ha az item-browser tényleg az item-listerre épül, akkor az
                               ; item-lister infinite-loader komponense által indított request

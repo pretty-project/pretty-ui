@@ -33,16 +33,17 @@
   [extension-id]
   (keyword/add-namespace extension-id :synchronize!))
 
-(defn render-event-id
+(defn render-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @example
-  ;  (view-selector/render-event-id :my-extension)
+  ;  (view-selector/render-event :my-extension)
   ;  =>
-  ;  :my-extension/render!
+  ;  [:my-extension/render!]
   ;
-  ; @return (keyword)
+  ; @return (event-vector)
   [extension-id]
-  (keywordadd-namespace extension-id :render!))
+  (let [event-id (keyword/add-namespace extension-id :render!)]
+       [event-id]))
