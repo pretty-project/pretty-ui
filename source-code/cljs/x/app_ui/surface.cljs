@@ -50,13 +50,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/close-surface!
+  :ui/close-surface!
   ; @param (keyword) surface-id
   (fn [{:keys [db]} [_ surface-id]]
-      [:x.app-ui/destroy-element! :surface surface-id]))
+      [:ui/destroy-element! :surface surface-id]))
 
 (a/reg-event-fx
-  :x.app-ui/render-surface!
+  :ui/render-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
@@ -67,13 +67,13 @@
             sidebar-hiding-duration (r sidebar/get-sidebar-hiding-duration db)
             surface-rendering-delay (+ close-popups-duration sidebar-hiding-duration)]
            {:dispatch-later
-            [{:ms                       0 :dispatch [:x.app-ui/destroy-all-elements! :popups]}
+            [{:ms                       0 :dispatch [:ui/destroy-all-elements! :popups]}
              {:ms close-popups-duration   :dispatch [:environment/enable-scroll!]}
-             {:ms close-popups-duration   :dispatch [:x.app-ui/hide-sidebar!]}
-             {:ms surface-rendering-delay :dispatch [:x.app-ui/request-rendering-element! :surface surface-id surface-props]}]})))
+             {:ms close-popups-duration   :dispatch [:ui/hide-sidebar!]}
+             {:ms surface-rendering-delay :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
 
 (a/reg-event-fx
-  :x.app-ui/set-surface!
+  :ui/set-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
   ;  {:content (component)
@@ -101,19 +101,19 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  [:x.app-ui/set-surface! {...}]
+  ;  [:ui/set-surface! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/set-surface! :my-surface {...}]
+  ;  [:ui/set-surface! :my-surface {...}]
   ;
   ; @usage
   ;  (defn view [surface-id] [:div "My surface"])
-  ;  [:x.app-ui/set-surface! {:content #'view}]
+  ;  [:ui/set-surface! {:content #'view}]
   (fn [{:keys [db]} event-vector]
       (let [surface-id    (a/event-vector->second-id   event-vector)
             surface-props (a/event-vector->first-props event-vector)
             surface-props (a/sub-prot db [surface-id surface-props] surface-props-prototype)]
-           [:x.app-ui/render-surface! surface-id surface-props])))
+           [:ui/render-surface! surface-id surface-props])))
 
 
 

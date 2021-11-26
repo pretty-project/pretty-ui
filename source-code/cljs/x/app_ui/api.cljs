@@ -19,7 +19,6 @@
               [x.app-ui.canvas]
               [x.app-ui.element]
               [x.app-ui.engine]
-              [x.app-ui.notification-sounds]
               [x.app-ui.popups]
               [x.app-ui.presets]
               [x.app-ui.progress-bar]
@@ -31,6 +30,7 @@
               [x.app-ui.interface       :as interface]
               [x.app-ui.popup-header-presets :as popup-header-presets]
               [x.app-ui.renderer        :as renderer]
+              [x.app-ui.sounds          :as sounds]
               [x.app-ui.structure       :as structure]
               [x.app-ui.themes          :as themes]
               [x.app-ui.title           :as title]))
@@ -81,6 +81,9 @@
 (def any-element-visible?   renderer/any-element-visible?)
 (def no-visible-elements?   renderer/no-visible-elements?)
 (def set-element-prop!      renderer/set-element-prop!)
+
+; x.app-ui.sounds
+(def play-sound! sounds/play-sound!)
 
 ; x.app-ui.structure
 (def structure structure/view)

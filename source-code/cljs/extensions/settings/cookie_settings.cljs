@@ -16,21 +16,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [privacy-policy-link   (r a/get-site-link db :privacy-policy)
-        terms-of-service-link (r a/get-site-link db :terms-of-service)]
-       {:privacy-policy-link   (r dictionary/translate db privacy-policy-link)
-        :terms-of-service-link (r dictionary/translate db terms-of-service-link)}))
-
-(a/reg-sub ::get-body-props get-body-props)
-
-
-
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -39,7 +24,7 @@
   [header-id]
   [elements/button ::cancel-button
                    {:preset   :cancel-button
-                    :on-click [:x.app-ui/close-popup! header-id]}])
+                    :on-click [:ui/close-popup! header-id]}])
 
 (defn- save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,8 +32,8 @@
   [elements/button ::save-button
                    {:preset  :save-button
                     :variant :transparent
-                    :on-click {:dispatch-n [[:x.app-ui/close-popup! header-id]
-                                            [::accept-cookie-settings!]]}}])
+                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                                            [:environment/->cookie-settings-changed]]}}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,31 +57,30 @@
 
 (defn- privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [privacy-policy-link]}]
-  (if (some? privacy-policy-link)
-      [elements/button ::policy-button
-                       {:label :privacy-policy :preset :primary-button :layout :row
-                        :on-click [:router/go-to! privacy-policy-link]}]))
+  [_]
+  [elements/button ::policy-button
+                   {:label :privacy-policy :preset :primary-button :layout :fit
+                    :on-click [:router/go-to! "/privacy-policy"]}])
 
 (defn- terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [terms-of-service-link]}]
-  (if (nil? terms-of-service-link)
-      [elements/button ::terms-of-service-button
-                       {:label :terms-of-service :preset :primary-button :layout :row
-                        :on-click [:router/go-to! terms-of-service-link]}]))
+  [_]
+  [elements/button ::terms-of-service-button
+                   {:label :terms-of-service :preset :primary-button :layout :fit
+                    :on-click [:router/go-to! "/terms-of-service"]}])
 
 (defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id body-props]
+  [body-id]
   [:<> ; This website uses cookies
        [elements/separator {:size :s}]
        [elements/text {:content :this-website-uses-cookies
                        :font-size :xs :layout :row :font-weight :bold}]
        ; Legal links
        [elements/separator {:size :xxs}]
-       [privacy-policy-button   body-id body-props]
-       [terms-of-service-button body-id body-props]
+       [privacy-policy-button   body-id]
+       [elements/separator {:size :s}]
+       [terms-of-service-button body-id]
        ; Cookie settings
        [elements/horizontal-line {:color :highlight :layout :row}]
        [elements/switch ::necessary-cookies-switch
@@ -125,18 +109,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
-  [components/content body-id {:component  #'body
-                               :subscriber [::get-body-props]}])
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  ::accept-cookie-settings!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:environment/->cookie-settings-changed])
+  [cookie-settings body-id])
 
 
 
@@ -144,11 +117,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  :settings/render-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view
-                        {:content          #'body
-                         :horizontal-align :left
-                         :label-bar        {:content #'header}
-                         :layout           :boxed
-                         :user-close?      false}])
+  [:ui/add-popup! ::view
+                  {:content          #'body
+                   :horizontal-align :left
+                   :label-bar        {:content #'header}
+                   :layout           :boxed
+                   :user-close?      false}])

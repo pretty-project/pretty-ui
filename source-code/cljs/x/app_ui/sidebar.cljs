@@ -73,14 +73,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/empty-sidebar!
+  :ui/empty-sidebar!
   ; @usage
-  ;  [:x.app-ui/empty-sidebar!]
-  {:dispatch-later [{:ms                  0 :dispatch [:x.app-ui/hide-sidebar!]}
-                    {:ms ANIMATION-DURATION :dispatch [:x.app-db/remove-partition! ::primary]}]})
+  ;  [:ui/empty-sidebar!]
+  {:dispatch-later [{:ms                  0 :dispatch [:ui/hide-sidebar!]}
+                    {:ms ANIMATION-DURATION :dispatch [:db/remove-partition! ::primary]}]})
 
 (a/reg-event-fx
-  :x.app-ui/set-sidebar!
+  :ui/set-sidebar!
   ; @param (keyword)(opt) content-id
   ; @param (map) content-props
   ;  {:content (metamorphic-content)(opt)
@@ -88,37 +88,37 @@
   ;   :subscriber (subscription vector)(opt)}
   ;
   ; @usage
-  ;  [:x.app-ui/set-sidebar! {...}]
+  ;  [:ui/set-sidebar! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/set-sidebar! :my-sidebar {...}]
+  ;  [:ui/set-sidebar! :my-sidebar {...}]
   (fn [_ event-vector]
       (let [content-id    (a/event-vector->second-id   event-vector)
             content-props (a/event-vector->first-props event-vector)]
-           {:dispatch [:x.app-db/set-item! (db/meta-item-path ::primary :sidebar-surface)
-                                           (param content-props)]
+           {:dispatch [:db/set-item! (db/meta-item-path ::primary :sidebar-surface)
+                                     (param content-props)]
             ; BUG#0845
-            :dispatch-later [{:ms SHOW-SIDEBAR-DELAY :dispatch [:x.app-ui/show-sidebar!]}]})))
+            :dispatch-later [{:ms SHOW-SIDEBAR-DELAY :dispatch [:ui/show-sidebar!]}]})))
 
 (a/reg-event-fx
-  :x.app-ui/hide-sidebar!
+  :ui/hide-sidebar!
   ; @usage
-  ;  [:x.app-ui/hide-sidebar!]
+  ;  [:ui/hide-sidebar!]
   (fn [{:keys [db]} _]
       (if (r sidebar-visible? db)
           {:dispatch-n [[:environment/remove-scroll-prohibition! :app-sidebar]
-                        [:x.app-db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
-                                             (param false)]]})))
+                        [:db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
+                                       (param false)]]})))
 
 (a/reg-event-fx
-  :x.app-ui/show-sidebar!
+  :ui/show-sidebar!
   ; @usage
-  ;  [:x.app-ui/show-sidebar!]
+  ;  [:ui/show-sidebar!]
   (fn [{:keys [db]} _]
       (if (r sidebar-hidden? db)
           {:dispatch-n [;[:environment/add-scroll-prohibition! :app-sidebar]
-                        [:x.app-db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
-                                             (param true)]]})))
+                        [:db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
+                                       (param true)]]})))
 
 
 
@@ -135,7 +135,7 @@
   [_ _]
   [:div#x-app-sidebar--controls
     [elements/button {:preset   :prev-icon-button
-                      :on-click [:x.app-ui/hide-sidebar!]}]])
+                      :on-click [:ui/hide-sidebar!]}]])
 
 (defn- sidebar-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -165,7 +165,7 @@
   ; @return (hiccup)
   [_ {:keys [sidebar-visible?]}]
   [:div#x-app-sidebar--cover {:data-visible sidebar-visible?
-                              :on-click #(a/dispatch [:x.app-ui/hide-sidebar!])}])
+                              :on-click #(a/dispatch [:ui/hide-sidebar!])}])
 
 (defn- sidebar-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -127,8 +127,8 @@
                    (modifier value)
                    (param    value))]
         (if (input/value-path->vector-item? value-path)
-            (a/dispatch-sync [:x.app-db/set-vector-item! value-path value])
-            (a/dispatch-sync [:x.app-db/set-item!        value-path value]))
+            (a/dispatch-sync [:db/set-vector-item! value-path value])
+            (a/dispatch-sync [:db/set-item!        value-path value]))
         (if (some? on-type-ended)
             (let [on-type-ended (a/event-vector<-params on-type-ended value)]
                  (a/dispatch-last TYPE-ENDED-AFTER on-type-ended)))

@@ -67,9 +67,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
-       :dispatch [:x.app-ui/add-popup! ::view
-                                       {:content    #'body
-                                        :label-bar  {:content    #'header
-                                                     :subscriber [::get-header-props]}
-                                        :layout     :boxed
-                                        :subscriber [::get-body-props]}]}))
+       :dispatch [:ui/add-popup! ::view
+                                 {:content    #'body
+                                  :label-bar  {:content    #'header
+                                               :subscriber [::get-header-props]}
+                                  :layout     :boxed
+                                  :subscriber [::get-body-props]}]}))

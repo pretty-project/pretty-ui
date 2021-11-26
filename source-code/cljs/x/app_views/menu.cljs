@@ -224,20 +224,20 @@
 (a/reg-event-fx
   :views/render-menu-as-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view
-                        {:content          #'body
-                         :label-bar        {:content #'ui/close-popup-header}
-                         :horizontal-align :left
-                         :layout           :boxed
-                         :min-width        :xs
-                         :subscriber       [::get-body-props]}])
+  [:ui/add-popup! ::view
+                  {:content          #'body
+                   :label-bar        {:content #'ui/close-popup-header}
+                   :horizontal-align :left
+                   :layout           :boxed
+                   :min-width        :xs
+                   :subscriber       [::get-body-props]}])
 
 (a/reg-event-fx
   :views/render-menu-as-sidebar!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-sidebar! ::view
-                          {:content    #'body
-                           :subscriber [::get-body-props]}])
+  [:ui/set-sidebar! ::view
+                    {:content    #'body
+                     :subscriber [::get-body-props]}])
 
 (a/reg-event-fx
   :views/render-menu!

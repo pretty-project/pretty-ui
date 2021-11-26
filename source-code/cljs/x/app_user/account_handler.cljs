@@ -163,5 +163,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:sync/send-request! :x.app-user/logout!
                        {:method :post :uri "/user/logout"
-                        :on-failure [:x.app-ui/blow-bubble!    {:content :logout-failed :color :warning}]
+                        :on-failure [:ui/blow-bubble!          {:content :logout-failed :color :warning}]
                         :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])

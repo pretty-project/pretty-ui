@@ -58,5 +58,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:x.app-db/store-collection! [:collection :path] [{...} {...}]]
-(a/reg-event-db :x.app-db/store-collection! store-collection!)
+;  [:db/store-collection! [:collection :path] [{...} {...}]]
+(a/reg-event-db :db/store-collection! store-collection!)

@@ -7,22 +7,11 @@
 ; Pl.: verziószám, ...
 ;
 ; Localstorage:
-
-
-
-; Az oldal elején mindjárt egy toggle!
-; "Az adatvédelmi beállításokat itt találád"
-; {:dispatch [:router/go-to! "/privacy-settings"]}
-
-
+;
 
 ; Statisztikai adatgyüjtés, amikor nincs hozzákötve felhasználóhoz az adat. (anonimizált adat)
-
-
-
+;
 ; https://ec.europa.eu/info/law/law-topic/data-protection/reform/rules-business-and-organisations/principles-gdpr/what-information-must-be-given-individuals-whose-data-collected_hu
-
-
 
 ; WEBSITE
 ;
@@ -31,12 +20,9 @@
 ; Google Maps, Youtube, Google Analytics, Facebook Pixel, Hotjar
 ; Cross-site trackers
 
-
-
 ; APPLICATION
 ;
-; Hotjar (kell az public appokba, hogy legyen visszajelzés)
-;
+; Hotjar (szükséges a public appikációkhoz)
 ;
 ; https://ec.europa.eu/info/law/law-topic/data-protection/reform/rights-citizens/how-my-personal-data-protected/can-personal-data-about-children-be-collected_hu
 
@@ -72,6 +58,14 @@
   ;
   ; @return (component)
   [surface-id])
+  ; Remove stored cookies button
+  ; Multilingual content
+  ;
+  ; WARNING!
+  ; Az Adatvédelmi irányelvek tartalmát jelenítsd meg a cookie-consent popup felületen,
+  ; ahelyett, hogy erre az oldalra irányítanád a privacy-policy gombbal a felhasználót!
+  ; Erről az oldalról tovább lehet navigálni az applikáció más részire anélkül, hogy
+  ; elfogadná a cookie-consent tartalmát!
 
 
 

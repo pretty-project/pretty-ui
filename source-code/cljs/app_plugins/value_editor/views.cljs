@@ -175,9 +175,9 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   (fn [_ [_ editor-id _]]
-      [:x.app-ui/add-popup! editor-id
-                            {:content    #'body
-                             :layout     :boxed
-                             :label-bar  {:content    #'header
-                                          :subscriber [::get-header-props editor-id]}
-                             :subscriber [::get-body-props editor-id]}]))
+      [:ui/add-popup! editor-id
+                      {:content    #'body
+                       :layout     :boxed
+                       :label-bar  {:content    #'header
+                                    :subscriber [::get-header-props editor-id]}
+                       :subscriber [::get-body-props editor-id]}]))

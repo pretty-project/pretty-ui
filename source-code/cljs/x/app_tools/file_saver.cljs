@@ -141,7 +141,7 @@
   ; @return (component)
   [popup-id _]
   [elements/button ::cancel-button
-                   {:on-click [:x.app-ui/close-popup! popup-id]
+                   {:on-click [:ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
 (defn- save-button
@@ -154,7 +154,7 @@
   [popup-id saver-props]
   [elements/button ::save-button
                    {:on-click {:dispatch-n [[:tools/->save-file-accepted popup-id saver-props]
-                                            [:x.app-ui/close-popup!            popup-id]]}
+                                            [:ui/close-popup!            popup-id]]}
                     :preset   :save-button}])
 
 (defn- header
@@ -214,9 +214,9 @@
   ; @param (keyword) saver-id
   ; @param (map) saver-props
   (fn [_ [_ saver-id saver-props]]
-      [:x.app-ui/add-popup! saver-id
-                            {:content       #'body
-                             :content-props saver-props
-                             :label-bar     {:content       #'header
-                                             :content-props saver-props}
-                             :layout        :boxed}]))
+      [:ui/add-popup! saver-id
+                      {:content       #'body
+                       :content-props saver-props
+                       :label-bar     {:content       #'header
+                                       :content-props saver-props}
+                       :layout        :boxed}]))

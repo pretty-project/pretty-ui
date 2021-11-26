@@ -54,7 +54,7 @@
   (let [shield-content-element (dom/get-element-by-id "x-app-shield--content")]
        (dom/set-element-content! shield-content-element content)))
 
-(a/reg-handled-fx :x.app-ui/render-shield-content! render-shield-content!)
+(a/reg-handled-fx :ui/render-shield-content! render-shield-content!)
 
 
 
@@ -62,21 +62,21 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/show-shield!
+  :ui/show-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-if [(shield-hidden?)
                      [:environment/reveal-element-animated! "x-app-shield"]]}))
 
 (a/reg-event-fx
-  :x.app-ui/hide-shield!
+  :ui/hide-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-if [(shield-visible?)
                      [:environment/hide-element-animated! renderer/HIDE-ANIMATION-TIMEOUT "x-app-shield"]]}))
 
 (a/reg-event-fx
-  :x.app-ui/set-shield!
+  :ui/set-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) shield-id
@@ -84,25 +84,25 @@
   ;  {:content (*)}
   ;
   ; @usage
-  ;  [:x.app-ui/set-shield! {...}]
+  ;  [:ui/set-shield! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/set-shield! :my-shield {...}]
+  ;  [:ui/set-shield! :my-shield {...}]
   (fn [_ event-vector]
       (let [shield-id    (a/event-vector->second-id   event-vector)
             shield-props (a/event-vector->first-props event-vector)]
-           {:dispatch-later [{:ms   0 :dispatch [:x.app-ui/empty-shield!]}
-                             {:ms  50 :dispatch [:x.app-ui/render-shield-content! shield-props]}
-                             {:ms 100 :dispatch [:x.app-ui/show-shield!]}]})))
+           {:dispatch-later [{:ms   0 :dispatch [:ui/empty-shield!]}
+                             {:ms  50 :dispatch [:ui/render-shield-content! shield-props]}
+                             {:ms 100 :dispatch [:ui/show-shield!]}]})))
 
 (a/reg-event-fx
-  :x.app-ui/remove-shield!
+  :ui/remove-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-later
-   [{:ms                               0 :dispatch [:x.app-ui/hide-shield!]}
-    {:ms renderer/HIDE-ANIMATION-TIMEOUT :dispatch [:x.app-ui/empty-shield!]}]})
+   [{:ms                               0 :dispatch [:ui/hide-shield!]}
+    {:ms renderer/HIDE-ANIMATION-TIMEOUT :dispatch [:ui/empty-shield!]}]})
 
 (a/reg-event-fx
-  :x.app-ui/empty-shield!
+  :ui/empty-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:environment/empty-element! "x-app-shield--content"])

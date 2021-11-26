@@ -24,7 +24,7 @@
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
                     :preset   :cancel-button
-                    :on-click [:x.app-ui/close-popup! popup-id]}])
+                    :on-click [:ui/close-popup! popup-id]}])
 
 (defn- delete-item-dialog-delete-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -34,7 +34,7 @@
   ;
   ; @return (component)
   [popup-id action-props]
-  (let [on-click {:dispatch-n [[:x.app-ui/close-popup!              popup-id]
+  (let [on-click {:dispatch-n [[:ui/close-popup!                    popup-id]
                                [:file-storage/delete-rendered-item! action-props]]}]
        [elements/button {:keypress {:key-code 13}
                          :preset   :delete-button
@@ -117,13 +117,12 @@
   (fn [{:keys [db]} [_ subdirectory-id]]
       (let [rendered-directory-id (r file-storage/get-rendered-directory-id db)
             subdirectory-alias    (r engine/get-subdirectory-prop db rendered-directory-id subdirectory-id :directory/alias)]
-           [:x.app-ui/add-popup!
-             ::delete-subdirectory-dialog
-             {:content       #'delete-subdirectory-dialog
-              :content-props {:subdirectory-alias subdirectory-alias}
-              :label-bar     {:content       #'delete-item-label-bar
-                              :content-props {:selected-item {:directory/id (name subdirectory-id)}}}
-              :layout        :boxed}])))
+           [:ui/add-popup! ::delete-subdirectory-dialog
+                           {:content       #'delete-subdirectory-dialog
+                            :content-props {:subdirectory-alias subdirectory-alias}
+                            :label-bar     {:content       #'delete-item-label-bar
+                                            :content-props {:selected-item {:directory/id (name subdirectory-id)}}}
+                            :layout        :boxed}])))
 
 (a/reg-event-fx
   :file-storage/render-delete-rendered-file-dialog!
@@ -133,13 +132,12 @@
   (fn [{:keys [db]} [_ file-id]]
       (let [rendered-directory-id (r file-storage/get-rendered-directory-id db)
             file-alias            (r engine/get-file-prop db rendered-directory-id file-id :file/alias)]
-           [:x.app-ui/add-popup!
-             ::delete-file-dialog
-             {:content       #'delete-file-dialog
-              :content-props {:file-alias file-alias}
-              :label-bar     {:content       #'delete-item-label-bar
-                              :content-props {:selected-item {:file/id (name file-id)}}}
-              :layout        :boxed}])))
+           [:ui/add-popup! ::delete-file-dialog
+                           {:content       #'delete-file-dialog
+                            :content-props {:file-alias file-alias}
+                            :label-bar     {:content       #'delete-item-label-bar
+                                            :content-props {:selected-item {:file/id (name file-id)}}}
+                            :layout        :boxed}])))
 
 (a/reg-event-fx
   :file-storage/render-not-enough-space-to-copy-dialog!
@@ -147,12 +145,11 @@
   ;
   ; @param (B) space-needed
   (fn [{:keys [db]} [_ space-needed]]
-      [:x.app-ui/add-popup!
-        ::not-enough-space-to-copy
-        {:content       #'not-enough-space-to-copy-dialog
-         :content-props {:space-needed space-needed}
-         :label-bar     {:content #'ui/accept-popup-header}
-         :layout        :boxed}]))
+      [:ui/add-popup! ::not-enough-space-to-copy
+                      {:content       #'not-enough-space-to-copy-dialog
+                       :content-props {:space-needed space-needed}
+                       :label-bar     {:content #'ui/accept-popup-header}
+                       :layout        :boxed}]))
 
 (a/reg-event-fx
   :file-storage/render-copy-rendered-file-dialog!

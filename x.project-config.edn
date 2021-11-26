@@ -50,19 +50,6 @@
   :database-port 27017}
 
 
- ; @param (map) site-links
- ;  {:privacy-policy (map)
- ;    {:en (string)
- ;     :hu (string)}
- ;   :terms-of-service (map)
- ;    {:en (string)
- ;     :hu (string)}}
- :site-links
- {:privacy-policy    {:en "/privacy-policy"
-                      :hu "/adatvedelmi-iranyelvek"}}
-; :terms-of-service  {:en "/terms-of-service"
-;                     :hu "/felhasznalasi-feltetelek"}}
-
 
  ; @param (map) seo-details
  ;  {:meta-description (string)

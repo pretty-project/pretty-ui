@@ -128,13 +128,15 @@
 (def move-data-item!          data-order-handler/move-data-item!)
 (def remove-data-item!        data-order-handler/remove-data-item!)
 (def add-data-item!           data-order-handler/add-data-item!)
-(def update-data-item!         data-order-handler/update-data-item!)
+(def update-data-item!        data-order-handler/update-data-item!)
 (def apply-data-item!         data-order-handler/apply-data-item!)
 (def apply-data-items!        data-order-handler/apply-data-items!)
 (def copy-item-to-partition!  data-order-handler/copy-item-to-partition!)
 (def move-item-to-partition!  data-order-handler/move-item-to-partition!)
 (def empty-partition!         data-order-handler/empty-partition!)
 (def update-data-order!       data-order-handler/update-data-order!)
+(def remove-data-item-id!     data-order-handler/remove-data-item-id!)
+(def remove-data-item-props!  data-order-handler/remove-data-item-props!)
 
 ; x.app-db.data-range-handler
 (def data-cursor-value-in-threshold?   data-range-handler/data-cursor-value-in-threshold?)

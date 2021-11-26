@@ -48,14 +48,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/set-theme!
+  :ui/set-theme!
   ; @param (string) theme-name
   ;
   ; @usage
-  ;  [:x.app-ui/set-theme! "light"]
+  ;  [:ui/set-theme! "light"]
   (fn [{:keys [db]} [_ theme-name]]
       {:db       (r store-selected-theme! db theme-name)
-       :dispatch [:x.app-ui/->theme-changed]}))
+       :dispatch [:ui/->theme-changed]}))
 
 
 
@@ -63,7 +63,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/->theme-changed
+  :ui/->theme-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [theme-name (r get-selected-theme db)]
@@ -76,4 +76,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-login [:x.app-ui/->theme-changed]})
+  {:on-login [:ui/->theme-changed]})

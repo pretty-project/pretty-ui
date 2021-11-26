@@ -478,7 +478,7 @@
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ input-id]]
       ; WARNING#9055
-      ; Az :x.app-db/reg-change-listener! esemény nem létezik!
+      ; Az db/reg-change-listener! esemény nem létezik!
       (let [value-path (r element/get-element-prop db input-id :value-path)])))
           ;(if (r input-listen-to-change? db input-id)
           ;    {:db (r db/reg-change-listener! value-path)})
@@ -490,7 +490,7 @@
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ input-id]]
       ; WARNING#9055
-      ; Az :x.app-db/resolve-change-listener! esemény nem létezik!
+      ; Az db/resolve-change-listener! esemény nem létezik!
       (let [value-path (r element/get-element-prop db input-id :value-path)])))
           ;(if (r input-listen-to-change? db input-id)
           ;    {:db (r db/resolve-change-listener! value-path)})

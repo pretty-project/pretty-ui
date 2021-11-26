@@ -83,7 +83,7 @@
         extended-item-path (conj item-path language-id)]
        (r db/set-item! db extended-item-path item)))
 
-(a/reg-event-db :x.app-db/set-multilingual-item! set-multilingual-item!)
+(a/reg-event-db :locales/set-multilingual-item! set-multilingual-item!)
 
 
 

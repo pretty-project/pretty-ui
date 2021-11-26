@@ -17,7 +17,6 @@
 
 (a/reg-event-fx
   :extensions.charts/render!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content #'view
-    :layout :unboxed}])
+  [:ui/set-surface! ::view
+                    {:content #'view
+                     :layout :unboxed}])

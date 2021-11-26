@@ -262,28 +262,33 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ::render!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content     #'view
-    :initializer [:x.app-db/set-item! (db/path ::stuff :multi-combobox :options)
-                                      [{:x "Apple"}
-                                       {:x "Apple juice"}
-                                       {:x "Pineapple"}
-                                       {:x "Banana"}
-                                       {:x "Brown"}
-                                       {:x "Apocalypse"}]]}])
+(defn- initialize!
+  [db _]
+  (assoc-in db (db/path ::stuff :multi-combobox :options)
+               [{:x "Apple"}
+                {:x "Apple juice"}
+                {:x "Pineapple"}
+                {:x "Banana"}
+                {:x "Brown"}
+                {:x "Apocalypse"}]))
+
+(a/reg-event-db :playground/initialize! initialize!)
 
 (a/reg-event-fx
-  ::load!
-  {:dispatch-n [[:x.app-ui/set-header-title! "Playground"]
-                [:x.app-ui/set-window-title! "Playground"]
-                [::render!]]})
+  :playground/render!
+  [:ui/set-surface! ::view
+                    {:content     #'view
+                     :initializer [:playground/initialize!]}])
+
+(a/reg-event-fx
+  :playground/load!
+  {:dispatch-n [[:ui/set-header-title! "Playground"]
+                [:ui/set-window-title! "Playground"]
+                [:playground/render!]]})
 
 (a/reg-lifecycles
   ::lifecycles
   {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [::load!]
+                                    {:route-event    [:playground/load!]
                                      :route-template "/playground"
                                      :restricted?    true}]})

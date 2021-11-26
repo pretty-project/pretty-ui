@@ -24,7 +24,7 @@
 
 (a/reg-event-fx
   :extensions.services/download-services!
-  [:x.app-db/query-partition! :extensions.services/primary])
+  [])
 
 
 

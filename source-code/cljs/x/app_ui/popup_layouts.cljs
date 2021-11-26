@@ -39,7 +39,7 @@
   ;
   ; @return (function)
   [{:keys [user-close?]}]
-  (if user-close? #(a/dispatch [:x.app-ui/close-upper-popup!])))
+  (if user-close? #(a/dispatch [:ui/close-upper-popup!])))
 
 (defn- popup-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,7 +93,7 @@
                         :color    :invert
                         :icon     :close_fullscreen
                         :layout   :icon-button
-                        :on-click [:x.app-ui/minimize-popup! popup-id]
+                        :on-click [:ui/minimize-popup! popup-id]
                         :variant  :transparent}]))
 
 (defn- popup-maximize-button
@@ -110,7 +110,7 @@
                         :color    :muted
                         :icon     :fullscreen
                         :layout   :icon-button
-                        :on-click [:x.app-ui/maximize-popup! popup-id]
+                        :on-click [:ui/maximize-popup! popup-id]
                         :variant  :filled}]))
 
 (defn- popup-content

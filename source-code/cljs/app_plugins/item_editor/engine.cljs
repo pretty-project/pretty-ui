@@ -153,7 +153,7 @@
             item-props    (get-in    db [extension-id :editor-data])]
            [:sync/send-query! (request-id extension-id item-namespace)
                               {:on-stalled [:router/go-to! parent-uri]
-                               :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                               :on-failure [:ui/blow-bubble! {:content :saving-error :color :warning}]
                                :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
@@ -171,7 +171,7 @@
             item-props    (get-in    db [extension-id :editor-data])]
            [:sync/send-query! (request-id extension-id item-namespace)
                               {:on-stalled [:router/go-to! parent-uri]
-                               :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                               :on-failure [:ui/blow-bubble! {:content :saving-error :color :warning}]
                                :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
@@ -190,7 +190,7 @@
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
            [:sync/send-query! (request-id extension-id item-namespace)
                               {:on-stalled [:router/go-to! parent-uri]
-                               :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
+                               :on-failure [:ui/blow-bubble! {:content :deleting-error :color :warning}]
                                :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
@@ -208,7 +208,7 @@
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
            [:sync/send-query! (request-id extension-id item-namespace)
                               {:on-stalled [:item-editor/->item-duplicated extension-id item-namespace]
-                               :on-failure [:x.app-ui/blow-bubble! {:content :copying-error :color :warning}]
+                               :on-failure [:ui/blow-bubble! {:content :copying-error :color :warning}]
                                :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
@@ -265,9 +265,9 @@
            {:db         (-> db (dissoc-in [extension-id :editor-data])
                                (dissoc-in [extension-id :editor-meta])
                                (assoc-in  [extension-id :editor-meta :item-id] derived-item-id))
-            :dispatch-n [[:x.app-ui/listen-to-process! (request-id extension-id item-namespace)]
-                         [:x.app-ui/set-header-title!  (param      header-label)]
-                         [:x.app-ui/set-window-title!  (param      header-label)]
+            :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
+                         [:ui/set-header-title!  (param      header-label)]
+                         [:ui/set-window-title!  (param      header-label)]
                          (if-not new-item? [:item-editor/request-item! extension-id item-namespace])
                          (render-event extension-id item-namespace)]})))
 
@@ -292,4 +292,4 @@
             mutation-name (symbol mutation-name)
             item-id       (get-in server-response [mutation-name item-id-key])
             edit-copy-uri (item-id->item-uri extension-id item-namespace item-id)]
-           [:x.app-ui/blow-bubble! {}])))
+           [:ui/blow-bubble! {}])))

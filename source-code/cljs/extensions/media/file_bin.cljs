@@ -118,6 +118,5 @@
       (let [bin-id    (a/event-vector->second-id   event-vector)
             bin-props (a/event-vector->first-props event-vector)
             bin-props (a/prot bin-props bin-props-prototype)]
-           [:x.app-ui/set-surface!
-             :media/view
-             {:content #'view}])))
+           [:ui/set-surface! :media/view
+                             {:content #'view}])))

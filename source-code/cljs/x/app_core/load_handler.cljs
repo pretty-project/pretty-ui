@@ -190,14 +190,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)
-       :dispatch [:x.app-ui/hide-shield!]}))
+       :dispatch [:ui/hide-shield!]}))
 
 (event-handler/reg-event-fx
   :core/->timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)
-       :dispatch [:x.app-ui/set-shield! {:content LOAD-TIMEOUT-ERROR}]}))
+       :dispatch [:ui/set-shield! {:content LOAD-TIMEOUT-ERROR}]}))
 
 
 

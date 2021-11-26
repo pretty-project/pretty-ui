@@ -33,5 +33,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:x.app-db/get-partition-state :my-partition/primary]
-(a/reg-sub :x.app-db/get-partition-state get-partition-state)
+;  [:db/get-partition-state :my-partition/primary]
+(a/reg-sub :db/get-partition-state get-partition-state)

@@ -148,7 +148,7 @@
   [db [_ popup-id]]
   (r renderer/set-element-prop! db :popups popup-id :minimized? true))
 
-(a/reg-event-db :x.app-ui/minimize-popup! minimize-popup!)
+(a/reg-event-db :ui/minimize-popup! minimize-popup!)
 
 (defn- maximize-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,7 +159,7 @@
   [db [_ popup-id]]
   (r renderer/set-element-prop! db :popups popup-id :minimized? false))
 
-(a/reg-event-db :x.app-ui/maximize-popup! maximize-popup!)
+(a/reg-event-db :ui/maximize-popup! maximize-popup!)
 
 
 
@@ -167,42 +167,42 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/update-popup!
+  :ui/update-popup!
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
   ; @usage
-  ;  [:x.app-ui/update-popup! :my-popup {...}]
+  ;  [:ui/update-popup! :my-popup {...}]
   (fn [_ [_ popup-id popup-props]]
-      [:x.app-ui/update-element! :popups popup-id popup-props]))
+      [:ui/update-element! :popups popup-id popup-props]))
 
 (a/reg-event-fx
-  :x.app-ui/close-popup!
+  :ui/close-popup!
   ; @param (keyword) popup-id
   (fn [{:keys [db]} [_ popup-id]]
-      {:dispatch-n [[:x.app-ui/destroy-element! :popups popup-id]]}))
+      {:dispatch-n [[:ui/destroy-element! :popups popup-id]]}))
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
                     ; [:environment/remove-scroll-prohibition! popup-id]
 
 (a/reg-event-fx
-  :x.app-ui/close-upper-popup!
+  :ui/close-upper-popup!
   (fn [{:keys [db]} _]
       (if-let [upper-popup-id (r get-upper-popup-id db)]
-              [:x.app-ui/close-popup! upper-popup-id])))
+              [:ui/close-popup! upper-popup-id])))
 
 (a/reg-event-fx
-  :x.app-ui/render-popup!
+  :ui/render-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   (fn [_ [_ popup-id popup-props]]
-      {:dispatch-n [[:x.app-ui/request-rendering-element! :popups popup-id popup-props]]}))
+      {:dispatch-n [[:ui/request-rendering-element! :popups popup-id popup-props]]}))
                     ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
                     ; [:environment/add-scroll-prohibition! popup-id]
 
 (a/reg-event-fx
-  :x.app-ui/render-popup-exclusive!
+  :ui/render-popup-exclusive!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -215,13 +215,13 @@
             close-header-delay     (+ close-surface-delay close-surface-duration)
             render-popup-delay     (+ close-popups-duration close-surface-duration close-header-duration)]
            {:dispatch-later
-            [{:ms                   0 :dispatch [:x.app-ui/destroy-all-elements! :popups]}
-             {:ms close-surface-delay :dispatch [:x.app-ui/destroy-all-elements! :surface]}
-             {:ms close-header-delay  :dispatch [:x.app-ui/destroy-all-elements! :header]}
-             {:ms render-popup-delay  :dispatch [:x.app-ui/render-popup! popup-id popup-props]}]})))
+            [{:ms                   0 :dispatch [:ui/destroy-all-elements! :popups]}
+             {:ms close-surface-delay :dispatch [:ui/destroy-all-elements! :surface]}
+             {:ms close-header-delay  :dispatch [:ui/destroy-all-elements! :header]}
+             {:ms render-popup-delay  :dispatch [:ui/render-popup! popup-id popup-props]}]})))
 
 (a/reg-event-fx
-  :x.app-ui/add-popup!
+  :ui/add-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
   ;  {:autopadding? (boolean)(opt)
@@ -263,24 +263,24 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  [:x.app-ui/add-popup! {...}]
+  ;  [:ui/add-popup! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/add-popup! :my-popup {...}]
+  ;  [:ui/add-popup! :my-popup {...}]
   ;
   ; @usage
   ;  (defn view        [popup-id]            [:div "My surface"])
   ;  (defn label-bar   [popup-id view-props] [:div "My label-bar"])
-  ;  [:x.app-ui/add-popup! {:content #'view
-  ;                         :label-bar {:content #'label-bar
-  ;                                     :subscriber [::get-label-bar-view-props]}}]
+  ;  [:ui/add-popup! {:content #'view
+  ;                   :label-bar {:content #'label-bar
+  ;                               :subscriber [::get-label-bar-view-props]}}]
   (fn [{:keys [db]} event-vector]
       (let [popup-id    (a/event-vector->second-id   event-vector)
             popup-props (a/event-vector->first-props event-vector)
             popup-props (a/sub-prot db [popup-id popup-props] popup-props-prototype)]
            (if (popup-props->render-popup-exclusive? popup-props)
-               [:x.app-ui/render-popup-exclusive! popup-id popup-props]
-               [:x.app-ui/render-popup!           popup-id popup-props]))))
+               [:ui/render-popup-exclusive! popup-id popup-props]
+               [:ui/render-popup!           popup-id popup-props]))))
 
 
 

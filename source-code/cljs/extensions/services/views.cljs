@@ -19,8 +19,7 @@
 
 (a/reg-event-fx
   :extensions.services/render!
-  [:x.app-ui/set-surface!
-   ::view
-   {:content #'view
-    :content-label :services
-    :initializer [:extensions.services/download-services!]}])
+  [:ui/set-surface! ::view
+                    {:content #'view
+                     :content-label :services
+                     :initializer [:extensions.services/download-services!]}])

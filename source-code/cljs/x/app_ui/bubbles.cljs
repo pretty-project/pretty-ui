@@ -51,7 +51,7 @@
   ;  {:dispatch-n (vector)}
   [bubble-id {:keys [primary-button]}]
   {:dispatch-n [(:on-click primary-button)
-                [:x.app-ui/pop-bubble! bubble-id]]})
+                [:ui/pop-bubble! bubble-id]]})
 
 (defn- bubble-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,7 +85,7 @@
   [bubble-id bubble-props]
   (merge {:autopop?         true
           :hide-animated?   true
-          :initializer      [:x.app-ui/initialize-bubble! bubble-id]
+          :initializer      [:ui/initialize-bubble! bubble-id]
           :reveal-animated? true
           :update-animated? false
           :user-close?      true}
@@ -141,16 +141,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/initialize-bubble!
+  :ui/initialize-bubble!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
   (fn [{:keys [db]} [_ bubble-id]]
       {:dispatch-later [(if (r autopop-bubble? db bubble-id)
-                            {:ms BUBBLE-LIFETIME :dispatch [:x.app-ui/autopop-bubble?! bubble-id]})]}))
+                            {:ms BUBBLE-LIFETIME :dispatch [:ui/autopop-bubble?! bubble-id]})]}))
 
 (a/reg-event-fx
-  :x.app-ui/autopop-bubble?!
+  :ui/autopop-bubble?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -159,28 +159,28 @@
             ; akkor megtörténik a pop esemény.
       (cond (and (r autopop-bubble?          db bubble-id)
                  (r bubble-lifetime-elapsed? db bubble-id))
-            [:x.app-ui/pop-bubble! bubble-id]
+            [:ui/pop-bubble! bubble-id]
             ; Ha a bubble rendelkezik {:autopop? true} tulajdonsággal és még NEM járt le az ideje,
             ; akkor beidőzít egy autopop eseményt a bubble várható élettartamára.
             ; Előfordulhat, hogy a bubble hátralévő idejében újra meghívásra kerül a blow esemény,
             ; ami miatt újraindul a bubble élettartama.
             (r autopop-bubble? db bubble-id)
             {:dispatch-later [{:ms       (r get-bubble-lifetime-left db bubble-id)
-                               :dispatch [:x.app-ui/autopop-bubble?! bubble-id]}]})))
+                               :dispatch [:ui/autopop-bubble?! bubble-id]}]})))
 
 (a/reg-event-fx
-  :x.app-ui/pop-bubble!
+  :ui/pop-bubble!
   ; @param (keyword) bubble-id
   ; @param (map)(opt) action-props
   ;  {:timeout (ms)(opt)
   ;    Default: 0}
   (fn [{:keys [db]} [_ bubble-id {:keys [timeout]}]]
       (if (some? timeout)
-          {:dispatch-later [{:ms timeout :dispatch [:x.app-ui/destroy-element! :bubbles bubble-id]}]}
-          [:x.app-ui/destroy-element! :bubbles bubble-id])))
+          {:dispatch-later [{:ms timeout :dispatch [:ui/destroy-element! :bubbles bubble-id]}]}
+          [:ui/destroy-element! :bubbles bubble-id])))
 
 (a/reg-event-fx
-  :x.app-ui/blow-bubble!
+  :ui/blow-bubble!
   ; XXX#3044
   ; Ha a button elem nem jelenít meg {:content ...} tulajdonságként átadott tartalmat,
   ; akkor a primary-button a button elem bal oldalán jelenik meg.
@@ -200,16 +200,16 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  [:x.app-ui/blow-bubble! {...}]
+  ;  [:ui/blow-bubble! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/blow-bubble! :my-bubble {...}]
+  ;  [:ui/blow-bubble! :my-bubble {...}]
   (fn [{:keys [db]} event-vector]
       (let [bubble-id    (a/event-vector->second-id   event-vector)
             bubble-props (a/event-vector->first-props event-vector)
             bubble-props (a/prot bubble-id bubble-props bubble-props-prototype)]
            {:dispatch-if [(r bubbles-enabled-by-user? db)
-                          [:x.app-ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))
+                          [:ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))
 
 
 
@@ -240,7 +240,7 @@
   ;
   ; @return (component)
   [bubble-id _]
-  [elements/button {:on-click [:x.app-ui/pop-bubble! bubble-id]
+  [elements/button {:on-click [:ui/pop-bubble! bubble-id]
                     :preset   :close-icon-button}])
 
 (defn- bubble-close-button-placeholder

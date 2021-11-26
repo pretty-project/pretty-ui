@@ -163,16 +163,16 @@
   ;
   ; @usage
   ;  (defn ah8900 [popup-id content-props subscribed-props])
-  ;  (a/dispatch [:x.app-ui/add-popup! {:content       #'ah8900
-  ;                                     :content-props {...}
-  ;                                     :subscriber    [...]}])
+  ;  (a/dispatch [:ui/add-popup! {:content       #'ah8900
+  ;                               :content-props {...}
+  ;                               :subscriber    [...]}])
   ;
   ; @usage
   ;  (defn ah8900 [popup-id content-props dynamic-props])
-  ;  (a/dispatch [:x.app-ui/add-popup! {:base-props    {...}
-  ;                                     :content       #'ah8900
-  ;                                     :content-props {...}
-  ;                                     :subscriber    [...]}])
+  ;  (a/dispatch [:ui/add-popup! {:base-props    {...}
+  ;                               :content       #'ah8900
+  ;                               :content-props {...}
+  ;                               :subscriber    [...]}])
   ;
   ; @return (component)
   [element-id element-props]

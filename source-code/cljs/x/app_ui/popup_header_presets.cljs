@@ -37,7 +37,7 @@
   ; @return (component)
   [popup-id _]
   [elements/button {:keypress {:key-code 13}
-                    :on-click [:x.app-ui/close-popup! popup-id]
+                    :on-click [:ui/close-popup! popup-id]
                     :preset   :accept-button}])
 
 (defn popup-cancel-button
@@ -47,7 +47,7 @@
   ; @return (component)
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
-                    :on-click [:x.app-ui/close-popup! popup-id]
+                    :on-click [:ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
 (defn popup-up-icon-button
@@ -77,7 +77,7 @@
   ; @return (component)
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
-                    :on-click [:x.app-ui/close-popup! popup-id]
+                    :on-click [:ui/close-popup! popup-id]
                     :preset   :close-icon-button}])
                    ;:tooltip  :close!
 

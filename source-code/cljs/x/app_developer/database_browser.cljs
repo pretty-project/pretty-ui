@@ -175,19 +175,19 @@
 (defn- decrease-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  [icon-button {:icon "remove" :label "Dec" :on-click [:x.app-db/apply! current-path dec]}])
+  [icon-button {:icon "remove" :label "Dec" :on-click [:db/apply! current-path dec]}])
 
 (defn- increase-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  [icon-button {:icon "add" :label "Inc" :on-click [:x.app-db/apply! current-path inc]}])
+  [icon-button {:icon "add" :label "Inc" :on-click [:db/apply! current-path inc]}])
 
 (defn- swap-boolean-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-item current-path]}]
   (if (boolean current-item)
-      [icon-button {:icon "task_alt"       :label "True"  :on-click [:x.app-db/apply! current-path not]}]
-      [icon-button {:icon "do_not_disturb" :label "False" :on-click [:x.app-db/apply! current-path not]}]))
+      [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/apply! current-path not]}]
+      [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/apply! current-path not]}]))
 
 (defn- toggle-original-view-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -199,7 +199,7 @@
 (defn- edit-string-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [edit-string?]}]
-  (let [toggle-event [:x.app-db/apply! (db/path ::settings :edit-string?) not]]
+  (let [toggle-event [:db/apply! (db/path ::settings :edit-string?) not]]
        (if (boolean edit-string?)
            [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
            [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
@@ -221,7 +221,7 @@
 (defn- remove-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  (let [remove-event [:x.app-db/move-item! current-path (db/path ::settings :bin)]]
+  (let [remove-event [:db/move-item! current-path (db/path ::settings :bin)]]
        (if (item-path->root-level? current-path)
            [icon-button {:icon "delete" :label "Remove" :disabled? true}]
            [icon-button {:icon "delete" :label "Remove" :on-click remove-event}])))
@@ -229,7 +229,7 @@
 (defn- recycle-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [bin current-path]}]
-  (let [revert-event [:x.app-db/move-item! (db/path ::settings :bin) current-path]]
+  (let [revert-event [:db/move-item! (db/path ::settings :bin) current-path]]
        (if (some? bin)
            [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}])))
 

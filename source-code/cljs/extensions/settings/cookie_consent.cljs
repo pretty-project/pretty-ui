@@ -3,12 +3,20 @@
     (:require [x.app-core.api        :as a :refer [r]]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
+              [x.app-ui.api          :as ui]
               [extensions.settings.cookie-settings :rename {body cookie-settings}]))
 
 
 
 ;; -- Descriptions ------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @description
+;  A cookie-consent felület applikáció módban elindított (bejelentkezett)
+;  rendszer esetén használható. A webhely módban elindított rendszer számára
+;  egyedileg a webhely számára szükséges cookie-consent felületet készíteni,
+;  mivel a felületen megjelenő Adatvédelmi irányelvek és Felhasználási feltételek
+;  hivatkozások az applikáció vonatkozó tartalmaira mutatnak.
 
 ; @description
 ;  WARNING! XXX#0459
@@ -29,6 +37,17 @@
 
 
 
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- render-cookie-consent?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (and (not (r environment/necessary-cookies-enabled? db))
+       (r ui/application-interface?                   db)))
+
+
+
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -39,8 +58,8 @@
                    {:label   :got-it!
                     :preset  :close-button
                     :variant :transparent
-                    :on-click {:dispatch-n [[:x.app-ui/close-popup! header-id]
-                                            [::accept-cookie-settings!]]}}])
+                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                                            [:environment/->cookie-settings-changed]]}}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,37 +69,27 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  ::accept-cookie-settings!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:environment/->cookie-settings-changed])
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  :settings/render-cookie-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view
-                        {:content          #'cookie-settings
-                         :horizontal-align :left
-                         :label-bar        {:content #'header}
-                         :layout           :boxed
-                         :user-close?      false}])
+  [:ui/add-popup! ::view
+                  {:content          #'cookie-settings
+                   :horizontal-align :left
+                   :label-bar        {:content #'header}
+                   :layout           :boxed
+                   :user-close?      false}])
 
 (a/reg-event-fx
-  ::initialize!
+  :settings/initialize-cookie-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-if [(not (r environment/necessary-cookies-enabled? db))
+      {:dispatch-if [(r render-cookie-consent? db)
                      ; BUG#2457
-                     {:dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [::render!]}]}]}))
+                     {:dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [:settings/render-cookie-consent!]}]}]}))
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-launch [::initialize!]})
+  {:on-app-launch [:settings/initialize-cookie-consent!]})

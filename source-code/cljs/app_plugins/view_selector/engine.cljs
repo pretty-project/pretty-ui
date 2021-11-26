@@ -126,7 +126,7 @@
       (let [derived-view-id (r get-derived-view-id db extension-id selector-props)]
            {:db         (-> db (dissoc-in [extension-id :view-meta])
                                (assoc-in  [extension-id :view-meta :view-id] derived-view-id))
-            :dispatch-n [[:x.app-ui/listen-to-process! (request-id extension-id)]
-                         [:x.app-ui/set-header-title!  (param      extension-id)]
-                         [:x.app-ui/set-window-title!  (param      extension-id)]
+            :dispatch-n [[:ui/listen-to-process! (request-id extension-id)]
+                         [:ui/set-header-title!  (param      extension-id)]
+                         [:ui/set-window-title!  (param      extension-id)]
                          (render-event extension-id)]})))

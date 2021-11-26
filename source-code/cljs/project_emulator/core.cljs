@@ -1,7 +1,8 @@
 
+; WARNING! THIS IS AN OUTDATED VERSION OF A MONO-TEMPLATE FILE!
+
 (ns project-emulator.core
     (:require [x.boot-loader]
-
               ; TEMP
               [playground.api]))
 

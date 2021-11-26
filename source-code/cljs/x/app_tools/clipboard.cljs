@@ -58,7 +58,7 @@
   ; @usage
   ;  [:tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
-      {:dispatch [:x.app-ui/blow-bubble! {:content :copied-to-clipboard}]
+      {:dispatch [:ui/blow-bubble! {:content :copied-to-clipboard}]
        :tools/copy-to-clipboard! (param text)}))
 
 

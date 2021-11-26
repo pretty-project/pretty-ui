@@ -47,14 +47,14 @@
 (a/reg-event-fx
   :home/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface! ::view {:content    #'view
-                                  :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content    #'view
+                            :subscriber [::get-view-props]}])
 
 (a/reg-event-fx
   :home/load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-detail db :app-title)]
-           {:dispatch-n [[:x.app-ui/restore-default-window-title!]
-                         [:x.app-ui/set-header-title! app-title]
+           {:dispatch-n [[:ui/restore-default-window-title!]
+                         [:ui/set-header-title! app-title]
                          [:home/render!]]})))

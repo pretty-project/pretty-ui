@@ -113,7 +113,7 @@
 (a/reg-event-fx
   :products/render-product-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:content #'view}])
 
 (a/reg-lifecycles
   ::lifecycles

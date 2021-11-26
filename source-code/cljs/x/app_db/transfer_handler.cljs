@@ -42,5 +42,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:x.app-db/import-collection! ::my-partition [{...} {...}] {...}]
-(a/reg-event-db :x.app-db/import-collection! import-collection!)
+;  [:db/import-collection! ::my-partition [{...} {...}] {...}]
+(a/reg-event-db :db/import-collection! import-collection!)

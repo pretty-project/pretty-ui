@@ -344,8 +344,8 @@
       (let [rendered-directory-id (r get-rendered-directory-id  db)]
            (if (r engine/directory-exists? db rendered-directory-id)
                (let [rendered-directory-alias (r engine/get-directory-alias db rendered-directory-id)]
-                    {:dispatch-n [[:x.app-ui/set-header-title! rendered-directory-alias]
-                                  [:x.app-ui/set-window-title! rendered-directory-alias]]})))))
+                    {:dispatch-n [[:ui/set-header-title! rendered-directory-alias]
+                                  [:ui/set-window-title! rendered-directory-alias]]})))))
 
 (a/reg-event-fx
   :file-storage/edit-rendered-file-alias!
@@ -931,7 +931,7 @@
 (a/reg-event-fx
   :media/render-directory-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:content #'view}])
 
 
 

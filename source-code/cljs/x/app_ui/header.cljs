@@ -68,7 +68,7 @@
   [db [_ header-title]]
   (assoc-in db (db/path ::primary :header-title) header-title))
 
-(a/reg-event-db :x.app-ui/set-header-title! set-header-title!)
+(a/reg-event-db :ui/set-header-title! set-header-title!)
 
 
 

@@ -67,12 +67,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:x.app-db/get-partition :my-partition/primary]
-(a/reg-sub :x.app-db/get-partition get-partition)
+;  [:db/get-partition :my-partition/primary]
+(a/reg-sub :db/get-partition get-partition)
 
 ; @usage
-;  [:x.app-db/partition-empty? :my-partition/primary]
-(a/reg-sub :x.app-db/partition-empty? partition-empty?)
+;  [:db/partition-empty? :my-partition/primary]
+(a/reg-sub :db/partition-empty? partition-empty?)
 
 
 
@@ -81,8 +81,8 @@
 
 ; @usage
 ;  ...
-(a/reg-event-db :x.app-db/reg-partition! reg-partition!)
+(a/reg-event-db :db/reg-partition! reg-partition!)
 
 ; @usage
-;  [:x.app-db/remove-partition! [:partition :path]]
-(a/reg-event-db :x.app-db/remove-partition! remove-partition!)
+;  [:db/remove-partition! [:partition :path]]
+(a/reg-event-db :db/remove-partition! remove-partition!)

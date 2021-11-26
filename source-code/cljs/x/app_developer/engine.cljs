@@ -9,4 +9,4 @@
 
 (a/reg-event-fx
   :developer/test!
-  [:x.app-ui/blow-bubble! {:content "It works!"}])
+  [:ui/blow-bubble! {:content "It works!"}])

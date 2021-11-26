@@ -132,6 +132,6 @@
   ; @param (keyword) error-id
   ;  :no-connection, :page-not-found, :under-construction, :under-maintenance
   (fn [_ [_ error-id]]
-      [:x.app-ui/set-surface! ::view
-                              {:content       #'view
-                               :content-props (error-id->content-props error-id)}]))
+      [:ui/set-surface! ::view
+                        {:content       #'view
+                         :content-props (error-id->content-props error-id)}]))

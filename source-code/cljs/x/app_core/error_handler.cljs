@@ -75,4 +75,4 @@
   (fn [{:keys [db]} [event-id error-props]]
       {:db       (-> db (store-error-props!               [event-id error-props])
                         (load-handler/stop-synchronizing! [event-id]))
-       :dispatch [:x.app-ui/set-shield! {:content (r get-error-message db)}]}))
+       :dispatch [:ui/set-shield! {:content (r get-error-message db)}]}))

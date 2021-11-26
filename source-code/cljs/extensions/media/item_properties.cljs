@@ -163,13 +163,12 @@
   ; @param (keyword) subdirectory-id
   (fn [{:keys [db]} [_ directory-id subdirectory-id]]
       (let [subdirectory-props (r engine/get-subdirectory-props db directory-id subdirectory-id)]
-           [:x.app-ui/add-popup!
-             directory-id
-             {:content       #'directory-properties
-              :content-props subdirectory-props
-              :label-bar     {:content #'ui/close-popup-header}
-              :layout        :boxed
-              :min-width     :xs}])))
+           [:ui/add-popup! directory-id
+                           {:content       #'directory-properties
+                            :content-props subdirectory-props
+                            :label-bar     {:content #'ui/close-popup-header}
+                            :layout        :boxed
+                            :min-width     :xs}])))
 
 (a/reg-event-fx
   :media/render-file-properties!
@@ -177,10 +176,9 @@
   ; @param (keyword) file-id
   (fn [{:keys [db]} [_ directory-id file-id]]
       (let [file-props (r engine/get-file-props db directory-id file-id)]
-           [:x.app-ui/add-popup!
-             file-id
-             {:content       #'file-properties
-              :content-props file-props
-              :label-bar     {:content #'ui/close-popup-header}
-              :layout        :boxed
-              :min-width     :xs}])))
+           [:ui/add-popup! file-id
+                           {:content       #'file-properties
+                            :content-props file-props
+                            :label-bar     {:content #'ui/close-popup-header}
+                            :layout        :boxed
+                            :min-width     :xs}])))

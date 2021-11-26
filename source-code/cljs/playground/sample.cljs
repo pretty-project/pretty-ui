@@ -32,18 +32,18 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
-  [:x.app-ui/set-surface! ::view {:content #'view}])
+  :sample/render!
+  [:ui/set-surface! ::view {:content #'view}])
 
 (a/reg-event-fx
-  ::load!
-  {:dispatch-n [[:x.app-ui/set-header-title! "Sample"]
-                [:x.app-ui/set-window-title! "Sample"]
-                [::render!]]})
+  :sample/load!
+  {:dispatch-n [[:ui/set-header-title! "Sample"]
+                [:ui/set-window-title! "Sample"]
+                [:sample/render!]]})
 
 (a/reg-lifecycles
   ::lifecycles
   {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [::load!]
+                                    {:route-event    [:sample/load!]
                                      :route-template "/sample"
                                      :restricted?    true}]})

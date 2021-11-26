@@ -550,7 +550,7 @@
   [popup-id view-props]
   [elements/button ::done-button
                    (merge {:keypress {:key-code 13}
-                           :on-click {:dispatch-n [[:x.app-ui/close-popup! popup-id]
+                           :on-click {:dispatch-n [[:ui/close-popup! popup-id]
                                                    [:file-browser/->browse-done]]}
                            :preset   :primary-button
                            :label    (view-props->done-button-label view-props)}
@@ -568,7 +568,7 @@
   [popup-id _]
   [elements/button ::cancel-button
                    {:keypress {:key-code 27}
-                    :on-click [:x.app-ui/close-popup! popup-id]
+                    :on-click [:ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
 (defn- file-browser-home-button
@@ -923,13 +923,12 @@
   ; @param (keyword) browser-id
   ; @param (map) browser-props
   (fn [_ [_ browser-id browser-props]]
-      [:x.app-ui/add-popup!
-       ::view
-       {:content          #'listener
-        :horizontal-align :center
-        :label-bar        {:content    #'file-browser-label-bar
-                           :subscriber [:file-browser/get-label-bar-view-props]}
-        :layout           :boxed}]))
+      [:ui/add-popup! ::view
+                      {:content          #'listener
+                       :horizontal-align :center
+                       :label-bar        {:content    #'file-browser-label-bar
+                                          :subscriber [:file-browser/get-label-bar-view-props]}
+                       :layout           :boxed}]))
 
 (a/reg-event-fx
   :file-browser/load!

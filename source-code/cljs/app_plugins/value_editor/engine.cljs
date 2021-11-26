@@ -180,7 +180,7 @@
        ; Leírni, miért szükséges a reset-input-value! függvény végrehajtása!
        ; Minden esetben szükséges a végrehajtás? edit-original? true és false esetén is?
       {:db       (r elements/reset-input-value! db :value-editor/editor-field)
-       :dispatch [:x.app-ui/close-popup! editor-id]}))
+       :dispatch [:ui/close-popup! editor-id]}))
 
 (a/reg-event-fx
   :value-editor/save-value!
@@ -188,9 +188,9 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      {:db          (r save-value!       db editor-id)
-       :dispatch-n [(r get-editor-prop   db editor-id :on-save)
-                    [:x.app-ui/close-popup! editor-id]]}))
+      {:db          (r save-value!     db editor-id)
+       :dispatch-n [(r get-editor-prop db editor-id :on-save)
+                    [:ui/close-popup!     editor-id]]}))
 
 (a/reg-event-fx :value-editor/load!
   ; @param (keyword)(opt) editor-id

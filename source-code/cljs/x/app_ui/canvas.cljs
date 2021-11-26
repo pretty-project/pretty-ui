@@ -53,7 +53,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-ui/add-item!
+  :ui/add-item!
   ; @param (keyword)(opt) item-id
   ; @param (map) item-props
   ;  {:content (metamorphic-content)
@@ -70,21 +70,24 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  [:x.app-ui/add-item! {...}]
+  ;  [:ui/add-item! {...}]
   ;
   ; @usage
-  ;  [:x.app-ui/add-item! :my-item {...}]
+  ;  [:ui/add-item! :my-item {...}]
   (fn [_ event-vector]
       (let [item-id    (a/event-vector->second-id   event-vector)
             item-props (a/event-vector->first-props event-vector)
             item-props (a/prot item-props item-props-prototype)]
-           [:x.app-ui/request-rendering-element! :canvas item-id item-props])))
+           [:ui/request-rendering-element! :canvas item-id item-props])))
 
 (a/reg-event-fx
-  :x.app-ui/remove-item!
+  :ui/remove-item!
   ; @param (keyword) item-id
+  ;
+  ; @usage
+  ;  [:ui/remove-item! :my-item]
   (fn [_ [_ item-id]]
-      [:x.app-ui/destroy-element! :canvas item-id]))
+      [:ui/destroy-element! :canvas item-id]))
 
 
 

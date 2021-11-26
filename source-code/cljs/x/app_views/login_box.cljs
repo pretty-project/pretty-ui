@@ -116,9 +116,8 @@
                    {:color    :muted
                     :label    :forgot-password
                     :layout   :fit
-                    :on-click [:x.app-ui/blow-bubble!
-                               ::service-not-available
-                               {:content :service-not-available :color :warning}]
+                    :on-click [:ui/blow-bubble! ::service-not-available
+                                                {:content :service-not-available :color :warning}]
                     :variant  :transparent}])
 
 (defn- login-form
@@ -229,10 +228,10 @@
 (a/reg-event-fx
   :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view
-                        {:content           #'body
-                         :layout            :boxed
-                         :min-width         :xs
-                         :render-exclusive? true
-                         :subscriber        [::get-body-props]
-                         :user-close?       false}])
+  [:ui/add-popup! ::view
+                  {:content           #'body
+                   :layout            :boxed
+                   :min-width         :xs
+                   :render-exclusive? true
+                   :subscriber        [::get-body-props]
+                   :user-close?       false}])

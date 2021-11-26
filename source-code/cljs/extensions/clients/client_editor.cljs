@@ -173,7 +173,7 @@
   :clients/edit-last-duplicated!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      [:x.app-ui/pop-bubble! ::notification]))
+      [:ui/pop-bubble! ::notification]))
 
 
 
@@ -183,7 +183,7 @@
 (a/reg-event-fx
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
 
 (a/reg-lifecycles
   ::lifecycles

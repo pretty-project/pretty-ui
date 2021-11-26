@@ -75,12 +75,12 @@
   (let [popup-id (engine/element-id->extended-id select-id :popup)]
        {:dispatch-some  on-select
         :dispatch-later [{:ms       CLOSE-POPUP-DELAY
-                          :dispatch [:x.app-ui/close-popup! popup-id]}
+                          :dispatch [:ui/close-popup! popup-id]}
 
                          ; XXX#0134
                          (if (boolean autoclear?)
                              {:ms       AUTOCLEAR-VALUE-DELAY
-                              :dispatch [:x.app-db/remove-item! value-path]})
+                              :dispatch [:db/remove-item! value-path]})
 
                          (when (some? on-popup-closed)
                                {:ms       ON-POPUP-CLOSED-DELAY
@@ -214,7 +214,7 @@
   ; @return (component)
   [popup-id]
   [polarity {:start-content [button {:preset   :cancel-button
-                                     :on-click [:x.app-ui/close-popup! popup-id]}]}])
+                                     :on-click [:ui/close-popup! popup-id]}]}])
 
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -445,16 +445,15 @@
             options-props (a/event-vector->first-props event-vector)
             options-id    (engine/element-id->extended-id select-id :popup)
             options-props (a/prot select-id options-props options-props-prototype)]
-           [:x.app-ui/add-popup!
-             options-id
-             {:content       #'select-options
-              :content-props options-props
-              :layout        :boxed
-              :min-width     :xs
+           [:ui/add-popup! options-id
+                           {:content       #'select-options
+                            :content-props options-props
+                            :layout        :boxed
+                            :min-width     :xs
 
-              ; Select options popup's label-bar
-              :label-bar (cond (options-props->render-popup-label-bar?  options-props)
-                               {:content       #'popup-label-bar
-                                :content-props {:label (:options-label options-props)}}
-                               (options-props->render-popup-cancel-bar? options-props)
-                               {:content #'popup-cancel-bar})}])))
+                            ; Select options popup's label-bar
+                            :label-bar (cond (options-props->render-popup-label-bar?  options-props)
+                                             {:content       #'popup-label-bar
+                                              :content-props {:label (:options-label options-props)}}
+                                             (options-props->render-popup-cancel-bar? options-props)
+                                             {:content #'popup-cancel-bar})}])))

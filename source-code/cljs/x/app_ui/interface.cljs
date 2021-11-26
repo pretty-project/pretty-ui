@@ -55,7 +55,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-interface!
+(defn set-interface!
   ; @param (keyword) interface
   ;  :application-ui, :website-ui
   ;
@@ -67,8 +67,8 @@
   (assoc-in db (db/path ::primary :interface) interface))
 
 ; @usage
-;  [:x.app-ui/set-interface! :application-ui]
-(a/reg-event-db :x.app-ui/set-interface! set-interface!)
+;  [:ui/set-interface! :application-ui]
+(a/reg-event-db :ui/set-interface! set-interface!)
 
 
 
@@ -77,5 +77,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:x.app-ui/set-interface! :website-ui]
-   :on-login    [:x.app-ui/set-interface! :application-ui]})
+  {:on-app-init [:ui/set-interface! :website-ui]
+   :on-login    [:ui/set-interface! :application-ui]})

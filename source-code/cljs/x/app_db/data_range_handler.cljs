@@ -53,8 +53,8 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :x.app-db/step-data-cursor-high-bwd! step-data-cursor-high-bwd!)
-(a/reg-event-db :x.app-db/step-data-cursor-high-fwd! step-data-cursor-high-fwd!)
-(a/reg-event-db :x.app-db/step-data-cursor-low-bwd!  step-data-cursor-low-bwd!)
-(a/reg-event-db :x.app-db/step-data-cursor-low-fwd!  step-data-cursor-low-fwd!)
-(a/reg-event-db :x.app-db/trim-partition!            trim-partition!)
+(a/reg-event-db :db/step-data-cursor-high-bwd! step-data-cursor-high-bwd!)
+(a/reg-event-db :db/step-data-cursor-high-fwd! step-data-cursor-high-fwd!)
+(a/reg-event-db :db/step-data-cursor-low-bwd!  step-data-cursor-low-bwd!)
+(a/reg-event-db :db/step-data-cursor-low-fwd!  step-data-cursor-low-fwd!)
+(a/reg-event-db :db/trim-partition!            trim-partition!)

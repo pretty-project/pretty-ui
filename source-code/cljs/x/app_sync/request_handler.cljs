@@ -327,9 +327,9 @@
   ; @param (keyword) request-id
   ; @param (keyword or string) status-text
   (fn [{:keys [db]} [_ request-id status-text]]
-      [:x.app-ui/blow-bubble! request-id
-                              {:content (or status-text DEFAULT-FAILURE-MESSAGE)
-                               :color   :warning}]))
+      [:ui/blow-bubble! request-id
+                        {:content (or status-text DEFAULT-FAILURE-MESSAGE)
+                         :color   :warning}]))
 
 (a/reg-event-fx
   :sync/send-request!

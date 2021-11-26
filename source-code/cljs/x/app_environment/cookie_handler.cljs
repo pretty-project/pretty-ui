@@ -25,6 +25,32 @@
 
 
 
+;; -- Usage -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  (ns my-namespace (:require [x.app-environment.api :as environment]))
+;
+;  (defn my-subscription
+;    [db _]
+;    {:any-cookies-stored? (r environment/any-cookies-stored? db)
+;     :stored-cookies      (r environment/get-stored-cookies  db)
+;     :my-cookie-value     (r environment/get-cookie-value    db :my-cookie)})
+;
+; @usage
+;  (a/dispatch [:environment/set-cookie! {...}])
+;
+; @usage
+;  (a/dispatch [:environment/set-cookie! :my-cookie {...}])
+;
+; @usage
+;  (a/dispatch [:environment/remove-cookie! :my-cookie])
+;
+; @usage
+;  (a/dispatch [:environment/remove-cookies!])
+
+
+
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -454,7 +480,7 @@
   :environment/remove-cookies!
   ; @usage
   ;  [:environment/remove-cookies!]
-  [:environment/clear-browser-cookies!])
+  [:environment/remove-browser-cookies!])
 
 (a/reg-event-fx
   :environment/read-system-cookies!

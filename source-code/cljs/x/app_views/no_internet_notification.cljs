@@ -29,17 +29,17 @@
   (fn [{:keys [db]} _]
       (if (and (r environment/browser-offline? db)
                (r ui/application-interface?    db))
-          [:x.app-ui/blow-bubble! ::notification
-                                  {:content     :no-internet-connection
-                                   :autopop?    false
-                                   :user-close? false
-                                   :primary-button
-                                   {:label    :refresh!
-                                    :on-click [:boot-loader/refresh-app!]
-                                    :preset   :primary-button}}])))
+          [:ui/blow-bubble! ::notification
+                            {:content     :no-internet-connection
+                             :autopop?    false
+                             :user-close? false
+                             :primary-button
+                             {:label    :refresh!
+                              :on-click [:boot-loader/refresh-app!]
+                              :preset   :primary-button}}])))
 
 (a/reg-lifecycles
   ::lifecycles
   {:on-browser-offline [:views/blow-no-internet-bubble?!]
    :on-app-launch      [:views/blow-no-internet-bubble?!]
-   :on-browser-online  [:x.app-ui/pop-bubble! ::notification]})
+   :on-browser-online  [:ui/pop-bubble! ::notification]})

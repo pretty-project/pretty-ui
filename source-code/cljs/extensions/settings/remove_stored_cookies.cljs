@@ -17,7 +17,7 @@
                     :label    :cancel!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click [:x.app-ui/close-popup! header-id]}])
+                    :on-click [:ui/close-popup! header-id]}])
 
 (defn- remove-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -27,8 +27,8 @@
                     :label    :remove!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click {:dispatch-n [[:x.app-ui/close-popup! header-id]
-                                            [::remove-stored-cookies!]]}}])
+                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                                            [:settings/remove-stored-cookies!]]}}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,12 +55,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::remove-stored-cookies!
+  :settings/remove-stored-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [message (r dictionary/look-up db :just-a-moment)]
            {:dispatch-later [{:ms   0 :dispatch [:environment/remove-browser-cookies!]}
-                             {:ms   0 :dispatch [:x.app-ui/set-shield! {:content message}]}
+                             {:ms   0 :dispatch [:ui/set-shield! {:content message}]}
                              {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
 
 
@@ -71,7 +71,7 @@
 (a/reg-event-fx
   :settings/render-remove-stored-cookies-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/add-popup! ::view
-                        {:content   #'body
-                         :label-bar {:content #'header}
-                         :layout    :boxed}])
+  [:ui/add-popup! ::view
+                  {:content   #'body
+                   :label-bar {:content #'header}
+                   :layout    :boxed}])

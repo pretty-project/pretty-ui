@@ -18,10 +18,10 @@
 
 (a/reg-event-fx
   :developer/render-source-reader!
-  [:x.app-ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:content #'view}])
 
 (a/reg-lifecycles
   ::lifecycles
   {:on-app-boot [:router/add-route! ::route
                                     {:route-template "/docs"
-                                     :route-event    [::render!]}]})
+                                     :route-event    [:developer/render-source-reader!]}]})

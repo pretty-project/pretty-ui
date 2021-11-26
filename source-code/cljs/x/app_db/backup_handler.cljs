@@ -36,17 +36,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-sub :x.app-db/item-changed?   item-changed?)
-(a/reg-sub :x.app-db/item-unchanged? item-unchanged?)
+(a/reg-sub :db/item-changed?   item-changed?)
+(a/reg-sub :db/item-unchanged? item-unchanged?)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :x.app-db/store-backup-item!   store-backup-item!)
-(a/reg-event-db :x.app-db/restore-backup-item! restore-backup-item!)
-(a/reg-event-db :x.app-db/remove-backup-item!  remove-backup-item!)
+(a/reg-event-db :db/store-backup-item!   store-backup-item!)
+(a/reg-event-db :db/restore-backup-item! restore-backup-item!)
+(a/reg-event-db :db/remove-backup-item!  remove-backup-item!)
 
 
 
@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-db/resolve-backup-item!
+  :db/resolve-backup-item!
   ; @param (vector) item-path
   ; @param (map) events
   ;  {:on-changed   (metamorphic-event)

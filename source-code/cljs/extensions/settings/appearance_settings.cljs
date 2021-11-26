@@ -18,5 +18,5 @@
                                :get-value-f :value
                                :initial-options [{:label :dark-theme  :value "dark"}
                                                  {:label :light-theme :value "light"}]
-                               :on-select  [:x.app-ui/set-theme!]}]
+                               :on-select  [:ui/set-theme!]}]
        [elements/separator {:orientation :horizontal :size :s}]])

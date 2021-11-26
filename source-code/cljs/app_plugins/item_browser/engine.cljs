@@ -134,7 +134,7 @@
                               ; mert emlékezne, hogy utoljára nulla volt, stb ...
                                (dissoc-in [extension-id :lister-meta]))
 
-            :dispatch-n [[:x.app-ui/listen-to-process! (request-id extension-id item-namespace)]
-                         [:x.app-ui/set-header-title!  (param      extension-id)]
-                         [:x.app-ui/set-window-title!  (param      extension-id)]
+            :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
+                         [:ui/set-header-title!  (param      extension-id)]
+                         [:ui/set-window-title!  (param      extension-id)]
                          (render-event extension-id item-namespace)]})))

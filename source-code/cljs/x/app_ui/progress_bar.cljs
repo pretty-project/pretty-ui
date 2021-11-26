@@ -72,11 +72,11 @@
                       (param       options))))
 
 ; @usage
-;  [:x.app-ui/listen-to-process! :my-request]
+;  [:ui/listen-to-process! :my-request]
 ;
 ; @usage
-;  [:x.app-ui/listen-to-process! :my-request {...}]
-(a/reg-event-db :x.app-ui/listen-to-process! listen-to-process!)
+;  [:ui/listen-to-process! :my-request {...}]
+(a/reg-event-db :ui/listen-to-process! listen-to-process!)
 
 
 

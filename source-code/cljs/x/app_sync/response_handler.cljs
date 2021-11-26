@@ -163,7 +163,7 @@
       (let [filename (r request-handler/get-request-prop db request-id :filename)
             data-url (mixed/mixed->data-url server-response-body)]
           ;[:tools/save-file! ...]
-           [:x.app-ui/blow-bubble! {:color :warning :content :service-not-available}])))
+           [:ui/blow-bubble! {:color :warning :content :service-not-available}])))
 
 (a/reg-event-fx
   :sync/handle-request-response!

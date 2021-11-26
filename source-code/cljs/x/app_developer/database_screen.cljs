@@ -21,4 +21,4 @@
   []
   [components/subscriber ::view
                          {:component  #'database-screen
-                          :subscriber [:x.app-db/get-db]}])
+                          :subscriber [:db/get-db]}])

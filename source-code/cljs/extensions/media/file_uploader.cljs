@@ -323,7 +323,7 @@
   [popup-id _]
   [elements/button ::cancel-button
                    {:keypress {:key-code 27}
-                    :on-click [:x.app-ui/close-popup! popup-id]
+                    :on-click [:ui/close-popup! popup-id]
                     :preset   :cancel-button}])
 
 (defn- file-uploader-upload-button
@@ -338,13 +338,13 @@
                    {:disabled? (view-props->disable-upload-button? view-props)
                     :keypress  {:key-code 13}
                     :label     :upload!
-                    :on-click  {:dispatch-n [[:x.app-ui/close-popup! popup-id]
-                                             [:x.app-ui/blow-bubble! ::progress-bubble
-                                                                     {:autopop?      false
-                                                                      :color         :muted
-                                                                      :content       #'file-uploader-progress-bubble
-                                                                      :content-props view-props
-                                                                      :user-close?   false}]
+                    :on-click  {:dispatch-n [[:ui/close-popup! popup-id]
+                                             [:ui/blow-bubble! ::progress-bubble
+                                                               {:autopop?      false
+                                                                :color         :muted
+                                                                :content       #'file-uploader-progress-bubble
+                                                                :content-props view-props
+                                                                :user-close?   false}]
                                              [:file-uploader/upload-files!]]}
                     :preset    :primary-button}])
 
@@ -493,14 +493,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r ui/set-element-prop! db :bubbles ::progress-bubble :color :warning)
-       :dispatch [:x.app-ui/pop-bubble! ::progress-bubble {:timeout 5000}]}))
+       :dispatch [:ui/pop-bubble! ::progress-bubble {:timeout 5000}]}))
 
 (a/reg-event-fx
   :file-uploader/->files-uploaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r ui/set-element-prop! db :bubbles ::progress-bubble :color :success)
-       :dispatch [:x.app-ui/pop-bubble! ::progress-bubble {:timeout 5000}]}))
+       :dispatch [:ui/pop-bubble! ::progress-bubble {:timeout 5000}]}))
 
 
 
@@ -530,15 +530,14 @@
   :file-uploader/render-file-previews!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
-      [:x.app-ui/add-popup!
-       ::view
-       {:autopadding? false
-        :content      #'view
-        :layout       :boxed
-        :label-bar    {:content    #'file-uploader-label-bar
-                       :subscriber [:file-uploader/get-label-bar-view-props uploader-id]}
-        :min-width    :xxs
-        :subscriber   [:file-uploader/get-view-props uploader-id]}]))
+      [:ui/add-popup! ::view
+                      {:autopadding? false
+                       :content      #'view
+                       :layout       :boxed
+                       :label-bar    {:content    #'file-uploader-label-bar
+                                      :subscriber [:file-uploader/get-label-bar-view-props uploader-id]}
+                       :min-width    :xxs
+                       :subscriber   [:file-uploader/get-view-props uploader-id]}]))
 
 (a/reg-fx
   :file-uploader/open-file-selector!
