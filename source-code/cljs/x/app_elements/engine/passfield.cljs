@@ -39,7 +39,7 @@
   ;    Default: :show-password!}
   [field-id toggle-props]
   (merge {:icon     :visibility
-          :on-click [:x.app-elements/toggle-passphrase-visibility! field-id]
+          :on-click [:elements/toggle-passphrase-visibility! field-id]
           :tooltip  :show-password!}
          (param toggle-props)))
 
@@ -116,4 +116,4 @@
        (r element/set-element-prop! db field-id :passphrase-visible?
           (not passphrase-visible?))))
 
-(a/reg-event-db :x.app-elements/toggle-passphrase-visibility! toggle-passphrase-visibility!)
+(a/reg-event-db :elements/toggle-passphrase-visibility! toggle-passphrase-visibility!)

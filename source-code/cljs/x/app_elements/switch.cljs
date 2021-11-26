@@ -149,5 +149,5 @@
         [engine/stated-element switch-id
           {:component     #'switch
            :element-props switch-props
-           :initializer   [:x.app-elements/init-input! switch-id]
-           :subscriber    [::get-view-props            switch-id]}])))
+           :initializer   [:elements/init-input! switch-id]
+           :subscriber    [::get-view-props      switch-id]}])))

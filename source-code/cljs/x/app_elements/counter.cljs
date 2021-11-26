@@ -189,5 +189,5 @@
         [engine/stated-element counter-id
           {:component     #'counter
            :element-props counter-props
-           :initializer   [:x.app-elements/init-input! counter-id]
-           :subscriber    [::get-view-props            counter-id]}])))
+           :initializer   [:elements/init-input! counter-id]
+           :subscriber    [::get-view-props      counter-id]}])))

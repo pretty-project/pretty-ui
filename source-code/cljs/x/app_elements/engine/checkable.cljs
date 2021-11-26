@@ -35,7 +35,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:x.app-elements/->input-checked input-id]))
+  #(a/dispatch [:elements/->input-checked input-id]))
 
 (defn on-uncheck-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:x.app-elements/->input-unchecked input-id]))
+  #(a/dispatch [:elements/->input-unchecked input-id]))
 
 (defn checkable-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,7 +134,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/->input-checked
+  :elements/->input-checked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -146,7 +146,7 @@
             :dispatch on-check-event})))
 
 (a/reg-event-fx
-  :x.app-elements/->input-unchecked
+  :elements/->input-unchecked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

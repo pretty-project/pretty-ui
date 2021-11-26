@@ -38,7 +38,7 @@
   ;
   ; @return (function)
   [input-id option]
-  #(a/dispatch [:x.app-elements/select-option! input-id option]))
+  #(a/dispatch [:elements/select-option! input-id option]))
 
 (defn on-unselect-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +47,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:x.app-elements/unselect-option! input-id]))
+  #(a/dispatch [:elements/unselect-option! input-id]))
 
 (defn selectable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -147,7 +147,7 @@
   (let [option-stack (r get-option-stack db input-id)]
        (vector/contains-item? option-stack option)))
 
-(a/reg-sub :x.app-elements/option-stacked? option-stacked?)
+(a/reg-sub :elements/option-stacked? option-stacked?)
 
 (defn option-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,7 +160,7 @@
   (let [input-value (r input/get-input-value db input-id)]
        (= input-value option)))
 
-(a/reg-sub :x.app-elements/option-selected? option-selected?)
+(a/reg-sub :elements/option-selected? option-selected?)
 
 (defn selectable-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -227,7 +227,7 @@
   (-> db (input/init-input!               [event-id input-id])
          (use-selectable-initial-options! [event-id input-id])))
 
-(a/reg-event-db :x.app-elements/init-selectable! init-selectable!)
+(a/reg-event-db :elements/init-selectable! init-selectable!)
 
 (defn- add-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -240,7 +240,7 @@
   (let [options-path (r element/get-element-prop db input-id :options-path)]
        (update-in db options-path vector/conj-item-once option)))
 
-(a/reg-event-db :x.app-elements/add-option! add-option!)
+(a/reg-event-db :elements/add-option! add-option!)
 
 (defn select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -265,7 +265,7 @@
        (-> db (db/remove-item!              [event-id value-path])
               (input/mark-input-as-visited! [event-id input-id]))))
 
-(a/reg-event-db :x.app-elements/unselect-option! unselect-option!)
+(a/reg-event-db :elements/unselect-option! unselect-option!)
 
 (defn toggle-select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -279,7 +279,7 @@
       (r unselect-option! db input-id)
       (r select-option!   db input-id option)))
 
-(a/reg-event-db :x.app-elements/toggle-select-option! toggle-select-option!)
+(a/reg-event-db :elements/toggle-select-option! toggle-select-option!)
 
 (defn stack-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -293,7 +293,7 @@
        (-> db (db/apply!                    [event-id value-path vector/conj-item-once option])
               (input/mark-input-as-visited! [event-id input-id]))))
 
-(a/reg-event-db :x.app-elements/stack-option! stack-option!)
+(a/reg-event-db :elements/stack-option! stack-option!)
 
 (defn unstack-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -307,7 +307,7 @@
        (-> db (db/apply!                    [event-id value-path vector/remove-item option])
               (input/mark-input-as-visited! [event-id input-id]))))
 
-(a/reg-event-db :x.app-elements/unstack-option! unstack-option!)
+(a/reg-event-db :elements/unstack-option! unstack-option!)
 
 (defn toggle-stack-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -321,7 +321,7 @@
       (r unstack-option! db input-id option)
       (r stack-option!   db input-id option)))
 
-(a/reg-event-db :x.app-elements/toggle-stack-option! toggle-stack-option!)
+(a/reg-event-db :elements/toggle-stack-option! toggle-stack-option!)
 
 
 
@@ -329,7 +329,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/select-option!
+  :elements/select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

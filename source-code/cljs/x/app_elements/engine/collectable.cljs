@@ -37,7 +37,7 @@
   ;
   ; @return (function)
   [input-id option-id]
-  #(a/dispatch-n [[:x.app-elements/->option-collected input-id option-id]]))
+  #(a/dispatch-n [[:elements/->option-collected input-id option-id]]))
 
 (defn on-uncollect-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +47,7 @@
   ;
   ; @return (function)
   [input-id option-id]
-  #(a/dispatch [:x.app-elements/->option-uncollected input-id option-id]))
+  #(a/dispatch [:elements/->option-uncollected input-id option-id]))
 
 (defn collectable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -132,7 +132,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/->option-collected
+  :elements/->option-collected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -145,7 +145,7 @@
             :dispatch on-collect-event})))
 
 (a/reg-event-fx
-  :x.app-elements/->option-uncollected
+  :elements/->option-uncollected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

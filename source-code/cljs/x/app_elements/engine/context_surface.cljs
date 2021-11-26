@@ -33,7 +33,7 @@
             closest (.closest target DROPDOWN-CLASS)]
           ; Ha nem egy context-surface elemen történt a kattintás ...
           (if-not (some? closest)
-                  (a/dispatch [:x.app-elements/close-all-context-surface!]))))
+                  (a/dispatch [:elements/close-all-context-surface!]))))
 
 
 
@@ -41,15 +41,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/render-context-surface!
+  :elements/render-context-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   (fn [{:keys [db]} [event-id element-id]]
-      (let [partition-id :x.app-elements.engine.element/elements]
+      (let [partition-id :elements.engine.element/elements]
            {:dispatch-n [[:environment/add-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
                          [:environment/add-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]
-                         [:x.app-elements/set-element-prop! element-id :render-context-surface? true]]
+                         [:elements/set-element-prop! element-id :render-context-surface? true]]
 
             ; DEBUG
             ;  Ha egy elemen ki van renderelve az elem context-surface tartalma,
@@ -62,28 +62,28 @@
             :db (r db/apply-data-items! db partition-id dissoc :render-context-surface?)})))
 
 (a/reg-event-fx
-  :x.app-elements/close-context-surface!
+  :elements/close-context-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
-      (let [partition-id :x.app-elements.engine.element/elements]
+      (let [partition-id :elements.engine.element/elements]
            {:dispatch-n [[:environment/remove-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
                          [:environment/remove-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
             :db (r element/set-element-prop! db element-id :render-context-surface? false)})))
 
 (a/reg-event-fx
-  :x.app-elements/close-all-context-surface!
+  :elements/close-all-context-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Mivel ha egy event-listener paraméterezhető függvényként kerül átadásra
   ; az [:environment/add-event-listener!] eseménynek, akkor nem eltávolítható.
   ; Emiatt szükséges paraméterezés nélkül átadni a listener
-  ; függvényt és a [:x.app-elements/close-context-surface! element-id]
-  ; esemény helyett a [:x.app-elements/close-all-context-surface!]
+  ; függvényt és a [:elements/close-context-surface! element-id]
+  ; esemény helyett a [:elements/close-all-context-surface!]
   ; eseményt használni.
   (fn [{:keys [db]} _]
-      (let [partition-id :x.app-elements.engine.element/elements]
+      (let [partition-id :elements.engine.element/elements]
            {:dispatch-n [[:environment/remove-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
                          [:environment/remove-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
             :db (r db/apply-data-items! db partition-id dissoc :render-context-surface?)})))

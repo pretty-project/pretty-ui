@@ -43,7 +43,7 @@
 (defn- set-language-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selected-language]
-  [:x.app-user/set-user-settings-item! :selected-language selected-language])
+  [:user/set-user-settings-item! :selected-language selected-language])
 
 
 
@@ -127,7 +127,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::logout-button
-                   {:on-click [:x.app-user/logout!]
+                   {:on-click [:user/logout!]
                     :preset   :logout-button}])
 
 (defn- main

@@ -66,9 +66,9 @@
   ; @return (metamorphic-event)
   [directory-id {:keys [multiple-selection? selectable?]}]
   (cond (and multiple-selection? selectable?)
-        [:x.app-elements/toggle-stack-option!  directory-id directory-id]
+        [:elements/toggle-stack-option!  directory-id directory-id]
         (boolean selectable?)
-        [:x.app-elements/toggle-select-option! directory-id directory-id]))
+        [:elements/toggle-select-option! directory-id directory-id]))
 
 (defn- view-props->directory-selection-subscriber
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,8 +79,8 @@
   ;
   ; @return (metamorphic-event)
   [directory-id {:keys [multiple-selection?]}]
-  (if multiple-selection? [:x.app-elements/option-stacked?  directory-id directory-id]
-                          [:x.app-elements/option-selected? directory-id directory-id]))
+  (if multiple-selection? [:elements/option-stacked?  directory-id directory-id]
+                          [:elements/option-selected? directory-id directory-id]))
 
 
 
@@ -286,7 +286,7 @@
   ;    {:context-surface {:content       #'my-context-surface
   ;                       :content-props directory-props}
   ;     :label           "My directory"
-  ;     :on-right-click  [:x.app-elements/render-context-surface! :my-directory]}]
+  ;     :on-right-click  [:elements/render-context-surface! :my-directory]}]
   ;
   ; @return (component)
   ([directory-props]

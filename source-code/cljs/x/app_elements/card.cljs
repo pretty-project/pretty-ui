@@ -96,12 +96,12 @@
       [:button.x-card--header--expand-button
         (if (nonfalse? expanded?)
             [:i.x-card--header--expand-button-icon
-              {:on-click   #(a/dispatch [:x.app-elements/compress-element! card-id])
-               :on-mouse-up (engine/blur-element-function card-id)}
+              {:on-click   #(a/dispatch [:elements/compress-element! card-id])
+               :on-mouse-up (engine/blur-element-function            card-id)}
               (keyword/to-dom-value :expand_less)]
             [:i.x-card--header--expand-button-icon
-              {:on-click   #(a/dispatch [:x.app-elements/expand-element!   card-id])
-               :on-mouse-up (engine/blur-element-function card-id)}
+              {:on-click   #(a/dispatch [:elements/expand-element!   card-id])
+               :on-mouse-up (engine/blur-element-function            card-id)}
               (keyword/to-dom-value :expand_more)])]))
 
 (defn- card-header

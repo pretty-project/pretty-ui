@@ -421,7 +421,7 @@
   ; @return (component)
   [popup-id view-props {:keys [filename filesize file-object-url] :as file-props} file-dex]
   (let [element-id           (engine/file-dex->element-id file-dex :file-uploader)
-        on-right-click-event [:x.app-elements/render-context-surface! element-id]]
+        on-right-click-event [:elements/render-context-surface! element-id]]
        [elements/file element-id
                       {:label          filename
                        :filesize       filesize

@@ -36,7 +36,7 @@
   ;
   ; @return (function)
   [element-id]
-  #(a/dispatch [:x.app-elements/->element-deleted element-id]))
+  #(a/dispatch [:elements/->element-deleted element-id]))
 ; WARNING! DEPRECATED! DO NOT USE!
 
 (defn deletable-body-attributes
@@ -67,7 +67,7 @@
 ; Minél kevesebb element használjon feliratkozást! Ahol nem feltétlenül szükséges
 ; ott ne Re-Frame esemény kezelje az interakciókat!
 (a/reg-event-fx
-  :x.app-elements/->element-deleted
+  :elements/->element-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

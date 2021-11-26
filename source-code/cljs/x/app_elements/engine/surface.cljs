@@ -80,7 +80,7 @@
              (element/remove-element-prop! [event-id element-id :surface-props]))
       (return db)))
 
-(a/reg-event-db :x.app-elements/hide-surface! hide-surface!)
+(a/reg-event-db :elements/hide-surface! hide-surface!)
 
 (defn show-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,4 +91,4 @@
   [db [_ element-id]]
   (r element/set-element-prop! db element-id :surface-visible? true))
 
-(a/reg-event-db :x.app-elements/show-surface! show-surface!)
+(a/reg-event-db :elements/show-surface! show-surface!)

@@ -16,5 +16,5 @@
   [_ _]
   [:div#x-website-footer--scroll-to-top
     [:button#x-website-footer--scroll-to-top-icon
-      {:on-click #(a/dispatch [:x.app-environment.scroll-handler/scroll-to-top!])}
+      {:on-click #(a/dispatch [:environment/scroll-to-top!])}
       (keyword/to-dom-value :expand_less)]])

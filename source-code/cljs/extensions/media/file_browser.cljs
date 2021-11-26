@@ -191,7 +191,7 @@
   (if-not (subdirectory-disabled? component-id view-props subdirectory-id subdirectory-props)
           (let [element-id (engine/item-id->element-id subdirectory-id :file-browser)]
                [{:icon     :more_vert
-                 :on-click [:x.app-elements/render-context-surface! element-id]
+                 :on-click [:elements/render-context-surface! element-id]
                  :tooltip  :more-options}])))
 
 (defn- file-browser-file-stickers
@@ -206,7 +206,7 @@
   [_ _ file-id _]
   (let [element-id (engine/item-id->element-id file-id :file-browser)]
        [{:icon     :more_vert
-         :on-click [:x.app-elements/render-context-surface! element-id]
+         :on-click [:elements/render-context-surface! element-id]
          :tooltip  :more-options}]))
 
 
@@ -472,14 +472,13 @@
 (a/reg-event-fx
   :file-browser/render-order-by-select!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-elements/render-select-options!
-    ::order-by-select-options
-    {:default-value DEFAULT-ORDER-BY
-     :options-label :order-by
-     :options [{:label :by-date :value :by-date}
-               {:label :by-name :value :by-name}
-               {:label :by-size :value :by-size}]
-     :value-path (settings-item-path :order-by)}])
+  [:elements/render-select-options! ::order-by-select-options
+                                    {:default-value DEFAULT-ORDER-BY
+                                     :options-label :order-by
+                                     :options [{:label :by-date :value :by-date}
+                                               {:label :by-name :value :by-name}
+                                               {:label :by-size :value :by-size}]
+                                     :value-path (settings-item-path :order-by)}])
 
 (a/reg-event-fx
   :file-browser/download-directory-data!
@@ -498,7 +497,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db         (r discard-selected-files! db)
-       :dispatch-n [[:x.app-elements/empty-field!           ::filter-items-field]
+       :dispatch-n [[:elements/empty-field! ::filter-items-field]
                     [:file-browser/download-directory-data! engine/ROOT-DIRECTORY-ID]]}))
 
 (a/reg-event-fx
@@ -508,7 +507,7 @@
       (let [namespace           (a/get-namespace ::this)
             parent-directory-id (r engine/get-parent-directory-id db namespace)]
            {:db         (r discard-selected-files! db)
-            :dispatch-n [[:x.app-elements/empty-field!           ::filter-items-field]
+            :dispatch-n [[:elements/empty-field! ::filter-items-field]
                          [:file-browser/download-directory-data! parent-directory-id]]})))
 
 (a/reg-event-fx
@@ -518,7 +517,7 @@
   ; @param (keyword) directory-id
   (fn [{:keys [db]} [_ directory-id]]
       {:db         (r discard-selected-files! db)
-       :dispatch-n [[:x.app-elements/empty-field!           ::filter-items-field]
+       :dispatch-n [[:elements/empty-field! ::filter-items-field]
                     [:file-browser/download-directory-data! directory-id]]}))
 
 
@@ -701,8 +700,8 @@
   (let [element-id           (engine/item-id->element-id subdirectory-id :file-browser)
         stickers             (file-browser-subdirectory-stickers component-id view-props subdirectory-id subdirectory-props)
         disabled?            (subdirectory-disabled?             component-id view-props subdirectory-id subdirectory-props)
-        on-click-event       [:file-browser/go-to! subdirectory-id]
-        on-right-click-event [:x.app-elements/render-context-surface! element-id]]
+        on-click-event       [:file-browser/go-to!              subdirectory-id]
+        on-right-click-event [:elements/render-context-surface! element-id]]
        [elements/directory element-id
                            {:content-size    content-size
                             :disabled?       disabled?
@@ -767,7 +766,7 @@
   (let [element-id           (engine/item-id->element-id file-id :file-browser)
         stickers             (file-browser-file-stickers component-id view-props file-id file-props)
         timestamp            (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)
-        on-right-click-event [:x.app-elements/render-context-surface! element-id]
+        on-right-click-event [:elements/render-context-surface! element-id]
         thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
        [elements/file element-id
                       {:filesize       filesize

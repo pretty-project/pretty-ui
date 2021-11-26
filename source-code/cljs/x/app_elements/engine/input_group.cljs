@@ -162,7 +162,7 @@
            (-> db (conj-initial-value!       [event-id group-id context-props])
                   (element/set-element-prop! [event-id group-id :input-count-increased? true])))))
 
-(a/reg-event-db :x.app-elements/increase-input-count! increase-input-count!)
+(a/reg-event-db :elements/increase-input-count! increase-input-count!)
 
 (defn decrease-input-count!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -183,7 +183,7 @@
         updated-group-value (vector/remove-nth-item group-value input-dex)]
        (assoc-in db group-value-path updated-group-value)))
 
-(a/reg-event-db :x.app-elements/decrease-input-count! decrease-input-count!)
+(a/reg-event-db :elements/decrease-input-count! decrease-input-count!)
 
 (defn stack-to-group-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -209,7 +209,7 @@
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (update-in db group-value-path vector/conj-item-once value)))
 
-(a/reg-event-db :x.app-elements/stack-to-group-value! stack-to-group-value!)
+(a/reg-event-db :elements/stack-to-group-value! stack-to-group-value!)
 
 (defn unstack-from-group-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -229,4 +229,4 @@
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (update-in db group-value-path vector/remove-nth-item value-dex)))
 
-(a/reg-event-db :x.app-elements/unstack-from-group-value! unstack-from-group-value!)
+(a/reg-event-db :elements/unstack-from-group-value! unstack-from-group-value!)

@@ -103,9 +103,9 @@
   ; @return (metamorphic-event)
   [file-id {:keys [multiple-selection? selectable?]}]
   (cond (and multiple-selection? selectable?)
-        [:x.app-elements/toggle-stack-option!  file-id file-id]
+        [:elements/toggle-stack-option!  file-id file-id]
         (boolean selectable?)
-        [:x.app-elements/toggle-select-option! file-id file-id]))
+        [:elements/toggle-select-option! file-id file-id]))
 
 (defn- view-props->file-selection-subscriber
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,8 +116,8 @@
   ;
   ; @return (metamorphic-event)
   [file-id {:keys [multiple-selection?]}]
-  (if multiple-selection? [:x.app-elements/option-stacked?  file-id file-id]
-                          [:x.app-elements/option-selected? file-id file-id]))
+  (if multiple-selection? [:elements/option-stacked?  file-id file-id]
+                          [:elements/option-selected? file-id file-id]))
 
 
 
@@ -352,7 +352,7 @@
   ;    {:context-surface {:content       #'my-context-surface
   ;                       :content-props file-props}
   ;     :label           "My file"
-  ;     :on-right-click  [:x.app-elements/render-context-surface! :my-file]}]
+  ;     :on-right-click  [:elements/render-context-surface! :my-file]}]
   ;
   ; @return (component)
   ([file-props]

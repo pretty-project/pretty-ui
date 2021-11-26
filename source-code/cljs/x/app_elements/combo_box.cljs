@@ -44,7 +44,7 @@
 (def DEFAULT-NO-OPTIONS-LABEL :no-options)
 
 ; @constant (event-vector)
-(def DEFAULT-SELECT-OPTION-EVENT [:x.app-elements/select-option!])
+(def DEFAULT-SELECT-OPTION-EVENT [:elements/select-option!])
 
 
 
@@ -61,10 +61,10 @@
   ;
   ; @example
   ;  (view-props->select-option-event :my-field
-  ;                                   {:select-option-event [:x.app-elements/select-option!]}
+  ;                                   {:select-option-event [:elements/select-option!]}
   ;                                   {:label "My option"})
   ;  =>
-  ;  [:x.app-elements/select-option! :my-field {:label "My option"}]
+  ;  [:elements/select-option! :my-field {:label "My option"}]
   ;
   ; @return (event-vector)
   [field-id {:keys [select-option-event]} option]
@@ -94,7 +94,7 @@
           :get-value-f         return
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
-          :on-extend           [:x.app-elements/add-option!]
+          :on-extend           [:elements/add-option!]
           :options-path        (engine/default-options-path field-id)
           ; A combo-box elem használatakor nem elérhető az {:on-blur ...}
           ; és {:on-focus ...} tulajdonság, mivel a combo-box elem saját
@@ -102,10 +102,10 @@
           ; a két tulajdonság használhatóvá tétele.
           ; Az {:on-blur ...} és {:on-focus ...} tulajdonságokat
           ; a multi-combo-box elem a combo-box elem integrálásakor felülírja.
-          :on-blur  [:x.app-elements/remove-combo-box-controllers! field-id]
-          :on-focus [:x.app-elements/reg-combo-box-controllers!    field-id]}
+          :on-blur  [:elements/remove-combo-box-controllers! field-id]
+          :on-focus [:elements/reg-combo-box-controllers!    field-id]}
          (param field-props)
-         {:on-change  [:x.app-elements/->combo-box-changed         field-id]}))
+         {:on-change  [:elements/->combo-box-changed         field-id]}))
 
 (defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,7 +188,7 @@
           ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
           ;  React-fából történő lecsatolását okozná.
          {:on-mouse-down #(do (.preventDefault %))
-          :on-mouse-up   #(do (a/dispatch-n [[:x.app-elements/hide-surface! field-id]
+          :on-mouse-up   #(do (a/dispatch-n [[:elements/hide-surface! field-id]
                                              (param select-option-event)]))
           :data-selected    (param selected?)
           :data-highlighted (param highlighted?)}
@@ -226,7 +226,7 @@
   [:div.x-combo-box--no-options-label
     ; BUG#2105
     {:on-mouse-down #(.preventDefault %)
-     :on-mouse-up   #(a/dispatch [:x.app-elements/hide-surface! field-id])}
+     :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
     [components/content {:content no-options-label}]])
 
 (defn- combo-box-extender
@@ -322,7 +322,7 @@
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
   ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:x.app-elements/add-option! field-id value]
+  ;    Default: [:elements/add-option! field-id value]
   ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}
@@ -378,5 +378,5 @@
           {:component     #'text-field/text-field
            :element-props field-props
            :modifier      text-field/view-props-modifier
-           :initializer   [:x.app-elements/init-selectable! field-id]
-           :subscriber    [::get-view-props                 field-id]}])))
+           :initializer   [:elements/init-selectable! field-id]
+           :subscriber    [::get-view-props           field-id]}])))

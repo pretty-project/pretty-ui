@@ -59,7 +59,7 @@
   ;
   ; @param (keyword) component-id
   (fn [_ [_ component-id]]
-      [:x.app-environment.position-handler/add-position-listener! component-id]))
+      [:environment/add-element-position-listener! component-id]))
 
 
 

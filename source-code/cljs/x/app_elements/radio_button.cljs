@@ -206,5 +206,5 @@
         [engine/stated-element button-id
           {:component     #'radio-button
            :element-props button-props
-           :initializer   [:x.app-elements/init-selectable! button-id]
-           :subscriber    [::get-view-props                 button-id]}])))
+           :initializer   [:elements/init-selectable! button-id]
+           :subscriber    [::get-view-props           button-id]}])))

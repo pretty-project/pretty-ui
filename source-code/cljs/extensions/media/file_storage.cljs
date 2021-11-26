@@ -89,7 +89,7 @@
          :on-click [:file-storage/render-delete-rendered-subdirectory-dialog! subdirectory-id]
          :tooltip  :delete-directory!}
         {:icon     :more_vert
-         :on-click [:x.app-elements/render-context-surface! element-id]
+         :on-click [:elements/render-context-surface! element-id]
          :tooltip  :more-options}]))
 
 (defn- file-storage-file-stickers
@@ -110,7 +110,7 @@
          :on-click [:file-storage/render-delete-rendered-file-dialog! file-id]
          :tooltip  :delete-file!}
         {:icon     :more_vert
-         :on-click [:x.app-elements/render-context-surface! element-id]
+         :on-click [:elements/render-context-surface! element-id]
          :tooltip  :more-options}]))
 
 (defn- path-param->file-storage-uri
@@ -302,7 +302,7 @@
 (a/reg-event-fx
   :file-storage/go-home!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
+  {:dispatch-n [[:elements/empty-field! ::filter-items-field]
                 [:router/go-to! "/media"]]})
 
 (a/reg-event-fx
@@ -312,7 +312,7 @@
       (let [namespace           (a/get-namespace ::this)
             parent-directory-id (r engine/get-parent-directory-id db namespace)
             file-storage-uri    (directory-id->file-storage-uri parent-directory-id)]
-           {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
+           {:dispatch-n [[:elements/empty-field! ::filter-items-field]
                          [:router/go-to! file-storage-uri]]})))
 
 (a/reg-event-fx
@@ -322,20 +322,19 @@
   ; @param (keyword) subdirectory-id
   (fn [_ [_ subdirectory-id]]
       (let [file-storage-uri (directory-id->file-storage-uri subdirectory-id)]
-           {:dispatch-n [[:x.app-elements/empty-field! ::filter-items-field]
+           {:dispatch-n [[:elements/empty-field! ::filter-items-field]
                          [:router/go-to! file-storage-uri]]})))
 
 (a/reg-event-fx
   :file-storage/render-order-by-select!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-elements/render-select-options!
-    ::order-by-select-options
-    {:default-value DEFAULT-ORDER-BY
-     :options-label :order-by
-     :options [{:label :by-date :value :by-date}
-               {:label :by-name :value :by-name}
-               {:label :by-size :value :by-size}]
-     :value-path (settings-item-path :order-by)}])
+  [:elements/render-select-options! ::order-by-select-options
+                                    {:default-value DEFAULT-ORDER-BY
+                                     :options-label :order-by
+                                     :options [{:label :by-date :value :by-date}
+                                               {:label :by-name :value :by-name}
+                                               {:label :by-size :value :by-size}]
+                                     :value-path (settings-item-path :order-by)}])
 
 (a/reg-event-fx
   :file-storage/set-title!
@@ -664,7 +663,7 @@
   (let [element-id           (engine/item-id->element-id subdirectory-id :file-storage)
         stickers             (file-storage-subdirectory-stickers component-id view-props subdirectory-id subdirectory-props)
         on-click-event       [:file-storage/go-to! subdirectory-id]
-        on-right-click-event [:x.app-elements/render-context-surface! element-id]]
+        on-right-click-event [:elements/render-context-surface! element-id]]
        [elements/directory element-id
                            {:content-size   content-size
                             :item-count     item-count
@@ -726,7 +725,7 @@
   (let [element-id           (engine/item-id->element-id file-id :file-storage)
         stickers             (file-storage-file-stickers component-id view-props file-id file-props)
         timestamp            (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)
-        on-right-click-event [:x.app-elements/render-context-surface! element-id]
+        on-right-click-event [:elements/render-context-surface! element-id]
         thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
        [elements/file element-id
                       {:filesize       filesize

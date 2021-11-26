@@ -130,5 +130,5 @@
         [engine/stated-element field-id
          {:component     #'text-field
           :element-props field-props
-          :initializer   [:x.app-elements/init-field! field-id]
-          :subscriber    [::get-view-props            field-id]}])))
+          :initializer   [:elements/init-field! field-id]
+          :subscriber    [::get-view-props      field-id]}])))

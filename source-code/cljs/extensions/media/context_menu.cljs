@@ -49,7 +49,7 @@
   ; @return (component)
   [element-id {:keys [on-click] :as button-props}]
   ; A context-menu felületeken megjelenő gombokra kattintva a context-menu felület bezáródik.
-  (let [on-click {:dispatch-n [on-click [:x.app-elements/close-context-surface! element-id]]}]
+  (let [on-click {:dispatch-n [on-click [:elements/close-context-surface! element-id]]}]
        [elements/button (merge {:horizontal-align :left
                                 :layout           :fit
                                 :preset           :default-button}

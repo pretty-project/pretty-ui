@@ -92,7 +92,7 @@
   (merge {}
          (param view-props)
          {:chips     (view-props->chips view-props)
-          :on-delete [:x.app-elements/unstack-from-group-value! group-id]
+          :on-delete [:elements/unstack-from-group-value! group-id]
           ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
           ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
           ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
@@ -140,9 +140,9 @@
   (let [field-id (group-id->field-id group-id)]
        (merge {}
               (map/inherit group-props INHERITED-FIELD-PROPS)
-              {:on-focus            [:x.app-elements/reg-multi-combo-box-controllers! field-id]
+              {:on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
                :group-id            group-id
-               :select-option-event [:x.app-elements/stack-to-group-value! group-id]})))
+               :select-option-event [:elements/stack-to-group-value! group-id]})))
 
 
 
@@ -265,7 +265,7 @@
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
   ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:x.app-elements/add-option! field-id value]
+  ;    Default: [:elements/add-option! field-id value]
   ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}
@@ -296,5 +296,5 @@
         [engine/stated-element group-id
           {:component     #'multi-combo-box
            :element-props group-props
-           :initializer   [:x.app-elements/init-selectable! group-id]
-           :subscriber    [::get-view-props group-id]}])))
+           :initializer   [:elements/init-selectable! group-id]
+           :subscriber    [::get-view-props           group-id]}])))

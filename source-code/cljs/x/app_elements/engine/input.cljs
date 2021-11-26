@@ -35,7 +35,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:x.app-elements/reset-input! input-id]))
+  #(a/dispatch [:elements/reset-input! input-id]))
 
 (defn default-options-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -171,7 +171,7 @@
            (return default-value)
            (return stored-value))))
 
-(a/reg-sub :x.app-elements/get-input-value get-input-value)
+(a/reg-sub :elements/get-input-value get-input-value)
 
 (defn input-empty?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -379,7 +379,7 @@
   [db [_ input-id]]
   (r element/set-element-prop! db input-id :visited? true))
 
-(a/reg-event-db :x.app-elements/mark-input-as-visited! mark-input-as-visited!)
+(a/reg-event-db :elements/mark-input-as-visited! mark-input-as-visited!)
 
 (defn reg-form-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -404,7 +404,7 @@
          (store-input-backup-value! [event-id input-id])
          (reg-form-input!           [event-id input-id])))
 
-(a/reg-event-db :x.app-elements/init-input! init-input!)
+(a/reg-event-db :elements/init-input! init-input!)
 
 (defn reset-input-value!
   ; @param (keyword) input-id
@@ -420,7 +420,7 @@
 
 ; @usage
 ;  [:elements/reset-input-value! :my-input]
-(a/reg-event-db :x.app-elements/reset-input-value! reset-input-value!)
+(a/reg-event-db :elements/reset-input-value! reset-input-value!)
 
 (defn clear-input-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -454,7 +454,7 @@
       (r clear-input-value! db input-id)
       (return               db)))
 
-(a/reg-event-db :x.app-elements/autoclear-input?! autoclear-input?!)
+(a/reg-event-db :elements/autoclear-input?! autoclear-input?!)
 
 
 
@@ -462,7 +462,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/reset-input!
+  :elements/reset-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -472,7 +472,7 @@
             :dispatch on-reset-event})))
 
 (a/reg-event-fx
-  :x.app-elements/reg-change-listener?!
+  :elements/reg-change-listener?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -484,7 +484,7 @@
           ;    {:db (r db/reg-change-listener! value-path)})
 
 (a/reg-event-fx
-  :x.app-elements/resolve-change-listener?!
+  :elements/resolve-change-listener?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

@@ -34,7 +34,7 @@
   ;
   ; @return (function)
   [element-id]
-  #(a/dispatch [:x.app-elements/->element-clicked element-id]))
+  #(a/dispatch [:elements/->element-clicked element-id]))
 
 (defn clickable-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -90,7 +90,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/init-clickable!
+  :elements/init-clickable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -98,12 +98,12 @@
       (if-let [keypress (r element/get-element-prop db element-id :keypress)]
               [:environment/reg-keypress-event! element-id
                                                 {:key-code   (:key-code keypress)
-                                                 :on-keydown [:x.app-elements/->key-pressed  element-id]
-                                                 :on-keyup   [:x.app-elements/->key-released element-id]
+                                                 :on-keydown [:elements/->key-pressed  element-id]
+                                                 :on-keyup   [:elements/->key-released element-id]
                                                  :required?  (:required? keypress)}])))
 
 (a/reg-event-fx
-  :x.app-elements/destruct-clickable!
+  :elements/destruct-clickable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -118,7 +118,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/->element-clicked
+  :elements/->element-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -127,20 +127,20 @@
               {:dispatch on-click-event})))
 
 (a/reg-event-fx
-  :x.app-elements/->key-pressed
+  :elements/->key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   (fn [_ [_ element-id]]
       {:dispatch-if [(targetable/element-id->target-enabled? element-id)
-                     [:x.app-elements/focus-element! element-id]]}))
+                     [:elements/focus-element!               element-id]]}))
 
 (a/reg-event-fx
-  :x.app-elements/->key-released
+  :elements/->key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   (fn [_ [_ element-id]]
-      {:dispatch    [:x.app-elements/blur-element! element-id]
+      {:dispatch    [:elements/blur-element!                 element-id]
        :dispatch-if [(targetable/element-id->target-enabled? element-id)
-                     [:x.app-elements/->element-clicked      element-id]]}))
+                     [:elements/->element-clicked            element-id]]}))

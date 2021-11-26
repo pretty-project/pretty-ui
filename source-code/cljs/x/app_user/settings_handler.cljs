@@ -50,4 +50,4 @@
   (assoc-in db (db/path ::settings item-id)
                (param item)))
 
-(a/reg-event-db :x.app-user/set-user-settings-item! set-user-settings-item!)
+(a/reg-event-db :user/set-user-settings-item! set-user-settings-item!)

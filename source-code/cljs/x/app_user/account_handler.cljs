@@ -117,7 +117,7 @@
   (assoc-in db (db/path ::account :last-login-attempt)
                (time/elapsed)))
 
-(a/reg-event-db :x.app-user/reg-last-login-attempt! reg-last-login-attempt!)
+(a/reg-event-db :user/reg-last-login-attempt! reg-last-login-attempt!)
 
 (defn- clear-last-login-attempt!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,7 +126,7 @@
   [db _]
   (dissoc-in db (db/path ::account :last-login-attempt)))
 
-(a/reg-event-db :x.app-user/clear-last-login-attempt! clear-last-login-attempt!)
+(a/reg-event-db :user/clear-last-login-attempt! clear-last-login-attempt!)
 
 
 
@@ -134,7 +134,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-user/authenticate!
+  :user/authenticate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; A) Sikeres bejelentkezés
@@ -149,19 +149,19 @@
   ;    egy hibaüzenet jelenik meg a bejelentkező felületen.
   ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
-  [:sync/send-request! :x.app-user/authenticate!
+  [:sync/send-request! :user/authenticate!
                        {:method       :post
                         :on-success   [:boot-loader/restart-app!]
-                        :on-failure   [:x.app-user/reg-last-login-attempt!]
+                        :on-failure   [:user/reg-last-login-attempt!]
                         :silent-mode? true
-                        :source-path  (db/meta-item-path :x.app-views.login-box/primary)
+                        :source-path  [:login-box]
                         :uri          "/user/authenticate"
                         :idle-timeout 3000}])
 
 (a/reg-event-fx
-  :x.app-user/logout!
+  :user/logout!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:sync/send-request! :x.app-user/logout!
+  [:sync/send-request! :user/logout!
                        {:method :post :uri "/user/logout"
                         :on-failure [:ui/blow-bubble!          {:content :logout-failed :color :warning}]
                         :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])

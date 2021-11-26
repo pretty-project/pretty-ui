@@ -339,8 +339,8 @@
   (assoc-in db (db/path ::elements element-id prop-id) prop-value))
 
 ; @usage
-;  [:x.app-elements/set-element-prop! :my-element :my-prop "My value"]
-(a/reg-event-db :x.app-elements/set-element-prop! set-element-prop!)
+;  [:elements/set-element-prop! :my-element :my-prop "My value"]
+(a/reg-event-db :elements/set-element-prop! set-element-prop!)
 
 (defn update-element-prop!
   ; @param (keyword) element-id
@@ -371,8 +371,8 @@
        (assoc-in db prop-path prop-value)))
 
 ; @usage
-;  [:x.app-elements/set-element-subprop! :my-element [:my-prop :my-subprop] "My value"]
-(a/reg-event-db :x.app-elements/set-element-subprop! set-element-subprop!)
+;  [:elements/set-element-subprop! :my-element [:my-prop :my-subprop] "My value"]
+(a/reg-event-db :elements/set-element-subprop! set-element-subprop!)
 
 (defn remove-element-prop!
   ; @param (keyword) element-id
@@ -386,8 +386,8 @@
   (dissoc-in db (db/path ::elements element-id prop-id)))
 
 ; @usage
-;  [:x.app-elements/remove-element-prop! :my-element :my-prop]
-(a/reg-event-db :x.app-elements/remove-element-prop! remove-element-prop!)
+;  [:elements/remove-element-prop! :my-element :my-prop]
+(a/reg-event-db :elements/remove-element-prop! remove-element-prop!)
 
 (defn remove-element-subprop!
   ; @param (keyword) element-id
@@ -403,5 +403,5 @@
        (dissoc-in db prop-path)))
 
 ; @usage
-;  [:x.app-elements/remove-element-subprop! :my-element [:my-prop :my-subprop]]
-(a/reg-event-db :x.app-elements/remove-element-subprop! remove-element-subprop!)
+;  [:elements/remove-element-subprop! :my-element [:my-prop :my-subprop]]
+(a/reg-event-db :elements/remove-element-subprop! remove-element-subprop!)

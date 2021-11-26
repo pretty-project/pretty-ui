@@ -146,5 +146,5 @@
         [engine/stated-element checkbox-id
           {:component     #'checkbox
            :element-props checkbox-props
-           :initializer   [:x.app-elements/init-input! checkbox-id]
-           :subscriber    [::get-view-props            checkbox-id]}])))
+           :initializer   [:elements/init-input! checkbox-id]
+           :subscriber    [::get-view-props      checkbox-id]}])))

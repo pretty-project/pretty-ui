@@ -160,12 +160,11 @@
   ; @param (map) context-props
   ;  {:namespace (keyword)}
   (fn [_ [_ component-id context-props]]
-      [:x.app-elements/render-select-options!
-        :media/directory-action-select-options
-        {:autoclear?      true
-         :on-popup-closed [:media/->directory-action-selected component-id context-props]
-         :options         [{:label :create-directory!         :value :create-directory}
-                           {:label :upload-files-from-device! :value :upload-files-from-device}]
-         :user-cancel?    true
-         ; XXX#0134
-         :value-path      (db/path ::primary :directory-action)}]))
+      [:elements/render-select-options! :media/directory-action-select-options
+                                        {:autoclear?      true
+                                         :on-popup-closed [:media/->directory-action-selected component-id context-props]
+                                         :options         [{:label :create-directory!         :value :create-directory}
+                                                           {:label :upload-files-from-device! :value :upload-files-from-device}]
+                                         :user-cancel?    true
+                                         ; XXX#0134
+                                         :value-path      (db/path ::primary :directory-action)}]))

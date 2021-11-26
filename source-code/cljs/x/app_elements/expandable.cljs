@@ -96,7 +96,7 @@
   ; @return (hiccup)
   [expandable-id view-props]
   [:button.x-expandable--header
-    {:on-click   #(a/dispatch [:x.app-elements/toggle-element-expansion! expandable-id])
+    {:on-click   #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
      :on-mouse-up (engine/blur-element-function expandable-id)}
     [expandable-icon          expandable-id view-props]
     [expandable-label         expandable-id view-props]

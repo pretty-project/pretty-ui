@@ -32,7 +32,7 @@
 
 ; @description
 ;  A [select-options] komponenst megjelenítő popup UI elemet esemény-alapon is
-;  lehetséges megjeleníteni, az [:x.app-elements/render-select-options! ...]
+;  lehetséges megjeleníteni, az [:elements/render-select-options! ...]
 ;  esemény meghívásával.
 
 
@@ -151,7 +151,7 @@
               ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
               (if-not as-button? {:layout :row})
               (param select-props)
-              {:on-click [:x.app-elements/render-select-options! select-id options-props]})))
+              {:on-click [:elements/render-select-options! select-id options-props]})))
 
 (defn- options-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -415,8 +415,8 @@
         [engine/stated-element select-id
           {:component     #'select
            :element-props select-props
-           :initializer [:x.app-elements/init-selectable! select-id]
-           :subscriber  [::get-view-props                 select-id]}])))
+           :initializer [:elements/init-selectable! select-id]
+           :subscriber  [::get-view-props           select-id]}])))
 
 
 
@@ -424,12 +424,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/render-select-options!
+  :elements/render-select-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; Az [:x.app-elements/render-select-options!] esemény használatával nem lehetséges
+  ; Az [:elements/render-select-options!] esemény használatával nem lehetséges
   ; megfelően inicializálni a select elemet, mert a select-options elem nem használhatja
-  ; az [:x.app-elements/init-selectable!] esemény initializer-ként, ugyanis az opciók minden
+  ; az [:elements/init-selectable!] esemény initializer-ként, ugyanis az opciók minden
   ; kirenderelésekor újrainicializálná az elemet.
   ;
   ; WARNING#0134

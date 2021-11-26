@@ -259,8 +259,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; A combo-box elem option listájában megjelenített értékeket a Re-Frame
-  ; feliratkozásban szükséges szűrni, hogy az [:x.app-elements/highlight-prev-option! ...]
-  ; és [:x.app-elements/highlight-next-option! ...] események is ki tudják olvasni
+  ; feliratkozásban szükséges szűrni, hogy az [:elements/highlight-prev-option! ...]
+  ; és [:elements/highlight-next-option! ...] események is ki tudják olvasni
   ; a Re-Frame adatbázisból, hogy összese hány és melyik értékek kerülnek kirenderelésre.
   ;
   ; @param (keyword) field-id
@@ -376,7 +376,7 @@
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] prev-option-dex))
         :else (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option])))
 
-(a/reg-event-db :x.app-elements/up-combo-box! up-combo-box!)
+(a/reg-event-db :elements/up-combo-box! up-combo-box!)
 
 (defn down-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -395,7 +395,7 @@
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] next-option-dex))
         :else (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option])))
 
-(a/reg-event-db :x.app-elements/down-combo-box! down-combo-box!)
+(a/reg-event-db :elements/down-combo-box! down-combo-box!)
 
 (defn enter-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -411,7 +411,7 @@
       (-> db (discard-option-highlighter!       [event-id field-id])
              (surface/hide-surface!             [event-id field-id]))))
 
-(a/reg-event-db :x.app-elements/enter-combo-box! enter-combo-box!)
+(a/reg-event-db :elements/enter-combo-box! enter-combo-box!)
 
 (defn enter-multi-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -427,7 +427,7 @@
       (-> db (discard-option-highlighter!             [event-id field-id])
              (surface/hide-surface!                   [event-id field-id]))))
 
-(a/reg-event-db :x.app-elements/enter-multi-combo-box! enter-multi-combo-box!)
+(a/reg-event-db :elements/enter-multi-combo-box! enter-multi-combo-box!)
 
 (defn escape-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -440,7 +440,7 @@
           (r discard-option-highlighter! db field-id)
           (r surface/hide-surface!       db field-id)))
 
-(a/reg-event-db :x.app-elements/escape-combo-box! escape-combo-box!)
+(a/reg-event-db :elements/escape-combo-box! escape-combo-box!)
 
 
 
@@ -456,7 +456,7 @@
   [db [_ field-id]]
   (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option]))
 
-(a/reg-event-db :x.app-elements/->combo-box-changed ->combo-box-changed)
+(a/reg-event-db :elements/->combo-box-changed ->combo-box-changed)
 
 
 
@@ -464,41 +464,41 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/reg-combo-box-controllers!
+  :elements/reg-combo-box-controllers!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:x.app-elements/down-combo-box!   field-id]
+                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!   field-id]
                                                        :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:x.app-elements/up-combo-box!     field-id]
+                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!     field-id]
                                                        :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
-                                                      {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
+                                                      {:key-code 27 :on-keydown [:elements/escape-combo-box! field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
-                                                      {:key-code 13 :on-keydown [:x.app-elements/enter-combo-box!  field-id]}]]}))
+                                                      {:key-code 13 :on-keydown [:elements/enter-combo-box!  field-id]}]]}))
 
 (a/reg-event-fx
-  :x.app-elements/reg-multi-combo-box-controllers!
+  :elements/reg-multi-combo-box-controllers!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:x.app-elements/down-combo-box! field-id]
+                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!        field-id]
                                                        :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:x.app-elements/up-combo-box! field-id]
+                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!          field-id]
                                                        :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
-                                                      {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
+                                                      {:key-code 27 :on-keydown [:elements/escape-combo-box!      field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
-                                                      {:key-code 13 :on-keydown [:x.app-elements/enter-multi-combo-box! field-id]}]]}))
+                                                      {:key-code 13 :on-keydown [:elements/enter-multi-combo-box! field-id]}]]}))
 
 (a/reg-event-fx
-  :x.app-elements/remove-combo-box-controllers!
+  :elements/remove-combo-box-controllers!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id

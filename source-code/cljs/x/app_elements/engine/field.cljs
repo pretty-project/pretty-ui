@@ -75,7 +75,7 @@
   ;   :on-click (vector)
   ;   :preset (keyword)}
   [field-id]
-  {:icon :clear :on-click [:x.app-elements/empty-field! field-id]
+  {:icon :clear :on-click [:elements/empty-field! field-id]
    ; XXX#8073
    ; Az adornment a {:preset ...} tulajdonság értékével azonosítható
    :preset  :empty-field-adornment
@@ -96,7 +96,7 @@
   ;   :on-click (vector)
   ;   :preset (keyword)}
   [field-id]
-  {:icon :undo :on-click [:x.app-elements/reset-input! field-id]
+  {:icon :undo :on-click [:elements/reset-input! field-id]
    ; XXX#8073
    :preset  :reset-field-adornment
    :tooltip :reset-field!})
@@ -136,7 +136,7 @@
             (let [on-change (a/metamorphic-event<-params on-change value)]
                  (a/dispatch on-change)))
         (if (some? surface)
-            (a/dispatch [:x.app-elements/show-surface! field-id]))))
+            (a/dispatch [:elements/show-surface! field-id]))))
 
 (defn field-props->start-adornments-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -251,7 +251,7 @@
   ;
   ; @return (function)
   [field-id]
-  #(a/dispatch [:x.app-elements/->field-blurred field-id]))
+  #(a/dispatch [:elements/->field-blurred field-id]))
 
 (defn on-focus-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -260,7 +260,7 @@
   ;
   ; @return (function)
   [field-id]
-  #(a/dispatch [:x.app-elements/->field-focused field-id]))
+  #(a/dispatch [:elements/->field-focused field-id]))
 
 (defn field-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -328,7 +328,7 @@
                (boolean targetable?))
           (merge {:id (targetable/element-id->target-id field-id)})
           (some? surface)
-          (merge {:on-mouse-down #(a/dispatch [:x.app-elements/show-surface! field-id])})))
+          (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
 
 (defn field-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -426,7 +426,7 @@
   [db [_ field-id]]
   (r element/set-element-prop! db field-id :focused? false))
 
-(a/reg-event-db :x.app-elements/mark-field-as-blurred! mark-field-as-blurred!)
+(a/reg-event-db :elements/mark-field-as-blurred! mark-field-as-blurred!)
 
 (defn mark-field-as-focused!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -437,7 +437,7 @@
   [db [_ field-id]]
   (r element/set-element-prop! db field-id :focused? true))
 
-(a/reg-event-db :x.app-elements/mark-field-as-focused! mark-field-as-focused!)
+(a/reg-event-db :elements/mark-field-as-focused! mark-field-as-focused!)
 
 (defn empty-field-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -466,18 +466,18 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/init-field!
+  :elements/init-field!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id x]]
       (if-let [auto-focus? (r element/get-element-prop db field-id :auto-focus?)]
               {:db       (r input/init-input!          db field-id)
-               :dispatch [:x.app-elements/->field-focused field-id]}
+               :dispatch [:elements/->field-focused       field-id]}
               {:db       (r input/init-input!          db field-id)})))
 
 (a/reg-event-fx
-  :x.app-elements/reg-field-keypress-events?!
+  :elements/reg-field-keypress-events?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -488,7 +488,7 @@
             [(boolean emptiable?)
              [:environment/reg-keypress-event! ::on-escape-pressed
                                                {:key-code  27
-                                                :on-keyup  [:x.app-elements/empty-field! field-id]
+                                                :on-keyup  [:elements/empty-field! field-id]
                                                 :required? true}]
              (some? on-enter)
              [:environment/reg-keypress-event! ::on-enter-pressed
@@ -497,7 +497,7 @@
                                                 :required? true}]]})))
 
 (a/reg-event-fx
-  :x.app-elements/remove-field-keypress-events?!
+  :elements/remove-field-keypress-events?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -511,7 +511,7 @@
              [:environment/remove-keypress-event! ::on-enter-pressed]]})))
 
 (a/reg-event-fx
-  :x.app-elements/empty-field!
+  :elements/empty-field!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -527,7 +527,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/->field-blurred
+  :elements/->field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -537,19 +537,19 @@
                        (mark-field-as-blurred!                           [event-id field-id])
                        (input/mark-input-as-visited!                     [event-id field-id])
                        (surface/hide-surface!                            [event-id field-id]))
-            :dispatch-n [[:x.app-elements/remove-field-keypress-events?! field-id]
+            :dispatch-n [[:elements/remove-field-keypress-events?! field-id]
                          (param on-blur-event)]})))
 
                          ; WARNING#9055
                          ; x4.3.9
-                         ; Az :x.app-elements/resolve-change-listener?! eseményt nem sikerült
+                         ; Az :elements/resolve-change-listener?! eseményt nem sikerült
                          ; DB függvényként értelmezve meghívni, mert az esemény olyan adatbázis
                          ; műveleteket tartalmaz, amik nem léteznek az x.app-db.api modulban.
                          ;
-                         ; [:x.app-elements/resolve-change-listener?! field-id]
+                         ; [:elements/resolve-change-listener?! field-id]
 
 (a/reg-event-fx
-  :x.app-elements/->field-focused
+  :elements/->field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -557,8 +557,8 @@
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
            {:db (-> db (environment/disable-non-required-keypress-events! [event-id])
                        (mark-field-as-focused!                            [event-id field-id]))
-            :dispatch-n [[:x.app-elements/reg-field-keypress-events?! field-id]
+            :dispatch-n [[:elements/reg-field-keypress-events?! field-id]
                          (param on-focus-event)]})))
 
                          ; WARNING#9055
-                         ; [:x.app-elements/reg-change-listener?! field-id]
+                         ; [:elements/reg-change-listener?! field-id]

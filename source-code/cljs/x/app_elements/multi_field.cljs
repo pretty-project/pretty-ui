@@ -116,22 +116,22 @@
   (cond (and (field-dex->last-field?               group-id view-props field-dex)
              (view-props->multi-field?             group-id view-props field-dex)
              (view-props->max-field-count-reached? group-id view-props field-dex))
-        [{:icon :close :on-click [:x.app-elements/decrease-input-count! group-id field-dex]
+        [{:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]
         ; Multiple field & last field
         (and (field-dex->last-field?   group-id view-props field-dex)
              (view-props->multi-field? group-id view-props field-dex))
-        [{:icon :add   :on-click [:x.app-elements/increase-input-count! group-id {:initial-value ""}]
+        [{:icon :add   :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
           :tooltip :add-field!}
-         {:icon :close :on-click [:x.app-elements/decrease-input-count! group-id field-dex]
+         {:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]
         ; Single field
         (view-props->single-field? group-id view-props field-dex)
-        [{:icon :add :on-click [:x.app-elements/increase-input-count! group-id {:initial-value ""}]
+        [{:icon :add :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
           :tooltip :add-field!}]
         ; Single field & not the last field
         (view-props->multi-field? group-id view-props field-dex)
-        [{:icon :close :on-click [:x.app-elements/decrease-input-count! group-id field-dex]
+        [{:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]))
 
 (defn- field-dex->auto-focus?

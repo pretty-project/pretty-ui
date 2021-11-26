@@ -41,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-elements/focus-element!
+  :elements/focus-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -50,7 +50,7 @@
            [:environment/focus-element! target-id])))
 
 (a/reg-event-fx
-  :x.app-elements/blur-element!
+  :elements/blur-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

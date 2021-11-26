@@ -46,7 +46,7 @@
   [db [_ element-id]]
   (r element/set-element-prop! db element-id :expanded? true))
 
-(a/reg-event-db :x.app-elements/expand-element! expand-element!)
+(a/reg-event-db :elements/expand-element! expand-element!)
 
 (defn compress-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,7 +57,7 @@
   [db [_ element-id]]
   (r element/set-element-prop! db element-id :expanded? false))
 
-(a/reg-event-db :x.app-elements/compress-element! compress-element!)
+(a/reg-event-db :elements/compress-element! compress-element!)
 
 (defn toggle-element-expansion!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -70,4 +70,4 @@
       (r compress-element! db element-id)
       (r expand-element!   db element-id)))
 
-(a/reg-event-db :x.app-elements/toggle-element-expansion! toggle-element-expansion!)
+(a/reg-event-db :elements/toggle-element-expansion! toggle-element-expansion!)

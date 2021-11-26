@@ -39,7 +39,7 @@
   {:login-attempted? (r user/login-attempted?      db)
    :user-identified? (r user/user-identified?      db)
    :username         (r user/get-user-name         db)
-   :synchronizing?   (r sync/listening-to-request? db :x.app-user/authenticate!)})
+   :synchronizing?   (r sync/listening-to-request? db :user/authenticate!)})
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -70,7 +70,7 @@
   [_ {:keys [synchronizing?]}]
   [elements/text-field ::email-address-field
                        {:label      :email-address
-                        :value-path (db/meta-item-path ::primary :email-address)
+                        :value-path [:login-box :email-address]
                         :disabled?  synchronizing?}])
 
 (defn- password-field
@@ -82,7 +82,7 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/password-field ::password-field
-                           {:value-path (db/meta-item-path ::primary :password)
+                           {:value-path [:login-box :password]
                             :disabled?  synchronizing?}])
 
 (defn- login-button
@@ -101,7 +101,7 @@
                            :keypress   {:key-code 13 :required? true}
                            :label      :login!
                            :layout     :fit
-                           :on-click   [:x.app-user/authenticate!]
+                           :on-click   [:user/authenticate!]
                            :variant    :filled}])
 
 (defn- forgot-password-button
@@ -153,7 +153,7 @@
   ; @return (component)
   [_ _]
   [elements/button ::logout-button
-                   {:on-click [:x.app-user/logout!]
+                   {:on-click [:user/logout!]
                     :color    :none
                     :label    :logout!
                     :layout   :row

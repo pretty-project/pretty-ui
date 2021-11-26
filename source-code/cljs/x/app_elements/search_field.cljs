@@ -132,5 +132,5 @@
           {:component     #'text-field
            :element-props field-props
            :modifier      text-field/view-props-modifier
-           :initializer   [:x.app-elements/init-field! field-id]
-           :subscriber    [::get-view-props            field-id]}])))
+           :initializer   [:elements/init-field! field-id]
+           :subscriber    [::get-view-props      field-id]}])))

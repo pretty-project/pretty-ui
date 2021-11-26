@@ -127,7 +127,7 @@
 ;  Ha ez problémát jelent, akkor célszerű a paramétert Re-Frame eseménnyel
 ;  változtatni, ami nem okozza az elem konténerének újrarenderelődését.
 ;
-;  [:x.app-elements/set-element-prop! ...]
+;  [:elements/set-element-prop! ...]
 
 
 

@@ -30,7 +30,7 @@
   [db _]
   (get-in db (db/path ::profile)))
 
-(a/reg-sub :x.app-user/get-user-profile get-user-profile)
+(a/reg-sub :user/get-user-profile get-user-profile)
 
 (defn get-user-profile-item
   ; @param (keyword) item-id

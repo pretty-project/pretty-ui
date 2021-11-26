@@ -49,7 +49,7 @@
   ;
   ; @return (function)
   [surface-id]
-  #(a/dispatch [:x.app-elements/empty-surface! surface-id]))
+  #(a/dispatch [:elements/empty-surface! surface-id]))
 
 (defn on-show-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -59,7 +59,7 @@
   ;
   ; @return (function)
   [surface-id content-id]
-  #(a/dispatch [:x.app-elements/set-content! surface-id content-id]))
+  #(a/dispatch [:elements/set-content! surface-id content-id]))
 
 
 
@@ -124,7 +124,7 @@
   [db [_ surface-id content-id]]
   (assoc-in db (element/element-prop-path surface-id :selected-content-id) content-id))
 
-(a/reg-event-db :x.app-elements/set-content! set-content!)
+(a/reg-event-db :elements/set-content! set-content!)
 
 (defn- remove-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -135,5 +135,5 @@
   [db [_ surface-id]]
   (dissoc-in db (element/element-prop-path surface-id :selected-content-id)))
 
-(a/reg-event-db :x.app-elements/remove-content! remove-content!)
-(a/reg-event-db :x.app-elements/empty-surface!  remove-content!)
+(a/reg-event-db :elements/remove-content! remove-content!)
+(a/reg-event-db :elements/empty-surface!  remove-content!)

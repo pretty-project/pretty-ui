@@ -188,4 +188,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-if [(not (r any-schedule-registered? db))
-                     [:x.app-environment.window/clear-interval! ::interval]]}))
+                     [:environment/clear-interval! ::interval]]}))

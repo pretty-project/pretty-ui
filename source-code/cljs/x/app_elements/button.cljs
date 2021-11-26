@@ -379,5 +379,5 @@
         [engine/stated-element button-id
           {:component     #'button
            :element-props button-props
-           :destructor    [:x.app-elements/destruct-clickable! button-id]
-           :initializer   [:x.app-elements/init-clickable!     button-id]}])))
+           :destructor    [:elements/destruct-clickable! button-id]
+           :initializer   [:elements/init-clickable!     button-id]}])))

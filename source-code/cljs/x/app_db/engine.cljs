@@ -14,10 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.engine
-    (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a]
-              [x.mid-db.engine    :as engine]))
+    (:require [x.app-core.api  :as a]
+              [x.mid-db.engine :as engine]))
 
 
 
@@ -104,26 +102,6 @@
 ;                         {:apple  [:where :to :store :apples :color]
 ;                          :banana [:where :to :store :bananas :color]}]
 (a/reg-event-db :db/distribute-items! distribute-items!)
-
-
-
-;; -- XXX#1071 ----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn db-event-handler
-  ; @param (vectors in vector) event-vectors
-  [event-vectors]
-  (doseq [event-vector event-vectors]
-         (let [event-id            (first event-vector)
-               namespaced-event-id (keyword/add-namespace :x.app-db event-id)
-               event-vector (vector/change-nth-item event-vector 0 namespaced-event-id)]
-              (a/dispatch event-vector))))
-
-; @usage
-;  {:dispatch [...]
-;   :x.app-db [[:set-item! [ *item-path* ] "new-value"]
-;              [:apply!    [ *item-path* ] merge {}]]}
-(a/reg-fx :x.app-db db-event-handler)
 
 
 

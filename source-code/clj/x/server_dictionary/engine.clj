@@ -63,7 +63,12 @@
         suffixed-term     (str translated-term suffix)]
        (string/use-replacements suffixed-term replacements)))
 
-(a/reg-sub :x.server-dictionary/look-up look-up)
+(a/reg-sub :dictionary/look-up look-up)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn looked-up
   ; @param (keyword) term-id
@@ -73,9 +78,14 @@
   ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
+  ; @example
+  ;  (dictionary/looked-up :save!)
+  ;  =>
+  ;  "Mentés"
+  ;
   ; @return (string)
   [term-id options]
-  (a/subscribed [:x.app-dictionary/look-up term-id options]))
+  (a/subscribed [:dictionary/look-up term-id options]))
 
 
 
@@ -86,14 +96,14 @@
 ; @param (map) term
 ;
 ; @usage
-;  [:x.server-dictionary/add-term! :my-term {:en "My term"}]
-(a/reg-event-db :x.server-dictionary/add-term!  add-term!)
+;  [:dictionary/add-term! :my-term {:en "My term"}]
+(a/reg-event-db :dictionary/add-term!  add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
-;  [:x.server-dictionary/add-terms! {:my-term {:en "My term"}}]
-(a/reg-event-db :x.server-dictionary/add-terms! add-terms!)
+;  [:dictionary/add-terms! {:my-term {:en "My term"}}]
+(a/reg-event-db :dictionary/add-terms! add-terms!)
 
 
 
@@ -102,4 +112,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:x.server-dictionary/add-terms! BOOKS]})
+  {:on-app-init [:dictionary/add-terms! BOOKS]})
