@@ -81,7 +81,7 @@
   ; 1. Let's start!
   (a/dispatch-sync [:boot-synchronizer/synchronize-app! app])
   ; 2. A load-handler várjon az XXX#5030 jelre!
-  (a/dispatch-sync [:x.app-core/synchronize-loading! :boot-loader/build-app!]))
+  (a/dispatch-sync [:core/synchronize-loading! :boot-loader/build-app!]))
 
 (defn render-app!
   ; @param (component) app
@@ -165,8 +165,7 @@
   :boot-loader/reboot-app!
   (fn [{:keys [db]} _]
       (let [restart-target (r get-restart-target db)]
-           {:dispatch-later [{:ms RESTART-TIMEOUT :dispatch
-                              [:x.app-environment.window-handler/go-to! restart-target]}]})))
+           {:dispatch-later [{:ms RESTART-TIMEOUT :dispatch [:environment/go-to! restart-target]}]})))
 
 (a/reg-event-fx
   :boot-loader/initialize-app!
@@ -216,7 +215,7 @@
       {:dispatch-if
        ; 1. Ha a felhasználó nem vendégként lett azonosítva, akkor
        ;    a bejelentkezési események meghívása (Dispatch on-login events)
-       [(r user/user-identified? db) [:x.app-core/login-app!]]
+       [(r user/user-identified? db) [:core/login-app!]]
        ;
        :dispatch-later
        [; 2. Az applikáció renderelése
@@ -225,7 +224,7 @@
         {:ms 100 :dispatch [:boot-loader/launch-app!]}
         ; 4. Curtains up!
         ; XXX#5030
-        {:ms 500 :dispatch [:x.app-core/->synchron-signal :boot-loader/build-app!]}]}))
+        {:ms 500 :dispatch [:core/->synchron-signal :boot-loader/build-app!]}]}))
 
 (a/reg-event-fx
   :boot-loader/launch-app!
@@ -255,6 +254,6 @@
   (fn [{:keys [db]} [_ app]]
       (let [app-build (r a/get-app-detail db :app-build)]
                          ; 1.
-           {:dispatch-n [[:x.app-environment.cookie-handler/set-cookie! :x-app-build {:value app-build}]
+           {:dispatch-n [[:environment/set-cookie! :x-app-build {:value app-build}]
                          ; 2.
                          [:boot-loader/initialize-app! app]]})))

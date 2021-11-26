@@ -486,17 +486,15 @@
             on-enter   (r element/get-element-prop db field-id :on-enter)]
            {:dispatch-cond
             [(boolean emptiable?)
-             [:x.app-environment.keypress-handler/reg-keypress-event!
-              ::on-escape-pressed
-              {:key-code  27
-               :on-keyup  [:x.app-elements/empty-field! field-id]
-               :required? true}]
+             [:environment/reg-keypress-event! ::on-escape-pressed
+                                               {:key-code  27
+                                                :on-keyup  [:x.app-elements/empty-field! field-id]
+                                                :required? true}]
              (some? on-enter)
-             [:x.app-environment.keypress-handler/reg-keypress-event!
-              ::on-enter-pressed
-              {:key-code  13
-               :on-keyup  on-enter
-               :required? true}]]})))
+             [:environment/reg-keypress-event! ::on-enter-pressed
+                                               {:key-code  13
+                                                :on-keyup  on-enter
+                                                :required? true}]]})))
 
 (a/reg-event-fx
   :x.app-elements/remove-field-keypress-events?!
@@ -508,11 +506,9 @@
             on-enter   (r element/get-element-prop db field-id :on-enter)]
            {:dispatch-cond
             [(boolean emptiable?)
-             [:x.app-environment.keypress-handler/remove-keypress-event!
-              ::on-escape-pressed]
+             [:environment/remove-keypress-event! ::on-escape-pressed]
              (some? on-enter)
-             [:x.app-environment.keypress-handler/remove-keypress-event!
-              ::on-enter-pressed]]})))
+             [:environment/remove-keypress-event! ::on-enter-pressed]]})))
 
 (a/reg-event-fx
   :x.app-elements/empty-field!

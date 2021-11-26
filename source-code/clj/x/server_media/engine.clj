@@ -48,7 +48,8 @@
   ;
   ; @example
   ;  (source-directory-id->item-path "root")
-  ;  => [{:directory/id "root"}]
+  ;  =>
+  ;  [{:directory/id "root"}]
   ;
   ; @return (maps in vector)
   [source-directory-id]
@@ -150,7 +151,8 @@
   ;  (a/prot {:request {:session {:user-account/id "my-user"}}}
   ;          [:my-directory {:my-key "My value"}]
   ;          updated-props-prototype)
-  ;  => {:my-key "My value" :modified-at "..." :modified-by {:user-account/id "my-user"}}
+  ;  =>
+  ;  {:my-key "My value" :modified-at "..." :modified-by {:user-account/id "my-user"}}
   ;
   ; @return (map)
   [{:keys [request]} [_ updated-props]]

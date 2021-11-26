@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.focusable
-    (:require [x.app-core.api                   :as a]
+    (:require [x.app-core.api :as a]
               [x.app-elements.engine.targetable :as targetable]))
 
 
@@ -33,7 +33,7 @@
   ; az ENTER és SPACE billentyűk lenyomására újból megtörténik a kattintási
   ; esemény. Ennek elkerülése érdekében szükséges megszűntetni a fókuszt
   ; az elemen!
-  #(a/dispatch [:x.app-environment.element-handler/blur!]))
+  #(a/dispatch [:environment/blur-element!]))
 
 
 
@@ -47,7 +47,7 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (let [target-id (targetable/element-id->target-id element-id)]
-           [:x.app-environment.element-handler/focus! target-id])))
+           [:environment/focus-element! target-id])))
 
 (a/reg-event-fx
   :x.app-elements/blur-element!
@@ -56,4 +56,4 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (let [target-id (targetable/element-id->target-id element-id)]
-           [:x.app-environment.element-handler/blur! target-id])))
+           [:environment/blur-element! target-id])))

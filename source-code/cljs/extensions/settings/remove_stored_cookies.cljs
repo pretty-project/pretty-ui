@@ -59,7 +59,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [message (r dictionary/look-up db :just-a-moment)]
-           {:dispatch-later [{:ms   0 :dispatch [:x.app-environment.cookie-handler/remove-browser-cookies!]}
+           {:dispatch-later [{:ms   0 :dispatch [:environment/remove-browser-cookies!]}
                              {:ms   0 :dispatch [:x.app-ui/set-shield! {:content message}]}
                              {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
 

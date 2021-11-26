@@ -31,7 +31,8 @@
   ;
   ; @example
   ;  (gestures/suffix->trail-base "copy")
-  ;  => " copy "
+  ;  =>
+  ;  " copy "
   ;
   ; @return (string)
   [suffix]
@@ -45,22 +46,26 @@
   ;
   ; @example
   ;  (gestures/label->label-base "My item" "copy")
-  ;  => "My item"
+  ;  =>
+  ;  "My item"
   ;
   ; @example
   ;  (gestures/label->label-base "My item copy" "copy")
-  ;  => "My item"
+  ;  =>
+  ;  "My item"
   ;
   ; @example
   ;  (gestures/label->label-base "My item copy 2" "copy")
-  ;  => "My item"
+  ;  =>
+  ;  "My item"
   ;
   ; WARNING!
   ;  A függvény nem vizsgálja, hogy a trail-base után következő szöveg
   ;  valóban csak számot tartalmaz!
   ; @example
   ;  (gestures/label->label-base "My item copy 2 xyz" "copy")
-  ;  => "My item"
+  ;  =>
+  ;  "My item"
   ;
   ; @return (string)
   [n suffix]
@@ -77,18 +82,21 @@
   ;
   ; @example
   ;  (gestures/label->nth-copy-dex "My item copy" "copy")
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @example
   ;  (gestures/label->nth-copy-dex "My item copy 2" "copy")
-  ;  => "2"
+  ;  =>
+  ;  "2"
   ;
   ; WARNING!
   ;  A függvény nem vizsgálja, hogy a trail-base után következő szöveg
   ;  valóban csak számot tartalmaz!
   ; @example
   ;  (gestures/label->nth-copy-dex "My item copy 2 xyz" "copy")
-  ;  => "2 xyz"
+  ;  =>
+  ;  "2 xyz"
   ;
   ; @return (string)
   [n suffix]
@@ -103,15 +111,18 @@
   ;
   ; @example
   ;  (gestures/label->first-copy-label? "My item" "copy")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (gestures/label->first-copy-label? "My item copy" "copy")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (gestures/label->first-copy-label? "My item copy 2" "copy")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n suffix]
@@ -126,15 +137,18 @@
   ;
   ; @example
   ;  (gestures/label->nth-copy-label? "My item" "copy")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (gestures/label->nth-copy-label? "My item copy" "copy")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (gestures/label->nth-copy-label? "My item copy 2" "copy")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n suffix]
@@ -150,15 +164,18 @@
   ;
   ; @example
   ;  (gestures/label->next-copy-label "My item" "copy")
-  ;  => "My item copy"
+  ;  =>
+  ;  "My item copy"
   ;
   ; @example
   ;  (gestures/label->next-copy-label "My item copy" "copy")
-  ;  => "My item copy 2"
+  ;  =>
+  ;  "My item copy 2"
   ;
   ; @example
   ;  (gestures/label->next-copy-label "My item copy 2" "copy")
-  ;  => "My item copy 3"
+  ;  =>
+  ;  "My item copy 3"
   ;
   ; @return (string)
   [n suffix]
@@ -188,24 +205,27 @@
   ;  (gestures/item-label->duplicated-item-label "My item"
   ;                                              ["Your item" "Their item"]
   ;                                              "copy")
-  ;  => "My item copy"
+  ;  =>
+  ;  "My item copy"
   ;
   ; @example
   ;  (gestures/item-label->duplicated-item-label "My item"
   ;                                              ["My item copy"]
   ;                                              "copy")
-  ;  => "My item copy 2"
+  ;  =>
+  ;  "My item copy 2"
   ;
   ; @example
   ;  (gestures/item-label->duplicated-item-label "My item copy"
   ;                                              ["Your item"]
   ;                                              "copy")
-  ;  => "My item copy 2"
+  ;  =>
+  ;  "My item copy 2"
   ;
   ; @return (string)
   ([original-label suffix]
    (item-label->duplicated-item-label original-label [] suffix))
-   
+
   ([original-label concurent-labels suffix]
    (do-while (fn [%] (label->next-copy-label % suffix))
              (param original-label)

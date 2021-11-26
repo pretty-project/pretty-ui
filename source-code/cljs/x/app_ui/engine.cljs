@@ -27,7 +27,8 @@
   ;
   ; @example
   ;  (renderer-id->partition-id :my-renderer)
-  ;  => :x.app-ui.my-renderer/elements
+  ;  =>
+  ;  :x.app-ui.my-renderer/elements
   ;
   ; @return (keyword)
   [renderer-id]
@@ -41,7 +42,8 @@
   ;
   ; @example
   ;  (renderer-id->dom-id :my-renderer)
-  ;  => :x-app-my-renderer
+  ;  =>
+  ;  :x-app-my-renderer
   ;
   ; @return (keyword)
   [renderer-id]

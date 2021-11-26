@@ -149,19 +149,19 @@
   ;    egy hibaüzenet jelenik meg a bejelentkező felületen.
   ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
-  [:x.app-sync/send-request! :x.app-user/authenticate!
-                             {:method       :post
-                              :on-success   [:boot-loader/restart-app!]
-                              :on-failure   [:x.app-user/reg-last-login-attempt!]
-                              :silent-mode? true
-                              :source-path  (db/meta-item-path :x.app-views.login-box/primary)
-                              :uri          "/user/authenticate"
-                              :idle-timeout 3000}])
+  [:sync/send-request! :x.app-user/authenticate!
+                       {:method       :post
+                        :on-success   [:boot-loader/restart-app!]
+                        :on-failure   [:x.app-user/reg-last-login-attempt!]
+                        :silent-mode? true
+                        :source-path  (db/meta-item-path :x.app-views.login-box/primary)
+                        :uri          "/user/authenticate"
+                        :idle-timeout 3000}])
 
 (a/reg-event-fx
   :x.app-user/logout!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-sync/send-request! :x.app-user/logout!
-                             {:method :post :uri "/user/logout"
-                              :on-failure [:x.app-ui/blow-bubble!    {:content :logout-failed :color :warning}]
-                              :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])
+  [:sync/send-request! :x.app-user/logout!
+                       {:method :post :uri "/user/logout"
+                        :on-failure [:x.app-ui/blow-bubble!    {:content :logout-failed :color :warning}]
+                        :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])

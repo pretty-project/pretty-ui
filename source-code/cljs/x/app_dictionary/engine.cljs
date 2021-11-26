@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.17
 ; Description:
-; Version: v0.6.6
-; Compatibility: x4.3.3
+; Version: v0.8.0
+; Compatibility: x4.4.6
 
 
 
@@ -52,15 +52,18 @@
   ;
   ; @example
   ;  (r dictionary/look-up :save!)
-  ;  => "Mentés"
+  ;  =>
+  ;  "Mentés"
   ;
   ; @example
   ;  (r dictionary/look-up :save! {:language-id :en})
-  ;  => "Save"
+  ;  =>
+  ;  "Save"
   ;
   ; @example
   ;  (r dictionary/look-up :my-name-is {:replacements ["John"]})
-  ;  => "Hi, my name is John"
+  ;  =>
+  ;  "Hi, my name is John"
   ;
   ; @return (string)
   [db [_ term-id {:keys [language-id replacements suffix]}]]
@@ -70,7 +73,31 @@
         suffixed-term     (str translated-term suffix)]
        (string/use-replacements suffixed-term replacements)))
 
-(a/reg-sub :x.app-dictionary/look-up look-up)
+; @usage
+;  [:dictionary/look-up! :my-term]
+(a/reg-sub :dictionary/look-up look-up)
+
+(defn translate
+  ; @param (map) multilingual-item
+  ;
+  ; @example
+  ;  (r dictionary/translate db {:en "Apple" :hu "Alma"})
+  ;  =>
+  ;  "Alma"
+  ;
+  ; @return (*)
+  [db [_ multilingual-item]]
+  (let [language-id (r locales/get-selected-language db)]
+       (language-id multilingual-item)))
+
+; @usage
+;  [:dictionary/translate {:en "Apple" :hu "Alma"}]
+(a/reg-sub :dictionary/translate translate)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn looked-up
   ; @param (keyword) term-id
@@ -81,30 +108,26 @@
   ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
+  ; @example
+  ;  (dictionary/looked-up :save!)
+  ;  =>
+  ;  "Mentés"
+  ;
   ; @return (string)
   [term-id options]
-  (a/subscribed [:x.app-dictionary/look-up term-id options]))
-
-(defn translate
-  ; @param (map) multilingual-item
-  ;
-  ; @example
-  ;  (r dictionary/translate db {:en "Apple" :hu "Alma"})
-  ;  => "Alma"
-  ;
-  ; @return (*)
-  [db [_ multilingual-item]]
-  (let [language-id (r locales/get-selected-language db)]
-       (language-id multilingual-item)))
-
-(a/reg-sub :x.app-dictionary/translate translate)
+  (a/subscribed [:dictionary/look-up term-id options]))
 
 (defn translated
   ; @param (map) multilingual-item
   ;
+  ; @example
+  ;  (dictionary/translated {:en "Apple" :hu "Alma"})
+  ;  =>
+  ;  "Alma"
+  ;
   ; @return (*)
   [multilingual-item]
-  (a/subscribed [:x.app-dictionary/translate multilingual-item]))
+  (a/subscribed [:dictionary/translate multilingual-item]))
 
 
 
@@ -115,14 +138,14 @@
 ; @param (map) term
 ;
 ; @usage
-;  [:x.app-dictionary/add-term! :my-term {:en "My term"}]
-(a/reg-event-db :x.app-dictionary/add-term!  add-term!)
+;  [:dictionary/add-term! :my-term {:en "My term"}]
+(a/reg-event-db :dictionary/add-term!  add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
-;  [:x.app-dictionary/add-terms! {:my-term {:en "My term"}}]
-(a/reg-event-db :x.app-dictionary/add-terms! add-terms!)
+;  [:dictionary/add-terms! {:my-term {:en "My term"}}]
+(a/reg-event-db :dictionary/add-terms! add-terms!)
 
 
 
@@ -131,4 +154,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:x.app-dictionary/add-terms! BOOKS]})
+  {:on-app-init [:dictionary/add-terms! BOOKS]})

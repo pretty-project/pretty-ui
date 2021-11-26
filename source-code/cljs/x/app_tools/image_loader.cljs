@@ -89,7 +89,7 @@
   [db [_ loader-id loader-props]]
   (assoc-in db (db/path ::image-loaders loader-id) loader-props))
 
-(a/reg-event-db :x.app-tools/init-image-loader! init-image-loader!)
+(a/reg-event-db :tools/init-image-loader! init-image-loader!)
 
 (defn- destruct-image-loader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,7 +100,7 @@
   [db [_ loader-id]]
   (dissoc-in db (db/path ::image-loaders loader-id)))
 
-(a/reg-event-db :x.app-tools/destruct-image-loader! destruct-image-loader!)
+(a/reg-event-db :tools/destruct-image-loader! destruct-image-loader!)
 
 
 
@@ -114,11 +114,11 @@
   [db [_ loader-id]]
   (assoc-in db (db/path ::image-loaders loader-id :image-loaded?) true))
 
-(a/reg-event-db :x.app-tools/->image-loader-loaded ->image-loader-loaded)
+(a/reg-event-db :tools/->image-loader-loaded ->image-loader-loaded)
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :x.app-tools/->image-loader-updated
+  :tools/->image-loader-updated
   (fn [_ [_ loader-id]]))
   ; uri megváltozott?
 
@@ -149,7 +149,7 @@
   ;
   ; @return (hiccup)
   [loader-id {:keys [uri]}]
-  [:img {:on-load #(a/dispatch [:x.app-tools/->image-loader-loaded loader-id])
+  [:img {:on-load #(a/dispatch [:tools/->image-loader-loaded loader-id])
          :src      (param uri)
          :style    {:display "none"}}])
 
@@ -182,8 +182,8 @@
    [component (a/id) loader-props])
 
   ([loader-id loader-props]
-   (reagent/lifecycles {:component-did-mount    #(a/dispatch [:x.app-tools/init-image-loader!     loader-id loader-props])
-                        :component-did-update   #(a/dispatch [:x.app-tools/->image-loader-updated loader-id loader-props])
-                        :component-will-unmount #(a/dispatch [:x.app-tools/destruct-image-loader! loader-id])
+   (reagent/lifecycles {:component-did-mount    #(a/dispatch [:tools/init-image-loader!     loader-id loader-props])
+                        :component-did-update   #(a/dispatch [:tools/->image-loader-updated loader-id loader-props])
+                        :component-will-unmount #(a/dispatch [:tools/destruct-image-loader! loader-id])
                         :reagent-render (fn [] (let [loader-props (a/subscribe [::get-loader-props loader-id])]
                                                     [image-loader loader-id @loader-props]))})))

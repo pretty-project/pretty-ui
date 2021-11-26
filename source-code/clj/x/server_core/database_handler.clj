@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.2
+; Version: v0.2.4
+; Compatibility: x4.4.6
 
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.server-core/connect-to-database!
+  :core/connect-to-database!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [database-name (r config-handler/get-database-detail db :database-name)

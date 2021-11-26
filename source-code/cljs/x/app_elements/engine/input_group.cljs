@@ -151,7 +151,8 @@
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
   ;  (r engine/increase-input-count! db :my-group {:initial-value "Apple"})
-  ;  => {:my-value ["First value" "Second value" "Apple"]}
+  ;  =>
+  ;  {:my-value ["First value" "Second value" "Apple"]}
   ;
   ; @return (map)
   [db [event-id group-id context-props]]
@@ -172,7 +173,8 @@
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
   ;  (r engine/decrease-input-count! db :my-group 1)
-  ;  => {:my-value ["First value"]}
+  ;  =>
+  ;  {:my-value ["First value"]}
   ;
   ; @return (map)
   [db [event-id group-id input-dex]]
@@ -193,12 +195,14 @@
   ; @example
   ;  (def db {:my-value []})
   ;  (r engine/stack-to-group-value! db :my-group :my-input {:label "My value"})
-  ;  => {:my-value [{:label "My value"}]}
+  ;  =>
+  ;  {:my-value [{:label "My value"}]}
   ;
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
   ;  (r engine/stack-to-group-value! db :my-group :my-input "My value")
-  ;  => {:my-value ["First value" "Second value" "My value"]}
+  ;  =>
+  ;  {:my-value ["First value" "Second value" "My value"]}
   ;
   ; @return (map)
   [db [_ group-id _ value]]
@@ -217,7 +221,8 @@
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
   ;  (r engine/unstack-from-group-value! db :my-group :my-input 0)
-  ;  => {:my-value ["Second value"]}
+  ;  =>
+  ;  {:my-value ["Second value"]}
   ;
   ; @return (map)
   [db [_ group-id _ value-dex]]

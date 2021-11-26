@@ -41,7 +41,7 @@
   ;
   ; @return (map)
   [db [_ request-id]]
-  (r db/get-data-history db ::responses request-id))  
+  (r db/get-data-history db ::responses request-id))
 
 (defn get-responses
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,7 +153,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-sync/save-request-response!
+  :sync/save-request-response!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -162,18 +162,18 @@
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [filename (r request-handler/get-request-prop db request-id :filename)
             data-url (mixed/mixed->data-url server-response-body)]
-          ;[:x.app-tools.file-saver/...]
+          ;[:tools/save-file! ...]
            [:x.app-ui/blow-bubble! {:color :warning :content :service-not-available}])))
 
 (a/reg-event-fx
-  :x.app-sync/handle-request-response!
+  :sync/handle-request-response!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; WARNING!
-  ; A tesztek során ha az [:x.app-sync/store-request-response! ...] esemény különálló
-  ; Re-Frame adatbázis-eseményként lett regisztrálva és az [:x.app-sync/handle-request-response! ...]
+  ; A tesztek során ha az [:sync/store-request-response! ...] esemény különálló
+  ; Re-Frame adatbázis-eseményként lett regisztrálva és az [:sync/handle-request-response! ...]
   ; esemény megtörténése után történik meg, akkor véletlenszerűen előfordultak olyan esetek, amelyekben
-  ; az :on-success esemény hamarabb megtörtént, mint a [:x.app-sync/store-request-response! ...] esemény!
+  ; az :on-success esemény hamarabb megtörtént, mint a [:sync/store-request-response! ...] esemény!
   ;
   ; @param (keyword) request-id
   ; @param (string) server-response-body
@@ -181,7 +181,7 @@
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [response-action (r request-handler/get-request-prop db request-id :response-action)]
            (case response-action
-                 :save  [:x.app-sync/save-request-response! request-id server-response-body]
+                 :save  [:sync/save-request-response! request-id server-response-body]
                  ; Az :on-failure, :on-success és :on-responsed események megtörténése előtt
                  ; szükséges eltárolni a szerver válaszát!
                  :store {:db (r store-request-response! db request-id server-response-body)}))))

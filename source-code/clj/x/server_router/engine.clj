@@ -55,19 +55,23 @@
   ;
   ; @example
   ;  (engine/route-template-parts-ordered? "abcd" "abcd")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (engine/route-template-parts-ordered? "abcd" "efgh")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (engine/route-template-parts-ordered? "efgh" "abcd")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (engine/route-template-parts-ordered? ":abcd" "abcd")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [a b]

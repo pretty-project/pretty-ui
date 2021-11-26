@@ -270,7 +270,7 @@
             ; Az elemek letöltődése után, ha maradt még a szerveren letöltendő elem, akkor újratölti
             ; az infinite-loader komponenst, hogy megállapítsa, hogy az a viewport területén van-e még.
             :dispatch-if [(r download-more-items? db extension-id item-namespace)
-                          [:x.app-tools/reload-infinite-loader! extension-id]]})))
+                          [:tools/reload-infinite-loader! extension-id]]})))
 
 (a/reg-event-fx
   :item-lister/request-items!
@@ -294,9 +294,9 @@
                 resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-id)
                                 :search-term           (r get-search-term           db extension-id)
                                 :order-by              (r get-order-by              db extension-id)}]
-               [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                        {:on-stalled [:item-lister/receive-items! extension-id item-namespace]
-                                         :query      [`(~resolver-id ~resolver-props)]}]))))
+               [:sync/send-query! (request-id extension-id item-namespace)
+                                  {:on-stalled [:item-lister/receive-items! extension-id item-namespace]
+                                   :query      [`(~resolver-id ~resolver-props)]}]))))
 
 (a/reg-event-fx
   :item-lister/load!

@@ -4,7 +4,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.server-views.head
+(ns project-emulator.server-ui.head
     (:require [server-fruits.http :as http]))
 
 

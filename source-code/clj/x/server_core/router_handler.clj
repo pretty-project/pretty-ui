@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.24
 ; Description:
-; Version: v0.9.6
-; Compatibility: x4.2.5
+; Version: v0.9.8
+; Compatibility: x4.4.6
 
 
 
@@ -29,7 +29,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [default-routes           (event-handler/subscribed [:router/get-default-routes])
-        resource-handler-options (event-handler/subscribed [:x.server-core/get-resource-handler-options])]
+        resource-handler-options (event-handler/subscribed [:core/get-resource-handler-options])]
        (reitit-ring/routes (reitit-ring/create-resource-handler resource-handler-options)
                            (reitit-ring/create-default-handler  default-routes))))
 

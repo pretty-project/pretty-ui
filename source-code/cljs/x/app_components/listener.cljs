@@ -184,7 +184,7 @@
   ;
   ; @return (component)
   [component-id {:keys [request-id] :as context-props}]
-  (let [request-state (a/subscribe [:x.app-sync/get-request-state request-id])]
+  (let [request-state (a/subscribe [:sync/get-request-state request-id])]
        (fn [_ context-props]
            (let [context-props (request-state->context-props context-props @request-state)]
                 [content component-id context-props]))))

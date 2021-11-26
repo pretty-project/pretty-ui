@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.01
 ; Description:
-; Version: v0.2.8
-; Compatibility: x3.9.9
+; Version: v0.3.0
+; Compatibility: x4.4.6
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-utils.crawlers
-    (:require [x.server-user.api :as user]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [x.server-user.api :as user]))
 
 
 
@@ -32,9 +33,9 @@
   ; snippet: Show a text snippet or video preview in the search results for this page
   ;
   ; @param (map) request
-  ; 
+  ;
   ; @return (string)
   [request]
   (if (user/request->authenticated? request)
-      "noindex, nofollow, noarchive, nosnippet"
-      "index, follow, noarchive, max-snippet:200, max-image-preview:large"))
+      (return "noindex, nofollow, noarchive, nosnippet")
+      (return "index, follow, noarchive, max-snippet:200, max-image-preview:large")))

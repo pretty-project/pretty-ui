@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.9.8
+; Version: v1.2.0
 ; Compatibility: x4.4.6
 
 
@@ -24,14 +24,17 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def ERROR-CONTENT
-     {:no-connection  {:title  :yo-do-not-have-internet-connection
-                       :helper :please-check-your-internet-connection
-                       :icon   :wifi_off}
-      :page-not-found {:title  :page-is-not-available
-                       :helper :the-link-you-followed-may-be-broken
-                       :action :go-back!
-                       :icon   :self_improvement}})
+(def ERROR-CONTENT {:no-connection      {:title  :yo-do-not-have-internet-connection
+                                         :helper :please-check-your-internet-connection
+                                         :icon   :wifi_off}
+                    :page-not-found     {:title  :page-is-not-available
+                                         :helper :the-link-you-followed-may-be-broken
+                                         :icon   :self_improvement}
+                    :under-construction {:title  :page-is-under-construction
+                                         :icon   :self_improvement}
+                    :under-maintenance  {:title  :page-is-under-maintenance
+                                         :helper :please-check-back-soon...
+                                         :icon   :self_improvement}})
 
 
 
@@ -64,7 +67,7 @@
   ; @return (component)
   [_ {:keys [title]}]
   [elements/text ::error-title
-                 {:content title :font-size :xxl :horizontal-align :center :layout :fit}])
+                 {:content title :font-size :xxl :horizontal-align :center :layout :fit :selectable? false}])
 
 (defn- error-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,7 +79,7 @@
   ; @return (component)
   [_ {:keys [helper]}]
   [elements/text ::error-helper
-                 {:content helper :font-size :s :horizontal-align :center :layout :fit}])
+                 {:content helper :font-size :s :horizontal-align :center :layout :fit :selectable? false}])
 
 (defn- error-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -125,21 +128,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+  :views/render-error-page!
   ; @param (keyword) error-id
-  ;  :no-connection, :page-not-found, ...
+  ;  :no-connection, :page-not-found, :under-construction, :under-maintenance
   (fn [_ [_ error-id]]
       [:x.app-ui/set-surface! ::view
                               {:content       #'view
                                :content-props (error-id->content-props error-id)}]))
-
-(a/reg-lifecycles
-  ::lifecycles
-  ; Ha az error-handler {:on-app-init [...]} időzítéssel adja hozzá a :page-not-found
-  ; route eseményt a rendszerhez, akkor azt lehetőség van {:on-app-boot [...]}
-  ; időzítéssel felülírni.
-  {:on-app-boot [:router/add-route! :page-not-found
-                                    {:route-event    [::render! :page-not-found]
-                                     :route-template "/page-not-found"}]})

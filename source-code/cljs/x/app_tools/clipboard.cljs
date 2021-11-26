@@ -26,10 +26,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  (a/dispatch [:x.app-tools/copy-to-clipboard! "My text"])
+;  (a/dispatch [:tools/copy-to-clipboard! "My text"])
 ;
 ; @usage
-;  (reg-event-fx :my-event {:x.app-tools/copy-to-clipboard! "My text"})
+;  (reg-event-fx :my-event {:tools/copy-to-clipboard! "My text"})
 ;
 ; @usage
 ;  (ns my-namespace (:require [x.app-tools.api :as tools]))
@@ -52,14 +52,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-tools/copy-to-clipboard!
+  :tools/copy-to-clipboard!
   ; @param (string) text
   ;
   ; @usage
-  ;  [:x.app-tools/copy-to-clipboard! "My text"]
+  ;  [:tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
       {:dispatch [:x.app-ui/blow-bubble! {:content :copied-to-clipboard}]
-       :x.app-tools/copy-to-clipboard! (param text)}))
+       :tools/copy-to-clipboard! (param text)}))
 
 
 
@@ -90,5 +90,5 @@
   (remove-temporary-component!))
 
 ; @usage
-;  {:x.app-tools/copy-to-clipboard! "My text"}
-(a/reg-fx :x.app-tools/copy-to-clipboard! copy-to-clipboard!)
+;  {:tools/copy-to-clipboard! "My text"}
+(a/reg-fx :tools/copy-to-clipboard! copy-to-clipboard!)

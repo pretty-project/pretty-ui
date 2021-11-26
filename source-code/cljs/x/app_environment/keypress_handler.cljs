@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.9.8
-; Compatibility: x4.3.6
+; Version: v2.0.4
+; Compatibility: x4.4.6
 
 
 
@@ -47,13 +47,13 @@
      #(let [key-code (.-keyCode %)]
            (if (keypress-prevented? key-code)
                (.preventDefault %))
-           (a/dispatch [::->key-pressed key-code])))
+           (a/dispatch [:environment/->key-pressed key-code])))
 
 (def keyup-listener
      #(let [key-code (.-keyCode %)]
            (if (keypress-prevented? key-code)
                (.preventDefault %))
-           (a/dispatch [::->key-released key-code])))
+           (a/dispatch [:environment/->key-released key-code])))
 
 (defn- event-props->prevent-default?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -316,7 +316,7 @@
   [db _]
   (r rebuild-cache! db))
 
-(a/reg-event-db ::enable-non-required-keypress-events! enable-non-required-keypress-events!)
+(a/reg-event-db :environment/enable-non-required-keypress-events! enable-non-required-keypress-events!)
 
 (defn- disable-non-required-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -329,30 +329,30 @@
              (r empty-cache! db)
              (r get-events   db)))
 
-(a/reg-event-db ::disable-non-required-keypress-events! disable-non-required-keypress-events!)
+(a/reg-event-db :environment/disable-non-required-keypress-events! disable-non-required-keypress-events!)
 
 
 
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- prevent-default!
+(defn- prevent-keypress-default!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
   [key-code]
   (swap! PREVENTED-KEYS vector/conj-item-once key-code))
 
-(a/reg-handled-fx ::prevent-default! prevent-default!)
+(a/reg-handled-fx :environment/prevent-keypress-default! prevent-keypress-default!)
 
-(defn- enable-default!
+(defn- enable-keypress-default!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
   [key-code]
   (swap! PREVENTED-KEYS vector/remove-item key-code))
 
-(a/reg-handled-fx ::enable-default! enable-default!)
+(a/reg-handled-fx :environment/enable-keypress-default! enable-keypress-default!)
 
 
 
@@ -360,7 +360,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::reg-keypress-event!
+  :environment/reg-keypress-event!
   ; @param (keyword)(opt) event-id
   ; @param (map) event-props
   ;  {:key-code (integer)
@@ -373,13 +373,13 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  [:x.app-environment.keypress-handler/reg-keypress-event
-  ;   {:key-code 65 :on-keydown [:do-something!]}
+  ;  [:environment/reg-keypress-event {...}]
   ;
   ; @usage
-  ;  [:x.app-environment.keypress-handler/reg-keypress-event
-  ;   ::keypress
-  ;   {:key-code 65 :on-keydown [:do-something!]}
+  ;  [:environment/reg-keypress-event :my-event {...}]
+  ;
+  ; @usage
+  ;  [:environment/reg-keypress-event {:key-code 65 :on-keydown [:do-something!]}
   (fn [{:keys [db]} event-vector]
       (let [rf-event-id (a/event-vector->first-id    event-vector)
             event-id    (a/event-vector->second-id   event-vector)
@@ -389,44 +389,50 @@
            {:db (-> db (store-event-props! [rf-event-id event-id event-props])
                        (cache-event!       [rf-event-id event-id event-props]))
             ; Enable handler if ...
-            :dispatch [::enable-handler?!]
+            :dispatch [:environment/enable-keypress-handler?!]
             ; Prevent default if ...
             :dispatch-if [(event-props->prevent-default? event-props)
                           (let [key-code (get event-props :key-code)]
-                               [::prevent-default! key-code])]})))
+                               [:environment/prevent-keypress-default! key-code])]})))
 
 (a/reg-event-fx
-  ::remove-keypress-event!
+  :environment/remove-keypress-event!
   ; @param (keyword) event-id
+  ;
+  ; @usage
+  ;  [:environment/remove-keypress-event! :my-event]
   (fn [{:keys [db]} [rf-event-id event-id]]
        ; rf-event-id: Re-Frame event-id
        ; event-id:    Keypress event-id
       {:db (-> db (uncache-event!      [rf-event-id event-id])
                   (remove-event-props! [rf-event-id event-id]))
        ; Disable handler if ...
-       :dispatch [::disable-handler?!]
+       :dispatch [:environment/disable-keypress-handler?!]
        ; Enable default if ...
        :dispatch-if [(r enable-default? db event-id)
                      (let [key-code (r get-event-prop db event-id :key-code)]
-                          [::enable-default! key-code])]}))
+                          [:environment/enable-keypress-default! key-code])]}))
 
 (a/reg-event-fx
-  ::enable-handler?!
+  :environment/enable-keypress-handler?!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       ; Handler will be enabled, if ...
-      {:dispatch-if [(r enable-handler? db) [::->handler-enabled]]}))
+      {:dispatch-if [(r enable-handler? db) [:environment/->keypress-handler-enabled]]}))
 
 (a/reg-event-fx
-  ::disable-handler?!
+  :environment/disable-keypress-handler?!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       ; Handler will be disabled, if ...
-      {:dispatch-if [(r disable-handler? db) [::->handler-disabled]]}))
+      {:dispatch-if [(r disable-handler? db) [:environment/->keypress-handler-disabled]]}))
 
 (a/reg-event-fx
-  ::disable-handler!
+  :environment/disable-keypress-handler!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       ; Handler will be disabled anyway!
-      {:dispatch-if [(r handler-enabled? db) [::->handler-disabled]]}))
+      {:dispatch-if [(r handler-enabled? db) [:environment/->keypress-handler-disabled]]}))
 
 
 
@@ -434,7 +440,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->key-pressed
+  :environment/->key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
@@ -447,7 +453,7 @@
             :dispatch-n keydown-events})))
 
 (a/reg-event-fx
-  ::->key-released
+  :environment/->key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
@@ -460,28 +466,27 @@
             :dispatch-n keyup-events})))
 
 (a/reg-event-fx
-  ::->handler-enabled
+  :environment/->keypress-handler-enabled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r db/set-item! db (db/meta-item-path ::keypress-events :enabled?) true)
-       :dispatch-n
-       [[:x.app-environment.event-handler/add-event-listener! "keydown" keydown-listener]
-        [:x.app-environment.event-handler/add-event-listener! "keyup"   keyup-listener]]}))
+       :dispatch-n [[:environment/add-event-listener! "keydown" keydown-listener]
+                    [:environment/add-event-listener! "keyup"   keyup-listener]]}))
 
 (a/reg-event-fx
-  ::->handler-disabled
+  :environment/->keypress-handler-disabled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r db/set-item! db (db/meta-item-path ::keypress-events :enabled?) false)
-       :dispatch-n
-       [[:x.app-environment.event-handler/remove-event-listener! "keydown" keydown-listener]
-        [:x.app-environment.event-handler/remove-event-listener! "keyup"   keyup-listener]]}))
+       :dispatch-n [[:environment/remove-event-listener! "keydown" keydown-listener]
+                    [:environment/remove-event-listener! "keyup"   keyup-listener]]}))
 
 (a/reg-event-fx
-  ::->settings-changed
+  :environment/->keypress-settings-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-if [(r enable-handler? db) [::enable-handler?!] [::disable-handler!]]}))
+      {:dispatch-if [(r enable-handler? db) [:environment/enable-keypress-handler?!]
+                                            [:environment/disable-keypress-handler!]]}))
 
 
 
@@ -490,4 +495,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-login [::->settings-changed]})
+  {:on-login [:environment/->keypress-settings-changed]})

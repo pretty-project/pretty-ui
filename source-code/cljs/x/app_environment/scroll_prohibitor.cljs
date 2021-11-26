@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v1.8.8
-; Compatibility: x4.4.2
+; Version: v1.9.6
+; Compatibility: x4.4.6
 
 
 
@@ -29,8 +29,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name scroll-prohibitor
-;  Letiltja a görgetést. A tiltások saját azonosítóval rendelkeznek
-;  es egyszerre több tiltás is lehet érvényben.
+;  Letiltja az oldalon való görgetést.
+;  A tiltások saját azonosítóval rendelkeznek és egyszerre több tiltás is lehet érvényben.
 
 
 
@@ -130,11 +130,11 @@
        ; szükséges a scroll-y értékét újra beállítani
        (dom/set-scroll-y!               (param scroll-y))))
 
-; Az [::enable-scroll-effects!] mellékhatás esemény működését nem lehetséges
+; Az [:environment/enable-dom-scroll!] mellékhatás esemény működését nem lehetséges
 ; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
 ; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
 ; tulajdonságának átállítása után történjen!
-(a/reg-handled-fx ::enable-dom-scroll! enable-dom-scroll!)
+(a/reg-handled-fx :environment/enable-dom-scroll! enable-dom-scroll!)
 
 (defn- disable-dom-scroll!
   []
@@ -157,7 +157,7 @@
        (dom/set-element-style! (dom/get-body-element)
                                (param body-style))))
 
-(a/reg-handled-fx ::disable-dom-scroll! disable-dom-scroll!)
+(a/reg-handled-fx :environment/disable-dom-scroll! disable-dom-scroll!)
 
 
 
@@ -165,12 +165,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->scroll-prohibitions-changed
+  :environment/->scroll-prohibitions-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r scroll-disabled? db)
-          [::disable-dom-scroll!]
-          [::enable-dom-scroll!])))
+          [:environment/disable-dom-scroll!]
+          [:environment/enable-dom-scroll!])))
 
 
 
@@ -178,21 +178,21 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::remove-scroll-prohibition!
+  :environment/remove-scroll-prohibition!
   ; @param (keyword) prohibition-id
   (fn [{:keys [db]} [_ prohibition-id]]
       {:db       (r db/remove-item! db (db/path ::prohibitions prohibition-id))
-       :dispatch [::->scroll-prohibitions-changed]}))
+       :dispatch [:environment/->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx
-  ::add-scroll-prohibition!
+  :environment/add-scroll-prohibition!
   ; @param (keyword) prohibition-id
   (fn [{:keys [db]} [_ prohibition-id]]
       {:db       (r db/set-item! db (db/path ::prohibitions prohibition-id) {})
-       :dispatch [::->scroll-prohibitions-changed]}))
+       :dispatch [:environment/->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx
-  ::enable-scroll!
+  :environment/enable-scroll!
   (fn [{:keys [db]} _]
       {:db       (r remove-scroll-prohibitions! db)
-       :dispatch [::->scroll-prohibitions-changed]}))
+       :dispatch [:environment/->scroll-prohibitions-changed]}))

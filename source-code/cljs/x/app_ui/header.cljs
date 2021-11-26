@@ -138,7 +138,7 @@
   [_ _]
   [elements/button ::menu-icon-button
                    {:preset   :user-menu-icon-button
-                    :on-click [:x.app-views.menu/render!]}])
+                    :on-click [:views/render-menu!]}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

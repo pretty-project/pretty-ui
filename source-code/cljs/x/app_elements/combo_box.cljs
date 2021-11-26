@@ -63,7 +63,8 @@
   ;  (view-props->select-option-event :my-field
   ;                                   {:select-option-event [:x.app-elements/select-option!]}
   ;                                   {:label "My option"})
-  ;  => [:x.app-elements/select-option! :my-field {:label "My option"}]
+  ;  =>
+  ;  [:x.app-elements/select-option! :my-field {:label "My option"}]
   ;
   ; @return (event-vector)
   [field-id {:keys [select-option-event]} option]

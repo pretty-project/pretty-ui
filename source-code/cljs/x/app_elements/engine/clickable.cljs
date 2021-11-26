@@ -96,11 +96,11 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (if-let [keypress (r element/get-element-prop db element-id :keypress)]
-              [:x.app-environment.keypress-handler/reg-keypress-event! element-id
-               {:key-code   (:key-code keypress)
-                :on-keydown [:x.app-elements/->key-pressed  element-id]
-                :on-keyup   [:x.app-elements/->key-released element-id]
-                :required?  (:required? keypress)}])))
+              [:environment/reg-keypress-event! element-id
+                                                {:key-code   (:key-code keypress)
+                                                 :on-keydown [:x.app-elements/->key-pressed  element-id]
+                                                 :on-keyup   [:x.app-elements/->key-released element-id]
+                                                 :required?  (:required? keypress)}])))
 
 (a/reg-event-fx
   :x.app-elements/destruct-clickable!
@@ -110,7 +110,7 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
       (if (some? keypress)
-          [:x.app-environment.keypress-handler/remove-keypress-event! element-id])))
+          [:environment/remove-keypress-event! element-id])))
 
 
 

@@ -24,7 +24,8 @@
   ;
   ; @example
   ;  (integer/to-keyword 2)
-  ;  => :2
+  ;  =>
+  ;  :2
   ;
   ; @return (keyword)
   [n]

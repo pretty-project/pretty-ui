@@ -48,11 +48,13 @@
   ;
   ; @example
   ;  (r dictionary/look-up :save! {:language-id :en})
-  ;  => "Save"
+  ;  =>
+  ;  "Save"
   ;
   ; @example
   ;  (r dictionary/look-up :my-name-is {:language-id :en :replacements ["John"]})
-  ;  => "Hi, my name is John"
+  ;  =>
+  ;  "Hi, my name is John"
   ;
   ; @return (string)
   [db [_ term-id {:keys [language-id replacements suffix]}]]

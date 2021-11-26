@@ -180,8 +180,9 @@
   :x.app-ui/close-popup!
   ; @param (keyword) popup-id
   (fn [{:keys [db]} [_ popup-id]]
-      {:dispatch-n [[:x.app-ui/destroy-element! :popups popup-id]
-                    [:x.app-ui/enable-scroll-by-popup!  popup-id]]}))
+      {:dispatch-n [[:x.app-ui/destroy-element! :popups popup-id]]}))
+                    ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
+                    ; [:environment/remove-scroll-prohibition! popup-id]
 
 (a/reg-event-fx
   :x.app-ui/close-upper-popup!
@@ -190,34 +191,15 @@
               [:x.app-ui/close-popup! upper-popup-id])))
 
 (a/reg-event-fx
-  :x.app-ui/enable-scroll-by-popup!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ;
-  ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
-  (fn [_ [_ popup-id]]))
-      ;[:x.app-environment.scroll-prohibitor/remove-scroll-prohibition! popup-id]))
-
-(a/reg-event-fx
-  :x.app-ui/disable-scroll-by-popup!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ;
-  ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
-  (fn [_ [_ popup-id]]))
-      ;[:x.app-environment.scroll-prohibitor/add-scroll-prohibition! popup-id]))
-
-(a/reg-event-fx
   :x.app-ui/render-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   (fn [_ [_ popup-id popup-props]]
-      {:dispatch-n [[:x.app-ui/request-rendering-element! :popups popup-id popup-props]
-                    [:x.app-ui/disable-scroll-by-popup!           popup-id]]}))
+      {:dispatch-n [[:x.app-ui/request-rendering-element! :popups popup-id popup-props]]}))
+                    ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
+                    ; [:environment/add-scroll-prohibition! popup-id]
 
 (a/reg-event-fx
   :x.app-ui/render-popup-exclusive!

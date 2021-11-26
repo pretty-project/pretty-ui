@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.5.2
-; Compatibility: x3.9.9
+; Version: v0.5.4
+; Compatibility: x4.4.6
 
 
 
@@ -37,5 +37,5 @@
   ; @return (boolean)
   [request]
   (let [cached-version  (http/request->cookie request "x-app-build")
-        current-version (event-handler/subscribed [:x.server-core/get-config-item :app-build])]
+        current-version (event-handler/subscribed [:core/get-config-item :app-build])]
        (= cached-version current-version)))

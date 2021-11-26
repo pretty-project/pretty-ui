@@ -36,15 +36,14 @@
       (let [rendered-directory-id (r engine/get-rendered-directory-id db namespace)
             action-id             (engine/namespace->query-id namespace)
             action-props          {:destination-directory-id rendered-directory-id}]
-           [:x.app-tools.editor/edit!
-            :media/alias-editor
-            {:initial-value (r dictionary/look-up db :new-directory)
-             :label         :directory-name
-             :on-save       [:media/create-subdirectory! action-id action-props]
-             :validator     {:f io/directory-name-valid?
-                             :invalid-message :invalid-directory-name
-                             :pre-validate? true}
-             :primary-button-label :create!}])))
+           [:tools.editor/edit! :media/alias-editor
+                                {:initial-value (r dictionary/look-up db :new-directory)
+                                 :label         :directory-name
+                                 :on-save       [:media/create-subdirectory! action-id action-props]
+                                 :validator     {:f io/directory-name-valid?
+                                                 :invalid-message :invalid-directory-name
+                                                 :pre-validate? true}
+                                 :primary-button-label :create!}])))
 
 (a/reg-event-fx
   :media/upload-files!

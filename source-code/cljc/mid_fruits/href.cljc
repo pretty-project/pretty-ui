@@ -26,7 +26,8 @@
   ;
   ; @example
   ;  (href/email-address->href "Hello@my-site.com")
-  ;  => "mailto:hello@my-site.com"
+  ;  =>
+  ;  "mailto:hello@my-site.com"
   ;
   ; @return (string)
   [n]
@@ -38,7 +39,8 @@
   ;
   ; @example
   ;  (href/phone-number->href "+3630 / 123 - 4567")
-  ;  => "tel:+36301234567"
+  ;  =>
+  ;  "tel:+36301234567"
   ;
   ; @return (string)
   [n]

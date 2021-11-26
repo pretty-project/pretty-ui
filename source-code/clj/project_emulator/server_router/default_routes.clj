@@ -5,10 +5,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-emulator.server-router.default-routes
-    (:require [mid-fruits.candy              :refer [param]]
-              [project-emulator.server-views.api :as views]
-              [server-fruits.http            :as http]
-              [x.server-core.api             :as a]))
+    (:require [mid-fruits.candy   :refer [param]]
+              [server-fruits.http :as http]
+              [x.server-core.api  :as a]
+              [project-emulator.server-ui.api :as ui]))
 
 
 
@@ -16,21 +16,21 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (function)
-; No method matched
+;  No method matched
 (def METHOD-NOT-ALLOWED
-     #(http/html-wrap {:body   (views/main %)
+     #(http/html-wrap {:body   (ui/main %)
                        :status (param 404)}))
 
 ; @constant (function)
-; Handler returned nil
+;  Handler returned nil
 (def NOT-ACCEPTABLE
-     #(http/html-wrap {:body   (views/main %)
+     #(http/html-wrap {:body   (ui/main %)
                        :status (param 404)}))
 
 ; @constant (function)
-; No route matched – {:status 200} handled at client side
+;  No route matched – {:status 200} handled at client-side
 (def NOT-FOUND
-     #(http/html-wrap {:body   (views/main %)
+     #(http/html-wrap {:body   (ui/main %)
                        :status (param 200)}))
 
 
@@ -38,12 +38,8 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  ::on-app-init-events
-  {:dispatch-n [[:router/set-default-route! :method-not-allowed METHOD-NOT-ALLOWED]
-                [:router/set-default-route! :not-acceptable     NOT-ACCEPTABLE]
-                [:router/set-default-route! :not-found          NOT-FOUND]]})
-
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [::on-app-init-events]})
+  {:on-app-init {:dispatch-n [[:router/set-default-route! :method-not-allowed METHOD-NOT-ALLOWED]
+                              [:router/set-default-route! :not-acceptable     NOT-ACCEPTABLE]
+                              [:router/set-default-route! :not-found          NOT-FOUND]]}})

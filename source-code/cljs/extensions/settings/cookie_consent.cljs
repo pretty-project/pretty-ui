@@ -56,7 +56,7 @@
 (a/reg-event-fx
   ::accept-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-environment.cookie-handler/->settings-changed])
+  [:environment/->cookie-settings-changed])
 
 
 

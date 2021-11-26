@@ -1119,8 +1119,7 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ _ element-id]]
       ;(a/console (str "Hide element - " (time/elapsed)))
-      [:x.app-environment.element-handler/set-attribute!
-        (keyword/to-dom-value element-id) "data-animation" "hide"]))
+      [:environment/set-element-attribute! (keyword/to-dom-value element-id) "data-animation" "hide"]))
 
 (a/reg-event-fx
   :x.app-ui/destroy-element-animated!
@@ -1205,7 +1204,7 @@
   ;
   ; @param (keyword) renderer-id
   (fn [_ [_ renderer-id]]
-      [:x.app-core/->error-catched {:error ILLEGAL-UNMOUNTING-ERROR :renderer-id renderer-id}]))
+      [:core/->error-catched {:error ILLEGAL-UNMOUNTING-ERROR :renderer-id renderer-id}]))
 
 
 

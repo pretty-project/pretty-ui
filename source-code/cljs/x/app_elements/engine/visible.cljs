@@ -33,9 +33,9 @@
   ;  [{:content-id (keyword)}]
   ;
   ; @example
-  ;  (engine/visible-items->first-content-id
-  ;    [{:foo1 :bar1} {:foo2 :bar2 :content-id :baz2}])
-  ;  => :baz2
+  ;  (engine/visible-items->first-content-id [{:foo1 :bar1} {:foo2 :bar2 :content-id :baz2}])
+  ;  =>
+  ;  :baz2
   ;
   ; @return (keyword)
   [visible-items]

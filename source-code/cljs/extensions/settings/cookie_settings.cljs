@@ -23,11 +23,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [privacy-policy-link   (r a/get-site-link db :privacy-policy)
-        terms-of-service-link (r a/get-site-link db :terms-of-service)
-        what-cookies-are-link (r a/get-site-link db :what-cookies-are?)]
+        terms-of-service-link (r a/get-site-link db :terms-of-service)]
        {:privacy-policy-link   (r dictionary/translate db privacy-policy-link)
-        :terms-of-service-link (r dictionary/translate db terms-of-service-link)
-        :what-cookies-are-link (r dictionary/translate db what-cookies-are-link)}))
+        :terms-of-service-link (r dictionary/translate db terms-of-service-link)}))
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -88,14 +86,6 @@
                        {:label :terms-of-service :preset :primary-button :layout :row
                         :on-click [:router/go-to! terms-of-service-link]}]))
 
-(defn- what-cookies-are-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [what-cookies-are-link]}]
-  (if (nil? what-cookies-are-link)
-      [elements/button ::what-cookies-are-button
-                       {:label :what-cookies-are? :preset :primary-button :layout :row
-                        :on-click [:router/go-to! what-cookies-are-link]}]))
-
 (defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
@@ -107,7 +97,6 @@
        [elements/separator {:size :xxs}]
        [privacy-policy-button   body-id body-props]
        [terms-of-service-button body-id body-props]
-       [what-cookies-are-button body-id body-props]
        ; Cookie settings
        [elements/horizontal-line {:color :highlight :layout :row}]
        [elements/switch ::necessary-cookies-switch
@@ -119,14 +108,14 @@
                         {:initial-value true
                          :label         :user-experience-cookies
                          :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
-                         :on-check   [:x.app-environment.cookie-handler/->settings-changed]
-                         :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
+                         :on-check   [:environment/->cookie-settings-changed]
+                         :on-uncheck [:environment/->cookie-settings-changed]}]
        [elements/switch ::analytics-cookies-switch
                         {:initial-value true
                          :label         :analytics-cookies
                          :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
-                         :on-check   [:x.app-environment.cookie-handler/->settings-changed]
-                         :on-uncheck [:x.app-environment.cookie-handler/->settings-changed]}]
+                         :on-check   [:environment/->cookie-settings-changed]
+                         :on-uncheck [:environment/->cookie-settings-changed]}]
        ; Remove stored cookies
        [elements/separator {:size :s}]
        [elements/button {:label :remove-stored-cookies! :preset :secondary-button :layout :row
@@ -147,7 +136,7 @@
 (a/reg-event-fx
   ::accept-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-environment.cookie-handler/->settings-changed])
+  [:environment/->cookie-settings-changed])
 
 
 

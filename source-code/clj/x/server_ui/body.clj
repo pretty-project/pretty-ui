@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.19
 ; Description:
-; Version: v0.6.2
+; Version: v0.6.8
 ; Compatibility: x4.4.6
 
 
@@ -20,7 +20,8 @@
               [x.mid-ui.api       :as ui]
               [x.server-core.api  :as a :refer [cache-control-uri]]
               [x.server-ui.engine :refer [include-js]]
-              [x.server-ui.shield :refer [view] :rename {view app-shield}]))
+              [x.server-ui.shield :refer [view] :rename {view app-shield}]
+              [x.server-user.api  :as user]))
 
 
 
@@ -41,7 +42,7 @@
   [request]
   (if-let [core-js-filename (a/request->route-param request :js)]
           (string/not-starts-with! core-js-filename  "/")
-          (let [default-core-js-filename (a/subscribed [:x.server-core/get-config-item :default-core-js])]
+          (let [default-core-js-filename (a/subscribed [:core/get-config-item :default-core-js])]
                (string/not-starts-with! default-core-js-filename  "/"))))
 
 (defn- request->core-js-uri-base
@@ -56,7 +57,7 @@
   ;
   ; @return (string)
   [request]
-  (let [core-js-dir (a/subscribed [:x.server-core/get-config-item :core-js-dir])]
+  (let [core-js-dir (a/subscribed [:core/get-config-item :core-js-dir])]
        (-> core-js-dir (string/starts-with! "/")
                        (string/ends-with!   "/"))))
 
@@ -134,6 +135,48 @@
   ; @return (map)
   ;  {:shield (hiccup)}
   [request body-props]
-  (merge (a/subscribed [:x.server-core/get-destructed-configs])
+  (merge (a/subscribed [:core/get-destructed-configs])
          {:shield (app-shield (ui/loading-animation-a))}
          (param body-props)))
+
+
+
+;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) request
+  ; @param (map) body-props
+  ;  {:shield (hiccup)(opt)}
+  ;
+  ; @return (hiccup)
+  [request {:keys [shield]}]
+  [:body#x-body-container
+    {:data-theme (user/request->user-settings-item request :selected-theme)}
+    [:div#x-app-container]
+    (if (some? shield)
+        (param shield))])
+
+(defn view
+  ; @param (map) request
+  ; @param (map)(opt) body-props
+  ;  {:app-build (string)(opt)
+  ;   :plugin-js-paths (maps in vector)
+  ;    [{:cache-control? (boolean)(opt)
+  ;       Default: false
+  ;      :uri (string)}]
+  ;   :shield (hiccup)(opt)}
+  ;
+  ; @usage
+  ;  (ui/body {...} {:shield [:div#x-app-shield "My loading screen"]})
+  ;
+  ; @return (hiccup)
+  ([request]
+   (view request {}))
+
+  ([request body-props]
+   (let [body-props (body-props-prototype request body-props)]
+        (-> (body              request body-props)
+            (body<-js-includes request body-props)))))

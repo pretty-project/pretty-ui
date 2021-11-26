@@ -30,12 +30,12 @@
 ; @usage Szöveg mentése fájlként a kliens eszközre:
 ;  (def text     "My text")
 ;  (def data-url (str "data:text/plain;charset=utf-8," text))
-;  (a/dispatch [:x.app-tools/save-file! {:data-url data-url
-;                                        :filename "My file.txt"}])
+;  (a/dispatch [:tools/save-file! {:data-url data-url
+;                                  :filename "My file.txt"}])
 ;
 ; @usage Távoli fájl mentése a kliens eszközre:
-;  (a/dispatch [:x.app-tools/save-file! {:uri      "/images/my-image.jpg"
-;                                        :filename "my-image.jpg"}])
+;  (a/dispatch [:tools/save-file! {:uri      "/images/my-image.jpg"
+;                                  :filename "my-image.jpg"}])
 
 
 
@@ -78,7 +78,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-tools/save-file!
+  :tools/save-file!
   ; @param (keyword)(opt) saver-id
   ; @param (map) saver-props
   ;  {:data-url (string)(opt)
@@ -89,23 +89,23 @@
   ;    Only w/o {:data-url ...}}
   ;
   ; @usage
-  ;  [:x.app-tools/save-file! {...}]
+  ;  [:tools/save-file! {...}]
   ;
   ; @usage
-  ;  [:x.app-tools/save-file! :my-file-saver {...}]
+  ;  [:tools/save-file! :my-file-saver {...}]
   ;
   ; @usage
-  ;  [:x.app-tools/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
-  ;                            :filename "my-file.edn"}]
+  ;  [:tools/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
+  ;                      :filename "my-file.edn"}]
   ;
   ; @usage
-  ;  [:x.app-tools/save-file! {:uri      "/images/my-image.jpg"}
-  ;                            :filename "my-image.jpg"}]
+  ;  [:tools/save-file! {:uri      "/images/my-image.jpg"}
+  ;                      :filename "my-image.jpg"}]
   (fn [_ event-vector]
       (let [saver-id    (a/event-vector->second-id   event-vector)
             saver-props (a/event-vector->first-props event-vector)
             saver-props (a/prot saver-props saver-props-prototype)]
-           [:x.app-tools/render-save-file-dialog! saver-id saver-props])))
+           [:tools/render-save-file-dialog! saver-id saver-props])))
 
 
 
@@ -153,7 +153,7 @@
   ; @return (component)
   [popup-id saver-props]
   [elements/button ::save-button
-                   {:on-click {:dispatch-n [[:x.app-tools/->save-file-accepted popup-id saver-props]
+                   {:on-click {:dispatch-n [[:tools/->save-file-accepted popup-id saver-props]
                                             [:x.app-ui/close-popup!            popup-id]]}
                     :preset   :save-button}])
 
@@ -203,10 +203,10 @@
                                (param save-file-f))
   (remove-temporary-component!))
 
-(a/reg-handled-fx :x.app-tools/->save-file-accepted ->save-file-accepted)
+(a/reg-handled-fx :tools/->save-file-accepted ->save-file-accepted)
 
 (a/reg-event-fx
-  :x.app-tools/render-save-file-dialog!
+  :tools/render-save-file-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Párbeszédablakot nyit meg a fájl mentésével kapcsolatban.

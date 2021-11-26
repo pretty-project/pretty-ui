@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.09
 ; Description:
-; Version: v0.9.8
-; Compatibility: x3.9.9
+; Version: v1.0.8
+; Compatibility: x4.4.6
 
 
 
@@ -108,13 +108,16 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-external-source!
+(defn add-external-css!
   ; @param (string) filepath
   ; @param (map)(opt) context-props
   ;  {:as-first? (boolean)}
+  ;
+  ; @usage
+  ;  (environment/add-external-css! "/directory-name/filename.css")
   [filepath context-props]
   (let [head-element (dom/get-head-element)
-        app-build    (a/subscribed [:x.app-core/get-app-detail :app-build])
+        app-build    (a/subscribed [:core/get-app-detail :app-build])
         filepath     (cache-control-uri (string/starts-with! filepath "/")
                                         (param app-build))
         link-element (create-link-element! filepath)]
@@ -122,26 +125,32 @@
                (insert-link-element! head-element link-element context-props))))
 
 ; @usage
-;  [:x.app-environment.css-handler/add-external-source! "/directory-name/filename.css"]
-(a/reg-handled-fx ::add-external-source! add-external-source!)
+;  [:environment/add-external-css! "/directory-name/filename.css"]
+(a/reg-handled-fx :environment/add-external-css! add-external-css!)
 
-(defn- add-source!
+(defn add-css!
   ; @param (string) filename
   ; @param (map)(opt) context-props
   ;  {:as-first? (boolean)}
+  ;
+  ; @usage
+  ;  (environment/add-css! "/filename.css")
   [filename context-props]
   (let [filepath (filename->external-css-uri filename)]
-       (add-external-source! filepath context-props)))
+       (add-external-css! filepath context-props)))
 
 ; @usage
-;  [:x.app-environment.css-handler/add-source! "filename.css"]
-(a/reg-handled-fx ::add-source! add-source!)
+;  [:environment/add-css! "filename.css"]
+(a/reg-handled-fx :environment/add-css! add-css!)
 
-(defn- remove-source!
+(defn remove-css!
   ; @param (string) filename
+  ;
+  ; @usage
+  ;  (environment/remove-css! "/filename.css")
   [filename])
   ; TODO ...
 
 ; @usage
-;  [:x.app-environment.css-handler/remove-source! "/my-style.css"]
-(a/reg-handled-fx ::remove-source! remove-source!)
+;  [:environment/remove-css! "/filename.css"]
+(a/reg-handled-fx :environment/remove-css! remove-css!)

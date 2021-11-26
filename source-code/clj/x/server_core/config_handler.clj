@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.3.3
+; Version: v0.8.6
+; Compatibility: x4.4.6
 
 
 
@@ -67,19 +67,19 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-sub :x.server-core/get-app-details        get-app-details)
-(event-handler/reg-sub :x.server-core/get-site-links         get-site-links)
-(event-handler/reg-sub :x.server-core/get-storage-details    get-storage-details)
-(event-handler/reg-sub :x.server-core/get-configs            get-configs)
-(event-handler/reg-sub :x.server-core/get-destructed-configs get-destructed-configs)
-(event-handler/reg-sub :x.server-core/get-config-item        get-config-item)
+(event-handler/reg-sub :core/get-app-details        get-app-details)
+(event-handler/reg-sub :core/get-site-links         get-site-links)
+(event-handler/reg-sub :core/get-storage-details    get-storage-details)
+(event-handler/reg-sub :core/get-configs            get-configs)
+(event-handler/reg-sub :core/get-destructed-configs get-destructed-configs)
+(event-handler/reg-sub :core/get-config-item        get-config-item)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-db :x.server-core/store-configs! store-configs!)
+(event-handler/reg-event-db :core/store-configs! store-configs!)
 
 
 
@@ -92,6 +92,6 @@
   (let [project-config-file-content (io/read-edn-file PROJECT-CONFIG-FILEPATH)
         server-config-file-content  (io/read-edn-file SERVER-CONFIG-FILEPATH)
         app-configs                 (merge project-config-file-content server-config-file-content)]
-       (event-handler/dispatch [:x.server-core/store-configs! app-configs])))
+       (event-handler/dispatch [:core/store-configs! app-configs])))
 
-(event-handler/reg-handled-fx :x.server-core/config-app! config-app!)
+(event-handler/reg-handled-fx :core/config-app! config-app!)

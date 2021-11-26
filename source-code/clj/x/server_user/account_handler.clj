@@ -77,9 +77,10 @@
   ;
   ; @example
   ;  (user/user-account-id->user-account "my-account")
-  ;  => {:user-account/id "my-account"
-  ;      :user-account/password "my-password"
-  ;      ...}
+  ;  =>
+  ;  {:user-account/id "my-account"
+  ;   :user-account/password "my-password"
+  ;   ...}
   ;
   ; @return (map)
   [user-account-id]

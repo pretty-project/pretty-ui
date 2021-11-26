@@ -168,7 +168,8 @@
   ;
   ; @example
   ;  (field-dex->field-id :my-group {} 3)
-  ;  => :my-group--3
+  ;  =>
+  ;  :my-group--3
   ;
   ; @return (keyword)
   [group-id _ field-dex]
@@ -183,7 +184,8 @@
   ;
   ; @example
   ;  (field-dex->react-key :my-group {} 3)
-  ;  => "my-group--3"
+  ;  =>
+  ;  "my-group--3"
   ;
   ; @return (keyword)
   [group-id _ field-dex]

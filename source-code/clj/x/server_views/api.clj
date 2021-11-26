@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.2.6
+; Version: v0.3.4
+; Compatibility: x4.4.6
 
 
 
@@ -14,12 +14,6 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.api
-    (:require [x.server-views.main :as main]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.server-views.main
-(def app-main main/view)
+    (:require [x.server-views.login-box]
+              [x.server-views.privacy-policy]
+              [x.server-views.terms-of-service]))

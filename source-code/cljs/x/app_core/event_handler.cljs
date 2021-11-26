@@ -102,7 +102,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
-(def ERROR-EVENT-ID :x.app-core/->error-catched)
+(def ERROR-EVENT-ID :core/->error-catched)
 
 
 

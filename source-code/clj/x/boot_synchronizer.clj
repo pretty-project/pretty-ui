@@ -31,9 +31,9 @@
   ;
   ; @return (map)
   [request]
-  (let [app-details     (a/subscribed [:x.server-core/get-app-details])
-        site-links      (a/subscribed [:x.server-core/get-site-links])
-        storage-details (a/subscribed [:x.server-core/get-storage-details])
+  (let [app-details     (a/subscribed [:core/get-app-details])
+        site-links      (a/subscribed [:core/get-site-links])
+        storage-details (a/subscribed [:core/get-storage-details])
         client-routes   (a/subscribed [:router/get-client-routes])
         user-account    (user/request->user-public-account request)
         user-profile    (user/request->user-profile        request)

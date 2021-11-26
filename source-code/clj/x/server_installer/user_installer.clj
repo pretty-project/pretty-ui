@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.1
+; Version: v0.2.4
+; Compatibility: x4.4.6
 
 
 
@@ -26,13 +26,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.server-installer/install-user!
+  :installer/install-user!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "installing module: user")
       {:db (r engine/->module-installed db :user)
-       :dispatch [:x.server-user/add-user! {:email-address "demo@monotech.hu"
-                                            :password      "mono"}]}))
+       :dispatch [:user/add-user! {:email-address "demo@monotech.hu"
+                                   :password      "mono"}]}))
 
 
 

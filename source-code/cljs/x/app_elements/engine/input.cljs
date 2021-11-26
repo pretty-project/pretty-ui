@@ -69,11 +69,13 @@
   ;
   ; @example
   ;  (input/value-path->vector-item? [:my :value])
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (input/value-path->vector-item? [:my :value 2])
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [value-path]

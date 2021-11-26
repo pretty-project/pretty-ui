@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.08
 ; Description:
-; Version: v0.1.8
-; Compatibility: x3.9.9
+; Version: v0.2.2
+; Compatibility: x4.4.6
 
 
 
@@ -24,9 +24,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-; https://github.com/metosin/reitit/blob/master/doc/ring/static.md
-(def DEFAULT-OPTIONS
-     {:path "/" :root "/public"})
+;  https://github.com/metosin/reitit/blob/master/doc/ring/static.md
+;  {:path (string)
+;   :root (string)}
+(def DEFAULT-OPTIONS {:path "/" :root "/public"})
 
 
 
@@ -40,7 +41,7 @@
   [db _]
   (get-in db [::options :data-items]))
 
-(event-handler/reg-sub :x.server-core/get-resource-handler-options get-resource-handler-options)
+(event-handler/reg-sub :core/get-resource-handler-options get-resource-handler-options)
 
 
 
@@ -57,7 +58,7 @@
   (assoc-in db [::options :data-items]
                (param resource-handler-options)))
 
-(event-handler/reg-event-db :x.server-core/store-resource-handler-options! store-resource-handler-options!)
+(event-handler/reg-event-db :core/store-resource-handler-options! store-resource-handler-options!)
 
 
 
@@ -66,4 +67,4 @@
 
 (lifecycle-handler/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:x.server-core/store-resource-handler-options! DEFAULT-OPTIONS]})
+  {:on-app-init [:core/store-resource-handler-options! DEFAULT-OPTIONS]})

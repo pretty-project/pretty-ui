@@ -175,8 +175,8 @@ button.x-card:focus,
 .x-file--timestamp,
 .x-file--preview-icon,
 .x-icon,
-.x-label--icon,
-.x-label--body,
+.x-label[data-selectable="false"] .x-label--icon,
+.x-label[data-selectable="false"] .x-label--body,
 .x-line-diagram--label,
 .x-radio-button--label,
 .x-radio-button--option-label,
@@ -185,6 +185,7 @@ button.x-card:focus,
 .x-select--button-icon,
 .x-select--option,
 .x-switch--label,
+.x-text[data-selectable="false"] .x-text--body,
 .x-text-field--label,
 .x-text-field--placeholder,
 .x-text-field--invalid-message,
@@ -194,13 +195,6 @@ button.x-card:focus,
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none }
-
-.x-label[data-selectable="true"] .x-label--body {
-  /* user-select not supperted properly in all browsers */
-  -ms-user-select: auto;
-  -moz-user-select: auto;
-  -webkit-user-select: auto;
-  user-select: auto }
 
 /***** User select *****/
 
@@ -2675,7 +2669,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   flex-direction: column;
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
-  margin-right: 8px;
+  margin: 0 8px;
   justify-content: center;
   width: var( --icon-size-default ); }
 

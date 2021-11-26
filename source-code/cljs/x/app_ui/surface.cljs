@@ -56,11 +56,6 @@
       [:x.app-ui/destroy-element! :surface surface-id]))
 
 (a/reg-event-fx
-  :x.app-ui/enable-scroll!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-environment.scroll-prohibitor/enable-scroll!])
-
-(a/reg-event-fx
   :x.app-ui/render-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -73,7 +68,7 @@
             surface-rendering-delay (+ close-popups-duration sidebar-hiding-duration)]
            {:dispatch-later
             [{:ms                       0 :dispatch [:x.app-ui/destroy-all-elements! :popups]}
-             {:ms close-popups-duration   :dispatch [:x.app-ui/enable-scroll!]}
+             {:ms close-popups-duration   :dispatch [:environment/enable-scroll!]}
              {:ms close-popups-duration   :dispatch [:x.app-ui/hide-sidebar!]}
              {:ms surface-rendering-delay :dispatch [:x.app-ui/request-rendering-element! :surface surface-id surface-props]}]})))
 

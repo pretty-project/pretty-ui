@@ -63,11 +63,13 @@
   ;
   ; @example
   ;  (meta-keywords->formatted-meta-keywords ["My" "keywords"])
-  ;  => "My, keywords"
+  ;  =>
+  ;  "My, keywords"
   ;
   ; @example
   ;  (meta-keywords->formatted-meta-keywords "My, keywords")
-  ;  => "My, keywords"
+  ;  =>
+  ;  "My, keywords"
   ;
   ; @return (string)
   [meta-keywords]
@@ -214,7 +216,7 @@
   ;  {:crawler-rules (?)
   ;   :selected-language (string)}
   [request head-props]
-  (merge (a/subscribed [:x.server-core/get-destructed-configs])
+  (merge (a/subscribed [:core/get-destructed-configs])
          {:crawler-rules     (crawler-rules request)
           :selected-language (user/request->user-settings-item request :selected-language)}
          (param head-props)))
@@ -247,7 +249,7 @@
   ;   :theme-color (string)(opt)
   ;
   ; @usage
-  ;  (server-views/head {...} {...})
+  ;  (ui/head {...} {...})
   ;
   ; @return (hiccup)
   ([request]

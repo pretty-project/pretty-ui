@@ -1,9 +1,5 @@
 
 
-; PDF formátumú letölthető fájl lesz ez a view helyett
-
-
-
 ; Ez a webhely Önnel kapcsolatos adatokat nem gyűjt és harmadik félnek nem ad át.
 ;
 ; Cookie:
@@ -17,14 +13,16 @@
 ; Az oldal elején mindjárt egy toggle!
 ; "Az adatvédelmi beállításokat itt találád"
 ; {:dispatch [:router/go-to! "/privacy-settings"]}
-;
+
+
 
 ; Statisztikai adatgyüjtés, amikor nincs hozzákötve felhasználóhoz az adat. (anonimizált adat)
-;
 
-;
+
 
 ; https://ec.europa.eu/info/law/law-topic/data-protection/reform/rules-business-and-organisations/principles-gdpr/what-information-must-be-given-individuals-whose-data-collected_hu
+
+
 
 ; WEBSITE
 ;
@@ -32,7 +30,6 @@
 ; Nem átadjuk, hanem lehetővé tesszük az adatgyűjtést
 ; Google Maps, Youtube, Google Analytics, Facebook Pixel, Hotjar
 ; Cross-site trackers
-;
 
 
 
@@ -51,8 +48,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.04
 ; Description:
-; Version: v0.1.2
-; Compatibility: x4.4.5
+; Version: v0.2.0
+; Compatibility: x4.4.6
 
 
 
@@ -74,8 +71,7 @@
   ; @param (keyword) surface-id
   ;
   ; @return (component)
-  [surface-id]
-  [elements/box {:content "Coming soon..."}])
+  [surface-id])
 
 
 
@@ -83,13 +79,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  :views/render-privacy-policy!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-ui/set-surface! ::view
-                          {:content #'view}])
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [::render!]
-                                     :route-template "/privacy-policy"}]})
+  [:views/render-error-page! :under-construction])

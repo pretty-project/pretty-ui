@@ -92,7 +92,7 @@
   [_ _]
   [:button#x-website-menu--toggle
     {:on-click    #(a/dispatch [:website-menu/toggle-visibility!])
-     :on-mouse-up #(a/dispatch [:x.app-environment.element-handler/blur!])
+     :on-mouse-up #(a/dispatch [:environment/blur-element!])
      :title        (components/content {:content :menu})}
     [:div#x-website-menu--toggle-icon]])
 

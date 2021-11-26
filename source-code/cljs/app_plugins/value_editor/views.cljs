@@ -118,7 +118,7 @@
   [elements/button ::cancel-button
                    {:keypress {:key-code 27 :required? true}
                     :preset   :cancel-button
-                    :on-click [:x.app-tools.editor/cancel-editing! editor-id]}])
+                    :on-click [:value-editor/cancel-editing! editor-id]}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

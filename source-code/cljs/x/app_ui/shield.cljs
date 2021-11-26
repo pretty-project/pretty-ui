@@ -66,15 +66,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-if [(shield-hidden?)
-                     [:x.app-environment.element-handler/reveal-animated! "x-app-shield"]]}))
+                     [:environment/reveal-element-animated! "x-app-shield"]]}))
 
 (a/reg-event-fx
   :x.app-ui/hide-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-if [(shield-visible?)
-                     [:x.app-environment.element-handler/hide-animated!
-                      renderer/HIDE-ANIMATION-TIMEOUT "x-app-shield"]]}))
+                     [:environment/hide-element-animated! renderer/HIDE-ANIMATION-TIMEOUT "x-app-shield"]]}))
 
 (a/reg-event-fx
   :x.app-ui/set-shield!
@@ -106,4 +105,4 @@
 (a/reg-event-fx
   :x.app-ui/empty-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:x.app-environment.element-handler/empty-element! "x-app-shield--content"])
+  [:environment/empty-element! "x-app-shield--content"])

@@ -44,16 +44,19 @@
   ;
   ; @example (resolver-id as keyword)
   ;  (request-response->query-answer {:all-users [{...} {...}]} :all-users)
-  ;  => [{...} {...}]
+  ;  =>
+  ;  [{...} {...}]
   ;
   ; @example (entity as vector)
   ;  (request-response->query-answer {[:directory/id "my-directory"] {:directory/id "my-directory"}}
   ;                                  [:directory/id "my-directory"])
-  ;  => {:directory/id "my-directory"}
+  ;  =>
+  ;  {:directory/id "my-directory"}
   ;
   ; @example (mutation-f-name as string)
   ;  (request-response->query-answer {media/update-item! "*"} "media/update-item!")
-  ;  => "*"
+  ;  =>
+  ;  "*"
   ;
   ; @return (*)
   [request-response query-key]
@@ -147,7 +150,8 @@
   ;
   ; @example
   ;  (r sync/get-query-answer db :my-query :all-users)
-  ;  => [{...} {...}]
+  ;  =>
+  ;  [{...} {...}]
   ;
   ; @return (*)
   [db [_ query-id query-key]]
@@ -176,7 +180,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-sync/send-query!
+  :sync/send-query!
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
   ;  {:body (map)(opt)
@@ -199,33 +203,33 @@
   ;    Default: DEFAULT-URI}
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {...}]
+  ;  [:sync/send-query! {...}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! :my-query {...}]
+  ;  [:sync/send-query! :my-query {...}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query "[:all-users]"}]
+  ;  [:sync/send-query! {:query "[:all-users]"}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users]}]
+  ;  [:sync/send-query! {:query [:all-users]}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
+  ;  [:sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users]}]
-  ;                            :target-paths {:my-data-item   [:db :my   :data :item :path]
-  ;                                           :your-data-item [:db :your :data :item :path]
-  ;                                           :my-item {:my-nested-item [:db :my :nested :item]}}
+  ;  [:sync/send-query! {:query [:all-users]}]
+  ;                      :target-paths {:my-data-item   [:db :my   :data :item :path]
+  ;                                     :your-data-item [:db :your :data :item :path]
+  ;                                     :my-item {:my-nested-item [:db :my :nested :item]}}
   ;
   ; @usage
-  ;  [:x.app-sync/send-query! {:query [:all-users]}]
-  ;                            :target-path [:my :response :path]}
+  ;  [:sync/send-query! {:query [:all-users]}]
+  ;                      :target-path [:my :response :path]}
   (fn [{:keys [db]} event-vector]
       (let [query-id      (a/event-vector->second-id   event-vector)
             query-props   (a/event-vector->first-props event-vector)
             query-props   (a/prot query-props query-props-prototype)
             request-props (query-props->request-props  query-id query-props)]
            {:db       (r store-query-props!   db query-id query-props)
-            :dispatch [:x.app-sync/send-request! query-id request-props]})))
+            :dispatch [:sync/send-request! query-id request-props]})))

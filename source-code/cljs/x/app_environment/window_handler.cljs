@@ -31,7 +31,7 @@
   ;
   ; @return (function)
   []
-  (a/dispatch [::->connection-changed]))
+  (a/dispatch [:environment/->connection-changed]))
 
 
 
@@ -71,87 +71,105 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- open-new-browser-tab!
+(defn open-new-browser-tab!
   ; @param (string) uri
+  ;
+  ; @usage
+  ;  (environment/open-new-browser-tab! "www.my-site.com/my-link")
   [uri]
   (.open js/window uri "_blank"))
 
 ; @usage
-;  [:x.app-environment.window-handler/open-new-browser-tab! "www.my-site.com/my-link"]
-(a/reg-handled-fx ::open-new-browser-tab! open-new-browser-tab!)
+;  [:environment/open-new-browser-tab! "www.my-site.com/my-link"]
+(a/reg-handled-fx :environment/open-new-browser-tab! open-new-browser-tab!)
 
-(defn- set-title!
+(defn set-window-title!
   ; @param (string) title
+  ;
+  ; @usage
+  ;  (environment/set-window-title! "My title")
   [title]
   (set! (-> js/document .-title) title))
 
 ; @usage
-;  [:x.app-environment.window-handler/set-title! "My title"]
-(a/reg-handled-fx ::set-title! set-title!)
+;  [:environment/set-window-title! "My title"]
+(a/reg-handled-fx :environment/set-window-title! set-window-title!)
 
-(defn- reload!
+(defn reload-window!
+  ; @usage
+  ;  (environment/reload-window!)
   []
   (.reload js/window.location true))
 
 ; @usage
-;  [:x.app-environment.window-handler/reload!]
-(a/reg-handled-fx ::reload! reload!)
+;  [:environment/reload-window!]
+(a/reg-handled-fx :environment/reload-window! reload-window!)
 
-(defn- go-to-root!
+(defn go-to-root!
+  ; @usage
+  ;  (environment/go-to-root!)
   []
   (set! (-> js/window .-location .-href) "/"))
 
 ; @usage
-;  [:x.app-environment.window-handler/go-to-root!]
-(a/reg-handled-fx ::go-to-root!)
+;  [:environment/go-to-root!]
+(a/reg-handled-fx :environment/go-to-root!)
 
-(defn- go-to!
+(defn go-to!
   ; @param (string) uri
+  ;
+  ; @usage
+  ;  (environment/go-to! "www.my-site.com/my-link")
   [uri]
   (set! (-> js/window .-location .-href) uri))
 
 ; @usage
-;  [:x.app-environment.window-handler/go-to! "www.my-site.com/my-link"]
-(a/reg-handled-fx ::go-to! go-to!)
+;  [:environment/go-to! "www.my-site.com/my-link"]
+(a/reg-handled-fx :environment/go-to! go-to!)
 
-(defn- set-interval!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn set-interval!
   ; @param (keyword) interval-id
   ; @param (map) interval-props
   ;  {:event (metamorphic-event)
   ;   :interval (ms)}
+  ;
+  ; @usage
+  ;  (environment/set-interval! :my-interval {:event [:do-something!]
+  ;                                           :interval 420})
   [interval-id {:keys [interval event] :as interval-props}]
   (fn [[interval-id {:keys [interval event] :as interval-props}]]
       (let [js-id          (time/set-interval! interval #(a/dispatch event))
             interval-props (assoc interval-props :js-id js-id)]
            ; TODO ...
            ; Re-Frame adatbázis helyett helyi atomban legyenek tárolva!
-           (a/dispatch [::store-interval-props! interval-id interval-props]))))
+           (a/dispatch [:environment/store-interval-props! interval-id interval-props]))))
 
 ; @usage
-;  [:x.app-environment.window-handler/set-interval! :my-interval {:event [:do-something!]
-;                                                                 :interval 420}]
-(a/reg-handled-fx ::set-interval! set-interval!)
+;  [:environment/set-interval! :my-interval {:event [:do-something!]
+;                                            :interval 420}]
+(a/reg-handled-fx :environment/set-interval! set-interval!)
 
-(defn- clear-interval!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn clear-interval!
   ; @param (keyword) js-id
+  ;
+  ; @usage
+  ;  (environment/clear-interval! :my-interval)
   [js-id]
   (time/clear-interval! js-id))
 
 ; @usage
-;  [:x.app-environment.window-handler/clear-interval! :my-interval]
-(a/reg-handled-fx ::clear-interval! clear-interval!)
+;  [:environment/clear-interval! :my-interval]
+(a/reg-handled-fx :environment/clear-interval! clear-interval!)
 
-(defn- set-timeout!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn set-timeout!
   ; @param (keyword) timeout-id
   ; @param (map) timeout-props
   ;  {:event (metamorphic-event)
   ;   :timeout (ms)}
+  ;
+  ; @usage
+  ;  (environment/set-timeout! :my-timeout {:event [:do-something!]
+  ;                                         :timeout 420})
   [timeout-id {:keys [timeout event] :as timeout-props}]
   (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
         timeout-props (assoc timeout-props :js-id js-id)]
@@ -160,20 +178,21 @@
        (a/dispatch [::store-timeout-props! timeout-id timeout-props])))
 
 ; @usage
-;  [:x.app-environment.window-handler/set-timeout! :my-timeout {:event [:do-something!]
-;                                                               :timeout 420}]
-(a/reg-handled-fx ::set-timeout! set-timeout!)
+;  [:environment/set-timeout! :my-timeout {:event [:do-something!]
+;                                          :timeout 420}]
+(a/reg-handled-fx :environment/set-timeout! set-timeout!)
 
-(defn- clear-timeout!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn clear-timeout!
   ; @param (keyword) js-id
+  ;
+  ; @usage
+  ;  (environment/clear-timeout! :my-timeout)
   [js-id])
   ; TODO ...
 
 ; @usage
-;  [:x.app-environment.window-handler/clear-timeout! :my-timeout]
-(a/reg-handled-fx ::clear-timeout! clear-timeout!)
+;  [:environment/clear-timeout! :my-timeout]
+(a/reg-handled-fx :environment/clear-timeout! clear-timeout!)
 
 
 
@@ -190,7 +209,7 @@
   [db [_ interval-id interval-props]]
   (assoc-in db (db/path ::intervals interval-id) interval-props))
 
-(a/reg-event-db ::store-interval-props! store-interval-props!)
+(a/reg-event-db :environment/store-interval-props! store-interval-props!)
 
 (defn- store-timeout-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -202,7 +221,7 @@
   [db [_ timeout-id timeout-props]]
   (assoc-in db (db/path ::timeouts timeout-id) timeout-props))
 
-(a/reg-event-db ::store-timeout-props! store-timeout-props!)
+(a/reg-event-db :environment/store-timeout-props! store-timeout-props!)
 
 (defn- update-window-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -213,7 +232,7 @@
          (assoc-in (db/meta-item-path ::primary :language)        (window/get-language))
          (assoc-in (db/meta-item-path ::primary :user-agent)      (window/get-user-agent))))
 
-(a/reg-event-db ::update-window-data! update-window-data!)
+(a/reg-event-db :environment/update-window-data! update-window-data!)
 
 
 
@@ -221,42 +240,56 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::reg-interval!
+  :environment/reg-interval!
   ; @param (keyword)(opt) interval-id
   ; @param (map) interval-props
   ;  {:event (metamorphic-event)
   ;   :interval (ms)}
+  ;
+  ; @usage
+  ;  [:environment/reg-interval! :my-interval {:event [:do-something!]
+  ;                                            :interval 420}]
   (fn [{:keys [db]} event-vector]
       (let [interval-id    (a/event-vector->second-id   event-vector)
             interval-props (a/event-vector->first-props event-vector)]
            {:dispatch-if [(not (r interval-exists? db interval-id))
-                          [::set-interval! interval-id interval-props]]})))
+                          [:environment/set-interval! interval-id interval-props]]})))
 
 (a/reg-event-fx
-  ::remove-interval!
+  :environment/remove-interval!
   ; @param (keyword) interval-id
+  ;
+  ; @usage
+  ;  [:environment/remove-interval! :my-interval]
   (fn [{:keys [db]} [_ interval-id]]
       (let [{:keys [js-id]} (get-in db (db/path ::intervals interval-id))]
-           [::clear-interval! js-id])))
+           [:environment/clear-interval! js-id])))
 
 (a/reg-event-fx
-  ::reg-timeout!
+  :environment/reg-timeout!
   ; @param (keyword)(opt) timeout-id
   ; @param (map) timeout-props
   ;  {:event (metamorphic-event)
   ;   :timeout (ms)}
+  ;
+  ; @usage
+  ;  [:environment/reg-timeout! :my-timeout {:event [:do-something!]
+  ;                                          :timeout 420}]
   (fn [{:keys [db]} event-vector]
       (let [timeout-id    (a/event-vector->second-id   event-vector)
             timeout-props (a/event-vector->first-props event-vector)]
            {:dispatch-if [(not (r timeout-exists? db timeout-id))
-                          [::set-timeout! timeout-id timeout-props]]})))
+                          [:environment/set-timeout! timeout-id timeout-props]]})))
 
 (a/reg-event-fx
-  ::remove-timeout!
+  :environment/remove-timeout!
   ; @param (keyword) timeout-id
+  ;
+  ; @usage
+  ;  [:environment/remove-timeout! :my-timeout]
   (fn [{:keys [db]} [_ timeout-id]]
       (let [{:keys [js-id]} (get-in db (db/path ::timeouts timeout-id))]
-           [::clear-timeout! js-id])))
+           [:environment/clear-timeout! js-id])))
 
 
 
@@ -269,7 +302,7 @@
   (do (dom/add-event-listener! "online"  connection-change-listener)
       (dom/add-event-listener! "offline" connection-change-listener)))
 
-(a/reg-handled-fx ::listen-to-connection-change! listen-to-connection-change!)
+(a/reg-handled-fx :environment/listen-to-connection-change! listen-to-connection-change!)
 
 
 
@@ -277,13 +310,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->connection-changed
+  :environment/->connection-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [browser-online? (window/browser-online?)]
            {:db          (assoc-in db (db/meta-item-path ::primary :browser-online?) browser-online?)
-            :dispatch-if [browser-online? [:x.app-core/connect-app!]
-                                          [:x.app-core/disconnect-app!]]})))
+            :dispatch-if [browser-online? [:core/connect-app!]
+                                          [:core/disconnect-app!]]})))
 
 
 
@@ -292,5 +325,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init {:dispatch-n [[::update-window-data!]
-                              [::listen-to-connection-change!]]}})
+  {:on-app-init {:dispatch-n [[:environment/update-window-data!]
+                              [:environment/listen-to-connection-change!]]}})

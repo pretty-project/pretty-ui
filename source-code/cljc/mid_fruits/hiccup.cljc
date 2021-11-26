@@ -36,8 +36,9 @@
   ;
   ; @example
   ;  (hiccup/explode "ab" [:div])
-  ;  => [:div [:span "a"]
-  ;           [:span "b"])
+  ;  =>
+  ;  [:div [:span "a"]
+  ;        [:span "b"])
   ;
   ; @return (nil or hiccup)
   [n container]
@@ -54,7 +55,8 @@
   ;
   ; @example
   ;  (hiccup/tag-name? [:div "Hello World!"] :div)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n tag-name]
@@ -66,7 +68,8 @@
   ;
   ; @example
   ;  (hiccup/to-string [:div "Hello " [:strong "World!"]])
-  ;  => "Hello World!"
+  ;  =>
+  ;  "Hello World!"
   ;
   ; @return (string)
   [n]
@@ -82,7 +85,8 @@
   ;
   ; @example
   ;  (hiccup/content-length [:div "Hello World!"])
-  ;  => 12
+  ;  =>
+  ;  12
   ;
   ; @return (integer)
   [n]

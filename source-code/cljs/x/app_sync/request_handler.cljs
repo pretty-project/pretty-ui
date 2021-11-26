@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.4.0
-; Compatibility: x4.4.5
+; Version: v2.4.8
+; Compatibility: x4.4.6
 
 
 
@@ -38,9 +38,9 @@
 
 ; @constant (map)
 (def REQUEST-HANDLERS
-     {:error-handler-event    ::->request-failure
-      :handler-event          ::->request-success
-      :progress-handler-event ::->request-progressed})
+     {:error-handler-event    :sync/->request-failure
+      :handler-event          :sync/->request-success
+      :progress-handler-event :sync/->request-progressed})
 
 
 
@@ -235,7 +235,7 @@
    :request-failured?     (r request-failured?     db request-id)
    :listening-to-request? (r listening-to-request? db request-id)})
 
-(a/reg-sub :x.app-sync/get-request-state get-request-state)
+(a/reg-sub :sync/get-request-state get-request-state)
 
 
 
@@ -296,19 +296,24 @@
   (-> db (assoc-in (db/path ::requests request-id) request-props)
          ; DEBUG
          (assoc-in (db/path ::requests request-id :debug)
-                   [:x.app-sync/get-request-state request-id])
+                   [:sync/get-request-state request-id])
          ; DEBUG
          (db/update-data-history! [event-id ::requests request-id])))
 
 (defn clear-request!
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/clear-request! db :my-request)
+  ;
   ; @return (map)
   [db [event-id request-id]]
   (-> db (db/remove-item!  [event-id (db/path ::requests request-id)])
          (a/clear-process! [event-id request-id])))
 
-(a/reg-event-db :x.app-sync/clear-request! clear-request!)
+; @usage
+;  [:sync/clear-request! :my-request]
+(a/reg-event-db :sync/clear-request! clear-request!)
 
 
 
@@ -316,18 +321,18 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-sync/show-request-failure-message!
+  :sync/show-request-failure-message!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ; @param (keyword or string) status-text
   (fn [{:keys [db]} [_ request-id status-text]]
       [:x.app-ui/blow-bubble! request-id
-       {:content (or status-text DEFAULT-FAILURE-MESSAGE)
-        :color   :warning}]))
+                              {:content (or status-text DEFAULT-FAILURE-MESSAGE)
+                               :color   :warning}]))
 
 (a/reg-event-fx
-  :x.app-sync/send-request!
+  :sync/send-request!
   ; @param (keyword)(opt) request-id
   ;  A request a saját request-id azonosítójával párhuzamosan elindít egy process
   ;  folyamatot, ennek köszönhetően a request státuszát, aktivitását
@@ -379,34 +384,34 @@
   ;    "/sample-uri"}
   ;
   ; @usage
-  ;  [:x.app-sync/send-request! {...}]
+  ;  [:sync/send-request! {...}]
   ;
   ; @usage
-  ;  [:x.app-sync/send-request! :my-request {...}]
+  ;  [:sync/send-request! :my-request {...}]
   ;
   ; @usage
   ;  (defn download-our-data [request] (http/map-wrap {:my-data-item "..." :your-data-item "..."}))
-  ;  [:x.app-sync/send-request! {:method :get
-  ;                              :target-paths {:my-data-item   [:db :my   :data :item :path]
-  ;                                             :your-data-item [:db :your :data :item :path]
-  ;                                             :my-item {:my-nested-item [:db :my :nested :item]}}
-  ;                              :uri "/get-our-data"}]
+  ;  [:sync/send-request! {:method :get
+  ;                        :target-paths {:my-data-item   [:db :my   :data :item :path]
+  ;                                       :your-data-item [:db :your :data :item :path]
+  ;                                       :my-item {:my-nested-item [:db :my :nested :item]}}
+  ;                        :uri "/get-our-data"}]
   ;
   ; @usage
   ;  (defn my-modifier [db [_ request-id response] (do-something-with! response))
-  ;  [:x.app-sync/send-request! {:method      :get
-  ;                              :modifier    my-modifier
-  ;                              :target-path [:my :response :path]
-  ;                              :uri         "/get-my-data"}]
+  ;  [:sync/send-request! {:method      :get
+  ;                        :modifier    my-modifier
+  ;                        :target-path [:my :response :path]
+  ;                        :uri         "/get-my-data"}]
   (fn [{:keys [db]} event-vector]
       (let [request-id    (a/event-vector->second-id   event-vector)
             request-props (a/event-vector->first-props event-vector)
             request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
                {:db         (r store-request-props! db request-id request-props)
-                :dispatch-n [[:x.app-sync/->request-sent request-id]
+                :dispatch-n [[:sync/->request-sent request-id]
                              (let [request-props (merge request-props REQUEST-HANDLERS)]
-                                  [:x.app-utils.http/send-request! request-id request-props])]}))))
+                                  [:http/send-request! request-id request-props])]}))))
 
 
 
@@ -414,7 +419,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-sync/->request-sent
+  :sync/->request-sent
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -431,7 +436,7 @@
        :dispatch (r get-request-on-sent-event db request-id)}))
 
 (a/reg-event-fx
-  ::->request-success
+  :sync/->request-success
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -440,19 +445,19 @@
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [server-response (reader/string->mixed server-response-body)]
            {:dispatch-n
-            [[:x.app-sync/handle-request-response! request-id server-response]
-             [:x.app-core/set-process-status!      request-id :success]
-             [:x.app-core/set-process-activity!    request-id :idle]
-             (r get-request-on-success-event   db  request-id server-response)
-             (r get-request-on-responsed-event db  request-id server-response)]
+            [[:sync/handle-request-response!      request-id server-response]
+             [:core/set-process-status!           request-id :success]
+             [:core/set-process-activity!         request-id :idle]
+             (r get-request-on-success-event   db request-id server-response)
+             (r get-request-on-responsed-event db request-id server-response)]
             :dispatch-later
             [{:ms       (r get-request-idle-timeout     db request-id)
-              :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
+              :dispatch [:core/set-process-activity!       request-id :stalled]}
              {:ms       (r get-request-idle-timeout     db request-id)
               :dispatch (r get-request-on-stalled-event db request-id server-response)}]})))
 
 (a/reg-event-fx
-  ::->request-failure
+  :sync/->request-failure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -465,23 +470,23 @@
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
       {:dispatch-n
-       [[:x.app-core/set-process-status!     request-id :failure]
-        [:x.app-core/set-process-activity!   request-id :idle]
+       [[:core/set-process-status!           request-id :failure]
+        [:core/set-process-activity!         request-id :idle]
         (r get-request-on-failure-event   db request-id server-response)
         (r get-request-on-responsed-event db request-id server-response)
         (if-not (r silent-mode? db request-id)
-                [:x.app-sync/show-request-failure-message! request-id status-text])]
+                [:sync/show-request-failure-message! request-id status-text])]
        :dispatch-later
        [{:ms       (r get-request-idle-timeout     db request-id)
-         :dispatch [:x.app-core/set-process-activity! request-id :stalled]}
+         :dispatch [:core/set-process-activity!       request-id :stalled]}
         {:ms       (r get-request-idle-timeout     db request-id)
          :dispatch (r get-request-on-stalled-event db request-id server-response)}]}))
 
 (a/reg-event-fx
-  ::->request-progressed
+  :sync/->request-progressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ; @param (integer) request-progress
   (fn [_ [_ request-id request-progress]]
-      [:x.app-core/set-process-progress! request-id request-progress]))
+      [:core/set-process-progress! request-id request-progress]))

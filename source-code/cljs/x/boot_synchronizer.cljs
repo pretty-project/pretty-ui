@@ -46,9 +46,9 @@
   ; @usage
   ;  [:boot-synchronizer/synchronize-app! #'app]
   (fn [_ [_ app]]
-      [:x.app-sync/send-request! ::synchronize-app!
-                                 {:method       :get
-                                  :on-failure   [:x.app-core/->error-catched]
-                                  :on-success   [:boot-loader/->app-synchronized app]
-                                  :target-paths TARGET-PATHS
-                                  :uri          "/synchronize-app"}]))
+      [:sync/send-request! ::synchronize-app!
+                           {:method       :get
+                            :on-failure   [:core/->error-catched]
+                            :on-success   [:boot-loader/->app-synchronized app]
+                            :target-paths TARGET-PATHS
+                            :uri          "/synchronize-app"}]))

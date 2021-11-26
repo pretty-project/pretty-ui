@@ -7,6 +7,9 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 {; @param (map) app-details
  ;  {:author (string)
  ;   :app-build (string)
@@ -53,17 +56,12 @@
  ;     :hu (string)}
  ;   :terms-of-service (map)
  ;    {:en (string)
- ;     :hu (string)}
- ;   :what-cookies-are? (map)
- ;    {:en (string)
  ;     :hu (string)}}
  :site-links
  {:privacy-policy    {:en "/privacy-policy"
                       :hu "/adatvedelmi-iranyelvek"}}
 ; :terms-of-service  {:en "/terms-of-service"
 ;                     :hu "/felhasznalasi-feltetelek"}}
-; :what-cookies-are? {:en "/what-cookies-are"
-;                     :hu "/mik-azok-a-sutik"}
 
 
  ; @param (map) seo-details

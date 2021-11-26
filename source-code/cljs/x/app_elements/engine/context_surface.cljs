@@ -47,10 +47,8 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [event-id element-id]]
       (let [partition-id :x.app-elements.engine.element/elements]
-           {:dispatch-n [[:x.app-environment.event-handler/add-event-listener!
-                          "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
-                         [:x.app-environment.event-handler/add-event-listener!
-                          "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]
+           {:dispatch-n [[:environment/add-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
+                         [:environment/add-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]
                          [:x.app-elements/set-element-prop! element-id :render-context-surface? true]]
 
             ; DEBUG
@@ -70,10 +68,8 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (let [partition-id :x.app-elements.engine.element/elements]
-           {:dispatch-n [[:x.app-environment.event-handler/remove-event-listener!
-                          "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
-                         [:x.app-environment.event-handler/remove-event-listener!
-                          "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
+           {:dispatch-n [[:environment/remove-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
+                         [:environment/remove-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
             :db (r element/set-element-prop! db element-id :render-context-surface? false)})))
 
 (a/reg-event-fx
@@ -81,15 +77,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Mivel ha egy event-listener paraméterezhető függvényként kerül átadásra
-  ; az [:x.app-environment.event-handler/add-event-listener!] eseménynek, akkor
-  ; nem eltávolítható. Emiatt szükséges paraméterezés nélkül átadni a listener
+  ; az [:environment/add-event-listener!] eseménynek, akkor nem eltávolítható.
+  ; Emiatt szükséges paraméterezés nélkül átadni a listener
   ; függvényt és a [:x.app-elements/close-context-surface! element-id]
   ; esemény helyett a [:x.app-elements/close-all-context-surface!]
   ; eseményt használni.
   (fn [{:keys [db]} _]
       (let [partition-id :x.app-elements.engine.element/elements]
-           {:dispatch-n [[:x.app-environment.event-handler/remove-event-listener!
-                          "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
-                         [:x.app-environment.event-handler/remove-event-listener!
-                          "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
+           {:dispatch-n [[:environment/remove-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
+                         [:environment/remove-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]]
             :db (r db/apply-data-items! db partition-id dissoc :render-context-surface?)})))

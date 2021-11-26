@@ -649,14 +649,21 @@
       :page-is-not-available
       {:en "Sorry, this page is not available"
        :hu "A keresett oldal nem található"}
-      ;:hu "A megadott címen ..."
+      :page-is-under-construction
+      {:en "Sorry, this page is under construction"
+       :hu "A keresett oldal fejlesztés alatt áll"}
+      :page-is-under-maintenance
+      {:en "Sorry, this page is under maintenance"
+       :hu "A keresett oldal pillanatnyilag nem elérhető"}
       :page-not-found
       {:en "Page not found"
        :hu "Az oldal nem található"}
       :please-check-your-internet-connection
-      {:en "Please check your internet connection and try to reload"
-       :hu ""}
-      ;:hu "Kérlek ellenőrízd a ..."
+      {:en "Please check your internet connection!"
+       :hu "Kérlek ellenőrizd az internet kapcsolatot!"}
+      :please-check-back-soon...
+      {:en "Please check back soon ..."
+       :hu "Kérlek nézz vissza később ..."}
       :send-error-report!
       {:en "Send error report"
        :hu "Hibajelentés küldése"}
@@ -714,10 +721,7 @@
         :hu "Sütik használata"}
        :user-experience-cookies
        {:en "User-experience cookies"
-        :hu "Felhasználói élmény sütik"}
-       :what-cookies-are?
-       {:en "What cookies are?"
-        :hu "Mik azok a sütik?"}})
+        :hu "Felhasználói élmény sütik"}})
 
 
 

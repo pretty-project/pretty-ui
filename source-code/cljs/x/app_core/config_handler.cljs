@@ -35,5 +35,5 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-sub :x.app-core/get-app-details get-app-details)
-(event-handler/reg-sub :x.app-core/get-app-detail  get-app-detail)
+(event-handler/reg-sub :core/get-app-details get-app-details)
+(event-handler/reg-sub :core/get-app-detail  get-app-detail)

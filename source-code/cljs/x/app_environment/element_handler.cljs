@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.6.4
-; Compatibility: x3.9.9
+; Version: v0.8.8
+; Compatibility: x4.4.6
 
 
 
@@ -38,28 +38,37 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::remove-animated!
+  :environment/remove-element-animated!
   ; @param (integer) timeout
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/remove-element-animated! 500 "my-element"]
   (fn [_ [_ timeout element-id]]
-      {:dispatch-later [{:ms 0       :dispatch [::set-attribute!  element-id "data-animation" "hide"]}
-                        {:ms timeout :dispatch [::remove-element! element-id]}]}))
+      {:dispatch-later [{:ms 0       :dispatch [:environment/set-element-attribute!  element-id "data-animation" "hide"]}
+                        {:ms timeout :dispatch [:environment/remove-element!         element-id]}]}))
 
 (a/reg-event-fx
-  ::hide-animated!
+  :environment/hide-element-animated!
   ; @param (integer) timeout
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/hide-element-animated! 500 "my-element"]
   (fn [_ [_ timeout element-id]]
-      {:dispatch-later [{:ms 0       :dispatch [::set-attribute!    element-id "data-animation" "hide"]}
-                        {:ms timeout :dispatch [::set-style-value!  element-id "display"        "none"]}
-                        {:ms timeout :dispatch [::remove-attribute! element-id "data-animation"]}]}))
+      {:dispatch-later [{:ms 0       :dispatch [:environment/set-element-attribute!    element-id "data-animation" "hide"]}
+                        {:ms timeout :dispatch [:environment/set-element-style-value!  element-id "display"        "none"]}
+                        {:ms timeout :dispatch [:environment/remove-element-attribute! element-id "data-animation"]}]}))
 
 (a/reg-event-fx
-  ::reveal-animated!
+  :environment/reveal-element-animated!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/reveal-element-animated! "my-element"]
   (fn [_ [_ element-id]]
-      {:dispatch-n [[::set-style-value! element-id "display"        "block"]
-                    [::set-attribute!   element-id "data-animation" "reveal"]]}))
+      {:dispatch-n [[:environment/set-element-style-value! element-id "display"        "block"]
+                    [:environment/set-element-attribute!   element-id "data-animation" "reveal"]]}))
 
 
 
@@ -67,16 +76,22 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::reveal!
+  :environment/reveal-element!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/reveal-element! "my-element"]
   (fn [_ [_ element-id]]
-      [::set-style-value! element-id "display" "block"]))
+      [:environment/set-element-style-value! element-id "display" "block"]))
 
 (a/reg-event-fx
-  ::hide!
+  ::hide-element!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/hide-element! "my-element"]
   (fn [_ [_ element-id]]
-      [::set-style-value! element-id "display" "none"]))
+      [:environment/set-element-style-value! element-id "display" "none"]))
 
 
 
@@ -84,38 +99,50 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::mark-masspoint-orientation!
+  :environment/mark-element-masspoint-orientation!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/mark-element-masspoint-orientation! "my-element"]
   (fn [_ [_ element-id]]
       (if-let [element (dom/get-element-by-id element-id)]
               (let [masspoint-orientation (dom/get-element-masspoint-orientation element)]
-                   [::set-attribute! element-id "data-masspoint-orientation"
-                                     (keyword/to-dom-value masspoint-orientation)]))))
+                   [:environment/set-element-attribute! element-id "data-masspoint-orientation"
+                                                        (keyword/to-dom-value masspoint-orientation)]))))
 
 (a/reg-event-fx
-  ::unmark-masspoint-orientation!
+  :environment/unmark-element-masspoint-orientation!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  [:environment/unmark-element-masspoint-orientation! "my-element"]
   (fn [_ [_ element-id]]
       (if-let [element (dom/get-element-by-id element-id)]
-              [::remove-attribute! element-id "data-masspoint-orientation"])))
+              [:environment/remove-element-attribute! element-id "data-masspoint-orientation"])))
 
 
 
 ;; -- Focus/blur side-effect events -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- focus!
+(defn focus-element!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/focus-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/focus-element! element)))
 
 ; @usage
-;  [:x.app-environment.element-handler/focus! "my-element"]
-(a/reg-handled-fx ::focus! focus!)
+;  [:environment/focus-element! "my-element"]
+(a/reg-handled-fx :environment/focus-element! focus-element!)
 
-(defn- blur!
+(defn- blur-element!
   ; @param (string)(opt) element-id
+  ;
+  ; @usage
+  ;  (environment/blur-element! "my-element")
   ([]
    (let [active-element (dom/get-active-element)]
         (dom/blur-element! active-element)))
@@ -125,133 +152,163 @@
            (dom/blur-element! element))))
 
 ; @usage
-;  [:x.app-environment.element-handler/blur!]
+;  [:environment/blur-element!]
 ;
 ; @usage
-;  [:x.app-environment.element-handler/blur! "my-element"]
-(a/reg-handled-fx ::blur! blur!)
+;  [:environment/blur-element! "my-element"]
+(a/reg-handled-fx :environment/blur-element! blur-element!)
 
 
 
 ;; -- Classlist side-effect events --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-class!
+(defn add-element-class!
   ; @param (string) element-id
   ; @param (string) class-name
+  ;
+  ; @usage
+  ;  (environment/add-element-class! "my-element" "my-class")
   [element-id class-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-class! element class-name)))
 
 ; @usage
-;  [:x.app-environment.element-handler/add-class! "my-element" "my-class"]
-(a/reg-handled-fx ::add-class! add-class!)
+;  [:environment/add-element-class! "my-element" "my-class"]
+(a/reg-handled-fx :environment/add-element-class! add-element-class!)
 
-(defn- remove-class!
+(defn remove-element-class!
   ; @param (string) element-id
   ; @param (string) class-name
+  ;
+  ; @usage
+  ;  (environment/remove-element-class! "my-element" "my-class")
   [element-id class-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-class! element class-name)))
 
 ; @usage
-;  [:x.app-environment.element-handler/remove-class! "my-element" "my-class"]
-(a/reg-handled-fx ::remove-class! remove-class!)
+;  [:environment/remove-element-class! "my-element" "my-class"]
+(a/reg-handled-fx :environment/remove-element-class! remove-element-class!)
 
 
 
 ;; -- Attribute side-effect events --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-style!
+(defn set-element-style!
   ; @param (string) element-id
   ; @param (map) style
+  ;
+  ; @usage
+  ;  (environment/set-element-style! "my-element" {:opacity 1})
   [element-id style]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-style! element style)))
 
 ; @usage
-;  [:x.app-environment.element-handler/set-style! "my-element" {:opacity 1}]
-(a/reg-handled-fx ::set-style! set-style!)
+;  [:environment/set-element-style! "my-element" {:opacity 1}]
+(a/reg-handled-fx :environment/set-element-style! set-element-style!)
 
-(defn- remove-style!
+(defn remove-element-style!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/remove-element-style! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-style! element)))
 
 ; @usage
-;  [:x.app-environment.element-handler/remove-style! "my-element"]
-(a/reg-handled-fx ::remove-style! remove-style!)
+;  [:environment/remove-element-style! "my-element"]
+(a/reg-handled-fx :environment/remove-element-style! remove-element-style!)
 
-(defn- set-style-value!
+(defn set-element-style-value!
   ; @param (string) element-id
   ; @param (string) style-name
   ; @param (string) style-value
+  ;
+  ; @usage
+  ;  (environment/set-element-style-value! "my-element" "opacity" 1)
   [element-id style-name style-value]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-style-value! element style-name style-value)))
 
 ; @usage
-;  [:x.app-environment.element-handler/set-style-value! "my-element" "opacity" 1]
-(a/reg-handled-fx ::set-style-value! set-style-value!)
+;  [:environment/set-element-style-value! "my-element" "opacity" 1]
+(a/reg-handled-fx :environment/set-element-style-value! set-element-style-value!)
 
-(defn- remove-style-value!
+(defn remove-element-style-value!
   ; @param (string) element-id
   ; @param (string) style-name
+  ;
+  ; @usage
+  ;  (environment/remove-element-style-value! "my-element" "opacity")
   [element-id style-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-style-value! element style-name)))
 
 ; @usage
-;  [:x.app-environment.element-handler/remove-style-value! "my-element" "opacity"]
-(a/reg-handled-fx ::remove-style-value! remove-style-value!)
+;  [:environment/remove-element-style-value! "my-element" "opacity"]
+(a/reg-handled-fx :environment/remove-element-style-value! remove-element-style-value!)
 
-(defn- set-attribute!
+(defn set-element-attribute!
   ; @param (string) element-id
   ; @param (string) attribute-name
   ; @param (*) attribute-value
+  ;
+  ; @usage
+  ;  (environment/set-element-attribute! "my-element" "my-attribute" "my-value")
   [element-id attribute-name attribute-value]
   (if-let [element (dom/get-element-by-id element-id)]
           (let [attribute-value (str attribute-value)]
                (dom/set-element-attribute! element attribute-name attribute-value))))
 
 ; @usage
-;  [:x.app-environment.element-handler/set-attribute! "my-element" "my-attribute" "my-value"]
-(a/reg-handled-fx ::set-attribute! set-attribute!)
+;  [:environment/set-element-attribute! "my-element" "my-attribute" "my-value"]
+(a/reg-handled-fx :environment/set-element-attribute! set-element-attribute!)
 
-(defn- remove-attribute!
+(defn remove-element-attribute!
   ; @param (string) element-id
   ; @param (string) attribute-name
+  ;
+  ; @usage
+  ;  (environment/remove-element-attribute! "my-element" "my-attribute")
   [element-id attribute-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-attribute! element attribute-name)))
 
 ; @usage
-;  [:x.app-environment.element-handler/remove-attribute! "my-element" "my-attribute"]
-(a/reg-handled-fx ::remove-attribute! remove-attribute!)
+;  [:environment/remove-element-attribute! "my-element" "my-attribute"]
+(a/reg-handled-fx :environment/remove-element-attribute! remove-element-attribute!)
 
 
 
 ;; -- Node side-effect events -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- empty-element!
+(defn empty-element!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/empty-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/empty-element! element)))
 
 ; @usage
-;  [:x.app-environment.element-handler/empty-element! "my-element"]
-(a/reg-handled-fx ::empty-element! empty-element!)
+;  [:environment/empty-element! "my-element"]
+(a/reg-handled-fx :environment/empty-element! empty-element!)
 
-(defn- remove-element!
+(defn remove-element!
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/remove-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element! element)))
 
 ; @usage
-;  [:x.app-environment.element-handler/remove-element! "my-element"]
-(a/reg-handled-fx ::remove-element! remove-element!)
+;  [:environment/remove-element! "my-element"]
+(a/reg-handled-fx :environment/remove-element! remove-element!)

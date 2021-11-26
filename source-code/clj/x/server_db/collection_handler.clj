@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.28
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.1.5
+; Version: v0.4.0
+; Compatibility: x4.4.6
 
 
 
@@ -58,5 +58,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:x.server-db/store-collection! [:collection :path] [{...} {...}]]
-(a/reg-event-db :x.server-db/store-collection! store-collection!)
+;  [:db/store-collection! [:collection :path] [{...} {...}]]
+(a/reg-event-db :db/store-collection! store-collection!)

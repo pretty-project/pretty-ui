@@ -51,19 +51,19 @@
 ;
 ; (a/reg-event-fx
 ;   ::lets-rock!
-;   {:dispatch-n [[:x.app-core/reg-process-status-event! :my-process :failure [::->my-process-failured]
-;                 [:x.app-core/reg-process-status-event! :my-process :success [::->my-process-successed]
+;   {:dispatch-n [[:core/reg-process-status-event! :my-process :failure [::->my-process-failured]
+;                 [:core/reg-process-status-event! :my-process :success [::->my-process-successed]
 ;                 [::initialize-something!]]})
 ;
 ; (a/reg-event-fx
 ;   ::initialize-something!
-;   {:dispatch-n [[:x.app-core/set-process-status! :my-process :prepare]
+;   {:dispatch-n [[:core/set-process-status! :my-process :prepare]
 ;                 [::start-something!]]})
 ;
 ; (a/reg-event-fx
 ;   ::start-something!
-;   {:dispatch-n [[:x.app-core/set-process-status!   :my-process :progress]
-;                 [:x.app-core/set-process-activity! :my-process :active]
+;   {:dispatch-n [[:core/set-process-status!   :my-process :progress]
+;                 [:core/set-process-activity! :my-process :active]
 ;                 [::do-something!]]})
 ;
 ; (a/reg-event-fx
@@ -75,17 +75,17 @@
 ;
 ; (a/reg-event-fx
 ;   ::->something-successed
-;   {:dispatch-n     [[:x.app-core/set-process-status!   :my-process :success]
-;                     [:x.app-core/set-process-activity! :my-process :idle]]
-;    :dispatch-later [{:ms IDLE-TIMEOUT :dispatch
-;                      [:x.app-core/set-process-activity! :my-process :stalled]}]})
+;   {:dispatch-n     [[:core/set-process-status!   :my-process :success]
+;                     [:core/set-process-activity! :my-process :idle]]
+;    :dispatch-later [{:ms       IDLE-TIMEOUT
+;                      :dispatch [:core/set-process-activity! :my-process :stalled]}]})
 ;
 ; (a/reg-event-fx
 ;   ::->something-failured
-;   {:dispatch-n     [[:x.app-core/set-process-status!   :my-process :failure]
-;                     [:x.app-core/set-process-activity! :my-process :idle]]
-;    :dispatch-later [{:ms IDLE-TIMEOUT :dispatch
-;                      [:x.app-core/set-process-activity! :my-process :stalled]}]})
+;   {:dispatch-n     [[:core/set-process-status!   :my-process :failure]
+;                     [:core/set-process-activity! :my-process :idle]]
+;    :dispatch-later [{:ms       IDLE-TIMEOUT
+;                      :dispatch [:core/set-process-activity! :my-process :stalled]}]})
 
 
 
@@ -234,6 +234,9 @@
 (defn get-process-state
   ; @param (keyword) process-id
   ;
+  ; @usage
+  ;  (r a/get-process-state db :my-process)
+  ;
   ; @return (map)
   ;  {:process-status (keyword)
   ;   :process-activity (keyword)
@@ -243,7 +246,9 @@
    :process-activity (r get-process-activity db process-id)
    :process-progress (r get-process-progress db process-id)})
 
-(event-handler/reg-sub :x.app-core/get-process-state get-process-state)
+; @usage
+;  [:core/get-process-state :my-process]
+(event-handler/reg-sub :core/get-process-state get-process-state)
 
 
 
@@ -291,7 +296,7 @@
   ;  nem történnek meg a hozzárendelt process-*-event események.
   ;
   ;  As DB-event:     (r a/set-process-progress! db :my-process)
-  ;  As effect-event: [:x.app-core/set-process-progress! :my-process]
+  ;  As effect-event: [:core/set-process-progress!  :my-process]
   ;
   ; @param (keyword) process-id
   ; @param (percent) process-progress
@@ -328,14 +333,16 @@
   ; @param (metamorphic-event) event
   ;
   ; @usage
-  ;  [:x.app-core/reg-process-status-event! :my-process :success [:do-something!]]
+  ;  (r a/reg-process-status-event! db :my-process :success [:do-something!])
   ;
   ; @return (map)
   [db [_ process-id process-status event]]
   (update-in db [::processes :data-items process-id :status-events process-status]
              vector/conj-item event))
 
-(event-handler/reg-event-db :x.app-core/reg-process-status-event! reg-process-status-event!)
+; @usage
+;  [:core/reg-process-status-event! :my-process :success [:do-something!]]
+(event-handler/reg-event-db :core/reg-process-status-event! reg-process-status-event!)
 
 (defn- reg-process-activity-event!
   ; @param (keyword) process-id
@@ -343,14 +350,16 @@
   ; @param (metamorphic-event) event
   ;
   ; @usage
-  ;  [:x.app-core/reg-process-activity-event! :my-process :stalled [:do-something!]]
+  ;  (r a/reg-process-activity-event! db :my-process :stalled [:do-something!])
   ;
   ; @return (map)
   [db [_ process-id process-activity event]]
   (update-in db [::processes :data-items process-id :activity-events process-activity]
              vector/conj-item event))
 
-(event-handler/reg-event-db :x.app-core/reg-process-activity-event! reg-process-activity-event!)
+; @usage
+;  [:core/reg-process-activity-event! :my-process :stalled [:do-something!]]
+(event-handler/reg-event-db :core/reg-process-activity-event! reg-process-activity-event!)
 
 (defn- reg-process-progress-event!
   ; @param (keyword) process-id
@@ -358,26 +367,29 @@
   ; @param (metamorphic-event) event
   ;
   ; @usage
-  ;  [:x.app-core/reg-process-progress-event! :my-process 100 [:do-something!]]
+  ;  (r a/reg-process-progress-event! db :my-process 100 [:do-something!])
+  ;
   ;
   ; @return (map)
   [db [_ process-id process-progress event]]
   (update-in db [::processes :data-items process-id :progress-events process-progress]
              vector/conj-item event))
 
-(event-handler/reg-event-db :x.app-core/reg-process-progress-event! reg-process-progress-event!)
+; @usage
+;  [:core/reg-process-progress-event! :my-process 100 [:do-something!]]
+(event-handler/reg-event-db :core/reg-process-progress-event! reg-process-progress-event!)
 
 (defn- clear-process!
   ; @param (keyword) process-id
   ;
   ; @usage
-  ;  [:x.app-core/clear-process! :my-process]
+  ;  [:core/clear-process! :my-process]
   ;
   ; @return (map)
   [db [_ process-id]]
   (dissoc-in db [::processes :data-items process-id]))
 
-(event-handler/reg-event-db :x.app-core/clear-process! clear-process!)
+(event-handler/reg-event-db :core/clear-process! clear-process!)
 
 
 
@@ -385,12 +397,12 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/set-process-progress!
+  :core/set-process-progress!
   ; @param (keyword) process-id
   ; @param (percent) process-progress
   ;
   ; @usage
-  ;  [:x.app-core-set-process-progress! :my-process 100]
+  ;  [:core/set-process-progress! :my-process 100]
   (fn [{:keys [db]} [_ process-id process-progress]]
       (let [process-progress (math/floor process-progress)]
            (if-let [process-events (r get-process-progress-events db process-id process-progress)]
@@ -399,12 +411,12 @@
                    {:db (r set-process-progress! db process-id process-progress)}))))
 
 (event-handler/reg-event-fx
-  :x.app-core/set-process-status!
+  :core/set-process-status!
   ; @param (keyword) process-id
   ; @param (keyword) process-status
   ;
   ; @usage
-  ;  [:x.app-core-set-process-status! :my-process :success]
+  ;  [:core/set-process-status! :my-process :success]
   (fn [{:keys [db]} [_ process-id process-status]]
       (if-let [status-events (r get-process-status-events db process-id process-status)]
               {:db (r set-process-status! db process-id process-status)
@@ -412,12 +424,12 @@
               {:db (r set-process-status! db process-id process-status)})))
 
 (event-handler/reg-event-fx
-  :x.app-core/set-process-activity!
+  :core/set-process-activity!
   ; @param (keyword) process-id
   ; @param (keyword) process-activity
   ;
   ; @usage
-  ;  [:x.app-core-set-process-activity! :my-process :stalled]
+  ;  [:core/set-process-activity! :my-process :stalled]
   (fn [{:keys [db]} [_ process-id process-activity]]
       (if-let [activity-events (r get-process-activity-events db process-id process-activity)]
               {:db (r set-process-activity! db process-id process-activity)

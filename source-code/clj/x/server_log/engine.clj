@@ -11,7 +11,7 @@
 ; Author: bithandshake
 ; Created: 2020.08.29
 ; Description:
-; Version: v0.3.4
+; Version: v0.3.8
 ; Compatibility:
 
 
@@ -44,8 +44,8 @@
   ;   :time (string)}
   [entry-props]
   (merge (param entry-props)
-         {:app-name  (a/subscribed [:x.server-core/get-config-item :app-name])
-          :app-build (a/subscribed [:x.server-core/get-config-item :app-build])
+         {:app-name  (a/subscribed [:core/get-config-item :app-name])
+          :app-build (a/subscribed [:core/get-config-item :app-build])
           :time      (time/timestamp-string)}))
 
 

@@ -3,39 +3,26 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.04.27
+; Created: 2020.01.11
 ; Description:
-; Version: v0.1.8
+; Version: v0.3.4
+; Compatibility: x4.4.6
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-fruits.format
-    (:require [mid-fruits.string :as string]))
+(ns x.server-views.login-box
+    (:require [x.server-core.api :as a]))
 
 
 
+;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn group-number
-  ; @param (number or string) n
-  ;
-  ; @example
-  ;  (format/group-number 4200.5)
-  ;  =>
-  ;  "4 200.5"
-  ;
-  ; @return (string)
-  [n])
-  ; TODO ...
-
-(defn leading-zeros
-  [])
-  ; TODO ...
-
-(defn trailing-zeros
-  [])
-  ; TODO ...
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:router/add-route! ::route
+                                    {:client-event   [:views/render-login-box!]
+                                     :route-template "/login"}]})

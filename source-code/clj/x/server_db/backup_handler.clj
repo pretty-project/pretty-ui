@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.28
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.1.5
+; Version: v0.4.0
+; Compatibility: x4.4.6
 
 
 
@@ -36,9 +36,9 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :x.server-db/store-backup-item!   store-backup-item!)
-(a/reg-event-db :x.server-db/restore-backup-item! restore-backup-item!)
-(a/reg-event-db :x.server-db/remove-backup-item!  remove-backup-item!)
+(a/reg-event-db :db/store-backup-item!   store-backup-item!)
+(a/reg-event-db :db/restore-backup-item! restore-backup-item!)
+(a/reg-event-db :db/remove-backup-item!  remove-backup-item!)
 
 
 
@@ -46,7 +46,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.server-db/resolve-backup-item!
+  :db/resolve-backup-item!
   ; @param (vector) item-path
   ; @param (map) events
   ;  {:on-changed   (metamorphic-event)

@@ -5,10 +5,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-emulator.server-router.routes
-    (:require [project-emulator.server-views.api :as views]
-              [pathom.api         :as pathom]
+    (:require [pathom.api         :as pathom]
               [server-fruits.http :as http]
-              [x.server-core.api  :as a]))
+              [x.server-core.api  :as a]
+              [project-emulator.server-ui.api :as ui]))
 
 
 
@@ -19,13 +19,18 @@
 (def ROUTES
      {:main
       {:route-template "/"
-       :get #(http/html-wrap {:body (views/main %)})
+       :get #(http/html-wrap {:body (ui/main %)})
        :js "app.js"}
 
-      :admin
-      {:route-template "/admin"
-       :get #(http/html-wrap {:body (views/main %)})
-       :js "app.js"}
+;     :site
+;     {:route-template "/"
+;      :get #(http/html-wrap {:body (ui/main %)})
+;      :js "site.js"}
+;
+;     :admin
+;     {:route-template "/admin"
+;      :get #(http/html-wrap {:body (ui/main %)})
+;      :js "admin.js"}
 
       :db/query
       {:route-template "/query"

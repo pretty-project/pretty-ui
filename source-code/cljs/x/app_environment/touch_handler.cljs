@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.0
+; Version: v0.3.8
 ; Compatibility: x4.4.6
 
 
@@ -35,11 +35,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::detect-touch-events-api!
+  :environment/detect-touch-events-api!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (if (dom/touch-events-api-detected?)
-      [::->touch-events-api-detected]
-      [::->touch-events-api-not-detected]))
+      [:environment/->touch-events-api-detected]
+      [:environment/->touch-events-api-not-detected]))
 
 
 
@@ -47,20 +47,18 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->touch-events-api-detected
+  :environment/->touch-events-api-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) true)
-       :dispatch-n [:x.app-environment.element-handler/set-attribute!
-                    "x-body-container" "data-touch-detected" true]}))
+      {:db       (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) true)
+       :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" true]}))
 
 (a/reg-event-fx
-  ::->touch-events-api-not-detected
+  :environment/->touch-events-api-not-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) false)
-       :dispatch [:x.app-environment.element-handler/set-attribute!
-                  "x-body-container" "data-touch-detected" false]}))
+      {:db       (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) false)
+       :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" false]}))
 
 
 
@@ -69,4 +67,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [::detect-touch-events-api!]})
+  {:on-app-init [:environment/detect-touch-events-api!]})

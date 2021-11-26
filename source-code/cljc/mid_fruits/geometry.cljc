@@ -34,19 +34,23 @@
   ;
   ; @example
   ;  (geometry/column-count 13 200 8 1980)
-  ;  => 8
+  ;  =>
+  ;  8
   ;
   ; @example
   ;  (geometry/column-count 13 200 8 1240)
-  ;  => 6
+  ;  =>
+  ;  6
   ;
   ; @example
   ;  (geometry/column-count 2 200 8 1980)
-  ;  => 2
+  ;  =>
+  ;  2
   ;
   ; @example
   ;  (geometry/column-count 0 200 8 1980)
-  ;  => 0
+  ;  =>
+  ;  0
   ;
   ; @return (integer)
   [item-count column-width max-column-count max-width]
@@ -65,19 +69,23 @@
   ;
   ; @example
   ;  (geometry/columns-width 13 200 8 1980)
-  ;  => 1600
+  ;  =>
+  ;  1600
   ;
   ; @example
   ;  (geometry/columns-width 13 200 8 1240)
-  ;  => 1200
+  ;  =>
+  ;  1200
   ;
   ; @example
   ;  (geometry/columns-width 2 200 8 1980)
-  ;  => 400
+  ;  =>
+  ;  400
   ;
   ; @example
   ;  (geometry/columns-width 0 200 8 1980)
-  ;  => 0
+  ;  =>
+  ;  0
   ;
   ; @return (integer)
   [item-count column-width max-column-count max-width]

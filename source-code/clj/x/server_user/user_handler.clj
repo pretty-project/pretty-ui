@@ -76,5 +76,5 @@
        ;(println (str (mongo-db/add-document! "user_accounts" user-account)))))
 
 ; @usage
-;  [:x.server-user/add-user! {...}]
-(a/reg-handled-fx :x.server-user/add-user! add-user!)
+;  [:user/add-user! {...}]
+(a/reg-handled-fx :user/add-user! add-user!)

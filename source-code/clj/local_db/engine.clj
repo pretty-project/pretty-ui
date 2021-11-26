@@ -130,7 +130,8 @@
   ;
   ; @example
   ;  (local-db/get-collection "my-collection")
-  ;  => [{...} {...} {...}]
+  ;  =>
+  ;  [{...} {...} {...}]
   ;
   ; @return (vector)
   ([collection-id]
@@ -221,7 +222,8 @@
   ;
   ; @example
   ;  (local-db/match-documents "my-collection" {:foo "bar"})
-  ;  => [{:foo "bar" :baz "boo"}]
+  ;  =>
+  ;  [{:foo "bar" :baz "boo"}]
   ;
   ; @return (vector)
   ([collection-id pattern]
@@ -240,7 +242,8 @@
   ;
   ; @example
   ;  (local-db/match-document "my-collection" {:foo "bar"})
-  ;  => {:foo "bar" :baz "boo"}
+  ;  =>
+  ;  {:foo "bar" :baz "boo"}
   ;
   ; @return (map)
   ([collection-id pattern]

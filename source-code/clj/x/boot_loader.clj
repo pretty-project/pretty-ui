@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.0.4
-; Compatibility: x4.4.2
+; Version: v1.0.8
+; Compatibility: x4.4.6
 
 
 
@@ -83,7 +83,7 @@
                        ; A szerver indítási paramétereinek eltárolása
       {:dispatch-tick [{:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
-                       {:tick   0 :dispatch [:x.server-core/config-app!]}
+                       {:tick   0 :dispatch [:core/config-app!]}
                        ; A telepítés vizsgálata
                        {:tick 500 :dispatch [:boot-loader/check-install!]}]}))
 
@@ -97,7 +97,7 @@
           (let [installed-at (r installer/get-installed-at db)]
                (println details/app-name "installed at:" installed-at)
                [:boot-loader/initialize-app!])
-          [:x.server-installer/install-server!])))
+          [:installer/install-server!])))
 
 (a/reg-event-fx
   :boot-loader/initialize-app!
@@ -120,7 +120,7 @@
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
        :dispatch-tick [; 2. A szerver indítása
-                       {:tick  50 :dispatch [:x.server-core/run-server! (r get-server-props db)]}
+                       {:tick  50 :dispatch [:core/run-server! (r get-server-props db)]}
                        ; 4. Az indítási események lefutása után az applikáció betöltésének folytatása
                        {:tick 100 :dispatch [:boot-loader/launch-app!]}]}))
 
@@ -132,4 +132,4 @@
       (println details/app-name "launching app ...")
       ; A szerver indítása utáni események meghívása (Dispatch on-app-launch events)
       {:dispatch-n (r a/get-period-events db :on-app-launch)
-       :dispatch   [:x.server-core/connect-to-database!]}))
+       :dispatch   [:core/connect-to-database!]}))

@@ -284,25 +284,30 @@
   ;
   ; @example (dictionary term as keyword)
   ;  [components/content {:content :username}]
-  ;  => "Username"
+  ;  =>
+  ;  "Username"
   ;
   ; @example (string)
   ;  [components/content {:content "Hakuna Matata"}]
-  ;  => "Hakuna Matata"
+  ;  =>
+  ;  "Hakuna Matata"
   ;
   ; @example (multilingual-item as map)
   ;  [components/content {:content {:en "Window" :hu "Ablak"}}]
-  ;  => "Window"
+  ;  =>
+  ;  "Window"
   ;
   ; @example (db-item as item-path vector)
   ;  {:db {:item {:path "DB item value"}}}
   ;  [components/content {:content-path [:db :item :path]}]
-  ;  => "DB item value"
+  ;  =>
+  ;  "DB item value"
   ;
   ; @example (multilingual-db-item as item-path vector)
   ;  (def db {:db {:item {:path {:en "Window" :hu "Ablak"}}}})
   ;  [components/content {:content-path [:db :item :path]}]
-  ;  => "Window"
+  ;  =>
+  ;  "Window"
   ;
   ; @example (component)
   ;  (defn my-component [component-id])

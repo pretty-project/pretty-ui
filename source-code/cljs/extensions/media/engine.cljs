@@ -680,7 +680,7 @@
             file-link (media/filename->media-storage-uri filename)]
             ; TODO
             ; file-link (r get-file-link db directory-id file-id)
-           [:x.app-tools.clipboard/copy-to! (str uri-base file-link)])))
+           [:tools/copy-to-clipboard! (str uri-base file-link)])))
 
 (a/reg-event-fx
   :media/->file-alias-edited
@@ -699,10 +699,9 @@
                                 :updated-props updated-file-props}
             query-action      `(media/update-file! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/->subdirectory-alias-edited
@@ -721,10 +720,9 @@
                                         :updated-props updated-subdirectory-props}
             query-action              `(media/update-directory! ~mutation-props)
             query-question             {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/create-subdirectory!
@@ -741,10 +739,9 @@
             query-action      `(media/create-directory! ~mutation-props)
             query-question     {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
            [:media/test]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/delete-item!
@@ -762,10 +759,9 @@
                               :selected-items      [selected-item]}
             query-action    `(media/delete-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/copy-item!
@@ -785,10 +781,9 @@
                               :selected-items           [selected-item]}
             query-action    `(media/copy-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/move-item!
@@ -807,10 +802,9 @@
                               :source-directory-id      (name source-directory-id)}
             query-action    `(media/move-items! ~mutation-props)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             action-id
-             {:on-success [:media/handle-request-response! action-id]
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
+           [:sync/send-query! action-id
+                              {:on-success [:media/handle-request-response! action-id]
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-action query-question)}])))
 
 (a/reg-event-fx
   :media/download-directory-data!
@@ -823,11 +817,10 @@
   (fn [{:keys [db]} [_ query-id {:keys [directory-id on-success]}]]
       (let [directory-entity (db/item-id->document-entity directory-id :directory)
             query-question   {directory-entity DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-           [:x.app-sync/send-query!
-             query-id
-             {:on-success {:dispatch-n [[:media/handle-request-response! query-id]
-                                        (param on-success)]}
-              :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)}])))
+           [:sync/send-query! query-id
+                              {:on-success {:dispatch-n [[:media/handle-request-response! query-id]
+                                                         (param on-success)]}
+                               :query      (eql/append-to-query ROOT-DIRECTORY-QUERY query-question)}])))
 
 
 
@@ -872,13 +865,13 @@
            ;query-question {[:directory/id "my-directory"] [...]}
             query-question {item-entity item-params}]
            (println "sdfsdfsdf")
-           [:x.app-sync/send-query! :extensions/request-browser-items!
-                                    ;:on-success [:extensions/receive-browser-items! "media"]
-                                    {:on-success [:extensions/receive-browser-items! extension-name item-name]
-                                     ;:query      (eql/append-to-query base-query query-question)}])))
+           [:sync/send-query! :extensions/request-browser-items!
+                              ;:on-success [:extensions/receive-browser-items! "media"]
+                              {:on-success [:extensions/receive-browser-items! extension-name item-name]
+                               ;:query      (eql/append-to-query base-query query-question)}])))
 
 
-                                     :query [`(:media/get-directory-data {:directory-id ~item-id})]}])))
+                               :query [`(:media/get-directory-data {:directory-id ~item-id})]}])))
 
 
 
@@ -999,4 +992,4 @@
              (param db)
              (param server-response)))
 
-(a/reg-event-db :extensions/receive-browser-items! receive-browser-items!)
+;(a/reg-event-db :extensions/receive-browser-items! receive-browser-items!)

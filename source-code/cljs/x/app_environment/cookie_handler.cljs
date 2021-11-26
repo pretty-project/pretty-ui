@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.07
 ; Description:
-; Version: 1.2.8
-; Compatibility: x4.2.6
+; Version: 1.4.6
+; Compatibility: x4.4.6
 
 
 
@@ -35,14 +35,12 @@
 (def COOKIE-PATH "/")
 
 ; @constant (map)
-(def COOKIE-NAME-PREFIXES
-     {:analytics       "xa"
-      :necessary       "xn"
-      :user-experience "xue"})
+(def COOKIE-NAME-PREFIXES {:analytics       "xa"
+                           :necessary       "xn"
+                           :user-experience "xue"})
 
 ; @constant (map)
-(def COOKIE-TYPES
-     (map/swap COOKIE-NAME-PREFIXES))
+(def COOKIE-TYPES (map/swap COOKIE-NAME-PREFIXES))
 
 
 
@@ -76,7 +74,8 @@
   ;
   ; @example
   ;  (cookie-id->cookie-name :my-cookie {:cookie-type :user-experience})
-  ;  => "xue-my-cookie"
+  ;  =>
+  ;  "xue-my-cookie"
   ;
   ; @return (string)
   [cookie-id {:keys [cookie-type]}]
@@ -91,7 +90,8 @@
   ;
   ; @example
   ;  (cookie-name->cookie-name-prefix "xn-my-cookie")
-  ;  => "xn"
+  ;  =>
+  ;  "xn"
   ;
   ; @return (string)
   [cookie-name]
@@ -104,7 +104,8 @@
   ;
   ; @example
   ;  (cookie-name->system-cookie? "xa-my-cookie")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [cookie-name]
@@ -119,7 +120,8 @@
   ;
   ; @example
   ;  (cookie-name->system-cookie? "xn-my-cookie")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [cookie-name]
@@ -134,7 +136,8 @@
   ;
   ; @example
   ;  (cookie-name->system-cookie? "xue-my-cookie")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [cookie-name]
@@ -149,7 +152,8 @@
   ;
   ; @example
   ;  (cookie-name->system-cookie? "xn-my-cookie")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [cookie-name]
@@ -163,7 +167,8 @@
   ;
   ; @example
   ;  (cookie-name->cookie-id "xn-my-cookie")
-  ;  => :my-cookie
+  ;  =>
+  ;  :my-cookie
   ;
   ; @return (keyword)
   [cookie-name]
@@ -249,7 +254,9 @@
   (let [stored-cookies (r get-stored-cookies db)]
        (map/nonempty? stored-cookies)))
 
-(a/reg-sub :x.app-environment/any-cookies-stored? any-cookies-stored?)
+; @usage
+;  [:environment/any-cookies-stored?]
+(a/reg-sub :environment/any-cookies-stored? any-cookies-stored?)
 
 (defn get-cookie-value
   ; @param (keyword) cookie-id
@@ -333,8 +340,6 @@
   (assoc-in db (db/path ::cookies cookie-id)
                (param value)))
 
-(a/reg-event-db ::store-cookie-value! store-cookie-value!)
-
 (defn- remove-cookie-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -343,8 +348,6 @@
   ; return (map)
   [db [_ cookie-id]]
   (dissoc-in db (db/path ::cookies cookie-id)))
-
-(a/reg-event-db ::remove-cookie-value! remove-cookie-value!)
 
 
 
@@ -360,7 +363,7 @@
        (assoc-in cofx (db/meta-item-cofx-path ::cookies :enabled-by-browser?)
                       (param enabled-by-browser?))))
 
-(a/reg-cofx ::inject-cookie-browser-settings! inject-cookie-browser-settings!)
+(a/reg-cofx :environment/inject-cookie-browser-settings! inject-cookie-browser-settings!)
 
 (defn- inject-system-cookie-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -399,7 +402,7 @@
                (param cofx)
                (param cookie-names))))
 
-(a/reg-cofx ::inject-system-cookies! inject-system-cookies!)
+(a/reg-cofx :environment/inject-system-cookies! inject-system-cookies!)
 
 
 
@@ -407,7 +410,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::set-cookie!
+  :environment/set-cookie!
   ; @param (keyword)(opt) cookie-id
   ; @param (map) cookie-props
   ;  {:cookie-type (keyword)(opt)
@@ -419,19 +422,19 @@
   ;   :value (*)}
   ;
   ; @usage
-  ;  [:x.app-environment.cookie-handler/set-cookie! {...}]
+  ;  [:environment/set-cookie! {...}]
   ;
   ; @usage
-  ;  [:x.app-environment.cookie-handler/set-cookie! :my-cookie {...}]
+  ;  [:environment/set-cookie! :my-cookie {...}]
   (fn [{:keys [db]} event-vector]
       (let [cookie-id    (a/event-vector->second-id   event-vector)
             cookie-props (a/event-vector->first-props event-vector)
             cookie-props (a/prot cookie-props cookie-props-prototype)]
            {:dispatch-if [(r set-cookie? db cookie-id cookie-props)
-                          [::store-browser-cookie! cookie-id cookie-props]]})))
+                          [:environment/store-browser-cookie! cookie-id cookie-props]]})))
 
 (a/reg-event-fx
-  ::remove-cookie!
+  :environment/remove-cookie!
   ; @param (keyword) cookie-id
   ; @param (map) cookie-props
   ;  {:cookie-type (keyword)(opt)
@@ -439,35 +442,36 @@
   ;    Default: :user-experience}
   ;
   ; @usage
-  ;  [:x.app-environment.cookie-handler/remove-cookie! :my-cookie]
+  ;  [:environment/remove-cookie! :my-cookie]
   ;
   ; @usage
-  ;  [:x.app-environment.cookie-handler/remove-cookie! :my-cookie {:cookie-type :necessary}]
+  ;  [:environment/remove-cookie! :my-cookie {:cookie-type :necessary}]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
       (let [cookie-props (a/prot cookie-props cookie-props-prototype)]
-           [::remove-browser-cookie! cookie-id cookie-props])))
+           [:environment/remove-browser-cookie! cookie-id cookie-props])))
 
 (a/reg-event-fx
-  ::remove-cookies!
-  [::clear-browser-cookies!])
+  :environment/remove-cookies!
+  ; @usage
+  ;  [:environment/remove-cookies!]
+  [:environment/clear-browser-cookies!])
 
 (a/reg-event-fx
-  ::read-system-cookies!
-  [(a/inject-cofx ::inject-system-cookies!)]
+  :environment/read-system-cookies!
+  [(a/inject-cofx :environment/inject-system-cookies!)]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      ; Store injected cookies
+      ; Store injected cookies w/ interceptor ...
       {:db db}))
 
 (a/reg-event-fx
-  ::store-cookie-settings!
+  :environment/store-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [cookie-settings (r get-cookie-settings db)]
-           [:x.app-environment.cookie-handler/set-cookie!
-            :cookie-settings
-            {:cookie-type :necessary
-             :value       cookie-settings}])))
+           [:environment/set-cookie! :cookie-settings
+                                     {:cookie-type :necessary
+                                      :value       cookie-settings}])))
 
 
 
@@ -491,9 +495,9 @@
         cookie-body (str {:cookie-id cookie-id :value value})]
        (try (.set goog.net.cookies cookie-name cookie-body
                   max-age path domain secure same-site)
-            (a/dispatch [::->cookie-set cookie-id cookie-props]))))
+            (a/dispatch [:environment/->cookie-set cookie-id cookie-props]))))
 
-(a/reg-handled-fx ::store-browser-cookie! store-browser-cookie!)
+(a/reg-handled-fx :environment/store-browser-cookie! store-browser-cookie!)
 
 (defn- remove-browser-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -503,17 +507,17 @@
   [cookie-id cookie-props]
   (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)]
        (try (.remove goog.net.cookies cookie-name COOKIE-PATH COOKIE-DOMAIN)
-            (a/dispatch [::->cookie-removed cookie-id]))))
+            (a/dispatch [:environment/->cookie-removed cookie-id]))))
 
-(a/reg-handled-fx ::remove-browser-cookie! remove-browser-cookie!)
+(a/reg-handled-fx :environment/remove-browser-cookie! remove-browser-cookie!)
 
 (defn- remove-browser-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (try (.clear goog.net.cookies
-        (a/dispatch [::->cookies-removed]))))
+  (try (.clear goog.net.cookies)
+       (a/dispatch [:environment/->cookies-removed])))
 
-(a/reg-handled-fx ::remove-browser-cookies! remove-browser-cookies!)
+(a/reg-handled-fx :environment/remove-browser-cookies! remove-browser-cookies!)
 
 
 
@@ -521,32 +525,35 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->settings-changed
+  :environment/->cookie-settings-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [::store-cookie-settings!])
+  [:environment/store-cookie-settings!])
 
-(a/reg-event-fx
-  ::->cookie-set
+(defn- ->cookie-set
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) cookie-id
   ; @param (map) cookie-props
-  (fn [_ [_ cookie-id cookie-props]]
-      [::store-cookie-value! cookie-id cookie-props]))
+  [db [_ cookie-id cookie-props]]
+  (r store-cookie-value! db cookie-id cookie-props))
 
-(a/reg-event-fx
-  ::->cookie-removed
+(a/reg-event-db :environment/->cookie-set ->cookie-set)
+
+(defn- ->cookie-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) cookie-id
-  (fn [{:keys [db]} [_ cookie-id]]
-      [::remove-cookie-value! cookie-id]))
+  [db [_ cookie-id]]
+  (r remove-cookie-value! db cookie-id))
 
-(a/reg-event-fx
+(a/reg-event-db :environment/->cookie-removed ->cookie-removed)
+
+(defn- ->cookies-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ::->cookies-removed
-  (fn [{:keys [db _]}]
-      [:x.app-db/empty-partition! ::cookies]))
+  [db _]
+  (r db/empty-partition! db ::cookies))
+
+(a/reg-event-db :environment/->cookies-removed ->cookies-removed)
 
 
 
@@ -555,4 +562,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [::read-system-cookies!]})
+  {:on-app-init [:environment/read-system-cookies!]})

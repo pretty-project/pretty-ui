@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v0.7.2
-; Compatibility: x4.4.4
+; Version: v0.7.6
+; Compatibility: x4.4.6
 
 
 
@@ -187,8 +187,7 @@
   ; @return (hiccup)
   [_ {:keys [username]}]
   [elements/label ::signed-in-as-label
-                  {:content :signed-in-as :suffix username
-                   :horizontal-align :center}])
+                  {:content :signed-in-as :suffix username :horizontal-align :center}])
 
 (defn- logged-in-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -228,7 +227,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::render!
+  :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:x.app-ui/add-popup! ::view
                         {:content           #'body
@@ -237,9 +236,3 @@
                          :render-exclusive? true
                          :subscriber        [::get-body-props]
                          :user-close?       false}])
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [::render!]
-                                     :route-template "/login"}]})

@@ -5,6 +5,10 @@
   Pl.:
   [:x.app-router/...] -> [:router/...]
   ...
+- BREAKING CHANGE
+  A route-okat a szerver-oldali x.server-router.api modullal lehetséges mostantól hozzáadni
+- BREAKING CHANGE
+  x.server-views.api/main -> x.server-ui.api/body
 
 
 

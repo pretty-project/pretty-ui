@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/login-app!
+  :core/login-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-n (r lifecycle-handler/get-period-events db :on-login)}))

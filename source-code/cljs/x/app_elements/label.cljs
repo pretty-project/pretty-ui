@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.3.2
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.4.6
 
 
 
@@ -35,13 +35,15 @@
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
-  ;   :horizontal-align (keyword)}
+  ;   :horizontal-align (keyword)
+  ;   :selectable? (boolean)}
   [{:keys [icon] :as label-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :left
-          :layout           :row}
+          :layout           :row
+          :selectable?      false}
          (if (some? icon) {:icon-family :material-icons-filled})
          (param label-props)))
 
@@ -96,7 +98,6 @@
   ; XXX#0439
   ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
   ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
-  ; A text elemen lehetséges kijelölni a szöveget, a label elemen nem lehetséges.
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props

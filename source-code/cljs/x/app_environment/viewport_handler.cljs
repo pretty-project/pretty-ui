@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.2
+; Version: v0.4.8
 ; Compatibility: x4.4.6
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (function)
   []
-  (a/dispatch-once 250 [::->viewport-resized]))
+  (a/dispatch-once 250 [:environment/->viewport-resized]))
 
 
 
@@ -112,7 +112,7 @@
                 :viewport-profile     (dom/get-viewport-profile)
                 :viewport-width       (dom/get-viewport-width)}))
 
-(a/reg-event-db ::update-viewport-data! update-viewport-data!)
+(a/reg-event-db :environment/update-viewport-data! update-viewport-data!)
 
 
 
@@ -124,7 +124,7 @@
   []
   (dom/add-event-listener! "resize" resize-listener))
 
-(a/reg-handled-fx ::listen-to-viewport-resize! listen-to-viewport-resize!)
+(a/reg-handled-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
 
 
 
@@ -132,12 +132,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::detect-viewport-profile!
+  :environment/detect-viewport-profile!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
-      [:x.app-environment.element-handler/set-attribute!
-       "x-body-container" "data-viewport-profile"
-       (keyword/to-string (dom/get-viewport-profile))]))
+      [:environment/set-element-attribute! "x-body-container" "data-viewport-profile"
+                                           (keyword/to-string (dom/get-viewport-profile))]))
 
 
 
@@ -145,11 +144,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->viewport-resized
+  :environment/->viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-environment.position-handler/update-stored-positions!]
-                [::update-viewport-data!]
-                [::detect-viewport-profile!]]})
+  {:dispatch-n [[:environment/update-stored-element-positions!]
+                [:environment/update-viewport-data!]
+                [:environment/detect-viewport-profile!]]})
 
 
 
@@ -158,6 +157,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init {:dispatch-n [[::update-viewport-data!]
-                              [::detect-viewport-profile!]
-                              [::listen-to-viewport-resize!]]}})
+  {:on-app-init {:dispatch-n [[:environment/update-viewport-data!]
+                              [:environment/detect-viewport-profile!]
+                              [:environment/listen-to-viewport-resize!]]}})

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v2.6.0
-; Compatibility: x3.9.9
+; Version: v2.6.8
+; Compatibility: x4.4.6
 
 
 
@@ -41,40 +41,55 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-element-position
+(defn get-element-position
   ; @param (keyword) element-id
+  ;
+  ; @usage
+  ;  (r environment/get-element-position db :my-element)
   ;
   ; @return (integer)
   [db [_ element-id]]
   (get-in db (db/path ::element-positions element-id)))
 
-(a/reg-sub ::get-element-position get-element-position)
+; @usage
+;  [:environment/get-element-position :my-element]
+(a/reg-sub :environment/get-element-position get-element-position)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-position-listener!
+(defn add-element-position-listener!
   ; @param (keyword) element-id
+  ;
+  ; @usage
+  ;  (r environment/add-element-position-listener! db :my-element)
   ;
   ; @return (map)
   [db [_ element-id]]
   (assoc-in db (db/path ::element-positions element-id)
                (element-id->element-position element-id)))
 
-(a/reg-event-db ::add-position-listener! add-position-listener!)
+; @usage
+;  [:environment/add-element-position-listener! :my-element]
+(a/reg-event-db :environment/add-element-position-listener! add-element-position-listener!)
 
-(defn- remove-position-listener!
+(defn remove-element-position-listener!
   ; @param (keyword) element-id
+  ;
+  ; @usage
+  ;  (r environment/remove-element-position-listener! db :my-element)
   ;
   ; @return (map)
   [db [_ element-id]]
   (r db/remove-item! db (db/path ::element-positions element-id)))
 
-(a/reg-event-db ::remove-position-listener! remove-position-listener!)
+; @usage
+;  [:environment/remove-element-position-listener! :my-element]
+(a/reg-event-db :environment/remove-element-position-listener! remove-element-position-listener!)
 
-(defn- update-stored-positions!
+(defn- update-stored-element-positions!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -86,4 +101,4 @@
                                    (param stored-positions)))
           (return db)))
 
-(a/reg-event-db ::update-stored-positions! update-stored-positions!)
+(a/reg-event-db :environment/update-stored-element-positions! update-stored-element-positions!)

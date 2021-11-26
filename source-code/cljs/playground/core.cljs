@@ -74,7 +74,7 @@
   [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs}]
        [tools/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
        [elements/button ::reload-infinite-loader-button
-                        {:label "Reload infinite loader!" :on-click [:x.app-tools/reload-infinite-loader! :my-loader]
+                        {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :my-loader]
                          :variant :transparent :color :secondary}]])
 
 (defn buttons

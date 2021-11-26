@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.4.1
+; Version: v0.4.6
+; Compatibility: x4.4.6
 
 
 
@@ -90,7 +90,7 @@
   (assoc-in db (db/path ::modules module-id :installed?)
                (param true)))
 
-(a/reg-event-db :x.server-installer/->module-installed ->module-installed)
+(a/reg-event-db :installer/->module-installed ->module-installed)
 
 
 
@@ -110,7 +110,7 @@
   (println details/app-name "exiting ...")
   (System/exit 0))
 
-(a/reg-handled-fx :x.server-installer/->server-installed ->server-installed)
+(a/reg-handled-fx :installer/->server-installed ->server-installed)
 
 
 
@@ -118,24 +118,24 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.server-installer/install-server!
+  :installer/install-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       (println details/app-name "installing ...")
        ; Installing modules
-      {:dispatch-n [[:x.server-installer/install-db!]
-                    [:x.server-installer/install-media!]
-                    [:x.server-installer/install-user!]]
+      {:dispatch-n [[:installer/install-db!]
+                    [:installer/install-media!]
+                    [:installer/install-user!]]
        ; Running self-test
-       :dispatch-tick [{:tick 100 :dispatch [:x.server-installer/self-test!]}]}))
+       :dispatch-tick [{:tick 100 :dispatch [:installer/self-test!]}]}))
 
 (a/reg-event-fx
-  :x.server-installer/self-test!
+  :installer/self-test!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "self-testing installation ...")
       (if (and (r module-installed? db :db)
                (r module-installed? db :media)
                (r module-installed? db :user))
-          [:x.server-installer/->server-installed]
+          [:installer/->server-installed]
           (println details/app-name "installation error"))))

@@ -38,7 +38,7 @@
 ;
 ;  [tools/infinite-loader :my-infinite-loader {:on-viewport [:do-something!]}]
 ;
-;  (a/dispatch [:x.app-tools/reload-infinite-loader! :my-infinite-loader])
+;  (a/dispatch [:tools/reload-infinite-loader! :my-infinite-loader])
 
 
 
@@ -91,7 +91,7 @@
   [db [_ loader-id]]
   (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) false))
 
-(a/reg-event-db :x.app-tools/hide-infinite-observer! hide-infinite-observer!)
+(a/reg-event-db :tools/hide-infinite-observer! hide-infinite-observer!)
 
 (defn show-infinite-observer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,7 +102,7 @@
   [db [_ loader-id]]
   (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) true))
 
-(a/reg-event-db :x.app-tools/show-infinite-observer! show-infinite-observer!)
+(a/reg-event-db :tools/show-infinite-observer! show-infinite-observer!)
 
 
 
@@ -110,11 +110,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-tools/reload-infinite-loader!
+  :tools/reload-infinite-loader!
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  [:x.app-tools/reload-infinite-loader! :my-loader]
+  ;  [:tools/reload-infinite-loader! :my-loader]
   (fn [{:keys [db]} [_ loader-id]]
        ; Az infinite-loader komponensben elhelyezett observer viewport-on kívülre
        ; helyezése, majd visszaállítása újra meghívja az infinite-loader komponens
@@ -122,7 +122,7 @@
       {:db (r hide-infinite-observer! db loader-id)
        ; A túlságosan rövid ideig (pl.: 5ms) a viewport-on kívülre helyezett observer
        ; nem minden esetben hívja meg a callback függvényt.
-       :dispatch-later [{:ms 50 :dispatch [:x.app-tools/show-infinite-observer! loader-id]}]}))
+       :dispatch-later [{:ms 50 :dispatch [:tools/show-infinite-observer! loader-id]}]}))
 
 
 

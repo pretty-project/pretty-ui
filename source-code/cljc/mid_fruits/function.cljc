@@ -26,7 +26,8 @@
   ;
   ; @example
   ;  (function/->js "mid-fruits.vector/conj-item")
-  ;  => "mid_fruits.vector.conj_item"
+  ;  =>
+  ;  "mid_fruits.vector.conj_item"
   ;
   ; @return (string)
   [var-name]
@@ -40,7 +41,8 @@
   ;
   ; @example
   ;  (function/invoke "mid-fruits.vector/conj-item" [:a :b] :c)
-  ;  => [:a :b :c]
+  ;  =>
+  ;  [:a :b :c]
   [function-name & args])
 ;  #?(:cljs (let [evaled (js/eval (->js function-name))]
 ;                (apply evaled args)]

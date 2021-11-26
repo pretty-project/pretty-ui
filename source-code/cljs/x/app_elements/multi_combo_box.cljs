@@ -53,7 +53,8 @@
   ;
   ; @example
   ;  (group-id->field-id :my-multi-combo-box)
-  ;  => :my-multi-combo-box--field
+  ;  =>
+  ;  :my-multi-combo-box--field
   ;
   ; @return (keyword)
   [group-id]

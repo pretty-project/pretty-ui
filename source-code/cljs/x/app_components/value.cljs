@@ -93,24 +93,29 @@
   ; @example (subscriber function)
   ;  (defn my-subscription-function [db [_ value-id]] "Return value")
   ;  (r components/get-metamorphic-value db {:value my-subscription-function})
-  ;  => "Return value"
+  ;  =>
+  ;  "Return value"
   ;
   ; @example (dictionary term as keyword)
   ;  (r components/get-metamorphic-value db {:value :username})
-  ;  => "Username"
+  ;  =>
+  ;  "Username"
   ;
   ; @example (multilingual-item as map)
   ;  (r components/get-metamorphic-value db {:value {:en "Window" :hu "Ablak"}})
-  ;  => "Window"
+  ;  =>
+  ;  "Window"
   ;
   ; @example (string)
   ;  (r components/get-metamorphic-value db {:value "Hakuna Matata"})
-  ;  => "Hakuna Matata"
+  ;  =>
+  ;  "Hakuna Matata"
   ;
   ; @example (item-path vector)
   ;  (def db {:db {:item {:path {:en "Window" :hu "Ablak"}}}})
   ;  (r components/get-metamorphic-value db {:value [:db :item :path]})
-  ;  => "Window"
+  ;  =>
+  ;  "Window"
   ;
   ; @return (string)
   [db event-vector]

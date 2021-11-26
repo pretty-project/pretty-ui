@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v0.5.0
+; Version: v0.5.4
 
 
 
@@ -67,9 +67,19 @@
   ; @param (B) filesize
   ;
   ; @example
-  ;  (B->KB     256) =>    0.26
-  ;  (B->KB   65536) =>   65.54
-  ;  (B->KB 1048576) => 1048.58
+  ;  (io/B->KB 256)
+  ;  =>
+  ;  0.26
+  ;
+  ; @example
+  ;  (io/B->KB 65536)
+  ;  =>
+  ;  65.54
+  ;
+  ; @example
+  ;  (io/B->KB 1048576)
+  ;  =>
+  ;  1048.58
   ;
   ; @return (KB)
   [filesize]
@@ -79,9 +89,19 @@
   ; @param (B) filesize
   ;
   ; @example
-  ;  (B->MB     256) => 0.00
-  ;  (B->MB   65536) => 0.07
-  ;  (B->MB 1048576) => 1.05
+  ;  (io/B->MB 256)
+  ;  =>
+  ;  0.00
+  ;
+  ; @example
+  ;  (io/B->MB 65536)
+  ;  =>
+  ;  0.07
+  ;
+  ; @example
+  ;  (io/B->MB 1048576)
+  ;  =>
+  ;  1.05
   ;
   ; @return (MB)
   [filesize]
@@ -91,8 +111,14 @@
   ; @param (B) filesize
   ;
   ; @example
-  ;  (B->GB      256) => 0.00
-  ;  (B->GB 33554432) => 0.03
+  ;  (io/B->GB 256)
+  ;  =>
+  ;  0.00
+  ;
+  ; @example
+  ;  (io/B->GB 33554432)
+  ;  =>
+  ;  0.03
   ;
   ; @return (GB)
   [filesize]
@@ -102,7 +128,9 @@
   ; @param (KB) filesize
   ;
   ; @example
-  ;  (KB->B 10) => 10000
+  ;  (io/KB->B 10)
+  ;  =>
+  ;  10000
   ;
   ; @return (B)
   [filesize]
@@ -112,7 +140,9 @@
   ; @param (KB) filesize
   ;
   ; @example
-  ;  (KB->MB 10000) => 10.00
+  ;  (io/KB->MB 10000)
+  ;  =>
+  ;  10.00
   ;
   ; @return (MB)
   [filesize]
@@ -122,7 +152,9 @@
   ; @param (MB) filesize
   ;
   ; @example
-  ;  (MB->B 10) => 10000000
+  ;  (io/MB->B 10)
+  ;  =>
+  ;  10000000
   ;
   ; @return (B)
   [filesize]
@@ -132,7 +164,9 @@
   ; @param (MB) filesize
   ;
   ; @example
-  ;  (MB->KB 10) => 10000
+  ;  (io/MB->KB 10)
+  ;  =>
+  ;  10000
   ;
   ; @return (KB)
   [filesize]
@@ -142,7 +176,9 @@
   ; @param (MB) filesize
   ;
   ; @example
-  ;  (MB->GB 400) => 0.4
+  ;  (io/MB->GB 400)
+  ;  =>
+  ;  0.4
   ;
   ; @return (GB)
   [filesize]
@@ -153,6 +189,7 @@
 ;; -- MIME types --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (map)
 (def mime-types
   {"aac"  "audio/aac"
    "avi"  "video/x-msvideo"
@@ -201,14 +238,21 @@
    "zip"  "application/zip"
    "7z"   "application/x-7z-compressed"})
 
+; @constant (map)
 (def extensions (map/swap mime-types))
 
 (defn mime-type->extension
   ; @param (string) mime-type
   ;
   ; @example
-  ;  (io/mime-type->extension "text/xml") => "xml"
-  ;  (io/mime-type->extension "foo/bar")  => "unknown"
+  ;  (io/mime-type->extension "text/xml")
+  ;  =>
+  ;  "xml"
+  ;
+  ; @example
+  ;  (io/mime-type->extension "foo/bar")
+  ;  =>
+  ;  "unknown"
   ;
   ; @return (string)
   [mime-type]
@@ -218,8 +262,14 @@
   ; @param (extension)
   ;
   ; @example
-  ;  (io/extension->mime-type "xml") => "text/xml"
-  ;  (io/extension->mime-type "bar") => "unknown/unknown"
+  ;  (io/extension->mime-type "xml")
+  ;  =>
+  ;  "text/xml"
+  ;
+  ; @example
+  ;  (io/extension->mime-type "bar")
+  ;  =>
+  ;  "unknown/unknown"
   ;
   ; @return (string)
   [extension]
@@ -230,8 +280,14 @@
   ; @param (string) mime-type
   ;
   ; @example
-  ;  (io/unknown-mime-type? "text/xml") => false
-  ;  (io/unknown-mime-type? "foo/bar")  => true
+  ;  (io/unknown-mime-type? "text/xml")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (io/unknown-mime-type? "foo/bar")
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [mime-type]
@@ -252,7 +308,8 @@
   ;
   ; @example
   ;  (io/extension->image? "png")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [extension]
@@ -263,7 +320,8 @@
   ;
   ; @example
   ;  (io/mime-type->image? "image/png")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [mime-type]
@@ -274,7 +332,8 @@
   ;
   ; @example
   ;  (io/filepath->filename "a/b.png")
-  ;  => "b.png"
+  ;  =>
+  ;  "b.png"
   ;
   ; @return (string)
   [filepath]
@@ -287,15 +346,18 @@
   ;
   ; @example
   ;  (io/filepath->extension "a/b.png")
-  ;  => "png"
+  ;  =>
+  ;  "png"
   ;
   ; @example
   ;  (io/filepath->extension "a/.hidden-file.txt")
-  ;  => "txt"
+  ;  =>
+  ;  "txt"
   ;
   ; @example
   ;  (io/filepath->extension "a/.hidden-file")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (string)
   [filepath]
@@ -317,15 +379,18 @@
   ;
   ; @example
   ;  (io/filepath->basepath "a/b.png")
-  ;  => "a"
+  ;  =>
+  ;  "a"
   ;
   ; @example
   ;  (io/filepath->basepath "a/b/c.png")
-  ;  => "a/b"
+  ;  =>
+  ;  "a/b"
   ;
   ; @example
   ;  (io/filepath->basepath "c.png")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (string)
   [filepath]
@@ -336,15 +401,18 @@
   ;
   ; @example
   ;  (io/filename->basename "b.png")
-  ;  => "b"
+  ;  =>
+  ;  "b"
   ;
   ; @example
   ;  (io/filename->basename ".hidden-file.txt")
-  ;  => ".hidden-file"
+  ;  =>
+  ;  ".hidden-file"
   ;
   ; @example
   ;  (io/filename->basename ".hidden-file")
-  ;  => ".hidden-file"
+  ;  =>
+  ;  ".hidden-file"
   ;
   ; @return (string)
   [filename]
@@ -358,15 +426,18 @@
   ;
   ; @example
   ;  (io/filepath->basename "a/b.png")
-  ;  => "b"
+  ;  =>
+  ;  "b"
   ;
   ; @example
   ;  (io/filepath->basename "a/.hidden-file.txt")
-  ;  => ".hidden-file"
+  ;  =>
+  ;  ".hidden-file"
   ;
   ; @example
   ;  (io/filepath->basename "a/.hidden-file")
-  ;  => ".hidden-file"
+  ;  =>
+  ;  ".hidden-file"
   ;
   ; @return (string)
   [filepath]
@@ -378,11 +449,13 @@
   ;
   ; @example
   ;  (io/filepath->mime-type "a/b.png")
-  ;  => "image/png"
+  ;  =>
+  ;  "image/png"
   ;
   ; @example
   ;  (io/filepath->mime-type "a/b")
-  ;  => "unknown/unknown"
+  ;  =>
+  ;  "unknown/unknown"
   ;
   ; @return (string)
   [filepath]

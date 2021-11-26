@@ -106,7 +106,7 @@
   ;  [:x.app-ui/hide-sidebar!]
   (fn [{:keys [db]} _]
       (if (r sidebar-visible? db)
-          {:dispatch-n [[:x.app-environment.scroll-prohibitor/remove-scroll-prohibition! :app-sidebar]
+          {:dispatch-n [[:environment/remove-scroll-prohibition! :app-sidebar]
                         [:x.app-db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
                                              (param false)]]})))
 
@@ -116,7 +116,7 @@
   ;  [:x.app-ui/show-sidebar!]
   (fn [{:keys [db]} _]
       (if (r sidebar-hidden? db)
-          {:dispatch-n [;[:x.app-environment.scroll-prohibitor/add-scroll-prohibition! :app-sidebar]
+          {:dispatch-n [;[:environment/add-scroll-prohibition! :app-sidebar]
                         [:x.app-db/set-item! (db/meta-item-path ::primary :sidebar-visible?)
                                              (param true)]]})))
 

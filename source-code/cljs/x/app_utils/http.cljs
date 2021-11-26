@@ -56,7 +56,7 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- send-request!
+(defn send-request!
   ; @param (keyword)(opt) request-id
   ; @param (map) request-props
   ;  {:body (*)(opt)
@@ -69,8 +69,17 @@
   ;   :progress-handler-event (event-id)(opt)
   ;    Only w/ {:method :post}
   ;   :timeout (ms)(opt)
-  ;   :uri (string)
-  ;    "/sample-uri"}
+  ;   :uri (string)}
+  ;
+  ; @usage
+  ;  (http/send-request! {...})
+  ;
+  ; @usage
+  ;  (http/send-request! :my-request {...})
+  ;
+  ; @usage
+  ;  (http/send-request! {:method :get
+  ;                       :uri    "/sample-uri"})
   ([request-props]
    (send-request! nil request-props))
 
@@ -80,18 +89,18 @@
         (http/send-request! request-id request-props))))
 
 ; @usage
-;  [:x.app-utils.http/send-request! {...}]
+;  [:http/send-request! {...}]
 ;
 ; @usage
-;  [:x.app-utils.http/send-request! :my-request {...}]
+;  [:http/send-request! :my-request {...}]
 ;
 ; @usage
-;  (a/reg-event-fx ::my-error-handler    (fn [_ [_ request-id server-response]]))
-;  (a/reg-event-fx ::my-handler          (fn [_ [_ request-id server-response]]))
-;  (a/reg-event-fx ::my-progress-handler (fn [_ [_ request-id request-progress]]))
-;  [:x.app-utils.http/send-request! {:error-handler-event    ::my-error-handler
-;                                    :handler-event          ::my-handler
-;                                    :method                 :post
-;                                    :progress-handler-event ::my-progress-handler
-;                                    :uri                    "/my-uri"}]
-(a/reg-handled-fx ::send-request! send-request!)
+;  (a/reg-event-fx :my-error-handler    (fn [_ [_ request-id server-response]]))
+;  (a/reg-event-fx :my-handler          (fn [_ [_ request-id server-response]]))
+;  (a/reg-event-fx :my-progress-handler (fn [_ [_ request-id request-progress]]))
+;  [:http/send-request! {:error-handler-event    :my-error-handler
+;                        :handler-event          :my-handler
+;                        :method                 :post
+;                        :progress-handler-event :my-progress-handler
+;                        :uri                    "/my-uri"}]
+(a/reg-handled-fx :http/send-request! send-request!)

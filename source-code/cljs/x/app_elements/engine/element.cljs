@@ -46,7 +46,8 @@
   ;
   ; @example
   ;  (element/element-id->extended-id :namespace/my-element :popup)
-  ;  => :namespace/my-element--popup
+  ;  =>
+  ;  :namespace/my-element--popup
   ;
   ; @return (keyword)
   [element-id flag]
@@ -248,11 +249,11 @@
   ;   :src (string)}
   [_ {:keys [alt disabled? highlighted? selectable? src]}]
   (cond-> (param {})
-          (some? alt)            (assoc :alt alt)
-          (some? src)            (assoc :src src)
-          (boolean disabled?)    (assoc :data-disabled    true)
-          (boolean highlighted?) (assoc :data-highlighted true)
-          (boolean selectable?)  (assoc :data-selectable  true)))
+          (some? alt)             (assoc :alt alt)
+          (some? src)             (assoc :src src)
+          (boolean? disabled?)    (assoc :data-disabled    disabled?)
+          (boolean? highlighted?) (assoc :data-highlighted highlighted?)
+          (boolean? selectable?)  (assoc :data-selectable  selectable?)))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

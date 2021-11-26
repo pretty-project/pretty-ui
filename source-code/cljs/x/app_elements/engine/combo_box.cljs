@@ -469,20 +469,16 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 40)
-                     {:key-code 40 :on-keydown [:x.app-elements/down-combo-box! field-id]
-                      :prevent-default? true}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 38)
-                     {:key-code 38 :on-keydown [:x.app-elements/up-combo-box! field-id]
-                      :prevent-default? true}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 27)
-                     {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 13)
-                     {:key-code 13 :on-keydown [:x.app-elements/enter-combo-box! field-id]}]]}))
+      {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
+                                                      {:key-code 40 :on-keydown [:x.app-elements/down-combo-box!   field-id]
+                                                       :prevent-default? true}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
+                                                      {:key-code 38 :on-keydown [:x.app-elements/up-combo-box!     field-id]
+                                                       :prevent-default? true}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
+                                                      {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
+                                                      {:key-code 13 :on-keydown [:x.app-elements/enter-combo-box!  field-id]}]]}))
 
 (a/reg-event-fx
   :x.app-elements/reg-multi-combo-box-controllers!
@@ -490,20 +486,16 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 40)
-                     {:key-code 40 :on-keydown [:x.app-elements/down-combo-box! field-id]
-                      :prevent-default? true}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 38)
-                     {:key-code 38 :on-keydown [:x.app-elements/up-combo-box! field-id]
-                      :prevent-default? true}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 27)
-                     {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
-                    [:x.app-environment.keypress-handler/reg-keypress-event!
-                     (key-code->keypress-id field-id 13)
-                     {:key-code 13 :on-keydown [:x.app-elements/enter-multi-combo-box! field-id]}]]}))
+      {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
+                                                      {:key-code 40 :on-keydown [:x.app-elements/down-combo-box! field-id]
+                                                       :prevent-default? true}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
+                                                      {:key-code 38 :on-keydown [:x.app-elements/up-combo-box! field-id]
+                                                       :prevent-default? true}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
+                                                      {:key-code 27 :on-keydown [:x.app-elements/escape-combo-box! field-id]}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
+                                                      {:key-code 13 :on-keydown [:x.app-elements/enter-multi-combo-box! field-id]}]]}))
 
 (a/reg-event-fx
   :x.app-elements/remove-combo-box-controllers!
@@ -511,11 +503,7 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:x.app-environment.keypress-handler/remove-keypress-event!
-                     (key-code->keypress-id field-id 40)]
-                    [:x.app-environment.keypress-handler/remove-keypress-event!
-                     (key-code->keypress-id field-id 38)]
-                    [:x.app-environment.keypress-handler/remove-keypress-event!
-                     (key-code->keypress-id field-id 27)]
-                    [:x.app-environment.keypress-handler/remove-keypress-event!
-                     (key-code->keypress-id field-id 13)]]}))
+      {:dispatch-n [[:environment/remove-keypress-event! (key-code->keypress-id field-id 40)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 38)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 27)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 13)]]}))

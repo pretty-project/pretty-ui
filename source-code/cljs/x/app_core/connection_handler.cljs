@@ -24,13 +24,13 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/connect-app!
+  :core/connect-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-n (r lifecycle-handler/get-period-events db :on-browser-online)}))
 
 (event-handler/reg-event-fx
-  :x.app-core/disconnect-app!
+  :core/disconnect-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-n (r lifecycle-handler/get-period-events db :on-browser-offline)}))

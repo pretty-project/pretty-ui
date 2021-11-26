@@ -31,7 +31,8 @@
   ;
   ; @example
   ;  (sound-id->catalog-id :click-1)
-  ;  => "x-app-sound--click-1"
+  ;  =>
+  ;  "x-app-sound--click-1"
   ;
   ; @return (string)
   [sound-id]

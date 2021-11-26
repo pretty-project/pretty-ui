@@ -30,10 +30,10 @@
 ;  inicializására.
 ;
 ; @description
-;  Az elem inicializálásának kezdetekor az [:x.app-core/synchronize-loading!]
+;  Az elem inicializálásának kezdetekor az [:core/synchronize-loading!]
 ;  eseménnyel lehet jelezni az app-loader számára, hogy addig ne tekintse
 ;  befejezettnek az applikáció betöltését, amíg ugyanez az elem nem indítja
-;  el a [:x.app-core/->synchron-signal] eseményt.
+;  el a [:core/->synchron-signal] eseményt.
 
 
 
@@ -96,7 +96,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Az applikáció betöltése akkor számít befejezettnek, ha az összes várt
-  ; [::->synchron-signal] esemény megtörtént és a várokozások száma 0-ra csökkent.
+  ; [:core/->synchron-signal] esemény megtörtént és a várokozások száma 0-ra csökkent.
   ;
   ; @return (boolean)
   [db _]
@@ -134,7 +134,7 @@
   [db [_ status]]
   (assoc-in db [::primary :data-items :status] status))
 
-(event-handler/reg-event-db :x.app-core/set-app-status! set-app-status!)
+(event-handler/reg-event-db :core/set-app-status! set-app-status!)
 
 (defn synchronize-loading!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,7 +145,7 @@
   [db [_ signal-id]]
   (update-in db [::primary :data-items :signals] inc))
 
-(event-handler/reg-event-db :x.app-core/synchronize-loading! synchronize-loading!)
+(event-handler/reg-event-db :core/synchronize-loading! synchronize-loading!)
 
 (defn stop-synchronizing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,7 +156,7 @@
       (r set-app-status! db :halted)
       (return            db)))
 
-(event-handler/reg-event-db :x.app-core/stop-synchronizing! stop-synchronizing!)
+(event-handler/reg-event-db :core/stop-synchronizing! stop-synchronizing!)
 
 
 
@@ -164,13 +164,13 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/self-test!
+  :core/self-test!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
             ; 1.
-      (cond (r synchronized?  db) {:dispatch [:x.app-core/->app-loaded]}
+      (cond (r synchronized?  db) {:dispatch [:core/->app-loaded]}
             ; 2.
-            (r timeout-error? db) {:dispatch [:x.app-core/->timeout-reached]})))
+            (r timeout-error? db) {:dispatch [:core/->timeout-reached]})))
 
 
 
@@ -178,22 +178,22 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/->synchron-signal
+  :core/->synchron-signal
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
           {:db       (update-in db [::primary :data-items :signals] dec)
-           :dispatch [:x.app-core/self-test!]})))
+           :dispatch [:core/self-test!]})))
 
 (event-handler/reg-event-fx
-  :x.app-core/->app-loaded
+  :core/->app-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)
        :dispatch [:x.app-ui/hide-shield!]}))
 
 (event-handler/reg-event-fx
-  :x.app-core/->timeout-reached
+  :core/->timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)
@@ -205,13 +205,13 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/initialize-load-handler!
+  :core/initialize-load-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [event-id]]
       {:db (-> db (set-app-status!   [event-id :loading])
                   (reg-load-started! [event-id]))
-       :dispatch-later [{:ms LOAD-TIMEOUT :dispatch [:x.app-core/self-test!]}]}))
+       :dispatch-later [{:ms LOAD-TIMEOUT :dispatch [:core/self-test!]}]}))
 
 (lifecycle-handler/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:x.app-core/initialize-load-handler!]})
+  {:on-app-init [:core/initialize-load-handler!]})

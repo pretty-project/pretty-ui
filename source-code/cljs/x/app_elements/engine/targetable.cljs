@@ -33,7 +33,8 @@
   ;
   ; @example
   ;  (targetable/element-id->target-id :namespace/my-element)
-  ;  => "namespace--my-element--target"
+  ;  =>
+  ;  "namespace--my-element--target"
   ;
   ; @return (string)
   [element-id]

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.0
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.4.6
 
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (function)
   [event]
-  (a/dispatch-once 500 [::update-mouse-position! event]))
+  (a/dispatch-once 500 [:environment/update-mouse-position! event]))
 
 
 
@@ -51,38 +51,45 @@
   (assoc-in db (db/meta-item-path ::primary :mouse-position)
                (dom/get-mouse-position mouse-event)))
 
-(a/reg-event-db ::update-mouse-position! update-mouse-position!)
+(a/reg-event-db :environment/update-mouse-position! update-mouse-position!)
 
 
 
 ;; Side-effect events ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- listen-to-mousemove!
-  ; @return (?)
+(defn listen-to-mousemove!
+  ; @usage
+  ;  (environment/listen-to-mousemove!)
   []
   (dom/add-event-listener! "mousemove" mousemove-listener))
 
-(a/reg-fx ::listen-to-mousemove! listen-to-mousemove!)
+(a/reg-fx :environment/listen-to-mousemove! listen-to-mousemove!)
 
-(defn- stop-listen-to-mousemove!
-  ; @return (?)
+(defn stop-listen-to-mousemove!
+  ; @usage
+  ;  (environment/stop-listen-to-mousemove!)
   []
   (dom/remove-event-listener! "mousemove" mousemove-listener))
 
-(a/reg-fx ::stop-listen-to-mousemove! stop-listen-to-mousemove!)
+(a/reg-fx :environment/stop-listen-to-mousemove! stop-listen-to-mousemove!)
 
 (defn- prevent-selecting!
   ; Letiltja a mousedown eventet, a nem kivant szovegkijelolesek
   ; megakadalyozasa vegett
+  ;
+  ; @usage
+  ;  (environment/prevent-selecting!)
   []
   (dom/add-event-listener! "mousedown" dom/select-preventer))
   ; + (add-event-listener! "touchstart" #(.preventDefault %)) ?
 
-(a/reg-handled-fx ::prevent-selecting! prevent-selecting!)
+(a/reg-handled-fx :environment/prevent-selecting! prevent-selecting!)
 
 (defn- enable-selecting!
+  ; @usage
+  ;  (environment/enable-selecting!)
   []
   (dom/remove-event-listener! "mousedown" dom/select-preventer))
 
-(a/reg-handled-fx ::enable-selecting! enable-selecting!)
+(a/reg-handled-fx :environment/enable-selecting! enable-selecting!)

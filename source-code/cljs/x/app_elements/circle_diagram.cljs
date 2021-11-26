@@ -46,7 +46,8 @@
   ;
   ; @example
   ;  (diagram-props<-rotations {:sections [{:value 50} {:value 25} {:value 50}] :total-value 100})
-  ;  => {:sections [{:value 25 :rotation 0} {:value 25 :rotation 90} {:value 50 :rotation 180}] :total-value 100}
+  ;  =>
+  ;  {:sections [{:value 25 :rotation 0} {:value 25 :rotation 90} {:value 50 :rotation 180}] :total-value 100}
   ;
   ; @return (map)
   ;  {:sections (maps in vector)

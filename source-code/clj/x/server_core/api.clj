@@ -68,6 +68,7 @@
 (def query-string->debug-mode  debug-handler/query-string->debug-mode)
 (def request->debug-mode?      debug-handler/request->debug-mode?)
 (def request->debug-mode       debug-handler/request->debug-mode)
+(def console                   debug-handler/console)
 
 ; x.server-core.engine
 (def id            engine/id)

@@ -32,7 +32,8 @@
   ;
   ; @example
   ;  (element-class :my-renderer)
-  ;  => "x-app-my-renderer--element"
+  ;  =>
+  ;  "x-app-my-renderer--element"
   ;
   ; @return (string)
   [renderer-id]
@@ -47,7 +48,8 @@
   ;
   ; @example
   ;  (element-additional-class :my-renderer "label")
-  ;  => "x-app-my-renderer--element--label"
+  ;  =>
+  ;  "x-app-my-renderer--element--label"
   ;
   ; @return (string)
   [renderer-id flag]

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.1
+; Version: v0.2.4
+; Compatibility: x4.4.6
 
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.server-installer/install-media!
+  :installer/install-media!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-name "installing module: media")

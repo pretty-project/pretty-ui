@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
-(def ERROR-EVENT-ID :x.server-core.error-handler/->error-catched)
+(def ERROR-EVENT-ID :core/->error-catched)
 
 ; @constant (boolean)
 (def LOG-EVENTS? false)
@@ -100,13 +100,13 @@
 
 (def log-event!
      (re-frame/->interceptor
-       :id ::log-event!
+       :id      ::log-event!
        :before #(do (println (context->event-vector %1))
                     (return %1))))
 
 (def check-db!
      (re-frame/->interceptor
-       :id ::check-db!
+       :id      ::check-db!
        :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
                      error-event   [ERROR-EVENT-ID (context->error-props %1)]]
                     (when (context->error-catched? error-context)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.1.2
-; Compatibility: x3.9.9
+; Version: v0.2.8
+; Compatibility: x4.4.6
 
 
 
@@ -30,53 +30,64 @@
   ;
   ; @return (DOM-element)
   [element-id]
-  (if (some? element-id)
+  (if (some?                 element-id)
       (dom/get-element-by-id element-id)
-      (return js/window)))
+      (return                js/window)))
 
 
 
 ;; -- Side effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-event-listener!
+(defn add-event-listener!
   ; @param (string) type
   ; @param (function) listener
   ; @param (string)(opt) element-id
   ;  Default: js/window
+  ;
+  ; @usage
+  ;  (defn handler-f [e] (do-something!))
+  ;  (environment/add-event-listener! "mousemove" handler-f)
   [type listener & [element-id]]
   (let [target (element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
-;  [::add-event-listener! "mousemove" handler-f]}
-(a/reg-handled-fx ::add-event-listener! add-event-listener!)
+;  [:environment/add-event-listener! "mousemove" handler-f]
+(a/reg-handled-fx :environment/add-event-listener! add-event-listener!)
 
-(defn- remove-event-listener!
+(defn remove-event-listener!
   ; @param (string) type
   ; @param (function) listener
   ; @param (string)(opt) element-id
   ;  Default: js/window
+  ;
+  ; @usage
+  ;  (defn handler-f [e] (do-something!))
+  ;  (environment/remove-event-listener! "mousemove" handler-f)
   [type listener & [element-id]]
   (let [target (element-id->target element-id)]
        (dom/remove-event-listener! type listener target)))
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
-;  [::add-event-listener! "mousemove" handler-f]}
-(a/reg-handled-fx ::remove-event-listener! remove-event-listener!)
+;  [:environment/remove-event-listener! "mousemove" handler-f]
+(a/reg-handled-fx :environment/remove-event-listener! remove-event-listener!)
 
-(defn- add-event!
+(defn add-event!
   ; @param (string) type
   ; @param (metamorphic-event) event
   ; @param (string)(opt) element-id
   ;  Default: js/window
+  ;
+  ; @usage
+  ;  (environment/add-event! "mousemove" [:do-something!])
   [type event & [element-id]]
   (let [listener #(a/dispatch event)
         target    (element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
 
 ; @usage
-;  [::add-event! "mousemove" [:do-something!]]}
-(a/reg-handled-fx ::add-event! add-event!)
+;  [:environment/add-event! "mousemove" [:do-something!]]
+(a/reg-handled-fx :environment/add-event! add-event!)

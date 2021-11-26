@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.5.6
+; Version: v0.6.8
 ; Compatibility: x4.4.6
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (function)
   []
-  (a/dispatch-once 250 [::->scrolled]))
+  (a/dispatch-once 250 [:environment/->scrolled]))
 
 
 
@@ -150,7 +150,7 @@
          ; 3.
          (update-scroll-progress!  [event-id])))
 
-(a/reg-event-db ::update-scroll-data! update-scroll-data!)
+(a/reg-event-db :environment/update-scroll-data! update-scroll-data!)
 
 
 
@@ -158,50 +158,58 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::->scrolled
+  :environment/->scrolled
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:x.app-environment.position-handler/update-stored-positions!]
-                [::update-scroll-data!]]})
+  {:dispatch-n [[:environment/update-stored-positions!]
+                [:environment/update-scroll-data!]]})
 
 
 
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-scroll-y!
+(defn set-scroll-y!
   ; @param (n) integer
+  ;
+  ; @usage
+  ;  (environment/set-scroll-y! 100)
   [n]
   (dom/set-scroll-y! n))
 
 ; @usage
-; [:x.app-environment.scroll-handler/set-scroll-y! 100]
-(a/reg-handled-fx ::set-scroll-y! set-scroll-y!)
+; [:environment/set-scroll-y! 100]
+(a/reg-handled-fx :environment/set-scroll-y! set-scroll-y!)
 
-(defn- scroll-to-top!
+(defn scroll-to-top!
+  ; @usage
+  ;  (environment/scroll-to-top!)
   []
   (dom/set-scroll-y! 0))
 
 ; @usage
-; [:x.app-environment.scroll-handler/scroll-to-top!]
-(a/reg-handled-fx ::scroll-to-top! scroll-to-top!)
+; [:environment/scroll-to-top!]
+(a/reg-handled-fx :environment/scroll-to-top! scroll-to-top!)
 
 (defn- scroll-to-element-top!
   ; @param (string) element-id
   ; @param (integer)(opt) offset
+  ;
+  ; @usage
+  ;  (environment/scroll-to-element-top! "my-element" 50)
   [element-id offset]
   (dom/scroll-to-element-top! (dom/get-element-by-id element-id)
                               (param offset)))
 
 ; @usage
-; [:x.app-environment.scroll-handler/scroll-to-element-top! "my-element" 50]
-(a/reg-handled-fx ::scroll-to-element-top! scroll-to-element-top!)
+; [:environment/scroll-to-element-top! "my-element" 50]
+(a/reg-handled-fx :environment/scroll-to-element-top! scroll-to-element-top!)
 
 (defn- listen-to-scroll!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (dom/add-event-listener! "scroll" scroll-listener))
 
-(a/reg-handled-fx ::listen-to-scroll! listen-to-scroll!)
+(a/reg-handled-fx :environment/listen-to-scroll! listen-to-scroll!)
 
 
 
@@ -210,5 +218,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot {:dispatch-n [[::listen-to-scroll!]
-                              [::update-scroll-data!]]}})
+  {:on-app-boot {:dispatch-n [[:environment/listen-to-scroll!]
+                              [:environment/update-scroll-data!]]}})

@@ -129,6 +129,12 @@
                             :icon    :more_vert
                             :layout  :icon-button
                             :variant :transparent}
+      :more-options-button {:color   :default
+                            :horizontal-align :left
+                            :icon    :list
+                            :label   :more-options
+                            :layout  :row
+                            :variant :transparent}
       :next-icon-button    {:color   :default
                             :icon    :arrow_forward_ios
                             :layout  :icon-button

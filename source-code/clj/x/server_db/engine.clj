@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.1.5
+; Version: v0.7.0
+; Compatibility: x4.4.6
 
 
 
@@ -49,4 +49,4 @@
   [db _]
   (return db))
 
-(a/reg-sub :x.server-db/get-db get-db)
+(a/reg-sub :db/get-db get-db)

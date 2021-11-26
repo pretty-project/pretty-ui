@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.8.8
-; Compatibility: x3.9.9
+; Version: v0.9.2
+; Compatibility: x4.4.6
 
 
 
@@ -68,7 +68,7 @@
   [db _]
   (dissoc-in db [::primary :meta-items :server-state]))
 
-(event-handler/reg-event-db :x.server-core/reset-server-state! reset-server-state!)
+(event-handler/reg-event-db :core/reset-server-state! reset-server-state!)
 
 (defn- store-server-state!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,7 +79,7 @@
   [db [_ server-state]]
   (assoc-in db [::primary :meta-items :server-state] server-state))
 
-(event-handler/reg-event-db :x.server-core/store-server-state! store-server-state!)
+(event-handler/reg-event-db :core/store-server-state! store-server-state!)
 
 
 
@@ -96,12 +96,12 @@
   (let [server-props (engine/prot server-props server-props-prototype)
         server-state (run-server (ring-handler)
                                  (param server-props))]
-       (event-handler/dispatch [:x.server-core/store-server-state! server-state])
+       (event-handler/dispatch [:core/store-server-state! server-state])
 
        ; *
        (let [server-port (get server-props :port)]
             (println details/app-name "started on port:" server-port))))
 
 ; @usage
-;  [:x.server-core/run-server! {...}]
-(event-handler/reg-handled-fx :x.server-core/run-server! run-server!)
+;  [:core/run-server! {...}]
+(event-handler/reg-handled-fx :core/run-server! run-server!)

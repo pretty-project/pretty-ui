@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :x.app-tools/init-position-signal!
+  :tools/init-position-signal!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -96,5 +96,5 @@
   ([component-id context-props]
    [components/stated component-id
                       {:component   position-signal-component
-                       :initializer [:x.app-tools/init-position-signal! component-id]
-                       :subscriber  [::get-context-props                component-id context-props]}]))
+                       :initializer [:tools/init-position-signal! component-id]
+                       :subscriber  [::get-context-props          component-id context-props]}]))

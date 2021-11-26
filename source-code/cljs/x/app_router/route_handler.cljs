@@ -60,7 +60,7 @@
 ; @name route-fragment
 ;  "order"
 ;
-; @name route-event
+; @name client-event
 ;  [:products/render!]
 ;
 ; @name route-id
@@ -76,13 +76,15 @@
 
 ; @constant (map)
 (def DEFAULT-ROUTES
-     {:reboot {:route-event    [:boot-loader/reboot-app!]
-               :route-template "/reboot"}})
+     {:page-not-found {:client-event   [:views/render-error-page! :page-not-found]
+                       :route-template "/page-not-found"}
+      :reboot         {:client-event   [:boot-loader/reboot-app!]
+                       :route-template "/reboot"}})
 
 ; @constant (map)
 (def ACCOUNTANT-CONFIG
-     {:nav-handler  #(a/dispatch   [::handle-route!      %])
-      :path-exists? #(a/subscribed [::route-path-exists? %])
+     {:nav-handler  #(a/dispatch   [:router/handle-route!      %])
+      :path-exists? #(a/subscribed [:router/route-path-exists? %])
       :reload-same-path? false})
 
 
@@ -224,7 +226,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::routes)))
+  (get-in db (db/path ::client-routes)))
 
 (defn- get-router-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -263,7 +265,7 @@
   (let [route-match (r get-route-match db route-path)]
        (boolean route-match)))
 
-(a/reg-sub ::route-path-exists? route-path-exists?)
+(a/reg-sub :router/route-path-exists? route-path-exists?)
 
 
 
@@ -289,14 +291,14 @@
   [db [_ route-id]]
   (r get-route-prop db route-id :route-template))
 
-(defn- get-route-event
+(defn- get-client-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
   ;
   ; @return (metamorphic-event)
   [db [_ route-id]]
-  (r get-route-prop db route-id :route-event))
+  (r get-route-prop db route-id :client-event))
 
 (defn- get-on-leave-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -626,7 +628,12 @@
   ;
   ; @return (map)
   [db _]
-  (assoc-in db (db/path ::client-routes) DEFAULT-ROUTES))
+  (let [stored-routes (r get-routes db)]
+       ; A szerverről érkezett client-routes útvonalak magasabb prioritásúak,
+       ; mint a DEFAULT-ROUTES útvonalak.
+       ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni
+       ; a kliens-oldali DEFAULT-ROUTES útvonalakat.
+       (assoc-in db (db/path ::client-routes) (merge DEFAULT-ROUTES stored-routes))))
 
 (defn- reg-to-history!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -635,7 +642,7 @@
   ;
   ; @return (map)
   [db [_ route-id]]
-  (r db/apply! db (db/meta-item-path ::routes :history) vector/conj-item route-id))
+  (r db/apply! db (db/meta-item-path ::client-routes :history) vector/conj-item route-id))
 
 
 
@@ -655,18 +662,18 @@
            {:db (-> db (store-current-route! [event-id route-string])
                        ; Make history
                        (reg-to-history!      [event-id route-id]))
-                         ; Dispatch on-leave event if ...
+                         ; Dispatch on-leave-event if ...
             :dispatch-n [(if-let [on-leave-event (r get-on-leave-event db previous-route-id)]
                                  (if (r route-id-changed? db route-id) on-leave-event))
                          ; Render login screen if ...
                          (if (r require-authentication? db route-id)
-                             [:x.app-views.login-box/render!])
+                             [:views/render-login-box!])
                          ; Set restart-target if ...
                          (if (r require-authentication? db route-id)
                              [:boot-loader/set-restart-target! route-string])
-                         ; Dispatch route-event if ...
-                         (if-let [route-event (r get-route-event db route-id)]
-                                 (if-not (r require-authentication? db route-id) route-event))]})))
+                         ; Dispatch client-event if ...
+                         (if-let [client-event (r get-client-event db route-id)]
+                                 (if-not (r require-authentication? db route-id) client-event))]})))
 
 (a/reg-event-fx
   :router/go-home!

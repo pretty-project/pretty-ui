@@ -359,7 +359,7 @@
             action-id             (engine/namespace->query-id namespace)
             action-props          {:source-directory-id rendered-directory-id
                                    :file-id             file-id}]
-           [:x.app-tools.editor/edit!
+           [:value-editor/edit!
             :media/alias-editor
             {:initial-value file-alias
              :label         :filename
@@ -380,7 +380,7 @@
             action-id             (engine/namespace->query-id namespace)
             action-props          {:source-directory-id rendered-directory-id
                                    :subdirectory-id     subdirectory-id}]
-           [:x.app-tools.editor/edit!
+           [:value-editor/edit!
             :media/alias-editor
             {:initial-value subdirectory-alias
              :label         :directory-name
@@ -446,7 +446,7 @@
             file-alias            (r engine/get-file-prop db rendered-directory-id file-id :file/alias)
             filename              (r engine/get-file-prop db rendered-directory-id file-id :file/filename)
             uri                   (media/filename->media-storage-uri filename)]
-           [:x.app-tools.file-saver/save-file! {:filename file-alias :uri uri}])))
+           [:tools/save-file! {:filename file-alias :uri uri}])))
 
 
 

@@ -213,7 +213,8 @@
   ;
   ; @example
   ;  (io/file-list "my-directory")
-  ;  => ["my-directory/my-file.ext" ...]
+  ;  =>
+  ;  ["my-directory/my-file.ext" ...]
   ;
   ; @return (strings in vector)
   [directory-path]
@@ -228,7 +229,8 @@
   ;
   ; @example
   ;  (io/item-list "my-directory")
-  ;  => ["my-directory/my-file.ext" "my-directory/my-subdirectory" ...]
+  ;  =>
+  ;  ["my-directory/my-file.ext" "my-directory/my-subdirectory" ...]
   ;
   ; @return (strings in vector)
   [directory-path]

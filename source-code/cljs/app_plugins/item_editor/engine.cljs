@@ -151,10 +151,10 @@
       (let [parent-uri    (parent-uri    extension-id item-namespace)
             mutation-name (mutation-name extension-id item-namespace :add)
             item-props    (get-in    db [extension-id :editor-data])]
-           [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:router/go-to! parent-uri]
-                                     :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
-                                     :query      [`(~(symbol mutation-name) ~item-props)]}])))
+           [:sync/send-query! (request-id extension-id item-namespace)
+                              {:on-stalled [:router/go-to! parent-uri]
+                               :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                               :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
   :item-editor/update-item!
@@ -169,10 +169,10 @@
       (let [parent-uri    (parent-uri    extension-id item-namespace)
             mutation-name (mutation-name extension-id item-namespace :update)
             item-props    (get-in    db [extension-id :editor-data])]
-           [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:router/go-to! parent-uri]
-                                     :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
-                                     :query      [`(~(symbol mutation-name) ~item-props)]}])))
+           [:sync/send-query! (request-id extension-id item-namespace)
+                              {:on-stalled [:router/go-to! parent-uri]
+                               :on-failure [:x.app-ui/blow-bubble! {:content :saving-error :color :warning}]
+                               :query      [`(~(symbol mutation-name) ~item-props)]}])))
 
 (a/reg-event-fx
   :item-editor/delete-item!
@@ -188,10 +188,10 @@
             mutation-name (mutation-name extension-id item-namespace "delete")
             item-id-key   (item-id-key   extension-id item-namespace)
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
-           [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:router/go-to! parent-uri]
-                                     :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
-                                     :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
+           [:sync/send-query! (request-id extension-id item-namespace)
+                              {:on-stalled [:router/go-to! parent-uri]
+                               :on-failure [:x.app-ui/blow-bubble! {:content :deleting-error :color :warning}]
+                               :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
   :item-editor/duplicate-item!
@@ -206,10 +206,10 @@
       (let [mutation-name (mutation-name extension-id item-namespace "duplicate")
             item-id-key   (item-id-key   extension-id item-namespace)
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
-           [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:item-editor/->item-duplicated extension-id item-namespace]
-                                     :on-failure [:x.app-ui/blow-bubble! {:content :copying-error :color :warning}]
-                                     :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
+           [:sync/send-query! (request-id extension-id item-namespace)
+                              {:on-stalled [:item-editor/->item-duplicated extension-id item-namespace]
+                               :on-failure [:x.app-ui/blow-bubble! {:content :copying-error :color :warning}]
+                               :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
 (a/reg-event-fx
   :item-editor/edit-copy!
@@ -245,9 +245,9 @@
       (let [item-id      (get-in db [extension-id :editor-meta :item-id])
             entity       (eql/id->entity item-id item-namespace)
             added-at-key (keyword item-namespace "added-at")]
-           [:x.app-sync/send-query! (request-id extension-id item-namespace)
-                                    {:on-stalled [:item-editor/receive-item! extension-id item-namespace]
-                                     :query      [{entity [added-at-key '*]}]}])))
+           [:sync/send-query! (request-id extension-id item-namespace)
+                              {:on-stalled [:item-editor/receive-item! extension-id item-namespace]
+                               :query      [{entity [added-at-key '*]}]}])))
 
 (a/reg-event-fx
   :item-editor/load!

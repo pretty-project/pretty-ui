@@ -68,7 +68,7 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :x.app-core/->error-catched
+  :core/->error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) error-props

@@ -244,13 +244,12 @@
             ; Request details
             action-id                (engine/namespace->query-id namespace)
             body                     (dom/merge-to-form-data!    form-data {:query query})]
-           [:x.app-sync/send-query!
-             action-id
-             {:body         (param body)
-              :idle-timeout (param 1000)
-              :on-failure   [:file-uploader/->upload-failure]
-              :on-success   {:dispatch-n [[:media/handle-request-response! action-id]
-                                          [:file-uploader/->files-uploaded]]}}])))
+           [:sync/send-query! action-id
+                              {:body         (param body)
+                               :idle-timeout (param 1000)
+                               :on-failure   [:file-uploader/->upload-failure]
+                               :on-success   {:dispatch-n [[:media/handle-request-response! action-id]
+                                                           [:file-uploader/->files-uploaded]]}}])))
 
 
 

@@ -62,11 +62,13 @@
   ;
   ; @example
   ;  (file-alias->copy-file-alias "My file.txt" [] "copy")
-  ;  => "My file copy.txt"
+  ;  =>
+  ;  "My file copy.txt"
   ;
   ; @example
   ;  (file-alias->copy-file-alias "My file" [] "copy")
-  ;  => "My file copy"
+  ;  =>
+  ;  "My file copy"
   ;
   ; @return (string)
   [file-alias concurent-aliases suffix]
@@ -85,7 +87,8 @@
   ;
   ; @example
   ;  (directory-alias->copy-directory-alias "My directory" [] "copy")
-  ;  => "My directory copy"
+  ;  =>
+  ;  "My directory copy"
   ;
   ; @return (string)
   [directory-alias concurent-aliases suffix]
@@ -103,8 +106,9 @@
   ;
   ; @example
   ;  (get-directory-items-alias-list "my-directory")
-  ;  => {:directory ["My directory" "Your directory"]
-  ;      :file ["My file" "Your file"]}
+  ;  =>
+  ;  {:directory ["My directory" "Your directory"]
+  ;   :file      ["My file" "Your file"]}
   ;
   ; @return (map)
   [directory-id]

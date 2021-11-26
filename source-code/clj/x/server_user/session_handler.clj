@@ -29,9 +29,8 @@
 ; @constant (map)
 ;  {:user-account/id (nil)
 ;   :user-account/roles (vector)}
-(def ANONYMOUS-SESSION
-     {:user-account/id    nil
-      :user-account/roles []})
+(def ANONYMOUS-SESSION {:user-account/id    nil
+                        :user-account/roles []})
 
 
 
