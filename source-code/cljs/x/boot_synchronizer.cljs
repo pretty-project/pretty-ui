@@ -25,7 +25,6 @@
 ; @constant (map)
 (def TARGET-PATHS
      {:app-details     (db/path :x.mid-core.config-handler/configs :app-details)
-      :site-links      (db/path :x.mid-core.config-handler/configs :site-links)
       :storage-details (db/path :x.mid-core.config-handler/configs :storage-details)
       :client-routes   (db/path :x.app-router.route-handler/client-routes)
       :user-account    (db/path :x.app-user.account-handler/account)

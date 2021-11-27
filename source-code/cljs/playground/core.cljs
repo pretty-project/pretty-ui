@@ -226,6 +226,7 @@
   [:<> [elements/box {:body   {:content "Menu"}
                       :header {:content #'menu-bar
                                :sticky? true}}]
+
        [elements/box {:body   {:content #'buttons}
                       :header {:content "Buttons"
                                :sticky? true}
@@ -285,10 +286,3 @@
   {:dispatch-n [[:ui/set-header-title! "Playground"]
                 [:ui/set-window-title! "Playground"]
                 [:playground/render!]]})
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [:playground/load!]
-                                     :route-template "/playground"
-                                     :restricted?    true}]})

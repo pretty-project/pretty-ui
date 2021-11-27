@@ -66,7 +66,6 @@
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-sub :core/get-app-details        get-app-details)
-(event-handler/reg-sub :core/get-site-links         get-site-links)
 (event-handler/reg-sub :core/get-storage-details    get-storage-details)
 (event-handler/reg-sub :core/get-configs            get-configs)
 (event-handler/reg-sub :core/get-destructed-configs get-destructed-configs)

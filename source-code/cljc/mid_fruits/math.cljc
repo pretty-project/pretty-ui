@@ -28,7 +28,8 @@
   ;
   ; @example
   ;  (math/percent->angle 50)
-  ;  => 180
+  ;  => 
+  ;  180
   ;
   ; @return (float or integer)
   [n]
@@ -39,11 +40,13 @@
   ;
   ; @example
   ;  (math/floor 4.20)
-  ;  => 4
+  ;  =>
+  ;  4
   ;
   ; @example
   ;  (math/floor 4.80)
-  ;  => 4
+  ;  =>
+  ;  4
   ;
   ; @return (integer)
   [n]
@@ -54,11 +57,13 @@
   ;
   ; @example
   ;  (math/round 4.20)
-  ;  => 4
+  ;  =>
+  ;  4
   ;
   ; @example
   ;  (math/round 4.80)
-  ;  => 5
+  ;  =>
+  ;  5
   ;
   ; @return (integer)
   [n]
@@ -69,7 +74,8 @@
   ;
   ; @example
   ;  (math/absolute -4.20)
-  ;  => 4.20
+  ;  =>
+  ;  4.20
   ;
   ; @return (float or integer)
   [n]
@@ -80,7 +86,8 @@
   ;
   ; @example
   ;  (math/negative 4.20)
-  ;  => -4.20
+  ;  =>
+  ;  -4.20
   ;
   ; @return (float or integer)
   [n]
@@ -93,7 +100,8 @@
   ;
   ; @example
   ;  (math/positive -4.20)
-  ;  => 4.20
+  ;  =>
+  ;  4.20
   ;
   ; @return (float or integer)
   [n]
@@ -117,7 +125,8 @@
   ;
   ; @example
   ;  (math/opposite 4.20)
-  ;  => -4.20
+  ;  =>
+  ;  -4.20
   ;
   ; @return (float or integer)
   [n]
@@ -130,7 +139,8 @@
   ;
   ; @example
   ;  (math/between? 4.20 0 42)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n min max]
@@ -144,7 +154,8 @@
   ;
   ; @example
   ;  (math/between! 4.20 0 42)
-  ;  => 4.20
+  ;  =>
+  ;  4.20
   ;
   ; @return (float or integer)
   [n min max]
@@ -157,7 +168,8 @@
   ;
   ; @example
   ;  (math/negative? -4.20)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -168,7 +180,8 @@
   ;
   ; @example
   ;  (math/positive? 4.20)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -179,7 +192,8 @@
   ;
   ; @example
   ;  (math/nonnegative? 4.20)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -191,15 +205,18 @@
   ;
   ; @example
   ;  (math/collection-minimum [100 14 3 55])
-  ;  => 3
+  ;  =>
+  ;  3
   ;
   ; @example
   ;  (math/collection-minimum ["0" 1 "a" nil])
-  ;  => 1
+  ;  =>
+  ;  1
   ;
   ; @example
   ;  (math/collection-minimum ["0" "a"])
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or integer)
   [n]
@@ -210,15 +227,18 @@
   ;
   ; @example
   ;  (math/collection-maximum [100 14 3 55])
-  ;  => 100
+  ;  =>
+  ;  100
   ;
   ; @example
   ;  (math/collection-maximum ["0" 1 "a" nil])
-  ;  => 1
+  ;  =>
+  ;  1
   ;
   ; @example
   ;  (math/collection-maximum ["0" "a"])
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or integer)
   [n]
@@ -229,7 +249,8 @@
   ;
   ; @example
   ;  (math/minimum -4.20 2 0)
-  ;  => 2
+  ;  =>
+  ;  2
   ;
   ; @return (float or integer)
   [& xyz]
@@ -240,7 +261,8 @@
   ;
   ; @example
   ;  (math/maximum -4.20 2 0)
-  ;  => 2
+  ;  =>
+  ;  2
   ;
   ; @return (float or integer)
   [& xyz]
@@ -252,7 +274,8 @@
   ;
   ; @example
   ;  (math/percent 50 20)
-  ;  => 40
+  ;  =>
+  ;  40
   ;
   ; @return (float or integer)
   [total value]
@@ -271,7 +294,8 @@
   ;
   ; @example
   ;  (math/choose 4.20 42 "A" "B")
-  ;  => "B"
+  ;  =>
+  ;  "B"
   ;
   ; @return (*)
   [n limit value-if-bigger & [value-if-smaller]]
@@ -304,7 +328,8 @@
   ;
   ; @example
   ;  (math/calc 42 [10 50] [100 500])
-  ;  => 420
+  ;  =>
+  ;  420
   ;
   ; @return (*)
   ;  A B valtozo pillanatnyi erteke (az A valtozotol fuggoen)

@@ -292,10 +292,10 @@
   ; @param (map) context-props
   ;  {:initializer (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [event-id component-id {:keys [initializer] :as context-props} mount-id]]
+  (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
-              {:db       (-> db (store-component-initial-props! [event-id component-id context-props])
-                                (engine/set-component-prop!     [event-id component-id :initialized? true]))
+              {:db       (as-> db % (r store-component-initial-props! % component-id context-props)
+                                    (r engine/set-component-prop!     % component-id :initialized? true))
                :dispatch (param initializer)})))
 
 (a/reg-event-fx
@@ -306,13 +306,13 @@
   ; @param (map) context-props
   ;  {:destructor (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [event-id component-id {:keys [destructor] :as context-props} mount-id]]
+  (fn [{:keys [db]} [_ component-id {:keys [destructor] :as context-props} mount-id]]
       (if (and (r component-unmounted?  db component-id)
                (r component-mounted-as? db component-id mount-id))
           (let [initial-props (r get-component-initial-props db component-id context-props)
                 destructor    (a/metamorphic-event<-params destructor initial-props)]
-               {:db       (-> db (engine/remove-component-props!  [event-id component-id])
-                                 (remove-component-initial-props! [event-id component-id context-props]))
+               {:db       (as-> db % (r engine/remove-component-props!  % component-id)
+                                     (r remove-component-initial-props! % component-id context-props))
                 :dispatch (param destructor)}))))
 
 
@@ -327,9 +327,9 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [event-id component-id context-props mount-id]]
-      {:db       (-> db (engine/set-component-prop! [event-id component-id :status :mounted])
-                        (engine/set-component-prop! [event-id component-id :mount-id mount-id]))
+  (fn [{:keys [db]} [_ component-id context-props mount-id]]
+      {:db       (as-> db % (r engine/set-component-prop! % component-id :status :mounted)
+                            (r engine/set-component-prop! % component-id :mount-id mount-id))
        :dispatch [:components/initialize-component! component-id context-props mount-id]}))
 
 (a/reg-event-fx

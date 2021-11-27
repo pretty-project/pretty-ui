@@ -45,7 +45,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  (fn [{:keys [db]} [event-id element-id]]
+  (fn [{:keys [db]} [_ element-id]]
       (let [partition-id :elements.engine.element/elements]
            {:dispatch-n [[:environment/add-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]
                          [:environment/add-event-listener! "contextmenu" CLOSE-ON-CLICK-LISTENER "x-document-element"]

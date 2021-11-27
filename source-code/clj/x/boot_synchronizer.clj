@@ -32,14 +32,12 @@
   ; @return (map)
   [request]
   (let [app-details     (a/subscribed [:core/get-app-details])
-        site-links      (a/subscribed [:core/get-site-links])
         storage-details (a/subscribed [:core/get-storage-details])
         client-routes   (a/subscribed [:router/get-client-routes])
         user-account    (user/request->user-public-account request)
         user-profile    (user/request->user-profile        request)
         user-settings   (user/request->user-settings       request)]
        (http/map-wrap {:body {:app-details     (param app-details)
-                              :site-links      (param site-links)
                               :storage-details (param storage-details)
                               :client-routes   (param client-routes)
                               :user-account    (db/document->non-namespaced-document user-account)

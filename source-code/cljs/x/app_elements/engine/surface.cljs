@@ -74,10 +74,10 @@
   ; @param (keyword) element-id
   ;
   ; @return (map)
-  [db [event-id element-id]]
+  [db [_ element-id]]
   (if (r surface-visible? db element-id)
-      (-> db (element/set-element-prop!    [event-id element-id :surface-visible? false])
-             (element/remove-element-prop! [event-id element-id :surface-props]))
+      (as-> db % (r element/set-element-prop!    % element-id :surface-visible? false)
+                 (r element/remove-element-prop! % element-id :surface-props))
       (return db)))
 
 (a/reg-event-db :elements/hide-surface! hide-surface!)

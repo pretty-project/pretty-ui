@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.10.16
 ; Description:
-; Version: v0.2.8
+; Version: v0.3.2
 ; Compatibility: x4.4.6
 
 
@@ -106,9 +106,7 @@
   ;
   ; @return (string)
   []
-;  (string/bracket (str (time/get-hours) ":" (time/get-minutes) ":" (time/get-seconds)))
-;                       (elapsed-timestamp)))
-  "00:00:21.132 elapsed")
+  (string/bracket (str (time/ms->time (time/elapsed)) " elapsed")))
 
 (defn console
   ; @param (string) group-label

@@ -620,7 +620,7 @@
   ; @param (string) route-string
   ;
   ; @return (map)
-  [db [event-id route-string]]
+  [db [_ route-string]]
   (r store-current-route-string! db route-string))
 
 (defn- set-default-routes!
@@ -654,14 +654,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
-  (fn [{:keys [db]} [event-id route-string]]
+  (fn [{:keys [db]} [_ route-string]]
       (let [route-id          (r match-route-id-by-abs-route-string db route-string)
             previous-route-id (r get-current-route-id db)
             on-leave-event    (r get-on-leave-event   db previous-route-id)]
-                       ; Store the current route
-           {:db (-> db (store-current-route! [event-id route-string])
-                       ; Make history
-                       (reg-to-history!      [event-id route-id]))
+                           ; Store the current route
+           {:db (as-> db % (r store-current-route! % route-string)
+                           ; Make history
+                           (r reg-to-history!      % route-id))
                          ; Dispatch on-leave-event if ...
             :dispatch-n [(if-let [on-leave-event (r get-on-leave-event db previous-route-id)]
                                  (if (r route-id-changed? db route-id) on-leave-event))
@@ -760,11 +760,11 @@
   :router/initialize!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [event-id]]
-                  ; Set default routes
-      {:db (-> db (set-default-routes! [event-id DEFAULT-ROUTES])
-                  ; Store debug subscriber
-                  (assoc-in (db/meta-item-path ::client-routes :debug) [:router/get-router-data]))
+  (fn [{:keys [db]} _]
+                      ; Set default routes
+      {:db (as-> db % (r set-default-routes! % DEFAULT-ROUTES)
+                      ; Store debug subscriber
+                      (r db/set-item!        % (db/meta-item-path ::client-routes :debug) [:router/get-router-data]))
        ; Configure navigation
        :router/configure-navigation! nil}))
 

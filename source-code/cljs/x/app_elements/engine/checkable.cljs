@@ -138,11 +138,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  (fn [{:keys [db]} [event-id input-id]]
+  (fn [{:keys [db]} [_ input-id]]
       (let [on-check-event (r element/get-element-prop db input-id :on-check)
             value-path     (r element/get-element-prop db input-id :value-path)]
-           {:db (-> db (db/set-item!                 [event-id value-path true])
-                       (input/mark-input-as-visited! [event-id input-id]))
+           {:db (as-> db % (r db/set-item!                 % value-path true)
+                           (r input/mark-input-as-visited! % input-id))
             :dispatch on-check-event})))
 
 (a/reg-event-fx
@@ -150,9 +150,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  (fn [{:keys [db]} [event-id input-id]]
+  (fn [{:keys [db]} [_ input-id]]
       (let [on-uncheck-event (r element/get-element-prop db input-id :on-uncheck)
             value-path       (r element/get-element-prop db input-id :value-path)]
-           {:db (-> db (db/set-item!                 [event-id value-path false])
-                       (input/mark-input-as-visited! [event-id input-id]))
+           {:db (as-> db % (r db/set-item!                 % value-path false)
+                           (r input/mark-input-as-visited! % input-id))
             :dispatch on-uncheck-event})))

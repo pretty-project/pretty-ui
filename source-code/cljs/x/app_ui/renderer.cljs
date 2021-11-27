@@ -823,10 +823,10 @@
   ; @param (map) element-props
   ;
   ; @return (map)
-  [db [event-id renderer-id element-id element-props]]
+  [db [_ renderer-id element-id element-props]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (-> db (update-render-log! [event-id renderer-id  element-id :rendered-at])
-              (db/add-data-item!  [event-id partition-id element-id element-props]))))
+       (as-> db % (r update-render-log! % renderer-id  element-id :rendered-at)
+                  (r db/add-data-item!  % partition-id element-id element-props))))
 
 (defn- remove-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -835,10 +835,10 @@
   ; @param (keyword) element-id
   ;
   ; @return (map)
-  [db [event-id renderer-id element-id]]
+  [db [_ renderer-id element-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (-> db (update-render-log!   [event-id renderer-id  element-id :props-removed-at])
-              (db/remove-data-item! [event-id partition-id element-id]))))
+       (as-> db % (r update-render-log!   % renderer-id  element-id :props-removed-at)
+                  (r db/remove-data-item! % partition-id element-id))))
 
 (a/reg-event-db :ui/remove-element! remove-element!)
 
@@ -850,11 +850,11 @@
   ; @param (map) element-props
   ;
   ; @return (map)
-  [db [event-id renderer-id element-id element-props]]
+  [db [_ renderer-id element-id element-props]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (-> db (update-render-log! [event-id renderer-id element-id :updated-at])
-              (assoc-in (db/path partition-id element-id)
-                        (param   element-props)))))
+       (as-> db % (r update-render-log! % renderer-id element-id :updated-at)
+                  (r db/set-item!       % (db/path partition-id element-id)
+                                          (param   element-props)))))
 
 (defn set-element-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1088,11 +1088,11 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
-  (fn [{:keys [db]} [event-id renderer-id element-id element-props]]
+  (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       ;(a/console (str "Render element - " (time/elapsed)))
       (if (r render-element-now? db renderer-id element-id)
-          {:db       (-> db (reserve-renderer!  [event-id renderer-id])
-                            (update-render-log! [event-id renderer-id element-id :render-requested-at]))
+          {:db       (as-> db % (r reserve-renderer!  % renderer-id)
+                                (r update-render-log! % renderer-id element-id :render-requested-at))
            :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}
           {:dispatch [:ui/render-element-later!  renderer-id element-id element-props]})))
 
@@ -1123,7 +1123,7 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  (fn [{:keys [db]} [event-id renderer-id element-id]]
+  (fn [{:keys [db]} [_ renderer-id element-id]]
       ;(a/console (str "Destroy element animated - " (time/elapsed)))
       {:db       (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
@@ -1142,10 +1142,10 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  (fn [{:keys [db]} [event-id renderer-id element-id]]
+  (fn [{:keys [db]} [_ renderer-id element-id]]
       ;(a/console (str "Destroy element static - " (time/elapsed)))
-      {:db       (-> db (stop-element-rendering! [event-id renderer-id element-id])
-                        (remove-element!         [event-id renderer-id element-id]))
+      {:db       (as-> db % (r stop-element-rendering! % renderer-id element-id)
+                            (r remove-element!         % renderer-id element-id))
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
 (a/reg-event-fx

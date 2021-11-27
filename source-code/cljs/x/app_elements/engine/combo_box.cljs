@@ -403,13 +403,13 @@
   ; @param (keyword) field-id
   ;
   ; @return (map)
-  [db [event-id field-id]]
+  [db [_ field-id]]
   (if (r any-option-highlighted? db field-id)
-      (-> db (use-highlighted-combo-box-option! [event-id field-id])
-             (discard-option-highlighter!       [event-id field-id])
-             (surface/hide-surface!             [event-id field-id]))
-      (-> db (discard-option-highlighter!       [event-id field-id])
-             (surface/hide-surface!             [event-id field-id]))))
+      (as-> db % (use-highlighted-combo-box-option! % field-id)
+                 (discard-option-highlighter!       % field-id)
+                 (surface/hide-surface!             % field-id))
+      (as-> db % (discard-option-highlighter!       % field-id)
+                 (surface/hide-surface!             % field-id))))
 
 (a/reg-event-db :elements/enter-combo-box! enter-combo-box!)
 
@@ -419,13 +419,13 @@
   ; @param (keyword) field-id
   ;
   ; @return (map)
-  [db [event-id field-id]]
+  [db [_ field-id]]
   (if (r any-option-highlighted? db field-id)
-      (-> db (use-highlighted-multi-combo-box-option! [event-id field-id])
-             (discard-option-highlighter!             [event-id field-id])
-             (surface/hide-surface!                   [event-id field-id]))
-      (-> db (discard-option-highlighter!             [event-id field-id])
-             (surface/hide-surface!                   [event-id field-id]))))
+      (as-> db % (use-highlighted-multi-combo-box-option! % field-id)
+                 (discard-option-highlighter!             % field-id)
+                 (surface/hide-surface!                   % field-id))
+      (as-> db % (discard-option-highlighter!             % field-id)
+                 (surface/hide-surface!                   % field-id))))
 
 (a/reg-event-db :elements/enter-multi-combo-box! enter-multi-combo-box!)
 

@@ -34,3 +34,15 @@
   [request]
   (if (a/request->debug-mode? request)
       (playground             request)))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:router/add-route! ::route
+                                    {:client-event   [:playground/load!]
+                                     :route-template "/playground"
+                                     :restricted?    true}]})

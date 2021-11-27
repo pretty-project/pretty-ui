@@ -1,4 +1,24 @@
 
+
+
+
+
+
+
+
+; "/media/storage/:filename"
+; helyett
+; "/media/storage/:filename/:file-alias"
+;
+; "/media/storage/b3eaeb03-380e-4065-a5b7-44453a52de2b?original-filename.ext"
+; helyett
+; "/media/storage/b3eaeb03-380e-4065-a5b7-44453a52de2b/original-filename.ext"
+
+
+
+
+
+
 (ns extensions.media.file-browser
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.map       :as map :refer [dissoc-in]]

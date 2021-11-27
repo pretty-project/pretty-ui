@@ -17,6 +17,7 @@
              #?(:clj org.bson.types.BSONTimestamp))
 
     (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.math   :as math]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]
 
@@ -124,20 +125,30 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn timestamp-part<-leading-zero
+(defn leading-zero
   ; @param (integer or string) n
+  ; @param (integer)(opt) length
+  ;  Default: 2
   ;
   ; @example
-  ;  (time/timestamp-part<-leading-zero 1)
+  ;  (time/leading-zero 7)
   ;  =>
-  ;  "01"
+  ;  "07"
+  ;
+  ; @example
+  ;  (time/leading-zero 7 3)
+  ;  =>
+  ;  "007"
   ;
   ; @return (string)
-  [n]
-  (let [n (str n)]
-       (if (string/length? n 1)
-           (str        "0" n)
-           (return         n))))
+  ([n]
+   (leading-zero n 2))
+
+  ([n length]
+   (loop [x (str n)]
+         (if (< (string/length x) length)
+             (recur (str "0" x))
+             (return x)))))
 
 
 
@@ -342,8 +353,8 @@
   ([n format]
    (if (string/nonempty? n)
        (let [year  (timestamp-string->year n)
-             month (timestamp-part<-leading-zero (timestamp-string->month n))
-             day   (timestamp-part<-leading-zero (timestamp-string->day   n))]
+             month (leading-zero (timestamp-string->month n))
+             day   (leading-zero (timestamp-string->day   n))]
             (case format :yyyymmdd (str year "/" month "/" day)
                          :yymmdd   (let [year (string/part year 2 2)]
                                         (str year "/" month "/" day))
@@ -366,9 +377,9 @@
 
   ([n format]
    (if (string/nonempty? n)
-       (let [hours   (timestamp-part<-leading-zero (timestamp-string->hours   n))
-             minutes (timestamp-part<-leading-zero (timestamp-string->minutes n))
-             seconds (timestamp-part<-leading-zero (timestamp-string->seconds n))]
+       (let [hours   (leading-zero (timestamp-string->hours   n))
+             minutes (leading-zero (timestamp-string->minutes n))
+             seconds (leading-zero (timestamp-string->seconds n))]
             (case format :hhmmss (str hours ":" minutes ":" seconds)
                          :hhmm   (str hours ":" minutes)
                          (return n))))))
@@ -399,6 +410,44 @@
        (let [date (timestamp-string->date n date-format)
              time (timestamp-string->time n time-format)]
             (str date " - " time)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ms->time
+  ; @param (float, integer or string) n
+  ; @param (keyword)(opt) format
+  ;  :hhmmssmmm, :hhmmss
+  ;
+  ; @example
+  ;  (time/ms->time 260000)
+  ;  =>
+  ;  "00:04:20.000"
+  ;
+  ; @example
+  ;  (time/ms->time 260000.123)
+  ;  =>
+  ;  "00:04:20.000"
+  ;
+  ; @example
+  ;  (time/ms->time 260000 :hhmmss)
+  ;  =>
+  ;  "00:04:20"
+  ;
+  ; @return (string)
+  ([n]
+   (ms->time n :hhmmssmmm))
+
+  ([n format]
+   (if (some? n)
+       (let [hours        (leading-zero (math/floor (/ n 36000000))       2)
+             minutes      (leading-zero (rem (math/floor (/ n 60000)) 60) 2)
+             seconds      (leading-zero (rem (math/floor (/ n  1000)) 60) 2)
+             milliseconds (leading-zero (rem (math/floor n) 1000)         3)]
+            (case format :hhmmssmmm (str hours ":" minutes ":" seconds "." milliseconds)
+                         :hhmmss    (str hours ":" minutes ":" seconds))))))
 
 
 
@@ -625,7 +674,8 @@
   ;
   ; @example
   ;  (time/unparse-date-time {:my-timestamp #<DateTime 2020-04-20T16:20:00.123Z>})
-  ;  => {:my-timestamp "2020-04-20T16:20:00.123Z"}
+  ;  =>
+  ;  {:my-timestamp "2020-04-20T16:20:00.123Z"}
   ;
   ; @return (*)
   [n]

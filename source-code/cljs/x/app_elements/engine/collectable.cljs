@@ -137,11 +137,11 @@
   ;
   ; @param (keyword) input-id
   ; @param (keyword) option-id
-  (fn [{:keys [db]} [event-id input-id option-id]]
+  (fn [{:keys [db]} [_ input-id option-id]]
       (let [on-collect-event (r element/get-element-prop db input-id :on-collect)
             value-path       (r element/get-element-prop db input-id :value-path)]
-           {:db (-> db (db/apply!                    [event-id value-path vector/conj-item option-id])
-                       (input/mark-input-as-visited! [event-id input-id]))
+           {:db (as-> db % (r db/apply!                    % value-path vector/conj-item option-id)
+                           (r input/mark-input-as-visited! % input-id))
             :dispatch on-collect-event})))
 
 (a/reg-event-fx
@@ -150,6 +150,6 @@
   ;
   ; @param (keyword) input-id
   ; @param (keyword) option-id
-  (fn [{:keys [db]} [event-id input-id option-id]]
+  (fn [{:keys [db]} [_ input-id option-id]]
       (let [value-path (r element/get-element-prop db input-id :value-path)]
-           {:db (-> db (db/apply! [event-id value-path vector/remove-item option-id]))})))
+           {:db (r db/apply! db value-path vector/remove-item option-id)})))

@@ -223,9 +223,9 @@
   ; @param (keyword) input-id
   ;
   ; @return (map)
-  [db [event-id input-id]]
-  (-> db (input/init-input!               [event-id input-id])
-         (use-selectable-initial-options! [event-id input-id])))
+  [db [_ input-id]]
+  (as-> db % (r input/init-input!               % input-id)
+             (r use-selectable-initial-options! % input-id)))
 
 (a/reg-event-db :elements/init-selectable! init-selectable!)
 
@@ -249,21 +249,21 @@
   ; @param (*) option
   ;
   ; @return (map)
-  [db [event-id input-id option]]
+  [db [_ input-id option]]
   (let [value-path  (r element/get-element-prop db input-id :value-path)
         get-value-f (r element/get-element-prop db input-id :get-value-f)
         value       (get-value-f option)]
-       (-> db (db/set-item!                 [event-id value-path value])
-              (input/mark-input-as-visited! [event-id input-id]))))
+       (as-> db % (r db/set-item!                 % value-path value)
+                  (r input/mark-input-as-visited! % input-id))))
 
 (defn unselect-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  [db [event-id input-id]]
+  [db [_ input-id]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (-> db (db/remove-item!              [event-id value-path])
-              (input/mark-input-as-visited! [event-id input-id]))))
+       (as-> db % (r db/remove-item!              % value-path)
+                  (r input/mark-input-as-visited! % input-id))))
 
 (a/reg-event-db :elements/unselect-option! unselect-option!)
 
@@ -288,10 +288,10 @@
   ; @param (*) option
   ;
   ; @return (map)
-  [db [event-id input-id option]]
+  [db [_ input-id option]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (-> db (db/apply!                    [event-id value-path vector/conj-item-once option])
-              (input/mark-input-as-visited! [event-id input-id]))))
+       (as-> db % (r db/apply!                    % value-path vector/conj-item-once option)
+                  (r input/mark-input-as-visited! % input-id))))
 
 (a/reg-event-db :elements/stack-option! stack-option!)
 
@@ -302,10 +302,10 @@
   ; @param (*) option
   ;
   ; @return (map)
-  [db [event-id input-id option]]
+  [db [_ input-id option]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (-> db (db/apply!                    [event-id value-path vector/remove-item option])
-              (input/mark-input-as-visited! [event-id input-id]))))
+       (as-> db % (r db/apply!                    % value-path vector/remove-item option)
+                  (r input/mark-input-as-visited! % input-id))))
 
 (a/reg-event-db :elements/unstack-option! unstack-option!)
 
@@ -334,7 +334,7 @@
   ;
   ; @param (keyword) input-id
   ; @param (*) option
-  (fn [{:keys [db]} [event-id input-id option]]
+  (fn [{:keys [db]} [_ input-id option]]
       (let [on-select-event (r element/get-element-prop db input-id :on-select)
             get-value-f     (r element/get-element-prop db input-id :get-value-f)
             value           (get-value-f option)]

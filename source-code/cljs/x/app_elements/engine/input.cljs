@@ -399,10 +399,10 @@
   ; @param (keyword) input-id
   ;
   ; @return (map)
-  [db [event-id input-id]]
-  (-> db (use-input-initial-value!  [event-id input-id])
-         (store-input-backup-value! [event-id input-id])
-         (reg-form-input!           [event-id input-id])))
+  [db [_ input-id]]
+  (as-> db % (r use-input-initial-value!  % input-id)
+             (r store-input-backup-value! % input-id)
+             (r reg-form-input!           % input-id)))
 
 (a/reg-event-db :elements/init-input! init-input!)
 

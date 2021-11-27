@@ -531,12 +531,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  (fn [{:keys [db]} [event-id field-id]]
+  (fn [{:keys [db]} [_ field-id]]
       (let [on-blur-event (r element/get-element-prop db field-id :on-blur)]
-           {:db (-> db (environment/enable-non-required-keypress-events! [event-id])
-                       (mark-field-as-blurred!                           [event-id field-id])
-                       (input/mark-input-as-visited!                     [event-id field-id])
-                       (surface/hide-surface!                            [event-id field-id]))
+           {:db (as-> db % (r environment/enable-non-required-keypress-events! %)
+                           (r mark-field-as-blurred!                           % field-id)
+                           (r input/mark-input-as-visited!                     % field-id)
+                           (r surface/hide-surface!                            % field-id))
             :dispatch-n [[:elements/remove-field-keypress-events?! field-id]
                          (param on-blur-event)]})))
 
@@ -553,10 +553,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  (fn [{:keys [db]} [event-id field-id]]
+  (fn [{:keys [db]} [_ field-id]]
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
-           {:db (-> db (environment/disable-non-required-keypress-events! [event-id])
-                       (mark-field-as-focused!                            [event-id field-id]))
+           {:db (as-> db % (r environment/disable-non-required-keypress-events! %)
+                           (r mark-field-as-focused!                            % field-id))
             :dispatch-n [[:elements/reg-field-keypress-events?! field-id]
                          (param on-focus-event)]})))
 

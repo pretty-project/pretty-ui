@@ -292,13 +292,13 @@
   ; @param (map) request-props
   ;
   ; @return (map)
-  [db [event-id request-id request-props]]
-  (-> db (assoc-in (db/path ::requests request-id) request-props)
-         ; DEBUG
-         (assoc-in (db/path ::requests request-id :debug)
-                   [:sync/get-request-state request-id])
-         ; DEBUG
-         (db/update-data-history! [event-id ::requests request-id])))
+  [db [_ request-id request-props]]
+  (as-> db % (r db/set-item! % (db/path ::requests request-id) request-props)
+             ; DEBUG
+             (r db/set-item! % (db/path ::requests request-id :debug)
+                               [:sync/get-request-state request-id])
+             ; DEBUG
+             (r db/update-data-history! % ::requests request-id)))
 
 (defn clear-request!
   ; @param (keyword) request-id
@@ -307,9 +307,9 @@
   ;  (r sync/clear-request! db :my-request)
   ;
   ; @return (map)
-  [db [event-id request-id]]
-  (-> db (db/remove-item!  [event-id (db/path ::requests request-id)])
-         (a/clear-process! [event-id request-id])))
+  [db [_ request-id]]
+  (as-> db % (r db/remove-item!  % (db/path ::requests request-id))
+             (r a/clear-process! % request-id)))
 
 ; @usage
 ;  [:sync/clear-request! :my-request]
@@ -423,15 +423,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
-  (fn [{:keys [db]} [event-id request-id]]
-                  ; Set request status
-      {:db (-> db (a/set-process-status!   [event-id request-id :progress])
-                  ; Set request activity
-                  (a/set-process-activity! [event-id request-id :active])
-                  ; Set request progress
-                  ; Szükséges a process-progress értékét nullázni!
-                  ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
-                  (a/set-process-progress! [event-id request-id 0]))
+  (fn [{:keys [db]} [_ request-id]]
+                      ; Set request status
+      {:db (as-> db % (r a/set-process-status!   % request-id :progress)
+                      ; Set request activity
+                      (r a/set-process-activity! % request-id :active)
+                      ; Set request progress
+                      ; Szükséges a process-progress értékét nullázni!
+                      ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
+                      (r a/set-process-progress! % request-id 0))
       ; Dispatch request on-sent event
        :dispatch (r get-request-on-sent-event db request-id)}))
 

@@ -131,21 +131,20 @@
   (let [modified-response (r use-modifier?! db request-id server-response)
         target-path       (r get-response-target-path  db request-id)
         target-paths      (r get-response-target-paths db request-id)]
-       (cond-> (param db)
-               ; Store original response
-               (param :store-original-response)
-               (db/set-item! [event-id (db/path ::responses request-id)
-                                       (param server-response)])
-               ; Distribute modified response items
-               (and (r distribute-response-items? db request-id)
-                    (map/nonempty? modified-response))
-               (db/distribute-items! [event-id modified-response target-paths])
-               ; Store modified response
-               (r store-response-to-target? db request-id)
-               (db/set-item! [event-id target-path modified-response])
-               ; DEBUG
-               :update-response-history!
-               (db/update-data-history! [event-id ::responses request-id]))))
+                  ; Store original response
+       (cond-> db (param :store-original-response)
+                  (db/set-item! [event-id (db/path ::responses request-id)
+                                          (param server-response)])
+                  ; Distribute modified response items
+                  (and (r distribute-response-items? db request-id)
+                       (map/nonempty? modified-response))
+                  (db/distribute-items! [event-id modified-response target-paths])
+                  ; Store modified response
+                  (r store-response-to-target? db request-id)
+                  (db/set-item! [event-id target-path modified-response])
+                  ; DEBUG
+                  :update-response-history!
+                  (db/update-data-history! [event-id ::responses request-id]))))
 
 
 

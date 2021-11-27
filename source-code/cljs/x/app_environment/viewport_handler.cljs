@@ -18,7 +18,8 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]))
+              [x.app-db.api       :as db]
+              [x.app-environment.position-handler :as position-handler]))
 
 
 
@@ -135,8 +136,9 @@
   :environment/detect-viewport-profile!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
-      [:environment/set-element-attribute! "x-body-container" "data-viewport-profile"
-                                           (keyword/to-string (dom/get-viewport-profile))]))
+      (let [viewport-profile (dom/get-viewport-profile)]
+           [:environment/set-element-attribute! "x-body-container" "data-viewport-profile"
+                                                (keyword/to-string viewport-profile)])))
 
 
 
@@ -146,9 +148,10 @@
 (a/reg-event-fx
   :environment/->viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:environment/update-stored-element-positions!]
-                [:environment/update-viewport-data!]
-                [:environment/detect-viewport-profile!]]})
+  (fn [{:keys [db]} _]
+      {:db       (as-> db % (r position-handler/update-stored-element-positions! %)
+                            (r update-viewport-data!                             %))
+       :dispatch [:environment/detect-viewport-profile!]}))
 
 
 

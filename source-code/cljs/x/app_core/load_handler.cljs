@@ -207,9 +207,9 @@
 (event-handler/reg-event-fx
   :core/initialize-load-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [event-id]]
-      {:db (-> db (set-app-status!   [event-id :loading])
-                  (reg-load-started! [event-id]))
+  (fn [{:keys [db]} _]
+      {:db (as-> db % (r set-app-status!   % :loading)
+                      (r reg-load-started! %))
        :dispatch-later [{:ms LOAD-TIMEOUT :dispatch [:core/self-test!]}]}))
 
 (lifecycle-handler/reg-lifecycles

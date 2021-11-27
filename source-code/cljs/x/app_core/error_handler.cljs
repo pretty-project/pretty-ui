@@ -72,7 +72,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) error-props
-  (fn [{:keys [db]} [event-id error-props]]
-      {:db       (-> db (store-error-props!               [event-id error-props])
-                        (load-handler/stop-synchronizing! [event-id]))
+  (fn [{:keys [db]} [_ error-props]]
+      {:db       (as-> db % (r store-error-props!               % error-props)
+                            (r load-handler/stop-synchronizing! %))
        :dispatch [:ui/set-shield! {:content (r get-error-message db)}]}))

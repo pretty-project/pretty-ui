@@ -155,12 +155,12 @@
   ;  {:my-value ["First value" "Second value" "Apple"]}
   ;
   ; @return (map)
-  [db [event-id group-id context-props]]
+  [db [_ group-id context-props]]
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (if (r max-input-count-reached? db group-id)
            (return db)
-           (-> db (conj-initial-value!       [event-id group-id context-props])
-                  (element/set-element-prop! [event-id group-id :input-count-increased? true])))))
+           (as-> db % (r conj-initial-value!       % group-id context-props)
+                      (r element/set-element-prop! % group-id :input-count-increased? true)))))
 
 (a/reg-event-db :elements/increase-input-count! increase-input-count!)
 
@@ -177,7 +177,7 @@
   ;  {:my-value ["First value"]}
   ;
   ; @return (map)
-  [db [event-id group-id input-dex]]
+  [db [_ group-id input-dex]]
   (let [group-value-path    (r element/get-element-prop db group-id :value-path)
         group-value         (get-in db group-value-path)
         updated-group-value (vector/remove-nth-item group-value input-dex)]

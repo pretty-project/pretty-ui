@@ -18,7 +18,8 @@
               [mid-fruits.candy :refer [param return]]
               [mid-fruits.math  :as math]
               [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+              [x.app-db.api     :as db]
+              [x.app-environment.position-handler :as position-handler]))
 
 
 
@@ -142,13 +143,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
-  [db [event-id]]
-         ; 1.
-  (-> db (update-scroll-direction! [event-id])
-         ; 2.
-         (update-scroll-position!  [event-id])
-         ; 3.
-         (update-scroll-progress!  [event-id])))
+  [db _]
+             ; 1.
+  (as-> db % (r update-scroll-direction! %)
+             ; 2.
+             (r update-scroll-position!  %)
+             ; 3.
+             (r update-scroll-progress!  %)))
 
 (a/reg-event-db :environment/update-scroll-data! update-scroll-data!)
 
@@ -157,11 +158,13 @@
 ;; -- Status events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/->scrolled
+(defn- ->scrolled
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:environment/update-stored-positions!]
-                [:environment/update-scroll-data!]]})
+  [db _]
+  (as-> db % (r position-handler/update-stored-element-positions! %)
+             (r update-scroll-data!                               %)))
+
+(a/reg-event-db :environment/->scrolled ->scrolled)
 
 
 
