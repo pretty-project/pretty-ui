@@ -28,14 +28,14 @@
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-lister/get-header-props db "clients"))
+  (r item-lister/get-header-props db :clients))
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-lister/get-view-props db "clients"))
+  (r item-lister/get-view-props db :clients))
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -61,7 +61,7 @@
 (defn- xxx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:client/keys [id] :as client-props} view-props]
-  (let [client-uri      (item-editor/item-id->item-uri "clients" id)]
+  (let [client-uri      (item-editor/item-id->item-uri :clients id)]
        [elements/toggle {:on-click [:router/go-to! client-uri]
                          :stretch-orientation :horizontal
                          :content
@@ -84,33 +84,33 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/polarity ::desktop-header
-                     {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
-                                          [item-lister/sort-items-button  "clients" "client"
+                     {:start-content [:<> [item-lister/new-item-button    :clients :client]
+                                          [item-lister/sort-items-button  :clients :client
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
                                                                            :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button         "clients"]
-                                          [item-lister/toggle-item-filter-visibility-button "clients"]]
-                                          ;[item-lister/delete-selected-items-button "clients" header-props]]
-                      :end-content   [:<> [item-lister/search-items-field "clients" "client"]]}])
+                                          [item-lister/select-multiple-items-button         :clients]
+                                          [item-lister/toggle-item-filter-visibility-button :clients]]
+                                          ;[item-lister/delete-selected-items-button :clients header-props]]
+                      :end-content   [:<> [item-lister/search-items-field :clients :client]]}])
 
 (defn- mobile-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/polarity ::mobile-header
-                     {:start-content [:<> [item-lister/new-item-button    "clients" "client"]
-                                          [item-lister/sort-items-button  "clients" "client"
+                     {:start-content [:<> [item-lister/new-item-button    :clients :client]
+                                          [item-lister/sort-items-button  :clients :client
                                                                           {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
                                                                            :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button "clients"]
-                                          [item-lister/delete-selected-items-button "clients" header-props]]
-                      :end-content   [:<> [item-lister/search-mode-button "clients"]]}])
+                                          [item-lister/select-multiple-items-button :clients]
+                                          [item-lister/delete-selected-items-button :clients header-props]]
+                      :end-content   [:<> [item-lister/search-mode-button :clients]]}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id {:keys [search-mode? viewport-small?] :as header-props}]
   (cond ; search-mode & small viewport
         (and viewport-small? search-mode?)
-        [item-lister/search-header "clients" "client"]
+        [item-lister/search-header :clients :client]
         ; small viewport
         (boolean viewport-small?)
         [mobile-header  header-id header-props]
@@ -126,7 +126,7 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
-  [item-lister "clients" "client"
+  [item-lister :clients :client
                {:list-element #'client-item}])
 
 
@@ -152,7 +152,3 @@
   :clients/render-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:item-lister/initialize! "clients" "client"]})

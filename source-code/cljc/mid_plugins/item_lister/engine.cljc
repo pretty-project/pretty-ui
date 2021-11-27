@@ -89,6 +89,21 @@
   (keyword (name extension-id)
            (str (name item-namespace) "-lister-route")))
 
+(defn route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-lister/route-template :my-extension :my-type)
+  ;  =>
+  ;  "/my-extension"
+  ;
+  ; @return (keyword)
+  [extension-id _]
+  (str "/" (name extension-id)))
+
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

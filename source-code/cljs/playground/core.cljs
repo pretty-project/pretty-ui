@@ -45,7 +45,7 @@
 
 (defn get-view-props
   [db _]
-  {})
+  {:debug (get-in db [:playground :debug])})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -216,47 +216,55 @@
                                   :initial-options [{:x "A"} {:x "B"}]}]])
 
 (defn- menu-bar
-  []
+  [_]
   [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [] :color :default}
                                    {:label "Menu item #2" :on-click [] :color :muted}
                                    {:label "Menu item #3" :on-click [] :color :muted}]}])
 
 (defn- view
-  []
-  [:<> [elements/box {:body   {:content "Menu"}
+  [surface-id view-props]
+  [:<> [elements/box surface-id
+                     {:body   {:content "Menu"}
                       :header {:content #'menu-bar
                                :sticky? true}}]
-
-       [elements/box {:body   {:content #'buttons}
+       [elements/box surface-id
+                     {:body   {:content #'buttons}
                       :header {:content "Buttons"
                                :sticky? true}
                       :horizontal-align :left
                       :stickers [{:icon :apps :tooltip :filters :on-click []}]}]
 
-       [elements/box {:body   {:content #'chips}
+       [elements/box surface-id
+                     {:body   {:content #'chips}
                       :header {:content "Chips"
                                :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:body   {:content #'diagrams}
+       [elements/box surface-id
+                     {:body   {:content #'diagrams}
                       :header {:content "Diagrams"
                                :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:body   {:content #'form-a}
+       [elements/box surface-id
+                     {:body   {:content #'form-a}
                       :header {:content "Form A"
                                :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:body   {:content #'form-b}
+       [elements/box surface-id
+                     {:body   {:content #'form-b}
                       :header {:content "Form B"
                                :sticky? true}
                       :horizontal-align :left}]
-       [elements/box {:body   {:content #'form-c}
+       [elements/box surface-id
+                     {:body   {:content #'form-c}
                       :header {:content "Form C"
                                :sticky? true}
                       :horizontal-align :left
                       :expandable? true
                       :expanded? true}]
-       [elements/box {:body   {:content #'infinite-loader}}]
-       [elements/box {:body   {:content #'local-state}}]])
+       [elements/box surface-id
+                     {:body   {:content #'infinite-loader}}]
+       [elements/box surface-id
+                     {:body   {:content #'local-state}}]])
 
 
 
@@ -279,7 +287,8 @@
   :playground/render!
   [:ui/set-surface! ::view
                     {:content     #'view
-                     :initializer [:playground/initialize!]}])
+                     :initializer [:playground/initialize!]
+                     :subscriber  [::get-view-props]}])
 
 (a/reg-event-fx
   :playground/load!

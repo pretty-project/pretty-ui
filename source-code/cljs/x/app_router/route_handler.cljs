@@ -206,24 +206,18 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-app-home
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @return (string)
   [db _]
   (let [app-home (r a/get-app-detail db :app-home)]
        (valid-route-path app-home)))
 
 (defn app-home-specific?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @return (boolean)
   [db _]
   (let [app-home (r get-app-home db)]
        (not= app-home "/")))
 
-(defn- get-routes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn get-routes
   ; @return (map)
   [db _]
   (get-in db (db/path ::client-routes)))

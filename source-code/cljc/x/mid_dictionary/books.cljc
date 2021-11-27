@@ -675,10 +675,13 @@
        :hu "A szolgáltatás nem elérhető"}
       :the-link-you-followed-may-be-broken
       {:en "The link you followed may be broken, or the page may have been removed"
-       :hu ""}
+       :hu "Előfordulhat, hogy a megadott hivatkozás nem megfelelő, vagy az oldalt áthelyeztük"}
       :you-do-not-have-internet-connection
       {:en "You do not have internet connection"
-       :hu "Nincs internet kapcsolatod"}})
+       :hu "Nincs internet kapcsolatod"}
+      :you-do-not-have-permission-to-view-this-page
+      {:en "You do not have permission to view this page!"
+       :hu "Nincs jogosultságod az oldal megtekintéséhez!"}})
 
 
 

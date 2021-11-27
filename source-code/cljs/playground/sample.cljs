@@ -40,10 +40,3 @@
   {:dispatch-n [[:ui/set-header-title! "Sample"]
                 [:ui/set-window-title! "Sample"]
                 [:sample/render!]]})
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
-                                    {:route-event    [:sample/load!]
-                                     :route-template "/sample"
-                                     :restricted?    true}]})

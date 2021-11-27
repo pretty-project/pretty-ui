@@ -16,7 +16,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :extensions.jobs/render!
+  :jobs/render!
   [:ui/set-surface! ::view
-                    {:content #'view
-                     :layout :unboxed}])
+                    {:content #'view}])

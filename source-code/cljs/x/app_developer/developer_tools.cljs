@@ -6,7 +6,8 @@
               [x.app-gestures.api :as gestures]
               [x.app-ui.api       :as ui]
               [x.app-developer.database-browser :rename {body database-browser}]
-              [x.app-developer.request-browser  :rename {body request-browser}]))
+              [x.app-developer.request-browser  :rename {body request-browser}]
+              [x.app-developer.route-browser    :rename {body route-browser}]))
 
 
 
@@ -15,6 +16,24 @@
 
 ; @constant (keyword)
 (def DEFAULT-VIEW-ID :database-browser)
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn menu-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [view-id]}]
+  [{:label "DB"
+    :on-click [:gestures/change-view! ::handler :database-browser]
+    :color    (if (not= view-id :database-browser) :muted)}
+   {:label "Requests"
+    :on-click [:gestures/change-view! ::handler :request-browser]
+    :color    (if (not= view-id :request-browser)  :muted)}
+   {:label "Routes"
+    :on-click [:gestures/change-view! ::handler :route-browser]
+    :color    (if (not= view-id :route-browser)    :muted)}])
 
 
 
@@ -42,20 +61,16 @@
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [selected-view] :as header-props}]
-  [elements/polarity {:start-content [elements/menu-bar {:menu-items [{:label "DB"
-                                                                       :on-click [:gestures/change-view! ::handler :database-browser]
-                                                                       :color (if (not= selected-view :database-browser) :muted)}
-                                                                      {:label "Requests"
-                                                                       :on-click [:gestures/change-view! ::handler :request-browser]
-                                                                       :color (if (not= selected-view :request-browser)  :muted)}]}]
+  [header-id header-props]
+  [elements/polarity {:start-content [elements/menu-bar {:menu-items (menu-items header-id header-props)}]
                       :end-content   [ui/popup-close-icon-button header-id header-props]}])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
   (case view-id :database-browser [database-browser]
-                :request-browser  [request-browser]))
+                :request-browser  [request-browser]
+                :route-browser    [route-browser]))
 
 
 

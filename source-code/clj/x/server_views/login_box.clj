@@ -23,6 +23,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
+  {:on-app-boot [:router/add-route! :login-box/route
                                     {:client-event   [:views/render-login-box!]
                                      :route-template "/login"}]})

@@ -23,7 +23,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
+  {:on-app-boot [:router/add-route! :privacy-policy/route
                                     {:client-event   [:views/render-privacy-policy!]
                                      :restricted?    true
                                      :route-template "/privacy-policy"}]})

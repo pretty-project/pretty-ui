@@ -48,15 +48,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-requests-history
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @return (map)
   [db _]
   (r db/get-partition-history db ::requests))
 
 (defn get-request-history
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) request-id
   ;
   ; @return (map)
@@ -64,8 +60,6 @@
   (r db/get-data-history db ::requests request-id))
 
 (defn get-requests
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @return (map)
   [db _]
   (get-in db (db/path ::requests)))

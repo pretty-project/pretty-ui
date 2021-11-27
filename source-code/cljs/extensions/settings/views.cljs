@@ -15,17 +15,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keywords in vector)
-(def ALLOWED-VIEWS [:personal :privacy :appearance :notifications])
-
-; @constant (keywords)
-(def DEFAULT-VIEW :personal)
-
-
-
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -149,8 +138,3 @@
   [:ui/set-surface! ::view
                     {:content    #'view
                      :subscriber [::get-view-props]}])
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:view-selector/initialize! :settings {:allowed-views ALLOWED-VIEWS
-                                                       :default-view  DEFAULT-VIEW}]})

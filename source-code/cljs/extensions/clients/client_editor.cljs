@@ -29,14 +29,14 @@
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-editor/get-header-props db "clients" "client"))
+  (r item-editor/get-header-props db :clients :client))
 
 (a/reg-sub ::get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r item-editor/get-view-props db "clients" "client"))
+  (r item-editor/get-view-props db :clients :client))
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -48,18 +48,18 @@
 (defn- action-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [:<> [item-editor/delete-item-button "clients" "client"]
-       [item-editor/copy-item-button   "clients" "client"]])
+  [:<> [item-editor/delete-item-button :clients :client]
+       [item-editor/copy-item-button   :clients :client]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id {:keys [new-item?] :as header-props}]
   [elements/polarity ::form-header
                      {:start-content [:<> (if (boolean new-item?)
-                                             ;[item-editor/cancel-item-button "clients" "client"]
+                                             ;[item-editor/cancel-item-button :clients :client]
                                               nil
                                               [action-buttons header-id header-props])]
-                      :end-content [item-editor/save-item-button "clients" "client" header-props]}])
+                      :end-content [item-editor/save-item-button :clients :client header-props]}])
 
 
 
@@ -184,7 +184,3 @@
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-boot [:item-editor/initialize! :clients :client]})

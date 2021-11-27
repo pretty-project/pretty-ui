@@ -10,80 +10,76 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (string)
 (def collection-name "clients")
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-;; ----------------------------------------------------------------------------
+
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- added-client-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request]} client-props]
-  (let [timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
-       (merge {:client/added-at    timestamp
-               :client/added-by    user-link}
-              (param client-props)
-              {:client/modified-at timestamp
-               :client/modified-by user-link})))
+       ; WARNING! NON-PUBLIC! DO NOT USE!
+       [{:keys [request]} client-props]
+       (let [timestamp (time/timestamp-object)
+             user-link (user/request->user-link request)]
+            (merge {:client/added-at    timestamp
+                    :client/added-by    user-link}
+                   (param client-props)
+                   {:client/modified-at timestamp
+                    :client/modified-by user-link})))
 
 (defn- updated-client-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request]} client-props]
-  (let [timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
-       (merge (param client-props)
-              {:client/modified-at timestamp
-               :client/modified-by user-link})))
+       ; WARNING! NON-PUBLIC! DO NOT USE!
+       [{:keys [request]} client-props]
+       (let [timestamp (time/timestamp-object)
+             user-link (user/request->user-link request)]
+            (merge (param client-props)
+                   {:client/modified-at timestamp
+                    :client/modified-by user-link})))
 
 (defn- duplicated-client-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request]} client-props]
-  (let [timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
-       (merge (param client-props)
-              {:client/added-at    timestamp
-               :client/added-by    user-link
-               :client/modified-at timestamp
-               :client/modified-by user-link
-               :xxxx :yyyyy})))
+       ; WARNING! NON-PUBLIC! DO NOT USE!
+       [{:keys [request]} client-props]
+       (let [timestamp (time/timestamp-object)
+             user-link (user/request->user-link request)]
+            (merge (param client-props)
+                   {:client/added-at    timestamp
+                    :client/added-by    user-link
+                    :client/modified-at timestamp
+                    :client/modified-by user-link})))
 
-;; ----------------------------------------------------------------------------
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-;; ----------------------------------------------------------------------------
+
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn env->search-props
-  [env]
-  (let [resolver-props        (pathom/env->params env)
-        downloaded-item-count (get resolver-props :downloaded-item-count)
-        search-term           (get resolver-props :search-term)
-        order-by              (get resolver-props :order-by)]
-       {:max-count      10
-        :skip           downloaded-item-count
-        :search-pattern [[:clients/full-name search-term] [:clients/email-address search-term]]
-        :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
-                                       :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
-                                       :by-date-ascending  [[:client/modified-at  1]]
-                                       :by-date-descending [[:client/modified-at -1]])}))
+      ; WARNING! NON-PUBLIC! DO NOT USE!
+      [env]
+      (let [resolver-props        (pathom/env->params env)
+            downloaded-item-count (get resolver-props :downloaded-item-count)
+            search-term           (get resolver-props :search-term)
+            order-by              (get resolver-props :order-by)]
+           {:max-count      10
+            :skip           downloaded-item-count
+            :search-pattern [[:clients/full-name search-term] [:clients/email-address search-term]]
+            :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
+                                           :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
+                                           :by-date-ascending  [[:client/modified-at  1]]
+                                           :by-date-descending [[:client/modified-at -1]])}))
 
 (defn search-props->search-pipeline
-      ; Example: (search-props->search-pipeline
-      ;             {:skip 0
-      ;              :max-count 20
-      ;              :search-pattern [[:clients/first-name "sad"]]
-      ;              :sort-pattern   [[:clients/first-name 1]]}
+      ; WARNING! NON-PUBLIC! DO NOT USE!
+      ;
+      ; @usage
+      ;  (search-props->search-pipeline {:max-count 20
+      ;                                  :skip       0
+      ;                                  :search-pattern [[:clients/first-name "xyz"]]
+      ;                                  :sort-pattern   [[:clients/first-name 1]]}
       [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
       (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
             sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
@@ -94,22 +90,23 @@
             {"$limit" max-count}]))
 
 (defn search-props->count-pipeline
-      ; Example: (search-props->count-pipeline
-      ;             {:search-pattern [[:clients/first-name "sad"]]}
+      ; WARNING! NON-PUBLIC! DO NOT USE!
+      ;
+      ; @usage
+      ;  (search-props->count-pipeline {:search-pattern [[:clients/first-name "xyz"]]}
       [{:keys [search-pattern] :as search-props}]
       (let [query (mongo-db/search-pattern->pipeline-query search-pattern)]
            [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
             {"$match" query}]))
 
-;; ----------------------------------------------------------------------------
-;; -- Pipelines ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-;; ----------------------------------------------------------------------------
+
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defresolver get-client-items
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
              ; @param (map) env
              ;  {}
              ; @param (map) resolver-props
@@ -130,6 +127,8 @@
                     :document-count (mongo-db/count-documents-by-pipeline collection-name count-pipeline)})})
 
 (defresolver get-client-item
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;  {:client/id (string)}
@@ -151,11 +150,8 @@
                             :client/zip-code]}
              (mongo-db/get-document-by-id collection-name id))
 
-;; ----------------------------------------------------------------------------
-;; -- Resolvers ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-;; ----------------------------------------------------------------------------
+
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -178,10 +174,12 @@
              (mongo-db/duplicate-document! collection-name client-id
                                            {:prototype-f #(a/sub-prot env % duplicated-client-props-prototype)}))
 
-;; ----------------------------------------------------------------------------
-;; -- Mutations ---------------------------------------------------------------
+
+
+;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (vector)
 (def HANDLERS [get-client-item
                get-client-items
                update-client-item!

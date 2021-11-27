@@ -28,6 +28,7 @@
 (def new-item-uri       engine/new-item-uri)
 (def add-new-item-event engine/add-new-item-event)
 (def route-id           engine/route-id)
+(def route-template     engine/route-template)
 (def render-event       engine/render-event)
 
 
@@ -41,12 +42,9 @@
   ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-lister/initialize! :products :product]
-  (fn [_ [_ extension-id item-namespace]
-      ;[:router/add-route! :products/route {...}]
-       [:router/add-route! (route-id extension-id item-namespace)
-                           ;:route-template "/products"
-                           {:route-template (route-template extension-id item-namespace)
-                           ;:client-event   [:item-lister/load! :products :product]
-                            :client-event   [:item-lister/load! extension-id item-namespace]
-                            :restricted?    true}]]))
+  ;  [:item-lister/initialize! :my-extension :my-type]
+  (fn [_ [_ extension-id item-namespace]]
+      [:router/add-route! (route-id extension-id item-namespace)
+                          {:route-template (route-template     extension-id item-namespace)
+                           :client-event   [:item-lister/load! extension-id item-namespace]
+                           :restricted?    true}]))

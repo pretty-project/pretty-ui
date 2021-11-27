@@ -958,6 +958,6 @@
 
 
 
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-app-init [:item-browser/add-routes! "media" "directory"]}) ;{:default-item-id "home"}]})
+;(a/reg-lifecycles)
+;  ::lifecycles)
+;  {:on-app-init [:item-browser/add-routes! "media" "directory"]}) ;{:default-item-id "home"}]})

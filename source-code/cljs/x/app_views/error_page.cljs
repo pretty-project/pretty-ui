@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.2.0
-; Compatibility: x4.4.6
+; Version: v1.2.2
+; Compatibility: x4.4.7
 
 
 
@@ -27,6 +27,8 @@
 (def ERROR-CONTENT {:no-connection      {:title  :yo-do-not-have-internet-connection
                                          :helper :please-check-your-internet-connection
                                          :icon   :wifi_off}
+                    :no-permission      {:title  :you-do-not-have-permission-to-view-this-page
+                                         :icon   :warning_amber}
                     :page-not-found     {:title  :page-is-not-available
                                          :helper :the-link-you-followed-may-be-broken
                                          :icon   :self_improvement}
@@ -117,6 +119,7 @@
   [surface-id content-props]
   [:<> [elements/separator {:size :xxl :orientation :horizontal}]
        [error-icon     surface-id content-props]
+       [elements/separator {:orientation :horizontal :size :m}]
        [error-title    surface-id content-props]
        [error-helper   surface-id content-props]
        [elements/separator {:orientation :horizontal :size :m}]
@@ -130,7 +133,7 @@
 (a/reg-event-fx
   :views/render-error-page!
   ; @param (keyword) error-id
-  ;  :no-connection, :page-not-found, :under-construction, :under-maintenance
+  ;  :no-connection, :no-permission, :page-not-found, :under-construction, :under-maintenance
   (fn [_ [_ error-id]]
       [:ui/set-surface! ::view
                         {:content       #'view

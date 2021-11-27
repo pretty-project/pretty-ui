@@ -292,7 +292,11 @@
           (merge {:disabled   true
                   :style      (view-props->field-style view-props)
                   :type       (keyword/to-dom-value type)
-                  :value      value})
+                  :value      value
+                  ; BUG#8809
+                  ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+                  ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+                  :on-change #(let [])})
           (not disabled?)
           (merge {:autoFocus  auto-focus?
                   :max-length max-length
@@ -301,7 +305,6 @@
                   :style      (view-props->field-style view-props)
                   :type       (keyword/to-dom-value    type)
                   :value      value
-
                   ; BUG#8041
                   ;  Abban az esetben, ha egy input elem {:value-path [...]}
                   ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt

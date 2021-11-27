@@ -16,7 +16,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :extensions.inventories/render!
+  :inventories/render!
   [:ui/set-surface! ::view
                     {:content #'view
                      :layout :unboxed}])

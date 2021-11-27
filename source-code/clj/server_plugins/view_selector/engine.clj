@@ -40,7 +40,7 @@
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   ;  {:allowed-views (keywords in vector)(opt)
-  ;    Ha a selected-view értéke nem található meg az allowed-views felsorolásban,
+  ;    Ha a kiválasztott view-id értéke nem található meg az allowed-views felsorolásban,
   ;    akkor behelyettesítésre kerül a default-view értékével.
   ;   :default-view (keyword)(opt)}
   ;
