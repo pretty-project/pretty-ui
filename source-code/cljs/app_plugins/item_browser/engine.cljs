@@ -42,11 +42,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- get-derived-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   ;  {:default-item-id (keyword)(opt)}
+  ;
+  ; @usage
+  ;  (r item-browser/get-derived-item-id db :my-extension {...})
   ;
   ; @return (keyword)
   ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id
@@ -55,6 +56,10 @@
           (let [derived-item-id (keyword derived-item-id)]
                (return derived-item-id))
           (return default-item-id)))
+
+; @usage
+;  [:item-browser/get-derived-item-id :my-extension {...}]
+(a/reg-sub :item-browser/get-derived-item-id get-derived-item-id)
 
 (defn get-current-path
   ; @param (keyword) extension-id
@@ -67,6 +72,10 @@
   (let [current-path (get-in db [extension-id :browser-meta :current-path])]
        (vec current-path)))
 
+; @usage
+;  [:item-browser/get-current-path :my-extension]
+(a/reg-sub :item-browser/get-current-path get-current-path)
+
 (defn at-home?
   ; @param (keyword) extension-id
   ;
@@ -78,6 +87,10 @@
   (let [current-path (r get-current-path db extension-id)]
        (empty? current-path)))
 
+; @usage
+;  [:item-browser/at-home? :my-extension]
+(a/reg-sub :item-browser/at-home? at-home?)
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ;
@@ -88,6 +101,10 @@
   ;  {:at-home? (boolean)}
   [db [_ extension-id]]
   {:at-home? (r at-home? db extension-id)})
+
+; @usage
+;  [:item-browser/get-header-props :my-extension]
+(a/reg-sub :item-browser/get-header-props get-header-props)
 
 
 

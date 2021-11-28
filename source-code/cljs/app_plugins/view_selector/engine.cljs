@@ -67,6 +67,10 @@
   [db [_ extension-id]]
   (get-in db [extension-id :view-meta :view-id]))
 
+; @usage
+;  [:view-selector/get-selected-view-id :my-extension]
+(a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)
+
 (defn get-body-props
   ; @param (keyword) extension-id
   ;
@@ -77,6 +81,10 @@
   ;  {:view-id (keyword)}
   [db [_ extension-id]]
   {:view-id (r get-selected-view-id db extension-id)})
+
+; @usage
+;  [:view-selector/get-body-props :my-extension]
+(a/reg-sub :view-selector/get-body-props get-body-props)
 
 (defn get-header-props
   ; @param (keyword) extension-id
@@ -89,6 +97,9 @@
   [db [_ extension-id]]
   {:view-id (r get-selected-view-id db extension-id)})
 
+; @usage
+;  [:view-selector/get-header-props :my-extension]
+(a/reg-sub :view-selector/get-header-props get-header-props)
 
 
 ;; -- DB events ---------------------------------------------------------------

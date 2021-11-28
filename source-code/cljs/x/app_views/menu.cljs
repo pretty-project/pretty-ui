@@ -222,29 +222,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :views/render-menu-as-popup!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! ::view
-                  {:content          #'body
-                   :label-bar        {:content #'ui/close-popup-header}
-                   :horizontal-align :left
-                   :layout           :boxed
-                   :min-width        :xs
-                   :subscriber       [::get-body-props]}])
-
-(a/reg-event-fx
-  :views/render-menu-as-sidebar!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-sidebar! ::view
-                    {:content    #'body
-                     :subscriber [::get-body-props]}])
-
-(a/reg-event-fx
   :views/render-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db           (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
-       :dispatch-if [(r environment/viewport-small? db)
-                     [:views/render-menu-as-popup!]
-                     [:views/render-menu-as-popup!]]}))
-                    ;[:views/render-menu-as-popup!]
+      {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
+       :dispatch [:ui/add-popup! ::view
+                                 {:content          #'body
+                                  :label-bar        {:content #'ui/close-popup-header}
+                                  :horizontal-align :left
+                                  :layout           :boxed
+                                  :min-width        :xs
+                                  :subscriber       [::get-body-props]}]}))

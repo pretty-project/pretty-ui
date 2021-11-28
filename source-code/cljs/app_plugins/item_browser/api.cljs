@@ -28,9 +28,9 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
-
-;(def get-body-props   engine/get-body-props)
-(def get-header-props engine/get-header-props)
-;(def get-view-props        engine/get-view-props)
+(def get-derived-item-id     engine/get-derived-item-id)
+(def get-current-path        engine/get-current-path)
+(def at-home?                engine/at-home?)
+(def get-header-props        engine/get-header-props)
 
 ; plugins.item-browser.views

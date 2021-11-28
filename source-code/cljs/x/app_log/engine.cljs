@@ -52,7 +52,7 @@
       (let [entry-id    (a/event-vector->second-id   event-vector)
             entry-props (a/event-vector->first-props event-vector)
             entry-props (r entry-props-prototype db entry-props)]
-           [:sync/send-request! ::synchronize!
+           [:sync/send-request! :log/synchronize!
                                 {:method :post
                                  :params {:entry-props entry-props}
                                  :uri    "/log/upload-entry"}])))

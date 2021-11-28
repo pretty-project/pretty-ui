@@ -91,6 +91,10 @@
   (let [edit-path (r get-editor-prop db editor-id :edit-path)]
        (get-in db edit-path)))
 
+; @usage
+;  [:value-editor/get-editor-value :my-editor]
+(a/reg-sub :value-editor/get-editor-value get-editor-value)
+
 
 
 ;; -- DB events ---------------------------------------------------------------

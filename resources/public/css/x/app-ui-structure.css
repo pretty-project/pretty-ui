@@ -142,8 +142,7 @@
 #x-app-bubbles,
 .x-app-popups--element--content,
 .x-app-popups--element--label-bar,
-#x-app-sidebar--surface,
-.x-app-surface--element--control-sidebar {
+#x-app-sidebar--surface {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar for Firefox */
@@ -679,34 +678,15 @@ body[data-viewport-profile="s"]   #x-app-header {
   background-color: var( --background-color );
   display: flex;
   flex-direction: column;
-  -height: 100vh;
-  -left: 0;
+  height: 100vh;
+  left: 0;
   position: fixed;
-  -top: 0;
+  top: 0;
   transform: translateX(-110%);
-  -width: 320px }
+  width: 320px }
 
 #x-app-sidebar[data-visible="true"] {
   transform: translateX(0) }
-
-body[data-viewport-profile="xxs"] #x-app-sidebar,
-body[data-viewport-profile="xs"]  #x-app-sidebar,
-body[data-viewport-profile="s"]   #x-app-sidebar {
-
-
-}
-
-body[data-viewport-profile="m"]   #x-app-sidebar,
-body[data-viewport-profile="l"]   #x-app-sidebar,
-body[data-viewport-profile="xl"]  #x-app-sidebar,
-body[data-viewport-profile="xxl"] #x-app-sidebar {
-  border-radius: var( --border-radius-m );
-  bottom: 0;
-  max-height: calc(100vh - 72px);
-  min-height: 60vh;
-  margin-bottom: 12px;
-  margin-left: var( --app-edge );
-  width: 240px }
 
 /*** App sidebar wrapper ***/
 
@@ -751,7 +731,6 @@ body[data-viewport-profile="xxl"] #x-app-sidebar {
   backdrop-filter: blur( 2px );
   -webkit-backdrop-filter: blur( 2px );
   background-color: var( --black-semi-transparent );
-  display: none;
   height: 100vh;
   left: 0;
   position: fixed;

@@ -12,6 +12,8 @@
 
 # x4.3.0
 
+- Ha a layout-okon lesznek mindenfél sidebar-ok, akkor a UI-sidebar -ra már nem is lesz szükség?
+
 - x.server-media modul kerüljön ki media extension-be???
   (ha igen, akkor a route-jai se system-route-ok legyenek!)
 
@@ -26,7 +28,6 @@
 - Multi-combobox elembe igy nézzen ki egy placeholder: "green, red, purple"
   Szóval vesszővel lehet elválasztani a tag-eket és a vessző billentyű leütése is viselkedjen
   ugyanugy mint az enter (kiüriti a mezőt és hozzáad egy chip-et)
-
 
 - params helyett transit-paramsbol szedi ki a query-t a pathom, le kell tesztelni fájlefeltöltésre is!
 
@@ -70,28 +71,7 @@
 
 - Legyen e layout fit a default mindenhol?
 
-- counter tulajdonságai nem müködnek label, initial-value
-
-- freezed-route-ra nincs szükség, ha a felület inicializálásakor letárolod a szükséges
-  path-param-ot és query-param-ot előre.
-
-- Elméletileg nem szükséges az authenticated-home! Amilyen route-on vagy amikor bejön
-  login-screen oda visz vissza a reboot után.
-  Csak a /login route-on volt valami basz!
-  SSC rányomsz a logout-ra ami átdob a login screen re ami a /-re akar bejelentkezni
-  valami a logout miatt nem tud vissza menni a /admin-ra
-
-
-- Az elementeknél megérné megvizsgálni, hogy szükséges a containernek átadni a subscriber
-  tulajdonságot mert sokszor tök felesleges a stated komponens nem static módban megy
-
-- A re-frame-be is lehetne tenni a :require :as -hez hasonló dolgot.
-  Meg lehetne mondani a re-frame-nek, hogy pölö az :x.app-router névteret :router névterként
-  is elérje.
-
-- Fájlkezelőben lecsekkolni, h ne lehessen egy mappát saját magába move-olni vagy (?másolni?)
-
-- a/redirect-sub
+- Fájlkezelőben lecsekkolni, h ne lehessen egy mappát saját magába move-olni vagy (?másolni?, ez télleg cenk?)
 
 - Ha az elemeknél különválasztásra kerül a :color tulajdonság, :color, :background-color, :border-color
   tulajdonságokra akkor megvalosítható az, hogy pl.: a label elemnek :color tulajdonságként string kerül átadásra, akkor az inline-style-ként hozzáadja, hogy {:color "..."}

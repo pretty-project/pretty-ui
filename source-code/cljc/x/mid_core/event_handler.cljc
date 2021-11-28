@@ -39,8 +39,6 @@
 ; Metamorphic effects functions
 ; Effects-map functions
 ; Event checking
-; Namespace redirecting
-; Event redirecting
 ; Event registrating
 ; Dispatch functions
 ; Dispatch timing
@@ -873,124 +871,6 @@
   [event-kind event-id]
   (let [event-handler (get-event-handler event-kind event-id)]
        (some? event-handler)))
-
-
-
-;; -- Namespace redirecting ---------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn redirect-cofx-namespace
-  ; @param (keyword) source-namespace
-  ; @param (keyword) target-namespace
-  ;
-  ; @usage
-  ;  (a/redirect-cofx-namespace :my-very-long-namespace :my-ns)
-  [source-namespace target-namespace])
-  ; TODO ...
-
-(defn redirect-event-namespace
-  ; @param (keyword) source-namespace
-  ; @param (keyword) target-namespace
-  ;
-  ; @usage
-  ;  (a/redirect-event-namespace :my-very-long-namespace :my-ns)
-  [source-namespace target-namespace]
-  (swap! kind->id->namespace merge
-         {:event {target-namespace {:require source-namespace}
-                  source-namespace {:as      target-namespace}}}))
-
-(defn redirect-fx-namespace
-  ; @param (keyword) source-namespace
-  ; @param (keyword) target-namespace
-  ;
-  ; @usage
-  ;  (a/redirect-cofx-namespace :my-very-long-namespace :my-ns)
-  [source-namespace target-namespace])
-  ; TODO ...
-
-(defn redirect-sub-namespace
-  ; @param (keyword) source-namespace
-  ; @param (keyword) target-namespace
-  ;
-  ; @usage
-  ;  (a/redirect-sub-namespace :my-very-long-namespace :my-ns)
-  [source-namespace target-namespace]
-  (swap! kind->id->namespace merge
-         {:sub {target-namespace {:require source-namespace}
-                source-namespace {:as      target-namespace}}}))
-
-(defn redirect-namespace
-  ; @param (keyword) source-namespace
-  ; @param (keyword) target-namespace
-  ;
-  ; @usage
-  ;  (a/redirect-namespace :my-very-long-namespace :my-ns)
-  [source-namespace target-namespace]
-  (redirect-cofx-namespace  source-namespace target-namespace)
-  (redirect-event-namespace source-namespace target-namespace)
-  (redirect-fx-namespace    source-namespace target-namespace)
-  (redirect-sub-namespace   source-namespace target-namespace))
-
-(defn get-cofx-namespace-redirection
-  ; @param (keyword) target-namespace
-  ;
-  ; @return (keyword)
-  [target-namespace])
-  ; TODO ...
-
-(defn get-event-namespace-redirection
-  ; @param (keyword) target-namespace
-  ;
-  ; @return (keyword)
-  [target-namespace]
-  (get-in @kind->id->namespace [:event target-namespace]
-          ; XXX#5376
-          ; Ha nincs másik névtér átirányítva a target-namespace paraméterként
-          ; átadott névtérre, akkor a visszatérési érték a target-namespace értéke.
-          (return target-namespace)))
-
-(defn get-fx-namespace-redirection
-  ; @param (keyword) target-namespace
-  ;
-  ; @return (keyword)
-  [target-namespace])
-  ; TODO ...
-
-(defn get-sub-namespace-redirection
-  ; @param (keyword) target-namespace
-  ;
-  ; @return (keyword)
-  [target-namespace]
-  (get-in @kind->id->namespace [:sub target-namespace]
-          ; XXX#5376
-          (return target-namespace)))
-
-
-
-;; -- Event redirecting -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn redirect-event-db
-  ; @param (keyword) source-event-id
-  ; @param (keyword) target-event-id
-  [source-event-id target-event-id]
-  (let [source-event-handler (get-event-handler :event source-event-id)]
-       (swap! registrar/kind->id->handler assoc-in [:event target-event-id]
-              source-event-handler)))
-
-(defn redirect-event-fx
-  ; @param (keyword) source-event-id
-  ; @param (keyword) target-event-id
-  [source-event-id target-event-id]
-  (let [source-event-handler (get-event-handler :event source-event-id)]
-       (swap! registrar/kind->id->handler assoc-in [:event target-event-id]
-              source-event-handler)))
-
-(defn redirect-sub
-  ; @param (keyword) source-event-id
-  ; @param (keyword) target-event-id
-  [source-event-id target-event-id])
-  ; TODO ...
 
 
 

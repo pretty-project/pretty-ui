@@ -63,28 +63,52 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-lister/synchronizing? db :my-namespace :my-type)
+  ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [request-id (request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
+; @usage
+;  [:item-lister/synchronizing? :my-namespace :my-type]
+(a/reg-sub :item-lister/synchronizing? synchronizing?)
+
 (defn get-downloaded-items
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-downloaded-items db :my-namespace)
   ;
   ; @return (maps in vector)
   [db [_ extension-id]]
   (get-in db [extension-id :lister-data]))
 
+; @usage
+;  [:item-lister/get-downloaded-items :my-namespace]
+(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
+
 (defn get-downloaded-item-count
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-downloaded-item-count db :my-namespace)
   ;
   ; @return (integer)
   [db [_ extension-id]]
   (let [downloaded-items (r get-downloaded-items db extension-id)]
        (count downloaded-items)))
 
+; @usage
+;  [:item-lister/get-downloaded-item-count :my-namespace]
+(a/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
+
 (defn get-all-item-count
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-all-item-count db :my-namespace)
   ;
   ; @return (integer)
   [db [_ extension-id]]
@@ -97,14 +121,21 @@
   ;   ne próbálja újra és újra letölteni a további feltételezett elemeket.
   ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
   ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-  ;   Az első kommunikáció megtörténtét, ezért szükséges külön vizsgálni!
+  ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
   (let [all-item-count (get-in db [extension-id :lister-meta :document-count])]
        (if (integer? all-item-count)
            (return   all-item-count)
            (return   0))))
 
+; @usage
+;  [:item-lister/get-all-item-count :my-namespace]
+(a/reg-sub :item-lister/get-all-item-count get-all-item-count)
+
 (defn all-items-downloaded?
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/all-items-downloaded? db :my-namespace)
   ;
   ; @return (boolean)
   [db [_ extension-id]]
@@ -116,25 +147,43 @@
        ;   akkor ne próbáljon további feltételezett elemeket letölteni.
        ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
        ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-       ;   Az első kommunikáció megtörténtét, ezért szükséges külön vizsgálni!
+       ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
        (println (str downloaded-item-count))
        (println (str all-item-count))
        (>= downloaded-item-count all-item-count)))
 
+; @usage
+;  [:item-lister/all-items-downloaded? :my-namespace]
+(a/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
+
 (defn get-search-term
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-search-term db :my-namespace)
   ;
   ; @return (string)
   [db [_ extension-id]]
   (let [search-term  (get-in db [extension-id :lister-meta :search-term])]
        (str search-term)))
 
+; @usage
+;  [:item-lister/get-search-term :my-namespace]
+(a/reg-sub :item-lister/get-search-term get-search-term)
+
 (defn get-order-by
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-order-by db :my-namespace)
   ;
   ; @return (keyword)
   [db [_ extension-id]]
   (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY))
+
+; @usage
+;  [:item-lister/get-order-by :my-namespace]
+(a/reg-sub :item-lister/get-order-by get-order-by)
 
 (defn- download-more-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,6 +207,9 @@
 (defn get-description
   ; @param (keyword) extension-id
   ;
+  ; @usage
+  ;  (r item-lister/get-description db :my-extension)
+  ;
   ; @return (string)
   [db [_ extension-id]]
   (let [downloaded-item-count (r get-downloaded-item-count db extension-id)
@@ -165,25 +217,43 @@
        (components/content {:content      :npn-items-downloaded
                             :replacements [downloaded-item-count all-item-count]})))
 
+; @usage
+;  [:item-lister/get-description :my-namespace]
+(a/reg-sub :item-lister/get-description get-description)
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ;
   ; @usage
-  ;  (r pattern/get-header-props db :my-extension)
+  ;  (r item-lister/get-header-props db :my-extension)
   ;
   ; @return (map)
-  ;  {:viewport-small? (boolean)}
+  ;  {:search-mode? (boolean)
+  ;   :select-mode? (boolean)
+  ;   :viewport-small? (boolean)}
   [db [_ extension-id]]
   {:search-mode?    (get-in db [extension-id :lister-meta :search-mode?])
+   :select-mode?    (get-in db [extension-id :lister-meta :select-mode?])
    :viewport-small? (r environment/viewport-small? db)})
+
+; @usage
+;  [:item-lister/get-header-props :my-namespace]
+(a/reg-sub :item-lister/get-header-props get-header-props)
 
 (defn get-view-props
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/get-view-props db :my-extension)
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)}
   [db [_ extension-id]]
   {:description (r get-description db extension-id)})
+
+; @usage
+;  [:item-lister/get-view-props :my-namespace]
+(a/reg-sub :item-lister/get-view-props get-view-props)
 
 
 
@@ -202,6 +272,8 @@
   [db [_ extension-id]]
   (update-in db [extension-id :lister-meta :search-mode?] not))
 
+; @usage
+;  [:item-lister/toggle-search-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
 
 (defn- toggle-select-mode!
@@ -216,6 +288,8 @@
   [db [_ extension-id]]
   (update-in db [extension-id :lister-meta :select-mode?] not))
 
+; @usage
+;  [:item-lister/toggle-select-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
 

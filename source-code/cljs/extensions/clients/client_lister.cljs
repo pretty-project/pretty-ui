@@ -16,14 +16,14 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-item-view-props
+(defn- get-item-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ _ {:client/keys [added-at]}]]
   {:added-at          (r activities/get-actual-timestamp db added-at)
    :viewport-small?   (r environment/viewport-small?     db)
    :selected-language (r locales/get-selected-language   db)})
 
-(a/reg-sub ::get-item-view-props get-item-view-props)
+(a/reg-sub ::get-item-props get-item-props)
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,22 +58,26 @@
           [:div.clients--client--full-name     full-name]
           [:div.clients--client--email-address email-address]]))
 
-(defn- xxx
+(defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:client/keys [id] :as client-props} view-props]
-  (let [client-uri      (item-editor/item-id->item-uri :clients id)]
+  [item-dex client-props item-props]
+  [:div.clients--client
+     [client-item-primary-details   item-dex client-props item-props]
+     [client-item-secondary-details item-dex client-props item-props]])
+
+(defn- client-item-toggle
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex {:client/keys [id] :as client-props} item-props]
+  (let [client-uri      (item-editor/item-id->item-uri :clients :client id)]
        [elements/toggle {:on-click [:router/go-to! client-uri]
                          :stretch-orientation :horizontal
-                         :content
-                         [:div.clients--client
-                            [client-item-primary-details   item-dex client-props view-props]
-                            [client-item-secondary-details item-dex client-props view-props]]}]))
+                         :content [client-item-structure item-dex client-props item-props]}]))
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props]
-  (let [view-props (a/subscribe [::get-item-view-props item-dex client-props])]
-       (fn [] [xxx item-dex client-props @view-props])))
+  (let [item-props (a/subscribe [::get-item-props item-dex client-props])]
+       (fn [] [client-item-structure item-dex client-props @item-props])))
 
 
 

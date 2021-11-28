@@ -45,7 +45,7 @@
   ; @usage
   ;  [:boot-synchronizer/synchronize-app! #'app]
   (fn [_ [_ app]]
-      [:sync/send-request! ::synchronize-app!
+      [:sync/send-request! :boot-synchronizer/synchronize-app!
                            {:method       :get
                             :on-failure   [:core/->error-catched]
                             :on-success   [:boot-loader/->app-synchronized app]

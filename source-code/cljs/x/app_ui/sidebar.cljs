@@ -32,7 +32,7 @@
 ; @constant (ms)
 ;  BUG#0845
 ;  A sidebar React-fába csatolása után késleltetve jelenik meg, ellenkező esetben
-;  a sidebar-megjelenítő animáció véletlenszerűen nem játszódna le.
+;  a sidebar-megjelenítő animáció (véletlenszerűen) nem minden alkalommal játszódna le.
 (def SHOW-SIDEBAR-DELAY 50)
 
 

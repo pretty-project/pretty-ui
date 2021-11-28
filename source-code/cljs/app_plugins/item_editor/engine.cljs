@@ -57,19 +57,33 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-editor/get-derived-item-id db :my-namespace :my-type)
+  ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
   (let [item-id-key (item-id-key extension-id item-namespace)]
        (r router/get-current-route-path-param db item-id-key)))
 
+; @usage
+;  [:item-editor/get-derived-item-id :my-namespace :my-type]
+(a/reg-sub :item-editor/get-derived-item-id get-derived-item-id)
+
 (defn synchronizing?
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/synchronizing? db :my-namespace :my-type)
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [request-id (request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
+
+; @usage
+;  [:item-editor/synchronizing? :my-namespace :my-type]
+(a/reg-sub :item-editor/synchronizing? synchronizing?)
 
 (defn new-item?
   ; @param (keyword) extension-id
@@ -82,6 +96,10 @@
   [db [_ extension-id item-namespace]]
   (let [item-id (get-in db [extension-id :editor-meta :item-id])]
        (item-id->new-item?  extension-id item-namespace item-id)))
+
+; @usage
+;  [:item-editor/new-item? :my-namespace :my-type]
+(a/reg-sub :item-editor/new-item? new-item?)
 
 (defn get-description
   ; @param (keyword) extension-id
@@ -99,18 +117,32 @@
             modified-at     (r activities/get-actual-timestamp db modified-at)]
            (components/content {:content :last-modified-at-n :replacements [modified-at]}))))
 
+; @usage
+;  [:item-editor/get-description :my-namespace :my-type]
+(a/reg-sub :item-editor/get-description get-description)
+
 (defn get-body-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-body-props db :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   {:new-item? (r new-item? db extension-id item-namespace)})
 
+; @usage
+;  [:item-editor/get-body-props :my-namespace :my-type]
+(a/reg-sub :item-editor/get-body-props get-body-props)
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-header-props db :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:form-completed? (boolean)
@@ -120,9 +152,16 @@
        {:form-completed? (r elements/form-completed? db form-id)
         :new-item?       (r new-item?                db extension-id item-namespace)}))
 
+; @usage
+;  [:item-editor/get-header-props :my-namespace :my-type]
+(a/reg-sub :item-editor/get-header-props get-header-props)
+
 (defn get-view-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-view-props db :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)
@@ -132,6 +171,10 @@
   {:description    (r get-description db extension-id item-namespace)
    :new-item?      (r new-item?       db extension-id item-namespace)
    :synchronizing? (r synchronizing?  db extension-id item-namespace)})
+
+; @usage
+;  [:item-editor/get-view-props :my-namespace :my-type]
+(a/reg-sub :item-editor/get-view-props get-view-props)
 
 
 

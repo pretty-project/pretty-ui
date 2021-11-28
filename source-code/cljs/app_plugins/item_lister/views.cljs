@@ -32,13 +32,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
   ;  {:downloaded-items (vector)
   ;   :synchronizing? (boolean)}
-  [db [_ extension-id]]
-  {:downloaded-items (r engine/get-downloaded-items db extension-id)
-   :synchronizing?   (r engine/synchronizing?       db extension-id)})
+  [db [_ extension-id item-namespace]]
+  {:downloaded-items (r engine/get-downloaded-items db extension-id item-namespace)
+   :synchronizing?   (r engine/synchronizing?       db extension-id item-namespace)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -334,5 +335,5 @@
   ;
   ; @return (component)
   [extension-id item-namespace lister-props]
-  (let [view-props (a/subscribe [::get-view-props extension-id])]
+  (let [view-props (a/subscribe [::get-view-props extension-id item-namespace])]
        (fn [] [item-lister extension-id item-namespace lister-props @view-props])))
