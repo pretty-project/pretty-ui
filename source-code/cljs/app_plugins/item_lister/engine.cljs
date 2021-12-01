@@ -21,7 +21,6 @@
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
-              [x.app-environment.api :as environment]
               [x.app-sync.api        :as sync]
               [mid-plugins.item-lister.engine :as engine]))
 
@@ -60,6 +59,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn synchronizing?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
@@ -71,11 +72,9 @@
   (let [request-id (request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
-; @usage
-;  [:item-lister/synchronizing? :my-namespace :my-type]
-(a/reg-sub :item-lister/synchronizing? synchronizing?)
-
 (defn get-downloaded-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -85,11 +84,9 @@
   [db [_ extension-id]]
   (get-in db [extension-id :lister-data]))
 
-; @usage
-;  [:item-lister/get-downloaded-items :my-namespace]
-(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
-
 (defn get-downloaded-item-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -100,11 +97,9 @@
   (let [downloaded-items (r get-downloaded-items db extension-id)]
        (count downloaded-items)))
 
-; @usage
-;  [:item-lister/get-downloaded-item-count :my-namespace]
-(a/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
-
 (defn get-all-item-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -127,11 +122,9 @@
            (return   all-item-count)
            (return   0))))
 
-; @usage
-;  [:item-lister/get-all-item-count :my-namespace]
-(a/reg-sub :item-lister/get-all-item-count get-all-item-count)
-
 (defn all-items-downloaded?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -152,11 +145,9 @@
        (println (str all-item-count))
        (>= downloaded-item-count all-item-count)))
 
-; @usage
-;  [:item-lister/all-items-downloaded? :my-namespace]
-(a/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
-
 (defn get-search-term
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -167,11 +158,9 @@
   (let [search-term  (get-in db [extension-id :lister-meta :search-term])]
        (str search-term)))
 
-; @usage
-;  [:item-lister/get-search-term :my-namespace]
-(a/reg-sub :item-lister/get-search-term get-search-term)
-
 (defn get-order-by
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ;
   ; @usage
@@ -180,10 +169,6 @@
   ; @return (keyword)
   [db [_ extension-id]]
   (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY))
-
-; @usage
-;  [:item-lister/get-order-by :my-namespace]
-(a/reg-sub :item-lister/get-order-by get-order-by)
 
 (defn- download-more-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -220,40 +205,6 @@
 ; @usage
 ;  [:item-lister/get-description :my-namespace]
 (a/reg-sub :item-lister/get-description get-description)
-
-(defn get-header-props
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r item-lister/get-header-props db :my-extension)
-  ;
-  ; @return (map)
-  ;  {:search-mode? (boolean)
-  ;   :select-mode? (boolean)
-  ;   :viewport-small? (boolean)}
-  [db [_ extension-id]]
-  {:search-mode?    (get-in db [extension-id :lister-meta :search-mode?])
-   :select-mode?    (get-in db [extension-id :lister-meta :select-mode?])
-   :viewport-small? (r environment/viewport-small? db)})
-
-; @usage
-;  [:item-lister/get-header-props :my-namespace]
-(a/reg-sub :item-lister/get-header-props get-header-props)
-
-(defn get-view-props
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r item-lister/get-view-props db :my-extension)
-  ;
-  ; @return (map)
-  ;  {:description (metamorphic-content)}
-  [db [_ extension-id]]
-  {:description (r get-description db extension-id)})
-
-; @usage
-;  [:item-lister/get-view-props :my-namespace]
-(a/reg-sub :item-lister/get-view-props get-view-props)
 
 
 

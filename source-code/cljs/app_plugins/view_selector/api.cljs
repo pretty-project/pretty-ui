@@ -27,16 +27,10 @@
 ; @usage
 ;  (ns my-namespace (:require [app-plugins.view-selector.api :as view-selector]))
 ;
-;  (defn get-body-props [db _] (r view-selector/get-body-props db))
-;  (a/reg-sub ::get-body-props get-body-props)
-;
-;  (defn get-header-props [db _] (r view-selector/get-header-props db))
-;  (a/reg-sub ::get-header-props get-header-props)
-;
 ;  (defn body [_ {:keys [view-id]}] ...)
 ;
 ;  (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:content    #'body
-;                                                           :subscriber [::get-body-props]}]))
+;                                                           :subscriber [:view-selector/get-view-props :my-extension]}]))
 ;
 ;  (a/dispatch [:sync/send-request! :my-namespace/synchronize! {...}])
 ;
@@ -56,6 +50,5 @@
 ; app-plugins.view-selector.engine
 (def request-id           engine/request-id)
 (def get-selected-view-id engine/get-selected-view-id)
-(def get-header-props     engine/get-header-props)
-(def get-body-props       engine/get-body-props)
+(def get-view-props       engine/get-view-props)
 (def change-view!         engine/change-view!)

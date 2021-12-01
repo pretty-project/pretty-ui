@@ -15,7 +15,6 @@
 
 (ns x.app-ui.renderer
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.loop      :refer [reduce+wormhole]]
               [mid-fruits.map       :as map]
               [mid-fruits.time      :as time]
@@ -1115,7 +1114,7 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ _ element-id]]
       ;(a/console (str "Hide element - " (time/elapsed)))
-      [:environment/set-element-attribute! (keyword/to-dom-value element-id) "data-animation" "hide"]))
+      [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "hide"]))
 
 (a/reg-event-fx
   :ui/destroy-element-animated!
@@ -1233,7 +1232,7 @@
   ;
   ; @return (hiccup)
   [renderer-id {:keys [attributes]} _]
-  (let [wrapper-attributes (assoc attributes :id (keyword/to-dom-value renderer-id))]
+  (let [wrapper-attributes (assoc attributes :id (a/dom-value renderer-id))]
        [:div wrapper-attributes]))
 
 (defn- elements

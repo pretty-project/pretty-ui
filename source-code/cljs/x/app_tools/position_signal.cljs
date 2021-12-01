@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.position-signal
-    (:require [mid-fruits.keyword    :as keyword]
-              [x.app-components.api  :as components]
+    (:require [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-environment.api :as environment]))
 
@@ -76,7 +75,7 @@
   ;
   ; @return (hiccup)
   [component-id {:keys [component component-props]}]
-  [:div.x-position-signal {:id (keyword/to-dom-value component-id)}
+  [:div.x-position-signal {:id (a/dom-value component-id)}
                           [component component-id component-props]])
 
 (defn component

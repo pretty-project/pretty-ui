@@ -37,7 +37,8 @@
   ;
   ; @example
   ;  (mixed/mixed->string [{:a "a"}])
-  ;  => "[{:a a}]"
+  ;  =>
+  ;  "[{:a a}]"
   ;
   ; @return (string)
   [n]
@@ -48,7 +49,8 @@
   ;
   ; @example
   ;  (mixed/mixed->data-url "My text file content")
-  ;  => "data:text/plain;charset=utf-8,My text file content"
+  ;  =>
+  ;  "data:text/plain;charset=utf-8,My text file content"
   ;
   ; @return (string)
   [n]
@@ -59,19 +61,23 @@
   ;
   ; @example
   ;  (mixed/mixed->vector [:a])
-  ;  => [:a]
+  ;  =>
+  ;  [:a]
   ;
   ; @example
   ;  (mixed/mixed->vector nil)
-  ;  => []
+  ;  =>
+  ;  []
   ;
   ; @example
   ;  (mixed/mixed->vector {:a "a" :b "b"})
-  ;  => ["a" "b"]
+  ;  =>
+  ;  ["a" "b"]
   ;
   ; @example
   ;  (mixed/mixed->vector :x)
-  ;  => [:x]
+  ;  =>
+  ;  [:x]
   ;
   ; @return (vector)
   [n]
@@ -85,19 +91,23 @@
   ;
   ; @example
   ;  (mixed/mixed->map {:a})
-  ;  => {:a}
+  ;  =>
+  ;  {:a}
   ;
   ; @example
   ;  (mixed/mixed->map nil)
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @example
   ;  (mixed/mixed->map [:x :y :z])
-  ;  => {0 :x 1 :y 2 :z}
+  ;  =>
+  ;  {0 :x 1 :y 2 :z}
   ;
   ; @example
   ;  (mixed/mixed->map :x)
-  ;  => {0 :x}
+  ;  =>
+  ;  {0 :x}
   ;
   ; @return (map)
   [n]
@@ -111,11 +121,13 @@
   ;
   ; @example
   ;  (mixed/mixed->number? "abCd12")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (mixed/mixed->number? "12")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -135,15 +147,18 @@
   ;
   ; @example
   ;  (mixed/mixed->update-number "12" inc)
-  ;  => "13"
+  ;  =>
+  ;  "13"
   ;
   ; @example
   ;  (mixed/mixed->update-number "12" + 3)
-  ;  => "15"
+  ;  =>
+  ;  "15"
   ;
   ; @example
   ;  (mixed/mixed->update-number "abCd12" + 3)
-  ;  => "abCd12"
+  ;  =>
+  ;  "abCd12"
   ;
   ; @return (*)
   ([n f]

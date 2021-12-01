@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.api
-    (:require [server-plugins.item-lister.engine :as engine]))
+    (:require [server-plugins.item-lister.engine]))
 
 
 
@@ -29,13 +29,3 @@
 ;
 ; @usage
 ;  (defresolver get-my-type-items [_] ...)
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; server-plugins.item-lister.engine
-(def request-id   engine/request-id)
-(def resolver-id  engine/resolver-id)
-(def new-item-uri engine/new-item-uri)

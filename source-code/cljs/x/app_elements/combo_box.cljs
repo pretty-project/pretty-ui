@@ -16,7 +16,6 @@
 (ns x.app-elements.combo-box
     (:require [mid-fruits.candy          :as candy :refer [param return]]
               [mid-fruits.io             :as io]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.loop           :refer [reduce-indexed]]
               [mid-fruits.string         :as string]
               [mid-fruits.vector         :as vector]
@@ -244,7 +243,7 @@
          ; BUG#2105
          {:on-mouse-down #(.preventDefault %)
           :on-mouse-up   #(a/dispatch on-extend)}
-         [:i.x-combo-box--extender-icon    (keyword/to-dom-value :add)]
+         [:i.x-combo-box--extender-icon    (a/dom-value :add)]
          [:div.x-combo-box--extender-label (str value)]]))
 
 (defn- combo-box-surface

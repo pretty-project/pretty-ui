@@ -28,12 +28,14 @@ body {
   /* XXX#2981
   *  320px (legkisebb támogatott képernyő-szélesség)
   * -120px (kettő ikon-gomb szélessége)
+  *  WARNING! Az ikon-gombok szélessége megváltozott!
   * - 24px (bar-edge x2) */
   --element-min-width-xxs: 176px;
 
   /* XXX#2981
    *  320px (legkisebb támogatott képernyő-szélesség)
    * - 60px (egy ikon-gomb szélessége)
+   *  WARNING! Az ikon-gombok szélessége megváltozott!
    * - 24px (bar-edge x2) */
   --element-min-width-xs:  236px;
 
@@ -126,6 +128,7 @@ button.x-card:focus,
 
 /***** Hide scrollbar *****/
 
+.x-card--header,
 .x-combo-box--options,
 .x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items {
   /* Hide scrollbar for IE and Edge */
@@ -135,6 +138,7 @@ button.x-card:focus,
 
   overflow-x: auto }
 
+.x-card--header::-webkit-scrollbar,
 .x-combo-box--options::-webkit-scrollbar,
 .x-menu-bar[data-orientation="horizontal"]
 .x-menu-bar--items::-webkit-scrollbar {
@@ -1810,6 +1814,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
   min-height: 48px;
+  overflow-x: auto;
   /* XXX#2981 */
   padding: 0 var( --bar-edge ) }
 

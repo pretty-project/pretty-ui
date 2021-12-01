@@ -15,7 +15,6 @@
 
 (ns x.app-elements.menu-bar
     (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -54,7 +53,7 @@
   ;   :on-focus (function)
   ;   :on-mouse-over (function)}
   [bar-id {:keys [selected-content-id]} {:keys [color content-id href on-click on-mouse-over]}]
-  (cond-> {:data-color    (keyword/to-dom-value color)
+  (cond-> {:data-color    (a/dom-value color)
            :data-selected (= selected-content-id content-id)
            :on-mouse-up   (engine/blur-element-function bar-id)}
           (some? href) (assoc :href href)

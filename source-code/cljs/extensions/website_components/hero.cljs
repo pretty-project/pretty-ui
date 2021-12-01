@@ -1,7 +1,7 @@
 
 (ns extensions.website-components.hero
-    (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.math    :as math]))
+    (:require [mid-fruits.math :as math]
+              [x.app-core.api  :as a]))
 
 
 
@@ -16,6 +16,5 @@
   ; @return (hiccup)
   [_ {:keys [height scroll-y top]}]
   [:div#x-website-hero--scroll-down
-    (if (some? scroll-y)
-        {:style {:opacity (math/choose scroll-y 40 0 1)}})
-    [:div#x-website-hero--scroll-down-icon (keyword/to-dom-value :arrow_downward)]])
+    (if (some? scroll-y) {:style {:opacity (math/choose scroll-y 40 0 1)}})
+    [:div#x-website-hero--scroll-down-icon (a/dom-value :arrow_downward)]])

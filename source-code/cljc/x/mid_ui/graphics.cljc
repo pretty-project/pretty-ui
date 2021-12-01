@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.1.7
+; Version: v0.5.2
+; Compatibility: x4.4.6
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-ui.graphics
-    (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.svg     :as svg]))
+    (:require [mid-fruits.svg :as svg]))
 
 
 
@@ -75,17 +74,14 @@
 (defn loading-animation-d
   ; @return (hiccup)
   []
-  [:div.x-loading-animation-d
-    [:i.x-loading-animation-d--icon (keyword/to-dom-value :hourglass_empty)]])
+  [:div.x-loading-animation-d [:i.x-loading-animation-d--icon "hourglass_empty"]])
 
 (defn success-animation-a
   ; @return (hiccup)
   []
-  [:div.x-success-animation-a
-    [:i.x-success-animation-a--icon (keyword/to-dom-value :done)]])
+  [:div.x-success-animation-a [:i.x-success-animation-a--icon "done"]])
 
 (defn failure-animation-a
   ; @return (hiccup)
   []
-  [:div.x-failure-animation-a
-    [:i.x-failure-animation-a--icon (keyword/to-dom-value :close)]])
+  [:div.x-failure-animation-a [:i.x-failure-animation-a--icon "close"]])

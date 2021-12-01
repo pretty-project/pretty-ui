@@ -140,8 +140,8 @@
   ; @return (string)
   [filepath]
   (if (file-exists? filepath)
-      (slurp filepath)
-      (println FILE-DOES-NOT-EXIST-ERROR filepath)))
+      (slurp        filepath)
+      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
 
 (defn write-file!
   ; @param (string) filepath
@@ -150,8 +150,8 @@
   ; @return (?)
   [filepath content]
   (if (file-exists? filepath)
-      (spit filepath (str content))
-      (println FILE-DOES-NOT-EXIST-ERROR filepath)))
+      (spit         filepath (str content))
+      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
 
 (defn append-to-file!
   ; @param (string) filepath
@@ -209,6 +209,10 @@
        (catch Exception e (str "Error while creating directory: "))))
 
 (defn file-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa fájljainak listája (egy mélységben).
+  ;
   ; @param (string) directory-path
   ;
   ; @example
@@ -218,17 +222,98 @@
   ;
   ; @return (strings in vector)
   [directory-path]
+  (let [directory (file       directory-path)
+        file-seq  (.listFiles directory)]
+       (mapv str (filter #(and (.isFile        %)
+                               (not (.isHidden %)))
+                          (param file-seq)))))
+
+(defn all-file-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa fájljainak listája (több mélységben).
+  ;
+  ; @param (string) directory-path
+  ;
+  ; @example
+  ;  (io/all-file-list "my-directory")
+  ;  =>
+  ;  ["my-directory/my-file.ext" ...]
+  ;
+  ; @return (strings in vector)
+  [directory-path]
   (let [directory (file     directory-path)
         file-seq  (file-seq directory)]
-       (mapv str (filter #(and (.isFile %)
+       (mapv str (filter #(and (.isFile        %)
+                               (not (.isHidden %)))
+                          (param file-seq)))))
+
+(defn subdirectory-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa almappáinak listája (egy mélységben).
+  ;
+  ; @param (string) directory-path
+  ;
+  ; @example
+  ;  (io/subdirectory-list "my-directory")
+  ;  =>
+  ;  ["my-directory/my-subdirectory" ...]
+  ;
+  ; @return (strings in vector)
+  [directory-path]
+  (let [directory (file       directory-path)
+        file-seq  (.listFiles directory)]
+       (mapv str (filter #(and (.isDirectory   %)
+                               (not (.isHidden %)))
+                          (param file-seq)))))
+
+(defn all-subdirectory-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa almappáinak listája (több mélységben).
+  ;
+  ; @param (string) directory-path
+  ;
+  ; @example
+  ;  (io/all-subdirectory-list "my-directory")
+  ;  =>
+  ;  ["my-directory/my-subdirectory" ...]
+  ;
+  ; @return (strings in vector)
+  [directory-path]
+  (let [directory (file     directory-path)
+        file-seq  (file-seq directory)]
+       (mapv str (filter #(and (.isDirectory   %)
                                (not (.isHidden %)))
                           (param file-seq)))))
 
 (defn item-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa elemeinek listája (egy mélységben).
+  ;
   ; @param (string) directory-path
   ;
   ; @example
   ;  (io/item-list "my-directory")
+  ;  =>
+  ;  ["my-directory/my-file.ext" "my-directory/my-subdirectory" ...]
+  ;
+  ; @return (strings in vector)
+  [directory-path]
+  (vector/remove-item (mapv str (.listFiles (file directory-path)))
+                      (param directory-path)))
+
+(defn all-item-list
+  ; @description
+  ;  A directory-path paraméterként átadott elérési útvonalon található
+  ;  mappa elemeinek listája (több mélységben).
+  ;
+  ; @param (string) directory-path
+  ;
+  ; @example
+  ;  (io/all-item-list "my-directory")
   ;  =>
   ;  ["my-directory/my-file.ext" "my-directory/my-subdirectory" ...]
   ;

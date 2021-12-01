@@ -33,61 +33,11 @@
   ; @return (string)
   [n]
  ;(apply str (rest (str n)))
-  (cond (keyword? n)
-        (if-let [namespace (namespace n)]
-                (str namespace "/" (name n))
-                (name n))
-        (string? n)
-        (return  n)))
-
-(defn to-dom-value
-  ; @param (keyword or string) n
-  ; @param (string)(opt) flag
-  ;
-  ; @example
-  ;  (keyword/to-dom-value :foo.bar/baz.boo)
-  ;  =>
-  ;  "foo--bar--baz--boo"
-  ;
-  ; @example
-  ;  (keyword/to-dom-value :foo.bar/baz.boo :bam)
-  ;  =>
-  ;  "foo--bar--baz--boo--bam"
-  ;
-  ; @return (string)
-  [n & [flag]]
-  (let [string-n    (cond (keyword? n) (to-string n)
-                          (string?  n) (return    n))]
-       (string/lowercase (str (-> (param string-n)
-
-                                 ; WARNING! DEPRECATED!
-                                 ; A mid-fruits modul független az X-től!
-                                 ; (string/replace-part "x." "x-")
-                                 ; WARNING! DEPRECATED!
-
-                                  (string/replace-part "."  "--")
-                                  (string/replace-part "/"  "--")
-                                  (string/remove-part  "?")
-                                  (string/remove-part  "!")
-                                  (string/remove-part  ">"))
-                              (if (some? flag)
-                                  (str   "--" flag))))))
-
-(defn to-react-key
-  ; @param (keywords) ids
-  ;
-  ; @example
-  ;  (keyword/to-react-key :foo :bar :baz.boo)
-  ;  =>
-  ;  "foobarbaz--boo"
-  ;
-  ; @return (string)
-  [& ids]
-  (reduce (fn [%1 %2]
-              (str (param        %1)
-                   (to-dom-value %2)))
-          (param nil)
-          (param ids)))
+  (cond (keyword? n) (if-let [namespace (namespace n)]
+                             (str namespace "/" (name n))
+                             (name n))
+        (string?  n)
+        (return   n)))
 
 
 

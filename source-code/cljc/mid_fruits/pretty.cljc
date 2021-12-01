@@ -31,7 +31,8 @@
   ;
   ; @example
   ;  (string->wrap? "[:a :b :c]")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n]
@@ -44,7 +45,8 @@
   ;
   ; @example
   ;  (mixed->wrap-items? [:a :b :c])
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n]
@@ -68,7 +70,8 @@
   ;
   ; @example
   ;  (key-tabs 2)
-  ;  => "  "
+  ;  =>
+  ;  "  "
   ;
   ; @return (string)
   [depth]
@@ -82,7 +85,8 @@
   ;
   ; @example
   ;  (break "{:foo "bar"}" 2)
-  ;  => "\r\n  "
+  ;  =>
+  ;  "\r\n  "
   ;
   ; @return (string)
   [n depth]
@@ -96,7 +100,8 @@
   ;
   ; @example
   ;  (map-wrap ":foo []")
-  ;  => "{:foo []}"
+  ;  =>
+  ;  "{:foo []}"
   ;
   ; @return (string)
   [n]
@@ -109,7 +114,8 @@
   ;
   ; @example
   ;  (vector-wrap ":foo :bar")
-  ;  => "[:foo :bar]"
+  ;  =>
+  ;  "[:foo :bar]"
   ;
   ; @return (string)
   [n]

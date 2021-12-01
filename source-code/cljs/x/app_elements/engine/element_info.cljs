@@ -15,7 +15,6 @@
 
 (ns x.app-elements.engine.element-info
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]))
 
@@ -48,7 +47,7 @@
   (if (some? info-tooltip)
       [:div.x-element--info-tooltip
          [:i.x-element--info-tooltip--icon
-            (keyword/to-dom-value :info_outline)]
+            (a/dom-value :info_outline)]
          [:div.x-element--info-tooltip--body
             [:div.x-element--info-tooltip--content
                [components/content {:content info-tooltip}]]]]))

@@ -217,6 +217,9 @@
       :minimize!
       {:en "Minimize"
        :hu "Kis méret"}
+      :menu
+      {:en "Menu"
+       :hu "Menü"}
       :more-actions
       {:en "More actions"
        :hu "További műveletek"}

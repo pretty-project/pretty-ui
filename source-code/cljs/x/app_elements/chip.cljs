@@ -15,7 +15,6 @@
 
 (ns x.app-elements.chip
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
@@ -66,7 +65,7 @@
   ; @return (hiccup)
   [_ {:keys [icon]}]
   (if (some? icon)
-      [:i.x-chip--icon (keyword/to-dom-value icon)]))
+      [:i.x-chip--icon (a/dom-value icon)]))
 
 (defn- chip-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,7 +91,7 @@
   (if (some? on-delete)
       [:button.x-chip--delete-button
         (engine/deletable-body-attributes chip-id chip-props)
-        [:i.x-chip--delete-button-icon (keyword/to-dom-value delete-button-icon)]]))
+        [:i.x-chip--delete-button-icon (a/dom-value delete-button-icon)]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

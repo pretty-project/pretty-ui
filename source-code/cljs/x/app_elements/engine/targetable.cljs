@@ -15,7 +15,7 @@
 
 (ns x.app-elements.engine.targetable
     (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.keyword    :as keyword]
+              [x.app-core.api        :as a]
               [x.app-environment.api :as environment]))
 
 
@@ -38,7 +38,7 @@
   ;
   ; @return (string)
   [element-id]
-  (keyword/to-dom-value element-id "target"))
+  (a/dom-value element-id "target"))
 
 (defn element-id->target-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!

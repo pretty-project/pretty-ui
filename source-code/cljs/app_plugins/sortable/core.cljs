@@ -20,7 +20,6 @@
               [app-fruits.reagent   :as reagent]
               [mid-fruits.candy     :as candy :refer [param return]]
               [mid-fruits.json      :as json]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.map       :as map :refer [dissoc-in]]
               [mid-fruits.mixed     :as mixed]
@@ -124,7 +123,7 @@
   ;   :id (string)
   ;   :style (map)}
   [sortable-id {:keys [class style]}]
-  (cond-> {:id (keyword/to-dom-value sortable-id)}
+  (cond-> {:id (a/dom-value sortable-id)}
           (some? class) (assoc :class class)
           (some? style) (assoc :style style)))
 
@@ -292,7 +291,7 @@
   ;   :tabIndex (integer)}
   [{:keys [attributes listeners setNodeRef]}]
   (let [active-item? (get attributes :aria-pressed)]
-       (merge {:data-position (keyword/to-dom-value :right)
+       (merge {:data-position (a/dom-value :right)
                :ref          #(setNodeRef %)
 
                ; WARNING! DEPRECATED!

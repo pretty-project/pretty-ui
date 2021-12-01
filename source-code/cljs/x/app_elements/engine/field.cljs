@@ -17,7 +17,6 @@
     (:require [app-fruits.dom                   :as dom]
               [mid-fruits.candy                 :refer [param return]]
               [mid-fruits.css                   :as css]
-              [mid-fruits.keyword               :as keyword]
               [mid-fruits.map                   :refer [dissoc-in]]
               [mid-fruits.string                :as string]
               [mid-fruits.vector                :as vector]
@@ -291,7 +290,7 @@
           (boolean disabled?)
           (merge {:disabled   true
                   :style      (view-props->field-style view-props)
-                  :type       (keyword/to-dom-value type)
+                  :type       (a/dom-value             type)
                   :value      value
                   ; BUG#8809
                   ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
@@ -303,7 +302,7 @@
                   :on-blur    (on-blur-function        field-id)
                   :on-focus   (on-focus-function       field-id)
                   :style      (view-props->field-style view-props)
-                  :type       (keyword/to-dom-value    type)
+                  :type       (a/dom-value             type)
                   :value      value
                   ; BUG#8041
                   ;  Abban az esetben, ha egy input elem {:value-path [...]}

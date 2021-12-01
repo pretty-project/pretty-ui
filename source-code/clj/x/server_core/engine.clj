@@ -23,6 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.engine
+(def dom-value     engine/dom-value)
 (def id            engine/id)
 (def prot          engine/prot)
 (def sub-prot      engine/sub-prot)

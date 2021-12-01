@@ -16,7 +16,6 @@
 (ns x.app-elements.table
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.loop           :refer [reduce-indexed]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -63,8 +62,8 @@
   ; @return (keyword)
   [view-props cell-dex]
   (if-let [horizontal-align (get-in view-props [:columns cell-dex :horizontal-align])]
-          (keyword/to-dom-value horizontal-align)
-          (keyword/to-dom-value DEFAULT-CELL-HORIZONTAL-ALIGN)))
+          (a/dom-value horizontal-align)
+          (a/dom-value DEFAULT-CELL-HORIZONTAL-ALIGN)))
 
 (defn- view-props->cell-vertical-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!

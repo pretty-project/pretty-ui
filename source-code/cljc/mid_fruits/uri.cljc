@@ -31,11 +31,13 @@
   ;
   ; @example
   ;  (uri/uri->protocol "https://something.com/scooby-doo")
-  ;  => "https"
+  ;  =>
+  ;  "https"
   ;
   ; @example
   ;  (uri/uri->protocol "something.com/scooby-doo")
-  ;   => ""
+  ;   =>
+  ;  ""
   ;
   ; @return (string)
   [uri]
@@ -46,15 +48,18 @@
   ;
   ; @example
   ;  (uri/uri->tail "https://something.com/scooby-doo?a=b&c#d")
-  ;  => "a=b&c#d"
+  ;  =>
+  ;  "a=b&c#d"
   ;
   ; @example
   ;  (uri/uri->tail "https://something.com/scooby-doo#d")
-  ;  => "d"
+  ;  =>
+  ;  "d"
   ;
   ; @example
   ;  (uri/uri->tail "https://something.com/scooby-doo")
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [uri]
@@ -69,7 +74,8 @@
   ;
   ; @example
   ;  (uri/uri->trimmed-uri "https://something.com/scooby-doo?a=b&c&d")
-  ;  => "something.com/scooby-doo"
+  ;  =>
+  ;  "something.com/scooby-doo"
   ;
   ; @return (string)
   [uri]
@@ -83,15 +89,18 @@
   ;
   ; @example
   ;  (uri/uri->path "https://something.com/scooby-doo?a=b&c")
-  ;  => "/scooby-doo"
+  ;  =>
+  ;  "/scooby-doo"
   ;
   ; @example
   ;  (uri/uri->path "https://something.com/?a=b&c")
-  ;   => "/"
+  ;  =>
+  ;  "/"
   ;
   ; @example
   ;  (uri/uri->path "https://something.com?a=b&c")
-  ;   => "/"
+  ;  =>
+  ;  "/"
   ;
   ; @return (string)
   [uri]
@@ -107,11 +116,13 @@
   ;
   ; @example
   ;  (uri/uri->trimmed-path "https://something.com/scooby-doo?a=b&c")
-  ;  => "scooby-doo"
+  ;  =>
+  ;  "scooby-doo"
   ;
   ; @example
   ;  (uri/uri->trimmed-path "https://something.com/scooby-doo/")
-  ;  => "scooby-doo"
+  ;  =>
+  ;  "scooby-doo"
   ;
   ; @return (string)
   [uri]
@@ -124,15 +135,18 @@
   ;
   ; @example
   ;  (uri/uri->path-parts "https://something.com/scooby-doo?a=b&c")
-  ;  => ["scooby-doo"]
+  ;  =>
+  ;  ["scooby-doo"]
   ;
   ; @example
   ;  (uri/uri->path-parts "https://something.com/scooby-doo/where-are-you")
-  ;  => ["scooby-doo" "where-are-you"]
+  ;  =>
+  ;  ["scooby-doo" "where-are-you"]
   ;
   ; @example
   ;  (uri/uri->path-parts "https://something.com/")
-  ;  => []
+  ;  =>
+  ;  []
   ;
   ; @return (vector)
   [uri]
@@ -146,22 +160,26 @@
   ; @example
   ;  (uri/uri->path-params "https://something.com/scooby-doo/where-are-you"
   ;                        "/:a/:b")
-  ;  => {:a "scooby-doo" :b "where-are-you"}
+  ;  =>
+  ;  {:a "scooby-doo" :b "where-are-you"}
   ;
   ; @example
   ;  (uri/uri->path-params "https://something.com/scooby-doo/where-are-you"
   ;                        "/:a/b")
-  ;  => {:a "scooby-doo"}
+  ;  =>
+  ;  {:a "scooby-doo"}
   ;
   ; @example
   ;  (uri/uri->path-params "/scooby-doo/where-are-you"
   ;                        "/:a/:b")
-  ;  => {:a "scooby-doo" :b "where-are-you"}
+  ;  =>
+  ;  {:a "scooby-doo" :b "where-are-you"}
   ;
   ; @example
   ;  (uri/uri->path-params "/scooby-doo/where-are-you"
   ;                        "/a/b")
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @return (map)
   [uri template]
@@ -182,11 +200,13 @@
   ;
   ; @example
   ;  (uri/uri->fragment "https://something.com/scooby-doo?a=b&c#d")
-  ;  => "d"
+  ;  =>
+  ;  "d"
   ;
   ; @example
   ;  (uri/uri->fragment "https://something.com/scooby-doo?a=b&c")
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [uri]
@@ -197,11 +217,13 @@
   ;
   ; @example
   ;  (uri/uri->uri-before-fragment "https://something.com/scooby-doo?a=b&c#d")
-  ;  => "https://something.com/scooby-doo?a=b&c"
+  ;  =>
+  ;  "https://something.com/scooby-doo?a=b&c"
   ;
   ; @example
   ;  (uri/uri->uri-before-fragment "https://something.com/scooby-doo?a=b&c")
-  ;  => "https://something.com/scooby-doo?a=b&c"
+  ;  =>
+  ;  "https://something.com/scooby-doo?a=b&c"
   ;
   ; @return (string)
   [uri]
@@ -214,11 +236,13 @@
   ;
   ; @example
   ;  (uri/uri->query-string "https://something.com/scooby-doo?a=b&c#d")
-  ;  => "a=b&c"
+  ;  =>
+  ;  "a=b&c"
   ;
   ; @example
   ;  (uri/uri->query-string "https://something.com/scooby-doo#d")
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [uri]
@@ -231,11 +255,13 @@
   ;
   ; @example
   ;  (uri/uri->query-params "http://something.com/scooby-doo?a=b&c#d")
-  ;   => {:a "b" :c nil}
+  ;   =>
+  ;  {:a "b" :c nil}
   ;
   ; @example
   ;  (uri/uri->query-params "http://something.com/scooby-doo#d")
-  ;   => {}
+  ;   =>
+  ;  {}
   ;
   ; @return (map)
   [uri]
@@ -252,7 +278,8 @@
   ;
   ; @example
   ;  (uri/string->uri "something.com/scooby doo?where are you")
-  ;  => "something.com/scooby%20doo?where%20are%20you"
+  ;  =>
+  ;  "something.com/scooby%20doo?where%20are%20you"
   ;
   ; @return (string)
   [n]
@@ -264,7 +291,8 @@
   ;
   ; @example
   ;  (uri/string->uri "something.com/scooby doo?where are you")
-  ;  => "something.com%2Fscooby%20doo%3Fwhere%20are%20you"
+  ;  =>
+  ;  "something.com%2Fscooby%20doo%3Fwhere%20are%20you"
   ;
   ; @return (string)
   [n]
@@ -277,19 +305,23 @@
   ;
   ; @example
   ;  (uri/uri<-query-param "something.com/scooby-doo" "where")
-  ;  => "something.com/scooby-doo?where"
+  ;  =>
+  ;  "something.com/scooby-doo?where"
   ;
   ; @example
   ;  (uri/uri<-query-param "something.com/scooby-doo" "where=are")
-  ;  => "something.com/scooby-doo?where=are"
+  ;  =>
+  ;  "something.com/scooby-doo?where=are"
   ;
   ; @example
   ;  (uri/uri<-query-param "something.com/scooby-doo#you" "where")
-  ;  => "something.com/scooby-doo?where#you"
+  ;  =>
+  ;  "something.com/scooby-doo?where#you"
   ;
   ; @example
   ;  (uri/uri<-query-param "something.com/scooby-doo?you" "where=are")
-  ;  => "something.com/scooby-doo?you&where=are"
+  ;  =>
+  ;  "something.com/scooby-doo?you&where=are"
   ;
   ; @return (string)
   [uri query-param]

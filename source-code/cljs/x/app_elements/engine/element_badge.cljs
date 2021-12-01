@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.element-badge
-    (:require [mid-fruits.keyword   :as keyword]
-              [x.app-components.api :as components]))
+    (:require [x.app-components.api :as components]
+              [x.app-core.api       :as a]))
 
 
 
@@ -33,6 +33,6 @@
   ; @return (hiccup)
   [_ {:keys [badge-color badge-content]}]
   (if (some? badge-color)
-      [:div.x-element-badge {:data-color (keyword/to-dom-value badge-color)}
+      [:div.x-element-badge {:data-color (a/dom-value badge-color)}
                             (if (some? badge-content)
                                 [:div.x-element-badge--content (components/content {:content badge-content})])]))

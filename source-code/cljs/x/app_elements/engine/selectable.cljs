@@ -15,7 +15,6 @@
 
 (ns x.app-elements.engine.selectable
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.map       :as map]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
@@ -103,9 +102,9 @@
   (if selected?
       {:on-click    (on-unselect-function            input-id)
        :on-mouse-up (focusable/blur-element-function input-id)
-       :title    (components/content {:content :uncheck-selected!})}
-      {:data-state (keyword/to-dom-value :disabled)
-       :disabled   true}))
+       :title       (components/content {:content :uncheck-selected!})}
+      {:data-state  (a/dom-value :disabled)
+       :disabled    true}))
 
 
 

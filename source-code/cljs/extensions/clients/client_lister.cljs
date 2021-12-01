@@ -9,7 +9,7 @@
               [x.app-layouts.api     :as layouts]
               [x.app-locales.api     :as locales]
               [app-plugins.item-editor.api :as item-editor]
-              [app-plugins.item-lister.api :as item-lister :refer [item-lister]]))
+              [app-plugins.item-lister.api :as item-lister]))
 
 
 
@@ -24,20 +24,6 @@
    :selected-language (r locales/get-selected-language   db)})
 
 (a/reg-sub ::get-item-props get-item-props)
-
-(defn- get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-lister/get-header-props db :clients))
-
-(a/reg-sub ::get-header-props get-header-props)
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-lister/get-view-props db :clients))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -86,41 +72,12 @@
 
 (defn- desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props]
-  [elements/polarity ::desktop-header
-                     {:start-content [:<> [item-lister/new-item-button    :clients :client]
-                                          [item-lister/sort-items-button  :clients :client
-                                                                          {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
-                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button         :clients]
-                                          [item-lister/toggle-item-filter-visibility-button :clients]]
-                                          ;[item-lister/delete-selected-items-button :clients header-props]]
-                      :end-content   [:<> [item-lister/search-items-field :clients :client]]}])
-
-(defn- mobile-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props]
-  [elements/polarity ::mobile-header
-                     {:start-content [:<> [item-lister/new-item-button    :clients :client]
-                                          [item-lister/sort-items-button  :clients :client
-                                                                          {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
-                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button :clients]
-                                          [item-lister/delete-selected-items-button :clients header-props]]
-                      :end-content   [:<> [item-lister/search-mode-button :clients]]}])
+  [header-id header-props])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [search-mode? viewport-small?] :as header-props}]
-  (cond ; search-mode & small viewport
-        (and viewport-small? search-mode?)
-        [item-lister/search-header :clients :client]
-        ; small viewport
-        (boolean viewport-small?)
-        [mobile-header  header-id header-props]
-        ; large viewport
-        :desktop-header
-        [desktop-header header-id header-props]))
+  [header-id {:keys [search-mode?] :as header-props}]
+  [item-lister/header :clients :client {}])
 
 
 
@@ -130,8 +87,7 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
-  [item-lister :clients :client
-               {:list-element #'client-item}])
+  [item-lister/body :clients :client {:list-element #'client-item}])
 
 
 
@@ -140,12 +96,11 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [description]}]
+  [surface-id]; {:keys [description]}]
   [layouts/layout-a surface-id {:body   {:content    #'body}
-                                :header {:content    #'header
-                                         :sticky?    true
-                                         :subscriber [::get-header-props]}
-                                :description description}])
+                                :header {:content    #'header}}])
+                                         ;:subscriber [:item-lister/get-header-props :clients]}}])
+              ;                  :description description}])
 
 
 
@@ -155,4 +110,4 @@
 (a/reg-event-fx
   :clients/render-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content #'view}])

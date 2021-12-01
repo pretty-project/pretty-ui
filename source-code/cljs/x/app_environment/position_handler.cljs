@@ -16,7 +16,6 @@
 (ns x.app-environment.position-handler
     (:require [app-fruits.dom     :as dom]
               [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]))
@@ -33,7 +32,7 @@
   ;
   ; @return (integer)
   [element-id]
-  (let [element (dom/get-element-by-id (keyword/to-dom-value element-id))]
+  (let [element (dom/get-element-by-id (a/dom-value element-id))]
        (dom/get-element-relative-position element)))
 
 

@@ -36,7 +36,7 @@
               [x.app-environment.api :as environment]
               [x.app-layouts.api     :as layouts]
               [app-plugins.item-editor.api :as item-editor]
-              [app-plugins.item-lister.api :as item-lister :refer [item-lister]]))
+              [app-plugins.item-lister.api :as item-lister]))
 
 
 
@@ -50,20 +50,6 @@
    :viewport-small?   (r environment/viewport-small?     db)})
 
 (a/reg-sub ::get-item-props get-item-props)
-
-(defn- get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-lister/get-header-props db :products))
-
-(a/reg-sub ::get-header-props get-header-props)
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-lister/get-view-props db :products))
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -82,23 +68,14 @@
 
 (defn- product-list-desktop-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/polarity ::desktop-header
-                     {:start-content [:<> [item-lister/new-item-button    :products :product]
-                                          [item-lister/sort-items-button  :products :product
-                                                                          {:options       item-lister/DEFAULT-ORDER-BY-OPTIONS
-                                                                           :initial-value item-lister/DEFAULT-ORDER-BY}]
-                                          [item-lister/select-multiple-items-button         :products]
-                                          [item-lister/toggle-item-filter-visibility-button :products]]
-                                         ;[item-lister/delete-selected-items-button         :products view-props]]
-                      :end-content   [:<> [item-lister/search-items-field :products :product]]}])
+  [surface-id view-props])
 
 (defn- product-list-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [search-mode? viewport-small?] :as view-props}]
   (cond ; search-mode & small viewport
-        (and viewport-small? search-mode?)
-        [item-lister/search-header :products :product]
+;        (and viewport-small? search-mode?)
+;        [item-lister/search-header :products :product]
         ; small viewport
         ;(boolean viewport-small?)
         ;[product-list-mobile-header  surface-id view-props]
@@ -118,8 +95,8 @@
    [elements/menu-bar {:menu-items [{:label "All" :on-click []} {:label "Active" :color :muted :on-click []}
                                     {:label "Draft" :color :muted :on-click []} {:label "Archived" :color :muted :on-click []}]}]
 
-   [item-lister :products :product
-                {:list-element #'product-item}]])
+   [item-lister/body :products :product
+                     {:list-element #'product-item}]])
 
 
 
@@ -131,8 +108,7 @@
   [surface-id {:keys [description]}]
   [layouts/layout-a surface-id {:body   {:content    #'product-list-body}
                                 :header {:content    #'product-list-header
-                                         :sticky?    true
-                                         :subscriber [::get-header-props]}
+                                         :subscriber [:item-lister/get-header-props :products]}
                                 :description description}])
 
 

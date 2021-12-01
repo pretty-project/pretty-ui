@@ -16,7 +16,6 @@
 (ns x.app-elements.file
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.io             :as io]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -180,7 +179,7 @@
   [:div.x-file--preview
     (view-props->file-preview-attributes view-props)
     (if (view-props->render-file-preview-icon? view-props)
-        [:i.x-file--preview-icon (keyword/to-dom-value icon)])])
+        [:i.x-file--preview-icon (a/dom-value icon)])])
 
 (defn- file-timestamp
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -218,7 +217,7 @@
   ; @return (hiccup)
   [_ {:keys [label]}]
   [:div.x-file--label
-    [:i.x-file--icon   (keyword/to-dom-value :insert_drive_file)]
+    [:i.x-file--icon   (a/dom-value :insert_drive_file)]
     [:div.x-file--name [components/content {:content label}]]])
 
 (defn- file-static-body

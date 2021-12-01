@@ -15,7 +15,7 @@
 
 (ns x.app-elements.engine.steppable
     (:require [mid-fruits.keyword            :as keyword]
-              [x.app-core.api                :refer [r]]
+              [x.app-core.api                :as a :refer [r]]
               [x.app-elements.engine.element :as element]
               [x.app-gestures.api            :as gestures]))
 
@@ -49,7 +49,7 @@
   [steppable-id view-props]
   (if-let [step-animation-name (view-props->step-animation-name view-props)]
           (element/element-attributes steppable-id view-props
-                                      {:data-animation (keyword/to-dom-value step-animation-name)})
+                                      {:data-animation (a/dom-value step-animation-name)})
           (element/element-attributes steppable-id view-props)))
 
 

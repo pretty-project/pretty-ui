@@ -15,9 +15,9 @@
 
 (ns x.app-ui.element
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.map       :as map]
               [x.app-components.api :as components]
+              [x.app-core.api       :as a]
               [x.app-ui.engine      :as engine]))
 
 
@@ -38,7 +38,7 @@
   ; @return (string)
   [renderer-id]
   (let [dom-id (engine/renderer-id->dom-id renderer-id)]
-       (keyword/to-dom-value dom-id "element")))
+       (a/dom-value dom-id "element")))
 
 (defn- element-additional-class
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -68,8 +68,8 @@
   ;   :key (string)}
   [renderer-id element-id _]
   {:class [(element-class renderer-id)]
-   :id    (keyword/to-dom-value element-id)
-   :key   (keyword/to-dom-value element-id)})
+   :id    (a/dom-value element-id)
+   :key   (a/dom-value element-id)})
 
 (defn element-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,21 +94,13 @@
   ;   :data-size (string)
   ;   :data-trim-content (boolean)}
   [_ _ {:keys [horizontal-align layout min-height min-width minimized? position size trim-content?]}]
-  (cond-> (param {})
-          (some? layout)
-          (assoc :data-layout           (keyword/to-dom-value layout))
-          (some? horizontal-align)
-          (assoc :data-horizontal-align (keyword/to-dom-value horizontal-align))
-          (some? min-height)
-          (assoc :data-min-height       (keyword/to-dom-value min-height))
-          (some? min-width)
-          (assoc :data-min-width        (keyword/to-dom-value min-width))
-          (some? position)
-          (assoc :data-position         (keyword/to-dom-value position))
-          (some? size)
-          (assoc :data-size             (keyword/to-dom-value size))
-          (some? trim-content?)
-          (assoc :data-trim-content     (boolean trim-content?))))
+  (cond-> {} (some? layout)           (assoc :data-layout           (a/dom-value layout))
+             (some? horizontal-align) (assoc :data-horizontal-align (a/dom-value horizontal-align))
+             (some? min-height)       (assoc :data-min-height       (a/dom-value min-height))
+             (some? min-width)        (assoc :data-min-width        (a/dom-value min-width))
+             (some? position)         (assoc :data-position         (a/dom-value position))
+             (some? size)             (assoc :data-size             (a/dom-value size))
+             (some? trim-content?)    (assoc :data-trim-content     (boolean     trim-content?))))
 
 (defn element-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,11 +115,8 @@
   ;  {:data-animation (string)
   ;   :data-color (string)}
   [_ _ {:keys [color reveal-animated?]}]
-  (cond-> (param {})
-          (some?   color)
-          (assoc   :data-color (keyword/to-dom-value color))
-          (boolean reveal-animated?)
-          (assoc   :data-animation "reveal")))
+  (cond-> {} (some?   color)            (assoc :data-color (a/dom-value color))
+             (boolean reveal-animated?) (assoc :data-animation "reveal")))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

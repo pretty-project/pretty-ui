@@ -18,20 +18,6 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r view-selector/get-body-props db :settings))
-
-(a/reg-sub ::get-body-props get-body-props)
-
-(defn- get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r view-selector/get-header-props db :settings))
-
-(a/reg-sub ::get-header-props get-header-props)
-
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
@@ -118,11 +104,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description label]}]
-  [layouts/layout-a surface-id {:body   {:content    #'body
-                                         :subscriber [::get-body-props]}
-                                :header {:content    #'header
-                                         :subscriber [::get-header-props]
-                                         :sticky?    true}
+  [layouts/layout-a surface-id {:body   {:content #'body   :subscriber [:view-selector/get-body-props   :settings]}
+                                :header {:content #'header :subscriber [:view-selector/get-header-props :settings]}
                                 :min-width :m
                                 :description description
                                 :label       label}])
@@ -135,6 +118,4 @@
 (a/reg-event-fx
   :settings/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view
-                    {:content    #'view
-                     :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])

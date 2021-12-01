@@ -16,7 +16,6 @@
 (ns x.app-elements.line-diagram
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.math           :as math]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -112,7 +111,7 @@
   [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
        [:div.x-line-diagram--section
-         {:data-color    (keyword/to-dom-value color)
+         {:data-color    (a/dom-value color)
           :style {:width (css/percent value-ratio)}}]))
 
 (defn- line-diagram-sections
@@ -145,7 +144,7 @@
   [_ {:keys [label label-position]}]
   (if (some? label)
       [:div.x-line-diagram--label
-        {:data-position (keyword/to-dom-value label-position)}
+        {:data-position     (a/dom-value label-position)}
         [components/content {:content label}]]))
 
 (defn line-diagram

@@ -15,7 +15,6 @@
 
 (ns x.app-elements.engine.countable
     (:require [mid-fruits.candy                :refer [param]]
-              [mid-fruits.keyword              :as keyword]
               [x.app-components.api            :as components]
               [x.app-core.api                  :as a :refer [r]]
               [x.app-db.api                    :as db]
@@ -95,7 +94,7 @@
       {:on-click    (input/on-reset-function         input-id)
        :on-mouse-up (focusable/blur-element-function input-id)
        :title       (components/content {:content :reset!})}
-      {:data-state  (keyword/to-dom-value :disabled)
+      {:data-state  (a/dom-value :disabled)
        :disabled    (param true)}))
 
 

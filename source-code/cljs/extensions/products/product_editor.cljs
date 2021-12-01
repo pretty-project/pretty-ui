@@ -12,32 +12,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  {})
-
-(a/reg-sub ::get-body-props get-body-props)
-
-(defn- get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-editor/get-header-props db :products :product))
-
-(a/reg-sub ::get-header-props get-header-props)
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-editor/get-view-props db :products :product))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -90,11 +64,8 @@
   [surface-id {:keys [description synchronizing?] :as view-props}]
   [layouts/layout-a surface-id {:description description
                                 :disabled?   synchronizing?
-                                :body {:content      #'body
-                                       :subscriber   [::get-body-props]}
-                                :header {:content    #'header
-                                         :sticky?    true
-                                         :subscriber [::get-header-props]}}])
+                                :body   {:content #'body   :subscriber [::get-body-props]}
+                                :header {:content #'header :subscriber [:item-editor/get-header-props :products :product]}}])
 
 
 
@@ -107,4 +78,4 @@
 (a/reg-event-fx
   :products/render-product-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}])

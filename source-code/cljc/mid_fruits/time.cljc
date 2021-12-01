@@ -17,6 +17,7 @@
              #?(:clj org.bson.types.BSONTimestamp))
 
     (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.format :as format]
               [mid-fruits.math   :as math]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]
@@ -119,36 +120,6 @@
   [n]
   (boolean (and (string? n)
                 (re-matches #"\d{4}[-|.]\d{2}[-|.]\d{2}" n))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn leading-zero
-  ; @param (integer or string) n
-  ; @param (integer)(opt) length
-  ;  Default: 2
-  ;
-  ; @example
-  ;  (time/leading-zero 7)
-  ;  =>
-  ;  "07"
-  ;
-  ; @example
-  ;  (time/leading-zero 7 3)
-  ;  =>
-  ;  "007"
-  ;
-  ; @return (string)
-  ([n]
-   (leading-zero n 2))
-
-  ([n length]
-   (loop [x (str n)]
-         (if (< (string/length x) length)
-             (recur (str "0" x))
-             (return x)))))
 
 
 
@@ -353,8 +324,8 @@
   ([n format]
    (if (string/nonempty? n)
        (let [year  (timestamp-string->year n)
-             month (leading-zero (timestamp-string->month n))
-             day   (leading-zero (timestamp-string->day   n))]
+             month (format/leading-zeros (timestamp-string->month n) 2)
+             day   (format/leading-zeros (timestamp-string->day   n) 2)]
             (case format :yyyymmdd (str year "/" month "/" day)
                          :yymmdd   (let [year (string/part year 2 2)]
                                         (str year "/" month "/" day))
@@ -377,9 +348,9 @@
 
   ([n format]
    (if (string/nonempty? n)
-       (let [hours   (leading-zero (timestamp-string->hours   n))
-             minutes (leading-zero (timestamp-string->minutes n))
-             seconds (leading-zero (timestamp-string->seconds n))]
+       (let [hours   (format/leading-zeros (timestamp-string->hours   n) 2)
+             minutes (format/leading-zeros (timestamp-string->minutes n) 2)
+             seconds (format/leading-zeros (timestamp-string->seconds n) 2)]
             (case format :hhmmss (str hours ":" minutes ":" seconds)
                          :hhmm   (str hours ":" minutes)
                          (return n))))))
@@ -442,10 +413,10 @@
 
   ([n format]
    (if (some? n)
-       (let [hours        (leading-zero (math/floor (/ n 36000000))       2)
-             minutes      (leading-zero (rem (math/floor (/ n 60000)) 60) 2)
-             seconds      (leading-zero (rem (math/floor (/ n  1000)) 60) 2)
-             milliseconds (leading-zero (rem (math/floor n) 1000)         3)]
+       (let [hours        (format/leading-zeros (math/floor (/ n 36000000))       2)
+             minutes      (format/leading-zeros (rem (math/floor (/ n 60000)) 60) 2)
+             seconds      (format/leading-zeros (rem (math/floor (/ n  1000)) 60) 2)
+             milliseconds (format/leading-zeros (rem (math/floor n) 1000)         3)]
             (case format :hhmmssmmm (str hours ":" minutes ":" seconds "." milliseconds)
                          :hhmmss    (str hours ":" minutes ":" seconds))))))
 

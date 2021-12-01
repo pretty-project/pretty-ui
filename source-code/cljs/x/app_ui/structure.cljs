@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.09.11
 ; Description:
-; Version: v1.0.2
-; Compatibility: x4.2.6
+; Version: v1.0.8
+; Compatibility: x4.4.7
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-ui.structure
     (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.keyword    :as keyword]
               [mid-fruits.map        :as map]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -46,8 +45,7 @@
   ; @return (map)
   ;  {:data-interface (string)}
   [{:keys [browser-online? interface]}]
-  (cond-> (param {})
-          (some? interface) (assoc :data-interface (keyword/to-dom-value interface))))
+  (cond-> {} (some? interface) (assoc :data-interface (a/dom-value interface))))
 
 
 

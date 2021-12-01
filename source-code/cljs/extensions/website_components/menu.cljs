@@ -1,7 +1,6 @@
 
 (ns extensions.website-components.menu
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
               [x.app-db.api         :as db]))
@@ -78,7 +77,7 @@
   ; @return (hiccup)
   [menu-id {:keys [animation-name menu-visible?] :as view-props}]
   [:div#x-website-menu--body
-    {:data-animation (keyword/to-dom-value animation-name)
+    {:data-animation (a/dom-value animation-name)
      :data-visible   (boolean menu-visible?)}
     [menu-content menu-id view-props]])
 

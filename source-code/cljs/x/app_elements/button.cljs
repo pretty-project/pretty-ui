@@ -15,7 +15,6 @@
 
 (ns x.app-elements.button
     (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.map            :as map]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -129,6 +128,10 @@
                             :icon    :more_vert
                             :layout  :icon-button
                             :variant :transparent}
+      :menu-bar-icon-button {:color   :default
+                             :icon    :more_horiz
+                             :layout  :icon-button
+                             :variant :transparent}
       :more-options-button {:color   :default
                             :horizontal-align :left
                             :icon    :list
@@ -275,7 +278,7 @@
   ;
   ; @return (component or nil)
   [_ {:keys [icon]}]
-  [:i.x-button--icon (keyword/to-dom-value icon)])
+  [:i.x-button--icon (a/dom-value icon)])
 
 (defn- button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

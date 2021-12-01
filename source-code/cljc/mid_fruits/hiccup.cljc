@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.1.8
+; Version: v0.3.2
 
 
 
@@ -74,9 +74,9 @@
   ; @return (string)
   [n]
   (reduce (fn [%1 %2]
-              (cond (string? %2)  (str %1 %2)
-                    (vector? %2)  (str %1 (to-string %2))
-                    (keyword? %2) (str %1)))
+              (cond (string? %2) (str %1 %2)
+                    (vector? %2) (str %1 (to-string %2))
+                    :else        (str %1)))
           (param string/empty-string)
           (param n)))
 

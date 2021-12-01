@@ -18,7 +18,6 @@
               [mid-fruits.integer        :as integer]
               [mid-fruits.io             :as io]
               [mid-fruits.loop           :refer [reduce-indexed]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -159,22 +158,6 @@
   [_ {:keys [value-path]} field-dex]
   (vector/conj-item value-path field-dex))
 
-(defn- field-dex->field-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) view-props
-  ; @param (integer) field-dex
-  ;
-  ; @example
-  ;  (field-dex->field-id :my-group {} 3)
-  ;  =>
-  ;  :my-group--3
-  ;
-  ; @return (keyword)
-  [group-id _ field-dex]
-  (keyword/append group-id field-dex "--"))
-
 (defn- field-dex->react-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -189,7 +172,7 @@
   ;
   ; @return (keyword)
   [group-id _ field-dex]
-  (keyword/to-dom-value group-id field-dex))
+  (a/dom-value group-id field-dex))
 
 
 

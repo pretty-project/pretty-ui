@@ -16,7 +16,6 @@
 (ns x.app-elements.circle-diagram
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.loop           :refer [reduce+wormhole]]
               [mid-fruits.math           :as math]
               [mid-fruits.svg            :as svg]
@@ -162,7 +161,7 @@
         rotation    (+ rotation ANGLE-CORRECTION)]
        (svg/circle {:x x :y y :r r
                     :class      "x-circle-diagram--section"
-                    :data-color (keyword/to-dom-value color)
+                    :data-color (a/dom-value color)
                     :style {:stroke-dasharray (str dash-filled " " dash-empty)
                             :stroke-width     (css/px strength)
                             :transform        (css/rotate rotation)}})))

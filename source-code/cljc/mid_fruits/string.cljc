@@ -62,11 +62,13 @@
   ;
   ; @example
   ;  (string/part "abcdef" 2 4)
-  ;  => "cd"
+  ;  =>
+  ;  "cd"
   ;
   ; @example
   ;  (string/part "abcdef" 4 2)
-  ;  => "cd"
+  ;  =>
+  ;  "cd"
   ;
   ; @return (string)
   [n start end]
@@ -81,7 +83,8 @@
   ;
   ; @example
   ;  (string/trim " Foo  ")
-  ;  => "Foo"
+  ;  =>
+  ;  "Foo"
   ;
   ; @return (string)
   [n]
@@ -107,7 +110,8 @@
   ;
   ; @example
   ;  (string/join ["filename" "extension"] ".")
-  ;  => "filename.extension"
+  ;  =>
+  ;  "filename.extension"
   ;
   ; @return (string)
   [coll separator]
@@ -122,11 +126,13 @@
   ;
   ; @example
   ;  (string/max-length "One Flew Over the Cuckoo's Nest" 10)
-  ;  => "One Flew O"
+  ;  =>
+  ;  "One Flew O"
   ;
   ; @example
   ;  (string/max-length "One Flew Over the Cuckoo's Nest" 10 " ...")
-  ;  => "One Flew O ..."
+  ;  =>
+  ;  "One Flew O ..."
   ;
   ; @return (string)
   [n limit & [suffix]]
@@ -144,11 +150,13 @@
   ;
   ; @example
   ;  (string/min-length? "abc" 3)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/min-length? "abc" 4)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n x]
@@ -163,11 +171,13 @@
   ;
   ; @example
   ;  (string/max-length? "abc" 3)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/max-length? "abc" 2)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n x]
@@ -182,11 +192,13 @@
   ;
   ; @example
   ;  (string/length? "abc" 3)
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/length? "abc" 2)
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n x]
@@ -195,15 +207,22 @@
 
 (defn split
   ; @param (string) n
-  ; @param (?) delimiter
+  ; @param (regex) delimiter
   ;
   ; @example
   ;  (string/split "a.b.c" #".")
-  ;  => ["a" "b" "c"]
+  ;  =>
+  ;  ["a" "b" "c"]
   ;
   ; @example
   ;  (string/split ".b.c" #".")
-  ;  => ["" "b" "c"]
+  ;  =>
+  ;  ["" "b" "c"]
+  ;
+  ; @example
+  ;  (string/split ".b.c" #"_")
+  ;  =>
+  ;  []
   ;
   ; @return (vector)
   [n delimiter]
@@ -234,13 +253,15 @@
   ;  (string/before-first-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   ", y")
-  ;  => "With insomnia"
+  ;  =>
+  ;  "With insomnia"
   ;
   ; @example
   ;  (string/before-first-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "abc")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (string)
   [n x]
@@ -259,13 +280,15 @@
   ;  (string/before-last-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   ", y")
-  ;  => "With insomnia"
+  ;  =>
+  ;  "With insomnia"
   ;
   ; @example
   ;  (string/before-first-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "abc")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or string)
   [n x]
@@ -283,13 +306,15 @@
   ;  (string/after-first-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "never")
-  ;  => "really asleep."
+  ;  =>
+  ;  "really asleep."
   ;
   ; @example
   ;  (string/after-first-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "abc")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil string)
   [n x]
@@ -308,13 +333,15 @@
   ;  (string/after-last-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "never")
-  ;  => "really asleep."
+  ;  =>
+  ;  "really asleep."
   ;
   ; @example
   ;  (string/after-last-occurence
   ;   "With insomnia, you're never really awake; but you're never really asleep."
   ;   "abc")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or string)
   [n x]
@@ -332,15 +359,18 @@
   ;
   ; @example
   ;  (string/between-occurences "Hey You!" "H" "u")
-  ;  => "ey Yo"
+  ;  =>
+  ;  "ey Yo"
   ;
   ; @example
   ;  (string/between-occurences "aabbccdd" "a" "d")
-  ;  => "abbccd"
+  ;  =>
+  ;  "abbccd"
   ;
   ; @example
   ;  (string/between-occurences "aabbccdd" "x" "y")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or string)
   [n x y]
@@ -353,11 +383,13 @@
   ;
   ; @example
   ;  (string/position-of-first-occurence "Apple" "p")
-  ;  => 1
+  ;  =>
+  ;  1
   ;
   ; @example
   ;  (string/position-of-first-occurence "Apple" "x")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or integer)
   [n x]
@@ -372,11 +404,13 @@
   ;
   ; @example
   ;  (string/position-of-last-occurence "Apple" "p")
-  ;  => 2
+  ;  =>
+  ;  2
   ;
   ; @example
   ;  (string/position-of-last-occurence "Apple" "x")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @return (nil or integer)
   [n x]
@@ -394,11 +428,13 @@
   ;
   ; @example
   ;  (string/ends-with? "The things you used to own, now they own you." ".")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/ends-with? "The things you used to own, now they own you." "")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   ([n x]
@@ -428,11 +464,13 @@
   ;
   ; @example
   ;  (string/ends-with! "abc" "bc")
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @example
   ;  (string/ends-with! "abc" "x")
-  ;  => "abcx"
+  ;  =>
+  ;  "abcx"
   ;
   ; @return (string)
   ([n x]
@@ -452,11 +490,13 @@
   ;
   ; @example
   ;  (string/not-ends-with! "abc" "bc")
-  ;  => "a"
+  ;  =>
+  ;  "a"
   ;
   ; @example
   ;  (string/not-ends-with! "abc" "x")
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @return (string)
   ([n x]
@@ -478,13 +518,15 @@
   ;  (string/starts-with?
   ;   "On a long enough time line, the survival rate for everyone drops to zero."
   ;   "On a")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/starts-with?
   ;   "On a long enough time line, the survival rate for everyone drops to zero."
   ;   "")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   ([n x]
@@ -514,11 +556,13 @@
   ;
   ; @example
   ;  (string/starts-with! "abc" "ab")
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @example
   ;  (string/starts-with! "abc" "x")
-  ;  => "xabc"
+  ;  =>
+  ;  "xabc"
   ;
   ; @return (string)
   ([n x]
@@ -538,11 +582,13 @@
   ;
   ; @example
   ;  (string/not-starts-with! "abc" "ab")
-  ;  => "c"
+  ;  =>
+  ;  "c"
   ;
   ; @example
   ;  (string/not-starts-with! "abc" "x")
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @return (string)
   ([n x]
@@ -573,11 +619,13 @@
   ;
   ; @example
   ;  (string/replace-part "ABC" #"B" "X")
-  ;  => "AXC"
+  ;  =>
+  ;  "AXC"
   ;
   ; @example
   ;  (string/replace-part "ABC" #"B" nil)
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [n x y]
@@ -594,15 +642,18 @@
   ;
   ; @example
   ;  (string/use-replacements "Hi, my name is %" ["John"])
-  ;  => "Hi, my name is John"
+  ;  =>
+  ;  "Hi, my name is John"
   ;
   ; @example
   ;  (string/use-replacements "My favorite colors are: %1, %2 and %3" ["red" "green" "blue"])
-  ;  => "My favorite colors are: red, green and blue"
+  ;  =>
+  ;  "My favorite colors are: red, green and blue"
   ;
   ; @example
   ;  (string/use-replacements "%1 / %2 items downloaded" [nil nil])
-  ;  => ""
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [n replacements]
@@ -623,7 +674,8 @@
   ;
   ; @example
   ;  (string/use-replacement "Hi, my name is %" "John")
-  ;  => "Hi, my name is John"
+  ;  =>
+  ;  "Hi, my name is John"
   ;
   ; @return (string)
   [n replacement]
@@ -638,13 +690,15 @@
   ;                         ["a" "b" "c"]
   ;                         ["a" "b" "c"]
   ;                         ["a" "b" "c"]])
-  ;  => "abca"
+  ;  =>
+  ;  "abca"
   ;
   ; @example
   ;  (string/matrix "abcd" [["a" "b" "c"]
   ;                         ["a" "b" "c"]
   ;                         ["a" "b" "c"]])
-  ;  => "abc"
+  ;  =>
+  ;  "abc"
   ;
   ; @example
   ;  (string/matrix "2014-07" [["_" 0 1 2 3 4 5 6 7 8 9]
@@ -657,7 +711,8 @@
   ;                            ["/"]
   ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
   ;                            ["_" 0 1 2 3 4 5 6 7 8 9]])
-  ;  => "2014/07/__"
+  ;  =>
+  ;  "2014/07/__"
   ;
   ; @return (string)
   [n character-matrix]
@@ -683,7 +738,8 @@
   ;
   ; @example
   ;  (string/filter-characters "+3630 / 123 - 4567" ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"])
-  ;  => "+36301234567"
+  ;  =>
+  ;  "+36301234567"
   ;
   ; @return (string)
   [n allowed-characters]
@@ -733,7 +789,8 @@
   ;
   ; @example
   ;  (string/paren "420")
-  ;  => "(420)"
+  ;  =>
+  ;  "(420)"
   ;
   ; @return (string)
   [n]
@@ -745,7 +802,8 @@
   ;
   ; @example
   ;  (string/bracket "420")
-  ;  => "[420]"
+  ;  =>
+  ;  "[420]"
   ;
   ; @return (string)
   [n]
@@ -757,7 +815,8 @@
   ;
   ; @example
   ;  (string/percent "99.999")
-  ;  => "99.999%"
+  ;  =>
+  ;  "99.999%"
   ;
   ; @return (string)
   [n]
@@ -769,7 +828,8 @@
   ;
   ; @example
   ;  (string/quotes "420")
-  ;  => "\"420\""
+  ;  =>
+  ;  "\"420\""
   ;
   ; @return (string)
   [n]
@@ -860,15 +920,18 @@
   ;
   ; @example
   ;  (string/abc? "abc" "def")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @example
   ;  (string/abc? "1a" "0a")
-  ;  => false
+  ;  =>
+  ;  false
   ;
   ; @example
   ;  (string/abc? "xyz" "xyz")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [x y]
@@ -879,7 +942,8 @@
   ;
   ; @example
   ;  (string/to-integer "10")
-  ;  => 10
+  ;  =>
+  ;  10
   ;
   ; @return (integer)
   [n]

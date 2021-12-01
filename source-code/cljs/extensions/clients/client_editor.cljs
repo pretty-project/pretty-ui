@@ -26,20 +26,6 @@
 
 (a/reg-sub ::get-body-props get-body-props)
 
-(defn- get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-editor/get-header-props db :clients :client))
-
-(a/reg-sub ::get-header-props get-header-props)
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r item-editor/get-view-props db :clients :client))
-
-(a/reg-sub ::get-view-props get-view-props)
-
 
 
 ;; -- Header components -------------------------------------------------------
@@ -161,8 +147,7 @@
                                 :body {:content      #'body
                                        :subscriber   [::get-body-props]}
                                 :header {:content    #'header
-                                         :sticky?    true
-                                         :subscriber [::get-header-props]}}])
+                                         :subscriber [:item-editor/get-header-props :products :product]}}])
 
 
 
@@ -183,4 +168,4 @@
 (a/reg-event-fx
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}])

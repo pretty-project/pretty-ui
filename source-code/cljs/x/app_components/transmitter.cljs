@@ -14,10 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.transmitter
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
-              [x.app-core.api     :as a]))
+    (:require [mid-fruits.candy :refer [param return]]
+              [mid-fruits.map   :as map]
+              [x.app-core.api   :as a]))
 
 
 
@@ -101,7 +100,7 @@
   ;
   ; @return (hiccup)
   [component-id static-props dynamic-props]
-  [:div {:id    (keyword/to-dom-value component-id "debug")
+  [:div {:id    (a/dom-value component-id "debug")
          :style {:display :none}}
         (str "component-id: "  component-id)
         (str "static-props: "  static-props)

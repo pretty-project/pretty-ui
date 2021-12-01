@@ -15,7 +15,6 @@
 
 (ns x.app-elements.engine.element-stickers
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
@@ -58,11 +57,11 @@
   ; @return (hiccup)
   [element-id _ {:keys [icon icon-family on-click tooltip]}]
   [:button.x-element--sticker-button
-    {:on-click   #(a/dispatch on-click)
-     :on-mouse-up (focusable/blur-element-function element-id)
+    {:on-click        #(a/dispatch on-click)
+     :on-mouse-up      (focusable/blur-element-function element-id)
      :title            (components/content {:content tooltip})
-     :data-icon-family (keyword/to-dom-value icon-family)}
-    (keyword/to-dom-value icon)])
+     :data-icon-family (a/dom-value icon-family)}
+    (a/dom-value icon)])
 
 (defn- element-sticker-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -81,9 +80,9 @@
   [:i.x-element--sticker-icon
     (if (boolean disabled?)
         {:data-disabled true
-         :data-icon-family (keyword/to-dom-value icon-family)}
-        {:data-icon-family (keyword/to-dom-value icon-family)})
-    (keyword/to-dom-value icon)])
+         :data-icon-family (a/dom-value icon-family)}
+        {:data-icon-family (a/dom-value icon-family)})
+    (a/dom-value icon)])
 
 (defn- element-sticker
   ; WARNING! NON-PUBLIC! DO NOT USE!

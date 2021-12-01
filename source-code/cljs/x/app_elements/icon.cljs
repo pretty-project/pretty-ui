@@ -15,7 +15,6 @@
 
 (ns x.app-elements.icon
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 
@@ -53,9 +52,8 @@
   ;
   ; @return (hiccup)
   [icon-id {:keys [icon] :as icon-props}]
-  [:i.x-icon
-    (engine/element-attributes icon-id icon-props)
-    (keyword/to-dom-value icon)])
+  [:i.x-icon (engine/element-attributes icon-id icon-props)
+             (a/dom-value               icon)])
 
 (defn view
   ; @param (keyword)(opt) icon-id

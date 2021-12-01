@@ -57,7 +57,8 @@
   ;
   ; @example
   ;  (random/generate-strings 2)
-  ;  => ["a991876d-6887-4f04-8525-328f090cde5" "78f1ff75-e91f-41a8-ba00-be949f9c2bed"]
+  ;  =>
+  ;  ["a991876d-6887-4f04-8525-328f090cde5" "78f1ff75-e91f-41a8-ba00-be949f9c2bed"]
   ;
   ; @return (strings in vector)
   [n]
@@ -86,7 +87,8 @@
   ;
   ; @example
   ;  (random/generate-strings 2)
-  ;  => [:a991876d-6887-4f04-8525-328f090cde5 :78f1ff75-e91f-41a8-ba00-be949f9c2bed]
+  ;  =>
+  ;  [:a991876d-6887-4f04-8525-328f090cde5 :78f1ff75-e91f-41a8-ba00-be949f9c2bed]
   ;
   ; @return (keywords in vector)
   [n]

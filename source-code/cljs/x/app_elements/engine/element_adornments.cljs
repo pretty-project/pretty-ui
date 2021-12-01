@@ -15,7 +15,6 @@
 
 (ns x.app-elements.engine.element-adornments
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
@@ -69,7 +68,7 @@
             :on-mouse-up   #(do (a/dispatch on-click)
                                 (focusable/blur-element-function element-id))
             :title            (components/content {:content tooltip})
-            :data-icon-family (keyword/to-dom-value icon-family)}
+            :data-icon-family (a/dom-value icon-family)}
            (if (false? tab-indexed?) {:tab-index "-1"}))
     (param icon)])
 
@@ -86,7 +85,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [icon icon-family]}]
-  [:i.x-element--adornment-icon {:data-icon-family (keyword/to-dom-value icon-family)}
+  [:i.x-element--adornment-icon {:data-icon-family (a/dom-value icon-family)}
                                 icon])
 
 (defn- element-adornment

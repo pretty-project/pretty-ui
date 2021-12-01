@@ -13,37 +13,69 @@
 @keyframes x-rotate-counterclockwise {
   to { transform: rotate( -360deg ) }}
 
-@keyframes x-slide-in-btt {
+@keyframes x-slide-in-btt-fs {
   from { transform: translateY( 110vh ) }
   to   { transform: translateY( 0 ) }}
 
-@keyframes x-slide-in-ltr {
+@keyframes x-slide-in-ltr-fs {
   from { transform: translateX( -110vw ) }
   to   { transform: translateX( 0 ) }}
 
-@keyframes x-slide-in-rtl {
+@keyframes x-slide-in-rtl-fs {
   from { transform: translateX( 110vw ) }
   to   { transform: translateX( 0 ) }}
 
-@keyframes x-slide-in-ttb {
+@keyframes x-slide-in-ttb-fs {
   from { transform: translateY( -110vh ) }
+  to   { transform: translateY( 0 ) }}
+
+@keyframes x-slide-out-btt-fs {
+  from { transform: translateY( 0 ) }
+  to   { transform: translateY( -110vh ) }}
+
+@keyframes x-slide-out-ltr-fs {
+  from { transform: translateX( 0 ) }
+  to   { transform: translateX( 110vw ) }}
+
+@keyframes x-slide-out-rtl-fs {
+  from { transform: translateX( 0 ) }
+  to   { transform: translateX( -110vw ) }}
+
+@keyframes x-slide-out-ttb-fs {
+  from { transform: translateY( 0 ) }
+  to   { transform: translateY( 110vh ) }}
+
+@keyframes x-slide-in-btt {
+  from { transform: translateY( 110% ) }
+  to   { transform: translateY( 0 ) }}
+
+@keyframes x-slide-in-ltr {
+  from { transform: translateX( -110% ) }
+  to   { transform: translateX( 0 ) }}
+
+@keyframes x-slide-in-rtl {
+  from { transform: translateX( 110% ) }
+  to   { transform: translateX( 0 ) }}
+
+@keyframes x-slide-in-ttb {
+  from { transform: translateY( -110% ) }
   to   { transform: translateY( 0 ) }}
 
 @keyframes x-slide-out-btt {
   from { transform: translateY( 0 ) }
-  to   { transform: translateY( -110vh ) }}
+  to   { transform: translateY( -110% ) }}
 
 @keyframes x-slide-out-ltr {
   from { transform: translateX( 0 ) }
-  to   { transform: translateX( 110vw ) }}
+  to   { transform: translateX( 110% ) }}
 
 @keyframes x-slide-out-rtl {
   from { transform: translateX( 0 ) }
-  to   { transform: translateX( -110vw ) }}
+  to   { transform: translateX( -110% ) }}
 
 @keyframes x-slide-out-ttb {
   from { transform: translateY( 0 ) }
-  to   { transform: translateY( 110vh ) }}
+  to   { transform: translateY( 110% ) }}
 
 @keyframes x-floating {
   0%   { transform: translateY(0) }

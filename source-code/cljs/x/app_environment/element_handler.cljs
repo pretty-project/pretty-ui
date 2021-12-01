@@ -14,10 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.element-handler
-    (:require [app-fruits.dom     :as dom]
-              [mid-fruits.css     :as css]
-              [mid-fruits.keyword :as keyword]
-              [x.app-core.api     :as a]))
+    (:require [app-fruits.dom :as dom]
+              [mid-fruits.css :as css]
+              [x.app-core.api :as a]))
 
 
 
@@ -108,7 +107,7 @@
       (if-let [element (dom/get-element-by-id element-id)]
               (let [masspoint-orientation (dom/get-element-masspoint-orientation element)]
                    [:environment/set-element-attribute! element-id "data-masspoint-orientation"
-                                                        (keyword/to-dom-value masspoint-orientation)]))))
+                                                        (a/dom-value masspoint-orientation)]))))
 
 (a/reg-event-fx
   :environment/unmark-element-masspoint-orientation!

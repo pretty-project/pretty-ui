@@ -48,7 +48,8 @@
   ; @example
   ;  (def KEYWORD-PREFIX "*")
   ;  (json/unkeywordized-string? "*:apple")
-  ;  => true
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
@@ -70,7 +71,8 @@
   ; @example
   ;  (def KEYWORD-PREFIX "*")
   ;  (json/unkeywordize-values {:a :b :c [:d "e"] :f {:g "h" :i :j}})
-  ;  => {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}}
+  ;  =>
+  ;  {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}}
   ;
   ; @return (*)
   [n]
@@ -117,7 +119,8 @@
   ; @example
   ;  (def KEYWORD-PREFIX "*")
   ;  (json/keywordize-values {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}})
-  ;  => {:a :b :c [:d "e"] :f {:g "h" :i :j}}
+  ;  =>
+  ;  {:a :b :c [:d "e"] :f {:g "h" :i :j}}
   ;
   ; @return (*)
   [n]
@@ -148,7 +151,8 @@
             ;
             ; @example
             ;  (keywordize-string "*:my-value")
-            ;  => :my-value
+            ;  =>
+            ;  :my-value
             ;
             ; @return (keyword)
             [n]
@@ -168,7 +172,8 @@
   ;
   ; @example
   ;  (json/unkeywordize-keys {:my-namespace/key :my-value})
-  ;  => {"my-namespace/key" :my-value}
+  ;  =>
+  ;  {"my-namespace/key" :my-value}
   ;
   ; @return (*)
   [n]
@@ -199,7 +204,8 @@
             ;
             ; @example
             ;  (unkeywordize-keyword :my-namespace/key)
-            ;  => "my-namespace/key"
+            ;  =>
+            ;  "my-namespace/key"
             ;
             ; @return (string)
             [n]
@@ -216,7 +222,8 @@
   ;
   ; @example
   ;  (json/keywordize-keys {"my-namespace/key" :my-value})
-  ;  => {:my-namespace/key :my-value}
+  ;  =>
+  ;  {:my-namespace/key :my-value}
   ;
   ; @return (*)
   [n]
@@ -247,7 +254,8 @@
             ;
             ; @example
             ;  (keywordize-string "my-namespace/key")
-            ;  => :my-namespace/key
+            ;  =>
+            ;  :my-namespace/key
             ;
             ; @return (keyword)
             [n]

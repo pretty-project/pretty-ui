@@ -137,7 +137,7 @@
   [loader-id]
   (let [observer-id (loader-id->observer-id loader-id)
         hidden?     (a/subscribe [::infinite-observer-hidden? loader-id])]
-       (fn [] [:div {:id    (keyword/to-dom-value observer-id)
+       (fn [] [:div {:id    (a/dom-value observer-id)
                      :style (if (deref hidden?)
                                 {:position :fixed :bottom "-100px"})}])))
 
@@ -146,7 +146,7 @@
   ;
   ; @return (component)
   [loader-id]
-  [:div.x-infinite-loader {:id (keyword/to-dom-value loader-id)}
+  [:div.x-infinite-loader {:id (a/dom-value  loader-id)}
                           [infinite-observer loader-id]])
 
 (defn component
@@ -164,7 +164,7 @@
   ([loader-id {:keys [on-viewport] :as loader-props}]
    (let [loader-id    (a/id                   loader-id)
          observer-id  (loader-id->observer-id loader-id)
-         element-id   (keyword/to-dom-value   observer-id)
+         element-id   (a/dom-value            observer-id)
          callback-f  #(a/dispatch             on-viewport)]
         (lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback-f))
                      :reagent-render      (fn [] [infinite-loader loader-id])}))))

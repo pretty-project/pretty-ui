@@ -34,7 +34,9 @@
    {:label "Routes"
     :on-click [:gestures/change-view! ::handler :route-browser]
     :color    (if (not= view-id :route-browser)    :muted)}])
-
+;   {:label "Docs"
+;    :on-click [:router/go-to! "/docs"]
+;    :color    :muted}])
 
 
 ;; -- Subscriptions -----------------------------------------------------------

@@ -16,7 +16,7 @@
               [x.app-router.api      :as router]
               [x.app-sync.api        :as sync]
               [x.app-ui.api          :as ui]
-              [app-plugins.item-lister.api        :as item-lister :refer [item-lister]]
+              [app-plugins.item-lister.api        :as item-lister]
               [app-plugins.item-browser.api       :as item-browser]
               [extensions.media.context-menu      :as context-menu]
               [extensions.media.directory-actions :as directory-actions]
@@ -898,14 +898,14 @@
 (defn- item-browser-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-lister :media {:on-list-ended [:extensions/request-browser-items! "media" "directory"
-                                                                          {:base-query  engine/ROOT-DIRECTORY-QUERY
-                                                                           :item-params engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}]
-                       :element       #'media-item
-                       :request-id    :extensions/request-browser-items!
-                       ;:sortable?     true
-                       ;:subscriber    [::get-common-props]
-                       :value-path    [:media :browser-data]}])
+  [item-lister/body :media {:on-list-ended [:extensions/request-browser-items! "media" "directory"
+                                                                               {:base-query  engine/ROOT-DIRECTORY-QUERY
+                                                                                :item-params engine/DOWNLOAD-DIRECTORY-DATA-PARAMS}]
+                            :element       #'media-item
+                            :request-id    :extensions/request-browser-items!
+                            ;:sortable?     true
+                            ;:subscriber    [::get-common-props]
+                            :value-path    [:media :browser-data]}])
 
 
 

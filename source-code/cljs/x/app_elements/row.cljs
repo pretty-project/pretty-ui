@@ -15,7 +15,6 @@
 
 (ns x.app-elements.row
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
@@ -67,9 +66,8 @@
   ;
   ; @return (hiccup)
   [row-id row-props]
-  [:div.x-row
-    (engine/element-attributes row-id row-props)
-    [row-body row-id row-props]])
+  [:div.x-row (engine/element-attributes row-id row-props)
+              [row-body row-id row-props]])
 
 (defn view
   ; XXX#8711

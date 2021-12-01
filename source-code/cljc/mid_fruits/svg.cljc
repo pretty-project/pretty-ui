@@ -15,8 +15,6 @@
 (ns mid-fruits.svg
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.css     :as css]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
               [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]))
@@ -29,7 +27,7 @@
 (defn- component-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
+  ; @param (string) component-id
   ; @param (map)(opt) attributes
   ;
   ; @return (map)
@@ -41,9 +39,7 @@
    (component-attributes component-id attributes {}))
 
   ([component-id attributes additional-attributes]
-   (merge {:id (keyword/to-dom-value component-id)}
-          (param attributes)
-          (param additional-attributes))))
+   (merge {:id component-id} attributes additional-attributes)))
 
 (defn view-box
   ; @param (integer) width
@@ -51,7 +47,8 @@
   ;
   ; @example
   ;  (svg/view-box 1024 1024)
-  ;  => "0 0 1024 1024"
+  ;  =>
+  ;  "0 0 1024 1024"
   ;
   ; @return (string)
   [width height]
@@ -63,7 +60,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn linear-gradient
-  ; @param (keyword)(opt) gradient-id
+  ; @param (string)(opt) gradient-id
   ; @param (map) gradient-props
   ;  {:x1 (integer)
   ;   :y1 (integer)
@@ -75,7 +72,7 @@
   ;  (svg/linear-gradient {...})
   ;
   ;; @usage
-  ;  (svg/linear-gradient :my-linear-gradient {...})
+  ;  (svg/linear-gradient "my-linear-gradient" {...})
   ;
   ; @example
   ;  (svg/linear-gradient {:x1 0 :y1 0 :x2 100 :y2 0 :stops [[0 "#000"] [100 "#fff"]]})
@@ -106,7 +103,7 @@
                 (param stops)))))
 
 (defn circle
-  ; @param (keyword)(opt) circle-id
+  ; @param (string)(opt) circle-id
   ; @param (map) circle-props
   ;  {:r (integer)
   ;   :x (integer)
@@ -116,7 +113,7 @@
   ;  (svg/circle {...})
   ;
   ; @usage
-  ;  (svg/circle :my-circle {...})
+  ;  (svg/circle "my-circle" {...})
   ;
   ; @return (hiccup)
   ([circle-props]
@@ -128,7 +125,7 @@
         [:circle (component-attributes circle-id attributes {:cx x :cy y :r r})])))
 
 (defn polygon
-  ; @param (keyword)(opt) polygon-id
+  ; @param (string)(opt) polygon-id
   ; @param (map) polygon-props
   ;  {:points (string)}
   ;
@@ -136,7 +133,7 @@
   ;  (svg/polygon {...})
   ;
   ; @usage
-  ;  (svg/polygon :my-polygon {...})
+  ;  (svg/polygon "my-polygon" {...})
   ;
   ; @usage
   ;  (svg/polygon {:points "0,100 50,25 50,75 100,0"})
@@ -151,7 +148,7 @@
         [:polygon (component-attributes polygon-id attributes {:points points})])))
 
 (defn svg
-  ; @param (keyword)(opt) svg-id
+  ; @param (string)(opt) svg-id
   ; @param (map) svg-props
   ;  {:elements (vector)
   ;   :height (integer)
@@ -161,7 +158,7 @@
   ;  (svg/svg {...})
   ;
   ; @usage
-  ;  (svg/svg :my-svg {...})
+  ;  (svg/svg "my-svg" {...})
   ;
   ; @usage
   ;  (svg/svg {:elements [[:polygon ...]] :height 100 :width 100})
@@ -181,7 +178,7 @@
                  (param elements)))))
 
 (defn wrapper
-  ; @param (keyword)(opt) wrapper-id
+  ; @param (string)(opt) wrapper-id
   ; @param (map) wrapper-props
   ;  {:content (hiccup)
   ;   :height (integer)
@@ -194,7 +191,7 @@
   ;  (svg/wrapper {...})
   ;
   ; @usage
-  ;  (svg/wrapper :my-wrapper {...})
+  ;  (svg/wrapper "my-wrapper" {...})
   ;
   ; @usage
   ;  (svg/wrapper {:content [:polygon ...] :height 200 :width 100 :unit "px"})

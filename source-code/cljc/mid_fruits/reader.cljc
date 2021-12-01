@@ -45,19 +45,23 @@
   ;
   ; @example
   ;  (reader/string->mixed "")
-  ;  => nil
+  ;  =>
+  ;  nil
   ;
   ; @example
   ;  (reader/string->mixed ":foo")
-  ;  => :foo
+  ;  =>
+  ;  :foo
   ;
   ; @example
   ;  (reader/string->mixed "{:foo :bar}")
-  ;  => {:foo :bar}
+  ;  =>
+  ;  {:foo :bar}
   ;
   ; @example
   ;  (reader/string->mixed "[:foo]")
-  ;  => [:foo]
+  ;  =>
+  ;  [:foo]
   ;
   ; @return (nil, keyword, map, string or vector)
   [n]
@@ -78,15 +82,18 @@
   ;
   ; @example
   ;  (reader/string->map "foo")
-  ;  => {:0 "foo"}
+  ;  =>
+  ;  {:0 "foo"}
   ;
   ; @example
   ;  (reader/string->map nil)
-  ;  => {}
+  ;  =>
+  ;  {}
   ;
   ; @example
   ;  (reader/string->map "{:foo :bar}")
-  ;  => {:foo :bar}
+  ;  =>
+  ;  {:foo :bar}
   ;
   ; @return (map)
   [n]

@@ -15,13 +15,12 @@
 
 (ns x.app-environment.cookie-handler
     (:require [goog.net.cookies]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map :refer [dissoc-in]]
-              [mid-fruits.reader  :as reader]
-              [mid-fruits.string  :as string]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]))
+              [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.map    :as map :refer [dissoc-in]]
+              [mid-fruits.reader :as reader]
+              [mid-fruits.string :as string]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]))
 
 
 
@@ -106,7 +105,7 @@
   ; @return (string)
   [cookie-id {:keys [cookie-type]}]
   (let [cookie-name-prefix (cookie-type->cookie-name-prefix cookie-type)
-        string-cookie-id   (keyword/to-dom-value cookie-id)]
+        string-cookie-id   (a/dom-value cookie-id)]
        (str cookie-name-prefix "-" string-cookie-id)))
 
 (defn- cookie-name->cookie-name-prefix

@@ -15,7 +15,6 @@
 
 (ns x.app-elements.select
     (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.map            :as map]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -272,7 +271,7 @@
   ;
   ; @return (hiccup)
   [_ _]
-  [:i.x-select--button-icon (keyword/to-dom-value SELECT-BUTTON-ICON)])
+  [:i.x-select--button-icon (a/dom-value SELECT-BUTTON-ICON)])
 
 (defn- select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

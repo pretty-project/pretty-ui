@@ -62,7 +62,8 @@
 (defn allowed-extensions
   ; @example
   ;  (media/allowed-extensions)
-  ;  => ("mp4" "ttf" "gif" "webm" ...)
+  ;  =>
+  ;  ("mp4" "ttf" "gif" "webm" ...)
   ;
   ; @return (list)
   []
@@ -73,7 +74,8 @@
   ;
   ; @example
   ;  (media/filename->media-storage-uri "ab3450.jpg")
-  ;  => "/media/storage/ab3450.jpg"
+  ;  =>
+  ;  "/media/storage/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -84,7 +86,8 @@
   ;
   ; @example
   ;  (media/filename->media-thumbnail-uri "ab3450.jpg")
-  ;  => "/media/thumbnails/ab3450.jpg"
+  ;  =>
+  ;  "/media/thumbnails/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -95,7 +98,8 @@
   ;
   ; @example
   ;  (media/filename->media-storage-filepath "ab3450.jpg")
-  ;  => "media/storage/ab3450.jpg"
+  ;  =>
+  ;  "media/storage/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -106,7 +110,8 @@
   ;
   ; @example
   ;  (media/filename->media-thumbnail-filepath "ab3450.jpg")
-  ;  => "media/thumbnails/ab3450.jpg"
+  ;  =>
+  ;  "media/thumbnails/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -117,7 +122,8 @@
   ;
   ; @example
   ;  (media/filename->temporary-filepath "ab3450.jpg")
-  ;  => "media/temp/ab3450.jpg"
+  ;  =>
+  ;  "media/temp/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -133,13 +139,15 @@
   ;  (media/file-props->filepath {:directory-path "foo/bar"
   ;                               :filename       "baz"
   ;                               :extension      "boo"})
-  ;  => "foo/bar/baz.boo"
+  ;  =>
+  ;  "foo/bar/baz.boo"
   ;
   ; @example
   ;  (media/file-props->filepath {:directory-path "foo/bar/"
   ;                               :filename       "baz"
   ;                               :extension      ".boo"})
-  ;  => "foo/bar/baz.boo"
+  ;  =>
+  ;  "foo/bar/baz.boo"
   ;
   ; @return (string)
   [{:keys [directory-path filename extension]}]

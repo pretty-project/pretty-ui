@@ -16,7 +16,6 @@
 (ns x.app-elements.card
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.logical        :refer [nonfalse?]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -98,11 +97,11 @@
             [:i.x-card--header--expand-button-icon
               {:on-click   #(a/dispatch [:elements/compress-element! card-id])
                :on-mouse-up (engine/blur-element-function            card-id)}
-              (keyword/to-dom-value :expand_less)]
+              (a/dom-value :expand_less)]
             [:i.x-card--header--expand-button-icon
               {:on-click   #(a/dispatch [:elements/expand-element!   card-id])
                :on-mouse-up (engine/blur-element-function            card-id)}
-              (keyword/to-dom-value :expand_more)])]))
+              (a/dom-value :expand_more)])]))
 
 (defn- card-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

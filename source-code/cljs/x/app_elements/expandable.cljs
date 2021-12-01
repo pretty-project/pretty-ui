@@ -16,10 +16,8 @@
 (ns x.app-elements.expandable
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.logical        :refer [nonfalse?]]
               [mid-fruits.math           :as math]
-              [mid-fruits.svg            :as svg]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -60,8 +58,8 @@
   ; @return (hiccup)
   [expandable-id {:keys [expanded?]}]
   (if (nonfalse? expanded?)
-      [:i.x-expandable--expand-icon (keyword/to-dom-value :expand_less)]
-      [:i.x-expandable--expand-icon (keyword/to-dom-value :expand_more)]))
+      [:i.x-expandable--expand-icon (a/dom-value :expand_less)]
+      [:i.x-expandable--expand-icon (a/dom-value :expand_more)]))
 
 (defn- expandable-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,7 +71,7 @@
   ; @return (hiccup)
   [_ {:keys [icon]}]
   (if (some? icon)
-      [:i.x-expandable--icon (keyword/to-dom-value icon)]))
+      [:i.x-expandable--icon (a/dom-value icon)]))
 
 (defn- expandable-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

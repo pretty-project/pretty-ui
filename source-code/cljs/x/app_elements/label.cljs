@@ -15,7 +15,6 @@
 
 (ns x.app-elements.label
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
@@ -62,8 +61,8 @@
   ;
   ; @return (hiccup or nil)
   [_ {:keys [icon icon-family]}]
-  [:i.x-label--icon {:data-icon-family (keyword/to-dom-value icon-family)}
-                    (keyword/to-dom-value icon)])
+  [:i.x-label--icon {:data-icon-family (a/dom-value icon-family)}
+                    (a/dom-value icon)])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

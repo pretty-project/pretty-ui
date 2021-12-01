@@ -15,7 +15,6 @@
 
 (ns x.app-elements.file-drop-area
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
@@ -68,7 +67,7 @@
   [area-id area-props]
   [:button.x-file-drop-area--body
     (engine/clickable-body-attributes area-id area-props)
-    [:i.x-file-drop-area--icon (keyword/to-dom-value :cloud_upload)]
+    [:i.x-file-drop-area--icon (a/dom-value :cloud_upload)]
     [file-drop-area-label area-id area-props]])
 
 (defn- file-drop-area

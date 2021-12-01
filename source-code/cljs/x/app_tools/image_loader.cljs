@@ -22,7 +22,6 @@
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.css     :as css]
               [mid-fruits.map     :refer [dissoc-in]]
-              [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]))
 
@@ -55,7 +54,7 @@
   ;   :style (map or nil)}
   [loader-id {:keys [class image-loaded? uri]}]
   {:class (param class)
-   :id    (keyword/to-dom-value loader-id)
+   :id    (a/dom-value loader-id)
    :style (if image-loaded? {:backgroundImage (css/url uri)})})
 
 
@@ -137,8 +136,8 @@
   ; @return (hiccup)
   [loader-id {:keys [image-loaded?]}]
   (if (not image-loaded?)
-      [:div.x-column {:data-vertical-align (keyword/to-dom-value :center)}
-                     [:i.x-icon            (keyword/to-dom-value :image)]]))
+      [:div.x-column {:data-vertical-align (a/dom-value :center)}
+                     [:i.x-icon            (a/dom-value :image)]]))
 
 (defn- control-image
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -6,7 +6,7 @@
 ; Created: 2021.10.22
 ; Description:
 ; Version: v0.2.0
-; Compatibility: x4.4.2
+; Compatibility: x4.4.7
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-layouts.layout-a
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.keyword   :as keyword]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
               [x.app-elements.api   :as elements]))
@@ -29,12 +28,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) layout-props
+  ;  {:header (map)(opt)}
   ;
   ; @return (map)
-  ;  {:min-width (keyword)}
-  [layout-props]
+  ;  {:header (map)
+  ;    {:sticky? (boolean)}
+  ;   :min-width (keyword)}
+  [{:keys [header] :as layout-props}]
   (merge {:min-width :l}
-         (param layout-props)))
+         (param layout-props)
+         (if (some? header)
+             (merge {:sticky? true} header))))
 
 
 
@@ -101,7 +105,7 @@
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :sticky? (boolean)(opt)
-  ;      Default: false
+  ;      Default: true
   ;     :subscriber (subscription vector)(opt)}
   ;   :label (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)

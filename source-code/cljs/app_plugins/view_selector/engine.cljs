@@ -71,11 +71,11 @@
 ;  [:view-selector/get-selected-view-id :my-extension]
 (a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)
 
-(defn get-body-props
+(defn get-view-props
   ; @param (keyword) extension-id
   ;
   ; @usage
-  ;  (r view-selector/get-body-props db :my-extension)
+  ;  (r view-selector/get-view-props db :my-extension)
   ;
   ; @return (map)
   ;  {:view-id (keyword)}
@@ -83,23 +83,9 @@
   {:view-id (r get-selected-view-id db extension-id)})
 
 ; @usage
-;  [:view-selector/get-body-props :my-extension]
-(a/reg-sub :view-selector/get-body-props get-body-props)
+;  [:view-selector/get-view-props :my-extension]
+(a/reg-sub :view-selector/get-view-props get-view-props)
 
-(defn get-header-props
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r view-selector/get-header-props db :my-extension)
-  ;
-  ; @return (map)
-  ;  {:view-id (keyword)}
-  [db [_ extension-id]]
-  {:view-id (r get-selected-view-id db extension-id)})
-
-; @usage
-;  [:view-selector/get-header-props :my-extension]
-(a/reg-sub :view-selector/get-header-props get-header-props)
 
 
 ;; -- DB events ---------------------------------------------------------------

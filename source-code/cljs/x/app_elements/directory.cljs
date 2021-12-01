@@ -15,7 +15,6 @@
 
 (ns x.app-elements.directory
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.io             :as io]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -149,7 +148,7 @@
   [_ {:keys [content-size]}]
   (if (some? content-size)
       [:div.x-directory--content-size (io/B->MB content-size)
-                                      (str   " MB")]))
+                                      (str " MB")]))
 
 (defn- directory-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -161,7 +160,7 @@
   ; @return (hiccup)
   [_ {:keys [label]}]
   [:div.x-directory--label
-    [:i.x-directory--icon   (keyword/to-dom-value :folder)]
+    [:i.x-directory--icon   (a/dom-value :folder)]
     [:div.x-directory--name [components/content {:content label}]]])
 
 (defn- directory-static-body
