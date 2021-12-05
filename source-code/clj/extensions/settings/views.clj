@@ -1,6 +1,7 @@
 
 (ns extensions.settings.views
-    (:require [x.server-core.api :as a]))
+    (:require [server-plugins.view-selector.api]
+              [x.server-core.api :as a]))
 
 
 
@@ -8,10 +9,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def ALLOWED-VIEWS [:personal :privacy :appearance :notifications])
+(def ALLOWED-VIEW-IDS [:personal :privacy :appearance :notifications])
 
 ; @constant (keywords)
-(def DEFAULT-VIEW :personal)
+(def DEFAULT-VIEW-ID :personal)
 
 
 
@@ -20,5 +21,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:view-selector/initialize! :settings {:allowed-views ALLOWED-VIEWS
-                                                       :default-view  DEFAULT-VIEW}]})
+  {:on-app-boot [:view-selector/initialize! :settings {:allowed-view-ids ALLOWED-VIEW-IDS
+                                                       :default-view-id  DEFAULT-VIEW-ID}]})

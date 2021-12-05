@@ -39,20 +39,20 @@
   :view-selector/initialize!
   ; @param (keyword) extension-id
   ; @param (map) selector-props
-  ;  {:allowed-views (keywords in vector)(opt)
-  ;    Ha a kiválasztott view-id értéke nem található meg az allowed-views felsorolásban,
-  ;    akkor behelyettesítésre kerül a default-view értékével.
-  ;   :default-view (keyword)(opt)}
+  ;  {:allowed-view-ids (keywords in vector)(opt)
+  ;    Ha a kiválasztott view-id értéke nem található meg az allowed-view-ids felsorolásban,
+  ;    akkor behelyettesítésre kerül a default-view-id értékével.
+  ;   :default-view-id (keyword)(opt)}
   ;
   ; @usage
   ;  [:view-selector/initialize! :my-extension]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :my-extension {:default-view :my-view}]
+  ;  [:view-selector/initialize! :my-extension {:default-view-id :my-view}]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :my-extension {:default-view  :my-view
-  ;                                             :allowed-views [:my-view :your-view :our-view]}]
+  ;  [:view-selector/initialize! :my-extension {:default-view-id  :my-view
+  ;                                             :allowed-view-ids [:my-view :your-view :our-view]}]
   (fn [_ [_ extension-id selector-props]]
       {:dispatch-n [[:router/add-route! (route-id extension-id)
                                         {:route-template (route-template extension-id)

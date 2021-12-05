@@ -1,8 +1,9 @@
 
 (ns playground.sample
-    (:require [x.app-core.api      :as a :refer [r]]
-              [x.app-elements.api  :as elements]
-              [x.app-layouts.api   :as layouts]))
+    (:require [x.app-core.api     :as a :refer [r]]
+              [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
+              [app-plugins.view-selector.api :as view-selector]))
 
 
 
@@ -10,19 +11,19 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- sample-header
-  [_]
-  [elements/menu-bar {:menu-items [{:label "Apple"  :on-click [] :color :default}
-                                   {:label "Banana" :on-click [] :color :muted}
-                                   {:label "Cherry" :on-click [] :color :muted}]}])
+  [_ {:keys [view-id]}]
+  [elements/menu-bar {:menu-items [{:label "Apple"  :on-click [:router/go-to! "/sample/apple"]  :color (if (not= view-id :apple)  :muted)}
+                                   {:label "Banana" :on-click [:router/go-to! "/sample/banana"] :color (if (not= view-id :banana) :muted)}
+                                   {:label "Cherry" :on-click [:router/go-to! "/sample/cherry"] :color (if (not= view-id :cherry) :muted)}]}])
 
 (defn- sample-body
-  [_]
-  [:div "Sample body"])
+  [_ {:keys [view-id]}]
+  [:div (str view-id)])
 
 (defn- view
-  [_]
-  [layouts/layout-a {:body   {:content #'sample-body}
-                     :header {:content #'sample-header}
+  [_ view-props]
+  [layouts/layout-a {:body   {:content #'sample-body   :content-props view-props}
+                     :header {:content #'sample-header :content-props view-props}
                      :description "Description"
                      :label       "My sample page"}])
 
@@ -33,7 +34,7 @@
 
 (a/reg-event-fx
   :sample/render!
-  [:ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:content #'view :subscriber [:view-selector/get-view-props :sample]}])
 
 (a/reg-event-fx
   :sample/load!

@@ -96,9 +96,8 @@
   ;
   ; @return (component)
   ([sidebar-props]
-   [view nil sidebar-props])
+   [view (a/id) sidebar-props])
 
   ([sidebar-id sidebar-props]
-   (let [sidebar-id    (a/id   sidebar-id)]
-        ;sidebar-props (a/prot sidebar-props sidebar-props-prototype)
+   (let [];sidebar-props (a/prot sidebar-props sidebar-props-prototype)
         [sidebar sidebar-id sidebar-props])))

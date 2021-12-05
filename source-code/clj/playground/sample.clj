@@ -12,7 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.sample
-    (:require [x.server-core.api :as a]))
+    (:require [server-plugins.view-selector.api]
+              [x.server-core.api :as a]))
 
 
 
@@ -21,12 +22,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-                ; Ha az x.project-config.edn fájlban az :app-home értéke pl. "/my-app"
-                ; akkor a "/my-app/sample" útvonalon érheted el a hozzáadott útvonalat,
-                ; mivel a {:restricted? true} beállítás használatával a rendszer
-                ; applikáció-útvonalként fogja azt kezelni. 
-                ; Igen, a {:restricted? false} beállítás használatával webhely-útvonalként kezelné.
-  {:on-app-boot [:router/add-route! ::route
-                                    {:client-event   [:sample/load!]
-                                     :route-template "/sample"
-                                     :restricted?    true}]})
+  {:on-app-boot [:view-selector/initialize! :sample {:allowed-view-ids [:apple :banana :cherry]
+                                                     :default-view-id  :apple}]})

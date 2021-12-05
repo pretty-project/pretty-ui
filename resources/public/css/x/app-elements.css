@@ -19,25 +19,21 @@
 
 
 
-
-
 /***** Element profiles *****/
 
 body {
 
   /* XXX#2981
-  *  320px (legkisebb támogatott képernyő-szélesség)
-  * -120px (kettő ikon-gomb szélessége)
-  *  WARNING! Az ikon-gombok szélessége megváltozott!
-  * - 24px (bar-edge x2) */
-  --element-min-width-xxs: 176px;
+  *   320px (legkisebb támogatott képernyő-szélesség)
+  * - 96px (kettő ikon-gomb szélessége)
+  * - 24px (content-edge x2) */
+  --element-min-width-xxs: 200px;
 
   /* XXX#2981
-   *  320px (legkisebb támogatott képernyő-szélesség)
-   * - 60px (egy ikon-gomb szélessége)
-   *  WARNING! Az ikon-gombok szélessége megváltozott!
-   * - 24px (bar-edge x2) */
-  --element-min-width-xs:  236px;
+   *   320px (legkisebb támogatott képernyő-szélesség)
+   * - 48px (egy ikon-gomb szélessége)
+   * - 24px (content-edge x2) */
+  --element-min-width-xs:  248px;
 
   /* XXX#5491 Element info-tooltip padding */
   /* ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
@@ -60,8 +56,6 @@ body {
 .x-button--body:focus,
 button.x-card:active,
 button.x-card:focus,
-.x-card--header--expand-button:active,
-.x-card--header--expand-button:focus,
 .x-checkbox--body:active
 .x-checkbox--label,
 .x-checkbox--body:focus
@@ -117,18 +111,12 @@ button.x-card:focus,
 .x-element[data-disabled="true"] {
   opacity: .5 }
 
-.x-card.x-element[data-disabled="true"]       { opacity: 1 }
-.x-card[data-disabled="true"] .x-card--body   { opacity: .5 }
-.x-card[data-disabled="true"] .x-card--header { opacity: .5 }
-
-
 /***** Disabled state *****/
 
 
 
 /***** Hide scrollbar *****/
 
-.x-card--header,
 .x-combo-box--options,
 .x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items {
   /* Hide scrollbar for IE and Edge */
@@ -138,7 +126,6 @@ button.x-card:focus,
 
   overflow-x: auto }
 
-.x-card--header::-webkit-scrollbar,
 .x-combo-box--options::-webkit-scrollbar,
 .x-menu-bar[data-orientation="horizontal"]
 .x-menu-bar--items::-webkit-scrollbar {
@@ -158,7 +145,6 @@ button.x-card:focus,
 .x-anchor,
 .x-button--icon,
 .x-button--label,
-.x-card--header,
 .x-chip--icon,
 .x-chip--delete-button-icon,
 .x-chip--label,
@@ -173,6 +159,8 @@ button.x-card:focus,
 .x-directory--content-size,
 .x-directory--timestamp,
 .x-element--helper,
+.x-element--info-tooltip--icon,
+.x-element--info-tooltip--content,
 .x-file--icon,
 .x-file--label,
 .x-file--filesize,
@@ -182,6 +170,9 @@ button.x-card:focus,
 .x-label[data-selectable="false"] .x-label--icon,
 .x-label[data-selectable="false"] .x-label--body,
 .x-line-diagram--label,
+.x-menu-bar--anchor-item,
+.x-menu-bar--button-item,
+.x-menu-bar--sensor-item,
 .x-radio-button--label,
 .x-radio-button--option-label,
 .x-select--label,
@@ -207,7 +198,6 @@ button.x-card:focus,
 /***** Material icons *****/
 
 .x-combo-box--extender-icon,
-.x-card--header--expand-button-icon,
 .x-checkbox--button::after,
 .x-chip--delete-button-icon,
 .x-expandable--expand-icon,
@@ -217,7 +207,6 @@ button.x-card:focus,
 .x-slideshow--controls--go-bwd,
 .x-slideshow--controls--go-fwd,
 .x-button[data-icon-family="material-icons-filled"] .x-button--icon,
-.x-card[data-icon-family="material-icons-filled"] .x-card--header--icon,
 .x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
 .x-directory[data-icon-family="material-icons-filled"] .x-directory--icon,
 .x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
@@ -239,7 +228,6 @@ button.x-card:focus,
   -webkit-font-smoothing: antialiased }
 
 .x-button[data-icon-family="material-icons-outlined"] .x-button--icon,
-.x-card[data-icon-family="material-icons-outlined"] .x-card--header--icon,
 .x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
 .x-directory[data-icon-family="material-icons-outlined"] .x-directory--icon,
 .x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
@@ -391,8 +379,7 @@ button.x-card:focus,
 
 .x-button[data-variant="filled"][data-color="muted"]
 .x-button--body,
-.x-chip[data-color="muted"] .x-chip--body,
-.x-content-bar[data-color="muted"] {
+.x-chip[data-color="muted"] .x-chip--body {
   background-color: var( --background-color-muted );
   color: var( --black ) }
 
@@ -480,10 +467,6 @@ button.x-card:focus,
   background-color: var( --soft-blue );
   color: var( --black ) }
 
-.x-content-bar[data-color="primary"] {
-  background-color: var( --soft-blue-xx-dark );
-  color: var( --white ) }
-
 .x-button[data-variant="outlined"][data-color="primary"]
 .x-button--body,
 .x-checkbox[data-color="primary"]
@@ -538,10 +521,6 @@ button.x-card:focus,
 .x-chip[data-color="secondary"] .x-chip--body {
   background-color: var( --secondary );
   color: var( --black ) }
-
-.x-content-bar[data-color="secondary"] {
-  background-color: var( --background-color-secondary );
-  color: var( --white ) }
 
 .x-button[data-variant="outlined"][data-color="secondary"]
 .x-button--body,
@@ -732,9 +711,6 @@ button.x-card:focus,
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs ) }
 
-.x-button[data-icon-size="xxs"] .x-button--icon {
-  font-size: var( --icon-size-xxs ) }
-
 /*** XXS ***/
 
 /*** XS ***/
@@ -772,9 +748,6 @@ button.x-card:focus,
 .x-separator[data-orientation="vertical"][data-size="xs"] {
   width: 6px }
 
-.x-button[data-icon-size="xs"] .x-button--icon {
-  font-size: var( --icon-size-xs ) }
-
 /*** XS ***/
 
 /*** S ***/
@@ -805,9 +778,6 @@ button.x-card:focus,
 .x-switch[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
-
-.x-button[data-icon-size="s"] .x-button--icon {
-  font-size: var( --icon-size-s ) }
 
 /*** S ***/
 
@@ -841,9 +811,6 @@ button.x-card:focus,
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m ) }
 
-.x-button[data-icon-size="m"] .x-button--icon {
-  font-size: var( --icon-size-m ) }
-
 /*** M ***/
 
 /*** L ***/
@@ -872,9 +839,6 @@ button.x-card:focus,
 .x-switch[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l ) }
-
-.x-button[data-icon-size="l"] .x-button--icon {
-  font-size: var( --icon-size-l ) }
 
 /*** L ***/
 
@@ -905,9 +869,6 @@ button.x-card:focus,
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl ) }
 
-.x-button[data-icon-size="xl"] .x-button--icon {
-  font-size: var( --icon-size-xl ) }
-
 /*** XL ***/
 
 /*** XXL ***/
@@ -936,9 +897,6 @@ button.x-card:focus,
 .x-switch[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl ) }
-
-.x-button[data-icon-size="xxl"] .x-button--icon {
-  font-size: var( --icon-size-xxl ) }
 
 /*** XXL ***/
 /***** Font-size profiles *****/
@@ -1014,9 +972,7 @@ button.x-card:focus,
 /***** Size profiles *****/
 /*** XXS ***/
 
-.x-card[data-min-width="xxs"] {
-  min-width: var( --content-width-xxs ) }
-
+.x-card[data-min-width="xxs"],
 .x-date-field[data-min-width="xxs"],
 .x-select[data-min-width="xxs"],
 .x-text-field[data-min-width="xxs"] {
@@ -1040,10 +996,7 @@ button.x-card:focus,
 
 /*** XS ***/
 
-
-.x-card[data-min-width="xs"] {
-  min-width: var( --content-width-xs ) }
-
+.x-card[data-min-width="xs"],
 .x-date-field[data-min-width="xs"],
 .x-select[data-min-width="xs"],
 .x-text-field[data-min-width="xs"] {
@@ -1067,9 +1020,7 @@ button.x-card:focus,
 
 /*** S ***/
 
-.x-card[data-min-width="s"] {
-  min-width: var( --content-width-s ) }
-
+.x-card[data-min-width="s"],
 .x-date-field[data-min-width="s"],
 .x-select[data-min-width="s"],
 .x-text-field[data-min-width="s"] {
@@ -1093,9 +1044,7 @@ button.x-card:focus,
 
 /*** M ***/
 
-.x-card[data-min-width="m"] {
-  min-width: var( --content-width-m ) }
-
+.x-card[data-min-width="m"],
 .x-date-field[data-min-width="m"],
 .x-select[data-min-width="m"],
 .x-text-field[data-min-width="m"] {
@@ -1119,9 +1068,7 @@ button.x-card:focus,
 
 /*** L ***/
 
-.x-card[data-min-width="l"] {
-  min-width: var( --content-width-l ) }
-
+.x-card[data-min-width="l"],
 .x-date-field[data-min-width="l"],
 .x-select[data-min-width="l"],
 .x-text-field[data-min-width="l"] {
@@ -1145,9 +1092,7 @@ button.x-card:focus,
 
 /*** XL ***/
 
-.x-card[data-min-width="xl"] {
-  min-width: var( --content-width-xl ) }
-
+.x-card[data-min-width="xl"],
 .x-date-field[data-min-width="xl"],
 .x-select[data-min-width="xl"],
 .x-text-field[data-min-width="xl"] {
@@ -1171,9 +1116,7 @@ button.x-card:focus,
 
 /*** XXL ***/
 
-.x-card[data-min-width="xxl"] {
-  min-width: var( --content-width-xxl ) }
-
+.x-card[data-min-width="xxl"],
 .x-date-field[data-min-width="xxl"],
 .x-select[data-min-width="xxl"],
 .x-text-field[data-min-width="xxl"] {
@@ -1300,6 +1243,7 @@ button.x-card:focus,
   line-height: var( --line-height-xs );
   opacity: .8;
   padding-bottom: 12px;
+  padding-left: 12px;
   padding-top: 6px }
 
 /*** Helper ***/
@@ -1439,20 +1383,17 @@ body[data-viewport-profile="s"]
 
 
 /***** Anchor *****/
-/*** Anchor wrapper ***/
+/*** Anchor body ***/
 
-.x-anchor {
+.x-anchor--body {
   cursor: pointer;
   display: block;
   font-weight: 500;
+  padding: 0 12px;
   white-space: nowrap;
   word-wrap: normal }
 
-/*** Anchor wrapper ***/
-
-/*** Anchor body ***/
-
-.x-anchor[data-layout="row"] {
+.x-anchor[data-layout="row"] .x-anchor--body {
   line-height: 48px;
   min-height: 48px }
 
@@ -1656,7 +1597,7 @@ body[data-viewport-profile="s"]
 .x-button[data-layout="row"] .x-button--icon {
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
-  margin: 0 8px;
+  margin: 0 12px;
   width: var( --icon-size-default ) }
 
 .x-button[data-layout="fit"] .x-button--icon-placeholder,
@@ -1677,6 +1618,8 @@ body[data-viewport-profile="s"]
   -top: 0;
   -width: 100%;
   /* XXX#6914 */
+
+  font-size: var( --icon-size-s );
 
   /* BUG#0983
    * height, overflow, width:
@@ -1723,45 +1666,13 @@ body[data-viewport-profile="s"]
 /*** Card wrapper ***/
 
 .x-card {
-  /* XXX#7319 */
-  -border-width: 1px;
-
   background-color: var( --background-color );
   border-radius: var( --border-radius-m );
-  -border-style: solid;
-
-  /* XXX#7319 */
-  -box-shadow: var( --box-shadow-black-xx-light );
-
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
   height: calc(100% - 24px);
-
-  margin: 12px var( --app-edge ) }
-
-/* XXX#8607
- * XXS és XS méretű viewport-on az app-edge értéke 0, ezért a card elem szélei közvetlenül
- * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot
- * és a szélső border-eket */
-body[data-viewport-profile="xxs"] .x-card[data-min-width="s"],
-body[data-viewport-profile="xxs"] .x-card[data-min-width="m"],
-body[data-viewport-profile="xxs"] .x-card[data-min-width="l"],
-body[data-viewport-profile="xxs"] .x-card[data-min-width="xl"],
-body[data-viewport-profile="xxs"] .x-card[data-min-width="xxl"],
-body[data-viewport-profile="xs"]  .x-card[data-min-width="s"],
-body[data-viewport-profile="xs"]  .x-card[data-min-width="m"],
-body[data-viewport-profile="xs"]  .x-card[data-min-width="l"],
-body[data-viewport-profile="xs"]  .x-card[data-min-width="xl"],
-body[data-viewport-profile="xs"]  .x-card[data-min-width="xxl"],
-body[data-viewport-profile="s"]   .x-card[data-min-width="s"],
-body[data-viewport-profile="s"]   .x-card[data-min-width="m"],
-body[data-viewport-profile="s"]   .x-card[data-min-width="l"],
-body[data-viewport-profile="s"]   .x-card[data-min-width="xl"],
-body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
-  border-radius: 0;
-  border-left-style: none;
-  border-right-style: none }
+  margin: 12px }
 
 /*** Card wrapper ***/
 
@@ -1773,73 +1684,6 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 /*** Button badge ***/
 
-/*** Ghost card ***/
-
-.x-card[data-ghost-view="true"] {
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-name: x-ghost;
-  background-color: var( --background-color-highlight );
-  min-height: 150px }
-
-/*** Ghost card ***/
-
-/*** Card structure ***/
-
-.x-card--structure {
-   display: flex;
-   flex-direction: column-reverse }
-
-/*** Card structure ***/
-
-/*** Card tail ***/
-
-.x-card--tail {
-  height: var( --border-radius-m ) }
-
-/*** Card tail ***/
-
-/*** Card header ***/
-
-.x-card--header {
-  align-items: center;
-  border-bottom-color: var( --border-color-highlight);
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  display: flex;
-  flex-direction: row;
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  justify-content: flex-start;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  min-height: 48px;
-  overflow-x: auto;
-  /* XXX#2981 */
-  padding: 0 var( --bar-edge ) }
-
-.x-card--header[data-sticky="true"] {
-  background-color: var( --background-color );
-  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
-  position: sticky }
-
-.x-card--header--expand-button {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 24px;
-  width: 24px }
-
-.x-card--header--expand-button-icon {
-  font-size: var( --icon-size-m );
-
-  /* BUG#0983 */
-  height: 100%;
-  width: 100% }
-
-/*** Card header ***/
-
 /*** Card body ***/
 
 .x-card--body {
@@ -1848,9 +1692,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   flex-direction: column;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
-  padding-left: var( --flex-edge );
-  padding-right: var( --flex-edge );
-  padding-top: var( --border-radius-m ) }
+  padding: 12px }
 
 /*** Card body ***/
 /***** Card *****/
@@ -1900,8 +1742,8 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 /*** Checkbox button ***/
 
 .x-checkbox--button {
-  margin-right: var( --flex-edge );
   height: 24px;
+  margin: 0 12px;
   width: 24px }
 
 .x-checkbox--button::before {
@@ -2101,32 +1943,6 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 
 
-/***** Content surface *****/
-/*** Content surface wrapper ***/
-
-.x-content-surface {
-  width: 100% }
-
-.x-menu .x-content-surface {
-  z-index: 9999 }
-
-/*** Content surface wrapper ***/
-
-/*** Content surface body ***/
-
-.x-content-surface--body {
-  width: 100% }
-
-.x-content-surface[data-position="absolute"] .x-content-surface--body {
-  left: 0;
-  position: absolute;
-  top: 0 }
-
-/*** Content surface body ***/
-/***** Content surface *****/
-
-
-
 /***** Counter *****/
 /*** Counter label ***/
 
@@ -2205,54 +2021,12 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 .x-counter--reset-button::after {
   transform: rotateZ( -45deg ) }
 
-.x-counter--reset-button[data-state="disabled"] {
+.x-counter--reset-button[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
 /*** Counter button ***/
 /***** Counter *****/
-
-
-
-/***** Content bar *****/
-/*** Content bar wrapper ***/
-
-.x-content-bar {
-  -box-shadow: var( --box-shadow-black-xx-dark );
-  margin: 36px 0;
-  padding: 48px var( --app-edge );
-  width: 100% }
-
-.x-content-bar[data-layout="header"] {
-  margin-top: 0 }
-
-.x-content-bar[data-layout="footer"] {
-  margin-bottom: 0 }
-
-.x-content-bar--body {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center }
-
-/*** Content bar wrapper ***/
-
-/*** Content bar bumper ***/
-
-/* XXX#0609
- * A main tab header border-radius tulajdonsága miatt szükséges */
-.x-content-bar[data-layout="header"]::before {
-  background-color: inherit;
-  content: '';
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: translateY( -100% );
-  width: 100%;
-  height: 64px }
-
-/*** Content bar bumper ***/
-/***** Content bar *****/
 
 
 
@@ -2284,6 +2058,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 
 
+/* WARNING! DEPRECATED! DO NOT USE! */
 /***** Directory *****/
 /*** Directory wrapper ***/
 
@@ -2382,6 +2157,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 /*** Directory details ***/
 /***** Directory *****/
+/* WARNING! DEPRECATED! DO NOT USE! */
 
 
 
@@ -2437,6 +2213,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 
 
+/* WARNING! DEPRECATED! DO NOT USE! */
 /***** File *****/
 /*** File wrapper ***/
 
@@ -2559,6 +2336,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 /*** File details ***/
 /***** File *****/
+/* WARNING! DEPRECATED! DO NOT USE! */
 
 
 
@@ -2674,7 +2452,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   flex-direction: column;
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
-  margin: 0 8px;
+  margin: 0 12px;
   justify-content: center;
   width: var( --icon-size-default ); }
 
@@ -2729,13 +2507,6 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
 
 
 
-/***** Menu, tabs *****/
-/*** Menu, tabs wrapper ***/
-/*** Menu, tabs wrapper ***/
-/***** Menu, tabs *****/
-
-
-
 /***** Menu bar *****/
 /*** Menu wrapper ***/
 /*** Menu wrapper ***/
@@ -2752,7 +2523,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   flex-direction: column;
   font-weight: 600;
   justify-content: center;
-  padding: 0 var( --flex-edge );
+  padding: 0 12px;
   white-space: nowrap }
 
 /* XXX#7605 */
@@ -2834,7 +2605,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   top: 4px;
   width: 2px }
 
-.x-radio-button--unselect-button[data-state="disabled"] {
+.x-radio-button--unselect-button[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
@@ -3191,7 +2962,7 @@ body[data-viewport-profile="s"]   .x-card[data-min-width="xxl"] {
   border-style: solid;
   border-width: 2px;
   height: 20px;
-  margin-right: var( --flex-edge );
+  margin: 0 12px;
   width: 40px }
 
 /*** Switch track ***/

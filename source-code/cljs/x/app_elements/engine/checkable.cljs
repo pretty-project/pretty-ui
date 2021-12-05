@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -60,25 +60,24 @@
   ;   :id (string)
   ;   :on-click (function)}
   [input-id {:keys [checked? disabled? targetable?]}]
-  (cond-> (param {})
-          (boolean disabled?)   (merge {:disabled true})
-          (boolean checked?)    (merge {:on-click    (on-uncheck-function             input-id)
-                                        :on-mouse-up (focusable/blur-element-function input-id)})
-          (not     checked?)    (merge {:on-click    (on-check-function               input-id)
-                                        :on-mouse-up (focusable/blur-element-function input-id)})
-          (boolean targetable?) (merge {:id (targetable/element-id->target-id input-id)})))
+  (cond-> {} (boolean disabled?)   (merge {:disabled true})
+             (boolean checked?)    (merge {:on-click    (on-uncheck-function              input-id)
+                                           :on-mouse-up (focusable/blur-element-function  input-id)})
+             (not     checked?)    (merge {:on-click    (on-check-function                input-id)
+                                           :on-mouse-up (focusable/blur-element-function  input-id)})
+             (boolean targetable?) (merge {:id          (targetable/element-id->target-id input-id)})))
 
 (defn checkable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (map) view-props
+  ; @param (map) input-props
   ;  {:checked? (boolean)}
   ;
   ; @return (map)
   ;  {:data-checked (boolean)}
-  [input-id {:keys [checked?] :as view-props}]
-  (element/element-attributes input-id view-props {:data-checked checked?}))
+  [input-id {:keys [checked?] :as input-props}]
+  (element/element-attributes input-id input-props {:data-checked checked?}))
 
 
 

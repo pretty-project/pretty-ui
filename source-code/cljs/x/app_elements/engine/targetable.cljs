@@ -6,7 +6,7 @@
 ; Created: 2021.05.01
 ; Description:
 ; Version: v0.2.8
-; Compatibility: x4.1.6
+; Compatibility: x4.4.8
 
 
 
@@ -32,9 +32,9 @@
   ; @param (keyword) element-id
   ;
   ; @example
-  ;  (targetable/element-id->target-id :namespace/my-element)
+  ;  (targetable/element-id->target-id :my-namespace/my-element)
   ;  =>
-  ;  "namespace--my-element--target"
+  ;  "my-namespace--my-element--target"
   ;
   ; @return (string)
   [element-id]

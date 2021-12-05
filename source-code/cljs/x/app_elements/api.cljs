@@ -16,7 +16,6 @@
 (ns x.app-elements.api
     (:require [x.app-elements.anchor            :as anchor]
               [x.app-elements.blank             :as blank]
-              [x.app-elements.box               :as box]
               [x.app-elements.button            :as button]
               [x.app-elements.card              :as card]
               [x.app-elements.card-desk         :as card-desk]
@@ -26,17 +25,19 @@
               [x.app-elements.circle-diagram    :as circle-diagram]
               [x.app-elements.column            :as column]
               [x.app-elements.combo-box         :as combo-box]
-              [x.app-elements.content-bar       :as content-bar]
-              [x.app-elements.content-surface   :as content-surface]
               [x.app-elements.counter           :as counter]
               [x.app-elements.data-table        :as data-table]
               [x.app-elements.date-field        :as date-field]
               [x.app-elements.digit-field       :as digit-field]
+
+              ; WARNING! DEPRECATED! DO NOT USE!
               [x.app-elements.directory         :as directory]
+              [x.app-elements.file              :as file]
+              ; WARNING! DEPRECATED! DO NOT USE!
+
               [x.app-elements.engine.api        :as engine]
               [x.app-elements.expandable        :as expandable]
               [x.app-elements.file-drop-area    :as file-drop-area]
-              [x.app-elements.file              :as file]
               [x.app-elements.horizontal-line   :as horizontal-line]
               [x.app-elements.icon              :as icon]
               [x.app-elements.image             :as image]
@@ -49,7 +50,6 @@
               [x.app-elements.overlay           :as overlay]
               [x.app-elements.password-field    :as password-field]
               [x.app-elements.polarity          :as polarity]
-              [x.app-elements.request-indicator :as request-indicator]
               [x.app-elements.radio-button      :as radio-button]
               [x.app-elements.row               :as row]
               [x.app-elements.scroll-indicator  :as scroll-indicator]
@@ -94,10 +94,6 @@
 ;
 ; @name initial-options
 ;  TODO ...
-;
-; @name ghost-view
-;  Bizonyos elemek rendelkeznek {:ghost-view? ...} tulajdonsággal, amely true érték
-;  esetén biztosítja, hogy az elem helyett annak szellemképe jelenjen meg.
 ;
 ; @name element-height
 ;  Egységes element magasságok:
@@ -151,9 +147,8 @@
 ; x.app-elements.*
 (def anchor            anchor/view)
 (def blank             blank/view)
-(def box               box/view)
-(def button            button/view)
 (def card              card/view)
+(def button            button/view)
 (def card-desk         card-desk/view)
 (def checkbox          checkbox/view)
 (def chip              chip/view)
@@ -161,16 +156,18 @@
 (def circle-diagram    circle-diagram/view)
 (def column            column/view)
 (def combo-box         combo-box/view)
-(def content-bar       content-bar/view)
-(def content-surface   content-surface/view)
 (def counter           counter/view)
 (def data-table        data-table/view)
 (def date-field        date-field/view)
 (def digit-field       digit-field/view)
+
+; WARNING! DEPRECATED! DO NOT USE!
 (def directory         directory/view)
+(def file              file/view)
+; WARNING! DEPRECATED! DO NOT USE!
+
 (def expandable        expandable/view)
 (def file-drop-area    file-drop-area/view)
-(def file              file/view)
 (def horizontal-line   horizontal-line/view)
 (def icon              icon/view)
 (def image             image/view)
@@ -183,7 +180,6 @@
 (def overlay           overlay/view)
 (def password-field    password-field/view)
 (def polarity          polarity/view)
-(def request-indicator request-indicator/view)
 (def radio-button      radio-button/view)
 (def row               row/view)
 (def scroll-indicator  scroll-indicator/view)

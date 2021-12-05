@@ -53,7 +53,7 @@
   ;   :on-focus (function)
   ;   :on-mouse-over (function)}
   [bar-id {:keys [selected-content-id]} {:keys [color content-id href on-click on-mouse-over]}]
-  (cond-> {:data-color    (a/dom-value color)
+  (cond-> {:data-color    (param color)
            :data-selected (= selected-content-id content-id)
            :on-mouse-up   (engine/blur-element-function bar-id)}
           (some? href) (assoc :href href)
@@ -199,7 +199,7 @@
 (defn view
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ;  {:class (string or vector)(opt)
+  ;  {;:class (string or vector)(opt)
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
@@ -240,9 +240,8 @@
   ;
   ; @return (component)
   ([bar-props]
-   [view nil bar-props])
+   [view (a/id) bar-props])
 
   ([bar-id bar-props]
-   (let [bar-id    (a/id   bar-id)
-         bar-props (a/prot bar-props bar-props-prototype)]
+   (let [bar-props (a/prot bar-props bar-props-prototype)]
         [menu-bar bar-id bar-props])))

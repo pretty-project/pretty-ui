@@ -57,7 +57,8 @@
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
   {:downloaded-items (r engine/get-downloaded-items db extension-id item-namespace)
-   :synchronizing?   (r engine/synchronizing?       db extension-id item-namespace)})
+   :synchronizing?   (r engine/synchronizing?       db extension-id item-namespace)
+   :select-mode?     (get-in db [extension-id :lister-meta :select-mode?])})
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -137,6 +138,19 @@
                    {:on-click [:item-lister/toggle-select-mode! extension-id]
                     :preset   :menu-bar-icon-button}])
 
+(defn- select-all-items-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (component)
+  [extension-id]
+  [elements/button ::select-all-items-button
+                   {:on-click [:item-lister/select-all-items! extension-id]
+                    :preset   :default-icon-button
+                    :tooltip  :check-all
+                    :icon     :check_box_outline_blank}])
+
 (defn- delete-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -210,8 +224,8 @@
   [extension-id]
   [elements/button ::toggle-select-mode-button
                    {:on-click [:item-lister/toggle-select-mode! extension-id]
-                    :preset  :select-more-icon-button
-                    :tooltip :check}])
+                    :preset   :select-mode-icon-button
+                    :tooltip  :check}])
 
 (defn- toggle-item-filter-visibility-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -256,60 +270,77 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:search-mode? (boolean)(opt)
-  ;    Default: false}
+  ; @param (map) lister-props
+  ; @param (map) header-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [search-mode?]}]
-  [:div.xxx {:style {:display "flex" :position "absolute" :width "100%" :justify-content "space-between"}}
-        [search-items-field extension-id item-namespace]
-        [quit-search-mode-button extension-id]])
+  [extension-id item-namespace _ _]
+  [:div.item-lister--header--menu-bar
+    [search-items-field      extension-id item-namespace]
+    [quit-search-mode-button extension-id]])
 
 (defn- select-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace]
-  [:div.xxx {:style {:display "flex" :position "absolute" :width "100%" :justify-content "space-between"}}
-        [:div {:style {:display "flex"}}
-              [duplicate-selected-items-button extension-id]
-              [delete-selected-items-button    extension-id]]
-        [quit-select-mode-button extension-id]])
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id _ _ _]
+  [:div.item-lister--header--menu-bar
+    [:div.item-lister--header--menu-item-group
+      [select-all-items-button         extension-id]
+      [duplicate-selected-items-button extension-id]
+      [delete-selected-items-button    extension-id]]
+    [quit-select-mode-button extension-id]])
 
 (defn- actions-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace]
-  [:div.xxx {:style {:display "flex" :justify-content "space-between" :width "100%" :position "absolute"}}
-        [:div {:style {:display "flex"}}
-              [new-item-button extension-id item-namespace]
-              [sort-items-button extension-id item-namespace
-                                 {:options       engine/DEFAULT-ORDER-BY-OPTIONS
-                                  :initial-value engine/DEFAULT-ORDER-BY}]
-              [toggle-select-mode-button extension-id]
-              [toggle-item-filter-visibility-button extension-id]
-              ; TEMP
-              [toggle-search-mode-button extension-id item-namespace]]
-        [:div {:style {:display "flex"}}
-              [search-block extension-id item-namespace]]])
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace _ _]
+  [:div.item-lister--header--menu-bar
+    [:div.item-lister--header--menu-item-group
+      [new-item-button                      extension-id item-namespace]
+      [sort-items-button                    extension-id item-namespace
+                                            {:options       engine/DEFAULT-ORDER-BY-OPTIONS
+                                             :initial-value engine/DEFAULT-ORDER-BY}]
+      [toggle-select-mode-button            extension-id]
+      [toggle-item-filter-visibility-button extension-id]
+      ; TEMP
+      [toggle-search-mode-button extension-id item-namespace]]
+    [:div.item-lister--header--menu-item-group
+      [search-block extension-id item-namespace]]])
 
 (defn- header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ; @param (map) header-props
+  ;
+  ; @return (component)
   [extension-id item-namespace lister-props {:keys [search-mode? select-mode?] :as header-props}]
-  [:div {:style {:height "48px" :width "100%" :overflow-y "hidden" :overflow-x "visible"}}
-        [:style {:type "text/css"} ".r-unmounting {animation-name: x-slide-out-ttb}
-                                    .r-mounting   {animation-name: x-slide-in-ttb}
-                                    .xxx {animation-duration: .25s; animation-iteration-count: 1; animation-fill-mode: both}"]
-        [react-transition/mount-animation {:animation-timeout 500 :mounted? (and search-mode? (not select-mode?))}
-                                          [search-mode-header  extension-id item-namespace lister-props header-props]]
-        [react-transition/mount-animation {:animation-timeout 500 :mounted? (and select-mode? (not search-mode?))}
-                                          [select-mode-header  extension-id item-namespace lister-props header-props]]
-        [react-transition/mount-animation {:animation-timeout 500 :mounted? (and (not search-mode?) (not select-mode?))}
-                                          [actions-mode-header extension-id item-namespace lister-props header-props]]])
+  [:div#item-lister--header--structure
+    [react-transition/mount-animation {:animation-timeout 500 :mounted? (and search-mode? (not select-mode?))}
+                                      [search-mode-header  extension-id item-namespace lister-props header-props]]
+    [react-transition/mount-animation {:animation-timeout 500 :mounted? (and select-mode? (not search-mode?))}
+                                      [select-mode-header  extension-id item-namespace lister-props header-props]]
+    [react-transition/mount-animation {:animation-timeout 500 :mounted? (and (not search-mode?) (not select-mode?))}
+                                      [actions-mode-header extension-id item-namespace lister-props header-props]]])
 
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
-  ;  {}
   ;
   ; @return (component)
   [extension-id item-namespace lister-props]
@@ -370,15 +401,20 @@
   ;  {:list-element (component)
   ;   :common-props (map)(opt)}
   ; @param (map) body-props
-  ;  {:downloaded-items (vector)}
+  ;  {:downloaded-items (vector)
+  ;   :select-mode? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id item-namespace {:keys [list-element]     :as lister-props}
-                               {:keys [downloaded-items] :as   body-props}]
+  [extension-id item-namespace {:keys [list-element]                  :as lister-props}
+                               {:keys [downloaded-items select-mode?] :as   body-props}]
   [:div.item-lister--item-list
     (map-indexed (fn [item-dex item]
                     ^{:key (db/document->document-id item)}
-                     [list-element item-dex item])
+                     (if (boolean select-mode?)
+                         [:div.item-lister--item-list--selectable-list-item
+                           [elements/checkbox {:color :primary}]
+                           [list-element item-dex item]]
+                         [list-element item-dex item]))
                  (param downloaded-items))])
 
 (defn- item-list

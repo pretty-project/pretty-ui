@@ -81,9 +81,8 @@
   ;
   ; @return (component)
   ([overlay-props]
-   [view nil overlay-props])
+   [view (a/id) overlay-props])
 
   ([overlay-id overlay-props]
-   (let [overlay-id    (a/id   overlay-id)]
-        ;overlay-props (a/prot overlay-props overlay-props-prototype)
+   (let [];overlay-props (a/prot overlay-props overlay-props-prototype)
         [overlay overlay-id overlay-props])))

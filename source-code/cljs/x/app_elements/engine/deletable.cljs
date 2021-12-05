@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.5.0
-; Compatibility: x4.3.0
+; Version: v0.5.8
+; Compatibility: x4.4.8
 
 
 
@@ -27,51 +27,28 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! DEPRECATED! DO NOT USE!
-; XXX#7601
-(defn on-delete-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (function)
-  [element-id]
-  #(a/dispatch [:elements/->element-deleted element-id]))
-; WARNING! DEPRECATED! DO NOT USE!
-
 (defn deletable-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :on-delete (metamorphic-event)}
   ;
   ; @return (map)
   ;  {:disabled (boolean)
-  ;   :on-click (function)}
-  [element-id {:keys [disabled? on-delete targetable? tooltip]}]
-  (cond-> (param {})
-          (boolean disabled?) (merge {:disabled true})
-          (not     disabled?) (merge {:on-click   #(a/dispatch on-delete)
-                                      :on-mouse-up (focusable/blur-element-function element-id)
-                                      :title       (components/content {:content :remove!})})))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! DEPRECATED! DO NOT USE!
-; XXX#7601
-;
-; Minél kevesebb element használjon feliratkozást! Ahol nem feltétlenül szükséges
-; ott ne Re-Frame esemény kezelje az interakciókat!
-(a/reg-event-fx
-  :elements/->element-deleted
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)
+  ;   :title (metamorphic-content)}
+  [element-id {:keys [disabled? on-delete]}]
+  ; Az on-delete eseményt nem szükséges a más on-* kezdetű eseményekhez hasonlóan
+  ; státusz-esemény használatával kezelni, mivel semmilyen adatbázis-változást
+  ; és más esemény-meghívást nem hajt végre!
   ;
-  ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ element-id]]
-    (if-let [on-delete-event (r element/get-element-prop db element-id :on-delete)]
-            {:dispatch on-delete-event})))
-; WARNING! DEPRECATED! DO NOT USE!
+  ; :on-click [:elements/->element-deleted element-id]
+  ; =>
+  ; :on-click #(a/dispatch on-delete)
+  (cond-> {} (boolean disabled?) (merge {:disabled true})
+             (not     disabled?) (merge {:on-click   #(a/dispatch on-delete)
+                                         :on-mouse-up (focusable/blur-element-function element-id)
+                                         :title       (components/content {:content :remove!})})))

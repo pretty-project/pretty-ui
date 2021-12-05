@@ -100,12 +100,11 @@
   ;
   ; @return (component)
   ([indicator-props]
-   [view nil indicator-props])
+   [view (a/id) indicator-props])
 
   ([indicator-id indicator-props]
-   (let [indicator-id    (a/id   indicator-id)
-         indicator-props (a/prot indicator-props indicator-props-prototype)]
+   (let [indicator-props (a/prot indicator-props indicator-props-prototype)]
         [engine/stated-element indicator-id
-          {:component     #'scroll-indicator
-           :element-props indicator-props
-           :subscriber   [::get-view-props indicator-id]}])))
+                               {:component     #'scroll-indicator
+                                :element-props indicator-props
+                                :subscriber    [::get-view-props indicator-id]}])))

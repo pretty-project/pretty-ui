@@ -80,9 +80,8 @@
   ;
   ; @return (component)
   ([desk-props]
-   [view nil desk-props])
+   [view (a/id) desk-props])
 
   ([desk-id desk-props]
-   (let [desk-id    (a/id desk-id)
-         desk-props (a/prot desk-props desk-props-prototype)]
+   (let [desk-props (a/prot desk-props desk-props-prototype)]
         [card-desk desk-id desk-props])))

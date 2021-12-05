@@ -3,33 +3,42 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.04.29
+; Created: 2021.12.04
 ; Description:
-; Version: v1.2.2
-; Compatibility: x4.4.5
+; Version: v0.2.8
+; Compatibility: x4.4.7
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.background)
+(ns x.app-layouts.body-a
+    (:require [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn- body-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword)(opt) body-id
+  ; @param (map) body-props
+  ;
+  ; @return (hiccup)
+  [body-id body-props]
+  [:div.x-body-a])
+
+(defn body
+  ; @param (keyword)(opt) body-id
+  ; @param (map) body-props
+  ;
   ; @return (component)
-  []
-  [:div#x-app-background
-    [:svg {:style {:width "100%" :height "100%"}
-           :preserve-aspect-ratio "none"
-           :view-box              "0 0 100 100"}
-          [:polygon {:points "3,0 0,10 0,75 15,15 40,0"
-                     :style  {:fill "#dde2ee"}}]
-          [:polygon {:points "95,92 100,90 100,50 80,80 75,100 92,100"
-                     :style  {:fill "#dde2ee"}}]]])
+  ([body-props]
+   [body (a/id) body-props])
+
+  ([body-id body-props]
+   [body body-id body-props]))

@@ -42,7 +42,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- anchor
+(defn- anchor-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) anchor-id
@@ -51,9 +51,23 @@
   ; @return (hiccup)
   [anchor-id anchor-props]
   (let [content-props (components/extended-props->content-props anchor-props)]
-       [:a.x-anchor (engine/element-attributes anchor-id anchor-props
-                      (engine/clickable-body-attributes anchor-id anchor-props))
-                    [components/content content-props]]))
+       [:a.x-anchor--body (engine/clickable-body-attributes anchor-id anchor-props)
+                          [components/content content-props]]))
+
+(defn- anchor
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) anchor-id
+  ; @param (map) anchor-props
+  ;
+  ; @return (hiccup)
+  [anchor-id anchor-props]
+  ; Az anchor elemet azért szükséges felosztani anchor és anchor-body komponensekre,
+  ; hogy a disabled állapotot megfelelően lehessen alkalmazni.
+  ; Az elemet disabled állapotában eltakaró overlay az elem kattintható komponensének
+  ; vagy a kattintható komponens valamely ősének szomszédos eleme kell legyen.
+  [:div.x-anchor (engine/element-attributes anchor-id anchor-props)
+                 [anchor-body anchor-id anchor-props]])
 
 (defn view
   ; XXX#9085
@@ -87,9 +101,8 @@
   ;
   ; @return (component)
   ([anchor-props]
-   [view nil anchor-props])
+   [view (a/id) anchor-props])
 
   ([anchor-id anchor-props]
-   (let [anchor-id    (a/id   anchor-id)
-         anchor-props (a/prot anchor-props anchor-props-prototype)]
+   (let [anchor-props (a/prot anchor-props anchor-props-prototype)]
         [anchor anchor-id anchor-props])))

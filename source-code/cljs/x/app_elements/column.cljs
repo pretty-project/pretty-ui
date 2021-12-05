@@ -63,8 +63,8 @@
   ;
   ; @return (hiccup)
   [column-id column-props]
-  [:div.x-column (engine/element-attributes column-id column-props)
-                 [column-body               column-id column-props]])
+  [:div.x-column (engine/flexible-attributes column-id column-props)
+                 [column-body                column-id column-props]])
 
 (defn view
   ; XXX#8711
@@ -104,9 +104,8 @@
   ;
   ; @return (component)
   ([column-props]
-   [view nil column-props])
+   [view (a/id) column-props])
 
   ([column-id column-props]
-   (let [column-id    (a/id column-id)
-         column-props (a/prot column-props column-props-prototype)]
+   (let [column-props (a/prot column-props column-props-prototype)]
         [column column-id column-props])))

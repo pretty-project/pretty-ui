@@ -34,4 +34,3 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
-(def request-id engine/request-id)

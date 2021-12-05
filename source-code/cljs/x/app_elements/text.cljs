@@ -101,9 +101,8 @@
   ;
   ; @return (component)
   ([text-props]
-   [view nil text-props])
+   [view (a/id) text-props])
 
   ([text-id text-props]
-   (let [text-id    (a/id   text-id)
-         text-props (a/prot text-props text-props-prototype)]
+   (let [text-props (a/prot text-props text-props-prototype)]
         [text text-id text-props])))

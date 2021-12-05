@@ -6,7 +6,7 @@
 ; Created: 2021.10.28
 ; Description:
 ; Version: v0.2.2
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -60,8 +60,8 @@
     {:on-click        #(a/dispatch on-click)
      :on-mouse-up      (focusable/blur-element-function element-id)
      :title            (components/content {:content tooltip})
-     :data-icon-family (a/dom-value icon-family)}
-    (a/dom-value icon)])
+     :data-icon-family (param icon-family)}
+    (param icon)])
 
 (defn- element-sticker-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,11 +78,10 @@
   ; @return (hiccup)
   [_ _ {:keys [disabled? icon icon-family]}]
   [:i.x-element--sticker-icon
-    (if (boolean disabled?)
-        {:data-disabled true
-         :data-icon-family (a/dom-value icon-family)}
-        {:data-icon-family (a/dom-value icon-family)})
-    (a/dom-value icon)])
+    (if disabled? {:data-disabled true
+                   :data-icon-family (param icon-family)}
+                  {:data-icon-family (param icon-family)})
+    (param icon)])
 
 (defn- element-sticker
   ; WARNING! NON-PUBLIC! DO NOT USE!

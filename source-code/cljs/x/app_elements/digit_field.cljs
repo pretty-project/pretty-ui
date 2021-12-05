@@ -142,12 +142,11 @@
   ;
   ; @return (component)
   ([field-props]
-   [view nil field-props])
+   [view (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-id    (a/id   field-id)
-         field-props (a/prot field-props field-props-prototype)]
+   (let [field-props (a/prot field-props field-props-prototype)]
         [engine/stated-element field-id
-          {:component     #'digit-field
-           :element-props field-props
-           :subscriber    [::get-view-props field-id]}])))
+                               {:component     #'digit-field
+                                :element-props field-props
+                                :subscriber    [::get-view-props field-id]}])))

@@ -271,6 +271,9 @@
       :packages
       {:en "Packages"
        :hu "Csomagok"}
+      :playground
+      {:en "Playground"
+       :hu "Playground"}
       :preferences
       {:en "Preferences"
        :hu "Tulajdonságok"}
@@ -599,16 +602,21 @@
       :select-all-items!
       {:en "Select all items"
        :hu "Összes elem kiválasztása"}
-
       :select
       {:en "Select"
        :hu "Kiválasztás"}
       :select!
       {:en "Select"
        :hu "Válassz"}
+      :select-all
+      {:en "Select all"
+       :hu "Összes kiválasztása"}
       :check
       {:en "Select"
        :hu "Kijelölés"}
+      :check-all
+      {:en "Select all"
+       :hu "Összes kijelölése"}
       :uncheck-selected!
       {:en "Uncheck selected"
        :hu "Kiválasztás megszűntetése"}

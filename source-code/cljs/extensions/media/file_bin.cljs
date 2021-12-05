@@ -68,10 +68,10 @@
   ; @param (keyword) component-id
   ;
   ; @return (hiccup)
-  [_]
-  [elements/box {:content    #'file-bin
-                 :min-width  :xxl
-                 :subscriber [:file-bin/get-view-props]}])
+  [_])
+  ;[elements/box {:content    #'file-bin
+  ;               :min-width  :xxl
+  ;               :subscriber [:file-bin/get-view-props]])
 
 (defn- ghost-file-bin
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,10 +88,10 @@
   ; @param (keyword) component-id
   ;
   ; @return (hiccup)
-  [_]
-  [elements/box {:content    #'ghost-file-bin
-                 :min-width  :xxl
-                 :subscriber [:file-bin/get-view-props]}])
+  [_])
+  ;[elements/box {:content    #'ghost-file-bin
+  ;               :min-width  :xxl
+  ;               :subscriber [:file-bin/get-view-props]])
 
 (defn- listener
   ; WARNING! NON-PUBLIC! DO NOT USE!

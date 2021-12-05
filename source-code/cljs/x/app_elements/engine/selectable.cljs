@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.7.8
-; Compatibility: x3.9.9
+; Compatibility: x4.4.8
 
 
 
@@ -52,14 +52,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (map) view-props
+  ; @param (map) input-props
   ;  {:selected? (boolean)}
   ;
   ; @return (map)
   ;  {:data-selected (boolean)}
-  [input-id {:keys [selected?] :as view-props}]
-  (element/element-attributes input-id view-props
-                              {:data-selected (boolean selected?)}))
+  [input-id {:keys [selected?] :as input-props}]
+  (element/element-attributes input-id input-props {:data-selected (boolean selected?)}))
 
 (defn selectable-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,34 +76,30 @@
   [input-id {:keys [disabled?] :as input-props} option]
   (let [selected-value (:value input-props)
         selected?      (= selected-value option)]
-       (cond-> (param {})
-               (boolean disabled?)
-               (merge {:data-selected (param selected?)
-                       :disabled      (param true)})
-               (not disabled?)
-               (merge {:data-selected (param selected?)
-                       :on-click      (on-select-function              input-id option)
-                       :on-mouse-up   (focusable/blur-element-function input-id)}))))
+       (cond-> {} (boolean disabled?) (merge {:data-selected (param selected?)
+                                              :disabled      (param true)})
+                  (not     disabled?) (merge {:data-selected (param selected?)
+                                              :on-click      (on-select-function              input-id option)
+                                              :on-mouse-up   (focusable/blur-element-function input-id)}))))
 
 (defn selectable-unselect-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (map) view-props
+  ; @param (map) input-props
   ;  {:selected? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-state (string)
+  ;  {:data-disabled (string)
   ;   :disabled (boolean)
   ;   :on-click (function)
   ;   :title (string)}
   [input-id {:keys [selected?]}]
-  (if selected?
-      {:on-click    (on-unselect-function            input-id)
-       :on-mouse-up (focusable/blur-element-function input-id)
-       :title       (components/content {:content :uncheck-selected!})}
-      {:data-state  (a/dom-value :disabled)
-       :disabled    true}))
+  (if selected? {:on-click      (on-unselect-function            input-id)
+                 :on-mouse-up   (focusable/blur-element-function input-id)
+                 :title         (components/content {:content :uncheck-selected!})}
+                {:data-disabled (param true)
+                 :disabled      (param true)}))
 
 
 

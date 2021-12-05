@@ -48,7 +48,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.view-selector.engine
-(def request-id           engine/request-id)
 (def get-selected-view-id engine/get-selected-view-id)
 (def get-view-props       engine/get-view-props)
 (def change-view!         engine/change-view!)

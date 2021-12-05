@@ -27,8 +27,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
-(def request-id   engine/request-id)
-(def render-event engine/render-event)
+(def request-id              engine/request-id)
+(def route-id                engine/route-id)
+(def extended-route-id       engine/extended-route-id)
+(def route-template          engine/route-template)
+(def extended-route-template engine/extended-route-template)
+(def render-event            engine/render-event)
 
 
 

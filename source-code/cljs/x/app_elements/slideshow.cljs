@@ -221,14 +221,13 @@
   ;
   ; @return (component)
   ([slideshow-props]
-   [view nil slideshow-props])
+   [view (a/id) slideshow-props])
 
   ([slideshow-id slideshow-props]
-   (let [slideshow-id       (a/id   slideshow-id)
-         slideshow-props    (a/prot slideshow-props slideshow-props-prototype)
+   (let [slideshow-props    (a/prot slideshow-props slideshow-props-prototype)
          step-handler-props (gestures/extended-props->step-handler-props slideshow-props)]
         [engine/stated-element slideshow-id
-          {:component     #'slideshow
-           :element-props slideshow-props
-           :initializer   [:gestures/init-step-handler! slideshow-id step-handler-props]
-           :subscriber    [::get-view-props             slideshow-id]}])))
+                               {:component     #'slideshow
+                                :element-props slideshow-props
+                                :initializer   [:gestures/init-step-handler! slideshow-id step-handler-props]
+                                :subscriber    [::get-view-props             slideshow-id]}])))

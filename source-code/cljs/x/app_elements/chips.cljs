@@ -163,9 +163,8 @@
   ;
   ; @return (component)
   ([chips-props]
-   [view nil chips-props])
+   [view (a/id) chips-props])
 
   ([chips-id chips-props]
-   (let [chips-id    (a/id   chips-id)]
-        ;chips-props (a/prot chips-props chips-props-prototype)
+   (let [];chips-props (a/prot chips-props chips-props-prototype)
         [chips chips-id chips-props])))

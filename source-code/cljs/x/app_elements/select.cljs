@@ -271,7 +271,7 @@
   ;
   ; @return (hiccup)
   [_ _]
-  [:i.x-select--button-icon (a/dom-value SELECT-BUTTON-ICON)])
+  [:i.x-select--button-icon SELECT-BUTTON-ICON])
 
 (defn- select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -406,16 +406,15 @@
   ;
   ; @return (hiccup)
   ([select-props]
-   [view nil select-props])
+   [view (a/id) select-props])
 
   ([select-id select-props]
-   (let [select-id    (a/id   select-id)
-         select-props (a/prot select-id select-props select-props-prototype)]
+   (let [select-props (a/prot select-id select-props select-props-prototype)]
         [engine/stated-element select-id
-          {:component     #'select
-           :element-props select-props
-           :initializer [:elements/init-selectable! select-id]
-           :subscriber  [::get-view-props           select-id]}])))
+                               {:component     #'select
+                                :element-props select-props
+                                :initializer   [:elements/init-selectable! select-id]
+                                :subscriber    [::get-view-props           select-id]}])))
 
 
 

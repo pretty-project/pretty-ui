@@ -198,13 +198,12 @@
   ;
   ; @return (component)
   ([button-props]
-   [view nil button-props])
+   [view (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-id    (a/id   button-id)
-         button-props (a/prot button-id button-props button-props-prototype)]
+   (let [button-props (a/prot button-id button-props button-props-prototype)]
         [engine/stated-element button-id
-          {:component     #'radio-button
-           :element-props button-props
-           :initializer   [:elements/init-selectable! button-id]
-           :subscriber    [::get-view-props           button-id]}])))
+                               {:component     #'radio-button
+                                :element-props button-props
+                                :initializer   [:elements/init-selectable! button-id]
+                                :subscriber    [::get-view-props           button-id]}])))

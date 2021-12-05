@@ -123,14 +123,13 @@
   ;
   ; @return (component)
   ([field-props]
-   [view nil field-props])
+   [view (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-id    (a/id   field-id)
-         field-props (a/prot field-id field-props field-props-prototype)]
+   (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
-          {:component     #'text-field
-           :element-props field-props
-           :modifier      text-field/view-props-modifier
-           :initializer   [:elements/init-field! field-id]
-           :subscriber    [::get-view-props      field-id]}])))
+                               {:component     #'text-field
+                                :element-props field-props
+                                :modifier      text-field/view-props-modifier
+                                :initializer   [:elements/init-field! field-id]
+                                :subscriber    [::get-view-props      field-id]}])))

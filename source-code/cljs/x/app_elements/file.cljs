@@ -1,4 +1,6 @@
 
+; WARNING! DEPRECATED! DO NOT USE!
+
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -179,7 +181,7 @@
   [:div.x-file--preview
     (view-props->file-preview-attributes view-props)
     (if (view-props->render-file-preview-icon? view-props)
-        [:i.x-file--preview-icon (a/dom-value icon)])])
+        [:i.x-file--preview-icon icon])])
 
 (defn- file-timestamp
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -217,7 +219,7 @@
   ; @return (hiccup)
   [_ {:keys [label]}]
   [:div.x-file--label
-    [:i.x-file--icon   (a/dom-value :insert_drive_file)]
+    [:i.x-file--icon   :insert_drive_file]
     [:div.x-file--name [components/content {:content label}]]])
 
 (defn- file-static-body
@@ -259,16 +261,17 @@
   ;
   ; @param (keyword) file-id
   ; @param (map) view-props
+  ;  {:selected? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [file-id view-props]
+  [file-id {:keys [selected?] :as view-props}]
   ; Az [elements/file ...] komponens újrarenderelődése az előnézeti kép villanásával jár,
   ; ezért a file-selected? tulajdonság nem paraméterként adódik át, hanem a [file-highlighter]
   ; független komponens feliratkozása kezeli.
   (let [file-selection-subscriber (view-props->file-selection-subscriber file-id view-props)
         file-selected?            (a/subscribe file-selection-subscriber)]
-       (fn [] [:div.x-file--highlighter {:data-selected (or (engine/view-props->element-selected? view-props)
-                                                            (deref file-selected?))}])))
+       (fn [] [:div.x-file--highlighter {:data-selected (or (boolean selected?)
+                                                            (deref   file-selected?))}])))
 
 (defn- file
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -355,12 +358,11 @@
   ;
   ; @return (component)
   ([file-props]
-   [view nil file-props])
+   [view (a/id) file-props])
 
   ([file-id file-props]
-   (let [file-id    (a/id   file-id)
-         file-props (a/prot file-id file-props file-props-prototype)]
+   (let [file-props (a/prot file-id file-props file-props-prototype)]
         [engine/stated-element file-id
-          {:component     #'file
-           :element-props file-props
-           :subscriber    [::get-view-props file-id]}])))
+                               {:component     #'file
+                                :element-props file-props
+                                :subscriber    [::get-view-props file-id]}])))

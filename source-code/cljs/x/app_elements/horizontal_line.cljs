@@ -71,10 +71,8 @@
   ;
   ; @return (hiccup)
   [line-id line-props]
-  [:div.x-horizontal-line
-    (engine/element-attributes line-id line-props)
-    [:div.x-horizontal-line--body
-      (line-body-attributes line-id line-props)]])
+  [:div.x-horizontal-line (engine/element-attributes line-id line-props)
+                          [:div.x-horizontal-line--body (line-body-attributes line-id line-props)]])
 
 (defn view
   ; @param (keyword)(opt) line-id
@@ -96,9 +94,8 @@
   ;
   ; @return (component)
   ([line-props]
-   [view nil line-props])
+   [view (a/id) line-props])
 
   ([line-id line-props]
-   (let [line-id    (a/id line-id)
-         line-props (a/prot line-props line-props-prototype)]
+   (let [line-props (a/prot line-props line-props-prototype)]
         [horizontal-line line-id line-props])))

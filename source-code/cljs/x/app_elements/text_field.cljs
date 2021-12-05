@@ -148,10 +148,9 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [placeholder] :as view-props}]
-  (if (engine/view-props->render-field-placeholder? view-props)
-      [:div.x-text-field--placeholder
-        (engine/field-placeholder-attributes field-id view-props)
-        [components/content {:content placeholder}]]))
+  (if (engine/field-props->render-field-placeholder? view-props)
+      [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id view-props)
+                                      [components/content {:content placeholder}]]))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -201,13 +200,12 @@
   ;
   ; @return (hiccup)
   [field-id view-props]
-  [:label.x-text-field
-    (engine/element-attributes   field-id view-props)
-    [text-field-label            field-id view-props]
-    [text-field-input-container  field-id view-props]
-    [text-field-invalid-message  field-id view-props]
-    [engine/element-helper       field-id view-props]
-    [engine/element-info-tooltip field-id view-props]])
+  [:label.x-text-field (engine/element-attributes   field-id view-props)
+                       [text-field-label            field-id view-props]
+                       [text-field-input-container  field-id view-props]
+                       [text-field-invalid-message  field-id view-props]
+                       [engine/element-helper       field-id view-props]
+                       [engine/element-info-tooltip field-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) field-id
@@ -331,14 +329,13 @@
   ;
   ; @return (component)
   ([field-props]
-   [view nil field-props])
+   [view (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-id    (a/id   field-id)
-         field-props (a/prot field-id field-props field-props-prototype)]
+   (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
-          {:component     text-field
-           :element-props field-props
-           :modifier      view-props-modifier
-           :initializer   [:elements/init-field! field-id]
-           :subscriber    [::get-view-props      field-id]}])))
+                               {:component     text-field
+                                :element-props field-props
+                                :modifier      view-props-modifier
+                                :initializer   [:elements/init-field! field-id]
+                                :subscriber    [::get-view-props      field-id]}])))

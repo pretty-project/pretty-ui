@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.8.6
-; Compatibility: x4.3.9
+; Version: v0.9.0
+; Compatibility: x4.4.8
 
 
 
@@ -28,16 +28,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view-props->element-selected?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) view-props
-  ;  {:selected? (boolean)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [selected?]}]
-  (boolean selected?))
-
 (defn element-id->extended-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -45,9 +35,9 @@
   ; @param (keyword) flag
   ;
   ; @example
-  ;  (element/element-id->extended-id :namespace/my-element :popup)
+  ;  (element/element-id->extended-id :my-namespace/my-element :popup)
   ;  =>
-  ;  :namespace/my-element--popup
+  ;  :my-namespace/my-element--popup
   ;
   ; @return (keyword)
   [element-id flag]
@@ -57,15 +47,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) element-props
-  ;  {:expandable? (boolean)(opt)
-  ;   :icon (keyword)(opt)
+  ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
   ;
   ; @return (boolean)
-  [{:keys [expandable? icon label]}]
-  (boolean (or (some?   icon)
-               (some?   label)
-               (boolean expandable?))))
+  [{:keys [icon label]}]
+  (boolean (or (some? icon)
+               (some? label))))
 
 (defn element-props-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,11 +92,10 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ;  {:ghost-view? (boolean)(opt)
-  ;   :horizontal-align (keyword)(opt)
+  ;  {:horizontal-align (keyword)(opt)
   ;    :left, :center, :right, :space-between
-  ;   :icon-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both
   ;   :layout (keyword)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -118,34 +105,28 @@
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;   :vertical-align (keyword)(opt)
-  ;    :top, :center, :bottom, :space-between
-  ;   :wrap-items? (boolean)(opt)}
+  ;    :top, :center, :bottom, :space-between}
   ;
   ; @return (map)
-  ;  {:data-ghost-view (boolean)
-  ;   :data-horizontal-align (string)
-  ;   :data-icon-size (string)
-  ;   :data-layout (string)
-  ;   :data-min-width (string)
-  ;   :data-orientation (string)
-  ;   :data-position (string)
-  ;   :data-size (string)
-  ;   :data-stretch-orientation (string)
-  ;   :data-vertical-align (string)
-  ;   :data-wrap-items (string)}
-  [_ {:keys [ghost-view? horizontal-align icon-size layout min-width orientation position
-             size stretch-orientation vertical-align wrap-items?]}]
-  (cond-> {} (some? ghost-view?)         (assoc :data-ghost-view          (boolean     ghost-view?))
-             (some? horizontal-align)    (assoc :data-horizontal-align    (a/dom-value horizontal-align))
-             (some? icon-size)           (assoc :data-icon-size           (a/dom-value icon-size))
-             (some? layout)              (assoc :data-layout              (a/dom-value layout))
-             (some? min-width)           (assoc :data-min-width           (a/dom-value min-width))
-             (some? orientation)         (assoc :data-orientation         (a/dom-value orientation))
-             (some? position)            (assoc :data-position            (a/dom-value position))
-             (some? size)                (assoc :data-size                (a/dom-value size))
-             (some? stretch-orientation) (assoc :data-stretch-orientation (a/dom-value stretch-orientation))
-             (some? vertical-align)      (assoc :data-vertical-align      (a/dom-value vertical-align))
-             (some? wrap-items?)         (assoc :data-wrap-items          (boolean     wrap-items?))))
+  ;  {:data-horizontal-align (keyword)
+  ;   :data-layout (keyword)
+  ;   :data-min-width (keyword)
+  ;   :data-orientation (keyword)
+  ;   :data-position (keyword)
+  ;   :data-size (keyword)
+  ;   :data-stretch-orientation (keyword)
+  ;   :data-vertical-align (keyword)}
+  [_ {:keys [horizontal-align indent layout min-width orientation position size stretch-orientation
+             vertical-align]}]
+  (cond-> {} (some? horizontal-align)    (assoc :data-horizontal-align    horizontal-align)
+             (some? indent)              (assoc :data-indent              indent)
+             (some? layout)              (assoc :data-layout              layout)
+             (some? min-width)           (assoc :data-min-width           min-width)
+             (some? orientation)         (assoc :data-orientation         orientation)
+             (some? position)            (assoc :data-position            position)
+             (some? size)                (assoc :data-size                size)
+             (some? stretch-orientation) (assoc :data-stretch-orientation stretch-orientation)
+             (some? vertical-align)      (assoc :data-vertical-align      vertical-align)))
 
 (defn element-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,45 +141,39 @@
   ;   :font-weight (keyword)(opt)
   ;   :height (keyword, px or string)(opt)
   ;   :icon-family (keyword)(opt)
-  ;   :horizontal-border (keyword)(opt)
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)
-  ;   :vertical-border (keyword)(opt)
   ;   :width (keyword, px or string)(opt)}
   ;
   ; @return
   ;  {:class (string or vector)
-  ;   :data-color (string)
-  ;   :data-font-size (string)
-  ;   :data-font-weight (string)
-  ;   :data-height (string)
-  ;   :data-horizontal-border (string)
-  ;   :data-icon-family (string)
-  ;   :data-variant (string)
+  ;   :data-color (keyword)
+  ;   :data-font-size (keyword)
+  ;   :data-font-weight (keyword)
+  ;   :data-height (keyword)
+  ;   :data-icon-family (keyword)
+  ;   :data-variant (keyword)
   ;   :style (map)
-  ;    {:height (string)
-  ;     :width (string)}
-  ;   :data-vertical-border (string)
-  ;   :data-width (string)}
+  ;    {:height (string or keyword)
+  ;     :width (string or keyword)}
+  ;   :data-width (keyword)}
   [_ {:keys [class background-color border-color color font-size font-weight height
-             horizontal-border icon-family style variant vertical-border width]}]
-  (cond-> {} (some? background-color)  (assoc :data-background-color  (a/dom-value background-color))
-             (some? border-color)      (assoc :data-border-color      (a/dom-value border-color))
-             :use-class                (assoc :class                  (css/join-class "x-element" class))
-             (some? color)             (assoc :data-color             (a/dom-value color))
-             (some? font-size)         (assoc :data-font-size         (a/dom-value font-size))
-             (some? font-weight)       (assoc :data-font-weight       (a/dom-value font-weight))
-             (some? icon-family)       (assoc :data-icon-family       (a/dom-value icon-family))
-             (some? style)             (assoc :style                  (param       style))
-             (integer? height)         (assoc-in [:style :height]     (css/px      height))
-             (string? height)          (assoc-in [:style :height]     (param       height))
-             (keyword? height)         (assoc :data-height            (a/dom-value height))
-             (integer? width)          (assoc-in [:style :width]      (css/px      width))
-             (string? width)           (assoc-in [:style :width]      (param       width))
-             (keyword? width)          (assoc :data-width             (a/dom-value width))
-             (some? variant)           (assoc :data-variant           (a/dom-value variant))
-             (some? horizontal-border) (assoc :data-horizontal-border (a/dom-value horizontal-border))
-             (some? vertical-border)   (assoc :data-vertical-border   (a/dom-value vertical-border))))
+             icon-family style variant width]}]
+  (cond-> {} (some?    background-color) (assoc :data-background-color (param  background-color))
+             (some?    border-color)     (assoc :data-border-color     (param  border-color))
+             (some?    color)            (assoc :data-color            (param  color))
+             (some?    font-size)        (assoc :data-font-size        (param  font-size))
+             (some?    font-weight)      (assoc :data-font-weight      (param  font-weight))
+             (some?    icon-family)      (assoc :data-icon-family      (param  icon-family))
+             (some?    style)            (assoc :style                 (param  style))
+             (integer? height)           (assoc-in [:style :height]    (css/px height))
+             (string?  height)           (assoc-in [:style :height]    (param  height))
+             (keyword? height)           (assoc :data-height           (param  height))
+             (integer? width)            (assoc-in [:style :width]     (css/px width))
+             (string?  width)            (assoc-in [:style :width]     (param  width))
+             (keyword? width)            (assoc :data-width            (param  width))
+             (some?    variant)          (assoc :data-variant          (param  variant))
+             :use-class                  (assoc :class                 (css/join-class "x-element" class))))
 
 (defn element-generic-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -218,8 +193,8 @@
   ;   :data-selectable (boolean)
   ;   :src (string)}
   [_ {:keys [alt disabled? highlighted? selectable? src]}]
-  (cond-> {} (some? alt)             (assoc :alt alt)
-             (some? src)             (assoc :src src)
+  (cond-> {} (some?    alt)          (assoc :alt alt)
+             (some?    src)          (assoc :src src)
              (boolean? disabled?)    (assoc :data-disabled    disabled?)
              (boolean? highlighted?) (assoc :data-highlighted highlighted?)
              (boolean? selectable?)  (assoc :data-selectable  selectable?)))

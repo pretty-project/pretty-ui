@@ -168,8 +168,8 @@
       :select-button       {:label   :select
                             :layout  :row
                             :variant :transparent}
-      :select-more-icon-button {:color   :default
-                                :icon    :radio_button_unchecked
+      :select-mode-icon-button {:color   :default
+                                :icon    :check_box_outline_blank
                                 :layout  :icon-button
                                 :variant :transparent}
       :settings-button     {:color   :default
@@ -243,8 +243,7 @@
          (if (some? keypress)
              {:targetable? true})
          (if (some? icon)
-             {:icon-size   :s
-              :icon-family :material-icons-filled})
+             {:icon-family :material-icons-filled})
          ; XXX#0523
          ; A button elemet {:layout :icon-button} beállítással használva,
          ; a {:content ...} tulajdonság neve nehezen értelmezhető,
@@ -278,7 +277,7 @@
   ;
   ; @return (component or nil)
   [_ {:keys [icon]}]
-  [:i.x-button--icon (a/dom-value icon)])
+  [:i.x-button--icon icon])
 
 (defn- button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -289,14 +288,13 @@
   ;
   ; @return (hiccup)
   [button-id {:keys [icon] :as button-props}]
-  [:button.x-button--body
-    (engine/clickable-body-attributes button-id button-props)
-    (if (some? icon)
-        [button-icon button-id button-props])
-    [button-label button-id button-props]
-    (if (some? icon)
-        [:div.x-button--icon-placeholder])
-    [engine/element-badge        button-id button-props]])
+  [:button.x-button--body (engine/clickable-body-attributes button-id button-props)
+                          (if (some? icon)
+                              [button-icon button-id button-props])
+                          [button-label button-id button-props]
+                          (if (some? icon)
+                              [:div.x-button--icon-placeholder])
+                          [engine/element-badge        button-id button-props]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -306,11 +304,9 @@
   ;
   ; @return (hiccup)
   [button-id button-props]
-  [:div.x-button
-    (engine/element-attributes   button-id button-props)
-    [button-body                 button-id button-props]
-    [engine/element-helper       button-id button-props]
-    [engine/element-info-tooltip button-id button-props]])
+  [:div.x-button (engine/element-attributes   button-id button-props)
+                 [button-body                 button-id button-props]
+                 [engine/element-info-tooltip button-id button-props]])
 
 (defn view
   ; @param (keyword)(opt) button-id
@@ -329,7 +325,6 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;    Only w/ {:layout :fit} or {:layout :row}
-  ;   :helper (metamorphic-content)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
@@ -338,10 +333,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;    Only w/ {:icon ...}
-  ;   :icon-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;    Only w/ {:icon ...}
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :keypress (map)(constant)(opt)
@@ -373,14 +364,13 @@
   ;
   ; @return (hiccup)
   ([button-props]
-   [view nil button-props])
+   [view (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-id    (a/id button-id)
-         button-props (engine/apply-preset BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (engine/apply-preset BUTTON-PROPS-PRESETS button-props)
          button-props (a/prot button-props button-props-prototype)]
         [engine/stated-element button-id
-          {:component     #'button
-           :element-props button-props
-           :destructor    [:elements/destruct-clickable! button-id]
-           :initializer   [:elements/init-clickable!     button-id]}])))
+                               {:component     #'button
+                                :element-props button-props
+                                :destructor    [:elements/destruct-clickable! button-id]
+                                :initializer   [:elements/init-clickable!     button-id]}])))

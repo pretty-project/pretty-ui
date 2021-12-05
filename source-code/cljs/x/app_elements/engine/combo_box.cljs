@@ -6,7 +6,7 @@
 ; Created: 2021.07.02
 ; Description:
 ; Version: v0.9.8
-; Compatibility: x4.3.7
+; Compatibility: x4.4.8
 
 
 
@@ -55,10 +55,10 @@
   [field-id key-code]
   (keyword/join field-id "--" key-code))
 
-(defn view-props->render-option?
+(defn field-props->render-option?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:get-label-f (function)
   ;   :value (string)}
   ;
@@ -68,31 +68,31 @@
                        (param       value)
                        {:case-sensitive? false}))
 
-(defn view-props->rendered-options
+(defn field-props->rendered-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:options (vector)}
   ;
   ; @return (vector)
-  [{:keys [options] :as view-props}]
+  [{:keys [options] :as field-props}]
   (reduce (fn [rendered-options option]
-              (if (view-props->render-option? view-props option)
+              (if (field-props->render-option? field-props option)
                   (vector/conj-item rendered-options option)
-                  (return rendered-options)))
+                  (return           rendered-options)))
           (param [])
           (param options)))
 
-(defn view-props->value-extendable?
+(defn field-props->value-extendable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:get-label-f (function)
   ;   :options (maps in vector)
   ;   :value (keyword)(opt)}
   ;
   ; @example
-  ;  (combo-box/view-props->value-extendable?
+  ;  (combo-box/field-props->value-extendable?
   ;    {:get-label-f #(get % :label)
   ;     :options     [{:label "Apple juice"   :value "apple-juice"}
   ;                   {:label "Avocado juice" :value "avocado-juice"}]
@@ -101,7 +101,7 @@
   ;  false
   ;
   ; @example
-  ;  (combo-box/view-props->value-extendable?
+  ;  (combo-box/field-props->value-extendable?
   ;    {:get-label-f #(get % :label)
   ;     :options     [{:label "Apple juice"   :value "apple-juice"}
   ;                   {:label "Avocado juice" :value "avocado-juice"}]
@@ -113,29 +113,29 @@
   [{:keys [get-label-f options value]}]
   (not (vector/any-item-match? options #(= value (get-label-f %1)))))
 
-(defn view-props->render-extender?
+(defn field-props->render-extender?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:extendable? (boolean)
   ;   :value (keyword)}
   ;
   ; @return (boolean)
-  [{:keys [extendable? value] :as view-props}]
-  (and (boolean                       extendable?)
-       (string/nonempty?              value)
-       (view-props->value-extendable? view-props)))
+  [{:keys [extendable? value] :as field-props}]
+  (and (boolean                        extendable?)
+       (string/nonempty?               value)
+       (field-props->value-extendable? field-props)))
 
-(defn view-props->render-options?
+(defn field-props->render-options?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:options (* in vector)}
   ;
   ; @return (boolean)
-  [{:keys [options] :as view-props}]
+  [{:keys [options] :as field-props}]
   (and (vector/nonempty? options)
-       (vector/any-item-match? options #(view-props->render-option? view-props %1))))
+       (vector/any-item-match? options #(field-props->render-option? field-props %1))))
 
 
 

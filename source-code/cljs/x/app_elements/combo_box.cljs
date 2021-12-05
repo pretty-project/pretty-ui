@@ -50,18 +50,18 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->select-option-event
+(defn- field-props->select-option-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:select-option-event (event-vector)}
   ; @param (*) option
   ;
   ; @example
-  ;  (view-props->select-option-event :my-field
-  ;                                   {:select-option-event [:elements/select-option!]}
-  ;                                   {:label "My option"})
+  ;  (field-props->select-option-event :my-field
+  ;                                    {:select-option-event [:elements/select-option!]}
+  ;                                    {:label "My option"})
   ;  =>
   ;  [:elements/select-option! :my-field {:label "My option"}]
   ;
@@ -162,8 +162,7 @@
   ; @return (hiccup)
   [_ {:keys [get-label-f]} option]
   (let [option-label (get-label-f option)]
-       [:div.x-combo-box--option-label
-         [components/content {:content option-label}]]))
+       [:div.x-combo-box--option-label [components/content {:content option-label}]]))
 
 (defn- combo-box-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -180,7 +179,7 @@
   ; @return (hiccup)
   [field-id {:keys [option-component select-option-event] :as view-props}
             {:keys [highlighted? option selected?]} option-dex]
-  (let [select-option-event (view-props->select-option-event field-id view-props option)]
+  (let [select-option-event (field-props->select-option-event field-id view-props option)]
        [:button.x-combo-box--option
           ; BUG#2105
           ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
@@ -243,8 +242,8 @@
          ; BUG#2105
          {:on-mouse-down #(.preventDefault %)
           :on-mouse-up   #(a/dispatch on-extend)}
-         [:i.x-combo-box--extender-icon    (a/dom-value :add)]
-         [:div.x-combo-box--extender-label (str value)]]))
+         [:i.x-combo-box--extender-icon    (param :add)]
+         [:div.x-combo-box--extender-label (str   value)]]))
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -255,12 +254,12 @@
   ; @return (component)
   [field-id view-props]
   [:div.x-combo-box--surface
-    (if (engine/view-props->render-options?  view-props)
-        [combo-box-options          field-id view-props])
+    (if (engine/field-props->render-options?  view-props)
+        [combo-box-options           field-id view-props])
        ; Szükségtelen megjeleníteni a no-options-label feliratot.
        ;[combo-box-no-options-label field-id view-props]
-    (if (engine/view-props->render-extender? view-props)
-        [combo-box-extender         field-id view-props])])
+    (if (engine/field-props->render-extender? view-props)
+        [combo-box-extender          field-id view-props])])
 
 (defn field-props<-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -367,15 +366,14 @@
   ;
   ; @return (component)
   ([field-props]
-   [view nil field-props])
+   [view (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-id    (a/id   field-id)
-         field-props (a/prot field-id field-props field-props-prototype)
+   (let [field-props (a/prot               field-id field-props field-props-prototype)
          field-props (field-props<-surface field-id field-props)]
         [engine/stated-element field-id
-          {:component     #'text-field/text-field
-           :element-props field-props
-           :modifier      text-field/view-props-modifier
-           :initializer   [:elements/init-selectable! field-id]
-           :subscriber    [::get-view-props           field-id]}])))
+                               {:component     #'text-field/text-field
+                                :element-props field-props
+                                :modifier      text-field/view-props-modifier
+                                :initializer   [:elements/init-selectable! field-id]
+                                :subscriber    [::get-view-props           field-id]}])))

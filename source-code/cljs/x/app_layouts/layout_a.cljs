@@ -17,7 +17,7 @@
     (:require [mid-fruits.candy     :refer [param return]]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]))
+              [x.app-layouts.engine :as engine]))
 
 
 
@@ -38,7 +38,7 @@
   (merge {:min-width :l}
          (param layout-props)
          (if (some? header)
-             (merge {:sticky? true} header))))
+             {:header (merge {:sticky? true} header)})))
 
 
 
@@ -56,13 +56,21 @@
   ;   :min-width (keyword)}
   ;
   ; @return (component)
-  [layout-id {:keys [body disabled? header min-width]}]
-  [elements/box layout-id
-                {:body      body
-                 :disabled? disabled?
-                 :header    header
-                 :min-width min-width}])
-
+  [layout-id {:keys [body header] :as layout-props}]
+  [:div.x-body-a (engine/layout-body-attributes layout-id layout-props)
+                 [:div.x-body-a--content-structure
+                   [:div.x-body-a--content-body [components/content layout-id body]]
+                   (if (some? header) [:div.x-body-a--content-header [components/content layout-id header]])]
+                 ; XXX#0093
+                 ; A layout-body sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
+                 ; a {position: sticky} content-header alsó sarkai kilógnának, amikor a content-header
+                 ; lecsúszik a layout-body aljáig.
+                 ; Azért szükséges a content-tail spacert alkalmazni, hogy a {position: sticky}
+                 ; content-header ne tudjon a layout-body aljáig lecsúszni.
+                 ; {overflow: hidden} tulajdonsággal nem lehet eltűntetni a content-header kilógó sarkait,
+                 ; mert {overflow: hidden} elemben nem működne a {position: sticky} tulajdonság.
+                 [:div.x-body-a--content-tail]])
+  
 (defn- layout-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -109,7 +117,7 @@
   ;     :subscriber (subscription vector)(opt)}
   ;   :label (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :m, :l, :xl, :xxl
   ;    Default: :l}
   ;
   ; @usage
@@ -120,8 +128,7 @@
   ;
   ; @return (component)
   ([layout-props]
-   (let [layout-id (a/id)]
-        [layout layout-id layout-props]))
+   [layout (a/id) layout-props])
 
   ([layout-id layout-props]
    (let [layout-props (a/prot layout-props layout-props-prototype)]

@@ -141,13 +141,12 @@
   ;
   ; @return (component)
   ([switch-props]
-   [view nil switch-props])
+   [view (a/id) switch-props])
 
   ([switch-id switch-props]
-   (let [switch-id    (a/id   switch-id)
-         switch-props (a/prot switch-id switch-props switch-props-prototype)]
+   (let [switch-props (a/prot switch-id switch-props switch-props-prototype)]
         [engine/stated-element switch-id
-          {:component     #'switch
-           :element-props switch-props
-           :initializer   [:elements/init-input! switch-id]
-           :subscriber    [::get-view-props      switch-id]}])))
+                               {:component     #'switch
+                                :element-props switch-props
+                                :initializer   [:elements/init-input! switch-id]
+                                :subscriber    [::get-view-props      switch-id]}])))

@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.header-a
-    (:require [x.app-elements.api :as elements]))
+    (:require [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]))
 
 
 
@@ -52,7 +53,7 @@
   ;
   ; @return (component)
   ([header-props]
-   [header nil header-props])
+   [header (a/id) header-props])
 
   ([header-id header-props]
    [header header-id header-props]))

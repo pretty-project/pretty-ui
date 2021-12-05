@@ -50,7 +50,6 @@
   :database-port 27017}
 
 
-
  ; @param (map) seo-details
  ;  {:meta-description (string)
  ;   :meta-keywords (strings in vector or string)
@@ -59,10 +58,9 @@
  :seo-details
  {:meta-description "The Matrix is everywhere. It is all around us."
  ;:meta-keywords    ["a" "b" "c"]
- ;:meta-keywords     "a, b, c"
+ ;:meta-keywords    "a, b, c"
   :meta-keywords    ["Follow the white rabbit!"]
   :og-preview-path  "/og/og-preview-1200x630.png"}
-
 
 
  ; @param (map) storage-details
@@ -71,7 +69,6 @@
  :storage-details
  {:max-upload-size   1000000000
   :storage-capacity 15000000000}
-
 
 
  ; @param (maps in vector) css-paths

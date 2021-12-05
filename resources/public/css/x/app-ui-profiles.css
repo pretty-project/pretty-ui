@@ -10,19 +10,17 @@
  *  app-width = 100vw - app-edge
  *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-width értéke 100vw.
  *
- * @name bar-edge
- *  Egyes esetekben a fejlécekben megjelenített gombok és más elemek esztétikati távolságot
- *  igényelnek a fejléc szélétől (pl.: feliratos gombok, feliratos ikon-gombok, stb.)
+ * @name content-edge
+ *  - A fejlécekben (egyes esetekben) a megjelenített gombok és más elemek esztétikati távolságot
+ *    igényelnek a fejléc szélétől (pl.: feliratos gombok, feliratos ikon-gombok, stb.).
+ *  - A tartalmat megjelenítő elemekben (egyes esetekben) a tartalom esztétikai távolságot igényel
+ *    az elem szélétől.
+ *  - Ezt a távolságot a content-edge értéke adja, amelyet mindkét esetben alkalmazva a fejlécek
+ *    elemei és az alattuk lévő tartalom azonos méretű behúzással jelenik meg.
+ *    A fejléc és a tartalom elemeinek azonos méretű behúzása esztétikai és gyakorlati szempontból
+ *    is szükséges!
  *  (Az app-edge bizonoyos esetekben 0vw ezért erre a célra alkalmatlan)
  *  (A flex-edge nagyobb képernyőkön túlságosan nagy erre a célra)
-
-
-A surface header bárra nem kell mert mindig felirat nélküli ikon gombok vannak
-A feliratos gombokba meg be lehetne építeni a paddinget?
-
-
-
-
  *
  * @name flex-edge
  *  Elemek közötti – képernyő mérettől függő – vízszintes távolság.
@@ -232,12 +230,12 @@ body[data-viewport-profile="xxs"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 0;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -274,12 +272,12 @@ body[data-viewport-profile="xs"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 0;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -316,12 +314,12 @@ body[data-viewport-profile="s"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 0;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -357,12 +355,12 @@ body[data-viewport-profile="m"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 12px;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -399,12 +397,12 @@ body[data-viewport-profile="l"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 8px;
+--content-edge: 12px;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -440,12 +438,12 @@ body[data-viewport-profile="xl"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 12px;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -481,12 +479,12 @@ body[data-viewport-profile="xxl"] {
 
 /*** App ***/
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /* XXX#2981 */
---bar-edge: 12px;
+--content-edge: 12px;
 
-/*** Bar edge ***/
+/*** Content edge ***/
 
 /*** Content width ***/
 

@@ -40,11 +40,11 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [selected-view] :as body-props}]
-  (case selected-view :personal      [personal-settings     body-id body-props]
-                      :privacy       [privacy-settings      body-id body-props]
-                      :notifications [notification-settings body-id body-props]
-                      :appearance    [appearance-settings   body-id body-props]))
+  [body-id {:keys [view-id] :as body-props}]
+  (case view-id :personal      [personal-settings     body-id body-props]
+                :privacy       [privacy-settings      body-id body-props]
+                :notifications [notification-settings body-id body-props]
+                :appearance    [appearance-settings   body-id body-props]))
 
 
 
@@ -53,36 +53,36 @@
 
 (defn personal-settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [selected-view]}]
+  [header-id {:keys [view-id]}]
   [elements/button ::personal-settings-button
-                   {:color    (if (= selected-view :personal) :default :muted)
+                   {:color    (if (not= view-id :personal) :muted)
                     :icon     :person
                     :on-click [:view-selector/change-view! :settings :personal]
                     :preset   :default-icon-button}])
 
 (defn privacy-settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [selected-view]}]
+  [header-id {:keys [view-id]}]
   [elements/button ::privacy-settings-button
-                   {:color    (if (= selected-view :privacy) :default :muted)
+                   {:color    (if (not= view-id :privacy) :muted)
                     :icon     :security
                     :on-click [:view-selector/change-view! :settings :privacy]
                     :preset   :default-icon-button}])
 
 (defn notification-settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [selected-view]}]
+  [header-id {:keys [view-id]}]
   [elements/button ::notification-settings-button
-                   {:color    (if (= selected-view :notifications) :default :muted)
+                   {:color    (if (not= view-id :notifications) :muted)
                     :icon     :notifications
                     :on-click [:view-selector/change-view! :settings :notifications]
                     :preset   :default-icon-button}])
 
 (defn appearance-settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [selected-view]}]
+  [header-id {:keys [view-id]}]
   [elements/button ::appearance-settings-button
-                   {:color    (if (= selected-view :appearance) :default :muted)
+                   {:color    (if (not= view-id :appearance) :muted)
                     :icon     :auto_awesome
                     :on-click [:view-selector/change-view! :settings :appearance]
                     :preset   :default-icon-button}])
@@ -104,8 +104,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description label]}]
-  [layouts/layout-a surface-id {:body   {:content #'body   :subscriber [:view-selector/get-body-props   :settings]}
-                                :header {:content #'header :subscriber [:view-selector/get-header-props :settings]}
+  [layouts/layout-a surface-id {:body   {:content #'body   :subscriber [:view-selector/get-view-props :settings]}
+                                :header {:content #'header :subscriber [:view-selector/get-view-props :settings]}
                                 :min-width :m
                                 :description description
                                 :label       label}])

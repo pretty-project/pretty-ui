@@ -42,7 +42,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! ::route
-                                    {:client-event   [:playground/load!]
-                                     :route-template "/playground"
-                                     :restricted?    true}]})
+  {:on-app-boot [:view-selector/initialize! :playground {:default-view-id :anchors}]})

@@ -58,8 +58,8 @@
   ; @return (hiccup)
   [expandable-id {:keys [expanded?]}]
   (if (nonfalse? expanded?)
-      [:i.x-expandable--expand-icon (a/dom-value :expand_less)]
-      [:i.x-expandable--expand-icon (a/dom-value :expand_more)]))
+      [:i.x-expandable--expand-icon :expand_less]
+      [:i.x-expandable--expand-icon :expand_more]))
 
 (defn- expandable-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -71,7 +71,7 @@
   ; @return (hiccup)
   [_ {:keys [icon]}]
   (if (some? icon)
-      [:i.x-expandable--icon (a/dom-value icon)]))
+      [:i.x-expandable--icon icon]))
 
 (defn- expandable-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,9 +162,8 @@
   ;
   ; @return (component)
   ([expandable-props]
-   [view nil expandable-props])
+   [view (a/id) expandable-props])
 
   ([expandable-id expandable-props]
-   (let [expandable-id    (a/id   expandable-id)
-         expandable-props (a/prot expandable-props expandable-props-prototype)]
+   (let [expandable-props (a/prot expandable-props expandable-props-prototype)]
         [expandable expandable-id expandable-props])))

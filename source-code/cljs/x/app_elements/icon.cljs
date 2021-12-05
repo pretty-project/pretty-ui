@@ -53,7 +53,7 @@
   ; @return (hiccup)
   [icon-id {:keys [icon] :as icon-props}]
   [:i.x-icon (engine/element-attributes icon-id icon-props)
-             (a/dom-value               icon)])
+             (param icon)])
 
 (defn view
   ; @param (keyword)(opt) icon-id
@@ -82,9 +82,8 @@
   ;
   ; @return (hiccup)
   ([icon-props]
-   [view nil icon-props])
+   [view (a/id) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-id    (a/id   icon-id)
-         icon-props (a/prot icon-props icon-props-prototype)]
+   (let [icon-props (a/prot icon-props icon-props-prototype)]
         [icon icon-id icon-props])))

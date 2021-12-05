@@ -66,8 +66,8 @@
   ;
   ; @return (hiccup)
   [row-id row-props]
-  [:div.x-row (engine/element-attributes row-id row-props)
-              [row-body row-id row-props]])
+  [:div.x-row (engine/flexible-attributes row-id row-props)
+              [row-body                   row-id row-props]])
 
 (defn view
   ; XXX#8711
@@ -107,9 +107,8 @@
   ;
   ; @return (component)
   ([row-props]
-   [view nil row-props])
+   [view (a/id) row-props])
 
   ([row-id row-props]
-   (let [row-id    (a/id row-id)
-         row-props (a/prot row-props row-props-prototype)]
+   (let [row-props (a/prot row-props row-props-prototype)]
         [row row-id row-props])))

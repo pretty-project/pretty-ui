@@ -157,9 +157,8 @@
   ;
   ; @return (component)
   ([table-props]
-   [view nil table-props])
+   [view (a/id) table-props])
 
   ([table-id table-props]
-   (let [table-id    (a/id   table-id)
-         table-props (a/prot table-props table-props-prototype)]
+   (let [table-props (a/prot table-props table-props-prototype)]
         [table table-id table-props])))

@@ -161,7 +161,7 @@
         rotation    (+ rotation ANGLE-CORRECTION)]
        (svg/circle {:x x :y y :r r
                     :class      "x-circle-diagram--section"
-                    :data-color (a/dom-value color)
+                    :data-color color
                     :style {:stroke-dasharray (str dash-filled " " dash-empty)
                             :stroke-width     (css/px strength)
                             :transform        (css/rotate rotation)}})))
@@ -251,9 +251,8 @@
   ;
   ; @return (component)
   ([diagram-props]
-   [view nil diagram-props])
+   [view (a/id) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-id    (a/id   diagram-id)
-         diagram-props (a/prot diagram-props diagram-props-prototype)]
+   (let [diagram-props (a/prot diagram-props diagram-props-prototype)]
         [circle-diagram diagram-id diagram-props])))

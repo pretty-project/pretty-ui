@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.6.4
-; Compatibility: x4.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -28,6 +28,7 @@
               [x.app-elements.engine.element-stickers   :as element-stickers]
               [x.app-elements.engine.expandable         :as expandable]
               [x.app-elements.engine.field              :as field]
+              [x.app-elements.engine.flexible           :as flexible]
               [x.app-elements.engine.focusable          :as focusable]
               [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
@@ -38,6 +39,7 @@
               [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]
               [x.app-elements.engine.surface            :as surface]
+              [x.app-elements.engine.table              :as table]
               [x.app-elements.engine.targetable         :as targetable]
               [x.app-elements.engine.visible            :as visible]))
 
@@ -52,12 +54,12 @@
 (def get-checkable-view-props  checkable/get-checkable-view-props)
 
 ; x.app-elements.engine.combo-box
-(def view-props->render-option?    combo-box/view-props->render-option?)
-(def view-props->rendered-options  combo-box/view-props->rendered-options)
-(def view-props->value-extendable? combo-box/view-props->value-extendable?)
-(def view-props->render-extender?  combo-box/view-props->render-extender?)
-(def view-props->render-options?   combo-box/view-props->render-options?)
-(def get-combo-box-view-props      combo-box/get-combo-box-view-props)
+(def field-props->render-option?    combo-box/field-props->render-option?)
+(def field-props->rendered-options  combo-box/field-props->rendered-options)
+(def field-props->value-extendable? combo-box/field-props->value-extendable?)
+(def field-props->render-extender?  combo-box/field-props->render-extender?)
+(def field-props->render-options?   combo-box/field-props->render-options?)
+(def get-combo-box-view-props       combo-box/get-combo-box-view-props)
 
 ; x.app-elements.engine.countable
 (def get-countable-view-props countable/get-countable-view-props)
@@ -74,7 +76,6 @@
 (def deletable-body-attributes deletable/deletable-body-attributes)
 
 ; x.app-elements.engine.element
-(def view-props->element-selected?         element/view-props->element-selected?)
 (def element-id->extended-id               element/element-id->extended-id)
 (def element-props->render-element-header? element/element-props->render-element-header?)
 (def element-props-path                    element/element-props-path)
@@ -102,15 +103,18 @@
 (def element-stickers element-stickers/element-stickers)
 
 ; x.app-elements.engine.field
-(def empty-field-adornment-preset          field/empty-field-adornment-preset)
-(def reset-field-adornment-preset          field/reset-field-adornment-preset)
-(def view-props->render-field-placeholder? field/view-props->render-field-placeholder?)
-(def field-body-attributes                 field/field-body-attributes)
-(def field-placeholder-attributes          field/field-placeholder-attributes)
-(def field-empty?                          field/field-empty?)
-(def field-filled?                         field/field-filled?)
-(def get-field-value                       field/get-field-value)
-(def get-field-view-props                  field/get-field-view-props)
+(def empty-field-adornment-preset           field/empty-field-adornment-preset)
+(def reset-field-adornment-preset           field/reset-field-adornment-preset)
+(def field-props->render-field-placeholder? field/field-props->render-field-placeholder?)
+(def field-body-attributes                  field/field-body-attributes)
+(def field-placeholder-attributes           field/field-placeholder-attributes)
+(def field-empty?                           field/field-empty?)
+(def field-filled?                          field/field-filled?)
+(def get-field-value                        field/get-field-value)
+(def get-field-view-props                   field/get-field-view-props)
+
+; x.app-elements.engine.flexible
+(def flexible-attributes flexible/flexible-attributes)
 
 ; x.app-elements.engine.focusable
 (def blur-element-function focusable/blur-element-function)
@@ -154,6 +158,9 @@
 
 ; x.app-elements.engine.surface
 (def get-surface-view-props surface/get-surface-view-props)
+
+; x.app-elements.engine.table
+(def table-attributes table/table-attributes)
 
 ; x.app-elements.engine.visible
 (def on-hide-function                visible/on-hide-function)

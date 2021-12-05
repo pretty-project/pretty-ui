@@ -138,13 +138,12 @@
   ;
   ; @return (component)
   ([checkbox-props]
-   [view nil checkbox-props])
+   [view (a/id) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (let [checkbox-id    (a/id   checkbox-id)
-         checkbox-props (a/prot checkbox-id checkbox-props checkbox-props-prototype)]
+   (let [checkbox-props (a/prot checkbox-id checkbox-props checkbox-props-prototype)]
         [engine/stated-element checkbox-id
-          {:component     #'checkbox
-           :element-props checkbox-props
-           :initializer   [:elements/init-input! checkbox-id]
-           :subscriber    [::get-view-props      checkbox-id]}])))
+                               {:component     #'checkbox
+                                :element-props checkbox-props
+                                :initializer   [:elements/init-input! checkbox-id]
+                                :subscriber    [::get-view-props      checkbox-id]}])))

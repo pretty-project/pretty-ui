@@ -22,26 +22,55 @@
 ;; ----------------------------------------------------------------------------
 
 (defn request-id
-  ; @param (keyword) extension-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @example
-  ;  (view-selector/request-id :my-extension)
-  ;  =>
-  ;  :my-extension/synchronize!
+  ; @param (keyword) extension-id
   ;
   ; @return (keyword)
   [extension-id]
   (keyword/add-namespace extension-id :synchronize!))
 
-(defn render-event
+(defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
-  ; @example
-  ;  (view-selector/render-event :my-extension)
-  ;  =>
-  ;  [:my-extension/render!]
+  ; @return (keyword)
+  [extension-id]
+  (keyword (name extension-id) "route"))
+
+(defn extended-route-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (keyword)
+  [extension-id]
+  (keyword (name extension-id) "extended-route"))
+
+(defn route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (keyword)
+  [extension-id]
+  (str "/" (name extension-id)))
+
+(defn extended-route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (keyword)
+  [extension-id]
+  (str "/" (name extension-id)
+       "/:view-id"))
+  
+(defn render-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
   ;
   ; @return (event-vector)
   [extension-id]

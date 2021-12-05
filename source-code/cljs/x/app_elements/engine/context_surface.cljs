@@ -6,7 +6,7 @@
 ; Created: 2021.06.07
 ; Description:
 ; Version: v0.3.0
-; Compatibility: x4.2.9
+; Compatibility: x4.4.8
 
 
 
@@ -80,8 +80,7 @@
   ; az [:environment/add-event-listener!] eseménynek, akkor nem eltávolítható.
   ; Emiatt szükséges paraméterezés nélkül átadni a listener
   ; függvényt és a [:elements/close-context-surface! element-id]
-  ; esemény helyett a [:elements/close-all-context-surface!]
-  ; eseményt használni.
+  ; esemény helyett a [:elements/close-all-context-surface!] eseményt használni.
   (fn [{:keys [db]} _]
       (let [partition-id :elements.engine.element/elements]
            {:dispatch-n [[:environment/remove-event-listener! "click"       CLOSE-ON-CLICK-LISTENER "x-document-element"]

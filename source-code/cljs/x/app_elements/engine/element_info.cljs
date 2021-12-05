@@ -6,7 +6,7 @@
 ; Created: 2021.10.27
 ; Description:
 ; Version: v0.4.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -46,8 +46,6 @@
   [_ {:keys [info-tooltip]}]
   (if (some? info-tooltip)
       [:div.x-element--info-tooltip
-         [:i.x-element--info-tooltip--icon
-            (a/dom-value :info_outline)]
+         [:i.x-element--info-tooltip--icon :info_outline]
          [:div.x-element--info-tooltip--body
-            [:div.x-element--info-tooltip--content
-               [components/content {:content info-tooltip}]]]]))
+            [:div.x-element--info-tooltip--content [components/content {:content info-tooltip}]]]]))

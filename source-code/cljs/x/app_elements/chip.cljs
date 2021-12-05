@@ -65,7 +65,7 @@
   ; @return (hiccup)
   [_ {:keys [icon]}]
   (if (some? icon)
-      [:i.x-chip--icon (a/dom-value icon)]))
+      [:i.x-chip--icon icon]))
 
 (defn- chip-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,7 +91,7 @@
   (if (some? on-delete)
       [:button.x-chip--delete-button
         (engine/deletable-body-attributes chip-id chip-props)
-        [:i.x-chip--delete-button-icon (a/dom-value delete-button-icon)]]))
+        [:i.x-chip--delete-button-icon delete-button-icon]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -151,9 +151,8 @@
   ;
   ; @return (component)
   ([chip-props]
-   [view nil chip-props])
+   [view (a/id) chip-props])
 
   ([chip-id chip-props]
-   (let [chip-id    (a/id   chip-id)
-         chip-props (a/prot chip-props chip-props-prototype)]
+   (let [chip-props (a/prot chip-props chip-props-prototype)]
         [chip chip-id chip-props])))

@@ -6,7 +6,7 @@
 ; Created: 2021.10.27
 ; Description:
 ; Version: v0.4.2
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -36,6 +36,10 @@
 
 ; @constant (keywords in vector)
 ;  Az elem mely tulajdonságai kerüljenek a Re-Frame adatbázisba
+;
+; Az :on-* kezdetű eseményeket leíró tulajdonságok közül nem mindnél szükséges az értéket
+; a Re-Frame adatbázisban tárolni. Az átláthatóság, karbantarthatóság és konzisztencia megtartása
+; miatt azonban minden :on-* kezdetű tulajdonság konstans tulajdonságként van használva.
 (def CONSTANT-PROPS-KEYS
      [:autoclear? :auto-focus? :default-value :disallow-empty-input-group? :emptiable?
       :form-id :keypress :get-label-f :get-value-f :group-id :initial-options
@@ -82,17 +86,17 @@
   ; @return (component)
   [element-id {:keys [component destructor disabler element-props initial-props
                       initializer modifier subscriber updater] :as context-props}]
-  (let [disabler           (get element-props disabler)
+  (let [disabler           (get                          element-props disabler)
         initial-props      (element-props->initial-props element-props)
         element-props-path (element/element-props-path   element-id)]
        [components/stated element-id
-         {:base-props         element-props
-          :component          component
-          :destructor         destructor
-          :disabler           disabler
-          :initial-props      initial-props
-          :initial-props-path element-props-path
-          :initializer        initializer
-          :modifier           modifier
-          :subscriber         subscriber
-          :updater            updater}]))
+                          {:base-props         element-props
+                           :component          component
+                           :destructor         destructor
+                           :disabler           disabler
+                           :initial-props      initial-props
+                           :initial-props-path element-props-path
+                           :initializer        initializer
+                           :modifier           modifier
+                           :subscriber         subscriber
+                           :updater            updater}]))

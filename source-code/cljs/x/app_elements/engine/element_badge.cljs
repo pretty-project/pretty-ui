@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.19
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.6
+; Version: v0.2.6
+; Compatibility: x4.4.8
 
 
 
@@ -33,6 +33,6 @@
   ; @return (hiccup)
   [_ {:keys [badge-color badge-content]}]
   (if (some? badge-color)
-      [:div.x-element-badge {:data-color (a/dom-value badge-color)}
+      [:div.x-element-badge {:data-color badge-color}
                             (if (some? badge-content)
                                 [:div.x-element-badge--content (components/content {:content badge-content})])]))

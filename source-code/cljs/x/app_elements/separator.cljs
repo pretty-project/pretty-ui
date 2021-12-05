@@ -59,9 +59,8 @@
   ;
   ; @return (component)
   ([separator-props]
-   [view nil separator-props])
+   [view (a/id) separator-props])
 
   ([separator-id separator-props]
-   (let [separator-id    (a/id separator-id)
-         separator-props (a/prot separator-props separator-props-prototype)]
+   (let [separator-props (a/prot separator-props separator-props-prototype)]
         [:div.x-separator (engine/element-attributes separator-id separator-props)])))

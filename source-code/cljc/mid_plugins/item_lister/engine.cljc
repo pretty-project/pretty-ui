@@ -32,6 +32,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn request-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
@@ -46,6 +48,8 @@
            (str "synchronize-" (name item-namespace) "-lister!")))
 
 (defn resolver-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
@@ -60,6 +64,8 @@
            (str "get-" (name item-namespace) "-items")))
 
 (defn new-item-uri
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;

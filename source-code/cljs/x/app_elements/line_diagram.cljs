@@ -110,9 +110,8 @@
   ; @return (hiccup)
   [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
-       [:div.x-line-diagram--section
-         {:data-color    (a/dom-value color)
-          :style {:width (css/percent value-ratio)}}]))
+       [:div.x-line-diagram--section {:data-color    (param color)
+                                      :style {:width (css/percent value-ratio)}}]))
 
 (defn- line-diagram-sections
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,8 +127,7 @@
               (let [section-props (a/prot section-props section-props-prototype)]
                    (vector/conj-item line-diagram-sections
                                      [line-diagram-section diagram-id diagram-props section-props])))
-          [:div.x-line-diagram--sections
-            {:style {:height (css/px strength)}}]
+          [:div.x-line-diagram--sections {:style {:height (css/px strength)}}]
           (param sections)))
 
 (defn- line-diagram-label
@@ -143,9 +141,8 @@
   ; @return (hiccup)
   [_ {:keys [label label-position]}]
   (if (some? label)
-      [:div.x-line-diagram--label
-        {:data-position     (a/dom-value label-position)}
-        [components/content {:content label}]]))
+      [:div.x-line-diagram--label {:data-position label-position}
+                                  [components/content {:content label}]]))
 
 (defn line-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,10 +152,9 @@
   ;
   ; @return (hiccup)
   [diagram-id diagram-props]
-  [:div.x-line-diagram
-    (engine/element-attributes diagram-id diagram-props)
-    [line-diagram-label        diagram-id diagram-props]
-    [line-diagram-sections     diagram-id diagram-props]])
+  [:div.x-line-diagram (engine/element-attributes diagram-id diagram-props)
+                       [line-diagram-label        diagram-id diagram-props]
+                       [line-diagram-sections     diagram-id diagram-props]])
 
 (defn view
   ; @param (keyword)(opt) diagram-id
@@ -203,9 +199,8 @@
   ;
   ; @return (component)
   ([diagram-props]
-   [view nil diagram-props])
+   [view (a/id) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-id    (a/id   diagram-id)
-         diagram-props (a/prot diagram-props diagram-props-prototype)]
+   (let [diagram-props (a/prot diagram-props diagram-props-prototype)]
         [line-diagram diagram-id diagram-props])))

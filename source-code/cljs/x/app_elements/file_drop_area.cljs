@@ -67,7 +67,7 @@
   [area-id area-props]
   [:button.x-file-drop-area--body
     (engine/clickable-body-attributes area-id area-props)
-    [:i.x-file-drop-area--icon (a/dom-value :cloud_upload)]
+    [:i.x-file-drop-area--icon :cloud_upload]
     [file-drop-area-label area-id area-props]])
 
 (defn- file-drop-area
@@ -112,9 +112,8 @@
   ;
   ; @return (component)
   ([area-props]
-   [view nil area-props])
+   [view (a/id) area-props])
 
   ([area-id area-props]
-   (let [area-id    (a/id   area-id)
-         area-props (a/prot area-props area-props-prototype)]
+   (let [area-props (a/prot area-props area-props-prototype)]
         [file-drop-area area-id area-props])))

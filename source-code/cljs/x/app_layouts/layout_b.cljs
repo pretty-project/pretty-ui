@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.6
+; Version: v0.3.6
+; Compatibility: x4.4.7
 
 
 
@@ -68,8 +68,9 @@
   ;
   ; @return (component)
   [layout-id layout-props {:keys [badge-color on-click] :as card-props}]
-  [elements/card {:body {:content [card-label layout-id layout-props card-props]}
-                  :horizontal-align :left :on-click on-click :badge-color badge-color}])
+  [elements/card {:content [card-label layout-id layout-props card-props]
+                  :horizontal-align :left :on-click on-click :badge-color badge-color
+                  :min-width :m}])
 
 (defn- card-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -146,8 +147,7 @@
   ;
   ; @return (component)
   ([layout-props]
-   (let [layout-id (a/id)]
-        [layout layout-id layout-props]))
+   [layout (a/id) layout-props])
 
   ([layout-id layout-props]
    (let [] ;layout-props (a/prot layout-props layout-props-prototype)

@@ -297,7 +297,7 @@
   flex-direction: row;
   justify-content: space-between;
   /* XXX#2981 */
-  padding-left: var( --bar-edge );
+  padding-left: var( --content-edge );
   width: 100% }
 
 #x-app-bubbles [data-layout="row"] {-display: none;}
@@ -335,7 +335,7 @@
 
 .x-app-bubbles--element--close-button-placeholder {
   /* XXX#2981 */
-  width: var( --bar-edge ) }
+  width: var( --content-edge ) }
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
@@ -370,7 +370,7 @@
   flex-direction: row;
   justify-content: space-between;
   left: 0;
-  padding: 0 var( --bar-edge );
+  padding: 0 var( --content-edge );
   position: fixed;
   top: 0;
   width: 100%;
@@ -521,7 +521,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 .x-app-popups--element[data-layout="boxed"]
 .x-app-popups--element--content[data-autopadding="true"] {
-  padding: 0 var( --flex-edge ) 12px var( --flex-edge ) }
+  padding: 0 var( --content-edge ) 12px var( --content-edge ) }
 
 /*** Popup content ***/
 
@@ -563,7 +563,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 .x-app-popups--element--label-bar {
   overflow-x: auto;
   /* XXX#2981 */
-  padding: 0 var( --bar-edge );
+  padding: 0 var( --content-edge );
   min-height: 48px;
   width: 100% }
 

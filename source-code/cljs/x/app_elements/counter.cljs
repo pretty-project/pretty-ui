@@ -181,11 +181,10 @@
   ;
   ; @return (component)
   ([counter-props]
-   [view nil counter-props])
+   [view (a/id) counter-props])
 
   ([counter-id counter-props]
-   (let [counter-id    (a/id   counter-id)
-         counter-props (a/prot counter-id counter-props counter-props-prototype)]
+   (let [counter-props (a/prot counter-id counter-props counter-props-prototype)]
         [engine/stated-element counter-id
           {:component     #'counter
            :element-props counter-props

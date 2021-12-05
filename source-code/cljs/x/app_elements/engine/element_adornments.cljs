@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.2.0
-; Compatibility: x4.3.9
+; Compatibility: x4.4.8
 
 
 
@@ -68,7 +68,7 @@
             :on-mouse-up   #(do (a/dispatch on-click)
                                 (focusable/blur-element-function element-id))
             :title            (components/content {:content tooltip})
-            :data-icon-family (a/dom-value icon-family)}
+            :data-icon-family (param icon-family)}
            (if (false? tab-indexed?) {:tab-index "-1"}))
     (param icon)])
 
@@ -85,8 +85,8 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [icon icon-family]}]
-  [:i.x-element--adornment-icon {:data-icon-family (a/dom-value icon-family)}
-                                icon])
+  [:i.x-element--adornment-icon {:data-icon-family icon-family}
+                                (param icon)])
 
 (defn- element-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -61,8 +61,8 @@
   ;
   ; @return (hiccup or nil)
   [_ {:keys [icon icon-family]}]
-  [:i.x-label--icon {:data-icon-family (a/dom-value icon-family)}
-                    (a/dom-value icon)])
+  [:i.x-label--icon {:data-icon-family icon-family}
+                    (param icon)])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,9 +134,8 @@
   ;
   ; @return (component)
   ([label-props]
-   [view nil label-props])
+   [view (a/id) label-props])
 
   ([label-id label-props]
-   (let [label-id    (a/id label-id)
-         label-props (a/prot label-props label-props-prototype)]
+   (let [label-props (a/prot label-props label-props-prototype)]
         [label label-id label-props])))

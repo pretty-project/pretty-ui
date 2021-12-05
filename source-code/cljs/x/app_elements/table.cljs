@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.table
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.css            :as css]
               [mid-fruits.loop           :refer [reduce-indexed]]
               [mid-fruits.vector         :as vector]
@@ -62,8 +62,8 @@
   ; @return (keyword)
   [view-props cell-dex]
   (if-let [horizontal-align (get-in view-props [:columns cell-dex :horizontal-align])]
-          (a/dom-value horizontal-align)
-          (a/dom-value DEFAULT-CELL-HORIZONTAL-ALIGN)))
+          (return horizontal-align)
+          (return DEFAULT-CELL-HORIZONTAL-ALIGN)))
 
 (defn- view-props->cell-vertical-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -250,10 +250,9 @@
   ; @return (hiccup)
   [table-id view-props]
   [:<> [table-label table-id view-props]
-       [:table.x-table
-         (engine/element-attributes table-id view-props)
-         [table-header table-id view-props]
-         [table-rows   table-id view-props]]])
+       [:table.x-table (engine/table-attributes table-id view-props)
+                       [table-header table-id view-props]
+                       [table-rows   table-id view-props]]])
 
 (defn view
   ; @param (keyword)(opt) table-id
@@ -330,9 +329,8 @@
   ;
   ; @return (component)
   ([table-props]
-   [view nil table-props])
+   [view (a/id) table-props])
 
   ([table-id table-props]
-   (let [table-id    (a/id   table-id)
-         table-props (a/prot table-props table-props-prototype)]
+   (let [table-props (a/prot table-props table-props-prototype)]
         [table table-id table-props])))

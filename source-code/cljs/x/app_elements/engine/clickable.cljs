@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.6.2
-; Compatibility: x4.3.6
+; Compatibility: x4.4.8
 
 
 
@@ -27,15 +27,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn on-click-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (function)
-  [element-id]
-  #(a/dispatch [:elements/->element-clicked element-id]))
-
 (defn clickable-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -55,20 +46,19 @@
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click targetable? tooltip]}]
-  (cond-> (param {})
-          (boolean disabled?)   (merge {:disabled     true
-                                        :data-tooltip (components/content {:content tooltip})})
-          (not     disabled?)   (merge {:data-tooltip (components/content {:content tooltip})
-                                        :href         (param href)
-                                        ; A stated & clickable elemek on-click eseménye elérhető a Re-Frame
-                                        ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
-                                        ; a keypress-handler által is vezérelhetővé tenni a clickable
-                                        ; elemeket.
-                                        ; A static & clickable elemek on-click esemény kizárólag függvényként
-                                        ; hívható meg.
-                                        :on-click    #(a/dispatch on-click)
-                                        :on-mouse-up  (focusable/blur-element-function element-id)})
-          (boolean targetable?) (merge {:id (targetable/element-id->target-id element-id)})))
+  (cond-> {} (boolean disabled?)   (merge {:disabled     true
+                                           :data-tooltip (components/content {:content tooltip})})
+             (not     disabled?)   (merge {:data-tooltip (components/content {:content tooltip})
+                                           :href         (param href)
+                                           ; A stated & clickable elemek on-click eseménye elérhető a Re-Frame
+                                           ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
+                                           ; a keypress-handler által is vezérelhetővé tenni a clickable
+                                           ; elemeket.
+                                           ; A static & clickable elemek on-click esemény kizárólag függvényként
+                                           ; hívható meg.
+                                           :on-click    #(a/dispatch on-click)
+                                           :on-mouse-up  (focusable/blur-element-function element-id)})
+             (boolean targetable?) (merge {:id (targetable/element-id->target-id element-id)})))
 
 
 
@@ -82,7 +72,8 @@
   ;
   ; @return (boolean)
   [db [_ element-id]]
-  (map/nonempty? (r element/get-element-prop db element-id :keypress)))
+  (let [keypress-props (r element/get-element-prop db element-id :keypress)]
+       (map/nonempty? keypress-props)))
 
 
 

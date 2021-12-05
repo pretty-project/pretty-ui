@@ -89,14 +89,13 @@
   ;
   ; @return (component)
   ([button-props]
-   [view nil button-props])
+   [view (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-id    (a/id   button-id)
-         button-props (a/prot button-props button-props-prototype)]
+   (let [button-props (a/prot button-props button-props-prototype)]
         [engine/stated-element button-id
-          {:component     #'button
-           :element-props button-props
-           :destructor    [:elements/destruct-clickable! button-id]
-           :initializer   [:elements/init-clickable!     button-id]
-           :subscriber    [::get-view-props              button-id]}])))
+                               {:component     #'button
+                                :element-props button-props
+                                :destructor    [:elements/destruct-clickable! button-id]
+                                :initializer   [:elements/init-clickable!     button-id]
+                                :subscriber    [::get-view-props              button-id]}])))

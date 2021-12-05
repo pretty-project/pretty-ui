@@ -40,10 +40,27 @@
 
 
 
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- menu-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [view-id]}]
+  [{:label "Anchors"   :on-click [:router/go-to! "/playground/anchors"]   :color (if (not= view-id :anchors)   :muted)}
+   {:label "Buttons"   :on-click [:router/go-to! "/playground/buttons"]   :color (if (not= view-id :buttons)   :muted)}
+   {:label "Chips"     :on-click [:router/go-to! "/playground/chips"]     :color (if (not= view-id :chips)     :muted)}
+   {:label "Diagrams"  :on-click [:router/go-to! "/playground/diagrams"]  :color (if (not= view-id :diagrams)  :muted)}
+   {:label "Fields"    :on-click [:router/go-to! "/playground/fields"]    :color (if (not= view-id :fields)    :muted)}
+   {:label "Selectors" :on-click [:router/go-to! "/playground/selectors"] :color (if (not= view-id :selectors) :muted)}
+   {:label "Text"      :on-click [:router/go-to! "/playground/text"]      :color (if (not= view-id :text)      :muted)}])
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:debug (get-in db [:playground :debug])})
 
@@ -56,42 +73,64 @@
 
 (a/reg-event-fx
   :playground/test!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch [:x.test!]}))
+      {:dispatch [:developer/test!]}))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- local-state
-  []
-  (let [state (ratom 10)]
-       (fn [] [:div "Here comes the sun"])))
-
 (defn- infinite-loader
-  []
-  [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs}]
-       [tools/infinite-loader :my-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [:<> [elements/separator {:orientation :horizontal :size :m}]
+       [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs :layout :fit :selectable? false}]
+       [tools/infinite-loader :playground-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
        [elements/button ::reload-infinite-loader-button
-                        {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :my-loader]
-                         :variant :transparent :color :secondary}]])
+                        {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :playground-loader]
+                         :variant :transparent :color :secondary :layout :fit}]])
+
+(defn anchors
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [elements/anchor {:content "Anchor link"   :href "/link"}]
+       [elements/anchor {:content "Anchor button" :on-click [:router/go-to! "/link"]}]
+       [elements/anchor {:content "Disabled anchor"  :on-click [] :disabled? true}]])
 
 (defn buttons
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [elements/anchor {:content "My anchor link"   :href "/my-link"}]
-       [elements/anchor {:content "My anchor button" :on-click [:router/go-to! "/my-link"]}]
-       [elements/button ::pres-esc-button
+  [:<> [elements/button ::pres-esc-button
                         {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
-                         :variant :transparent :color :none :icon :people}]
-       [elements/button ::my-button
-                        {:label "My button" :variant :filled :color :primary :icon :people}]])
+                         :variant :transparent :color :none :icon :people :on-click [:developer/test!]}]
+       [:div {:style {:display :flex}}
+             [elements/button ::add-icon-button
+                              {:tooltip :add! :preset :add-icon-button :on-click [:developer/test!]}]
+             [elements/button ::save-icon-button
+                              {:tooltip :save! :preset :save-icon-button :on-click [:developer/test!]}]
+             [elements/button ::delete-icon-button
+                              {:tooltip :delete! :preset :delete-icon-button :on-click [:developer/test!]}]]
+       [elements/button ::filled-button
+                        {:label "Filled button" :variant :filled :color :primary :icon :people
+                         :on-click [:developer/test!]}]
+       [elements/button ::outlined-button
+                        {:label "Outlined button"
+                         :on-click [:developer/test!]}]
+       [elements/button ::transparent-button
+                        {:label "Transparent button"
+                         :on-click [:developer/test!]}]])
 
 (defn chips
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [elements/chip {:label "My chip" :icon :apps}]
-       [elements/chip {:label "Your chip" :variant :outlined}]
-       [elements/chip {:label "Your chip" :variant :outlined :on-delete [:x.test!]}]])
+  [:<> [elements/chip {:label "Chip" :icon :apps}]
+       [elements/chip {:label "Deletable chip" :on-delete [:developer/test!]}]
+       [elements/chips ::chips
+                       {:label "Chips" :chips [{:label "Chip #1" :color :highlight}
+                                               {:label "Chip #2" :color :secondary}]
+                        :on-delete [:developer/test!]}]])
 
 (defn diagrams
   []
@@ -100,171 +139,118 @@
        [elements/line-diagram {:sections [{:color :primary :value 50}
                                           {:color :highlight :value 20}]}]])
 
-(defn content-bar
+(defn- selectors
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/content-bar {}])
-
-(defn- form-a
-  []
-  [:<> [elements/select ::my-select
-                        {:label "My select"
-                         :on-select #(println "Selected")
-                         :options [{:label "Option #1" :value :option-1}
-                                   {:label "Option #2" :value :option-2}]}]
-       [elements/date-field ::my-date-field
-                            {:label "My date field" :value-path (db/path ::stuff :my-date)}]
-       [elements/text-field ::my-text-field-w-surface
-                            {:label "My text-field w/ surface" :emptiable? true
-                             :placeholder "Placeholder"
-                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
-                             :helper "My helper"}]
-       [elements/text-field ::my-text-field-w-modifier
-                            {:label "My text-field w/ modifier" :emptiable? true
-                             :placeholder "Placeholder"
-                             :modifier #(string/starts-with! % "/")}]
-       [elements/text-field ::my-text-field-w-validator
-                            {:label "My text-field w/ validator" :emptiable? true
-                             :placeholder "Placeholder"
-                             :validator {:f #(= % "x")
-                                         :invalid-message "Type \"x\""}}]
-       [elements/text-field ::my-text-field-w-prevalidator
-                            {:label "My text-field w/ prevalidator" :emptiable? true
-                             :placeholder "Placeholder"
-                             :initial-value "x"
-                             :validator {:f #(= % "x")
-                                         :invalid-message "Type \"x\""
-                                         :pre-validate? true}}]
-       [elements/password-field ::my-password-field-w-adornments
-                                {:label "My password-field w/ adornments" :emptiable? true
-                                 :placeholder "Placeholder"
-                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [] :tooltip "Hello"}]}]
-       [elements/multiline-field ::my-multiline-field
-                                 {:label "My multiline-field" :placeholder "Placeholder"}]])
-
-(defn- form-b
-  []
-  [:<> [elements/switch ::my-switch
-                        {:label "My switch"
+  [:<> [elements/select ::select
+                        {:label "Select"
+                         :on-select [:developer/test!]
+                         :initial-options ["Option #1" "Option #2"]}]
+       [elements/switch ::switch-1
+                        {:label "Switch #1"
+                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+       [elements/switch ::switch-2
+                        {:label "Switch #2"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                          :default-value true}]
-       [elements/switch ::your-switch
-                        {:label "Your switch"
-                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
-       [elements/separator {:orientation :horizontal :size :l}]
-       [elements/label {:content "My label"}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/checkbox ::my-checkbox
-                          {:label "My checkbox"
+       [elements/checkbox ::checkbox-1
+                          {:label "Checkbox #1"
                            :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
-       [elements/checkbox ::your-checkbox
-                          {:label "Your checkbox"
+       [elements/checkbox ::checkbox-2
+                          {:label "Checkbox #2"
                            :helper "Check it to check out!"}]
-       [elements/checkbox ::our-checkbox
-                          {:label "Our checkbox"
+       [elements/checkbox ::checkbox-3
+                          {:label "Checkbox #3"
                            :helper "Check it to check out!"}]
-       [elements/separator {:orientation :horizontal :size :l}]
-       [elements/label {:content "Your label"}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/counter ::my-counter
-                         {:label "My counter" :resetable? true :initial-value 420}]
-       [elements/counter ::your-counter
-                         {:label "Your counter" :resetable? true :initial-value 420
-                          :helper "Your helper"}]
-       [elements/separator {:orientation :horizontal :size :l}]
-       [elements/label {:content "Our label"}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/anchor {:href "/x" :content "My anchor"}]
-       [elements/button ::my-button-w-helper
-                        {:label "My button"
-                         :helper "Your helper"}]
-       [elements/button ::browse-files-button
-                        {:label "Browse files!"
-                         :on-click [:file-browser/load! {:value-path (db/path ::stuff :selected-files)
-                                                         :browser-mode :add-files}]}]
-       [elements/separator {:orientation :horizontal :size :xxl}]
-       [elements/radio-button ::my-radio-button
-                              {:label "My radio-button"
+       [elements/radio-button ::radio-button
+                              {:label "Radio-button"
                                :unselectable? true
                                :get-label-f :label
                                :initial-options [{:label "Option #1" :value "ot-1"}
                                                  {:label "Option #2" :value "ot-2"}]}]
-       [elements/chip  {:color :highlight :label "My chip" :variant :outlined :on-delete [:chip-deleted :layout :fit]}]
-       [elements/chips ::my-chips
-                       {:label "My chips" :chips [{:label "Chip #1" :variant :outlined}
-                                                  {:label "Chip #2" :variant :filled}]
-                                          :on-delete []}]])
+       [elements/counter ::counter-1
+                         {:label "Counter #1" :resetable? true :initial-value 420
+                          :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+       [elements/counter ::counter-2
+                         {:label "Counter #2" :resetable? true :initial-value 420}]])
 
-(defn form-c
+(defn- text
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [elements/label {:content "Label"}]])
+
+(defn fields
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [:<> [elements/expandable  {:content "My content" :icon :apps :label "My expandable"}]
-       [elements/multi-field ::my-multi-field
-                             {:label "My multi-field"
+  [:<> [elements/multi-field ::multi-field
+                             {:label "Multi-field"
                               :value-path [:x :y]}]
-       [elements/combo-box ::my-combo-box
-                           {:label "My combo-box"
+       [elements/combo-box ::combo-box
+                           {:label "Combo-box"
                             :extendable? true
                             :get-label-f  #(do (get % :x))
                             :options-path (db/path ::stuff :combo-box :options)
                             :initial-options [{:x "A"} {:x "B"}]
                             :initial-value {:x "B"}}]
-
-       [elements/multi-combo-box ::my-multi-combo-box
-                                 {:label "My multi-combo-box"
+       [elements/multi-combo-box ::multi-combo-box
+                                 {:label "Multi-combo-box"
                                   :extendable? true
                                   :get-label-f #(get % :x)
                                   ;:options-path (db/path ::stuff :multi-combo-box :options)
-                                  :initial-options [{:x "A"} {:x "B"}]}]])
+                                  :initial-options [{:x "A"} {:x "B"}]}]
+       [elements/date-field ::date-field
+                            {:label "Date field" :value-path (db/path ::stuff :date)}]
+       [elements/text-field ::text-field-w-surface
+                            {:label "Text-field w/ surface" :emptiable? true
+                             :placeholder "Placeholder"
+                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
+                             :helper "My helper"}]
+       [elements/text-field ::text-field-w-modifier
+                            {:label "Text-field w/ modifier" :emptiable? true
+                             :placeholder "Placeholder"
+                             :modifier #(string/starts-with! % "/")}]
+       [elements/text-field ::text-field-w-validator
+                            {:label "Text-field w/ validator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""}}]
+       [elements/text-field ::text-field-w-prevalidator
+                            {:label "Text-field w/ prevalidator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :initial-value "x"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""
+                                         :pre-validate? true}}]
+       [elements/password-field ::password-field-w-adornments
+                                {:label "Password-field w/ adornments" :emptiable? true
+                                 :placeholder "Placeholder"
+                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]}]
+       [elements/multiline-field ::multiline-field
+                                 {:label "Multiline-field" :placeholder "Placeholder"}]])
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id view-props]
+  [elements/menu-bar {:menu-items (menu-items surface-id view-props)}])
 
-(defn- menu-bar
-  [_]
-  [elements/menu-bar {:menu-items [{:label "Menu item #1" :on-click [] :color :default}
-                                   {:label "Menu item #2" :on-click [] :color :muted}
-                                   {:label "Menu item #3" :on-click [] :color :muted}]}])
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id {:keys [view-id] :as view-props}]
+  (case view-id :anchors   [anchors   surface-id view-props]
+                :buttons   [buttons   surface-id view-props]
+                :chips     [chips     surface-id view-props]
+                :diagrams  [diagrams  surface-id view-props]
+                :fields    [fields    surface-id view-props]
+                :selectors [selectors surface-id view-props]
+                :text      [text      surface-id view-props]))
 
 (defn- view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
-  [:<> [elements/box surface-id
-                     {:body   {:content "Menu"}
-                      :header {:content #'menu-bar
-                               :sticky? true}}]
-       [elements/box surface-id
-                     {:body   {:content #'buttons}
-                      :header {:content "Buttons"
-                               :sticky? true}
-                      :horizontal-align :left
-                      :stickers [{:icon :apps :tooltip :filters :on-click []}]}]
-
-       [elements/box surface-id
-                     {:body   {:content #'chips}
-                      :header {:content "Chips"
-                               :sticky? true}
-                      :horizontal-align :left}]
-       [elements/box surface-id
-                     {:body   {:content #'diagrams}
-                      :header {:content "Diagrams"
-                               :sticky? true}
-                      :horizontal-align :left}]
-       [elements/box surface-id
-                     {:body   {:content #'form-a}
-                      :header {:content "Form A"
-                               :sticky? true}
-                      :horizontal-align :left}]
-       [elements/box surface-id
-                     {:body   {:content #'form-b}
-                      :header {:content "Form B"
-                               :sticky? true}
-                      :horizontal-align :left}]
-       [elements/box surface-id
-                     {:body   {:content #'form-c}
-                      :header {:content "Form C"
-                               :sticky? true}
-                      :horizontal-align :left
-                      :expandable? true
-                      :expanded? true}]
-       [elements/box surface-id
-                     {:body   {:content #'infinite-loader}}]
-       [elements/box surface-id
-                     {:body   {:content #'local-state}}]])
+  [:<> [layouts/layout-a surface-id
+                         {:description "Follow the white rabbit!"
+                          :body   {:content #'body   :subscriber [:view-selector/get-view-props :playground]}
+                          :header {:content #'header :subscriber [:view-selector/get-view-props :playground]}}]
+       [infinite-loader surface-id view-props]])
 
 
 
@@ -285,13 +271,4 @@
 
 (a/reg-event-fx
   :playground/render!
-  [:ui/set-surface! ::view
-                    {:content     #'view
-                     :initializer [:playground/initialize!]
-                     :subscriber  [::get-view-props]}])
-
-(a/reg-event-fx
-  :playground/load!
-  {:dispatch-n [[:ui/set-header-title! "Playground"]
-                [:ui/set-window-title! "Playground"]
-                [:playground/render!]]})
+  [:ui/set-surface! ::view {:content #'view :initializer [:playground/initialize!]}])

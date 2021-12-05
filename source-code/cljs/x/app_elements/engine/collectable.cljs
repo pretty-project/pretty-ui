@@ -6,7 +6,7 @@
 ; Created: 2021.03.01
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -53,12 +53,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (map) view-props
+  ; @param (map) input-props
   ;  {:value (boolean)}
   ;
   ; @return (map)
-  [input-id {:keys [value] :as view-props}]
-  (element/element-attributes input-id view-props))
+  [input-id {:keys [value] :as input-props}]
+  (element/element-attributes input-id input-props))
 
 (defn collectable-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,14 +76,13 @@
   ;   :id (string)
   ;   :on-click (function)}
   [input-id {:keys [disabled? targetable? value]} {:keys [id]}]
-  (cond-> (param {})
-          (boolean disabled?) (merge {:disabled true})
-          (not     disabled?) (merge {:on-click    (on-collect-function             input-id id)
-                                      ; WARNING! NOT TESTED!
-                                      :on-mouse-up (focusable/blur-element-function input-id)})
-                                      ; WARNING! NOT TESTED!
-          (and (not     disabled?)
-               (boolean targetable?)) (merge {:id (targetable/element-id->target-id input-id)})))
+  (cond-> {} (boolean disabled?) (merge {:disabled true})
+             (not     disabled?) (merge {:on-click    (on-collect-function             input-id id)
+                                         ; WARNING! NOT TESTED!
+                                         :on-mouse-up (focusable/blur-element-function input-id)})
+                                         ; WARNING! NOT TESTED!
+             (and (not     disabled?)
+                  (boolean targetable?)) (merge {:id (targetable/element-id->target-id input-id)})))
 
 
 
@@ -98,7 +97,7 @@
   ; @return (boolean)
   [db [_ input-id]]
   (let [value (r input/get-input-value db input-id)]
-       (not (nil? value))))
+       (some? value)))
 
 (defn collectable-noncollected?
   ; WARNING! NON-PUBLIC! DO NOT USE!

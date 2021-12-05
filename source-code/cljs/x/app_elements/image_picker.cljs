@@ -84,12 +84,11 @@
   ;
   ; @return (component)
   ([picker-props]
-   [view nil picker-props])
+   [view (a/id) picker-props])
 
   ([picker-id picker-props]
-   (let [picker-id    (a/id   picker-id)]
-        ;picker-props (a/prot picker-props picker-props-prototype)
+   (let [];picker-props (a/prot picker-props picker-props-prototype)
         [engine/stated-element picker-id
-          {:component     #'image-picker
-           :element-props picker-props
-           :subscriber    [::get-view-props picker-id]}])))
+                               {:component     #'image-picker
+                                :element-props picker-props
+                                :subscriber    [::get-view-props picker-id]}])))

@@ -113,9 +113,8 @@
   ;
   ; @return (hiccup)
   ([image-props]
-   [view nil image-props])
+   [view (a/id) image-props])
 
   ([image-id image-props]
-   (let [image-id    (a/id   image-id)]
-        ;image-props (a/prot image-id image-props image-props-prototype)
+   (let [];image-props (a/prot image-id image-props image-props-prototype)
         [image image-id image-props])))

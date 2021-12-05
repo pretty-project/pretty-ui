@@ -119,9 +119,8 @@
   ;
   ; @return (component)
   ([polarity-props]
-   [view nil polarity-props])
+   [view (a/id) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-id    (a/id   polarity-id)
-         polarity-props (a/prot polarity-props polarity-props-prototype)]
+   (let [polarity-props (a/prot polarity-props polarity-props-prototype)]
         [polarity polarity-id polarity-props])))

@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v1.1.6
-; Compatibility: x4.3.9
+; Compatibility: x4.4.8
 
 
 
@@ -163,20 +163,20 @@
          (param ADORNMENTS-HORIZONTAL-PADDING))
       (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
 
-(defn view-props->field-filled?
+(defn field-props->field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:value (string)}
   ;
   ; @return (boolean)
   [{:keys [value]}]
   (string/nonempty? value))
 
-(defn view-props->line-count
+(defn field-props->line-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:multiline? (boolean)(opt)
   ;   :value (string)}
   ;
@@ -192,49 +192,49 @@
            (inc line-count))
       (return 1)))
 
-(defn view-props->field-height
+(defn field-props->field-height
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (integer)
-  [view-props]
-  (+ (* FIELD-LINE-HEIGHT (view-props->line-count view-props))
+  [field-props]
+  (+ (* FIELD-LINE-HEIGHT (field-props->line-count field-props))
      (* FIELD-VERTICAL-PADDING 2)))
     ; WARNING! DEPRECATED!
     ; Ettől 50px magas lett a search-field!
     ; (* FIELD-BORDER-WIDTH 2)
     ; WARNING! DEPRECATED!
 
-(defn view-props->field-style
+(defn field-props->field-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (map)
   ;  {:height (string)
   ;   :paddingLeft (string)
   ;   :paddingRight (string)}
-  [view-props]
-  {:height       (css/px (view-props->field-height              view-props))
-   :paddingLeft  (css/px (field-props->start-adornments-padding view-props))
-   :paddingRight (css/px (field-props->end-adornments-padding   view-props))})
+  [field-props]
+  {:height       (css/px (field-props->field-height             field-props))
+   :paddingLeft  (css/px (field-props->start-adornments-padding field-props))
+   :paddingRight (css/px (field-props->end-adornments-padding   field-props))})
 
-(defn view-props->placeholder-style
+(defn field-props->placeholder-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (map)
   ;  {:left (string)}
-  [view-props]
-  {:left (css/px (+ (field-props->start-adornments-padding view-props)
+  [field-props]
+  {:left (css/px (+ (field-props->start-adornments-padding field-props)
                     (param CARET-OFFSET)))})
 
-(defn view-props->render-field-placeholder?
+(defn field-props->render-field-placeholder?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:field-empty? (boolean)
   ;   :placeholder (metamorphic-content)}
   ;
@@ -265,7 +265,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;   :max-length (integer)(opt)
@@ -285,63 +285,61 @@
   ;   :style (map)
   ;   :value (string)}
   [field-id {:keys [auto-focus? disabled? max-length surface targetable? type value]
-             :as view-props}]
-  (cond-> (param {})
-          (boolean disabled?)
-          (merge {:disabled   true
-                  :style      (view-props->field-style view-props)
-                  :type       (a/dom-value             type)
-                  :value      value
-                  ; BUG#8809
-                  ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                  ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
-                  :on-change #(let [])})
-          (not disabled?)
-          (merge {:autoFocus  auto-focus?
-                  :max-length max-length
-                  :on-blur    (on-blur-function        field-id)
-                  :on-focus   (on-focus-function       field-id)
-                  :style      (view-props->field-style view-props)
-                  :type       (a/dom-value             type)
-                  :value      value
-                  ; BUG#8041
-                  ;  Abban az esetben, ha egy input elem {:value-path [...]}
-                  ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
-                  ;  érték megváltozik egy külső esemény hatására, az input elem
-                  ;  {:on-change #(...)} függvényétől függetlenül, miközben
-                  ;  az input elemen van a fókusz, akkor az elem fókuszának
-                  ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
-                  ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
-                  ;  aminek hatására nem várt események történhetnek, amik hibás
-                  ;  működéshez vezethetnek.
-                  ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
-                  ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
-                  ;  felülíródik az input tartalmával, ami minden esetben string
-                  ;  típus, ellentétben a kiválaszott opcióval.
-                  ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
-                  ;  függvény használatával kezeli.
-                  :on-input   (field-props->on-change-function field-id view-props)
-                  ; BUG#8041
-                  ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
-                  ;  függvény nélküli input elemeket.
-                  :on-change #(let [])})
-
-          (and (not     disabled?)
-               (boolean targetable?))
-          (merge {:id (targetable/element-id->target-id field-id)})
-          (some? surface)
-          (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
+             :as field-props}]
+             ; If field is disabled ...
+  (cond-> {} (boolean disabled?) (merge {:disabled   true
+                                         :style      (field-props->field-style field-props)
+                                         :type       (param                    type)
+                                         :value      value
+                                         ; BUG#8809
+                                         ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+                                         ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+                                         :on-change #(let [])})
+             ; If field is not disabled ...
+             (not disabled?) (merge {:autoFocus  auto-focus?
+                                     :max-length max-length
+                                     :on-blur    (on-blur-function         field-id)
+                                     :on-focus   (on-focus-function        field-id)
+                                     :style      (field-props->field-style field-props)
+                                     :type       (param                    type)
+                                     :value      value
+                                     ; BUG#8041
+                                     ;  Abban az esetben, ha egy input elem {:value-path [...]}
+                                     ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
+                                     ;  érték megváltozik egy külső esemény hatására, az input elem
+                                     ;  {:on-change #(...)} függvényétől függetlenül, miközben
+                                     ;  az input elemen van a fókusz, akkor az elem fókuszának
+                                     ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
+                                     ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
+                                     ;  aminek hatására nem várt események történhetnek, amik hibás
+                                     ;  működéshez vezethetnek.
+                                     ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
+                                     ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
+                                     ;  felülíródik az input tartalmával, ami minden esetben string
+                                     ;  típus, ellentétben a kiválaszott opcióval.
+                                     ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
+                                     ;  függvény használatával kezeli.
+                                     :on-input   (field-props->on-change-function field-id field-props)
+                                     ; BUG#8041
+                                     ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
+                                     ;  függvény nélküli input elemeket.
+                                     :on-change #(let [])})
+             ; If field is targetable & not disabled ...
+             (and (not     disabled?)
+                  (boolean targetable?)) (merge {:id (targetable/element-id->target-id field-id)})
+             ; If field has surface ...
+             (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
 
 (defn field-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (map)
   ;  {:style (map)}
-  [_ view-props]
-  {:style (view-props->placeholder-style view-props)})
+  [_ field-props]
+  {:style (field-props->placeholder-style field-props)})
 
 
 

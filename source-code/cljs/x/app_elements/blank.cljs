@@ -104,9 +104,8 @@
   ;
   ; @return (component)
   ([blank-props]
-   [view nil blank-props])
+   [view (a/id) blank-props])
 
   ([blank-id blank-props]
-   (let [blank-id    (a/id   blank-id)]
-        ;blank-props (a/prot blank-props blank-props-prototype
+   (let [];blank-props (a/prot blank-props blank-props-prototype
         [blank blank-id blank-props])))

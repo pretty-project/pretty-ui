@@ -69,7 +69,8 @@
   ; @return (component)
   [_ {:keys [title]}]
   [elements/text ::error-title
-                 {:content title :font-size :xxl :horizontal-align :center :layout :fit :selectable? false}])
+                 {:content title :font-size :xxl :horizontal-align :center :layout :fit :selectable? false
+                  :font-weight :bold}])
 
 (defn- error-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!

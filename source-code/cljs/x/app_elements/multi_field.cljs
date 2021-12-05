@@ -274,12 +274,11 @@
   ;
   ; @return (component)
   ([group-props]
-   [view nil group-props])
+   [view (a/id) group-props])
 
   ([group-id group-props]
-   (let [group-id    (a/id   group-id)
-         group-props (a/prot group-id group-props group-props-prototype)]
+   (let [group-props (a/prot group-id group-props group-props-prototype)]
         [engine/stated-element group-id
-          {:component     #'multi-field
-           :element-props group-props
-           :subscriber    [::get-view-props group-id]}])))
+                               {:component     #'multi-field
+                                :element-props group-props
+                                :subscriber    [::get-view-props group-id]}])))

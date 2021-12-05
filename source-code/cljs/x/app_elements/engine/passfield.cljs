@@ -6,7 +6,7 @@
 ; Created: 2021.02.28
 ; Description:
 ; Version: v0.3.2
-; Compatibility: x3.9.9
+; Compatibility: x4.4.8
 
 
 
@@ -112,8 +112,6 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (let [passphrase-visible? (r passphrase-visible? db field-id)]
-       (r element/set-element-prop! db field-id :passphrase-visible?
-          (not passphrase-visible?))))
+  (r element/update-element-prop! db field-id :passphrase-visible? not))
 
 (a/reg-event-db :elements/toggle-passphrase-visibility! toggle-passphrase-visibility!)

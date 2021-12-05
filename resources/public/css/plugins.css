@@ -29,6 +29,32 @@
 
 
 /***** Item-lister *****/
+/*** Item-lister header ***/
+
+#item-lister--header--structure {
+   height: 48px;
+   width: 100% }
+
+ /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként
+  * vannak azonosítva, mert a különböző menük közötti átváltáskor előfordul, hogy egyszerre
+  * több több menü van a React-fába csatolva. */
+.item-lister--header--menu-bar {
+  animation-duration: .25s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100% }
+
+.item-lister--header--menu-bar.r-unmounting { animation-name: x-slide-out-ttb }
+.item-lister--header--menu-bar.r-mounting   { animation-name: x-slide-in-ttb  }
+
+.item-lister--header--menu-item-group {
+  display: flex }
+
+/*** Item-lister header ***/
+
 /*** Item-lister items ***/
 
 .item-lister--structure {
@@ -43,6 +69,9 @@
   justify-content: center;
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
+
+.item-lister--item-list--selectable-list-item {
+  display: flex }  
 
 /*** Item-lister items ***/
 /***** Item-lister *****/

@@ -113,6 +113,10 @@
 ; @name restricted?
 ;  A {:restricted? true} tulajdonságú útvonalak az applikáció belső útvonalai, amelyek
 ;  használata kizárólag azonosított felhasználók számára lehetséges.
+;
+;  Ha az x.project-config.edn fájlban az :app-home értéke pl. "/my-app"
+;  akkor a "/my-app/my-route" útvonalon érheted el a {:restricted? true} beállítás
+;  használatával hozzáadott útvonalat, mivel azt applikáció-útvonalként fogja azt kezelni.
 
 
 

@@ -1,4 +1,6 @@
 
+; WARNING! DEPRECATED! DO NOT USE!
+
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -160,7 +162,7 @@
   ; @return (hiccup)
   [_ {:keys [label]}]
   [:div.x-directory--label
-    [:i.x-directory--icon   (a/dom-value :folder)]
+    [:i.x-directory--icon   :folder]
     [:div.x-directory--name [components/content {:content label}]]])
 
 (defn- directory-static-body
@@ -202,14 +204,15 @@
   ;
   ; @param (keyword) directory-id
   ; @param (map) view-props
+  ;  {:selected? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [directory-id view-props]
+  [directory-id {:keys [selected?] :as view-props}]
   ; Az [elements/file ...] komponens highlighter funkciójának megvalósítása.
   (let [directory-selection-subscriber (view-props->directory-selection-subscriber directory-id view-props)
         directory-selected?            (a/subscribe directory-selection-subscriber)]
-       (fn [] [:div.x-directory--highlighter {:data-selected (or (engine/view-props->element-selected? view-props)
-                                                                 (deref directory-selected?))}])))
+       (fn [] [:div.x-directory--highlighter {:data-selected (or (boolean selected?)
+                                                                 (deref   directory-selected?))}])))
 
 (defn- directory
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -289,12 +292,11 @@
   ;
   ; @return (component)
   ([directory-props]
-   [view nil directory-props])
+   [view (a/id) directory-props])
 
   ([directory-id directory-props]
-   (let [directory-id    (a/id   directory-id)
-         directory-props (a/prot directory-id directory-props directory-props-prototype)]
+   (let [directory-props (a/prot directory-id directory-props directory-props-prototype)]
         [engine/stated-element directory-id
-          {:component     #'directory
-           :element-props directory-props
-           :subscriber    [::get-view-props directory-id]}])))
+                               {:component     #'directory
+                                :element-props directory-props
+                                :subscriber    [::get-view-props directory-id]}])))

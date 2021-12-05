@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.27
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.4.4
+; Version: v0.3.6
+; Compatibility: x4.4.8
 
 
 
@@ -32,7 +32,7 @@
   ;  {:on-click (metamorphic-event)(opt)
   ;   :preset (keyword)(opt)}
   ;
-  ; @example
+  ; @usage
   ;  (engine/apply-preset {:preset-name {...}}
   ;                       {:preset :preset-name ...})
   ;

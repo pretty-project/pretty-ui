@@ -31,16 +31,8 @@
 ;  (a/dispatch [:view-selector/initialize! :my-extension])
 ;
 ; @usage
-;  (a/dispatch [:view-selector/initialize! :my-extension {:default-view :my-view}])
+;  (a/dispatch [:view-selector/initialize! :my-extension {:default-view-id :my-view}])
 ;
 ; @usage
-;  (a/dispatch [:view-selector/initialize! :my-extension {:default-view  :my-view
-;                                                         :allowed-views [:my-view :your-view :our-view]}])
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; server-plugins.view-selector.engine
-(def request-id engine/request-id)
+;  (a/dispatch [:view-selector/initialize! :my-extension {:default-view-id  :my-view
+;                                                         :allowed-view-ids [:my-view :your-view :our-view]}])

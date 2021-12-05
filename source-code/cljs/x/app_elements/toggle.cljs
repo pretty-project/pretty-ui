@@ -51,10 +51,9 @@
   ; @return (hiccup)
   [toggle-id view-props]
   (let [content-props (components/extended-props->content-props view-props)]
-       [:button.x-toggle
-         (engine/element-attributes          toggle-id view-props
-           (engine/clickable-body-attributes toggle-id view-props))
-         [components/content content-props]]))
+       [:button.x-toggle (engine/element-attributes          toggle-id view-props
+                           (engine/clickable-body-attributes toggle-id view-props))
+                         [components/content content-props]]))
 
 (defn view
   ; XXX#8711
@@ -92,9 +91,8 @@
   ;
   ; @return (component)
   ([toggle-props]
-   [view nil toggle-props])
+   [view (a/id) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [toggle-id    (a/id   toggle-id)
-         toggle-props (a/prot toggle-props toggle-props-prototype)]
+   (let [toggle-props (a/prot toggle-props toggle-props-prototype)]
         [toggle toggle-id toggle-props])))

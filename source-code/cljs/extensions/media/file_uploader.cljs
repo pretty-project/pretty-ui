@@ -265,11 +265,11 @@
   ;
   ; @return (component)
   [bubble-id {:keys [namespace]}]
-  (let [query-id (engine/namespace->query-id namespace)]
-       [elements/request-indicator {:diameter   36
-                                    :layout     :row
-                                    :request-id query-id
-                                    :shape      :circle}]))
+  (let [query-id (engine/namespace->query-id namespace)]))
+;       [elements/request-indicator {:diameter   36
+;                                    :layout     :row
+;                                    :request-id query-id
+;                                    :shape      :circle)]))
 
 (defn- file-uploader-pending-bubble
   ; WARNING! NON-PUBLIC! DO NOT USE!

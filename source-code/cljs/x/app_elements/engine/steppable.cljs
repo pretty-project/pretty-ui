@@ -6,7 +6,7 @@
 ; Created: 2021.04.09
 ; Description:
 ; Version: v0.1.8
-; Compatibility: x3.9.9
+; Compatibility: x4.4.8
 
 
 
@@ -24,10 +24,10 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->step-animation-name
+(defn- steppable-props->step-animation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) steppable-props
   ;  {:step-animation (keyword)(opt)
   ;   :step-direction (keyword)(opt)}
   ;
@@ -41,16 +41,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) steppable-id
-  ; @param (map) view-props
+  ; @param (map) steppable-props
   ;  {:step-animation-name (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:data-animation (string)}
-  [steppable-id view-props]
-  (if-let [step-animation-name (view-props->step-animation-name view-props)]
-          (element/element-attributes steppable-id view-props
-                                      {:data-animation (a/dom-value step-animation-name)})
-          (element/element-attributes steppable-id view-props)))
+  [steppable-id steppable-props]
+  (if-let [step-animation-name (steppable-props->step-animation-name steppable-props)]
+          (element/element-attributes steppable-id steppable-props {:data-animation step-animation-name})
+          (element/element-attributes steppable-id steppable-props)))
 
 
 
