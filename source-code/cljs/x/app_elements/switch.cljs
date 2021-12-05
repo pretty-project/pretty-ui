@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.9.6
-; Compatibility: x4.4.3
+; Version: v0.9.8
+; Compatibility: x4.4.8
 
 
 
@@ -33,10 +33,12 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
+  ;   :indent (keyword)
   ;   :layout (keyword)}
   [switch-id switch-props]
   (merge {:color     :primary
           :font-size :s
+          :indent    :left
           :layout    :row
           :value-path (engine/default-value-path switch-id)}
          (param switch-props)))
@@ -85,11 +87,9 @@
   ;
   ; @return (hiccup)
   [switch-id view-props]
-  [:button.x-switch--body
-    (engine/checkable-body-attributes switch-id view-props)
-    [:div.x-switch--track
-      [:div.x-switch--thumb]]
-    [switch-label switch-id view-props]])
+  [:button.x-switch--body (engine/checkable-body-attributes switch-id view-props)
+                          [:div.x-switch--track [:div.x-switch--thumb]]
+                          [switch-label switch-id view-props]])
 
 (defn- switch
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,11 +99,10 @@
   ;
   ; @return (hiccup)
   [switch-id view-props]
-  [:div.x-switch
-    (engine/checkable-attributes switch-id view-props)
-    [switch-body                 switch-id view-props]
-    [engine/element-helper       switch-id view-props]
-    [engine/element-info-tooltip switch-id view-props]])
+  [:div.x-switch (engine/checkable-attributes switch-id view-props)
+                 [switch-body                 switch-id view-props]
+                 [engine/element-helper       switch-id view-props]
+                 [engine/element-info-tooltip switch-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) switch-id
@@ -116,11 +115,11 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-value (boolean)(constant)(opt)
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)

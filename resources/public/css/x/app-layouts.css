@@ -177,7 +177,8 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 .x-layout-b--card-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center }
+  justify-content: center;
+  grid-gap: 12px }
 
 /*** Card list ***/
 /***** Layout B *****/

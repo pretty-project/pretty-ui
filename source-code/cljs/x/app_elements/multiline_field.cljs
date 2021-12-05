@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.1.4
-; Compatibility: x4.4.3
+; Version: v1.1.8
+; Compatibility: x4.4.8
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-elements.multiline-field
     (:require [mid-fruits.candy          :as candy :refer [param]]
-              [mid-fruits.string         :as string]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
               [x.app-elements.text-field :as text-field]))
@@ -33,6 +32,7 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
+  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :max-height (integer)
   ;   :min-height (integer)
@@ -41,6 +41,7 @@
   ;   :status-animation? (boolean)}
   [field-id field-props]
   (merge {:color      :default
+          :indent     :left
           :layout     :row
           :max-height 32
           :min-height 1
@@ -69,8 +70,7 @@
   ;
   ; @return (hiccup)
   [field-id view-props]
-  [:textarea.x-text-field--textarea
-    (engine/field-body-attributes field-id view-props)])
+  [:textarea.x-text-field--textarea (engine/field-body-attributes field-id view-props)])
 
 (defn- multiline-field-textarea-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -80,9 +80,8 @@
   ;
   ; @return (hiccup)
   [field-id view-props]
-  [:div.x-text-field--input-container
-    [multiline-field-textarea          field-id view-props]
-    [text-field/text-field-placeholder field-id view-props]])
+  [:div.x-text-field--input-container [multiline-field-textarea          field-id view-props]
+                                      [text-field/text-field-placeholder field-id view-props]])
 
 (defn- multiline-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,13 +91,12 @@
   ;
   ; @return (hiccup)
   [field-id view-props]
-  [:label.x-text-field
-     (engine/element-attributes field-id view-props)
-     [text-field/text-field-label           field-id view-props]
-     [multiline-field-textarea-container    field-id view-props]
-     [text-field/text-field-invalid-message field-id view-props]
-     [engine/element-helper                 field-id view-props]
-     [engine/element-info-tooltip           field-id view-props]])
+  [:label.x-text-field (engine/element-attributes field-id view-props)
+                       [text-field/text-field-label           field-id view-props]
+                       [multiline-field-textarea-container    field-id view-props]
+                       [text-field/text-field-invalid-message field-id view-props]
+                       [engine/element-helper                 field-id view-props]
+                       [engine/element-info-tooltip           field-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) field-id
@@ -114,8 +112,9 @@
   ;   :disabler (subscription vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

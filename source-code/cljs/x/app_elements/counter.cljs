@@ -6,7 +6,7 @@
 ; Created: 2020.10.21
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.4.2
+; Compatibility: x4.4.8
 
 
 
@@ -33,10 +33,12 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
+  ;   :indent (keyword)
   ;   :layout (keyword)}
   [counter-id counter-props]
   (merge {:color     :primary
           :font-size :s
+          :indent    :left
           :layout    :row
           :value-path (engine/default-value-path counter-id)}
          (param counter-props)))
@@ -72,9 +74,7 @@
   ;
   ; @return (hiccup)
   [counter-id {:keys [resetable?] :as view-props}]
-  (if resetable?
-      [:button.x-counter--reset-button
-        (engine/countable-reset-attributes counter-id view-props)]))
+  (if resetable? [:button.x-counter--reset-button (engine/countable-reset-attributes counter-id view-props)]))
 
 (defn- counter-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,8 +100,7 @@
   ;
   ; @return (hiccup)
   [counter-id view-props]
-  [:button.x-counter--increase-button
-    (engine/countable-increase-attributes counter-id view-props)])
+  [:button.x-counter--increase-button (engine/countable-increase-attributes counter-id view-props)])
 
 (defn- counter-decrease-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,8 +111,7 @@
   ;
   ; @return (hiccup)
   [counter-id view-props]
-  [:button.x-counter--decrease-button
-    (engine/countable-decrease-attributes counter-id view-props)])
+  [:button.x-counter--decrease-button (engine/countable-decrease-attributes counter-id view-props)])
 
 (defn- counter-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,12 +122,11 @@
   ;
   ; @return (hiccup)
   [counter-id {:keys [value] :as view-props}]
-  [:div.x-counter--body
-    [counter-decrease-button counter-id view-props]
-    [:div.x-counter--value   value]
-    [counter-increase-button counter-id view-props]
-    [counter-reset-button    counter-id view-props]
-    [counter-label           counter-id view-props]])
+  [:div.x-counter--body [counter-decrease-button counter-id view-props]
+                        [:div.x-counter--value   value]
+                        [counter-increase-button counter-id view-props]
+                        [counter-reset-button    counter-id view-props]
+                        [counter-label           counter-id view-props]])
 
 (defn- counter
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -139,10 +136,9 @@
   ;
   ; @return (hiccup)
   [counter-id view-props]
-  [:div.x-counter
-    (engine/element-attributes counter-id view-props)
-    [counter-body              counter-id view-props]
-    [engine/element-helper     counter-id view-props]])
+  [:div.x-counter (engine/element-attributes counter-id view-props)
+                  [counter-body              counter-id view-props]
+                  [engine/element-helper     counter-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) counter-id
@@ -154,11 +150,11 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-value (integer)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)

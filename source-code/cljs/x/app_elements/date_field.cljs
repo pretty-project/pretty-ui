@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.24
 ; Description:
-; Version: v0.1.6
-; Compatibility: x4.3.4
+; Version: v0.1.8
+; Compatibility: x4.4.8
 
 
 
@@ -31,11 +31,13 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:min-width (keyword)
+  ;  {:indent (keyword)
+  ;   :min-width (keyword)
   ;   :type (keyword)
   ;   :value-path (item-path vector)}
   [field-id field-props]
-  (merge {:min-width  :s
+  (merge {:indent     :left
+          :min-width  :s
           :type       :date
           :value-path (engine/default-value-path field-id)}
          (param field-props)))
@@ -111,8 +113,9 @@
   ;   :disabler (subscription vector)(opt)
   ;    TODO ...
   ;   :form-id (keyword)(opt)
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

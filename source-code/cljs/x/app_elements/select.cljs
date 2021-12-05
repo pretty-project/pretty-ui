@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.19
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.3.0
+; Version: v0.8.8
+; Compatibility: x4.4.8
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-elements.select
     (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.map            :as map]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -138,6 +137,7 @@
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
+  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id {:keys [as-button?] :as select-props}]
@@ -148,7 +148,8 @@
                :value-path   (engine/default-value-path   select-id)}
               ; A button elemnél is alkalmazott tulajdonságok csak akkor részei a select elem
               ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
-              (if-not as-button? {:layout :row})
+              (if-not as-button? {:indent :left
+                                  :layout :row})
               (param select-props)
               {:on-click [:elements/render-select-options! select-id options-props]})))
 
@@ -227,9 +228,8 @@
   ; @return (hiccup)
   [popup-id {:keys [get-label-f options-id] :as view-props} option]
   (let [option-label (get-label-f option)]
-       [:button.x-select--option
-         (engine/selectable-option-attributes options-id view-props option)
-         [components/content {:content option-label}]]))
+       [:button.x-select--option (engine/selectable-option-attributes options-id view-props option)
+                                 [components/content {:content option-label}]]))
 
 (defn- ab7081
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -254,9 +254,9 @@
   ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
-    {:component     #'ab7081
-     :element-props options-props
-     :subscriber  [::get-view-props options-id]}])
+                         {:component     #'ab7081
+                          :element-props options-props
+                          :subscriber    [::get-view-props options-id]}])
 
 
 
@@ -292,10 +292,9 @@
   ;
   ; @return (hiccup)
   [select-id view-props]
-  [:button.x-select--button-body
-    (engine/clickable-body-attributes select-id view-props)
-    [select-button-label select-id view-props]
-    [select-button-icon  select-id view-props]])
+  [:button.x-select--button-body (engine/clickable-body-attributes select-id view-props)
+                                 [select-button-label              select-id view-props]
+                                 [select-button-icon               select-id view-props]])
 
 (defn- select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -305,9 +304,8 @@
   ;
   ; @return (hiccup)
   [select-id view-props]
-  [:div.x-select--button
-    [select-button-body    select-id view-props]
-    [engine/element-helper select-id view-props]])
+  [:div.x-select--button [select-button-body    select-id view-props]
+                         [engine/element-helper select-id view-props]])
 
 (defn- select-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -332,10 +330,9 @@
   ;
   ; @return (hiccup)
   [select-id view-props]
-  [:div.x-select
-    (engine/element-attributes select-id view-props)
-    [select-label  select-id view-props]
-    [select-button select-id view-props]])
+  [:div.x-select (engine/element-attributes select-id view-props)
+                 [select-label              select-id view-props]
+                 [select-button             select-id view-props]])
 
 (defn- select
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -372,6 +369,10 @@
   ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left w/ {:as-button? false}
+  ;    Default: :none w/ {:as-button? true}
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

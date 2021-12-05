@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.17
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.3.7
+; Version: v0.3.8
+; Compatibility: x4.4.8
 
 
 
@@ -98,6 +98,9 @@
   ;   :error-src (string)(opt)
   ;    TODO ...
   ;   :height (string)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :lazy-loading? (boolean)(opt)
   ;    Default: false
   ;    TODO ...

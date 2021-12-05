@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.16
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.3.3
+; Version: v0.2.8
+; Compatibility: x4.4.8
 
 
 
@@ -89,9 +89,8 @@
   [view-props cell-dex]
   (let [horizontal-align (view-props->cell-horizontal-align view-props cell-dex)
         vertical-padding (view-props->cell-vertical-padding view-props)]
-       (cond-> {}
-               (some? vertical-padding) (assoc-in [:style :padding] (css/vertical-padding vertical-padding))
-               :horizontal-align        (assoc :data-horizontal-align horizontal-align))))
+       (cond-> {} (some? vertical-padding) (assoc-in [:style :padding]        (css/vertical-padding vertical-padding))
+                  :horizontal-align        (assoc-in [:data-horizontal-align] (param                horizontal-align)))))
 
 (defn- view-props->header-cell-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -108,10 +107,9 @@
   [view-props {:keys [width]} cell-dex]
   (let [horizontal-align (view-props->cell-horizontal-align view-props cell-dex)
         vertical-padding (view-props->cell-vertical-padding view-props)]
-       (cond-> {}
-               (some? vertical-padding) (assoc-in [:style :padding] (css/vertical-padding vertical-padding))
-               (some? width)            (assoc-in [:style :width]   width)
-               :horizontal-align        (assoc :data-horizontal-align horizontal-align))))
+       (cond-> {} (some? vertical-padding) (assoc-in [:style :padding]        (css/vertical-padding vertical-padding))
+                  (some? width)            (assoc-in [:style :width]          (param                width))
+                  :horizontal-align        (assoc-in [:data-horizontal-align] (param                horizontal-align)))))
 
 
 
@@ -151,9 +149,8 @@
   ;
   ; @return (hiccup)
   [table-id view-props cell-content cell-index]
-  [:td.x-table--body-cell
-    (view-props->row-cell-attributes view-props cell-index)
-    [components/content {:content cell-content}]])
+  [:td.x-table--body-cell (view-props->row-cell-attributes view-props cell-index)
+                          [components/content {:content cell-content}]])
 
 (defn- table-row
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,8 +192,7 @@
   ; @return (hiccup)
   [_ _ {:keys [label]}]
   (if (some? label)
-      [:div.x-table--header-cell--label
-        [components/content {:content label}]]))
+      [:div.x-table--header-cell--label [components/content {:content label}]]))
 
 (defn- table-header-cell
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -208,9 +204,8 @@
   ;
   ; @return (hiccup)
   [table-id view-props column-props cell-dex]
-  [:th.x-table--header-cell
-    (view-props->header-cell-attributes view-props column-props cell-dex)
-    [table-header-cell-label table-id view-props column-props]])
+  [:th.x-table--header-cell (view-props->header-cell-attributes view-props column-props cell-dex)
+                            [table-header-cell-label table-id view-props column-props]])
 
 (defn- table-header-row
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,8 +228,7 @@
   ;
   ; @return (hiccup)
   [table-id view-props]
-  [:thead.x-table--header
-    [table-header-row table-id view-props]])
+  [:thead.x-table--header [table-header-row table-id view-props]])
 
 (defn- table-label
   [table-id {:keys [label]}]
@@ -274,6 +268,9 @@
   ;    Default: :s
   ;   :horizontal-border (keyword)(opt)
   ;    :normal, :none
+  ;    Default: :none
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
   ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)

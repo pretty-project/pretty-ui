@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.0.6
-; Compatibility: x4.4.3
+; Version: v1.0.8
+; Compatibility: x4.4.8
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field
-    (:require [app-fruits.dom            :as dom]
-              [mid-fruits.candy          :as candy :refer [param return]]
+    (:require [mid-fruits.candy          :as candy :refer [param return]]
               [mid-fruits.string         :as string]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
@@ -38,11 +37,8 @@
   ;
   ; @return (map)
   [field-id {:keys [emptiable? end-adornments resetable?]}]
-  (cond-> (param end-adornments)
-          (boolean resetable?)
-          (vector/conj-item (engine/reset-field-adornment-preset field-id))
-          (boolean emptiable?)
-          (vector/conj-item (engine/empty-field-adornment-preset field-id))))
+  (cond-> end-adornments (boolean resetable?) (vector/conj-item (engine/reset-field-adornment-preset field-id))
+                         (boolean emptiable?) (vector/conj-item (engine/empty-field-adornment-preset field-id))))
 
 (defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -53,11 +49,13 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :end-adornments (maps in vector)
+  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :min-width (keyword)
   ;   :type (keyword)}
   [field-id field-props]
   (merge {:color      :default
+          :indent     :left
           :layout     :row
           :min-width  :s
           :type       :text
@@ -161,8 +159,7 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [value] :as view-props}]
-  [:input.x-text-field--input
-    (engine/field-body-attributes field-id view-props)])
+  [:input.x-text-field--input (engine/field-body-attributes field-id view-props)])
 
 (defn- text-field-invalid-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,8 +171,7 @@
   ; @return (hiccup)
   [field-id {:keys [invalid-message]}]
   (if (some? invalid-message)
-      [:div.x-text-field--invalid-message
-        [components/content {:content invalid-message}]]))
+      [:div.x-text-field--invalid-message [components/content {:content invalid-message}]]))
 
 (defn- text-field-input-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -232,8 +228,9 @@
   ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

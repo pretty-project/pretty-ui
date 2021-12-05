@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.07
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.4.4
+; Version: v0.9.8
+; Compatibility: x4.4.8
 
 
 
@@ -89,17 +89,15 @@
   ;   :delete-chip-event (metamorphic-event)
   ;   :no-chips-label (metamorphic-content)}
   [group-id {:keys [no-options-selected-label] :as view-props}]
-  (merge {}
-         (param view-props)
-         {:chips     (view-props->chips view-props)
-          :on-delete [:elements/unstack-from-group-value! group-id]
-          ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
-          ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
-          ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
-          ; közötti távolság.
-          ; Ezért szükséges a chips elem {:no-chips-label ...} tulajdonságának használatával
-          ; megjelenített szöveggel megtörni ezt a távolságot.
-          :no-chips-label (param no-options-selected-label)}))
+  (merge view-props {:chips     (view-props->chips view-props)
+                     :on-delete [:elements/unstack-from-group-value! group-id]
+                     ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
+                     ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
+                     ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
+                     ; közötti távolság.
+                     ; Ezért szükséges a chips elem {:no-chips-label ...} tulajdonságának használatával
+                     ; megjelenített szöveggel megtörni ezt a távolságot.
+                     :no-chips-label (param no-options-selected-label)}))
 
 
 
@@ -115,12 +113,14 @@
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
+  ;   :indent (keyword)
   ;   :no-options-selected-label (metamorphic-content)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [group-id group-props]
   (merge {:get-label-f               return
-          :get-value-f  return
+          :get-value-f               return
+          :indent                    :left
           :no-options-selected-label DEFAULT-NO-OPTIONS-SELECTED-LABEL
           :options-path              (engine/default-options-path group-id)
           :value-path                (engine/default-value-path   group-id)}
@@ -138,8 +138,7 @@
   ;   :select-option-event (event-vector)}
   [group-id group-props]
   (let [field-id (group-id->field-id group-id)]
-       (merge {}
-              (map/inherit group-props INHERITED-FIELD-PROPS)
+       (merge (map/inherit group-props INHERITED-FIELD-PROPS)
               {:on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
                :group-id            group-id
                :select-option-event [:elements/stack-to-group-value! group-id]})))
@@ -197,9 +196,9 @@
   ; @return (component)
   [group-id view-props]
   [components/subscriber group-id
-    {:base-props view-props
-     :component  #'xi8071
-     :subscriber [::get-chips-view-props group-id]}])
+                         {:base-props view-props
+                          :component  #'xi8071
+                          :subscriber [::get-chips-view-props group-id]}])
 
 (defn- multi-combo-box-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,11 +220,10 @@
   ;
   ; @return (component)
   [group-id view-props]
-  [:div.x-multi-combo-box
-    [multi-combo-box-chips       group-id view-props]
-    [multi-combo-box-field       group-id view-props]
-    [engine/element-helper       group-id view-props]
-    [engine/element-info-tooltip group-id view-props]])
+  [:div.x-multi-combo-box [multi-combo-box-chips       group-id view-props]
+                          [multi-combo-box-field       group-id view-props]
+                          [engine/element-helper       group-id view-props]
+                          [engine/element-info-tooltip group-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) group-id
@@ -249,6 +247,9 @@
   ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)

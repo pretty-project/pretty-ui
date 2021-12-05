@@ -6,7 +6,7 @@
 ; Created: 2020.10.20
 ; Description:
 ; Version: v0.7.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -33,15 +33,15 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
-  ;   :font-size (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
+  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [button-id button-props]
   (merge {:color        :primary
-          :font-size    :s
+          :indent       :left
           :layout       :row
           :options-path (engine/default-options-path button-id)
           :value-path   (engine/default-value-path   button-id)
@@ -95,10 +95,9 @@
   ; @return (hiccup)
   [button-id {:keys [get-label-f] :as view-props} option]
   (let [option-label (get-label-f option)]
-       [:button.x-radio-button--option
-         (engine/selectable-option-attributes button-id view-props option)
-         [:div.x-radio-button--option-button]
-         [:div.x-radio-button--option-label [components/content {:content option-label}]]]))
+       [:button.x-radio-button--option (engine/selectable-option-attributes button-id view-props option)
+                                       [:div.x-radio-button--option-button]
+                                       [:div.x-radio-button--option-label [components/content {:content option-label}]]]))
 
 (defn- radio-button-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,9 +123,8 @@
   ;
   ; @return (component)
   [button-id {:keys [unselectable?] :as view-props}]
-  (if unselectable?
-      [:button.x-radio-button--unselect-button
-         (engine/selectable-unselect-attributes button-id view-props)]))
+  (if (boolean unselectable?)
+      [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id view-props)]))
 
 (defn- radio-button-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -136,9 +134,8 @@
   ;
   ; @return (hiccup)
   [button-id view-props]
-  [:div.x-radio-button--header
-    [radio-button-unselect-button button-id view-props]
-    [radio-button-label           button-id view-props]])
+  [:div.x-radio-button--header [radio-button-unselect-button button-id view-props]
+                               [radio-button-label           button-id view-props]])
 
 (defn- radio-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -148,10 +145,9 @@
   ;
   ; @return (hiccup)
   [button-id view-props]
-  [:div.x-radio-button
-    (engine/selectable-attributes button-id view-props)
-    [radio-button-header  button-id view-props]
-    [radio-button-options button-id view-props]])
+  [:div.x-radio-button (engine/selectable-attributes button-id view-props)
+                       [radio-button-header  button-id view-props]
+                       [radio-button-options button-id view-props]])
 
 (defn view
   ; @param (keyword) button-id
@@ -164,9 +160,6 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
@@ -174,6 +167,9 @@
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;    TODO ...
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)

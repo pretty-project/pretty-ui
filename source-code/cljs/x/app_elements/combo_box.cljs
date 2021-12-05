@@ -6,7 +6,7 @@
 ; Created: 2021.07.02
 ; Description:
 ; Version: v0.8.8
-; Compatibility: x4.4.4
+; Compatibility: x4.4.8
 
 
 
@@ -15,9 +15,7 @@
 
 (ns x.app-elements.combo-box
     (:require [mid-fruits.candy          :as candy :refer [param return]]
-              [mid-fruits.io             :as io]
               [mid-fruits.loop           :refer [reduce-indexed]]
-              [mid-fruits.string         :as string]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -180,19 +178,18 @@
   [field-id {:keys [option-component select-option-event] :as view-props}
             {:keys [highlighted? option selected?]} option-dex]
   (let [select-option-event (field-props->select-option-event field-id view-props option)]
-       [:button.x-combo-box--option
-          ; BUG#2105
-          ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
-          ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
-          ;  React-fából történő lecsatolását okozná.
-         {:on-mouse-down #(do (.preventDefault %))
-          :on-mouse-up   #(do (a/dispatch-n [[:elements/hide-surface! field-id]
-                                             (param select-option-event)]))
-          :data-selected    (param selected?)
-          :data-highlighted (param highlighted?)}
-         (if (some? option-component)
-             [option-component         field-id view-props option]
-             [default-option-component field-id view-props option])]))
+       ; BUG#2105
+       ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
+       ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
+       ;  React-fából történő lecsatolását okozná.
+       [:button.x-combo-box--option {:on-mouse-down #(do (.preventDefault %))
+                                     :on-mouse-up   #(do (a/dispatch-n [[:elements/hide-surface! field-id]
+                                                                        (param select-option-event)]))
+                                     :data-selected    (param selected?)
+                                     :data-highlighted (param highlighted?)}
+                                    (if (some? option-component)
+                                        [option-component         field-id view-props option]
+                                        [default-option-component field-id view-props option])]))
 
 (defn- combo-box-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,11 +218,10 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [no-options-label] :as view-props}]
-  [:div.x-combo-box--no-options-label
-    ; BUG#2105
-    {:on-mouse-down #(.preventDefault %)
-     :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
-    [components/content {:content no-options-label}]])
+                                      ; BUG#2105
+  [:div.x-combo-box--no-options-label {:on-mouse-down #(.preventDefault %)
+                                       :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
+                                      [components/content {:content no-options-label}]])
 
 (defn- combo-box-extender
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -238,12 +234,11 @@
   ; @return (hiccup)
   [field-id {:keys [on-extend value]}]
   (let [on-extend (a/metamorphic-event<-params on-extend field-id value)]
-       [:button.x-combo-box--extender-button
-         ; BUG#2105
-         {:on-mouse-down #(.preventDefault %)
-          :on-mouse-up   #(a/dispatch on-extend)}
-         [:i.x-combo-box--extender-icon    (param :add)]
-         [:div.x-combo-box--extender-label (str   value)]]))
+                                             ; BUG#2105
+       [:button.x-combo-box--extender-button {:on-mouse-down #(.preventDefault %)
+                                              :on-mouse-up   #(a/dispatch on-extend)}
+                                             [:i.x-combo-box--extender-icon    (param :add)]
+                                             [:div.x-combo-box--extender-label (str   value)]]))
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -253,13 +248,12 @@
   ;
   ; @return (component)
   [field-id view-props]
-  [:div.x-combo-box--surface
-    (if (engine/field-props->render-options?  view-props)
-        [combo-box-options           field-id view-props])
-       ; Szükségtelen megjeleníteni a no-options-label feliratot.
-       ;[combo-box-no-options-label field-id view-props]
-    (if (engine/field-props->render-extender? view-props)
-        [combo-box-extender          field-id view-props])])
+  [:div.x-combo-box--surface (if (engine/field-props->render-options?  view-props)
+                                 [combo-box-options           field-id view-props])
+                                ; Szükségtelen megjeleníteni a no-options-label feliratot.
+                                ;[combo-box-no-options-label field-id view-props]
+                             (if (engine/field-props->render-extender? view-props)
+                                 [combo-box-extender          field-id view-props])])
 
 (defn field-props<-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -306,6 +300,9 @@
   ;   :get-value-f (function)(opt)
   ;    Default: return
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)

@@ -1,8 +1,6 @@
 
 ; WARNING! NOT TESTED! DO NOT USE!
 
-
-
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -10,7 +8,7 @@
 ; Created: 2021.04.09
 ; Description:
 ; Version: v0.1.8
-; Compatibility: x4.4.3
+; Compatibility:
 
 
 
@@ -20,8 +18,6 @@
 (ns x.app-elements.slideshow
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.loop           :refer [reduce-indexed]]
-              [mid-fruits.vector         :as vector]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
               [x.app-gestures.api        :as gestures]))
@@ -97,8 +93,7 @@
   ;
   ; @return (hiccup)
   [slideshow-id {:keys [prev-step]}]
-  [:div.x-slideshow--prev-step
-    {:style {:background-image (css/url (:image-uri prev-step))}}])
+  [:div.x-slideshow--prev-step {:style {:background-image (css/url (:image-uri prev-step))}}])
 
 (defn- slideshow-current-step
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,8 +105,7 @@
   ;
   ; @return (hiccup)
   [slideshow-id {:keys [current-step]}]
-  [:div.x-slideshow--current-step
-    {:style {:background-image (css/url (:image-uri current-step))}}])
+  [:div.x-slideshow--current-step {:style {:background-image (css/url (:image-uri current-step))}}])
 
 (defn- slideshow-temp-step
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,8 +117,7 @@
   ;
   ; @return (hiccup)
   [slideshow-id {:keys [current-step]}]
-  [:div.x-slideshow--temp-step
-    {:style {:background-image (css/url (:image-uri current-step))}}])
+  [:div.x-slideshow--temp-step {:style {:background-image (css/url (:image-uri current-step))}}])
 
 (defn- slideshow-next-step
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -136,8 +129,7 @@
   ;
   ; @return (hiccup)
   [slideshow-id {:keys [next-step]}]
-  [:div.x-slideshow--next-step
-    {:style {:background-image (css/url (:image-uri next-step))}}])
+  [:div.x-slideshow--next-step {:style {:background-image (css/url (:image-uri next-step))}}])
 
 (defn- slideshow-steps
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -147,11 +139,10 @@
   ;
   ; @return (hiccup)
   [slideshow-id view-props]
-  [:div.x-slideshow--steps
-    [slideshow-prev-step    slideshow-id view-props]
-    [slideshow-current-step slideshow-id view-props]
-    [slideshow-next-step    slideshow-id view-props]
-    [slideshow-temp-step    slideshow-id view-props]])
+  [:div.x-slideshow--steps [slideshow-prev-step    slideshow-id view-props]
+                           [slideshow-current-step slideshow-id view-props]
+                           [slideshow-next-step    slideshow-id view-props]
+                           [slideshow-temp-step    slideshow-id view-props]])
 
 (defn- slideshow-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -161,13 +152,12 @@
   ;
   ; @return (hiccup)
   [slideshow-id view-props]
-  [:div.x-slideshow--controls
-    [:button.x-slideshow--controls--go-bwd
-      {:on-click   #(a/dispatch [:gestures/step-backward! slideshow-id])
-       :on-mouse-up (engine/blur-element-function slideshow-id)}]
-    [:button.x-slideshow--controls--go-fwd
-      {:on-click   #(a/dispatch [:gestures/step-forward! slideshow-id])
-       :on-mouse-up (engine/blur-element-function slideshow-id)}]])
+  [:div.x-slideshow--controls [:button.x-slideshow--controls--go-bwd
+                                {:on-click   #(a/dispatch [:gestures/step-backward! slideshow-id])
+                                 :on-mouse-up (engine/blur-element-function slideshow-id)}]
+                              [:button.x-slideshow--controls--go-fwd
+                                {:on-click   #(a/dispatch [:gestures/step-forward! slideshow-id])
+                                 :on-mouse-up (engine/blur-element-function slideshow-id)}]])
 
 (defn- slideshow
   ; WARNING! NON-PUBLIC! DO NOT USE!

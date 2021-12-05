@@ -1,15 +1,13 @@
 
 ; WARNING! NOT TESTED! DO NOT USE!
 
-
-
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
 ; Created: 2021.03.05
 ; Description:
-; Version: v0.1.6
+; Version: v0.1.8
 ; Compatibility:
 
 
@@ -21,7 +19,6 @@
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
               [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
 
@@ -112,8 +109,7 @@
   ; @return (hiccup)
   [field-id view-props]
   (reduce #(vector/conj-item %1 [digit])
-           [:div.x-digit-field--digits
-             {:style {:width (css/px (view-props->digits-width view-props))}}]
+           [:div.x-digit-field--digits {:style {:width (css/px (view-props->digits-width view-props))}}]
            (range 4)))
 
 (defn- digit-field
@@ -124,15 +120,17 @@
   ;
   ; @return (hiccup)
   [field-id view-props]
-  [:div.x-digit-field
-    (engine/element-attributes field-id view-props)
-    [digits field-id view-props]])
+  [:div.x-digit-field (engine/element-attributes field-id view-props)
+                      [digits                    field-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:digit-count (integer)
-  ;    Default: DEFAULT-DIGIT-COUNT}
+  ;    Default: DEFAULT-DIGIT-COUNT
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none}
   ;
   ; @usage
   ;  [elements/digit-field {...}]

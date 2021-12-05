@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.03
 ; Description:
-; Version: v0.6.6
-; Compatibility: x4.4.2
+; Version: v0.6.8
+; Compatibility: x4.4.8
 
 
 
@@ -140,6 +140,9 @@
   ;  {:chips (maps in vector)
   ;    [{...} {...}]
   ;   :class (string or vector)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :no-chips-label (metamorphic-content)(opt)
   ;   :on-delete (event-vector)(opt)

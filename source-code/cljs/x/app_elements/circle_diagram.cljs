@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.07
 ; Description:
-; Version: v1.0.2
-; Compatibility: x4.3.6
+; Version: v1.0.8
+; Compatibility: x4.4.8
 
 
 
@@ -20,7 +20,6 @@
               [mid-fruits.math           :as math]
               [mid-fruits.svg            :as svg]
               [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
 
@@ -193,8 +192,8 @@
   [diagram-id {:keys [diameter] :as diagram-props}]
   [:div.x-circle-diagram--svg {:style {:height (css/px diameter)
                                        :width  (css/px diameter)}}
-    (svg/svg {:elements (circle-diagram-sections diagram-id diagram-props)
-              :height diameter :width diameter})])
+                              (svg/svg {:elements (circle-diagram-sections diagram-id diagram-props)
+                                        :height diameter :width diameter})])
 
 (defn- circle-diagram-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -216,16 +215,18 @@
   ;
   ; @return (hiccup)
   [diagram-id diagram-props]
-  [:div.x-circle-diagram
-    (engine/element-attributes diagram-id diagram-props)
-    [circle-diagram-label      diagram-id diagram-props]
-    [circle-diagram-circle     diagram-id diagram-props]])
+  [:div.x-circle-diagram (engine/element-attributes diagram-id diagram-props)
+                         [circle-diagram-label      diagram-id diagram-props]
+                         [circle-diagram-circle     diagram-id diagram-props]])
 
 (defn view
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ;  {:diameter (px)(opt)
   ;    Default: 48
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :fit

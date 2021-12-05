@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.3.6
+; Version: v0.6.8
+; Compatibility: x4.4.8
 
 
 
@@ -54,9 +54,8 @@
   [db [_ indicator-id]]
   (let [element-props   (r engine/get-element-view-props   db indicator-id)
         scroll-progress (r environment/get-scroll-progress db)]
-       (merge (param element-props)
-              {:sections [{:color :primary   :value scroll-progress}
-                          {:color :highlight :value (- 100 scroll-progress)}]})))
+       (merge element-props {:sections [{:color :primary   :value scroll-progress}
+                                        {:color :highlight :value (- 100 scroll-progress)}]})))
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -87,6 +86,9 @@
   ;   :diameter (px)(opt)
   ;    Default: 48
   ;    Only w/ {:shape :circle}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :shape (keyword)(opt)
   ;    :circle, :line
   ;    Default: :line

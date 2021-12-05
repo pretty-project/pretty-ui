@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.21
 ; Description:
-; Version: v0.5.4
-; Compatibility: x4.4.2
+; Version: v0.5.8
+; Compatibility: x4.4.8
 
 
 
@@ -32,12 +32,12 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
-  ;   :layout (keyword)
-  ;   :font-size (keyword)}
+  ;   :indent (keyword)
+  ;   :layout (keyword)}
   [checkbox-id checkbox-props]
-  (merge {:color     :primary
-          :font-size :s
-          :layout    :row
+  (merge {:color  :primary
+          :indent :left
+          :layout :row
           :value-path (engine/default-value-path checkbox-id)}
          (param checkbox-props)))
 
@@ -86,10 +86,9 @@
   ;
   ; @return (hiccup)
   [checkbox-id view-props]
-  [:button.x-checkbox--body
-   (engine/checkable-body-attributes checkbox-id view-props)
-   [:div.x-checkbox--button]
-   [checkbox-label checkbox-id view-props]])
+  [:button.x-checkbox--body (engine/checkable-body-attributes checkbox-id view-props)
+                            [:div.x-checkbox--button]
+                            [checkbox-label checkbox-id view-props]])
 
 (defn- checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,10 +98,9 @@
   ;
   ; @return (hiccup)
   [checkbox-id view-props]
-  [:div.x-checkbox
-    (engine/checkable-attributes checkbox-id view-props)
-    [checkbox-body         checkbox-id view-props]
-    [engine/element-helper checkbox-id view-props]])
+  [:div.x-checkbox (engine/checkable-attributes checkbox-id view-props)
+                   [checkbox-body         checkbox-id view-props]
+                   [engine/element-helper checkbox-id view-props]])
 
 (defn view
   ; @param (keyword)(opt) checkbox-id
@@ -114,11 +112,11 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-value (boolean)(constant)(opt)
   ;   :on-check (metamorphic-event)(opt)
   ;   :label (metamorphic-content)(opt)

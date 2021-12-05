@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.17
 ; Description:
-; Version: v0.2.6
-; Compatibility: x3.9.9
+; Version: v0.2.8
+; Compatibility: x4.4.8
 
 
 
@@ -64,6 +64,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit Az ikont tartalmazó elem méretei megegyeznek az ikon méreteivel
   ;    :row ...

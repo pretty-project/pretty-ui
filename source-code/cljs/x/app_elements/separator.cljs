@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.23
 ; Description:
-; Version: v0.2.0
-; Compatibility: x3.9.9
+; Version: v0.2.8
+; Compatibility: x4.4.8
 
 
 

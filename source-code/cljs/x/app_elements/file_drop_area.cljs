@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v0.7.6
-; Compatibility: x3.9.9
+; Version: v0.9.8
+; Compatibility: x4.4.8
 
 
 
@@ -65,10 +65,9 @@
   ;
   ; @return (hiccup)
   [area-id area-props]
-  [:button.x-file-drop-area--body
-    (engine/clickable-body-attributes area-id area-props)
-    [:i.x-file-drop-area--icon :cloud_upload]
-    [file-drop-area-label area-id area-props]])
+  [:button.x-file-drop-area--body (engine/clickable-body-attributes area-id area-props)
+                                  [:i.x-file-drop-area--icon :cloud_upload]
+                                  [file-drop-area-label area-id area-props]])
 
 (defn- file-drop-area
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,26 +77,22 @@
   ;
   ; @return (hiccup)
   [area-id area-props]
-  [:div.x-file-drop-area
-    (engine/element-attributes   area-id area-props)
-    [file-drop-area-body         area-id area-props]
-    [engine/element-helper       area-id area-props]
-    [engine/element-info-tooltip area-id area-props]])
+  [:div.x-file-drop-area (engine/element-attributes   area-id area-props)
+                         [file-drop-area-body         area-id area-props]
+                         [engine/element-helper       area-id area-props]
+                         [engine/element-info-tooltip area-id area-props]])
 
 (defn view
   ; @param (keyword)(opt) area-id
   ; @param (map) area-props
   ;  {:class (string or vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :muted
-  ;    Default: :primary
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Default: :drop-files-here-to-upload

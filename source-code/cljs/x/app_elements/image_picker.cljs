@@ -2,8 +2,6 @@
 
 ; WARNING! NOT TESTED! DO NOT USE!
 
-
-
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -11,7 +9,7 @@
 ; Created: 2021.04.26
 ; Description:
 ; Version: v0.2.6
-; Compatibility: x4.4.3
+; Compatibility:
 
 
 
@@ -20,7 +18,6 @@
 
 (ns x.app-elements.image-picker
     (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
 

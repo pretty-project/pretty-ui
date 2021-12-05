@@ -259,6 +259,9 @@
   ;    TODO ...
   ;   :info-tooltip (metamorphic-content)(opt)
   ;    TODO ...
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :max-field-count (integer)(opt)
   ;    Default: DEFAULT-MAX-FIELD-COUNT

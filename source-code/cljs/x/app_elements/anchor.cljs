@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.25
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.4.2
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -31,10 +31,14 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
+  ;   :font-size (keyword)
+  ;   :indent (keyword)
   ;   :layout (keyword)}
   [anchor-props]
-  (merge {:color  :primary
-          :layout :row}
+  (merge {:color     :primary
+          :font-size :s
+          :indent    :both
+          :layout    :row}
          (param anchor-props)))
 
 
@@ -84,8 +88,14 @@
   ;   :content (metamorphic-content)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :font-size (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
   ;   :href (string)(opt)
   ;     Only w/o {:on-click ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :both
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

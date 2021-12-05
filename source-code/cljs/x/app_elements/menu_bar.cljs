@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v0.7.6
-; Compatibility: x4.3.9
+; Version: v0.7.8
+; Compatibility: x4.4.8
 
 
 
@@ -74,13 +74,13 @@
   ;    :horizontal, :vertical}
   ;
   ; @return (map)
-  ;  {:font-size (keyword)
-  ;   :horizontal-align (keyword)
+  ;  {:horizontal-align (keyword)
+  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :menu-items (map)
   ;   :orientation (keyword)}
   [{:keys [orientation] :as bar-props}]
-  (merge {:font-size   :s
+  (merge {:indent      :both
           :layout      :row
           :orientation :horizontal}
          (if-not (= orientation :vertical)
@@ -199,15 +199,15 @@
 (defn view
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ;  {;:class (string or vector)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
+  ;  {:class (string or vector)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
   ;    (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   ;    Only w/ {:orientation :horizontal}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :both
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

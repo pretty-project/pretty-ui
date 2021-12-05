@@ -6,7 +6,7 @@
 ; Created: 2020.10.19
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -85,13 +85,10 @@
   ;
   ; @return (hiccup)
   [label-id {:keys [icon] :as label-props}]
-  [:div.x-label
-    (engine/element-attributes label-id label-props)
-    (if (some? icon)
-        [label-icon label-id label-props])
-    [label-body label-id label-props]
-    (if (some? icon)
-        [:div.x-label--icon-placeholder])])
+  [:div.x-label (engine/element-attributes label-id label-props)
+                (if (some? icon) [label-icon label-id label-props])
+                [label-body label-id label-props]
+                (if (some? icon) [:div.x-label--icon-placeholder])])
 
 (defn view
   ; XXX#0439
@@ -119,6 +116,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

@@ -6,7 +6,7 @@
 ; Created: 2021.04.25
 ; Description:
 ; Version: v0.4.8
-; Compatibility: x4.4.2
+; Compatibility: x4.4.8
 
 
 
@@ -65,9 +65,8 @@
   ; @return (hiccup)
   [sidebar-id view-props]
   (let [content-props (components/extended-props->content-props view-props)]
-       [:div.x-sidebar
-         (engine/element-attributes sidebar-id view-props)
-         [components/content sidebar-id content-props]]))
+       [:div.x-sidebar (engine/element-attributes sidebar-id view-props)
+                       [components/content sidebar-id content-props]]))
 
 (defn view
   ; XXX#8711

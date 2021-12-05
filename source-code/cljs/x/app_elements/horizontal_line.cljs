@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.4.3
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -16,7 +16,6 @@
 (ns x.app-elements.horizontal-line
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
-              [mid-fruits.keyword        :as keyword]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.16
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.3.3
+; Version: v0.2.8
+; Compatibility: x4.4.8
 
 
 
@@ -15,8 +15,6 @@
 
 (ns x.app-elements.data-table
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.loop           :refer [reduce-indexed]]
-              [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
@@ -117,6 +115,9 @@
   ;   :horizontal-border (keyword)(opt)
   ;    :normal, :none
   ;    Default: :normal
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

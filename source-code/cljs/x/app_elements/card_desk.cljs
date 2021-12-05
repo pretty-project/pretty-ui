@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.26
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.4.2
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-elements.card-desk
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.keyword        :as keyword]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -70,6 +69,9 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :style (map)(opt)}
   ;
   ; @usage

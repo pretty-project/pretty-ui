@@ -6,7 +6,7 @@
 ; Created: 2020.10.16
 ; Description:
 ; Version: v0.5.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -96,8 +96,9 @@
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
   ;   :form-id (keyword)(opt)
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}

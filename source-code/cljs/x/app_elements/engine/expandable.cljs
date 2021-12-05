@@ -32,6 +32,16 @@
   (let [element-expanded? (r element/get-element-prop db element-id :expanded?)]
        (boolean element-expanded?)))
 
+(defn get-expandable-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ;
+  ; @return (map)
+  ;  {:expanded? (boolean)}
+  [db [_ element-id]]
+  {:expanded? (r element-expanded? db element-id)})
+
 
 
 ;; -- DB events ---------------------------------------------------------------

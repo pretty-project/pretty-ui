@@ -6,7 +6,7 @@
 ; Created: 2021.02.20
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.3.6
+; Compatibility: x4.4.8
 
 
 
@@ -167,6 +167,9 @@
   ;    :xxs, :xs, :s, :m
   ;    Default: :s
   ;    Only w/ {:label ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :label-position (keyword)(opt)
   ;    :left, :center :right

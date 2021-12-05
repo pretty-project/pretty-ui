@@ -182,22 +182,19 @@
   ; @param (map) element-props
   ;  {:alt (string)(opt)
   ;   :disabled? (boolean)(opt)
-  ;   :highlighted? (boolean)(opt)
   ;   :selectable? (boolean)(opt)
   ;   :src (string)(opt)}
   ;
   ; @return
   ;  {:alt (string)
   ;   :data-disabled (boolean)
-  ;   :data-highlighted (boolean)
   ;   :data-selectable (boolean)
   ;   :src (string)}
-  [_ {:keys [alt disabled? highlighted? selectable? src]}]
-  (cond-> {} (some?    alt)          (assoc :alt alt)
-             (some?    src)          (assoc :src src)
-             (boolean? disabled?)    (assoc :data-disabled    disabled?)
-             (boolean? highlighted?) (assoc :data-highlighted highlighted?)
-             (boolean? selectable?)  (assoc :data-selectable  selectable?)))
+  [_ {:keys [alt disabled? selectable? src]}]
+  (cond-> {} (some?    alt)         (assoc :alt alt)
+             (some?    src)         (assoc :src src)
+             (boolean? disabled?)   (assoc :data-disabled   disabled?)
+             (boolean? selectable?) (assoc :data-selectable selectable?)))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

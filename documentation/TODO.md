@@ -37,7 +37,8 @@
 
 - request->added-prop, modified-prop, ... törölhető
 
-- icon-button külön element lehet ujra
+- icon-button külön element lehet ujra, már csak a bubble-ok fogadnak button-props térképeket, amihez
+  szükséges a közös elem.
 
 - db/id-handler mehet mid-fruits/eql-be
 

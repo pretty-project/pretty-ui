@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.08.19
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.2
+; Version: v0.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -15,10 +15,7 @@
 
 (ns x.app-elements.expandable
     (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.css            :as css]
               [mid-fruits.logical        :refer [nonfalse?]]
-              [mid-fruits.math           :as math]
-              [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
@@ -42,6 +39,23 @@
           :layout    :row}
          (if (some? icon) {:icon-family :material-icons-filled})
          (param expandable-props)))
+
+
+
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) expandable-id
+  ;
+  ; @return (map)
+  [db [_ expandable-id]]
+  (merge (r engine/get-element-view-props    db expandable-id)
+         (r engine/get-expandable-view-props db expandable-id)))
+
+(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -93,12 +107,11 @@
   ;
   ; @return (hiccup)
   [expandable-id view-props]
-  [:button.x-expandable--header
-    {:on-click   #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
-     :on-mouse-up (engine/blur-element-function expandable-id)}
-    [expandable-icon          expandable-id view-props]
-    [expandable-label         expandable-id view-props]
-    [expandable-expand-button expandable-id view-props]])
+  [:button.x-expandable--header {:on-click   #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
+                                 :on-mouse-up (engine/blur-element-function expandable-id)}
+                                [expandable-icon          expandable-id view-props]
+                                [expandable-label         expandable-id view-props]
+                                [expandable-expand-button expandable-id view-props]])
 
 (defn- expandable-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,10 +134,9 @@
   ;
   ; @return (hiccup)
   [expandable-id view-props]
-  [:div.x-expandable
-    (engine/element-attributes expandable-id view-props)
-    [expandable-header expandable-id view-props]
-    [expandable-body   expandable-id view-props]])
+  [:div.x-expandable (engine/element-attributes expandable-id view-props)
+                     [expandable-header         expandable-id view-props]
+                     [expandable-body           expandable-id view-props]])
 
 (defn view
   ; XXX#8711
@@ -144,6 +156,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
@@ -166,4 +181,7 @@
 
   ([expandable-id expandable-props]
    (let [expandable-props (a/prot expandable-props expandable-props-prototype)]
-        [expandable expandable-id expandable-props])))
+        [engine/stated-element expandable-id
+                               {:component     #'expandable
+                                :element-props expandable-props
+                                :subscriber    [::get-view-props expandable-id]}])))

@@ -6,7 +6,7 @@
 ; Created: 2020.10.25
 ; Description:
 ; Version: v0.8.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -15,8 +15,6 @@
 
 (ns x.app-elements.search-field
     (:require [mid-fruits.candy          :as candy :refer [param]]
-              [mid-fruits.io             :as io]
-              [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
@@ -86,8 +84,9 @@
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: true
   ;   :helper (metamorphic-content)(opt)
-  ;   :highlighted? (boolean)(opt)
-  ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :left
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

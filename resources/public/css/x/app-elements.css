@@ -15,6 +15,7 @@
 /***** Element info *****/
 /***** Element context-surface *****/
 /***** Element stickers *****/
+/***** Element indent *****/
 /***** Elements ... *****/
 
 
@@ -90,8 +91,8 @@ button.x-card:focus,
 .x-switch--label,
 .x-switch--body:focus
 .x-switch--label,
-.x-toggle:active,
-.x-toggle:focus {
+.x-toggle--body:active,
+.x-toggle--body:focus {
   opacity: .5 }
 
 /***** Active state and focused state *****/
@@ -161,11 +162,15 @@ button.x-card:focus,
 .x-element--helper,
 .x-element--info-tooltip--icon,
 .x-element--info-tooltip--content,
+.x-expandable--label,
+.x-expandable--expand-icon,
 .x-file--icon,
 .x-file--label,
 .x-file--filesize,
 .x-file--timestamp,
 .x-file--preview-icon,
+.x-file-drop-area--label,
+.x-file-drop-area--icon,
 .x-icon,
 .x-label[data-selectable="false"] .x-label--icon,
 .x-label[data-selectable="false"] .x-label--body,
@@ -184,7 +189,7 @@ button.x-card:focus,
 .x-text-field--label,
 .x-text-field--placeholder,
 .x-text-field--invalid-message,
-.x-toggle {
+.x-toggle--body {
   /* user-select not supperted properly in all browsers */
   -ms-user-select: none;
   -moz-user-select: none;
@@ -693,23 +698,14 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xxs"],
 .x-button[data-font-size="xxs"],
-.x-file-drop-area[data-font-size="xxs"],
 .x-label[data-font-size="xxs"],
 .x-line-diagram[data-font-size="xxs"]
 .x-line-diagram--label,
-.x-menu-bar[data-font-size="xxs"],
 .x-table[data-font-size="xxs"],
 .x-text[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   line-height: var( --line-height-xxs ) }
-
-.x-checkbox[data-font-size="xxs"],
-.x-counter[data-font-size="xxs"],
-.x-radio-button[data-font-size="xxs"],
-.x-switch[data-font-size="xxs"] {
-  font-size: var( --font-size-xxs );
-  letter-spacing: var( --letter-spacing-xxs ) }
 
 /*** XXS ***/
 
@@ -724,23 +720,14 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xs"],
 .x-button[data-font-size="xs"],
-.x-file-drop-area[data-font-size="xs"],
 .x-label[data-font-size="xs"],
 .x-line-diagram[data-font-size="xs"]
 .x-line-diagram--label,
-.x-menu-bar[data-font-size="xs"],
 .x-table[data-font-size="xs"],
 .x-text[data-font-size="xs"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs ) }
-
-.x-checkbox[data-font-size="xs"],
-.x-counter[data-font-size="xs"],
-.x-radio-button[data-font-size="xs"],
-.x-switch[data-font-size="xs"] {
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xs ) }
 
 .x-separator[data-orientation="horizontal"][data-size="xs"] {
   height: 6px }
@@ -761,23 +748,14 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="s"],
 .x-button[data-font-size="s"],
-.x-file-drop-area[data-font-size="s"],
 .x-label[data-font-size="s"],
 .x-line-diagram[data-font-size="s"]
 .x-line-diagram--label,
-.x-menu-bar[data-font-size="s"],
 .x-table[data-font-size="s"],
 .x-text[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
-
-.x-checkbox[data-font-size="s"],
-.x-counter[data-font-size="s"],
-.x-radio-button[data-font-size="s"],
-.x-switch[data-font-size="s"] {
-  font-size: var( --font-size-s );
-  letter-spacing: var( --letter-spacing-s ) }
 
 /*** S ***/
 
@@ -793,23 +771,14 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="m"],
 .x-button[data-font-size="m"],
-.x-file-drop-area[data-font-size="m"],
 .x-label[data-font-size="m"],
 .x-line-diagram[data-font-size="m"]
 .x-line-diagram--label,
-.x-menu-bar[data-font-size="m"],
 .x-table[data-font-size="m"],
 .x-text[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: var( --line-height-m ) }
-
-.x-checkbox[data-font-size="m"],
-.x-counter[data-font-size="m"],
-.x-radio-button[data-font-size="m"],
-.x-switch[data-font-size="m"] {
-  font-size: var( --font-size-m );
-  letter-spacing: var( --letter-spacing-m ) }
 
 /*** M ***/
 
@@ -824,21 +793,12 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="l"],
 .x-button[data-font-size="l"],
-.x-file-drop-area[data-font-size="l"],
 .x-label[data-font-size="l"],
-.x-menu-bar[data-font-size="l"],
 .x-table[data-font-size="l"],
 .x-text[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: var( --line-height-l ) }
-
-.x-checkbox[data-font-size="l"],
-.x-counter[data-font-size="l"],
-.x-radio-button[data-font-size="l"],
-.x-switch[data-font-size="l"] {
-  font-size: var( --font-size-l );
-  letter-spacing: var( --letter-spacing-l ) }
 
 /*** L ***/
 
@@ -853,21 +813,12 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xl"],
 .x-button[data-font-size="xl"],
-.x-file-drop-area[data-font-size="xl"],
 .x-label[data-font-size="xl"],
-.x-menu-bar[data-font-size="xl"],
 .x-table[data-font-size="xl"],
 .x-text[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: var( --line-height-xl ) }
-
-.x-checkbox[data-font-size="xl"],
-.x-counter[data-font-size="xl"],
-.x-radio-button[data-font-size="xl"],
-.x-switch[data-font-size="xl"] {
-  font-size: var( --font-size-xl );
-  letter-spacing: var( --letter-spacing-xl ) }
 
 /*** XL ***/
 
@@ -882,21 +833,12 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xxl"],
 .x-button[data-font-size="xxl"],
-.x-file-drop-area[data-font-size="xxl"],
 .x-label[data-font-size="xxl"],
-.x-menu-bar[data-font-size="xxl"],
 .x-table[data-font-size="xxl"],
 .x-text[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: var( --line-height-xxl ) }
-
-.x-checkbox[data-font-size="xxl"],
-.x-counter[data-font-size="xxl"],
-.x-radio-button[data-font-size="xxl"],
-.x-switch[data-font-size="xxl"] {
-  font-size: var( --font-size-xxl );
-  letter-spacing: var( --letter-spacing-xxl ) }
 
 /*** XXL ***/
 /***** Font-size profiles *****/
@@ -1241,9 +1183,7 @@ button.x-card:focus,
   font-weight: 500;
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs );
-  opacity: .8;
   padding-bottom: 12px;
-  padding-left: 12px;
   padding-top: 6px }
 
 /*** Helper ***/
@@ -1382,6 +1322,20 @@ body[data-viewport-profile="s"]
 
 
 
+/***** Element indent *****/
+
+.x-element[data-indent="left"],
+.x-element[data-indent="both"] {
+  margin-left: 12px }
+
+.x-element[data-indent="right"],
+.x-element[data-indent="both"] {
+  margin-right: 12px }
+
+/***** Element indent *****/
+
+
+
 /***** Anchor *****/
 /*** Anchor body ***/
 
@@ -1389,7 +1343,6 @@ body[data-viewport-profile="s"]
   cursor: pointer;
   display: block;
   font-weight: 500;
-  padding: 0 12px;
   white-space: nowrap;
   word-wrap: normal }
 
@@ -1399,99 +1352,6 @@ body[data-viewport-profile="s"]
 
 /*** Anchor body ***/
 /***** Anchor *****/
-
-
-
-/***** Combo-box *****/
-/*** Combo-box surface ***/
-
-.x-combo-box--surface {
-  font-size: var( --font-size-s );
-  line-height: var( --line-height-s );
-  letter-spacing: var( --letter-spacing-s ) }
-
-/*** Combo-box surface ***/
-
-/*** Combo-box extender button ***/
-
-.x-combo-box--extender-button {
-  align-items: center;
-  border-top-color: var( --border-color-highlight );
-  border-top-style: solid;
-  border-top-width: 1px;
-  color: var( --color-primary );
-  display: flex;
-  flex-direction: row;
-  height: 32px;
-  padding: 0 8px;
-  text-align: left;
-  width: 100% }
-
-.x-combo-box--extender-button:hover {
-  background-color: var( --background-color-highlight ) }
-
-.x-combo-box--extender-icon {
-  padding-right: 8px }
-
-/*** Combo-box extender button ***/
-
-/*** Combo-box options ***/
-
-.x-combo-box--options {
-  display: flex;
-  flex-direction: column;
-  max-height: 340px;
-  overflow-y: scroll }
-
-.x-combo-box--no-options-label {
-  align-items: center;
-  color: var( --color-muted );
-  display: flex;
-  flex-direction: row;
-  font-size: var( --font-size-xs );
-  height: 32px;
-  letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs );
-  padding: 0 8px }
-
-/*** Combo-box options ***/
-
-/*** Combo-box option ***/
-
-.x-combo-box--option {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  flex-shrink: 0;
-  padding: 8px 8px;
-  text-align: left;
-  width: 100% }
-
-.x-combo-box--option[data-highlighted="true"],
-.x-combo-box--option:hover {
-  background-color: var( --background-color-highlight ) }
-
-/*** Combo-box option ***/
-
-/*** Multi combo-box field ***/
-
-.x-multi-combo-box--field {
-
-  /* WARNING! DEPRECATED!
-   * Az .x-multi-combo-box--field osztály {display: flex} tulajdonságához
-   * nem készült leírás. Nem ismert milyen indokból kapta meg ezt a tulajdonságot.
-   * Lehetséges, hogy a multi-combo-box elem így teremt flex környezetet a text-field
-   * elemnek, hogy a többi elemmel konzisztensen működhessen.
-   * Viszont az SSC/admin rendszerben a multi-combo-box elemben lévő text-field elem szélessége
-   * nem egyezett meg a hagyományos text-field elemek szélességével, ezért a {:display flex}
-   * tulajdonság kikapcsolásra került.
-   *
-   * display: flex
-   * WARNING! DEPRECATED! */
-}
-
-/*** Multi combo-box field ***/
-/***** Combo-box *****/
 
 
 
@@ -1597,12 +1457,21 @@ body[data-viewport-profile="s"]
 .x-button[data-layout="row"] .x-button--icon {
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
-  margin: 0 12px;
+
+  /* XXX#4509 */
+  margin-right: 12px;
   width: var( --icon-size-default ) }
 
 .x-button[data-layout="fit"] .x-button--icon-placeholder,
 .x-button[data-layout="row"] .x-button--icon-placeholder {
-  width: 32px }
+  /* XXX#4509
+   * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
+   * az ikon placeholder alkalmazása.
+   *
+   * WARNING! Ismert use-case hiányában kikapcsolva!
+   *
+   * placeholder-width = icon-width + icon-margin-right */
+  -width: 36px }
 
 .x-button[data-layout="icon-button"] .x-button--icon {
   /* XXX#6914
@@ -1671,8 +1540,7 @@ body[data-viewport-profile="s"]
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
-  height: calc(100% - 24px);
-  margin: 12px }
+  height: calc(100% - 24px) }
 
 /*** Card wrapper ***/
 
@@ -1705,7 +1573,8 @@ body[data-viewport-profile="s"]
 .x-card-desk {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap }
+  flex-wrap: wrap;
+  grid-gap: 12px }
 
 /*** Card-desk wrapper ***/
 /***** Card-desk *****/
@@ -1724,8 +1593,11 @@ body[data-viewport-profile="s"]
 /*** Checkbox label ***/
 
 .x-checkbox--label {
+  font-size: var( --font-size-s );
   font-weight: 500;
-  line-height: 24px }
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  margin-left: 12px }
 
 /*** Checkbox label ***/
 
@@ -1743,7 +1615,6 @@ body[data-viewport-profile="s"]
 
 .x-checkbox--button {
   height: 24px;
-  margin: 0 12px;
   width: 24px }
 
 .x-checkbox--button::before {
@@ -1873,8 +1744,9 @@ body[data-viewport-profile="s"]
 /*** Chips label ***/
 
 .x-chips--label {
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xs );
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
 /*** Chips label ***/
@@ -1943,13 +1815,108 @@ body[data-viewport-profile="s"]
 
 
 
+/***** Combo-box *****/
+/*** Combo-box surface ***/
+
+.x-combo-box--surface {
+  font-size: var( --font-size-s );
+  line-height: var( --line-height-s );
+  letter-spacing: var( --letter-spacing-s ) }
+
+/*** Combo-box surface ***/
+
+/*** Combo-box extender button ***/
+
+.x-combo-box--extender-button {
+  align-items: center;
+  border-top-color: var( --border-color-highlight );
+  border-top-style: solid;
+  border-top-width: 1px;
+  color: var( --color-primary );
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+  padding: 0 8px;
+  text-align: left;
+  width: 100% }
+
+.x-combo-box--extender-button:hover {
+  background-color: var( --background-color-highlight ) }
+
+.x-combo-box--extender-icon {
+  padding-right: 8px }
+
+/*** Combo-box extender button ***/
+
+/*** Combo-box options ***/
+
+.x-combo-box--options {
+  display: flex;
+  flex-direction: column;
+  max-height: 340px;
+  overflow-y: scroll }
+
+.x-combo-box--no-options-label {
+  align-items: center;
+  color: var( --color-muted );
+  display: flex;
+  flex-direction: row;
+  font-size: var( --font-size-xs );
+  height: 32px;
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs );
+  padding: 0 8px }
+
+/*** Combo-box options ***/
+
+/*** Combo-box option ***/
+
+.x-combo-box--option {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  padding: 8px 8px;
+  text-align: left;
+  width: 100% }
+
+.x-combo-box--option[data-highlighted="true"],
+.x-combo-box--option:hover {
+  background-color: var( --background-color-highlight ) }
+
+/*** Combo-box option ***/
+
+/*** Multi combo-box field ***/
+
+.x-multi-combo-box--field {
+
+  /* WARNING! DEPRECATED!
+   * Az .x-multi-combo-box--field osztály {display: flex} tulajdonságához
+   * nem készült leírás. Nem ismert milyen indokból kapta meg ezt a tulajdonságot.
+   * Lehetséges, hogy a multi-combo-box elem így teremt flex környezetet a text-field
+   * elemnek, hogy a többi elemmel konzisztensen működhessen.
+   * Viszont az SSC/admin rendszerben a multi-combo-box elemben lévő text-field elem szélessége
+   * nem egyezett meg a hagyományos text-field elemek szélességével, ezért a {:display flex}
+   * tulajdonság kikapcsolásra került.
+   *
+   * display: flex
+   * WARNING! DEPRECATED! */
+}
+
+/*** Multi combo-box field ***/
+/***** Combo-box *****/
+
+
+
 /***** Counter *****/
 /*** Counter label ***/
 
 .x-counter--label {
+  font-size: var( --font-size-s );
   font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
   line-height: 24px;
-  margin-left: var( --flex-edge ) }
+  margin-left: 12px }
 
 /*** Counter label ***/
 
@@ -2015,7 +1982,7 @@ body[data-viewport-profile="s"]
 
 .x-counter--reset-button {
   border-color: var( --color );
-  margin-left: var( --flex-edge ) }
+  margin-left: 12px }
 
 .x-counter--reset-button::before,
 .x-counter--reset-button::after {
@@ -2360,7 +2327,10 @@ body[data-viewport-profile="s"]
 
 .x-file-drop-area--label {
   color: var( --color-muted );
-  font-weight: 500 }
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
 
 .x-file-drop-area--icon {
   font-size: var( --icon-size-xxl );
@@ -2512,6 +2482,10 @@ body[data-viewport-profile="s"]
 /*** Menu wrapper ***/
 
 /*** Menu items ***/
+
+.x-menu-bar--items {
+  column-gap: 24px }
+
 /*** Menu items ***/
 
 /*** Menu item ***/
@@ -2521,9 +2495,11 @@ body[data-viewport-profile="s"]
 .x-menu-bar--sensor-item {
   display: flex;
   flex-direction: column;
+  font-size: var( --font-size-s );
   font-weight: 600;
   justify-content: center;
-  padding: 0 12px;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
   white-space: nowrap }
 
 /* XXX#7605 */
@@ -2568,7 +2544,9 @@ body[data-viewport-profile="s"]
 
 .x-radio-button--label,
 .x-radio-button--option-label {
+  font-size: var( --font-size-s );
   font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
   line-height: 36px }
 
 /*** Radio button label, option label ***/
@@ -2581,7 +2559,7 @@ body[data-viewport-profile="s"]
   border-radius: 50%;
   border-style: solid;
   border-width: 2px;
-  margin-right: var( --flex-edge );
+  margin-right: 12px;
   height: 20px;
   width: 20px }
 
@@ -2632,7 +2610,7 @@ body[data-viewport-profile="s"]
   border-style: solid;
   border-width: 2px;
   height: 20px;
-  margin-right: var( --flex-edge );
+  margin-right: 12px;
   width: 20px }
 
 /*** Radio button option button ***/
@@ -2695,8 +2673,9 @@ body[data-viewport-profile="s"]
 /*** Select label ***/
 
 .x-select--label {
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xs );
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
 /*** Select label ***/
@@ -2949,7 +2928,10 @@ body[data-viewport-profile="s"]
 /***** Switch label *****/
 
 .x-switch--label {
+  font-size: var( --font-size-s );
   font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  margin-left: 12px;
   line-height: 24px }
 
 /***** Switch label *****/
@@ -2962,7 +2944,6 @@ body[data-viewport-profile="s"]
   border-style: solid;
   border-width: 2px;
   height: 20px;
-  margin: 0 12px;
   width: 40px }
 
 /*** Switch track ***/
@@ -3146,13 +3127,10 @@ body[data-viewport-profile="s"]
 
 .x-date-field--label,
 .x-text-field--label {
-  font-size: var( --font-size-xs );
+  font-size: var( --font-size-s );
+  font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
-
-.x-date-field[data-highlighted="true"] .x-date-field--label,
-.x-text-field[data-highlighted="true"] .x-text-field--label {
-  color: var( --white ) }
 
 /*** Field label ***/
 
@@ -3199,7 +3177,7 @@ body[data-viewport-profile="s"]
 /***** Toggle *****/
 /*** Toggle wrapper ***/
 
-.x-toggle {
+.x-toggle--body {
   cursor: pointer;
   display: block;
   font-weight: 500;
@@ -3210,7 +3188,7 @@ body[data-viewport-profile="s"]
 
 /*** Toggle body ***/
 
-.x-toggle[data-layout="row"] {
+.x-toggle--body[data-layout="row"] {
   min-height: 48px }
 
 /*** Toggle body ***/

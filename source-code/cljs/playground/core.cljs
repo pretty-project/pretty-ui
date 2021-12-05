@@ -46,13 +46,16 @@
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
-  [{:label "Anchors"   :on-click [:router/go-to! "/playground/anchors"]   :color (if (not= view-id :anchors)   :muted)}
-   {:label "Buttons"   :on-click [:router/go-to! "/playground/buttons"]   :color (if (not= view-id :buttons)   :muted)}
-   {:label "Chips"     :on-click [:router/go-to! "/playground/chips"]     :color (if (not= view-id :chips)     :muted)}
-   {:label "Diagrams"  :on-click [:router/go-to! "/playground/diagrams"]  :color (if (not= view-id :diagrams)  :muted)}
-   {:label "Fields"    :on-click [:router/go-to! "/playground/fields"]    :color (if (not= view-id :fields)    :muted)}
-   {:label "Selectors" :on-click [:router/go-to! "/playground/selectors"] :color (if (not= view-id :selectors) :muted)}
-   {:label "Text"      :on-click [:router/go-to! "/playground/text"]      :color (if (not= view-id :text)      :muted)}])
+  [{:label "Anchors"    :on-click [:router/go-to! "/playground/anchors"]    :color (if (not= view-id :anchors)    :muted)}
+   {:label "Buttons"    :on-click [:router/go-to! "/playground/buttons"]    :color (if (not= view-id :buttons)    :muted)}
+   {:label "Chips"      :on-click [:router/go-to! "/playground/chips"]      :color (if (not= view-id :chips)      :muted)}
+   {:label "Diagrams"   :on-click [:router/go-to! "/playground/diagrams"]   :color (if (not= view-id :diagrams)   :muted)}
+   {:label "Expandable" :on-click [:router/go-to! "/playground/expandable"] :color (if (not= view-id :expandable) :muted)}
+   {:label "Fields"     :on-click [:router/go-to! "/playground/fields"]     :color (if (not= view-id :fields)     :muted)}
+   {:label "Files"      :on-click [:router/go-to! "/playground/files"]      :color (if (not= view-id :files)      :muted)}
+   {:label "Selectors"  :on-click [:router/go-to! "/playground/selectors"]  :color (if (not= view-id :selectors)  :muted)}
+   {:label "Tables"     :on-click [:router/go-to! "/playground/tables"]     :color (if (not= view-id :tables)     :muted)}
+   {:label "Text"       :on-click [:router/go-to! "/playground/text"]       :color (if (not= view-id :text)       :muted)}])
 
 
 
@@ -85,23 +88,22 @@
 (defn- infinite-loader
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [:<> [elements/separator {:orientation :horizontal :size :m}]
-       [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs :layout :fit :selectable? false}]
+  [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs :layout :fit :selectable? false}]
        [tools/infinite-loader :playground-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
        [elements/button ::reload-infinite-loader-button
                         {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :playground-loader]
                          :variant :transparent :color :secondary :layout :fit}]])
 
-(defn anchors
+(defn- anchors
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   [:<> [elements/anchor {:content "Anchor link"   :href "/link"}]
        [elements/anchor {:content "Anchor button" :on-click [:router/go-to! "/link"]}]
        [elements/anchor {:content "Disabled anchor"  :on-click [] :disabled? true}]])
 
-(defn buttons
+(defn- buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   [:<> [elements/button ::pres-esc-button
                         {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
                          :variant :transparent :color :none :icon :people :on-click [:developer/test!]}]
@@ -118,13 +120,27 @@
        [elements/button ::outlined-button
                         {:label "Outlined button"
                          :on-click [:developer/test!]}]
-       [elements/button ::transparent-button
-                        {:label "Transparent button"
-                         :on-click [:developer/test!]}]])
+       [elements/button ::transparent-button-1
+                        {:label "Transparent button #1"
+                         :on-click [:developer/test!]
+                         :variant :transparent}]
+       [elements/button ::transparent-button-2
+                        {:label "Transparent button #2"
+                         :on-click [:developer/test!]
+                         :variant :transparent
+                         :icon :people}]])
 
-(defn chips
+(defn- card-desk
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
+  [elements/card-desk ::card-desk
+                      {:cards [{:content "Card #1" :on-click [:developer/test!]}
+                               {:content "Card #2" :on-click [:developer/test!]}
+                               {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}]}])
+
+(defn- chips
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
   [:<> [elements/chip {:label "Chip" :icon :apps}]
        [elements/chip {:label "Deletable chip" :on-delete [:developer/test!]}]
        [elements/chips ::chips
@@ -132,16 +148,27 @@
                                                {:label "Chip #2" :color :secondary}]
                         :on-delete [:developer/test!]}]])
 
-(defn diagrams
-  []
+(defn- diagrams
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
   [:<> [elements/circle-diagram {:sections [{:color :primary :value 50}
                                             {:color :highlight :value 20}]}]
        [elements/line-diagram {:sections [{:color :primary :value 50}
                                           {:color :highlight :value 20}]}]])
 
+(defn- expandable
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [elements/expandable {:content "Here comes the sun!" :label "Click to expand!"}])
+
+(defn- files
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [:<> [elements/file-drop-area {}]])
+
 (defn- selectors
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   [:<> [elements/select ::select
                         {:label "Select"
                          :on-select [:developer/test!]
@@ -174,12 +201,22 @@
        [elements/counter ::counter-2
                          {:label "Counter #2" :resetable? true :initial-value 420}]])
 
+(defn- tables
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [:<> [elements/data-table {:columns [{:label "Name"}
+                                       {:label "Value #1"}
+                                       {:label "Value #2"}]
+                             :rows [["Data #1" 30 50]
+                                    ["Data #2" 10 90]
+                                    ["Data #3" 20 75]]}]])
+
 (defn- text
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   [:<> [elements/label {:content "Label"}]])
 
-(defn fields
+(defn- fields
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> [elements/multi-field ::multi-field
@@ -226,7 +263,11 @@
                                  :placeholder "Placeholder"
                                  :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]}]
        [elements/multiline-field ::multiline-field
-                                 {:label "Multiline-field" :placeholder "Placeholder"}]])
+                                 {:label "Multiline-field" :placeholder "Placeholder"}]
+       [elements/digit-field {}]
+       [elements/search-field ::search-field
+                              {:label "Search-field" :placeholder "Placeholder"}]])
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
@@ -235,13 +276,16 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [view-id] :as view-props}]
-  (case view-id :anchors   [anchors   surface-id view-props]
-                :buttons   [buttons   surface-id view-props]
-                :chips     [chips     surface-id view-props]
-                :diagrams  [diagrams  surface-id view-props]
-                :fields    [fields    surface-id view-props]
-                :selectors [selectors surface-id view-props]
-                :text      [text      surface-id view-props]))
+  (case view-id :anchors    [anchors    surface-id view-props]
+                :buttons    [buttons    surface-id view-props]
+                :chips      [chips      surface-id view-props]
+                :diagrams   [diagrams   surface-id view-props]
+                :expandable [expandable surface-id view-props]
+                :fields     [fields     surface-id view-props]
+                :files      [files      surface-id view-props]
+                :selectors  [selectors  surface-id view-props]
+                :tables     [tables     surface-id view-props]
+                :text       [text       surface-id view-props]))
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -250,7 +294,11 @@
                          {:description "Follow the white rabbit!"
                           :body   {:content #'body   :subscriber [:view-selector/get-view-props :playground]}
                           :header {:content #'header :subscriber [:view-selector/get-view-props :playground]}}]
-       [infinite-loader surface-id view-props]])
+       [elements/separator {:orientation :horizontal :size :xxl}]
+       [infinite-loader surface-id view-props]
+       [elements/separator {:orientation :horizontal :size :xxl}]
+       [card-desk       surface-id view-props]
+       [elements/separator {:orientation :horizontal :size :xxl}]])
 
 
 

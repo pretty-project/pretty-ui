@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.4.2
+; Version: v0.8.8
+; Compatibility: x4.4.8
 
 
 
@@ -334,6 +334,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :keypress (map)(constant)(opt)
   ;    {:key-code (integer)

@@ -6,7 +6,7 @@
 ; Created: 2021.04.27
 ; Description:
 ; Version: v0.8.8
-; Compatibility: x4.4.3
+; Compatibility: x4.4.8
 
 
 
@@ -103,6 +103,9 @@
   ;    :horizontal, vertical
   ;    Default: :horizontal
   ;   :end-content (metamorphic-content)
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :middle-content (metamorphic-content)
   ;   :style (map)(opt)
   ;   :start-content (metamorphic-content)(opt)

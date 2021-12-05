@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.03
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.4.2
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -134,6 +134,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

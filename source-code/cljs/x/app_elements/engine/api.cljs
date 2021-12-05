@@ -102,6 +102,9 @@
 ; x.app-elements.engine.element-stickers
 (def element-stickers element-stickers/element-stickers)
 
+; x.app-elements.engine.expandable
+(def get-expandable-view-props expandable/get-expandable-view-props)
+
 ; x.app-elements.engine.field
 (def empty-field-adornment-preset           field/empty-field-adornment-preset)
 (def reset-field-adornment-preset           field/reset-field-adornment-preset)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.2.4
-; Compatibility: x3.9.9
+; Version: v0.2.8
+; Compatibility: x4.4.8
 
 
 
@@ -42,7 +42,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle
+(defn- toggle-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) toggle-id
@@ -51,9 +51,19 @@
   ; @return (hiccup)
   [toggle-id view-props]
   (let [content-props (components/extended-props->content-props view-props)]
-       [:button.x-toggle (engine/element-attributes          toggle-id view-props
-                           (engine/clickable-body-attributes toggle-id view-props))
-                         [components/content content-props]]))
+       [:button.x-toggle--body (engine/clickable-body-attributes toggle-id view-props)
+                               [components/content content-props]]))
+
+(defn- toggle
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) toggle-id
+  ; @param (map) view-props
+  ;
+  ; @return (hiccup)
+  [toggle-id view-props]
+  [:div.x-toggle (engine/element-attributes toggle-id view-props)
+                 [toggle-body               toggle-id view-props]])
 
 (defn view
   ; XXX#8711
@@ -72,6 +82,9 @@
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :indent (keyword)(opt)
+  ;    :left, :right, :both, :none
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :fit
