@@ -46,16 +46,16 @@
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
-  [{:label "Anchors"    :on-click [:router/go-to! "/playground/anchors"]    :color (if (not= view-id :anchors)    :muted)}
-   {:label "Buttons"    :on-click [:router/go-to! "/playground/buttons"]    :color (if (not= view-id :buttons)    :muted)}
-   {:label "Chips"      :on-click [:router/go-to! "/playground/chips"]      :color (if (not= view-id :chips)      :muted)}
-   {:label "Diagrams"   :on-click [:router/go-to! "/playground/diagrams"]   :color (if (not= view-id :diagrams)   :muted)}
-   {:label "Expandable" :on-click [:router/go-to! "/playground/expandable"] :color (if (not= view-id :expandable) :muted)}
-   {:label "Fields"     :on-click [:router/go-to! "/playground/fields"]     :color (if (not= view-id :fields)     :muted)}
-   {:label "Files"      :on-click [:router/go-to! "/playground/files"]      :color (if (not= view-id :files)      :muted)}
-   {:label "Selectors"  :on-click [:router/go-to! "/playground/selectors"]  :color (if (not= view-id :selectors)  :muted)}
-   {:label "Tables"     :on-click [:router/go-to! "/playground/tables"]     :color (if (not= view-id :tables)     :muted)}
-   {:label "Text"       :on-click [:router/go-to! "/playground/text"]       :color (if (not= view-id :text)       :muted)}])
+  [{:label "Anchors"    :on-click [:router/go-to! "/playground/anchors"]    :active? (= view-id :anchors)}
+   {:label "Buttons"    :on-click [:router/go-to! "/playground/buttons"]    :active? (= view-id :buttons)}
+   {:label "Chips"      :on-click [:router/go-to! "/playground/chips"]      :active? (= view-id :chips)}
+   {:label "Diagrams"   :on-click [:router/go-to! "/playground/diagrams"]   :active? (= view-id :diagrams)}
+   {:label "Expandable" :on-click [:router/go-to! "/playground/expandable"] :active? (= view-id :expandable)}
+   {:label "Fields"     :on-click [:router/go-to! "/playground/fields"]     :active? (= view-id :fields)}
+   {:label "Files"      :on-click [:router/go-to! "/playground/files"]      :active? (= view-id :files)}
+   {:label "Selectors"  :on-click [:router/go-to! "/playground/selectors"]  :active? (= view-id :selectors)}
+   {:label "Tables"     :on-click [:router/go-to! "/playground/tables"]     :active? (= view-id :tables)}
+   {:label "Text"       :on-click [:router/go-to! "/playground/text"]       :active? (= view-id :text)}])
 
 
 
@@ -319,4 +319,6 @@
 
 (a/reg-event-fx
   :playground/render!
-  [:ui/set-surface! ::view {:content #'view :initializer [:playground/initialize!]}])
+  [:ui/set-surface! ::view {:content     #'view
+                            :initializer [:playground/initialize!]
+                            :subscriber  [::get-view-props]}])

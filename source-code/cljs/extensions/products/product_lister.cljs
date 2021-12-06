@@ -92,8 +92,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [:div
-   [elements/menu-bar {:menu-items [{:label "All" :on-click []} {:label "Active" :color :muted :on-click []}
-                                    {:label "Draft" :color :muted :on-click []} {:label "Archived" :color :muted :on-click []}]}]
+   [elements/menu-bar {:menu-items [{:label "All" :on-click []}
+                                    {:label "Active" :on-click []}
+                                    {:label "Draft"  :on-click []}
+                                    {:label "Archived" :on-click []}]}]
 
    [item-lister/body :products :product
                      {:list-element #'product-item}]])

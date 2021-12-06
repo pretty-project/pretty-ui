@@ -412,7 +412,7 @@
                     ^{:key (db/document->document-id item)}
                      (if (boolean select-mode?)
                          [:div.item-lister--item-list--selectable-list-item
-                           [elements/checkbox {:color :primary}]
+                           [elements/checkbox {:color :primary :indent :both}]
                            [list-element item-dex item]]
                          [list-element item-dex item]))
                  (param downloaded-items))])

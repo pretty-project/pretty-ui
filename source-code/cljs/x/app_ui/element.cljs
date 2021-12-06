@@ -150,19 +150,6 @@
   ;   :subscriber (subscription vector)(opt)
   ;    XXX#8711}
   ;
-  ; @usage
-  ;  (defn ah8900 [popup-id content-props subscribed-props])
-  ;  (a/dispatch [:ui/add-popup! {:content       #'ah8900
-  ;                               :content-props {...}
-  ;                               :subscriber    [...]}])
-  ;
-  ; @usage
-  ;  (defn ah8900 [popup-id content-props dynamic-props])
-  ;  (a/dispatch [:ui/add-popup! {:base-props    {...}
-  ;                               :content       #'ah8900
-  ;                               :content-props {...}
-  ;                               :subscriber    [...]}])
-  ;
   ; @return (component)
   [element-id element-props]
   (let [context-props (components/extended-props->content-props element-props)]

@@ -260,8 +260,7 @@
   ;  (environment/set-element-attribute! "my-element" "my-attribute" "my-value")
   [element-id attribute-name attribute-value]
   (if-let [element (dom/get-element-by-id element-id)]
-          (let [attribute-value (str attribute-value)]
-               (dom/set-element-attribute! element attribute-name attribute-value))))
+          (dom/set-element-attribute! element attribute-name attribute-value)))
 
 ; @usage
 ;  [:environment/set-element-attribute! "my-element" "my-attribute" "my-value"]

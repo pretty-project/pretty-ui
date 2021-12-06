@@ -58,7 +58,6 @@
   ; @return (hiccup)
   [surface-id surface-props]
   [:div.x-app-surface--element--structure
-   ;[:div.x-app-surface--element--background]
     [surface-content surface-id surface-props]])
 
 (defn surface-element
@@ -70,4 +69,4 @@
   ; @return (hiccup)
   [surface-id surface-props]
   [:div (surface-attributes surface-id surface-props)
-        [surface-structure surface-id surface-props]])
+        [surface-structure  surface-id surface-props]])

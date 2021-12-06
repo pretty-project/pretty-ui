@@ -21,16 +21,35 @@
 
 
 
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn user-settings-item-path
+  ; @usage
+  ;  (user/user-settings-item-path :my-settings-item)
+  ;
+  ; @return (item-path vector)
+  [item-id]
+  (db/path ::settings item-id))
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-user-settings
+  ; @usage
+  ;  (r user/get-user-settings db)
+  ;
   ; @return (map)
   [db _]
   (get-in db (db/path ::settings)))
 
 (defn get-user-settings-item
   ; @param (keyword) item-id
+  ;
+  ; @usage
+  ;  (r user/get-user-settings-item db :my-settings-item)
   ;
   ; @return (map)
   [db [_ item-id]]

@@ -15,7 +15,10 @@
  ;   :app-build (string)
  ;   :app-codename (string)
  ;   :app-home (string)
- ;   :app-languages (strings in vector)
+ ;   :app-languages (keywords in vector)
+ ;   :app-themes (maps in vector)
+ ;    [{:name (metamorphic-content)
+ ;      :id (keyword)}]
  ;   :app-title (string)}
  ;
  ; @usage
@@ -23,12 +26,18 @@
  ;
  ; @usage
  ;  {:app-details {:app-home "/admin"}}
+ ;
+ ; @usage
+ ;  {:app-details {:app-themes [{:id :my-theme :name "My theme"}
+ ;                              {:id :light    :name :light-theme}]}}
  :app-details
  {:author        "bithandshake"
   :app-build     "0.0.1"
   :app-codename  "x4"
   :app-home      "/admin"
-  :app-languages ["en" "hu"]
+  :app-languages [:en :hu]
+  :app-themes    [{:id :light :name :light-theme}
+                  {:id :dark  :name :dark-theme}]
   :app-title     "x4"}
 
 

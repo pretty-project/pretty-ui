@@ -28,6 +28,8 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
+(def route                   engine/route)
+(def extended-route          engine/extended-route)
 (def render-event            engine/render-event)
 
 

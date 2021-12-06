@@ -23,6 +23,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.config-handler
+(def app-detail-path     config-handler/app-detail-path)
+(def storage-detail-path config-handler/storage-detail-path)
 (def get-app-details     config-handler/get-app-details)
 (def get-app-detail      config-handler/get-app-detail)
 (def get-storage-details config-handler/get-storage-details)

@@ -76,9 +76,9 @@
   :settings/render-cookie-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
-                  {:content          #'cookie-settings
+                  {:body   {:content #'cookie-settings}
+                   :header {:content #'header}
                    :horizontal-align :left
-                   :label-bar        {:content #'header}
                    :layout           :boxed
                    :user-close?      false}])
 

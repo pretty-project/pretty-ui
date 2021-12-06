@@ -73,7 +73,8 @@
   [_ {:keys [app-languages selected-language]}]
   (reduce #(let [language-selected? (= %2 selected-language)
                  button-props       {:icon :placeholder :label %2 :on-click (set-language-event %2)
-                                     :preset (if language-selected? :primary-button :default-button)}]
+                                     :preset (if language-selected? :primary-button :default-button)
+                                     :indent :left}]
                 (vector/conj-item %1 [elements/button button-props]))
            [:div#x-app-menu--languages]
            (param app-languages)))
@@ -83,7 +84,8 @@
   [popup-id body-props]
   (vector/conj-item (language-selector-languages popup-id body-props)
                     [elements/button ::back-button
-                                     {:label    :back!
+                                     {:indent   :left
+                                      :label    :back!
                                       :on-click [:gestures/change-view! ::handler :main]
                                       :preset   :back-button}]))
 
@@ -92,6 +94,7 @@
   [_ {:keys [app-multilingual?]}]
   [elements/button ::language-selector-button
                    {:disabled? (not app-multilingual?)
+                    :indent   :left
                     :preset    :language-button
                     :on-click  [:gestures/change-view! ::handler :language-selector]}])
 
@@ -104,14 +107,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::settings-button
-                   {:on-click [:router/go-to! "/settings"]
+                   {:indent   :left
+                    :on-click [:router/go-to! "/settings"]
                     :preset   :settings-button}])
 
 (defn- more-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::more-options-button
-                   {:on-click [:gestures/change-view! ::handler :more-options]
+                   {:indent   :left
+                    :on-click [:gestures/change-view! ::handler :more-options]
                     :preset   :more-options-button}])
 
 (defn- about-app-button
@@ -119,6 +124,7 @@
   [_ _]
   [elements/button ::about-app-button
                    {:icon     :copyright
+                    :indent   :left
                     :label    :about-app
                     :on-click [:gestures/change-view! ::handler :about-app]
                     :preset   :default-button}])
@@ -127,7 +133,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::logout-button
-                   {:on-click [:user/logout!]
+                   {:indent   :left
+                    :on-click [:user/logout!]
                     :preset   :logout-button}])
 
 (defn- main
@@ -160,7 +167,8 @@
                         :color            :muted
                         :icon             :copyright}]
        [elements/button ::back-button
-                        {:label    :back!
+                        {:indent   :left
+                         :label    :back!
                          :on-click [:gestures/change-view! ::handler  :main]
                          :preset   :back-button}]])
 
@@ -174,16 +182,19 @@
   [_ _]
   [:<> [elements/button ::terms-of-service-button
                         {:icon     :subject
+                         :indent   :left
                          :label    :terms-of-service
                          :on-click [:router/go-to! "/terms-of-service"]
                          :preset   :default-button}]
        [elements/button ::privacy-policy-button
                         {:icon     :subject
+                         :indent   :left
                          :label    :privacy-policy
                          :on-click [:router/go-to! "/privacy-policy"]
                          :preset   :default-button}]
        [elements/button ::back-button
                         {:label    :back!
+                         :indent   :left
                          :on-click [:gestures/change-view! ::handler  :main]
                          :preset   :back-button}]])
 
@@ -227,9 +238,8 @@
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
-                                 {:content          #'body
-                                  :label-bar        {:content #'ui/close-popup-header}
+                                 {:body   {:content #'body :subscriber [::get-body-props]}
+                                  :header {:content #'ui/close-popup-header}
                                   :horizontal-align :left
                                   :layout           :boxed
-                                  :min-width        :xs
-                                  :subscriber       [::get-body-props]}]}))
+                                  :min-width        :xs}]}))

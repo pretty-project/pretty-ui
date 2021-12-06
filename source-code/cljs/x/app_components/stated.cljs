@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.2.4
-; Compatibility: x4.4.6
+; Version: v2.2.8
+; Compatibility: x4.4.8
 
 
 
@@ -102,11 +102,11 @@
 ;  történik majd az ahhoz tartozó – eredetileg a (re)mount esemény előtt megtörténő –
 ;  unmount esemény történik, akkor az remounting eseménypárnak számít.
 ;  Ebből az következett, hogy bizonyos esetekben, ha gyors egymás utánban történt kettő
-;  vagy több remounting, akkor az unmount-(re)mount eseménypárok néha összekeveredtek
-;  és ez hibákhoz vezetett.
+;  vagy több remounting, akkor az unmount-(re)mount eseménypárok néha időbeni átfedésbe kerültek
+;  egymással és ez hibákhoz vezetett.
 ;  Ennek kiküszöbölésére került bevezetésre, hogy minden React-fába történe komponens-
-;  -csatolás saját azonosítóval rendelkezik (mount-id) és a destructor esemény megtörténése vagy
-;  a komponens tulajdonságainak Re-Frame adatbázisból való eltávolítása késleltetve
+;  -csatolás saját csatolás-azonosítóval rendelkezik (mount-id) és a destructor esemény megtörténése
+;  vagy a komponens tulajdonságainak Re-Frame adatbázisból való eltávolítása késleltetve
 ;  történik, így lehetséges megvizsgálni, hogy ha a komponens még mindig azzal az azonosítóval
 ;  van csatolva, amivel a lecsatolásai események megtörténnének, akkor azok végrehajtódhatnak,
 ;  de ha azóta eltérő azonosítóval újra van csatolva a komponens, akkor a lecsatolási események
@@ -290,13 +290,11 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:initializer (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
-      (if-not (r component-initialized? db component-id)
-              {:db       (as-> db % (r store-component-initial-props! % component-id context-props)
-                                    (r engine/set-component-prop!     % component-id :initialized? true))
-               :dispatch (param initializer)})))
+  (fn [_ _]))
+  ; Az x4.4.8 verzióig a komponensek inicializálása a [:components/initialize-component! ...]
+  ; eseményben történt, amely esemény a komponensek gyorsabb felépülése érdekében összevonásra
+  ; került a [:components/->component-mounted ...] eseménnyel.
 
 (a/reg-event-fx
   :components/destruct-component!
@@ -326,11 +324,18 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
+  ;  {:initializer (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [_ component-id context-props mount-id]]
-      {:db       (as-> db % (r engine/set-component-prop! % component-id :status :mounted)
-                            (r engine/set-component-prop! % component-id :mount-id mount-id))
-       :dispatch [:components/initialize-component! component-id context-props mount-id]}))
+  (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
+      (if-not (r component-initialized? db component-id)
+              ; If component is not initialized ...
+              {:db       (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
+                                    (r engine/set-component-prop!     % component-id :mount-id mount-id)
+                                    (r engine/set-component-prop!     % component-id :initialized? true)
+                                    (r store-component-initial-props! % component-id context-props))
+               :dispatch (param initializer)}
+              ; If component is initialized ...
+              {:db (r engine/set-component-prop! db component-id :mount-id mount-id)})))
 
 (a/reg-event-fx
   :components/->component-updated

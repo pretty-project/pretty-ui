@@ -52,7 +52,6 @@
               [x.app-elements.polarity          :as polarity]
               [x.app-elements.radio-button      :as radio-button]
               [x.app-elements.row               :as row]
-              [x.app-elements.scroll-indicator  :as scroll-indicator]
               [x.app-elements.search-field      :as search-field]
               [x.app-elements.select            :as select]
               [x.app-elements.separator         :as separator]
@@ -182,7 +181,6 @@
 (def polarity          polarity/view)
 (def radio-button      radio-button/view)
 (def row               row/view)
-(def scroll-indicator  scroll-indicator/view)
 (def search-field      search-field/view)
 (def select            select/view)
 (def sidebar           sidebar/view)

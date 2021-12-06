@@ -17,15 +17,15 @@
 /*** Horizontal align ***/
 
 .x-app-popups--element[data-horizontal-align="left"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   align-items: flex-start; }
 
 .x-app-popups--element[data-horizontal-align="center"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   align-items: center }
 
 .x-app-popups--element[data-horizontal-align="right"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   align-items: flex-end }
 
 /*** Horizontal align ***/
@@ -79,7 +79,7 @@
 /*** XXS ***/
 
 .x-app-popups--element[data-min-width="xxs"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-xxs ) }
 
 /*** XXS ***/
@@ -87,7 +87,7 @@
 /*** XS ***/
 
 .x-app-popups--element[data-min-width="xs"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-xs ) }
 
 /*** XS ***/
@@ -95,7 +95,7 @@
 /*** S ***/
 
 .x-app-popups--element[data-min-width="s"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-s ) }
 
 /*** S ***/
@@ -103,7 +103,7 @@
 /*** M ***/
 
 .x-app-popups--element[data-min-width="m"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-m ) }
 
 /*** M ***/
@@ -111,7 +111,7 @@
 /*** L ***/
 
 .x-app-popups--element[data-min-width="l"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-l ) }
 
 /*** L ***/
@@ -119,7 +119,7 @@
 /*** XL ***/
 
 .x-app-popups--element[data-min-width="xl"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-xl ) }
 
 /*** XL ***/
@@ -127,7 +127,7 @@
 /*** XXL ***/
 
 .x-app-popups--element[data-min-width="xxl"]
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   min-width: var( --content-width-xxl ) }
 
 /*** XXL ***/
@@ -140,8 +140,8 @@
 #x-document-element,
 #x-body-container,
 #x-app-bubbles,
-.x-app-popups--element--content,
-.x-app-popups--element--label-bar,
+.x-app-popups--element--body,
+.x-app-popups--element--header,
 #x-app-sidebar--surface {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
@@ -151,8 +151,8 @@
 #x-document-element::-webkit-scrollbar,
 #x-body-container::-webkit-scrollbar,
 #x-app-bubbles::-webkit-scrollbar,
-.x-app-popups--element--content::-webkit-scrollbar,
-.x-app-popups--element--label-bar::-webkit-scrollbar,
+.x-app-popups--element--body::-webkit-scrollbar,
+.x-app-popups--element--header::-webkit-scrollbar,
 #x-app-sidebar--surface::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
@@ -365,6 +365,7 @@
 
 #x-app-header {
   background-color: var( --background-color );
+  -background-color: var( --app-background-color );
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
   flex-direction: row;
@@ -476,7 +477,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 .x-app-popups--element[data-stretched="true"]
 .x-app-popups--element--structure {
-  /* Engedi látszani az app-surface label-bar sávját */
+  /* Engedi látszani az app-header komponenst */
   height: calc(100vh - 48px);
   left: 0;
   position: absolute;
@@ -485,7 +486,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 .x-app-popups--element[data-stretched="false"]
 .x-app-popups--element--structure {
-  /* Engedi látszani az app-surface label-bar sávját */
+  /* Engedi látszani az app-header komponenst */
   max-height: calc(100% - 96px) }
 
 /*** Popup structure ***/
@@ -511,19 +512,19 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 /*** Popup background ***/
 
-/*** Popup content ***/
+/*** Popup body ***/
 
-.x-app-popups--element--content {
+.x-app-popups--element--body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   overflow-y: auto }
 
 .x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--content[data-autopadding="true"] {
+.x-app-popups--element--body[data-autopadding="true"] {
   padding: 0 var( --content-edge ) 12px var( --content-edge ) }
 
-/*** Popup content ***/
+/*** Popup body ***/
 
 /*** Popup header ***/
 
@@ -537,6 +538,13 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 .x-app-popups--element--header-placeholder {
   height: 12px }
+
+.x-app-popups--element--header {
+  overflow-x: auto;
+  /* XXX#2981 */
+  padding: 0 var( --content-edge );
+  min-height: 48px;
+  width: 100% }
 
 /*** Popup header ***/
 
@@ -557,17 +565,6 @@ body[data-viewport-profile="s"]   #x-app-header {
   width: 50px }
 
 /*** Popup touch anchor ***/
-
-/*** Popup label-bar ***/
-
-.x-app-popups--element--label-bar {
-  overflow-x: auto;
-  /* XXX#2981 */
-  padding: 0 var( --content-edge );
-  min-height: 48px;
-  width: 100% }
-
-/*** Popup label-bar ***/
 
 /*** Popup minimize/maximize button ***/
 
@@ -821,18 +818,6 @@ body[data-viewport-profile="s"]   #x-app-header {
   -padding-top: 60px }
 
 /*** Surface structure ***/
-
-/*** Surface background ***/
-
-.x-app-surface--element--background {
-  background-color: var( --app-background-color );
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100% }
-
-/*** Surface background ***/
 
 /*** Surface content ***/
 

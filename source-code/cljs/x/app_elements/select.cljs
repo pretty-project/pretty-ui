@@ -84,26 +84,6 @@
                                {:ms       ON-POPUP-CLOSED-DELAY
                                 :dispatch on-popup-closed})]}))
 
-(defn- options-props->render-popup-label-bar?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) options-props
-  ;  {:options-label (metamorphic-content)(opt)
-  ;
-  ; @return (boolean)
-  [{:keys [options-label]}]
-  (some? options-label))
-
-(defn- options-props->render-popup-cancel-bar?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) options-props
-  ;  {:user-cancel? (boolean)(opt)
-  ;
-  ; @return (boolean)
-  [{:keys [user-cancel?]}]
-  (boolean user-cancel?))
-
 (defn- view-props->select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -199,23 +179,38 @@
 ;; -- Select options components -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- popup-label-bar
+(defn- select-options-close-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) popup-id
-  ; @param (map) content-props
-  ;  {:label (metamorphic-content)}
+  ; @param (map) options-props
   ;
   ; @return (component)
-  [_ content-props]
-  [polarity {:middle-content [label {:content (:label content-props)}]}])
+  [popup-id _]
+  [button {:preset   :cancel-button
+           :on-click [:ui/close-popup! popup-id]}])
 
-(defn- popup-cancel-bar
+(defn- select-options-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) popup-id
+  ; @param (map) options-props
   ;
   ; @return (component)
-  [popup-id]
-  [polarity {:start-content [button {:preset   :cancel-button
-                                     :on-click [:ui/close-popup! popup-id]}]}])
+  [_ {:keys [options-label]}]
+  [label {:content options-label}])
 
+(defn- select-options-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) options-props
+  ;
+  ; @return (component)
+  [popup-id {:keys [options-label user-cancel?] :as options-props}]
+  (cond (some?   options-label) [polarity {:middle-content [select-options-label        popup-id options-props]}]
+        (boolean user-cancel?)  [polarity {:start-content  [select-options-close-button popup-id options-props]}]))
+      
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -231,7 +226,7 @@
        [:button.x-select--option (engine/selectable-option-attributes options-id view-props option)
                                  [components/content {:content option-label}]]))
 
-(defn- ab7081
+(defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -244,7 +239,7 @@
            [:div.x-select--options]
            (param options)))
 
-(defn- select-options
+(defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -254,7 +249,7 @@
   ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
-                         {:component     #'ab7081
+                         {:component     #'select-options
                           :element-props options-props
                           :subscriber    [::get-view-props options-id]}])
 
@@ -445,14 +440,7 @@
             options-id    (engine/element-id->extended-id select-id :popup)
             options-props (a/prot select-id options-props options-props-prototype)]
            [:ui/add-popup! options-id
-                           {:content       #'select-options
-                            :content-props options-props
-                            :layout        :boxed
-                            :min-width     :xs
-
-                            ; Select options popup's label-bar
-                            :label-bar (cond (options-props->render-popup-label-bar?  options-props)
-                                             {:content       #'popup-label-bar
-                                              :content-props {:label (:options-label options-props)}}
-                                             (options-props->render-popup-cancel-bar? options-props)
-                                             {:content #'popup-cancel-bar})}])))
+                           {:body   {:content #'select-options-body   :content-props options-props}
+                            :header {:content #'select-options-header :content-props options-props}
+                            :layout    :boxed
+                            :min-width :xs}])))

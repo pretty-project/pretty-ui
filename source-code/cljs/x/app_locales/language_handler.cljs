@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.4.2
-; Compatibility: x3.9.9
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -26,26 +26,38 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-app-languages
-  ; @return (vector)
+  ; @usage
+  ;  (r locales/get-app-languages db)
+  ;
+  ; @return (keywords in vector)
   [db _]
   (let [app-languages (r a/get-app-detail db :app-languages)]
-       (reduce #(vector/conj-item %1 (keyword %2))
+       (reduce #(vector/conj-item %1 %2)
                 (param [])
                 (param app-languages))))
 
 (defn app-multilingual?
+  ; @usage
+  ;  (r locales/app-multilingual? db)
+  ;
   ; @return (boolean)
   [db _]
   (let [app-languages (r get-app-languages db)]
        (vector/min? app-languages 2)))
 
 (defn get-selected-language
+  ; @usage
+  ;  (r locales/get-selected-language db)
+  ;
   ; @return (keyword)
   [db _]
-  (keyword (r user/get-user-settings-item db :selected-language)))
+  (r user/get-user-settings-item db :selected-language))
 
 (defn get-multilingual-item
   ; @param (vector) item-path
+  ;
+  ; @usage
+  ;  (r locales/get-multilingual-item db [:my :item])
   ;
   ; @return (*)
   [db [_ item-path]]

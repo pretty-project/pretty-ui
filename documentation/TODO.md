@@ -10,7 +10,11 @@
 - demo user monotemplate be is!
 
 
-# x4.3.0
+# x4.5.0
+- (ns xyz (:require [x.app-user.api :as user]))
+  (println (str ::user/primary)) => :x.app-user.api/primary
+
+- nem mukodik a goog.net.cookies törlés!
 
 - Ha a layout-okon lesznek mindenfél sidebar-ok, akkor a UI-sidebar -ra már nem is lesz szükség?
 

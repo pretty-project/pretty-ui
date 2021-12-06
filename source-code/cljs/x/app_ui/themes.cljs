@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-selected-theme
-  ; @return (string)
+  ; @return (keyword)
   [db _]
   (r user/get-user-settings-item db :selected-theme))
 
@@ -36,11 +36,11 @@
 (defn- store-selected-theme!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) theme-name
+  ; @param (keyword) theme-id
   ;
   ; @return (map)
-  [db [_ theme-name]]
-  (r user/set-user-settings-item! db :selected-theme theme-name))
+  [db [_ theme-id]]
+  (r user/set-user-settings-item! db :selected-theme theme-id))
 
 
 
@@ -48,13 +48,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :ui/set-theme!
-  ; @param (string) theme-name
+  :ui/change-theme!
+  ; @param (keyword) theme-id
   ;
   ; @usage
-  ;  [:ui/set-theme! "light"]
-  (fn [{:keys [db]} [_ theme-name]]
-      {:db       (r store-selected-theme! db theme-name)
+  ;  [:ui/change-theme! :light]
+  (fn [{:keys [db]} [_ theme-id]]
+      {:db       (r store-selected-theme! db theme-id)
        :dispatch [:ui/->theme-changed]}))
 
 
@@ -66,8 +66,8 @@
   :ui/->theme-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [theme-name (r get-selected-theme db)]
-           [:environment/set-element-attribute! "x-body-container" "data-theme" theme-name])))
+      (let [theme-id (r get-selected-theme db)]
+           [:environment/set-element-attribute! "x-body-container" "data-theme" (name theme-id)])))
 
 
 

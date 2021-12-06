@@ -146,8 +146,9 @@
   ; @return (hiccup)
   [button-id view-props]
   [:div.x-radio-button (engine/selectable-attributes button-id view-props)
-                       [radio-button-header  button-id view-props]
-                       [radio-button-options button-id view-props]])
+                       [radio-button-header   button-id view-props]
+                       [engine/element-helper button-id view-props]
+                       [radio-button-options  button-id view-props]])
 
 (defn view
   ; @param (keyword) button-id

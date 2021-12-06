@@ -15,7 +15,6 @@
 
 (ns x.app-ui.structure
     (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.map        :as map]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-environment.api :as environment]
@@ -40,12 +39,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) view-props
-  ;  {:interface (keyword)(opt)}
+  ;  {:interface (keyword)(opt)
+  ;   :scrolled-to-top? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-interface (string)}
-  [{:keys [browser-online? interface]}]
-  (cond-> {} (some? interface) (assoc :data-interface (a/dom-value interface))))
+  ;  {:data-interface (string)
+  ;   :data-scrolled-to-top (boolean)}
+  [{:keys [interface scrolled-to-top?]}]
+  (cond-> {} (some? interface)        (assoc :data-interface       interface)
+             (some? scrolled-to-top?) (assoc :data-scrolled-to-top scrolled-to-top?)))
 
 
 
@@ -59,8 +61,9 @@
   ;  {:client-locked? (boolean)
   ;   :interface (keyword)}
   [db _]
-  {:client-locked? (r user/client-locked?     db)
-   :interface      (r interface/get-interface db)})
+  {:client-locked?   (r user/client-locked?          db)
+   :interface        (r interface/get-interface      db)
+   :scrolled-to-top? (r environment/scrolled-to-top? db)})
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -77,9 +80,8 @@
   ;
   ; @return (hiccup)
   [_ view-props]
-  [:div#x-app-ui-structure
-    (ui-structure-attributes view-props)
-    [app-locker]])
+  [:div#x-app-ui-structure (ui-structure-attributes view-props)
+                           [app-locker]])
 
 (defn- unlocked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,17 +91,16 @@
   ;
   ; @return (hiccup)
   [_ view-props]
-  [:div#x-app-ui-structure
-    (ui-structure-attributes view-props)
-   ;[app-sounds]
-    [app-background]
-    [app-surface]
-    [app-header]
-    [app-popups]
-    [app-sidebar]
-    [app-canvas]
-    [app-bubbles]
-    [progress-bar]])
+  [:div#x-app-ui-structure (ui-structure-attributes view-props)
+                          ;[app-sounds]
+                           [app-background]
+                           [app-surface]
+                           [app-header]
+                           [app-popups]
+                           [app-sidebar]
+                           [app-canvas]
+                           [app-bubbles]
+                           [progress-bar]])
 
 (defn- client-lock-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!

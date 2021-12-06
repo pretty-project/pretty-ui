@@ -109,10 +109,12 @@
 .x-body-a--content-header {
   align-items: center;
   background-color: var( --background-color );
+  -background-color: var( --app-background-color );
   border-bottom-color: var( --border-color-highlight);
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
+  -border-radius: var( --border-radius-m );
   display: flex;
   flex-direction: row;
   font-size: var( --font-size-s );

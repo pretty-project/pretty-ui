@@ -34,15 +34,6 @@
   [{:keys [layout]}]
   (= layout :boxed))
 
-(defn popup-props->popup-unboxed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;
-  ; @return (boolean)
-  [popup-props]
-  (not (popup-props->popup-boxed? popup-props)))
-
 (defn popup-props->popup-stretched?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -52,25 +43,6 @@
   ; @return (boolean)
   [{:keys [stretched?]}]
   (boolean stretched?))
-
-(defn popup-props->render-label-bar?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;  {:label-bar (map)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [label-bar]}]
-  (map/nonempty? label-bar))
-
-(defn popup-props->render-popup-header?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;
-  ; @return (boolean)
-  [popup-props]
-  (popup-props->render-label-bar? popup-props))
 
 
 

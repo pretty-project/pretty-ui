@@ -85,19 +85,10 @@
 (def remove-element-position-listener! position-handler/remove-element-position-listener!)
 
 ; x.app-environment.scroll-handler
-(def get-scroll-direction      scroll-handler/get-scroll-direction)
-(def get-scroll-y              scroll-handler/get-scroll-y)
-(def scrolled-to-top?          scroll-handler/scrolled-to-top?)
-(def scrolled-to-bottom?       scroll-handler/scrolled-to-bottom?)
-(def scroll-direction-btt?     scroll-handler/scroll-direction-btt?)
-(def scroll-direction-ttb?     scroll-handler/scroll-direction-ttb?)
-(def scroll-direction-changed? scroll-handler/scroll-direction-changed?)
-(def get-scroll-turn-position  scroll-handler/get-scroll-turn-position)
-(def get-scroll-turn-distance  scroll-handler/get-scroll-turn-distance)
-(def get-scroll-progress       scroll-handler/get-scroll-progress)
-(def set-scroll-y!             scroll-handler/set-scroll-y!)
-(def scroll-to-top!            scroll-handler/scroll-to-top!)
-(def scroll-to-element-top!    scroll-handler/scroll-to-element-top!)
+(def scrolled-to-top?       scroll-handler/scrolled-to-top?)
+(def set-scroll-y!          scroll-handler/set-scroll-y!)
+(def scroll-to-top!         scroll-handler/scroll-to-top!)
+(def scroll-to-element-top! scroll-handler/scroll-to-element-top!)
 
 ; x.app-environment.touch-handler
 (def touch-events-api-detected? touch-handler/touch-events-api-detected?)

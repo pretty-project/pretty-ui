@@ -229,9 +229,8 @@
   :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
-                  {:content           #'body
+                  {:body {:content #'body :subscriber [::get-body-props]}
                    :layout            :boxed
                    :min-width         :xs
                    :render-exclusive? true
-                   :subscriber        [::get-body-props]
                    :user-close?       false}])

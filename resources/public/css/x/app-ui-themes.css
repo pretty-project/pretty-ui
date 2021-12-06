@@ -38,6 +38,7 @@ body[data-theme="light"] {
   /* App background */
   --app-background-color:       #d7dde8;
   --app-background-color:       #e7edf8;
+  --app-background-color:       #ebf2fc;
   /* App overlay */
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */

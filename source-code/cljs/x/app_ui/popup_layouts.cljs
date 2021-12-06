@@ -23,7 +23,6 @@
               [x.app-environment.api   :as environment]
               [x.app-ui.element        :as element]
               [x.app-ui.popup-geometry :as geometry]
-              [x.app-ui.popup-header   :rename {view popup-header}]
               [x.app-ui.renderer       :as renderer]))
 
 
@@ -55,12 +54,10 @@
   [popup-id {:keys [minimized? stretched?] :as popup-props}]
   (cond-> (element/element-attributes :popups popup-id popup-props
                                       {:data-nosnippet true})
-          (some? stretched?)
-          (assoc :data-stretched (boolean stretched?))
-          (some? minimized?)
-          (assoc :data-minimized (boolean minimized?))))
+          (some? stretched?) (assoc :data-stretched (boolean stretched?))
+          (some? minimized?) (assoc :data-minimized (boolean minimized?))))
 
-(defn- popup-content-attributes
+(defn- popup-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -70,13 +67,30 @@
   ; @return (map)
   ;  {:data-autopadding (boolean)}
   [_ {:keys [autopadding?]}]
-  (merge {}
-         (if (some? autopadding?)
-             {:data-autopadding (boolean autopadding?)})))
+  (merge {} (if (some? autopadding?)
+                {:data-autopadding (boolean autopadding?)})))
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-header-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ;
+  ; @return (map)
+  ;  {:render-touch-anchor? (boolean)}
+  [db [_ popup-id]]
+  {:render-touch-anchor? false})
+  ;:render-touch-anchor? (r geometry/render-touch-anchor? db popup-id)
+
+(a/reg-sub ::get-header-props get-header-props)
+
+
+
+;; -- Popup header components ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- popup-minimize-button
@@ -113,17 +127,57 @@
                         :on-click [:ui/maximize-popup! popup-id]
                         :variant  :filled}]))
 
-(defn- popup-content
+(defn- popup-header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ;  {:header (map)(opt)
+  ;   :render-touch-anchor? (boolean)}
+  ;
+  ; @return (hiccup)
+  [popup-id {:keys [header render-touch-anchor?] :as popup-props}]
+  [:<> (if (boolean render-touch-anchor?)
+           [:div.x-app-popups--element--touch-anchor])
+       (if (some? header)
+           [:div.x-app-popups--element--header
+             [components/content popup-id header]]
+           [:div.x-app-popups--element--header-placeholder])])
+
+(defn popup-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;
-  ; @return (hiccup)
+  ; @return (component)
   [popup-id popup-props]
-  [:div.x-app-popups--element--content
-    (popup-content-attributes popup-id popup-props)
-    [element/element-content  popup-id popup-props]])
+  [components/subscriber popup-id
+                         {:component  #'popup-header-structure
+                          :base-props popup-props
+                          :subscriber [::get-header-props popup-id]}])
+
+
+
+;; -- Popup body components ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- popup-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) popup-props
+  ;  {:body (map)}
+  ;
+  ; @return (hiccup)
+  [popup-id {:keys [body] :as popup-props}]
+  [:div.x-app-popups--element--body (popup-body-attributes popup-id popup-props)
+                                    [components/content    popup-id body]])
+
+
+
+;; -- Popup layout components -------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- popup-cover
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,9 +199,8 @@
   ; @return (hiccup)
   [popup-id popup-props]
   [:div.x-app-popups--element--structure
-    [popup-content popup-id popup-props]
-    (if (geometry/popup-props->render-popup-header? popup-props)
-        [popup-header popup-id popup-props])])
+    [popup-body   popup-id popup-props]
+    [popup-header popup-id popup-props]])
 
 (defn- boxed-popup-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,13 +212,11 @@
   [popup-id popup-props]
   [:div.x-app-popups--element--structure
     [:div.x-app-popups--element--background]
-    (if (geometry/popup-props->render-popup-header? popup-props)
-        [popup-header popup-id popup-props]
-        [:div.x-app-popups--element--header-placeholder])
-    [popup-content         popup-id popup-props]
+    [popup-header          popup-id popup-props]
+    [popup-body            popup-id popup-props]
     [popup-minimize-button popup-id popup-props]])
 
-(defn- popup-structure
+(defn- popup-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -177,15 +228,16 @@
   (case layout :boxed   [boxed-popup-structure   popup-id popup-props]
                :unboxed [unboxed-popup-structure popup-id popup-props]))
 
-(defn view
+(defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
+  ;  {:minimized? (boolean)(opt)}
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimized?] :as popup-props}]
   [:<> [popup-maximize-button popup-id popup-props]
        [:div (popup-attributes popup-id popup-props)
              [popup-cover      popup-id popup-props]
-             [popup-structure  popup-id popup-props]]])
+             [popup-layout     popup-id popup-props]]])

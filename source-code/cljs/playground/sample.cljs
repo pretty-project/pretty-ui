@@ -12,9 +12,9 @@
 
 (defn- sample-header
   [_ {:keys [view-id]}]
-  [elements/menu-bar {:menu-items [{:label "Apple"  :on-click [:router/go-to! "/sample/apple"]  :color (if (not= view-id :apple)  :muted)}
-                                   {:label "Banana" :on-click [:router/go-to! "/sample/banana"] :color (if (not= view-id :banana) :muted)}
-                                   {:label "Cherry" :on-click [:router/go-to! "/sample/cherry"] :color (if (not= view-id :cherry) :muted)}]}])
+  [elements/menu-bar {:menu-items [{:label "Apple"  :on-click [:view-selector/go-to! :sample :apple]  :active? (= view-id :apple)}
+                                   {:label "Banana" :on-click [:view-selector/go-to! :sample :banana] :active? (= view-id :banana)}
+                                   {:label "Cherry" :on-click [:view-selector/go-to! :sample :cherry] :active? (= view-id :cherry)}]}])
 
 (defn- sample-body
   [_ {:keys [view-id]}]

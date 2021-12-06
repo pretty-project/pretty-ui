@@ -25,18 +25,18 @@
 (defn menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
-  [{:label "DB"
+  [{:label    "DB"
     :on-click [:gestures/change-view! ::handler :database-browser]
-    :color    (if (not= view-id :database-browser) :muted)}
-   {:label "Requests"
+    :active?  (= view-id :database-browser)}
+   {:label    "Requests"
     :on-click [:gestures/change-view! ::handler :request-browser]
-    :color    (if (not= view-id :request-browser)  :muted)}
-   {:label "Routes"
+    :active?  (= view-id :request-browser)}
+   {:label    "Routes"
     :on-click [:gestures/change-view! ::handler :route-browser]
-    :color    (if (not= view-id :route-browser)    :muted)}])
+    :active?  (= view-id :route-browser)}])
 ;   {:label "Docs"
 ;    :on-click [:router/go-to! "/docs"]
-;    :color    :muted}])
+
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -85,8 +85,6 @@
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
-                                 {:content    #'body
-                                  :label-bar  {:content    #'header
-                                               :subscriber [::get-header-props]}
-                                  :layout     :boxed
-                                  :subscriber [::get-body-props]}]}))
+                                 {:body   {:content #'body   :subscriber [::get-body-props]}
+                                  :header {:content #'header :subscriber [::get-header-props]}
+                                  :layout :boxed}]}))

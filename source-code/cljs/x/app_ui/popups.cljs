@@ -40,7 +40,6 @@
 ;  A popup felületén megjelenő tartalmat magában foglaló DIV elem
 ;  háttere az applikáció témája szerinti háttérszín
 ;
-; @name layout
 ; {:layout :unboxed}
 ; TODO ...
 ;
@@ -180,9 +179,9 @@
   :ui/close-popup!
   ; @param (keyword) popup-id
   (fn [{:keys [db]} [_ popup-id]]
-      {:dispatch-n [[:ui/destroy-element! :popups popup-id]]}))
+      {:dispatch-n [[:ui/destroy-element! :popups popup-id]
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
-                    ; [:environment/remove-scroll-prohibition! popup-id]
+                    [:environment/remove-scroll-prohibition! popup-id]]}))
 
 (a/reg-event-fx
   :ui/close-upper-popup!
@@ -197,9 +196,9 @@
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   (fn [_ [_ popup-id popup-props]]
-      {:dispatch-n [[:ui/request-rendering-element! :popups popup-id popup-props]]}))
+      {:dispatch-n [[:ui/request-rendering-element! :popups popup-id popup-props]
                     ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
-                    ; [:environment/add-scroll-prohibition! popup-id]
+                    [:environment/add-scroll-prohibition! popup-id]]}))
 
 (a/reg-event-fx
   :ui/render-popup-exclusive!
@@ -227,21 +226,21 @@
   ;  {:autopadding? (boolean)(opt)
   ;    Default: true
   ;    Only w/ {:layout :boxed}
-  ;   :content (component)
-  ;    XXX#8711
-  ;   :content-props (map)(opt)
-  ;    XXX#8711
+  ;   :body (map)
+  ;    {:content (metamorphic-content)
+  ;     :content-props (map)(opt)
+  ;     :subscriber (subscription vector)(opt)}
+  ;   :header (map)(opt)
+  ;    {:content (metamorphic-content)
+  ;      #'ui/go-back-popup-header, #'ui/close-popup-header, ...
+  ;     :content-props (map)(opt)
+  ;      {:label (metamorphic-content)(opt)}
+  ;     :subscriber (subscription vector)(opt)}
   ;   :hide-animated? (boolean)(opt)
   ;    Default: true
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;   :label-bar (map)(opt)
-  ;    {:content (metamorphic-content)
-  ;      #'ui/go-back-popup-label-bar, #'ui/close-popup-label-bar, ...
-  ;     :content-props (map)(opt)
-  ;      {:label (metamorphic-content)(opt)}
-  ;     :subscriber (subscription vector)(opt)}
   ;   :layout (keyword)(opt)
   ;    :boxed, :unboxed
   ;    Default: :unboxed
@@ -254,8 +253,6 @@
   ;    Default: true
   ;   :stretched? (boolean)(opt)
   ;    Default: false
-  ;   :subscriber (subscription vector)(opt)
-  ;    XXX#8711
   ;   :update-animated? (boolean)(opt)
   ;    Default: false
   ;   :user-close? (boolean)(opt)
@@ -269,11 +266,10 @@
   ;  [:ui/add-popup! :my-popup {...}]
   ;
   ; @usage
-  ;  (defn view        [popup-id]            [:div "My surface"])
-  ;  (defn label-bar   [popup-id view-props] [:div "My label-bar"])
-  ;  [:ui/add-popup! {:content #'view
-  ;                   :label-bar {:content #'label-bar
-  ;                               :subscriber [::get-label-bar-view-props]}}]
+  ;  (defn body   [popup-id]              [:div "My body"])
+  ;  (defn header [popup-id header-props] [:div "My header"])
+  ;  [:ui/add-popup! {:body   {:content #'body}
+  ;                   :header {:content #'header :subscriber [::get-header-props]}}]
   (fn [{:keys [db]} event-vector]
       (let [popup-id    (a/event-vector->second-id   event-vector)
             popup-props (a/event-vector->first-props event-vector)

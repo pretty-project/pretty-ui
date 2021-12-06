@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v3.4.0
-; Compatibility: x4.4.4
+; Version: v3.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -22,11 +22,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
-              [x.app-ui.engine      :as engine]
-
-              ; TEMP
-              ; DEBUG
-              [mid-fruits.time :as time]))
+              [x.app-ui.engine      :as engine]))
 
 
 
@@ -988,7 +984,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      ;(a/console (str "Render element animated - " (time/elapsed)))
       {:db             (r store-element! db renderer-id element-id element-props)
        :dispatch-later [{:ms REVEAL-ANIMATION-TIMEOUT :dispatch [:ui/->rendering-ended renderer-id]}]}))
 
@@ -1000,8 +995,7 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      ;(a/console (str "Render element static - " (time/elapsed)))
-      {:db       (r store-element! db renderer-id element-id element-props)
+      {:db       (r store-element!   db renderer-id element-id element-props)
        :dispatch [:ui/->rendering-ended renderer-id]}))
 
 (a/reg-event-fx
@@ -1025,8 +1019,8 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      {:db       (r update-element-props!  db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended renderer-id]}))
+      {:db       (r update-element-props! db renderer-id element-id element-props)
+       :dispatch [:ui/->rendering-ended      renderer-id]}))
 
 (a/reg-event-fx
   :ui/update-element-static!
@@ -1036,8 +1030,8 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      {:db       (r update-element-props!  db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended renderer-id]}))
+      {:db       (r update-element-props! db renderer-id element-id element-props)
+       :dispatch [:ui/->rendering-ended      renderer-id]}))
 
 (a/reg-event-fx
   :ui/push-element!
@@ -1061,7 +1055,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      ;(a/console (str "Select rendering mode - " (time/elapsed)))
       (cond (r push-element?            db renderer-id element-id element-props)
             [:ui/push-element!             renderer-id element-id element-props]
             (r rerender-element?        db renderer-id element-id element-props)
@@ -1088,7 +1081,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      ;(a/console (str "Render element - " (time/elapsed)))
       (if (r render-element-now? db renderer-id element-id)
           {:db       (as-> db % (r reserve-renderer!  % renderer-id)
                                 (r update-render-log! % renderer-id element-id :render-requested-at))
@@ -1113,7 +1105,6 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ _ element-id]]
-      ;(a/console (str "Hide element - " (time/elapsed)))
       [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "hide"]))
 
 (a/reg-event-fx
@@ -1123,7 +1114,6 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ renderer-id element-id]]
-      ;(a/console (str "Destroy element animated - " (time/elapsed)))
       {:db       (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
        :dispatch [:ui/hide-element! renderer-id element-id]
@@ -1142,7 +1132,6 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ renderer-id element-id]]
-      ;(a/console (str "Destroy element static - " (time/elapsed)))
       {:db       (as-> db % (r stop-element-rendering! % renderer-id element-id)
                             (r remove-element!         % renderer-id element-id))
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
@@ -1154,7 +1143,6 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ renderer-id element-id]]
-      ;(a/console (str "Destroy element - " (time/elapsed)))
       {:db       (r update-render-log!              db renderer-id element-id :destroyed-at)
        :dispatch (cond (r destroy-element-animated? db renderer-id element-id)
                        [:ui/destroy-element-animated!  renderer-id element-id]
@@ -1190,7 +1178,7 @@
   ;
   ; @param (keyword) renderer-id
   (fn [{:keys [db]} [_ renderer-id]]
-      {:db       (r free-renderer!                   db renderer-id)
+      {:db       (r free-renderer!             db renderer-id)
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
 (a/reg-event-fx

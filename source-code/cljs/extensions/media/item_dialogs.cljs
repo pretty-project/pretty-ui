@@ -118,10 +118,10 @@
       (let [rendered-directory-id (r file-storage/get-rendered-directory-id db)
             subdirectory-alias    (r engine/get-subdirectory-prop db rendered-directory-id subdirectory-id :directory/alias)]
            [:ui/add-popup! ::delete-subdirectory-dialog
-                           {:content       #'delete-subdirectory-dialog
-                            :content-props {:subdirectory-alias subdirectory-alias}
-                            :label-bar     {:content       #'delete-item-label-bar
-                                            :content-props {:selected-item {:directory/id (name subdirectory-id)}}}
+                           {:body {:content #'delete-subdirectory-dialog
+                                   :content-props {:subdirectory-alias subdirectory-alias}}
+                            :header {:content       #'delete-item-label-bar
+                                     :content-props {:selected-item {:directory/id (name subdirectory-id)}}}
                             :layout        :boxed}])))
 
 (a/reg-event-fx

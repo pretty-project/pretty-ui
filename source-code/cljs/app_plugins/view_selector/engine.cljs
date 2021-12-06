@@ -32,6 +32,8 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
+(def route                   engine/route)
+(def extended-route          engine/extended-route)
 (def render-event            engine/render-event)
 
 
@@ -114,6 +116,19 @@
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :view-selector/go-to!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) view-id
+  ;
+  ; @usage
+  ;  [:view-selector/go-to! :my-extension :my-view]
+  (fn [_ [_ extension-id view-id]]
+      (let [target-route (extended-route extension-id view-id)]
+           [:router/go-to! target-route])))
 
 (a/reg-event-fx
   :view-selector/load!

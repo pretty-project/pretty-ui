@@ -120,8 +120,8 @@
   :settings/render-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
-                  {:content          #'body
+                  {:body   {:content #'body}
+                   :header {:content #'header}
                    :horizontal-align :left
-                   :label-bar        {:content #'header}
                    :layout           :boxed
                    :user-close?      false}])

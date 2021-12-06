@@ -57,7 +57,7 @@
   [elements/button ::personal-settings-button
                    {:color    (if (not= view-id :personal) :muted)
                     :icon     :person
-                    :on-click [:view-selector/change-view! :settings :personal]
+                    :on-click [:view-selector/go-to! :settings :personal]
                     :preset   :default-icon-button}])
 
 (defn privacy-settings-button
@@ -66,7 +66,7 @@
   [elements/button ::privacy-settings-button
                    {:color    (if (not= view-id :privacy) :muted)
                     :icon     :security
-                    :on-click [:view-selector/change-view! :settings :privacy]
+                    :on-click [:view-selector/go-to! :settings :privacy]
                     :preset   :default-icon-button}])
 
 (defn notification-settings-button
@@ -75,7 +75,7 @@
   [elements/button ::notification-settings-button
                    {:color    (if (not= view-id :notifications) :muted)
                     :icon     :notifications
-                    :on-click [:view-selector/change-view! :settings :notifications]
+                    :on-click [:view-selector/go-to! :settings :notifications]
                     :preset   :default-icon-button}])
 
 (defn appearance-settings-button
@@ -84,7 +84,7 @@
   [elements/button ::appearance-settings-button
                    {:color    (if (not= view-id :appearance) :muted)
                     :icon     :auto_awesome
-                    :on-click [:view-selector/change-view! :settings :appearance]
+                    :on-click [:view-selector/go-to! :settings :appearance]
                     :preset   :default-icon-button}])
 
 (defn- header

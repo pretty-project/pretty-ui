@@ -324,7 +324,7 @@
        (or (keyword selected-files)
            (vector/nonempty? selected-files))))
 
-(defn- get-label-bar-view-props
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -342,7 +342,7 @@
                :directory-path     (r engine/get-directory-path  db rendered-directory-id)
                :synchronizing?     (r sync/listening-to-request? db query-id)})))
 
-(a/reg-sub :file-browser/get-label-bar-view-props get-label-bar-view-props)
+(a/reg-sub :file-browser/get-header-props get-header-props)
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -685,7 +685,7 @@
                              :min-width   :l
                              :placeholder :filter-items!}]))
 
-(defn- file-browser-label-bar
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -943,10 +943,9 @@
   ; @param (map) browser-props
   (fn [_ [_ browser-id browser-props]]
       [:ui/add-popup! ::view
-                      {:content          #'listener
+                      {:body   {:content #'listener}  ; #'body és #'header
+                       :header {:content #'header :subscriber [:file-browser/get-header-props]}
                        :horizontal-align :center
-                       :label-bar        {:content    #'file-browser-label-bar
-                                          :subscriber [:file-browser/get-label-bar-view-props]}
                        :layout           :boxed}]))
 
 (a/reg-event-fx

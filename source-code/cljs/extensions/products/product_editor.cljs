@@ -41,8 +41,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
   [:div#product--product-form
-    [elements/menu-bar {:menu-items [{:label "Adatok" :on-click []} {:label "Képek" :color :muted :on-click []}
-                                     {:label "Változatok" :on-click [] :color :muted}]}]
+    [elements/menu-bar {:menu-items [{:label "Adatok" :on-click []}
+                                     {:label "Képek" :on-click []}
+                                     {:label "Változatok" :on-click []}]}]
      ;                   :horizontal-align "left"}]
     [elements/text-field {:label :name :required? true}]
     [elements/combo-box {:label "Vendor" :initial-options ["Wörmann" "AL-KO"]}]

@@ -75,12 +75,8 @@ button.x-card:focus,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
 .x-file-drop-area--body:focus,
-.x-menu-bar--anchor-item:active,
-.x-menu-bar--anchor-item:focus,
-.x-menu-bar--button-item:active,
-.x-menu-bar--button-item:focus,
-.x-menu-bar--sensor-item:active,
-.x-menu-bar--sensor-item:focus,
+.x-menu-bar--menu-item:active,
+.x-menu-bar--menu-item:focus,
 .x-radio-button--unselect-button:active,
 .x-radio-button--unselect-button:focus,
 .x-radio-button--option:active
@@ -119,7 +115,7 @@ button.x-card:focus,
 /***** Hide scrollbar *****/
 
 .x-combo-box--options,
-.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items {
+.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar for Firefox */
@@ -129,7 +125,7 @@ button.x-card:focus,
 
 .x-combo-box--options::-webkit-scrollbar,
 .x-menu-bar[data-orientation="horizontal"]
-.x-menu-bar--items::-webkit-scrollbar {
+.x-menu-bar--menu-items::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
 
@@ -175,9 +171,7 @@ button.x-card:focus,
 .x-label[data-selectable="false"] .x-label--icon,
 .x-label[data-selectable="false"] .x-label--body,
 .x-line-diagram--label,
-.x-menu-bar--anchor-item,
-.x-menu-bar--button-item,
-.x-menu-bar--sensor-item,
+.x-menu-bar--menu-item,
 .x-radio-button--label,
 .x-radio-button--option-label,
 .x-select--label,
@@ -417,9 +411,6 @@ button.x-card:focus,
 .x-label[data-color="muted"],
 .x-line-diagram[data-color=muted]
 .x-line-diagram--label,
-.x-menu-bar--anchor-item[data-color="muted"],
-.x-menu-bar--button-item[data-color="muted"],
-.x-menu-bar--sensor-item[data-color="muted"],
 .x-text[data-color="muted"],
 .x-toggle[data-color="muted"] {
   color: var( --color-muted ) }
@@ -445,9 +436,6 @@ button.x-card:focus,
 
 .x-icon[data-color="highlight"],
 .x-label[data-color="highlight"],
-.x-menu-bar--anchor-item[data-color="highlight"],
-.x-menu-bar--button-item[data-color="highlight"],
-.x-menu-bar--sensor-item[data-color="highlight"],
 .x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
 
@@ -508,9 +496,6 @@ button.x-card:focus,
 .x-label[data-color="primary"],
 .x-line-diagram[data-color=primary]
 .x-line-diagram--label,
-.x-menu-bar--anchor-item[data-color="primary"],
-.x-menu-bar--button-item[data-color="primary"],
-.x-menu-bar--sensor-item[data-color="primary"],
 .x-text[data-color="primary"],
 .x-toggle[data-color="primary"] {
   color: var( --color-primary ) }
@@ -563,9 +548,6 @@ button.x-card:focus,
 .x-label[data-color="secondary"],
 .x-line-diagram[data-color=secondary]
 .x-line-diagram--label,
-.x-menu-bar--anchor-item[data-color="secondary"],
-.x-menu-bar--button-item[data-color="secondary"],
-.x-menu-bar--sensor-item[data-color="secondary"],
 .x-text[data-color="secondary"],
 .x-toggle[data-color="secondary"] {
   color: var( --color-secondary ) }
@@ -878,7 +860,7 @@ button.x-card:focus,
 
 .x-element-list[data-orientation="horizontal"],
 .x-menu-bar[data-orientation="horizontal"],
-.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--items,
+.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items,
 .x-polarity[data-orientation="horizontal"],
 .x-polarity[data-orientation="horizontal"] .x-polarity--start-content,
 .x-polarity[data-orientation="horizontal"] .x-polarity--middle-content,
@@ -896,7 +878,7 @@ button.x-card:focus,
 /*** Vertical orientation ***/
 
 .x-element-list[data-orientation="vertical"],
-.x-menu-bar[data-orientation="vertical"] .x-menu-bar--items,
+.x-menu-bar[data-orientation="vertical"] .x-menu-bar--menu-items,
 .x-polarity[data-orientation="vertical"] {
   display: flex;
   flex-direction: column }
@@ -2483,16 +2465,15 @@ body[data-viewport-profile="s"]
 
 /*** Menu items ***/
 
-.x-menu-bar--items {
+.x-menu-bar--menu-items {
   column-gap: 24px }
 
 /*** Menu items ***/
 
 /*** Menu item ***/
 
-.x-menu-bar--anchor-item,
-.x-menu-bar--button-item,
-.x-menu-bar--sensor-item {
+.x-menu-bar--menu-item {
+  color: var( --color-muted );
   display: flex;
   flex-direction: column;
   font-size: var( --font-size-s );
@@ -2502,13 +2483,19 @@ body[data-viewport-profile="s"]
   line-height: var( --line-height-s );
   white-space: nowrap }
 
-/* XXX#7605 */
-.x-menu-bar--sensor-item {
-  cursor: default }
+.x-menu-bar--menu-item[data-active="true"]::after {
+  background-color: var( --border-color-primary );
+  bottom: 0;
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: 100% }
 
-.x-menu-bar[data-layout="row"] .x-menu-bar--anchor-item,
-.x-menu-bar[data-layout="row"] .x-menu-bar--button-item,
-.x-menu-bar[data-layout="row"] .x-menu-bar--sensor-item {
+.x-menu-bar--menu-item[data-active="true"] {
+  color: var( --color ) }
+
+.x-menu-bar[data-layout="row"] .x-menu-bar--menu-item {
   height: 48px }
 
 /*** Menu item ***/

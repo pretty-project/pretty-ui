@@ -160,7 +160,7 @@
         upload-size           (get-in db (settings-item-path :files-size))]
        (>= upload-size storage-free-capacity)))
 
-(defn- get-label-bar-view-props
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) uploader-id
@@ -174,9 +174,9 @@
           :max-upload-size                  (r a/get-storage-detail db :max-upload-size)
           :storage-free-capacity            (r engine/get-storage-free-capacity db)}))
 
-(a/reg-sub :file-uploader/get-label-bar-view-props get-label-bar-view-props)
+(a/reg-sub :file-uploader/get-header-props get-header-props)
 
-(defn- get-view-props
+(defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) uploader-id
@@ -187,7 +187,7 @@
          {:all-files-aborted? (r all-files-aborted?             db)
           :viewport-width     (r environment/get-viewport-width db)}))
 
-(a/reg-sub :file-uploader/get-view-props get-view-props)
+(a/reg-sub :file-uploader/get-body-props get-body-props)
 
 
 
@@ -397,7 +397,7 @@
                                   [file-uploader-uploading-size popup-id view-props]]
                     :horizontal-align :center}])
 
-(defn- file-uploader-label-bar
+(defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -468,19 +468,19 @@
                       :color       :muted
                       :font-weight :bold}]))
 
-(defn- view
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) view-props
+  ; @param (map) body-props
   ;
   ; @return (hiccup)
-  [popup-id view-props]
+  [popup-id body-props]
   [:<> [elements/separator {:orientation :horizontal :size :s}]
-       [elements/row {:content [file-uploader-file-list popup-id view-props]
-                      :style   (popup-geometry/view-props->item-list-container-style view-props)
+       [elements/row {:content [file-uploader-file-list popup-id body-props]
+                      :style   (popup-geometry/view-props->item-list-container-style body-props)
                       :wrap-items? true}]
-       [file-uploader-no-files-to-upload popup-id view-props]
+       [file-uploader-no-files-to-upload popup-id body-props]
        [elements/separator {:orientation :horizontal :size :s}]])
 
 
@@ -532,12 +532,12 @@
   (fn [_ [_ uploader-id]]
       [:ui/add-popup! ::view
                       {:autopadding? false
-                       :content      #'view
+                       ; #'body és #'header
+                       :body   {:content #'body   :subscriber [:file-uploader/get-body-props   uploader-id]}
+                       :header {:content #'header :subscriber [:file-uploader/get-header-props uploader-id]}
                        :layout       :boxed
-                       :label-bar    {:content    #'file-uploader-label-bar
-                                      :subscriber [:file-uploader/get-label-bar-view-props uploader-id]}
-                       :min-width    :xxs
-                       :subscriber   [:file-uploader/get-view-props uploader-id]}]))
+                       :min-width    :xxs}]))
+
 
 (a/reg-fx
   :file-uploader/open-file-selector!

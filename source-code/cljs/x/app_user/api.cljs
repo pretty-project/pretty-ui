@@ -54,6 +54,7 @@
 (def set-user-profile-item!       profile-handler/set-user-profile-item!)
 
 ; x.app-user.settings-handler
+(def user-settings-item-path settings-handler/user-settings-item-path)
 (def get-user-settings       settings-handler/get-user-settings)
 (def get-user-settings-item  settings-handler/get-user-settings-item)
 (def set-user-settings-item! settings-handler/set-user-settings-item!)

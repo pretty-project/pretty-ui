@@ -215,8 +215,6 @@
   ; @param (map) saver-props
   (fn [_ [_ saver-id saver-props]]
       [:ui/add-popup! saver-id
-                      {:content       #'body
-                       :content-props saver-props
-                       :label-bar     {:content       #'header
-                                       :content-props saver-props}
-                       :layout        :boxed}]))
+                      {:body   {:content #'body   :content-props saver-props}
+                       :header {:content #'header :content-props saver-props}
+                       :layout :boxed}]))

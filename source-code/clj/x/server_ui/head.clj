@@ -91,9 +91,9 @@
   [head request {:keys [crawler-rules meta-description meta-keywords]}]
   (let [meta-keywords (meta-keywords->formatted-meta-keywords meta-keywords)]
        (vector/concat-items (param head)
-         [[:meta {:content (str crawler-rules)    :name "robots"}]
-          [:meta {:content (str meta-description) :name "description"}]
-          [:meta {:content (str meta-keywords)    :name "keywords"}]])))
+                            [[:meta {:content (str crawler-rules)    :name "robots"}]
+                             [:meta {:content (str meta-description) :name "description"}]
+                             [:meta {:content (str meta-keywords)    :name "keywords"}]])))
 
 (defn- head<-browser-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,20 +102,20 @@
   ; @param (map) request
   ; @param (map) head-props
   ;  {:app-title (string)
-  ;   :selected-language (string)
+  ;   :selected-language (keyword)
   ;   :theme-color (string)}
   ;
   ; @return (hiccup)
   [head request {:keys [app-title selected-language theme-color]}]
   (vector/concat-items (param head)
-    [[:title (str app-title)]
-     [:meta {:charset "utf-8"}]
-     ; maximum-scale=1
-     ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
-     ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
-     [:meta {:content "width=320, initial-scale=1 maximum-scale=1" :name "viewport"}]
-     [:meta {:content (str theme-color)            :name "theme-color"}]
-     [:meta {:content (str selected-language)      :http-equiv "content-language"}]]))
+                       [[:title (str app-title)]
+                        [:meta {:charset "utf-8"}]
+                        ; maximum-scale=1
+                        ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
+                        ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
+                        [:meta {:content "width=320, initial-scale=1 maximum-scale=1" :name "viewport"}]
+                        [:meta {:content theme-color                                  :name "theme-color"}]
+                        [:meta {:content selected-language                            :http-equiv "content-language"}]]))
 
 (defn- head<-legal-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,9 +128,9 @@
   ; @return (hiccup)
   [head request {:keys [author]}]
   (vector/concat-items (param head)
-    [[:meta {:content (str author)                        :name "author"}]
-     [:meta {:content (str details/copyright-information) :name "copyright"}]
-     [:meta {:content (str details/app-version)           :name "version"}]]))
+                       [[:meta {:content (str author)                        :name "author"}]
+                        [:meta {:content (str details/copyright-information) :name "copyright"}]
+                        [:meta {:content (str details/app-version)           :name "version"}]]))
 
 (defn- head<-og-properties
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -148,11 +148,11 @@
   ; @return (hiccup)
   [head request {:keys [app-title meta-description og-preview-path]}]
   (vector/concat-items (param head)
-    [[:meta {:content "website"                   :property "og:type"}]
-     [:meta {:content (str meta-description)      :property "og:description"}]
-     [:meta {:content (str app-title)             :property "og:title"}]
-     [:meta {:content (str og-preview-path)       :property "og:image"}]
-     [:meta {:content (http/request->uri request) :property "og:url"}]]))
+                       [[:meta {:content "website"                   :property "og:type"}]
+                        [:meta {:content (str meta-description)      :property "og:description"}]
+                        [:meta {:content (str app-title)             :property "og:title"}]
+                        [:meta {:content (str og-preview-path)       :property "og:image"}]
+                        [:meta {:content (http/request->uri request) :property "og:url"}]]))
 
 (defn- head<-css-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,7 +214,7 @@
   ;
   ; @return (map)
   ;  {:crawler-rules (?)
-  ;   :selected-language (string)}
+  ;   :selected-language (keyword)}
   [request head-props]
   (merge (a/subscribed [:core/get-destructed-configs])
          {:crawler-rules     (crawler-rules request)
@@ -245,7 +245,7 @@
   ;   :meta-description (string)(opt)
   ;   :meta-keywords (string or strings in vector)(opt)
   ;   :og-preview-path (string)(opt)
-  ;   :selected-language (string)(opt)
+  ;   :selected-language (keyword)(opt)
   ;   :theme-color (string)(opt)
   ;
   ; @usage

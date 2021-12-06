@@ -1,4 +1,12 @@
 
+; WARNING! DEPRECATED! DO NOT USE!
+;
+; A scroll adatok Re-Frame adatbázisban való eltárolása túlságosan erőforrásigényes!
+; A Re-Frame nem alkalmas 500ms-onkénti írásra, mivel az adatbázis minden írása
+; magával vonja az összes feliratkozott subscription függvény lefutását!
+
+
+
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
