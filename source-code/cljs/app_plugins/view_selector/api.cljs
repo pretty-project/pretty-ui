@@ -29,8 +29,8 @@
 ;
 ;  (defn body [_ {:keys [view-id]}] ...)
 ;
-;  (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:content    #'body
-;                                                           :subscriber [:view-selector/get-view-props :my-extension]}]))
+;  (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:view {:content    #'body
+;                                                                  :subscriber [:view-selector/get-view-props :my-extension]}}]))
 ;
 ;  (a/dispatch [:sync/send-request! :my-namespace/synchronize! {...}])
 ;

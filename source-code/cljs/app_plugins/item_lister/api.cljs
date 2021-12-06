@@ -31,7 +31,7 @@
 ;  (defn list-item [item-dex item] ...)
 ;  (defn view      [_] [:<> [item-lister/header :my-extension :my-type]
 ;                           [item-lister/body   :my-extension :my-type {:list-item #'list-item}]])
-;  (a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:content #'view}])
+;  (a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:view {:content #'view}}])
 ;
 ;  (a/dispatch [:router/go-to! "/my-extension"])
 

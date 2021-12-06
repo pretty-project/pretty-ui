@@ -18,4 +18,4 @@
 (a/reg-event-fx
   :vehicles/render!
   [:ui/set-surface! ::view
-                    {:content #'view}])
+                    {:view {:content #'view}}])

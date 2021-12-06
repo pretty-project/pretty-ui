@@ -84,9 +84,9 @@
   ;   :updater (metamorphic-event)(opt)}
   ;
   ; @return (component)
-  [element-id {:keys [component destructor disabler element-props initial-props
-                      initializer modifier subscriber updater] :as context-props}]
-  (let [disabler           (get                          element-props disabler)
+  [element-id {:keys [component destructor element-props initial-props initializer modifier
+                      subscriber updater] :as context-props}]
+  (let [disabler           (get                          element-props :disabler)
         initial-props      (element-props->initial-props element-props)
         element-props-path (element/element-props-path   element-id)]
        [components/stated element-id

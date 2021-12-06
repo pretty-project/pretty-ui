@@ -20,4 +20,4 @@
 (a/reg-event-fx
   :services/render!
   [:ui/set-surface! ::view
-                    {:content #'view}])
+                    {:view {:content #'view}}])

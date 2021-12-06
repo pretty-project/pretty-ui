@@ -18,4 +18,4 @@
 (a/reg-event-fx
   :employees/render!
   [:ui/set-surface! ::view
-                    {:content #'view}])
+                    {:view {:content #'view}}])

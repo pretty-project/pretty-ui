@@ -79,4 +79,4 @@
 (a/reg-event-fx
   :products/render-product-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}}])

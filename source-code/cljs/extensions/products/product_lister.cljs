@@ -121,4 +121,4 @@
 (a/reg-event-fx
   :products/render-product-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:view {:content #'view}}])

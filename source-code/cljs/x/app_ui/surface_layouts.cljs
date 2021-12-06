@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.29
 ; Description:
-; Version: v1.8.0
-; Compatibility: x4.4.4
+; Version: v1.8.8
+; Compatibility: x4.4.8
 
 
 
@@ -14,9 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface-layouts
-    (:require [mid-fruits.css   :as css]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-ui.element :as element]))
+    (:require [mid-fruits.css       :as css]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-ui.element     :as element]))
 
 
 
@@ -38,27 +39,17 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- surface-content
+(defn- surface-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
+  ;  {:view (map)}
   ;
   ; @return (hiccup)
-  [surface-id surface-props]
-  [:div.x-app-surface--element--content
-    [element/element-content surface-id surface-props]])
-
-(defn- surface-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  ;
-  ; @return (hiccup)
-  [surface-id surface-props]
-  [:div.x-app-surface--element--structure
-    [surface-content surface-id surface-props]])
+  [surface-id {:keys [view]}]
+  [:div.x-app-surface--element--view
+    [components/content surface-id view]])
 
 (defn surface-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,4 +60,4 @@
   ; @return (hiccup)
   [surface-id surface-props]
   [:div (surface-attributes surface-id surface-props)
-        [surface-structure  surface-id surface-props]])
+        [surface-view       surface-id surface-props]])

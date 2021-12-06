@@ -210,7 +210,7 @@
   [popup-id {:keys [options-label user-cancel?] :as options-props}]
   (cond (some?   options-label) [polarity {:middle-content [select-options-label        popup-id options-props]}]
         (boolean user-cancel?)  [polarity {:start-content  [select-options-close-button popup-id options-props]}]))
-      
+
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -334,7 +334,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) view-props
-  ;  {}
+  ;  {:as-button? (boolean)(opt)}
   ;
   ; @return (hiccup)
   [select-id {:keys [as-button?] :as view-props}]

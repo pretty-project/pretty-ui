@@ -55,7 +55,6 @@
               [x.app-elements.search-field      :as search-field]
               [x.app-elements.select            :as select]
               [x.app-elements.separator         :as separator]
-              [x.app-elements.sidebar           :as sidebar]
               [x.app-elements.slideshow         :as slideshow]
               [x.app-elements.submit-button     :as submit-button]
               [x.app-elements.switch            :as switch]
@@ -183,7 +182,6 @@
 (def row               row/view)
 (def search-field      search-field/view)
 (def select            select/view)
-(def sidebar           sidebar/view)
 (def separator         separator/view)
 (def slideshow         slideshow/view)
 (def submit-button     submit-button/view)

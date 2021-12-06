@@ -18,4 +18,4 @@
 (a/reg-event-fx
   :calendar/render!
   [:ui/set-surface! ::view
-                    {:content #'view}])
+                    {:view {:content #'view}}])

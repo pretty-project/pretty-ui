@@ -119,4 +119,4 @@
             bin-props (a/event-vector->first-props event-vector)
             bin-props (a/prot bin-props bin-props-prototype)]
            [:ui/set-surface! :media/view
-                             {:content #'view}])))
+                             {:view {:content #'view}}])))

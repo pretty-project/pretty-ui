@@ -110,4 +110,4 @@
 (a/reg-event-fx
   :clients/render-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:view {:content #'view}}])

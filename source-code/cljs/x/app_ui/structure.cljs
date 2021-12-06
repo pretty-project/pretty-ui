@@ -20,14 +20,12 @@
               [x.app-environment.api :as environment]
               [x.app-ui.background   :rename {view app-background}]
               [x.app-ui.bubbles      :rename {view app-bubbles}]
-              [x.app-ui.canvas       :rename {view app-canvas}]
               [x.app-ui.header       :rename {view app-header}]
               [x.app-ui.interface    :as interface]
               [x.app-ui.locker       :rename {view app-locker}]
               [x.app-ui.popups       :rename {view app-popups}]
               [x.app-ui.progress-bar :rename {view progress-bar}]
               [x.app-ui.surface      :rename {view app-surface}]
-              [x.app-ui.sidebar      :rename {view app-sidebar}]
               [x.app-user.api        :as user]))
 
 
@@ -97,8 +95,6 @@
                            [app-surface]
                            [app-header]
                            [app-popups]
-                           [app-sidebar]
-                           [app-canvas]
                            [app-bubbles]
                            [progress-bar]])
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.9.4
-; Compatibility: x4.2.6
+; Version: v1.9.8
+; Compatibility: x4.4.8
 
 
 
@@ -181,16 +181,11 @@
 
 (a/reg-event-fx
   :ui/blow-bubble!
-  ; XXX#3044
-  ; Ha a button elem nem jelenít meg {:content ...} tulajdonságként átadott tartalmat,
-  ; akkor a primary-button a button elem bal oldalán jelenik meg.
-  ;
   ; @param (keyword)(opt) bubble-id
   ; @param (map) bubble-props
   ;  {:autopop? (boolean)(opt)
   ;    Default: true
-  ;   :content (metamorphic-content)(opt)
-  ;    XXX#8711
+  ;   :content (metamorphic-content)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning, :muted
   ;   :primary-button (map)(opt)
@@ -258,11 +253,12 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
+  ;  {:body (map)}
   ;
   ; @return (hiccup)
-  [bubble-id bubble-props]
+  [bubble-id {:keys [body]}]
   [:div.x-app-bubbles--element--content
-    [element/element-content bubble-id bubble-props]])
+    [components/content bubble-id body]])
 
 (defn- bubble-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!

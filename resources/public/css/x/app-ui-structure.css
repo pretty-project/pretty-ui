@@ -141,8 +141,7 @@
 #x-body-container,
 #x-app-bubbles,
 .x-app-popups--element--body,
-.x-app-popups--element--header,
-#x-app-sidebar--surface {
+.x-app-popups--element--header {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar for Firefox */
@@ -152,8 +151,7 @@
 #x-body-container::-webkit-scrollbar,
 #x-app-bubbles::-webkit-scrollbar,
 .x-app-popups--element--body::-webkit-scrollbar,
-.x-app-popups--element--header::-webkit-scrollbar,
-#x-app-sidebar--surface::-webkit-scrollbar {
+.x-app-popups--element--header::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
 
@@ -339,24 +337,6 @@
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
-
-
-
-/***** App canvas *****/
-/*** App canvas wrapper ***/
-
-#x-app-canvas {
-  height: 0;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100% }
-
-/***** App canvas wrapper *****/
-
-/*** App canvas renderer ***/
-/*** App canvas renderer ***/
-/***** App canvas *****/
 
 
 
@@ -668,89 +648,6 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 
 
-/***** App sidebar *****/
-/*** App sidebar wrapper ***/
-
-#x-app-sidebar {
-  background-color: var( --background-color );
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  transform: translateX(-110%);
-  width: 320px }
-
-#x-app-sidebar[data-visible="true"] {
-  transform: translateX(0) }
-
-/*** App sidebar wrapper ***/
-
-/*** App sidebar controls ***/
-
-#x-app-sidebar--controls {
-  position: absolute;
-  right: 0;
-  top: 0 }
-
-/*** App sidebar controls ***/
-
-/*** App sidebar body ***/
-
-#x-app-sidebar--body {
-  display: flex;
-  flex-direction: column;
-  height: 100% }
-
-/*** App sidebar body ***/
-
-/*** App sidebar surface ***/
-
-#x-app-sidebar--surface {
-  flex-grow: 0;
-  overflow: hidden auto;
-  padding-top: 24px }
-
-/*** App sidebar surface ***/
-
-/*** App sidebar placeholder ***/
-
-/* XXX#1980 */
-#x-app-sidebar--placeholder {
-  height: 72px }
-
-/*** App sidebar placeholder ***/
-
-/*** App sidebar cover ***/
-
-#x-app-sidebar--cover {
-  backdrop-filter: blur( 2px );
-  -webkit-backdrop-filter: blur( 2px );
-  background-color: var( --black-semi-transparent );
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  transform: translateX( -110% );
-  width: 100% }
-
-#x-app-sidebar--cover[data-visible="true"] {
-  transform: translateX(0) }
-
-/*** App sidebar cover ***/
-
-/*** Responsive styles ***/
-
-@media only screen and (max-width: 420px) {
-  #x-app-sidebar { width: 100% }
-  #x-app-sidebar--cover[data-visible="true"] { display: none }}
-
-/*** Responsive styles ***/
-/***** App sidebar *****/
-
-
-
 /***** App sounds *****/
 /*** App sounds wrapper ***/
 
@@ -772,7 +669,7 @@ body[data-viewport-profile="s"]   #x-app-header {
    *
    * Az #x-app-surface felületen esetlegesen megjelenített túlméretes tartalom által
    * okozott hibák elkerülése érdekében alkalmazott {overflow-x: hidden} tulajdonság
-   * elrontja az .x-app-surface--element--content elemben elhelyezett {position: sticky}
+   * elrontja az .x-app-surface--element--view elemben elhelyezett {position: sticky}
    * elemek megfelelő működését!
    *
    * https://stackoverflow.com/questions/47095596/body-overflow-x-hidden-breaks-position-sticky
@@ -805,29 +702,21 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 /*** Oversized content ***/
 
-/*** Surface structure ***/
+/*** Surface body ***/
 
-.x-app-surface--element--structure {
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  max-width: 100% }
-
-#x-app-ui-structure[data-interface="application-ui"] .x-app-surface--element--structure {
-  padding-top: 48px;
-  -padding-top: 60px }
-
-/*** Surface structure ***/
-
-/*** Surface content ***/
-
-.x-app-surface--element--content {
+.x-app-surface--element--view {
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-grow: 1 }
 
-/*** Surface content ***/
+  /* max-height & max-width: why? */
+  max-height: 100%;
+  max-width:  100% }
+
+#x-app-ui-structure[data-interface="application-ui"] .x-app-surface--element--view {
+  padding-top: 48px }
+
+/*** Surface body ***/
 /***** App surface *****/
 
 

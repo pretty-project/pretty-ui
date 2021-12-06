@@ -319,6 +319,5 @@
 
 (a/reg-event-fx
   :playground/render!
-  [:ui/set-surface! ::view {:content     #'view
-                            :initializer [:playground/initialize!]
-                            :subscriber  [::get-view-props]}])
+  [:ui/set-surface! ::view {:view        {:content #'view :subscriber [::get-view-props]}
+                            :initializer [:playground/initialize!]}])

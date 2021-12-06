@@ -930,7 +930,7 @@
 (a/reg-event-fx
   :media/render-directory-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view}])
+  [:ui/set-surface! ::view {:view {:content #'view}}])
 
 
 

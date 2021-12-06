@@ -6,7 +6,7 @@
 ; Created: 2020.01.21
 ; Description:
 ; Version: v2.8.8
-; Compatibility: x4.4.4
+; Compatibility: x4.4.8
 
 
 
@@ -18,7 +18,6 @@
               [mid-fruits.keyword       :as keyword]
               [x.app-core.api           :as a :refer [r]]
               [x.app-ui.renderer        :as renderer :rename {component renderer}]
-              [x.app-ui.sidebar         :as sidebar]
               [x.app-ui.surface-layouts :refer [surface-element]]))
 
 
@@ -63,24 +62,17 @@
   ; @param (map) surface-props
   ;  {:render-animated? (boolean)(opt)}
   (fn [{:keys [db]} [_ surface-id {:keys [render-animated?] :as surface-props}]]
-      (let [close-popups-duration   (r renderer/get-visible-elements-destroying-duration db :popups)
-            sidebar-hiding-duration (r sidebar/get-sidebar-hiding-duration db)
-            surface-rendering-delay (+ close-popups-duration sidebar-hiding-duration)]
+      (let [close-popups-duration (r renderer/get-visible-elements-destroying-duration db :popups)]
            {:dispatch-later
-            [{:ms                       0 :dispatch [:ui/destroy-all-elements! :popups]}
-             {:ms close-popups-duration   :dispatch [:environment/enable-scroll!]}
-             {:ms close-popups-duration   :dispatch [:ui/hide-sidebar!]}
-             {:ms surface-rendering-delay :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
+            [{:ms                     0 :dispatch [:ui/destroy-all-elements! :popups]}
+             {:ms close-popups-duration :dispatch [:environment/enable-scroll!]}
+             {:ms close-popups-duration :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
 
 (a/reg-event-fx
   :ui/set-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
-  ;  {:content (component)
-  ;    XXX#8711
-  ;   :content-props (map)(opt)
-  ;    XXX#8711
-  ;   :destructor (metamorphic-event)(opt)
+  ;  {:destructor (metamorphic-event)(opt)
   ;   :hide-animated? (boolean)(opt)
   ;    Default: false
   ;   :horizontal-align (keyword)(opt)
@@ -88,8 +80,6 @@
   ;   :initializer (metamorphic-event)(opt)
   ;   :reveal-animated? (boolean)(opt)
   ;    Default: false
-  ;   :subscriber (subscription vector)(opt)
-  ;    XXX#8711
   ;   :trim-content? (boolean)(opt)
   ;    A surface felületéről az X tengelyen túlméretes tartalom elrejtése.
   ;    Default: false
@@ -98,7 +88,11 @@
   ;    tartalmak pozícionálása nem kompatibilis a {:trim-content? true}
   ;    tulajdonság használatával!
   ;   :update-animated? (boolean)(opt)
-  ;    Default: false}
+  ;    Default: false
+  ;   :view (map)
+  ;    {:content (component)
+  ;     :content-props (map)(opt)
+  ;     :subscriber (subscription vector)(opt)}}
   ;
   ; @usage
   ;  [:ui/set-surface! {...}]
@@ -108,7 +102,7 @@
   ;
   ; @usage
   ;  (defn view [surface-id] [:div "My surface"])
-  ;  [:ui/set-surface! {:content #'view}]
+  ;  [:ui/set-surface! {:view {:content #'view}}]
   (fn [{:keys [db]} event-vector]
       (let [surface-id    (a/event-vector->second-id   event-vector)
             surface-props (a/event-vector->first-props event-vector)

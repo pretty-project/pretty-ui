@@ -132,25 +132,3 @@
          (element-layout-attributes  renderer-id element-id element-props)
          (element-style-attributes   renderer-id element-id element-props)
          (param element-attributes)))
-
-
-
-;; -- Components --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn element-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
-  ;  {:content (metamorphic-content)
-  ;    XXX#8711
-  ;   :content-props (map)(opt)
-  ;    XXX#8711
-  ;   :subscriber (subscription vector)(opt)
-  ;    XXX#8711}
-  ;
-  ; @return (component)
-  [element-id element-props]
-  (let [context-props (components/extended-props->content-props element-props)]
-       [components/content element-id context-props]))

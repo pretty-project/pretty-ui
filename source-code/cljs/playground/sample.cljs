@@ -34,7 +34,7 @@
 
 (a/reg-event-fx
   :sample/render!
-  [:ui/set-surface! ::view {:content #'view :subscriber [:view-selector/get-view-props :sample]}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:view-selector/get-view-props :sample]}}])
 
 (a/reg-event-fx
   :sample/load!

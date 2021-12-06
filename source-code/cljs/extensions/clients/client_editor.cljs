@@ -168,4 +168,4 @@
 (a/reg-event-fx
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}}])

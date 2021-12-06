@@ -118,4 +118,4 @@
 (a/reg-event-fx
   :settings/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [::get-view-props]}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [::get-view-props]}}])

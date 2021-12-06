@@ -18,5 +18,5 @@
 (a/reg-event-fx
   :inventories/render!
   [:ui/set-surface! ::view
-                    {:content #'view
+                    {:view   {:content #'view}
                      :layout :unboxed}])

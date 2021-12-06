@@ -137,5 +137,4 @@
   ;  :no-connection, :no-permission, :page-not-found, :under-construction, :under-maintenance
   (fn [_ [_ error-id]]
       [:ui/set-surface! ::view
-                        {:content       #'view
-                         :content-props (error-id->content-props error-id)}]))
+                        {:view {:content #'view :content-props (error-id->content-props error-id)}}]))

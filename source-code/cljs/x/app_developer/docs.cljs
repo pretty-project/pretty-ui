@@ -147,7 +147,7 @@
 (a/reg-event-fx
   :developer/render-docs!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:content #'view :subscriber [:db/get-item [:docs]]}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:db/get-item [:docs]]}}])
 
 (a/reg-event-fx
   :developer/load-docs!
