@@ -52,7 +52,7 @@
        [:div.x-overlay (engine/element-attributes overlay-id overlay-props)
                        [components/content overlay-id content-props]]))
 
-(defn view
+(defn element
   ; XXX#8711
   ; Az overlay elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -81,7 +81,7 @@
   ;
   ; @return (component)
   ([overlay-props]
-   [view (a/id) overlay-props])
+   [element (a/id) overlay-props])
 
   ([overlay-id overlay-props]
    (let [];overlay-props (a/prot overlay-props overlay-props-prototype)

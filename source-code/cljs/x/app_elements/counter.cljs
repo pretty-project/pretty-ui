@@ -48,17 +48,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-counter-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
   ;
   ; @return (map)
   [db [_ counter-id]]
-  (merge (r engine/get-element-view-props   db counter-id)
-         (r engine/get-countable-view-props db counter-id)))
+  (merge (r engine/get-element-props   db counter-id)
+         (r engine/get-countable-props db counter-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-counter-props get-counter-props)
 
 
 
@@ -69,18 +69,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;  {:resetable? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [counter-id {:keys [resetable?] :as view-props}]
-  (if resetable? [:button.x-counter--reset-button (engine/countable-reset-attributes counter-id view-props)]))
+  [counter-id {:keys [resetable?] :as counter-props}]
+  (if resetable? [:button.x-counter--reset-button (engine/countable-reset-attributes counter-id counter-props)]))
 
 (defn- counter-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
   ;
@@ -95,52 +95,52 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [counter-id view-props]
-  [:button.x-counter--increase-button (engine/countable-increase-attributes counter-id view-props)])
+  [counter-id counter-props]
+  [:button.x-counter--increase-button (engine/countable-increase-attributes counter-id counter-props)])
 
 (defn- counter-decrease-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [counter-id view-props]
-  [:button.x-counter--decrease-button (engine/countable-decrease-attributes counter-id view-props)])
+  [counter-id counter-props]
+  [:button.x-counter--decrease-button (engine/countable-decrease-attributes counter-id counter-props)])
 
 (defn- counter-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;  {:value (integer)}
   ;
   ; @return (hiccup)
-  [counter-id {:keys [value] :as view-props}]
-  [:div.x-counter--body [counter-decrease-button counter-id view-props]
-                        [:div.x-counter--value   value]
-                        [counter-increase-button counter-id view-props]
-                        [counter-reset-button    counter-id view-props]
-                        [counter-label           counter-id view-props]])
+  [counter-id {:keys [value] :as counter-props}]
+  [:div.x-counter--body [counter-decrease-button counter-id counter-props]
+                        [:div.x-counter--value value]
+                        [counter-increase-button counter-id counter-props]
+                        [counter-reset-button    counter-id counter-props]
+                        [counter-label           counter-id counter-props]])
 
 (defn- counter
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
-  ; @param (map) view-props
+  ; @param (map) counter-props
   ;
   ; @return (hiccup)
-  [counter-id view-props]
-  [:div.x-counter (engine/element-attributes counter-id view-props)
-                  [counter-body              counter-id view-props]
-                  [engine/element-helper     counter-id view-props]])
+  [counter-id counter-props]
+  [:div.x-counter (engine/element-attributes counter-id counter-props)
+                  [counter-body              counter-id counter-props]
+                  [engine/element-helper     counter-id counter-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
   ;  {:color (keyword)(opt)
@@ -177,12 +177,12 @@
   ;
   ; @return (component)
   ([counter-props]
-   [view (a/id) counter-props])
+   [element (a/id) counter-props])
 
   ([counter-id counter-props]
    (let [counter-props (a/prot counter-id counter-props counter-props-prototype)]
         [engine/stated-element counter-id
-          {:component     #'counter
-           :element-props counter-props
-           :initializer   [:elements/init-input! counter-id]
-           :subscriber    [::get-view-props      counter-id]}])))
+                               {:component     #'counter
+                                :element-props counter-props
+                                :initializer   [:elements/init-input!       counter-id]
+                                :subscriber    [:elements/get-counter-props counter-id]}])))

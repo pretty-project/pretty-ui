@@ -94,7 +94,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn element
   ; @param (keyword)(opt) table-id
   ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)
@@ -158,7 +158,7 @@
   ;
   ; @return (component)
   ([table-props]
-   [view (a/id) table-props])
+   [element (a/id) table-props])
 
   ([table-id table-props]
    (let [table-props (a/prot table-props table-props-prototype)]

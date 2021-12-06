@@ -145,8 +145,8 @@ button.x-card:focus,
 .x-chip--icon,
 .x-chip--delete-button-icon,
 .x-chip--label,
-.x-chips--label,
-.x-chips--no-chips-label,
+.x-chip-group--label,
+.x-chip-group--no-chips-label,
 .x-checkbox--label,
 .x-combo-box--no-options-label,
 .x-counter--label,
@@ -266,7 +266,7 @@ button.x-card:focus,
 /*** Horizontal align ***/
 
 .x-button[data-horizontal-align="left"] .x-button--body,
-.x-card-desk[data-horizontal-align="left"],
+.x-card-group[data-horizontal-align="left"],
 .x-label[data-horizontal-align="left"],
 .x-menu-bar[data-horizontal-align="left"],
 .x-row[data-horizontal-align="left"] .x-row--body {
@@ -286,7 +286,7 @@ button.x-card:focus,
   text-align: left }
 
 .x-button[data-horizontal-align="center"] .x-button--body,
-.x-card-desk[data-horizontal-align="center"],
+.x-card-group[data-horizontal-align="center"],
 .x-label[data-horizontal-align="center"],
 .x-menu-bar[data-horizontal-align="center"],
 .x-row[data-horizontal-align="center"] .x-row--body {
@@ -306,7 +306,7 @@ button.x-card:focus,
   text-align: center }
 
 .x-button[data-horizontal-align="right"] .x-button--body,
-.x-card-desk[data-horizontal-align="right"],
+.x-card-group[data-horizontal-align="right"],
 .x-label[data-horizontal-align="right"],
 .x-menu-bar[data-horizontal-align="right"],
 .x-row[data-horizontal-align="right"] .x-row--body {
@@ -1549,17 +1549,17 @@ body[data-viewport-profile="s"]
 
 
 
-/***** Card-desk *****/
-/*** Card-desk wrapper ***/
+/***** Card-group *****/
+/*** Card-group wrapper ***/
 
-.x-card-desk {
+.x-card-group {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   grid-gap: 12px }
 
-/*** Card-desk wrapper ***/
-/***** Card-desk *****/
+/*** Card-group wrapper ***/
+/***** Card-group *****/
 
 
 
@@ -1705,44 +1705,44 @@ body[data-viewport-profile="s"]
 
 
 
-/***** Chips *****/
-/*** Chips wrapper ***/
+/***** Chip-group *****/
+/*** Chip-group wrapper ***/
 
-.x-chips {}
+.x-chip-group {}
 
-/*** Chips wrapper ***/
+/*** Chip-group wrapper ***/
 
-/*** Chips chips ***/
+/*** Chip-group chips ***/
 
-.x-chips--chips {
+.x-chip-group--chips {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   grid-gap: 12px;
   padding: 6px 0 }
 
-/*** Chips chips ***/
+/*** Chip-group chips ***/
 
-/*** Chips label ***/
+/*** Chip-group label ***/
 
-.x-chips--label {
+.x-chip-group--label {
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
-/*** Chips label ***/
+/*** Chip-group label ***/
 
-/*** Chips no chips label ***/
+/*** Chip-group no-chips label ***/
 
-.x-chips--no-chips-label {
+.x-chip-group--no-chips-label {
   color: var( --color-highlight );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs ) }
 
-/*** Chips no chips label ***/
-/***** Chips *****/
+/*** Chip-group no-chips label ***/
+/***** Chip-group *****/
 
 
 

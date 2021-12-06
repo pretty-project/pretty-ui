@@ -331,7 +331,7 @@
   [db [_ input-id]]
   (boolean (r element/get-element-prop db input-id :autoclear?)))
 
-(defn get-input-view-props
+(defn get-input-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) input-id

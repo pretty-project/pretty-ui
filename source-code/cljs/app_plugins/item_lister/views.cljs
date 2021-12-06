@@ -409,11 +409,14 @@
                                {:keys [downloaded-items select-mode?] :as   body-props}]
   [:div.item-lister--item-list
     (map-indexed (fn [item-dex item]
-                    ^{:key (db/document->document-id item)}
                      (if (boolean select-mode?)
+                        ; If select-mode is enabled ...
+                        ^{:key (db/document->document-id item)}
                          [:div.item-lister--item-list--selectable-list-item
                            [elements/checkbox {:color :primary :indent :both}]
                            [list-element item-dex item]]
+                        ; If select-mode is NOT enabled ...
+                        ^{:key (db/document->document-id item)}
                          [list-element item-dex item]))
                  (param downloaded-items))])
 

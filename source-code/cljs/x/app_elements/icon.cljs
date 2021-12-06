@@ -55,7 +55,7 @@
   [:i.x-icon (engine/element-attributes icon-id icon-props)
              (param icon)])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ;  {:class (string or vector)(opt)
@@ -85,7 +85,7 @@
   ;
   ; @return (hiccup)
   ([icon-props]
-   [view (a/id) icon-props])
+   [element (a/id) icon-props])
 
   ([icon-id icon-props]
    (let [icon-props (a/prot icon-props icon-props-prototype)]

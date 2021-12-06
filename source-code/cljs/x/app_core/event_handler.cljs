@@ -239,7 +239,7 @@
 (defn- dispatch-unlocked?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; Dispatch event if it does not locked
+  ; Dispatch event if it is NOT locked
   ;
   ; @param (event-vector) event-vector
   ;

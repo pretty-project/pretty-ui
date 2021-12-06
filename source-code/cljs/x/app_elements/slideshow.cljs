@@ -66,17 +66,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-slideshow-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) slideshow-id
   ;
   ; @return (map)
   [db [_ slideshow-id]]
-  (merge (r engine/get-element-view-props   db slideshow-id)
-         (r engine/get-steppable-view-props db slideshow-id)))
+  (merge (r engine/get-element-props   db slideshow-id)
+         (r engine/get-steppable-props db slideshow-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-slideshow-props get-slideshow-props)
 
 
 
@@ -87,7 +87,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;  {:prev-step (map)
   ;    {:image-uri (string)}}
   ;
@@ -99,7 +99,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;  {:current-step (map)
   ;    {:image-uri (string)}}
   ;
@@ -111,7 +111,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;  {:current-step (map)
   ;    {:image-uri (string)}}
   ;
@@ -123,7 +123,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;  {:next-step (map)
   ;    {:image-uri (string)}}
   ;
@@ -135,23 +135,23 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;
   ; @return (hiccup)
-  [slideshow-id view-props]
-  [:div.x-slideshow--steps [slideshow-prev-step    slideshow-id view-props]
-                           [slideshow-current-step slideshow-id view-props]
-                           [slideshow-next-step    slideshow-id view-props]
-                           [slideshow-temp-step    slideshow-id view-props]])
+  [slideshow-id slideshow-props]
+  [:div.x-slideshow--steps [slideshow-prev-step    slideshow-id slideshow-props]
+                           [slideshow-current-step slideshow-id slideshow-props]
+                           [slideshow-next-step    slideshow-id slideshow-props]
+                           [slideshow-temp-step    slideshow-id slideshow-props]])
 
 (defn- slideshow-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;
   ; @return (hiccup)
-  [slideshow-id view-props]
+  [slideshow-id slideshow-props]
   [:div.x-slideshow--controls [:button.x-slideshow--controls--go-bwd
                                 {:on-click   #(a/dispatch [:gestures/step-backward! slideshow-id])
                                  :on-mouse-up (engine/blur-element-function slideshow-id)}]
@@ -163,24 +163,24 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slideshow-id
-  ; @param (map) view-props
+  ; @param (map) slideshow-props
   ;
   ; @return (hiccup)
-  [slideshow-id view-props]
+  [slideshow-id slideshow-props]
   [:div.x-slideshow
-    (engine/steppable-attributes slideshow-id view-props)
-    [slideshow-steps    slideshow-id view-props]
-    [slideshow-controls slideshow-id view-props]
+    (engine/steppable-attributes slideshow-id slideshow-props)
+    [slideshow-steps             slideshow-id slideshow-props]
+    [slideshow-controls          slideshow-id slideshow-props]
     [:div {:style {:position "absolute" :top "-30px" :left 0}}
 
-          (str (:current-dex view-props))
-          (str (:step-direction view-props))]])
+          (str (:current-dex    slideshow-props))
+          (str (:step-direction slideshow-props))]])
 
           ; XXX#0000
           ;
           ; overflow-x: auto + set-scroll-x! = slideshow
 
-(defn view
+(defn element
   ; @param (keyword)(opt) slideshow-id
   ; @param (map) slideshow-props
   ;  {:autostep? (boolean)(opt)
@@ -211,7 +211,7 @@
   ;
   ; @return (component)
   ([slideshow-props]
-   [view (a/id) slideshow-props])
+   [element (a/id) slideshow-props])
 
   ([slideshow-id slideshow-props]
    (let [slideshow-props    (a/prot slideshow-props slideshow-props-prototype)
@@ -219,5 +219,5 @@
         [engine/stated-element slideshow-id
                                {:component     #'slideshow
                                 :element-props slideshow-props
-                                :initializer   [:gestures/init-step-handler! slideshow-id step-handler-props]
-                                :subscriber    [::get-view-props             slideshow-id]}])))
+                                :initializer   [:gestures/init-step-handler!  slideshow-id step-handler-props]
+                                :subscriber    [:elements/get-slideshow-props slideshow-id]}])))

@@ -53,16 +53,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) text-id
-  ; @param (map) view-props
+  ; @param (map) text-props
   ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [text-id view-props]
-  (let [content-props (components/extended-props->content-props view-props)]
-       [:div.x-text (engine/element-attributes text-id view-props)
+  [text-id text-props]
+  (let [content-props (components/extended-props->content-props text-props)]
+       [:div.x-text (engine/element-attributes text-id text-props)
                     [:div.x-text--body [components/content text-id content-props]]]))
 
-(defn view
+(defn element
   ; XXX#0439
   ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
   ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
@@ -104,7 +104,7 @@
   ;
   ; @return (component)
   ([text-props]
-   [view (a/id) text-props])
+   [element (a/id) text-props])
 
   ([text-id text-props]
    (let [text-props (a/prot text-props text-props-prototype)]

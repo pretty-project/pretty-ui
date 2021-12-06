@@ -73,7 +73,7 @@
   [:div.x-anchor (engine/element-attributes anchor-id anchor-props)
                  [anchor-body anchor-id anchor-props]])
 
-(defn view
+(defn element
   ; XXX#9085
   ; Az anchor elem {:on-click [:router/go-to! "..."]} paraméterezés helyett
   ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
@@ -111,7 +111,7 @@
   ;
   ; @return (component)
   ([anchor-props]
-   [view (a/id) anchor-props])
+   [element (a/id) anchor-props])
 
   ([anchor-id anchor-props]
    (let [anchor-props (a/prot anchor-props anchor-props-prototype)]

@@ -295,7 +295,7 @@
                                          ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
                                          ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                                          :on-change #(let [])})
-             ; If field is not disabled ...
+             ; If field is NOT disabled ...
              (not disabled?) (merge {:autoFocus  auto-focus?
                                      :max-length max-length
                                      :on-blur    (on-blur-function         field-id)
@@ -385,7 +385,7 @@
   [db [_ field-id]]
   (r input/input-value-changed? db field-id))
 
-(defn get-field-view-props
+(defn get-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id

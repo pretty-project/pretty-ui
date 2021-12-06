@@ -117,7 +117,7 @@
   ; A {:render-context-surface? ...} tulajdonság értéket a Re-Frame adatbázisból
   ; kapja a directory elem, ezért szükséges feliratkozást használni, akkor is,
   ; ha azt más tulajdonság nem indokolja.
-  (r engine/get-element-view-props db directory-id))
+  (r engine/get-element-props db directory-id))
 
 (a/reg-sub ::get-view-props get-view-props)
 

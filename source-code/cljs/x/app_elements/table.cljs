@@ -35,10 +35,10 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->row-attributes
+(defn- table-props->row-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)}
   ; @param (integer) row-dex
   ;
@@ -51,24 +51,24 @@
       {:data-even true}
       {:data-odd  true}))
 
-(defn- view-props->cell-horizontal-align
+(defn- table-props->cell-horizontal-align
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:columns (maps in vector)(opt)
   ;    [{:horizontal-align (keyword)(opt)}]}
   ; @param (integer) row-dex
   ;
   ; @return (keyword)
-  [view-props cell-dex]
-  (if-let [horizontal-align (get-in view-props [:columns cell-dex :horizontal-align])]
+  [table-props cell-dex]
+  (if-let [horizontal-align (get-in table-props [:columns cell-dex :horizontal-align])]
           (return horizontal-align)
           (return DEFAULT-CELL-HORIZONTAL-ALIGN)))
 
-(defn- view-props->cell-vertical-padding
+(defn- table-props->cell-vertical-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:vertical-gap (px)(opt)}
   ;
   ; @return (string)
@@ -76,26 +76,26 @@
   (if (some? vertical-gap)
       (css/px (/ vertical-gap 2))))
 
-(defn- view-props->row-cell-attributes
+(defn- table-props->row-cell-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:columns (maps in vector)(opt)
   ;    [{:horizontal-align (keyword)(opt)}]}
   ; @param (integer) row-dex
   ;
   ; @return (map)
   ;  {:data-horizontal-align (string)}
-  [view-props cell-dex]
-  (let [horizontal-align (view-props->cell-horizontal-align view-props cell-dex)
-        vertical-padding (view-props->cell-vertical-padding view-props)]
+  [table-props cell-dex]
+  (let [horizontal-align (table-props->cell-horizontal-align table-props cell-dex)
+        vertical-padding (table-props->cell-vertical-padding table-props)]
        (cond-> {} (some? vertical-padding) (assoc-in [:style :padding]        (css/vertical-padding vertical-padding))
                   :horizontal-align        (assoc-in [:data-horizontal-align] (param                horizontal-align)))))
 
-(defn- view-props->header-cell-attributes
+(defn- table-props->header-cell-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) table-props
   ; @param (map) column-props
   ;  {:width (string)(opt)}
   ; @param (integer) cell-dex
@@ -104,9 +104,9 @@
   ;  {:data-horizontal-align (string)
   ;   :style (map)
   ;   {:width (string)}}
-  [view-props {:keys [width]} cell-dex]
-  (let [horizontal-align (view-props->cell-horizontal-align view-props cell-dex)
-        vertical-padding (view-props->cell-vertical-padding view-props)]
+  [table-props {:keys [width]} cell-dex]
+  (let [horizontal-align (table-props->cell-horizontal-align table-props cell-dex)
+        vertical-padding (table-props->cell-vertical-padding table-props)]
        (cond-> {} (some? vertical-padding) (assoc-in [:style :padding]        (css/vertical-padding vertical-padding))
                   (some? width)            (assoc-in [:style :width]          (param                width))
                   :horizontal-align        (assoc-in [:data-horizontal-align] (param                horizontal-align)))))
@@ -144,40 +144,40 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ; @param (*) cell-content
   ;
   ; @return (hiccup)
-  [table-id view-props cell-content cell-index]
-  [:td.x-table--body-cell (view-props->row-cell-attributes view-props cell-index)
+  [table-id table-props cell-content cell-index]
+  [:td.x-table--body-cell (table-props->row-cell-attributes table-props cell-index)
                           [components/content {:content cell-content}]])
 
 (defn- table-row
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:columns (maps in vector)(opt)}
   ; @param (vector) row-data
   ; @param (integer) row-dex
   ;
   ; @return (hiccup)
-  [table-id {:keys [columns] :as view-props} row-data row-dex]
+  [table-id {:keys [columns] :as table-props} row-data row-dex]
   (let [row-data (vector/count! row-data (count columns))]
-       (reduce-indexed #(vector/conj-item %1 [table-row-cell table-id view-props %2 %3])
-                        [:tr.x-table--body-row (view-props->row-attributes view-props row-dex)]
+       (reduce-indexed #(vector/conj-item %1 [table-row-cell table-id table-props %2 %3])
+                        [:tr.x-table--body-row (table-props->row-attributes table-props row-dex)]
                         (param row-data))))
 
 (defn- table-rows
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:rows (vectors in vector)(opt)}
   ;
   ; @return (hiccup)
-  [table-id {:keys [rows] :as view-props}]
-  (reduce-indexed #(vector/conj-item %1 [table-row table-id view-props %2 %3])
+  [table-id {:keys [rows] :as table-props}]
+  (reduce-indexed #(vector/conj-item %1 [table-row table-id table-props %2 %3])
                    [:tbody.x-table--body]
                    (param rows)))
 
@@ -185,7 +185,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ; @param (map) column-props
   ;  {:label (metamorphic-content)(opt)}
   ;
@@ -198,25 +198,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ; @param (map) column-props
   ; @param (integer) cell-dex
   ;
   ; @return (hiccup)
-  [table-id view-props column-props cell-dex]
-  [:th.x-table--header-cell (view-props->header-cell-attributes view-props column-props cell-dex)
-                            [table-header-cell-label table-id view-props column-props]])
+  [table-id table-props column-props cell-dex]
+  [:th.x-table--header-cell (table-props->header-cell-attributes table-props column-props cell-dex)
+                            [table-header-cell-label    table-id table-props column-props]])
 
 (defn- table-header-row
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;  {:columns (maps in vector)}
   ;
   ; @return (hiccup)
-  [table-id {:keys [columns] :as view-props}]
-  (reduce-indexed #(vector/conj-item %1 [table-header-cell table-id view-props %2 %3])
+  [table-id {:keys [columns] :as table-props}]
+  (reduce-indexed #(vector/conj-item %1 [table-header-cell table-id table-props %2 %3])
                    [:tr.x-table--header-row]
                    (param columns)))
 
@@ -224,13 +224,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;
   ; @return (hiccup)
-  [table-id view-props]
-  [:thead.x-table--header [table-header-row table-id view-props]])
+  [table-id table-props]
+  [:thead.x-table--header [table-header-row table-id table-props]])
 
 (defn- table-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) table-id
+  ; @param (map) table-props
+  ;
+  ; @return (hiccup)
   [table-id {:keys [label]}]
   (if (some? label)
       [:div.x-table--label [components/content {:content label}]]))
@@ -239,16 +245,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) table-id
-  ; @param (map) view-props
+  ; @param (map) table-props
   ;
   ; @return (hiccup)
-  [table-id view-props]
-  [:<> [table-label table-id view-props]
-       [:table.x-table (engine/table-attributes table-id view-props)
-                       [table-header table-id view-props]
-                       [table-rows   table-id view-props]]])
+  [table-id table-props]
+  [:<> [table-label table-id table-props]
+       [:table.x-table (engine/table-attributes table-id table-props)
+                       [table-header            table-id table-props]
+                       [table-rows              table-id table-props]]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) table-id
   ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)
@@ -326,7 +332,7 @@
   ;
   ; @return (component)
   ([table-props]
-   [view (a/id) table-props])
+   [element (a/id) table-props])
 
   ([table-id table-props]
    (let [table-props (a/prot table-props table-props-prototype)]

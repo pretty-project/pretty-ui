@@ -41,7 +41,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
   ;  {:orientation (keyword)(opt)
@@ -59,7 +59,7 @@
   ;
   ; @return (component)
   ([separator-props]
-   [view (a/id) separator-props])
+   [element (a/id) separator-props])
 
   ([separator-id separator-props]
    (let [separator-props (a/prot separator-props separator-props-prototype)]

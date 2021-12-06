@@ -93,7 +93,7 @@
   (cond (some? on-click) [button-card card-id card-props]
         (nil?  on-click) [static-card card-id card-props]))
 
-(defn view
+(defn element
   ; XXX#8711
   ; A card elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -147,7 +147,7 @@
   ;
   ; @return (component)
   ([card-props]
-   [view (a/id) card-props])
+   [element (a/id) card-props])
 
   ([card-id card-props]
    (let [card-props (a/prot card-props card-props-prototype)]

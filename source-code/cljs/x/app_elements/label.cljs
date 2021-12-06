@@ -90,7 +90,7 @@
                 [label-body label-id label-props]
                 (if (some? icon) [:div.x-label--icon-placeholder])])
 
-(defn view
+(defn element
   ; XXX#0439
   ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
   ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
@@ -134,7 +134,7 @@
   ;
   ; @return (component)
   ([label-props]
-   [view (a/id) label-props])
+   [element (a/id) label-props])
 
   ([label-id label-props]
    (let [label-props (a/prot label-props label-props-prototype)]

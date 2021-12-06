@@ -13,12 +13,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.card-desk
+(ns x.app-elements.card-group
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.card       :rename {view card}]
+              [x.app-elements.card       :rename {element card}]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -26,43 +26,43 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- desk-props-prototype
+(defn- group-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) desk-props
+  ; @param (map) group-props
   ;
   ; @return (map)
   ;  {:horizontal-align (keyword)}
-  [desk-props]
+  [group-props]
   (merge {:horizontal-align :center}
-         (param desk-props)))
+         (param group-props)))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- card-desk
+(defn- card-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) desk-id
-  ; @param (map) desk-props
+  ; @param (keyword) group-id
+  ; @param (map) group-props
   ;  {:cards (maps in vector)}
   ;
   ; @return (hiccup)
-  [desk-id {:keys [cards] :as desk-props}]
+  [group-id {:keys [cards] :as group-props}]
   (reduce #(vector/conj-item %1 [card %2])
-           [:div.x-card-desk (engine/element-attributes desk-id desk-props)]
+           [:div.x-card-group (engine/element-attributes group-id group-props)]
            (param cards)))
 
-(defn view
+(defn element
   ; XXX#3240
-  ; A card-desk elem számára :cards tulajdonságként átadott vektor a card-desk elemen megjelenített
+  ; A card-group elem számára :cards tulajdonságként átadott vektor a card-group elemen megjelenített
   ; card elemek paraméter térképeit tartalmazza.
   ; A card elemek paraméterézének leírását a card elem dokumentációjában találod.
   ;
-  ; @param (keyword)(opt) desk-id
-  ; @param (map) desk-props
+  ; @param (keyword)(opt) group-id
+  ; @param (map) group-props
   ;  {:cards (maps in vector)
   ;    [{...} {...}]
   ;   :class (string or vector)(opt)
@@ -75,15 +75,15 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/card-desk {...}]
+  ;  [elements/card-group {...}]
   ;
   ; @usage
-  ;  [elements/card-desk :my-card-desk {...}]
+  ;  [elements/card-group :my-card-group {...}]
   ;
   ; @return (component)
-  ([desk-props]
-   [view (a/id) desk-props])
+  ([group-props]
+   [element (a/id) group-props])
 
-  ([desk-id desk-props]
-   (let [desk-props (a/prot desk-props desk-props-prototype)]
-        [card-desk desk-id desk-props])))
+  ([group-id group-props]
+   (let [group-props (a/prot group-props group-props-prototype)]
+        [card-group group-id group-props])))

@@ -77,7 +77,7 @@
   [db [_ field-id]]
   (if (r passphrase-visible? db field-id) :visibility_off :visibility))
 
-(defn get-visibility-toggle-view-props
+(defn get-visibility-toggle-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -87,7 +87,7 @@
   [db [_ field-id]]
   (visibility-toggle-props-prototype field-id {:icon (r get-visibility-toggle-icon db field-id)}))
 
-(defn get-passfield-view-props
+(defn get-passfield-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -96,8 +96,8 @@
   ;  {:end-adornments (maps in vector)
   ;   :type (keyword)}
   [db [_ field-id]]
-  (merge (r field/get-field-view-props db field-id)
-         {:end-adornments [(r get-visibility-toggle-view-props db field-id)]
+  (merge (r field/get-field-props db field-id)
+         {:end-adornments [(r get-visibility-toggle-props db field-id)]
           :type           (r get-field-type db field-id)}))
 
 

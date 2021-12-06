@@ -41,13 +41,13 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->digits-width
+(defn- field-props->digits-width
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (integer)
-  [view-props]
+  [field-props]
   (+ (* DIGIT-WIDTH 4)
      (* DIGIT-SPACE 3)))
 
@@ -72,18 +72,18 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-digit-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-view-props   db field-id)
-         (r engine/get-field-view-props     db field-id)
-         (r engine/get-passfield-view-props db field-id)))
+  (merge (r engine/get-element-props   db field-id)
+         (r engine/get-field-props     db field-id)
+         (r engine/get-passfield-props db field-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-digit-field-props get-digit-field-props)
 
 
 
@@ -94,36 +94,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
+  [field-id field-props]
   [:div.x-digit-field--digit])
 
 (defn- digits
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
+  [field-id field-props]
   (reduce #(vector/conj-item %1 [digit])
-           [:div.x-digit-field--digits {:style {:width (css/px (view-props->digits-width view-props))}}]
+           [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
            (range 4)))
 
 (defn- digit-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:div.x-digit-field (engine/element-attributes field-id view-props)
-                      [digits                    field-id view-props]])
+  [field-id field-props]
+  [:div.x-digit-field (engine/element-attributes field-id field-props)
+                      [digits                    field-id field-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:digit-count (integer)
@@ -140,11 +140,11 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     #'digit-field
                                 :element-props field-props
-                                :subscriber    [::get-view-props field-id]}])))
+                                :subscriber    [:elements/get-digit-field-props field-id]}])))

@@ -29,17 +29,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ;
   ; @return (map)
-  [bar-id view-props]
-  (engine/element-attributes bar-id view-props))
+  [bar-id bar-props]
+  (engine/element-attributes bar-id bar-props))
 
 (defn- menu-item-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:active? (boolean)(opt)
   ;   :href (string)(opt)
@@ -84,22 +84,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bar-id
-  ;
-  ; @return (map)
-  [db [_ bar-id]]
-  (r engine/get-element-view-props db bar-id))
-
-(a/reg-sub ::get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -107,57 +91,57 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [bar-id view-props {:keys [label] :as item-props}]
-  [:button.x-menu-bar--menu-item (menu-item-attributes bar-id view-props item-props)
+  [bar-id bar-props {:keys [label] :as item-props}]
+  [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                                  [components/content {:content label}]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [bar-id view-props {:keys [label] :as item-props}]
-  [:a.x-menu-bar--menu-item (menu-item-attributes bar-id view-props item-props)
+  [bar-id bar-props {:keys [label] :as item-props}]
+  [:a.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                             [components/content {:content label}]])
 
 (defn- menu-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (hiccup)
-  [bar-id view-props {:keys [href on-click] :as item-props}]
-  (cond (some? href)     [anchor-item bar-id view-props item-props]
-        (some? on-click) [button-item bar-id view-props item-props]))
+  [bar-id bar-props {:keys [href on-click] :as item-props}]
+  (cond (some? href)     [anchor-item bar-id bar-props item-props]
+        (some? on-click) [button-item bar-id bar-props item-props]))
 
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ;  {:menu-items (maps in vector)}
   ;
   ; @return (hiccup)
-  [bar-id {:keys [menu-items] :as view-props}]
+  [bar-id {:keys [menu-items] :as bar-props}]
   ; XXX#5406
   ; A {:orientation :horizontal} menük esetén az overflow-x: scroll tulajdonság
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
   ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
-  (reduce #(vector/conj-item %1 [menu-item bar-id view-props %2])
+  (reduce #(vector/conj-item %1 [menu-item bar-id bar-props %2])
            [:div.x-menu-bar--menu-items]
            (param menu-items)))
 
@@ -165,14 +149,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
-  ; @param (map) view-props
+  ; @param (map) bar-props
   ;
   ; @return (hiccup)
-  [bar-id view-props]
-  [:div.x-menu-bar (menu-bar-attributes bar-id view-props)
-                   [menu-items bar-id view-props]])
+  [bar-id bar-props]
+  [:div.x-menu-bar (menu-bar-attributes bar-id bar-props)
+                   [menu-items          bar-id bar-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
   ;  {:class (string or vector)(opt)
@@ -214,7 +198,7 @@
   ;
   ; @return (component)
   ([bar-props]
-   [view (a/id) bar-props])
+   [element (a/id) bar-props])
 
   ([bar-id bar-props]
    (let [bar-props (a/prot bar-props bar-props-prototype)]

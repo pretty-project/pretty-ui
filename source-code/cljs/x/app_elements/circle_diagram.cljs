@@ -219,7 +219,7 @@
                          [circle-diagram-label      diagram-id diagram-props]
                          [circle-diagram-circle     diagram-id diagram-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ;  {:diameter (px)(opt)
@@ -252,7 +252,7 @@
   ;
   ; @return (component)
   ([diagram-props]
-   [view (a/id) diagram-props])
+   [element (a/id) diagram-props])
 
   ([diagram-id diagram-props]
    (let [diagram-props (a/prot diagram-props diagram-props-prototype)]

@@ -89,9 +89,8 @@
   ; @return (hiccup)
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
   (if (some? on-delete)
-      [:button.x-chip--delete-button
-        (engine/deletable-body-attributes chip-id chip-props)
-        [:i.x-chip--delete-button-icon delete-button-icon]]))
+      [:button.x-chip--delete-button (engine/deletable-body-attributes chip-id chip-props)
+                                     [:i.x-chip--delete-button-icon delete-button-icon]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,10 +100,9 @@
   ;
   ; @return (hiccup)
   [chip-id chip-props]
-  [:div.x-chip--body
-    [chip-icon          chip-id chip-props]
-    [chip-label         chip-id chip-props]
-    [chip-delete-button chip-id chip-props]])
+  [:div.x-chip--body [chip-icon          chip-id chip-props]
+                     [chip-label         chip-id chip-props]
+                     [chip-delete-button chip-id chip-props]])
 
 (defn- chip
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -114,11 +112,10 @@
   ;
   ; @return (hiccup)
   [chip-id chip-props]
-  [:div.x-chip
-    (engine/element-attributes chip-id chip-props)
-    [chip-body                 chip-id chip-props]])
+  [:div.x-chip (engine/element-attributes chip-id chip-props)
+               [chip-body                 chip-id chip-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ;  XXX#7701
@@ -154,7 +151,7 @@
   ;
   ; @return (component)
   ([chip-props]
-   [view (a/id) chip-props])
+   [element (a/id) chip-props])
 
   ([chip-id chip-props]
    (let [chip-props (a/prot chip-props chip-props-prototype)]

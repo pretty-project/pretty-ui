@@ -112,7 +112,7 @@
   [db [_ input-id]]
   (not (r checkable-checked? db input-id)))
 
-(defn get-checkable-view-props
+(defn get-checkable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

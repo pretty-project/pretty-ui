@@ -328,7 +328,7 @@
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
-              ; If component is not initialized ...
+              ; If component is NOT initialized ...
               {:db       (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
                                     (r engine/set-component-prop!     % component-id :mount-id mount-id)
                                     (r engine/set-component-prop!     % component-id :initialized? true)

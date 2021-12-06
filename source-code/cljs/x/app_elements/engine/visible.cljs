@@ -95,7 +95,7 @@
   [db [_ surface-id]]
   (nil? (r get-selected-content-id db surface-id)))
 
-(defn get-visible-view-props
+(defn get-visible-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id

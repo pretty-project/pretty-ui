@@ -56,7 +56,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-steppable-view-props
+(defn get-steppable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) steppable-id

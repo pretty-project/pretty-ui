@@ -147,7 +147,7 @@
 (defn- request-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request-id {:keys [sent-time] :as request-props} {:keys [request-failured? request-successed?]} body-props]
-  [:div.x-toggle
+  [:div.x-toggle--body
         {:style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                  :margin "4px 0"}
          :on-click #(a/dispatch [::change-view! request-id])}

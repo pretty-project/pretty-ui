@@ -42,16 +42,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-image-picker-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
   ;
   ; @return (map)
   [db [_ picker-id]]
-  (merge (r engine/get-element-view-props db picker-id)))
+  (r engine/get-element-props db picker-id))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-image-picker-props get-image-picker-props)
 
 
 
@@ -62,13 +62,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
-  ; @param (map) view-props
+  ; @param (map) picker-props
   ;
   ; @return (hiccup)
-  [picker-id view-props]
+  [picker-id picker-props]
   [:div.x-image-picker])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
   ;  {}
@@ -81,11 +81,11 @@
   ;
   ; @return (component)
   ([picker-props]
-   [view (a/id) picker-props])
+   [element (a/id) picker-props])
 
   ([picker-id picker-props]
    (let [];picker-props (a/prot picker-props picker-props-prototype)
         [engine/stated-element picker-id
                                {:component     #'image-picker
                                 :element-props picker-props
-                                :subscriber    [::get-view-props picker-id]}])))
+                                :subscriber    [:elements/get-image-picker-props picker-id]}])))

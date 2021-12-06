@@ -32,7 +32,7 @@
   (let [element-expanded? (r element/get-element-prop db element-id :expanded?)]
        (boolean element-expanded?)))
 
-(defn get-expandable-view-props
+(defn get-expandable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

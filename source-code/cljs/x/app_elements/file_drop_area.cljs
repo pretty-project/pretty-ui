@@ -82,7 +82,7 @@
                          [engine/element-helper       area-id area-props]
                          [engine/element-info-tooltip area-id area-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) area-id
   ; @param (map) area-props
   ;  {:class (string or vector)(opt)
@@ -107,7 +107,7 @@
   ;
   ; @return (component)
   ([area-props]
-   [view (a/id) area-props])
+   [element (a/id) area-props])
 
   ([area-id area-props]
    (let [area-props (a/prot area-props area-props-prototype)]

@@ -127,7 +127,7 @@
                     (and (some? max-value)
                          (> max-value value))))))
 
-(defn get-countable-view-props
+(defn get-countable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

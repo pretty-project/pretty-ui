@@ -130,23 +130,23 @@
                          :variant :transparent
                          :icon :people}]])
 
-(defn- card-desk
+(defn- card-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [elements/card-desk ::card-desk
-                      {:cards [{:content "Card #1" :on-click [:developer/test!]}
-                               {:content "Card #2" :on-click [:developer/test!]}
-                               {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}]}])
+  [elements/card-group ::card-group
+                       {:cards [{:content "Card #1" :on-click [:developer/test!]}
+                                {:content "Card #2" :on-click [:developer/test!]}
+                                {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}]}])
 
 (defn- chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> [elements/chip {:label "Chip" :icon :apps}]
        [elements/chip {:label "Deletable chip" :on-delete [:developer/test!]}]
-       [elements/chips ::chips
-                       {:label "Chips" :chips [{:label "Chip #1" :color :highlight}
-                                               {:label "Chip #2" :color :secondary}]
-                        :on-delete [:developer/test!]}]])
+       [elements/chip-group ::chip-group
+                            {:label "Chip-group" :chips [{:label "Chip #1" :color :highlight}
+                                                         {:label "Chip #2" :color :secondary}]
+                             :on-delete [:developer/test!]}]])
 
 (defn- diagrams
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -297,7 +297,7 @@
        [elements/separator {:orientation :horizontal :size :xxl}]
        [infinite-loader surface-id view-props]
        [elements/separator {:orientation :horizontal :size :xxl}]
-       [card-desk       surface-id view-props]
+       [card-group      surface-id view-props]
        [elements/separator {:orientation :horizontal :size :xxl}]])
 
 

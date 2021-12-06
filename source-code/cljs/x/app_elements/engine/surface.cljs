@@ -52,7 +52,7 @@
   (let [surface-visible? (r surface-visible? db element-id)]
        (not surface-visible?)))
 
-(defn get-surface-view-props
+(defn get-surface-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

@@ -81,25 +81,25 @@
   [db [_ group-id]]
   (if-let [group-value-path (r element/get-element-prop db group-id :value-path)]
           (let [group-value (get-in db group-value-path)]
-                     ; Group-value is nonempty vector
+                     ; Group-value is a nonempty vector
                (cond (vector/nonempty? group-value)
                      (return           group-value)
-                     ; Group-value is empty vector & allow empty input-group
+                     ; Group-value is an empty vector & allow empty input-group
                      (and (vector? group-value)
                           (r allow-empty-input-group? db group-id))
                      (return group-value)
-                     ; Group-value is empty vector & disallow empty input-group
+                     ; Group-value is an empty vector & disallow empty input-group
                      (vector? group-value)
                      (let [initial-value (r element/get-element-prop db group-id :initial-value)]
                           (return [initial-value]))
-                     ; Group-value is not vector & allow empty input group
+                     ; Group-value is NOT a vector & allow empty input group
                      (r allow-empty-input-group? db group-id)
                      (return [])
-                     ; Group-value is not vector & disallow empty input group
+                     ; Group-value is NOT a vector & disallow empty input group
                      :disallow-empty-input-group?
                      (return [nil])))))
 
-(defn get-input-group-view-props
+(defn get-input-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id

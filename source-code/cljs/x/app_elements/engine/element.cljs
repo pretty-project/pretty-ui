@@ -253,15 +253,6 @@
   (let [element-props (r get-element-props db element-id)]
        (get-in element-props prop-path)))
 
-(defn get-element-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (map)
-  [db [_ element-id]]
-  (r get-element-props db element-id))
-
 
 
 ;; -- DB events ---------------------------------------------------------------

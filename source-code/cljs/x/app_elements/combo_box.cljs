@@ -120,29 +120,29 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-surface-view-props
+(defn- get-combo-box-surface-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @param (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-view-props   db field-id)
-         (r engine/get-combo-box-view-props db field-id)))
+  (merge (r engine/get-element-props   db field-id)
+         (r engine/get-combo-box-props db field-id)))
 
-(a/reg-sub ::get-surface-view-props get-surface-view-props)
+(a/reg-sub :elements/get-combo-box-surface-props get-combo-box-surface-props)
 
-(defn- get-view-props
+(defn- get-combo-box-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @param (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-view-props   db field-id)
-         (r engine/get-combo-box-view-props db field-id)))
+  (merge (r engine/get-element-props   db field-id)
+         (r engine/get-combo-box-props db field-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-combo-box-props get-combo-box-props)
 
 
 
@@ -153,7 +153,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:get-label-f (function)}
   ; @param (map) option
   ;
@@ -166,7 +166,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:option-component (component)(opt)
   ;   :select-option-event (event-vector)}
   ; @param (map) option-data
@@ -175,9 +175,9 @@
   ; @param (integer) option-dex
   ;
   ; @return (hiccup)
-  [field-id {:keys [option-component select-option-event] :as view-props}
+  [field-id {:keys [option-component select-option-event] :as field-props}
             {:keys [highlighted? option selected?]} option-dex]
-  (let [select-option-event (field-props->select-option-event field-id view-props option)]
+  (let [select-option-event (field-props->select-option-event field-id field-props option)]
        ; BUG#2105
        ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
        ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
@@ -188,24 +188,24 @@
                                      :data-selected    (param selected?)
                                      :data-highlighted (param highlighted?)}
                                     (if (some? option-component)
-                                        [option-component         field-id view-props option]
-                                        [default-option-component field-id view-props option])]))
+                                        [option-component         field-id field-props option]
+                                        [default-option-component field-id field-props option])]))
 
 (defn- combo-box-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:rendered-options (maps in vector)
   ;   [{:option (*)
   ;     :selected? (boolean)}]}
   ;
   ; @return (hiccup)
-  [field-id {:keys [rendered-options] :as view-props}]
+  [field-id {:keys [rendered-options] :as field-props}]
   (reduce-indexed (fn [rendered-options option-data option-dex]
                       (vector/conj-item rendered-options
                                       ;^{:key (random/generate-react-key)}
-                                        [combo-box-option field-id view-props option-data option-dex]))
+                                        [combo-box-option field-id field-props option-data option-dex]))
                   [:div.x-combo-box--options]
                   (param rendered-options)))
 
@@ -213,11 +213,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:no-options-label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [no-options-label] :as view-props}]
+  [field-id {:keys [no-options-label] :as field-props}]
                                       ; BUG#2105
   [:div.x-combo-box--no-options-label {:on-mouse-down #(.preventDefault %)
                                        :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
@@ -227,7 +227,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:on-extend (metamorphic-event)
   ;   :value (*)}
   ;
@@ -244,16 +244,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (component)
-  [field-id view-props]
-  [:div.x-combo-box--surface (if (engine/field-props->render-options?  view-props)
-                                 [combo-box-options           field-id view-props])
+  [field-id field-props]
+  [:div.x-combo-box--surface (if (engine/field-props->render-options?  field-props)
+                                 [combo-box-options           field-id field-props])
                                 ; Szükségtelen megjeleníteni a no-options-label feliratot.
-                                ;[combo-box-no-options-label field-id view-props]
-                             (if (engine/field-props->render-extender? view-props)
-                                 [combo-box-extender          field-id view-props])])
+                                ;[combo-box-no-options-label field-id field-props]
+                             (if (engine/field-props->render-extender? field-props)
+                                 [combo-box-extender          field-id field-props])])
 
 (defn field-props<-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -273,11 +273,11 @@
   [field-id {:keys [surface] :as field-props}]
   (let [surface-props (merge {:base-props field-props
                               :content    #'combo-box-surface
-                              :subscriber [::get-surface-view-props field-id]}
+                              :subscriber [:elements/get-combo-box-surface-props field-id]}
                              (param surface))]
        (assoc field-props :surface surface-props)))
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -338,7 +338,7 @@
   ;     :content (metamorphic-content)(opt)
   ;      Default: #'combo-box-surface
   ;     :subscriber (subscription vector)(opt)
-  ;      Default: [::get-surface-view-props field-id]}
+  ;      Default: [:elements/get-combo-box-surface-props field-id]}
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
   ; @usage
@@ -363,7 +363,7 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot               field-id field-props field-props-prototype)
@@ -371,6 +371,6 @@
         [engine/stated-element field-id
                                {:component     #'text-field/text-field
                                 :element-props field-props
-                                :modifier      text-field/view-props-modifier
-                                :initializer   [:elements/init-selectable! field-id]
-                                :subscriber    [::get-view-props           field-id]}])))
+                                :modifier      text-field/field-props-modifier
+                                :initializer   [:elements/init-selectable!    field-id]
+                                :subscriber    [:elements/get-combo-box-props field-id]}])))

@@ -46,26 +46,26 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) toggle-id
-  ; @param (map) view-props
+  ; @param (map) toggle-props
   ;
   ; @return (hiccup)
-  [toggle-id view-props]
-  (let [content-props (components/extended-props->content-props view-props)]
-       [:button.x-toggle--body (engine/clickable-body-attributes toggle-id view-props)
+  [toggle-id toggle-props]
+  (let [content-props (components/extended-props->content-props toggle-props)]
+       [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
                                [components/content content-props]]))
 
 (defn- toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) toggle-id
-  ; @param (map) view-props
+  ; @param (map) toggle-props
   ;
   ; @return (hiccup)
-  [toggle-id view-props]
-  [:div.x-toggle (engine/element-attributes toggle-id view-props)
-                 [toggle-body               toggle-id view-props]])
+  [toggle-id toggle-props]
+  [:div.x-toggle (engine/element-attributes toggle-id toggle-props)
+                 [toggle-body               toggle-id toggle-props]])
 
-(defn view
+(defn element
   ; XXX#8711
   ; A toggle elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -104,7 +104,7 @@
   ;
   ; @return (component)
   ([toggle-props]
-   [view (a/id) toggle-props])
+   [element (a/id) toggle-props])
 
   ([toggle-id toggle-props]
    (let [toggle-props (a/prot toggle-props toggle-props-prototype)]

@@ -47,17 +47,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-date-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-view-props db field-id)
-         (r engine/get-input-view-props   db field-id)))
+  (merge (r engine/get-element-props db field-id)
+         (r engine/get-input-props   db field-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-date-field-props get-date-field-props)
 
 
 
@@ -68,7 +68,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -80,27 +80,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:input.x-date-field--input
-    (engine/field-body-attributes field-id view-props)])
+  [field-id field-props]
+  [:input.x-date-field--input (engine/field-body-attributes field-id field-props)])
 
 (defn- date-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:label.x-date-field
-    (engine/element-attributes field-id view-props)
-    [date-field-label field-id view-props]
-    [date-field-body  field-id view-props]])
+  [field-id field-props]
+  [:label.x-date-field (engine/element-attributes field-id field-props)
+                       [date-field-label          field-id field-props]
+                       [date-field-body           field-id field-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:class (string or vector)(opt)
@@ -134,12 +132,12 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     #'date-field
                                 :element-props field-props
-                                :initializer   [:elements/init-field! field-id]
-                                :subscriber    [::get-view-props      field-id]}])))
+                                :initializer   [:elements/init-field!          field-id]
+                                :subscriber    [:elements/get-date-field-props field-id]}])))

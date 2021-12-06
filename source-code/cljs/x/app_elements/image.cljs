@@ -90,7 +90,7 @@
   (let [image-attributes (image-attributes image-id image-props)]
        [:img.x-image (engine/element-attributes image-id image-props image-attributes)]))
 
-(defn view
+(defn element
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ;  {:alt (string)(opt)
@@ -116,7 +116,7 @@
   ;
   ; @return (hiccup)
   ([image-props]
-   [view (a/id) image-props])
+   [element (a/id) image-props])
 
   ([image-id image-props]
    (let [];image-props (a/prot image-id image-props image-props-prototype)

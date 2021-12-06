@@ -91,11 +91,11 @@
   ; @return (hiccup)
   [polarity-id polarity-props]
   [:div.x-polarity (engine/element-attributes polarity-id polarity-props)
-                   [start-content  polarity-id polarity-props]
-                   [middle-content polarity-id polarity-props]
-                   [end-content    polarity-id polarity-props]])
+                   [start-content             polarity-id polarity-props]
+                   [middle-content            polarity-id polarity-props]
+                   [end-content               polarity-id polarity-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) polarity-id
   ; @param (map) polarity-props
   ;  {:class (string or vector)(opt)
@@ -122,7 +122,7 @@
   ;
   ; @return (component)
   ([polarity-props]
-   [view (a/id) polarity-props])
+   [element (a/id) polarity-props])
 
   ([polarity-id polarity-props]
    (let [polarity-props (a/prot polarity-props polarity-props-prototype)]

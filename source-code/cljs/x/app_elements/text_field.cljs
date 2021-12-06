@@ -68,40 +68,39 @@
 ;; -- Modifiers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props-modifier
+(defn- field-props-modifier
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:field-empty? (boolean)}
   ;
   ; @return (map)
-  [_ {:keys [end-adornments field-empty?] :as view-props}]
-  (cond-> (param view-props)
-          ; XXX#8073
-          (boolean field-empty?)
-          (update :end-adornments vector/remove-items-kv :preset :empty-field-adornment)
-          ; XXX#8073
-          (boolean field-empty?)
-          (update :end-adornments vector/remove-items-kv :preset :reset-field-adornment)))
+  [_ {:keys [end-adornments field-empty?] :as field-props}]
+                      ; XXX#8073
+  (cond-> field-props (boolean field-empty?)
+                      (update :end-adornments vector/remove-items-kv :preset :empty-field-adornment)
+                      ; XXX#8073
+                      (boolean field-empty?)
+                      (update :end-adornments vector/remove-items-kv :preset :reset-field-adornment)))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-text-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-view-props db field-id)
-         (r engine/get-field-view-props   db field-id)
-         (r engine/get-surface-view-props db field-id)))
+  (merge (r engine/get-element-props db field-id)
+         (r engine/get-field-props   db field-id)
+         (r engine/get-surface-props db field-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-text-field-props get-text-field-props)
 
 
 
@@ -112,7 +111,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:surface (map)(opt)
   ;   :surface-visible? (boolean)(opt)}
   ;
@@ -126,7 +125,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
   ;
@@ -141,31 +140,31 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:placeholder (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [placeholder] :as view-props}]
-  (if (engine/field-props->render-field-placeholder? view-props)
-      [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id view-props)
+  [field-id {:keys [placeholder] :as field-props}]
+  (if (engine/field-props->render-field-placeholder? field-props)
+      [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id field-props)
                                       [components/content {:content placeholder}]]))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:value (string)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [value] :as view-props}]
-  [:input.x-text-field--input (engine/field-body-attributes field-id view-props)])
+  [field-id {:keys [value] :as field-props}]
+  [:input.x-text-field--input (engine/field-body-attributes field-id field-props)])
 
 (defn- text-field-invalid-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;  {:invalid-message (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -177,33 +176,33 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
+  [field-id field-props]
   [:div.x-text-field--input-container
-    [text-field-input                field-id view-props]
-    [text-field-placeholder          field-id view-props]
-    [text-field-surface              field-id view-props]
-    [engine/element-start-adornments field-id view-props]
-    [engine/element-end-adornments   field-id view-props]])
+    [text-field-input                field-id field-props]
+    [text-field-placeholder          field-id field-props]
+    [text-field-surface              field-id field-props]
+    [engine/element-start-adornments field-id field-props]
+    [engine/element-end-adornments   field-id field-props]])
 
 (defn- text-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:label.x-text-field (engine/element-attributes   field-id view-props)
-                       [text-field-label            field-id view-props]
-                       [text-field-input-container  field-id view-props]
-                       [text-field-invalid-message  field-id view-props]
-                       [engine/element-helper       field-id view-props]
-                       [engine/element-info-tooltip field-id view-props]])
+  [field-id field-props]
+  [:label.x-text-field (engine/element-attributes   field-id field-props)
+                       [text-field-label            field-id field-props]
+                       [text-field-input-container  field-id field-props]
+                       [text-field-invalid-message  field-id field-props]
+                       [engine/element-helper       field-id field-props]
+                       [engine/element-info-tooltip field-id field-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -326,13 +325,13 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     text-field
                                 :element-props field-props
-                                :modifier      view-props-modifier
-                                :initializer   [:elements/init-field! field-id]
-                                :subscriber    [::get-view-props      field-id]}])))
+                                :modifier      field-props-modifier
+                                :initializer   [:elements/init-field!          field-id]
+                                :subscriber    [:elements/get-text-field-props field-id]}])))

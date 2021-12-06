@@ -21,8 +21,8 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.chips      :rename {view chips}]
-              [x.app-elements.combo-box  :as combo-box]))
+              [x.app-elements.chip-group :rename {element chip-group}]
+              [x.app-elements.combo-box  :as combo-box :rename {element combo-box}]))
 
 
 
@@ -60,10 +60,10 @@
   [group-id]
   (keyword/append group-id :field "--"))
 
-(defn- view-props->chips
+(defn- group-props->chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:get-label-f (function)
   ;   :group-value (vector)}
   ;
@@ -76,11 +76,11 @@
           (param [])
           (param group-value)))
 
-(defn- view-props->chips-props
+(defn- group-props->chip-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:group-value (vector)
   ;   :no-options-selected-label (metamorphic-content)(opt)}
   ;
@@ -88,16 +88,16 @@
   ;  {:chips (vector)
   ;   :delete-chip-event (metamorphic-event)
   ;   :no-chips-label (metamorphic-content)}
-  [group-id {:keys [no-options-selected-label] :as view-props}]
-  (merge view-props {:chips     (view-props->chips view-props)
-                     :on-delete [:elements/unstack-from-group-value! group-id]
-                     ; Mivel a multi-combo-box elem a chips elem feliratát használja, ezért
-                     ; ha nincs kiválasztva opció, akkor a chips elem felirata és a text-field
-                     ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
-                     ; közötti távolság.
-                     ; Ezért szükséges a chips elem {:no-chips-label ...} tulajdonságának használatával
-                     ; megjelenített szöveggel megtörni ezt a távolságot.
-                     :no-chips-label (param no-options-selected-label)}))
+  [group-id {:keys [no-options-selected-label] :as group-props}]
+  (merge group-props {:chips     (group-props->chips group-props)
+                      :on-delete [:elements/unstack-from-group-value! group-id]
+                      ; Mivel a multi-combo-box elem a chip-group elem feliratát használja, ezért
+                      ; ha nincs kiválasztva opció, akkor a chip-group elem felirata és a text-field
+                      ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
+                      ; közötti távolság.
+                      ; Ezért szükséges a chip-group elem {:no-chips-label ...} tulajdonságának
+                      ; használatával megjelenített szöveggel megtörni ezt a távolságot.
+                      :no-chips-label (param no-options-selected-label)}))
 
 
 
@@ -148,28 +148,28 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-chips-view-props
+(defn- get-multi-combo-box-chip-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ;
   ; @param (map)
   [db [_ group-id]]
-  (merge (r engine/get-element-view-props     db group-id)
-         (r engine/get-input-group-view-props db group-id)))
+  (merge (r engine/get-element-props     db group-id)
+         (r engine/get-input-group-props db group-id)))
 
-(a/reg-sub ::get-chips-view-props get-chips-view-props)
+(a/reg-sub :elements/get-multi-combo-box-chip-group-props get-multi-combo-box-chip-group-props)
 
-(defn- get-view-props
+(defn- get-multi-combo-box-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ;
   ; @param (map)
   [db [_ group-id]]
-  (r engine/get-element-view-props db group-id))
+  (r engine/get-element-props db group-id))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-multi-combo-box-props get-multi-combo-box-props)
 
 
 
@@ -180,52 +180,52 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;
   ; @return (hiccup)
-  [group-id view-props]
-  (let [chips-props (view-props->chips-props group-id view-props)]
-       [:div.x-multi-combo-box--chips [chips chips-props]]))
+  [group-id group-props]
+  (let [chip-group-props (group-props->chip-group-props group-id group-props)]
+       [:div.x-multi-combo-box--chip-group [chip-group chip-group-props]]))
 
-(defn- multi-combo-box-chips
+(defn- multi-combo-box-chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;
   ; @return (component)
-  [group-id view-props]
+  [group-id group-props]
   [components/subscriber group-id
-                         {:base-props view-props
+                         {:base-props group-props
                           :component  #'xi8071
-                          :subscriber [::get-chips-view-props group-id]}])
+                          :subscriber [:elements/get-multi-combo-box-chip-group-props group-id]}])
 
 (defn- multi-combo-box-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;
   ; @return (hiccup)
-  [group-id view-props]
+  [group-id group-props]
   (let [field-id    (group-id->field-id group-id)
-        field-props (a/prot group-id view-props field-props-prototype)]
-       [:div.x-multi-combo-box--field [combo-box/view field-id field-props]]))
+        field-props (a/prot             group-id group-props field-props-prototype)]
+       [:div.x-multi-combo-box--field [combo-box field-id field-props]]))
 
 (defn- multi-combo-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;
   ; @return (component)
-  [group-id view-props]
-  [:div.x-multi-combo-box [multi-combo-box-chips       group-id view-props]
-                          [multi-combo-box-field       group-id view-props]
-                          [engine/element-helper       group-id view-props]
-                          [engine/element-info-tooltip group-id view-props]])
+  [group-id group-props]
+  [:div.x-multi-combo-box [multi-combo-box-chip-group  group-id group-props]
+                          [multi-combo-box-field       group-id group-props]
+                          [engine/element-helper       group-id group-props]
+                          [engine/element-info-tooltip group-id group-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -289,12 +289,12 @@
   ;
   ; @return (component)
   ([group-props]
-   [view (a/id) group-props])
+   [element (a/id) group-props])
 
   ([group-id group-props]
    (let [group-props (a/prot group-id group-props group-props-prototype)]
         [engine/stated-element group-id
                                {:component     #'multi-combo-box
                                 :element-props group-props
-                                :initializer   [:elements/init-selectable! group-id]
-                                :subscriber    [::get-view-props           group-id]}])))
+                                :initializer   [:elements/init-selectable!          group-id]
+                                :subscriber    [:elements/get-multi-combo-box-props group-id]}])))

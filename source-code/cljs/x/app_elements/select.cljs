@@ -19,9 +19,9 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.button     :as button   :rename {view button}]
-              [x.app-elements.label      :as label    :rename {view label}]
-              [x.app-elements.polarity   :as polarity :rename {view polarity}]))
+              [x.app-elements.button     :as button   :rename {element button}]
+              [x.app-elements.label      :as label    :rename {element label}]
+              [x.app-elements.polarity   :as polarity :rename {element polarity}]))
 
 
 
@@ -84,17 +84,17 @@
                                {:ms       ON-POPUP-CLOSED-DELAY
                                 :dispatch on-popup-closed})]}))
 
-(defn- view-props->select-button-label
+(defn- select-props->select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;  {:get-label-f (function)
   ;   :select-button-label (metamorphic-content)(opt)
   ;   :value (*)}
   ;
   ; @return (metamorphic-content)
-  [{:keys [get-label-f select-button-label] :as view-props}]
-  (if-let [selected-option (get view-props :value)]
+  [{:keys [get-label-f select-button-label] :as select-props}]
+  (if-let [selected-option (get select-props :value)]
           (get-label-f selected-option)
           (or select-button-label DEFAULT-SELECT-BUTTON-LABEL)))
 
@@ -161,7 +161,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-select-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -169,10 +169,10 @@
   ;
   ; @return (map)
   [db [_ element-id]]
-  (merge (r engine/get-element-view-props    db element-id)
-         (r engine/get-selectable-view-props db element-id)))
+  (merge (r engine/get-element-props    db element-id)
+         (r engine/get-selectable-props db element-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-select-props get-select-props)
 
 
 
@@ -215,27 +215,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;  {:get-label-f (function)
   ;   :options-id (keyword)}
   ; @param (*) option
   ;
   ; @return (hiccup)
-  [popup-id {:keys [get-label-f options-id] :as view-props} option]
+  [popup-id {:keys [get-label-f options-id] :as select-props} option]
   (let [option-label (get-label-f option)]
-       [:button.x-select--option (engine/selectable-option-attributes options-id view-props option)
+       [:button.x-select--option (engine/selectable-option-attributes options-id select-props option)
                                  [components/content {:content option-label}]]))
 
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;  {:options (maps in vector)}
   ;
   ; @return (hiccup)
-  [popup-id {:keys [options] :as view-props}]
-  (reduce #(vector/conj-item %1 [select-option popup-id view-props %2])
+  [popup-id {:keys [options] :as select-props}]
+  (reduce #(vector/conj-item %1 [select-option popup-id select-props %2])
            [:div.x-select--options]
            (param options)))
 
@@ -251,7 +251,7 @@
   [engine/stated-element options-id
                          {:component     #'select-options
                           :element-props options-props
-                          :subscriber    [::get-view-props options-id]}])
+                          :subscriber    [:elements/get-select-props options-id]}])
 
 
 
@@ -262,7 +262,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;
   ; @return (hiccup)
   [_ _]
@@ -272,41 +272,41 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;
   ; @return (hiccup)
-  [_ view-props]
-  (let [button-label (view-props->select-button-label view-props)]
+  [_ select-props]
+  (let [button-label (select-props->select-button-label select-props)]
        [:div.x-select--button-label [components/content {:content button-label}]]))
 
 (defn- select-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;
   ; @return (hiccup)
-  [select-id view-props]
-  [:button.x-select--button-body (engine/clickable-body-attributes select-id view-props)
-                                 [select-button-label              select-id view-props]
-                                 [select-button-icon               select-id view-props]])
+  [select-id select-props]
+  [:button.x-select--button-body (engine/clickable-body-attributes select-id select-props)
+                                 [select-button-label              select-id select-props]
+                                 [select-button-icon               select-id select-props]])
 
 (defn- select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;
   ; @return (hiccup)
-  [select-id view-props]
-  [:div.x-select--button [select-button-body    select-id view-props]
-                         [engine/element-helper select-id view-props]])
+  [select-id select-props]
+  [:div.x-select--button [select-button-body    select-id select-props]
+                         [engine/element-helper select-id select-props]])
 
 (defn- select-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
   ;
@@ -321,30 +321,30 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;
   ; @return (hiccup)
-  [select-id view-props]
-  [:div.x-select (engine/element-attributes select-id view-props)
-                 [select-label              select-id view-props]
-                 [select-button             select-id view-props]])
+  [select-id select-props]
+  [:div.x-select (engine/element-attributes select-id select-props)
+                 [select-label              select-id select-props]
+                 [select-button             select-id select-props]])
 
 (defn- select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
-  ; @param (map) view-props
+  ; @param (map) select-props
   ;  {:as-button? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [select-id {:keys [as-button?] :as view-props}]
+  [select-id {:keys [as-button?] :as select-props}]
   (if (boolean as-button?)
-      (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS view-props)
+      (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS select-props)
             button-props (a/prot button-props button/button-props-prototype)]
            [button/button select-id button-props])
-      [select-layout select-id view-props]))
+      [select-layout select-id select-props]))
 
-(defn view
+(defn element
   ; A select elem gombja helyett lehetséges button elemet megjeleníteni az {:as-button? true}
   ; tulajdonság használatával.
   ;
@@ -402,7 +402,7 @@
   ;
   ; @return (hiccup)
   ([select-props]
-   [view (a/id) select-props])
+   [element (a/id) select-props])
 
   ([select-id select-props]
    (let [select-props (a/prot select-id select-props select-props-prototype)]
@@ -410,7 +410,7 @@
                                {:component     #'select
                                 :element-props select-props
                                 :initializer   [:elements/init-selectable! select-id]
-                                :subscriber    [::get-view-props           select-id]}])))
+                                :subscriber    [:elements/get-select-props select-id]}])))
 
 
 

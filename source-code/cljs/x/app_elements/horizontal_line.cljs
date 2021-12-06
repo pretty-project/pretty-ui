@@ -73,7 +73,7 @@
   [:div.x-horizontal-line (engine/element-attributes line-id line-props)
                           [:div.x-horizontal-line--body (line-body-attributes line-id line-props)]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
   ;  {:color (keyword)(opt)
@@ -93,7 +93,7 @@
   ;
   ; @return (component)
   ([line-props]
-   [view (a/id) line-props])
+   [element (a/id) line-props])
 
   ([line-id line-props]
    (let [line-props (a/prot line-props line-props-prototype)]

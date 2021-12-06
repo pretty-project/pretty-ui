@@ -305,7 +305,7 @@
                 highlighted-option-data (vector/nth-item rendered-options highlighted-option-dex)]
                (get highlighted-option-data :option))))
 
-(defn get-combo-box-view-props
+(defn get-combo-box-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id

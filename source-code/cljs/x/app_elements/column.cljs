@@ -66,7 +66,7 @@
   [:div.x-column (engine/flexible-attributes column-id column-props)
                  [column-body                column-id column-props]])
 
-(defn view
+(defn element
   ; XXX#8711
   ; A column elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -107,7 +107,7 @@
   ;
   ; @return (component)
   ([column-props]
-   [view (a/id) column-props])
+   [element (a/id) column-props])
 
   ([column-id column-props]
    (let [column-props (a/prot column-props column-props-prototype)]

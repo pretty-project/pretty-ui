@@ -51,7 +51,7 @@
 ; x.app-elements.engine.checkable
 (def checkable-attributes      checkable/checkable-attributes)
 (def checkable-body-attributes checkable/checkable-body-attributes)
-(def get-checkable-view-props  checkable/get-checkable-view-props)
+(def get-checkable-props       checkable/get-checkable-props)
 
 ; x.app-elements.engine.combo-box
 (def field-props->render-option?    combo-box/field-props->render-option?)
@@ -59,18 +59,16 @@
 (def field-props->value-extendable? combo-box/field-props->value-extendable?)
 (def field-props->render-extender?  combo-box/field-props->render-extender?)
 (def field-props->render-options?   combo-box/field-props->render-options?)
-(def get-combo-box-view-props       combo-box/get-combo-box-view-props)
-
-; x.app-elements.engine.countable
-(def get-countable-view-props countable/get-countable-view-props)
-
-; x.app-elements.engine.clickable
-(def clickable-body-attributes clickable/clickable-body-attributes)
+(def get-combo-box-props            combo-box/get-combo-box-props)
 
 ; x.app-elements.engine.countable
 (def countable-decrease-attributes countable/countable-decrease-attributes)
 (def countable-increase-attributes countable/countable-increase-attributes)
 (def countable-reset-attributes    countable/countable-reset-attributes)
+(def get-countable-props           countable/get-countable-props)
+
+; x.app-elements.engine.clickable
+(def clickable-body-attributes clickable/clickable-body-attributes)
 
 ; x.app-elements.engine.deletable
 (def deletable-body-attributes deletable/deletable-body-attributes)
@@ -83,7 +81,6 @@
 (def element-attributes                    element/element-attributes)
 (def get-element-prop                      element/get-element-prop)
 (def get-element-props                     element/get-element-props)
-(def get-element-view-props                element/get-element-view-props)
 (def set-element-prop!                     element/set-element-prop!)
 (def update-element-prop!                  element/update-element-prop!)
 (def remove-element-prop!                  element/remove-element-prop!)
@@ -103,7 +100,7 @@
 (def element-stickers element-stickers/element-stickers)
 
 ; x.app-elements.engine.expandable
-(def get-expandable-view-props expandable/get-expandable-view-props)
+(def get-expandable-props expandable/get-expandable-props)
 
 ; x.app-elements.engine.field
 (def empty-field-adornment-preset           field/empty-field-adornment-preset)
@@ -114,7 +111,7 @@
 (def field-empty?                           field/field-empty?)
 (def field-filled?                          field/field-filled?)
 (def get-field-value                        field/get-field-value)
-(def get-field-view-props                   field/get-field-view-props)
+(def get-field-props                        field/get-field-props)
 
 ; x.app-elements.engine.flexible
 (def flexible-attributes flexible/flexible-attributes)
@@ -132,17 +129,17 @@
 (def generate-value-path    input/generate-value-path)
 (def get-input-stored-value input/get-input-stored-value)
 (def get-input-value        input/get-input-value)
-(def get-input-view-props   input/get-input-view-props)
+(def get-input-props        input/get-input-props)
 (def reset-input-value!     input/reset-input-value!)
 
 ; x.app-elements.engine.input-group
-(def get-input-group-view-props input-group/get-input-group-view-props)
+(def get-input-group-props input-group/get-input-group-props)
 
 ; x.app-elements.engine.preset
 (def apply-preset preset/apply-preset)
 
 ; x.app-elements.engine.passfield
-(def get-passfield-view-props passfield/get-passfield-view-props)
+(def get-passfield-props passfield/get-passfield-props)
 
 ; x.app-elements.engine.selectable
 (def on-select-function             selectable/on-select-function)
@@ -150,17 +147,17 @@
 (def selectable-attributes          selectable/selectable-attributes)
 (def selectable-option-attributes   selectable/selectable-option-attributes)
 (def selectable-unselect-attributes selectable/selectable-unselect-attributes)
-(def get-selectable-view-props      selectable/get-selectable-view-props)
+(def get-selectable-props           selectable/get-selectable-props)
 
 ; x.app-elements.engine.stated-element
-(def stated-element stated-element/view)
+(def stated-element stated-element/element)
 
 ; x.app-elements.engine.steppable
-(def steppable-attributes     steppable/steppable-attributes)
-(def get-steppable-view-props steppable/get-steppable-view-props)
+(def steppable-attributes steppable/steppable-attributes)
+(def get-steppable-props  steppable/get-steppable-props)
 
 ; x.app-elements.engine.surface
-(def get-surface-view-props surface/get-surface-view-props)
+(def get-surface-props surface/get-surface-props)
 
 ; x.app-elements.engine.table
 (def table-attributes table/table-attributes)
@@ -169,4 +166,4 @@
 (def on-hide-function                visible/on-hide-function)
 (def on-show-function                visible/on-show-function)
 (def visible-items->first-content-id visible/visible-items->first-content-id)
-(def get-visible-view-props          visible/get-visible-view-props)
+(def get-visible-props               visible/get-visible-props)

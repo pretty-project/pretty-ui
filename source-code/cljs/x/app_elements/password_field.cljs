@@ -66,24 +66,24 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-password-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @param (map)
   [db [_ field-id]]
-  (merge (r text-field/get-view-props       db field-id)
-         (r engine/get-passfield-view-props db field-id)))
+  (merge (r text-field/get-text-field-props db field-id)
+         (r engine/get-passfield-props      db field-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-password-field-props get-password-field-props)
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -123,12 +123,12 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     #'text-field
                                 :element-props field-props
-                                :initializer   [:elements/init-field! field-id]
-                                :subscriber    [::get-view-props      field-id]}])))
+                                :initializer   [:elements/init-field!              field-id]
+                                :subscriber    [:elements/get-password-field-props field-id]}])))

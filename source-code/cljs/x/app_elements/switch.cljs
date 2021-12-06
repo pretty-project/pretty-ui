@@ -48,17 +48,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-switch-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ;
   ; @return (map)
   [db [_ switch-id]]
-  (merge (r engine/get-element-view-props   db switch-id)
-         (r engine/get-checkable-view-props db switch-id)))
+  (merge (r engine/get-element-props   db switch-id)
+         (r engine/get-checkable-props db switch-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-switch-props get-switch-props)
 
 
 
@@ -69,7 +69,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
-  ; @param (map) view-props
+  ; @param (map) switch-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
   ;
@@ -83,28 +83,28 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
-  ; @param (map) view-props
+  ; @param (map) switch-props
   ;
   ; @return (hiccup)
-  [switch-id view-props]
-  [:button.x-switch--body (engine/checkable-body-attributes switch-id view-props)
+  [switch-id switch-props]
+  [:button.x-switch--body (engine/checkable-body-attributes switch-id switch-props)
                           [:div.x-switch--track [:div.x-switch--thumb]]
-                          [switch-label switch-id view-props]])
+                          [switch-label switch-id switch-props]])
 
 (defn- switch
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
-  ; @param (map) view-props
+  ; @param (map) switch-props
   ;
   ; @return (hiccup)
-  [switch-id view-props]
-  [:div.x-switch (engine/checkable-attributes switch-id view-props)
-                 [switch-body                 switch-id view-props]
-                 [engine/element-helper       switch-id view-props]
-                 [engine/element-info-tooltip switch-id view-props]])
+  [switch-id switch-props]
+  [:div.x-switch (engine/checkable-attributes switch-id switch-props)
+                 [switch-body                 switch-id switch-props]
+                 [engine/element-helper       switch-id switch-props]
+                 [engine/element-info-tooltip switch-id switch-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
   ;  {:class (string or vector)(opt)
@@ -140,12 +140,12 @@
   ;
   ; @return (component)
   ([switch-props]
-   [view (a/id) switch-props])
+   [element (a/id) switch-props])
 
   ([switch-id switch-props]
    (let [switch-props (a/prot switch-id switch-props switch-props-prototype)]
         [engine/stated-element switch-id
                                {:component     #'switch
                                 :element-props switch-props
-                                :initializer   [:elements/init-input! switch-id]
-                                :subscriber    [::get-view-props      switch-id]}])))
+                                :initializer   [:elements/init-input!      switch-id]
+                                :subscriber    [:elements/get-switch-props switch-id]}])))

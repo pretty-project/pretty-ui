@@ -50,7 +50,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-submit-button-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-id
@@ -58,18 +58,18 @@
   ; @return (map)
   ;  {:disabled? (boolean)}
   [db [_ button-id]]
-  (merge (r engine/get-element-view-props db button-id)
+  (merge (r engine/get-element-props db button-id)
          (if-not (r engine/inputs-passed? db button-id)
                  {:disabled? true})))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-submit-button-props get-submit-button-props)
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn element
   ; XXX#0714
   ; A submit-button elem alapkomponense a button elem.
   ; A submit-button elem további paraméterezését a button elem dokumentációjában találod.
@@ -89,13 +89,13 @@
   ;
   ; @return (component)
   ([button-props]
-   [view (a/id) button-props])
+   [element (a/id) button-props])
 
   ([button-id button-props]
    (let [button-props (a/prot button-props button-props-prototype)]
         [engine/stated-element button-id
                                {:component     #'button
                                 :element-props button-props
-                                :destructor    [:elements/destruct-clickable! button-id]
-                                :initializer   [:elements/init-clickable!     button-id]
-                                :subscriber    [::get-view-props              button-id]}])))
+                                :destructor    [:elements/destruct-clickable!     button-id]
+                                :initializer   [:elements/init-clickable!         button-id]
+                                :subscriber    [:elements/get-submit-button-props button-id]}])))

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description:
-; Version: v0.1.2
-; Compatibility: x3.9.9
+; Version: v0.1.8
+; Compatibility: x4.4.8
 
 
 
@@ -49,12 +49,11 @@
   ; @return (hiccup)
   [blank-id blank-props]
   (let [content-props (components/extended-props->content-props blank-props)]
-       [:div.x-blank
-         (engine/element-attributes blank-id blank-props)
-         [components/content      blank-id content-props]
-         [engine/element-stickers blank-id blank-props]]))
+       [:div.x-blank (engine/element-attributes blank-id blank-props)
+                     [components/content        blank-id content-props]
+                     [engine/element-stickers   blank-id blank-props]]))
 
-(defn view
+(defn element
   ; XXX#8711
   ; A blank elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -92,19 +91,19 @@
   ;  [elements/blank {:content #'my-component}]
   ;
   ; @usage
-  ;  (defn my-component [_ view-props])
+  ;  (defn my-component [_ subscribed-props])
   ;  [elements/blank {:content    #'my-component
-  ;                   :subscriber [::get-view-props]}]
+  ;                   :subscriber [::get-subscribed-props]}]
   ;
   ; @usage
-  ;  (defn my-component [component-id content-props view-props])
+  ;  (defn my-component [component-id static-props subscribed-props])
   ;  [elements/blank :my-component {:content       #'my-component
   ;                                 :content-props {...}
-  ;                                 :subscriber    [::get-view-props]}]
+  ;                                 :subscriber    [::get-subscribed-props]}]
   ;
   ; @return (component)
   ([blank-props]
-   [view (a/id) blank-props])
+   [element (a/id) blank-props])
 
   ([blank-id blank-props]
    (let [];blank-props (a/prot blank-props blank-props-prototype

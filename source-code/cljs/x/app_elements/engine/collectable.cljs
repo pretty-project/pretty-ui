@@ -108,7 +108,7 @@
   [db [_ input-id]]
   (not (r collectable-collected? db input-id)))
 
-(defn get-collectable-view-props
+(defn get-collectable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

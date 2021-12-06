@@ -45,17 +45,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-expandable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
   ;
   ; @return (map)
   [db [_ expandable-id]]
-  (merge (r engine/get-element-view-props    db expandable-id)
-         (r engine/get-expandable-view-props db expandable-id)))
+  (merge (r engine/get-element-props    db expandable-id)
+         (r engine/get-expandable-props db expandable-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-expandable-props get-expandable-props)
 
 
 
@@ -66,7 +66,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;  {:expanded? (boolean)}
   ;
   ; @return (hiccup)
@@ -79,7 +79,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;  {:icon (keyword)(opt)}
   ;
   ; @return (hiccup)
@@ -91,7 +91,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
@@ -103,42 +103,42 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;
   ; @return (hiccup)
-  [expandable-id view-props]
+  [expandable-id expandable-props]
   [:button.x-expandable--header {:on-click   #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
                                  :on-mouse-up (engine/blur-element-function expandable-id)}
-                                [expandable-icon          expandable-id view-props]
-                                [expandable-label         expandable-id view-props]
-                                [expandable-expand-button expandable-id view-props]])
+                                [expandable-icon          expandable-id expandable-props]
+                                [expandable-label         expandable-id expandable-props]
+                                [expandable-expand-button expandable-id expandable-props]])
 
 (defn- expandable-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;  {:expanded? (boolean)}
   ;
   ; @return (hiccup)
-  [expandable-id {:keys [expanded?] :as view-props}]
+  [expandable-id {:keys [expanded?] :as expandable-props}]
   (if (boolean expanded?)
-      (let [content-props (components/extended-props->content-props view-props)]
+      (let [content-props (components/extended-props->content-props expandable-props)]
            [:div.x-expandable--body [components/content expandable-id content-props]])))
 
 (defn expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
-  ; @param (map) view-props
+  ; @param (map) expandable-props
   ;
   ; @return (hiccup)
-  [expandable-id view-props]
-  [:div.x-expandable (engine/element-attributes expandable-id view-props)
-                     [expandable-header         expandable-id view-props]
-                     [expandable-body           expandable-id view-props]])
+  [expandable-id expandable-props]
+  [:div.x-expandable (engine/element-attributes expandable-id expandable-props)
+                     [expandable-header         expandable-id expandable-props]
+                     [expandable-body           expandable-id expandable-props]])
 
-(defn view
+(defn element
   ; XXX#8711
   ; Az expandable elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -177,11 +177,11 @@
   ;
   ; @return (component)
   ([expandable-props]
-   [view (a/id) expandable-props])
+   [element (a/id) expandable-props])
 
   ([expandable-id expandable-props]
    (let [expandable-props (a/prot expandable-props expandable-props-prototype)]
         [engine/stated-element expandable-id
                                {:component     #'expandable
                                 :element-props expandable-props
-                                :subscriber    [::get-view-props expandable-id]}])))
+                                :subscriber    [:elements/get-expandable-props expandable-id]}])))

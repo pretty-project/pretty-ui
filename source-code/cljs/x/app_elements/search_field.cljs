@@ -57,17 +57,10 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-sub ::get-view-props text-field/get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -122,13 +115,13 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     #'text-field
                                 :element-props field-props
-                                :modifier      text-field/view-props-modifier
-                                :initializer   [:elements/init-field! field-id]
-                                :subscriber    [::get-view-props      field-id]}])))
+                                :modifier      text-field/field-props-modifier
+                                :initializer   [:elements/init-field!          field-id]
+                                :subscriber    [:elements/get-text-field-props field-id]}])))

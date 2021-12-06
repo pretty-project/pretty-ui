@@ -175,7 +175,7 @@
   [db [_ input-id]]
   (not (r selectable-selected? db input-id)))
 
-(defn get-selectable-view-props
+(defn get-selectable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

@@ -52,13 +52,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-sub ::get-view-props text-field/get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -66,39 +59,39 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:textarea.x-text-field--textarea (engine/field-body-attributes field-id view-props)])
+  [field-id field-props]
+  [:textarea.x-text-field--textarea (engine/field-body-attributes field-id field-props)])
 
 (defn- multiline-field-textarea-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:div.x-text-field--input-container [multiline-field-textarea          field-id view-props]
-                                      [text-field/text-field-placeholder field-id view-props]])
+  [field-id field-props]
+  [:div.x-text-field--input-container [multiline-field-textarea          field-id field-props]
+                                      [text-field/text-field-placeholder field-id field-props]])
 
 (defn- multiline-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) view-props
+  ; @param (map) field-props
   ;
   ; @return (hiccup)
-  [field-id view-props]
-  [:label.x-text-field (engine/element-attributes field-id view-props)
-                       [text-field/text-field-label           field-id view-props]
-                       [multiline-field-textarea-container    field-id view-props]
-                       [text-field/text-field-invalid-message field-id view-props]
-                       [engine/element-helper                 field-id view-props]
-                       [engine/element-info-tooltip           field-id view-props]])
+  [field-id field-props]
+  [:label.x-text-field (engine/element-attributes             field-id field-props)
+                       [text-field/text-field-label           field-id field-props]
+                       [multiline-field-textarea-container    field-id field-props]
+                       [text-field/text-field-invalid-message field-id field-props]
+                       [engine/element-helper                 field-id field-props]
+                       [engine/element-info-tooltip           field-id field-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) initial-props
   ;  {:auto-focus? (boolean)(constant)(opt)
@@ -181,12 +174,12 @@
   ;
   ; @return (component)
   ([field-props]
-   [view (a/id) field-props])
+   [element (a/id) field-props])
 
   ([field-id field-props]
    (let [field-props (a/prot field-id field-props field-props-prototype)]
         [engine/stated-element field-id
                                {:component     #'multiline-field
                                 :element-props field-props
-                                :initializer   [:elements/init-field! field-id]
-                                :subscriber    [::get-view-props      field-id]}])))
+                                :initializer   [:elements/init-field!          field-id]
+                                :subscriber    [:elements/get-text-field-props field-id]}])))

@@ -69,7 +69,7 @@
   [:div.x-row (engine/flexible-attributes row-id row-props)
               [row-body                   row-id row-props]])
 
-(defn view
+(defn element
   ; XXX#8711
   ; A row elem az x.app-components.api/content komponens használatával jeleníti meg
   ; a számára :content tulajdonságként átadott tartalmat.
@@ -110,7 +110,7 @@
   ;
   ; @return (component)
   ([row-props]
-   [view (a/id) row-props])
+   [element (a/id) row-props])
 
   ([row-id row-props]
    (let [row-props (a/prot row-props row-props-prototype)]

@@ -6,7 +6,7 @@
 ; Created: 2021.06.09
 ; Description:
 ; Version: v0.9.8
-; Compatibility: x4.3.0
+; Compatibility: x4.4.8
 
 
 
@@ -15,14 +15,12 @@
 
 (ns x.app-elements.multi-field
     (:require [mid-fruits.candy          :as candy :refer [param return]]
-              [mid-fruits.integer        :as integer]
-              [mid-fruits.io             :as io]
               [mid-fruits.loop           :refer [reduce-indexed]]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.text-field :rename {view text-field}]))
+              [x.app-elements.text-field :rename {element text-field}]))
 
 
 
@@ -37,11 +35,11 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-props->single-field?
+(defn- group-props->single-field?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:group-value (vector)}
   ; @param (integer) field-dex
   ;
@@ -49,22 +47,22 @@
   [_ {:keys [group-value]} _]
   (vector/count? group-value 1))
 
-(defn- view-props->multi-field?
+(defn- group-props->multi-field?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ; @param (integer) field-dex
   ;
   ; @return (boolean)
-  [group-id view-props field-dex]
-  (not (view-props->single-field? group-id view-props field-dex)))
+  [group-id group-props field-dex]
+  (not (group-props->single-field? group-id group-props field-dex)))
 
-(defn- view-props->max-field-count-reached?
+(defn- group-props->max-field-count-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:group-value (vector)
   ;   :max-input-count (integer)}
   ; @param (integer) field-dex
@@ -77,7 +75,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:group-value (vector)}
   ; @param (integer) field-dex
   ;
@@ -89,47 +87,49 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:label (metamorphic-content)}
   ; @param (integer) field-dex
   ;
   ; @return (metamorphic-content)
-  [group-id {:keys [label] :as view-props} field-dex]
+  [group-id {:keys [label] :as group-props} field-dex]
+        ; Single-field label
   (cond (and (some? label)
-             (view-props->single-field? group-id view-props field-dex))
+             (group-props->single-field? group-id group-props field-dex))
         (return label)
+        ; Multi-field label
         (and (some? label)
-             (view-props->multi-field? group-id view-props field-dex))
+             (group-props->multi-field? group-id group-props field-dex))
         (components/content {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn- field-dex->end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ; @param (integer) field-dex
   ;
   ; @return (maps in vector)
-  [group-id view-props field-dex]
+  [group-id group-props field-dex]
         ; Multiple field & last field & maximum field count reached
-  (cond (and (field-dex->last-field?               group-id view-props field-dex)
-             (view-props->multi-field?             group-id view-props field-dex)
-             (view-props->max-field-count-reached? group-id view-props field-dex))
+  (cond (and (field-dex->last-field?                group-id group-props field-dex)
+             (group-props->multi-field?             group-id group-props field-dex)
+             (group-props->max-field-count-reached? group-id group-props field-dex))
         [{:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]
         ; Multiple field & last field
-        (and (field-dex->last-field?   group-id view-props field-dex)
-             (view-props->multi-field? group-id view-props field-dex))
+        (and (field-dex->last-field?    group-id group-props field-dex)
+             (group-props->multi-field? group-id group-props field-dex))
         [{:icon :add   :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
           :tooltip :add-field!}
          {:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]
         ; Single field
-        (view-props->single-field? group-id view-props field-dex)
+        (group-props->single-field? group-id group-props field-dex)
         [{:icon :add :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
           :tooltip :add-field!}]
         ; Single field & not the last field
-        (view-props->multi-field? group-id view-props field-dex)
+        (group-props->multi-field? group-id group-props field-dex)
         [{:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]))
 
@@ -137,20 +137,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:value-path (item-path vector)}
   ; @param (integer) field-dex
   ;
   ; @return (item-path vector)
-  [group-id {:keys [input-count-increased?] :as view-props} field-dex]
+  [group-id {:keys [input-count-increased?] :as group-props} field-dex]
   (and (boolean input-count-increased?)
-       (field-dex->last-field? group-id view-props field-dex)))
+       (field-dex->last-field? group-id group-props field-dex)))
 
 (defn- field-dex->value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:value-path (item-path vector)}
   ; @param (integer) field-dex
   ;
@@ -162,7 +162,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ; @param (integer) field-dex
   ;
   ; @example
@@ -200,17 +200,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-multi-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ;
   ; @param (map)
   [db [_ group-id]]
-  (merge (r engine/get-element-view-props     db group-id)
-         (r engine/get-input-group-view-props db group-id)))
+  (merge (r engine/get-element-props     db group-id)
+         (r engine/get-input-group-props db group-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-multi-field-props get-multi-field-props)
 
 
 
@@ -221,36 +221,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:placeholder (metamorphic-content)(opt)}
   ; @param (integer) field-dex
   ;
   ; @return (hiccup)
-  [group-id {:keys [placeholder] :as view-props} field-dex]
+  [group-id {:keys [placeholder] :as group-props} field-dex]
   [:div.x-multi-field--text-field
-    {:key (field-dex->react-key group-id view-props field-dex)}
-    [text-field {:auto-focus?    (field-dex->auto-focus?    group-id view-props field-dex)
-                 :end-adornments (field-dex->end-adornments group-id view-props field-dex)
-                 :label          (field-dex->field-label    group-id view-props field-dex)
+    {:key (field-dex->react-key group-id group-props field-dex)}
+    [text-field {:auto-focus?    (field-dex->auto-focus?    group-id group-props field-dex)
+                 :end-adornments (field-dex->end-adornments group-id group-props field-dex)
+                 :label          (field-dex->field-label    group-id group-props field-dex)
                  :layout         (param :fit)
                  :placeholder    (param placeholder)
-                 :value-path     (field-dex->value-path     group-id view-props field-dex)}]])
+                 :value-path     (field-dex->value-path     group-id group-props field-dex)}]])
 
 (defn- multi-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) view-props
+  ; @param (map) group-props
   ;  {:group-value (vector)}
   ;
   ; @return (hiccup)
-  [group-id {:keys [group-value] :as view-props}]
+  [group-id {:keys [group-value] :as group-props}]
   (reduce-indexed (fn [wrapper _ field-dex]
-                      (vector/conj-item wrapper [multi-field-text-field group-id view-props field-dex]))
-                  [:div.x-multi-field (engine/element-attributes group-id view-props)]
+                      (vector/conj-item wrapper [multi-field-text-field group-id group-props field-dex]))
+                  [:div.x-multi-field (engine/element-attributes group-id group-props)]
                   (param group-value)))
 
-(defn view
+(defn element
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:class (string or vector)(opt)
@@ -277,11 +277,11 @@
   ;
   ; @return (component)
   ([group-props]
-   [view (a/id) group-props])
+   [element (a/id) group-props])
 
   ([group-id group-props]
    (let [group-props (a/prot group-id group-props group-props-prototype)]
         [engine/stated-element group-id
                                {:component     #'multi-field
                                 :element-props group-props
-                                :subscriber    [::get-view-props group-id]}])))
+                                :subscriber    [:elements/get-multi-field-props group-id]}])))

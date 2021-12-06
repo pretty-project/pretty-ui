@@ -12,9 +12,8 @@
 (defn- database-screen
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [view-id db]
-  [:div#x-database-screen
-    (str view-id)
-    [:pre (pretty/mixed->string db)]])
+  [:div#x-database-screen (str view-id)
+                          [:pre (pretty/mixed->string db)]])
 
 (defn view
   ; @return (component)

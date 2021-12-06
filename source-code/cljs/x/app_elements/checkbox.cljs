@@ -46,17 +46,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-checkbox-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ;
   ; @return (map)
   [db [_ checkbox-id]]
-  (merge (r engine/get-element-view-props   db checkbox-id)
-         (r engine/get-checkable-view-props db checkbox-id)))
+  (merge (r engine/get-element-props   db checkbox-id)
+         (r engine/get-checkable-props db checkbox-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-checkbox-props get-checkbox-props)
 
 
 
@@ -67,7 +67,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
-  ; @param (map) view-props
+  ; @param (map) checkbox-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
   ;
@@ -82,27 +82,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
-  ; @param (map) view-props
+  ; @param (map) checkbox-props
   ;
   ; @return (hiccup)
-  [checkbox-id view-props]
-  [:button.x-checkbox--body (engine/checkable-body-attributes checkbox-id view-props)
+  [checkbox-id checkbox-props]
+  [:button.x-checkbox--body (engine/checkable-body-attributes checkbox-id checkbox-props)
                             [:div.x-checkbox--button]
-                            [checkbox-label checkbox-id view-props]])
+                            [checkbox-label checkbox-id checkbox-props]])
 
 (defn- checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
-  ; @param (map) view-props
+  ; @param (map) checkbox-props
   ;
   ; @return (hiccup)
-  [checkbox-id view-props]
-  [:div.x-checkbox (engine/checkable-attributes checkbox-id view-props)
-                   [checkbox-body         checkbox-id view-props]
-                   [engine/element-helper checkbox-id view-props]])
+  [checkbox-id checkbox-props]
+  [:div.x-checkbox (engine/checkable-attributes checkbox-id checkbox-props)
+                   [checkbox-body               checkbox-id checkbox-props]
+                   [engine/element-helper       checkbox-id checkbox-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
   ;  {:color (keyword)(opt)
@@ -136,12 +136,12 @@
   ;
   ; @return (component)
   ([checkbox-props]
-   [view (a/id) checkbox-props])
+   [element (a/id) checkbox-props])
 
   ([checkbox-id checkbox-props]
    (let [checkbox-props (a/prot checkbox-id checkbox-props checkbox-props-prototype)]
         [engine/stated-element checkbox-id
                                {:component     #'checkbox
                                 :element-props checkbox-props
-                                :initializer   [:elements/init-input! checkbox-id]
-                                :subscriber    [::get-view-props      checkbox-id]}])))
+                                :initializer   [:elements/init-input!        checkbox-id]
+                                :subscriber    [:elements/get-checkbox-props checkbox-id]}])))

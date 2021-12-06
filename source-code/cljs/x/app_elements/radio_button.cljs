@@ -54,17 +54,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-radio-button-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ;
   ; @return (map)
   [db [_ button-id]]
-  (merge (r engine/get-element-view-props    db button-id)
-         (r engine/get-selectable-view-props db button-id)))
+  (merge (r engine/get-element-props    db button-id)
+         (r engine/get-selectable-props db button-id)))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :elements/get-radio-button-props get-radio-button-props)
 
 
 
@@ -75,7 +75,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
   ;
@@ -89,13 +89,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ; @param (*) option
   ;
   ; @return (hiccup)
-  [button-id {:keys [get-label-f] :as view-props} option]
+  [button-id {:keys [get-label-f] :as button-props} option]
   (let [option-label (get-label-f option)]
-       [:button.x-radio-button--option (engine/selectable-option-attributes button-id view-props option)
+       [:button.x-radio-button--option (engine/selectable-option-attributes button-id button-props option)
                                        [:div.x-radio-button--option-button]
                                        [:div.x-radio-button--option-label [components/content {:content option-label}]]]))
 
@@ -103,14 +103,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;  {:options (maps in vector)
   ;   [{:label (metamorphic-content)
   ;     :value (*)}]}
   ;
   ; @return (hiccup)
-  [button-id {:keys [options] :as view-props}]
-  (reduce #(vector/conj-item %1 [radio-button-option button-id view-props %2])
+  [button-id {:keys [options] :as button-props}]
+  (reduce #(vector/conj-item %1 [radio-button-option button-id button-props %2])
            [:div.x-radio-button--options]
            (param options)))
 
@@ -118,39 +118,39 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;  {:unselectable? (boolean)(opt)}
   ;
   ; @return (component)
-  [button-id {:keys [unselectable?] :as view-props}]
+  [button-id {:keys [unselectable?] :as button-props}]
   (if (boolean unselectable?)
-      [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id view-props)]))
+      [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id button-props)]))
 
 (defn- radio-button-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;
   ; @return (hiccup)
-  [button-id view-props]
-  [:div.x-radio-button--header [radio-button-unselect-button button-id view-props]
-                               [radio-button-label           button-id view-props]])
+  [button-id button-props]
+  [:div.x-radio-button--header [radio-button-unselect-button button-id button-props]
+                               [radio-button-label           button-id button-props]])
 
 (defn- radio-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) view-props
+  ; @param (map) button-props
   ;
   ; @return (hiccup)
-  [button-id view-props]
-  [:div.x-radio-button (engine/selectable-attributes button-id view-props)
-                       [radio-button-header   button-id view-props]
-                       [engine/element-helper button-id view-props]
-                       [radio-button-options  button-id view-props]])
+  [button-id button-props]
+  [:div.x-radio-button (engine/selectable-attributes button-id button-props)
+                       [radio-button-header          button-id button-props]
+                       [engine/element-helper        button-id button-props]
+                       [radio-button-options         button-id button-props]])
 
-(defn view
+(defn element
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:class (string or vector)(opt)
@@ -195,12 +195,12 @@
   ;
   ; @return (component)
   ([button-props]
-   [view (a/id) button-props])
+   [element (a/id) button-props])
 
   ([button-id button-props]
    (let [button-props (a/prot button-id button-props button-props-prototype)]
         [engine/stated-element button-id
                                {:component     #'radio-button
                                 :element-props button-props
-                                :initializer   [:elements/init-selectable! button-id]
-                                :subscriber    [::get-view-props           button-id]}])))
+                                :initializer   [:elements/init-selectable!       button-id]
+                                :subscriber    [:elements/get-radio-button-props button-id]}])))

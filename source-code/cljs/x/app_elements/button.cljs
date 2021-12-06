@@ -294,7 +294,7 @@
                           [button-label button-id button-props]
                           (if (some? icon)
                               [:div.x-button--icon-placeholder])
-                          [engine/element-badge        button-id button-props]])
+                          [engine/element-badge button-id button-props]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -308,7 +308,7 @@
                  [button-body                 button-id button-props]
                  [engine/element-info-tooltip button-id button-props]])
 
-(defn view
+(defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ;  XXX#0714
@@ -367,7 +367,7 @@
   ;
   ; @return (hiccup)
   ([button-props]
-   [view (a/id) button-props])
+   [element (a/id) button-props])
 
   ([button-id button-props]
    (let [button-props (engine/apply-preset BUTTON-PROPS-PRESETS button-props)
