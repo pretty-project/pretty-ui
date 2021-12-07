@@ -83,7 +83,6 @@
   ;   :get-value-f (function)
   ;   :no-options-label (metamorphic-content)
   ;   :on-change (metamorphic-event)
-  ;   :on-extend (metamorphic-event)
   ;   :select-option-event (event-vector)}
   [field-id field-props]
   (merge {:emptiable?          true
@@ -91,7 +90,6 @@
           :get-value-f         return
           :no-options-label    DEFAULT-NO-OPTIONS-LABEL
           :select-option-event DEFAULT-SELECT-OPTION-EVENT
-          :on-extend           [:elements/add-option!]
           :options-path        (engine/default-options-path field-id)
           ; A combo-box elem használatakor nem elérhető az {:on-blur ...}
           ; és {:on-focus ...} tulajdonság, mivel a combo-box elem saját
@@ -228,17 +226,14 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:on-extend (metamorphic-event)
-  ;   :value (*)}
+  ;  {:value (*)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [on-extend value]}]
-  (let [on-extend (a/metamorphic-event<-params on-extend field-id value)]
-                                             ; BUG#2105
-       [:button.x-combo-box--extender-button {:on-mouse-down #(.preventDefault %)
-                                              :on-mouse-up   #(a/dispatch on-extend)}
-                                             [:i.x-combo-box--extender-icon    (param :add)]
-                                             [:div.x-combo-box--extender-label (str   value)]]))
+  [field-id {:keys [value]}]            ; BUG#2105
+  [:button.x-combo-box--extender-button {:on-mouse-down #(.preventDefault %)
+                                         :on-mouse-up   #(a/dispatch [:elements/add-option! field-id value])}
+                                        [:i.x-combo-box--extender-icon    (param :add)]
+                                        [:div.x-combo-box--extender-label (str   value)]])
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -316,9 +311,6 @@
   ;   :max-length (integer)(opt)
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
-  ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:elements/add-option! field-id value]
-  ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}
   ;   :on-select (metamorphic-event)(constant)(opt
@@ -348,16 +340,11 @@
   ;  [elements/combo-box :my-combo-box {...}]
   ;
   ; @usage
-  ;  [elements/combo-box {:extendable?  true
-  ;                       :options-path [:my-options]
+  ;  [elements/combo-box {:options-path [:my-options]
   ;                       :value-path   [:my-value]}]]
   ;
   ; @usage
-  ;  (a/reg-event-db :my-extender (fn [db [_ field-id value]]
-  ;                                   (update-in db [:my-options] vector/conj-item {:name value})))
-  ;  [elements/combo-box {:extendable?  true
-  ;                       :get-label-f  #(get % :name)
-  ;                       :on-extend    [:my-extender]
+  ;  [elements/combo-box {:get-label-f  #(get % :name)
   ;                       :options-path [:my-options]
   ;                       :value-path   [:my-value]}]]
   ;

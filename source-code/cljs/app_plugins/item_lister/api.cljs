@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.4.7
+; Compatibility: x4.4.8
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.api
-    (:require [app-plugins.item-lister.engine]
+    (:require [app-plugins.item-lister.dialogs]
+              [app-plugins.item-lister.engine]
               [app-plugins.item-lister.views :as views]))
 
 

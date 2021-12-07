@@ -38,7 +38,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/request-id :my-extension :my-type)
+  ;  (engine/request-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/synchronize-my-type-lister!
   ;
@@ -54,7 +54,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/resolver-id :my-extension :my-type)
+  ;  (engine/resolver-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/get-my-type-items!
   ;
@@ -70,7 +70,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/new-item-uri :my-extension :my-type)
+  ;  (engine/new-item-uri :my-extension :my-type)
   ;  =>
   ;  "/my-extension/new-my-type"
   ;
@@ -86,7 +86,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/route-id :my-extension :my-type)
+  ;  (engine/route-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/lister-route
   ;
@@ -102,7 +102,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/route-template :my-extension :my-type)
+  ;  (engine/route-template :my-extension :my-type)
   ;  =>
   ;  "/my-extension"
   ;
@@ -117,7 +117,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/add-new-item-event :my-extension :my-type)
+  ;  (engine/add-new-item-event :my-extension :my-type)
   ;  =>
   ;  [:my-extension/add-new-my-type!]
   ;
@@ -134,7 +134,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-lister/render-event :my-extension :my-type)
+  ;  (engine/render-event :my-extension :my-type)
   ;  =>
   ;  [:my-extension/render-my-type-lister!]
   ;

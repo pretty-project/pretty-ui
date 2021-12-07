@@ -86,5 +86,4 @@
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
                                  {:body   {:content #'body   :subscriber [::get-body-props]}
-                                  :header {:content #'header :subscriber [::get-header-props]}
-                                  :layout :boxed}]}))
+                                  :header {:content #'header :subscriber [::get-header-props]}}]}))

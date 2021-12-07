@@ -75,8 +75,7 @@
   [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-checkbox--label [components/content {:content label}]
-                              (if (boolean required?)
-                                  [:span.x-input--label-asterisk "*"])]))
+                              (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- checkbox-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,6 +118,7 @@
   ;    Default: :left
   ;   :initial-value (boolean)(constant)(opt)
   ;   :on-check (metamorphic-event)(opt)
+  ;   :on-uncheck (metamorphic-event)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

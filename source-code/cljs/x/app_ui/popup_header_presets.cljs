@@ -38,7 +38,8 @@
   [popup-id _]
   [elements/button {:keypress {:key-code 13}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :accept-button}])
+                    :preset   :accept-button
+                    :indent   :right}])
 
 (defn popup-cancel-button
   ; @param (keyword) popup-id
@@ -48,7 +49,8 @@
   [popup-id _]
   [elements/button {:keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel-button}])
+                    :preset   :cancel-button
+                    :indent   :left}])
 
 (defn popup-up-icon-button
   ; @param (keyword) popup-id

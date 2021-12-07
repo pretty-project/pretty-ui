@@ -36,19 +36,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-editor.engine
-(def item-id->new-item?  engine/item-id->new-item?)
-(def item-id->form-label engine/item-id->form-label)
-(def item-id->item-uri   engine/item-id->item-uri)
-(def request-id          engine/request-id)
-(def mutation-name       engine/mutation-name)
-(def form-id             engine/form-id)
-(def get-derived-item-id engine/get-derived-item-id)
-(def synchronizing?      engine/synchronizing?)
-(def new-item?           engine/new-item?)
-(def get-description     engine/get-description)
-(def get-body-props      engine/get-body-props)
-(def get-header-props    engine/get-header-props)
-(def get-view-props      engine/get-view-props)
+(def item-id->item-uri engine/item-id->item-uri)
 
 ; app-plugins.item-editor.views
 (def undo-delete-button  views/undo-delete-button)

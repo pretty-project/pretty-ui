@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.03.01
 ; Description:
-; Version: v0.3.8
+; Version: v0.4.8
 ; Compatibility: x4.4.8
 
 
@@ -15,14 +15,29 @@
 
 (ns x.app-elements.engine.collectable
     (:require [mid-fruits.candy                 :refer [param]]
-              [mid-fruits.map                   :as map]
               [mid-fruits.vector                :as vector]
               [x.app-core.api                   :as a :refer [r]]
               [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.input      :as input]
               [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.targetable :as targetable]))
+              [x.app-elements.engine.selectable :as selectable]))
+
+
+
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name collectable
+;  Olyan input, amelynek a value-path Re-Frame adatbázis útvonalon tárolt értéke
+;  egy vektor, amelyben a kiválasztható opciók értékei gyűjthetők.
+;  Az egyes opciók kiválasztásakor azokból a {:get-value-f ...} függvénnyel
+;  vonja ki azok értékekét.
+;  Egymással megegyező értékből egyszerre több nem tárolódik a gyűjteményben!
+;
+; @name collected?
+;  Az input {:collected? true} tulajdonsága jelzi, hogy a value-path ... útvonalon
+;  tárolt érték egy nem üres vektor.
 
 
 
@@ -33,61 +48,118 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (keyword) option-id
+  ; @param (*) option
   ;
   ; @return (function)
-  [input-id option-id]
-  #(a/dispatch-n [[:elements/->option-collected input-id option-id]]))
+  [input-id option]
+  #(a/dispatch [:elements/collect-option! input-id option]))
 
 (defn on-uncollect-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (keyword) option-id
+  ; @param (*) option
   ;
   ; @return (function)
-  [input-id option-id]
-  #(a/dispatch [:elements/->option-uncollected input-id option-id]))
+  [input-id option]
+  #(a/dispatch [:elements/uncollect-option! input-id option]))
+
+(defn on-toggle-function
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (*) option
+  ;
+  ; @return (function)
+  [input-id option]
+  #(a/dispatch [:elements/toggle-option-collection! input-id option]))
+
+(defn input-props->option-collected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) input-props
+  ;  {:collected-value (vector)
+  ;   :get-value-f (function)}
+  ; @param (*) option
+  ;
+  ; @return (boolean)
+  [{:keys [collected-value get-value-f]} option]
+  (let [value (get-value-f option)]
+       (vector/contains-item? collected-value value)))
 
 (defn collectable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:value (boolean)}
   ;
   ; @return (map)
-  [input-id {:keys [value] :as input-props}]
+  [input-id {:keys [] :as input-props}]
   (element/element-attributes input-id input-props))
 
-(defn collectable-body-attributes
+(defn collectable-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :targetable? (boolean)(opt)
-  ;   :value (keyword)(opt)}
-  ; @param (map) option-props
-  ;  {:id (keyword)}
+  ;  {:disabled? (boolean)(opt)}
+  ; @param (*) option
   ;
   ; @return (map)
-  ;  {:disabled (boolean)
-  ;   :id (string)
-  ;   :on-click (function)}
-  [input-id {:keys [disabled? targetable? value]} {:keys [id]}]
-  (cond-> {} (boolean disabled?) (merge {:disabled true})
-             (not     disabled?) (merge {:on-click    (on-collect-function             input-id id)
-                                         ; WARNING! NOT TESTED!
-                                         :on-mouse-up (focusable/blur-element-function input-id)})
-                                         ; WARNING! NOT TESTED!
-             (and (not     disabled?)
-                  (boolean targetable?)) (merge {:id (targetable/element-id->target-id input-id)})))
+  ;  {:data-collected (boolean)
+  ;   :disabled (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
+  [input-id {:keys [disabled?] :as input-props} option]
+  (if disabled? {:disabled true}
+                {:data-collected (input-props->option-collected?  input-props option)
+                 :on-click       (on-toggle-function              input-id option)
+                 :on-mouse-up    (focusable/blur-element-function input-id)}))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-collectable-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (vector)
+  [db [_ input-id]]
+  ; BUG#7633
+  (if-let [options-path (r element/get-element-prop db input-id :options-path)]
+          (get-in db options-path)))
+
+(defn get-collected-value
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (vector)
+  [db [_ input-id]]
+  (vec (r input/get-input-value db input-id)))
+
+
+
+
+
+
+
+(defn option-collected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (*) option
+  ;
+  ; @return (boolean)
+  [db [_ input-id option]]
+  (let [get-value-f     (r element/get-element-prop db input-id :get-value-f)
+        value-path      (r element/get-element-prop db input-id :value-path)
+        collected-value (r get-collected-value      db input-id)
+        value           (get-value-f option)]
+       (vector/contains-item? collected-value value)))
 
 (defn collectable-collected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,8 +168,8 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (let [value (r input/get-input-value db input-id)]
-       (some? value)))
+  (let [collected-value (r get-collected-value db input-id)]
+       (vector/nonempty? collected-value)))
 
 (defn collectable-noncollected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,38 +189,72 @@
   ;  {:collected? (boolean)
   ;   :color (keyword)
   ;   :helper (keyword)
-  ;   :value (vector)}
+  ;   :collected-value (vector)}
   [db [_ input-id]]
-  (merge {:collected? (r collectable-collected? db input-id)
-          :value      (r input/get-input-value  db input-id)}
+  (merge {:collected?      (r collectable-collected?  db input-id)
+          :collected-value (r get-collected-value     db input-id)
+          :options         (r get-collectable-options db input-id)}
          (if (r input/input-required-warning? db input-id)
              {:color  :warning
               :helper :please-select-an-option})))
 
 
 
-;; -- Status events -----------------------------------------------------------
+;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements/->option-collected
+(defn init-collectable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (keyword) option-id
-  (fn [{:keys [db]} [_ input-id option-id]]
+  ;
+  ; @return (map)
+  [db [_ input-id]]
+  (r selectable/init-selectable! db input-id))
+
+(a/reg-event-db :elements/init-collectable! init-collectable!)
+
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements/collect-option!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (*) option
+  (fn [{:keys [db]} [_ input-id option]]
       (let [on-collect-event (r element/get-element-prop db input-id :on-collect)
-            value-path       (r element/get-element-prop db input-id :value-path)]
-           {:db (as-> db % (r db/apply!                    % value-path vector/conj-item option-id)
+            get-value-f      (r element/get-element-prop db input-id :get-value-f)
+            value-path       (r element/get-element-prop db input-id :value-path)
+            value            (get-value-f option)]
+           {:db (as-> db % (r db/apply!                    % value-path vector/conj-item-once value)
                            (r input/mark-input-as-visited! % input-id))
             :dispatch on-collect-event})))
 
 (a/reg-event-fx
-  :elements/->option-uncollected
+  :elements/uncollect-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (keyword) option-id
-  (fn [{:keys [db]} [_ input-id option-id]]
-      (let [value-path (r element/get-element-prop db input-id :value-path)]
-           {:db (r db/apply! db value-path vector/remove-item option-id)})))
+  ; @param (*) option
+  (fn [{:keys [db]} [_ input-id option]]
+      (let [on-uncollect-event (r element/get-element-prop db input-id :on-uncollect)
+            value-path         (r element/get-element-prop db input-id :value-path)
+            get-value-f        (r element/get-element-prop db input-id :get-value-f)
+            value              (get-value-f option)]
+           {:db (r db/apply! db value-path vector/remove-item value)
+            :dispatch on-uncollect-event})))
+
+(a/reg-event-fx
+  :elements/toggle-option-collection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (*) option
+  (fn [{:keys [db]} [_ input-id option]]
+      (if (r option-collected? db input-id option)
+          [:elements/uncollect-option! input-id option]
+          [:elements/collect-option!   input-id option])))

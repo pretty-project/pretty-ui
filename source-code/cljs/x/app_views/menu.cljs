@@ -241,5 +241,4 @@
                                  {:body   {:content #'body :subscriber [::get-body-props]}
                                   :header {:content #'ui/close-popup-header}
                                   :horizontal-align :left
-                                  :layout           :boxed
                                   :min-width        :xs}]}))

@@ -497,6 +497,9 @@
       :duplicate!
       {:en "Duplicate"
        :hu "Duplikálás"}
+      :duplicate-selected-items?
+      {:en "Are you sure you want to duplicate selected items?"
+       :hu "Biztos vagy benne, hogy szeretnéd másolni a kiválasztott elemeket?"}
       :edit!
       {:en "Edit"
        :hu "Szerkesztés"}
@@ -599,27 +602,24 @@
       :saving-error
       {:en "Saving error"
        :hu "Sikertelen mentés"}
-      :select-all-items!
-      {:en "Select all items"
-       :hu "Összes elem kiválasztása"}
       :select
       {:en "Select"
-       :hu "Kiválasztás"}
+       :hu "Kijelölés"}
       :select!
       {:en "Select"
        :hu "Válassz"}
-      :select-all
-      {:en "Select all"
-       :hu "Összes kiválasztása"}
-      :check
-      {:en "Select"
-       :hu "Kijelölés"}
-      :check-all
+      :select-all!
       {:en "Select all"
        :hu "Összes kijelölése"}
-      :uncheck-selected!
-      {:en "Uncheck selected"
-       :hu "Kiválasztás megszűntetése"}
+      :select-all-items!
+      {:en "Select all"
+       :hu "Összes elem kijelölése"}
+      :select-item!
+      {:en "Select item"
+       :hu "Elem kijelölése"}
+      :unselect!
+      {:en "Unselect"
+       :hu "Kijelölés megszűntetése"}
       :undo!
       {:en "Undo"
        :hu "Visszavonás"}

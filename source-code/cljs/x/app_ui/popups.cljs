@@ -116,7 +116,7 @@
          {:autopadding?     true
           :hide-animated?   true
           :horizontal-align :center
-          :layout           :unboxed
+          :layout           :boxed
           :min-width        :m
           :reveal-animated? true
           :stretched?       false
@@ -243,7 +243,7 @@
   ;    Default: :center
   ;   :layout (keyword)(opt)
   ;    :boxed, :unboxed
-  ;    Default: :unboxed
+  ;    Default: :boxed
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :m

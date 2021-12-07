@@ -138,6 +138,9 @@
                             :label   :more-options
                             :layout  :row
                             :variant :transparent}
+      :muted-icon-button   {:color   :muted
+                            :layout  :icon-button
+                            :variant :transparent}
       :next-icon-button    {:color   :default
                             :icon    :arrow_forward_ios
                             :layout  :icon-button

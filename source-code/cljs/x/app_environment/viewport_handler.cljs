@@ -6,7 +6,7 @@
 ; Created: 2020.12.22
 ; Description:
 ; Version: v0.4.8
-; Compatibility: x4.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -18,8 +18,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-environment.position-handler :as position-handler]))
+              [x.app-db.api       :as db]))
 
 
 
@@ -149,8 +148,7 @@
   :environment/->viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (as-> db % (r position-handler/update-stored-element-positions! %)
-                            (r update-viewport-data!                             %))
+      {:db       (r update-viewport-data! db)
        :dispatch [:environment/detect-viewport-profile!]}))
 
 

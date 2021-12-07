@@ -25,6 +25,25 @@
 
 
 
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name checkable
+;  Olyan input, amelynek a value-path Re-Frame adatbázis útvonalon tárolt értéke
+;  true vagy false lehet.
+;
+; @name checked?
+;  Az input {:checked? true} tulajdonsága jelzi, hogy a value-path ... útvonalon
+;  tárolt érték boolean típusként kiértékelve igaznak számít.
+;
+; @name on-check
+;  TODO ...
+;
+; @name on-uncheck
+;  TODO ...
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

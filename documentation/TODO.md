@@ -16,14 +16,10 @@
 
 - nem mukodik a goog.net.cookies törlés!
 
-- Ha a layout-okon lesznek mindenfél sidebar-ok, akkor a UI-sidebar -ra már nem is lesz szükség?
-
 - x.server-media modul kerüljön ki media extension-be???
   (ha igen, akkor a route-jai se system-route-ok legyenek!)
 
 - Ha kész a media, lehet hogy a listener komponensre sem lesz szükség
-
-- popup és surface elemeken body és header elnevés content és label-bar helyett
 
 - Amikor egy formot töltesz ki és van el nem mentett változás, akkor ha el akarod hagyni
   az oldalt, akkor kérdezze meg, hogy biztos eldobod a nem mentett változásokat?
@@ -46,10 +42,6 @@
 
 - db/id-handler mehet mid-fruits/eql-be
 
-- Az elementek action-jei ne kizárólag Re-Frame alapon menjenek. felesleges események.
-  Az on-delete pl egyált nem használ már re-frame-et az on-click pedig elérhető re-frame-ből is,
-  de sima függvényként van meghívva
-
 - A go-back-surface-label-bar és go-back-popup-label-bar nem jo, hogy browser-back-et használ!
 
 - Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)
@@ -69,8 +61,6 @@
   mi lesz az observer-el?
 
 - A select popup-on ha elkezdesz beirni valamit, akkor arra reagaljon
-
-- Element container DOM wrapper helyett raw-element handling
 
 - Pathom handler-ekbe user-auth-ot vizsgálni
 
@@ -98,9 +88,6 @@
 
 - Jobb tárolni a dokumentumokban a névteret is?
 
-- Scroll handler és mouse handler és más soxor db-be iro namespace-ek atomot vagy saját Re-Frame db
-  atom-ot használjanak, hogy ne spam-eljék a db-t, mert tul sokszor futnak a subscription function-ök
-
 - Az on-scroll és on-touch-move események stopPropagation függvénye nem gátolja meg,
   hogy a modalon szkrollolás szkrollolja a modal mögött kontentet?
 
@@ -127,13 +114,8 @@
 
 - Home könyvtárat betenni a project-name storage-ba
 
-- Collapsible event-log
-
 - Date-field elem gyári "reset!" end-adornment-jét x-esre cserélni
   + Calendar icon end-adornment ami megnyitja a Calendar-t
-
-- project-name-et re-strukturálni, föleg az eql-es pathom-os részt az x.server-media
-  névtér tapasztalatai alapján
 
 - FOUT és FOUT material
 
@@ -163,43 +145,18 @@
 
 - load timeout errort is teszelni kell!
 
-- A radio-button és combo-box elemekben nem egyforma (nem szabványos) az {:options [...]}
-  tulajdonságként átadott opciók
-
 - Text-field label
   - https://css-tricks.com/html-inputs-and-labels-a-love-story/
   - Ne legyen a label-ben interaktív elem, csak text!
   - Ne label-lel legyen vezérelve a fókusz, hanem natívan (on-mouse-down sets focus)
 
-- A radio-button is kezelje ugy az option-öket, mint az autocomplete?
-  {:get-label-f (function)
-   :options (* in vector)}
 - x.app-elements/autocomplete-surface billentyűzet-vezérlés,
   {:extendable? ... :on-extend tulajdonságok}
 
-- Elements/broker törlése, element-list [element :element-id {...}] formulával
-  működöjön
-  Paul: akkor a formnak kell kiválasztania, melyik element kell egy adott típushoz
 - Ha egy popup label bar label nem fér, ki -> akkor text-overflow: ellipsis
 - Peti: elementekre aria-label
 - DRAG-OVERLAY-t berakni!
 - Sortable mozgatás picit laggos iOS Chrome-on
-- iOS belezoomol a text-field-be és nem zoomol ki amikor kilépsz :D
-- Bizonyos esetekben a request-eket nem lehet manual megadott azonosítóval küldeni,
-  mert, akkor a gyors egymás utánban küldött request-ek közül nem mindegyik megy ki,
-  ugyanis a request-handler kezeli, hogy egy request, akkor mehet ki, ha már visszaért
-  az előző válasza és letelt az idle-timeout-ja. Erre megoldás, hogy a request-eket
-  manual megadott azonosító nélkül kell küldeni és akkor mindegyik kap egy random
-  generált azonosítót. Igy korlátlanul lehet küldözgetni őket. Ilyen pl a search-field
-  element on-interval eseménye által küldött request-ek esete is, ahol random generált
-  azonosítoval kell küldeni a request-eket. Viszont igy az ilyen request-ekre nem
-  tudnak az element-ek rasubscribeolni a {:process-id ...} tulajdonságukkal.
-  Ezért ha ez egy valós usecase-nél is problémát okoz majd, akkor fontos lenne
-  a request-eknek adni egy olyan tulajdonságot, amivel több egymástól független,
-  random azonositoju request egy csoportként azonosítható lenne, és akkor rá lehetne kötni
-  az element animációját. Pl lehetne a request-eknek {:request-group-id ...} tulajdonságuk.
-  És ez a request-group-id is indítana a request processétől függetlenül egy saját
-  process-t és erre is rá lehetne subscribe-olni.
 - A template resources/public/logo mappábol ki lehet venni az mt-logo- logókat
   elég ha a monosetben van benne. Ugyis ott van használva
 - EQL
@@ -215,7 +172,7 @@
   read-string-elje a szerver válaszát. Paul szerint talán a :transit-params megoldja,
   hogy clojure adatszerkezeket lehessen küldeni a kliensre
 
-# x4.4.0
+# x4.6.0
 - BUG#0054
 - https://www.spar.hu/uzletek/spar-express-szeged-6723-makkoshazi-krt-1-
 - A privacy-policy beállításokat állandóan elérhetővé kell tenni a felhasználók
@@ -226,7 +183,7 @@
 - Nem megy a tab-background backdrop-filter iOS-on
 - Nem megy a viewport tetejére a szkroll-csík iOS-on relative tabon
 
-# x4.5.0
+# x4.7.0
 - https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
   Ebböl a manifest-es részt tedd bele az appba!
   https://web.dev/add-manifest/
@@ -242,20 +199,20 @@
   tab label bar / bal oldali gomb: back-button
   tab label bar / jobb oldali gomb(opcionálisan): close-button
 
-# x4.6.0
+# x4.8.0
 - A resolution-blockert leváltotta a viewport meta tag átkonfigurálása
   width=device-width beállításról width=320px belállításra.
   Tesztelni kell asztali- és mobileszközökön is!
 - init, remove, reg, destruct, clean, add, set, store, save, delete
   elnevezéseket rendezni!  
 
-# x4.7.0
+# x4.9.0
 - A pdf generator és más service-ek teleszemetelik a /tmp mappát,
   cron-ba be kell állítani, hogy törlödjön egy bizonyos idő után!
 - Access webapp when offline:
   https://en.wikipedia.org/wiki/Cache_manifest_in_HTML5  
 
-# x4.8.0
+# x5.0.0
 - Ha az applikáció full-screen modban van vagy headless browser-ben akkor
   a felhasználó nem feltétlenül tud frissíteni, ezért szükséges lehet,
   az app-menu-be egy "Restart app" gomb ami reboot-olja az applikációt.
@@ -270,7 +227,7 @@
   is engedi néha szkrolloni a bodyt! iOS ontouchmove preventDefault
 - css :in-range selector
 
-# x5.0.0
+# x5.0.1
 - Event-id eltávolítása az event-vector-ból trim interceptor használatával
 - A reg-event-fx eseménykezelő a cofx map helyett a db map-ot használja kontextusként!
 - Minden regisztrált felhasználó meghivat új felhasználókat, de az általa

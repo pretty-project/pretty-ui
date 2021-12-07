@@ -76,11 +76,11 @@
   [input-id {:keys [disabled?] :as input-props} option]
   (let [selected-value (:value input-props)
         selected?      (= selected-value option)]
-       (cond-> {} (boolean disabled?) (merge {:data-selected (param selected?)
-                                              :disabled      (param true)})
-                  (not     disabled?) (merge {:data-selected (param selected?)
-                                              :on-click      (on-select-function              input-id option)
-                                              :on-mouse-up   (focusable/blur-element-function input-id)}))))
+       (if disabled? {:data-selected (param selected?)
+                      :disabled      (param true)}
+                     {:data-selected (param selected?)
+                      :on-click      (on-select-function              input-id option)
+                      :on-mouse-up   (focusable/blur-element-function input-id)})))
 
 (defn selectable-unselect-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,32 +116,6 @@
   ; BUG#7633
   (if-let [options-path (r element/get-element-prop db input-id :options-path)]
           (get-in db options-path)))
-
-(defn get-option-stack
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (vector)
-  [db [_ input-id]]
-  (let [value-path   (r element/get-element-prop db input-id :value-path)
-        option-stack (get-in db value-path)]
-       (if (vector? option-stack)
-           (return option-stack)
-           (return []))))
-
-(defn option-stacked?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (*) option
-  ;
-  ; @return (boolean)
-  [db [_ input-id option]]
-  (let [option-stack (r get-option-stack db input-id)]
-       (vector/contains-item? option-stack option)))
-
-(a/reg-sub :elements/option-stacked? option-stacked?)
 
 (defn option-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -227,12 +201,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (*) option
+  ; @param (*) value
   ;
   ; @return (map)
-  [db [_ input-id option]]
+  [db [_ input-id value]]
   (let [options-path (r element/get-element-prop db input-id :options-path)]
-       (update-in db options-path vector/conj-item-once option)))
+       (update-in db options-path vector/conj-item-once value)))
 
 (a/reg-event-db :elements/add-option! add-option!)
 
@@ -274,48 +248,6 @@
       (r select-option!   db input-id option)))
 
 (a/reg-event-db :elements/toggle-select-option! toggle-select-option!)
-
-(defn stack-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (*) option
-  ;
-  ; @return (map)
-  [db [_ input-id option]]
-  (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (as-> db % (r db/apply!                    % value-path vector/conj-item-once option)
-                  (r input/mark-input-as-visited! % input-id))))
-
-(a/reg-event-db :elements/stack-option! stack-option!)
-
-(defn unstack-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (*) option
-  ;
-  ; @return (map)
-  [db [_ input-id option]]
-  (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (as-> db % (r db/apply!                    % value-path vector/remove-item option)
-                  (r input/mark-input-as-visited! % input-id))))
-
-(a/reg-event-db :elements/unstack-option! unstack-option!)
-
-(defn toggle-stack-option!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (*) option
-  ;
-  ; @return (map)
-  [db [_ input-id option]]
-  (if (r option-stacked? db input-id option)
-      (r unstack-option! db input-id option)
-      (r stack-option!   db input-id option)))
-
-(a/reg-event-db :elements/toggle-stack-option! toggle-stack-option!)
 
 
 

@@ -121,8 +121,7 @@
                            {:body {:content #'delete-subdirectory-dialog
                                    :content-props {:subdirectory-alias subdirectory-alias}}
                             :header {:content       #'delete-item-label-bar
-                                     :content-props {:selected-item {:directory/id (name subdirectory-id)}}}
-                            :layout        :boxed}])))
+                                     :content-props {:selected-item {:directory/id (name subdirectory-id)}}}}])))
 
 (a/reg-event-fx
   :file-storage/render-delete-rendered-file-dialog!
@@ -136,8 +135,7 @@
                            {:content       #'delete-file-dialog
                             :content-props {:file-alias file-alias}
                             :label-bar     {:content       #'delete-item-label-bar
-                                            :content-props {:selected-item {:file/id (name file-id)}}}
-                            :layout        :boxed}])))
+                                            :content-props {:selected-item {:file/id (name file-id)}}}}])))
 
 (a/reg-event-fx
   :file-storage/render-not-enough-space-to-copy-dialog!
@@ -148,8 +146,7 @@
       [:ui/add-popup! ::not-enough-space-to-copy
                       {:content       #'not-enough-space-to-copy-dialog
                        :content-props {:space-needed space-needed}
-                       :label-bar     {:content #'ui/accept-popup-header}
-                       :layout        :boxed}]))
+                       :label-bar     {:content #'ui/accept-popup-header}}]))
 
 (a/reg-event-fx
   :file-storage/render-copy-rendered-file-dialog!

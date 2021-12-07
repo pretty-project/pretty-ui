@@ -23,7 +23,7 @@
    :viewport-small?   (r environment/viewport-small?     db)
    :selected-language (r locales/get-selected-language   db)})
 
-(a/reg-sub ::get-item-props get-item-props)
+(a/reg-sub :clients/get-client-item-props get-item-props)
 
 
 
@@ -62,45 +62,30 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props]
-  (let [item-props (a/subscribe [::get-item-props item-dex client-props])]
+  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])]
        (fn [] [client-item-structure item-dex client-props @item-props])))
-
-
-
-;; -- Header components -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- desktop-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props])
-
-(defn- header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [search-mode?] :as header-props}]
-  [item-lister/header :clients :client {}])
-
-
-
-;; -- Body components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
-  [item-lister/body :clients :client {:list-element #'client-item}])
 
 
 
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [header-id]
+  [item-lister/header :clients :client])
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [body-id]
+  [item-lister/body :clients :client {:list-element #'client-item}])
+
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id]; {:keys [description]}]
-  [layouts/layout-a surface-id {:body   {:content    #'body}
-                                :header {:content    #'header}}])
-                                         ;:subscriber [:item-lister/get-header-props :clients]}}])
-              ;                  :description description}])
+  [surface-id  {:keys [description]}]
+  [layouts/layout-a surface-id {:body   {:content #'body}
+                                :header {:content #'header}
+                                :description description}])
 
 
 
@@ -110,4 +95,4 @@
 (a/reg-event-fx
   :clients/render-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view}}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-lister/get-view-props :clients]}}])

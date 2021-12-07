@@ -70,33 +70,18 @@
                  ; {overflow: hidden} tulajdonsággal nem lehet eltűntetni a content-header kilógó sarkait,
                  ; mert {overflow: hidden} elemben nem működne a {position: sticky} tulajdonság.
                  [:div.x-body-a--content-tail]])
-  
-(defn- layout-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) layout-id
-  ; @param (map) layout-props
-  ;  {:description (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
-  [_ {:keys [description label]}]
-  [:div.x-header-a (if (some? label)       [:div.x-header-a--label       (components/content {:content label})])
-                   (if (some? description) [:div.x-header-a--description (components/content {:content description})])])
 
 (defn- layout-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {:description (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
+  ;  {:description (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [layout-id {:keys [description label] :as layout-props}]
-  [:<> (if (or (some? description)
-               (some? label))
-           [layout-header layout-id layout-props])
+  [layout-id {:keys [description] :as layout-props}]
+  [:<> (if (some? description)
+           [:div.x-description-a (components/content {:content description})])
        [layout-body layout-id layout-props]])
 
 (defn layout
@@ -115,7 +100,6 @@
   ;     :sticky? (boolean)(opt)
   ;      Default: true
   ;     :subscriber (subscription vector)(opt)}
-  ;   :label (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :m, :l, :xl, :xxl
   ;    Default: :l}

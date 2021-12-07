@@ -105,7 +105,8 @@
                     :keypress  {:key-code 13 :required? true}
                     :on-click  [:value-editor/save-value! editor-id]
                     :label     save-button-label
-                    :preset    :close-button}])
+                    :preset    :close-button
+                    :indent    :right}])
 
 (defn- cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -118,7 +119,8 @@
   [elements/button ::cancel-button
                    {:keypress {:key-code 27 :required? true}
                     :preset   :cancel-button
-                    :on-click [:value-editor/cancel-editing! editor-id]}])
+                    :on-click [:value-editor/cancel-editing! editor-id]
+                    :indent   :left}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -177,5 +179,4 @@
   (fn [_ [_ editor-id _]]
       [:ui/add-popup! editor-id
                       {:body   {:content #'body   :subscriber [::get-body-props   editor-id]}
-                       :header {:content #'header :subscriber [::get-header-props editor-id]}
-                       :layout :boxed}]))
+                       :header {:content #'header :subscriber [::get-header-props editor-id]}}]))

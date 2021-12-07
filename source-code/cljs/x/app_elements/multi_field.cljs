@@ -120,7 +120,7 @@
         ; Multiple field & last field
         (and (field-dex->last-field?    group-id group-props field-dex)
              (group-props->multi-field? group-id group-props field-dex))
-        [{:icon :add   :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
+        [{:icon :add :on-click [:elements/increase-input-count! group-id {:initial-value ""}]
           :tooltip :add-field!}
          {:icon :close :on-click [:elements/decrease-input-count! group-id field-dex]
           :tooltip :delete-field!}]

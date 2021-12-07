@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.0.2
+; Version: v1.0.8
 
 
 
@@ -541,6 +541,23 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-keys-by
+  ; @param (map) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (map/get-keys-by {:a "a" :b :b :c :c} string?)
+  ;  =>
+  ;  [:a]
+  ;
+  ; @return (vector)
+  [n f]
+  (reduce-kv (fn [result k v]
+                 (if (f v) (vector/conj-item result k)
+                           (return           result)))
+             (param [])
+             (param n)))
 
 (defn get-ordered-keys
   ; @param (map) n

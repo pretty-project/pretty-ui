@@ -21,7 +21,6 @@
               [x.app-environment.event-handler    :as event-handler]
               [x.app-environment.keypress-handler :as keypress-handler]
               [x.app-environment.mouse-handler    :as mouse-handler]
-              [x.app-environment.position-handler :as position-handler]
               [x.app-environment.scroll-handler   :as scroll-handler]
               [x.app-environment.touch-handler    :as touch-handler]
               [x.app-environment.viewport-handler :as viewport-handler]
@@ -74,15 +73,8 @@
 (def disable-non-required-keypress-events! keypress-handler/disable-non-required-keypress-events!)
 
 ; x.app-environment.mouse-handler
-(def listen-to-mousemove!      mouse-handler/listen-to-mousemove!)
-(def stop-listen-to-mousemove! mouse-handler/stop-listen-to-mousemove!)
-(def prevent-selecting!        mouse-handler/prevent-selecting!)
-(def enable-selecting!         mouse-handler/enable-selecting!)
-
-; x.app-environment.position-handler
-(def get-element-position              position-handler/get-element-position)
-(def add-element-position-listener!    position-handler/add-element-position-listener!)
-(def remove-element-position-listener! position-handler/remove-element-position-listener!)
+(def prevent-selecting! mouse-handler/prevent-selecting!)
+(def enable-selecting!  mouse-handler/enable-selecting!)
 
 ; x.app-environment.scroll-handler
 (def scrolled-to-top?       scroll-handler/scrolled-to-top?)

@@ -34,6 +34,10 @@
 ; A combo-box elem összetettségéből adódóan saját névteret (eszközkészletet)
 ; igényel, mivel az x.app-elements.engine.field eszközök normál szövegmező
 ; készítéséhez alkalmasak.
+;
+; A multi-combo-box egy chip-group és egy combo-box inputok csoportja, amelyek
+; rendelkeznek saját egyedi azonosítóval és egy közös group-id azonosítóval.
+; A multi-combo-box az input-group eszközkészletet alkalmazza.
 
 
 
@@ -261,7 +265,7 @@
   ; A combo-box elem option listájában megjelenített értékeket a Re-Frame
   ; feliratkozásban szükséges szűrni, hogy az [:elements/highlight-prev-option! ...]
   ; és [:elements/highlight-next-option! ...] események is ki tudják olvasni
-  ; a Re-Frame adatbázisból, hogy összese hány és melyik értékek kerülnek kirenderelésre.
+  ; a Re-Frame adatbázisból, hogy összesen hány és melyik értékek kerülnek kirenderelésre.
   ;
   ; @param (keyword) field-id
   ;
@@ -371,7 +375,7 @@
         (r surface/show-surface!   db field-id)
         (r any-combo-box-option-rendered? db field-id)
         (let [rendered-options       (r get-combo-box-rendered-options db field-id)
-              highlighted-option-dex (r get-highlighted-option-dex db field-id)
+              highlighted-option-dex (r get-highlighted-option-dex     db field-id)
               prev-option-dex        (vector/prev-dex rendered-options highlighted-option-dex)]
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] prev-option-dex))
         :else (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option])))
@@ -385,11 +389,11 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (cond (r surface/surface-hidden? db field-id)
-        (r surface/show-surface!   db field-id)
+  (cond (r surface/surface-hidden?        db field-id)
+        (r surface/show-surface!          db field-id)
         (r any-combo-box-option-rendered? db field-id)
         (let [highlighted-option-dex (r get-highlighted-option-dex db field-id)
-              highlighted-option-dex (or highlighted-option-dex    -1)
+              highlighted-option-dex (or highlighted-option-dex -1)
               rendered-options       (r get-combo-box-rendered-options db field-id)
               next-option-dex        (vector/next-dex rendered-options highlighted-option-dex)]
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] next-option-dex))
@@ -405,11 +409,11 @@
   ; @return (map)
   [db [_ field-id]]
   (if (r any-option-highlighted? db field-id)
-      (as-> db % (use-highlighted-combo-box-option! % field-id)
-                 (discard-option-highlighter!       % field-id)
-                 (surface/hide-surface!             % field-id))
-      (as-> db % (discard-option-highlighter!       % field-id)
-                 (surface/hide-surface!             % field-id))))
+      (as-> db % (r use-highlighted-combo-box-option! % field-id)
+                 (r discard-option-highlighter!       % field-id)
+                 (r surface/hide-surface!             % field-id))
+      (as-> db % (r discard-option-highlighter!       % field-id)
+                 (r surface/hide-surface!             % field-id))))
 
 (a/reg-event-db :elements/enter-combo-box! enter-combo-box!)
 
@@ -421,11 +425,11 @@
   ; @return (map)
   [db [_ field-id]]
   (if (r any-option-highlighted? db field-id)
-      (as-> db % (use-highlighted-multi-combo-box-option! % field-id)
-                 (discard-option-highlighter!             % field-id)
-                 (surface/hide-surface!                   % field-id))
-      (as-> db % (discard-option-highlighter!             % field-id)
-                 (surface/hide-surface!                   % field-id))))
+      (as-> db % (r use-highlighted-multi-combo-box-option! % field-id)
+                 (r discard-option-highlighter!             % field-id)
+                 (r surface/hide-surface!                   % field-id))
+      (as-> db % (r discard-option-highlighter!             % field-id)
+                 (r surface/hide-surface!                   % field-id))))
 
 (a/reg-event-db :elements/enter-multi-combo-box! enter-multi-combo-box!)
 
@@ -470,11 +474,9 @@
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!   field-id]
-                                                       :prevent-default? true}]
+                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!   field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!     field-id]
-                                                       :prevent-default? true}]
+                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!     field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
                                                       {:key-code 27 :on-keydown [:elements/escape-combo-box! field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
@@ -487,11 +489,9 @@
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!        field-id]
-                                                       :prevent-default? true}]
+                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!        field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!          field-id]
-                                                       :prevent-default? true}]
+                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!          field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
                                                       {:key-code 27 :on-keydown [:elements/escape-combo-box!      field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)

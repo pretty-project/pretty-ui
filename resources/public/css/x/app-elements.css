@@ -404,6 +404,18 @@ button.x-card:focus,
 .x-vertical-line--body {
   background-color: var( --border-color-muted ) }
 
+.x-horizontal-line[data-color="muted"]
+.x-horizontal-line--body[data-fade="in"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-muted )) }
+
+.x-horizontal-line[data-color="muted"]
+.x-horizontal-line--body[data-fade="out"] {
+  background: linear-gradient(90deg, var( --border-color-muted ), transparent) }
+
+.x-horizontal-line[data-color="muted"]
+.x-horizontal-line--body[data-fade="in-out"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-muted ), transparent) }
+
 .x-anchor[data-color="muted"],
 .x-button[data-variant="transparent"][data-color="muted"]
 .x-button--body,
@@ -433,6 +445,18 @@ button.x-card:focus,
 .x-vertical-line[data-color="highlight"]
 .x-vertical-line--body {
   background-color: var( --border-color-highlight ) }
+
+.x-horizontal-line[data-color="highlight"]
+.x-horizontal-line--body[data-fade="in"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-highlight )) }
+
+.x-horizontal-line[data-color="highlight"]
+.x-horizontal-line--body[data-fade="out"] {
+  background: linear-gradient(90deg, var( --border-color-highlight ), transparent) }
+
+.x-horizontal-line[data-color="highlight"]
+.x-horizontal-line--body[data-fade="in-out"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-highlight ), transparent) }
 
 .x-icon[data-color="highlight"],
 .x-label[data-color="highlight"],
@@ -489,6 +513,18 @@ button.x-card:focus,
 .x-vertical-line--body {
   background-color: var( --border-color-primary ) }
 
+.x-horizontal-line[data-color="primary"]
+.x-horizontal-line--body[data-fade="in"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-primary )) }
+
+.x-horizontal-line[data-color="primary"]
+.x-horizontal-line--body[data-fade="out"] {
+  background: linear-gradient(90deg, var( --border-color-primary ), transparent) }
+
+.x-horizontal-line[data-color="primary"]
+.x-horizontal-line--body[data-fade="in-out"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-primary ), transparent) }
+
 .x-anchor[data-color="primary"],
 .x-button[data-variant="transparent"][data-color="primary"]
 .x-button--body,
@@ -541,6 +577,18 @@ button.x-card:focus,
 .x-vertical-line--body {
   background-color: var( --border-color-secondary ) }
 
+.x-horizontal-line[data-color="secondary"]
+.x-horizontal-line--body[data-fade="in"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-secondary )) }
+
+.x-horizontal-line[data-color="secondary"]
+.x-horizontal-line--body[data-fade="out"] {
+  background: linear-gradient(90deg, var( --border-color-secondary ), transparent) }
+
+.x-horizontal-line[data-color="secondary"]
+.x-horizontal-line--body[data-fade="in-out"] {
+  background: linear-gradient(90deg, transparent, var( --border-color-secondary ), transparent) }
+
 .x-anchor[data-color="secondary"],
 .x-button[data-variant="transparent"][data-color="secondary"]
 .x-button--body,
@@ -585,8 +633,6 @@ button.x-card:focus,
   border-color: var( --border-color-success ) }
 
 .x-element-badge[data-color="success"],
-.x-horizontal-line[data-color="success"]
-.x-horizontal-line--body,
 .x-line-diagram--section[data-color="success"],
 .x-table[data-color="success"] .x-table--header-cell,
 .x-vertical-line[data-color="success"]
@@ -635,8 +681,6 @@ button.x-card:focus,
   border-color: var( --border-color-warning ) }
 
 .x-element-badge[data-color="warning"],
-.x-horizontal-line[data-color="warning"]
-.x-horizontal-line--body,
 .x-line-diagram--section[data-color="warning"],
 .x-table[data-color="warning"] .x-table--header-cell,
 .x-vertical-line[data-color="warning"]
@@ -1637,6 +1681,11 @@ body[data-viewport-profile="s"]
 
 /*** Checkbox marker ***/
 /***** Checkbox *****/
+
+
+
+/***** Checkbox-group *****/
+/***** Checkbox-group *****/
 
 
 

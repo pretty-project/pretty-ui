@@ -24,6 +24,14 @@
 
 
 
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name deletable
+;  Olyan elem, amelyet csoportban megjelenítve lehetséges eltávolítani a csoportból.
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -48,7 +56,7 @@
   ; :on-click [:elements/->element-deleted element-id]
   ; =>
   ; :on-click #(a/dispatch on-delete)
-  (cond-> {} (boolean disabled?) (merge {:disabled true})
-             (not     disabled?) (merge {:on-click   #(a/dispatch on-delete)
-                                         :on-mouse-up (focusable/blur-element-function element-id)
-                                         :title       (components/content {:content :remove!})})))
+  (if disabled? {:disabled    (param true)}
+                {:on-click   #(a/dispatch on-delete)
+                 :on-mouse-up (focusable/blur-element-function element-id)
+                 :title       (components/content {:content :remove!})}))

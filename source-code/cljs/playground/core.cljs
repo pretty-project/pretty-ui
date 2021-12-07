@@ -85,6 +85,19 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- section-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [label]}]
+  [:<> [elements/label {:content label :font-weight :extra-bold :font-size :m :layout :fit}]
+       [elements/separator {:orientation :horizontal :size :xxs}]
+       [elements/horizontal-line {:color :highlight :fade :out}]
+       [elements/separator {:orientation :horizontal :size :m}]])
+
+(defn- section-footer
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [elements/separator {:orientation :horizontal :size :xxl}])
+
 (defn- infinite-loader
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
@@ -103,8 +116,10 @@
 
 (defn- buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [elements/button ::pres-esc-button
+  [surface-id _]
+  [:<> [section-footer surface-id {}]
+       [section-header surface-id {:label "Icon-button"}]
+       [elements/button ::pres-esc-button
                         {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
                          :variant :transparent :color :none :icon :people :on-click [:developer/test!]}]
        [:div {:style {:display :flex}}
@@ -114,12 +129,18 @@
                               {:tooltip :save! :preset :save-icon-button :on-click [:developer/test!]}]
              [elements/button ::delete-icon-button
                               {:tooltip :delete! :preset :delete-icon-button :on-click [:developer/test!]}]]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Filled button"}]
        [elements/button ::filled-button
                         {:label "Filled button" :variant :filled :color :primary :icon :people
                          :on-click [:developer/test!]}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Outlined button"}]
        [elements/button ::outlined-button
                         {:label "Outlined button"
                          :on-click [:developer/test!]}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Transparent button"}]
        [elements/button ::transparent-button-1
                         {:label "Transparent button #1"
                          :on-click [:developer/test!]
@@ -168,11 +189,15 @@
 
 (defn- selectors
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [elements/select ::select
+  [surface-id _]
+  [:<> [section-footer surface-id {}]
+       [section-header surface-id {:label "Select"}]
+       [elements/select ::select
                         {:label "Select"
                          :on-select [:developer/test!]
                          :initial-options ["Option #1" "Option #2"]}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Switch"}]
        [elements/switch ::switch-1
                         {:label "Switch #1"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
@@ -180,21 +205,34 @@
                         {:label "Switch #2"
                          :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                          :default-value true}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Checkbox"}]
        [elements/checkbox ::checkbox-1
                           {:label "Checkbox #1"
-                           :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+                           :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                           :required? true}]
        [elements/checkbox ::checkbox-2
                           {:label "Checkbox #2"
                            :helper "Check it to check out!"}]
        [elements/checkbox ::checkbox-3
                           {:label "Checkbox #3"
                            :helper "Check it to check out!"}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Checkbox-group"}]
+;      [elements/checkbox-group ::checkbox-group
+;                               {:label "Checkbox-group"
+;                                :options-path (db/path ::stuff :stored-options)
+;                                :get-label-f :x}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Radio-button"}]
        [elements/radio-button ::radio-button
                               {:label "Radio-button"
                                :unselectable? true
                                :get-label-f :label
                                :initial-options [{:label "Option #1" :value "ot-1"}
                                                  {:label "Option #2" :value "ot-2"}]}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Counter"}]
        [elements/counter ::counter-1
                          {:label "Counter #1" :resetable? true :initial-value 420
                           :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
@@ -224,17 +262,14 @@
                               :value-path [:x :y]}]
        [elements/combo-box ::combo-box
                            {:label "Combo-box"
-                            :extendable? true
                             :get-label-f  #(do (get % :x))
-                            :options-path (db/path ::stuff :combo-box :options)
+                            :options-path (db/path ::stuff :initial-options)
                             :initial-options [{:x "A"} {:x "B"}]
                             :initial-value {:x "B"}}]
        [elements/multi-combo-box ::multi-combo-box
                                  {:label "Multi-combo-box"
-                                  :extendable? true
                                   :get-label-f #(get % :x)
-                                  ;:options-path (db/path ::stuff :multi-combo-box :options)
-                                  :initial-options [{:x "A"} {:x "B"}]}]
+                                  :options-path (db/path ::stuff :initial-options)}]
        [elements/date-field ::date-field
                             {:label "Date field" :value-path (db/path ::stuff :date)}]
        [elements/text-field ::text-field-w-surface
@@ -307,7 +342,7 @@
 
 (defn- initialize!
   [db _]
-  (assoc-in db (db/path ::stuff :multi-combobox :options)
+  (assoc-in db (db/path ::stuff :stored-options)
                [{:x "Apple"}
                 {:x "Apple juice"}
                 {:x "Pineapple"}

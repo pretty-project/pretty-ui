@@ -144,9 +144,9 @@
   ; függvény deklarálná a value-path értékét, akkor abban a pillanatban
   ; a get-input-value függvény visszatérési értéke az egész adatbázis lenne.
   (if-let [value-path (r element/get-element-prop db input-id :value-path)]
-          (if (r input-multilingual? db input-id)
+          (if (r input-multilingual?           db input-id)
               (r locales/get-multilingual-item db value-path)
-              (get-in db value-path))))
+              (get-in                          db value-path))))
 
 (defn get-input-default-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -268,10 +268,10 @@
   [db [_ input-id]]
   (boolean (or (and (r input-nonempty?           db input-id)
                     (r pre-validate-input-value? db input-id)
-                    (not (r input-value-valid? db input-id)))
-               (and (r input-visited?        db input-id)
-                    (r validate-input-value? db input-id)
-                    (not (r input-value-valid? db input-id))))))
+                    (not (r input-value-valid?   db input-id)))
+               (and (r input-visited?            db input-id)
+                    (r validate-input-value?     db input-id)
+                    (not (r input-value-valid?   db input-id))))))
 
 (defn input-value-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -307,8 +307,8 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (boolean (and (r input-visited?  db input-id)
-                (r input-required? db input-id)
+  (boolean (and (r input-visited?           db input-id)
+                (r input-required?          db input-id)
                 (not (r input-value-passed? db input-id)))))
 
 (defn input-required-success?
@@ -356,7 +356,7 @@
   (if-let [value-path (r element/get-element-prop db input-id :value-path)]
           (assoc-in db (element/element-prop-path input-id :backup-value)
                        (get-in db value-path))
-          (return db)))
+          (return   db)))
 
 (defn use-input-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -389,8 +389,7 @@
   ; @return (map)
   [db [_ input-id]]
   (if-let [form-id (r element/get-element-prop db input-id :form-id)]
-          (r element/update-element-prop! db form-id :input-ids
-             vector/conj-item input-id)
+          (r element/update-element-prop! db form-id :input-ids vector/conj-item input-id)
           (return db)))
 
 (defn init-input!

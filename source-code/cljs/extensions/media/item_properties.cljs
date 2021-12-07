@@ -167,7 +167,6 @@
                            {:content       #'directory-properties
                             :content-props subdirectory-props
                             :label-bar     {:content #'ui/close-popup-header}
-                            :layout        :boxed
                             :min-width     :xs}])))
 
 (a/reg-event-fx
@@ -180,5 +179,4 @@
                            {:content       #'file-properties
                             :content-props file-props
                             :label-bar     {:content #'ui/close-popup-header}
-                            :layout        :boxed
                             :min-width     :xs}])))

@@ -188,6 +188,7 @@
   ; @return (component)
   [popup-id _]
   [button {:preset   :cancel-button
+           :indent   :right
            :on-click [:ui/close-popup! popup-id]}])
 
 (defn- select-options-label
@@ -314,8 +315,7 @@
   [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-select--label [components/content {:content label}]
-                            (if (boolean required?)
-                                [:span.x-input--label-asterisk "*"])]))
+                            (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -442,5 +442,4 @@
            [:ui/add-popup! options-id
                            {:body   {:content #'select-options-body   :content-props options-props}
                             :header {:content #'select-options-header :content-props options-props}
-                            :layout    :boxed
                             :min-width :xs}])))

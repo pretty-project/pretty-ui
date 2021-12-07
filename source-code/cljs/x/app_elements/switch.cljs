@@ -76,8 +76,7 @@
   ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-switch--label [components/content {:content label}]
-                        (if (boolean required?)
-                            [:span.x-input--label-asterisk "*"])])
+                        (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- switch-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

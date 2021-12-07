@@ -23,6 +23,15 @@
 
 
 
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name input-group
+;  Olyan inputok csoportja, amelyeknek a közös value-path Re-Frame adatbázis útvonalon
+;  tárolt értéke egy vektor, amelyben az egyes inputok értékei vannak.
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -125,11 +134,11 @@
   [db [_ group-id {:keys [initial-value]}]]
   (let [group-value-path (r element/get-element-prop db group-id :value-path)
         group-value      (get-in db group-value-path)]
-             ; Group value is nonempty vector & allow empty input-group
-             ; Group value is nonempty vector & disallow empty input-group
+             ; Group value is a nonempty vector & allow empty input-group
+             ; or group value is a nonempty vector & disallow empty input-group
        (cond (vector/nonempty? group-value)
              (update-in db group-value-path vector/conj-item initial-value)
-             ; Group value is NOT nonempty vector & disallow empty input-group
+             ; Group value is NOT a nonempty vector & disallow empty input-group
              ;
              ; Pl. ha egy multi-field group-value értéke nil, akkor EGY field
              ; jelenik meg, amely esetben a mezők számának növelése után
@@ -137,7 +146,7 @@
              ; kettő értéket tartalmazzon.
              (r disallow-empty-input-group? db group-id)
              (assoc-in db group-value-path [initial-value initial-value])
-             ; Group value is NOT nonempty vector & allow empty input-group
+             ; Group value is NOT a nonempty vector & allow empty input-group
              (r allow-empty-input-group? db group-id)
              (assoc-in db group-value-path [initial-value]))))
 
@@ -193,16 +202,16 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (def db {:my-value []})
+  ;  (def db {:my-group-value []})
   ;  (r engine/stack-to-group-value! db :my-group :my-input {:label "My value"})
   ;  =>
-  ;  {:my-value [{:label "My value"}]}
+  ;  {:my-group-value [{:label "My value"}]}
   ;
   ; @example
-  ;  (def db {:my-value ["First value" "Second value"]})
+  ;  (def db {:my-group-value ["First value" "Second value"]})
   ;  (r engine/stack-to-group-value! db :my-group :my-input "My value")
   ;  =>
-  ;  {:my-value ["First value" "Second value" "My value"]}
+  ;  {:my-group-value ["First value" "Second value" "My value"]}
   ;
   ; @return (map)
   [db [_ group-id _ value]]
@@ -219,10 +228,10 @@
   ; @param (integer) value-dex
   ;
   ; @example
-  ;  (def db {:my-value ["First value" "Second value"]})
+  ;  (def db {:my-group-value ["First value" "Second value"]})
   ;  (r engine/unstack-from-group-value! db :my-group :my-input 0)
   ;  =>
-  ;  {:my-value ["Second value"]}
+  ;  {:my-group-value ["Second value"]}
   ;
   ; @return (map)
   [db [_ group-id _ value-dex]]

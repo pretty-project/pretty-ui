@@ -112,9 +112,8 @@
   ; @return (hiccup)
   [element-id {:keys [end-adornments] :as element-props}]
   (if (vector/nonempty? end-adornments)
-      (reduce (fn [%1 %2]
-                  (let [%2 (a/prot %2 adornment-props-prototype)]
-                       (vector/conj-item %1 [element-adornment element-id element-props %2])))
+      (reduce (fn [%1 %2] (let [%2 (a/prot %2 adornment-props-prototype)]
+                               (vector/conj-item %1 [element-adornment element-id element-props %2])))
               [:div.x-element--end-adornments] end-adornments)))
 
 (defn- element-start-adornments
@@ -127,7 +126,6 @@
   ; @return (hiccup)
   [element-id {:keys [start-adornments] :as element-props}]
   (if (vector/nonempty? start-adornments)
-      (reduce (fn [%1 %2]
-                  (let [%2 (a/prot %2 adornment-props-prototype)]
-                       (vector/conj-item %1 [element-adornment element-id element-props %2])))
+      (reduce (fn [%1 %2] (let [%2 (a/prot %2 adornment-props-prototype)]
+                               (vector/conj-item %1 [element-adornment element-id element-props %2])))
               [:div.x-element--start-adornments] start-adornments)))

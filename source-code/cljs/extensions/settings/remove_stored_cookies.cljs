@@ -14,6 +14,7 @@
   [header-id]
   [elements/button ::cancel-button
                    {:color    :default
+                    :indent   :left
                     :label    :cancel!
                     :preset   :close-button
                     :variant  :transparent
@@ -24,6 +25,7 @@
   [header-id]
   [elements/button ::remove-button
                    {:color    :warning
+                    :indent   :right
                     :label    :remove!
                     :preset   :close-button
                     :variant  :transparent
@@ -73,5 +75,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
                   {:body   {:content #'body}
-                   :header {:content #'header}
-                   :layout :boxed}])
+                   :header {:content #'header}}])

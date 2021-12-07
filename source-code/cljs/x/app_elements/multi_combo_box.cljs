@@ -265,9 +265,6 @@
   ;   :max-length (integer)(opt)
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
-  ;   :on-extend (metamorphic-event)(constant)(opt)
-  ;    Default: [:elements/add-option! field-id value]
-  ;    Only w/ {:extendable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
   ;    Only w/ {:resetable? true}
   ;   :on-select (metamorphic-event)(constant)(opt)

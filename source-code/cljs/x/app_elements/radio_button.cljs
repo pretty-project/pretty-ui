@@ -82,8 +82,7 @@
   ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-radio-button--label [components/content {:content label}]
-                              (if (boolean required?)
-                                  [:span.x-input--label-asterisk "*"])])
+                              (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- radio-button-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,9 +103,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:options (maps in vector)
-  ;   [{:label (metamorphic-content)
-  ;     :value (*)}]}
+  ;  {:options (vector)}
   ;
   ; @return (hiccup)
   [button-id {:keys [options] :as button-props}]

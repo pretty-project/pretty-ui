@@ -48,9 +48,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-editor.engine
-(def item-id->new-item?      engine/item-id->new-item?)
-(def item-id->form-label     engine/item-id->form-label)
-(def item-id->item-uri       engine/item-id->item-uri)
-(def request-id              engine/request-id)
-(def mutation-name           engine/mutation-name)
-(def form-id                 engine/form-id)
+(def item-id->item-uri engine/item-id->item-uri)

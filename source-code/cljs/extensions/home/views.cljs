@@ -23,8 +23,7 @@
 
 (defn- get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  {:user-name (r user/get-user-name db)})
+  [db _])
 
 (a/reg-sub ::get-view-props get-view-props)
 
@@ -36,8 +35,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [user-name] :as view-props}]
-  (let [label (components/content {:content :welcome-n :replacements [user-name]})]
-       [layouts/layout-b surface-id {:cards CARDS :label label}]))
+  [layouts/layout-b surface-id {:cards CARDS}])
 
 
 
@@ -47,8 +45,7 @@
 (a/reg-event-fx
   :home/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content    #'view
-                                   :subscriber [::get-view-props]}}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [::get-view-props]}}])
 
 (a/reg-event-fx
   :home/load!

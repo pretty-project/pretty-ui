@@ -1,4 +1,12 @@
 
+; WARNING#9904
+; A görgetés pozícióját és más görgetéssel kapcsolatos adatot nem célszerű
+; a Re-Frame adatbásisban tárolni, mivel az nem alkalmas a gyors egymás-utáni
+; írások kezelésére, ugyanis minden Re-Frame adatbázis-írás következménye
+; az összes aktív feliratkozás (subscription) újbóli kiértékelődése.
+
+
+
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -18,8 +26,7 @@
               [mid-fruits.candy :refer [param return]]
               [mid-fruits.math  :as math]
               [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]
-              [x.app-environment.position-handler :as position-handler]))
+              [x.app-db.api     :as db]))
 
 
 

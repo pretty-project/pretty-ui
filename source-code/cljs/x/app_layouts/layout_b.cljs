@@ -83,7 +83,7 @@
   [layout-id {:keys [cards] :as layout-props}]
   (reduce (fn [card-list card-props]
               (vector/conj-item card-list [card layout-id layout-props card-props]))
-          [:div.x-layout-b--card-list]
+          [:div.x-layout-b--card-group]
           (param cards)))
 
 (defn- layout-body
@@ -96,19 +96,6 @@
   [layout-id layout-props]
   [card-list layout-id layout-props])
 
-(defn- layout-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) layout-id
-  ; @param (map) layout-props
-  ;  {:description (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
-  [_ {:keys [label description]}]
-  [:div.x-header-a (if (some? label)       [:div.x-header-a--label       (components/content {:content label})])
-                   (if (some? description) [:div.x-header-a--description (components/content {:content description})])])
-
 (defn- layout-b
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -117,11 +104,8 @@
   ;  {}
   ;
   ; @return (component)
-  [layout-id {:keys [description label] :as layout-props}]
-  [:<> (if (or (some? description)
-               (some? label))
-           [layout-header layout-id layout-props])
-       [layout-body layout-id layout-props]])
+  [layout-id layout-props]
+  [layout-body layout-id layout-props])
 
 (defn layout
   ; @param (keyword)(opt) layout-id
@@ -135,9 +119,7 @@
   ;       Only w/ {:icon ...}
   ;      :label (metamorphic-content)
   ;      :on-click (metamorphic-event)(opt)}
-  ;     {...}]
-  ;   :description (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
+  ;     {...}]}
   ;
   ; @usage
   ;  [layouts/layout-b {...}]

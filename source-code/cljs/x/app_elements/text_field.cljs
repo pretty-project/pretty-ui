@@ -133,8 +133,7 @@
   [field-id {:keys [label required?]}]
   (if (some? label)
       [:div.x-text-field--label [components/content {:content label}]
-                                (if (boolean required?)
-                                    [:span.x-input--label-asterisk "*"])]))
+                                (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- text-field-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!

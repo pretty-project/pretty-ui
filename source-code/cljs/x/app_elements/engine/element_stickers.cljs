@@ -56,12 +56,11 @@
   ;
   ; @return (hiccup)
   [element-id _ {:keys [icon icon-family on-click tooltip]}]
-  [:button.x-element--sticker-button
-    {:on-click        #(a/dispatch on-click)
-     :on-mouse-up      (focusable/blur-element-function element-id)
-     :title            (components/content {:content tooltip})
-     :data-icon-family (param icon-family)}
-    (param icon)])
+  [:button.x-element--sticker-button {:on-click        #(a/dispatch on-click)
+                                      :on-mouse-up      (focusable/blur-element-function element-id)
+                                      :title            (components/content {:content tooltip})
+                                      :data-icon-family (param icon-family)}
+                                     (param icon)])
 
 (defn- element-sticker-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,11 +76,10 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [disabled? icon icon-family]}]
-  [:i.x-element--sticker-icon
-    (if disabled? {:data-disabled true
-                   :data-icon-family (param icon-family)}
-                  {:data-icon-family (param icon-family)})
-    (param icon)])
+  [:i.x-element--sticker-icon (if disabled? {:data-disabled true
+                                             :data-icon-family (param icon-family)}
+                                            {:data-icon-family (param icon-family)})
+                              (param icon)])
 
 (defn- element-sticker
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,7 +107,6 @@
   ; @return (hiccup)
   [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
-      (reduce (fn [%1 %2]
-                  (let [%2 (a/prot %2 sticker-props-prototype)]
-                       (vector/conj-item %1 [element-sticker element-id element-props %2])))
+      (reduce (fn [%1 %2] (let [%2 (a/prot %2 sticker-props-prototype)]
+                               (vector/conj-item %1 [element-sticker element-id element-props %2])))
               [:div.x-element--stickers] stickers)))

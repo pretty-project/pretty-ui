@@ -230,7 +230,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
                   {:body {:content #'body :subscriber [::get-body-props]}
-                   :layout            :boxed
                    :min-width         :xs
                    :render-exclusive? true
                    :user-close?       false}])

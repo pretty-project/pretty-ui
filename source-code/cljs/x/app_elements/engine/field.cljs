@@ -52,8 +52,7 @@
 (def FIELD-BORDER-WIDTH 1)
 
 ; @constant (ms)
-;  Az utolsó karakter leütése után mennyi idő elteltével számít
-;  befejezettnek a gépelés
+;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
 (def TYPE-ENDED-AFTER 250)
 
 ; @constant (px)
@@ -125,17 +124,18 @@
          value (if (some?    modifier)
                    (modifier value)
                    (param    value))]
+        ; *
         (if (input/value-path->vector-item? value-path)
             (a/dispatch-sync [:db/set-vector-item! value-path value])
             (a/dispatch-sync [:db/set-item!        value-path value]))
-        (if (some? on-type-ended)
-            (let [on-type-ended (a/event-vector<-params on-type-ended value)]
-                 (a/dispatch-last TYPE-ENDED-AFTER on-type-ended)))
-        (if (some? on-change)
-            (let [on-change (a/metamorphic-event<-params on-change value)]
-                 (a/dispatch on-change)))
-        (if (some? surface)
-            (a/dispatch [:elements/show-surface! field-id]))))
+        ; Dispatch on-type-ended event if ...
+        (if (some? on-type-ended) (let [on-type-ended (a/event-vector<-params on-type-ended value)]
+                                       (a/dispatch-last TYPE-ENDED-AFTER on-type-ended)))
+        ; Dispatch on-change event if ...
+        (if (some? on-change)     (let [on-change (a/metamorphic-event<-params on-change value)]
+                                       (a/dispatch on-change)))
+        ; Reveal surface if ...
+        (if (some? surface)       (a/dispatch [:elements/show-surface! field-id]))))
 
 (defn field-props->start-adornments-padding
   ; WARNING! NON-PUBLIC! DO NOT USE!

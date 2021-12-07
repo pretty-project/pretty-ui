@@ -6,7 +6,7 @@
 ; Created: 2020.01.21
 ; Description:
 ; Version: v0.1.8
-; Compatibility: x4.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -20,7 +20,6 @@
               [x.app-tools.image-loader        :as image-loader]
               [x.app-tools.image-preloader     :as image-preloader]
               [x.app-tools.infinite-loader     :as infinite-loader]
-              [x.app-tools.position-signal     :as position-signal]
               [x.app-tools.temporary-component :as temporary-component]))
 
 
@@ -39,9 +38,6 @@
 
 ; x.app-tools/infinite-loader
 (def infinite-loader infinite-loader/component)
-
-; x.app-tools/position-signal
-(def position-signal position-signal/component)
 
 ; x.app-tools/temporary-component
 (def append-temporary-component! temporary-component/append-temporary-component!)

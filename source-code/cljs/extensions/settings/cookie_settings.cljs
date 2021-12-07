@@ -24,6 +24,7 @@
   [header-id]
   [elements/button ::cancel-button
                    {:preset   :cancel-button
+                    :indent   :left
                     :on-click [:ui/close-popup! header-id]}])
 
 (defn- save-button
@@ -32,23 +33,22 @@
   [elements/button ::save-button
                    {:preset  :save-button
                     :variant :transparent
+                    :indent  :right
                     :on-click {:dispatch-n [[:ui/close-popup! header-id]
                                             [:environment/->cookie-settings-changed]]}}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [elements/label {:content :privacy-settings}])
+  [elements/label {:content :privacy-settings :indent :both}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id]
   [elements/polarity ::header
-                     {:start-content  [:<> [cancel-button header-id]]
-                      :middle-content [:<> [elements/separator {:size :xs :orientation :vertical}]
-                                           [header-label  header-id]
-                                           [elements/separator {:size :xs :orientation :vertical}]]
-                      :end-content    [:<> [save-button   header-id]]}])
+                     {:start-content  [cancel-button header-id]
+                      :middle-content [header-label  header-id]
+                      :end-content    [save-button   header-id]}])
 
 
 
@@ -123,5 +123,4 @@
                   {:body   {:content #'body}
                    :header {:content #'header}
                    :horizontal-align :left
-                   :layout           :boxed
                    :user-close?      false}])

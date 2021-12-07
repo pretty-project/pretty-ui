@@ -153,7 +153,6 @@
   ; @usage
   ;  [elements/chip-group :my-chip-group {...}]
   ;
-  ;
   ; @usage
   ;  [elements/chip-group {:chip-group [{:label "Chip #1"}]}]
   ;

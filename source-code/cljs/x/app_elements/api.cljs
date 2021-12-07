@@ -20,6 +20,7 @@
               [x.app-elements.card              :as card]
               [x.app-elements.card-group        :as card-group]
               [x.app-elements.checkbox          :as checkbox]
+              [x.app-elements.checkbox-group    :as checkbox-group]
               [x.app-elements.chip-group        :as chip-group]
               [x.app-elements.chip              :as chip]
               [x.app-elements.circle-diagram    :as circle-diagram]
@@ -149,6 +150,7 @@
 (def card              card/element)
 (def card-group        card-group/element)
 (def checkbox          checkbox/element)
+(def checkbox-group    checkbox-group/element)
 (def chip-group        chip-group/element)
 (def chip              chip/element)
 (def circle-diagram    circle-diagram/element)

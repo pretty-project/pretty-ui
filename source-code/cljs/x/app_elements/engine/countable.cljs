@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.4.2
+; Version: v0.4.8
 ; Compatibility: x4.4.8
 
 
@@ -21,6 +21,21 @@
               [x.app-elements.engine.element   :as element]
               [x.app-elements.engine.input     :as input]
               [x.app-elements.engine.focusable :as focusable]))
+
+
+
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name countable
+;  Olyan input, amelynek a value-path Re-Frame adatbázis útvonalon tárolt értéke
+;  egész szám, amelyet a léptető események használatával lehetséges növelni
+;  és csökkenteni.
+;
+; @name changed?
+;  Az input {:changed? true} tulajdonsága jelzi, hogy a value-path ... útvonalon
+;  tárolt érték nem egyezik meg az input React-fába csatolásának idejében rögzített
+;  értékkel.
 
 
 
@@ -56,7 +71,7 @@
   ;  {:disabled (boolean)
   ;   :on-click (function)}
   [input-id {:keys [disabled?]}]
-  (if disabled? {:disabled true}
+  (if disabled? {:disabled    (param true)}
                 {:on-click    (on-decrease-function            input-id)
                  :on-mouse-up (focusable/blur-element-function input-id)}))
 
@@ -71,7 +86,7 @@
   ;  {:disabled (boolean)
   ;   :on-click (function)}
   [input-id {:keys [disabled?]}]
-  (if disabled? {:disabled true}
+  (if disabled? {:disabled    (param true)}
                 {:on-click    (on-increase-function            input-id)
                  :on-mouse-up (focusable/blur-element-function input-id)}))
 
@@ -88,9 +103,9 @@
   ;   :on-click (function)
   ;   :title (string)}
   [input-id {:keys [changed?]}]
-  (if changed? {:on-click    (input/on-reset-function         input-id)
-                :on-mouse-up (focusable/blur-element-function input-id)
-                :title       (components/content {:content :reset!})}
+  (if changed? {:on-click      (input/on-reset-function         input-id)
+                :on-mouse-up   (focusable/blur-element-function input-id)
+                :title         (components/content {:content :reset!})}
                {:data-disabled (param true)
                 :disabled      (param true)}))
 

@@ -144,10 +144,8 @@
   [surface-id {:keys [description synchronizing?] :as view-props}]
   [layouts/layout-a surface-id {:description description
                                 :disabled?   synchronizing?
-                                :body {:content      #'body
-                                       :subscriber   [::get-body-props]}
-                                :header {:content    #'header
-                                         :subscriber [:item-editor/get-header-props :products :product]}}])
+                                :body   {:content #'body   :subscriber [::get-body-props]}
+                                :header {:content #'header :subscriber [:item-editor/get-header-props :products :product]}}])
 
 
 
