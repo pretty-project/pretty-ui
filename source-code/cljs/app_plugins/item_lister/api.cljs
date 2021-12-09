@@ -29,9 +29,9 @@
 ; @usage
 ;  (ns my-namespace (:require [app-plugins.item-lister.api :item-lister]))
 ;
-;  (defn list-item [item-dex item] ...)
-;  (defn view      [_] [:<> [item-lister/header :my-extension :my-type]
-;                           [item-lister/body   :my-extension :my-type {:list-item #'list-item}]])
+;  (defn my-list-item [item-dex item] ...)
+;  (defn my-view      [_] [:<> [item-lister/header :my-extension :my-type]
+;                              [item-lister/body   :my-extension :my-type {:list-item #'my-list-item}]])
 ;  (a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:view {:content #'view}}])
 ;
 ;  (a/dispatch [:router/go-to! "/my-extension"])
@@ -42,5 +42,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.views
-(def header views/header)
-(def body   views/body)
+(def header    views/header)
+(def list-item views/list-item)
+(def body      views/body)

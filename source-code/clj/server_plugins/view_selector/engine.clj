@@ -31,6 +31,7 @@
 (def route                   engine/route)
 (def extended-route          engine/extended-route)
 (def render-event            engine/render-event)
+(def load-event              engine/load-event)
 
 
 
@@ -58,9 +59,9 @@
   (fn [_ [_ extension-id selector-props]]
       {:dispatch-n [[:router/add-route! (route-id extension-id)
                                         {:route-template (route-template extension-id)
-                                         :client-event   [:view-selector/load! extension-id selector-props]
+                                         :client-event   [:view-selector/initialize! extension-id selector-props]
                                          :restricted?    true}]
                     [:router/add-route! (extended-route-id extension-id)
                                         {:route-template (extended-route-template extension-id)
-                                         :client-event   [:view-selector/load! extension-id selector-props]
+                                         :client-event   [:view-selector/initialize! extension-id selector-props]
                                          :restricted?    true}]]}))

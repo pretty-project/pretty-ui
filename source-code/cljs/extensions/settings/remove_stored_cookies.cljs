@@ -14,7 +14,6 @@
   [header-id]
   [elements/button ::cancel-button
                    {:color    :default
-                    :indent   :left
                     :label    :cancel!
                     :preset   :close-button
                     :variant  :transparent
@@ -25,7 +24,6 @@
   [header-id]
   [elements/button ::remove-button
                    {:color    :warning
-                    :indent   :right
                     :label    :remove!
                     :preset   :close-button
                     :variant  :transparent
@@ -61,9 +59,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [message (r dictionary/look-up db :just-a-moment)]
-           {:dispatch-later [{:ms   0 :dispatch [:environment/remove-browser-cookies!]}]})))
-                             ;{:ms   0 :dispatch [:ui/set-shield! {:content message}]}]})))
-                             ;{:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
+           {:dispatch-later [{:ms   0 :dispatch [:environment/remove-browser-cookies!]}
+                             {:ms   0 :dispatch [:ui/set-shield! {:content message}]}
+                             {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
 
 
 

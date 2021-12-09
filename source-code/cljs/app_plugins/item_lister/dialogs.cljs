@@ -32,9 +32,9 @@
   ; @return (component)
   [extension-id]
   [elements/polarity ::duplicate-selected-items-dialog-header
-                     {:start-content [elements/button {:label :cancel! :preset :default-button :indent :left
+                     {:start-content [elements/button {:label :cancel! :preset :default-button
                                                        :on-click [:ui/close-popup! extension-id]}]
-                      :end-content   [elements/button {:label :copy!   :preset :primary-button :indent :right
+                      :end-content   [elements/button {:label :copy!   :preset :primary-button
                                                        :on-click [:item-lister/duplicate-selected-items! extension-id]}]}])
 
 (defn- duplicate-selected-items-dialog-body
@@ -59,9 +59,9 @@
   ; @return (component)
   [extension-id]
   [elements/polarity ::delete-selected-items-dialog-header
-                     {:start-content [elements/button {:label :cancel! :preset :default-button :indent :left
+                     {:start-content [elements/button {:label :cancel! :preset :default-button
                                                        :on-click [:ui/close-popup! extension-id]}]
-                      :end-content   [elements/button {:label :delete! :preset :warning-button :indent :right
+                      :end-content   [elements/button {:label :delete! :preset :warning-button
                                                        :on-click [:item-lister/delete-selected-items! extension-id]}]}])
 
 (defn- delete-selected-items-dialog-body

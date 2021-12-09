@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.4.6
+; Version: v0.3.8
+; Compatibility: x4.4.8
 
 
 
@@ -32,7 +32,12 @@
 ;  (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:view {:content    #'body
 ;                                                                  :subscriber [:view-selector/get-view-props :my-extension]}}]))
 ;
-;  (a/dispatch [:sync/send-request! :my-namespace/synchronize! {...}])
+;  (a/reg-event-fx :my-extension/load! {:dispatch-n [[:ui/listen-to-process! :my-extension/synchronize!]
+;                                                    [:ui/set-header-title!  "My extension"]
+;                                                    [:ui/set-window-title!  "My extension"]
+;                                                    [:my-extension/render!]]})
+;
+;  (a/dispatch [:sync/send-request! :my-extension/synchronize! {...}])
 ;
 ;  (a/dispatch [:router/go-to! "/my-extension"])
 ;  (a/dispatch [:router/go-to! "/my-extension/my-view"])

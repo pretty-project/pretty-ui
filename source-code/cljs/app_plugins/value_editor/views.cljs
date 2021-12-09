@@ -105,8 +105,7 @@
                     :keypress  {:key-code 13 :required? true}
                     :on-click  [:value-editor/save-value! editor-id]
                     :label     save-button-label
-                    :preset    :close-button
-                    :indent    :right}])
+                    :preset    :close-button}])
 
 (defn- cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,8 +118,7 @@
   [elements/button ::cancel-button
                    {:keypress {:key-code 27 :required? true}
                     :preset   :cancel-button
-                    :on-click [:value-editor/cancel-editing! editor-id]
-                    :indent   :left}])
+                    :on-click [:value-editor/cancel-editing! editor-id]}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

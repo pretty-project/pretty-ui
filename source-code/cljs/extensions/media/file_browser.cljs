@@ -572,8 +572,7 @@
                            :on-click {:dispatch-n [[:ui/close-popup! popup-id]
                                                    [:file-browser/->browse-done]]}
                            :preset   :primary-button
-                           :label    (view-props->done-button-label view-props)
-                           :indent   :right}
+                           :label    (view-props->done-button-label view-props)}
                           (if (view-props->done-button-disabled? view-props)
                               {:color     :muted
                                :disabled? true}))])
@@ -589,8 +588,7 @@
   [elements/button ::cancel-button
                    {:keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel-button
-                    :indent   :left}])
+                    :preset   :cancel-button}])
 
 (defn- file-browser-home-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -147,8 +147,8 @@
         [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label true]]
-      [:div.x-toggle--body {:on-click #(a/dispatch on-click)
-                            :style {:padding "0 12px" :min-width "48px"}}
+      [:div.x-clickable {:on-click #(a/dispatch on-click)
+                         :style {:padding "0 12px" :min-width "48px"}}
         [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label]]))
@@ -273,11 +273,11 @@
 (defn- map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-path]} map-key]
-  [:div.x-toggle--body {:on-click #(a/dispatch [::navigate! (vector/conj-item current-path map-key)])
-                        :style (if (map-item-hidden? map-key) {:opacity ".65"})}
-                       (if (string? map-key)
-                           (string/quotes map-key)
-                           (str           map-key))])
+  [:div.x-clickable {:on-click #(a/dispatch [::navigate! (vector/conj-item current-path map-key)])
+                     :style (if (map-item-hidden? map-key) {:opacity ".65"})}
+                    (if (string? map-key)
+                        (string/quotes map-key)
+                        (str           map-key))])
 
 (defn- map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

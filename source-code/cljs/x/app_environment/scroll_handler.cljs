@@ -34,7 +34,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (px)
-(def SCROLLED-TO-TOP-THRESHOLD 5)
+(def SCROLLED-TO-TOP-THRESHOLD 50)
 
 
 

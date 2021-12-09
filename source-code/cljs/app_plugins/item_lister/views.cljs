@@ -125,8 +125,8 @@
   [extension-id _ _]
   [elements/button ::unselect-some-items-button
                    {:on-click [:item-lister/unselect-all-items! extension-id]
-                    :preset   :muted-icon-button
-                    :icon     :check_box}])
+                    :preset   :default-icon-button
+                    :icon     :indeterminate_check_box}])
 
 (defn- select-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -357,6 +357,55 @@
   ([extension-id item-namespace header-props]
    (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id])]
         (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+
+
+
+;; -- List-item components ----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn static-list-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) item-props
+  ;  {:on-click (metamorphic-event)}
+  ;
+  ; @return (hiccup)
+  [extension-id item-namespace {:keys [on-click] :as item-props}]
+  [:div.x-item-lister--item-list--static-list-item
+     [components/content item-props]])
+
+(defn toggle-list-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) item-props
+  ;  {:on-click (metamorphic-event)}
+  ;
+  ; @return (hiccup)
+  [extension-id item-namespace {:keys [on-click] :as item-props}]
+  [:button.x-item-lister--item-list--toggle-list-item
+     {:on-click #(a/dispatch on-click)}
+     [components/content item-props]])
+
+(defn list-item
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) item-props
+  ;  {:content (metamorphic-content)
+  ;   :content-props (map)(opt)
+  ;   :on-click (metamorphic-event)(opt)
+  ;   :subscriber (subscription vector)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/list-item :my-extension :my-type {...}]
+  ;
+  ; @return (hiccup)
+  [extension-id item-namespace {:keys [on-click] :as item-props}]
+  (if (some? on-click) [toggle-list-item extension-id item-namespace item-props]
+                       [static-list-item extension-id item-namespace item-props]))
 
 
 

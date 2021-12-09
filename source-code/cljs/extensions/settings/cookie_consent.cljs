@@ -58,7 +58,6 @@
                    {:label   :got-it!
                     :preset  :close-button
                     :variant :transparent
-                    :indent  :right
                     :on-click {:dispatch-n [[:ui/close-popup! header-id]
                                             [:environment/->cookie-settings-changed]]}}])
 

@@ -58,8 +58,7 @@
 ;   :client-event   [:do-something-on-client!]
 ;   :server-event   [:do-something-on-server!]
 ;   :restricted?    true
-;   :route-template "/my-route"
-;   :route-title    "My route"}
+;   :route-template "/my-route"}
 ;
 ; @name structured-routes
 ;  Az útvonalak és azok adatai route-id - route-props kulcs-érték párokként
@@ -106,9 +105,6 @@
 ;
 ; @name route-parent
 ;  A route-parent útvonalat a kliens-oldali applikáció a "Vissza" gomb célpontjaként alkalmazza.
-;
-; @name route-title
-;  ...
 ;
 ; @name restricted?
 ;  A {:restricted? true} tulajdonságú útvonalak az applikáció belső útvonalai, amelyek
@@ -177,7 +173,7 @@
 ; @constant (keywords in vector)
 ;  Az egyes útvonalak mely tulajdonságait küldje el a szerver a klienseknek
 (def CLIENT-ROUTE-PARAMS
-     [:client-event :on-leave-event :restricted? :route-parent :route-template :route-title])
+     [:client-event :on-leave-event :restricted? :route-parent :route-template])
 
 
 
@@ -380,7 +376,6 @@
   ;    Default: false
   ;   :route-parent (string)(opt)
   ;   :route-template (string)
-  ;   :route-title (metamorphic-content)(opt)
   ;   :client-event (metamorphic-event)(opt)
   ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény.
   ;   :on-leave-event (metamorphic-event)(opt)

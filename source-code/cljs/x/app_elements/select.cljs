@@ -188,7 +188,6 @@
   ; @return (component)
   [popup-id _]
   [button {:preset   :cancel-button
-           :indent   :right
            :on-click [:ui/close-popup! popup-id]}])
 
 (defn- select-options-label

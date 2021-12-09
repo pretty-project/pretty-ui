@@ -136,3 +136,18 @@
   [extension-id]
   (let [event-id (keyword/add-namespace extension-id :render!)]
        [event-id]))
+
+(defn load-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @example
+  ;  (engine/load-event :my-extension)
+  ;  =>
+  ;  [:my-extension/load!]
+  ;
+  ; @return (event-vector)
+  [extension-id]
+  (let [event-id (keyword/add-namespace extension-id :load!)]
+       [event-id]))

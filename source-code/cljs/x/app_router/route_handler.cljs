@@ -702,7 +702,7 @@
             route-id          (r match-route-id-by-rel-route-string db rel-route-string)
             route-restricted? (r route-restricted?                  db route-id)
             abs-route-string  (if route-restricted? (route-string->abs-route-string rel-route-string app-home)
-                                                    (param rel-route-string))
+                                                    (param                          rel-route-string))
             ; Az applikáció az útvonalváltás után is debug módban marad
             abs-route-string (r get-debug-route-string db abs-route-string)]
            (if (r reload-same-path? db abs-route-string)

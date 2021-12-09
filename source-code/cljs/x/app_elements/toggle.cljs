@@ -74,10 +74,7 @@
   ;
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
-  ;    Default: :default
-  ;   :class (string or vector)(opt)
+  ;  {:class (string or vector)(opt)
   ;   :content (metamorphic-content)
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)

@@ -1,4 +1,14 @@
 
+/***** Active state and focused state *****/
+
+.item-lister--item-list--toggle-list-item:active,
+.item-lister--item-list--toggle-list-item:focus {
+  opacity: .5 }
+
+/***** Active state and focused state *****/
+
+
+
 /***** Material icons *****/
 
 .sortable--sensor::before {
@@ -55,7 +65,7 @@
 
 /*** Item-lister header ***/
 
-/*** Item-lister items ***/
+/*** Item-lister item-list ***/
 
 .item-lister--structure {
   width: 100% }
@@ -70,10 +80,18 @@
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
-.item-lister--item-list--selectable-list-item {
-  display: flex }  
+/*** Item-lister item-list ***/
 
-/*** Item-lister items ***/
+/*** Item-lister list-item ***/
+
+.item-lister--item-list--selectable-list-item {
+  display: flex }
+
+.item-lister--item-list--toggle-list-item {
+  cursor: pointer;
+  display: block }
+
+/*** Item-lister list-item ***/
 /***** Item-lister *****/
 
 

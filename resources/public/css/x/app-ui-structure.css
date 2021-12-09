@@ -38,38 +38,18 @@
 
 /***** Color profiles *****/
 /*** Muted ***/
-
-.x-app-bubbles--element[data-color="muted"]::before {
-  background-color: var( --border-color-muted ) }
-
 /*** Muted ***/
 
 /*** Primary ***/
-
-.x-app-bubbles--element[data-color="primary"]::before {
-  background-color: var( --border-color-primary ) }
-
 /*** Primary ***/
 
 /*** Secondary ***/
-
-.x-app-bubbles--element[data-color="secondary"]::before {
-  background-color: var( --border-color-secondary ) }
-
 /*** Secondary ***/
 
 /*** Success ***/
-
-.x-app-bubbles--element[data-color="success"]::before {
-  background-color: var( --border-color-success ) }
-
 /*** Success ***/
 
 /*** Warning ***/
-
-.x-app-bubbles--element[data-color="warning"]::before {
-  background-color: var( --border-color-warning ) }
-
 /*** Warning ***/
 /***** Color profiles *****/
 
@@ -182,113 +162,53 @@
   justify-content: flex-start;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
+  padding-right: 24px;
   position: fixed;
-  right: 0 }
-
-[data-viewport-profile="xxs"] #x-app-bubbles,
-[data-viewport-profile="xs"] #x-app-bubbles,
-[data-viewport-profile="s"] #x-app-bubbles,
-[data-viewport-profile="m"] #x-app-bubbles {
-  width: 100% }
-
-[data-viewport-profile="l"] #x-app-bubbles,
-[data-viewport-profile="xl"] #x-app-bubbles,
-[data-viewport-profile="xxl"] #x-app-bubbles {
+  right: 0;
   width: 420px }
 
-/*** App bubbles wrapper ***/
+[data-viewport-profile="xxs"] #x-app-bubbles,
+[data-viewport-profile="xs"]  #x-app-bubbles,
+[data-viewport-profile="s"]   #x-app-bubbles,
+[data-viewport-profile="m"]   #x-app-bubbles {
+  padding-right: 0;
+  width: 100% }
 
-/*** App bubbles renderer ***/
-/*** App bubbles renderer ***/
+/*** App bubbles wrapper ***/
 
 /*** App bubbles element ***/
 
 .x-app-bubbles--element {
   background-color: var( --background-color );
-  border-color: var( --border-color );
+  border-color: var( --border-color-secondary );
+  border-radius: var( --border-radius-m );
   border-style: solid;
-  border-width: 1px 0 0 0;
+  border-width: 1px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 48px;
+  margin-bottom: 24px;
   min-height: 48px;
-  width: 100%;
+  width: 100% }
 
-  -height: 48px;
-  -color: white;
-  -background-color: var( --soft-blue-x-light );
-  -background-color: #cbcecd;
-  -border-radius: var( --border-radius-m );
-  -position: fixed;
-  -border: none;
-  -left: calc(50vw - 210px);
-  -bottom: 24px;
-  -width: 420px
- }
-
-.x-app-bubbles--element--content {
-  -display: none;
-}
-
-.x-app-bubbles--element--buttons {
-  -display: none;
-}
-
-.x-app-bubbles--element--buttons::after {
-  font-style: normal;
-  font-family: 'Material Icons';
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-
-  -content: 'arrow_forward_ios';
-  position: absolute;
-  right: 68px;
-  z-index: 9999;
-  top: 14px;
-  font-size: 16px;
-}
-
-.x-app-bubbles--element::before {
-  background-color: var( --border-color-primary );
-  content: '';
-  height: 100%;
-  width: 8px }
+[data-viewport-profile="xxs"] .x-app-bubbles--element,
+[data-viewport-profile="xs"]  .x-app-bubbles--element,
+[data-viewport-profile="s"]   .x-app-bubbles--element,
+[data-viewport-profile="m"]   .x-app-bubbles--element {
+  border-radius: 0;
+  margin-bottom: 0 }
 
 /* Amikor az egymás felett megjelenő bubble elemek közül egy eltűnik, akkor
  * egy pillanatra alsó border nélkül maradna a felette elhelyezkedő bubble */
-.x-app-bubbles--element::after {
+.x-app-bubbles--element::after_______ {
   background-color: var( --border-color );
   bottom: -1px;
   content: '';
   height: 1px;
   left: 0;
   position: absolute;
-  width: 100%;
-
-  -border-radius: 10px;
-  -background-color: var(--soft-blue-xx-dark );
-  -background-color: var( --primary-xx-light );
-  -background-color: var( --background-color-highlight );
-  -background: white;
-  -content: 'Másolat szerkesztése';
-  -color: var( --color-primary );
-  -color: white;
-  -position: absolute;
-  -top: 0px;
-  -right: 0px;
-  -width: calc(100% - 60px );
-  -height: 48px;
-  -display: flex;
-  -justify-content: center;
-  -align-items: center;
-  -font-weight: 500;
-  -font-size: var(--font-size-s);
- }
+  width: 100% }
 
 .x-app-bubbles--element--body {
   display: flex;
@@ -297,18 +217,6 @@
   /* XXX#2981 */
   padding-left: var( --content-edge );
   width: 100% }
-
-#x-app-bubbles [data-layout="row"] {-display: none;}
-
-#x-app-bubbles [data-layout="icon-button"] {
-  -border-radius: 10px;
-  -background-color: white;
-  -position: absolute;
-  -top: 2px;
-  -left: -8px;
-  -border: 2px solid var( --soft-blue-x-light );
-  -height: 46px;
-}
 
 .x-app-bubbles--element--buttons {
 

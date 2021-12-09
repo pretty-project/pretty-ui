@@ -341,6 +341,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- initialize!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (assoc-in db (db/path ::stuff :stored-options)
                [{:x "Apple"}
@@ -354,5 +355,13 @@
 
 (a/reg-event-fx
   :playground/render!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view        {:content #'view :subscriber [::get-view-props]}
                             :initializer [:playground/initialize!]}])
+
+(a/reg-event-fx
+  :playground/load!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  {:dispatch-n [[:ui/set-header-title! :playground]
+                [:ui/set-window-title! :playground]
+                [:playground/render!]]})

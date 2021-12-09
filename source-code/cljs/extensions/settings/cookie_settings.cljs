@@ -24,7 +24,6 @@
   [header-id]
   [elements/button ::cancel-button
                    {:preset   :cancel-button
-                    :indent   :left
                     :on-click [:ui/close-popup! header-id]}])
 
 (defn- save-button
@@ -33,7 +32,6 @@
   [elements/button ::save-button
                    {:preset  :save-button
                     :variant :transparent
-                    :indent  :right
                     :on-click {:dispatch-n [[:ui/close-popup! header-id]
                                             [:environment/->cookie-settings-changed]]}}])
 
@@ -85,17 +83,20 @@
        [elements/horizontal-line {:color :highlight :layout :row}]
        [elements/switch ::necessary-cookies-switch
                         {:disabled?     true
+                         :indent        :none
                          :initial-value true
                          :label         :necessary-cookies
                          :value-path (environment/cookie-setting-path :necessary-cookies-enabled?)}]
        [elements/switch ::user-experience-cookies-switch
-                        {:initial-value true
+                        {:indent        :none
+                         :initial-value true
                          :label         :user-experience-cookies
                          :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
                          :on-check   [:environment/->cookie-settings-changed]
                          :on-uncheck [:environment/->cookie-settings-changed]}]
        [elements/switch ::analytics-cookies-switch
-                        {:initial-value true
+                        {:indent        :none
+                         :initial-value true
                          :label         :analytics-cookies
                          :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
                          :on-check   [:environment/->cookie-settings-changed]

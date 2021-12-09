@@ -35,5 +35,5 @@
                                :layout       :fit
                                :get-label-f  :name
                                :options-path (a/app-detail-path :app-themes)
-                               :on-select    [:ui/set-theme!]}]
+                               :on-select    [:settings/set-theme!]}]
        [elements/separator {:orientation :horizontal :size :s}]])

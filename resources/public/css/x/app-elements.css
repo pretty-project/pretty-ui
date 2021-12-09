@@ -63,6 +63,8 @@ button.x-card:focus,
 .x-checkbox--label,
 .x-chip--delete-button:active,
 .x-chip--delete-button:focus,
+.x-clickable:active,
+.x-clickable:focus,
 .x-counter--decrease-button:active,
 .x-counter--decrease-button:focus,
 .x-counter--increase-button:active,
@@ -148,6 +150,7 @@ button.x-card:focus,
 .x-chip-group--label,
 .x-chip-group--no-chips-label,
 .x-checkbox--label,
+.x-clickable,
 .x-combo-box--no-options-label,
 .x-counter--label,
 .x-date-field--label,
@@ -423,8 +426,7 @@ button.x-card:focus,
 .x-label[data-color="muted"],
 .x-line-diagram[data-color=muted]
 .x-line-diagram--label,
-.x-text[data-color="muted"],
-.x-toggle[data-color="muted"] {
+.x-text[data-color="muted"] {
   color: var( --color-muted ) }
 
 /*** Muted ***/
@@ -532,8 +534,7 @@ button.x-card:focus,
 .x-label[data-color="primary"],
 .x-line-diagram[data-color=primary]
 .x-line-diagram--label,
-.x-text[data-color="primary"],
-.x-toggle[data-color="primary"] {
+.x-text[data-color="primary"] {
   color: var( --color-primary ) }
 
 /*** Primary ***/
@@ -596,8 +597,7 @@ button.x-card:focus,
 .x-label[data-color="secondary"],
 .x-line-diagram[data-color=secondary]
 .x-line-diagram--label,
-.x-text[data-color="secondary"],
-.x-toggle[data-color="secondary"] {
+.x-text[data-color="secondary"] {
   color: var( --color-secondary ) }
 
 /*** Secondary ***/
@@ -644,8 +644,7 @@ button.x-card:focus,
 .x-button--body,
 .x-icon[data-color="success"],
 .x-label[data-color="success"],
-.x-text[data-color="success"],
-.x-toggle[data-color="success"] {
+.x-text[data-color="success"] {
   color: var( --color-success ) }
 
 /*** Success ***/
@@ -692,8 +691,7 @@ button.x-card:focus,
 .x-button--body,
 .x-icon[data-color="warning"],
 .x-label[data-color="warning"],
-.x-text[data-color="warning"],
-.x-toggle[data-color="warning"] {
+.x-text[data-color="warning"] {
   color: var( --color-warning ) }
 
 /*** Warning ***/
@@ -1827,6 +1825,16 @@ body[data-viewport-profile="s"]
 
 /*** Circle diagram section ***/
 /***** Circle diagram *****/
+
+
+
+/***** Clickable *****/
+
+.x-clickable {
+  cursor: pointer;
+  display: block }
+
+/***** Clickable *****/
 
 
 
@@ -3208,6 +3216,7 @@ body[data-viewport-profile="s"]
   display: block;
   font-weight: 500;
   white-space: nowrap;
+  width: 100%;
   word-wrap: normal }
 
 /*** Toggle wrapper ***/

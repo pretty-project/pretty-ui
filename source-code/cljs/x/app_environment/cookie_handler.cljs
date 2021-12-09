@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.07
 ; Description:
-; Version: 1.4.6
-; Compatibility: x4.4.6
+; Version: 1.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -54,6 +54,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (nil)
+;  If Domain is unspecified, the attribute defaults to the same host that set the cookie,
+;  excluding subdomains.
+;  If Domain is specified, then subdomains are always included.
 (def COOKIE-DOMAIN nil)
 
 ; @constant (string)
@@ -206,7 +209,7 @@
   ;
   ; @param (keyword) setting-id
   ;
-  ; @return (vector)
+  ; @return (item-path vector)
   [setting-id]
   (db/path ::cookies :cookie-settings setting-id))
 
@@ -244,17 +247,13 @@
   ;
   ; @return (map)
   ;  {:cookie-type (keyword)
-  ;   :domain (nil)
   ;   :max-age (integer)
-  ;   :path (string)
   ;   :secure (boolean)}
   [cookie-props]
   (merge {:cookie-type :user-experience
           :max-age     -1}
          (param cookie-props)
-         {:domain    COOKIE-DOMAIN
-          :path      COOKIE-PATH
-          :secure    true
+         {:secure    true
           :same-site "strict"}))
 
 
@@ -341,12 +340,9 @@
   ;
   ; @return (boolean)
   [db [_ cookie-id {:keys [cookie-type]}]]
-  (boolean (or (and (= cookie-type :analytics)
-                    (r analytics-cookies-enabled? db))
-               (and (= cookie-type :necessary)
-                    (r necessary-cookies-enabled? db))
-               (and (= cookie-type :user-experience)
-                    (r user-experience-cookies-enabled? db)))))
+  (boolean (or (and (= cookie-type :analytics)       (r analytics-cookies-enabled?       db))
+               (and (= cookie-type :necessary)       (r necessary-cookies-enabled?       db))
+               (and (= cookie-type :user-experience) (r user-experience-cookies-enabled? db)))))
 
 
 
@@ -509,17 +505,18 @@
   ; @param (keyword)(opt) cookie-id
   ; @param (map) cookie-props
   ;  {:cookie-type (keyword)
-  ;   :domain (string)
   ;   :max-age (sec)
-  ;   :path (string)
   ;   :secure (boolean)
   ;   :same-site (string)
   ;   :value (*)}
-  [cookie-id {:keys [max-age path domain secure same-site value] :as cookie-props}]
+  [cookie-id {:keys [max-age secure same-site value] :as cookie-props}]
   (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)
         cookie-body (str {:cookie-id cookie-id :value value})]
-       (try (.set goog.net.cookies cookie-name cookie-body
-                  max-age path domain secure same-site)
+       (try (.set goog.net.cookies cookie-name cookie-body #js{:domain   COOKIE-DOMAIN
+                                                               :maxAge   max-age
+                                                               :path     COOKIE-PATH
+                                                               :sameSite same-site
+                                                               :secure   secure})
             (a/dispatch [:environment/->cookie-set cookie-id cookie-props]))))
 
 (a/reg-handled-fx :environment/store-browser-cookie! store-browser-cookie!)

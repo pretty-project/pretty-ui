@@ -142,8 +142,7 @@
   [popup-id _]
   [elements/button ::cancel-button
                    {:on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel-button
-                    :indent   :left}])
+                    :preset   :cancel-button}])
 
 (defn- save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,8 +155,7 @@
   [elements/button ::save-button
                    {:on-click {:dispatch-n [[:tools/->save-file-accepted popup-id saver-props]
                                             [:ui/close-popup!            popup-id]]}
-                    :preset   :save-button
-                    :indent   :right}])
+                    :preset   :save-button}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

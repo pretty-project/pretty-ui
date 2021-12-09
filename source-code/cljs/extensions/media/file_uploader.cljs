@@ -324,8 +324,7 @@
   [elements/button ::cancel-button
                    {:keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel-button
-                    :indent   :left}])
+                    :preset   :cancel-button}])
 
 (defn- file-uploader-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -339,7 +338,6 @@
                    {:disabled? (view-props->disable-upload-button? view-props)
                     :keypress  {:key-code 13}
                     :label     :upload!
-                    :indent    :right
                     :on-click  {:dispatch-n [[:ui/close-popup! popup-id]
                                              [:ui/blow-bubble! ::progress-bubble
                                                                {:autopop?      false

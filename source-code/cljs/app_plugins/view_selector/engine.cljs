@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.4.6
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -35,6 +35,7 @@
 (def route                   engine/route)
 (def extended-route          engine/extended-route)
 (def render-event            engine/render-event)
+(def load-event              engine/load-event)
 
 
 
@@ -131,7 +132,7 @@
            [:router/go-to! target-route])))
 
 (a/reg-event-fx
-  :view-selector/load!
+  :view-selector/initialize!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -140,9 +141,6 @@
   ;   :default-view-id (keyword)(opt)}
   (fn [{:keys [db]} [_ extension-id selector-props]]
       (let [derived-view-id (r get-derived-view-id db extension-id selector-props)]
-           {:db         (-> db (dissoc-in [extension-id :view-meta])
-                               (assoc-in  [extension-id :view-meta :view-id] derived-view-id))
-            :dispatch-n [[:ui/listen-to-process! (request-id extension-id)]
-                         [:ui/set-header-title!  (param      extension-id)]
-                         [:ui/set-window-title!  (param      extension-id)]
-                         (render-event extension-id)]})))
+           {:db       (-> db (dissoc-in [extension-id :view-meta])
+                             (assoc-in  [extension-id :view-meta :view-id] derived-view-id))
+            :dispatch (load-event extension-id)})))

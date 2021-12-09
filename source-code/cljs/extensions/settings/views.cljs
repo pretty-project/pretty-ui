@@ -119,3 +119,11 @@
   :settings/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view :subscriber [::get-view-props]}}])
+
+(a/reg-event-fx
+  :settings/load!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  {:dispatch-n [[:ui/listen-to-process! :settings/synchronize!]
+                [:ui/set-window-title!  :settings]
+                [:ui/set-header-title!  :settings]
+                [:settings/render!]]})

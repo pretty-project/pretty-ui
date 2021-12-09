@@ -47,23 +47,17 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props item-props]
-  [:div.clients--client
-     [client-item-primary-details   item-dex client-props item-props]
-     [client-item-secondary-details item-dex client-props item-props]])
-
-(defn- client-item-toggle
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:client/keys [id] :as client-props} item-props]
-  (let [client-uri      (item-editor/item-id->item-uri :clients :client id)]
-       [elements/toggle {:on-click [:router/go-to! client-uri]
-                         :stretch-orientation :horizontal
-                         :content [client-item-structure item-dex client-props item-props]}]))
+  [:div.clients--client [client-item-primary-details   item-dex client-props item-props]
+                        [client-item-secondary-details item-dex client-props item-props]])
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-props]
-  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])]
-       (fn [] [client-item-structure item-dex client-props @item-props])))
+  [item-dex {:client/keys [id] :as client-props}]
+  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])
+        client-uri (item-editor/item-id->item-uri :clients :client id)]
+       (fn [] [item-lister/list-item :clients :client
+                                     {:on-click [:router/go-to! client-uri]
+                                      :content [client-item-structure item-dex client-props @item-props]}])))
 
 
 
@@ -82,7 +76,7 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id  {:keys [description]}]
+  [surface-id {:keys [description]}]
   [layouts/layout-a surface-id {:body   {:content #'body}
                                 :header {:content #'header}
                                 :description description}])
