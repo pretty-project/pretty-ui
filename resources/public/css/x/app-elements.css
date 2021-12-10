@@ -444,6 +444,7 @@ button.x-card:focus,
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="highlight"],
 .x-table[data-color="highlight"] .x-table--header-cell,
+.x-toggle[data-hover-color="highlight"]:hover,
 .x-vertical-line[data-color="highlight"]
 .x-vertical-line--body {
   background-color: var( --border-color-highlight ) }
@@ -1172,7 +1173,7 @@ button.x-card:focus,
 
 [data-tooltip]::after {
   align-items: center;
-  background-color: var( --background-color );
+  background-color: transparent;
   content: attr(data-tooltip);
   display: flex;
   flex-direction: column;
@@ -1183,9 +1184,9 @@ button.x-card:focus,
   line-height: var( --line-height-xxs);
   letter-spacing: var( --letter-spacing-xxs);
   min-width: 100%;
-  opacity: 0;
   position: absolute;
-  transition: .1s opacity .35s }
+  transform: scaleX(0);
+  transition: .1s transform .35s, .1s background-color .35s }
 
 .x-button [data-tooltip]::after {
   /* Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
@@ -1195,7 +1196,18 @@ button.x-card:focus,
   height: 36px }
 
 [data-touch-detected="false"] [data-tooltip]:hover::after {
-  opacity: 1 }
+  /* BUG#8094
+   * Az ikon-gombokon megjelenített az ikon-gombnál szélesebb tartalmú tooltip kilógna az ikon-gomb
+   * területéről és emiatt amikor az ikon-gomb [data-disabled="true"] állapotban van, akkor a tooltip
+   * kilógó részén működne a gomb érzékelése!
+   * Ezért az eredetileg {opacity: 0} tulajdonsággal eltűntetett tooltip pszeudo-elemet
+   * {transform: scaleX(0)} tulajdonsággal szükséges eltűntetni.
+   * A {background-color: transparent} és a {transform: scaleX(0)} tulajdonság egyidejű
+   * használatával esztétikusa a tooltip pszeudo-elem eltűntetése.
+   * A tooltip pszeudo-elemet {display: none} tulajdonsággal csak animáció és késleltetés nélkül
+   * lenne lehetséges eltűntetni ... */
+  background-color: var( --background-color );
+  transform: scaleX(1);}
 
 /*** Tooltip ***/
 
@@ -3211,6 +3223,13 @@ body[data-viewport-profile="s"]
 /***** Toggle *****/
 /*** Toggle wrapper ***/
 
+.x-toggle {
+  border-radius: var( --border-radius-s ) }
+
+/*** Toggle wrapper ***/
+
+/*** Toggle body ***/
+
 .x-toggle--body {
   cursor: pointer;
   display: block;
@@ -3218,10 +3237,6 @@ body[data-viewport-profile="s"]
   white-space: nowrap;
   width: 100%;
   word-wrap: normal }
-
-/*** Toggle wrapper ***/
-
-/*** Toggle body ***/
 
 .x-toggle--body[data-layout="row"] {
   min-height: 48px }

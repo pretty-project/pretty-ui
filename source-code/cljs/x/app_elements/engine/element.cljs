@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.9.0
+; Version: v0.9.8
 ; Compatibility: x4.4.8
 
 
@@ -140,6 +140,7 @@
   ;   :font-size (keyword)(opt)
   ;   :font-weight (keyword)(opt)
   ;   :height (keyword, px or string)(opt)
+  ;   :hover-color (keyword)(opt)
   ;   :icon-family (keyword)(opt)
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)
@@ -151,19 +152,21 @@
   ;   :data-font-size (keyword)
   ;   :data-font-weight (keyword)
   ;   :data-height (keyword)
+  ;   :data-hover-color (keyword)
   ;   :data-icon-family (keyword)
   ;   :data-variant (keyword)
   ;   :style (map)
   ;    {:height (string or keyword)
   ;     :width (string or keyword)}
   ;   :data-width (keyword)}
-  [_ {:keys [class background-color border-color color font-size font-weight height
+  [_ {:keys [class background-color border-color color font-size font-weight height hover-color
              icon-family style variant width]}]
   (cond-> {} (some?    background-color) (assoc :data-background-color (param  background-color))
              (some?    border-color)     (assoc :data-border-color     (param  border-color))
              (some?    color)            (assoc :data-color            (param  color))
              (some?    font-size)        (assoc :data-font-size        (param  font-size))
              (some?    font-weight)      (assoc :data-font-weight      (param  font-weight))
+             (some?    hover-color)      (assoc :data-hover-color      (param  hover-color))
              (some?    icon-family)      (assoc :data-icon-family      (param  icon-family))
              (some?    style)            (assoc :style                 (param  style))
              (integer? height)           (assoc-in [:style :height]    (css/px height))

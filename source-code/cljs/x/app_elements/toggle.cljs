@@ -30,11 +30,9 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :layout (keyword)}
+  ;  {:layout (keyword)}
   [toggle-props]
-  (merge {:color  :default
-          :layout :fit}
+  (merge {:layout :fit}
          (param toggle-props)))
 
 
@@ -79,6 +77,8 @@
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :hover-color (keyword)(opt)
+  ;    :highlight
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none

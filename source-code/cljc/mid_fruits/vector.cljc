@@ -679,8 +679,7 @@
   ;
   ; @return (vector)
   [n x]
-  (vec (remove #(= % x)
-                (param n))))
+  (vec (remove #(= % x) n)))
 
 (defn remove-nth-item
   ; @param (vector) n
@@ -695,6 +694,25 @@
   [n dex]
   (concat-items (ranged-items n 0 dex)
                 (ranged-items n (inc dex))))
+
+(defn remove-nth-items
+  ; @param (vector) n
+  ; @param (integers in vector) dexes
+  ;
+  ; @example
+  ;  (vector/remove-nth-item [:a :b :c :d :e] [0 2])
+  ;  =>
+  ;  [:b :d :e]
+  ;
+  ; @return (vector)
+  [n dexes]
+  (vec (first (reduce (fn [[result lap] x]
+                          (let [next-lap (inc lap)]
+                               (if (contains-item? dexes lap)
+                                   [result next-lap]
+                                   [(conj result x) next-lap])))
+                      (param [[] 0])
+                      (param n)))))
 
 (defn remove-items
   ; @param (vector) n

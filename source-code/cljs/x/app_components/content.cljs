@@ -239,9 +239,9 @@
   [component-id {:keys [content] :as context-props}]
   (cond (keyword? content) (dictionary-content   component-id context-props)
         (var?     content) [component-content    component-id context-props]
+        (string?  content) (string-content       component-id context-props)
         (map?     content) (multilingual-content component-id context-props)
         (nil?     content) (nil-content          component-id context-props)
-        (string?  content) (string-content       component-id context-props)
         :else              (return content)))
 
 (defn- db-item
@@ -344,6 +344,6 @@
    (component (a/id) context-props))
 
   ([component-id {:keys [content-path] :as context-props}]
-   (if (vector/nonempty? content-path)
+   (if (vector?     content-path)
        [db-item     component-id context-props]
        (non-db-item component-id context-props))))

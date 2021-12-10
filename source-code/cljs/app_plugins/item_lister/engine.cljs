@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.4.8
-; Compatibility: x4.4.6
+; Compatibility: x4.4.8
 
 
 
@@ -100,6 +100,19 @@
   [db [_ extension-id]]
   (get-in db [extension-id :lister-data]))
 
+(defn no-items-to-show?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r engine/no-items-to-show? db :my-namespace)
+  ;
+  ; @return (maps in vector)
+  [db [_ extension-id]]
+  (let [downloaded-items (r get-downloaded-items db extension-id)]
+       (empty? downloaded-items)))
+
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -154,7 +167,10 @@
   ; az egyes lista-elemek sorrendbeli pozíciói az értékek pedig a pozícióhoz tartozó lista-elem
   ; kiválasztottságának értékei.
   ; Csak azon lista-elemek kiválasztottságának értéke van eltárolva, amely értékek legalább egyszer
-  ; megváltoztak (nem nil, hanem true vagy false).
+  ; megváltoztak (már nem nil, hanem true vagy false értékek).
+  ;
+  ; A checkbox input value-path Re-Frame adatábzis útvonalra írt true vagy false kimenete miatt
+  ; szükséges térkép típusban tárolni a lista-elemek kiválasztottságának értékeit.
   (get-in db [extension-id :lister-meta :item-selections]))
 
 (defn- get-selected-items
@@ -308,20 +324,33 @@
   ; @param (keyword) extension-id
   ;
   ; @return (map)
-  ;  {:search-mode? (boolean)
+  ;  {:actions-mode? (boolean)
+  ;   :all-items-selected? (boolean)
+  ;   :any-item-selected? (boolean)
+  ;   :no-items-to-show? (boolean)
+  ;   :order-changed? (boolean)
+  ;   :reorder-mode? (boolean)
+  ;   :search-mode? (boolean)
   ;   :select-mode? (boolean)
   ;   :viewport-small? (boolean)}
   [db [_ extension-id]]
-  (if-let [select-mode? (get-in db [extension-id :lister-meta :select-mode?])]
-          ; If select-mode is enabled ...
-          {:select-mode? true
-           :all-items-selected? (r all-items-selected? db extension-id)
-           :any-item-selected?  (r any-item-selected?  db extension-id)
-           :search-mode?        (get-in db [extension-id :lister-meta :search-mode?])
-           :viewport-small?     (r environment/viewport-small? db)}
-          ; If select-mode is NOT enabled ...
-          {:search-mode?        (get-in db [extension-id :lister-meta :search-mode?])
-           :viewport-small?     (r environment/viewport-small? db)}))
+        ; If select-mode is enabled ...
+  (cond (get-in db [extension-id :lister-meta :select-mode?])
+        {:select-mode?        true
+         :all-items-selected? (r all-items-selected? db extension-id)
+         :any-item-selected?  (r any-item-selected?  db extension-id)}
+        ; If search-mode is enabled ...
+        (get-in db [extension-id :lister-meta :search-mode?])
+        {:search-mode? true}
+        ; If reorder-mode is enabled ...
+        (get-in db [extension-id :lister-meta :reorder-mode?])
+        {:reorder-mode?  true
+         :order-changed? false}
+        ; Use actions-mode as default ...
+        :default
+        {:actions-mode?     true
+         :no-items-to-show? (r no-items-to-show?           db extension-id)
+         :viewport-small?   (r environment/viewport-small? db)}))
 
 (a/reg-sub :item-lister/get-header-props get-header-props)
 
@@ -333,11 +362,16 @@
   ;
   ; @return (map)
   ;  {:downloaded-items (vector)
+  ;   :disabled-items (integers in vector)
+  ;   :no-items-to-show? (boolean)
+  ;   :select-mode? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-  {:downloaded-items (r get-downloaded-items db extension-id item-namespace)
-   :synchronizing?   (r synchronizing?       db extension-id item-namespace)
-   :select-mode?     (get-in db [extension-id :lister-meta :select-mode?])})
+  {:downloaded-items  (r get-downloaded-items db extension-id)
+   :no-items-to-show? (r no-items-to-show?    db extension-id)
+   :synchronizing?    (r synchronizing?       db extension-id item-namespace)
+   :disabled-items    (get-in db [extension-id :lister-meta :disabled-items])
+   :select-mode?      (get-in db [extension-id :lister-meta :select-mode?])})
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
@@ -391,6 +425,23 @@
 ;  [:item-lister/toggle-select-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
+(defn- toggle-reorder-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r engine/toggle-reorder-mode! :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (-> db (update-in [extension-id :lister-meta :reorder-mode?] not)
+         (dissoc-in [extension-id :lister-meta :item-selections])))
+
+; @usage
+;  [:item-lister/toggle-reorder-mode! :my-extension]
+(a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
+
 (defn- select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -443,6 +494,34 @@
 ;  [:item-lister/toggle-item-selection! :my-extension]
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
+(defn- mark-items-as-disabled!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (integers in vector) item-dexes
+  ;
+  ; @usage
+  ;  (r engine/mark-items-as-disabled! db :my-extension [0 1 4])
+  ;
+  ; @return (map)
+  [db [_ extension-id item-dexes]]
+  (update-in db [extension-id :lister-meta :disabled-items]
+             vector/concat-items item-dexes))
+
+(defn- unmark-items-as-disabled!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (integers in vector) item-dexes
+  ;
+  ; @usage
+  ;  (r engine/unmark-items-as-disabled! db :my-extension [0 1 4])
+  ;
+  ; @return (map)
+  [db [_ extension-id item-dexes]]
+  (update-in db [extension-id :lister-meta :disabled-items]
+             vector/remove-items item-dexes))
+
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -457,7 +536,35 @@
   ;
   ; @usage
   ;  [:item-lister/search-items! :my-extension :my-type]
-  (fn [_ [_ extension-id item-namespace]]))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]))
+
+(defn- delete-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (let [selected-items (r get-selected-items db extension-id)]
+       (r mark-items-as-disabled! db extension-id selected-items)))
+
+;       (assoc-in db [extension-id :lister-data])))
+;                 (vector/remove-nth-items (get-in db [extension-id :lister-data])))))
+;                                          selected-items))))
+
+       ;(update-in db [extension-id :lister-data] vector/remove-nth-items selected-items)))
+
+(a/reg-event-fx
+  :item-lister/delete-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/search-items! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r delete-selected-items! db extension-id)}))
 
 (a/reg-event-fx
   :item-lister/search-items!

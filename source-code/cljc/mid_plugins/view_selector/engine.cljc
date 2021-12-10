@@ -21,20 +21,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @example
-  ;  (engine/request-id :my-extension)
-  ;  =>
-  ;  :my-extension/synchronize!
-  ;
-  ; @return (keyword)
-  [extension-id]
-  (keyword/add-namespace extension-id :synchronize!))
-
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -121,21 +107,6 @@
   [extension-id view-id]
   (str "/" (name extension-id)
        "/" (name view-id)))
-
-(defn render-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @example
-  ;  (engine/render-event :my-extension)
-  ;  =>
-  ;  [:my-extension/render!]
-  ;
-  ; @return (event-vector)
-  [extension-id]
-  (let [event-id (keyword/add-namespace extension-id :render!)]
-       [event-id]))
 
 (defn load-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -569,6 +569,9 @@
       :rename!
       {:en "Rename"
        :hu "Átnevezés"}
+      :reorder
+      {:en "Reorder"
+       :hu "Rendezés"}
       :reset!
       {:en "Reset"
        :hu "Visszaállítás"}
@@ -596,6 +599,9 @@
       :save-n-changes
       {:en " changes to be saved"
        :hu " változtatás mentése"}
+      :save-order!
+      {:en "Save order"
+       :hu "Sorrend mentése"}
       :saved
       {:en "Saved"
        :hu "Sikeres mentés"}

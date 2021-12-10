@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.06
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.4.4
+; Version: v0.4.8
+; Compatibility: x4.4.8
 
 
 
@@ -43,3 +43,20 @@
             time       (time/timestamp-string->time timestamp :hhmm)]
            (str today-term ", " time))
       (time/timestamp-string->date timestamp :yyyymmdd)))
+
+(defn get-actual-elapsed-time
+  ; @param (string) timestamp
+  ;
+  ; @example
+  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "5m"
+  ;
+  ; @example
+  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  =>
+  ;  "7d"
+  ;
+  ; @return (string)
+  [db [_ timestamp]])
+  ; TODO ...

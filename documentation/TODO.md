@@ -11,6 +11,15 @@
 
 
 # x4.5.0
+
+- Ha az item-lister select-mode-ban a checkbox-ok képesek lennének egy vektorban elhelyezni és kivenni
+  a saját indexüket, aszerint, hogy be vannak-e pipálva, akkor javulna az item-lister renderelési sebessége
+  select-mode-ban. (Most érezhetően laggol egy nagyon picit, re-frame íráskor a popup-ok renderlése)
+
+- (def a [0 1 2 3 4 5])
+  (println (str (apply > a)))
+
+
 - (ns xyz (:require [x.app-user.api :as user]))
   (println (str ::user/primary)) => :x.app-user.api/primary
 

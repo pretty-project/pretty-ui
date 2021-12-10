@@ -2,7 +2,6 @@
 (ns extensions.clients.client-lister
     (:require [mid-fruits.candy      :refer [param return]]
               [x.app-activities.api  :as activities]
-              [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
@@ -55,9 +54,9 @@
   [item-dex {:client/keys [id] :as client-props}]
   (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])
         client-uri (item-editor/item-id->item-uri :clients :client id)]
-       (fn [] [item-lister/list-item :clients :client
-                                     {:on-click [:router/go-to! client-uri]
-                                      :content [client-item-structure item-dex client-props @item-props]}])))
+       (fn [] [elements/toggle {:on-click [:router/go-to! client-uri]
+                                :content  [client-item-structure item-dex client-props @item-props]
+                                :hover-color :highlight}])))
 
 
 

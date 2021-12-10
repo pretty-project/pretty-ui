@@ -8,21 +8,15 @@
 /*** Client-list item ***/
 
 .clients--client {
-  border-radius: var( --border-radius-xs );
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 4px 8px;
-  width: 100% }
-
-.clients--client:hover {
-  background: var( --background-color-highlight ) }
+  padding: 4px 8px }
 
 .clients--client--primary-details {
   text-align: left }
 
-.clients--client--secondary-details {
-  -text-align: left }
+.clients--client--secondary-details {}
 
 .clients--client--full-name {
   font-size: var( --font-size-s );
@@ -50,9 +44,9 @@
   /* A nagyon hosszú szavakat akkor lehet {text-overflow: ellipsis} tulajdonsággal
    * megjeleníteni, ha az elem meghatározott (nem százalék alapú) szélességgel rendelkezik.
    * Ezért szükséges a {max-width: 70vw} tulajdonság használata, mert így nagyon kis méretű
-   * képernyőkön is eleggé korlátozza a név szélességét, hogy ne foglalhasson a számára rendelkezésre
-   * állónál nagyobb helyet viszont emelett nagy méretű képernyőkön használhatja a rendelkezésre álló
-   * nagy helyet. */
+   * képernyőkön is eleggé korlátozza a szöveg szélességét, hogy ne foglalhasson a számára
+   * rendelkezésre állónál nagyobb helyet viszont emelett nagy méretű képernyőkön használhatja
+   * a rendelkezésre álló nagy helyet. */
   max-width: 70vw;
   text-overflow: ellipsis;
   overflow: hidden;

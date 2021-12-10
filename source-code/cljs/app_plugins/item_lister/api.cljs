@@ -42,6 +42,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.views
-(def header    views/header)
-(def list-item views/list-item)
-(def body      views/body)
+(def header views/header)
+(def body   views/body)
