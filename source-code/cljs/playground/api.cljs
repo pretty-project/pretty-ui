@@ -1,4 +1,5 @@
 
 (ns playground.api
     (:require [playground.core]
-              [playground.sample]))
+              [playground.sample]
+              [playground.crypto]))

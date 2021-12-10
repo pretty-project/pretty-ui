@@ -13,6 +13,7 @@
 
 (ns playground.api
     (:require [playground.sample]
+              [playground.crypto]
               [playground.core :as core]))
 
 
