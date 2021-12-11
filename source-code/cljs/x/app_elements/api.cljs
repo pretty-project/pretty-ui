@@ -50,6 +50,7 @@
               [x.app-elements.multi-field       :as multi-field]
               [x.app-elements.overlay           :as overlay]
               [x.app-elements.password-field    :as password-field]
+              [x.app-elements.point-diagram     :as point-diagram]
               [x.app-elements.polarity          :as polarity]
               [x.app-elements.radio-button      :as radio-button]
               [x.app-elements.row               :as row]
@@ -179,6 +180,7 @@
 (def multiline-field   multiline-field/element)
 (def overlay           overlay/element)
 (def password-field    password-field/element)
+(def point-diagram     point-diagram/element)
 (def polarity          polarity/element)
 (def radio-button      radio-button/element)
 (def row               row/element)

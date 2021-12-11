@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.4.6
+; Version: v0.3.8
+; Compatibility: x4.4.8
 
 
 
@@ -18,8 +18,6 @@
               [app-fruits.reagent :refer [ratom lifecycles]]
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
-              [mid-fruits.random  :as random]
-              [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]))
 
@@ -38,7 +36,12 @@
 ;
 ;  [tools/infinite-loader :my-infinite-loader {:on-viewport [:do-something!]}]
 ;
-;  (a/dispatch [:tools/reload-infinite-loader! :my-infinite-loader])
+; @usage
+;  (a/dispatch [:tools/reload-infinite-loader!  :my-infinite-loader])
+;
+; @usage
+;  (a/dispatch [:tools/pause-infinite-loader!   :my-infinite-loader])
+;  (a/dispatch [:tools/restart-infinite-loader! :my-infinite-loader])
 
 
 
@@ -103,6 +106,34 @@
   (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) true))
 
 (a/reg-event-db :tools/show-infinite-observer! show-infinite-observer!)
+
+(defn pause-infinite-loader!
+  ; @param (keyword) loader-id
+  ;
+  ; @usage
+  ;  (r tools/pause-infinite-loader! db :my-loader)
+  ;
+  ; @return (map)
+  [db [_ loader-id]]
+  (r hide-infinite-observer! db loader-id))
+
+; @usage
+;  [:tools/pause-infinite-loader! :my-loader]
+(a/reg-event-db :tools/pause-infinite-loader! pause-infinite-loader!)
+
+(defn restart-infinite-loader!
+  ; @param (keyword) loader-id
+  ;
+  ; @usage
+  ;  (r tools/restart-infinite-loader! db :my-loader)
+  ;
+  ; @return (map)
+  [db [_ loader-id]]
+  (r show-infinite-observer! db loader-id))
+
+; @usage
+;  [:tools/restart-infinite-loader! :my-loader]
+(a/reg-event-db :tools/restart-infinite-loader! restart-infinite-loader!)
 
 
 

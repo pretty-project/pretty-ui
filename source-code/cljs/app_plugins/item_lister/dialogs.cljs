@@ -21,8 +21,36 @@
               [mid-plugins.item-lister.engine :as engine]))
 
 
+
+;; -- Common components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- close-dialog-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (component)
+  [extension-id]
+  [elements/button ::close-dialog-button
+                   {:label :cancel! :preset :default-button :on-click [:ui/close-popup! extension-id]}])
+
+
+
 ;; -- Duplicate dialog components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- duplicate-selected-items-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (component)
+  [extension-id]
+  [elements/button ::duplicate-selected-items-button
+                   {:label :copy! :preset :primary-button
+                    :on-click {:dispatch-n [[:ui/close-popup!                       extension-id]
+                                            [:item-lister/duplicate-selected-items! extension-id]]}}])
 
 (defn- duplicate-selected-items-dialog-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -32,10 +60,8 @@
   ; @return (component)
   [extension-id]
   [elements/polarity ::duplicate-selected-items-dialog-header
-                     {:start-content [elements/button {:label :cancel! :preset :default-button
-                                                       :on-click [:ui/close-popup! extension-id]}]
-                      :end-content   [elements/button {:label :copy!   :preset :primary-button
-                                                       :on-click [:item-lister/duplicate-selected-items! extension-id]}]}])
+                     {:start-content [close-dialog-button             extension-id]
+                      :end-content   [duplicate-selected-items-button extension-id]}])
 
 (defn- duplicate-selected-items-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,6 +77,18 @@
 ;; -- Delete dialog components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- delete-selected-items-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (component)
+  [extension-id]
+  [elements/button ::delete-selected-items-button
+                   {:label :copy! :preset :primary-button
+                    :on-click {:dispatch-n [[:ui/close-popup!                    extension-id]
+                                            [:item-lister/delete-selected-items! extension-id]]}}])
+
 (defn- delete-selected-items-dialog-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -59,10 +97,8 @@
   ; @return (component)
   [extension-id]
   [elements/polarity ::delete-selected-items-dialog-header
-                     {:start-content [elements/button {:label :cancel! :preset :default-button
-                                                       :on-click [:ui/close-popup! extension-id]}]
-                      :end-content   [elements/button {:label :delete! :preset :warning-button
-                                                       :on-click [:item-lister/delete-selected-items! extension-id]}]}])
+                     {:start-content [close-dialog-button          extension-id]
+                      :end-content   [delete-selected-items-button extension-id]}])
 
 (defn- delete-selected-items-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

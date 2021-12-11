@@ -37,7 +37,9 @@
 (def image-preloader image-preloader/component)
 
 ; x.app-tools/infinite-loader
-(def infinite-loader infinite-loader/component)
+(def pause-infinite-loader!  infinite-loader/pause-infinite-loader!)
+(def restart-infinite-loader infinite-loader/restart-infinite-loader!)
+(def infinite-loader         infinite-loader/component)
 
 ; x.app-tools/temporary-component
 (def append-temporary-component! temporary-component/append-temporary-component!)

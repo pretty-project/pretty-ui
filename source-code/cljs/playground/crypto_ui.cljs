@@ -10,9 +10,15 @@
 (defn kline-attributes
   ; @param (keyword) kline-id
   ; @param (map) kline-props
+  ;  {}
+  ; @param (diagram-props)
+  ;  TEMP
+  ;  {:highest ()
+  ;   :lowest ()
+  ;   :range ()}
   ;
   ; @return (map)
-  [kline-id {:keys []}]
+  [_ {:keys [open high low close]} {:keys [highest lowest range]}]
   {})
 
 

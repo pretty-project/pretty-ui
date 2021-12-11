@@ -27,6 +27,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
+(def DEFAULT-VIEW-ID         engine/DEFAULT-VIEW-ID)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
@@ -49,7 +50,9 @@
   ;   :default-view-id (keyword)(opt)}
   ;
   ; @return (keyword)
-  ;  A view-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-view-id
+  ;  A view-id forrásából (route-path param) származó adat.
+  ;  A forrás hiánya esetén a default-view-id paraméter.
+  ;  A default-view-id paraméter hiánya esetén a DEFAULT-VIEW-ID konstans.
   [db [_ extension-id {:keys [allowed-view-ids default-view-id]}]]
   (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
           (let [derived-view-id (keyword derived-view-id)]
@@ -59,8 +62,8 @@
                    ; or allowed-view-ids is in use & derived-view-id is allowed ...
                    (return derived-view-id)
                    ; If allowed-view-ids is in use & derived-view-id is NOT allowed ...
-                   (return default-view-id)))
-          (return default-view-id)))
+                   (or default-view-id DEFAULT-VIEW-ID)))
+          (or default-view-id DEFAULT-VIEW-ID)))
 
 (defn get-selected-view-id
   ; @param (keyword) extension-id

@@ -23,6 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
+(def DEFAULT-VIEW-ID         engine/DEFAULT-VIEW-ID)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
@@ -43,7 +44,8 @@
   ;  {:allowed-view-ids (keywords in vector)(opt)
   ;    Ha a kiválasztott view-id értéke nem található meg az allowed-view-ids felsorolásban,
   ;    akkor behelyettesítésre kerül a default-view-id értékével.
-  ;   :default-view-id (keyword)(opt)}
+  ;   :default-view-id (keyword)(opt)
+  ;    Default: DEFAULT-VIEW-ID}
   ;
   ; @usage
   ;  [:view-selector/initialize! :my-extension]

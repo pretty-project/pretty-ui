@@ -114,7 +114,7 @@
   ;  {:as-first? (boolean)}
   ;
   ; @usage
-  ;  (environment/add-external-css! "/directory-name/filename.css")
+  ;  (environment/add-external-css! "/css/filename.css")
   [filepath context-props]
   (let [head-element (dom/get-head-element)
         app-build    (a/subscribed [:core/get-app-detail :app-build])
@@ -125,7 +125,7 @@
                (insert-link-element! head-element link-element context-props))))
 
 ; @usage
-;  [:environment/add-external-css! "/directory-name/filename.css"]
+;  [:environment/add-external-css! "/css/filename.css"]
 (a/reg-handled-fx :environment/add-external-css! add-external-css!)
 
 (defn add-css!

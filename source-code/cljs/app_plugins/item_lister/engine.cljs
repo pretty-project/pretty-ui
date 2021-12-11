@@ -23,6 +23,7 @@
               [x.app-db.api          :as db]
               [x.app-environment.api :as environment]
               [x.app-sync.api        :as sync]
+              [x.app-tools.api       :as tools]
               [mid-plugins.item-lister.engine :as engine]))
 
 
@@ -46,13 +47,14 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.engine
-(def request-id         engine/request-id)
-(def resolver-id        engine/resolver-id)
-(def new-item-uri       engine/new-item-uri)
-(def add-new-item-event engine/add-new-item-event)
-(def route-id           engine/route-id)
-(def route-template     engine/route-template)
-(def render-event       engine/render-event)
+(def DEFAULT-DOWNLOAD-LIMIT engine/DEFAULT-DOWNLOAD-LIMIT)
+(def request-id             engine/request-id)
+(def resolver-id            engine/resolver-id)
+(def new-item-uri           engine/new-item-uri)
+(def add-new-item-event     engine/add-new-item-event)
+(def route-id               engine/route-id)
+(def route-template         engine/route-template)
+(def render-event           engine/render-event)
 
 
 
@@ -392,6 +394,17 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- reset-item-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (-> db (dissoc-in [extension-id :lister-data])
+         (dissoc-in [extension-id :lister-meta :document-count])
+         (dissoc-in [extension-id :lister-meta :synchronized?])))
+
 (defn- toggle-search-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -522,6 +535,16 @@
   (update-in db [extension-id :lister-meta :disabled-items]
              vector/remove-items item-dexes))
 
+(defn- delete-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (let [selected-items (r get-selected-items db extension-id)]
+       (r mark-items-as-disabled! db extension-id selected-items)))
+
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -538,22 +561,6 @@
   ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]))
 
-(defn- delete-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (let [selected-items (r get-selected-items db extension-id)]
-       (r mark-items-as-disabled! db extension-id selected-items)))
-
-;       (assoc-in db [extension-id :lister-data])))
-;                 (vector/remove-nth-items (get-in db [extension-id :lister-data])))))
-;                                          selected-items))))
-
-       ;(update-in db [extension-id :lister-data] vector/remove-nth-items selected-items)))
-
 (a/reg-event-fx
   :item-lister/delete-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -565,6 +572,9 @@
   ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r delete-selected-items! db extension-id)}))
+      ; TODO
+      ; Ameddig a kommunikáció történik a szerverrel, addig az egész lista legyen disabled állapotban
+      ; és az új elemek letöltése szüneteljen addig? (item-lister pause function!)
 
 (a/reg-event-fx
   :item-lister/search-items!
@@ -576,8 +586,16 @@
   ; @usage
   ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (-> db (dissoc-in [extension-id :lister-data])
-                        (dissoc-in [extension-id :lister-meta :document-count]))
+                 ; BUG#8071
+                 ; Az item-lister alapállapotba állítása után az infinite-loader komponens
+                 ; azonnal újratöltené az elemeket az eddigi beállításokkal még mielőtt
+                 ; az :item-lister/request-items! esemény elkezdené letölteni az elemeket
+                 ; a megváltozott beállításokkal, ezért szükséges az infinite-loader komponenst
+                 ; paused állapotba állítani.
+                 ; Az :item-lister/receive-items! esemény újratölti az infinite-loader komponenst
+                 ; ezért nem szükséges annak paused állapotát visszaállítani!
+      {:db       (as-> db % (r reset-item-lister!           % extension-id)
+                            (r tools/pause-infinite-loader! % extension-id))
        :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
@@ -590,8 +608,9 @@
   ; @usage
   ;  [:item-lister/order-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (-> db (dissoc-in [extension-id :lister-data])
-                        (dissoc-in [extension-id :lister-meta :document-count]))
+                 ; BUG#8071
+      {:db       (as-> db % (r reset-item-lister!           % extension-id)
+                            (r tools/pause-infinite-loader! % extension-id))
        :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
@@ -638,7 +657,8 @@
           (let [resolver-id    (resolver-id extension-id item-namespace)
                 resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-id)
                                 :search-term           (r get-search-term           db extension-id)
-                                :order-by              (r get-order-by              db extension-id)}]
+                                :order-by              (r get-order-by              db extension-id)
+                                :download-limit        (get-in db [extension-id :lister-meta :download-limit])}]
                [:sync/send-query! (request-id extension-id item-namespace)
                                   {:on-stalled [:item-lister/receive-items! extension-id item-namespace]
                                    :query      [`(~resolver-id ~resolver-props)]}]))))
@@ -649,12 +669,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ;  {:download-limit (integer)}
   ;
   ; @usage
   ;  [:item-lister/load! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
       {:db         (-> db (dissoc-in [extension-id :lister-data])
-                          (dissoc-in [extension-id :lister-meta]))
+                          (assoc-in  [extension-id :lister-meta] lister-props))
        :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
                     [:ui/set-header-title!  (param      extension-id)]
                     [:ui/set-window-title!  (param      extension-id)]

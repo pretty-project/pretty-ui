@@ -571,7 +571,7 @@
        :hu "Átnevezés"}
       :reorder
       {:en "Reorder"
-       :hu "Rendezés"}
+       :hu "Egyedi sorrend"}
       :reset!
       {:en "Reset"
        :hu "Visszaállítás"}

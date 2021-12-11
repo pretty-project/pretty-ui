@@ -32,11 +32,12 @@
 
               ; A project-emulator.core fájl közös használatának mellőzése miatt a fejlesztés alatt
               ; lévő modulok behívása a playground.core névtérben történik.
-              [extensions.clients.api]
-              [extensions.home.api]
-              [extensions.media.api]
-              [extensions.products.api]
-              [extensions.settings.api]))
+              [app-extensions.clients.api]
+              [app-extensions.home.api]
+              [app-extensions.media.api]
+              [app-extensions.products.api]
+              [app-extensions.settings.api]
+              [app-extensions.trader.api]))
 
 
 
@@ -171,11 +172,21 @@
 
 (defn- diagrams
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [elements/circle-diagram {:sections [{:color :primary :value 50}
+  [surface-id _]
+  [:<> [section-footer surface-id {}]
+       [section-header surface-id {:label "Circle diagram"}]
+       [elements/circle-diagram {:sections [{:color :primary   :value 50}
+                                            {:color :secondary :value 10}
                                             {:color :highlight :value 20}]}]
-       [elements/line-diagram {:sections [{:color :primary :value 50}
-                                          {:color :highlight :value 20}]}]])
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Line diagram"}]
+       [elements/line-diagram {:sections [{:color :primary   :value 50}
+                                          {:color :secondary :value 10}
+                                          {:color :highlight :value 20}]}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Point diagram"}]
+       [elements/point-diagram {:points [4000 4050 4150 4120 4150 4180]
+                                :x-max 3800}]])
 
 (defn- expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -365,3 +376,7 @@
   {:dispatch-n [[:ui/set-header-title! :playground]
                 [:ui/set-window-title! :playground]
                 [:playground/render!]]})
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:environment/add-external-css! "/css/playground.css"]})

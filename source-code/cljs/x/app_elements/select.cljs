@@ -25,13 +25,19 @@
 
 
 
-;; -- Descriptions ------------------------------------------------------------
+;; -- Usage -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @description
+; @usage
+;  (ns my-namespace (:require [x.app-elements.api :as elements]))
+;  [elements/select {...}]
+;
+; @usage
 ;  A [select-options] komponenst megjelenítő popup UI elemet esemény-alapon is
 ;  lehetséges megjeleníteni, az [:elements/render-select-options! ...]
 ;  esemény meghívásával.
+;
+;  (a/dispatch [:elements/render-select-options! {...}])
 
 
 
@@ -72,17 +78,11 @@
   [select-id {:keys [autoclear? on-popup-closed on-select value-path]}]
   (let [popup-id (engine/element-id->extended-id select-id :popup)]
        {:dispatch-some  on-select
-        :dispatch-later [{:ms       CLOSE-POPUP-DELAY
-                          :dispatch [:ui/close-popup! popup-id]}
-
-                         ; XXX#0134
-                         (if (boolean autoclear?)
-                             {:ms       AUTOCLEAR-VALUE-DELAY
-                              :dispatch [:db/remove-item! value-path]})
-
+        :dispatch-later [{:ms CLOSE-POPUP-DELAY :dispatch [:ui/close-popup! popup-id]}
+                         (when (boolean autoclear?) ; XXX#0134
+                               {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:db/remove-item! value-path]})
                          (when (some? on-popup-closed)
-                               {:ms       ON-POPUP-CLOSED-DELAY
-                                :dispatch on-popup-closed})]}))
+                               {:ms ON-POPUP-CLOSED-DELAY :dispatch on-popup-closed})]}))
 
 (defn- select-props->select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,7 +121,12 @@
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id {:keys [as-button?] :as select-props}]
-  (let [options-props (param select-props)]
+       ; BUG#1507
+       ; Ha a select-button elem {:disabled? true} állapotban csatolódik a React-fába,
+       ; akkor a {:disabled? true} tulajdonságát az options-props térképben továbbörökítené
+       ; az {:on-click [:elements/render-select-options! ...]} konstans tulajdonságon keresztül
+       ; select-options elemnek.
+  (let [options-props (dissoc select-props :disabled?)]
        (merge {:get-label-f  return
                :get-value-f  return
                :options-path (engine/default-options-path select-id)
@@ -234,7 +239,7 @@
   ;  {:options (maps in vector)}
   ;
   ; @return (hiccup)
-  [popup-id {:keys [options] :as select-props}]
+  [popup-id {:keys [options] :as select-props} b]
   (reduce #(vector/conj-item %1 [select-option popup-id select-props %2])
            [:div.x-select--options]
            (param options)))

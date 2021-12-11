@@ -7,10 +7,11 @@
 (ns project-emulator.core
     (:require [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
-              [extensions.clients.api]
-              [extensions.home.api]
-              [extensions.products.api]
-              [extensions.settings.api]
+              [server-extensions.clients.api]
+              [server-extensions.home.api]
+              [server-extensions.products.api]
+              [server-extensions.settings.api]
+              [server-extensions.trader.api]
               [x.boot-loader]
               [project-emulator.server-router.api])
     (:gen-class))
