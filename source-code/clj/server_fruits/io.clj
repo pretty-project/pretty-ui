@@ -336,7 +336,7 @@
   [directory-path]
   (delete-file! directory-path))
 
-(defn delete-items-in-directory!
+(defn empty-directory!
   ; @param (string) directory-path
   ;
   ; @return (?)
@@ -352,8 +352,8 @@
   ;
   ; @return (?)
   [directory-path]
-  (delete-items-in-directory! directory-path)
-  (delete-empty-directory!    directory-path))
+  (empty-directory!        directory-path)
+  (delete-empty-directory! directory-path))
 
 
 
