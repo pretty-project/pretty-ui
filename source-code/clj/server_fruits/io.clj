@@ -343,8 +343,8 @@
   [directory-path]
   (doseq [item-path (item-list directory-path)]
          (if (directory? item-path)
-             (do (delete-items-in-directory! item-path)
-                 (delete-empty-directory!    item-path))
+             (do (empty-directory!        item-path)
+                 (delete-empty-directory! item-path))
              (delete-file! item-path))))
 
 (defn delete-directory!
