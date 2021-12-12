@@ -24,6 +24,7 @@
               [x.app-elements.chip-group        :as chip-group]
               [x.app-elements.chip              :as chip]
               [x.app-elements.circle-diagram    :as circle-diagram]
+              [x.app-elements.color-picker      :as color-picker]
               [x.app-elements.column            :as column]
               [x.app-elements.combo-box         :as combo-box]
               [x.app-elements.counter           :as counter]
@@ -155,6 +156,7 @@
 (def chip-group        chip-group/element)
 (def chip              chip/element)
 (def circle-diagram    circle-diagram/element)
+(def color-picker      color-picker/element)
 (def column            column/element)
 (def combo-box         combo-box/element)
 (def counter           counter/element)

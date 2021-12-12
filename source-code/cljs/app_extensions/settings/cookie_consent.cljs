@@ -55,9 +55,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id]
   [elements/button ::got-it-button
-                   {:label   :got-it!
-                    :preset  :close-button
-                    :variant :transparent
+                   {:label    :got-it!
+                    :preset   :close-button
+                    :variant  :transparent
                     :on-click {:dispatch-n [[:ui/close-popup! header-id]
                                             [:environment/->cookie-settings-changed]]}}])
 

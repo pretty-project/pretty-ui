@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.04
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.7
+; Version: v0.2.4
+; Compatibility: x4.4.9
 
 
 
@@ -27,11 +27,14 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   ;  {:disabled? (boolean)(opt)
+  ;   :horizontal-align (keyword)(opt)
   ;   :min-width (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:data-disabled (boolean)
-  ;   :data-min-width (string)}
-  [_ {:keys [disabled? min-width]}]
-  (merge {:data-min-width (a/dom-value min-width)}
-         (if (boolean disabled?) {:data-disabled true})))
+  ;   :data-horizontal-align (keyword)
+  ;   :data-min-width (keyword)}
+  [_ {:keys [disabled? horizontal-align min-width]}]
+  (cond-> {} (some? min-width)        (assoc :data-min-width        min-width)
+             (some? horizontal-align) (assoc :data-horizontal-align horizontal-align)
+             (some? disabled?)        (assoc :data-disabled         disabled?)))

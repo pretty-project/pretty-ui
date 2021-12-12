@@ -481,7 +481,7 @@ body[data-viewport-profile="s"]   #x-app-header {
   width: 100% }
 
 #x-app-progress-bar--process-progress {
-  background-color: var( --primary );
+  background-color: var( --border-color-primary );
   height: 100%;
   transition: width .2s ease-in-out;
   width: 0% }

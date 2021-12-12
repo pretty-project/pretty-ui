@@ -60,7 +60,7 @@
   ; @usage
   ;  (r item-editor/get-derived-item-id db :my-namespace :my-type)
   ;
-  ; @return (keyword)
+  ; @return (string)
   [db [_ extension-id item-namespace]]
   (let [item-id-key (item-id-key extension-id item-namespace)]
        (r router/get-current-route-path-param db item-id-key)))
@@ -175,6 +175,21 @@
 ; @usage
 ;  [:item-editor/get-view-props :my-namespace :my-type]
 (a/reg-sub :item-editor/get-view-props get-view-props)
+
+
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- reset-item-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (-> db (dissoc-in [extension-id :editor-data])
+         (dissoc-in [extension-id :editor-meta])))
 
 
 
@@ -305,9 +320,8 @@
       (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)
             new-item?       (item-id->new-item?       extension-id item-namespace derived-item-id)
             header-label    (item-id->form-label      extension-id item-namespace derived-item-id)]
-           {:db         (-> db (dissoc-in [extension-id :editor-data])
-                               (dissoc-in [extension-id :editor-meta])
-                               (assoc-in  [extension-id :editor-meta :item-id] derived-item-id))
+           {:db (as-> db % (r reset-item-editor! % extension-id)
+                           (assoc-in % [extension-id :editor-meta :item-id] derived-item-id))
             :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
                          [:ui/set-header-title!  (param      header-label)]
                          [:ui/set-window-title!  (param      header-label)]

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.12
 ; Description: Eye-candy függvények
-; Version: v0.3.8
+; Version: v0.4.2
 
 
 
@@ -21,3 +21,4 @@
 
 (defn return [n] n)
 (defn param  [n] n)
+(defn none   [_] nil)

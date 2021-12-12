@@ -143,20 +143,22 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) options-props
-  ;  {:on-select (metamorphic-event)(opt)}
+  ;  {:options-label (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :on-select (metamorphic-event)
   ;   :options-id (keyword)
   ;   :options-path (item-path vector)
+  ;   :user-cancel? (boolean)
   ;   :value-path (item-path vector)}
-  [select-id options-props]
+  [select-id {:keys [options-label] :as options-props}]
   (let [on-select (on-select-events select-id options-props)]
        (merge {:get-label-f  return
                :get-value-f  return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
+              (if (nil? options-label) {:user-cancel? true})
               (param options-props)
               {:on-select  on-select
                :options-id (engine/element-id->extended-id select-id :options)})))
@@ -386,7 +388,7 @@
   ;    Default: false
   ;   :style (map)(opt)
   ;   :user-cancel? (boolean)(constant)(opt)
-  ;    Default: false
+  ;    Default: true
   ;    Only w/o {:options-label ...}
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
@@ -425,6 +427,7 @@
   :elements/render-select-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; WARNING#4051
   ; Az [:elements/render-select-options!] esemény használatával nem lehetséges
   ; megfelően inicializálni a select elemet, mert a select-options elem nem használhatja
   ; az [:elements/init-selectable!] esemény initializer-ként, ugyanis az opciók minden

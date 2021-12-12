@@ -21,7 +21,8 @@
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:name-order        (r locales/get-name-order        db)
+  {:client-color      (get-in db [:clients :editor-data :client-color])
+   :name-order        (r locales/get-name-order        db)
    :selected-language (r locales/get-selected-language db)})
 
 (a/reg-sub ::get-body-props get-body-props)
@@ -122,14 +123,71 @@
                                               :min-width :l}]
                         (param name-order)]])
 
+
+(defn- client-color-and-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [client-color]}]
+  [:div {:style {:display :flex :justify-content :center :flex-direction :column :align-items :center}}
+   [:div {:style {:width "64px" :height "64px" :border-radius "32px"
+                  :border (str "4px solid #ddd")
+                  :font-weight 600
+                  :font-size "var(--font-size-xl )"
+                  :background-color client-color
+                  :color "white"
+                  :display :flex :flex-direction :column :justify-content :center :align-items :center}}
+         "C#"]
+   [:div {:style {:font-size "var(--font-size-xxs)" :font-weight 500 :color "#888"}
+          :on-click #(a/dispatch [:clients/render-client-color-picker!])}
+         "Szín kiválasztása"]])
+
+(defn- client-color-and-name__
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [client-color]}]
+  [:div {:style {:display :flex :flex-direction :column :justify-content :flex-start :align-items :center
+                 :margin "0 0 24px 0" :line-height "21px" :font-size "var(--font-size-m)" :font-weight 600}}
+        "Client #001"
+        [:div {:style {:margin "24px 0 0 0" :background-color client-color :width "360px" :height "12px" :border-radius "6px"}
+               :on-click #(a/dispatch [:clients/render-client-color-picker!])}]
+        [:div {:style {:width "360px" :text-align :right :font-size "var(--font-size-xxs)" :font-weight 500 :color "#888"}}
+              "Szín kiválasztása"]])
+
+(defn- client-color-and-name_
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [client-color]}]
+  [:div {:style {:margin "24px 0" :display :flex :width "100%" :justify-content :space-between}}
+    [:div
+       [:div {:style {:background client-color :border-radius "12px"
+                      :height "64px"
+                      :display :flex :flex-direction :column :justify-content :center :align-items :center
+                      :font-weight 500
+                      ;:margin "24px 0"
+                      :width "128px"}
+               :on-click #(a/dispatch [:clients/render-client-color-picker!])}
+           [elements/icon {:icon :format_color_fill :color :invert :size :s}]]
+       [elements/label {:content "Szín kiválasztása" :font-size :xs :layout :fit}]]
+    [elements/label {:content "Client #001" :font-size :xxl}]
+    [:div {:style {:width "128px"}}]])
+
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
   [:div#clients--client-form
+    [client-color-and-name body-id body-props]
+    ;[client-color-and-name body-id body-props]
+    [elements/separator {:orientation :horizontal :size :xxl}]
+    [elements/label {:content "Alapvető adatok" :font-size :m :font-weight :extra-bold :layout :fit :indent :left}]
+    ;[elements/horizontal-line {:color :highlight :fade :out}]
+    ;[elements/separator {:orientation :horizontal :size :s}]
     [client-name               body-id body-props]
     [client-primary-contacts   body-id body-props]
-    [elements/separator {:orientation :horizontal :size :xl}]
-    [elements/separator {:orientation :horizontal :size :xl}]
+    [elements/separator {:orientation :horizontal :size :l}]
+
+    [elements/separator {:orientation :horizontal :size :xxl}]
+    [elements/label {:content "További adatok" :font-size :m :font-weight :extra-bold :layout :fit :indent :left}]
+    ;[elements/horizontal-line {:color :highlight :fade :out}]
+    ;[elements/separator {:orientation :horizontal :size :s}]
+    ;[elements/separator {:orientation :horizontal :size :xl}]
+    ;[elements/separator {:orientation :horizontal :size :xl}]
     [client-secondary-contacts body-id body-props]
     [client-legal-details      body-id body-props]
     [elements/separator {:orientation :horizontal :size :l}]])

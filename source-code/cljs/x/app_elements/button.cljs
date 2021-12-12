@@ -57,7 +57,9 @@
   ;
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)
-  ;   :keypress (map)(opt)}
+  ;   :keypress (map)(opt)
+  ;   :layout (keyword)(opt)
+  ;   :variant (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:color (keyword)
@@ -67,17 +69,18 @@
   ;   :layout (keyword)
   ;   :targetable? (boolean)
   ;   :variant (keyword)}
-  [{:keys [icon keypress label layout] :as button-props}]
-  (merge {:color   :primary
-          :layout  :row
-          :variant :outlined}
-         (if (not= layout :icon-button)
-             {:font-size        :s
-              :horizontal-align :center})
-         (if (some? keypress)
-             {:targetable? true})
-         (if (some? icon)
-             {:icon-family :material-icons-filled})
+  [{:keys [icon keypress label layout variant] :as button-props}]
+  (merge {:layout  :row}
+         (if (not= layout :icon-button) {:font-size        :s
+                                         :horizontal-align :center})
+         (if (some? keypress)           {:targetable? true})
+         (if (some? icon)               {:icon-family :material-icons-filled})
+         (if (= variant :filled)        {:background-color :primary})
+         (if (= variant :outlined)      {:border-color     :primary})
+         (if (= variant :transparent)   {:color            :primary})
+         (if (nil? variant)             {:border-color     :primary
+                                         :variant          :outlined})
+         (param button-props)
          ; XXX#0523
          ; A button elemet {:layout :icon-button} beállítással használva,
          ; a {:content ...} tulajdonság neve nehezen értelmezhető,
@@ -148,10 +151,19 @@
   ;  XXX#0714
   ;  {:badge-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success
+  ;   :background-color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    Default: :primary
+  ;    Only w/ {:variant :filled}
+  ;   :border-color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    Default: :primary
+  ;    Only w/ {:variant :outlined}
   ;   :class (string or vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default, :invert
   ;    Default: :primary
+  ;    Only w/ {:variant :transparent}
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)

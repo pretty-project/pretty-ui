@@ -586,16 +586,16 @@
   ; @usage
   ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-                 ; BUG#8071
-                 ; Az item-lister alapállapotba állítása után az infinite-loader komponens
-                 ; azonnal újratöltené az elemeket az eddigi beállításokkal még mielőtt
-                 ; az :item-lister/request-items! esemény elkezdené letölteni az elemeket
-                 ; a megváltozott beállításokkal, ezért szükséges az infinite-loader komponenst
-                 ; paused állapotba állítani.
-                 ; Az :item-lister/receive-items! esemény újratölti az infinite-loader komponenst
-                 ; ezért nem szükséges annak paused állapotát visszaállítani!
-      {:db       (as-> db % (r reset-item-lister!           % extension-id)
-                            (r tools/pause-infinite-loader! % extension-id))
+           ; BUG#8071
+           ; Az item-lister alapállapotba állítása után az infinite-loader komponens
+           ; azonnal újratöltené az elemeket az eddigi beállításokkal még mielőtt
+           ; az :item-lister/request-items! esemény elkezdené letölteni az elemeket
+           ; a megváltozott beállításokkal, ezért szükséges az infinite-loader komponenst
+           ; paused állapotba állítani.
+           ; Az :item-lister/receive-items! esemény újratölti az infinite-loader komponenst
+           ; ezért nem szükséges annak paused állapotát visszaállítani!
+      {:db (as-> db % (r reset-item-lister!           % extension-id)
+                      (r tools/pause-infinite-loader! % extension-id))
        :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
@@ -608,9 +608,9 @@
   ; @usage
   ;  [:item-lister/order-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-                 ; BUG#8071
-      {:db       (as-> db % (r reset-item-lister!           % extension-id)
-                            (r tools/pause-infinite-loader! % extension-id))
+           ; BUG#8071
+      {:db (as-> db % (r reset-item-lister!           % extension-id)
+                      (r tools/pause-infinite-loader! % extension-id))
        :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
@@ -626,12 +626,12 @@
       (let [resolver-id    (resolver-id extension-id item-namespace)
             documents      (get-in server-response [resolver-id :documents])
             document-count (get-in server-response [resolver-id :document-count])]
-           {:db       (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
-                             ; Szükséges frissíteni a keresési feltételeknek megfelelő
-                             ; dokumentumok számát, mert megváltozhat az értéke!
-                             (assoc-in  [extension-id :lister-meta :document-count] document-count)
-                             ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-                             (assoc-in  [extension-id :lister-meta :synchronized?]  true))
+           {:db (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
+                       ; Szükséges frissíteni a keresési feltételeknek megfelelő
+                       ; dokumentumok számát, mert megváltozhat az értéke!
+                       (assoc-in  [extension-id :lister-meta :document-count] document-count)
+                       ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
+                       (assoc-in  [extension-id :lister-meta :synchronized?]  true))
             ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
             ; hogy az a viewport területén van-e még.
             :dispatch [:tools/reload-infinite-loader! extension-id]})))
@@ -675,8 +675,8 @@
   ; @usage
   ;  [:item-lister/load! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
-      {:db         (-> db (dissoc-in [extension-id :lister-data])
-                          (assoc-in  [extension-id :lister-meta] lister-props))
+      {:db (-> db (dissoc-in [extension-id :lister-data])
+                  (assoc-in  [extension-id :lister-meta] lister-props))
        :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
                     [:ui/set-header-title!  (param      extension-id)]
                     [:ui/set-window-title!  (param      extension-id)]

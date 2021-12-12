@@ -130,7 +130,7 @@
   ;   :required? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [label required?]}]
+  [_ {:keys [label required?]}]
   (if (some? label)
       [:div.x-text-field--label [components/content {:content label}]
                                 (if required? [:span.x-input--label-asterisk "*"])]))
@@ -167,7 +167,7 @@
   ;  {:invalid-message (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [invalid-message]}]
+  [_ {:keys [invalid-message]}]
   (if (some? invalid-message)
       [:div.x-text-field--invalid-message [components/content {:content invalid-message}]]))
 

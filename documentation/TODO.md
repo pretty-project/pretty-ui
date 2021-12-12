@@ -11,6 +11,7 @@
 
 
 # x4.5.0
+- Loading animations: DEPRECATED
 
 - Ha az item-lister select-mode-ban a checkbox-ok képesek lennének egy vektorban elhelyezni és kivenni
   a saját indexüket, aszerint, hogy be vannak-e pipálva, akkor javulna az item-lister renderelési sebessége

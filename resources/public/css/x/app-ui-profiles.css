@@ -61,8 +61,6 @@ body {
 
 /*** Box shadow ***/
 
---box-shadow-primary:        0 0 010px 0 var( --primary );
---box-shadow-secondary:      0 0 015px 0 var( --secondary );
 --box-shadow-black-xx-light: 0 0 015px 0 rgba(030, 050, 100, 0.10);
 --box-shadow-black-x-light:  0 0 015px 0 rgba(030, 050, 100, 0.25);
 --box-shadow-black-light:    0 0 015px 0 rgba(030, 050, 100, 0.40);
@@ -107,16 +105,16 @@ body {
 --white-x-light:  rgb(250, 250, 250);
 --white-xx-light: rgb(255, 255, 255);
 
-/* Primary */
---primary-xx-dark:  rgb( 40, 180, 225);
---primary-x-dark:   rgb( 50, 190, 235);
---primary-dark:     rgb( 60, 200, 245);
---primary:          rgb( 70, 210, 255);
---primary-light:    rgb( 80, 220, 255);
---primary-x-light:  rgb( 90, 230, 255);
---primary-xx-light: rgb(100, 240, 255);
+/* Hard blue */
+--hard-blue-xx-dark:  rgb( 40, 180, 225);
+--hard-blue-x-dark:   rgb( 50, 190, 235);
+--hard-blue-dark:     rgb( 60, 200, 245);
+--hard-blue:          rgb( 70, 210, 255);
+--hard-blue-light:    rgb( 80, 220, 255);
+--hard-blue-x-light:  rgb( 90, 230, 255);
+--hard-blue-xx-light: rgb(100, 240, 255);
 
-/* Primary soft */
+/* Soft blue */
 --soft-blue-xx-dark:  rgb(120, 180, 215);
 --soft-blue-x-dark:   rgb(130, 190, 225);
 --soft-blue-dark:     rgb(140, 200, 235);
@@ -125,32 +123,41 @@ body {
 --soft-blue-x-light:  rgb(170, 230, 255);
 --soft-blue-xx-light: rgb(180, 240, 255);
 
-/* Secondary */
---secondary-xx-dark:  rgb(170, 000, 225);
---secondary-x-dark:   rgb(180, 000, 235);
---secondary-dark:     rgb(190, 000, 245);
---secondary:          rgb(200, 000, 255);
---secondary-light:    rgb(210, 010, 255);
---secondary-x-light:  rgb(220, 020, 255);
---secondary-xx-light: rgb(230, 030, 255);
+/* Hard purple */
+--hard-purple-xx-dark:  rgb(170, 000, 225);
+--hard-purple-x-dark:   rgb(180, 000, 235);
+--hard-purple-dark:     rgb(190, 000, 245);
+--hard-purple:          rgb(200, 000, 255);
+--hard-purple-light:    rgb(210, 010, 255);
+--hard-purple-x-light:  rgb(220, 020, 255);
+--hard-purple-xx-light: rgb(230, 030, 255);
 
-/* Success */
---success-xx-dark:  rgb(050, 225, 000);
---success-x-dark:   rgb(060, 235, 010);
---success-dark:     rgb(070, 245, 020);
---success:          rgb(080, 255, 030);
---success-light:    rgb(090, 255, 040);
---success-x-light:  rgb(100, 255, 050);
---success-xx-light: rgb(110, 255, 060);
+/* Soft purple */
+--soft-purple-xx-dark:  rgb(170, 050, 225);
+--soft-purple-x-dark:   rgb(180, 060, 235);
+--soft-purple-dark:     rgb(190, 070, 245);
+--soft-purple:          rgb(200, 080, 255);
+--soft-purple-light:    rgb(210, 090, 255);
+--soft-purple-x-light:  rgb(220, 100, 255);
+--soft-purple-xx-light: rgb(230, 110, 255);
 
-/* Warning */
---warning-xx-dark:  rgb(235, 000, 100);
---warning-x-dark:   rgb(245, 000, 110);
---warning-dark:     rgb(245, 000, 120);
---warning:          rgb(255, 000, 130);
---warning-light:    rgb(255, 010, 140);
---warning-x-light:  rgb(255, 020, 150);
---warning-xx-light: rgb(255, 030, 160);
+/* Hard green */
+--hard-green-xx-dark:  rgb(050, 225, 000);
+--hard-green-x-dark:   rgb(060, 235, 010);
+--hard-green-dark:     rgb(070, 245, 020);
+--hard-green:          rgb(080, 255, 030);
+--hard-green-light:    rgb(090, 255, 040);
+--hard-green-x-light:  rgb(100, 255, 050);
+--hard-green-xx-light: rgb(110, 255, 060);
+
+/* Hard red */
+--hard-red-xx-dark:  rgb(235, 000, 100);
+--hard-red-x-dark:   rgb(245, 000, 110);
+--hard-red-dark:     rgb(245, 000, 120);
+--hard-red:          rgb(255, 000, 130);
+--hard-red-light:    rgb(255, 010, 140);
+--hard-red-x-light:  rgb(255, 020, 150);
+--hard-red-xx-light: rgb(255, 030, 160);
 
 /*** Color ***/
 /***** Background, border, color and shadow *****/

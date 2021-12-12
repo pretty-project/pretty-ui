@@ -193,5 +193,6 @@
                               :layout  :icon-button
                               :variant :transparent}
       :warning-button        {:color   :warning
+                              :horizontal-align :left
                               :layout  :row
                               :variant :transparent}})

@@ -2,7 +2,9 @@
 (ns app-extensions.trader.views
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]))
+              [x.app-layouts.api  :as layouts]
+              [app-extensions.trader.overview :as overview]
+              [app-extensions.trader.trades   :as trades]))
 
 
 
@@ -20,22 +22,33 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn monitoring-switch
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [header-id]
+  [elements/switch ::monitoring-switch
+                   {:label "Monitoring" :initial-value true :indent :both}])
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [elements/menu-bar {:menu-items (menu-items surface-id view-props)}])
+  [header-id view-props]
+  [elements/polarity {:start-content [elements/menu-bar {:menu-items (menu-items header-id view-props)}]
+                      :end-content   [monitoring-switch header-id]}])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id view-props]
-  [:div (str view-props)])
+  [body-id {:keys [view-id]}]
+  (case view-id :overview [overview/body body-id]
+                :trades   [trades/body   body-id]
+                "Follow the white rabbit!"))
+
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a surface-id
                     {:body   {:content #'body   :subscriber [:view-selector/get-view-props :trader]}
-                     :header {:content #'header :subscriber [:view-selector/get-view-props :trader]}}])
+                     :header {:content #'header :subscriber [:view-selector/get-view-props :trader]}
+                     :description "Connected to https://api.bybit.com"}])
 
 
 

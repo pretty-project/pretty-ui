@@ -32,6 +32,23 @@
 
 
 
+/***** Align profiles *****/
+/*** Horizontal align ***/
+
+.x-body-a[data-horizontal-align="left"] .x-body-a--content-body {
+  align-items: flex-start }
+
+.x-body-a[data-horizontal-align="center"] .x-body-a--content-body {
+  align-items: center }
+
+.x-body-a[data-horizontal-align="right"] .x-body-a--content-body {
+  align-items: flex-end }
+
+/*** Horizontal align ***/
+/***** Align profiles *****/
+
+
+
 /***** Size profiles *****/
 /*** XXS ***/
 /*** XXS ***/
@@ -88,7 +105,6 @@
   flex-direction: column-reverse }
 
 .x-body-a--content-body {
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
   padding-left: var( --content-edge );

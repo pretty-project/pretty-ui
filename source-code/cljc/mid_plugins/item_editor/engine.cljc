@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.6
+; Version: v0.3.0
+; Compatibility: x4.4.9
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-editor.engine
-    (:require [mid-fruits.keyword :as keyword]))
+    (:require [mid-fruits.candy   :refer [param]]
+              [mid-fruits.keyword :as keyword]))
 
 
 
@@ -34,53 +35,53 @@
 (defn item-id->item-uri
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) item-id
+  ; @param (string) item-id
   ;
   ; @example
-  ;  (item-editor/item-id->item-uri :my-extension :my-type :my-item)
+  ;  (item-editor/item-id->item-uri :my-extension :my-type "my-item")
   ;  =>
   ;  "/my-extension/my-item"
   ;
   ; @return (string)
   [extension-id _ item-id]
-  (str "/" (name extension-id)
-       "/" (name item-id)))
+  (str "/" (name  extension-id)
+       "/" (param item-id)))
 
 (defn item-id->new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) item-id
+  ; @param (string) item-id
   ;
   ; @example
-  ;  (engine/item-id->new-item? :my-extension :my-type :new-my-type)
+  ;  (engine/item-id->new-item? :my-extension :my-type "new-my-type")
   ;  =>
   ; true
   ;
   ; @example
-  ;  (engine/item-id->new-item? :my-extension :my-type :my-item)
+  ;  (engine/item-id->new-item? :my-extension :my-type "my-item")
   ;  =>
   ; false
   ;
   ; @return (boolean)
   [_ item-namespace item-id]
-  (= item-id (keyword/join "new-" item-namespace)))
+  (= item-id (str "new-" (name item-namespace))))
 
 (defn item-id->form-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) item-id
+  ; @param (string) item-id
   ;
   ; @example
-  ;  (engine/item-id->form-label :my-extension :my-type :new-my-type)
+  ;  (engine/item-id->form-label :my-extension :my-type "new-my-type")
   ;  =>
   ; :add-my-type
   ;
   ; @example
-  ;  (engine/item-id->form-label :my-extension :my-type :my-item)
+  ;  (engine/item-id->form-label :my-extension :my-type "my-item")
   ;  =>
   ; :edit-my-type
   ;

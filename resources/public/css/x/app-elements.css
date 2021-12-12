@@ -65,6 +65,8 @@ button.x-card:focus,
 .x-chip--delete-button:focus,
 .x-clickable:active,
 .x-clickable:focus,
+.x-color-picker--option:active,
+.x-color-picker--option:focus,
 .x-counter--decrease-button:active,
 .x-counter--decrease-button:focus,
 .x-counter--increase-button:active,
@@ -85,6 +87,8 @@ button.x-card:focus,
 .x-radio-button--option-label,
 .x-radio-button--option:focus
 .x-radio-button--option-label,
+.x-select--button-body:active,
+.x-select--button-body:focus,
 .x-switch--body:active
 .x-switch--label,
 .x-switch--body:focus
@@ -149,6 +153,7 @@ button.x-card:focus,
 .x-chip--label,
 .x-chip-group--label,
 .x-chip-group--no-chips-label,
+.x-color-picker--label,
 .x-checkbox--label,
 .x-clickable,
 .x-combo-box--no-options-label,
@@ -379,13 +384,13 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
-.x-button[data-variant="filled"][data-color="muted"]
+.x-button[data-variant="filled"][data-background-color="muted"]
 .x-button--body,
 .x-chip[data-color="muted"] .x-chip--body {
   background-color: var( --background-color-muted );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-color="muted"]
+.x-button[data-variant="outlined"][data-border-color="muted"]
 .x-button--body,
 .x-checkbox[data-color="muted"]
 .x-checkbox--button::before,
@@ -481,13 +486,13 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
-.x-button[data-variant="filled"][data-color="primary"]
+.x-button[data-variant="filled"][data-background-color="primary"]
 .x-button--body,
 .x-chip[data-color="primary"] .x-chip--body {
   background-color: var( --soft-blue );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-color="primary"]
+.x-button[data-variant="outlined"][data-border-color="primary"]
 .x-button--body,
 .x-checkbox[data-color="primary"]
 .x-checkbox--button::before,
@@ -545,12 +550,12 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="secondary"] {
   stroke: var( --border-color-secondary ) }
 
-.x-button[data-variant="filled"][data-color="secondary"] .x-button--body,
+.x-button[data-variant="filled"][data-background-color="secondary"] .x-button--body,
 .x-chip[data-color="secondary"] .x-chip--body {
-  background-color: var( --secondary );
+  background-color: var( --soft-purple );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-color="secondary"]
+.x-button[data-variant="outlined"][data-border-color="secondary"]
 .x-button--body,
 .x-checkbox[data-color="secondary"]
 .x-checkbox--button::before,
@@ -608,12 +613,12 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="success"] {
   stroke: var( --border-color-success ) }
 
-.x-button[data-variant="filled"][data-color="success"] .x-button--body,
+.x-button[data-variant="filled"][data-background-color="success"] .x-button--body,
 .x-chip[data-color="success"] .x-chip--body {
-  background-color: var( --success );
+  background-color: var( --soft-green );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-color="success"]
+.x-button[data-variant="outlined"][data-border-color="success"]
 .x-button--body,
 .x-checkbox[data-color="success"]
 .x-checkbox--button::before,
@@ -655,12 +660,12 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="warning"] {
   stroke: var( --border-color-warning ) }
 
-.x-button[data-variant="filled"][data-color="warning"] .x-button--body,
+.x-button[data-variant="filled"][data-background-color="warning"] .x-button--body,
 .x-chip[data-color="warning"] .x-chip--body {
-  background-color: var( --warning );
+  background-color: var( --soft-red );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-color="warning"]
+.x-button[data-variant="outlined"][data-border-color="warning"]
 .x-button--body,
 .x-checkbox[data-color="warning"]
 .x-checkbox--button::before,
@@ -1847,6 +1852,38 @@ body[data-viewport-profile="s"]
   display: block }
 
 /***** Clickable *****/
+
+
+
+/***** Color-picker *****/
+/*** Color-picker label ***/
+
+.x-color-picker--label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px }
+
+/*** Color-picker label ***/
+
+/*** Color-picker options ***/
+
+.x-color-picker--options {
+  display: flex;
+  flex-direction: row;
+  grid-gap: 12px }
+
+/*** Color-picker options ***/
+
+/*** Color-picker option ***/
+
+.x-color-picker--option--color {
+  border-radius: var( --border-radius-m );
+  height: 48px;
+  width: 48px }
+
+/*** Color-picker option ***/
+/***** Color-picker *****/
 
 
 

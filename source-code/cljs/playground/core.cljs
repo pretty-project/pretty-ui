@@ -54,6 +54,7 @@
    {:label "Expandable" :on-click [:router/go-to! "/playground/expandable"] :active? (= view-id :expandable)}
    {:label "Fields"     :on-click [:router/go-to! "/playground/fields"]     :active? (= view-id :fields)}
    {:label "Files"      :on-click [:router/go-to! "/playground/files"]      :active? (= view-id :files)}
+   {:label "Pickers"    :on-click [:router/go-to! "/playground/pickers"]    :active? (= view-id :pickers)}
    {:label "Selectors"  :on-click [:router/go-to! "/playground/selectors"]  :active? (= view-id :selectors)}
    {:label "Tables"     :on-click [:router/go-to! "/playground/tables"]     :active? (= view-id :tables)}
    {:label "Text"       :on-click [:router/go-to! "/playground/text"]       :active? (= view-id :text)}])
@@ -132,8 +133,17 @@
                               {:tooltip :delete! :preset :delete-icon-button :on-click [:developer/test!]}]]
        [section-footer surface-id {}]
        [section-header surface-id {:label "Filled button"}]
-       [elements/button ::filled-button
-                        {:label "Filled button" :variant :filled :color :primary :icon :people
+       [elements/button ::primary-filled-button
+                        {:label "Filled button" :variant :filled :background-color :primary :icon :people
+                         :on-click [:developer/test!]}]
+       [elements/button ::secondary-filled-button
+                        {:label "Filled button" :variant :filled :background-color :secondary :icon :dashboard
+                         :on-click [:developer/test!]}]
+       [elements/button ::success-filled-button
+                        {:label "Filled button" :variant :filled :background-color :success :icon :people
+                         :on-click [:developer/test!]}]
+       [elements/button ::warning-filled-button
+                        {:label "Filled button" :variant :filled :background-color :warning :icon :people
                          :on-click [:developer/test!]}]
        [section-footer surface-id {}]
        [section-header surface-id {:label "Outlined button"}]
@@ -193,10 +203,68 @@
   [_ _]
   [elements/expandable {:content "Here comes the sun!" :label "Click to expand!"}])
 
+(defn- fields
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [:<> [elements/multi-field ::multi-field
+                             {:label "Multi-field"
+                              :value-path [:x :y]}]
+       [elements/combo-box ::combo-box
+                           {:label "Combo-box"
+                            :get-label-f  #(do (get % :x))
+                            :options-path (db/path ::stuff :initial-options)
+                            :initial-options [{:x "A"} {:x "B"}]
+                            :initial-value {:x "B"}}]
+       [elements/multi-combo-box ::multi-combo-box
+                                 {:label "Multi-combo-box"
+                                  :get-label-f #(get % :x)
+                                  :options-path (db/path ::stuff :initial-options)}]
+       [elements/date-field ::date-field
+                            {:label "Date field" :value-path (db/path ::stuff :date)}]
+       [elements/text-field ::text-field-w-surface
+                            {:label "Text-field w/ surface" :emptiable? true
+                             :placeholder "Placeholder"
+                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
+                             :helper "My helper"}]
+       [elements/text-field ::text-field-w-modifier
+                            {:label "Text-field w/ modifier" :emptiable? true
+                             :placeholder "Placeholder"
+                             :modifier #(string/starts-with! % "/")}]
+       [elements/text-field ::text-field-w-validator
+                            {:label "Text-field w/ validator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""}}]
+       [elements/text-field ::text-field-w-prevalidator
+                            {:label "Text-field w/ prevalidator" :emptiable? true
+                             :placeholder "Placeholder"
+                             :initial-value "x"
+                             :validator {:f #(= % "x")
+                                         :invalid-message "Type \"x\""
+                                         :pre-validate? true}}]
+       [elements/password-field ::password-field-w-adornments
+                                {:label "Password-field w/ adornments" :emptiable? true
+                                 :placeholder "Placeholder"
+                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]}]
+       [elements/multiline-field ::multiline-field
+                                 {:label "Multiline-field" :placeholder "Placeholder"}]
+       [elements/digit-field {}]
+       [elements/search-field ::search-field
+                              {:label "Search-field" :placeholder "Placeholder"}]])
+
 (defn- files
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> [elements/file-drop-area {}]])
+
+(defn- pickers
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id _]
+  [:<> [section-footer surface-id {}]
+       [section-header surface-id {:label "Color-picker"}]
+       [elements/color-picker {:initial-options ["var( --background-color-primary )" "var( --background-color-secondary )" "var( --background-color-warning )" "var( --background-color-success )"]
+                               :get-label-f return
+                               :label "Color-picker"}]])
 
 (defn- selectors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -265,55 +333,6 @@
   [_ _]
   [:<> [elements/label {:content "Label"}]])
 
-(defn- fields
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [elements/multi-field ::multi-field
-                             {:label "Multi-field"
-                              :value-path [:x :y]}]
-       [elements/combo-box ::combo-box
-                           {:label "Combo-box"
-                            :get-label-f  #(do (get % :x))
-                            :options-path (db/path ::stuff :initial-options)
-                            :initial-options [{:x "A"} {:x "B"}]
-                            :initial-value {:x "B"}}]
-       [elements/multi-combo-box ::multi-combo-box
-                                 {:label "Multi-combo-box"
-                                  :get-label-f #(get % :x)
-                                  :options-path (db/path ::stuff :initial-options)}]
-       [elements/date-field ::date-field
-                            {:label "Date field" :value-path (db/path ::stuff :date)}]
-       [elements/text-field ::text-field-w-surface
-                            {:label "Text-field w/ surface" :emptiable? true
-                             :placeholder "Placeholder"
-                             :surface {:content [:<> [:div {:style {:padding "24px 12px"}} "Text field surface"]]}
-                             :helper "My helper"}]
-       [elements/text-field ::text-field-w-modifier
-                            {:label "Text-field w/ modifier" :emptiable? true
-                             :placeholder "Placeholder"
-                             :modifier #(string/starts-with! % "/")}]
-       [elements/text-field ::text-field-w-validator
-                            {:label "Text-field w/ validator" :emptiable? true
-                             :placeholder "Placeholder"
-                             :validator {:f #(= % "x")
-                                         :invalid-message "Type \"x\""}}]
-       [elements/text-field ::text-field-w-prevalidator
-                            {:label "Text-field w/ prevalidator" :emptiable? true
-                             :placeholder "Placeholder"
-                             :initial-value "x"
-                             :validator {:f #(= % "x")
-                                         :invalid-message "Type \"x\""
-                                         :pre-validate? true}}]
-       [elements/password-field ::password-field-w-adornments
-                                {:label "Password-field w/ adornments" :emptiable? true
-                                 :placeholder "Placeholder"
-                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]}]
-       [elements/multiline-field ::multiline-field
-                                 {:label "Multiline-field" :placeholder "Placeholder"}]
-       [elements/digit-field {}]
-       [elements/search-field ::search-field
-                              {:label "Search-field" :placeholder "Placeholder"}]])
-
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id view-props]
@@ -329,6 +348,7 @@
                 :expandable [expandable surface-id view-props]
                 :fields     [fields     surface-id view-props]
                 :files      [files      surface-id view-props]
+                :pickers    [pickers    surface-id view-props]
                 :selectors  [selectors  surface-id view-props]
                 :tables     [tables     surface-id view-props]
                 :text       [text       surface-id view-props]))
@@ -339,7 +359,8 @@
   [:<> [layouts/layout-a surface-id
                          {:description "Follow the white rabbit!"
                           :body   {:content #'body   :subscriber [:view-selector/get-view-props :playground]}
-                          :header {:content #'header :subscriber [:view-selector/get-view-props :playground]}}]
+                          :header {:content #'header :subscriber [:view-selector/get-view-props :playground]}
+                          :horizontal-align :left}]
        [elements/separator {:orientation :horizontal :size :xxl}]
        [infinite-loader surface-id view-props]
        [elements/separator {:orientation :horizontal :size :xxl}]
