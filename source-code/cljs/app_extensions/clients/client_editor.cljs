@@ -32,21 +32,25 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- action-buttons
+(defn- start-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [item-editor/delete-item-button :clients :client]
-       [item-editor/copy-item-button   :clients :client]])
+  [_ header-props]
+  [:<> [item-editor/delete-item-button  :clients :client]
+       [item-editor/copy-item-button    :clients :client]
+       [item-editor/archive-item-button :clients :client header-props]])
+
+(defn- end-buttons
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ header-props]
+  [:<> [item-editor/favorite-item-button :clients :client header-props]
+       [item-editor/save-item-button     :clients :client header-props]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id {:keys [new-item?] :as header-props}]
   [elements/polarity ::form-header
-                     {:start-content [:<> (if (boolean new-item?)
-                                             ;[item-editor/cancel-item-button :clients :client]
-                                              nil
-                                              [action-buttons header-id header-props])]
-                      :end-content [item-editor/save-item-button :clients :client header-props]}])
+                     {:start-content (if-not new-item? [start-buttons header-id header-props])
+                      :end-content   [end-buttons header-id header-props]}])
 
 
 
@@ -123,8 +127,18 @@
                                               :min-width :l}]
                         (param name-order)]])
 
-
 (defn- client-color-and-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [client-color]}]
+  [:div {:style {:display :flex :justify-content :center :flex-direction :column :align-items :center}}
+        [:div {:style {:font-weight 600}}
+              "Client #001"
+              [:span {:style {:width "12px" :height "12px" :background-color "var(--background-color-primary)"
+                              :display :inline-block
+                              :border-radius "50%"
+                              :margin "3px 0 0 6px"}}]]])
+
+(defn- client-color-and-name-
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [client-color]}]
   [:div {:style {:display :flex :justify-content :center :flex-direction :column :align-items :center}}
@@ -203,7 +217,7 @@
   [layouts/layout-a surface-id {:description description
                                 :disabled?   synchronizing?
                                 :body   {:content #'body   :subscriber [::get-body-props]}
-                                :header {:content #'header :subscriber [:item-editor/get-header-props :products :product]}}])
+                                :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}])
 
 
 

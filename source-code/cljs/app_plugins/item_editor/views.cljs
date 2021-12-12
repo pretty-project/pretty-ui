@@ -65,12 +65,30 @@
 (defn archive-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:archived? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [archived?]}]
   [elements/button ::archive-item-button
-                   {:tooltip :archive! :preset :archive-icon-button
-                    :on-click [:item-editor/archive-item! extension-id item-namespace]}])
+                   (if archived? {:tooltip :archived :preset :archived-icon-button
+                                  :on-click [:item-editor/unmark-item-as-archived! extension-id item-namespace]}
+                                 {:tooltip :archive! :preset :archive-icon-button
+                                  :on-click [:item-editor/mark-item-as-archived!   extension-id item-namespace]})])
+
+(defn favorite-item-button
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:favorite? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [favorite?]}]
+  [elements/button ::favorite-item-button
+                   (if favorite? {:preset :added-to-favorites-icon-button ; :tooltip :added-to-favorites
+                                  :on-click [:item-editor/unmark-item-as-favorite! extension-id item-namespace]}
+                                 {:preset :add-to-favorites-icon-button   ; :tooltip :add-to-favorites!
+                                  :on-click [:item-editor/mark-item-as-favorite!   extension-id item-namespace]})])
 
 (defn copy-item-button
   ; @param (keyword) extension-id

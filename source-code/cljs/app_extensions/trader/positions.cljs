@@ -1,5 +1,5 @@
 
-(ns app-extensions.trader.trades
+(ns app-extensions.trader.positions
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]))
 

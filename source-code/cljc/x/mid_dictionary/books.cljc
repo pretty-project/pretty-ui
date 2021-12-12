@@ -94,6 +94,12 @@
       :active
       {:en "Active"
        :hu "Aktív"}
+      :add-to-favorites!
+      {:en "Add to favorites"
+       :hu "Kedvencekhez adás"}
+      :added-to-favorites
+      {:en "Added to favorites"
+       :hu "Kedvencekhez adva"}
       :app-menu
       {:en "App menu"
        :hu "Alkalmazás menü"}
@@ -166,6 +172,9 @@
       :extensions
       {:en "Extensions"
        :hu "Eszközök"}
+      :favorites
+      {:en "Favorites"
+       :hu "Kedvencek"}
       :filter!
       {:en "Filter"
        :hu "Szűrés"}
@@ -461,6 +470,9 @@
       :archive!
       {:en "Archive"
        :hu "Arhiválás"}
+      :archived
+      {:en "Archived"
+       :hu "Arhiválva"}
       :copy
       {:en "Copy"
        :hu "Másolat"}

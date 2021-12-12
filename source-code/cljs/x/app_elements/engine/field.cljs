@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v1.1.6
-; Compatibility: x4.4.8
+; Compatibility: x4.4.9
 
 
 
@@ -269,7 +269,6 @@
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;   :max-length (integer)(opt)
-  ;   :targetable? (boolean)(opt)
   ;   :type (keyword)(opt)
   ;    :password, :text
   ;   :value (string)}
@@ -284,51 +283,55 @@
   ;   :on-change (function)
   ;   :style (map)
   ;   :value (string)}
-  [field-id {:keys [auto-focus? disabled? max-length surface targetable? type value]
-             :as field-props}]
-             ; If field is disabled ...
-  (cond-> {} (boolean disabled?) (merge {:disabled   true
-                                         :style      (field-props->field-style field-props)
-                                         :type       (param                    type)
-                                         :value      value
-                                         ; BUG#8809
-                                         ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                                         ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
-                                         :on-change #(let [])})
-             ; If field is NOT disabled ...
-             (not disabled?) (merge {:autoFocus  auto-focus?
-                                     :max-length max-length
-                                     :on-blur    (on-blur-function         field-id)
-                                     :on-focus   (on-focus-function        field-id)
-                                     :style      (field-props->field-style field-props)
-                                     :type       (param                    type)
-                                     :value      value
-                                     ; BUG#8041
-                                     ;  Abban az esetben, ha egy input elem {:value-path [...]}
-                                     ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
-                                     ;  érték megváltozik egy külső esemény hatására, az input elem
-                                     ;  {:on-change #(...)} függvényétől függetlenül, miközben
-                                     ;  az input elemen van a fókusz, akkor az elem fókuszának
-                                     ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
-                                     ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
-                                     ;  aminek hatására nem várt események történhetnek, amik hibás
-                                     ;  működéshez vezethetnek.
-                                     ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
-                                     ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
-                                     ;  felülíródik az input tartalmával, ami minden esetben string
-                                     ;  típus, ellentétben a kiválaszott opcióval.
-                                     ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
-                                     ;  függvény használatával kezeli.
-                                     :on-input   (field-props->on-change-function field-id field-props)
-                                     ; BUG#8041
-                                     ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
-                                     ;  függvény nélküli input elemeket.
-                                     :on-change #(let [])})
-             ; If field is targetable & not disabled ...
-             (and (not     disabled?)
-                  (boolean targetable?)) (merge {:id (targetable/element-id->target-id field-id)})
-             ; If field has surface ...
-             (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
+  [field-id {:keys [auto-focus? disabled? max-length surface type value] :as field-props}]
+          ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
+          ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
+          ; minden esetben elérhető.
+          ; A field típusú elemek target-id azonosítása nem kizárólag a {:targetable? ...}
+          ; tulajdonságuk függvénye volt. A {:disabled? true} állapotban levő field elemek
+          ; nem voltak azonosíthatók target-id használatával. Az x4.4.9 verzióban ez a feltétel
+          ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
+  (cond-> {:id (targetable/element-id->target-id field-id)}
+          ; If field is disabled ...
+          (boolean disabled?) (merge {:disabled   true
+                                      :style      (field-props->field-style field-props)
+                                      :type       (param                    type)
+                                      :value      value
+                                      ; BUG#8809
+                                      ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+                                      ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+                                      :on-change #(let [])})
+          ; If field is NOT disabled ...
+          (not disabled?) (merge {:autoFocus  auto-focus?
+                                  :max-length max-length
+                                  :on-blur    (on-blur-function         field-id)
+                                  :on-focus   (on-focus-function        field-id)
+                                  :style      (field-props->field-style field-props)
+                                  :type       (param                    type)
+                                  :value      value
+                                  ; BUG#8041
+                                  ;  Abban az esetben, ha egy input elem {:value-path [...]}
+                                  ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
+                                  ;  érték megváltozik egy külső esemény hatására, az input elem
+                                  ;  {:on-change #(...)} függvényétől függetlenül, miközben
+                                  ;  az input elemen van a fókusz, akkor az elem fókuszának
+                                  ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
+                                  ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
+                                  ;  aminek hatására nem várt események történhetnek, amik hibás
+                                  ;  működéshez vezethetnek.
+                                  ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
+                                  ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
+                                  ;  felülíródik az input tartalmával, ami minden esetben string
+                                  ;  típus, ellentétben a kiválaszott opcióval.
+                                  ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
+                                  ;  függvény használatával kezeli.
+                                  :on-input   (field-props->on-change-function field-id field-props)
+                                  ; BUG#8041
+                                  ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
+                                  ;  függvény nélküli input elemeket.
+                                  :on-change #(let [])})
+          ; If field has surface ...
+          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
 
 (defn field-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

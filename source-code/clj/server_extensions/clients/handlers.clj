@@ -140,9 +140,11 @@
              {::pco/output [:client/id
                             :client/added-at
                             :client/address
+                            :client/archived?
                             :client/city
                             :client/country
                             :client/email-address
+                            :client/favorite?
                             :client/first-name
                             :client/last-name
                             :client/modified-at

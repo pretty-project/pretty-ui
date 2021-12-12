@@ -37,12 +37,15 @@
 
 ; app-plugins.item-editor.engine
 (def item-id->item-uri engine/item-id->item-uri)
+(def get-body-props    engine/get-body-props)
+(def get-header-props  engine/get-header-props)
 
 ; app-plugins.item-editor.views
-(def undo-delete-button  views/undo-delete-button)
-(def edit-copy-button    views/edit-copy-button)
-(def cancel-item-button  views/cancel-item-button)
-(def delete-item-button  views/delete-item-button)
-(def archive-item-button views/archive-item-button)
-(def copy-item-button    views/copy-item-button)
-(def save-item-button    views/save-item-button)
+(def undo-delete-button   views/undo-delete-button)
+(def edit-copy-button     views/edit-copy-button)
+(def cancel-item-button   views/cancel-item-button)
+(def delete-item-button   views/delete-item-button)
+(def archive-item-button  views/archive-item-button)
+(def favorite-item-button views/favorite-item-button)
+(def copy-item-button     views/copy-item-button)
+(def save-item-button     views/save-item-button)

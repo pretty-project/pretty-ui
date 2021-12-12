@@ -67,13 +67,11 @@
   ;   :horizontal-align (keyword)
   ;   :icon-family (keyword)
   ;   :layout (keyword)
-  ;   :targetable? (boolean)
   ;   :variant (keyword)}
-  [{:keys [icon keypress label layout variant] :as button-props}]
+  [{:keys [icon label layout variant] :as button-props}]
   (merge {:layout  :row}
          (if (not= layout :icon-button) {:font-size        :s
                                          :horizontal-align :center})
-         (if (some? keypress)           {:targetable? true})
          (if (some? icon)               {:icon-family :material-icons-filled})
          (if (= variant :filled)        {:background-color :primary})
          (if (= variant :outlined)      {:border-color     :primary})
@@ -152,11 +150,11 @@
   ;  {:badge-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success
   ;   :background-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    :primary, :secondary, :warning, :success, :muted
   ;    Default: :primary
   ;    Only w/ {:variant :filled}
   ;   :border-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    :primary, :secondary, :warning, :success, :muted
   ;    Default: :primary
   ;    Only w/ {:variant :outlined}
   ;   :class (string or vector)(opt)

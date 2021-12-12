@@ -32,7 +32,7 @@
 /*** Item-lister header ***/
 
 #item-lister--header--structure {
-   height: 48px;
+   transition: .15s height;
    width: 100% }
 
  /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként
@@ -42,9 +42,12 @@
   animation-duration: .25s;
   animation-iteration-count: 1;
   animation-fill-mode: both;
+  background-color: var( --background-color );
   display: flex;
   justify-content: space-between;
+  left: 0;
   position: absolute;
+  top: 0;
   width: 100% }
 
 .item-lister--header--menu-bar.r-unmounting { animation-name: x-slide-out-ttb }
@@ -52,6 +55,12 @@
 
 .item-lister--header--menu-item-group {
   display: flex }
+
+.item-lister--header--item-filters {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  position: absolute }
 
 /*** Item-lister header ***/
 

@@ -37,6 +37,14 @@
                             :icon    :add
                             :layout  :icon-button
                             :variant :transparent}
+      :add-to-favorites-icon-button {:color   :default
+                                     :icon    :favorite_border
+                                     :layout  :icon-button
+                                     :variant :transparent}
+      :added-to-favorites-icon-button {:color   :default
+                                       :icon    :favorite
+                                       :layout  :icon-button
+                                       :variant :transparent}
       :apps-icon-button    {:color   :default
                             :icon    :apps
                             :layout  :icon-button
@@ -46,6 +54,10 @@
                             :icon-family :material-icons-outlined
                             :layout  :icon-button
                             :variant :transparent}
+      :archived-icon-button {:color   :default
+                             :icon    :inventory_2
+                             :layout  :icon-button
+                             :variant :transparent}
       :back-button         {:color   :default
                             :icon    :arrow_back
                             :layout  :row
@@ -88,11 +100,15 @@
                               :icon    :content_copy
                               :layout  :icon-button
                               :variant :transparent}
-      :filters-icon-button  {:color   :default
-                             :icon    :filter_alt
-                             :icon-family :material-icons-outlined
-                             :layout  :icon-button
-                             :variant :transparent}
+      :filters-visible-icon-button {:color   :default
+                                    :icon    :filter_alt
+                                    :layout  :icon-button
+                                    :variant :transparent}
+      :filters-nonvisible-icon-button {:color   :default
+                                       :icon    :filter_alt
+                                       :icon-family :material-icons-outlined
+                                       :layout  :icon-button
+                                       :variant :transparent}
       :forward-icon-button {:color   :default
                             :icon    :arrow_forward
                             :layout  :icon-button

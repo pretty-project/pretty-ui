@@ -384,9 +384,8 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
-.x-button[data-variant="filled"][data-background-color="muted"]
-.x-button--body,
-.x-chip[data-color="muted"] .x-chip--body {
+.x-button[data-variant="filled"][data-background-color="muted"] .x-button--body,
+.x-chip[data-background-color="muted"] .x-chip--body {
   background-color: var( --background-color-muted );
   color: var( --black ) }
 
@@ -441,7 +440,7 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
 
-.x-chip[data-color="highlight"] .x-chip--body {
+.x-chip[data-background-color="highlight"] .x-chip--body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
@@ -486,9 +485,8 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
-.x-button[data-variant="filled"][data-background-color="primary"]
-.x-button--body,
-.x-chip[data-color="primary"] .x-chip--body {
+.x-button[data-variant="filled"][data-background-color="primary"] .x-button--body,
+.x-chip[data-background-color="primary"] .x-chip--body {
   background-color: var( --soft-blue );
   color: var( --black ) }
 
@@ -551,7 +549,7 @@ button.x-card:focus,
   stroke: var( --border-color-secondary ) }
 
 .x-button[data-variant="filled"][data-background-color="secondary"] .x-button--body,
-.x-chip[data-color="secondary"] .x-chip--body {
+.x-chip[data-background-color="secondary"] .x-chip--body {
   background-color: var( --soft-purple );
   color: var( --black ) }
 
@@ -614,7 +612,7 @@ button.x-card:focus,
   stroke: var( --border-color-success ) }
 
 .x-button[data-variant="filled"][data-background-color="success"] .x-button--body,
-.x-chip[data-color="success"] .x-chip--body {
+.x-chip[data-background-color="success"] .x-chip--body {
   background-color: var( --soft-green );
   color: var( --black ) }
 
@@ -661,7 +659,7 @@ button.x-card:focus,
   stroke: var( --border-color-warning ) }
 
 .x-button[data-variant="filled"][data-background-color="warning"] .x-button--body,
-.x-chip[data-color="warning"] .x-chip--body {
+.x-chip[data-background-color="warning"] .x-chip--body {
   background-color: var( --soft-red );
   color: var( --black ) }
 
@@ -1191,7 +1189,11 @@ button.x-card:focus,
   min-width: 100%;
   position: absolute;
   transform: scaleX(0);
-  transition: .1s transform .35s, .1s background-color .35s }
+  /* Az x4.4.9 verzióig a tooltip feliratok .35s késleltetéssel jelentek meg és tűntek el.
+   * A késleltetés miatt akadozva történt meg a felirat lecserélése az ikon-gombokon, amikor
+   * azok egyik állapotukból egy másik állapotukba léptek és az újrarendereléssel járó felirat
+   * és ikon csere történt. */
+  transition: .1s transform, .1s background-color }
 
 .x-button [data-tooltip]::after {
   /* Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített

@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-lister.views
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.css       :as css]
               [mid-fruits.vector    :as vector]
               [x.app-db.api         :as db]
               [x.app-components.api :as components]
@@ -292,16 +293,19 @@
                     :preset    :reorder-mode-icon-button
                     :tooltip   :reorder}])
 
-(defn- toggle-item-filter-visibility-button
+(defn- toggle-item-filters-visibility-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:filters-visible? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
-  [elements/button ::toggle-item-filter-visibility-button
-                   {:on-click [:item-lister/toggle-item-filter-visibility! extension-id]
-                    :preset   :filters-icon-button
+  [extension-id _ {:keys [filters-visible?]}]
+  [elements/button ::toggle-item-filters-visibility-button
+                   {:on-click [:item-lister/toggle-item-filters-visibility! extension-id]
+                    :preset   (if filters-visible? :filters-visible-icon-button :filters-nonvisible-icon-button)
                     :tooltip  :filters}])
 
 (defn- sort-items-button
@@ -372,15 +376,14 @@
   [extension-id item-namespace {:keys [no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      [new-item-button                      extension-id item-namespace]
-      [sort-items-button                    extension-id item-namespace
-                                            {:options       engine/DEFAULT-ORDER-BY-OPTIONS
-                                             :initial-value engine/DEFAULT-ORDER-BY
-                                             :no-items-to-show? no-items-to-show?}]
-      [toggle-select-mode-button            extension-id item-namespace header-props]
-      [toggle-reorder-mode-button           extension-id item-namespace header-props]]
-    ; TODO ...
-    ; [toggle-item-filter-visibility-button extension-id]
+      [new-item-button                       extension-id item-namespace]
+      [sort-items-button                     extension-id item-namespace
+                                             {:options       engine/DEFAULT-ORDER-BY-OPTIONS
+                                              :initial-value engine/DEFAULT-ORDER-BY
+                                              :no-items-to-show? no-items-to-show?}]
+      [toggle-select-mode-button             extension-id item-namespace header-props]
+      [toggle-reorder-mode-button            extension-id item-namespace header-props]
+      [toggle-item-filters-visibility-button extension-id item-namespace header-props]]
     [:div.item-lister--header--menu-item-group
       [search-block extension-id item-namespace header-props]]])
 
@@ -400,6 +403,21 @@
       [save-order-button extension-id]]
     [quit-reorder-mode-button extension-id]])
 
+(defn- item-filters
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace header-props]
+  [:div.item-lister--header--item-filters
+    [elements/checkbox ::xx
+                       {:label "Archived items"}]
+    [elements/checkbox ::xx
+                       {:label "Favorites"}]])
+
 (defn- header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -412,16 +430,19 @@
   ;   :select-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [actions-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
-  [:div#item-lister--header--structure
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
-                                      [actions-mode-header extension-id item-namespace header-props]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
-                                      [search-mode-header  extension-id item-namespace header-props]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                      [select-mode-header  extension-id item-namespace header-props]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                      [reorder-mode-header extension-id item-namespace header-props]]])
+  [extension-id item-namespace {:keys [actions-mode? filters-visible? reorder-mode? search-mode? select-mode?] :as header-props}]
+  (let [header-height (if filters-visible? 96 48)]
+       [:div#item-lister--header--structure {:style {:height (css/px header-height)}}
+         [react-transition/mount-animation {:animation-timeout 500 :mounted? filters-visible?}
+                                           [item-filters extension-id item-namespace header-props]]
+         [react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
+                                           [actions-mode-header extension-id item-namespace header-props]]
+         [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
+                                           [search-mode-header  extension-id item-namespace header-props]]
+         [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
+                                           [select-mode-header  extension-id item-namespace header-props]]
+         [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
+                                           [reorder-mode-header extension-id item-namespace header-props]]]))
 
 (defn header
   ; @param (keyword) extension-id

@@ -39,12 +39,12 @@
   ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:background-color (keyword)
   ;   :delete-button-icon (keyword)
   ;   :icon-family (keyword)
   ;   :layout (keyword)}
   [{:keys [icon] :as chip-props}]
-  (merge {:color              :primary
+  (merge {:background-color   :primary
           :layout             :row
           :delete-button-icon DEFAULT-DELETE-BUTTON-ICON}
          (if (some? icon) {:icon-family :material-icons-filled})
@@ -119,8 +119,8 @@
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ;  XXX#7701
-  ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
+  ;  {:background-color (keyword)(opt)
+  ;    :primary, :secondary, :warning, :success, :muted, :highlight
   ;    Default: :primary
   ;   :class (string or vector)(opt)
   ;   :delete-button-icon (keyword)(opt)

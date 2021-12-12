@@ -133,13 +133,13 @@ body {
 --hard-purple-xx-light: rgb(230, 030, 255);
 
 /* Soft purple */
---soft-purple-xx-dark:  rgb(170, 050, 225);
---soft-purple-x-dark:   rgb(180, 060, 235);
---soft-purple-dark:     rgb(190, 070, 245);
---soft-purple:          rgb(200, 080, 255);
---soft-purple-light:    rgb(210, 090, 255);
---soft-purple-x-light:  rgb(220, 100, 255);
---soft-purple-xx-light: rgb(230, 110, 255);
+--soft-purple-xx-dark:  rgb(170, 060, 225);
+--soft-purple-x-dark:   rgb(180, 070, 235);
+--soft-purple-dark:     rgb(190, 080, 245);
+--soft-purple:          rgb(200, 090, 255);
+--soft-purple-light:    rgb(210, 100, 255);
+--soft-purple-x-light:  rgb(220, 110, 255);
+--soft-purple-xx-light: rgb(230, 120, 255);
 
 /* Hard green */
 --hard-green-xx-dark:  rgb(050, 225, 000);
@@ -150,6 +150,15 @@ body {
 --hard-green-x-light:  rgb(100, 255, 050);
 --hard-green-xx-light: rgb(110, 255, 060);
 
+/* Soft green */
+--soft-green-xx-dark:  rgb(050, 225, 110);
+--soft-green-x-dark:   rgb(060, 235, 120);
+--soft-green-dark:     rgb(070, 245, 130);
+--soft-green:          rgb(080, 255, 140);
+--soft-green-light:    rgb(090, 255, 150);
+--soft-green-x-light:  rgb(100, 255, 160);
+--soft-green-xx-light: rgb(110, 255, 170);
+
 /* Hard red */
 --hard-red-xx-dark:  rgb(235, 000, 100);
 --hard-red-x-dark:   rgb(245, 000, 110);
@@ -158,6 +167,15 @@ body {
 --hard-red-light:    rgb(255, 010, 140);
 --hard-red-x-light:  rgb(255, 020, 150);
 --hard-red-xx-light: rgb(255, 030, 160);
+
+/* Soft red */
+--soft-red-xx-dark:  rgb(235, 060, 100);
+--soft-red-x-dark:   rgb(245, 070, 110);
+--soft-red-dark:     rgb(245, 080, 120);
+--soft-red:          rgb(255, 090, 130);
+--soft-red-light:    rgb(255, 100, 140);
+--soft-red-x-light:  rgb(255, 110, 150);
+--soft-red-xx-light: rgb(255, 120, 160);
 
 /*** Color ***/
 /***** Background, border, color and shadow *****/

@@ -3,8 +3,8 @@
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
-              [app-extensions.trader.overview :as overview]
-              [app-extensions.trader.trades   :as trades]))
+              [app-extensions.trader.overview  :as overview]
+              [app-extensions.trader.positions :as positions]))
 
 
 
@@ -14,8 +14,8 @@
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
-  [{:label "Overview" :on-click [:view-selector/go-to! :trader :overview] :active? (= view-id :overview)}
-   {:label "Trades"   :on-click [:view-selector/go-to! :trader :trades]   :active? (= view-id :trades)}])
+  [{:label "Overview"  :on-click [:view-selector/go-to! :trader :overview]  :active? (= view-id :overview)}
+   {:label "Positions" :on-click [:view-selector/go-to! :trader :positions] :active? (= view-id :positions)}])
 
 
 
@@ -37,10 +37,9 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [view-id]}]
-  (case view-id :overview [overview/body body-id]
-                :trades   [trades/body   body-id]
+  (case view-id :overview  [overview/body  body-id]
+                :positions [positions/body body-id]
                 "Follow the white rabbit!"))
-
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!

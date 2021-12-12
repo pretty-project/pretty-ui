@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.4.8
+; Compatibility: x4.4.9
 
 
 
@@ -71,20 +71,19 @@
   ; @param (keyword) input-id
   ; @param (map) input-props
   ;  {:checked? (boolean)
-  ;   :disabled? (boolean)(opt)
-  ;   :targetable? (boolean)(opt)}
+  ;   :disabled? (boolean)(opt)}
   ;
   ; @return (map)
   ;  {:disabled (boolean)
   ;   :id (string)
   ;   :on-click (function)}
-  [input-id {:keys [checked? disabled? targetable?]}]
-  (cond-> {} (boolean disabled?)   (merge {:disabled true})
-             (boolean checked?)    (merge {:on-click    (on-uncheck-function              input-id)
-                                           :on-mouse-up (focusable/blur-element-function  input-id)})
-             (not     checked?)    (merge {:on-click    (on-check-function                input-id)
-                                           :on-mouse-up (focusable/blur-element-function  input-id)})
-             (boolean targetable?) (merge {:id          (targetable/element-id->target-id input-id)})))
+  [input-id {:keys [checked? disabled?]}]
+  (cond-> {:id (targetable/element-id->target-id input-id)}
+          (boolean disabled?) (merge {:disabled true})
+          (boolean checked?)  (merge {:on-click    (on-uncheck-function             input-id)
+                                      :on-mouse-up (focusable/blur-element-function input-id)})
+          (not     checked?)  (merge {:on-click    (on-check-function               input-id)
+                                      :on-mouse-up (focusable/blur-element-function input-id)})))
 
 (defn checkable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -57,56 +57,50 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @usage
-  ;  (r item-editor/get-derived-item-id db :my-namespace :my-type)
-  ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
   (let [item-id-key (item-id-key extension-id item-namespace)]
        (r router/get-current-route-path-param db item-id-key)))
 
-; @usage
-;  [:item-editor/get-derived-item-id :my-namespace :my-type]
-(a/reg-sub :item-editor/get-derived-item-id get-derived-item-id)
-
 (defn synchronizing?
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/synchronizing? db :my-namespace :my-type)
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [request-id (request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
-; @usage
-;  [:item-editor/synchronizing? :my-namespace :my-type]
-(a/reg-sub :item-editor/synchronizing? synchronizing?)
-
 (defn new-item?
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/new-item? db :my-extension :my-type)
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [item-id (get-in db [extension-id :editor-meta :item-id])]
        (item-id->new-item?  extension-id item-namespace item-id)))
 
-; @usage
-;  [:item-editor/new-item? :my-namespace :my-type]
-(a/reg-sub :item-editor/new-item? new-item?)
+(defn item-archived?
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [archived-key (keyword item-namespace :archived?)]
+       (get-in db [extension-id :editor-data archived-key])))
+
+(defn item-favorite?
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [favorite-key (keyword item-namespace :favorite?)]
+       (get-in db [extension-id :editor-data favorite-key])))
 
 (defn get-description
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-description db :my-extension :my-type)
   ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
@@ -116,10 +110,6 @@
             modified-at     (get-in db [extension-id :editor-data modified-at-key])
             modified-at     (r activities/get-actual-timestamp db modified-at)]
            (components/content {:content :last-modified-at-n :replacements [modified-at]}))))
-
-; @usage
-;  [:item-editor/get-description :my-namespace :my-type]
-(a/reg-sub :item-editor/get-description get-description)
 
 (defn get-body-props
   ; @param (keyword) extension-id
@@ -149,7 +139,9 @@
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (let [form-id (form-id extension-id item-namespace)]
-       {:form-completed? (r elements/form-completed? db form-id)
+       {:archived?       (r item-archived? db extension-id item-namespace)
+        :favorite?       (r item-favorite? db extension-id item-namespace)
+        :form-completed? (r elements/form-completed? db form-id)
         :new-item?       (r new-item?                db extension-id item-namespace)}))
 
 ; @usage
@@ -181,7 +173,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- reset-item-editor!
+(defn reset-item-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -190,6 +182,58 @@
   [db [_ extension-id]]
   (-> db (dissoc-in [extension-id :editor-data])
          (dissoc-in [extension-id :editor-meta])))
+
+(defn mark-item-as-favorite!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [favorite-key (keyword item-namespace :favorite?)]
+       (assoc-in db [extension-id :editor-data favorite-key] true)))
+
+(a/reg-event-db :item-editor/mark-item-as-favorite! mark-item-as-favorite!)
+
+(defn unmark-item-as-favorite!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [favorite-key (keyword item-namespace :favorite?)]
+       (dissoc-in db [extension-id :editor-data favorite-key])))
+
+(a/reg-event-db :item-editor/unmark-item-as-favorite! unmark-item-as-favorite!)
+
+(defn mark-item-as-archived!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [archived-key (keyword item-namespace :archived?)]
+       (assoc-in db [extension-id :editor-data archived-key] true)))
+
+(a/reg-event-db :item-editor/mark-item-as-archived! mark-item-as-archived!)
+
+(defn unmark-item-as-archived!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [archived-key (keyword item-namespace :archived?)]
+       (dissoc-in db [extension-id :editor-data archived-key])))
+
+(a/reg-event-db :item-editor/unmark-item-as-archived! unmark-item-as-archived!)
 
 
 

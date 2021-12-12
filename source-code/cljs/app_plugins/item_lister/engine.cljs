@@ -340,17 +340,21 @@
   (cond (get-in db [extension-id :lister-meta :select-mode?])
         {:select-mode?        true
          :all-items-selected? (r all-items-selected? db extension-id)
-         :any-item-selected?  (r any-item-selected?  db extension-id)}
+         :any-item-selected?  (r any-item-selected?  db extension-id)
+         :filters-visible?    false}
         ; If search-mode is enabled ...
         (get-in db [extension-id :lister-meta :search-mode?])
-        {:search-mode? true}
+        {:search-mode?     true
+         :filters-visible? false}
         ; If reorder-mode is enabled ...
         (get-in db [extension-id :lister-meta :reorder-mode?])
-        {:reorder-mode?  true
-         :order-changed? false}
+        {:reorder-mode?    true
+         :filters-visible? false
+         :order-changed?   false}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
+         :filters-visible?  (get-in db [extension-id :lister-meta :filters-visible?])
          :no-items-to-show? (r no-items-to-show?           db extension-id)
          :viewport-small?   (r environment/viewport-small? db)}))
 
@@ -454,6 +458,22 @@
 ; @usage
 ;  [:item-lister/toggle-reorder-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
+
+(defn- toggle-item-filters-visibility!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r engine/toggle-item-filters-visibility! :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (update-in db [extension-id :lister-meta :filters-visible?] not))
+
+; @usage
+;  [:item-lister/toggle-item-filters-visibility! :my-extension]
+(a/reg-event-db :item-lister/toggle-item-filters-visibility! toggle-item-filters-visibility!)
 
 (defn- select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -160,7 +160,9 @@
                         {:label "Transparent button #2"
                          :on-click [:developer/test!]
                          :variant :transparent
-                         :icon :people}]])
+                         :icon :people}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Submit button"}]])
 
 (defn- card-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
