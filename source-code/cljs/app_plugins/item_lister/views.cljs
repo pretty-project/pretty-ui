@@ -344,14 +344,14 @@
   ;  {:filter (keyword)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id _ {:keys [filter]}]
+  [extension-id item-namespace {:keys [filter]}]
   [:div.item-lister--header--item-filters
     [elements/menu-bar {:menu-items [{:label :all-items      :active? (nil? filter)
-                                      :on-click [:db/remove-item! [extension-id :lister-meta :filter]]}
+                                      :on-click [:item-lister/discard-filter! extension-id item-namespace]}
                                      {:label :favorites      :active? (= filter :favorite-items)
-                                      :on-click [:db/set-item! [extension-id :lister-meta :filter] :favorite-items]}
+                                      :on-click [:item-lister/use-filter! extension-id item-namespace :favorite-items]}
                                      {:label :archived-items :active? (= filter :archived-items)
-                                      :on-click [:db/set-item! [extension-id :lister-meta :filter] :archived-items]}]}]])
+                                      :on-click [:item-lister/use-filter! extension-id item-namespace :archived-items]}]}]])
 
 
 
@@ -513,27 +513,7 @@
   [extension-id item-namespace body-props]
   [:div "sortable"])
 
-(defn- filtered-item-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;  {:downloaded-items (maps in vector)
-  ;   :filter (keyword)(opt)
-  ;   :list-element (component)}
-  ;
-  ; @return (component)
-  [extension-id item-namespace {:keys [downloaded-items filter list-element]}]
-  (reduce-indexed (fn [item-list {:keys [archived? favorite? id] :as item} item-dex]
-                      (if (or (and (nil? filter) (not archived?))
-                              (and (= filter :archived-items) archived?)
-                              (and (= filter :favorite-items) favorite?))
-                          (vector/conj-item item-list ^{:key id}
-                                                       [:div.item-lister--list-item [list-element item-dex item]])
-                          (return item-list)))
-                  [:div.item-lister--item-list]
-                  (param downloaded-items)))
+
 
 
 
@@ -557,13 +537,12 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [downloaded-items list-element]}]
-  (reduce-indexed (fn [item-list {:keys [archived? id] :as item} item-dex]
-                      (if archived? (return item-list)
-                                    (vector/conj-item item-list ^{:key id}
-                                                                 [:div.item-lister--list-item--structure
-                                                                   [list-item-checkbox extension-id item-dex]
-                                                                   [:div.item-lister--list-item {:data-archived false}
-                                                                                                [list-element item-dex item]]])))
+  (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
+                      (vector/conj-item item-list ^{:key id}
+                                                   [:div.item-lister--list-item--structure
+                                                     [list-item-checkbox extension-id item-dex]
+                                                     [:div.item-lister--list-item {:data-archived false}
+                                                                                  [list-element item-dex item]]]))
                   [:div.item-lister--item-list]
                   (param downloaded-items)))
 
@@ -576,10 +555,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [downloaded-items list-element]}]
-  (reduce-indexed (fn [item-list {:keys [archived? id] :as item} item-dex]
-                      (if archived? (return item-list)
-                                    (vector/conj-item item-list ^{:key id}
-                                                                 [:div.item-lister--list-item [list-element item-dex item]])))
+  (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
+                      (vector/conj-item item-list ^{:key id}
+                                                   [:div.item-lister--list-item [list-element item-dex item]]))
                   [:div.item-lister--item-list]
                   (param downloaded-items)))
 
@@ -589,12 +567,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:select-mode? (boolean)(opt)}
+  ;  {:reorder-mode? (boolean)(opt)
+  ;   :select-mode? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id item-namespace {:keys [filter-mode? reorder-mode? select-mode?] :as body-props}]
-  (cond filter-mode?  [filtered-item-list   extension-id item-namespace body-props]
-        select-mode?  [selectable-item-list extension-id item-namespace body-props]
+  [extension-id item-namespace {:keys [reorder-mode? select-mode?] :as body-props}]
+  (cond select-mode?  [selectable-item-list extension-id item-namespace body-props]
         reorder-mode? [sortable-item-list   extension-id item-namespace body-props]
         :default-mode [default-item-list    extension-id item-namespace body-props]))
 

@@ -291,19 +291,30 @@
   [db [_ extension-id]]
   (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY))
 
+(defn- some-items-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (let [received-count (get-in db [extension-id :lister-meta :received-count])]
+       (not= received-count 0)))
+
 (defn- download-more-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  ; XXX#0791
-  ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
-  ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-  (or (not (r synchronized?         db extension-id))
-      (not (r all-items-downloaded? db extension-id))))
+  [db [_ extension-id]]
+       ; XXX#0791
+       ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
+       ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
+  (and (or (not (r synchronized?         db extension-id))
+           (not (r all-items-downloaded? db extension-id)))
+       ; BUG#7009
+       (r some-items-received? db extension-id)))
 
 (defn- get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -369,8 +380,6 @@
   ;  {:actions-mode? (boolean)
   ;   :downloaded-items (vector)
   ;   :disabled-items (integers in vector)
-  ;   :filter (keyword)
-  ;   :filter-mode? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :reorder-mode? (boolean)
   ;   :search-mode? (boolean)
@@ -388,9 +397,7 @@
         {:search-mode?      true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)
-         :filter            (get-in db [extension-id :lister-meta :filter])
-         :filter-mode?      (get-in db [extension-id :lister-meta :filter-mode?])}
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (get-in db [extension-id :lister-meta :reorder-mode?])
         {:reorder-mode?     true
@@ -402,9 +409,7 @@
         {:actions-mode?     true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)
-         :filter            (get-in db [extension-id :lister-meta :filter])
-         :filter-mode?      (get-in db [extension-id :lister-meta :filter-mode?])}))
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
@@ -578,6 +583,27 @@
   (let [selected-items (r get-selected-items db extension-id)]
        (r mark-items-as-disabled! db extension-id selected-items)))
 
+(defn- use-filter!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) filter-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace filter-id]]
+  (assoc-in db [extension-id :lister-meta :filter] filter-id))
+
+(defn- discard-filter!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (dissoc-in db [extension-id :lister-meta :filter]))
+
 
 
 ;; -- Effect events -----------------------------------------------------------
@@ -589,9 +615,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]))
 
 (a/reg-event-fx
@@ -600,9 +623,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r delete-selected-items! db extension-id)}))
       ; TODO
@@ -615,9 +635,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/search-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
            ; BUG#8071
            ; Az item-lister alapállapotba állítása után az infinite-loader komponens
@@ -637,13 +654,37 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/order-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
            ; BUG#8071
       {:db (as-> db % (r reset-item-lister!           % extension-id)
                       (r tools/pause-infinite-loader! % extension-id))
+       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+
+(a/reg-event-fx
+  :item-lister/discard-filter!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+           ; BUG#8071
+      {:db (as-> db % (r reset-item-lister!           % extension-id)
+                      (r tools/pause-infinite-loader! % extension-id)
+                      (r discard-filter!              % extension-id))
+       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+
+(a/reg-event-fx
+  :item-lister/use-filter!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) filter-id
+  (fn [{:keys [db]} [_ extension-id item-namespace filter-id]]
+           ; BUG#8071
+      {:db (as-> db % (r reset-item-lister!           % extension-id)
+                      (r tools/pause-infinite-loader! % extension-id)
+                      (r use-filter!                  % extension-id item-namespace filter-id))
        :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
@@ -652,13 +693,11 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/receive-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [resolver-id    (resolver-id extension-id item-namespace)
             documents      (get-in server-response [resolver-id :documents])
-            document-count (get-in server-response [resolver-id :document-count])]
+            document-count (get-in server-response [resolver-id :document-count])
+            received-count (count documents)]
                            ; XXX#3907
                            ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
                            ; a lista-elemek felsorolásakor és egyes Re-Frame feliratkozásokban
@@ -671,7 +710,14 @@
                            ; dokumentumok számát, mert megváltozhat az értéke!
                            (assoc-in % [extension-id :lister-meta :document-count] document-count)
                            ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-                           (assoc-in % [extension-id :lister-meta :synchronized?]  true))
+                           (assoc-in % [extension-id :lister-meta :synchronized?]  true)
+                           ; BUG#7009
+                           ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
+                           ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor
+                           ; az elemek letöltésével kapcsolatban valamilyen hiba történt.
+                           ; Az ilyen típusú hibák megállapításához szükséges a received-count
+                           ; értéket eltárolni.
+                           (assoc-in % [extension-id :lister-meta :received-count] received-count))
             ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
             ; hogy az a viewport területén van-e még.
             :dispatch [:tools/reload-infinite-loader! extension-id]})))
@@ -687,18 +733,16 @@
   ; a Re-Frame adatbázisba, így elkerülhető, hogy a request idle-timeout ideje alatt
   ; az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
   ; felirat még megjelenik a lista végén.
-  ;
-  ; @usage
-  ;  [:item-lister/request-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
       ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
-      (if (r download-more-items? db extension-id item-namespace)
+      (if (r download-more-items? db extension-id)
           (let [resolver-id    (resolver-id extension-id item-namespace)
                 resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-id)
                                 :search-term           (r get-search-term           db extension-id)
                                 :order-by              (r get-order-by              db extension-id)
-                                :download-limit        (get-in db [extension-id :lister-meta :download-limit])}]
+                                :download-limit        (get-in db [extension-id :lister-meta :download-limit])
+                                :filter                (get-in db [extension-id :lister-meta :filter])}]
                [:sync/send-query! (request-id extension-id item-namespace)
                                   {:on-stalled [:item-lister/receive-items! extension-id item-namespace]
                                    :query      [`(~resolver-id ~resolver-props)]}]))))
@@ -711,9 +755,6 @@
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
   ;  {:download-limit (integer)}
-  ;
-  ; @usage
-  ;  [:item-lister/load! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
       {:db (-> db (dissoc-in [extension-id :lister-data])
                   (assoc-in  [extension-id :lister-meta] lister-props))

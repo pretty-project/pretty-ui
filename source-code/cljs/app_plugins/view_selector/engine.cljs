@@ -41,7 +41,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-derived-view-id
+(defn- get-derived-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -65,19 +65,19 @@
                    (or default-view-id DEFAULT-VIEW-ID)))
           (or default-view-id DEFAULT-VIEW-ID)))
 
-(defn get-selected-view-id
+(defn get-selected-view
   ; @param (keyword) extension-id
   ;
   ; @usage
-  ;  (r view-selector/get-selected-view-id db :my-extension)
+  ;  (r view-selector/get-selected-view db :my-extension)
   ;
   ; @return (keyword)
   [db [_ extension-id]]
   (get-in db [extension-id :view-meta :view-id]))
 
 ; @usage
-;  [:view-selector/get-selected-view-id :my-extension]
-(a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)
+;  [:view-selector/get-selected-view :my-extension]
+(a/reg-sub :view-selector/get-selected-view get-selected-view)
 
 (defn get-view-props
   ; @param (keyword) extension-id
@@ -88,7 +88,7 @@
   ; @return (map)
   ;  {:view-id (keyword)}
   [db [_ extension-id]]
-  {:view-id (r get-selected-view-id db extension-id)})
+  {:view-id (r get-selected-view db extension-id)})
 
 ; @usage
 ;  [:view-selector/get-view-props :my-extension]
@@ -141,7 +141,7 @@
   ;  {:allowed-view-ids (keywords in vector)(opt)
   ;   :default-view-id (keyword)(opt)}
   (fn [{:keys [db]} [_ extension-id selector-props]]
-      (let [derived-view-id (r get-derived-view-id db extension-id selector-props)]
+      (let [derived-view-id (r get-derived-view db extension-id selector-props)]
            {:db       (-> db (dissoc-in [extension-id :view-meta])
                              (assoc-in  [extension-id :view-meta :view-id] derived-view-id))
             :dispatch (load-event extension-id)})))

@@ -25,5 +25,6 @@
 (def get-documents-by-pipeline   engine/get-documents-by-pipeline)
 
 ; mongo-db.pipelines
+(def filter-pattern->pipeline-query pipelines/filter-pattern->pipeline-query)
 (def search-pattern->pipeline-query pipelines/search-pattern->pipeline-query)
 (def sort-pattern->pipeline-sort    pipelines/sort-pattern->pipeline-sort)

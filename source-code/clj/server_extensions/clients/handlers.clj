@@ -67,10 +67,13 @@
             downloaded-item-count (get resolver-props :downloaded-item-count)
             search-term           (get resolver-props :search-term)
             order-by              (get resolver-props :order-by)
-            max-count             (get resolver-props :download-limit)]
+            max-count             (get resolver-props :download-limit)
+            filter-id             (get resolver-props :filter)]
            {:max-count      max-count
             :skip           downloaded-item-count
-            :search-pattern [[:clients/full-name search-term] [:clients/email-address search-term]]
+;            :filter-pattern (case filter-id :archived-items [[:client/archived? true]])
+;                                            :favorite-items [[:client/favorite? true]])
+            :search-pattern [[:client/full-name search-term] [:client/email-address search-term]]
             :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
                                            :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
                                            :by-date-ascending  [[:client/modified-at  1]]
@@ -82,13 +85,16 @@
       ; @usage
       ;  (search-props->search-pipeline {:max-count 20
       ;                                  :skip       0
-      ;                                  :search-pattern [[:clients/first-name "xyz"]]
-      ;                                  :sort-pattern   [[:clients/first-name 1]]}
-      [{:keys [max-count skip search-pattern sort-pattern] :as search-props}]
-      (let [query      (mongo-db/search-pattern->pipeline-query search-pattern)
-            sort       (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
-           [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" query}
+      ;                                  :search-pattern [[:client/first-name "xyz"]]
+      ;                                  :sort-pattern   [[:client/first-name 1]]}
+      [{:keys [filter-pattern max-count skip search-pattern sort-pattern] :as search-props}]
+      (let [;filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
+            search-query (mongo-db/search-pattern->pipeline-query search-pattern)
+            sort         (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
+           [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
+            {"$match" ;(if (vector/nonempty? filter-query)
+                      ;    {"$or" search-query "$and" filter-query}
+                          {"$or" search-query}}
             {"$sort"  sort}
             {"$skip"  skip}
             {"$limit" max-count}]))
@@ -97,11 +103,17 @@
       ; WARNING! NON-PUBLIC! DO NOT USE!
       ;
       ; @usage
-      ;  (search-props->count-pipeline {:search-pattern [[:clients/first-name "xyz"]]}
-      [{:keys [search-pattern] :as search-props}]
-      (let [query (mongo-db/search-pattern->pipeline-query search-pattern)]
-           [{"$addFields" {"clients/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" query}]))
+      ;  (search-props->count-pipeline {:search-pattern [[:client/first-name "xyz"]]}
+      [{:keys [filter-pattern search-pattern] :as search-props}]
+      (let [;filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
+            search-query (mongo-db/search-pattern->pipeline-query search-pattern)]
+;           (println (str {"$match" (if (vector/nonempty? filter-query)
+;                                       {"$or" search-query "$and" filter-query}
+;                                       {"$or" search-query})]
+           [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
+            {"$match"; (if (vector/nonempty? filter-query)
+                      ;    {"$or" search-query "$and" filter-query}
+                          {"$or" search-query}}]))
 
 
 
@@ -117,18 +129,17 @@
              ;
              ; @return (map)
              ;  {:clients/get-client-suggestions (map)
-             ;   {:cities (strings in vector)}}
              [env _]
              {:clients/get-client-suggestions
               (let [all-documents   (mongo-db/get-all-documents :clients)
                     suggestion-keys (pathom/env->param      env :suggestion-keys)]
-                   (reduce (fn [a document]
-                               (reduce (fn [b suggestion-key]
+                   (reduce (fn [result document]
+                               (reduce (fn [result suggestion-key]
                                            (let [suggestion-value (db/get-document-value document suggestion-key)]
                                                 (if (string/nonempty? suggestion-value)
-                                                    (update b suggestion-key vector/conj-item-once suggestion-value)
-                                                    (return b))))
-                                       (param a)
+                                                    (update result suggestion-key vector/conj-item-once suggestion-value)
+                                                    (return result))))
+                                       (param result)
                                        (param suggestion-keys)))
                            {}
                            (param all-documents)))})
@@ -146,7 +157,7 @@
              ;     :documents (maps in vector)}}
              [env _]
              {:clients/get-client-items
-              (let [search-props    (env->search-props  env)
+              (let [search-props    (env->search-props env)
                     search-pipeline (search-props->search-pipeline search-props)
                     count-pipeline  (search-props->count-pipeline  search-props)]
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve

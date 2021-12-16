@@ -410,6 +410,11 @@ body[data-viewport-profile="s"]   #x-app-header {
   -min-height: 48px;
   /* WARNING! DEPRECATED! */
 
+  /* A {:min-height ...} tulajdonság használata nélkül az .x-app-popups--element--body elem
+   * esetlegesen méretcsökkenésre kényszerítené az .x-app-popups--element--header elemet,
+   * ezért szükséges a {:flex-shrink 0} tulajdonságot alkalmazni */
+  flex-shrink: 0;
+
   width: 100% }
 
 /*** Popup header ***/

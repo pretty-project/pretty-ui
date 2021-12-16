@@ -34,10 +34,11 @@
 ; Converters
 ; Event-vector converters
 ; DB functions
-; Event self-destructing
 ; Metamorphic handler functions
 ; Metamorphic effects functions
 ; Effects-map functions
+; Prototype functions
+; Event self-destructing
 ; Event checking
 ; Event registrating
 ; Dispatch functions
@@ -145,14 +146,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-;  {:cofx (map)
-;   :event (map)
-;   :fx (map)
-;   :sub (map)}
-(def kind->id->namespace (atom {:cofx  {}
-                                :event {}
-                                :fx    {}
-                                :sub   {}}))
+(def PROTOTYPES (atom {}))
 
 
 
@@ -648,38 +642,6 @@
 
 
 
-;; -- Event self-destructing --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A self-destruct! interceptor használatával az esemény megsemmisíti önmagát
-; az első meghívását követően, így azt többször már nem lehet meghívni.
-;
-; @usage
-;  (reg-event-fx
-;   ::my-event
-;   [self-destruct!]
-;   (fn [cofx event-vector]
-;       {:dispatch ...}))
-
-(defn <-self-destruct!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;
-  ; @return (map)
-  [context]
-  (let [event-vector (context->event-vector  context)
-        event-id     (event-vector->event-id event-vector)]
-       (registrar/clear-handlers :event event-id)
-       (return context)))
-
-(def self-destruct!
-  (re-frame/->interceptor
-    :id    ::self-destruct!
-    :after <-self-destruct!))
-
-
-
 ;; -- Event param functions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -831,6 +793,67 @@
   (-> a (update-some :dispatch-n     vector/conj-item    (:dispatch       b))
         (update-some :dispatch-n     vector/concat-items (:dispatch-n     b))
         (update-some :dispatch-later vector/concat-items (:dispatch-later b))))
+
+
+
+;; -- Prototype functions -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reg-prototype
+  ; @param (keyword) prototype-id
+  ; @param (function) prototype-f
+  ;
+  ; @usage
+  ;  (defn my-prototype [db [prototype-id my-param]])
+  ;  (a/reg-prototype :my-prototype my-prototype)
+  [prototype-id prototype-f]
+  (swap! PROTOTYPES assoc prototype-id prototype-f))
+
+(defn use-prototype
+  ; @param (keyword) prototype-id
+  ;
+  ; @usage
+  ;  (a/use-prototype [:my-prototype "My param"])
+  ;
+  ; @usage
+  ;  (defn my-function
+  ;    (let [my-value (a/use-prototype [:my-prototype "My param"])]
+  ;         (do-something! my-value)))
+  [[prototype-id :as prototype-vector]]
+  (let [prototype-f (get @PROTOTYPES prototype-id)]
+       (prototype-f @app-db prototype-vector)))
+
+
+
+;; -- Event self-destructing --------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A self-destruct! interceptor használatával az esemény megsemmisíti önmagát
+; az első meghívását követően, így azt többször már nem lehet meghívni.
+;
+; @usage
+;  (reg-event-fx
+;   ::my-event
+;   [self-destruct!]
+;   (fn [cofx event-vector]
+;       {:dispatch ...}))
+
+(defn <-self-destruct!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) context
+  ;
+  ; @return (map)
+  [context]
+  (let [event-vector (context->event-vector  context)
+        event-id     (event-vector->event-id event-vector)]
+       (registrar/clear-handlers :event event-id)
+       (return context)))
+
+(def self-destruct!
+  (re-frame/->interceptor
+    :id    ::self-destruct!
+    :after <-self-destruct!))
 
 
 

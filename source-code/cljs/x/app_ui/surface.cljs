@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.8.8
-; Compatibility: x4.4.8
+; Version: v2.9.2
+; Compatibility: x4.4.9
 
 
 
@@ -42,6 +42,8 @@
           :trim-content?    false
           :update-animated? false}
          (param surface-props)))
+
+(a/reg-prototype :ui/surface-props-prototype surface-props-prototype)
 
 
 
