@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.06.09
 ; Description:
-; Version: v0.2.8
+; Version: v0.4.4
 ; Compatibility: x4.4.9
 
 
@@ -91,7 +91,7 @@
   ;   :params (map)
   ;    {:query (string)}}
   [query-id {:keys [body query] :as query-props}]
-  (let [request-props (map/inherit query-props [:body :modifier :on-failure :on-sent :on-success
+  (let [request-props (map/inherit query-props [:body :idle-timeout :modifier :on-failure :on-sent :on-success
                                                 :on-stalled :target-path :target-paths :uri])]
        (merge request-props {:method :post}
                             (if (some? query)
@@ -187,6 +187,8 @@
   ;  {:body (map)(opt)
   ;    {:query (string or vector)}
   ;    Only w/o {:query ...}
+  ;   :idle-timeout (ms)(opt)
+  ;    Default: x.app-sync/request-handler/DEFAULT-IDLE-TIMEOUT
   ;   :modifier (function)(opt)
   ;    A szerver-válasz értéket eltárolása előtt módosító függvény.
   ;   :on-failure (metamorphic-event)(opt)

@@ -15,22 +15,9 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- action-buttons
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [item-editor/delete-item-button  :products :product]
-       [item-editor/copy-item-button    :products :product]
-       [item-editor/archive-item-button :products :product]])
-
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [new-item?] :as header-props}]
-  [elements/polarity ::form-header
-                     {:start-content [:<> (if (boolean new-item?)
-                                             ;[item-editor/cancel-item-button :products :product]
-                                              nil
-                                              [action-buttons header-id header-props])]
-                      :end-content [item-editor/save-item-button :products :product header-props]}])
+  [header-id {:keys [new-item?] :as header-props}])
 
 
 

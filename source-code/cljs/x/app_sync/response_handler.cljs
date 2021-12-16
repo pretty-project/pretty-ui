@@ -180,7 +180,7 @@
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [response-action (r request-handler/get-request-prop db request-id :response-action)]
            (case response-action
-                 :save  [:sync/save-request-response! request-id server-response-body]
+                 :save [:sync/save-request-response! request-id server-response-body]
                  ; Az :on-failure, :on-success és :on-responsed események megtörténése előtt
                  ; szükséges eltárolni a szerver válaszát!
                  :store {:db (r store-request-response! db request-id server-response-body)}))))

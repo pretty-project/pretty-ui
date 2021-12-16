@@ -188,7 +188,9 @@
                             :client/phone-number
                             :client/vat-no
                             :client/zip-code]}
-             (mongo-db/get-document-by-id collection-name id))
+             (if-let [document (mongo-db/get-document-by-id collection-name id)]
+                     (return document)
+                     (pathom/error-answer :document-not-found)))
 
 
 

@@ -20,6 +20,7 @@
               [mid-fruits.map       :refer [dissoc-in]]
               [mid-fruits.vector    :as vector]
               [mid-fruits.time      :as time]
+              [pathom.api           :as pathom]
               [x.app-activities.api :as activities]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
@@ -49,6 +50,7 @@
 (def extended-route-template engine/extended-route-template)
 (def parent-uri              engine/parent-uri)
 (def render-event            engine/render-event)
+(def dialog-id               engine/dialog-id)
 
 
 
@@ -112,12 +114,15 @@
   ;
   ; @return (map)
   ;  {:colors (strings in vector)
+  ;   :error-occured? (boolean)
   ;   :synchronizing? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  {:colors         (get-in db [extension-id :editor-data :colors])
-   :new-item?      (r new-item?      db extension-id item-namespace)
-   :synchronizing? (r synchronizing? db extension-id item-namespace)})
+  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
+          {:error-occured? true}
+          {:colors         (get-in db [extension-id :editor-data :colors])
+           :new-item?      (r new-item?      db extension-id item-namespace)
+           :synchronizing? (r synchronizing? db extension-id item-namespace)}))
 
 ; @usage
 ;  [:item-editor/get-body-props :my-namespace :my-type]
@@ -132,17 +137,20 @@
   ;
   ; @return (map)
   ;  {:archived? (boolean)
+  ;   :error-occured? (boolean)
   ;   :favorite? (boolean)
   ;   :form-completed? (boolean)
   ;   :new-item? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-  (let [form-id (form-id extension-id item-namespace)]
-       {:archived?       (get-in db [extension-id :editor-data :archived?])
-        :favorite?       (get-in db [extension-id :editor-data :favorite?])
-        :form-completed? (r elements/form-completed? db form-id)
-        :new-item?       (r new-item?                db extension-id item-namespace)
-        :synchronizing?  (r synchronizing?           db extension-id item-namespace)}))
+  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
+          {:error-occured? true}
+          (let [form-id (form-id extension-id item-namespace)]
+               {:archived?       (get-in db [extension-id :editor-data :archived?])
+                :favorite?       (get-in db [extension-id :editor-data :favorite?])
+                :form-completed? (r elements/form-completed? db form-id)
+                :new-item?       (r new-item?                db extension-id item-namespace)
+                :synchronizing?  (r synchronizing?           db extension-id item-namespace)})))
 
 ; @usage
 ;  [:item-editor/get-header-props :my-namespace :my-type]
@@ -157,12 +165,15 @@
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)
+  ;   :error-occured? (boolean)
   ;   :new-item? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-  {:description    (r get-description db extension-id item-namespace)
-   :new-item?      (r new-item?       db extension-id item-namespace)
-   :synchronizing? (r synchronizing?  db extension-id item-namespace)})
+  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
+          {:error-occured? true}
+          {:description    (r get-description db extension-id item-namespace)
+           :new-item?      (r new-item?       db extension-id item-namespace)
+           :synchronizing? (r synchronizing?  db extension-id item-namespace)}))
 
 ; @usage
 ;  [:item-editor/get-view-props :my-namespace :my-type]
@@ -288,6 +299,10 @@
             item-props    (get-in    db [extension-id :editor-data])
             document      (db/document->namespaced-document item-props item-namespace)]
            [:sync/send-query! (request-id extension-id item-namespace)
+                               ; XXX#3701
+                               ; Az on-success helyett on-stalled időzítés használatával elkerülhető,
+                               ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
+                               ; egymást, megnehezítve a felhasználó számára a történések megértését
                               {:on-stalled [:router/go-to! parent-uri]
                                :on-failure [:ui/blow-bubble! {:content {:body :failed-to-save}}]
                                :query      [`(~(symbol mutation-name) ~document)]}])))
@@ -304,6 +319,7 @@
             item-props    (get-in    db [extension-id :editor-data])
             document      (db/document->namespaced-document item-props item-namespace)]
            [:sync/send-query! (request-id extension-id item-namespace)
+                               ; XXX#3701
                               {:on-stalled [:router/go-to! parent-uri]
                                :on-failure [:ui/blow-bubble! {:content {:body :failed-to-save}}]
                                :query      [`(~(symbol mutation-name) ~document)]}])))
@@ -320,6 +336,7 @@
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
            {:db (r store-item-backup! db extension-id item-namespace item-id)
             :dispatch [:sync/send-query! (request-id extension-id item-namespace)
+                                          ; XXX#3701
                                          {:on-stalled [:item-editor/->item-deleted extension-id item-namespace item-id]
                                           :on-failure [:ui/blow-bubble! {:content {:body :failed-to-delete}}]
                                           :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}]})))
@@ -336,7 +353,7 @@
             mutation-name (mutation-name extension-id item-namespace :undo-delete)
             item-id-key   (item-id-key   extension-id item-namespace)]
            [:sync/send-query! (request-id extension-id item-namespace)
-                              {:on-stalled [:item-editor/->delete-undid extension-id item-namespace item-id]
+                              {:on-success [:item-editor/->delete-undid extension-id item-namespace item-id]
                                :on-failure [:ui/blow-bubble! {:content {:body :failed-to-undo-delete}}]
                                :query      [`(~(symbol mutation-name) ~backup-item)]}])))
 
@@ -351,7 +368,7 @@
             item-id-key   (item-id-key   extension-id item-namespace)
             item-id       (get-in    db [extension-id :editor-meta :item-id])]
            [:sync/send-query! (request-id extension-id item-namespace)
-                              {:on-stalled [:item-editor/->item-duplicated extension-id item-namespace]
+                              {:on-success [:item-editor/->item-duplicated extension-id item-namespace]
                                :on-failure [:ui/blow-bubble! {:content {:body :failed-to-copy}}]
                                :query      [`(~(symbol mutation-name) ~{item-id-key item-id})]}])))
 
@@ -375,13 +392,19 @@
             item-entity (eql/id->entity item-id item-namespace)
             document    (get server-response item-entity)
             resolver-id (resolver-id extension-id item-namespace :suggestions)
-            suggestions (get server-response resolver-id)
-            ; XXX#3907
-            ; Az item-lister modullal megegyezően az item-editor is névtér nélkül tárolja
-            ; a letöltött dokumentumot.
-            document (db/document->non-namespaced-document document)]
-           {:db (-> db (assoc-in [extension-id :editor-data] document)
-                       (assoc-in [extension-id :editor-meta :suggestions] suggestions))})))
+            suggestions (get server-response resolver-id)]
+           ; *
+           (if-let [error-occured? (or (pathom/error-answer? document)
+                                       (pathom/error-answer? suggestions))]
+                   ; If document or suggestions are NOT correct ...
+                   {:db (assoc-in db [extension-id :editor-meta :error-occured?] true)}
+                   ; If document & suggestions are correct ...
+                         ; XXX#3907
+                         ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
+                         ; a letöltött dokumentumot
+                   (let [document (db/document->non-namespaced-document document)]
+                        {:db (-> db (assoc-in [extension-id :editor-data] document)
+                                    (assoc-in [extension-id :editor-meta :suggestions] suggestions))})))))
 
 (a/reg-event-fx
   :item-editor/request-new-item!
@@ -394,7 +417,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [suggestion-keys]}]]
       (when (vector/nonempty? suggestion-keys)
             [:sync/send-query! (request-id extension-id item-namespace)
-                               {:on-stalled [:item-editor/receive-item! extension-id item-namespace]
+                               {:on-success [:item-editor/receive-item! extension-id item-namespace]
                                         ; Get-suggestions resolver
                                 :query [(let [resolver-id (resolver-id extension-id item-namespace :suggestions)]
                                             `(~resolver-id {:suggestion-keys ~suggestion-keys}))]}])))
@@ -410,7 +433,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [suggestion-keys]}]]
       (let [item-id (get-in db [extension-id :editor-meta :item-id])]
            [:sync/send-query! (request-id extension-id item-namespace)
-                              {:on-stalled [:item-editor/receive-item! extension-id item-namespace]
+                              {:on-success [:item-editor/receive-item! extension-id item-namespace]
                                        ; Get-item resolver
                                :query [(let [entity       (eql/id->entity item-id item-namespace)
                                              added-at-key (keyword item-namespace "added-at")]

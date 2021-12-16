@@ -42,25 +42,10 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- start-buttons
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ header-props]
-  [:<> [item-editor/delete-item-button  :clients :client]
-       [item-editor/copy-item-button    :clients :client]
-       [item-editor/archive-item-button :clients :client header-props]])
-
-(defn- end-buttons
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [new-item?] :as header-props}]
-  [:<> (if-not new-item? [item-editor/favorite-item-button :clients :client header-props])
-       [item-editor/save-item-button :clients :client header-props]])
-
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [new-item?] :as header-props}]
-  [elements/polarity ::form-header
-                     {:start-content (if-not new-item? [start-buttons header-id header-props])
-                      :end-content   [end-buttons header-id header-props]}])
+  [header-id header-props]
+  [item-editor/header :clients :client header-props])
 
 
 
@@ -203,11 +188,15 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [description synchronizing?] :as view-props}]
-  [layouts/layout-a surface-id {:description description
-                                :disabled?   synchronizing?
-                                :body   {:content #'body   :subscriber [::get-body-props]}
-                                :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}])
+  [surface-id {:keys [description error-occured? synchronizing?] :as view-props}]
+  (if (boolean error-occured?)
+      [layouts/layout-a surface-id {:description "" ; Use "" as placeholder
+                                    :body  {:content  #'item-editor/error-body}
+                                    :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}]
+      [layouts/layout-a surface-id {:description description
+                                    :disabled?   synchronizing?
+                                    :body   {:content #'body   :subscriber [::get-body-props]}
+                                    :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}]))
 
 
 

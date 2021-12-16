@@ -268,3 +268,34 @@
   (let [event-id (keyword (name extension-id)
                           (str "render-" (name item-namespace) "-editor!"))]
        [event-id]))
+
+(defn dialog-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ; @param (keyword)(opt) item-id
+  ;
+  ; @example
+  ;  (engine/dialog-id :my-extension :my-type :color-picker)
+  ;  =>
+  ;  :my-extension/color-picker-dialog
+  ;
+  ; @example
+  ;  (engine/dialog-id :my-extension :my-type :delete :my-item)
+  ;  =>
+  ;  :my-extension/delete-my-item-dialog
+  ;
+  ; @return (namespaced keyword)
+  ([extension-id _ action-id]
+   (keyword (name extension-id)
+            (str (name action-id) "-dialog")))
+
+  ([extension-id _ action-id item-id]
+   ; Bizonyos esetben szükséges megkülönböztetni az azonos célra, de több példányban megjelenített
+   ; párbeszéd elemeket.
+   ; Pl.: Az undo-delete-dialog bubble elem egy időben több példányban is megjelenhet.
+   (keyword (name extension-id)
+            (str (name action-id) "-"
+                 (name item-id)   "-dialog"))))

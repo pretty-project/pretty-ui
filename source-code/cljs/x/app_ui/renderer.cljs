@@ -1096,7 +1096,7 @@
       (if-let [[element-id element-props] (r get-next-rendering db renderer-id)]
               {:db (r trim-rendering-queue! db renderer-id)
                :dispatch-later
-               [{:ms RENDER-DELAY-OFFSET :dispatch [:ui/render-element! renderer-id element-id element-props]}]})))
+               [{:ms RENDER-DELAY-OFFSET :dispatch [:ui/request-rendering-element! renderer-id element-id element-props]}]})))
 
 (a/reg-event-fx
   :ui/hide-element!

@@ -87,10 +87,10 @@
   ;  (pathom/reg-handler! do-something!)
   [handler-id handler-f]
   (swap! HANDLERS assoc handler-id handler-f)
-  ; Minden handler-fuggveny regisztralas utan ujraepiti a Pathom kornyezetet,
-  ; igy biztosithato, hogy az egyes forrasfajlok wrap-reload eszkoz altali ujratoltesekor
-  ; ujra lefuto reg-handler! fuggvenyek regisztralhassak az esetlegesen megvaltozott
-  ; handler-fuggvenyeket.
+  ; Minden handler-függvény regisztrálás után újraépíti a Pathom környezetet,
+  ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor
+  ; újra lefutó reg-handler! függvények regisztrálhassák az esetlegesen megváltozott
+  ; handler-függvényeket.
   (reset-environment!))
 
 (defn reg-handlers!
@@ -104,8 +104,8 @@
   ;  (pathom/reg-handlers! HANDLERS)
   [handlers-id handler-fs]
   (swap! HANDLERS assoc handlers-id handler-fs)
-  ; Minden handler-fuggvenycsoport regisztralas utan ujraepiti a Pathom kornyezetet,
-  ; igy biztosithato, hogy az egyes forrasfajlok wrap-reload eszkoz altali ujratoltesekor
-  ; ujra lefuto reg-handlers! fuggvenyek regisztralhassak az esetlegesen megvaltozott
-  ; handler-fuggvenycsoportokat.
+  ; Minden handler-függvénycsoport regisztrálás után újraépíti a Pathom környezetet,
+  ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor
+  ; újra lefutó reg-handlers! függvények regisztrálhassák az esetlegesen megváltozott
+  ; handler-függvénycsoportokat.
   (reset-environment!))

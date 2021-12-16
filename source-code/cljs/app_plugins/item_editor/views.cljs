@@ -43,41 +43,33 @@
                    {:label :edit-copy! :variant :transparent :horizontal-align :left :color :primary
                     :on-click [:item-editor/edit-last-duplicated! extension-id]}])
 
-(defn cancel-item-button
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
-  [extension-id item-namespace]
-  (let [parent-uri (engine/parent-uri extension-id item-namespace)]
-       [elements/button ::cancel-item-button
-                        {:tooltip :cancel! :preset :cancel-icon-button
-                         :on-click [:router/go-to! parent-uri]}]))
-
 (defn delete-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:error-occured? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [error-occured?]}]
   [elements/button ::delete-item-button
-                   {:tooltip :delete! :preset :delete-icon-button
+                   {:tooltip :delete! :preset :delete-icon-button :disabled? error-occured?
                     :on-click [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn archive-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:archived? (boolean)(opt)}
+  ;  {:archived? (boolean)(opt)
+  ;   :error-occured? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [archived?]}]
+  [extension-id item-namespace {:keys [archived? error-occured?]}]
   [elements/button ::archive-item-button
-                   (if archived? {:tooltip :archived :preset :archived-icon-button
+                   (if archived? {:tooltip :archived :preset :archived-icon-button :disabled? error-occured?
                                   :on-click [:item-editor/unmark-item! extension-id item-namespace
                                                                        {:marker-key       :archived?
                                                                         :unmarked-message :archived-item-restored}]}
-                                 {:tooltip :archive! :preset :archive-icon-button
+                                 {:tooltip :archive! :preset :archive-icon-button :disabled? error-occured?
                                   :on-click [:item-editor/mark-item! extension-id item-namespace
                                                                      {:marker-key     :archived?
                                                                       :marked-message :archived}]})])
@@ -86,18 +78,19 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:favorite? (boolean)(opt)}
+  ;  {:favorite? (boolean)(opt)
+  ;   :error-occured? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [favorite?]}]
+  [extension-id item-namespace {:keys [error-occured? favorite?]}]
   [elements/button ::favorite-item-button
                    ; Az :added-to-favorites tooltip túlságosan széles, ezért a favorite-item-button
                    ; elemen a tooltip feliratok ki vannak kapcsolva
-                   (if favorite? {:preset :added-to-favorites-icon-button ; :tooltip :added-to-favorites
+                   (if favorite? {:preset :added-to-favorites-icon-button :disabled? error-occured? ; :tooltip :added-to-favorites
                                   :on-click [:item-editor/unmark-item! extension-id item-namespace
                                                                        {:marker-key       :favorite?
                                                                         :unmarked-message :removed-from-favorites}]}
-                                 {:preset :add-to-favorites-icon-button   ; :tooltip :add-to-favorites!
+                                 {:preset :add-to-favorites-icon-button :disabled? error-occured? ; :tooltip :add-to-favorites!
                                   :on-click [:item-editor/mark-item! extension-id item-namespace
                                                                      {:marker-key       :favorite?
                                                                       :marked-message :added-to-favorites}]})])
@@ -105,23 +98,27 @@
 (defn copy-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:error-occured? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [error-occured?]}]
   [elements/button ::copy-item-button
-                   {:tooltip :duplicate! :preset :duplicate-icon-button
+                   {:tooltip :duplicate! :preset :duplicate-icon-button :disabled? error-occured?
                     :on-click [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:form-completed? (boolean)}
+  ;  {:error-occured? (boolean)(opt)
+  ;   :form-completed? (boolean)
+  ;   :new-item? (boolean)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [form-completed? new-item?]}]
+  [extension-id item-namespace {:keys [error-occured? form-completed? new-item?]}]
   [elements/button ::save-item-button
-                   {:tooltip :save! :preset :save-icon-button :disabled? (not form-completed?)
+                   {:tooltip :save! :preset :save-icon-button :disabled? (or (not form-completed?) error-occured?)
                     :on-click (if new-item? [:item-editor/add-item!  extension-id item-namespace]
                                             [:item-editor/save-item! extension-id item-namespace])}])
 
@@ -181,10 +178,10 @@
   ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id item-namespace {:keys [synchronizing?]}]
   [elements/button ::add-colors-button
                    {:label :add-color! :preset :muted-button :layout :row :font-size :xs
-                    :on-click [:item-editor/render-color-picker-dialog! extension-id]
+                    :on-click [:item-editor/render-color-picker-dialog! extension-id item-namespace]
                     :disabled? synchronizing?}])
 
 (defn- selected-colors
@@ -213,7 +210,7 @@
   ; @return (component)
   [extension-id item-namespace {:keys [synchronizing?] :as element-props}]
   [elements/toggle ::selected-colors-button
-                   {:on-click  [:item-editor/render-color-picker-dialog! extension-id]
+                   {:on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
                     :content   [selected-colors extension-id item-namespace element-props]
                     :disabled? synchronizing?}])
 
@@ -245,3 +242,58 @@
               [:div.item-editor--color-stamp]
               (param colors))
       [:div.item-editor--color-stamp-placeholder]))
+
+
+
+;; -- Error components --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn error-body
+  ; @param (keyword) body-id
+  ;
+  ; @return (component)
+  [body-id]
+  [:<> [elements/label     {:content :an-error-occured :font-size :m :layout :fit}]
+       [elements/separator {:orientation :horizontal :size :xs}]
+       [elements/label     {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
+       [elements/separator {:orientation :horizontal :size :xs}]])
+
+
+
+;; -- Header components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- header-start-buttons
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace header-props]
+  [:<> [delete-item-button  extension-id item-namespace header-props]
+       [copy-item-button    extension-id item-namespace header-props]
+       [archive-item-button extension-id item-namespace header-props]])
+
+(defn- header-end-buttons
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [new-item?] :as header-props}]
+  [:<> (if-not new-item? [favorite-item-button extension-id item-namespace header-props])
+       [save-item-button extension-id item-namespace header-props]])
+
+(defn header
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [new-item?] :as header-props}]
+  [elements/polarity {:start-content (if-not new-item? [header-start-buttons extension-id item-namespace header-props])
+                      :end-content   [header-end-buttons extension-id item-namespace header-props]}])

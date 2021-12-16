@@ -68,7 +68,9 @@
   ; Java időbélyegző-objektum string típussá alakításának formátuma: "2020-04-20T16:20:00.123Z"
   #?(:cljs (let [formatter (cljs-time.format/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                  timestamp (cljs-time.core/now)]
-                (cljs-time.format/unparse formatter timestamp))))
+                (cljs-time.format/unparse formatter timestamp))
+     :clj  (let [timestamp-object (timestamp-object)]
+                (str timestamp-object))))
 
 
 

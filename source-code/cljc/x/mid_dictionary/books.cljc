@@ -690,7 +690,13 @@
 ;; ----------------------------------------------------------------------------
 
 (def errors
-     {:error-report
+     {:an-error-occured
+      {:en "An error occured"
+       :hu "Hiba történt"}
+      :error-occured
+      {:en "Error occured"
+       :hu "Hiba történt"}
+      :error-report
       {:en "Error report"
        :hu "Hibajelentés"}
       :error-report-sent
@@ -742,8 +748,12 @@
       {:en "Service not available"
        :hu "A szolgáltatás nem elérhető"}
       :the-link-you-followed-may-be-broken
+      ; Always place a comma before or when it begins an independent clause!
       {:en "The link you followed may be broken, or the page may have been removed"
        :hu "Előfordulhat, hogy a megadott hivatkozás nem megfelelő, vagy az oldalt áthelyeztük"}
+      :the-item-you-opened-may-be-broken
+      {:en "The item you want to open may be broken or removed"
+       :hu "Előfordulhat, hogy az elem sérült vagy már nem elérhető"}
       :you-do-not-have-internet-connection
       {:en "You do not have internet connection"
        :hu "Nincs internet kapcsolatod"}

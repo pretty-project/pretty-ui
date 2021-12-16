@@ -16,7 +16,8 @@
 (ns app-plugins.item-editor.dialogs
     (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
-              [x.app-ui.api       :as ui]))
+              [x.app-ui.api       :as ui]
+              [app-plugins.item-editor.engine :as engine]))
 
 
 
@@ -54,8 +55,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-id]
-  [elements/button {:label :undo-delete! :preset :primary-button
-                    :on-click [:item-editor/undo-delete! extension-id item-namespace item-id]}])
+  (let [dialog-id (engine/dialog-id extension-id item-namespace :delete item-id)]
+       [elements/button {:label :undo-delete! :preset :primary-button
+                         :on-click {:dispatch-n [[:item-editor/undo-delete! extension-id item-namespace item-id]
+                                                 [:ui/pop-bubble! dialog-id]]}}]))
 
 
 
@@ -67,8 +70,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  (fn [_ [_ extension-id]]
-      [:ui/add-popup! extension-id
+  ; @param (keyword) item-namespace
+  (fn [_ [_ extension-id item-namespace]]
+      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
                       {:body   {:content #'color-picker-body}
                        :header {:content #'ui/close-popup-header}
                        :min-width :none}]))
@@ -81,5 +85,6 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [_ [_ extension-id item-namespace item-id]]
-      [:ui/blow-bubble! {:body {:content [undo-delete-body extension-id item-namespace item-id]}
+      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :delete item-id)
+                        {:body {:content [undo-delete-body extension-id item-namespace item-id]}
                          :autopop? false}]))
