@@ -439,10 +439,10 @@
   ; @return (map)
   [db [_ extension-id _ lister-props]]
   ; Az item-lister betöltésekor felülírás nélkül összefűzi a lister-props térképet a lister-meta
-  ; térképpel, így a reset-item-lister! függvény által meghagyott beállítások elérhetők maradnak.
+  ; térképpel, így a reset-*! függvények által meghagyott beállítások elérhetők maradnak.
   (update-in db [extension-id :lister-meta] merge lister-props))
 
-(defn- reset-item-lister!
+(defn- reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -451,7 +451,17 @@
   [db [_ extension-id]]
   (-> db (dissoc-in [extension-id :lister-data])
          (dissoc-in [extension-id :lister-meta :document-count])
+         (dissoc-in [extension-id :lister-meta :received-count])
          (dissoc-in [extension-id :lister-meta :synchronized?])))
+
+(defn- reset-search!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (dissoc-in db [extension-id :lister-meta :search-term]))
 
 (defn- quit-filter-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -647,17 +657,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-           ; BUG#8071
-           ; Az item-lister alapállapotba állítása után az infinite-loader komponens
-           ; azonnal újratöltené az elemeket az eddigi beállításokkal még mielőtt
-           ; az :item-lister/request-items! esemény elkezdené letölteni az elemeket
-           ; a megváltozott beállításokkal, ezért szükséges az infinite-loader komponenst
-           ; paused állapotba állítani.
-           ; Az :item-lister/receive-items! esemény újratölti az infinite-loader komponenst
-           ; ezért nem szükséges annak paused állapotát visszaállítani!
-      {:db (as-> db % (r reset-item-lister!           % extension-id)
-                      (r tools/pause-infinite-loader! % extension-id))
-       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+      {:db       (r reset-downloads!          db extension-id)
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/order-items!
@@ -666,10 +667,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-           ; BUG#8071
-      {:db (as-> db % (r reset-item-lister!           % extension-id)
-                      (r tools/pause-infinite-loader! % extension-id))
-       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+      {:db       (r reset-downloads!          db extension-id)
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/discard-filter!
@@ -678,11 +677,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-           ; BUG#8071
-      {:db (as-> db % (r reset-item-lister!           % extension-id)
-                      (r tools/pause-infinite-loader! % extension-id)
-                      (r discard-filter!              % extension-id))
-       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+      {:db (as-> db % (r reset-downloads! % extension-id)
+                      (r discard-filter!  % extension-id))
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/use-filter!
@@ -692,11 +689,9 @@
   ; @param (keyword) item-namespace
   ; @param (keyword) filter-id
   (fn [{:keys [db]} [_ extension-id item-namespace filter-id]]
-           ; BUG#8071
-      {:db (as-> db % (r reset-item-lister!           % extension-id)
-                      (r tools/pause-infinite-loader! % extension-id)
-                      (r use-filter!                  % extension-id item-namespace filter-id))
-       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
+      {:db (as-> db % (r reset-downloads! % extension-id)
+                      (r use-filter!      % extension-id item-namespace filter-id))
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/receive-items!
@@ -767,7 +762,8 @@
   ; @param (map) lister-props
   ;  {:download-limit (integer)}
   (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
-      {:db (as-> db % (r reset-item-lister!  % extension-id)
+      {:db (as-> db % (r reset-downloads!    % extension-id)
+                      (r reset-search!       % extension-id)
                       (r store-lister-props! % extension-id item-namespace lister-props))
        :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
                     [:ui/set-header-title!  (param      extension-id)]
