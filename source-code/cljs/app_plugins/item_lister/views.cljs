@@ -265,13 +265,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:filter-mode? (boolean)(opt)
-  ;   :no-items-to-show? (boolean)(opt)}
+  ;  {:no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [filter-mode? no-items-to-show?]}]
+  [extension-id _ {:keys [no-items-to-show?]}]
   [elements/button ::toggle-select-mode-button
-                   {:disabled? (or filter-mode? no-items-to-show?)
+                   {:disabled? no-items-to-show?
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                     :preset    :select-mode-icon-button
                     :tooltip   :select}])
@@ -387,7 +386,8 @@
     [:div.item-lister--header--menu-item-group
       [toggle-all-items-selection-button extension-id item-namespace header-props]
       [archive-selected-items-button     extension-id item-namespace header-props]
-      [delete-selected-items-button      extension-id item-namespace header-props]]
+      [delete-selected-items-button      extension-id item-namespace header-props]
+      [toggle-filter-mode-button         extension-id item-namespace header-props]]
     [quit-select-mode-button extension-id]])
 
 (defn- actions-mode-header
@@ -445,8 +445,6 @@
   [extension-id item-namespace {:keys [actions-mode? filter-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
   (let [header-height (if filter-mode? 96 48)]
        [:div#item-lister--header--structure {:style {:height (css/px header-height)}}
-         [react-transition/mount-animation {:animation-timeout 500 :mounted? filter-mode?}
-                                           [item-filters        extension-id item-namespace header-props]]
          [react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
                                            [actions-mode-header extension-id item-namespace header-props]]
          [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
@@ -454,7 +452,8 @@
          [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
                                            [select-mode-header  extension-id item-namespace header-props]]
          [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                           [reorder-mode-header extension-id item-namespace header-props]]]))
+                                           [reorder-mode-header extension-id item-namespace header-props]]
+         (if filter-mode?                  [item-filters        extension-id item-namespace header-props])]))
 
 (defn header
   ; @param (keyword) extension-id

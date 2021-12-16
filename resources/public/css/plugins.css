@@ -73,7 +73,7 @@
   border-radius: var( --border-radius-s );
   height: 24px;
   margin: 12px;
-  width: 24px }  
+  width: 24px }
 
 /*** Color-stamp ***/
 /***** Item-editor *****/
@@ -94,7 +94,6 @@
   animation-duration: .25s;
   animation-iteration-count: 1;
   animation-fill-mode: both;
-  background-color: var( --background-color );
   display: flex;
   justify-content: space-between;
   left: 0;
@@ -116,6 +115,13 @@
   left: 0;
   position: absolute;
   width: 100% }
+
+.item-lister--header--menu-bar,
+.item-lister--header--item-filters {
+  /* A különböző menü sávok eltűnése és megjelenése közben szükséges biztosítani,
+   * hogy az egyidőben és ezért egymás alatt/felett megjelenített sávok közül a z-tengelyen
+   * alacsonyabb pozícióban lévő sávot eltakarja a magasabb pozícióban lévő sáv */
+  background-color: var( --background-color ) }
 
 /*** Item-lister header ***/
 

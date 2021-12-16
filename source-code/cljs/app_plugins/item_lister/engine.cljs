@@ -67,9 +67,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @usage
-  ;  (r engine/synchronizing? db :my-namespace :my-type)
-  ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [request-id (request-id extension-id item-namespace)]
@@ -79,9 +76,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r engine/synchronized? db :my-namespace)
   ;
   ; @return (boolean)
   [db [_ extension-id]]
@@ -95,9 +89,6 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/get-downloaded-items db :my-namespace)
-  ;
   ; @return (maps in vector)
   [db [_ extension-id]]
   (get-in db [extension-id :lister-data]))
@@ -107,21 +98,25 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/no-items-to-show? db :my-namespace)
-  ;
-  ; @return (maps in vector)
+  ; @return (boolean)
   [db [_ extension-id]]
   (let [downloaded-items (r get-downloaded-items db extension-id)]
        (empty? downloaded-items)))
+
+(defn any-item-to-show?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (let [downloaded-items (r get-downloaded-items db extension-id)]
+       (vector/nonempty? downloaded-items)))
 
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r engine/get-downloaded-item-count db :my-namespace)
   ;
   ; @return (integer)
   [db [_ extension-id]]
@@ -229,9 +224,11 @@
   ;
   ; @return (boolean)
   [db [_ extension-id]]
-  ; Kevesebb számítás szükséges a "legalább egy elem nincs kiválasztva" negálásához,
-  ; mint az "összes elem ki van választva" megállapításához.
-  (not (r any-item-nonselected? db extension-id)))
+  (let [downloaded-item-count (r get-downloaded-item-count db extension-id)]
+       ; Kevesebb számítás szükséges a "legalább egy elem nincs kiválasztva" negálásához,
+       ; mint az "összes elem ki van választva" megállapításához.
+       (and      (r any-item-to-show?     db extension-id)
+            (not (r any-item-nonselected? db extension-id)))))
 
 (defn- any-item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -352,7 +349,9 @@
   (cond (get-in db [extension-id :lister-meta :select-mode?])
         {:select-mode?        true
          :all-items-selected? (r all-items-selected? db extension-id)
-         :any-item-selected?  (r any-item-selected?  db extension-id)}
+         :any-item-selected?  (r any-item-selected?  db extension-id)
+         :filter              (get-in db [extension-id :lister-meta :filter])
+         :filter-mode?        (get-in db [extension-id :lister-meta :filter-mode?])}
         ; If search-mode is enabled ...
         (get-in db [extension-id :lister-meta :search-mode?])
         {:search-mode?     true}
@@ -430,6 +429,19 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- store-lister-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ;
+  ; @return (map)
+  [db [_ extension-id _ lister-props]]
+  ; Az item-lister betöltésekor felülírás nélkül összefűzi a lister-props térképet a lister-meta
+  ; térképpel, így a reset-item-lister! függvény által meghagyott beállítások elérhetők maradnak.
+  (update-in db [extension-id :lister-meta] merge lister-props))
+
 (defn- reset-item-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -488,8 +500,7 @@
   ; @return (map)
   [db [_ extension-id]]
   (as-> db % (update-in % [extension-id :lister-meta :select-mode?] not)
-             (dissoc-in % [extension-id :lister-meta :item-selections])
-             (r quit-filter-mode! % extension-id)))
+             (dissoc-in % [extension-id :lister-meta :item-selections])))
 
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
@@ -756,8 +767,8 @@
   ; @param (map) lister-props
   ;  {:download-limit (integer)}
   (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
-      {:db (-> db (dissoc-in [extension-id :lister-data])
-                  (assoc-in  [extension-id :lister-meta] lister-props))
+      {:db (as-> db % (r reset-item-lister!  % extension-id)
+                      (r store-lister-props! % extension-id item-namespace lister-props))
        :dispatch-n [[:ui/listen-to-process! (request-id extension-id item-namespace)]
                     [:ui/set-header-title!  (param      extension-id)]
                     [:ui/set-window-title!  (param      extension-id)]

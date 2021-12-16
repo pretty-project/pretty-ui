@@ -71,8 +71,9 @@
             filter-id             (get resolver-props :filter)]
            {:max-count      max-count
             :skip           downloaded-item-count
-;            :filter-pattern (case filter-id :archived-items [[:client/archived? true]])
-;                                            :favorite-items [[:client/favorite? true]])
+            :filter-pattern (case filter-id :archived-items [[:client/archived? true]]
+                                            :favorite-items [[:client/favorite? true]]
+                                            []) ; No filter selected ...
             :search-pattern [[:client/full-name search-term] [:client/email-address search-term]]
             :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
                                            :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
@@ -88,13 +89,13 @@
       ;                                  :search-pattern [[:client/first-name "xyz"]]
       ;                                  :sort-pattern   [[:client/first-name 1]]}
       [{:keys [filter-pattern max-count skip search-pattern sort-pattern] :as search-props}]
-      (let [;filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
+      (let [filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
             search-query (mongo-db/search-pattern->pipeline-query search-pattern)
             sort         (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
            [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" ;(if (vector/nonempty? filter-query)
-                      ;    {"$or" search-query "$and" filter-query}
-                          {"$or" search-query}}
+            {"$match" (if (vector/nonempty? filter-query)
+                          {"$or" search-query "$and" filter-query}
+                          {"$or" search-query})}
             {"$sort"  sort}
             {"$skip"  skip}
             {"$limit" max-count}]))
@@ -105,15 +106,12 @@
       ; @usage
       ;  (search-props->count-pipeline {:search-pattern [[:client/first-name "xyz"]]}
       [{:keys [filter-pattern search-pattern] :as search-props}]
-      (let [;filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
+      (let [filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
             search-query (mongo-db/search-pattern->pipeline-query search-pattern)]
-;           (println (str {"$match" (if (vector/nonempty? filter-query)
-;                                       {"$or" search-query "$and" filter-query}
-;                                       {"$or" search-query})]
            [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match"; (if (vector/nonempty? filter-query)
-                      ;    {"$or" search-query "$and" filter-query}
-                          {"$or" search-query}}]))
+            {"$match" (if (vector/nonempty? filter-query)
+                          {"$or" search-query "$and" filter-query}
+                          {"$or" search-query})}]))
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.08.01
 ; Description:
-; Version: v1.7.8
-; Compatibility: x4.4.6
+; Version: v1.8.4
+; Compatibility: x4.4.9
 
 
 
@@ -490,13 +490,13 @@
        :hu "Összes elem"}
       :archive!
       {:en "Archive"
-       :hu "Arhiválás"}
+       :hu "Archiválás"}
       :archived
       {:en "Archived"
-       :hu "Arhiválva"}
+       :hu "Archiválva"}
       :archived-items
       {:en "Archived items"
-       :hu "Arhivált elemek"}
+       :hu "Archivált elemek"}
       :archived-item-restored
       {:en "Archived item restored"
        :hu "Archivált elem visszaállítva"}
