@@ -258,7 +258,7 @@ body[data-viewport-profile="xxs"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 0;
+--content-edge: 8px;
 
 /*** Content edge ***/
 
@@ -300,7 +300,7 @@ body[data-viewport-profile="xs"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 0;
+--content-edge: 8px;
 
 /*** Content edge ***/
 
@@ -342,7 +342,7 @@ body[data-viewport-profile="s"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 0;
+--content-edge: 8px;
 
 /*** Content edge ***/
 

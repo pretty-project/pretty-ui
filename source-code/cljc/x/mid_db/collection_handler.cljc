@@ -681,8 +681,8 @@
   [db [_ collection-path collection {:keys [additional-namespace remove-namespace?]}]]
   (cond (some? additional-namespace)
         (let [collection (collection->namespaced-collection collection additional-namespace)]
-             (assoc-in db collection-path collection))
+             (update-in db collection-path vector/concat-items collection))
         (boolean remove-namespace?)
         (let [collection (collection->non-namespaced-collection collection)]
-             (assoc-in db collection-path collection))
-        :else (assoc-in db collection-path collection)))
+             (update-in db collection-path vector/concat-items collection))
+        :else (update-in db collection-path vector/concat-items collection)))

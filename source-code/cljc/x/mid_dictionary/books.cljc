@@ -48,9 +48,15 @@
 ;; ----------------------------------------------------------------------------
 
 (def appearance
-     {:appearance
+     {:add-color!
+      {:en "Add color"
+       :hu "Szín hozzáadása"}
+      :appearance
       {:en "Appearance"
        :hu "Kinézet"}
+      :change-colors!
+      {:en "Change colors"
+       :hu "Színek módosítása"}
       :dark-theme
       {:en "Dark theme"
        :hu "Sötét téma"}
@@ -99,7 +105,7 @@
        :hu "Kedvencekhez adás"}
       :added-to-favorites
       {:en "Added to favorites"
-       :hu "Kedvencekhez adva"}
+       :hu "Hozzáadva a kedvencekhez"}
       :app-menu
       {:en "App menu"
        :hu "Alkalmazás menü"}
@@ -112,6 +118,9 @@
       :back-to-home!
       {:en "Back to home"
        :hu "Vissza a főoldalra"}
+      :basic-info
+      {:en "Basic info"
+       :hu "Alapvető adatok"}
       :browser
       {:en "Browser"
        :hu "Böngésző"}
@@ -232,6 +241,9 @@
       :more-actions
       {:en "More actions"
        :hu "További műveletek"}
+      :more-info
+      {:en "More info"
+       :hu "További adatok"}
       :more-options
       {:en "More options"
        :hu "További lehetőségek"}
@@ -244,6 +256,9 @@
       :need-help?
       {:en "Need help?"
        :hu "Súgó"}
+      :network-error
+      {:en "Network error"
+       :hu "Hálózati hiba"}
       :n-items
       {:en "% items"
        :hu "% elem"}
@@ -295,6 +310,9 @@
       :refresh!
       {:en "Refresh"
        :hu "Frissítés"}
+      :removed-from-favorites
+      {:en "Removed from favorites"
+       :hu "Eltávolítva a kedvencek közül"}
       :retry!
       {:en "Retry"
        :hu "Újra"}
@@ -467,12 +485,21 @@
       :add-title!
       {:en "Add title"
        :hu "Címke hozzáadása"}
+      :all-items
+      {:en "All items"
+       :hu "Összes elem"}
       :archive!
       {:en "Archive"
        :hu "Arhiválás"}
       :archived
       {:en "Archived"
        :hu "Arhiválva"}
+      :archived-items
+      {:en "Archived items"
+       :hu "Arhivált elemek"}
+      :archived-item-restored
+      {:en "Archived item restored"
+       :hu "Archivált elem visszaállítva"}
       :copy
       {:en "Copy"
        :hu "Másolat"}
@@ -539,6 +566,9 @@
       :item-added
       {:en "Item added"
        :hu "Elem hozzáadva"}
+      :item-archived
+      {:en "Item archived"
+       :hu "Elem archiválva"}
       :item-duplicated
       {:en "Item duplicated"
        :hu "Elem másolva"}
@@ -617,9 +647,6 @@
       :saved
       {:en "Saved"
        :hu "Sikeres mentés"}
-      :saving-error
-      {:en "Saving error"
-       :hu "Sikertelen mentés"}
       :select
       {:en "Select"
        :hu "Kijelölés"}
@@ -672,6 +699,18 @@
       :enable-sending-error-reports!
       {:en "Enable sending error reports"
        :hu "Hibajelentések küldésének engedélyezése"}
+      :failed-to-copy
+      {:en "Failed to copy"
+       :hu "Sikertelen másolás"}
+      :failed-to-delete
+      {:en "Failed to undo delete"
+       :hu "Sikertelen törlés"}
+      :failed-to-undo-delete
+      {:en "Failed to undo delete"
+       :hu "A törlés visszaállítása sikertelen"}
+      :failed-to-save
+      {:en "Failed to save"
+       :hu "Sikertelen mentés"}
       :no-internet-connection
       {:en "No internet connection"
        :hu "Nincs internet kapcsolat"}

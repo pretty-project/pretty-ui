@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v2.1.6
-; Compatibility: x4.4.6
+; Version: v2.2.4
+; Compatibility: x4.4.9
 
 
 
@@ -49,11 +49,6 @@
 ;  átadott komponens második paramétereként átadott térkép alapja
 ;  (az XXX#0001 logika szerint)
 ;
-; @name content-path
-;  A {:content-path [...]} tulajdonságként átadott Re-Frame adatbázis útvonalon
-;  talált érték (metamorphic-content) típusként kiértékelve a content komponensnek
-;  {:content ...} tulajdonságként átadódik.
-;
 ; @name content-props
 ;  Ha a content komponensnek {:content ...} tulajdonságként egy komponens kerül
 ;  átadásra, akkor ennek az átadott komponensnek második paraméterként adódik
@@ -91,8 +86,7 @@
   ; @return (map)
   [extended-props]
   (map/inherit (param extended-props)
-               [:base-props :content :content-path :content-props :prefix
-                :replacements :subscriber :suffix]))
+               [:base-props :content :content-props :prefix :replacements :subscriber :suffix]))
 
 (defn- context-props->subscribe?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,25 +97,6 @@
   ; @return (boolean)
   [{:keys [subscriber]}]
   (some? subscriber))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-db-item-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) db-item-path
-  ;
-  ; @return (*)
-  [db [_ db-item-path]]
-  (let [db-item (get-in db db-item-path)]
-       (cond (map?     db-item) (r dictionary/translate db db-item)
-             (keyword? db-item) (r dictionary/get-term  db db-item)
-             :else              (str db-item))))
-
-(a/reg-sub :components/get-db-item-content get-db-item-content)
 
 
 
@@ -228,7 +203,7 @@
       [subscribed-component-content component-id context-props]
       [static-component-content     component-id context-props]))
 
-(defn- non-db-item
+(defn- content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -244,17 +219,6 @@
         (nil?     content) (nil-content          component-id context-props)
         :else              (return content)))
 
-(defn- db-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;
-  ; @return (component)
-  [component-id {:keys [content-path] :as context-props}]
-  (let [content (a/subscribe [:components/get-db-item-content content-path])]
-       (fn [] [non-db-item component-id (assoc context-props :content @content)])))
-
 (defn component
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
@@ -262,7 +226,6 @@
   ;  {:base-props (map)(opt)
   ;    Only w/ {:content (component)}
   ;   :content (component, keyword, hiccup, map or string)(opt)
-  ;   :content-path (item-path vector)(opt)
   ;   :content-props (map)(opt)
   ;    Only w/ {:content (component)}
   ;   :prefix (string)(opt)
@@ -294,18 +257,6 @@
   ;
   ; @example (multilingual-item as map)
   ;  [components/content {:content {:en "Window" :hu "Ablak"}}]
-  ;  =>
-  ;  "Window"
-  ;
-  ; @example (db-item as item-path vector)
-  ;  {:db {:item {:path "DB item value"}}}
-  ;  [components/content {:content-path [:db :item :path]}]
-  ;  =>
-  ;  "DB item value"
-  ;
-  ; @example (multilingual-db-item as item-path vector)
-  ;  (def db {:db {:item {:path {:en "Window" :hu "Ablak"}}}})
-  ;  [components/content {:content-path [:db :item :path]}]
   ;  =>
   ;  "Window"
   ;
@@ -343,7 +294,8 @@
   ([context-props]
    (component (a/id) context-props))
 
-  ([component-id {:keys [content-path] :as context-props}]
-   (if (vector?     content-path)
-       [db-item     component-id context-props]
-       (non-db-item component-id context-props))))
+  ([component-id context-props]
+   (if-not (map? context-props)
+           ; TODO ...
+           (content component-id {:content context-props})
+           (content component-id context-props))))

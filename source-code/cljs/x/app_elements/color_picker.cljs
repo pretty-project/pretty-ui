@@ -41,7 +41,7 @@
           :options-path (engine/default-options-path picker-id)
           :value-path   (engine/default-value-path   picker-id)}
          (param picker-props)
-         ; A color-picker elem nem használja de a selectable engine működéséhez szükséges
+         ; A color-picker elem nem használja de a collectable engine működéséhez szükséges
          ; a {:get-value-f ...} tulajdonságot beállítani.
          {:get-value-f return}))
 
@@ -57,8 +57,8 @@
   ;
   ; @return (map)
   [db [_ picker-id]]
-  (merge (r engine/get-element-props    db picker-id)
-         (r engine/get-selectable-props db picker-id)))
+  (merge (r engine/get-element-props     db picker-id)
+         (r engine/get-collectable-props db picker-id)))
 
 (a/reg-sub :elements/get-color-picker-props get-color-picker-props)
 
@@ -76,7 +76,7 @@
   ;
   ; @return (hiccup)
   [picker-id picker-props option]
-  [:button.x-color-picker--option (engine/selectable-option-attributes picker-id picker-props option)
+  [:button.x-color-picker--option (engine/collectable-option-attributes picker-id picker-props option)
     [:div.x-color-picker--option--color {:style {:background-color option}}]])
 
 (defn- color-picker-options
@@ -146,7 +146,6 @@
   ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
   ;    Default: :primary
   ;   :class (string or vector)(opt)
-  ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
@@ -155,7 +154,7 @@
   ;    :left, :right, :both, :none
   ;    Default: :none
   ;   :initial-options (strings in vector)(constant)(opt)
-  ;   :initial-value (string)(constant)(opt)
+  ;   :initial-value (strings in vector)(constant)(opt)
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
@@ -189,5 +188,5 @@
         [engine/stated-element picker-id
                                {:component     #'color-picker
                                 :element-props picker-props
-                                :initializer   [:elements/init-selectable!       picker-id]
+                                :initializer   [:elements/init-collectable!      picker-id]
                                 :subscriber    [:elements/get-color-picker-props picker-id]}])))

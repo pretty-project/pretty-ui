@@ -48,4 +48,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-editor.engine
-(def item-id->item-uri engine/item-id->item-uri)
+(def editor-uri engine/editor-uri)
+(def form-id    engine/form-id)

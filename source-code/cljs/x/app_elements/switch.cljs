@@ -33,12 +33,10 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
-  ;   :indent (keyword)
   ;   :layout (keyword)}
   [switch-id switch-props]
   (merge {:color     :primary
           :font-size :s
-          :indent    :left
           :layout    :row
           :value-path (engine/default-value-path switch-id)}
          (param switch-props)))
@@ -114,11 +112,14 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :font-size (keyword)(opt)
+  ;    :xs, :s
+  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-value (boolean)(constant)(opt)
   ;   :label (metamorphic-content)
   ;   :layout (keyword)(opt)

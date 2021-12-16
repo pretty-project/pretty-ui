@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.9.8
-; Compatibility: x4.4.8
+; Version: v2.0.6
+; Compatibility: x4.4.9
 
 
 
@@ -83,13 +83,13 @@
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
   [bubble-id bubble-props]
-  (merge {:autopop?         true
-          :hide-animated?   true
-          :initializer      [:ui/initialize-bubble! bubble-id]
+  (merge {:autopop?    true
+          :initializer [:ui/initialize-bubble! bubble-id]
+          :user-close? true}
+         (param bubble-props)
+         {:hide-animated?   true
           :reveal-animated? true
-          :update-animated? false
-          :user-close?      true}
-         (param bubble-props)))
+          :update-animated? false}))
 
 
 
@@ -185,12 +185,10 @@
   ; @param (map) bubble-props
   ;  {:autopop? (boolean)(opt)
   ;    Default: true
-  ;   :content (metamorphic-content)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :success, :warning, :muted
-  ;   :primary-button (map)(opt)
-  ;   :update-animated? (boolean)(opt)
-  ;    Default: false
+  ;   :body (map)
+  ;    {:content (metamorphic-content)
+  ;     :content-props (map)(opt)
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :user-close? (boolean)(opt)
   ;    Default: true}
   ;
@@ -211,44 +209,20 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- bubble-primary-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;  {:primary-button (map)
-  ;    {:icon (string)(opt)
-  ;      Material icon class
-  ;     :on-click (metamorphic-event)(opt)
-  ;     :tooltip (metamorphic-content)(opt)}}
-  ;
-  ; @return (component)
-  [bubble-id {:keys [primary-button] :as bubble-props}]
-  (let [on-click (primary-button-on-click bubble-id bubble-props)]
-       [elements/button (assoc primary-button :on-click on-click)]))
-
 (defn- bubble-close-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
+  ;  {:user-close? (boolean)(opt)}
   ;
   ; @return (component)
-  [bubble-id _]
-  [elements/button {:on-click [:ui/pop-bubble! bubble-id]
-                    :preset   :close-icon-button}])
+  [bubble-id {:keys [user-close?]}]
+  (if (boolean user-close?)
+      [elements/button {:on-click [:ui/pop-bubble! bubble-id]
+                        :preset   :close-icon-button}]))
 
-(defn- bubble-close-button-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;
-  ; @return (hiccup)
-  [_ _]
-  [:div.x-app-bubbles--element--close-button-placeholder])
-
-(defn- bubble-content
+(defn- bubble-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -257,40 +231,8 @@
   ;
   ; @return (hiccup)
   [bubble-id {:keys [body]}]
-  [:div.x-app-bubbles--element--content
-    [components/content bubble-id body]])
-
-(defn- bubble-buttons
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;  {:primary-button (map)(opt)
-  ;    XXX#0714
-  ;   :user-close? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
-  [bubble-id {:keys [primary-button user-close?] :as bubble-props}]
-  [:div.x-app-bubbles--element--buttons
-    (if (some? primary-button)
-        [bubble-primary-button bubble-id bubble-props])
-    (if (boolean user-close?)
-        [bubble-close-button             bubble-id bubble-props]
-        [bubble-close-button-placeholder bubble-id bubble-props])])
-
-(defn- bubble-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;  {:content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
-  [bubble-id {:keys [content] :as bubble-props}]
   [:div.x-app-bubbles--element--body
-    (if (some? content)
-        [bubble-content bubble-id bubble-props])
-    [bubble-buttons bubble-id bubble-props]])
+    [components/content bubble-id body]])
 
 (defn- bubble-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -300,8 +242,9 @@
   ;
   ; @return (hiccup)
   [bubble-id bubble-props]
-  [:div (bubble-attributes bubble-id bubble-props)
-        [bubble-body       bubble-id bubble-props]])
+  [:div (bubble-attributes   bubble-id bubble-props)
+        [bubble-body         bubble-id bubble-props]
+        [bubble-close-button bubble-id bubble-props]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

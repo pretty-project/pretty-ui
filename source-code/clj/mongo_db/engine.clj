@@ -22,6 +22,17 @@
 
 
 
+;; -- TODO --------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @todo
+;  Az add-document!, upsert-document!, update-document! és merge-document! függvények
+;  a monger.collection save-and-return függvényét használják az egyes dokumentumok írására.
+;  A save-and-return függvény nem minden esetben a legalkalmasabb a teljesítmény-optimalizálás
+;  szempontjából!
+
+
+
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -330,6 +341,30 @@
 ;; -- Finding documents functions ---------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-all-documents
+  ; @param (string) collection-name
+  ; @param (map)(opt) projection
+  ;
+  ; @example
+  ;  (mongo-db/get-all-documents "my-collection" {:my-namespace/my-keyword  0
+  ;                                               :my-namespace/your-string 1})
+  ;  =>
+  ;  {:my-namespace/my-keyword  :my-value
+  ;   :my-namespace/your-string "your-value"
+  ;   :my-namespace/id          "my-document"}
+  ;
+  ; @return (maps in vector)
+  ;  [{:namespace/id (string)}]
+  [collection-name & [projection]]
+  (let [documents (find-all-documents collection-name projection)]
+       (reduce (fn [result document]
+                   (let [document (-> document (_id->id)
+                                               (json/keywordize-values)
+                                               (time/unparse-date-time))]
+                        (vector/conj-item result document)))
+               (param [])
+               (param documents))))
+
 (defn get-documents-by-query
   ; @param (string) collection-name
   ; @param (map) query
@@ -349,8 +384,8 @@
   [collection-name query & [projection]]
   (let [query      (-> query (json/unkeywordize-keys)
                              (json/unkeywordize-values))
-        projection (json/unkeywordize-keys   projection)
-        documents  (find-documents-by-query  collection-name query projection)]
+        projection (json/unkeywordize-keys  projection)
+        documents  (find-documents-by-query collection-name query projection)]
        (reduce (fn [result document]
                    (let [document (-> document (_id->id)
                                                (json/keywordize-values)
@@ -419,6 +454,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn add-document!
+  ; Az add-document! függvény a számára azonosító nélkül átadott dokumentumot
+  ; újonnan generált azonosítóval látja el az eltárolás előtt, míg a számára
+  ; azonosítóval átadott dokumentumot annak azonosítójának változtatása nélkül
+  ; tárolja el.
+  ;
   ; @param (string) collection-name
   ; @param (map) namespaced document
   ;  {:namespace/id (string)(opt)}
@@ -482,6 +522,54 @@
 
 
 
+;; -- Upserting document ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn upsert-document!
+  ; @param (string) collection-name
+  ; @param (map) namespaced document
+  ;  {:namespace/id (string)}
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)
+  ;    Ha a dokumentum nem létezik a kollekcióban, akkor az upsert-document! függvény
+  ;    hozzáadja azt a kollekcióhoz az add-document! függvény használatával.
+  ;    Az {:ordered? ...} tulajdonság az add-document! függvény paramétere!
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/upsert-document! "my-collection" {:my-namespace/my-keyword  :my-value
+  ;                                              :my-namespace/your-string "your-value"
+  ;                                              :my-namespace/id          "my-document"})
+  ;  =>
+  ;  {:my-namespace/my-keyword  :my-value}
+  ;   :my-namespace/your-string "your-value"
+  ;   :my-namespace/id          "my-document"}
+  ;
+  ; @return (map)
+  ;  {:namespace/id (string)}
+  ([collection-name document]
+   (upsert-document! collection-name document {}))
+
+  ([collection-name document {:keys [prototype-f] :as options}]
+   (let [document-id (db/document->document-id document)]
+        (if (document-exists? collection-name document-id)
+
+            ; If document exists ...
+            (let [document (if (some?       prototype-f)
+                               (prototype-f document)
+                               (return      document))]
+                 (save-document! collection-name document))
+
+            ; If document NOT exists ...
+            (add-document! collection-name document options)))))
+
+; @usage
+;  [:mongo-db/upsert-document! "my-collection" {:my-namespace/id "my-document"}]
+(a/reg-handled-fx :mongo-db/upsert-document! upsert-document!)
+
+
+
 ;; -- Updating document -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -490,11 +578,7 @@
   ; @param (map) namespaced document
   ;  {:namespace/id (string)}
   ; @param (map)(opt) options
-  ;  {:ordered? (boolean)
-  ;    Ha a dokumentum nem létezik az adatbázisban, akkor hozzáadja a kollekcióhoz.
-  ;    A hozzáadás művelet paramétere az {:ordered? ...} tulajdonság.
-  ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;  {:prototype-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/update-document! "my-collection" {:my-namespace/my-keyword  :my-value
@@ -510,9 +594,9 @@
   ([collection-name document]
    (update-document! collection-name document {}))
 
-  ([collection-name document {:keys [prototype-f] :as options}]
+  ([collection-name document {:keys [prototype-f]}]
    (let [document-id (db/document->document-id document)]
-        (if (document-exists? document-id)
+        (if (document-exists? collection-name document-id)
 
             ; If document exists ...
             (let [document (if (some?       prototype-f)
@@ -520,12 +604,56 @@
                                (return      document))]
                  (save-document! collection-name document))
 
-            ; If document not exists ...
-            (add-document! collection-name document options)))))
+            ; If document NOT exists ...
+            (println "Document does not exists error" collection-name document-id)))))
 
 ; @usage
 ;  [:mongo-db/update-document! "my-collection" {:my-namespace/id "my-document"}]
 (a/reg-handled-fx :mongo-db/update-document! update-document!)
+
+
+
+;; -- Merging document --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn merge-document!
+  ; @param (string) collection-name
+  ; @param (map) namespaced document
+  ;  {:namespace/id (string)}
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/merge-document! "my-collection" {:my-namespace/my-keyword  :my-value
+  ;                                             :my-namespace/your-string "your-value"
+  ;                                             :my-namespace/id          "my-document"})
+  ;  =>
+  ;  {:my-namespace/my-keyword  :my-value}
+  ;   :my-namespace/your-string "your-value"
+  ;   :my-namespace/id          "my-document"}
+  ;
+  ; @return (map)
+  ;  {:namespace/id (string)}
+  ([collection-name document]
+   (merge-document! collection-name document {}))
+
+  ([collection-name document {:keys [prototype-f]}]
+   (let [document-id (db/document->document-id document)]
+        (if-let [stored-document (get-document-by-id collection-name document-id)]
+
+                ; If document exists ...
+                (let [document (merge stored-document document)
+                      document (if (some?       prototype-f)
+                                   (prototype-f document)
+                                   (return      document))]
+                     (save-document! collection-name document))
+
+                ; If document NOT exists ...
+                (println "Document does not exists error" collection-name document-id)))))
+
+; @usage
+;  [:mongo-db/merge-document! "my-collection" {:my-namespace/id "my-document"}]
+(a/reg-handled-fx :mongo-db/merge-document! merge-document!)
 
 
 
@@ -663,7 +791,7 @@
 
         ; Ha a dokumentum nem rendelkezik {:namespace/order ...} tulajdonsággal ...
         document-copy-dex (try (inc document-dex)
-                               (catch Exception e (println "Document corrupted error #981" collection-name document-id)))
+                               (catch Exception e (println "Document corrupted error" collection-name document-id)))
 
         ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt a duplicate-ordered-document!
         ; függvény végrehajtana rajta bármilyen változtatást.

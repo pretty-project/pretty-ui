@@ -14,8 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.api
-    (:require [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.views  :as views]))
+    (:require [app-plugins.item-editor.dialogs :as dialogs]
+              [app-plugins.item-editor.engine  :as engine]
+              [app-plugins.item-editor.views   :as views]))
 
 
 
@@ -36,7 +37,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-editor.engine
-(def item-id->item-uri engine/item-id->item-uri)
+(def editor-uri        engine/editor-uri)
+(def form-id           engine/form-id)
 (def get-body-props    engine/get-body-props)
 (def get-header-props  engine/get-header-props)
 
@@ -49,3 +51,9 @@
 (def favorite-item-button views/favorite-item-button)
 (def copy-item-button     views/copy-item-button)
 (def save-item-button     views/save-item-button)
+(def input-group-label    views/input-group-label)
+(def input-group-footer   views/input-group-footer)
+(def form-footer          views/form-footer)
+(def form-header          views/form-header)
+(def color-selector       views/color-selector)
+(def color-stamp          views/color-stamp)

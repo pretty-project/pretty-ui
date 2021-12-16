@@ -32,7 +32,6 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :max-height (integer)
   ;   :min-height (integer)
@@ -41,14 +40,15 @@
   ;   :status-animation? (boolean)}
   [field-id field-props]
   (merge {:color      :default
-          :indent     :left
           :layout     :row
           :max-height 32
           :min-height 1
           :min-width  :s
           :value-path (engine/default-value-path field-id)}
          (param field-props)
-         {:multiline? true}))
+         {:multiline? true
+          ; XXX#6782
+          :name (a/id)}))
 
 
 
@@ -107,7 +107,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

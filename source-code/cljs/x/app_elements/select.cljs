@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.19
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.4.8
+; Version: v0.9.2
+; Compatibility: x4.4.9
 
 
 
@@ -117,7 +117,6 @@
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id {:keys [as-button?] :as select-props}]
@@ -133,8 +132,7 @@
                :value-path   (engine/default-value-path   select-id)}
               ; A button elemnél is alkalmazott tulajdonságok csak akkor részei a select elem
               ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
-              (if-not as-button? {:indent :left
-                                  :layout :row})
+              (if-not as-button? {:layout :row})
               (param select-props)
               {:on-click [:elements/render-select-options! select-id options-props]})))
 
@@ -194,7 +192,7 @@
   ;
   ; @return (component)
   [popup-id _]
-  [button {:preset   :cancel-button
+  [button {:preset   :close-icon-button
            :on-click [:ui/close-popup! popup-id]}])
 
 (defn- select-options-label
@@ -216,7 +214,7 @@
   ; @return (component)
   [popup-id {:keys [options-label user-cancel?] :as options-props}]
   (cond (some?   options-label) [polarity {:middle-content [select-options-label        popup-id options-props]}]
-        (boolean user-cancel?)  [polarity {:start-content  [select-options-close-button popup-id options-props]}]))
+        (boolean user-cancel?)  [polarity {:end-content    [select-options-close-button popup-id options-props]}]))
 
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -372,8 +370,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left w/ {:as-button? false}
-  ;    Default: :none w/ {:as-button? true}
+  ;    Default: :none
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

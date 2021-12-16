@@ -329,6 +329,7 @@
   ;  {:actions-mode? (boolean)
   ;   :all-items-selected? (boolean)
   ;   :any-item-selected? (boolean)
+  ;   :filter-mode? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :order-changed? (boolean)
   ;   :reorder-mode? (boolean)
@@ -340,21 +341,19 @@
   (cond (get-in db [extension-id :lister-meta :select-mode?])
         {:select-mode?        true
          :all-items-selected? (r all-items-selected? db extension-id)
-         :any-item-selected?  (r any-item-selected?  db extension-id)
-         :filters-visible?    false}
+         :any-item-selected?  (r any-item-selected?  db extension-id)}
         ; If search-mode is enabled ...
         (get-in db [extension-id :lister-meta :search-mode?])
-        {:search-mode?     true
-         :filters-visible? false}
+        {:search-mode?     true}
         ; If reorder-mode is enabled ...
         (get-in db [extension-id :lister-meta :reorder-mode?])
         {:reorder-mode?    true
-         :filters-visible? false
          :order-changed?   false}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
-         :filters-visible?  (get-in db [extension-id :lister-meta :filters-visible?])
+         :filter            (get-in db [extension-id :lister-meta :filter])
+         :filter-mode?      (get-in db [extension-id :lister-meta :filter-mode?])
          :no-items-to-show? (r no-items-to-show?           db extension-id)
          :viewport-small?   (r environment/viewport-small? db)}))
 
@@ -367,17 +366,45 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  ;  {:downloaded-items (vector)
+  ;  {:actions-mode? (boolean)
+  ;   :downloaded-items (vector)
   ;   :disabled-items (integers in vector)
+  ;   :filter (keyword)
+  ;   :filter-mode? (boolean)
   ;   :no-items-to-show? (boolean)
+  ;   :reorder-mode? (boolean)
+  ;   :search-mode? (boolean)
   ;   :select-mode? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-  {:downloaded-items  (r get-downloaded-items db extension-id)
-   :no-items-to-show? (r no-items-to-show?    db extension-id)
-   :synchronizing?    (r synchronizing?       db extension-id item-namespace)
-   :disabled-items    (get-in db [extension-id :lister-meta :disabled-items])
-   :select-mode?      (get-in db [extension-id :lister-meta :select-mode?])})
+        ; If select-mode is enabled ...
+  (cond (get-in db [extension-id :lister-meta :select-mode?])
+        {:select-mode?      true
+         :downloaded-items  (r get-downloaded-items db extension-id)
+         :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
+        ; If search-mode is enabled ...
+        (get-in db [extension-id :lister-meta :search-mode?])
+        {:search-mode?      true
+         :downloaded-items  (r get-downloaded-items db extension-id)
+         :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)
+         :filter            (get-in db [extension-id :lister-meta :filter])
+         :filter-mode?      (get-in db [extension-id :lister-meta :filter-mode?])}
+        ; If reorder-mode is enabled ...
+        (get-in db [extension-id :lister-meta :reorder-mode?])
+        {:reorder-mode?     true
+         :downloaded-items  (r get-downloaded-items db extension-id)
+         :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
+        ; Use actions-mode as default ...
+        :default
+        {:actions-mode?     true
+         :downloaded-items  (r get-downloaded-items db extension-id)
+         :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronizing?    (r synchronizing?       db extension-id item-namespace)
+         :filter            (get-in db [extension-id :lister-meta :filter])
+         :filter-mode?      (get-in db [extension-id :lister-meta :filter-mode?])}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
@@ -409,20 +436,43 @@
          (dissoc-in [extension-id :lister-meta :document-count])
          (dissoc-in [extension-id :lister-meta :synchronized?])))
 
+(defn- quit-filter-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; WARNING#4569
+  ; A {:filter-mode? true} az {:actions-mode? true} beállítással párhuzamosan fut, ezért
+  ; az {:actions-mode? true} módból bármelyik másik módba átlépéskor szükséges a {:filter-mode? true}
+  ; beállításból kilépni!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (-> db (dissoc-in [extension-id :lister-meta :filter-mode?])
+         (dissoc-in [extension-id :lister-meta :filter])))
+
+(defn- toggle-filter-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (-> db (update-in [extension-id :lister-meta :filter-mode?] not)
+         (dissoc-in [extension-id :lister-meta :filter])))
+
+(a/reg-event-db :item-lister/toggle-filter-mode! toggle-filter-mode!)
+
 (defn- toggle-search-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/toggle-search-mode! :my-extension)
-  ;
   ; @return (map)
   [db [_ extension-id]]
-  (update-in db [extension-id :lister-meta :search-mode?] not))
+  (as-> db % (update-in % [extension-id :lister-meta :search-mode?] not)
+             (r quit-filter-mode! % extension-id)))
 
-; @usage
-;  [:item-lister/toggle-search-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
 
 (defn- toggle-select-mode!
@@ -430,16 +480,12 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/toggle-select-mode! :my-extension)
-  ;
   ; @return (map)
   [db [_ extension-id]]
-  (-> db (update-in [extension-id :lister-meta :select-mode?] not)
-         (dissoc-in [extension-id :lister-meta :item-selections])))
+  (as-> db % (update-in % [extension-id :lister-meta :select-mode?] not)
+             (dissoc-in % [extension-id :lister-meta :item-selections])
+             (r quit-filter-mode! % extension-id)))
 
-; @usage
-;  [:item-lister/toggle-select-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
 (defn- toggle-reorder-mode!
@@ -447,41 +493,17 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/toggle-reorder-mode! :my-extension)
-  ;
   ; @return (map)
   [db [_ extension-id]]
-  (-> db (update-in [extension-id :lister-meta :reorder-mode?] not)
-         (dissoc-in [extension-id :lister-meta :item-selections])))
+  (as-> db % (update-in % [extension-id :lister-meta :reorder-mode?] not)
+             (r quit-filter-mode! % extension-id)))
 
-; @usage
-;  [:item-lister/toggle-reorder-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
-
-(defn- toggle-item-filters-visibility!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r engine/toggle-item-filters-visibility! :my-extension)
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (update-in db [extension-id :lister-meta :filters-visible?] not))
-
-; @usage
-;  [:item-lister/toggle-item-filters-visibility! :my-extension]
-(a/reg-event-db :item-lister/toggle-item-filters-visibility! toggle-item-filters-visibility!)
 
 (defn- select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r engine/select-all-items! :my-extension)
   ;
   ; @return (map)
   [db [_ extension-id]]
@@ -489,8 +511,6 @@
         item-selections       (reduce #(assoc %1 %2 true) {} (range 0 downloaded-item-count))]
        (assoc-in db [extension-id :lister-meta :item-selections] item-selections)))
 
-; @usage
-;  [:item-lister/select-all-items! :my-extension]
 (a/reg-event-db :item-lister/select-all-items! select-all-items!)
 
 (defn- unselect-all-items!
@@ -498,15 +518,10 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/unselect-all-items! :my-extension)
-  ;
   ; @return (map)
   [db [_ extension-id]]
   (dissoc-in db [extension-id :lister-meta :item-selections]))
 
-; @usage
-;  [:item-lister/unselect-all-items! :my-extension]
 (a/reg-event-db :item-lister/unselect-all-items! unselect-all-items!)
 
 (defn- toggle-item-selection!
@@ -523,8 +538,6 @@
   [db [_ extension-id _ item-dex]]
   (update-in db [extension-id :lister-meta :item-selections item-dex] not))
 
-; @usage
-;  [:item-lister/toggle-item-selection! :my-extension]
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 (defn- mark-items-as-disabled!
@@ -646,12 +659,19 @@
       (let [resolver-id    (resolver-id extension-id item-namespace)
             documents      (get-in server-response [resolver-id :documents])
             document-count (get-in server-response [resolver-id :document-count])]
-           {:db (-> db (update-in [extension-id :lister-data] vector/concat-items documents)
-                       ; Szükséges frissíteni a keresési feltételeknek megfelelő
-                       ; dokumentumok számát, mert megváltozhat az értéke!
-                       (assoc-in  [extension-id :lister-meta :document-count] document-count)
-                       ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-                       (assoc-in  [extension-id :lister-meta :synchronized?]  true))
+                           ; XXX#3907
+                           ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
+                           ; a lista-elemek felsorolásakor és egyes Re-Frame feliratkozásokban
+                           ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel.
+           {:db (as-> db % (r db/store-collection! % [extension-id :lister-data] documents {:remove-namespace? true})
+                           ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
+                           ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
+                           (assoc-in % [extension-id :lister-meta :item-namespace] item-namespace)
+                           ; Szükséges frissíteni a keresési feltételeknek megfelelő
+                           ; dokumentumok számát, mert megváltozhat az értéke!
+                           (assoc-in % [extension-id :lister-meta :document-count] document-count)
+                           ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
+                           (assoc-in % [extension-id :lister-meta :synchronized?]  true))
             ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
             ; hogy az a viewport területén van-e még.
             :dispatch [:tools/reload-infinite-loader! extension-id]})))

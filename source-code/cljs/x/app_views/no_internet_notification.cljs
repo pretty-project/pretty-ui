@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.4.6
+; Version: v0.4.8
+; Compatibility: x4.4.9
 
 
 
@@ -15,8 +15,26 @@
 
 (ns x.app-views.no-internet-notification
     (:require [x.app-core.api        :as a :refer [r]]
+              [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
               [x.app-ui.api          :as ui]))
+
+
+
+;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bubble-id
+  ;
+  ; @return (component)
+  [bubble-id]
+  [elements/polarity {:start-content [elements/label  {:content  :no-internet-connection}]
+                      :end-content   [elements/button {:label    :refresh!
+                                                       :on-click [:boot-loader/refresh-app!]
+                                                       :preset   :primary-button}]}])
 
 
 
@@ -30,13 +48,9 @@
       (if (and (r environment/browser-offline? db)
                (r ui/application-interface?    db))
           [:ui/blow-bubble! ::notification
-                            {:content     :no-internet-connection
+                            {:body        {:content #'body}
                              :autopop?    false
-                             :user-close? false
-                             :primary-button
-                             {:label    :refresh!
-                              :on-click [:boot-loader/refresh-app!]
-                              :preset   :primary-button}}])))
+                             :user-close? false}])))
 
 (a/reg-lifecycles
   ::lifecycles

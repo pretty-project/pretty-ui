@@ -6,10 +6,8 @@
       [mid-fruits.keyword :as keyword]))
 
 (defn namespace-and-name [the-key]
-      (str
-        (namespace the-key)
-        "/"
-        (name the-key)))
+      (str (namespace the-key) "/"
+           (name      the-key)))
 
 (defn search-pattern->pipeline-query
        ; @param (vectors in vector) search-pattern
@@ -44,5 +42,3 @@
                         (assoc sort str-sort-key sort-direction)))
                (param {})
                (param sort-pattern)))
-
-

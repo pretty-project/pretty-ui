@@ -1,6 +1,7 @@
 
 /***** Material icons *****/
 
+.item-lister--list-item--checkbox::after,
 .sortable--sensor::before {
   font-style: normal;
   font-family: 'Material Icons';
@@ -28,11 +29,62 @@
 
 
 
+/***** Item-editor *****/
+/*** Form-header ***/
+
+/*** Form-header ***/
+
+/*** Selected colors ***/
+
+.item-editor--selected-colors {
+  background-color: var( --fill-color );
+  border-radius: var( --border-radius-s );
+  display: flex;
+  grid-gap: 2px;
+  height: 42px;
+  margin: 3px;
+  overflow: hidden;
+  width: 42px }
+
+.item-editor--selected-color {
+  flex-grow: 1;
+  height: 42px }
+
+/*** Selected colors ***/
+
+/*** Color-stamp ***/
+
+.item-editor--color-stamp {
+  background-color: var( --fill-color );
+  border-radius: var( --border-radius-s );
+  display: flex;
+  grid-gap: 1px;
+  height: 24px;
+  margin: 12px;
+  overflow: hidden;
+  width: 24px }
+
+.item-editor--color-stamp--color {
+  flex-grow: 1;
+  height: 24px }
+
+.item-editor--color-stamp-placeholder {
+  background-color: var( --background-color-highlight );
+  border-radius: var( --border-radius-s );
+  height: 24px;
+  margin: 12px;
+  width: 24px }  
+
+/*** Color-stamp ***/
+/***** Item-editor *****/
+
+
+
 /***** Item-lister *****/
 /*** Item-lister header ***/
 
 #item-lister--header--structure {
-   transition: .15s height;
+   -transition: .15s height;
    width: 100% }
 
  /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként
@@ -59,8 +111,11 @@
 .item-lister--header--item-filters {
   bottom: 0;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   left: 0;
-  position: absolute }
+  position: absolute;
+  width: 100% }
 
 /*** Item-lister header ***/
 
@@ -76,13 +131,12 @@
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
-/*** Item-lister body ***/
-
-/*** Item-lister item-list ***/
-
 .item-lister--structure {
   width: 100% }
 
+/*** Item-lister body ***/
+
+/*** Item-lister item-list ***/
 /*** Item-lister item-list ***/
 
 /*** Item-lister list-item ***/
@@ -90,26 +144,46 @@
 /* XXX#7601
  * A {:select-mode? true} beállítással megjelenített listaelemekben a checkbox elemet
  * és a listaelemet szükséges egy flex-level elemben elhelyezni. */
-.item-lister--item-list--list-item-structure {
-  display: flex }
+.item-lister--list-item--structure {
+  display: flex;
+  padding-left: 48px
+ }
 
 /* XXX#7601
  * A flex-level elemben elhelyezett block-level vagy flex-level listaelem nem venné fel
  * a rendelkezésre álló szélesség 100%-át, ezért szükséges a listaelemet egy 100% szélességű
  * block-level elemben elhelyezni. */
-.item-lister--item-list--list-item {
+.item-lister--list-item {
   width: 100% }
 
-.item-lister--item-list--list-item[data-disabled="true"] {
-  opacity: .5 }
+.item-lister--list-item[data-disabled="true"] {
+  -opacity: .5 }
 
-.item-lister--item-list--list-item[data-disabled="true"]::after {
-  content: '';
+.item-lister--list-item[data-disabled="true"]::after {
+  -content: '';
+  -height: 100%;
+  -left: 0;
+  -position: absolute;
+  -top: 0;
+  -width: 100% }
+
+.item-lister--list-item--checkbox {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  justify-content: center;
   left: 0;
   position: absolute;
   top: 0;
-  width: 100% }
+  width: 48px;
+}
+
+.item-lister--list-item--checkbox[data-checked="false"]::after {
+  content: 'check_box_outline_blank';
+  color: var( --color-primary );
+  font-size: var( --icon-size-s )
+}
 
 /*** Item-lister list-item ***/
 /***** Item-lister *****/

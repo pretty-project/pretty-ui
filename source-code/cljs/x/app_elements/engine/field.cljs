@@ -266,24 +266,28 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:auto-focus? (boolean)(constant)(opt)
+  ;  {:auto-focus? (boolean)(opt)
+  ;   :autocomplete? (boolean)(opt)
   ;   :disabled? (boolean)(opt)
   ;   :max-length (integer)(opt)
+  ;   :name (keyword)
   ;   :type (keyword)(opt)
   ;    :password, :text
   ;   :value (string)}
   ;
   ; @return (map)
-  ;  {:autoFocus (boolean)
+  ;  {:autoComplete (keyword)
+  ;   :autoFocus (boolean)
   ;   :disabled (boolean)
   ;   :id (string)
   ;   :max-length (integer)
+  ;   :name (keyword)
   ;   :on-blur (function)
   ;   :on-focus (function)
   ;   :on-change (function)
   ;   :style (map)
   ;   :value (string)}
-  [field-id {:keys [auto-focus? disabled? max-length surface type value] :as field-props}]
+  [field-id {:keys [auto-focus? autocomplete? disabled? max-length name surface type value] :as field-props}]
           ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
           ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
           ; minden esetben elérhető.
@@ -331,7 +335,15 @@
                                   ;  függvény nélküli input elemeket.
                                   :on-change #(let [])})
           ; If field has surface ...
-          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
+          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})
+          ; BUG#6782 https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
+          ;  A Chrome böngésző - ignorálja az {:autocomplete "off"} beállítást
+          ;                    - ignorálja az {:autocomplete "new-*"} beállítást
+          ;                    - figyelembe veszi a {:name ...} értékét
+          ;  Véletlenszerű {:name ...} érték használatakor az autofill nem képes megállapítani,
+          ;  mi alapján ajánljon értékeket a mezőhöz, ezért ilyen esetben nem működik az autofill.
+          (not autocomplete?) (merge {:name         name
+                                      :autoComplete name})))
 
 (defn field-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

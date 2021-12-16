@@ -3,7 +3,8 @@
 
 /***** User select *****/
 
-#x-app-header--title {
+#x-app-header--title,
+.x-app-bubbles--element--body {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -160,7 +161,7 @@
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-start;
-  max-height: calc(100vh - 48px);
+  max-height: 100vh;
   overflow-y: auto;
   padding-right: 24px;
   position: fixed;
@@ -186,10 +187,9 @@
   border-width: 1px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: 48px;
-  margin-bottom: 24px;
+  justify-content: space-between;
   min-height: 48px;
+  margin-bottom: 24px;
   width: 100% }
 
 [data-viewport-profile="xxs"] .x-app-bubbles--element,
@@ -197,51 +197,22 @@
 [data-viewport-profile="s"]   .x-app-bubbles--element,
 [data-viewport-profile="m"]   .x-app-bubbles--element {
   border-radius: 0;
+  border-style: solid none none none;
   margin-bottom: 0 }
 
-/* Amikor az egymás felett megjelenő bubble elemek közül egy eltűnik, akkor
- * egy pillanatra alsó border nélkül maradna a felette elhelyezkedő bubble */
-.x-app-bubbles--element::after_______ {
-  background-color: var( --border-color );
-  bottom: -1px;
-  content: '';
-  height: 1px;
-  left: 0;
-  position: absolute;
-  width: 100% }
-
 .x-app-bubbles--element--body {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* XXX#2981 */
-  padding-left: var( --content-edge );
-  width: 100% }
-
-.x-app-bubbles--element--buttons {
-
-  display: flex;
-  flex-direction: row;
-
-  /* XXX#3044 */
-  flex-grow: 1;
-  justify-content: space-between }
-
-.x-app-bubbles--element--content {
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   font-size: var( --font-size-s );
   font-weight: 500;
-  height: 100%;
+  flex-grow: 1;
   justify-content: center;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
-  overflow: hidden }
-
-.x-app-bubbles--element--close-button-placeholder {
+  overflow: hidden;
   /* XXX#2981 */
-  width: var( --content-edge ) }
+  padding: 0 var( --content-edge ) }
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
@@ -253,7 +224,6 @@
 
 #x-app-header {
   background-color: var( --background-color );
-  -background-color: var( --app-background-color );
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
   flex-direction: row;
@@ -431,7 +401,15 @@ body[data-viewport-profile="s"]   #x-app-header {
   overflow-x: auto;
   /* XXX#2981 */
   padding: 0 var( --content-edge );
-  min-height: 48px;
+
+  /* WARNING! DEPRECATED!
+   * A select elem abban az esetben is használja a popup {:header ...} tulajdonságát,
+   * amikor nem jelenít meg rajta semmilyen tartalmat. A {min-height: 48px} tulajdonság
+   * használatával ilyenkor egy üres sáv jelenne meg a header elem helyén.
+   * Nem ismert milyen okból volt használva a min-height tulajdonság! */
+  -min-height: 48px;
+  /* WARNING! DEPRECATED! */
+
   width: 100% }
 
 /*** Popup header ***/

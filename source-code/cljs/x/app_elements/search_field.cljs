@@ -79,7 +79,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

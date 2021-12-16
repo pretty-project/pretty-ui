@@ -50,13 +50,11 @@
   ;  {:color (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path-vector)}
   [group-id group-props]
   (merge {:color  :primary
-          :indent :left
           :layout :row
           :options-path (engine/default-options-path group-id)
           :value-path   (engine/default-value-path   group-id)
@@ -180,7 +178,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)

@@ -37,11 +37,11 @@
                             :icon    :add
                             :layout  :icon-button
                             :variant :transparent}
-      :add-to-favorites-icon-button {:color   :default
+      :add-to-favorites-icon-button {:color   :secondary
                                      :icon    :favorite_border
                                      :layout  :icon-button
                                      :variant :transparent}
-      :added-to-favorites-icon-button {:color   :default
+      :added-to-favorites-icon-button {:color   :secondary
                                        :icon    :favorite
                                        :layout  :icon-button
                                        :variant :transparent}
@@ -147,6 +147,10 @@
                             :horizontal-align :left
                             :icon    :list
                             :label   :more-options
+                            :layout  :row
+                            :variant :transparent}
+      :muted-button        {:color   :muted
+                            :horizontal-align :left
                             :layout  :row
                             :variant :transparent}
       :muted-icon-button   {:color   :muted

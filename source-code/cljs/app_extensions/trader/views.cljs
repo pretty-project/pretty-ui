@@ -3,6 +3,7 @@
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
+              [app-extensions.trader.listeners :as listeners]
               [app-extensions.trader.overview  :as overview]
               [app-extensions.trader.positions :as positions]))
 
@@ -15,6 +16,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
   [{:label "Overview"  :on-click [:view-selector/go-to! :trader :overview]  :active? (= view-id :overview)}
+   {:label "Listeners" :on-click [:view-selector/go-to! :trader :listeners] :active? (= view-id :listeners)}
    {:label "Positions" :on-click [:view-selector/go-to! :trader :positions] :active? (= view-id :positions)}])
 
 
@@ -38,6 +40,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [view-id]}]
   (case view-id :overview  [overview/body  body-id]
+                :listeners [listeners/body body-id]
                 :positions [positions/body body-id]
                 "Follow the white rabbit!"))
 
@@ -59,10 +62,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view}}])
 
-
 (a/reg-event-fx
   :trader/load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-header-title! "Trader"]
-                [:ui/set-window-title! "Trader"]
+  {:dispatch-n [[:ui/listen-to-process! :trader/synchronize-listener-lister!]
+                [:ui/set-header-title!  "Trader"]
+                [:ui/set-window-title!  "Trader"]
                 [:trader/render!]]})

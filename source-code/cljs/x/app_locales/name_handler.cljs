@@ -49,11 +49,27 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-name-order
+  ; @usage
+  ;  (r locales/get-name-order db)
+  ;
   ; @return (keyword)
   ;  :normal, :reversed
   [db _]
   (let [selected-language (r language-handler/get-selected-language db)]
        (get NAME-ORDERS selected-language :normal)))
+
+(defn get-ordered-name
+  ; @param (string) first-name
+  ; @param (string) last-name
+  ;
+  ; @usage
+  ;  (r locales/get-ordered-name db "My" "Name")
+  ;
+  ; @return (string)
+  [db [_ first-name last-name]]
+  (let [name-order (r get-name-order db)]
+       (case name-order :reversed (str last-name  " " first-name)
+                                  (str first-name " " last-name))))
 
 
 

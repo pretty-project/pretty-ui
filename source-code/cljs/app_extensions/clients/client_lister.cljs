@@ -17,8 +17,8 @@
 
 (defn- get-item-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ _ {:client/keys [added-at]}]]
-  {:added-at          (r activities/get-actual-timestamp db added-at)
+  [db [_ _ {:keys [modified-at]}]]
+  {:modified-at       (r activities/get-actual-timestamp db modified-at)
    :viewport-small?   (r environment/viewport-small?     db)
    :selected-language (r locales/get-selected-language   db)})
 
@@ -31,29 +31,33 @@
 
 (defn- client-item-secondary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [added-at]}]
-  [:div.clients--client--secondary-details
-     [:div.clients--client--added-at added-at]])
+  [_ _ {:keys [modified-at]}]
+  [:div.clients--client-item--secondary-details [:div.clients--client-item--modified-at modified-at]])
 
 (defn- client-item-primary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:client/keys [email-address first-name last-name]} {:keys [selected-language]}]
+  [_ {:keys [email-address first-name last-name]} {:keys [selected-language]}]
   (let [full-name (locales/name->ordered-name first-name last-name selected-language)]
-       [:div.clients--client--primary-details
-          [:div.clients--client--full-name     full-name]
-          [:div.clients--client--email-address email-address]]))
+       [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     full-name]
+                                                   [:div.clients--client-item--email-address email-address]]))
+
+(defn- client-item-details
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex client-props item-props]
+  [:div.clients--client-item--details [client-item-primary-details   item-dex client-props item-props]
+                                      [client-item-secondary-details item-dex client-props item-props]])
 
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props item-props]
-  [:div.clients--client [client-item-primary-details   item-dex client-props item-props]
-                        [client-item-secondary-details item-dex client-props item-props]])
+  [:div.clients--client-item [item-editor/color-stamp :clients :client client-props]
+                             [client-item-details item-dex client-props item-props]])
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:client/keys [id] :as client-props}]
+  [item-dex {:keys [id] :as client-props}]
   (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])
-        client-uri (item-editor/item-id->item-uri :clients :client id)]
+        client-uri (item-editor/editor-uri :clients :client id)]
        (fn [] [elements/toggle {:on-click [:router/go-to! client-uri]
                                 :content  [client-item-structure item-dex client-props @item-props]
                                 :hover-color :highlight}])))

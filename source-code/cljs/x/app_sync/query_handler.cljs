@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.09
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.2.8
+; Version: v0.2.8
+; Compatibility: x4.4.9
 
 
 
@@ -14,10 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.query-handler
-    (:require [mid-fruits.candy            :refer [param]]
-              [mid-fruits.map              :as map]
-              [x.app-core.api              :as a :refer [r]]
-              [x.app-db.api                :as db]
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.map    :as map]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]
               [x.app-sync.response-handler :as response-handler]))
 
 
@@ -230,6 +231,16 @@
       (let [query-id      (a/event-vector->second-id   event-vector)
             query-props   (a/event-vector->first-props event-vector)
             query-props   (a/prot query-props query-props-prototype)
-            request-props (query-props->request-props  query-id query-props)]
-           {:db       (r store-query-props!   db query-id query-props)
-            :dispatch [:sync/send-request! query-id request-props]})))
+            request-props (query-props->request-props  query-id query-props)
+
+            ; BUG#5011
+            ; A query vektorba feltételesen – if, when, ... függvény használatával –
+            ; írt query-question elemek helyett a feltétel nem teljesülésekor nil
+            ; érték kerül, ami a szerver-oldali Pathom rendszerben hibához vezetne.
+            ; Emiatt szükséges eltávolítani a query vektorból a nil értékeket,
+            ; miután a {:query [...]} és a {:body {:query [...]}} tulajdonságok
+            ; egységesítése megtörtént.
+            request-props (update-in request-props [:params :query] vector/remove-item nil)]
+
+           {:db       (r store-query-props! db query-id query-props)
+            :dispatch [:sync/send-request!     query-id request-props]})))

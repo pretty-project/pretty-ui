@@ -32,12 +32,12 @@
   ;
   ; @return (map)
   ;  {:color (keyword)
-  ;   :indent (keyword)
+  ;   :font-size (keyword)
   ;   :layout (keyword)}
   [checkbox-id checkbox-props]
-  (merge {:color  :primary
-          :indent :left
-          :layout :row
+  (merge {:color     :primary
+          :font-size :s
+          :layout    :row
           :value-path (engine/default-value-path checkbox-id)}
          (param checkbox-props)))
 
@@ -111,11 +111,14 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)
+  ;   :font-size (keyword)(opt)
+  ;    :xs, :s
+  ;    Default: :s
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-value (boolean)(constant)(opt)
   ;   :on-check (metamorphic-event)(opt)
   ;   :on-uncheck (metamorphic-event)(opt)

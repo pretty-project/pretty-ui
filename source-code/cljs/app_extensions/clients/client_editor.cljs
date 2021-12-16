@@ -3,14 +3,15 @@
 
 
 (ns app-extensions.clients.client-editor
-    (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.form    :as form]
-              [mid-fruits.string  :as string]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
-              [x.app-locales.api  :as locales]
+    (:require [mid-fruits.candy      :refer [param]]
+              [mid-fruits.form       :as form]
+              [mid-fruits.string     :as string]
+              [x.app-core.api        :as a :refer [r]]
+              [x.app-db.api          :as db]
+              [x.app-elements.api    :as elements]
+              [x.app-environment.api :as environment]
+              [x.app-layouts.api     :as layouts]
+              [x.app-locales.api     :as locales]
               [app-plugins.item-editor.api :as item-editor]))
 
 
@@ -18,12 +19,21 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- get-client-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [first-name (get-in db [:clients :editor-data :first-name])
+        last-name  (get-in db [:clients :editor-data :last-name])]
+       (r locales/get-ordered-name db first-name last-name)))
+
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:client-color      (get-in db [:clients :editor-data :client-color])
-   :name-order        (r locales/get-name-order        db)
-   :selected-language (r locales/get-selected-language db)})
+  (merge (r item-editor/get-body-props db :clients :client)
+         {:form-label        (r get-client-name               db)
+          :name-order        (r locales/get-name-order        db)
+          :selected-language (r locales/get-selected-language db)
+          :viewport-large?   (r environment/viewport-large?   db)}))
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -41,9 +51,9 @@
 
 (defn- end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ header-props]
-  [:<> [item-editor/favorite-item-button :clients :client header-props]
-       [item-editor/save-item-button     :clients :client header-props]])
+  [_ {:keys [new-item?] :as header-props}]
+  [:<> (if-not new-item? [item-editor/favorite-item-button :clients :client header-props])
+       [item-editor/save-item-button :clients :client header-props]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,151 +70,131 @@
 (defn- client-legal-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
-  [:div#clients--client-form--legal-details
+  [:div#clients--client-editor--legal-details
     [elements/text-field ::vat-no-field
-                         {:label :vat-no :value-path [:clients :editor-data :client/vat-no]}]])
+                         {:label :vat-no :value-path [:clients :editor-data :vat-no]}]])
+
+(defn- client-country-select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [selected-language synchronizing?]}]
+  [elements/select ::country-select
+                   {:label :country ;:min-width :xxs :user-cancel? false
+                    :initial-value   (locales/country-native-name selected-language)
+                    :initial-options (param locales/EU-COUNTRY-NAMES)
+                    :value-path      [:clients :editor-data :country]
+                    :disabled?       synchronizing?}])
+
+(defn- client-zip-code-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::zip-code-field
+                       {:label :zip-code ; :min-width :xxs
+                        :value-path [:clients :editor-data :zip-code]
+                        :disabled?  synchronizing?}])
+
+(defn- client-city-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/combo-box ::city-field
+                      {:label :city :emptiable? false
+                       :options-path [:clients :editor-meta :suggestions :city]
+                       :value-path   [:clients :editor-data :city]
+                       :disabled? synchronizing?}])
+
+(defn- client-address-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::address-field
+                       {:label :address :min-width :grow
+                        :value-path [:clients :editor-data :address]
+                        :disabled? synchronizing?}])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [selected-language] :as body-props}]
+  [body-id body-props]
  [:div
   [:div {:style {:display :flex :grid-column-gap "24px" :flex-wrap :wrap}}
-    [elements/select ::country-field
-                     {:label :country :min-width :xxs
-                      :initial-value   (locales/country-native-name selected-language)
-                      :initial-options (param locales/EU-COUNTRY-NAMES)
-                      :value-path [:clients :editor-data :client/country]}]
+    [client-country-select body-id body-props]
+    [client-zip-code-field body-id body-props]
+    [client-city-field     body-id body-props]]
 
-    [elements/text-field ::zip-code-field
-                         {:label :zip-code :min-width :xxs}]
-    [elements/combo-box ::city-field
-                        {:label :city :options-path [:clients :editor-meta :suggestions :cities]
-                         :style {:flex-grow 1}
-                         :value-path [:clients :editor-data :client/city]
-                         :initial-value "Makó"
-                         :initial-options ["HMVH" "BP"]
-
-                         ; TODO BUG
-                         ; Ez why nem megy?
-                         :emptiable? false}]]
   [:div
-    [elements/text-field ::address-field
-                         {:label :address :min-width :grow :value-path [:clients :editor-data :client/address]}]]])
+    [client-address-field body-id body-props]]])
+
+
+(defn- client-phone-number-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::phone-number-field
+                       {:label :phone-number :required? true :min-width :l :indent :both
+                        :value-path [:clients :editor-data :phone-number]
+                        :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
+                        ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
+                        ;:modifier form/valid-phone-number
+                        :modifier #(string/starts-with! % "+")
+                        :form-id   (item-editor/form-id :clients :client)
+                        :disabled? synchronizing?}])
+
+(defn- client-email-address-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::email-address-field
+                       {:label :email-address :required? true :min-width :l :indent :both
+                        :value-path [:clients :editor-data :email-address]
+                        :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
+                        :form-id   (item-editor/form-id :clients :client)
+                        :disabled? synchronizing?}])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
-  [:div#clients--client-form--primary-contacts
-    [elements/text-field ::email-address-field
-                         {:label :email-address :required? true
-                          :value-path [:clients :editor-data :client/email-address]
-                          :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
-                          :form-id :item-editor
-                          :min-width :l}]
-    [elements/text-field ::phone-number-field
-                         {:label :phone-number :required? true
-                          :value-path [:clients :editor-data :client/phone-number]
-                          :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
-                          ; Nem egyértelmű a használata, ha egyszerűen le vannak tiltva bizonoyos karakterek
-                          ;:modifier form/valid-phone-number
-                          :modifier #(string/starts-with! % "+")
-                          :form-id :item-editor
-                          :min-width :l}]])
+  [:div#clients--client-editor--primary-contacts [client-email-address-field body-id body-props]
+                                                 [client-phone-number-field  body-id body-props]])
+
+(defn- client-last-name-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::last-name-field
+                       {:label :last-name :required? true :min-width :l :indent :both
+                        :value-path [:clients :editor-data :last-name]
+                        :form-id    (item-editor/form-id :clients :client)
+                        :disabled?  synchronizing?}])
+
+(defn- client-first-name-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [synchronizing?]}]
+  [elements/text-field ::first-name-field
+                       {:label :first-name :required? true :min-width :l :indent :both
+                        :value-path [:clients :editor-data :first-name]
+                        :form-id    (item-editor/form-id :clients :client)
+                        :disabled?  synchronizing?}])
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [name-order] :as body-props}]
-  [:div#clients--client-form--client-name
-    [locales/name-order [elements/text-field ::first-name-field
-                                             {:label :first-name :required? true
-                                              :value-path [:clients :editor-data :client/first-name]
-                                              :form-id :item-editor
-                                              :min-width :l}]
-                        [elements/text-field ::last-name-field
-                                             {:label :last-name :required? true
-                                              :value-path [:clients :editor-data :client/last-name]
-                                              :form-id :item-editor
-                                              :min-width :l}]
+  [:div#clients--client-editor--client-name
+    [locales/name-order [client-first-name-field body-id body-props]
+                        [client-last-name-field  body-id body-props]
                         (param name-order)]])
-
-(defn- client-color-and-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [client-color]}]
-  [:div {:style {:display :flex :justify-content :center :flex-direction :column :align-items :center}}
-        [:div {:style {:font-weight 600}}
-              "Client #001"
-              [:span {:style {:width "12px" :height "12px" :background-color "var(--background-color-primary)"
-                              :display :inline-block
-                              :border-radius "50%"
-                              :margin "3px 0 0 6px"}}]]])
-
-(defn- client-color-and-name-
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [client-color]}]
-  [:div {:style {:display :flex :justify-content :center :flex-direction :column :align-items :center}}
-   [:div {:style {:width "64px" :height "64px" :border-radius "32px"
-                  :border (str "4px solid #ddd")
-                  :font-weight 600
-                  :font-size "var(--font-size-xl )"
-                  :background-color client-color
-                  :color "white"
-                  :display :flex :flex-direction :column :justify-content :center :align-items :center}}
-         "C#"]
-   [:div {:style {:font-size "var(--font-size-xxs)" :font-weight 500 :color "#888"}
-          :on-click #(a/dispatch [:clients/render-client-color-picker!])}
-         "Szín kiválasztása"]])
-
-(defn- client-color-and-name__
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [client-color]}]
-  [:div {:style {:display :flex :flex-direction :column :justify-content :flex-start :align-items :center
-                 :margin "0 0 24px 0" :line-height "21px" :font-size "var(--font-size-m)" :font-weight 600}}
-        "Client #001"
-        [:div {:style {:margin "24px 0 0 0" :background-color client-color :width "360px" :height "12px" :border-radius "6px"}
-               :on-click #(a/dispatch [:clients/render-client-color-picker!])}]
-        [:div {:style {:width "360px" :text-align :right :font-size "var(--font-size-xxs)" :font-weight 500 :color "#888"}}
-              "Szín kiválasztása"]])
-
-(defn- client-color-and-name_
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [client-color]}]
-  [:div {:style {:margin "24px 0" :display :flex :width "100%" :justify-content :space-between}}
-    [:div
-       [:div {:style {:background client-color :border-radius "12px"
-                      :height "64px"
-                      :display :flex :flex-direction :column :justify-content :center :align-items :center
-                      :font-weight 500
-                      ;:margin "24px 0"
-                      :width "128px"}
-               :on-click #(a/dispatch [:clients/render-client-color-picker!])}
-           [elements/icon {:icon :format_color_fill :color :invert :size :s}]]
-       [elements/label {:content "Szín kiválasztása" :font-size :xs :layout :fit}]]
-    [elements/label {:content "Client #001" :font-size :xxl}]
-    [:div {:style {:width "128px"}}]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
-  [:div#clients--client-form
-    [client-color-and-name body-id body-props]
-    ;[client-color-and-name body-id body-props]
-    [elements/separator {:orientation :horizontal :size :xxl}]
-    [elements/label {:content "Alapvető adatok" :font-size :m :font-weight :extra-bold :layout :fit :indent :left}]
-    ;[elements/horizontal-line {:color :highlight :fade :out}]
-    ;[elements/separator {:orientation :horizontal :size :s}]
+  [:div#clients--client-editor {:style {:display :flex :flex-direction :column}}
+    ; Color and name
+    [item-editor/form-header    :clients :client body-props]
+    [item-editor/color-selector :clients :client body-props]
+    [item-editor/input-group-footer]
+    ; Basic info
+    [item-editor/input-group-label :clients :client {:content :basic-info}]
     [client-name               body-id body-props]
     [client-primary-contacts   body-id body-props]
-    [elements/separator {:orientation :horizontal :size :l}]
-
-    [elements/separator {:orientation :horizontal :size :xxl}]
-    [elements/label {:content "További adatok" :font-size :m :font-weight :extra-bold :layout :fit :indent :left}]
-    ;[elements/horizontal-line {:color :highlight :fade :out}]
-    ;[elements/separator {:orientation :horizontal :size :s}]
-    ;[elements/separator {:orientation :horizontal :size :xl}]
-    ;[elements/separator {:orientation :horizontal :size :xl}]
+    [item-editor/input-group-footer]
+    ; More info
+    [item-editor/input-group-label :clients :client {:content :more-info}]
     [client-secondary-contacts body-id body-props]
     [client-legal-details      body-id body-props]
-    [elements/separator {:orientation :horizontal :size :l}]])
+    [item-editor/form-footer]])
 
 
 
@@ -238,4 +228,4 @@
 (a/reg-event-fx
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-editor/get-view-props :products :product]}}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-editor/get-view-props :clients :client]}}])

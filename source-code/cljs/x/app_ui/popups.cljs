@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.29
 ; Description:
-; Version: v1.6.8
-; Compatibility: x4.4.8
+; Version: v1.7.0
+; Compatibility: x4.4.9
 
 
 
@@ -81,7 +81,7 @@
   ; @return (boolean)
   [db [_ _ {:keys [layout]}]]
   (and (r environment/viewport-small? db)
-       (= layout :boxed)))
+       (not= layout :unboxed)))
 
 (defn- get-upper-popup-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

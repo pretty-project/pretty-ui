@@ -47,21 +47,26 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:autocomplete? (boolean)
+  ;   :color (keyword)
   ;   :end-adornments (maps in vector)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :min-width (keyword)
+  ;   :name (keyword)
   ;   :type (keyword)}
   [field-id field-props]
   (merge {:color      :default
-          :indent     :left
           :layout     :row
           :min-width  :s
           :type       :text
           :value-path (engine/default-value-path field-id)}
          (param field-props)
-         {:end-adornments (end-adornments-prototype field-id field-props)}))
+         {:end-adornments (end-adornments-prototype field-id field-props)
+          ; BUG#6782
+          ; A field mezők számára szükséges {:name ...} tulajdonságot a komponens React-fába
+          ; csatolásakor szükséges generálni, mert az attributes térképben a felhasználás helyén
+          ; generált érték az attributes térkép minden megváltozásakor feleslegesen újragenerálódna.
+          :name (a/id)}))
 
 
 
@@ -194,6 +199,10 @@
   ;
   ; @return (hiccup)
   [field-id field-props]
+  ; XXX#8094
+  ; A text-field komponensbe helyezett placeholder komponensre kattintva az input elem fókuszt kap,
+  ; mert egy közös [:label] HTML elemben vannak. Másképpen a placeholder komponens {:on-mouse-up ...}
+  ; eseményével kell fókuszt adni az inputnak.
   [:label.x-text-field (engine/element-attributes   field-id field-props)
                        [text-field-label            field-id field-props]
                        [text-field-input-container  field-id field-props]
@@ -205,6 +214,8 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
+  ;   :autocomplete? (boolean)(opt)
+  ;    Default: false
   ;   :class (string or vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
@@ -228,7 +239,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)

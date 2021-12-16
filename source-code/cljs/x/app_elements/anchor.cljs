@@ -32,12 +32,10 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
-  ;   :indent (keyword)
   ;   :layout (keyword)}
   [anchor-props]
   (merge {:color     :primary
           :font-size :s
-          :indent    :both
           :layout    :row}
          (param anchor-props)))
 
@@ -95,7 +93,7 @@
   ;     Only w/o {:on-click ...}
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :both
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

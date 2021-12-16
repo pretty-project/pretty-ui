@@ -69,9 +69,10 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/text-field ::email-address-field
-                       {:label      :email-address
-                        :value-path [:login-box :email-address]
-                        :disabled?  synchronizing?}])
+                       {:label         :email-address
+                        :value-path    [:login-box :email-address]
+                        :autocomplete? true
+                        :disabled?     synchronizing?}])
 
 (defn- password-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -82,8 +83,10 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/password-field ::password-field
-                           {:value-path [:login-box :password]
-                            :disabled?  synchronizing?}])
+                           {:value-path    [:login-box :password]
+                            :autocomplete? true
+                            :disabled?     synchronizing?}])
+
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -32,13 +32,13 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn item-id->item-uri
+(defn editor-uri
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-editor/item-id->item-uri :my-extension :my-type "my-item")
+  ;  (item-editor/editor-uri :my-extension :my-type "my-item")
   ;  =>
   ;  "/my-extension/my-item"
   ;
@@ -46,6 +46,20 @@
   [extension-id _ item-id]
   (str "/" (name  extension-id)
        "/" (param item-id)))
+
+(defn form-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-editor/form-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension/my-type-editor-form
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (name extension-id)
+           (str (name item-namespace) "-editor-form")))
 
 (defn item-id->new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -140,21 +154,23 @@
        (name action-id)      "-"
        (name item-namespace) "-item!"))
 
-(defn form-id
+(defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
   ;
   ; @example
-  ;  (engine/form-id :my-extension :my-type)
+  ;  (engine/resolver-name :my-extension :my-type :suggestions)
   ;  =>
-  ;  :my-extension/my-type-editor-form
+  ;  :my-extension/get-my-type-suggestions!
   ;
   ; @return (keyword)
-  [extension-id item-namespace]
+  [extension-id item-namespace action-id]
   (keyword (name extension-id)
-           (str (name item-namespace) "-editor-form")))
+           (str "get-" (name item-namespace)
+                "-"    (name action-id))))
 
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

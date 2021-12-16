@@ -35,13 +35,11 @@
   ;  {:color (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [button-id button-props]
   (merge {:color        :primary
-          :indent       :left
           :layout       :row
           :options-path (engine/default-options-path button-id)
           :value-path   (engine/default-value-path   button-id)
@@ -167,7 +165,7 @@
   ;    TODO ...
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)

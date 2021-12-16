@@ -98,7 +98,7 @@
   ;   :form-id (keyword)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}

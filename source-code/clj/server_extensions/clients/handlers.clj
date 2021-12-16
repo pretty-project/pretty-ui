@@ -1,10 +1,13 @@
 
 (ns server-extensions.clients.handlers
     (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]
               [mid-fruits.time   :as time]
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
+              [x.server-db.api   :as db]
               [x.server-user.api :as user]
               [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
@@ -105,6 +108,31 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defresolver get-client-suggestions
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ;  {}
+             ; @param (map) resolver-props
+             ;
+             ; @return (map)
+             ;  {:clients/get-client-suggestions (map)
+             ;   {:cities (strings in vector)}}
+             [env _]
+             {:clients/get-client-suggestions
+              (let [all-documents   (mongo-db/get-all-documents :clients)
+                    suggestion-keys (pathom/env->param      env :suggestion-keys)]
+                   (reduce (fn [a document]
+                               (reduce (fn [b suggestion-key]
+                                           (let [suggestion-value (db/get-document-value document suggestion-key)]
+                                                (if (string/nonempty? suggestion-value)
+                                                    (update b suggestion-key vector/conj-item-once suggestion-value)
+                                                    (return b))))
+                                       (param a)
+                                       (param suggestion-keys)))
+                           {}
+                           (param all-documents)))})
+
 (defresolver get-client-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
@@ -118,8 +146,7 @@
              ;     :documents (maps in vector)}}
              [env _]
              {:clients/get-client-items
-              (let [resolver-props  (pathom/env->params env)
-                    search-props    (env->search-props  env)
+              (let [search-props    (env->search-props  env)
                     search-pipeline (search-props->search-pipeline search-props)
                     count-pipeline  (search-props->count-pipeline  search-props)]
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
@@ -142,6 +169,7 @@
                             :client/address
                             :client/archived?
                             :client/city
+                            :client/colors
                             :client/country
                             :client/email-address
                             :client/favorite?
@@ -158,15 +186,24 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation update-client-item! [env client-props]
-             {::pco/op-name 'clients/update-client-item!}
-             (mongo-db/add-document! collection-name client-props
-                                     {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
-
 (defmutation add-client-item! [env client-props]
              {::pco/op-name 'clients/add-client-item!}
              (mongo-db/add-document! collection-name client-props
                                      {:prototype-f #(a/sub-prot env % added-client-props-prototype)}))
+
+(defmutation undo-delete-client-item! [env client-props]
+             {::pco/op-name 'clients/undo-delete-client-item!}
+             (mongo-db/add-document! collection-name client-props))
+
+(defmutation save-client-item! [env client-props]
+             {::pco/op-name 'clients/save-client-item!}
+             (mongo-db/update-document! collection-name client-props
+                                        {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
+
+(defmutation merge-client-item! [env client-props]
+             {::pco/op-name 'clients/merge-client-item!}
+             (mongo-db/merge-document! collection-name client-props
+                                       {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
 
 (defmutation delete-client-item! [{:keys [client-id]}]
              {::pco/op-name 'clients/delete-client-item!}
@@ -183,10 +220,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-(def HANDLERS [get-client-item
+(def HANDLERS [get-client-suggestions
                get-client-items
-               update-client-item!
+               get-client-item
                add-client-item!
+               undo-delete-client-item!
+               save-client-item!
+               merge-client-item!
                delete-client-item!
                duplicate-client-item!])
 

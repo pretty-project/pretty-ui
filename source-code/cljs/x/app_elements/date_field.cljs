@@ -33,14 +33,17 @@
   ; @return (map)
   ;  {:indent (keyword)
   ;   :min-width (keyword)
+  ;   :name (keyword)
   ;   :type (keyword)
   ;   :value-path (item-path vector)}
   [field-id field-props]
-  (merge {:indent     :left
+  (merge {:indent     :none
           :min-width  :s
           :type       :date
           :value-path (engine/default-value-path field-id)}
-         (param field-props)))
+         (param field-props)
+          ; XXX#6782
+         {:name (a/id)}))
 
 
 
@@ -113,7 +116,7 @@
   ;   :form-id (keyword)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row

@@ -33,12 +33,10 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
-  ;   :indent (keyword)
   ;   :layout (keyword)}
   [counter-id counter-props]
   (merge {:color     :primary
           :font-size :s
-          :indent    :left
           :layout    :row
           :value-path (engine/default-value-path counter-id)}
          (param counter-props)))
@@ -153,7 +151,7 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :initial-value (integer)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)

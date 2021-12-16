@@ -191,7 +191,12 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
   font-weight: 500;
   letter-spacing: var( --letter-spacing-xxs );
   line-height: 24px;
-  margin-top: 12px }
+  /* A body-a elem 12px magas felső margójának használata miatt nem szükséges a description-a
+   * elemen alsó margót állítani */
+  margin-top: 12px;
+  /* Ha a description-a elem nem rendelkezik tartalommal, akkor is távolságot tart a body-a elem
+   * és az app-header elem között */
+  min-height: 24px }
 
 /***** Description A *****/
 
