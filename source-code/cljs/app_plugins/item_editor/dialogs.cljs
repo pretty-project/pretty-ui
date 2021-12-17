@@ -73,7 +73,7 @@
   ; @param (keyword) item-namespace
   (fn [_ [_ extension-id item-namespace]]
       [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                      {:body   {:content #'color-picker-body}
+                      {:body   {:content [color-picker-body extension-id]}
                        :header {:content #'ui/close-popup-header}
                        :min-width :none}]))
 

@@ -10,6 +10,6 @@
 (a/reg-lifecycles
   ::lifecycles
   {:on-app-boot [:router/add-route! :home/route
-                                    {:route-template "/"
+                                    {:route-template "/:app-home"
                                      :client-event   [:home/load!]
                                      :restricted?    true}]})

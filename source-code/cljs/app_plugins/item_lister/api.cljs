@@ -44,3 +44,4 @@
 ; app-plugins.item-lister.views
 (def header views/header)
 (def body   views/body)
+(def view   views/view)

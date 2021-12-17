@@ -10,7 +10,6 @@
               [x.app-db.api          :as db]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
-              [x.app-layouts.api     :as layouts]
               [x.app-locales.api     :as locales]
               [app-plugins.item-editor.api :as item-editor]))
 
@@ -35,7 +34,7 @@
           :selected-language (r locales/get-selected-language db)
           :viewport-large?   (r environment/viewport-large?   db)}))
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :client-editor/get-body-props get-body-props)
 
 
 
@@ -162,7 +161,7 @@
                         [client-last-name-field  body-id body-props]
                         (param name-order)]])
 
-(defn- body
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
   [:div#clients--client-editor {:style {:display :flex :flex-direction :column}}
@@ -181,6 +180,12 @@
     [client-legal-details      body-id body-props]
     [item-editor/form-footer]])
 
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [body-id]
+  (let [body-props (a/subscribe [:client-editor/get-body-props])]
+       (fn [] [body-structure body-id @body-props])))
+
 
 
 ;; -- View components ---------------------------------------------------------
@@ -188,15 +193,8 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [description error-occured? synchronizing?] :as view-props}]
-  (if (boolean error-occured?)
-      [layouts/layout-a surface-id {:description "" ; Use "" as placeholder
-                                    :body  {:content  #'item-editor/error-body}
-                                    :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}]
-      [layouts/layout-a surface-id {:description description
-                                    :disabled?   synchronizing?
-                                    :body   {:content #'body   :subscriber [::get-body-props]}
-                                    :header {:content #'header :subscriber [:item-editor/get-header-props :clients :client]}}]))
+  [surface-id]
+  [item-editor/view :clients :client {:form-element #'body}])
 
 
 
@@ -217,4 +215,4 @@
 (a/reg-event-fx
   :clients/render-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-editor/get-view-props :clients :client]}}])
+  [:ui/set-surface! ::view {:view {:content #'view}}])

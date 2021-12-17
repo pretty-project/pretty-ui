@@ -18,6 +18,7 @@
               [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
               [app-plugins.item-editor.engine :as engine]))
 
 
@@ -47,12 +48,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-occured? (boolean)(opt)}
+  ;  {:error-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-occured?]}]
+  [extension-id item-namespace {:keys [error-mode?]}]
   [elements/button ::delete-item-button
-                   {:tooltip :delete! :preset :delete-icon-button :disabled? error-occured?
+                   {:tooltip :delete! :preset :delete-icon-button :disabled? error-mode?
                     :on-click [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn archive-item-button
@@ -60,16 +61,16 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:archived? (boolean)(opt)
-  ;   :error-occured? (boolean)(opt)}
+  ;   :error-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [archived? error-occured?]}]
+  [extension-id item-namespace {:keys [archived? error-mode?]}]
   [elements/button ::archive-item-button
-                   (if archived? {:tooltip :archived :preset :archived-icon-button :disabled? error-occured?
+                   (if archived? {:tooltip :archived :preset :archived-icon-button :disabled? error-mode?
                                   :on-click [:item-editor/unmark-item! extension-id item-namespace
                                                                        {:marker-key       :archived?
                                                                         :unmarked-message :archived-item-restored}]}
-                                 {:tooltip :archive! :preset :archive-icon-button :disabled? error-occured?
+                                 {:tooltip :archive! :preset :archive-icon-button :disabled? error-mode?
                                   :on-click [:item-editor/mark-item! extension-id item-namespace
                                                                      {:marker-key     :archived?
                                                                       :marked-message :archived}]})])
@@ -79,18 +80,18 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:favorite? (boolean)(opt)
-  ;   :error-occured? (boolean)(opt)}
+  ;   :error-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-occured? favorite?]}]
+  [extension-id item-namespace {:keys [error-mode? favorite?]}]
   [elements/button ::favorite-item-button
                    ; Az :added-to-favorites tooltip túlságosan széles, ezért a favorite-item-button
                    ; elemen a tooltip feliratok ki vannak kapcsolva
-                   (if favorite? {:preset :added-to-favorites-icon-button :disabled? error-occured? ; :tooltip :added-to-favorites
+                   (if favorite? {:preset :added-to-favorites-icon-button :disabled? error-mode? ; :tooltip :added-to-favorites
                                   :on-click [:item-editor/unmark-item! extension-id item-namespace
                                                                        {:marker-key       :favorite?
                                                                         :unmarked-message :removed-from-favorites}]}
-                                 {:preset :add-to-favorites-icon-button :disabled? error-occured? ; :tooltip :add-to-favorites!
+                                 {:preset :add-to-favorites-icon-button :disabled? error-mode? ; :tooltip :add-to-favorites!
                                   :on-click [:item-editor/mark-item! extension-id item-namespace
                                                                      {:marker-key       :favorite?
                                                                       :marked-message :added-to-favorites}]})])
@@ -99,26 +100,26 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-occured? (boolean)(opt)}
+  ;  {:error-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-occured?]}]
+  [extension-id item-namespace {:keys [error-mode?]}]
   [elements/button ::copy-item-button
-                   {:tooltip :duplicate! :preset :duplicate-icon-button :disabled? error-occured?
+                   {:tooltip :duplicate! :preset :duplicate-icon-button :disabled? error-mode?
                     :on-click [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:error-occured? (boolean)(opt)
+  ;  {:error-mode? (boolean)(opt)
   ;   :form-completed? (boolean)
   ;   :new-item? (boolean)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-occured? form-completed? new-item?]}]
+  [extension-id item-namespace {:keys [error-mode? form-completed? new-item?]}]
   [elements/button ::save-item-button
-                   {:tooltip :save! :preset :save-icon-button :disabled? (or (not form-completed?) error-occured?)
+                   {:tooltip :save! :preset :save-icon-button :disabled? (or (not form-completed?) error-mode?)
                     :on-click (if new-item? [:item-editor/add-item!  extension-id item-namespace]
                                             [:item-editor/save-item! extension-id item-namespace])}])
 
@@ -288,12 +289,63 @@
   [:<> (if-not new-item? [favorite-item-button extension-id item-namespace header-props])
        [save-item-button extension-id item-namespace header-props]])
 
-(defn header
+(defn- header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
+  ;  {:new-item? (boolean)(opt)}
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [new-item?] :as header-props}]
   [elements/polarity {:start-content (if-not new-item? [header-start-buttons extension-id item-namespace header-props])
                       :end-content   [header-end-buttons extension-id item-namespace header-props]}])
+
+(defn header
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map)(opt) header-props
+  ;
+  ; @return (component)
+  ([extension-id item-namespace]
+   [header extension-id item-namespace {}])
+
+  ([extension-id item-namespace header-props]
+   (let [subscribed-props (a/subscribe [:item-editor/get-header-props extension-id item-namespace])]
+        (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+
+
+
+;; -- View components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) view-props
+  ;  {:description (metamorphic-content)(opt)
+  ;   :error-mode? (boolean)(opt)
+  ;   :form-element (component)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [description error-mode? form-element]}]
+  (if (boolean error-mode?)
+      [layouts/layout-a extension-id {:body   {:content [error-body]}
+                                      :header {:content [header extension-id item-namespace]}}]
+      [layouts/layout-a extension-id {:description description
+                                      :body   {:content [form-element]}
+                                      :header {:content [header extension-id item-namespace]}}]))
+
+(defn view
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) view-props
+  ;  {:form-element (component)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace view-props]
+  (let [subscribed-props (a/subscribe [:item-editor/get-view-props extension-id item-namespace])]
+       (fn [] [layout extension-id item-namespace (merge view-props @subscribed-props)])))

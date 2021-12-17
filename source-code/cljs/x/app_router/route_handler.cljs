@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v3.1.8
-; Compatibility: x4.4.6
+; Version: v3.4.0
+; Compatibility: x4.4.9
 
 
 
@@ -14,31 +14,22 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler
-    (:require [accountant.core   :as accountant]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.string :as string]
-              [mid-fruits.uri    :as uri]
-              [mid-fruits.vector :as vector]
-              [reitit.frontend   :as reitit]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-user.api    :as user]))
+    (:require [accountant.core     :as accountant]
+              [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.uri      :as uri]
+              [mid-fruits.vector   :as vector]
+              [reitit.frontend     :as reitit]
+              [x.app-core.api      :as a :refer [r]]
+              [x.app-db.api        :as db]
+              [x.app-router.engine :as engine]
+              [x.app-user.api      :as user]
+              [x.mid-router.route-handler :as route-handler]))
 
 
 
 ;; -- Names -------------------------------------------------------------------
 ;; -- XXX#3387 ----------------------------------------------------------------
 
-; @name app-home
-;  "/admin"
-;
-; @name abs-route-string
-;  "/admin/clients"
-;
-; @name rel-route-string
-;  "/clients"
-;
 ; @name route-string
 ;  "/products/big-green-bong?type=hit#order"
 ;
@@ -75,114 +66,23 @@
 (def RELOAD-SAME-PATH? true)
 
 ; @constant (map)
-(def DEFAULT-ROUTES
-     {:page-not-found {:client-event   [:views/render-error-page! :page-not-found]
-                       :route-template "/page-not-found"}
-      :reboot         {:client-event   [:boot-loader/reboot-app!]
-                       :route-template "/reboot"}})
+(def DEFAULT-ROUTES {:page-not-found {:client-event   [:views/render-error-page! :page-not-found]
+                                      :route-template "/page-not-found"}
+                     :reboot         {:client-event   [:boot-loader/reboot-app!]
+                                      :route-template "/reboot"}})
 
 ; @constant (map)
-(def ACCOUNTANT-CONFIG
-     {:nav-handler  #(a/dispatch   [:router/handle-route!      %])
-      :path-exists? #(a/subscribed [:router/route-path-exists? %])
-      :reload-same-path? false})
+(def ACCOUNTANT-CONFIG {:nav-handler  #(a/dispatch   [:router/handle-route!          %])
+                        :path-exists? #(a/subscribed [:router/route-template-exists? %])
+                        :reload-same-path? false})
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn valid-route-path
-  ; @param (string) route-path
-  ;
-  ; @example
-  ;  (router/valid-route-path "my-route")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (router/valid-route-path "/my-route")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (router/valid-route-path "/my-route/")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @return (string)
-  [route-path]   ; 1.
-  (-> route-path (string/not-ends-with! "/")
-                 ; 2.
-                 (string/starts-with!   "/")))
-
-(defn- routes->router-routes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) routes
-  ;
-  ; @example
-  ;  (routes->router-routes {:route-id {:route-template "/"}})
-  ;  =>
-  ;  [["/" :route-id]]
-  ;
-  ; @return (vector)
-  [routes]
-  (reduce-kv #(if-let [route-template (:route-template %3)]
-                      (vector/conj-item %1 [route-template %2]) %1)
-              (param [])
-              (param routes)))
-
-(defn- route-string->rel-route-string
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) route-string
-  ; @param (string) app-home
-  ;
-  ; @example
-  ;  (relative-route-string "/my-route" "/admin")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (relative-route-string "/admin/my-route" "/admin")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (relative-route-string "/my-route" "/")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @return (string)
-  [route-string app-home]
-  (let [rel-route-string (string/not-starts-with! route-string app-home)]
-       (string/starts-with! rel-route-string "/")))
-
-(defn- route-string->abs-route-string
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) route-string
-  ; @param (string) app-home
-  ;
-  ; @example
-  ;  (relative-route-string "/my-route" "/admin")
-  ;  =>
-  ;  "/admin/my-route"
-  ;
-  ; @example
-  ;  (relative-route-string "/admin/my-route" "/admin")
-  ;  =>
-  ;  "/admin/my-route"
-  ;
-  ; @example
-  ;  (relative-route-string "/my-route" "/")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @return (string)
-  [route-string app-home]
-  (string/starts-with! route-string app-home))
+; x.mid-router.route-handler
+(def get-app-home route-handler/get-app-home)
 
 
 
@@ -205,18 +105,6 @@
 ;; -- Router subscriptions ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-app-home
-  ; @return (string)
-  [db _]
-  (let [app-home (r a/get-app-detail db :app-home)]
-       (valid-route-path app-home)))
-
-(defn app-home-specific?
-  ; @return (boolean)
-  [db _]
-  (let [app-home (r get-app-home db)]
-       (not= app-home "/")))
-
 (defn get-routes
   ; @return (map)
   [db _]
@@ -228,7 +116,7 @@
   ; @return (vector)
   [db _]
   (let [routes (r get-routes db)]
-       (routes->router-routes routes)))
+       (engine/routes->router-routes routes)))
 
 (defn- get-router
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -241,25 +129,25 @@
 (defn- get-route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) route-path
+  ; @param (string) route-template
   ;
   ; @return (map)
   ;  https://github.com/metosin/reitit
-  [db [_ route-path]]
+  [db [_ route-template]]
   (let [router (r get-router db)]
-       (reitit/match-by-path router route-path)))
+       (reitit/match-by-path router route-template)))
 
-(defn- route-path-exists?
+(defn- route-template-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) route-path
+  ; @param (string) route-string
   ;
   ; @return (boolean)
-  [db [_ route-path]]
-  (let [route-match (r get-route-match db route-path)]
+  [db [_ route-string]]
+  (let [route-match (r get-route-match db route-string)]
        (boolean route-match)))
 
-(a/reg-sub :router/route-path-exists? route-path-exists?)
+(a/reg-sub :router/route-template-exists? route-template-exists?)
 
 
 
@@ -276,33 +164,6 @@
   [db [_ route-id prop-id]]
   (get-in db (db/path ::client-routes route-id prop-id)))
 
-(defn- get-route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ;
-  ; @return (string)
-  [db [_ route-id]]
-  (r get-route-prop db route-id :route-template))
-
-(defn- get-client-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ;
-  ; @return (metamorphic-event)
-  [db [_ route-id]]
-  (r get-route-prop db route-id :client-event))
-
-(defn- get-on-leave-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ;
-  ; @return (metamorphic-event)
-  [db [_ route-id]]
-  (r get-route-prop db route-id :on-leave-event))
-
 (defn- route-restricted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -312,25 +173,6 @@
   [db [_ route-id]]
   (let [route-restricted? (r get-route-prop db route-id :restricted?)]
        (boolean route-restricted?)))
-
-(defn- application-route?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ;
-  ; @return (boolean)
-  [db [_ route-id]]
-  (r route-restricted? db route-id))
-
-(defn- website-route?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ;
-  ; @return (boolean)
-  [db [_ route-id]]
-  (let [application-route? (r application-route? db route-id)]
-       (not application-route?)))
 
 (defn- require-authentication?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -347,57 +189,17 @@
 ;; -- Match subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- match-route-id-by-rel-route-string
+(defn- match-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) rel-route-string
-  ;  A relatív útvonal
-  ;  Pl.: "/my-route"
+  ; @param (string) route-string
   ;
   ; @return (keyword)
-  [db [_ rel-route-string]]
-  (if (r route-path-exists? db rel-route-string)
-      (get-in (r get-route-match db rel-route-string) [:data :name])
+  [db [_ route-string]]
+  (if (r route-template-exists? db route-string)
+      (let [route-match (r get-route-match db route-string)]
+           (get-in route-match [:data :name]))
       (return :page-not-found)))
-
-(defn- match-route-id-by-abs-route-string
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) abs-route-string
-  ;  A címsorba írt útvonal
-  ;  Pl.: "/admin/my-route"
-  ;
-  ; @return (keyword)
-  [db [_ abs-route-string]]
-  (if (r app-home-specific? db)
-
-      ; If app-home is "/something" ...
-      (let [app-home         (r get-app-home db)
-            rel-route-string (route-string->rel-route-string abs-route-string app-home)]
-           (if (r route-path-exists? db rel-route-string)
-               ; If route-path exists ...
-               (let [route-id (get-in (r get-route-match db rel-route-string) [:data :name])]
-                          ; If route is application-route and it starts with app-home ...
-                    (cond (and (r application-route?  db route-id)
-                               (not= abs-route-string rel-route-string))
-                          (return route-id)
-                          ; If route is application-route but not starts with app-home ...
-                          (and (r application-route?  db route-id)
-                               (=    abs-route-string rel-route-string))
-                          (return :page-not-found)
-                          ; If route is website-route ...
-                          (r website-route? db route-id)
-                          (return route-id)))
-
-               ; If route-path not exists ...
-               (return :page-not-found)))
-
-      ; If app-home is "/" ...
-      (if (r route-path-exists? db abs-route-string)
-          ; If route-path exists ...
-          (get-in (r get-route-match db abs-route-string) [:data :name])
-          ; If route-path not exists ...
-          (return :page-not-found))))
 
 
 
@@ -418,7 +220,7 @@
   ; @return (keyword)
   [db _]
   (let [current-route-string (r get-current-route-string db)]
-       (r match-route-id-by-abs-route-string db current-route-string)))
+       (r match-route-id db current-route-string)))
 
 (defn get-current-route-path
   ; @usage
@@ -445,10 +247,8 @@
   ; @return (map)
   [db _]
   (let [current-route-string   (r get-current-route-string   db)
-        current-route-template (r get-current-route-template db)
-        app-home               (r get-app-home               db)
-        rel-route-string       (route-string->rel-route-string current-route-string app-home)]
-       (uri/uri->path-params rel-route-string current-route-template)))
+        current-route-template (r get-current-route-template db)]
+       (uri/uri->path-params current-route-string current-route-template)))
 
 ; @usage
 ;  [:router/get-current-route-path-params]
@@ -649,15 +449,14 @@
   ;
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-string]]
-      (let [route-id          (r match-route-id-by-abs-route-string db route-string)
-            previous-route-id (r get-current-route-id db)
-            on-leave-event    (r get-on-leave-event   db previous-route-id)]
+      (let [route-id          (r match-route-id db route-string)
+            previous-route-id (r get-current-route-id db)]
                            ; Store the current route
            {:db (as-> db % (r store-current-route! % route-string)
                            ; Make history
                            (r reg-to-history!      % route-id))
                          ; Dispatch on-leave-event if ...
-            :dispatch-n [(if-let [on-leave-event (r get-on-leave-event db previous-route-id)]
+            :dispatch-n [(if-let [on-leave-event (r get-route-prop db previous-route-id :on-leave-event)]
                                  (if (r route-id-changed? db route-id) on-leave-event))
                          ; Render login screen if ...
                          (if (r require-authentication? db route-id)
@@ -666,7 +465,7 @@
                          (if (r require-authentication? db route-id)
                              [:boot-loader/set-restart-target! route-string])
                          ; Dispatch client-event if ...
-                         (if-let [client-event (r get-client-event db route-id)]
+                         (if-let [client-event (r get-route-prop db route-id :client-event)]
                                  (if-not (r require-authentication? db route-id) client-event))]})))
 
 (a/reg-event-fx
@@ -693,21 +492,34 @@
 
 (a/reg-event-fx
   :router/go-to!
-  ; @param (string) rel-route-string
+  ; @param (string) route-string
   ;
   ; @usage
-  ;  [:router/go-to! "/products/big-green-bong?type=hit#order"]
-  (fn [{:keys [db]} [_ rel-route-string]]
-      (let [app-home          (r get-app-home                       db)
-            route-id          (r match-route-id-by-rel-route-string db rel-route-string)
-            route-restricted? (r route-restricted?                  db route-id)
-            abs-route-string  (if route-restricted? (route-string->abs-route-string rel-route-string app-home)
-                                                    (param                          rel-route-string))
-            ; Az applikáció az útvonalváltás után is debug módban marad
-            abs-route-string (r get-debug-route-string db abs-route-string)]
-           (if (r reload-same-path? db abs-route-string)
-               [:router/handle-route! abs-route-string]
-               [:router/navigate!     abs-route-string]))))
+  ;  [:router/go-to! "/my-route"]
+  ;
+  ; @usage
+  ;  [:router/go-to! "/my-app/your-route"]
+  ;
+  ; @usage
+  ;  [:router/go-to! "/:app-home/your-route"]
+  (fn [{:keys [db]} [_ route-string]]
+      (if (engine/variable-route-string? route-string)
+
+          ; If route-string is variable ...
+          (let [app-home     (r get-app-home db)
+                route-string (engine/resolve-variable-route-string route-string app-home)
+                ; Az applikáció az útvonalváltás után is debug módban marad
+                route-string (r get-debug-route-string db route-string)]
+               (if (r reload-same-path? db route-string)
+                   [:router/handle-route! route-string]
+                   [:router/navigate!     route-string]))
+
+          ; If route-string is static ...
+          (let [; Az applikáció az útvonalváltás után is debug módban marad
+                route-string (r get-debug-route-string db route-string)]
+               (if (r reload-same-path? db route-string)
+                   [:router/handle-route! route-string]
+                   [:router/navigate!     route-string])))))
 
 
 
@@ -724,9 +536,9 @@
 (defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) route-string
-  [route-string]
-  (accountant/navigate! route-string))
+  ; @param (string) abs-route-string
+  [abs-route-string]
+  (accountant/navigate! abs-route-string))
 
 (a/reg-handled-fx :router/navigate! navigate!)
 
@@ -754,11 +566,10 @@
   :router/initialize!
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-                      ; Set default routes
+  (fn [{:keys [db]} _]; Set default routes
       {:db (as-> db % (r set-default-routes! % DEFAULT-ROUTES)
                       ; Store debug subscriber
-                      (r db/set-item!        % (db/meta-item-path ::client-routes :debug) [:router/get-router-data]))
+                      (r db/set-item! % (db/meta-item-path ::client-routes :debug) [:router/get-router-data]))
        ; Configure navigation
        :router/configure-navigation! nil}))
 

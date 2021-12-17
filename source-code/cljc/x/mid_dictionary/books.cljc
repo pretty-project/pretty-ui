@@ -301,6 +301,9 @@
       :preferences
       {:en "Preferences"
        :hu "Tulajdonságok"}
+      :preparing-to-download...
+      {:en "Preparing to download ..."
+       :hu "Letöltés előkészítése ..."}
       :previous!
       {:en "Previous"
        :hu "Előző"}

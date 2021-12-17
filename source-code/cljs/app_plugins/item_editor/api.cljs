@@ -51,3 +51,4 @@
 (def color-stamp          views/color-stamp)
 (def error-body           views/error-body)
 (def header               views/header)
+(def view                 views/view)

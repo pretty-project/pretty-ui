@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.15
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.6
+; Version: v0.4.2
+; Compatibility: x4.4.9
 
 
 
@@ -14,15 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.system-routes
-    (:require [mid-fruits.vector   :as vector]
-              [server-fruits.http  :as http]
-              [x.boot-synchronizer :as boot-synchronizer]
+    (:require [x.boot-synchronizer :as boot-synchronizer]
               [x.server-core.api   :as a]
-              [x.server-db.api     :as db]
-              [x.server-log.api    :as log]
               [x.server-media.api  :as media]
-              [x.server-user.api   :as user]
-              [x.server-views.api  :as views]))
+              [x.server-user.api   :as user]))
 
 
 

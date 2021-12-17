@@ -22,6 +22,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
               [x.app-tools.api      :as tools]
               [app-fruits.react-transition    :as react-transition]
               [app-plugins.item-lister.engine :as engine]
@@ -479,12 +480,19 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:synchronizing? (boolean)}
+  ;  {:synchronized? (boolean)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [_ _ {:keys [synchronizing?]}]
-  (if (boolean synchronizing?)
-      [:div.item-lister--request-indicator [components/content {:content :downloading-items...}]]))
+  [_ _ {:keys [synchronized? synchronizing?]}]
+  (cond (boolean synchronizing?)
+        [:div.item-lister--request-indicator [components/content {:content :downloading-items...}]]
+        ; Az adatok letöltésének megkezdése előtti pillanatban a request-indicator felirat
+        ; megjelenése előtt, annak helyén egy placeholder megjelenítése segítségével nem változik
+        ; meg a tartalmazó elem magassága, a request-indicator felirat megjelenésekor.
+        (and (not synchronizing?)
+             (not synchronized?))
+        [:div.item-lister--request-indicator [components/content {:content :preparing-to-download...}]]))
 
 (defn- no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -493,12 +501,18 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:no-items-to-show? (boolean)(opt)
+  ;   :synchronized? (boolean)(opt)
   ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [_ _ {:keys [no-items-to-show? synchronizing?]}]
+  [_ _ {:keys [no-items-to-show? synchronized? synchronizing?]}]
   (if (and (boolean no-items-to-show?)
-           (not     synchronizing?))
+           ; Szükséges a synchronized? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
+           ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
+           (boolean synchronized?)
+           ; Szükséges a synchronizing? értékét is vizsgálni, hogy az adatok letöltése közben ne jelenjen
+           ; meg a no-items-to-show-label felirat!
+           (not synchronizing?))
       [:div.item-lister--no-items-to-show [components/content {:content :no-items-to-show}]]))
 
 (defn- sortable-item-list
@@ -626,3 +640,26 @@
   [extension-id item-namespace body-props]
   (let [subscribed-props (a/subscribe [:item-lister/get-body-props extension-id item-namespace])]
        (fn [] [item-lister-structure extension-id item-namespace (merge body-props @subscribed-props)])))
+
+
+
+;; -- View components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- layout
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [extension-id item-namespace {:keys [description] :as view-props}]
+  [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
+                                  :header {:content [header extension-id item-namespace]}
+                                  :description description}])
+
+(defn view
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) view-props
+  ;  {:list-element (component)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace view-props]
+  (let [subscribed-props (a/subscribe [:item-lister/get-view-props extension-id item-namespace])]
+       (fn [] [layout extension-id item-namespace (merge view-props @subscribed-props)])))

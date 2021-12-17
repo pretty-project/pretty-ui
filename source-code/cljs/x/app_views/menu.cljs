@@ -108,7 +108,7 @@
   [_ _]
   [elements/button ::settings-button
                    {:indent   :left
-                    :on-click [:router/go-to! "/settings"]
+                    :on-click [:router/go-to! "/:app-home/settings"]
                     :preset   :settings-button}])
 
 (defn- more-options-button
@@ -184,13 +184,13 @@
                         {:icon     :subject
                          :indent   :left
                          :label    :terms-of-service
-                         :on-click [:router/go-to! "/terms-of-service"]
+                         :on-click [:router/go-to! "/:app-home/terms-of-service"]
                          :preset   :default-button}]
        [elements/button ::privacy-policy-button
                         {:icon     :subject
                          :indent   :left
                          :label    :privacy-policy
-                         :on-click [:router/go-to! "/privacy-policy"]
+                         :on-click [:router/go-to! "/:app-home/privacy-policy"]
                          :preset   :default-button}]
        [elements/button ::back-button
                         {:label    :back!

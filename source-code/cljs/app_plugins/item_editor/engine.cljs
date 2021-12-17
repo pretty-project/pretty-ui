@@ -114,12 +114,12 @@
   ;
   ; @return (map)
   ;  {:colors (strings in vector)
-  ;   :error-occured? (boolean)
+  ;   :error-mode? (boolean)
   ;   :synchronizing? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
-          {:error-occured? true}
+  (if-let [error-mode? (get-in db [extension-id :editor-meta :error-mode?])]
+          {:error-mode? true}
           {:colors         (get-in db [extension-id :editor-data :colors])
            :new-item?      (r new-item?      db extension-id item-namespace)
            :synchronizing? (r synchronizing? db extension-id item-namespace)}))
@@ -137,14 +137,14 @@
   ;
   ; @return (map)
   ;  {:archived? (boolean)
-  ;   :error-occured? (boolean)
+  ;   :error-mode? (boolean)
   ;   :favorite? (boolean)
   ;   :form-completed? (boolean)
   ;   :new-item? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
-          {:error-occured? true}
+  (if-let [error-mode? (get-in db [extension-id :editor-meta :error-mode?])]
+          {:error-mode? true}
           (let [form-id (form-id extension-id item-namespace)]
                {:archived?       (get-in db [extension-id :editor-data :archived?])
                 :favorite?       (get-in db [extension-id :editor-data :favorite?])
@@ -165,15 +165,13 @@
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)
-  ;   :error-occured? (boolean)
-  ;   :new-item? (boolean)
-  ;   :synchronizing? (boolean)}
+  ;   :error-mode? (boolean)
+  ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-occured? (get-in db [extension-id :editor-meta :error-occured?])]
-          {:error-occured? true}
-          {:description    (r get-description db extension-id item-namespace)
-           :new-item?      (r new-item?       db extension-id item-namespace)
-           :synchronizing? (r synchronizing?  db extension-id item-namespace)}))
+  (if-let [error-mode? (get-in db [extension-id :editor-meta :error-mode?])]
+          {:error-mode? true}
+          {:description (r get-description db extension-id item-namespace)
+           :new-item?   (r new-item?       db extension-id item-namespace)}))
 
 ; @usage
 ;  [:item-editor/get-view-props :my-namespace :my-type]
@@ -397,7 +395,7 @@
            (if-let [error-occured? (or (pathom/error-answer? document)
                                        (pathom/error-answer? suggestions))]
                    ; If document or suggestions are NOT correct ...
-                   {:db (assoc-in db [extension-id :editor-meta :error-occured?] true)}
+                   {:db (assoc-in db [extension-id :editor-meta :error-mode?] true)}
                    ; If document & suggestions are correct ...
                          ; XXX#3907
                          ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja

@@ -58,7 +58,7 @@
   ;  {:middleware (vector)}
   []
   (let [site-defaults (engine/prot site-defaults site-defaults-prototype)]
-       {:middleware [#(wrap-reload           %)
+       {:middleware [#(wrap-reload           % {:dirs ["source-code"]})
                      #(wrap-keyword-params   %)
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})

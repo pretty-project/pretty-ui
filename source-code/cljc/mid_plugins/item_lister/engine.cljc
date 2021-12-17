@@ -112,11 +112,11 @@
   ; @example
   ;  (engine/route-template :my-extension :my-type)
   ;  =>
-  ;  "/my-extension"
+  ;  "/:app-home/my-extension"
   ;
   ; @return (keyword)
   [extension-id _]
-  (str "/" (name extension-id)))
+  (str "/:app-home/" (name extension-id)))
 
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

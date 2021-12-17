@@ -45,12 +45,12 @@
   ;
   ; @usage
   ;  [:item-browser/initialize! :my-extension :my-type {...}]
-  (fn [_ [_ extension-name item-name browser-props]]
+  (fn [_ [_ extension-id item-namespace browser-props]]
       {:dispatch-n [[:router/add-route! (route-id extension-id item-namespace)
-                                        {:route-event    [:item-browser/load! extension-name item-name browser-props]
+                                        {:route-event    [:item-browser/load! extension-id item-namespace browser-props]
                                          :route-template (route-template extension-id item-namespace)
                                          :restricted?    true}]
                     [:router/add-route! (extended-route-id extension-id item-namespace)
-                                        {:route-event    [:item-browser/load! extension-name item-name browser-props]
+                                        {:route-event    [:item-browser/load! extension-id item-namespace browser-props]
                                          :route-template (extended-route-template extension-id item-namespace)
                                          :restricted?    true}]]}))

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.6
+; Version: v0.4.2
+; Compatibility: x4.4.9
 
 
 
@@ -14,15 +14,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.api
-    (:require [x.app-router.route-handler :as route-handler]))
+    (:require [x.app-router.engine        :as engine]
+              [x.app-router.route-handler :as route-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; x.app-router.engine
+(def valid-route-path engine/valid-route-path)
+
 ; x.app-router.route-handler
-(def valid-route-path               route-handler/valid-route-path)
 (def get-app-home                   route-handler/get-app-home)
 (def get-routes                     route-handler/get-routes)
 (def get-current-route-string       route-handler/get-current-route-string)

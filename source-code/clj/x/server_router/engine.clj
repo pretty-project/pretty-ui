@@ -14,10 +14,23 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.engine
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]
-              [x.server-core.api :as a]))
+    (:require [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.string   :as string]
+              [mid-fruits.vector   :as vector]
+              [x.mid-router.engine :as engine]
+              [x.server-core.api   :as a]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.mid-router.engine
+(def valid-route-path              engine/valid-route-path)
+(def variable-route-string?        engine/variable-route-string?)
+(def resolve-variable-route-string engine/resolve-variable-route-string)
+(def route-props->server-route?    engine/route-props->server-route?)
+(def route-props->client-route?    engine/route-props->client-route?)
 
 
 
@@ -74,8 +87,7 @@
   ;  false
   ;
   ; @return (boolean)
-  [a b]
-        ; Both a and b are path-param-id identifiers.
+  [a b] ; Both a and b are path-param-id identifiers.
   (cond (and (string/starts-with? a ":")
              (string/starts-with? b ":"))
         (string/abc? a b)
@@ -124,3 +136,75 @@
   (let [a-parts (string/split a #"/")
         b-parts (string/split b #"/")]
        (vector/compared-items-ordered? a-parts b-parts route-template-parts-ordered?)))
+
+(defn route-props->route-data
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) route-props
+  ;  {:get (function or map)
+  ;   :post (function or map)
+  ;   :route-template (string)}
+  ;
+  ; @example
+  ;  (engine/route-props->route-data {:route-template "/my-route" :get (fn [request] ...)})
+  ;  =>
+  ;  ["/my-route" {:get (fn [request] ...)}]
+  ;
+  ; @return (vector)
+  ;  [(string) route-template
+  ;   (map) route-props
+  ;     {:get (function or map)
+  ;      :post (function or map)}]
+  [{:keys [route-template] :as route-props}]
+  [route-template (dissoc route-props :route-template)])
+
+(defn routes->destructed-routes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) routes
+  ;
+  ; @example
+  ;  (engine/routes->destructed-routes {:my-route   {:route-template "/my-route"   :get (fn [request] ...)}
+  ;                                     :your-route {:route-template "/your-route" :get (fn [request] ...)}})
+  ;  =>
+  ;  [["/my-route"   {:get (fn [request] ...)}]]
+  ;   ["/your-route" {:get (fn [request] ...)}]]
+  ;
+  ; @return (vectors in vector)
+  [routes]
+  (reduce-kv (fn [destructed-routes route-id {:keys [route-template] :as route-props}]
+                 (if (route-conflict? destructed-routes route-template)
+                     (return destructed-routes)
+                     (let [route-data (route-props->route-data route-props)]
+                          (vector/conj-item destructed-routes route-data))))
+             (param [])
+             (param routes)))
+
+(defn destructed-routes->ordered-routes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (vectors in vector) routes
+  ;
+  ; @example
+  ;  (engine/destructed-routes->ordered-routes [["/my-route"   {:get (fn [request] ...)}]
+  ;                                             ["/your-route" {:get (fn [request] ...)}]
+  ;                                             ["/our-route"  {:get (fn [request] ...)}]]
+  ;  =>
+  ;  [["/my-route"   {:get (fn [request] ...)}]]
+  ;   ["/our-route"  {:get (fn [request] ...)}]
+  ;   ["/your-route" {:get (fn [request] ...)}]]
+  ;
+  ; @example
+  ;  (engine/destructed-routes->ordered-routes [["/my-route/:a" {...}]
+  ;                                             ["/my-route/c"  {...}]
+  ;                                             ["/my-route/b"  {...}]
+  ;                                             ["/my-route"    {...}]]
+  ;  =>
+  ;  [["/my-route/b"  {...}]]
+  ;   ["/my-route/c"  {...}]
+  ;   ["/my-route/:a" {...}]
+  ;   ["/my-route"    {...}]]
+  ;
+  ; @return (vectors in vector)
+  [destructed-routes]
+  (vector/order-items-by destructed-routes route-templates-ordered? first))

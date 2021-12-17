@@ -26,4 +26,4 @@
   {:on-app-boot [:router/add-route! :privacy-policy/route
                                     {:client-event   [:views/render-privacy-policy!]
                                      :restricted?    true
-                                     :route-template "/privacy-policy"}]})
+                                     :route-template "/:app-home/privacy-policy"}]})

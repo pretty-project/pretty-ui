@@ -5,7 +5,6 @@
               [x.app-core.api        :as a :refer [r]]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
-              [x.app-layouts.api     :as layouts]
               [x.app-locales.api     :as locales]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
@@ -67,22 +66,10 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
-  [item-lister/header :clients :client])
-
-(defn- body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
-  [item-lister/body :clients :client {:list-element #'client-item}])
-
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description]}]
-  [layouts/layout-a surface-id {:body   {:content #'body}
-                                :header {:content #'header}
-                                :description description}])
+  [item-lister/view :clients :client  {:list-element #'client-item}])
 
 
 
@@ -92,4 +79,4 @@
 (a/reg-event-fx
   :clients/render-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:item-lister/get-view-props :clients]}}])
+  [:ui/set-surface! ::view {:view {:content #'view}}])

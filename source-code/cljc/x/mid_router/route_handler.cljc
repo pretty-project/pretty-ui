@@ -3,24 +3,29 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.11.23
+; Created: 2021.12.17
 ; Description:
 ; Version: v0.2.0
-; Compatibility: x4.4.6
+; Compatibility: x4.4.9
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-plugins.item-editor.api
-    (:require [server-plugins.item-editor.engine :as engine]))
+(ns x.mid-router.route-handler
+    (:require [x.mid-core.api      :as a :refer [r]]
+              [x.mid-router.engine :as engine]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; server-plugins.item-editor.engine
-(def editor-uri engine/editor-uri)
-(def form-id    engine/form-id)
+(defn get-app-home
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (let [app-home (r a/get-app-detail db :app-home)]
+       (engine/valid-route-path app-home)))

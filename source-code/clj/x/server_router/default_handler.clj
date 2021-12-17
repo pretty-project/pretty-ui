@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.6
+; Version: v0.7.0
+; Compatibility: x4.4.9
 
 
 
@@ -17,21 +17,6 @@
     (:require [mid-fruits.candy  :refer [param]]
               [x.server-core.api :as a]
               [x.server-db.api   :as db]))
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  A szerver inicializálásakor szükséges beállítani a :method-not-allowed, :not-acceptable
-;  és :not-found alapértelmezett kezelőket!
-;
-; (a/reg-lifecycles
-;   ::lifecycles
-;   {:on-app-init {:dispatch-n [[:router/set-default-route! :method-not-allowed {...}]
-;                               [:router/set-default-route! :not-acceptable     {...}]
-;                               [:router/set-default-route! :not-found          {...}]]}})
 
 
 

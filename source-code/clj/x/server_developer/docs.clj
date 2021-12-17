@@ -119,6 +119,6 @@
                                                   {:route-template "/docs/download-docs"
                                                    :get            #(download-docs %)}]
                               [:router/add-route! :docs/route
-                                                  {:route-template "/docs"
+                                                  {:route-template "/:app-home/docs"
                                                    :client-event   [:developer/load-docs!]
                                                    :restricted?    true}]]}})

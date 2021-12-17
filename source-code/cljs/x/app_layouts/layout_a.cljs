@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.22
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.7
+; Version: v0.2.8
+; Compatibility: x4.4.9
 
 
 
@@ -83,7 +83,8 @@
   ; @return (component)
   [layout-id {:keys [description] :as layout-props}]
   [:<> (if (some? description)
-           [:div.x-description-a (components/content {:content description})])
+           [:div.x-description-a (components/content {:content description})]
+           [:div.x-description-a--placeholder])
        [layout-body layout-id layout-props]])
 
 (defn layout

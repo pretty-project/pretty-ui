@@ -26,4 +26,4 @@
   {:on-app-boot [:router/add-route! :terms-of-service/route
                                     {:client-event   [:views/render-terms-of-service!]
                                      :restricted?    true
-                                     :route-template "/terms-of-service"}]})
+                                     :route-template "/:app-home/terms-of-service"}]})

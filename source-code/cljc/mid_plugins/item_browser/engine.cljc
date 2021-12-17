@@ -82,11 +82,11 @@
   ; @example
   ;  (item-browser/route-template :my-extension :my-type)
   ;  =>
-  ;  "/my-extension"
+  ;  "/:app-home/my-extension"
   ;
   ; @return (string)
   [extension-id _]
-  (str "/" (name extension-id)))
+  (str "/:app-home/" (name extension-id)))
 
 (defn extended-route-template
   ; @param (keyword) extension-id
@@ -95,12 +95,12 @@
   ; @example
   ;  (item-browser/extended-route-template :my-extension :my-type)
   ;  =>
-  ;  "/my-extension/:my-type-id"
+  ;  "/:app-home/my-extension/:my-type-id"
   ;
   ; @return (string)
   [extension-id item-namespace]
-  (str "/"  (name extension-id)
-       "/:" (name item-namespace) "-id"))
+  (str "/:app-home/" (name extension-id)
+       "/:"          (name item-namespace) "-id"))
 
 (defn go-up-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

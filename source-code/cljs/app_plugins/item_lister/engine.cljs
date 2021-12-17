@@ -318,15 +318,13 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @usage
-  ;  (r engine/get-description db :my-extension)
-  ;
-  ; @return (string)
+  ; @return (metamorphic-content)
   [db [_ extension-id]]
   (let [downloaded-item-count (r get-downloaded-item-count db extension-id)
-        all-item-count        (r get-all-item-count        db extension-id)]
-       (components/content {:content      :npn-items-downloaded
-                            :replacements [downloaded-item-count all-item-count]})))
+        all-item-count        (r get-all-item-count        db extension-id)
+        synchronized?         (r synchronized?             db extension-id)]
+       (if synchronized? (components/content {:content      :npn-items-downloaded
+                                              :replacements [downloaded-item-count all-item-count]}))))
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -383,6 +381,7 @@
   ;   :reorder-mode? (boolean)
   ;   :search-mode? (boolean)
   ;   :select-mode? (boolean)
+  ;   :synchronized? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
         ; If select-mode is enabled ...
@@ -390,24 +389,28 @@
         {:select-mode?      true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronized?     (r synchronized?        db extension-id)
          :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (get-in db [extension-id :lister-meta :search-mode?])
         {:search-mode?      true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronized?     (r synchronized?        db extension-id)
          :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (get-in db [extension-id :lister-meta :reorder-mode?])
         {:reorder-mode?     true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronized?     (r synchronized?        db extension-id)
          :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
          :downloaded-items  (r get-downloaded-items db extension-id)
          :no-items-to-show? (r no-items-to-show?    db extension-id)
+         :synchronized?     (r synchronized?        db extension-id)
          :synchronizing?    (r synchronizing?       db extension-id item-namespace)}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
@@ -416,10 +419,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)}
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   {:description (r get-description db extension-id)})
 
 (a/reg-sub :item-lister/get-view-props get-view-props)

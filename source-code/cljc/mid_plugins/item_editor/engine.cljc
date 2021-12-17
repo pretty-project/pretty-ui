@@ -40,12 +40,12 @@
   ; @example
   ;  (item-editor/editor-uri :my-extension :my-type "my-item")
   ;  =>
-  ;  "/my-extension/my-item"
+  ;  "/:app-home/my-extension/my-item"
   ;
   ; @return (string)
   [extension-id _ item-id]
-  (str "/" (name  extension-id)
-       "/" (param item-id)))
+  (str "/:app-home/" (name  extension-id)
+       "/"           (param item-id)))
 
 (defn form-id
   ; @param (keyword) extension-id
@@ -213,12 +213,12 @@
   ; @example
   ;  (engine/route-template :my-extension :my-type)
   ;  =>
-  ;  "/my-extension/:my-type-id"
+  ;  "/:app-home/my-extension/:my-type-id"
   ;
   ; @return (string)
   [extension-id item-namespace]
-  (str "/"  (name extension-id)
-       "/:" (name item-namespace) "-id"))
+  (str "/:app-home/" (name extension-id)
+       "/:"          (name item-namespace) "-id"))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -229,12 +229,12 @@
   ; @example
   ;  (engine/extended-route-template :my-extension :my-type)
   ;  =>
-  ;  "/my-extension/:my-type-id/:view-id"
+  ;  "/:app-home/my-extension/:my-type-id/:view-id"
   ;
   ; @return (string)
   [extension-id item-namespace]
-  (str "/"  (name extension-id)
-       "/:" (name item-namespace) "-id"
+  (str "/:app-home" (name extension-id)
+       "/:"         (name item-namespace) "-id"
        "/:view-id"))
 
 (defn parent-uri
@@ -246,11 +246,11 @@
   ; @example
   ;  (engine/parent-uri :my-extension :my-type)
   ;  =>
-  ;  "/products"
+  ;  "/:app-home/my-extension"
   ;
   ; @return (string)
   [extension-id _]
-  (str "/" (name extension-id)))
+  (str "/:app-home/" (name extension-id)))
 
 (defn render-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

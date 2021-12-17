@@ -69,7 +69,7 @@
   ;
   ; @return (string)
   [extension-id]
-  (str "/" (name extension-id)))
+  (str "/:app-home/" (name extension-id)))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +83,7 @@
   ;
   ; @return (string)
   [extension-id]
-  (str "/" (name extension-id)
+  (str "/:app-home/" (name extension-id)
        "/:view-id"))
 
 (defn route
