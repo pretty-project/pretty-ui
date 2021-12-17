@@ -86,35 +86,35 @@
   (str "/:app-home/" (name extension-id)
        "/:view-id"))
 
-(defn route
+(defn route-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @example
-  ;  (engine/route :my-extension)
+  ;  (engine/route-string :my-extension)
   ;  =>
-  ;  "/my-extension"
+  ;  "/:app-home/my-extension"
   ;
   ; @return (string)
   [extension-id]
-  (str "/" (name extension-id)))
+  (str "/:app-home/" (name extension-id)))
 
-(defn extended-route
+(defn extended-route-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) view-id
   ;
   ; @example
-  ;  (engine/extended-route :my-extension :my-view)
+  ;  (engine/extended-route-string :my-extension :my-view)
   ;  =>
-  ;  "/my-extension/my-view"
+  ;  "/:app-home/my-extension/my-view"
   ;
   ; @return (string)
   [extension-id view-id]
-  (str "/" (name extension-id)
-       "/" (name view-id)))
+  (str "/:app-home/" (name extension-id)
+       "/"           (name view-id)))
 
 (defn load-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

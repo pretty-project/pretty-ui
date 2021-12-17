@@ -32,8 +32,8 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
-(def route                   engine/route)
-(def extended-route          engine/extended-route)
+(def route-string            engine/route-string)
+(def extended-route-string   engine/extended-route-string)
 (def load-event              engine/load-event)
 
 
@@ -129,8 +129,8 @@
   ; @usage
   ;  [:view-selector/go-to! :my-extension :my-view]
   (fn [_ [_ extension-id view-id]]
-      (let [target-route (extended-route extension-id view-id)]
-           [:router/go-to! target-route])))
+      (let [target-route-string (extended-route-string extension-id view-id)]
+           [:router/go-to! target-route-string])))
 
 (a/reg-event-fx
   :view-selector/initialize!
