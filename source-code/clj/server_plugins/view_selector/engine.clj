@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.6
+; Version: v0.2.2
+; Compatibility: x4.4.9
 
 
 
@@ -28,8 +28,8 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
-(def route                   engine/route)
-(def extended-route          engine/extended-route)
+(def route-string            engine/route-string)
+(def extended-route-string   engine/extended-route-string)
 (def load-event              engine/load-event)
 
 
