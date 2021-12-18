@@ -20,13 +20,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def empty-map {})
-
-
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -160,6 +153,23 @@
                      (param n)
                      (param xyz))
              (return n))))
+
+(defn reverse-merge
+  ; @param (list of maps) xyz
+  ;
+  ; @example
+  ;  (map/reverse-merge {:a "1"} {:a "2"})
+  ;  =>
+  ;  {:a "1"}
+  ;
+  ; @example
+  ;  (map/reverse-merge {:a "1"} {:a "2"} {:a "3"})
+  ;  =>
+  ;  {:a "1"}
+  ;
+  ; @return (map)
+  [& xyz]
+  (apply merge (reverse xyz)))
 
 (defn difference
   ; Things only in a
@@ -727,6 +737,48 @@
                    (param false)
                    (param n)
                    (fn [%1 _ _] (boolean %1))))
+
+(defn any-value-mismatch?
+  ; @param (map) n
+  ; @param (function) test-f
+  ;
+  ; @example
+  ;  (map/any-value-mismatch? {:a 1 :b "2"} string?)
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (map/any-value-mismatch? {:a "1" :b "2"} string?)
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n test-f]
+  (reduce-kv-while (fn [_ _ %3] (not (test-f %3)))
+                   (param false)
+                   (param n)
+                   (fn [%1 _ _] (boolean %1))))
+
+(defn all-values-match?
+  ; @param (map) n
+  ; @param (function) test-f
+  ;
+  ; @example
+  ;  (map/all-values-match? {:a 1 :b "2"} string?)
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (map/all-values-match? {:a "1" :b "2"} string?)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n test-f]
+  (reduce-kv-while (fn [_ _ %3] (test-f %3))
+                   (param true)
+                   (param n)
+                   (fn [%1 _ _] (not %1))))
 
 (defn get-first-match-key
   ; @param (map) n

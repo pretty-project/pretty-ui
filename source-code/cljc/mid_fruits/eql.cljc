@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.16
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.3.4
+; Version: v0.3.8
+; Compatibility: x4.4.9
 
 
 
@@ -16,7 +16,6 @@
 (ns mid-fruits.eql
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]))
 
 
@@ -193,7 +192,7 @@
   (if (some? namespace)
       [(keyword/add-namespace namespace :id) document-id]
       [(param                           :id) document-id]))
-      
+
 (defn entity->id
   ; @param (vector) entity
   ;

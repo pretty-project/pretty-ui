@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.2
+; Version: v0.7.4
+; Compatibility: x4.4.9
 
 
 
@@ -18,7 +18,8 @@
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map]
               [server-fruits.http :as http]
-              [x.server-db.api    :as db]))
+              [x.server-db.api    :as db]
+              [x.server-user.account-handler :as account-handler]))
 
 
 
@@ -74,8 +75,8 @@
   ;
   ; @return (map)
   [request item-id]
-  (let [user-settings (db/document->non-namespaced-document (request->user-settings request))]
-       (get user-settings item-id)))
+  (let [user-settings (request->user-settings request)]
+       (db/get-document-value user-settings item-id)))
 
 (defn request->extracted-user-settings
   ; @param (map) request
@@ -96,3 +97,21 @@
        ; hogy azok az elemek, amelyek megegyeznek a saját alapbeállításukkal,
        ; ne legyenek feleslegesen tárolva
        (map/difference updated-user-settings default-user-settings)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn upload-user-settings-item!
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (if (account-handler/request->authenticated? request)
+      (let [user-id (http/request->session-param request :user-account/id)
+            item-id (http/request->param         request :item-id)
+            item    (http/request->param         request :item)]
+           (local-db/update-document! "user_settings" user-id assoc item-id item)
+           (http/text-wrap {:body "Uploaded"}))
+      (http/error-wrap {:error-message :permission-denied :status 401})))

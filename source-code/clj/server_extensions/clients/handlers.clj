@@ -1,14 +1,16 @@
 
 (ns server-extensions.clients.handlers
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]
-              [mid-fruits.time   :as time]
-              [mongo-db.api      :as mongo-db]
-              [pathom.api        :as pathom]
-              [x.server-core.api :as a]
-              [x.server-db.api   :as db]
-              [x.server-user.api :as user]
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.validator :as validator]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [mid-fruits.time      :as time]
+              [mongo-db.api         :as mongo-db]
+              [pathom.api           :as pathom]
+              [x.server-core.api    :as a]
+              [x.server-db.api      :as db]
+              [x.server-locales.api :as locales]
+              [x.server-user.api    :as user]
               [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
@@ -63,7 +65,10 @@
 (defn env->search-props
       ; WARNING! NON-PUBLIC! DO NOT USE!
       [env]
-      (let [resolver-props        (pathom/env->params env)
+      (let [resolver-props        (pathom/env->params  env)
+            request               (pathom/env->request env)
+            selected-language     (user/request->user-settings-item request :selected-language)
+            name-order            (get locales/NAME-ORDERS selected-language)
             downloaded-item-count (get resolver-props :downloaded-item-count)
             search-term           (get resolver-props :search-term)
             order-by              (get resolver-props :order-by)
@@ -75,8 +80,10 @@
                                             :favorite-items [[:client/favorite? true]]
                                             []) ; No filter selected ...
             :search-pattern [[:client/full-name search-term] [:client/email-address search-term]]
-            :sort-pattern   (case order-by :by-name-ascending  [[:client/first-name   1] [:client/last-name  1]]
-                                           :by-name-descending [[:client/first-name  -1] [:client/last-name -1]]
+            :sort-pattern   (case order-by :by-name-ascending  (case name-order :reversed [[:client/last-name   1] [:client/first-name  1]]
+                                                                                          [[:client/first-name  1] [:client/last-name   1]])
+                                           :by-name-descending (case name-order :reversed [[:client/last-name  -1] [:client/first-name -1]]
+                                                                                          [[:client/first-name -1] [:client/last-name  -1]])
                                            :by-date-ascending  [[:client/modified-at  1]]
                                            :by-date-descending [[:client/modified-at -1]])}))
 
@@ -139,7 +146,7 @@
                                                     (return result))))
                                        (param result)
                                        (param suggestion-keys)))
-                           {}
+                           (validator/validate-data {})
                            (param all-documents)))})
 
 (defresolver get-client-items
@@ -189,8 +196,7 @@
                             :client/vat-no
                             :client/zip-code]}
              (if-let [document (mongo-db/get-document-by-id collection-name id)]
-                     (return document)
-                     (pathom/error-answer :document-not-found)))
+                     (validator/validate-data document)))
 
 
 

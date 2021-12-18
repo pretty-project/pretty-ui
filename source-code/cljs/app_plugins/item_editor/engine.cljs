@@ -18,9 +18,9 @@
               [mid-fruits.eql       :as eql]
               [mid-fruits.keyword   :as keyword]
               [mid-fruits.map       :refer [dissoc-in]]
+              [mid-fruits.validator :as validator]
               [mid-fruits.vector    :as vector]
               [mid-fruits.time      :as time]
-              [pathom.api           :as pathom]
               [x.app-activities.api :as activities]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
@@ -386,23 +386,21 @@
   ; @usage
   ;  [:item-editor/receive-item! :my-extension :my-type {...}]
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [item-id     (get-in db [extension-id :editor-meta :item-id])
-            item-entity (eql/id->entity item-id item-namespace)
-            document    (get server-response item-entity)
-            resolver-id (resolver-id extension-id item-namespace :suggestions)
-            suggestions (get server-response resolver-id)]
-           ; *
-           (if-let [error-occured? (or (pathom/error-answer? document)
-                                       (pathom/error-answer? suggestions))]
-                   ; If document or suggestions are NOT correct ...
-                   {:db (assoc-in db [extension-id :editor-meta :error-mode?] true)}
-                   ; If document & suggestions are correct ...
-                         ; XXX#3907
-                         ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
-                         ; a letöltött dokumentumot
-                   (let [document (db/document->non-namespaced-document document)]
-                        {:db (-> db (assoc-in [extension-id :editor-data] document)
-                                    (assoc-in [extension-id :editor-meta :suggestions] suggestions))})))))
+      (if-let [error-occured? (validator/data-structure-invalid? server-response)]
+              ; If document or suggestions are NOT valid ...
+              {:db (assoc-in db [extension-id :editor-meta :error-mode?] true)}
+              ; If document & suggestions are valid ...
+              (let [item-id     (get-in db [extension-id :editor-meta :item-id])
+                    item-entity (eql/id->entity item-id item-namespace)
+                    document    (get server-response item-entity)
+                    resolver-id (resolver-id extension-id item-namespace :suggestions)
+                    suggestions (get server-response resolver-id)
+                    ; XXX#3907
+                    ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
+                    ; a letöltött dokumentumot
+                    document (db/document->non-namespaced-document document)]
+                   {:db (-> db (assoc-in [extension-id :editor-data] document)
+                               (assoc-in [extension-id :editor-meta :suggestions] suggestions))}))))
 
 (a/reg-event-fx
   :item-editor/request-new-item!

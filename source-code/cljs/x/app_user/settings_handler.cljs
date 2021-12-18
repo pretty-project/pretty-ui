@@ -64,9 +64,33 @@
   ; @param (keyword) item-id
   ; @param (*) item
   ;
+  ; @usage
+  ;  (r user/set-user-settings-item! db :my-settings-item "My value")
+  ;
   ; @return (map)
   [db [_ item-id item]]
   (assoc-in db (db/path ::settings item-id)
                (param item)))
 
+; @usage
+;  [:user/set-user-settings-item! :my-settings-item "My value"]
 (a/reg-event-db :user/set-user-settings-item! set-user-settings-item!)
+
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :user/upload-user-settings-item!
+  ; @param (keyword) item-id
+  ; @param (*) item
+  ;
+  ; @usage
+  ;  [:user/upload-user-settings-item! :my-settings-item "My value"]
+  (fn [{:keys [db]} [_ item-id item]]
+      {:db       (r set-user-settings-item! db item-id item)
+       :dispatch [:sync/send-request! :user/upload-user-settings-item!
+                                      {:method :post
+                                       :params {:item-id item-id :item item}
+                                       :uri    "/user/upload-user-settings-item"}]}))

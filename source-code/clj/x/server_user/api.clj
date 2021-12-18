@@ -54,3 +54,4 @@
 ; x.server-user.settings-handler
 (def request->user-settings      settings-handler/request->user-settings)
 (def request->user-settings-item settings-handler/request->user-settings-item)
+(def upload-user-settings-item!  settings-handler/upload-user-settings-item!)

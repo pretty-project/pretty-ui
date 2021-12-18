@@ -53,7 +53,11 @@
 
       :user/logout
       {:route-template "/user/logout"
-       :post {:handler user/logout}}})
+       :post {:handler user/logout}}
+
+      :user/upload-settings-item
+      {:route-template "/user/upload-user-settings-item"
+       :post {:handler user/upload-user-settings-item!}}})
 
 
 

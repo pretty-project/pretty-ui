@@ -178,6 +178,10 @@
     [item-editor/input-group-label :clients :client {:content :more-info}]
     [client-secondary-contacts body-id body-props]
     [client-legal-details      body-id body-props]
+    [item-editor/input-group-footer]
+    ; Description
+    [item-editor/input-group-label :clients :client {:content :description}]
+    [item-editor/description-field :clients :client]
     [item-editor/form-footer]])
 
 (defn- body

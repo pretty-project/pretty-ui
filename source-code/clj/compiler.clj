@@ -1,6 +1,6 @@
 
-(ns compiler
-    (:require [hf.depstar                  :as hf]
+(ns compiler  ; Be kell még hívni a hf könyvtárat ...
+    (:require ;[hf.depstar                  :as hf]
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
               [server-fruits.io            :as io])
@@ -36,6 +36,6 @@
 
   (doseq [js-build js-builds]
          (println "Compiling:" js-build)
-         (shadow/release js-build))
+         (shadow/release js-build)))
 
-  (hf/jar java-config))
+  ;(hf/jar java-config))

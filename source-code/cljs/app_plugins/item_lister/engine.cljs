@@ -28,21 +28,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keyword)
-;  Ha az item-lister komponenst alkalmazó extension nem gondoskodik időben
-;  az [extension-name :lister-meta :order-by] értékének beállításáról,
-;  akkor az item-lister az elemek letöltésekor a DEFAULT-ORDER-BY értékét alkalmazza.
-(def DEFAULT-ORDER-BY :by-date-descending)
-
-; @constant (keywords in vector)
-(def DEFAULT-ORDER-BY-OPTIONS
-     [:by-date-descending :by-date-ascending :by-name-descending :by-name-ascending])
-
-
-
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -276,18 +261,6 @@
   (let [search-term  (get-in db [extension-id :lister-meta :search-term])]
        (str search-term)))
 
-(defn get-order-by
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r engine/get-order-by db :my-namespace)
-  ;
-  ; @return (keyword)
-  [db [_ extension-id]]
-  (get-in db [extension-id :lister-meta :order-by] DEFAULT-ORDER-BY))
-
 (defn- some-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -442,9 +415,9 @@
   ;
   ; @return (map)
   [db [_ extension-id _ lister-props]]
-  ; Az item-lister betöltésekor felülírás nélkül összefűzi a lister-props térképet a lister-meta
-  ; térképpel, így a reset-*! függvények által meghagyott beállítások elérhetők maradnak.
-  (update-in db [extension-id :lister-meta] merge lister-props))
+  ; Az item-lister betöltésekor felülírás nélkül aláfűzi a lister-props térképet a lister-meta
+  ; térképnek, így a legutóbbi beállítások elérhetők maradnak.
+  (update-in db [extension-id :lister-meta] map/reverse-merge lister-props))
 
 (defn- reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -750,7 +723,7 @@
           (let [resolver-id    (resolver-id extension-id item-namespace)
                 resolver-props {:downloaded-item-count (r get-downloaded-item-count db extension-id)
                                 :search-term           (r get-search-term           db extension-id)
-                                :order-by              (r get-order-by              db extension-id)
+                                :order-by              (get-in db [extension-id :lister-meta :order-by])
                                 :download-limit        (get-in db [extension-id :lister-meta :download-limit])
                                 :filter                (get-in db [extension-id :lister-meta :filter])}]
                [:sync/send-query! (request-id extension-id item-namespace)

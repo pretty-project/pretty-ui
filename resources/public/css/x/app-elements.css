@@ -3270,6 +3270,9 @@ body[data-viewport-profile="s"]
 
 .x-text-field--textarea {
   overflow: hidden;
+  /* A text-field input eleme középre igazítja a sort az inputban, de a multiline-field textarea
+   * elemének szüksége van a padding-top tulajdonság beállítására */
+  padding-top: 3px;
   resize: none }
 
 /*** Field input ***/

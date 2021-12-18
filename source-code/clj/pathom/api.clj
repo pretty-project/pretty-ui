@@ -1,7 +1,6 @@
 
 (ns pathom.api
     (:require [pathom.env       :as env]
-              [pathom.errors    :as errors]
               [pathom.universal :as universal]
               [pathom.query     :as query]
               [pathom.register  :as register]))
@@ -16,9 +15,6 @@
 (def env->request         env/env->request)
 (def env->params          env/env->params)
 (def env->param           env/env->param)
-
-; pathom.errors
-(def error-answer errors/error-answer)
 
 ; pathom.universal
 (def get-documents-by-pipeline universal/get-documents-by-pipeline)

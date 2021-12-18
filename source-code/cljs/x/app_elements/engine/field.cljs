@@ -43,7 +43,7 @@
 (def DEFAULT-FIELD-HORIZONTAL-PADDING 12)
 
 ; @constant (px)
-(def FIELD-VERTICAL-PADDING 4)
+(def FIELD-VERTICAL-PADDING 3)
 
 ; @constant (px)
 (def ADORNMENTS-HORIZONTAL-PADDING 4)
@@ -200,11 +200,8 @@
   ; @return (integer)
   [field-props]
   (+ (* FIELD-LINE-HEIGHT (field-props->line-count field-props))
-     (* FIELD-VERTICAL-PADDING 2)))
-    ; WARNING! DEPRECATED!
-    ; Ettől 50px magas lett a search-field!
-    ; (* FIELD-BORDER-WIDTH 2)
-    ; WARNING! DEPRECATED!
+     (* FIELD-VERTICAL-PADDING 2)
+     (* FIELD-BORDER-WIDTH     2)))
 
 (defn field-props->field-style
   ; WARNING! NON-PUBLIC! DO NOT USE!

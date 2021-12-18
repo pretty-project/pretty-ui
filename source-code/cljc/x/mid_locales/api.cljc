@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.01
 ; Description:
-; Version: v0.1.6
-; Compatibility: x4.4.4
+; Version: v0.2.0
+; Compatibility: x4.4.9
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-locales.api
-    (:require [x.mid-fruits.country-list :as country-list]))
+    (:require [x.mid-locales.country-list :as country-list]
+              [x.mid-locales.name-handler :as name-handler]))
 
 
 
@@ -32,3 +33,7 @@
 (def country-language     country-list/country-language)
 (def country-name         country-list/country-name)
 (def country-native-name  country-list/country-native-name)
+
+; x.mid-locales.name-handler
+(def NAME-ORDERS        name-handler/NAME-ORDERS)
+(def name->ordered-name name-handler/name->ordered-name)

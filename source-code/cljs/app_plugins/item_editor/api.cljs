@@ -49,6 +49,7 @@
 (def form-header          views/form-header)
 (def color-selector       views/color-selector)
 (def color-stamp          views/color-stamp)
+(def description-field    views/description-field)
 (def error-body           views/error-body)
 (def header               views/header)
 (def view                 views/view)

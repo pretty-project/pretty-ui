@@ -314,21 +314,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:initial-value (keyword)
-  ;   :options (vector)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [initial-value no-items-to-show? options]}]
+  [extension-id item-namespace {:keys [no-items-to-show?]}]
   [elements/select ::sort-items-button
-                   {:as-button?      true
-                    :disabled?       no-items-to-show?
-                    :on-select       [:item-lister/order-items! extension-id item-namespace]
-                    :options-label   :order-by
-                    :preset          :order-by-icon-button
-                    :tooltip         :order-by
-                    :initial-value   initial-value
-                    :initial-options options
-                    :value-path      [extension-id :lister-meta :order-by]}])
+                   {:as-button?    true
+                    :disabled?     no-items-to-show?
+                    :on-select     [:item-lister/order-items! extension-id item-namespace]
+                    :options-label :order-by
+                    :preset        :order-by-icon-button
+                    :tooltip       :order-by
+                    :options-path  [extension-id :lister-meta :order-by-options]
+                    :value-path    [extension-id :lister-meta :order-by]}])
 
 
 
@@ -404,10 +401,7 @@
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
       [new-item-button            extension-id item-namespace]
-      [sort-items-button          extension-id item-namespace
-                                  {:options       engine/DEFAULT-ORDER-BY-OPTIONS
-                                   :initial-value engine/DEFAULT-ORDER-BY
-                                   :no-items-to-show? no-items-to-show?}]
+      [sort-items-button          extension-id item-namespace header-props]
       [toggle-select-mode-button  extension-id item-namespace header-props]
       [toggle-reorder-mode-button extension-id item-namespace header-props]
       [toggle-filter-mode-button  extension-id item-namespace header-props]]
@@ -657,7 +651,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:list-element (component)}
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

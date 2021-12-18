@@ -80,12 +80,12 @@
   ; @example
   ;  (engine/new-item-uri :my-extension :my-type)
   ;  =>
-  ;  "/my-extension/new-my-type"
+  ;  "/:app-home/my-extension/new-my-type"
   ;
   ; @return (string)
   [extension-id item-namespace]
-  (str "/"     (name extension-id)
-       "/new-" (name item-namespace)))
+  (str "/:app-home/" (name extension-id)
+       "/new-"       (name item-namespace)))
 
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

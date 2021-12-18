@@ -40,6 +40,7 @@
 ; ...
 
 ; x.app-locales.name-handler
+(def NAME-ORDERS        name-handler/NAME-ORDERS)
 (def name->ordered-name name-handler/name->ordered-name)
 (def get-name-order     name-handler/get-name-order)
 (def get-ordered-name   name-handler/get-ordered-name)

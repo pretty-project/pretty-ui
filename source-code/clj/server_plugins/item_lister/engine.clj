@@ -20,6 +20,17 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keywords in vector)
+(def DEFAULT-ORDER-BY-OPTIONS [:by-date-descending :by-date-ascending :by-name-descending :by-name-ascending])
+
+; @constant (keyword)
+(def DEFAULT-ORDER-BY :by-date-descending)
+
+
+
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -44,9 +55,13 @@
   ; @param (map) lister-props
   ;
   ; @return (map)
-  ;  {:download-limit (integer)}
+  ;  {:download-limit (integer)
+  ;   :initial-order-by (keyword)
+  ;   :order-by-options (keywords in vector)}
   [lister-props]
-  (merge {:download-limit DEFAULT-DOWNLOAD-LIMIT}
+  (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
+          :order-by         DEFAULT-ORDER-BY
+          :order-by-options DEFAULT-ORDER-BY-OPTIONS}
          (param lister-props)))
 
 
@@ -60,7 +75,11 @@
   ; @param (keyword) item-namespace
   ; @param (map)(opt) lister-props
   ;  {:download-limit (integer)(opt)
-  ;    Default: DEFAULT-DOWNLOAD-LIMIT}
+  ;    Default: DEFAULT-DOWNLOAD-LIMIT
+  ;   :order-by (keyword)(opt)
+  ;    Default: DEFAULT-ORDER-BY
+  ;   :order-by-options (keywords in vector)(opt)
+  ;    Default: DEFAULT-ORDER-BY-OPTIONS}
   ;
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type]

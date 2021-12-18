@@ -246,6 +246,20 @@
 
 
 
+;; -- Input components --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn description-field
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (component)
+  [extension-id item-namespace]
+  [elements/multiline-field ::description-field
+                            {:value-path [extension-id :editor-data :description]}])
+
+
+
 ;; -- Error components --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

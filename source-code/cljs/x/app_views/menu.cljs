@@ -43,7 +43,7 @@
 (defn- set-language-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selected-language]
-  [:user/set-user-settings-item! :selected-language selected-language])
+  [:user/upload-user-settings-item! :selected-language selected-language])
 
 
 
@@ -56,10 +56,10 @@
   {:app-languages            (r locales/get-app-languages         db)
    :app-multilingual?        (r locales/app-multilingual?         db)
    :selected-language        (r locales/get-selected-language     db)
-   :view-id                  (r gestures/get-selected-view-id     db ::handler)
    :user-email-address       (r user/get-user-email-address       db)
    :user-name                (r user/get-user-name                db)
-   :user-profile-picture-url (r user/get-user-profile-picture-url db)})
+   :user-profile-picture-url (r user/get-user-profile-picture-url db)
+   :view-id                  (r gestures/get-selected-view-id     db ::handler)})
 
 (a/reg-sub ::get-body-props get-body-props)
 

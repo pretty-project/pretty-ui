@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.2.8
-; Compatibility: x3.9.9
+; Version: v0.3.2
+; Compatibility: x4.4.9
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-locales.api
-    (:require [x.server-locales.country-list :as country-list]))
+    (:require [x.server-locales.country-list :as country-list]
+              [x.server-locales.name-handler :as name-handler]))
 
 
 
@@ -32,3 +33,7 @@
 (def country-language     country-list/country-language)
 (def country-name         country-list/country-name)
 (def country-native-name  country-list/country-native-name)
+
+; x.mid-locales.name-handler
+(def NAME-ORDERS        name-handler/NAME-ORDERS)
+(def name->ordered-name name-handler/name->ordered-name)
