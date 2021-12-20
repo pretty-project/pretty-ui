@@ -105,7 +105,7 @@
 ;; -- Router subscriptions ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-routes
+(defn get-client-routes
   ; @return (map)
   [db _]
   (get-in db (db/path ::client-routes)))
@@ -115,8 +115,8 @@
   ;
   ; @return (vector)
   [db _]
-  (let [routes (r get-routes db)]
-       (engine/routes->router-routes routes)))
+  (let [client-routes (r get-client-routes db)]
+       (engine/routes->router-routes client-routes)))
 
 (defn- get-router
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,13 +214,22 @@
   [db _]
   (get-in db (db/meta-item-path ::client-routes :route-string)))
 
-(defn- get-current-route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+; @usage
+;  [:router/get-current-route-string]
+(a/reg-sub :router/get-current-route-string get-current-route-string)
+
+(defn get-current-route-id
+  ; @usage
+  ;  (r router/get-current-route-id db)
   ;
   ; @return (keyword)
   [db _]
   (let [current-route-string (r get-current-route-string db)]
        (r match-route-id db current-route-string)))
+
+; @usage
+;  [:router/get-current-route-id]
+(a/reg-sub :router/get-current-route-id get-current-route-id)
 
 (defn get-current-route-path
   ; @usage
@@ -231,6 +240,10 @@
   (let [current-route-string (r get-current-route-string db)]
        (uri/uri->path current-route-string)))
 
+; @usage
+;  [:router/get-current-route-path]
+(a/reg-sub :router/get-current-route-path get-current-route-path)
+
 (defn get-current-route-template
   ; @usage
   ;  (r router/get-current-route-template db)
@@ -239,6 +252,10 @@
   [db _]
   (let [current-route-id (r get-current-route-id db)]
        (get-in db (db/path ::client-routes current-route-id :route-template))))
+
+; @usage
+;  [:router/get-current-route-template]
+(a/reg-sub :router/get-current-route-template get-current-route-template)
 
 (defn get-current-route-path-params
   ; @usage
@@ -260,13 +277,13 @@
   ; @usage
   ;  (r router/get-current-route-path-param db :my-param)
   ;
-  ; @return (*)
+  ; @return (string)
   [db [_ param-id]]
   (let [current-route-path-params (r get-current-route-path-params db)]
        (get current-route-path-params param-id)))
 
 ; @usage
-;  [:router/get-current-route-path-params :my-param]
+;  [:router/get-current-route-path-param :my-param]
 (a/reg-sub :router/get-current-route-path-param get-current-route-path-param)
 
 (defn current-route-path-param?
@@ -274,7 +291,7 @@
   ; @param (string) param-value
   ;
   ; @usage
-  ;  (r router/current-route-path-param? db :my-param "my-value")
+  ;  (r router/current-route-path-param? db :my-param "My value")
   ;
   ; @return (boolean)
   [db [_ param-id param-value]]
@@ -282,7 +299,7 @@
        (= current-route-path-param param-value)))
 
 ; @usage
-;  [:router/current-route-path-param? :my-param "my-value"]
+;  [:router/current-route-path-param? :my-param "My value"]
 (a/reg-sub :router/current-route-path-param? current-route-path-param?)
 
 (defn get-current-route-query-params
@@ -294,16 +311,40 @@
   (let [current-route-string (r get-current-route-string db)]
        (uri/uri->query-params current-route-string)))
 
+; @usage
+;  [:router/get-current-route-query-param]
+(a/reg-sub :router/get-current-route-query-params get-current-route-query-params)
+
 (defn get-current-route-query-param
   ; @param (keyword) param-id
   ;
   ; @usage
   ;  (r router/get-current-route-query-param db :my-param)
   ;
-  ; @return (*)
+  ; @return (string)
   [db [_ param-id]]
   (let [current-route-query-params (r get-current-route-query-params db)]
        (get current-route-query-params param-id)))
+
+; @usage
+;  [:router/get-current-route-query-param :my-param]
+(a/reg-sub :router/get-current-route-query-param get-current-route-query-param)
+
+(defn current-route-query-param?
+  ; @param (keyword) param-id
+  ; @param (string) param-value
+  ;
+  ; @usage
+  ;  (r router/current-route-query-param? db :my-param "My value")
+  ;
+  ; @return (boolean)
+  [db [_ param-id param-value]]
+  (let [current-route-query-param (r get-current-route-query-param db param-id)]
+       (= current-route-query-param param-value)))
+
+; @usage
+;  [:router/current-route-query-param? :my-param "My value"]
+(a/reg-sub :router/current-route-query-param? current-route-query-param?)
 
 (defn get-current-route-fragment
   ; @usage
@@ -314,6 +355,10 @@
   (let [current-route-string (r get-current-route-string db)]
        (uri/uri->fragment current-route-string)))
 
+; @usage
+;  [:router/get-current-route-fragment]
+(a/reg-sub :router/get-current-route-fragment get-current-route-fragment)
+
 (defn get-current-route-parent
   ; @usage
   ;  (r router/get-current-route-parent db)
@@ -322,6 +367,10 @@
   [db _]
   (let [current-route-id (r get-current-route-id db)]
        (get-in db (db/path ::client-routes current-route-id :route-parent))))
+
+; @usage
+;  [:router/get-current-route-parent]
+(a/reg-sub :router/get-current-route-parent get-current-route-parent)
 
 
 
@@ -338,6 +387,8 @@
         current-route-path (r get-current-route-path db)]
        (= current-route-path app-home)))
 
+; @usage
+;  [:router/at-home?]
 (a/reg-sub :router/at-home? at-home?)
 
 (defn- route-id-changed?
@@ -422,12 +473,12 @@
   ;
   ; @return (map)
   [db _]
-  (let [stored-routes (r get-routes db)]
+  (let [client-routes (r get-client-routes db)]
        ; A szerverről érkezett client-routes útvonalak magasabb prioritásúak,
        ; mint a DEFAULT-ROUTES útvonalak.
        ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni
        ; a kliens-oldali DEFAULT-ROUTES útvonalakat.
-       (assoc-in db (db/path ::client-routes) (merge DEFAULT-ROUTES stored-routes))))
+       (assoc-in db (db/path ::client-routes) (merge DEFAULT-ROUTES client-routes))))
 
 (defn- reg-to-history!
   ; WARNING! NON-PUBLIC! DO NOT USE!

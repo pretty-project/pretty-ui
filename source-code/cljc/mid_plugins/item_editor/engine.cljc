@@ -105,21 +105,6 @@
       (keyword/join "add-"  item-namespace)
       (keyword/join "edit-" item-namespace)))
 
-(defn item-id-key
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/item-id-key :my-extension :my-type)
-  ;  =>
-  ;  :my-type-id
-  ;
-  ; @return (keyword)
-  [_ item-namespace]
-  (keyword (str (name item-namespace) "-id")))
-
 (defn request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -208,40 +193,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/route-template :my-extension :my-type)
+  ;  (engine/route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:my-type-id"
+  ;  "/:app-home/my-extension/:item-id"
   ;
   ; @return (string)
-  [extension-id item-namespace]
+  [extension-id]
   (str "/:app-home/" (name extension-id)
-       "/:"          (name item-namespace) "-id"))
+       "/:item-id"))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/extended-route-template :my-extension :my-type)
+  ;  (engine/extended-route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:my-type-id/:view-id"
+  ;  "/:app-home/my-extension/:item-id/:view-id"
   ;
   ; @return (string)
-  [extension-id item-namespace]
+  [extension-id]
   (str "/:app-home" (name extension-id)
-       "/:"         (name item-namespace) "-id"
-       "/:view-id"))
+       "/:item-id/:view-id"))
 
 (defn parent-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
   ;  (engine/parent-uri :my-extension :my-type)
@@ -249,7 +230,7 @@
   ;  "/:app-home/my-extension"
   ;
   ; @return (string)
-  [extension-id _]
+  [extension-id]
   (str "/:app-home/" (name extension-id)))
 
 (defn render-event
@@ -274,8 +255,9 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword)(opt) kind-id
   ; @param (keyword)(opt) item-id
+  ; @param (keyword)(opt) action-id
   ;
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :color-picker)
@@ -283,19 +265,19 @@
   ;  :my-extension/color-picker-dialog
   ;
   ; @example
-  ;  (engine/dialog-id :my-extension :my-type :delete :my-item)
+  ;  (engine/dialog-id :my-extension :my-type :my-item :deleted)
   ;  =>
-  ;  :my-extension/delete-my-item-dialog
+  ;  :my-extension/my-item-deleted-dialog
   ;
   ; @return (namespaced keyword)
-  ([extension-id _ action-id]
+  ([extension-id _ kind-id]
    (keyword (name extension-id)
-            (str (name action-id) "-dialog")))
+            (str (name kind-id) "-dialog")))
 
-  ([extension-id _ action-id item-id]
+  ([extension-id _ item-id action-id]
    ; Bizonyos esetben szükséges megkülönböztetni az azonos célra, de több példányban megjelenített
    ; párbeszéd elemeket.
    ; Pl.: Az undo-delete-dialog bubble elem egy időben több példányban is megjelenhet.
    (keyword (name extension-id)
-            (str (name action-id) "-"
-                 (name item-id)   "-dialog"))))
+            (str (name item-id)   "-"
+                 (name action-id) "-dialog"))))

@@ -215,7 +215,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [user-email-address user-name user-profile-picture-url]}]
   [elements/column {:content [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
-                                  [elements/separator {:size :s :orientation :horizontal}]
+                                  [elements/horizontal-separator {:size :s}]
                                   [elements/label     {:content user-name :layout :fit :size :xl :font-weight :extra-bold}]
                                   [elements/label     {:content user-email-address :color :highlight :layout :fit :font-size :xs}]]
                     :stretch-orientation :horizontal}])
@@ -224,7 +224,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [popup-id body-props]
   [:<> [user-card popup-id body-props]
-       [elements/separator {:size :l :orientation :horizontal}]
+       [elements/horizontal-separator {:size :l}]
        [app-menu  popup-id body-props]])
 
 

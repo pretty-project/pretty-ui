@@ -59,8 +59,8 @@
   ; @return (component)
   [_ _]
   [:<> [elements/text {:content :will-be-deleted-after :color :muted :font-size :xs}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/separator {:orientation :horizontal :size :m}]])
+       [elements/horizontal-line      {:color :highlight}]
+       [elements/horizontal-separator {:size :m}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -48,9 +48,9 @@
   [body-id overview-props]
   [:div {:style {:border "2px solid var( --border-color-highlight )" :padding "12px" :border-radius "var( --border-radius-m )"
                  :width "180px"}}
-        [elements/separator {:size :m :orientation :horizontal}]
+        [elements/horizontal-separator {:size :m}]
         [api-key  body-id overview-props]
-        [elements/separator {:size :m :orientation :horizontal}]
+        [elements/horizontal-separator {:size :m}]
         [symbol-c body-id overview-props]])
 
 (defn- ignition-button

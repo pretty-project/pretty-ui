@@ -280,7 +280,7 @@
   ; @return (component)
   [component-id context-props]
   [elements/row {:content [:<> [file-uploader-progress-indicator component-id context-props]
-                               [elements/separator {:orientation :vertical :size :s}]
+                               [elements/vertical-separator {:size :s}]
                                [elements/label {:content :file-uploading-in-progress}]]}])
 
 (defn- file-uploader-progress-bubble
@@ -393,7 +393,7 @@
   ; @return (component)
   [popup-id view-props]
   [elements/column {:content [:<> [file-uploader-available-capacity popup-id view-props]
-                                  [elements/separator {:orientation :horizontal :size :s}]
+                                  [elements/horizontal-separator {:size :s}]
                                   [file-uploader-uploading-size popup-id view-props]]
                     :horizontal-align :center}])
 
@@ -408,7 +408,7 @@
   [:<> [elements/polarity {:start-content [file-uploader-cancel-button popup-id view-props]
                            :end-content   [file-uploader-upload-button popup-id view-props]}]
        [file-uploader-summary popup-id view-props]
-       [elements/separator {:orientation :horizontal :size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 (defn- file-uploader-file
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -476,12 +476,12 @@
   ;
   ; @return (hiccup)
   [popup-id body-props]
-  [:<> [elements/separator {:orientation :horizontal :size :s}]
+  [:<> [elements/horizontal-separator {:size :s}]
        [elements/row {:content [file-uploader-file-list popup-id body-props]
                       :style   (popup-geometry/view-props->item-list-container-style body-props)
                       :wrap-items? true}]
        [file-uploader-no-files-to-upload popup-id body-props]
-       [elements/separator {:orientation :horizontal :size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 
 

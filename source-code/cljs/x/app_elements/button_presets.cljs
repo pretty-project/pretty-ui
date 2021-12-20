@@ -74,6 +74,14 @@
                             :icon    :close
                             :layout  :icon-button
                             :variant :transparent}
+      :checked-icon-button {:color   :default
+                            :icon    :check_box
+                            :layout  :icon-button
+                            :variant :transparent}
+      :unchecked-icon-button {:color   :default
+                              :icon    :check_box_outline_blank
+                              :layout  :icon-button
+                              :variant :transparent}
       :close-button        {:label   :close!
                             :layout  :row
                             :variant :transparent}

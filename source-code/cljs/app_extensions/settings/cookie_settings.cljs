@@ -71,13 +71,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [:<> ; This website uses cookies
-       [elements/separator {:size :s}]
+       [elements/horizontal-separator {:size :s}]
        [elements/text {:content :this-website-uses-cookies
                        :font-size :xs :layout :row :font-weight :bold}]
        ; Legal links
-       [elements/separator {:size :xxs}]
+       [elements/horizontal-separator {:size :xxs}]
        [privacy-policy-button   body-id]
-       [elements/separator {:size :s}]
+       [elements/horizontal-separator {:size :s}]
        [terms-of-service-button body-id]
        ; Cookie settings
        [elements/horizontal-line {:color :highlight :layout :row}]
@@ -102,10 +102,10 @@
                          :on-check   [:environment/->cookie-settings-changed]
                          :on-uncheck [:environment/->cookie-settings-changed]}]
        ; Remove stored cookies
-       [elements/separator {:size :s}]
+       [elements/horizontal-separator {:size :s}]
        [elements/button {:label :remove-stored-cookies! :preset :secondary-button :layout :row
                          :on-click [:settings/render-remove-stored-cookies-dialog!]}]
-       [elements/separator {:size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

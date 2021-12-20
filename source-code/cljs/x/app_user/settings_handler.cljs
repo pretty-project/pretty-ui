@@ -29,8 +29,8 @@
   ;  (user/user-settings-item-path :my-settings-item)
   ;
   ; @return (item-path vector)
-  [item-id]
-  (db/path ::settings item-id))
+  [item-key]
+  (db/path ::settings item-key))
 
 
 
@@ -46,14 +46,14 @@
   (get-in db (db/path ::settings)))
 
 (defn get-user-settings-item
-  ; @param (keyword) item-id
+  ; @param (keyword) item-key
   ;
   ; @usage
   ;  (r user/get-user-settings-item db :my-settings-item)
   ;
   ; @return (map)
-  [db [_ item-id]]
-  (get-in db (db/path ::settings item-id)))
+  [db [_ item-key]]
+  (get-in db (db/path ::settings item-key)))
 
 
 
@@ -61,16 +61,16 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-user-settings-item!
-  ; @param (keyword) item-id
-  ; @param (*) item
+  ; @param (keyword) item-key
+  ; @param (*) item-value
   ;
   ; @usage
   ;  (r user/set-user-settings-item! db :my-settings-item "My value")
   ;
   ; @return (map)
-  [db [_ item-id item]]
-  (assoc-in db (db/path ::settings item-id)
-               (param item)))
+  [db [_ item-key item-value]]
+  (assoc-in db (db/path ::settings item-key)
+               (param item-value)))
 
 ; @usage
 ;  [:user/set-user-settings-item! :my-settings-item "My value"]
@@ -83,14 +83,14 @@
 
 (a/reg-event-fx
   :user/upload-user-settings-item!
-  ; @param (keyword) item-id
-  ; @param (*) item
+  ; @param (keyword) item-key
+  ; @param (*) item-value
   ;
   ; @usage
   ;  [:user/upload-user-settings-item! :my-settings-item "My value"]
-  (fn [{:keys [db]} [_ item-id item]]
-      {:db       (r set-user-settings-item! db item-id item)
+  (fn [{:keys [db]} [_ item-key item-value]]
+      {:db       (r set-user-settings-item! db item-key item-value)
        :dispatch [:sync/send-request! :user/upload-user-settings-item!
                                       {:method :post
-                                       :params {:item-id item-id :item item}
+                                       :params {:item-key item-key :item-value item-value}
                                        :uri    "/user/upload-user-settings-item"}]}))

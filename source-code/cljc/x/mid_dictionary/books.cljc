@@ -469,9 +469,6 @@
 ;; -- Edit --------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def actions
-     {})
-
 (def edit
      {:add!
       {:en "Add"
@@ -503,6 +500,9 @@
       :archived-item-restored
       {:en "Archived item restored"
        :hu "Archivált elem visszaállítva"}
+      :changes-discarded
+      {:en "Changes discarded"
+       :hu "Változások elvetve"}
       :copy
       {:en "Copy"
        :hu "Másolat"}
@@ -521,6 +521,9 @@
       :delete-field!
       {:en "Delete field"
        :hu "Mező törlése"}
+      :delete-item!
+      {:en "Delete item"
+       :hu "Elem törlése"}
       :delete-selected-items!
       {:en "Delete selected items"
        :hu "Kiválasztott elemek törlése"}
@@ -572,6 +575,9 @@
       :item-archived
       {:en "Item archived"
        :hu "Elem archiválva"}
+      :item-deleted
+      {:en "Item deleted"
+       :hu "Elem törölve"}
       :item-duplicated
       {:en "Item duplicated"
        :hu "Elem másolva"}
@@ -632,6 +638,12 @@
       :reset-field!
       {:en "Reset field"
        :hu "Mező visszaállítása"}
+      :restore!
+      {:en "Restore"
+       :hu "Visszaállítás"}
+      :restore-archived-items
+      {:en "Restored archived items"
+       :hu "Archiválált elemek visszaállítása"}
       :save!
       {:en "Save"
        :hu "Mentés"}
@@ -665,9 +677,9 @@
       :select-item!
       {:en "Select item"
        :hu "Elem kijelölése"}
-      :unselect!
-      {:en "Unselect"
-       :hu "Kijelölés megszűntetése"}
+      :unarchive!
+      {:en "Unarchive"
+       :hu "Archiválás visszavonása"}
       :undo!
       {:en "Undo"
        :hu "Visszavonás"}
@@ -680,9 +692,12 @@
       :undo-changes!
       {:en "Undo changes"
        :hu "Változások visszavonása"}
-      :unselect
+      :unsaved-changes-discarded
+      {:en "Unsaved changes discarded"
+       :hu "Nem mentett változások elvetve"}
+      :unselect!
       {:en "Unselect"
-       :hu "Kiválasztás megszűntetése"}
+       :hu "Kijelölés megszűntetése"}
       :write-something!
       {:en "Write something!"
        :hu "Írj valamit!"}})

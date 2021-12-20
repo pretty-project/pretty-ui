@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.view-selector.api
-    (:require [server-plugins.view-selector.engine :as engine]))
+    (:require [server-plugins.view-selector.engine]
+              [server-plugins.view-selector.events]))
 
 
 

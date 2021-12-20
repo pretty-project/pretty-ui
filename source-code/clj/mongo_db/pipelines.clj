@@ -9,49 +9,71 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn filter-pattern->pipeline-query
-      ; @param (vectors in vector) filter-pattern
-      ;  [[(namespaced-keyword) filter-key
-      ;    (*) filter-value]]
+(defn filter-pattern->query-pipeline
+      ; @param (map) filter-pattern
+      ;  {:or (vectors in vector)(opt)
+      ;    [[(namespaced-keyword) filter-key
+      ;      (*) filter-value]
+      ;     ...]
+      ;   :and (vectors in vector)(opt)
+      ;    [[(namespaced-keyword) filter-key
+      ;      (*) filter-value]
+      ;     ...]}
       ;
       ; @example
-      ;  (mongo-db/filter-pattern->pipeline-query [[:my-namespace/archived? true] ...])
+      ;  (mongo-db/filter-pattern->query-pipeline {:or [[:my-namespace/archived? true] [...]]})
       ;  =>
-      ;  [{"my-namespace/archived?" true} ...]
+      ;  {"$or" [{"my-namespace/archived?" true} {...}]}
       ;
       ; @return (maps in vector)
       [filter-pattern]
-      (reduce (fn [query [filter-key filter-value]]
-                  (let [str-filter-key (keyword/to-string filter-key)]
-                       (vector/conj-item query {str-filter-key filter-value})))
-              (param [])
-              (param filter-pattern)))
+      (reduce-kv (fn [query operator expressions]
+                     (let [operator (case operator :and "$and" :or "$or")]
+                          (assoc query operator
+                                 (reduce (fn [expressions [filter-key filter-value]]
+                                             (let [str-filter-key (keyword/to-string filter-key)]
+                                                  (vector/conj-item expressions {str-filter-key filter-value})))
+                                         (param [])
+                                         (param expressions)))))
+                 (param {})
+                 (param filter-pattern)))
 
-(defn search-pattern->pipeline-query
-      ; @param (vectors in vector) search-pattern
-      ;  [[(namespaced keyword) search-key
-      ;    (string) search-term]]
+(defn search-pattern->query-pipeline
+      ; @param (map) search-pattern
+      ;  {:or (vectors in vector)(opt)
+      ;    [[(namespaced keyword) search-key
+      ;      (string) search-term]
+      ;     ...]
+      ;   :and (vectors in vector)(opt)
+      ;    [[(namespaced keyword) search-key
+      ;      (string) search-term]
+      ;     ...]}
       ;
       ; @example
-      ;  (mongo-db/search-pattern->pipeline-query [[:my-namespace/full-name ""] ...])
+      ;  (mongo-db/search-pattern->query-pipeline {:or [[:my-namespace/full-name "Xyz"] [...]]})
       ;  =>
-      ;  [{"my-namespace/full-name" {"$regex" "" "$options" "i"}} ...]
+      ;  {"$or" [{"my-namespace/full-name" {"$regex" "Xyz" "$options" "i"}} {...}]}
       ;
       ; @return (maps in vector)
       [search-pattern]
-      (reduce (fn [query [search-key search-term]]
-                  (let [str-search-key (keyword/to-string search-key)]
-                       (vector/conj-item query {str-search-key {"$regex" search-term "$options" "i"}})))
-              (param [])
-              (param search-pattern)))
+      (reduce-kv (fn [query operator expressions]
+                     (let [operator (case operator :and "$and" :or "$or")]
+                          (assoc query operator
+                                 (reduce (fn [expressions [search-key search-term]]
+                                             (let [str-search-key (keyword/to-string search-key)]
+                                                  (vector/conj-item expressions {str-search-key {"$regex" search-term "$options" "i"}})))
+                                         (param [])
+                                         (param expressions)))))
+                (param {})
+                (param search-pattern)))
 
-(defn sort-pattern->pipeline-sort
+(defn sort-pattern->sort-pipeline
       ; @param (vectors in vector) sort-pattern
       ;  [[(namespaced keyword) sort-key
       ;    (integer) sort-direction]]
       ;
       ; @example
-      ;  (mongo-db/sort-pattern->pipeline-sort [[:fruit/apple -1] [...]])
+      ;  (mongo-db/sort-pattern->sort-pipeline [[:fruit/apple -1] [...]])
       ;  =>
       ;  [["fruit/apple" -1] [...]]
       ;

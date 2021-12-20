@@ -14,7 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.api
-    (:require [app-plugins.view-selector.engine :as engine]))
+    (:require [app-plugins.view-selector.engine]
+              [app-plugins.view-selector.events :as events]
+              [app-plugins.view-selector.subs   :as subs]))
 
 
 
@@ -52,7 +54,9 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.view-selector.engine
-(def get-selected-view engine/get-selected-view)
-(def get-view-props    engine/get-view-props)
-(def change-view!      engine/change-view!)
+; app-plugins.view-selector.events
+(def change-view! events/change-view!)
+
+; app-plugins.view-selector.subs
+(def get-selected-view subs/get-selected-view)
+(def get-view-props    subs/get-view-props)

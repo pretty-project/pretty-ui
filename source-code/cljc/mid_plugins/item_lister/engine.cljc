@@ -28,14 +28,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (integer)
-(def DEFAULT-DOWNLOAD-LIMIT 20)
-
-
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -151,3 +143,20 @@
   (let [event-id (keyword (name extension-id)
                           (str "render-" (name item-namespace) "-lister!"))]
        [event-id]))
+
+(defn dialog-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ;
+  ; @example
+  ;  (engine/dialog-id :my-extension :my-type :delete-items)
+  ;  =>
+  ;  :my-extension/delete-items-dialog
+  ;
+  ; @return (namespaced keyword)
+  ([extension-id _ action-id]
+   (keyword (name extension-id)
+            (str (name action-id) "-dialog"))))

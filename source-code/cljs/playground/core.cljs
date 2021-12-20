@@ -41,6 +41,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def LOREM-IPSUM "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.")
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -91,14 +99,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [label]}]
   [:<> [elements/label {:content label :font-weight :extra-bold :font-size :m :layout :fit}]
-       [elements/separator {:orientation :horizontal :size :xxs}]
-       [elements/horizontal-line {:color :highlight :fade :out}]
-       [elements/separator {:orientation :horizontal :size :m}]])
+       [elements/horizontal-separator {:size :xxs}]
+       [elements/horizontal-line      {:color :highlight :fade :out}]
+       [elements/horizontal-separator {:size :m}]])
 
 (defn- section-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [elements/separator {:orientation :horizontal :size :xxl}])
+  [elements/horizontal-separator {:size :xxl}])
 
 (defn- infinite-loader
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -332,8 +340,32 @@
 
 (defn- text
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:<> [elements/label {:content "Label"}]])
+  [surface-id _]
+  [:<> [section-footer surface-id {}]
+       [section-header surface-id {:label "Label"}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :xxs}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :xs}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :s}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :m}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :l}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :xl}]
+       [elements/label {:content "Follow the white rabbit!" :font-size :xxl}]
+       [section-footer surface-id {}]
+       [section-header surface-id {:label "Text"}]
+       [elements/text {:content LOREM-IPSUM :font-size :xxs :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :xs  :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :s   :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :m   :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :l   :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :xl  :style {:max-width "720px"}}]
+       [elements/horizontal-separator {:size :l}]
+       [elements/text {:content LOREM-IPSUM :font-size :xxl :style {:max-width "720px"}}]
+       [section-footer surface-id {}]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -363,11 +395,11 @@
                           :body   {:content #'body   :subscriber [:view-selector/get-view-props :playground]}
                           :header {:content #'header :subscriber [:view-selector/get-view-props :playground]}
                           :horizontal-align :left}]
-       [elements/separator {:orientation :horizontal :size :xxl}]
+       [elements/horizontal-separator {:size :xxl}]
        [infinite-loader surface-id view-props]
-       [elements/separator {:orientation :horizontal :size :xxl}]
+       [elements/horizontal-separator {:size :xxl}]
        [card-group      surface-id view-props]
-       [elements/separator {:orientation :horizontal :size :xxl}]])
+       [elements/horizontal-separator {:size :xxl}]])
 
 
 

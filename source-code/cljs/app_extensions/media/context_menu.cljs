@@ -34,10 +34,10 @@
   ;
   ; @return (component)
   [element-id header-props]
-  [:<> [context-menu-label       element-id header-props]
-       [elements/separator       {:orientation :horizontal :size :xxs}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/separator       {:orientation :horizontal :size :xxs}]])
+  [:<> [context-menu-label element-id header-props]
+       [elements/horizontal-separator {:size :xxs}]
+       [elements/horizontal-line      {:color :highlight}]
+       [elements/horizontal-separator {:size :xxs}]])
 
 (defn context-menu-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

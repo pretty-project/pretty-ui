@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.6
+; Version: v0.3.0
+; Compatibility: x4.4.9
 
 
 
@@ -14,8 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.api
-    (:require [app-plugins.item-editor.dialogs :as dialogs]
+    (:require [app-plugins.item-editor.events]
+              [app-plugins.item-editor.dialogs :as dialogs]
               [app-plugins.item-editor.engine  :as engine]
+              [app-plugins.item-editor.subs    :as subs]
               [app-plugins.item-editor.views   :as views]))
 
 
@@ -37,10 +39,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-editor.engine
-(def editor-uri        engine/editor-uri)
-(def form-id           engine/form-id)
-(def get-body-props    engine/get-body-props)
-(def get-header-props  engine/get-header-props)
+(def editor-uri engine/editor-uri)
+(def form-id    engine/form-id)
+
+; app-plugins.item-editor.subs
+(def get-body-props   subs/get-body-props)
+(def get-header-props subs/get-header-props)
 
 ; app-plugins.item-editor.views
 (def input-group-label    views/input-group-label)

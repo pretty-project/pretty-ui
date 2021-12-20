@@ -26,23 +26,14 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- added-client-props-prototype
-       ; WARNING! NON-PUBLIC! DO NOT USE!
-       [{:keys [request]} client-props]
-       (let [timestamp (time/timestamp-object)
-             user-link (user/request->user-link request)]
-            (merge {:client/added-at    timestamp
-                    :client/added-by    user-link}
-                   (param client-props)
-                   {:client/modified-at timestamp
-                    :client/modified-by user-link})))
-
 (defn- updated-client-props-prototype
        ; WARNING! NON-PUBLIC! DO NOT USE!
        [{:keys [request]} client-props]
        (let [timestamp (time/timestamp-object)
              user-link (user/request->user-link request)]
-            (merge (param client-props)
+            (merge {:client/added-at timestamp
+                    :client/added-by user-link}
+                   (param client-props)
                    {:client/modified-at timestamp
                     :client/modified-by user-link})))
 
@@ -51,7 +42,7 @@
        [{:keys [request]} client-props]
        (let [timestamp (time/timestamp-object)
              user-link (user/request->user-link request)]
-            (merge (param client-props)
+            (merge (dissoc client-props :client/id)
                    {:client/added-at    timestamp
                     :client/added-by    user-link
                     :client/modified-at timestamp
@@ -74,12 +65,15 @@
             order-by              (get resolver-props :order-by)
             max-count             (get resolver-props :download-limit)
             filter-id             (get resolver-props :filter)]
-           {:max-count      max-count
-            :skip           downloaded-item-count
-            :filter-pattern (case filter-id :archived-items [[:client/archived? true]]
-                                            :favorite-items [[:client/favorite? true]]
-                                            []) ; No filter selected ...
-            :search-pattern [[:client/full-name search-term] [:client/email-address search-term]]
+           {:max-count max-count
+            :skip      downloaded-item-count
+            :filter-pattern (case filter-id :archived-items {:and [[:client/archived? true]]}
+                                            :favorite-items {:and [[:client/favorite? true]]
+                                                             :or  [[:client/archived? false]
+                                                                   [:client/archived? nil]]}
+                                            ; If no filter selected ...
+                                            {:or [[:client/archived? false] [:client/archived? nil]]})
+            :search-pattern {:or [[:client/full-name search-term] [:client/email-address search-term]]}
             :sort-pattern   (case order-by :by-name-ascending  (case name-order :reversed [[:client/last-name   1] [:client/first-name  1]]
                                                                                           [[:client/first-name  1] [:client/last-name   1]])
                                            :by-name-descending (case name-order :reversed [[:client/last-name  -1] [:client/first-name -1]]
@@ -93,16 +87,15 @@
       ; @usage
       ;  (search-props->search-pipeline {:max-count 20
       ;                                  :skip       0
-      ;                                  :search-pattern [[:client/first-name "xyz"]]
-      ;                                  :sort-pattern   [[:client/first-name 1]]}
+      ;                                  :filter-pattern {:or [[:client/favorite? true]  [...]]}
+      ;                                  :search-pattern {:or [[:client/full-name "Xyz"] [...]]}
+      ;                                  :sort-pattern   [[:client/first-name 1] [...]]}
       [{:keys [filter-pattern max-count skip search-pattern sort-pattern] :as search-props}]
-      (let [filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
-            search-query (mongo-db/search-pattern->pipeline-query search-pattern)
-            sort         (mongo-db/sort-pattern->pipeline-sort    sort-pattern)]
+      (let [filter-query (mongo-db/filter-pattern->query-pipeline filter-pattern)
+            search-query (mongo-db/search-pattern->query-pipeline search-pattern)
+            sort         (mongo-db/sort-pattern->sort-pipeline    sort-pattern)]
            [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" (if (vector/nonempty? filter-query)
-                          {"$or" search-query "$and" filter-query}
-                          {"$or" search-query})}
+            {"$match" {"$and" [filter-query search-query]}}
             {"$sort"  sort}
             {"$skip"  skip}
             {"$limit" max-count}]))
@@ -111,14 +104,13 @@
       ; WARNING! NON-PUBLIC! DO NOT USE!
       ;
       ; @usage
-      ;  (search-props->count-pipeline {:search-pattern [[:client/first-name "xyz"]]}
+      ;  (search-props->count-pipeline {:filter-pattern {:or [[:client/favorite? true]  [...]]}
+      ;                                 :search-pattern {:or [[:client/full-name "Xyz"] [...]]}}
       [{:keys [filter-pattern search-pattern] :as search-props}]
-      (let [filter-query (mongo-db/filter-pattern->pipeline-query filter-pattern)
-            search-query (mongo-db/search-pattern->pipeline-query search-pattern)]
+      (let [filter-query (mongo-db/filter-pattern->query-pipeline filter-pattern)
+            search-query (mongo-db/search-pattern->query-pipeline search-pattern)]
            [{"$addFields" {"client/full-name" {"$concat" ["$client/first-name" " " "$client/last-name"]}}}
-            {"$match" (if (vector/nonempty? filter-query)
-                          {"$or" search-query "$and" filter-query}
-                          {"$or" search-query})}]))
+            {"$match" {"$and" [filter-query search-query]}}]))
 
 
 
@@ -136,18 +128,10 @@
              ;  {:clients/get-client-suggestions (map)
              [env _]
              {:clients/get-client-suggestions
-              (let [all-documents   (mongo-db/get-all-documents :clients)
-                    suggestion-keys (pathom/env->param      env :suggestion-keys)]
-                   (reduce (fn [result document]
-                               (reduce (fn [result suggestion-key]
-                                           (let [suggestion-value (db/get-document-value document suggestion-key)]
-                                                (if (string/nonempty? suggestion-value)
-                                                    (update result suggestion-key vector/conj-item-once suggestion-value)
-                                                    (return result))))
-                                       (param result)
-                                       (param suggestion-keys)))
-                           (validator/validate-data {})
-                           (param all-documents)))})
+              (let [all-documents     (mongo-db/get-all-documents  :clients)
+                    suggestion-keys   (pathom/env->param       env :suggestion-keys)
+                    suggestion-values (db/get-specified-values all-documents suggestion-keys string/nonempty?)]
+                   (validator/validate-data suggestion-values))})
 
 (defresolver get-client-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,6 +171,7 @@
                             :client/city
                             :client/colors
                             :client/country
+                            :client/description
                             :client/email-address
                             :client/favorite?
                             :client/first-name
@@ -203,18 +188,13 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation add-client-item! [env client-props]
-             {::pco/op-name 'clients/add-client-item!}
-             (mongo-db/add-document! collection-name client-props
-                                     {:prototype-f #(a/sub-prot env % added-client-props-prototype)}))
-
 (defmutation undo-delete-client-item! [env client-props]
              {::pco/op-name 'clients/undo-delete-client-item!}
              (mongo-db/add-document! collection-name client-props))
 
 (defmutation save-client-item! [env client-props]
              {::pco/op-name 'clients/save-client-item!}
-             (mongo-db/update-document! collection-name client-props
+             (mongo-db/upsert-document! collection-name client-props
                                         {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
 
 (defmutation merge-client-item! [env client-props]
@@ -222,14 +202,14 @@
              (mongo-db/merge-document! collection-name client-props
                                        {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
 
-(defmutation delete-client-item! [{:keys [client-id]}]
+(defmutation delete-client-item! [{:keys [item-id]}]
              {::pco/op-name 'clients/delete-client-item!}
-             (mongo-db/remove-document! collection-name client-id))
+             (mongo-db/remove-document! collection-name item-id))
 
-(defmutation duplicate-client-item! [env {:keys [client-id]}]
+(defmutation duplicate-client-item! [env client-props]
              {::pco/op-name 'clients/duplicate-client-item!}
-             (mongo-db/duplicate-document! collection-name client-id
-                                           {:prototype-f #(a/sub-prot env % duplicated-client-props-prototype)}))
+             (mongo-db/add-document! collection-name client-props
+                                     {:prototype-f #(a/sub-prot env % duplicated-client-props-prototype)}))
 
 
 
@@ -240,7 +220,6 @@
 (def HANDLERS [get-client-suggestions
                get-client-items
                get-client-item
-               add-client-item!
                undo-delete-client-item!
                save-client-item!
                merge-client-item!

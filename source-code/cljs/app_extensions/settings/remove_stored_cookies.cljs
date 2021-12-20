@@ -45,9 +45,9 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [:<> [elements/separator {:orientation :horizontal :size :xs}]
-       [elements/text      {:content :remove-stored-cookies? :font-weight :bold
-                            :horizontal-align :center :icon :delete}]])
+  [:<> [elements/horizontal-separator {:size :xs}]
+       [elements/text {:content :remove-stored-cookies? :font-weight :bold
+                       :horizontal-align :center :icon :delete}]])
 
 
 

@@ -302,9 +302,9 @@
 (defn- vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-item] :as body-props}]
-  (reduce (fn [%1 %2] (vector/conj-item %1 [:div (if (string? %2)
-                                                     (string/quotes %2)
-                                                     (str           %2))]))
+  (reduce (fn [%1 %2] (vector/conj-item %1 [:div (cond (nil?          %2) (str "nil")
+                                                       (string?       %2) (string/quotes %2)
+                                                       :else              (str           %2))]))
           [:div.x-database-browser--vector-item
             [header          body-id body-props "vector"]
             [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]

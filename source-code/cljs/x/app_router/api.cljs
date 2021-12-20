@@ -27,7 +27,7 @@
 
 ; x.app-router.route-handler
 (def get-app-home                   route-handler/get-app-home)
-(def get-routes                     route-handler/get-routes)
+(def get-client-routes              route-handler/get-client-routes)
 (def get-current-route-string       route-handler/get-current-route-string)
 (def get-current-route-id           route-handler/get-current-route-id)
 (def get-current-route-path         route-handler/get-current-route-path)

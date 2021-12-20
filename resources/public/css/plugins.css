@@ -18,13 +18,6 @@
 
 /***** User select *****/
 
-.item-lister--items--no-items-to-show,
-.item-lister--items--request-indicator {
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none }
-
 /***** User select *****/
 
 
@@ -127,16 +120,6 @@
 
 /*** Item-lister body ***/
 
-.item-lister--no-items-to-show,
-.item-lister--request-indicator {
-  color: var( --color-highlight );
-  display: flex;
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  justify-content: center;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
-
 .item-lister--structure {
   width: 100% }
 
@@ -152,7 +135,7 @@
  * és a listaelemet szükséges egy flex-level elemben elhelyezni. */
 .item-lister--list-item--structure {
   display: flex;
-  padding-left: 48px
+  -padding-left: 48px
  }
 
 /* XXX#7601
@@ -172,24 +155,6 @@
   -position: absolute;
   -top: 0;
   -width: 100% }
-
-.item-lister--list-item--checkbox {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 48px;
-}
-
-.item-lister--list-item--checkbox[data-checked="false"]::after {
-  content: 'check_box_outline_blank';
-  color: var( --color-primary );
-  font-size: var( --icon-size-s )
-}
 
 /*** Item-lister list-item ***/
 /***** Item-lister *****/

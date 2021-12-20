@@ -33,11 +33,11 @@
 (a/reg-sub :user/get-user-profile get-user-profile)
 
 (defn get-user-profile-item
-  ; @param (keyword) item-id
+  ; @param (keyword) item-key
   ;
   ; @return (map)
-  [db [_ item-id]]
-  (get-in db (db/path ::profile item-id)))
+  [db [_ item-key]]
+  (get-in db (db/path ::profile item-key)))
 
 (defn get-user-first-name
   ; @return (string)
@@ -72,12 +72,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-user-profile-item!
-  ; @param (keyword) item-id
-  ; @param (*) item
+  ; @param (keyword) item-key
+  ; @param (*) item-value
   ;
   ; @usage
   ;  (r set-user-profile-item! db :last-name "Roger")
   ;
   ; @return (map)
-  [db [_ item-id item]]
-  (assoc-in db (db/path ::profile item-id) item))
+  [db [_ item-key item-value]]
+  (assoc-in db (db/path ::profile item-key) item-value))

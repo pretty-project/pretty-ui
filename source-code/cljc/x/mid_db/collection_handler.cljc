@@ -56,6 +56,7 @@
 (def document->document-non-namespaced? document-handler/document->document-non-namespaced?)
 (def document->namespaced-document      document-handler/document->namespaced-document)
 (def document->non-namespaced-document  document-handler/document->non-namespaced-document)
+(def get-document-value                 document-handler/get-document-value)
 (def document->document-id              document-handler/document->document-id)
 (def document->identified-document      document-handler/document->identified-document)
 (def document->item-key                 document-handler/document->item-key)
@@ -661,6 +662,34 @@
                    (update result namespace vector/conj-item document)))
           (param {})
           (param collection)))
+
+(defn get-specified-values
+  ; @param (maps in vector) collection
+  ; @param (keywords in vector) specified-keys
+  ; @param (function)(opt) test-f
+  ;  Default: some?
+  ;
+  ; @example
+  ;  (db/get-specified-values [{...} {...}] [:my-key :your-key] string?)
+  ;  =>
+  ;  {:my-key   ["..." "..."]
+  ;   :your-key ["..." "..."]}
+  ;
+  ; @return (map)
+  ([collection specified-keys]
+   (get-specified-values collection specified-keys some?))
+
+  ([collection specified-keys test-f]
+   (reduce (fn [result document]
+               (reduce (fn [result specified-key]
+                           (let [specified-value (get document specified-key)]
+                                (if (test-f specified-value)
+                                    (update result specified-key vector/conj-item-once specified-value)
+                                    (return result))))
+                       (param result)
+                       (param specified-keys)))
+           (param {})
+           (param collection))))
 
 
 

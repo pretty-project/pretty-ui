@@ -766,9 +766,9 @@
                          {:content [file-browser-subdirectory-list component-id view-props]
                           :wrap-items? true}]
            (if (boolean directory-render-files?)
-               [:<> [elements/separator {:orientation :horizontal :size :s}]
-                    [elements/horizontal-line {:color :highlight}]
-                    [elements/separator {:orientation :horizontal :size :s}]])]))
+               [:<> [elements/horizontal-separator {:size :s}]
+                    [elements/horizontal-line      {:color :highlight}]
+                    [elements/horizontal-separator {:size :s}]])]))
 
 (defn- file-browser-file
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -884,12 +884,12 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [:<> [elements/separator {:orientation :horizontal :size :s}]
+  [:<> [elements/horizontal-separator {:size :s}]
        [file-browser-subdirectories          component-id view-props]
        [file-browser-files                   component-id view-props]
        [file-browser-directory-empty         component-id view-props]
        [file-browser-no-filtered-items-match component-id view-props]
-       [elements/separator {:orientation :horizontal :size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!

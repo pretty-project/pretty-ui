@@ -14,7 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.api
-    (:require [app-plugins.value-editor.engine :as engine]
+    (:require [app-plugins.value-editor.engine]
+              [app-plugins.value-editor.events]
+              [app-plugins.value-editor.subs :as subs]
               [app-plugins.value-editor.views]))
 
 
@@ -51,5 +53,5 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.value-editor.api
-(def get-editor-value engine/get-editor-value)
+; app-plugins.value-editor.subs
+(def get-editor-value subs/get-editor-value)

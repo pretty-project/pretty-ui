@@ -113,22 +113,22 @@
 (defn- personal-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
-  [:<> [elements/separator   {:orientation :horizontal :size :s}]
+  [:<> [elements/horizontal-separator {:size :s}]
        [user-profile-picture body-id body-props]
-       [elements/separator   {:orientation :horizontal :size :s}]
-       [elements/horizontal-line {:color :highlight}]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :s}]
+       [elements/horizontal-line      {:color :highlight}]
+       [elements/horizontal-separator {:size :l}]
       [:div {:style {:width "100%"}}
        [user-name            body-id]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :l}]
        [user-email-address   body-id]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :l}]
        [user-phone-number    body-id]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :l}]
        [user-password        body-id]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :l}]
        [user-pin             body-id]
-       [elements/separator   {:orientation :horizontal :size :l}]
+       [elements/horizontal-separator {:size :l}]
        [elements/button      ::delete-user-account-button
                              {:label :delete-user-account!
                               :preset :secondary-button}]

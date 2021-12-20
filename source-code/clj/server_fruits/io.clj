@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.29
 ; Description:
-; Version: v0.5.0
+; Version: v0.5.2
 ; Compatibility: x4.3.5
 
 
@@ -16,7 +16,6 @@
 (ns server-fruits.io
     (:require [mid-fruits.candy  :refer [param]]
               [mid-fruits.io     :as io]
-              [mid-fruits.map    :as map]
               [mid-fruits.pretty :as pretty]
               [mid-fruits.reader :as reader]
               [mid-fruits.string :as string]
@@ -373,7 +372,7 @@
   ; @return (?)
   [filepath content & [options]]
   (let [output (pretty/mixed->string content options)]
-       (write-file! filepath output)))
+       (write-file! filepath (str "\n" output))))
 
 (defn read-edn-file
   ; @param (string) filepath

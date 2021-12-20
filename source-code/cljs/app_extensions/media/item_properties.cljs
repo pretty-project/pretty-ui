@@ -74,7 +74,7 @@
        [directory-content-size directory-id directory-props]
       ;[directory-tags         directory-id directory-props]])
        [directory-modified-at  directory-id directory-props]
-       [elements/separator {:orientation :horizontal :size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 (defn- file-modified-at
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -150,7 +150,7 @@
        [file-filesize    file-id file-props]
       ;[file-tags        file-id file-props]
        [file-modified-at file-id file-props]
-       [elements/separator {:orientation :horizontal :size :s}]])
+       [elements/horizontal-separator {:size :s}]])
 
 
 

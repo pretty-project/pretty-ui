@@ -184,9 +184,9 @@
   ; @return (hiccup)
   [_ {:keys [filename]}]
   [:<> [elements/text {:content :save-file? :font-weight :bold}]
-       [elements/row  {:content [:<> [elements/icon      {:icon :text_snippet}]
-                                     [elements/separator {:size :s :orientation :vertical}]
-                                     [elements/text      {:content filename :font-weight :bold}]]}]])
+       [elements/row  {:content [:<> [elements/icon {:icon :text_snippet}]
+                                     [elements/vertical-separator {:size :s}]
+                                     [elements/text {:content filename :font-weight :bold}]]}]])
 
 
 

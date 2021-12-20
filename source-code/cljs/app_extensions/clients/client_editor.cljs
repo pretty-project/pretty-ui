@@ -81,7 +81,7 @@
   [_ {:keys [synchronizing?]}]
   [elements/combo-box ::city-field
                       {:label :city :emptiable? false
-                       :options-path [:clients :editor-meta :suggestions :city]
+                       :options-path [:clients :editor-meta :suggestions :client/city]
                        :value-path   [:clients :editor-data :city]
                        :disabled? synchronizing?}])
 
@@ -165,10 +165,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
   [:div#clients--client-editor {:style {:display :flex :flex-direction :column}}
+
+    ; Fullosan mukodik
+    [:div {:style {:display :none :margin "48px 0" :flex-wrap :wrap}}
+      [:div {:style {:background :red  :min-width "40%" :height "48px" :flex-grow 1}}
+        [elements/text-field {:min-width :none}]]
+      [:div {:style {:background :blue :min-width "60%" :height "48px" :flex-grow 1}}
+        [elements/text-field {:min-width :none}]]]
+
     ; Color and name
     [item-editor/form-header    :clients :client body-props]
     [item-editor/color-selector :clients :client body-props]
     [item-editor/input-group-footer]
+
     ; Basic info
     [item-editor/input-group-label :clients :client {:content :basic-info}]
     [client-name               body-id body-props]

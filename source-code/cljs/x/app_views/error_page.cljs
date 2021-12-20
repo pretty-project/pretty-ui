@@ -118,12 +118,12 @@
   ;
   ; @return (component)
   [surface-id content-props]
-  [:<> [elements/separator {:orientation :horizontal :size :xl}]
+  [:<> [elements/horizontal-separator {:size :xl}]
        [error-icon     surface-id content-props]
-       [elements/separator {:orientation :horizontal :size :m}]
+       [elements/horizontal-separator {:size :m}]
        [error-title    surface-id content-props]
        [error-helper   surface-id content-props]
-       [elements/separator {:orientation :horizontal :size :m}]
+       [elements/horizontal-separator {:size :m}]
        [go-back-button surface-id content-props]])
 
 

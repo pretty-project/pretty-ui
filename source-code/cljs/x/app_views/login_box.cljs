@@ -132,15 +132,15 @@
   ;
   ; @return (component)
   [popup-id {:keys [login-attempted?] :as body-props}]
-  [:<> (if login-attempted?    [login-error-message popup-id body-props])
-       [elements/separator     {:size :m}]
-       [email-address-field    popup-id body-props]
-       [elements/separator     {:size :m}]
-       [password-field         popup-id body-props]
-       [elements/separator     {:size :xl}]
-       [login-button           popup-id body-props]
+  [:<> (if login-attempted? [login-error-message popup-id body-props])
+       [elements/horizontal-separator {:size :m}]
+       [email-address-field popup-id body-props]
+       [elements/horizontal-separator {:size :m}]
+       [password-field      popup-id body-props]
+       [elements/horizontal-separator {:size :xl}]
+       [login-button        popup-id body-props]
       ;[forgot-password-button popup-id body-props]
-       [elements/separator     {:size :m}]])
+       [elements/horizontal-separator {:size :m}]])
 
 
 
@@ -199,9 +199,9 @@
   ;
   ; @return (component)
   [popup-id body-props]
-  [:<> [elements/separator {:size :xs}]
+  [:<> [elements/horizontal-separator {:size :xs}]
        [signed-in-as-label popup-id body-props]
-       [elements/separator {:size :m}]
+       [elements/horizontal-separator {:size :m}]
        [continue-as-button popup-id body-props]
        [logout-button      popup-id body-props]])
 

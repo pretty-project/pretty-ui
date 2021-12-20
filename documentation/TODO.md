@@ -11,6 +11,9 @@
 
 
 # x4.5.0
+- pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne
+  item-editor/handlers és item-lister/handlers függvényekként
+
 - Loading animations: DEPRECATED
 
 - Ha az item-lister select-mode-ban a checkbox-ok képesek lennének egy vektorban elhelyezni és kivenni

@@ -30,6 +30,30 @@
 
 
 
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- filter-menu-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:filter (keyword)(opt)
+  ;   :handle-archived-items? (boolean)
+  ;   :handle-favorite-items? (boolean)}
+  ;
+  ; @return (vector)
+  [extension-id item-namespace {:keys [filter handle-archived-items? handle-favorite-items?]}]
+  [{:label :all-items :active? (nil? filter)
+    :on-click [:item-lister/discard-filter! extension-id item-namespace]}
+   (if handle-favorite-items? {:label :favorites :active? (= filter :favorite-items)
+                               :on-click [:item-lister/use-filter! extension-id item-namespace :favorite-items]})
+   (if handle-archived-items? {:label :archived-items :active? (= filter :archived-items)
+                               :on-click [:item-lister/use-filter! extension-id item-namespace :archived-items]})])
+
+
+
 ;; -- Search-mode header components -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -166,10 +190,10 @@
   ;  {:any-item-selected? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [any-item-selected?]}]
+  [extension-id item-namespace {:keys [any-item-selected?]}]
   [elements/button ::delete-selected-items-button
                    {:disabled? (not any-item-selected?)
-                    :on-click  [:item-lister/render-delete-selected-items-dialog! extension-id]
+                    :on-click  [:item-lister/render-delete-selected-items-dialog! extension-id item-namespace]
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
 
@@ -178,15 +202,21 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;  {:any-item-selected? (boolean)(opt)}
+  ;  {:any-item-selected? (boolean)(opt)
+  ;   :filter (keyword)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [any-item-selected?]}]
+  [extension-id item-namespace {:keys [any-item-selected? filter]}]
   [elements/button ::archive-selected-items-button
-                   {:disabled? (not any-item-selected?)
-                    :on-click  [:item-lister/render-archive-selected-items-dialog! extension-id]
-                    :preset    :archive-icon-button
-                    :tooltip   :archive!}])
+                   (if (= filter :archived-items)
+                       {:disabled? (not any-item-selected?)
+                        :on-click  [:item-lister/render-unarchive-selected-items-dialog! extension-id item-namespace]
+                        :preset    :archived-icon-button
+                        :tooltip   :unarchive!}
+                       {:disabled? (not any-item-selected?)
+                        :on-click  [:item-lister/render-archive-selected-items-dialog! extension-id item-namespace]
+                        :preset    :archive-icon-button
+                        :tooltip   :archive!})])
 
 
 
@@ -299,14 +329,17 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:filter-mode? (boolean)(opt)}
+  ;  {:filter-mode? (boolean)(opt)
+  ;   :handle-archived-items? (boolean)
+  ;   :handle-favorite-items? (boolean)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [filter-mode?]}]
-  [elements/button ::toggle-filter-mode-button
-                   {:on-click [:item-lister/toggle-filter-mode! extension-id]
-                    :preset   (if filter-mode? :filters-visible-icon-button :filters-nonvisible-icon-button)
-                    :tooltip  :filters}])
+  [extension-id _ {:keys [filter-mode? handle-archived-items? handle-favorite-items?]}]
+  (if (or handle-archived-items? handle-favorite-items?)
+      [elements/button ::toggle-filter-mode-button
+                       {:on-click [:item-lister/toggle-filter-mode! extension-id]
+                        :preset   (if filter-mode? :filters-visible-icon-button :filters-nonvisible-icon-button)
+                        :tooltip  :filters}]))
 
 (defn- sort-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -341,14 +374,9 @@
   ;  {:filter (keyword)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id item-namespace {:keys [filter]}]
+  [extension-id item-namespace element-props]
   [:div.item-lister--header--item-filters
-    [elements/menu-bar {:menu-items [{:label :all-items      :active? (nil? filter)
-                                      :on-click [:item-lister/discard-filter! extension-id item-namespace]}
-                                     {:label :favorites      :active? (= filter :favorite-items)
-                                      :on-click [:item-lister/use-filter! extension-id item-namespace :favorite-items]}
-                                     {:label :archived-items :active? (= filter :archived-items)
-                                      :on-click [:item-lister/use-filter! extension-id item-namespace :archived-items]}]}]])
+    [elements/menu-bar {:menu-items (filter-menu-items extension-id item-namespace element-props)}]])
 
 
 
@@ -460,7 +488,7 @@
    [header extension-id item-namespace {}])
 
   ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id])]
+   (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id item-namespace])]
         (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
 
 
@@ -479,14 +507,14 @@
   ;
   ; @return (component)
   [_ _ {:keys [synchronized? synchronizing?]}]
-  (cond (boolean synchronizing?)
-        [:div.item-lister--request-indicator [components/content {:content :downloading-items...}]]
-        ; Az adatok letöltésének megkezdése előtti pillanatban a request-indicator felirat
-        ; megjelenése előtt, annak helyén egy placeholder megjelenítése segítségével nem változik
-        ; meg a tartalmazó elem magassága, a request-indicator felirat megjelenésekor.
-        (and (not synchronizing?)
-             (not synchronized?))
-        [:div.item-lister--request-indicator [components/content {:content :preparing-to-download...}]]))
+  (if (or (boolean synchronizing?)
+          ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
+          ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
+          ; feltétel hozzáadása nélkül:
+          (and (not synchronizing?)
+               (not synchronized?)))
+      [elements/row {:content [elements/label {:content :downloading-items... :font-size :xs :color :highlight :font-weight :bold}]
+                     :horizontal-align :center}]))
 
 (defn- no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -507,7 +535,8 @@
            ; Szükséges a synchronizing? értékét is vizsgálni, hogy az adatok letöltése közben ne jelenjen
            ; meg a no-items-to-show-label felirat!
            (not synchronizing?))
-      [:div.item-lister--no-items-to-show [components/content {:content :no-items-to-show}]]))
+      [elements/row {:content [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}]
+                     :horizontal-align :center}]))
 
 (defn- sortable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -520,20 +549,18 @@
   [extension-id item-namespace body-props]
   [:div "sortable"])
 
-
-
-
-
-
 (defn- list-item-checkbox
-  [extension-id item-dex]
-  [:button.item-lister--list-item--checkbox
-    {:data-checked false
-     :on-click #(a/dispatch [:item-lister/toggle-item-selection! extension-id item-dex])}])
-
-
-
-
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace item-dex]
+  (let [item-selected? (a/subscribe [:item-lister/item-selected? extension-id item-namespace item-dex])]
+       (fn [] [elements/button {:preset   (if @item-selected? :checked-icon-button :unchecked-icon-button)
+                                :on-click [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]}])))
 
 (defn- selectable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -547,7 +574,7 @@
   (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
                       (vector/conj-item item-list ^{:key id}
                                                    [:div.item-lister--list-item--structure
-                                                     [list-item-checkbox extension-id item-dex]
+                                                     [list-item-checkbox extension-id item-namespace item-dex]
                                                      [:div.item-lister--list-item {:data-archived false}
                                                                                   [list-element item-dex item]]]))
                   [:div.item-lister--item-list]

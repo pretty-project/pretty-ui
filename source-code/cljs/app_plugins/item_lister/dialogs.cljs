@@ -22,46 +22,46 @@
 
 
 
-;; -- Common components -------------------------------------------------------
+;; -- Duplicate dialog components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- close-dialog-button
+(defn- close-duplicate-selected-items-dialog-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
-  [elements/button ::close-dialog-button
-                   {:label :cancel! :preset :default-button :on-click [:ui/close-popup! extension-id]}])
-
-
-
-;; -- Duplicate dialog components ---------------------------------------------
-;; ----------------------------------------------------------------------------
+  [extension-id item-namespace]
+  (let [dialog-id (engine/dialog-id extension-id item-namespace :delete-items)]
+       [elements/button ::close-dialog-button
+                        {:label :cancel! :preset :default-button :on-click [:ui/close-popup! dialog-id]}]))
 
 (defn- duplicate-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
-  [elements/button ::duplicate-selected-items-button
-                   {:label :copy! :preset :primary-button
-                    :on-click {:dispatch-n [[:ui/close-popup!                       extension-id]
-                                            [:item-lister/duplicate-selected-items! extension-id]]}}])
+  [extension-id item-namespace]
+  (let [dialog-id (engine/dialog-id extension-id item-namespace :delete-items)]
+       [elements/button ::duplicate-selected-items-button
+                        {:label :copy! :preset :primary-button
+                         :on-click {:dispatch-n [[:ui/close-popup!                       dialog-id]
+                                                 [:item-lister/duplicate-selected-items! extension-id]]}}]))
 
 (defn- duplicate-selected-items-dialog-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id item-namespace]
   [elements/polarity ::duplicate-selected-items-dialog-header
-                     {:start-content [close-dialog-button             extension-id]
-                      :end-content   [duplicate-selected-items-button extension-id]}])
+                     {:start-content [close-duplicate-selected-items-dialog-button extension-id item-namespace]
+                      :end-content   [duplicate-selected-items-button              extension-id item-namespace]}])
 
 (defn- duplicate-selected-items-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,28 +77,43 @@
 ;; -- Delete dialog components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- close-delete-selected-items-dialog-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (component)
+  [extension-id item-namespace]
+  (let [dialog-id (engine/dialog-id extension-id item-namespace :delete-items)]
+       [elements/button ::close-dialog-button
+                        {:label :cancel! :preset :default-button :on-click [:ui/close-popup! dialog-id]}]))
+
 (defn- delete-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
-  [elements/button ::delete-selected-items-button
-                   {:label :copy! :preset :primary-button
-                    :on-click {:dispatch-n [[:ui/close-popup!                    extension-id]
-                                            [:item-lister/delete-selected-items! extension-id]]}}])
+  [extension-id item-namespace]
+  (let [dialog-id (engine/dialog-id extension-id item-namespace :delete-items)]
+       [elements/button ::delete-selected-items-button
+                        {:label :delete! :preset :warning-button
+                         :on-click {:dispatch-n [[:ui/close-popup!                    dialog-id]
+                                                 [:item-lister/delete-selected-items! extension-id]]}}]))
 
 (defn- delete-selected-items-dialog-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id item-namespace]
   [elements/polarity ::delete-selected-items-dialog-header
-                     {:start-content [close-dialog-button          extension-id]
-                      :end-content   [delete-selected-items-button extension-id]}])
+                     {:start-content [close-delete-selected-items-dialog-button extension-id item-namespace]
+                      :end-content   [delete-selected-items-button              extension-id item-namespace]}])
 
 (defn- delete-selected-items-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,17 +134,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  (fn [_ [_ extension-id]]
-      [:ui/add-popup! extension-id
-                      {:body   {:content #'duplicate-selected-items-dialog-body}
-                       :header {:content #'duplicate-selected-items-dialog-header}}]))
+  ; @param (keyword) item-namespace
+  (fn [_ [_ extension-id item-namespace]]
+      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :duplicate-items)
+                      {:body   {:content [duplicate-selected-items-dialog-body   extension-id]}
+                       :header {:content [duplicate-selected-items-dialog-header extension-id item-namespace]}}]))
 
 (a/reg-event-fx
   :item-lister/render-delete-selected-items-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  (fn [_ [_ extension-id]]
-      [:ui/add-popup! extension-id
-                      {:body   {:content #'delete-selected-items-dialog-body}
-                       :header {:content #'delete-selected-items-dialog-header}}]))
+  ; @param (keyword) item-namespace
+  (fn [_ [_ extension-id item-namespace]]
+      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :delete-items)
+                      {:body   {:content [delete-selected-items-dialog-body   extension-id]}
+                       :header {:content [delete-selected-items-dialog-header extension-id item-namespace]}}]))

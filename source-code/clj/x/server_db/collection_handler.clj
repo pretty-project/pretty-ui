@@ -50,6 +50,7 @@
 (def update-document-item                   collection-handler/update-document-item)
 (def document-exists?                       collection-handler/document-exists?)
 (def explode-collection                     collection-handler/explode-collection)
+(def get-specified-values                   collection-handler/get-specified-values)
 (def store-collection!                      collection-handler/store-collection!)
 
 

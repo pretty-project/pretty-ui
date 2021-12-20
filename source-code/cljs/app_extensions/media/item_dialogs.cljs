@@ -102,7 +102,7 @@
                             :font-weight :bold
                             :layout :fit
                             :replacements [space-needed "MB"]}]
-            [elements/separator {:orientation :horizontal :size :s}]]))
+            [elements/horizontal-separator {:size :s}]]))
 
 
 

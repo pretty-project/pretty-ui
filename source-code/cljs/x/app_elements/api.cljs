@@ -14,58 +14,59 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.api
-    (:require [x.app-elements.anchor            :as anchor]
-              [x.app-elements.blank             :as blank]
-              [x.app-elements.button            :as button]
-              [x.app-elements.card              :as card]
-              [x.app-elements.card-group        :as card-group]
-              [x.app-elements.checkbox          :as checkbox]
-              [x.app-elements.checkbox-group    :as checkbox-group]
-              [x.app-elements.chip-group        :as chip-group]
-              [x.app-elements.chip              :as chip]
-              [x.app-elements.circle-diagram    :as circle-diagram]
-              [x.app-elements.color-picker      :as color-picker]
-              [x.app-elements.column            :as column]
-              [x.app-elements.combo-box         :as combo-box]
-              [x.app-elements.counter           :as counter]
-              [x.app-elements.data-table        :as data-table]
-              [x.app-elements.date-field        :as date-field]
-              [x.app-elements.digit-field       :as digit-field]
+    (:require [x.app-elements.anchor               :as anchor]
+              [x.app-elements.blank                :as blank]
+              [x.app-elements.button               :as button]
+              [x.app-elements.card                 :as card]
+              [x.app-elements.card-group           :as card-group]
+              [x.app-elements.checkbox             :as checkbox]
+              [x.app-elements.checkbox-group       :as checkbox-group]
+              [x.app-elements.chip-group           :as chip-group]
+              [x.app-elements.chip                 :as chip]
+              [x.app-elements.circle-diagram       :as circle-diagram]
+              [x.app-elements.color-picker         :as color-picker]
+              [x.app-elements.column               :as column]
+              [x.app-elements.combo-box            :as combo-box]
+              [x.app-elements.counter              :as counter]
+              [x.app-elements.data-table           :as data-table]
+              [x.app-elements.date-field           :as date-field]
+              [x.app-elements.digit-field          :as digit-field]
 
               ; WARNING! DEPRECATED! DO NOT USE!
-              [x.app-elements.directory         :as directory]
-              [x.app-elements.file              :as file]
+              [x.app-elements.directory :as directory]
+              [x.app-elements.file      :as file]
               ; WARNING! DEPRECATED! DO NOT USE!
 
-              [x.app-elements.engine.api        :as engine]
-              [x.app-elements.expandable        :as expandable]
-              [x.app-elements.file-drop-area    :as file-drop-area]
-              [x.app-elements.horizontal-line   :as horizontal-line]
-              [x.app-elements.icon              :as icon]
-              [x.app-elements.image             :as image]
-              [x.app-elements.label             :as label]
-              [x.app-elements.line-diagram      :as line-diagram]
-              [x.app-elements.menu-bar          :as menu-bar]
-              [x.app-elements.multiline-field   :as multiline-field]
-              [x.app-elements.multi-combo-box   :as multi-combo-box]
-              [x.app-elements.multi-field       :as multi-field]
-              [x.app-elements.overlay           :as overlay]
-              [x.app-elements.password-field    :as password-field]
-              [x.app-elements.point-diagram     :as point-diagram]
-              [x.app-elements.polarity          :as polarity]
-              [x.app-elements.radio-button      :as radio-button]
-              [x.app-elements.row               :as row]
-              [x.app-elements.search-field      :as search-field]
-              [x.app-elements.select            :as select]
-              [x.app-elements.separator         :as separator]
-              [x.app-elements.slideshow         :as slideshow]
-              [x.app-elements.submit-button     :as submit-button]
-              [x.app-elements.switch            :as switch]
-              [x.app-elements.table             :as table]
-              [x.app-elements.text              :as text]
-              [x.app-elements.text-field        :as text-field]
-              [x.app-elements.toggle            :as toggle]
-              [x.app-elements.vertical-line     :as vertical-line]))
+              [x.app-elements.engine.api           :as engine]
+              [x.app-elements.expandable           :as expandable]
+              [x.app-elements.file-drop-area       :as file-drop-area]
+              [x.app-elements.horizontal-line      :as horizontal-line]
+              [x.app-elements.horizontal-separator :as horizontal-separator]
+              [x.app-elements.icon                 :as icon]
+              [x.app-elements.image                :as image]
+              [x.app-elements.label                :as label]
+              [x.app-elements.line-diagram         :as line-diagram]
+              [x.app-elements.menu-bar             :as menu-bar]
+              [x.app-elements.multiline-field      :as multiline-field]
+              [x.app-elements.multi-combo-box      :as multi-combo-box]
+              [x.app-elements.multi-field          :as multi-field]
+              [x.app-elements.overlay              :as overlay]
+              [x.app-elements.password-field       :as password-field]
+              [x.app-elements.point-diagram        :as point-diagram]
+              [x.app-elements.polarity             :as polarity]
+              [x.app-elements.radio-button         :as radio-button]
+              [x.app-elements.row                  :as row]
+              [x.app-elements.search-field         :as search-field]
+              [x.app-elements.select               :as select]
+              [x.app-elements.slideshow            :as slideshow]
+              [x.app-elements.submit-button        :as submit-button]
+              [x.app-elements.switch               :as switch]
+              [x.app-elements.table                :as table]
+              [x.app-elements.text                 :as text]
+              [x.app-elements.text-field           :as text-field]
+              [x.app-elements.toggle               :as toggle]
+              [x.app-elements.vertical-line        :as vertical-line]
+              [x.app-elements.vertical-separator   :as vertical-separator]))
 
 
 
@@ -155,7 +156,6 @@
 (def checkbox-group    checkbox-group/element)
 (def chip-group        chip-group/element)
 (def chip              chip/element)
-
 (def circle-diagram    circle-diagram/element)
 (def color-picker      color-picker/element)
 (def column            column/element)
@@ -166,35 +166,36 @@
 (def digit-field       digit-field/element)
 
 ; WARNING! DEPRECATED! DO NOT USE!
-(def directory         directory/view)
-(def file              file/view)
+(def directory directory/view)
+(def file      file/view)
 ; WARNING! DEPRECATED! DO NOT USE!
 
-(def expandable        expandable/element)
-(def file-drop-area    file-drop-area/element)
-(def horizontal-line   horizontal-line/element)
-(def icon              icon/element)
-(def image             image/element)
-(def label             label/element)
-(def line-diagram      line-diagram/element)
-(def menu-bar          menu-bar/element)
-(def multi-combo-box   multi-combo-box/element)
-(def multi-field       multi-field/element)
-(def multiline-field   multiline-field/element)
-(def overlay           overlay/element)
-(def password-field    password-field/element)
-(def point-diagram     point-diagram/element)
-(def polarity          polarity/element)
-(def radio-button      radio-button/element)
-(def row               row/element)
-(def search-field      search-field/element)
-(def select            select/element)
-(def separator         separator/element)
-(def slideshow         slideshow/element)
-(def submit-button     submit-button/element)
-(def switch            switch/element)
-(def table             table/element)
-(def text              text/element)
-(def text-field        text-field/element)
-(def toggle            toggle/element)
-(def vertical-line     vertical-line/element)
+(def expandable           expandable/element)
+(def file-drop-area       file-drop-area/element)
+(def horizontal-line      horizontal-line/element)
+(def horizontal-separator horizontal-separator/element)
+(def icon                 icon/element)
+(def image                image/element)
+(def label                label/element)
+(def line-diagram         line-diagram/element)
+(def menu-bar             menu-bar/element)
+(def multi-combo-box      multi-combo-box/element)
+(def multi-field          multi-field/element)
+(def multiline-field      multiline-field/element)
+(def overlay              overlay/element)
+(def password-field       password-field/element)
+(def point-diagram        point-diagram/element)
+(def polarity             polarity/element)
+(def radio-button         radio-button/element)
+(def row                  row/element)
+(def search-field         search-field/element)
+(def select               select/element)
+(def slideshow            slideshow/element)
+(def submit-button        submit-button/element)
+(def switch               switch/element)
+(def table                table/element)
+(def text                 text/element)
+(def text-field           text-field/element)
+(def toggle               toggle/element)
+(def vertical-line        vertical-line/element)
+(def vertical-separator   vertical-separator/element)

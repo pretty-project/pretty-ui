@@ -18,7 +18,7 @@
               [mid-fruits.map     :as map]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
-              [app-plugins.value-editor.engine :as engine]))
+              [app-plugins.value-editor.subs :as subs]))
 
 
 
@@ -53,13 +53,13 @@
   ; @return (map)
   [db [_ editor-id]]
   (let [field-value (r elements/get-input-value db :value-editor/editor-field)
-        validator   (r engine/get-editor-prop   db editor-id :validator)]
+        validator   (r subs/get-editor-prop     db editor-id :validator)]
                     ; If validator is in use & field-value is NOT valid ...
        (boolean (or (and (some? validator)
                          (not ((:f validator) field-value)))
                     ; If field is required & field is empty ...
-                    (and (r engine/get-editor-prop db editor-id :required?)
-                         (r elements/field-empty?  db :value-editor/editor-field))))))
+                    (and (r subs/get-editor-prop  db editor-id :required?)
+                         (r elements/field-empty? db :value-editor/editor-field))))))
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +69,7 @@
   ; @return (map)
   ;  {:disable-save-button? (boolean)}
   [db [_ editor-id]]
-  (merge (r engine/get-editor-props db editor-id)
+  (merge (r subs/get-editor-props db editor-id)
          {:disable-save-button? (r disable-save-button? db editor-id)}))
 
 (a/reg-sub ::get-header-props get-header-props)
@@ -81,7 +81,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (r engine/get-editor-props db editor-id))
+  (r subs/get-editor-props db editor-id))
 
 (a/reg-sub ::get-body-props get-body-props)
 
@@ -147,8 +147,8 @@
   ; @return (component)
   [editor-id {:keys [helper]}]
   (if (some? helper)
-      [:<> [elements/separator {:horizontal :horizontal :size :l}]
-           [elements/text      {:content helper}]]))
+      [:<> [elements/horizontal-separator {:size :l}]
+           [elements/text                 {:content helper}]]))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,10 +159,10 @@
   ; @return (component)
   [editor-id body-props]
   (let [field-props (editor-props->field-props editor-id body-props)]
-       [:<> [elements/separator  {:horizontal :horizontal :size :l}]
+       [:<> [elements/horizontal-separator {:size :l}]
             [elements/text-field :value-editor/editor-field field-props]
-            [editor-helper       editor-id body-props]
-            [elements/separator  {:horizontal :horizontal :size :l}]]))
+            [editor-helper editor-id body-props]
+            [elements/horizontal-separator {:size :l}]]))
 
 
 
@@ -174,7 +174,11 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  (fn [_ [_ editor-id _]]
-      [:ui/add-popup! editor-id
-                      {:body   {:content #'body   :subscriber [::get-body-props   editor-id]}
-                       :header {:content #'header :subscriber [::get-header-props editor-id]}}]))
+  (fn [_ [_ editor-id _]]))
+
+      ; Külön van a subs és az events névtér ezért a ::value-editors particio nem ugyanoda mutat
+      ; Legyen itt is extension alapu adattárolás, mint a többi pluginban!!!
+
+      ;[:ui/add-popup! editor-id
+      ;                {:body   {:content #'body   :subscriber [::get-body-props   editor-id]}
+      ;                 :header {:content #'header :subscriber [::get-header-props editor-id]}]]))
