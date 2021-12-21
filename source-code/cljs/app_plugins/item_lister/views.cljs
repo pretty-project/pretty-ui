@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.0
+; Compatibility: x4.4.9
 
 
 
@@ -18,8 +18,6 @@
               [mid-fruits.css       :as css]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.vector    :as vector]
-              [x.app-db.api         :as db]
-              [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
@@ -43,7 +41,7 @@
   ;   :handle-archived-items? (boolean)
   ;   :handle-favorite-items? (boolean)}
   ;
-  ; @return (vector)
+  ; @return (maps in vector)
   [extension-id item-namespace {:keys [filter handle-archived-items? handle-favorite-items?]}]
   [{:label :all-items :active? (nil? filter)
     :on-click [:item-lister/discard-filter! extension-id item-namespace]}
@@ -61,41 +59,52 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyw) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id item-namespace {:keys [synchronizing?]}]
   [elements/button ::quit-search-mode-button
-                   {:on-click [:item-lister/toggle-search-mode! extension-id]
-                    :preset   :menu-bar-icon-button}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/toggle-search-mode! extension-id]
+                    :preset    :menu-bar-icon-button}])
 
 (defn- search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [synchronizing?]}]
   [elements/search-field ::search-items-field
                          {:auto-focus?   true
+                          :disabled?     synchronizing?
                           :layout        :row
                           :min-width     :xs
                           :on-empty      [:item-lister/search-items! extension-id item-namespace]
                           :on-type-ended [:item-lister/search-items! extension-id item-namespace]
                           :placeholder   :search
-                          :value-path    [extension-id :lister-meta :search-term]}])
+                          :value-path    [extension-id :item-lister/meta-items :search-term]}])
 
 (defn- toggle-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::toggle-search-mode-button
-                   {:on-click [:item-lister/toggle-search-mode! extension-id]
-                    :preset   :search-icon-button
-                    :tooltip  :search}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/toggle-search-mode! extension-id]
+                    :preset    :search-icon-button
+                    :tooltip   :search}])
 
 (defn- search-block
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,14 +112,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:viewport-small? (boolean)(opt)
-  ;    Default: false}
+  ;  {:viewport-small? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [viewport-small?]}]
-  (if (boolean viewport-small?)
-      [toggle-search-mode-button extension-id item-namespace]
-      [search-items-field        extension-id item-namespace]))
+  [extension-id item-namespace {:keys [viewport-small?] :as element-props}]
+  (if viewport-small? [toggle-search-mode-button extension-id item-namespace element-props]
+                      [search-items-field        extension-id item-namespace element-props]))
 
 
 
@@ -121,36 +128,48 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyw) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::quit-select-mode-button
-                   {:on-click [:item-lister/toggle-select-mode! extension-id]
-                    :preset   :menu-bar-icon-button}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/toggle-select-mode! extension-id]
+                    :preset    :menu-bar-icon-button}])
 
 (defn- unselect-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::unselect-all-items-button
-                   {:on-click [:item-lister/unselect-all-items! extension-id]
-                    :preset   :default-icon-button
-                    :icon     :check_box}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/unselect-all-items! extension-id]
+                    :preset    :default-icon-button
+                    :icon      :check_box}])
 
 (defn- unselect-some-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::unselect-some-items-button
-                   {:on-click [:item-lister/unselect-all-items! extension-id]
-                    :preset   :default-icon-button
-                    :icon     :indeterminate_check_box}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/unselect-all-items! extension-id]
+                    :preset    :default-icon-button
+                    :icon      :indeterminate_check_box}])
 
 (defn- select-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,13 +177,15 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::select-all-items-button
-                   {:on-click [:item-lister/select-all-items! extension-id]
-                    :preset   :default-icon-button
-                    :icon     :check_box_outline_blank}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/select-all-items! extension-id]
+                    :preset    :default-icon-button
+                    :icon      :check_box_outline_blank}])
 
 (defn- toggle-all-items-selection-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -176,10 +197,10 @@
   ;   :any-item-selected? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [all-items-selected? any-item-selected?]}]
-  (cond all-items-selected? [unselect-all-items-button  extension-id]
-        any-item-selected?  [unselect-some-items-button extension-id]
-        :no-items-selected  [select-all-items-button    extension-id]))
+  [extension-id item-namespace {:keys [all-items-selected? any-item-selected?] :as element-props}]
+  (cond all-items-selected? [unselect-all-items-button  extension-id item-namespace element-props]
+        any-item-selected?  [unselect-some-items-button extension-id item-namespace element-props]
+        :no-items-selected  [select-all-items-button    extension-id item-namespace element-props]))
 
 (defn- delete-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,12 +208,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:any-item-selected? (boolean)(opt)}
+  ;  {:any-item-selected? (boolean)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [any-item-selected?]}]
+  [extension-id item-namespace {:keys [any-item-selected? synchronizing?]}]
   [elements/button ::delete-selected-items-button
-                   {:disabled? (not any-item-selected?)
+                   {:disabled? (or (not any-item-selected?) synchronizing?)
                     :on-click  [:item-lister/render-delete-selected-items-dialog! extension-id item-namespace]
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
@@ -203,17 +225,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;  {:any-item-selected? (boolean)(opt)
-  ;   :filter (keyword)(opt)}
+  ;   :filter (keyword)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [any-item-selected? filter]}]
+  [extension-id item-namespace {:keys [any-item-selected? filter synchronizing?]}]
   [elements/button ::archive-selected-items-button
                    (if (= filter :archived-items)
-                       {:disabled? (not any-item-selected?)
+                       {:disabled? (or (not any-item-selected?) synchronizing?)
                         :on-click  [:item-lister/render-unarchive-selected-items-dialog! extension-id item-namespace]
                         :preset    :archived-icon-button
                         :tooltip   :unarchive!}
-                       {:disabled? (not any-item-selected?)
+                       {:disabled? (or (not any-item-selected?) synchronizing?)
                         :on-click  [:item-lister/render-archive-selected-items-dialog! extension-id item-namespace]
                         :preset    :archive-icon-button
                         :tooltip   :archive!})])
@@ -229,12 +252,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:order-changed? (boolean)(opt)}
+  ;  {:order-changed? (boolean)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [order-changed?]}]
+  [extension-id _ {:keys [order-changed? synchronizing?]}]
   [elements/button ::save-order-button
-                   {:disabled? (not order-changed?)
+                   {:disabled? (or (not order-changed?) synchronizing?)
                     :on-click  [:item-lister/save-order! extension-id]
                     :label     :save-order!
                     :preset    :primary-button}])
@@ -243,12 +267,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyw) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _ {:keys [synchronizing?]}]
   [elements/button ::quit-reorder-mode-button
-                   {:on-click [:item-lister/toggle-reorder-mode! extension-id]
-                    :preset   :menu-bar-icon-button}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-lister/toggle-reorder-mode! extension-id]
+                    :preset    :menu-bar-icon-button}])
 
 
 
@@ -357,8 +385,8 @@
                     :options-label :order-by
                     :preset        :order-by-icon-button
                     :tooltip       :order-by
-                    :options-path  [extension-id :lister-meta :order-by-options]
-                    :value-path    [extension-id :lister-meta :order-by]}])
+                    :options-path  [extension-id :item-lister/meta-items :order-by-options]
+                    :value-path    [extension-id :item-lister/meta-items :order-by]}])
 
 
 
@@ -388,12 +416,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace element-props]
   [:div.item-lister--header--menu-bar
-    [search-items-field      extension-id item-namespace]
-    [quit-search-mode-button extension-id]])
+    [search-items-field      extension-id item-namespace element-props]
+    [quit-search-mode-button extension-id item-namespace element-props]])
 
 (defn- select-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -414,7 +443,7 @@
       [archive-selected-items-button     extension-id item-namespace header-props]
       [delete-selected-items-button      extension-id item-namespace header-props]
       [toggle-filter-mode-button         extension-id item-namespace header-props]]
-    [quit-select-mode-button extension-id]])
+    [quit-select-mode-button extension-id item-namespace header-props]])
 
 (defn- actions-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -428,7 +457,7 @@
   [extension-id item-namespace {:keys [no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      [new-item-button            extension-id item-namespace]
+      [new-item-button            extension-id item-namespace header-props]
       [sort-items-button          extension-id item-namespace header-props]
       [toggle-select-mode-button  extension-id item-namespace header-props]
       [toggle-reorder-mode-button extension-id item-namespace header-props]
@@ -450,7 +479,7 @@
       [elements/button {:layout :icon-button :variant :placeholder}]]
     [:div.item-lister--header--menu-item-group
       [save-order-button extension-id item-namespace header-props]]
-    [quit-reorder-mode-button extension-id]])
+    [quit-reorder-mode-button extension-id item-namespace header-props]])
 
 (defn- header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -502,16 +531,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:synchronized? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;  {:downloading-items? (boolean)(opt)
+  ;   :synchronized? (boolean)(opt)}
   ;
   ; @return (component)
-  [_ _ {:keys [synchronized? synchronizing?]}]
-  (if (or (boolean synchronizing?)
+  [_ _ {:keys [downloading-items? synchronized?]}]
+  (if (or (boolean downloading-items?)
           ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
           ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
           ; feltétel hozzáadása nélkül:
-          (and (not synchronizing?)
+          (and (not downloading-items?)
                (not synchronized?)))
       [elements/row {:content [elements/label {:content :downloading-items... :font-size :xs :color :highlight :font-weight :bold}]
                      :horizontal-align :center}]))
@@ -522,19 +551,19 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:no-items-to-show? (boolean)(opt)
-  ;   :synchronized? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;  {:downloading-items? (boolean)(opt)
+  ;   :no-items-to-show? (boolean)(opt)
+  ;   :synchronized? (boolean)(opt)}
   ;
   ; @return (component)
-  [_ _ {:keys [no-items-to-show? synchronized? synchronizing?]}]
+  [_ _ {:keys [downloading-items? no-items-to-show? synchronized?]}]
   (if (and (boolean no-items-to-show?)
            ; Szükséges a synchronized? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
            ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
            (boolean synchronized?)
-           ; Szükséges a synchronizing? értékét is vizsgálni, hogy az adatok letöltése közben ne jelenjen
+           ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben ne jelenjen
            ; meg a no-items-to-show-label felirat!
-           (not synchronizing?))
+           (not downloading-items?))
       [elements/row {:content [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}]
                      :horizontal-align :center}]))
 
@@ -555,12 +584,37 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
+  ;  {:synchronizing? (boolean)(opt)}
+  ; @param (integer) item-dex
   ;
   ; @return (component)
-  [extension-id item-namespace item-dex]
+  [extension-id item-namespace body-props item-dex]
   (let [item-selected? (a/subscribe [:item-lister/item-selected? extension-id item-namespace item-dex])]
-       (fn [] [elements/button {:preset   (if @item-selected? :checked-icon-button :unchecked-icon-button)
-                                :on-click [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]}])))
+       (fn [_ _ {:keys [synchronizing?]} item-dex]
+           [elements/button {:disabled? synchronizing?
+                             :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+                             :preset    (if @item-selected? :checked-icon-button :unchecked-icon-button)}])))
+
+(defn- list-item-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;  {:list-element (component)}
+  ; @param (integer) item-dex
+  ; @param (map) item
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [list-element]} item-dex item]
+  (let [item-disabled? (a/subscribe [:item-lister/item-disabled? extension-id item-namespace item-dex])]
+       (fn [_ _ {:keys [select-mode?] :as body-props} item-dex _]
+           [:div.item-lister--list-item--structure
+             [:div.item-lister--list-item {:data-disabled @item-disabled?}
+                                          [list-element item-dex item]]
+             ; A lista-elem után (és nem előtt) megjelenített checkbox elem React-fába
+             ; történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
+             (if select-mode? [list-item-checkbox extension-id item-namespace body-props item-dex])])))
 
 (defn- selectable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -570,28 +624,14 @@
   ; @param (map) body-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloaded-items list-element]}]
+  [extension-id item-namespace {:keys [downloaded-items] :as body-props}]
   (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
-                      (vector/conj-item item-list ^{:key id}
-                                                   [:div.item-lister--list-item--structure
-                                                     [list-item-checkbox extension-id item-namespace item-dex]
-                                                     [:div.item-lister--list-item {:data-archived false}
-                                                                                  [list-element item-dex item]]]))
-                  [:div.item-lister--item-list]
-                  (param downloaded-items)))
-
-(defn- default-item-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (component)
-  [extension-id item-namespace {:keys [downloaded-items list-element]}]
-  (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
-                      (vector/conj-item item-list ^{:key id}
-                                                   [:div.item-lister--list-item [list-element item-dex item]]))
+                      (vector/conj-item item-list
+                                        ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
+                                        ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
+                                        ; az új indexükhöz!
+                                       ^{:key (str id item-dex)}
+                                        [list-item-structure extension-id item-namespace body-props item-dex item]))
                   [:div.item-lister--item-list]
                   (param downloaded-items)))
 
@@ -601,14 +641,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:reorder-mode? (boolean)(opt)
-  ;   :select-mode? (boolean)(opt)}
+  ;  {:reorder-mode? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id item-namespace {:keys [reorder-mode? select-mode?] :as body-props}]
-  (cond select-mode?  [selectable-item-list extension-id item-namespace body-props]
-        reorder-mode? [sortable-item-list   extension-id item-namespace body-props]
-        :default-mode [default-item-list    extension-id item-namespace body-props]))
+  [extension-id item-namespace {:keys [reorder-mode?] :as body-props}]
+  (if reorder-mode? [sortable-item-list   extension-id item-namespace body-props]
+                    [selectable-item-list extension-id item-namespace body-props]))
 
 (defn- item-lister-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -616,11 +654,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:downloaded-items (vector)
-  ;   :sortable? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [extension-id item-namespace {:keys [downloaded-items sortable?] :as body-props}]
+  [extension-id item-namespace body-props]
   [:div.item-lister--structure
     [item-list              extension-id item-namespace body-props]
     [tools/infinite-loader  extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
@@ -678,6 +714,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
+  ;  {:list-element (component)}
+  ;
+  ; @usage
+  ;  [item-lister/view :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  [item-lister/view :my-extension :my-type {:element #'my-list-element}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

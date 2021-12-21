@@ -57,7 +57,7 @@
   ;
   ; @return (keyword)
   [db [_ extension-id]]
-  (get-in db [extension-id :view-meta :view-id]))
+  (get-in db [extension-id :view-selector/meta-items :view-id]))
 
 ; @usage
 ;  [:view-selector/get-selected-view :my-extension]

@@ -26,23 +26,23 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- updated-client-props-prototype
+(defn- updated-client-item-prototype
        ; WARNING! NON-PUBLIC! DO NOT USE!
-       [{:keys [request]} client-props]
+       [{:keys [request]} client-item]
        (let [timestamp (time/timestamp-object)
              user-link (user/request->user-link request)]
             (merge {:client/added-at timestamp
                     :client/added-by user-link}
-                   (param client-props)
+                   (param client-item)
                    {:client/modified-at timestamp
                     :client/modified-by user-link})))
 
-(defn- duplicated-client-props-prototype
+(defn- duplicated-client-item-prototype
        ; WARNING! NON-PUBLIC! DO NOT USE!
-       [{:keys [request]} client-props]
+       [{:keys [request]} client-item]
        (let [timestamp (time/timestamp-object)
              user-link (user/request->user-link request)]
-            (merge (dissoc client-props :client/id)
+            (merge (dissoc client-item :client/id)
                    {:client/added-at    timestamp
                     :client/added-by    user-link
                     :client/modified-at timestamp
@@ -121,7 +121,6 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ;  {}
              ; @param (map) resolver-props
              ;
              ; @return (map)
@@ -137,7 +136,6 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ;  {}
              ; @param (map) resolver-props
              ;
              ; @return (map)
@@ -188,28 +186,87 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-client-item! [env client-props]
+(defmutation undo-delete-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced map) client-item
+             ;
+             ; @return (namespaced map)
+             [env client-item]
              {::pco/op-name 'clients/undo-delete-client-item!}
-             (mongo-db/add-document! collection-name client-props))
+             (mongo-db/add-document! collection-name client-item))
 
-(defmutation save-client-item! [env client-props]
+(defmutation undo-delete-client-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced maps in vector) client-items
+             ;
+             ; @return (namespaced maps in vector)
+             [env client-items]
+             {::pco/op-name 'clients/undo-delete-client-items!}
+             (mongo-db/add-documents! collection-name client-items))
+
+(defmutation save-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced map) client-item
+             ;
+             ; @return (namespaced map)
+             [env client-item]
              {::pco/op-name 'clients/save-client-item!}
-             (mongo-db/upsert-document! collection-name client-props
-                                        {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
+             (mongo-db/upsert-document! collection-name client-item
+                                        {:prototype-f #(a/sub-prot env % updated-client-item-prototype)}))
 
-(defmutation merge-client-item! [env client-props]
+(defmutation merge-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced map) client-item
+             ;
+             ; @return (namespaced map)
+             [env client-item]
              {::pco/op-name 'clients/merge-client-item!}
-             (mongo-db/merge-document! collection-name client-props
-                                       {:prototype-f #(a/sub-prot env % updated-client-props-prototype)}))
+             (mongo-db/merge-document! collection-name client-item
+                                       {:prototype-f #(a/sub-prot env % updated-client-item-prototype)}))
 
-(defmutation delete-client-item! [{:keys [item-id]}]
+(defmutation delete-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (string)}
+             ;
+             ; @return (string)
+             [{:keys [item-id]}]
              {::pco/op-name 'clients/delete-client-item!}
              (mongo-db/remove-document! collection-name item-id))
 
-(defmutation duplicate-client-item! [env client-props]
+(defmutation delete-client-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [{:keys [item-ids]}]
+             {::pco/op-name 'clients/delete-client-items!}
+             (mongo-db/remove-documents! collection-name item-ids))
+
+(defmutation duplicate-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced map) client-item
+             ;
+             ; @return (namespaced map)
+             [env client-item]
              {::pco/op-name 'clients/duplicate-client-item!}
-             (mongo-db/add-document! collection-name client-props
-                                     {:prototype-f #(a/sub-prot env % duplicated-client-props-prototype)}))
+             (mongo-db/add-document! collection-name client-item
+                                     {:prototype-f #(a/sub-prot env % duplicated-client-item-prototype)}))
 
 
 
@@ -221,9 +278,11 @@
                get-client-items
                get-client-item
                undo-delete-client-item!
+               undo-delete-client-items!
                save-client-item!
                merge-client-item!
                delete-client-item!
+               delete-client-items!
                duplicate-client-item!])
 
 (pathom/reg-handlers! :clients HANDLERS)

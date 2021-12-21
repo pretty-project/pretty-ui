@@ -203,11 +203,11 @@
   ;  {:scaleX (string)
   ;   :scaleY (string)}
   [transform-data active-item?]
-  (if (boolean active-item?)
-      (merge (param transform-data)
-             {:scaleX "1.05"
-              :scaleY "1.05"})
-      (return transform-data)))
+  (if active-item? ; If item is active
+                   (merge transform-data {:scaleX "1.05"
+                                          :scaleY "1.05"})
+                   ; If item is NOT active
+                   (return transform-data)))
 
 (defn- view-props->sortable-element-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

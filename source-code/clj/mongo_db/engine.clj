@@ -6,7 +6,6 @@
               [mid-fruits.json         :as json]
               [mid-fruits.keyword      :as keyword]
               [mid-fruits.random       :as random]
-              [mid-fruits.string       :as string]
               [mid-fruits.time         :as time]
               [mid-fruits.vector       :as vector]
               [mongo-db.connection     :refer [DB]]
@@ -460,7 +459,7 @@
   ; tárolja el.
   ;
   ; @param (string) collection-name
-  ; @param (map) namespaced document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)(opt)}
   ; @param (map)(opt) options
   ;  {:modifier-f (function)(opt)
@@ -522,12 +521,46 @@
 
 
 
+;; -- Adding documents --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn add-documents!
+  ; @param (string) collection-name
+  ; @param (namespaced maps in vector) documents
+  ;  [{:namespace/id (string)(opt)}]
+  ; @param (map)(opt) options
+  ;  {:modifier-f (function)(opt)
+  ;   :ordered? (boolean)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/add-documents! "my-collection" [{...} {...}])
+  ;
+  ; @return (map)
+  ;  {:namespace/id (string)}
+  ([collection-name documents]
+   (add-documents! collection-name documents {}))
+
+  ([collection-name documents options]
+   (reduce (fn [result document]
+               (let [return (add-document! collection-name document options)]
+                    (vector/conj-item result return))
+               (param [])
+               (param documents)))))
+
+; @usage
+;  [:mongo-db/add-documents! "my-collection" [{...} {...}]]
+(a/reg-handled-fx :mongo-db/add-documents! add-documents!)
+
+
+
 ;; -- Upserting document ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn upsert-document!
   ; @param (string) collection-name
-  ; @param (map) namespaced document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)}
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)
@@ -575,7 +608,7 @@
 
 (defn update-document!
   ; @param (string) collection-name
-  ; @param (map) namespaced document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)}
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
@@ -618,7 +651,7 @@
 
 (defn merge-document!
   ; @param (string) collection-name
-  ; @param (map) namespaced document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)}
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
@@ -697,14 +730,54 @@
   ;  {:ordered? (boolean)
   ;    Default: false}
   ;
+  ; @example
+  ;  (mongo-db/remove-document "my-collection" "my-document")
+  ;  =>
+  ;  "my-document"
+  ;
   ; @return (string)
   ([collection-name document-id]
    (remove-document! collection-name document-id {}))
 
   ([collection-name document-id {:keys [ordered?]}]
-   (if (boolean ordered?)
-       (remove-ordered-document!   collection-name document-id)
-       (remove-unordered-document! collection-name document-id))))
+   (if ordered? (remove-ordered-document!   collection-name document-id)
+                (remove-unordered-document! collection-name document-id))))
+
+; @usage
+;  [:mongo-db/remove-document! "my-collection" "my-document"]
+(a/reg-handled-fx :mongo-db/remove-document! remove-document!)
+
+
+
+;; -- Removing documents ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn remove-documents!
+  ; @param (string) collection-name
+  ; @param (strings in vector) document-ids
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)
+  ;    Default: false}
+  ;
+  ; @example
+  ;  (mongo-db/remove-documents! "my-collection" ["my-document" "your-document"])
+  ;  =>
+  ;  ["my-document" "your-document"]
+  ;
+  ; @return (string)
+  ([collection-name document-ids]
+   (remove-documents! collection-name document-ids {}))
+
+  ([collection-name document-ids options]
+   (reduce (fn [result document-id]
+               (let [return (remove-document! collection-name document-id options)]
+                    (vector/conj-item result return)))
+           (param [])
+           (param document-ids))))
+
+; @usage
+;  [:mongo-db/remove-documents! "my-collection" ["my-document" "your-document"]]
+(a/reg-handled-fx :mongo-db/remove-document! remove-document!)
 
 
 
@@ -858,9 +931,8 @@
    (duplicate-document! collection-name document-id {:ordered? false}))
 
   ([collection-name document-id {:keys [ordered?] :as options}]
-   (if (boolean ordered?)
-       (duplicate-ordered-document!   collection-name document-id options)
-       (duplicate-unordered-document! collection-name document-id options))))
+   (if ordered? (duplicate-ordered-document!   collection-name document-id options)
+                (duplicate-unordered-document! collection-name document-id options))))
 
 
 

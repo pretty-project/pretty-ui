@@ -122,9 +122,8 @@
   ;
   ; @return (hiccup)
   [expandable-id {:keys [expanded?] :as expandable-props}]
-  (if (boolean expanded?)
-      (let [content-props (components/extended-props->content-props expandable-props)]
-           [:div.x-expandable--body [components/content expandable-id content-props]])))
+  (if expanded? (let [content-props (components/extended-props->content-props expandable-props)]
+                     [:div.x-expandable--body [components/content expandable-id content-props]])))
 
 (defn expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -36,7 +36,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- color-picker-body
+(defn- color-picker-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -45,9 +45,9 @@
   [extension-id]
   [elements/color-picker ::color-picker
                          {:initial-options COLORS
-                          :value-path [extension-id :editor-data :colors]}])
+                          :value-path [extension-id :item-editor/data-items :colors]}])
 
-(defn- undo-delete-body
+(defn- undo-delete-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -60,12 +60,12 @@
        [:<> [elements/horizontal-separator {:size :s}]
             [elements/label {:content :item-deleted :layout :fit}]
             [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :undo! :preset :primary-button :layout :fit
+            [elements/button {:label :recover! :preset :primary-button :layout :fit
                               :on-click {:dispatch-n [[:item-editor/undo-delete! extension-id item-namespace item-id]
                                                       [:ui/pop-bubble! dialog-id]]}}]
             [elements/horizontal-separator {:size :s}]]))
 
-(defn- changes-discarded-body
+(defn- changes-discarded-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -83,7 +83,7 @@
                                                       [:ui/pop-bubble! dialog-id]]}}]
             [elements/horizontal-separator {:size :s}]]))
 
-(defn- item-duplicated-body
+(defn- item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -114,7 +114,7 @@
   ; @param (keyword) item-namespace
   (fn [_ [_ extension-id item-namespace]]
       [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                      {:body   {:content [color-picker-body extension-id]}
+                      {:body   {:content [color-picker-dialog-body extension-id]}
                        :header {:content #'ui/close-popup-header}
                        :min-width :none}]))
 
@@ -127,7 +127,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace current-item-id :deleted)
-                             {:body {:content [undo-delete-body extension-id item-namespace current-item-id]}}])))
+                             {:body       {:content [undo-delete-dialog-body extension-id item-namespace current-item-id]}
+                              :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
   :item-editor/render-changes-discarded-dialog!
@@ -138,7 +139,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace current-item-id :discarded)
-                             {:body {:content [changes-discarded-body extension-id item-namespace current-item-id]}}])))
+                             {:body {:content [changes-discarded-dialog-body extension-id item-namespace current-item-id]}
+                              :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
   :item-editor/render-edit-copy-dialog!
@@ -149,5 +151,4 @@
   ; @param (string) copy-id
   (fn [_ [_ extension-id item-namespace copy-id]]
       [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace copy-id :duplicated)
-                        {:body {:content [item-duplicated-body extension-id item-namespace copy-id]}
-                         :autopop? false}]))
+                        {:body {:content [item-duplicated-dialog-body extension-id item-namespace copy-id]}}]))

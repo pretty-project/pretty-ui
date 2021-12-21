@@ -342,11 +342,12 @@
   ;
   ; @return (hiccup)
   [select-id {:keys [as-button?] :as select-props}]
-  (if (boolean as-button?)
-      (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS select-props)
-            button-props (a/prot button-props button/button-props-prototype)]
-           [button/button select-id button-props])
-      [select-layout select-id select-props]))
+  (if as-button? ; If {:as-button? true} ...
+                 (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS select-props)
+                       button-props (a/prot button-props button/button-props-prototype)]
+                      [button/button select-id button-props])
+                 ; If {:as-button? false} ...
+                 [select-layout select-id select-props]))
 
 (defn element
   ; A select elem gombja helyett lehetséges button elemet megjeleníteni az {:as-button? true}

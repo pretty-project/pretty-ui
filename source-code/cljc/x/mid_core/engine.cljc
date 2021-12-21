@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.15
 ; Description:
-; Version: v0.3.2
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.4.9
 
 
 
@@ -75,8 +75,9 @@
            (random/generate-keyword))))
 
 (defn prot
-  ; @param (keyword)(opt) id
-  ; @param (map) props
+  ; @param (*) a
+  ; @param (*)(opt) b
+  ; @param (*)(opt) c
   ; @param (function) prototype-f
   ;
   ; @usage
@@ -88,13 +89,14 @@
   ;  (let [my-props (a/prot my-id my-props my-prototype-f)])
   ;
   ; @return (map)
-  ([props prototype-f]
-   (prot nil props prototype-f))
+  ([a prototype-f]
+   (prototype-f a))
 
-  ([id props prototype-f]
-   (if (some? id)
-       (prototype-f id props)
-       (prototype-f props))))
+  ([a b prototype-f]
+   (prototype-f a b))
+
+  ([a b c prototype-f]
+   (prototype-f a b c)))
 
 (defn sub-prot
   ; @param (map) context

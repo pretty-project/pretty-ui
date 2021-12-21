@@ -182,15 +182,16 @@
   ;
   ; @return (integer)
   [{:keys [multiline? value]}]
-  (if (boolean multiline?)
-      (let [line-count (inc (string/count-newlines value))]
-           ; BUG#1481
-           ; A textarea element magassága minimum 2 sor magasságú kell legyen,
-           ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
-           ; szöveg nem törik meg automatikusan
-           ; Google Chrome Version 89.0.4389.114
-           (inc line-count))
-      (return 1)))
+  (if multiline? ; If field is multiline ...
+                 (let [line-count (inc (string/count-newlines value))]
+                      ; BUG#1481
+                      ; A textarea element magassága minimum 2 sor magasságú kell legyen,
+                      ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
+                      ; szöveg nem törik meg automatikusan
+                      ; Google Chrome Version 89.0.4389.114
+                      (inc line-count))
+                 ; If field is NOT multiline ...
+                 (return 1)))
 
 (defn field-props->field-height
   ; WARNING! NON-PUBLIC! DO NOT USE!

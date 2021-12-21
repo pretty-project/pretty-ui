@@ -7,7 +7,7 @@
 ```
 (defn xxx []
  [:div {:on-mouse-over #(do-something! ...)} "Hello"])
- ```
+```
 
 Helyett hasznald ezt, mert igy csak egyszer generalodik le az anonymous function:
 

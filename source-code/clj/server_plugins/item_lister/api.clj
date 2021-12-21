@@ -16,17 +16,3 @@
 (ns server-plugins.item-lister.api
     (:require [server-plugins.item-lister.engine]
               [server-plugins.item-lister.events]))
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  More info: app-plugins.item-lister.api
-;
-; @usage
-;  (ns my-namespace (:require [server-plugins.item-lister.api :as item-lister]))
-;
-; @usage
-;  (defresolver get-my-type-items [_] ...)

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.08.01
 ; Description:
-; Version: v1.8.4
+; Version: v1.8.6
 ; Compatibility: x4.4.9
 
 
@@ -488,6 +488,9 @@
       :all-items
       {:en "All items"
        :hu "Összes elem"}
+      :archive-selected-items?
+      {:en "Are you sure you want to archive selected items?"
+       :hu "Biztos vagy benne, hogy szeretnéd archiválni a kiválasztott elemeket?"}
       :archive!
       {:en "Archive"
        :hu "Archiválás"}
@@ -602,6 +605,12 @@
       :no-changes-to-undo
       {:en "No changes to undo"
        :hu "Nincs visszavonható változás"}
+      :n-items-archived
+      {:en "% item(s) archived"
+       :hu "% elem archiválva"}
+      :n-items-deleted
+      {:en "% item(s) deleted"
+       :hu "% elem törölve"}
       :paste!
       {:en "Paste"
        :hu "Beillesztés"}
@@ -614,6 +623,9 @@
       :please-select-an-option
       {:en "Please select an option!"
        :hu "Kérlek válassz a lehetőségek közül!"}
+      :recover!
+      {:en "Recover"
+       :hu "Visszaállítás"}
       :redo!
       {:en "Redo"
        :hu "Megismétlés"}
@@ -623,9 +635,6 @@
       :reorder
       {:en "Reorder"
        :hu "Egyedi sorrend"}
-      :reset!
-      {:en "Reset"
-       :hu "Visszaállítás"}
       :remove!
       {:en "Remove"
        :hu "Eltávolítás"}
@@ -635,6 +644,9 @@
       :remove-item!
       {:en "Remove item"
        :hu "Elem eltávolítása"}
+      :reset!
+      {:en "Reset"
+       :hu "Visszaállítás"}
       :reset-field!
       {:en "Reset field"
        :hu "Mező visszaállítása"}
@@ -727,7 +739,7 @@
       {:en "Failed to copy"
        :hu "Sikertelen másolás"}
       :failed-to-delete
-      {:en "Failed to undo delete"
+      {:en "Failed to delete"
        :hu "Sikertelen törlés"}
       :failed-to-undo-delete
       {:en "Failed to undo delete"

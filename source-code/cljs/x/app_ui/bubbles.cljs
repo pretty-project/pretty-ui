@@ -189,6 +189,8 @@
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription-vector)(opt)}
+  ;   :destructor (metamorphic-event)(opt)
+  ;   :initializer (metamorphic-event)(opt)
   ;   :user-close? (boolean)(opt)
   ;    Default: true}
   ;
@@ -218,9 +220,8 @@
   ;
   ; @return (component)
   [bubble-id {:keys [user-close?]}]
-  (if (boolean user-close?)
-      [elements/button {:on-click [:ui/pop-bubble! bubble-id]
-                        :preset   :close-icon-button}]))
+  (if user-close? [elements/button {:on-click [:ui/pop-bubble! bubble-id]
+                                    :preset   :close-icon-button}]))
 
 (defn- bubble-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -231,8 +232,7 @@
   ;
   ; @return (hiccup)
   [bubble-id {:keys [body]}]
-  [:div.x-app-bubbles--element--body
-    [components/content bubble-id body]])
+  [:div.x-app-bubbles--element--body [components/content bubble-id body]])
 
 (defn- bubble-element
   ; WARNING! NON-PUBLIC! DO NOT USE!

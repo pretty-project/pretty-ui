@@ -15,15 +15,3 @@
 
 (ns mid-plugins.item-lister.api
     (:require [mid-plugins.item-lister.engine]))
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  More info: app-plugins.item-lister.api
-;             server-plugins.item-lister.api
-;
-; @usage
-;  (ns my-namespace (:require [mid-plugins.item-lister.api :as item-lister]))

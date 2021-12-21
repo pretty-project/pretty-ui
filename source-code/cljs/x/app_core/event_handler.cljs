@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v1.4.2
-; Compatibility: x4.4.6
+; Version: v1.4.8
+; Compatibility: x4.4.9
 
 
 
@@ -188,15 +188,17 @@
   ;                   {:ms 600 :dispatch-n [[:do-something!]
   ;                                         [:do-something-else!]]}])
   [event-list]
-  ; dispatch-f   instead dispatch:   To avoid name conflicts
-  ; dispatch-n-f instead dispatch-n: To avoid name conflicts
+  ; A dispatch-f és dispatch-n-f függvénynevek használata a névütközések
+  ; elkerülése miatt szükséges
   (let [dispatch-f   dispatch
         dispatch-n-f dispatch-n]
        (doseq [{:keys [ms dispatch dispatch-n]} (remove nil? event-list)]
-              (cond (and (some? dispatch)
+              (cond ; Dispatch single events ...
+                    (and (some?   dispatch)
                          (number? ms))
                     (time/set-timeout! ms #(dispatch-f dispatch))
-                    (and (some? dispatch-n)
+                    ; Dispatch multiple events ...
+                    (and (some?   dispatch-n)
                          (number? ms))
                     (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
 

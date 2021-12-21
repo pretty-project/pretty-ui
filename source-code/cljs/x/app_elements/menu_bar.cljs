@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.4.8
+; Version: v0.8.2
+; Compatibility: x4.4.9
 
 
 
@@ -42,19 +42,26 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:active? (boolean)(opt)
+  ;   :disabled? (boolean)(opt)
   ;   :href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
   ;  {:data-active (boolean)
+  ;   :data-disabled (boolean)
   ;   :href (string)
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
-  [bar-id _ {:keys [active? href on-click]}]
-  (cond-> {:on-mouse-up (engine/blur-element-function bar-id)}
-          (some? href)     (assoc :href        (str        href))
-          (some? on-click) (assoc :on-click   #(a/dispatch on-click))
-          (some? active?)  (assoc :data-active (boolean    active?))))
+  [bar-id _ {:keys [active? disabled? href on-click]}]
+  (if disabled? ; If menu-item is disabled ...
+                (cond-> {:data-disabled true
+                         :on-mouse-up   (engine/blur-element-function bar-id)}
+                        (some? active?) (assoc :data-active (boolean active?)))
+                ; If menu-item is NOT disabled ...
+                (cond-> {:on-mouse-up (engine/blur-element-function bar-id)}
+                        (some? href)     (assoc :href        (str        href))
+                        (some? on-click) (assoc :on-click   #(a/dispatch on-click))
+                        (some? active?)  (assoc :data-active (boolean    active?)))))
 
 
 
@@ -173,6 +180,8 @@
   ;    Default: :row
   ;   :menu-items (maps in vector)
   ;    [{:active? (boolean)(opt)
+  ;       Default: false
+  ;      :disabled? (boolean)(opt)
   ;       Default: false
   ;      :href (string)(opt)
   ;       XXX#7004

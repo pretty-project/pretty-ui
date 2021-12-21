@@ -230,6 +230,7 @@
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
   ;     :subscriber (subscription vector)(opt)}
+  ;   :destructor (metamorphic-event)(opt)
   ;   :header (map)(opt)
   ;    {:content (metamorphic-content)
   ;      #'ui/go-back-popup-header, #'ui/close-popup-header, ...
@@ -241,6 +242,7 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
+  ;   :initializer (metamorphic-event)(opt)
   ;   :layout (keyword)(opt)
   ;    :boxed, :unboxed
   ;    Default: :boxed

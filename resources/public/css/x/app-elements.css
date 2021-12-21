@@ -114,6 +114,10 @@ button.x-card:focus,
 .x-element[data-disabled="true"] {
   opacity: .5 }
 
+.x-menu-bar--menu-item[data-disabled="true"] {
+  cursor: default;
+  opacity: .5 }
+
 /***** Disabled state *****/
 
 

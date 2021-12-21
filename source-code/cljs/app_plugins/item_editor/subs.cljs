@@ -49,7 +49,24 @@
   ;
   ; @return (string)
   [db [_ extension-id]]
-  (get-in db [extension-id :editor-meta :item-id]))
+  (get-in db [extension-id :item-editor/meta-items :item-id]))
+
+(defn editing-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace item-id]]
+  ; - Az editing-item? függvény az item-id azonosítót a derived-item-id azonosítóval összehasonlítva
+  ;   állapítja meg, hogy az item-id azonosítójú elem szerkesztés alatt áll-e.
+  ; - A get-current-item-id függvény visszatérési értéke, csak abban az esetben felhasználható,
+  ;   amikor az item-editor plugin van betöltve, annak kilépése után az adatbázisban maradt item-id
+  ;   érték nem felhasználható!
+  (let [derived-item-id (r get-derived-item-id db extension-id)]
+       (= item-id derived-item-id)))
 
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +75,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (get-in db [extension-id :editor-data]))
+  (get-in db [extension-id :item-editor/data-items]))
 
 (defn export-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +100,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :editor-data item-key]))
+  (get-in db [extension-id :item-editor/data-items item-key]))
 
 (defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,7 +114,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :editor-meta item-key]))
+  (get-in db [extension-id :item-editor/meta-items item-key]))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,7 +147,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (get-in db [extension-id :editor-backup item-id]))
+  (get-in db [extension-id :item-editor/backup-items item-id]))
 
 (defn export-backup-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -152,7 +169,7 @@
   ; @return (map)
   [db [_ extension-id]]
   (let [current-item-id (r get-current-item-id db extension-id)]
-       (get-in db [extension-id :editor-meta :local-changes current-item-id])))
+       (get-in db [extension-id :item-editor/meta-items :local-changes current-item-id])))
 
 (defn get-recovered-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

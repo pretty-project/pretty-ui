@@ -118,8 +118,7 @@
   ;
   ; @return (component)
   [button-id {:keys [unselectable?] :as button-props}]
-  (if (boolean unselectable?)
-      [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id button-props)]))
+  (if unselectable? [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id button-props)]))
 
 (defn- radio-button-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

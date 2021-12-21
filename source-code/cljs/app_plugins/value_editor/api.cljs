@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.17
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.6
+; Version: v0.3.0
+; Compatibility: x4.4.9
 
 
 
@@ -31,22 +31,6 @@
 ; @name {:on-save ...}
 ;  A mentés gomb megnyomásakor megtörténő esemény, amely használatával
 ;  egyedi mentési eljárás is megvalósítható.
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  (ns my-namespace (:require [app-plugins.value-editor.api :as value-editor]))
-;
-;  (defn my-subscription
-;   [db _]
-;   {:my-value (r value-editor/get-editor-value db :my-editor)})
-;  (a/reg-sub ::my-subscription my-subscription)
-;
-; @usage
-;  (a/dispatch [:value-editor/load! ...])
 
 
 

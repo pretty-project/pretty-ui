@@ -102,13 +102,12 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimizable?]}]
-  (if (boolean minimizable?)
-      [elements/button {:class    "x-app-popups--element--minimize-button"
-                        :color    :invert
-                        :icon     :close_fullscreen
-                        :layout   :icon-button
-                        :on-click [:ui/minimize-popup! popup-id]
-                        :variant  :transparent}]))
+  (if minimizable? [elements/button {:class    "x-app-popups--element--minimize-button"
+                                     :color    :invert
+                                     :icon     :close_fullscreen
+                                     :layout   :icon-button
+                                     :on-click [:ui/minimize-popup! popup-id]
+                                     :variant  :transparent}]))
 
 (defn- popup-maximize-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,13 +118,12 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimized?]}]
-  (if (boolean minimized?)
-      [elements/button {:class    "x-app-popups--element--maximize-button"
-                        :color    :muted
-                        :icon     :fullscreen
-                        :layout   :icon-button
-                        :on-click [:ui/maximize-popup! popup-id]
-                        :variant  :filled}]))
+  (if minimized? [elements/button {:class    "x-app-popups--element--maximize-button"
+                                   :color    :muted
+                                   :icon     :fullscreen
+                                   :layout   :icon-button
+                                   :on-click [:ui/maximize-popup! popup-id]
+                                   :variant  :filled}]))
 
 (defn- popup-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,12 +135,9 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [header render-touch-anchor?] :as popup-props}]
-  [:<> (if (boolean render-touch-anchor?)
-           [:div.x-app-popups--element--touch-anchor])
-       (if (some? header)
-           [:div.x-app-popups--element--header
-             [components/content popup-id header]]
-           [:div.x-app-popups--element--header-placeholder])])
+  [:<> (if (boolean render-touch-anchor?) [:div.x-app-popups--element--touch-anchor])
+       (if (some?   header)               [:div.x-app-popups--element--header [components/content popup-id header]]
+                                          [:div.x-app-popups--element--header-placeholder])])
 
 (defn popup-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,6 +1,7 @@
 
 (ns pathom.register
     (:require [mid-fruits.vector :as vector]
+              [logger.api        :as logger]
               [x.server-core.api :as a :refer [r]]
               [x.server-db.api   :as db]
               [com.wsscode.pathom3.connect.indexes :as pathom.ci]))
@@ -51,6 +52,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def REG-LOG-FILENAME "pathom.handler-regs.log")
+
+
+
 ;; -- State -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -86,6 +95,7 @@
   ;  (pco/defmutation     do-something! [env] ...)
   ;  (pathom/reg-handler! do-something!)
   [handler-id handler-f]
+  (logger/write! REG-LOG-FILENAME (str "Registrating handler: " handler-f))
   (swap! HANDLERS assoc handler-id handler-f)
   ; Minden handler-függvény regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor
@@ -103,6 +113,7 @@
   ;  (def HANDLERS [do-something! do-anything!])
   ;  (pathom/reg-handlers! HANDLERS)
   [handlers-id handler-fs]
+  (logger/write! REG-LOG-FILENAME (str "Registrating handlers: " handler-fs))
   (swap! HANDLERS assoc handlers-id handler-fs)
   ; Minden handler-függvénycsoport regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor

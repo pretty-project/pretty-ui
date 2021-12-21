@@ -200,11 +200,10 @@
   [n {:keys [strict-mode?]}]
   (boolean (and (vector? n)
                 (let [event-id (first n)]
-                     (if (boolean strict-mode?)
-                         (and (keyword?                (param event-id))
-                              (or (string/starts-with? (name  event-id) "->")
-                                  (string/ends-with?   (name  event-id) "!")))
-                         (keyword? event-id))))))
+                     (if strict-mode? (and (keyword?                (param event-id))
+                                           (or (string/starts-with? (name  event-id) "->")
+                                               (string/ends-with?   (name  event-id) "!")))
+                                      (keyword? event-id))))))
 
 (defn subscription-vector?
   ; @param (*) n
@@ -1096,8 +1095,7 @@
   (reduce-indexed (fn [%1 %2 %3]
                       (if (even? %3)
                           (let [event (nth conditional-events (inc %3))]
-                               (if (boolean %2)
-                                   (dispatch event)))))
+                               (if %2 (dispatch event)))))
                   (param nil)
                   (param conditional-events)))
 

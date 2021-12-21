@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.0
+; Compatibility: x4.4.9
 
 
 
@@ -19,24 +19,6 @@
               [app-plugins.item-lister.events]
               [app-plugins.item-lister.subs]
               [app-plugins.item-lister.views :as views]))
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  More info: server-plugins.item-lister.api
-;
-; @usage
-;  (ns my-namespace (:require [app-plugins.item-lister.api :item-lister]))
-;
-;  (defn my-list-item [item-dex item] ...)
-;  (defn my-view      [_] [:<> [item-lister/header :my-extension :my-type]
-;                              [item-lister/body   :my-extension :my-type {:list-item #'my-list-item}]])
-;  (a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:view {:content #'view}}])
-;
-;  (a/dispatch [:router/go-to! "/my-extension"])
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.2.8
-; Compatibility: x4.4.8
+; Version: v2.3.6
+; Compatibility: x4.4.9
 
 
 
@@ -307,11 +307,13 @@
   (fn [{:keys [db]} [_ component-id {:keys [destructor] :as context-props} mount-id]]
       (if (and (r component-unmounted?  db component-id)
                (r component-mounted-as? db component-id mount-id))
-          (let [initial-props (r get-component-initial-props db component-id context-props)
-                destructor    (a/metamorphic-event<-params destructor initial-props)]
-               {:db       (as-> db % (r engine/remove-component-props!  % component-id)
-                                     (r remove-component-initial-props! % component-id context-props))
-                :dispatch (param destructor)}))))
+          {:db (as-> db % (r engine/remove-component-props!  % component-id)
+                          (r remove-component-initial-props! % component-id context-props))
+           :dispatch (if-let [initial-props (r get-component-initial-props db component-id context-props)]
+                             ; If initial-props is NOT nil ...
+                             (a/metamorphic-event<-params destructor initial-props)
+                             ; If initial-props is nil ...
+                             (param destructor))})))
 
 
 
@@ -329,11 +331,11 @@
   (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
               ; If component is NOT initialized ...
-              {:db       (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
-                                    (r engine/set-component-prop!     % component-id :mount-id mount-id)
-                                    (r engine/set-component-prop!     % component-id :initialized? true)
-                                    (r store-component-initial-props! % component-id context-props))
-               :dispatch (param initializer)}
+              {:db (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
+                              (r engine/set-component-prop!     % component-id :mount-id mount-id)
+                              (r engine/set-component-prop!     % component-id :initialized? true)
+                              (r store-component-initial-props! % component-id context-props))
+               :dispatch initializer}
               ; If component is initialized ...
               {:db (r engine/set-component-prop! db component-id :mount-id mount-id)})))
 

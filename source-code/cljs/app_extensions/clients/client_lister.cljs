@@ -49,8 +49,11 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props item-props]
+  (if (= item-dex 2)
+      (println (str "3rd item rendered")))
   [:div.clients--client-item [item-editor/color-stamp :clients :client client-props]
                              [client-item-details item-dex client-props item-props]])
+                             ;(str (random-uuid))])
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +72,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [description]}]
-  [item-lister/view :clients :client  {:list-element #'client-item}])
+  [item-lister/view :clients :client {:list-element #'client-item}])
 
 
 

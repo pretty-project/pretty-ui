@@ -15,7 +15,6 @@
 
 (ns app-plugins.item-lister.subs
     (:require [mid-fruits.candy      :refer [param return]]
-              [mid-fruits.map        :as map]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -36,7 +35,7 @@
   ;
   ; @return (maps in vector)
   [db [_ extension-id]]
-  (get-in db [extension-id :lister-data]))
+  (get-in db [extension-id :item-lister/data-items]))
 
 (defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +46,7 @@
   ;
   ; @return (*)
   [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :lister-meta item-key]))
+  (get-in db [extension-id :item-lister/meta-items item-key]))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,7 +125,7 @@
            (return   all-item-count)
            (return   0))))
 
-(defn get-selected-items
+(defn get-disabled-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -134,7 +133,51 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
+  (r get-meta-value db extension-id item-namespace :disabled-items))
+
+(defn item-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r engine/item-disabled? db :my-extension :my-type 0)
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace item-dex]]
+  (let [disabled-items (r get-disabled-items db extension-id item-namespace)]
+       (vector/contains-item? disabled-items item-dex)))
+
+; @usage
+;  [:item-lister/item-disabled? :my-extension :my-type 0]
+(a/reg-sub :item-lister/item-disabled? item-disabled?)
+
+(defn get-selected-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (integers in vector)
+  [db [_ extension-id item-namespace]]
   (r get-meta-value db extension-id item-namespace :selected-items))
+
+(defn get-selected-item-ids
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (strings in vector)
+  [db [_ extension-id item-namespace]]
+  (let [selected-items (r get-meta-value db extension-id item-namespace :selected-items)]
+       (reduce (fn [result item-dex]
+                   (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
+                        (vector/conj-item result item-id)))
+               (param [])
+               (param selected-items))))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,7 +185,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (vector)
+  ; @return (integer)
   [db [_ extension-id item-namespace]]
   (let [selected-items (r get-selected-items db extension-id item-namespace)]
        (count selected-items)))
@@ -247,6 +290,30 @@
        ; BUG#7009
        (r some-items-received? db extension-id item-namespace)))
 
+(defn downloading-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  ; A kiválasztott elemeken végzett műveletek is {:synchronizing? true} állapotba hozzák
+  ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
+  ; az elemeken végzett műveletek szinkronizációval.
+  (and (r download-more-items? db extension-id item-namespace)
+       (r synchronizing?       db extension-id item-namespace)))
+
+(defn get-recovered-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-ids]])
+
 (defn get-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -298,6 +365,7 @@
   ;   :reorder-mode? (boolean)
   ;   :search-mode? (boolean)
   ;   :select-mode? (boolean)
+  ;   :synchronizing? (boolean)
   ;   :viewport-small? (boolean)}
   [db [_ extension-id item-namespace]]
         ; If select-mode is enabled ...
@@ -308,14 +376,17 @@
          :filter                 (r get-meta-value      db extension-id item-namespace :filter)
          :filter-mode?           (r get-meta-value      db extension-id item-namespace :filter-mode?)
          :handle-archived-items? (r get-meta-value      db extension-id item-namespace :handle-archived-items?)
-         :handle-favorite-items? (r get-meta-value      db extension-id item-namespace :handle-favorite-items?)}
+         :handle-favorite-items? (r get-meta-value      db extension-id item-namespace :handle-favorite-items?)
+         :synchronizing?         (r synchronizing?      db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :search-mode?)
-        {:search-mode? true}
+        {:search-mode?   true
+         :synchronizing? (r synchronizing? db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
-        (r get-meta-value      db extension-id item-namespace :reorder-mode?)
+        (r get-meta-value db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?  true
-         :order-changed? false}
+         :order-changed? false
+         :synchronizing? (r synchronizing? db extension-id item-namespace)}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?          true
@@ -324,6 +395,7 @@
          :handle-archived-items? (r get-meta-value    db extension-id item-namespace :handle-archived-items?)
          :handle-favorite-items? (r get-meta-value    db extension-id item-namespace :handle-favorite-items?)
          :no-items-to-show?      (r no-items-to-show? db extension-id)
+         :synchronizing?         (r synchronizing?    db extension-id item-namespace)
          :viewport-small?        (r environment/viewport-small? db)}))
 
 (a/reg-sub :item-lister/get-header-props get-header-props)
@@ -337,6 +409,7 @@
   ; @return (map)
   ;  {:actions-mode? (boolean)
   ;   :downloaded-items (vector)
+  ;   :downloading-items? (boolean)
   ;   :disabled-items (integers in vector)
   ;   :no-items-to-show? (boolean)
   ;   :reorder-mode? (boolean)
@@ -348,31 +421,35 @@
         ; If select-mode is enabled ...
   (cond (r get-meta-value db extension-id item-namespace :select-mode?)
         {:select-mode?      true
-         :downloaded-items  (r get-downloaded-items db extension-id)
-         :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronized?     (r synchronized?        db extension-id item-namespace)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
+         :downloaded-items   (r get-downloaded-items db extension-id)
+         :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :no-items-to-show?  (r no-items-to-show?    db extension-id)
+         :synchronized?      (r synchronized?        db extension-id item-namespace)
+         :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :search-mode?)
         {:search-mode?      true
-         :downloaded-items  (r get-downloaded-items db extension-id)
-         :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronized?     (r synchronized?        db extension-id item-namespace)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
+         :downloaded-items   (r get-downloaded-items db extension-id)
+         :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :no-items-to-show?  (r no-items-to-show?    db extension-id)
+         :synchronized?      (r synchronized?        db extension-id item-namespace)
+         :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?     true
-         :downloaded-items  (r get-downloaded-items db extension-id)
-         :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronized?     (r synchronized?        db extension-id item-namespace)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}
+         :downloaded-items   (r get-downloaded-items db extension-id)
+         :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :no-items-to-show?  (r no-items-to-show?    db extension-id)
+         :synchronized?      (r synchronized?        db extension-id item-namespace)
+         :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
-         :downloaded-items  (r get-downloaded-items db extension-id)
-         :no-items-to-show? (r no-items-to-show?    db extension-id)
-         :synchronized?     (r synchronized?        db extension-id item-namespace)
-         :synchronizing?    (r synchronizing?       db extension-id item-namespace)}))
+         :downloaded-items   (r get-downloaded-items db extension-id)
+         :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :no-items-to-show?  (r no-items-to-show?    db extension-id)
+         :synchronized?      (r synchronized?        db extension-id item-namespace)
+         :synchronizing?     (r synchronizing?       db extension-id item-namespace)}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 

@@ -219,9 +219,8 @@
   ;
   ; @return (component)
   [popup-id {:keys [user-identified?] :as body-props}]
-  [:div#x-login-box (if (boolean user-identified?)
-                        [logged-in-form popup-id body-props]
-                        [login-form     popup-id body-props])])
+  [:div#x-login-box (if user-identified? [logged-in-form popup-id body-props]
+                                         [login-form     popup-id body-props])])
 
 
 

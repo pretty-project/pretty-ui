@@ -33,8 +33,8 @@
   ; @return (map)
   [db [_ extension-id selector-props]]
   (let [derived-view-id (r subs/get-derived-view db extension-id selector-props)]
-       (-> db (dissoc-in [extension-id :view-meta])
-              (assoc-in  [extension-id :view-meta :view-id] derived-view-id))))
+       (-> db (dissoc-in [extension-id :view-selector/meta-items])
+              (assoc-in  [extension-id :view-selector/meta-items :view-id] derived-view-id))))
 
 (defn change-view!
   ; @param (keyword) extension-id
@@ -45,7 +45,7 @@
   ;
   ; @return (map)
   [db [_ extension-id view-id]]
-  (assoc-in db [extension-id :view-meta :view-id] view-id))
+  (assoc-in db [extension-id :view-selector/meta-items :view-id] view-id))
 
 ; @usage
 ;  [:view-selector/change-view! :my-extension :my-view]

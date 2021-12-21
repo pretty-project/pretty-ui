@@ -1225,8 +1225,7 @@
   ; @return (object)
   [_ callback]
   (js/IntersectionObserver. (fn [%] (let [in-viewport? (.-isIntersecting (aget % 0))]
-                                         (if (boolean in-viewport?)
-                                             (callback))))
+                                         (if in-viewport? (callback))))
                             (param {})))
 
 (defn setup-intersection-observer!

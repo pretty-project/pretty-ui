@@ -94,11 +94,9 @@
   ;
   ; @return (hiccup)
   [component-id {:keys [process-progress render-progress-bar? render-screen-overlay?] :as view-props}]
-  (if (boolean render-progress-bar?)
-      [:div#x-app-progress-bar
-        (if (boolean render-screen-overlay?)
-            [:div#x-app-progress-bar--screen-overlay])
-        [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
+  (if render-progress-bar? [:div#x-app-progress-bar
+                             (if render-screen-overlay? [:div#x-app-progress-bar--screen-overlay])
+                             [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

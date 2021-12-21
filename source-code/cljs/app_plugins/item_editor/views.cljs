@@ -26,35 +26,19 @@
 ;; -- Action components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn undo-delete-button
-  ; @param (keyword) extension-id
-  ;
-  ; @return (component)
-  [extension-id]
-  [elements/button ::undo-delete-button
-                   {:label :undo-delete! :variant :transparent :horizontal-align :left :color :warning
-                    :on-click [:item-editor/undo-last-deleted! extension-id]}])
-
-(defn edit-copy-button
-  ; @param (keyword) extension-id
-  ;
-  ; @return (component)
-  [extension-id]
-  [elements/button ::edit-copy-button
-                   {:label :edit-copy! :variant :transparent :horizontal-align :left :color :primary
-                    :on-click [:item-editor/edit-last-duplicated! extension-id]}])
-
 (defn delete-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-mode? (boolean)(opt)}
+  ;  {:error-mode? (boolean)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode?]}]
+  [extension-id item-namespace {:keys [error-mode? synchronizing?]}]
   [elements/button ::delete-item-button
-                   {:tooltip :delete! :preset :delete-icon-button :disabled? error-mode?
-                    :on-click [:item-editor/delete-item! extension-id item-namespace]}])
+                   {:tooltip :delete! :preset :delete-icon-button
+                    :disabled? (or error-mode? synchronizing?)
+                    :on-click  [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn archive-item-button
   ; @param (keyword) extension-id
@@ -62,22 +46,26 @@
   ; @param (map) element-props
   ;  {:archived? (boolean)(opt)
   ;   :error-mode? (boolean)(opt)
-  ;   :handle-archived-items? (boolean)}
+  ;   :handle-archived-items? (boolean)
+  ;   :synchronizing? (boolean)(opt)}
+
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [archived? error-mode? handle-archived-items?]}]
+  [extension-id item-namespace {:keys [archived? error-mode? handle-archived-items? synchronizing?]}]
   (cond (and handle-archived-items? archived?)
         [elements/button ::archive-item-button
-                         {:tooltip :archived :preset :archived-icon-button :disabled? error-mode?
-                          :on-click [:item-editor/unmark-item! extension-id item-namespace
-                                                               {:marker-key       :archived?
-                                                                :unmarked-message :archived-item-restored}]}]
+                         {:tooltip :archived :preset :archived-icon-button
+                          :disabled? (or error-mode? synchronizing?)
+                          :on-click  [:item-editor/unmark-item! extension-id item-namespace
+                                                                {:marker-key       :archived?
+                                                                 :unmarked-message :archived-item-restored}]}]
         (and handle-archived-items? (not archived?))
         [elements/button ::archive-item-button
-                         {:tooltip :archive! :preset :archive-icon-button :disabled? error-mode?
-                          :on-click [:item-editor/mark-item! extension-id item-namespace
-                                                             {:marker-key     :archived?
-                                                              :marked-message :archived}]}]))
+                         {:tooltip :archive! :preset :archive-icon-button
+                          :disabled? (or error-mode? synchronizing?)
+                          :on-click  [:item-editor/mark-item! extension-id item-namespace
+                                                              {:marker-key     :archived?
+                                                               :marked-message :archived}]}]))
 
 (defn favorite-item-button
   ; @param (keyword) extension-id
@@ -85,48 +73,55 @@
   ; @param (map) element-props
   ;  {:favorite? (boolean)(opt)
   ;   :error-mode? (boolean)(opt)
-  ;   :handle-favorite-items? (boolean)}
+  ;   :handle-favorite-items? (boolean)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? favorite? handle-favorite-items?]}]
+  [extension-id item-namespace {:keys [error-mode? favorite? handle-favorite-items? synchronizing?]}]
   (cond (and handle-favorite-items? favorite?)
         [elements/button ::favorite-item-button
                          ; Az :added-to-favorites tooltip túlságosan széles, ezért a favorite-item-button
                          ; elemen a tooltip feliratok ki vannak kapcsolva
-                         {:preset :added-to-favorites-icon-button :disabled? error-mode? ; :tooltip :added-to-favorites
-                          :on-click [:item-editor/unmark-item! extension-id item-namespace
-                                                               {:marker-key       :favorite?
-                                                                :unmarked-message :removed-from-favorites}]}]
+                         {:preset :added-to-favorites-icon-button ;:tooltip :added-to-favorites
+                          :disabled? (or error-mode? synchronizing?)
+                          :on-click  [:item-editor/unmark-item! extension-id item-namespace
+                                                                {:marker-key       :favorite?
+                                                                 :unmarked-message :removed-from-favorites}]}]
         (and handle-favorite-items? (not favorite?))
         [elements/button ::favorite-item-button
-                         {:preset :add-to-favorites-icon-button :disabled? error-mode? ; :tooltip :add-to-favorites!
-                          :on-click [:item-editor/mark-item! extension-id item-namespace
-                                                             {:marker-key       :favorite?
-                                                              :marked-message :added-to-favorites}]}]))
+                         {:preset :add-to-favorites-icon-button ;:tooltip :add-to-favorites!
+                          :disabled? (or error-mode? synchronizing?)
+                          :on-click  [:item-editor/mark-item! extension-id item-namespace
+                                                              {:marker-key       :favorite?
+                                                               :marked-message :added-to-favorites}]}]))
 
 (defn copy-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-mode? (boolean)(opt)}
+  ;  {:error-mode? (boolean)(opt)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode?]}]
+  [extension-id item-namespace {:keys [error-mode? synchronizing?]}]
   [elements/button ::copy-item-button
-                   {:tooltip :duplicate! :preset :duplicate-icon-button :disabled? error-mode?
-                    :on-click [:item-editor/duplicate-item! extension-id item-namespace]}])
+                   {:tooltip :duplicate! :preset :duplicate-icon-button
+                    :disabled? (or error-mode? synchronizing?)
+                    :on-click  [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
   ;  {:error-mode? (boolean)(opt)
-  ;   :form-completed? (boolean)}
+  ;   :form-completed? (boolean)
+  ;   :synchronizing? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? form-completed?]}]
+  [extension-id item-namespace {:keys [error-mode? form-completed? synchronizing?]}]
   [elements/button ::save-item-button
-                   {:tooltip :save! :preset :save-icon-button :disabled? (or (not form-completed?) error-mode?)
+                   {:tooltip :save! :preset :save-icon-button
+                    :disabled? (or (not form-completed?) error-mode? synchronizing?)
                     :on-click [:item-editor/save-item! extension-id item-namespace]}])
 
 
@@ -188,8 +183,9 @@
   [extension-id item-namespace {:keys [synchronizing?]}]
   [elements/button ::add-colors-button
                    {:label :add-color! :preset :muted-button :layout :row :font-size :xs
-                    :on-click [:item-editor/render-color-picker-dialog! extension-id item-namespace]
-                    :disabled? synchronizing?}])
+                    :disabled? synchronizing?
+                    :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]}])
+
 
 (defn- selected-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -217,9 +213,9 @@
   ; @return (component)
   [extension-id item-namespace {:keys [synchronizing?] :as element-props}]
   [elements/toggle ::selected-colors-button
-                   {:on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
-                    :content   [selected-colors extension-id item-namespace element-props]
-                    :disabled? synchronizing?}])
+                   {:disabled? synchronizing?
+                    :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
+                    :content   [selected-colors extension-id item-namespace element-props]}])
 
 (defn color-selector
   ; @param (keyword) extension-id
@@ -262,7 +258,7 @@
   ; @return (component)
   [extension-id item-namespace]
   [elements/multiline-field ::description-field
-                            {:value-path [extension-id :editor-data :description]}])
+                            {:value-path [extension-id :item-editor/data-items :description]}])
 
 
 
@@ -352,12 +348,13 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [description error-mode? form-element]}]
-  (if (boolean error-mode?)
-      [layouts/layout-a extension-id {:body   {:content [error-body]}
-                                      :header {:content [header extension-id item-namespace]}}]
-      [layouts/layout-a extension-id {:description description
-                                      :body   {:content [form-element]}
-                                      :header {:content [header extension-id item-namespace]}}]))
+  (if error-mode? ; If error-mode is enabled ...
+                  [layouts/layout-a extension-id {:body   {:content [error-body]}
+                                                  :header {:content [header extension-id item-namespace]}}]
+                  ; If error-mode is NOT enabled ...
+                  [layouts/layout-a extension-id {:description description
+                                                  :body   {:content [form-element]}
+                                                  :header {:content [header extension-id item-namespace]}}]))
 
 (defn view
   ; @param (keyword) extension-id

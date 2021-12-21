@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.3.8
-; Compatibility: x3.9.9
+; Version: v1.5.2
+; Compatibility: x4.4.9
 
 
 
@@ -14,9 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.event-handler
-    (:require [mid-fruits.candy         :refer [param return]]
-              [mid-fruits.vector        :as vector]
-              [re-frame.core            :as re-frame]
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.vector :as vector]
+              [logger.api        :as logger]
+              [re-frame.core     :as re-frame]
               [x.mid-core.event-handler :as event-handler]))
 
 
@@ -27,8 +28,8 @@
 ; @constant (keyword)
 (def ERROR-EVENT-ID :core/->error-catched)
 
-; @constant (boolean)
-(def LOG-EVENTS? false)
+; @constant (string)
+(def EVENT-LOG-FILENAME "x.server-events.log")
 
 
 
@@ -95,7 +96,8 @@
 (def log-event!
      (re-frame/->interceptor
        :id      ::log-event!
-       :before #(do (println (context->event-vector %1))
+       :before #(do (let [event-vector (context->event-vector %1)]
+                         (logger/write! EVENT-LOG-FILENAME event-vector))
                     (return %1))))
 
 (def check-db!
@@ -114,9 +116,8 @@
   ;
   ; @return (vector)
   [interceptors]
-  (cond-> interceptors (param LOG-EVENTS?)
-                       (vector/conj-item log-event!)))
-                      ;:check-db! (vector/conj-item check-db!)
+  (vector/concat-items interceptors [log-event!]))
+                                   ;[log-event! check-db!]
 
 
 

@@ -171,6 +171,19 @@
   [& xyz]
   (apply merge (reverse xyz)))
 
+(defn remove-items
+  ; @param (map) n
+  ; @param (vector) keys
+  ;
+  ; @example
+  ;  (map/remove-items {:a "A" :b "B" :c "C"} [:a :c])
+  ;  =>
+  ;  {:b "B"}
+  ;
+  ; @return (map)
+  [n keys]
+  (reduce #(dissoc %1 %2) n keys))
+
 (defn difference
   ; Things only in a
   ;

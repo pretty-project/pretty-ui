@@ -47,6 +47,24 @@
   (keyword (name extension-id)
            (str "synchronize-" (name item-namespace) "-lister!")))
 
+(defn mutation-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ;
+  ; @example
+  ;  (engine/mutation-name :my-extension :my-type :delete)
+  ;  =>
+  ;  "my-extension/delete-my-type-items!"
+  ;
+  ; @return (string)
+  [extension-id item-namespace action-id]
+  (str (name extension-id)   "/"
+       (name action-id)      "-"
+       (name item-namespace) "-items!"))
+
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -159,4 +177,4 @@
   ; @return (namespaced keyword)
   ([extension-id _ action-id]
    (keyword (name extension-id)
-            (str (name action-id) "-dialog"))))
+            (str (name action-id) "dialog"))))

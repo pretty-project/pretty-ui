@@ -91,6 +91,9 @@
   ;
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type]
+  ;
+  ; @usage
+  ;  [:item-lister/initialize! :my-extension :my-type {...}]
   (fn [cofx [_ extension-id item-namespace lister-props]]
       (let [lister-props (a/prot lister-props lister-props-prototype)]
            (r add-route! cofx extension-id item-namespace lister-props))))

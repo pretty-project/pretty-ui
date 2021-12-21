@@ -157,8 +157,10 @@
   ; @param (*) content
   ;
   ; @return (?)
-  [filepath content])
-  ; TODO
+  [filepath content]
+  (let [file-content (read-file filepath)
+        output       (str file-content "\n" content)]
+       (write-file! filepath output)))
 
 (defn create-file!
   ; @param (string) filepath
