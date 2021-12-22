@@ -240,7 +240,7 @@
   ;
   ; @param (keyword)(opt) directory-id
   ; @param (map) directory-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :content-size (B)(opt)
   ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)

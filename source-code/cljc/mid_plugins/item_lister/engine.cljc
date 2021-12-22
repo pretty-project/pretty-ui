@@ -175,6 +175,6 @@
   ;  :my-extension/delete-items-dialog
   ;
   ; @return (namespaced keyword)
-  ([extension-id _ action-id]
-   (keyword (name extension-id)
-            (str (name action-id) "dialog"))))
+  [extension-id _ action-id]
+  (keyword (name extension-id)
+           (str (name action-id) "-dialog")))

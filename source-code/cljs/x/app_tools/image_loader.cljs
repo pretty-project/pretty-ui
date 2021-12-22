@@ -44,12 +44,12 @@
   ;
   ; @param (keyword) loader-id
   ; @param (map) loader-props
-  ;  {:class (string or vector)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :image-loaded? (boolean)
   ;   :uri (string)}
   ;
   ; @return (map)
-  ;  {:class (string or vector)
+  ;  {:class (keyword or keywords in vector)
   ;   :id (keyword)
   ;   :style (map or nil)}
   [loader-id {:keys [class image-loaded? uri]}]
@@ -167,7 +167,7 @@
 (defn component
   ; @param (keyword)(opt) loader-id
   ; @param (map) loader-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :uri (string)}
   ;
   ; @usage

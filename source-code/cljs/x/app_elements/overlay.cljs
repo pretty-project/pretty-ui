@@ -61,7 +61,7 @@
   ;
   ; @param (keyword)(opt) overlay-id
   ; @param (map) overlay-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)

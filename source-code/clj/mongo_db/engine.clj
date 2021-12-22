@@ -109,10 +109,10 @@
 (defn- document<-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)(opt)}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [document]
   (let [namespace (db/document->namespace document)
@@ -169,7 +169,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) document
+  ; @param (namespaced map) document
   ;  {:namespace/id (string)}
   ;
   ; @example
@@ -181,7 +181,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name document]
   (let [namespace   (db/document->namespace document)
@@ -210,8 +210,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) query
-  ; @param (map)(opt) projection
+  ; @param (namespaced map) query
+  ; @param (namespaced map)(opt) projection
   ;
   ; @example
   ;  (find-documents-by-query "my-collection" {"my-namespace/my-keyword"  "*:my-value"
@@ -223,7 +223,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :_id                      "my-document"}
   ;
-  ; @return (maps in vector)
+  ; @return (namespaced maps in vector)
   ;  [{:_id (string)
   ;    :namespace/key (*)}]
   [collection-name query & [projection]]
@@ -235,7 +235,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map)(opt) projection
+  ; @param (namespaced map)(opt) projection
   ;
   ; @example
   ;  (find-all-documents "my-collection" {"my-namespace/my-keyword"  1
@@ -245,7 +245,7 @@
   ;    :my-namespace/your-string "your-value"
   ;    :_id                      "my-document"}]
   ;
-  ; @return (maps in vector)
+  ; @return (namespaced maps in vector)
   ;  [{:_id (string)
   ;    :namespace/key (*)}]
   [collection-name & [projection]]
@@ -255,7 +255,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) query
+  ; @param (namespaced map) query
   ;
   ; @example
   ;  (find-document-by-query "my-collection" {"my-namespace/my-keyword" "*:my-value"})
@@ -272,7 +272,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :_id                      "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:_id (string)
   ;   :namespace/key (*)}
   [collection-name query]
@@ -291,7 +291,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :_id                      "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:_id (string)
   ;   :namespace/key (*)}
   [collection-name document-id]
@@ -329,7 +329,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) query
+  ; @param (namespaced map) query
   ;
   ; @return (integer)
   [collection-name query]
@@ -342,7 +342,7 @@
 
 (defn get-all-documents
   ; @param (string) collection-name
-  ; @param (map)(opt) projection
+  ; @param (namespaced map)(opt) projection
   ;
   ; @example
   ;  (mongo-db/get-all-documents "my-collection" {:my-namespace/my-keyword  0
@@ -366,8 +366,8 @@
 
 (defn get-documents-by-query
   ; @param (string) collection-name
-  ; @param (map) query
-  ; @param (map)(opt) projection
+  ; @param (namespaced map) query
+  ; @param (namespaced map)(opt) projection
   ;
   ; @example
   ;  (mongo-db/get-documents-by-query "my-collection" {:my-namespace/my-keyword :my-value}
@@ -378,7 +378,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (maps in vector)
+  ; @return (namespaced maps in vector)
   ;  [{:namespace/id (string)}]
   [collection-name query & [projection]]
   (let [query      (-> query (json/unkeywordize-keys)
@@ -395,7 +395,7 @@
 
 (defn get-document-by-query
   ; @param (string) collection-name
-  ; @param (map) query
+  ; @param (namespaced map) query
   ;
   ; @usage
   ;  (mongo-db/get-document-by-query "my-collection" {:my-namespace/my-keyword :my-value})
@@ -404,7 +404,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name query]
   (let [query    (-> query (json/unkeywordize-keys)
@@ -425,7 +425,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name document-id]
   (if-let [document (find-document-by-id collection-name document-id)]
@@ -484,7 +484,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document]
    (add-document! collection-name document {}))
@@ -537,7 +537,7 @@
   ; @usage
   ;  (mongo-db/add-documents! "my-collection" [{...} {...}])
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name documents]
    (add-documents! collection-name documents {}))
@@ -545,9 +545,9 @@
   ([collection-name documents options]
    (reduce (fn [result document]
                (let [return (add-document! collection-name document options)]
-                    (vector/conj-item result return))
-               (param [])
-               (param documents)))))
+                    (vector/conj-item result return)))
+           (param [])
+           (param documents))))
 
 ; @usage
 ;  [:mongo-db/add-documents! "my-collection" [{...} {...}]]
@@ -579,7 +579,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document]
    (upsert-document! collection-name document {}))
@@ -622,7 +622,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document]
    (update-document! collection-name document {}))
@@ -665,7 +665,7 @@
   ;   :my-namespace/your-string "your-value"
   ;   :my-namespace/id          "my-document"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document]
    (merge-document! collection-name document {}))
@@ -687,6 +687,36 @@
 ; @usage
 ;  [:mongo-db/merge-document! "my-collection" {:my-namespace/id "my-document"}]
 (a/reg-handled-fx :mongo-db/merge-document! merge-document!)
+
+
+
+;; -- Merging documents -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn merge-documents!
+  ; @param (string) collection-name
+  ; @param (namespaced map) document
+  ;  {:namespace/id (string)}
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/merge-documents! "my-collection" [{...} {...}])
+  ;
+  ; @return (namespaced maps in vector)
+  ([collection-name documents]
+   (merge-documents! collection-name documents {}))
+
+  ([collection-name documents options]
+   (reduce (fn [result document]
+               (let [return (merge-document! collection-name document options)]
+                    (vector/conj-item result return)))
+           (param [])
+           (param documents))))
+
+; @usage
+;  [:mongo-db/merge-documents! "my-collection" [{...} {...}]]
+(a/reg-handled-fx :mongo-db/merge-documents! merge-documents!)
 
 
 
@@ -788,7 +818,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) document-id
+  ; @param (string) document-id
   ; @param (map) options
   ;  {:label-key (namespaced keyword)
   ;   :language-id (keyword)}
@@ -815,7 +845,7 @@
   ;   :modifier-f (function)(opt)
   ;   :prototype-f (function)(opt)}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
   (let [document  (get-document-by-id     collection-name document-id)
@@ -854,7 +884,7 @@
   ;   :modifier-f (function)(opt)
   ;   :prototype-f (function)(opt)}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
   (let [document     (get-document-by-id     collection-name document-id)
@@ -925,7 +955,7 @@
   ;  =>
   ;  {:my-namespace/id "..." :my-namespace/label "My document copy"}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document-id]
    (duplicate-document! collection-name document-id {:ordered? false}))

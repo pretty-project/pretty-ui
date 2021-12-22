@@ -82,7 +82,7 @@
   ;  {:color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
   ;    Default: :primary
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

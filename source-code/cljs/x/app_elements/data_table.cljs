@@ -102,7 +102,7 @@
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :highlight, :none
   ;    Default: :highlight
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :columns (maps in vector or integer)
   ;    [{:horizontal-align (keyword)(opt)
   ;       :left, :center, :right

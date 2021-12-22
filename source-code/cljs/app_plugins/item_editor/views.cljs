@@ -14,11 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.views
-    (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
+    (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [x.app-core.api       :as a]
+              [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
               [app-plugins.item-editor.engine :as engine]))
 
 
@@ -54,18 +55,16 @@
   [extension-id item-namespace {:keys [archived? error-mode? handle-archived-items? synchronizing?]}]
   (cond (and handle-archived-items? archived?)
         [elements/button ::archive-item-button
-                         {:tooltip :archived :preset :archived-icon-button
+                         {:tooltip :unarchive! :preset :archived-icon-button
                           :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/unmark-item! extension-id item-namespace
-                                                                {:marker-key       :archived?
-                                                                 :unmarked-message :archived-item-restored}]}]
+                          :on-click  [:item-editor/mark-item! extension-id item-namespace
+                                       {:marker-key :archived? :toggle-f not :marked-message :item-unarchived}]}]
         (and handle-archived-items? (not archived?))
         [elements/button ::archive-item-button
                          {:tooltip :archive! :preset :archive-icon-button
                           :disabled? (or error-mode? synchronizing?)
                           :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                                              {:marker-key     :archived?
-                                                               :marked-message :archived}]}]))
+                                       {:marker-key :archived? :toggle-f not :marked-message :item-archived}]}]))
 
 (defn favorite-item-button
   ; @param (keyword) extension-id
@@ -84,16 +83,14 @@
                          ; elemen a tooltip feliratok ki vannak kapcsolva
                          {:preset :added-to-favorites-icon-button ;:tooltip :added-to-favorites
                           :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/unmark-item! extension-id item-namespace
-                                                                {:marker-key       :favorite?
-                                                                 :unmarked-message :removed-from-favorites}]}]
+                          :on-click  [:item-editor/mark-item! extension-id item-namespace
+                                       {:marker-key :favorite? :toggle-f not :marked-message :removed-from-favorites}]}]
         (and handle-favorite-items? (not favorite?))
         [elements/button ::favorite-item-button
                          {:preset :add-to-favorites-icon-button ;:tooltip :add-to-favorites!
                           :disabled? (or error-mode? synchronizing?)
                           :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                                              {:marker-key       :favorite?
-                                                               :marked-message :added-to-favorites}]}]))
+                                       {:marker-key :favorite? :toggle-f not :marked-message :added-to-favorites}]}]))
 
 (defn copy-item-button
   ; @param (keyword) extension-id
@@ -129,42 +126,55 @@
 ;; -- Form components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input-group-label
+(defn- new-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [_ _ {:keys [content]}]
-  [elements/label {:content     content
-                   :font-size   :m
-                   :font-weight :extra-bold
-                   :indent      :none
-                   :layout      :fit}])
+  [extension-id item-namespace]
+  (let [new-item-label (engine/new-item-label extension-id item-namespace)]
+       [elements/label ::new-item-label
+                       {:content new-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
-(defn input-group-footer
-  ; @return (component)
-  []
-  [elements/horizontal-separator {:size :xxl}])
-
-(defn form-footer
-  ; @return (component)
-  []
-  [elements/horizontal-separator {:size :l}])
-
-(defn form-header
+(defn- named-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:form-label (string)}
+  ;  {:item-name (metamorphic-content)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [form-label] :as element-props}]
-  [elements/row ::form-header
-                {:horizontal-align :center
-                 :content [elements/label {:content     form-label
-                                           :font-size   :m
-                                           :font-weight :extra-bold
-                                           :layout      :fit}]}])
+  [_ _ {:keys [item-name]}]
+  [elements/label ::named-item-label
+                  {:content item-name :font-weight :extra-bold :font-size :l}])
+
+(defn- unnamed-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (component)
+  [extension-id item-namespace]
+  (let [unnamed-item-label (engine/unnamed-item-label extension-id item-namespace)]
+       [elements/label ::unnamed-item-label
+                       {:content unnamed-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
+
+(defn item-label
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:item-name (metamorphic-content)(opt)
+  ;   :new-item? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [item-name new-item?] :as element-props}]
+  (cond (string/nonempty? item-name) [named-item-label   extension-id item-namespace element-props]
+        (boolean          new-item?) [new-item-label     extension-id item-namespace element-props]
+        :unnamed-item                [unnamed-item-label extension-id item-namespace element-props]))
 
 
 
@@ -258,7 +268,7 @@
   ; @return (component)
   [extension-id item-namespace]
   [elements/multiline-field ::description-field
-                            {:value-path [extension-id :item-editor/data-items :description]}])
+                            {:value-path [extension-id :item-editor/data-item :description]}])
 
 
 

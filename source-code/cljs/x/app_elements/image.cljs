@@ -94,7 +94,7 @@
   ; @param (keyword)(opt) image-id
   ; @param (map) image-props
   ;  {:alt (string)(opt)
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :error-src (string)(opt)
   ;    TODO ...
   ;   :height (string)(opt)

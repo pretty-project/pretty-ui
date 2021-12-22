@@ -11,6 +11,9 @@
 ; @constant (string)
 (def LOG-PATH "log")
 
+; @constant (integer)
+(def MAX-LINE-COUNT 500)
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -31,4 +34,4 @@
   (let [filepath  (str LOG-PATH "/" filename)
         timestamp (time/timestamp-string)
         output    (str timestamp " " content)]
-       (io/append-to-file! filepath output)))
+       (io/append-to-file! filepath output {:max-line-count MAX-LINE-COUNT :reverse? true})))

@@ -19,6 +19,7 @@
 (def upsert-document!            engine/upsert-document!)
 (def update-document!            engine/update-document!)
 (def merge-document!             engine/merge-document!)
+(def merge-documents!            engine/merge-documents!)
 (def remove-document!            engine/remove-document!)
 (def remove-documents!           engine/remove-documents!)
 (def duplicate-document!         engine/duplicate-document!)

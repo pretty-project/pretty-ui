@@ -145,7 +145,7 @@
   ;  {:color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
   ;    Default: :primary
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)

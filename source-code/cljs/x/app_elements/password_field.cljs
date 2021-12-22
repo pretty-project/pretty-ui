@@ -90,7 +90,7 @@
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
@@ -103,6 +103,9 @@
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
   ;   :max-length (integer)(opt)
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;    Default: :none
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)
   ;   :on-focus (metamorphic-event)(constant)(opt)

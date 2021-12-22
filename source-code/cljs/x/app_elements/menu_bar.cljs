@@ -166,7 +166,7 @@
 (defn element
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center

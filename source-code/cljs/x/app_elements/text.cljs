@@ -69,7 +69,7 @@
   ;
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
   ;    Default: :default

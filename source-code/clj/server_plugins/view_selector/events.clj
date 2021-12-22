@@ -30,9 +30,9 @@
   [_ [_ extension-id selector-props]]
   [:router/add-route! (engine/route-id extension-id)
                       {:route-template (engine/route-template extension-id)
-                       :client-event   [:view-selector/initialize! extension-id selector-props]
+                       :client-event   [:view-selector/load-selector! extension-id selector-props]
                        :restricted?    true}])
-                       
+
 (defn- add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -41,7 +41,7 @@
   [_ [_ extension-id selector-props]]
   [:router/add-route! (engine/extended-route-id extension-id)
                       {:route-template (engine/extended-route-template extension-id)
-                       :client-event   [:view-selector/initialize! extension-id selector-props]
+                       :client-event   [:view-selector/load-selector! extension-id selector-props]
                        :restricted?    true}])
 
 (a/reg-event-fx

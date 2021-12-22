@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.name-handler
-    (:require [x.app-core.api                 :as a :refer [r]]
+    (:require [mid-fruits.string :as string]
+              [x.app-core.api    :as a :refer [r]]
               [x.app-locales.language-handler :as language-handler]
               [x.mid-locales.name-handler     :as name-handler]))
 
@@ -52,8 +53,8 @@
   ; @return (string)
   [db [_ first-name last-name]]
   (let [name-order (r get-name-order db)]
-       (case name-order :reversed (str last-name  " " first-name)
-                                  (str first-name " " last-name))))
+       (string/trim (case name-order :reversed (str last-name  " " first-name)
+                                               (str first-name " " last-name)))))
 
 
 

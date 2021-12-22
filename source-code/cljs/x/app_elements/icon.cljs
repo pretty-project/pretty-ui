@@ -58,7 +58,7 @@
 (defn element
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined

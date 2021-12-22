@@ -78,15 +78,12 @@
   ;
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right, :space-around, :space-between, :space-evenly
   ;    Default: :left
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both, :none
-  ;    Default: :none
   ;   :style (map)(opt)
   ;   :subscriber (subscription vector)(opt)
   ;   :stretch-orientation (keyword)(opt)

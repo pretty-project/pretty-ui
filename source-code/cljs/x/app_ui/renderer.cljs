@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v3.4.8
-; Compatibility: x4.4.8
+; Version: v3.5.6
+; Compatibility: x4.4.9
 
 
 
@@ -131,6 +131,9 @@
 ; BUG#4701 (def HIDE-ANIMATION-TIMEOUT 350)
 (def HIDE-ANIMATION-TIMEOUT 450)
 
+; @constant (ms)
+(def UPDATE-ANIMATION-TIMEOUT 350)
+
 ; DEBUG
 ; @constant (ms)
 (def RENDER-DELAY-OFFSET 0)
@@ -160,9 +163,8 @@
   ;
   ; @return (map)
   [renderer-props]
-  (map/inherit (param renderer-props)
-               [:alternate-id :destructor :initializer :required? :partition-id
-                :rerender-same? :queue-behavior]))
+  (map/inherit renderer-props [:alternate-id :destructor :initializer :required? :partition-id
+                               :rerender-same? :queue-behavior]))
 
 (defn renderer-props->component-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -171,38 +173,7 @@
   ;
   ; @return (map)
   [renderer-props]
-  (map/inherit (param renderer-props)
-               [:attributes :element]))
-
-(defn- element-props->reveal-element-animated?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) element-props
-  ;  {:reveal-animated? (boolean)}
-  ;
-  ; @return (boolean)
-  [{:keys [reveal-animated?]}]
-  (boolean reveal-animated?))
-
-(defn- element-props->hide-element-animated?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) element-props
-  ;  {:hide-animated? (boolean)}
-  ;
-  ; @return (boolean)
-  [{:keys [hide-animated?]}]
-  (boolean hide-animated?))
-
-(defn- element-props->update-element-animated?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) element-props
-  ;  {:update-animated? (boolean)}
-  ;
-  ; @return (boolean)
-  [{:keys [update-animated?]}]
-  (boolean update-animated?))
+  (map/inherit renderer-props [:attributes :element]))
 
 
 
@@ -481,8 +452,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id]]
-  (let [element-props (r get-element-props db renderer-id element-id)]
-       (element-props->reveal-element-animated? element-props)))
+  (let [reveal-animated? (r get-element-prop db renderer-id element-id :reveal-animated?)]
+       (boolean reveal-animated?)))
 
 (defn hide-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -492,8 +463,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id]]
-  (let [element-props (r get-element-props db renderer-id element-id)]
-       (element-props->hide-element-animated? element-props)))
+  (let [hide-animated? (r get-element-prop db renderer-id element-id :hide-animated?)]
+       (boolean hide-animated?)))
 
 (defn element-rendered?
   ; @param (keyword) renderer-id
@@ -636,12 +607,13 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
+  ;  {:update-animated? (boolean)(opt)}
   ;
   ; @return (boolean)
-  [db [_ renderer-id element-id element-props]]
+  [db [_ renderer-id element-id {:keys [update-animated?]}]]
   (boolean (and (r element-rendered?   db renderer-id element-id)
                 (not (r rerender-same? db renderer-id))
-                (element-props->update-element-animated? element-props))))
+                (boolean update-animated?))))
 
 (defn- update-element-static?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -649,12 +621,13 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
+  ;  {:update-animated? (boolean)(opt)}
   ;
   ; @return (boolean)
-  [db [_ renderer-id element-id element-props]]
+  [db [_ renderer-id element-id {:keys [update-animated?]}]]
   (boolean (and (r element-rendered?   db renderer-id element-id)
                 (not (r rerender-same? db renderer-id))
-                (not (element-props->update-element-animated? element-props)))))
+                (not update-animated?))))
 
 (defn- push-element?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -675,12 +648,13 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
+  ;  {:reveal-animated? (boolean)(opt)}
   ;
   ; @return (boolean)
-  [db [_ renderer-id element-id element-props]]
+  [db [_ renderer-id element-id {:keys [reveal-animated?]}]]
   (boolean (and (not (r max-elements-reached? db renderer-id))
                 (not (r element-rendered?     db renderer-id element-id))
-                (element-props->reveal-element-animated? element-props))))
+                (boolean reveal-animated?))))
 
 (defn- render-element-static?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -688,12 +662,13 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   ; @param (map) element-props
+  ;  {:reveal-animated? (boolean)(opt)}
   ;
   ; @return (boolean)
-  [db [_ renderer-id element-id element-props]]
+  [db [_ renderer-id element-id {:keys [reveal-animated?]}]]
   (boolean (and (not (r max-elements-reached? db renderer-id))
                 (not (r element-rendered?     db renderer-id element-id))
-                (not (element-props->reveal-element-animated? element-props)))))
+                (not reveal-animated?))))
 
 (defn- destroy-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1019,8 +994,12 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      {:db       (r update-element-props! db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended      renderer-id]}))
+      {:db (r update-element-props! db renderer-id element-id element-props)
+       :dispatch-n [[:ui/->rendering-ended renderer-id]
+                    [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "update"]]
+       :dispatch-later
+       [{:ms UPDATE-ANIMATION-TIMEOUT
+         :dispatch [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
 
 (a/reg-event-fx
   :ui/update-element-static!

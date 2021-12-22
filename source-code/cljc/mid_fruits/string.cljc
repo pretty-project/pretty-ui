@@ -784,6 +784,14 @@
            (param \newline))
       (return 0)))
 
+(defn max-lines
+  ; @param (string) n
+  ; @param (integer) limit
+  ;
+  ; @return (string)
+  [n limit]
+  n)
+
 (defn paren
   ; @param (string) n
   ;

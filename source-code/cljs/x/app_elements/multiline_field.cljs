@@ -35,7 +35,6 @@
   ;   :layout (keyword)
   ;   :max-height (integer)
   ;   :min-height (integer)
-  ;   :min-width (keyword)
   ;   :multiline? (boolean)
   ;   :status-animation? (boolean)}
   [field-id field-props]
@@ -43,7 +42,6 @@
           :layout     :row
           :max-height 32
           :min-height 1
-          :min-width  :s
           :value-path (engine/default-value-path field-id)}
          (param field-props)
          {:multiline? true
@@ -98,7 +96,7 @@
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
@@ -129,7 +127,7 @@
   ;    Default: 1
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :s
+  ;    Default: :none
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)
   ;   :on-enter (metamorphic-event)(constant)(opt)

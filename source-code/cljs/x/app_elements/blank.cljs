@@ -62,7 +62,7 @@
   ;
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
   ;   :stickers (maps in vector)(opt)

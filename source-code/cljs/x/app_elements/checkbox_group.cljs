@@ -162,7 +162,7 @@
 (defn element
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
   ;    Default: :primary

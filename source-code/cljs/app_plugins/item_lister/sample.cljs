@@ -8,9 +8,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A szerver-oldalon inicializált item-lister plugint az extension nevéből készített
-; útvonalon lehetséges elérni
-(a/dispatch [:router/go-to! "/my-extension"])
+(a/reg-event-fx
+  :open-item-lister!
+  [:router/go-to! "/my-extension"])
 
 
 

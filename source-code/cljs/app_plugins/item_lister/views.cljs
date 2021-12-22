@@ -215,7 +215,7 @@
   [extension-id item-namespace {:keys [any-item-selected? synchronizing?]}]
   [elements/button ::delete-selected-items-button
                    {:disabled? (or (not any-item-selected?) synchronizing?)
-                    :on-click  [:item-lister/render-delete-selected-items-dialog! extension-id item-namespace]
+                    :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
 
@@ -233,11 +233,13 @@
   [elements/button ::archive-selected-items-button
                    (if (= filter :archived-items)
                        {:disabled? (or (not any-item-selected?) synchronizing?)
-                        :on-click  [:item-lister/render-unarchive-selected-items-dialog! extension-id item-namespace]
+                        :on-click  [:item-lister/mark-selected-items! extension-id item-namespace
+                                     {:marker-key :archived? :toggle-f not :marked-message :n-items-unarchived}]
                         :preset    :archived-icon-button
                         :tooltip   :unarchive!}
                        {:disabled? (or (not any-item-selected?) synchronizing?)
-                        :on-click  [:item-lister/render-archive-selected-items-dialog! extension-id item-namespace]
+                        :on-click  [:item-lister/mark-selected-items! extension-id item-namespace
+                                     {:marker-key :archived? :toggle-f not :marked-message :n-items-archived}]
                         :preset    :archive-icon-button
                         :tooltip   :archive!})])
 
@@ -404,7 +406,8 @@
   ; @return (hiccup)
   [extension-id item-namespace element-props]
   [:div.item-lister--header--item-filters
-    [elements/menu-bar {:menu-items (filter-menu-items extension-id item-namespace element-props)}]])
+    [elements/menu-bar {:menu-items (filter-menu-items extension-id item-namespace element-props)
+                        :horizontal-align :left}]])
 
 
 

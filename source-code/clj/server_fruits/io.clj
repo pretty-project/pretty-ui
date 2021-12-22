@@ -155,12 +155,22 @@
 (defn append-to-file!
   ; @param (string) filepath
   ; @param (*) content
+  ; @param (map)(opt) options
+  ;  {:max-line-count (integer)(opt)
+  ;   :reverse? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @return (?)
-  [filepath content]
+  [filepath content {:keys [max-line-count reverse?]}]
   (let [file-content (read-file filepath)
-        output       (str file-content "\n" content)]
-       (write-file! filepath output)))
+        output       (if reverse? (str content      "\n" file-content)
+                                  (str file-content "\n" content))]
+       (if (some? max-line-count)
+           ; If maximum number of lines is limited ...
+           (let [output (string/max-lines output max-line-count)]
+                (write-file! filepath output))
+           ; If maximum number of lines is NOT limited ...
+           (write-file! filepath output))))
 
 (defn create-file!
   ; @param (string) filepath

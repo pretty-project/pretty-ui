@@ -170,6 +170,7 @@ button.x-card:focus,
 .x-element--helper,
 .x-element--info-tooltip--icon,
 .x-element--info-tooltip--content,
+.x-expandable--icon,
 .x-expandable--label,
 .x-expandable--expand-icon,
 .x-file--icon,
@@ -2356,7 +2357,7 @@ body[data-viewport-profile="s"]
   font-size: var( --icon-size-m );
   height: 24px;
   line-height: 24px;
-  margin-right: var( --flex-edge );
+  margin-right: 12px;
   width: 24px }
 
 /*** Expandable icon ***/
@@ -2530,7 +2531,7 @@ body[data-viewport-profile="s"]
   flex-direction: column;
   height: 180px;
   justify-content: center;
-  padding: 0 var( --flex-edge );
+  padding: 0 24px;
   width: 280px }
 
 .x-file-drop-area--label {
@@ -2699,7 +2700,7 @@ body[data-viewport-profile="s"]
 /*** Menu item ***/
 
 .x-menu-bar--menu-item {
-  color: var( --color-muted );
+  color: var( --color-highlight );
   display: flex;
   flex-direction: column;
   font-size: var( --font-size-s );
@@ -2713,6 +2714,7 @@ body[data-viewport-profile="s"]
   background-color: var( --border-color-primary );
   bottom: 0;
   content: '';
+  content: none;
   height: 2px;
   left: 0;
   position: absolute;

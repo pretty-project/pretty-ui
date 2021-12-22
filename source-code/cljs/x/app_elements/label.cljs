@@ -97,7 +97,7 @@
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
   ;    Default: :default

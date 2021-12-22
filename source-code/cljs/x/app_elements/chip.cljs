@@ -122,7 +122,7 @@
   ;  {:background-color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :highlight
   ;    Default: :primary
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :delete-button-icon (keyword)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

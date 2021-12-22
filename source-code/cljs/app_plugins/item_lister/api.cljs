@@ -17,6 +17,7 @@
     (:require [app-plugins.item-lister.dialogs]
               [app-plugins.item-lister.engine]
               [app-plugins.item-lister.events]
+              [app-plugins.item-lister.queries]
               [app-plugins.item-lister.subs]
               [app-plugins.item-lister.views :as views]))
 

@@ -159,7 +159,7 @@
         dash-empty  (- cf dash-filled)
         rotation    (+ rotation ANGLE-CORRECTION)]
        (svg/circle {:x x :y y :r r
-                    :class      "x-circle-diagram--section"
+                    :class :x-circle-diagram--section
                     :data-color color
                     :style {:stroke-dasharray (str dash-filled " " dash-empty)
                             :stroke-width     (css/px strength)

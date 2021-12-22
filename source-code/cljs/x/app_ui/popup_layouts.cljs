@@ -102,7 +102,7 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimizable?]}]
-  (if minimizable? [elements/button {:class    "x-app-popups--element--minimize-button"
+  (if minimizable? [elements/button {:class    :x-app-popups--element--minimize-button
                                      :color    :invert
                                      :icon     :close_fullscreen
                                      :layout   :icon-button
@@ -118,7 +118,7 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [minimized?]}]
-  (if minimized? [elements/button {:class    "x-app-popups--element--maximize-button"
+  (if minimized? [elements/button {:class    :x-app-popups--element--maximize-button
                                    :color    :muted
                                    :icon     :fullscreen
                                    :layout   :icon-button

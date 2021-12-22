@@ -115,7 +115,7 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :style (map)(opt)}
   ;
   ; @return (map)
@@ -804,7 +804,7 @@
 (defn sortable
   ; @param (keyword)(opt) sortable-id
   ; @param (map) sortable-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :common-props (map)(opt)
   ;   :element (component)
   ;   :on-drag-end (metamorphic-event)(opt)

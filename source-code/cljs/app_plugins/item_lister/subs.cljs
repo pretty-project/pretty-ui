@@ -154,7 +154,7 @@
 ;  [:item-lister/item-disabled? :my-extension :my-type 0]
 (a/reg-sub :item-lister/item-disabled? item-disabled?)
 
-(defn get-selected-items
+(defn get-selected-item-dexes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -187,7 +187,7 @@
   ;
   ; @return (integer)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r get-selected-items db extension-id item-namespace)]
+  (let [selected-items (r get-selected-item-dexes db extension-id item-namespace)]
        (count selected-items)))
 
 (defn item-selected?
@@ -202,8 +202,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace item-dex]]
-  (let [selected-items (r get-selected-items db extension-id item-namespace)]
-       (vector/contains-item? selected-items item-dex)))
+  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
+       (vector/contains-item? selected-item-dexes item-dex)))
 
 ; @usage
 ;  [:item-lister/item-selected? :my-extension :my-type 0]
@@ -230,8 +230,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r get-selected-items db extension-id item-namespace)]
-       (vector/nonempty? selected-items)))
+  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
+       (vector/nonempty? selected-item-dexes)))
 
 (defn all-items-downloaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -304,15 +304,79 @@
   (and (r download-more-items? db extension-id item-namespace)
        (r synchronizing?       db extension-id item-namespace)))
 
-(defn get-recovered-items
+(defn export-backup-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
   ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-ids]])
+  ; @return (namespaced maps in vector)
+  [db [_ extension-id item-namespace item-ids]]
+  (reduce (fn [result item-id]
+              (let [backup-item   (get-in db [extension-id :item-lister/backup-items item-id])
+                    exported-item (db/document->namespaced-document backup-item item-namespace)]
+                   (vector/conj-item result exported-item)))
+          (param [])
+          (param item-ids)))
+
+(defn export-marked-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) mark-props
+  ;  {:marker-key (keyword)
+  ;   :toggle-f (function)}
+  ;
+  ; @example
+  ;  (r subs/export-marked-items db :my-extension :my-type {:marker-key :archived? :toggle-f not}
+  ;                                                        ["my-item" "your-item"])
+  ;  =>
+  ;  [{:my-type/id "my-item"   :my-type/archived? true}
+  ;   {:my-type/id "your-item" :my-type/archived? true}]
+  ;
+  ; @return (namespaced maps in vector)
+  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
+  (let [item-dexes  (r get-selected-item-dexes db extension-id item-namespace)
+        item-id-key (keyword item-namespace :id)]
+       (reduce (fn [result item-dex]
+                   (let [item-id      (get-in db [extension-id :item-lister/data-items item-dex :id])
+                         marker-value (get-in db [extension-id :item-lister/data-items item-dex marker-key])
+                         marker-key   (keyword item-namespace marker-key)]
+                        (vector/conj-item result {item-id-key item-id marker-key (toggle-f marker-value)})))
+               (param [])
+               (param item-dexes))))
+
+(defn export-unmarked-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) mark-props
+  ;  {:marker-key (keyword)
+  ;   :toggle-f (function)}
+  ; @param (strings in vector) item-ids
+  ;
+  ; @example
+  ;  (r subs/export-unmarked-items db :my-extension :my-type {:marker-key :archived? :toggle-f not}
+  ;                                                          ["my-item" "your-item"])
+  ;  =>
+  ;  [{:my-type/id "my-item"   :my-type/archived? false}
+  ;   {:my-type/id "your-item" :my-type/archived? false}]
+  ;
+  ; @return (namespaced maps in vector)
+  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]} item-ids]]
+  ; XXX#7810
+  ; Az elemek megjelőlésének visszavonásához szükséges azokról másolatot készíteni,
+  ; mivel az item-lister plugin a megjelölt elemeket eltávolítja a letöltött elemek listájából.
+  (let [item-id-key (keyword item-namespace :id)]
+       (reduce (fn [result item-id]
+                   (let [marker-value (get-in db [extension-id :item-lister/backup-items marker-key])
+                         marker-key   (keyword item-namespace marker-key)]
+                        (vector/conj-item result {item-id-key item-id marker-key (toggle-f marker-value)})))
+               (param [])
+               (param item-ids))))
 
 (defn get-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

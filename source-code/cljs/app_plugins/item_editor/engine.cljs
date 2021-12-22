@@ -26,6 +26,8 @@
 (def form-id                 engine/form-id)
 (def item-id->new-item?      engine/item-id->new-item?)
 (def item-id->form-label     engine/item-id->form-label)
+(def new-item-label          engine/new-item-label)
+(def unnamed-item-label      engine/unnamed-item-label)
 (def request-id              engine/request-id)
 (def mutation-name           engine/mutation-name)
 (def resolver-id             engine/resolver-id)
@@ -36,3 +38,27 @@
 (def parent-uri              engine/parent-uri)
 (def render-event            engine/render-event)
 (def dialog-id               engine/dialog-id)
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn server-response->copy-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (engine/server-response->copy-id :my-extension :my-type
+  ;                                   {my-extension/duplicate-my-type-item! {:my-type/id "my-item"}})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [extension-id item-namespace server-response]
+  (let [item-id-key   (keyword item-namespace "id")
+        mutation-name (mutation-name extension-id item-namespace :duplicate)]
+       (get-in server-response [(symbol mutation-name) item-id-key])))

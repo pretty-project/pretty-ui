@@ -24,19 +24,19 @@
 ;; ----------------------------------------------------------------------------
 
 (defn join-class
-  ; @param (list of string or vector)
+  ; @param (list of keyword or keywords in vector)
   ;
   ; @example
-  ;  (css/join-class "my-class" ["your-class"] "our-class")
+  ;  (css/join-class :my-class [:your-class] :our-class)
   ;  =>
-  ;  ["my-class" "your-class" "our-class"]
+  ;  [:my-class :your-class :our-class]
   ;
-  ; @return (vector)
+  ; @return (keywords in vector)
   [& xyz]
   (reduce (fn [result x]
-              (cond (vector? x) (vector/concat-items result x)
-                    (string? x) (vector/conj-item    result x)
-                    :else       (return              result)))
+              (cond (vector?  x) (vector/concat-items result x)
+                    (keyword? x) (vector/conj-item    result x)
+                    :else        (return              result)))
           (param [])
           (param xyz)))
 

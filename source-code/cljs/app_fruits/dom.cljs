@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v1.4.8
+; Version: v1.8.6
 
 
 
@@ -16,10 +16,8 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.css     :as css]
               [mid-fruits.io      :as io]
-              [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mid-fruits.math    :as math]
-              [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]))
 
@@ -82,7 +80,7 @@
   ;
   ; @return (string)
   [event]
-  (.-nodeName (.-srcElement event)))
+  (-> event .-srcElement .-nodeName))
 
 (defn event->value
   ; @param (dom-event) n
@@ -102,8 +100,11 @@
   ;  Default: js/document
   ;
   ; @return (DOM-element or nil)
-  [element-id & [parent-element]]
-  (.getElementById (or parent-element js/document) element-id))
+  ([element-id]
+   (.getElementById js/document element-id))
+
+  ([element-id parent-element]
+   (.getElementById parent-element element-id)))
 
 (defn get-elements-by-query-selector
   ; @param (DOM-element) parent-element
@@ -111,16 +112,14 @@
   ;  XXX#7603
   ;
   ; @usage
-  ;  (dom/get-elements-by-query-selector
-  ;   head-element link-element "[type=\"text/css\"]")
+  ;  (dom/get-elements-by-query-selector head-element "[type=\"text/css\"]")
   ;
   ; @usage
-  ;  (dom/get-elements-by-query-selector
-  ;   body-element my-element "div.my-class, div.your-class")
+  ;  (dom/get-elements-by-query-selector body-element "div.my-class, div.your-class")
   ;
   ; @return (vector)
   [parent-element query-selector]
-  (vec (array-seq (.querySelectorAll parent-element query-selector))))
+  (-> parent-element (.querySelectorAll query-selector) array-seq vec))
 
 (defn get-elements-by-class-name
   ; @param (string) class-name
@@ -128,8 +127,11 @@
   ;  Default: js/document
   ;
   ; @return (vector)
-  [class-name & [parent-element]]
-  (vec (array-seq (.getElementsByClassName (or parent-element js/document) class-name))))
+  ([class-name]
+   (-> js/document (.getElementsByClassName class-name) array-seq vec))
+
+  ([class-name parent-element]
+   (-> parent-element (.getElementsByClassName class-name) array-seq vec)))
 
 (defn get-elements-by-tag-name
   ; @param (string) tag-name
@@ -137,18 +139,23 @@
   ;  Default: js/document
   ;
   ; @return (vector)
-  [tag-name & [parent-element]]
-  (vec (array-seq (.getElementsByTagName (or parent-element js/document) tag-name))))
+  ([tag-name]
+   (-> js/document (.getElementsByTagName tag-name) array-seq vec))
+
+  ([tag-name parent-element]
+   (-> parent-element (.getElementsByTagName tag-name) array-seq vec)))
 
 (defn get-body-element
   ; @return (DOM-element)
   []
-  (aget (.getElementsByTagName js/document "body") 0))
+  (-> js/document (.getElementsByTagName "body")
+                  (aget 0)))
 
 (defn get-head-element
   ; @return (DOM-element)
   []
-  (aget (.getElementsByTagName js/document "head") 0))
+  (-> js/document (.getElementsByTagName "head")
+                  (aget 0)))
 
 (defn get-document-element
   ; @return (DOM-element)
@@ -168,25 +175,17 @@
 (defn get-document-height
   ; @return (integer)
   []
-  (.-scrollHeight (.-documentElement js/document)))
+  (-> js/document .-documentElement .-scrollHeight))
 
 (defn get-document-width
   ; @return (integer)
   []
-  (.-scrollWidth (.-documentElement js/document)))
+  (-> js/document .-documentElement .-scrollWidth))
 
 
 
 ;; -- Get viewport data helpers -----------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-viewport-size
-  ; @return (map)
-  ;  {:viewport.height (integer)
-  ;   :viewport.width (integer)}
-  []
-  {:viewport.height (.-innerHeight js/window)
-   :viewport.width  (.-innerWidth  js/window)})
 
 (defn get-viewport-height
   ; @return (integer)
@@ -206,10 +205,9 @@
   ;
   ; @return (boolean)
   [n]
-  (let [viewport-width    (get-viewport-width)
-        {:keys [max min]} (n VIEWPORT-PROFILES)]
-       (boolean (and (>= viewport-width min)
-                     (<= viewport-width max)))))
+  (let [viewport-width (.-innerWidth js/window)]
+       (and (>= viewport-width (get-in VIEWPORT-PROFILES [n :min]))
+            (<= viewport-width (get-in VIEWPORT-PROFILES [n :max])))))
 
 (defn viewport-profiles-match?
   ; @param (vector) xyz
@@ -234,67 +232,63 @@
   ; @return (keyword)
   ;  :landscape, :portrait
   []
-  (if (> (get-viewport-height)
-         (get-viewport-width))
+  (if (> (.-innerHeight js/window)
+         (.-innerWidth  js/window))
       (return :portrait)
       (return :landscape)))
+
+(defn square-viewport?
+  ; @return (boolean)
+  []
+  (= (.-innerHeight js/window)
+     (.-innerWidth  js/window)))
 
 (defn landscape-viewport?
   ; @return (boolean)
   []
-  (< (get-viewport-height)
-     (get-viewport-width)))
+  (< (.-innerHeight js/window)
+     (.-innerWidth  js/window)))
 
 (defn portrait-viewport?
   ; @return (boolean)
   []
-  (not (landscape-viewport?)))
+  (> (.-innerHeight js/window)
+     (.-innerWidth  js/window)))
 
 
 
 ;; -- Get scroll data helpers -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-scroll-position
-  ; @return (map)
-  ;  {:scroll.x (integer)
-  ;   :scroll-y (integer)}
-  []
-  (let [document-element (get-document-element)]
-       {:scroll.x (.-scrollLeft document-element)
-        :scroll.y (.-scrollTop  document-element)}))
-
 (defn get-scroll-x
   ; @return (integer)
   []
-  (.-scrollLeft (get-document-element)))
+  (-> js/document .-documentElement .-scrollLeft))
 
 (defn get-scroll-y
   ; @return (integer)
   []
-  (.-scrollTop (get-document-element)))
+  (-> js/document .-documentElement .-scrollTop))
 
 (defn scroll-direction-ttb?
   ; @param (integer) last-scroll-y
   ;
   ; @return (boolean)
   [last-scroll-y]
-  (let [scroll-y (get-scroll-y)]
-       ; Ha a scroll-y értéke legalább a SCROLL-DIRECTION-SENSITIVITY
-       ; értékével nagyobb, mint a last-scroll-y értéke
-       (< (+ last-scroll-y SCROLL-DIRECTION-SENSITIVITY)
-          (param scroll-y))))
+  ; Ha a scroll-y értéke legalább a SCROLL-DIRECTION-SENSITIVITY
+  ; értékével nagyobb, mint a last-scroll-y értéke ...
+  (< (+ last-scroll-y SCROLL-DIRECTION-SENSITIVITY)
+     (-> js/document .-documentElement .-scrollTop)))
 
 (defn scroll-direction-btt?
   ; @param (integer) last-scroll-y
   ;
   ; @return (boolean)
   [last-scroll-y]
-  (let [scroll-y (get-scroll-y)]
-       ; Ha a scroll-y értéke legalább a SCROLL-DIRECTION-SENSITIVITY
-       ; értékével kisebb, mint a last-scroll-y értéke
-       (> (- last-scroll-y SCROLL-DIRECTION-SENSITIVITY)
-          (param scroll-y))))
+  ; Ha a scroll-y értéke legalább a SCROLL-DIRECTION-SENSITIVITY
+  ; értékével kisebb, mint a last-scroll-y értéke ...
+  (> (- last-scroll-y SCROLL-DIRECTION-SENSITIVITY)
+     (-> js/document .-documentElement .-scrollTop)))
 
 (defn get-scroll-direction
   ; @param (integer) last-scroll-y
@@ -302,14 +296,14 @@
   ; @return (keyword or nil)
   ;   nil, :btt, :ttb
   [last-scroll-y]
-  (cond (and (scroll-direction-ttb? last-scroll-y)
-             ; XXX#0061
-             (math/nonnegative? last-scroll-y))
+  (cond (and ; XXX#0061
+             (scroll-direction-ttb? last-scroll-y)
+             (math/nonnegative?     last-scroll-y))
         (return :ttb)
 
-        (and (scroll-direction-btt? last-scroll-y)
-             ; XXX#0061
-             (math/nonnegative? last-scroll-y))
+        (and ; XXX#0061
+             (scroll-direction-btt? last-scroll-y)
+             (math/nonnegative?     last-scroll-y))
         (return :btt)
 
         ; XXX#0061
@@ -331,9 +325,9 @@
   ; @return (integer)
   ;  0 - 100
   []
-  (let [scroll-y        (get-scroll-y)
-        document-height (get-document-height)
-        viewport-height (get-viewport-height)
+  (let [viewport-height (.-innerHeight js/window)
+        scroll-y        (-> js/document .-documentElement .-scrollTop)
+        document-height (-> js/document .-documentElement .-scrollHeight)
         max-scroll-y    (- document-height viewport-height)
         scroll-progress (math/percent max-scroll-y scroll-y)]
       ; A DOM-struktúra felépülése közben előfordul olyan pillanat, amikor
@@ -345,6 +339,25 @@
 
 ;; -- Get mouse data helpers --------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-viewport-quarter
+  ; @param (DOM-event) mouse-event
+  ;
+  ; @return (keyword)
+  ;  :tl, :tr, :bl, :br
+  [mouse-event]
+  (let [half-viewport-height (-> js/window .-innerHeight (/ 2))
+        half-viewport-width  (-> js/window .-innerWidth  (/ 2))
+        mouse-x              (.-clientX mouse-event)
+        mouse-y              (.-clientY mouse-event)]
+       (cond (and (< mouse-x half-viewport-width)
+                  (< mouse-y half-viewport-height))
+             :tl
+             (and (>= mouse-x half-viewport-width)
+                  (<  mouse-y half-viewport-height))
+             :tr
+             (< mouse-x half-viewport-width)
+             :bl :else :br)))
 
 (defn get-mouse-x
   ; @param (DOM-event) mouse-event
@@ -360,16 +373,6 @@
   [mouse-event]
   (.-clientY mouse-event))
 
-(defn get-mouse-position
-  ; @param (DOM-event) mouse-event
-  ;
-  ; @return (map)
-  ;  {:mouse.x (integer)
-  ;   :mouse.y (integer)}
-  [mouse-event]
-  {:mouse.x (.-clientX mouse-event)
-   :mouse.y (.-clientY mouse-event)})
-
 
 
 ;; -- Get DOM-element data helpers --------------------------------------------
@@ -380,17 +383,7 @@
   ;
   ; @return (boolean)
   [element]
-  (boolean (.-disabled element)))
-
-(defn get-element-size
-  ; @param (DOM-element) element
-  ;
-  ; @return (map)
-  ;  {:height (integer)
-  ;   :width (integer)}
-  [element]
-  {:height (.-offsetHeight element)
-   :width  (.-offsetWidth  element)})
+  (-> element .-disabled boolean))
 
 (defn get-element-width
   ; @param (DOM-element) element
@@ -413,8 +406,7 @@
   ;
   ; @return (integer)
   [element]
-  (let [bcr (-> element .getBoundingClientRect)]
-       (math/round (.-left bcr))))
+  (-> element .getBoundingClientRect .-left math/round))
 
 (defn get-element-relative-top
   ; Relative position: relative to viewport position
@@ -423,8 +415,7 @@
   ;
   ; @return (integer)
   [element]
-  (let [bcr (-> element .getBoundingClientRect)]
-       (math/round (.-top bcr))))
+  (-> element .getBoundingClientRect .-top math/round))
 
 (defn get-element-absolute-left
   ; Absolute position: relative to document position
@@ -433,7 +424,8 @@
   ;
   ; @return (integer)
   [element]
-  (math/round (+ (get-element-relative-left element) (get-scroll-x))))
+  (math/round (+ (-> element     .getBoundingClientRect .-left)
+                 (-> js/document .-documentElement .-scrollLeft))))
 
 (defn get-element-absolute-top
   ; Absolute position: relative to document position
@@ -442,43 +434,26 @@
   ;
   ; @return (integer)
   [element]
-  (math/round (+ (get-element-relative-top element) (get-scroll-y))))
+  (math/round (+ (-> element     .getBoundingClientRect .-top)
+                 (-> js/document .-documentElement .-scrollTop))))
 
-(defn get-element-relative-position
-  ; Relative position: relative to viewport position
-  ;
-  ; @param (DOM-element) element
-  ;
-  ; @return (map)
-  ;  {:left (integer)
-  ;   :top (integer)}
-  [element]
-  {:left (get-element-relative-left element)
-   :top  (get-element-relative-top  element)})
-
-(defn get-element-absolute-position
-  ; Absolute position: relative to document position
-  ;
-  ; @param (DOM-element) element
-  ;
-  ; @return (map)
-  ;  {:left (integer)
-  ;   :top (integer)}
-  [element]
-  {:left (get-element-absolute-left element)
-   :top  (get-element-absolute-top  element)})
-
-(defn get-element-offset-position
+(defn get-element-offset-left
   ; Offset position: relative to parent position
   ;
   ; @param (DOM-element) element
   ;
-  ; @return (map)
-  ;  {:left (integer)
-  ;   :top (integer)}
+  ; @return (integer)
   [element]
-  {:left (math/round (.-offsetLeft element))
-   :top  (math/round (.-offsetTop  element))})
+  (-> element .-offsetLeft math/round))
+
+(defn get-element-offset-top
+  ; Offset position: relative to parent position
+  ;
+  ; @param (DOM-element) element
+  ;
+  ; @return (integer)
+  [element]
+  (-> element .-offsetTop math/round))
 
 (defn get-element-computed-style
   ; @param (DOM-element) element
@@ -494,86 +469,85 @@
   ;
   ; @example
   ;  (get-element-style my-element "display")
-  ;  => "flex"
+  ;  =>
+  ;  "flex"
   ;
   ; @return (string)
   [element style-name]
-  (let [element-computed-style (get-element-computed-style element)]
-       (aget element-computed-style style-name)))
+  (-> js/window (.getComputedStyle element)
+                (aget style-name)))
 
 (defn get-body-style-value
   ; @param (string) style-name
   ;
   ; @example
-  ;  (get-element-style "background")
-  ;  => "red"
+  ;  (get-element-style "background-color")
+  ;  =>
+  ;  "red"
   ;
   ; @return (string)
   [style-name]
-  (let [body-element (get-body-element)]
-       (get-element-style-value body-element style-name)))
+  (-> js/window (.getComputedStyle (-> js/document (.getElementsByTagName "body")
+                                                   (aget 0)))
+                (aget style-name)))
 
 (defn get-element-masspoint-x
   ; @param (DOM-element) element
   ;
   ; @return (integer)
   [element]
-  (let [bcr   (-> element .getBoundingClientRect)
-        width (.-offsetWidth element)]
-       (math/round (+ (.-left bcr)
-                      (/ width 2)
-                      (get-scroll-x)))))
+  (math/round (+ (-> element     .-offsetWidth (/ 2))
+                 (-> element     .getBoundingClientRect .-left)
+                 (-> js/document .-documentElement .-scrollLeft))))
 
 (defn get-element-masspoint-y
   ; @param (DOM-element) element
   ;
   ; @return (integer)
   [element]
-  (let [bcr    (-> element .getBoundingClientRect)
-        height (.-offsetHeight element)]
-       (math/round (+ (.-left bcr)
-                      (/ height 2)
-                      (get-scroll-y)))))
-
-(defn get-element-masspoint-position
-  ; @param (DOM-element) element
-  ;
-  ; @return (map)
-  ;  {:x (integer)
-  ;   :y (integer)}
-  [element]
-  {:x (get-element-masspoint-x element)
-   :y (get-element-masspoint-y element)})
+  (math/round (+ (-> element     .-offsetHeight (/ 2))
+                 (-> element     .getBoundingClientRect .-left)
+                 (-> js/document .-documentElement .-scrollTop))))
 
 (defn element-on-viewport-left?
   ; @param (DOM-element) element
   ;
   ; @return (boolean)
   [element]
-  (<= (get-element-masspoint-x element)
-      (/ (get-viewport-width) 2)))
+  (<= (+ (-> element     .-offsetWidth (/ 2))
+         (-> element     .getBoundingClientRect .-left)
+         (-> js/document .-documentElement .-scrollLeft))
+      (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-right?
   ; @param (DOM-element) element
   ;
   ; @return (boolean)
   [element]
-  (not (element-on-viewport-left? element)))
+  (> (+ (-> element     .-offsetWidth (/ 2))
+        (-> element     .getBoundingClientRect .-left)
+        (-> js/document .-documentElement .-scrollLeft))
+     (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-top?
   ; @param (DOM-element) element
   ;
   ; @return (boolean)
   [element]
-  (<= (get-element-masspoint-y element)
-      (/ (get-viewport-width) 2)))
+  (<= (+ (-> element     .-offsetHeight (/ 2))
+         (-> element     .getBoundingClientRect .-left)
+         (-> js/document .-documentElement .-scrollTop))
+      (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-bottom?
   ; @param (DOM-element) element
   ;
   ; @return (boolean)
   [element]
-  (not (element-on-viewport-top? element)))
+  (> (+ (-> element     .-offsetHeight (/ 2))
+        (-> element     .getBoundingClientRect .-left)
+        (-> js/document .-documentElement .-scrollTop))
+     (-> js/window .-innerWidth (/ 2))))
 
 (defn get-element-masspoint-orientation
   ; @param (DOM-element) element
@@ -615,7 +589,7 @@
   ; @usage
   ;  (dom/set-element-id! my-element "my-element-id")
   [element element-id]
-  (set! (.-id element) element-id))
+  (-> element .-id (set! element-id)))
 
 (defn set-element-style!
   ; @param (DOM-element) element
@@ -640,25 +614,25 @@
   ; @param (string) style-name
   ; @param (*) style-value
   [element style-name style-value]
-  (aset (.-style element) style-name style-value))
+  (-> element .-style (aset style-name style-value)))
 
 (defn remove-element-style-value!
   ; @param (DOM-element) element
   ; @param (string) style-name
   [element style-name]
-  (aset (.-style element) style-name nil))
+  (-> element .-style (aset style-name nil)))
 
 (defn set-element-class!
   ; @param (DOM-element) element
   ; @param (string) class-name
   [element class-name]
-  (.add (.-classList element) class-name))
+  (-> element .-classList (.add class-name)))
 
 (defn remove-element-class!
   ; @param (DOM-element) element
   ; @param (string) class-name
   [element class-name]
-  (.remove (.-classList element) class-name))
+  (-> element .-classList (.remove class-name)))
 
 
 
@@ -674,10 +648,12 @@
    (set-scroll-x! scroll-x {}))
 
   ([scroll-x {:keys [smooth?]}]
-   ;(set! (.-scrollLeft (get-document-element)) scroll-x)
-   (let [scroll-behavior   (if smooth? "smooth" "auto")
-         scroll-to-options {"left" scroll-x "top" 0 "behavior" scroll-behavior}]
-        (.scrollBy js/window (clj->js scroll-to-options)))))
+  ; BUG#8709
+  ; Out of order!
+  ;(let [scroll-behavior   (if smooth? "smooth" "auto")
+  ;       scroll-to-options {"left" scroll-x "top" 0 "behavior" scroll-behavior}
+  ;      (.scrollBy js/window (clj->js scroll-to-options))]))
+   (-> js/document .-documentElement .-scrollLeft (set! scroll-x))))
 
 (defn set-scroll-y!
   ; @param (integer) scroll-y
@@ -688,24 +664,25 @@
    (set-scroll-y! scroll-y {}))
 
   ([scroll-y {:keys [smooth?]}]
-   ;(set! (.-scrollTop (get-document-element)) scroll-y)
-
-   ; BUG#xxxx
-   ; Out of order!
-   (let [scroll-behavior   (if smooth? "smooth" "auto")
-         scroll-to-options {"left" 0 "top" scroll-y "behavior" scroll-behavior}]
-        (.scrollBy js/window (clj->js scroll-to-options)))
-
-   (set! (.-scrollTop (get-document-element)) scroll-y)))
+  ; BUG#8709
+  ; Out of order!
+  ;(let [scroll-behavior   (if smooth? "smooth" "auto")
+  ;     scroll-to-options {"left" 0 "top" scroll-y "behavior" scroll-behavior}
+  ;    (.scrollBy js/window (clj->js scroll-to-options))]
+   (-> js/document .-documentElement .-scrollTop (set! scroll-y))))
 
 (defn scroll-to-element-top!
   ; @param (DOM-element) element
   ; @param (px)(opt) offset
   ([element]
-   (scroll-to-element-top! element 0))
+   (-> js/document .-documentElement .-scrollTop
+       (set! (+ (-> element     .getBoundingClientRect .-top)
+                (-> js/document .-documentElement .-scrollTop)))))
 
   ([element offset]
-   (set-scroll-y! (+ (get-element-absolute-top element) offset))))
+   (-> js/document .-documentElement .-scrollTop
+       (set! (+ offset (-> element     .getBoundingClientRect .-top)
+                       (-> js/document .-documentElement .-scrollTop))))))
 
 
 
@@ -748,26 +725,23 @@
   ; @param (DOM-element) child-element
   ; @param (DOM-element) before-element
   [parent-element child-element before-element]
-  (let [next-sibling-element (.-nextSibling before-element)]
-       (insert-before! parent-element child-element next-sibling-element)))
+  (.insertBefore parent-element child-element (.-nextSibling before-element)))
 
 (defn insert-as-first-of-type!
   ; @param (DOM-element) parent-element
   ; @param (DOM-element) child-element
   [parent-element child-element]
-  (let [tag-name      (.-tagName child-element)
-        all-of-type   (get-elements-by-tag-name tag-name parent-element)
-        first-of-type (first all-of-type)]
-       (insert-before! parent-element child-element first-of-type)))
+  (.insertBefore parent-element child-element
+                 (-> parent-element (.getElementsByTagName (-> child-element .-tagName))
+                     array-seq first)))
 
 (defn insert-as-last-of-type!
   ; @param (DOM-element) parent-element
   ; @param (DOM-element) child-element
   [parent-element child-element]
-  (let [tag-name     (.-tagName child-element)
-        all-of-type  (get-elements-by-tag-name tag-name parent-element)
-        last-of-type (last all-of-type)]
-       (insert-after! parent-element child-element last-of-type)))
+  (.insertBefore parent-element child-element
+                 (-> parent-element (.getElementsByTagName (-> child-element .-tagName))
+                     array-seq last .-nextSibling)))
 
 (defn insert-as-first-of-query-selected!
   ; @param (DOM-element) parent-element
@@ -776,16 +750,13 @@
   ;  XXX#7603
   ;
   ; @usage
-  ;  (dom/insert-as-first-of-query-selected!
-  ;   head-element link-element "[type=\"text/css\"]")
+  ;  (dom/insert-as-first-of-query-selected! head-element link-element "[type=\"text/css\"]")
   ;
   ; @usage
-  ;  (dom/insert-as-first-of-query-selected!
-  ;   body-element my-element "div.my-class, div.your-class")
+  ;  (dom/insert-as-first-of-query-selected! body-element my-element "div.my-class, div.your-class")
   [parent-element child-element query-selector]
-  (let [all-of-query-selected   (get-elements-by-query-selector parent-element query-selector)
-        first-of-query-selected (first all-of-query-selected)]
-       (insert-before! parent-element child-element first-of-query-selected)))
+  (.insertBefore parent-element child-element
+                 (-> parent-element (.querySelectorAll query-selector) array-seq first)))
 
 (defn insert-as-last-of-query-selected!
   ; @param (DOM-element) parent-element
@@ -801,9 +772,8 @@
   ;  (dom/insert-as-first-of-query-selected!
   ;   body-element my-element "div.my-class, div.your-class")
   [parent-element child-element query-selector]
-  (let [all-of-query-selected  (get-elements-by-query-selector parent-element query-selector)
-        last-of-query-selected (last all-of-query-selected)]
-       (insert-after! parent-element child-element last-of-query-selected)))
+  (.insertBefore parent-element child-element
+                 (-> parent-element (.querySelectorAll query-selector) array-seq last .-nextSibling)))
 
 (defn append-element!
   ; @param (DOM-element) parent-element
@@ -815,7 +785,7 @@
   ; @param (DOM-element) parent-element
   ; @param (DOM-element) child-element
   [parent-element child-element]
-  (insert-before! parent-element child-element (.-firstChild parent-element)))
+  (.insertBefore parent-element child-element (.-firstChild parent-element)))
 
 (defn create-element!
   ; @param (string) nodename
@@ -853,7 +823,7 @@
   ;
   ; @return (string)
   [element content]
-  (set! (.-innerHTML element) content))
+  (-> element .-innerHTML (set! content)))
 
 
 
@@ -865,16 +835,22 @@
   ; @param (function) listener
   ; @param (DOM-element)(opt) target
   ;  Default: js/window
-  [type listener & [target]]
-  (.addEventListener (or target js/window) type listener false))
+  ([type listener]
+   (.addEventListener js/window type listener false))
+
+  ([type listener target]
+   (.addEventListener target type listener false)))
 
 (defn remove-event-listener!
   ; @param (string) type
   ; @param (function) listener
   ; @param (DOM-element)(opt) target
   ;  Default: js/window
-  [type listener & [target]]
-  (.removeEventListener (or target js/window) type listener false))
+  ([type listener]
+   (.removeEventListener js/window type listener false))
+
+  ([type listener target]
+   (.removeEventListener target type listener false)))
 
 
 
@@ -884,12 +860,12 @@
 (defn select-preventer
   ; @param (DOM-event) event
   [event]
-  (let [node-name (string/lowercase (event->node-name event))]
+  (let [node-name (-> event .-srcElement .-nodeName string/lowercase)]
        ; Az input es textarea elemek hasznalatahoz szukseg van mouse-down eventre!
-       (if-not (vector/contains-item? ["input" "textarea"] node-name)
-               (let [active-element (get-active-element)]
-                    (.preventDefault event)
-                    (.blur active-element)))))
+       (when-not (or (= node-name "input")
+                     (= node-name "textarea"))
+                 (do (-> event       .preventDefault)
+                     (-> js/document .-activeElement .blur)))))
 
 
 
@@ -900,8 +876,8 @@
   ; @return (boolean)
   []
   (boolean (or (.hasOwnProperty js/window "ontouchstart")
-               (> (.-maxTouchPoints   (.-navigator js/window)) 0)
-               (> (.-msMaxTouchPoints (.-navigator js/window)) 0)
+               (-> js/window .-navigator .-maxTouchPoints   (> 0))
+               (-> js/window .-navigator .-msMaxTouchPoints (> 0))
                (and (.-DocumentTouch js/window)
                     (instance? "DocumentTouch" js/document)))))
 
@@ -936,8 +912,7 @@
   ;
   ; @return (boolean)
   [file]
-  (let [mime-type (file->mime-type file)]
-       (io/mime-type->image? mime-type)))
+  (-> file .-type io/mime-type->image?))
 
 (defn file->file-data
   ; @param (file object) file
@@ -947,9 +922,9 @@
   ;   :filesize (B)
   ;   :mime-type (string)}
   [file]
-  {:filename  (file->filename  file)
-   :filesize  (file->filesize  file)
-   :mime-type (file->mime-type file)})
+  {:filename  (.-name file)
+   :filesize  (.-size file)
+   :mime-type (.-type file)})
 
 
 
@@ -971,6 +946,8 @@
                     (name     prop-id)
                     (return   prop-id))]
        (.append form-data prop-id prop-value)
+
+       ; Ez szükséges? Az .append függvény nem a form-data objektummal tér vissza?
        (return  form-data)))
 
 (defn merge-to-form-data!
@@ -990,6 +967,8 @@
   (doseq [n xyz]
          (doseq [[k v] n]
                 (append-to-form-data! form-data k v)))
+
+  ; Ez szükséges? Az .append függvény nem a form-data objektummal tér vissza?
   (return form-data))
 
 
@@ -1009,8 +988,7 @@
   ;
   ; @return (?)
   [file-selector]
-  (let [files (file-selector->files file-selector)]
-       (array-seq files)))
+  (-> file-selector .-files array-seq))
 
 (defn file-selector->file
   ; @param (DOM-element) file-selector
@@ -1018,50 +996,45 @@
   ;
   ; @return (file object)
   [file-selector file-dex]
-  (let [file-list (file-selector->file-list file-selector)]
-       (nth file-list file-dex)))
+  (-> file-selector .-files array-seq (nth file-dex)))
 
 (defn file-selector->files-size
   ; @param (DOM-element) file-selector
   ;
   ; @return (float)
   [file-selector]
-  (reduce #(+ %1 (file->filesize %2))
-           (param 0)
-           (file-selector->file-list file-selector)))
+  (reduce #(+ %1 (.-size %2))
+           (-> file-selector .-files array-seq)))
 
 (defn file-selector->file-count
   ; @param (DOM-element) file-selector
   ;
   ; @return (integer)
   [file-selector]
-  (.-length (.-files file-selector)))
+  (-> file-selector .-files .-length))
 
 (defn file-selector->any-file-selected?
   ; @param (DOM-element) file-selector
   ;
   ; @return (boolean)
   [file-selector]
-  (let [file-count (file-selector->file-count file-selector)]
-       (> file-count 0)))
+  (-> file-selector .-files .-length (> 0)))
 
 (defn file-selector->mime-types
   ; @param (DOM-element) file-selector
   ;
   ; @return (strings in vector)
   [file-selector]
-  (reduce #(vector/conj-item %1 (file->mime-type %2))
-           (param [])
-           (file-selector->file-list file-selector)))
+  (vec (reduce #(conj %1 (.-type %2))
+               [] (-> file-selector .-files array-seq))))
 
 (defn file-selector->files-data
   ; @param (DOM-element) file-selector
   ;
   ; @return (maps in vector)
   [file-selector]
-  (reduce #(vector/conj-item %1 (file->file-data %2))
-           (param [])
-           (file-selector->file-list file-selector)))
+  (vec (reduce #(conj %1 (file->file-data %2))
+               [] (-> file-selector .-files array-seq))))
 
 (defn file-selector->file-selector-data
   ; @param (DOM-element) file-selector
@@ -1116,6 +1089,8 @@
        (doseq [file-key file-keys]
               (let [file (aget files file-key)]
                    (append-to-form-data! form-data file-key file)))
+
+       ; Ez szükséges? Az .append függvény nem a form-data objektummal tér vissza?
        (return form-data)))
 
 
@@ -1137,24 +1112,13 @@
   [element]
   (.-selectionStart element))
 
-(defn get-selection-range
-  ; @param (DOM-element) element
-  ;
-  ; @return (map)
-  ;  {:start (integer)
-  ;   :end (integer)}
-  [element]
-  {:start (get-selection-start element)
-   :end   (get-selection-end   element)})
-
 (defn set-selection-start!
   ; @param (DOM-element)
   ; @param (integer) selection-start
   ;
   ; @return (?)
   [element selection-start]
-  (set! (.-selectionStart element)
-        (param selection-start)))
+  (-> element .-selectionStart (set! selection-start)))
 
 (defn set-selection-end!
   ; @param (DOM-element)
@@ -1162,8 +1126,7 @@
   ;
   ; @return (?)
   [element selection-end]
-  (set! (.-selectionEnd element)
-        (param selection-end)))
+  (-> element .-selectionEnd (set! selection-end)))
 
 (defn set-selection-range!
   ; @param (DOM-element) element
@@ -1182,36 +1145,32 @@
 ;; ----------------------------------------------------------------------------
 
 (defn px->vh
-  ; @param (integer) n
+  ; @param (px) n
   ;
-  ; @return (integer)
+  ; @return (vh)
   [n]
-  (let [vh (/ (get-viewport-height) 100)]
-       (math/floor (/ n vh))))
+  (-> n (/ (-> js/window .-innerHeight (/ 100))) math/floor))
 
 (defn px->vw
-  ; @param (integer) n
+  ; @param (px) n
   ;
-  ; @return (integer)
+  ; @return (vw)
   [n]
-  (let [vh (/ (get-viewport-width) 100)]
-       (math/floor (/ n vh))))
+  (-> n (/ (-> js/window .-innerWidth (/ 100))) math/floor))
 
 (defn vh->px
-  ; @param (integer) n
+  ; @param (vh) n
   ;
-  ; @return (integer)
+  ; @return (px)
   [n]
-  (let [vh (/ (get-viewport-height) 100)]
-       (math/floor (* n vh))))
+  (-> n (* (-> js/window .-innerHeight (/ 100))) math/floor))
 
 (defn vw->px
-  ; @param (integer) n
+  ; @param (vw) n
   ;
-  ; @return (integer)
+  ; @return (px)
   [n]
-  (let [vh (/ (get-viewport-height) 100)]
-       (math/floor (* n vh))))
+  (-> n (* (-> js/window .-innerWidth (/ 100))) math/floor))
 
 
 
@@ -1224,14 +1183,14 @@
   ;
   ; @return (object)
   [_ callback]
-  (js/IntersectionObserver. (fn [%] (let [in-viewport? (.-isIntersecting (aget % 0))]
-                                         (if in-viewport? (callback))))
-                            (param {})))
+  (js/IntersectionObserver. #(if (-> % (aget 0) .-isIntersecting)
+                                 (callback))
+                             (param {})))
 
 (defn setup-intersection-observer!
   ; @param (string) element-id
   ; @param (function) callback
   [element-id callback]
   (let [observer         (intersection-observer element-id callback)
-        observer-element (get-element-by-id     element-id)]
+        observer-element (.getElementById js/document element-id)]
        (.observe observer observer-element)))

@@ -135,7 +135,7 @@
   ; @param (map) element-props
   ;  {:background-color (keyword)(opt)
   ;   :border-color (keyword)(opt)
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;   :font-size (keyword)(opt)
   ;   :font-weight (keyword)(opt)
@@ -147,7 +147,7 @@
   ;   :width (keyword, px or string)(opt)}
   ;
   ; @return
-  ;  {:class (string or vector)
+  ;  {:class (keyword or keywords in vector)
   ;   :data-color (keyword)
   ;   :data-font-size (keyword)
   ;   :data-font-weight (keyword)
@@ -176,7 +176,7 @@
              (string?  width)            (assoc-in [:style :width]     (param  width))
              (keyword? width)            (assoc :data-width            (param  width))
              (some?    variant)          (assoc :data-variant          (param  variant))
-             :use-class                  (assoc :class                 (css/join-class "x-element" class))))
+             :use-class                  (assoc :class                 (css/join-class :x-element class))))
 
 (defn element-generic-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -51,13 +51,11 @@
   ;   :color (keyword)
   ;   :end-adornments (maps in vector)
   ;   :layout (keyword)
-  ;   :min-width (keyword)
   ;   :name (keyword)
   ;   :type (keyword)}
   [field-id field-props]
   (merge {:color      :default
           :layout     :row
-          :min-width  :s
           :type       :text
           :value-path (engine/default-value-path field-id)}
          (param field-props)
@@ -216,7 +214,7 @@
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;   :autocomplete? (boolean)(opt)
   ;    Default: false
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
@@ -253,7 +251,7 @@
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :s
+  ;    Default: :none
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)

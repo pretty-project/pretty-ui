@@ -107,7 +107,7 @@
   ;    :primary, :secondary, :warning, :success
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :horizontal-align (keyword)(opt)

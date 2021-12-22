@@ -59,23 +59,4 @@
   white-space: nowrap }
 
 /*** Client-list item ***/
-
-/*** Client-editor ***/
-
-#clients--client-editor--client-name,
-#clients--client-editor--primary-contacts,
-#clients--client-editor--secondary-contacts {
-  display: flex;
-  flex-wrap: wrap;
-  -grid-column-gap: 24px;
-  justify-content: center }
-
-#clients--client-editor--client-no {
-  align-items: center;
-  display: flex;
-  grid-column-gap: 6px;
-  justify-content: flex-end;
-  padding-bottom: 12px }
-
-/*** Client-editor ***/
 /***** Clients *****/

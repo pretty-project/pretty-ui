@@ -72,7 +72,7 @@
   ;
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)

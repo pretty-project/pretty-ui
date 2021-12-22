@@ -32,13 +32,11 @@
   ;
   ; @return (map)
   ;  {:indent (keyword)
-  ;   :min-width (keyword)
   ;   :name (keyword)
   ;   :type (keyword)
   ;   :value-path (item-path vector)}
   [field-id field-props]
   (merge {:indent     :none
-          :min-width  :s
           :type       :date
           :value-path (engine/default-value-path field-id)}
          (param field-props)
@@ -104,7 +102,7 @@
 (defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :date-from (string)(opt)
   ;    TODO ...
   ;   :date-to (string)(opt)
@@ -123,7 +121,7 @@
   ;    Default: :row
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :s
+  ;    Default: :none
   ;   :style (map)(opt)
   ;   :value-path (item-path vector)(opt)}
   ;

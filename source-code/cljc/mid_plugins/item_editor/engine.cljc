@@ -105,6 +105,36 @@
       (keyword/join "add-"  item-namespace)
       (keyword/join "edit-" item-namespace)))
 
+(defn new-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/new-item-label :my-extension :my-type)
+  ;  =>
+  ;  :new-my-type
+  ;
+  ; @return (metamorphic-content)
+  [_ item-namespace]
+  (keyword (str "new-" (name item-namespace))))
+
+(defn unnamed-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/new-item-label :my-extension :my-type)
+  ;  =>
+  ;  :unnamed-my-type
+  ;
+  ; @return (metamorphic-content)
+  [_ item-namespace]
+  (keyword (str "unnamed-" (name item-namespace))))
+
 (defn request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -225,7 +255,7 @@
   ; @param (keyword) extension-id
   ;
   ; @example
-  ;  (engine/parent-uri :my-extension :my-type)
+  ;  (engine/parent-uri :my-extension)
   ;  =>
   ;  "/:app-home/my-extension"
   ;
@@ -255,9 +285,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword)(opt) kind-id
-  ; @param (keyword)(opt) item-id
-  ; @param (keyword)(opt) action-id
+  ; @param (keyword) action-id
   ;
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :color-picker)
@@ -265,19 +293,11 @@
   ;  :my-extension/color-picker-dialog
   ;
   ; @example
-  ;  (engine/dialog-id :my-extension :my-type :my-item :deleted)
+  ;  (engine/dialog-id :my-extension :my-type :item-deleted)
   ;  =>
-  ;  :my-extension/my-item-deleted-dialog
+  ;  :my-extension/item-deleted-dialog
   ;
   ; @return (namespaced keyword)
-  ([extension-id _ kind-id]
-   (keyword (name extension-id)
-            (str (name kind-id) "-dialog")))
-
-  ([extension-id _ item-id action-id]
-   ; Bizonyos esetben szükséges megkülönböztetni az azonos célra, de több példányban megjelenített
-   ; párbeszéd elemeket.
-   ; Pl.: Az undo-delete-dialog bubble elem egy időben több példányban is megjelenhet.
-   (keyword (name extension-id)
-            (str (name item-id)   "-"
-                 (name action-id) "-dialog"))))
+  [extension-id _ action-id]
+  (keyword (name extension-id)
+           (str (name action-id) "-dialog")))

@@ -211,7 +211,7 @@
 (defn- expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [elements/expandable {:content "Here comes the sun!" :label "Click to expand!"}])
+  [elements/expandable {:content "Here comes the sun!" :label "Click to expand!" :icon :people}])
 
 (defn- fields
   ; WARNING! NON-PUBLIC! DO NOT USE!

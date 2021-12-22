@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.12.13
 ; Description:
-; Version: v0.3.2
+; Version: v0.4.6
 ; Compatibility: x4.4.9
 
 
@@ -33,7 +33,7 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Popup components --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- color-picker-dialog-body
@@ -45,7 +45,28 @@
   [extension-id]
   [elements/color-picker ::color-picker
                          {:initial-options COLORS
-                          :value-path [extension-id :item-editor/data-items :colors]}])
+                          :value-path [extension-id :item-editor/data-item :colors]}])
+
+
+
+;; -- Bubble components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- notification-bubble-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (component)
+  [bubble-id {:keys [label button-event button-label]}]
+  [:<> [elements/horizontal-separator {:size :s}]
+       [elements/label                {:content label :layout :fit}]
+       [elements/horizontal-separator {:size :s}]
+       [elements/button               {:label button-label :preset :primary-button :layout :fit
+                                       :on-click {:dispatch-n [button-event [:ui/pop-bubble! bubble-id]]}}]
+       [elements/horizontal-separator {:size :s}]])
 
 (defn- undo-delete-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -56,14 +77,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-id]
-  (let [dialog-id (engine/dialog-id extension-id item-namespace item-id :deleted)]
-       [:<> [elements/horizontal-separator {:size :s}]
-            [elements/label {:content :item-deleted :layout :fit}]
-            [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :recover! :preset :primary-button :layout :fit
-                              :on-click {:dispatch-n [[:item-editor/undo-delete! extension-id item-namespace item-id]
-                                                      [:ui/pop-bubble! dialog-id]]}}]
-            [elements/horizontal-separator {:size :s}]]))
+  (let [dialog-id  (engine/dialog-id extension-id item-namespace :item-deleted)
+        undo-event [:item-editor/undo-delete! extension-id item-namespace item-id]]
+       [notification-bubble-body dialog-id
+                                 {:label :item-deleted :button-event undo-event :button-label :recover!}]))
 
 (defn- changes-discarded-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,14 +91,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-id]
-  (let [dialog-id (engine/dialog-id extension-id item-namespace item-id :discarded)]
-       [:<> [elements/horizontal-separator {:size :s}]
-            [elements/label {:content :unsaved-changes-discarded :layout :fit}]
-            [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :restore! :preset :primary-button :layout :fit
-                              :on-click {:dispatch-n [[:item-editor/undo-discard! extension-id item-namespace item-id]
-                                                      [:ui/pop-bubble! dialog-id]]}}]
-            [elements/horizontal-separator {:size :s}]]))
+  (let [dialog-id  (engine/dialog-id extension-id item-namespace :changes-discarded)
+        undo-event [:item-editor/undo-discard! extension-id item-namespace item-id]]
+       [notification-bubble-body dialog-id
+                                 {:label :unsaved-changes-discarded :button-event undo-event :button-label :restore!}]))
 
 (defn- item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,14 +105,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace copy-id]
-  (let [dialog-id (engine/dialog-id extension-id item-namespace copy-id :duplicated)]
-       [:<> [elements/horizontal-separator {:size :s}]
-            [elements/label {:content :item-duplicated :layout :fit}]
-            [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :edit-copy! :preset :primary-button :layout :fit
-                              :on-click {:dispatch-n [[:item-editor/edit-copy! extension-id item-namespace copy-id]
-                                                      [:ui/pop-bubble! dialog-id]]}}]
-            [elements/horizontal-separator {:size :s}]]))
+  (let [dialog-id  (engine/dialog-id extension-id item-namespace :item-duplicated)
+        edit-event [:item-editor/edit-item! extension-id item-namespace copy-id]]
+       [notification-bubble-body dialog-id
+                                 {:label :item-duplicated :button-event edit-event :button-label :edit-copy!}]))
 
 
 
@@ -115,7 +124,7 @@
   (fn [_ [_ extension-id item-namespace]]
       [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
                       {:body   {:content [color-picker-dialog-body extension-id]}
-                       :header {:content #'ui/close-popup-header}
+                      ;:header {:content #'ui/close-popup-header}
                        :min-width :none}]))
 
 (a/reg-event-fx
@@ -126,7 +135,7 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
-           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace current-item-id :deleted)
+           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
                              {:body       {:content [undo-delete-dialog-body extension-id item-namespace current-item-id]}
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
@@ -138,7 +147,7 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
-           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace current-item-id :discarded)
+           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
                              {:body {:content [changes-discarded-dialog-body extension-id item-namespace current-item-id]}
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
@@ -150,5 +159,5 @@
   ; @param (keyword) item-namespace
   ; @param (string) copy-id
   (fn [_ [_ extension-id item-namespace copy-id]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace copy-id :duplicated)
+      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-duplicated)
                         {:body {:content [item-duplicated-dialog-body extension-id item-namespace copy-id]}}]))

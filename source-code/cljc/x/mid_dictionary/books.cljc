@@ -500,9 +500,6 @@
       :archived-items
       {:en "Archived items"
        :hu "Archivált elemek"}
-      :archived-item-restored
-      {:en "Archived item restored"
-       :hu "Archivált elem visszaállítva"}
       :changes-discarded
       {:en "Changes discarded"
        :hu "Változások elvetve"}
@@ -578,6 +575,9 @@
       :item-archived
       {:en "Item archived"
        :hu "Elem archiválva"}
+      :item-unarchived
+      {:en "Item unarchived"
+       :hu "Elem dearchiválva"}
       :item-deleted
       {:en "Item deleted"
        :hu "Elem törölve"}
@@ -608,6 +608,9 @@
       :n-items-archived
       {:en "% item(s) archived"
        :hu "% elem archiválva"}
+      :n-items-unarchived
+      {:en "% item(s) unarchived"
+       :hu "% elem dearchiválva"}
       :n-items-deleted
       {:en "% item(s) deleted"
        :hu "% elem törölve"}
@@ -653,9 +656,6 @@
       :restore!
       {:en "Restore"
        :hu "Visszaállítás"}
-      :restore-archived-items
-      {:en "Restored archived items"
-       :hu "Archiválált elemek visszaállítása"}
       :save!
       {:en "Save"
        :hu "Mentés"}
@@ -691,7 +691,10 @@
        :hu "Elem kijelölése"}
       :unarchive!
       {:en "Unarchive"
-       :hu "Archiválás visszavonása"}
+       :hu "Dearchiválás"}
+      :unarchived
+      {:en "Unarchived"
+       :hu "Dearchiválva"}
       :undo!
       {:en "Undo"
        :hu "Visszavonás"}

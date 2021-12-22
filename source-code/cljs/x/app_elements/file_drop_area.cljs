@@ -85,7 +85,7 @@
 (defn element
   ; @param (keyword)(opt) area-id
   ; @param (map) area-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)

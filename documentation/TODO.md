@@ -11,6 +11,8 @@
 
 
 # x4.5.0
+- mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
+
 - pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne
   item-editor/handlers és item-lister/handlers függvényekként
 

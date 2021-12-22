@@ -1,7 +1,5 @@
 
-/* XXX#3408
- *
- * @name app-edge
+/* @name app-edge
  *  M, L, XL, XXL méretű kijelzőkön a box elemben megjelenített tartalom és a képernyő széle
  *  közötti esztétikai távolság.
  *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-edge értéke 0vw.
@@ -12,25 +10,17 @@
  *
  * @name content-edge
  *  - A fejlécekben (egyes esetekben) a megjelenített gombok és más elemek esztétikati távolságot
- *    igényelnek a fejléc szélétől (pl.: feliratos gombok, feliratos ikon-gombok, stb.).
+ *    igényelnek a fejléc szélétől (pl.: feliratos gombok, feliratos ikon-gombok, stb.)
  *  - A tartalmat megjelenítő elemekben (egyes esetekben) a tartalom esztétikai távolságot igényel
  *    az elem szélétől.
  *  - Ezt a távolságot a content-edge értéke adja, amelyet mindkét esetben alkalmazva a fejlécek
  *    elemei és az alattuk lévő tartalom azonos méretű behúzással jelenik meg.
  *    A fejléc és a tartalom elemeinek azonos méretű behúzása esztétikai és gyakorlati szempontból
  *    is szükséges!
- *  (Az app-edge bizonoyos esetekben 0vw ezért erre a célra alkalmatlan)
- *  (A flex-edge nagyobb képernyőkön túlságosan nagy erre a célra)
- *
- * @name flex-edge
- *  Elemek közötti – képernyő mérettől függő – vízszintes távolság.
- *  Helytakarékosság miatt, minél kisebb a képernyő, annál kisebb ez a távolság.
  *
  * @name content-width
  *  ...
  */
-
-
 
 
 
@@ -258,7 +248,7 @@ body[data-viewport-profile="xxs"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 8px;
+--content-edge: 6px;
 
 /*** Content edge ***/
 
@@ -273,12 +263,6 @@ body[data-viewport-profile="xxs"] {
   --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 8px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -300,7 +284,7 @@ body[data-viewport-profile="xs"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 8px;
+--content-edge: 6px;
 
 /*** Content edge ***/
 
@@ -315,12 +299,6 @@ body[data-viewport-profile="xs"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 8px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -342,7 +320,7 @@ body[data-viewport-profile="s"] {
 /*** Content edge ***/
 
 /* XXX#2981 */
---content-edge: 8px;
+--content-edge: 6px;
 
 /*** Content edge ***/
 
@@ -357,12 +335,6 @@ body[data-viewport-profile="s"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 12px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -398,13 +370,6 @@ body[data-viewport-profile="m"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-/* XXX#3408 */
-
---flex-edge: 16px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -440,12 +405,6 @@ body[data-viewport-profile="l"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 24px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -481,12 +440,6 @@ body[data-viewport-profile="xl"] {
 --content-width-xxl: var( --app-width );
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 24px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }
 
@@ -522,11 +475,5 @@ body[data-viewport-profile="xxl"] {
 --content-width-xxl: 2160px;
 
 /*** Content width ***/
-
-/*** Flex edge ***/
-
---flex-edge: 24px;
-
-/*** Flex edge ***/
 /***** Layout *****/
 }

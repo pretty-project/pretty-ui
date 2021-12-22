@@ -228,7 +228,7 @@
   ; @param (map) group-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
@@ -253,7 +253,7 @@
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :s
+  ;    Default: :none
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: x.app-elements.combo-box/DEFAULT-NO-OPTIONS-LABEL
   ;   :no-options-selected-label (metamorphic-content)(opt)

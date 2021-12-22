@@ -193,20 +193,20 @@
              ; @param (namespaced map) client-item
              ;
              ; @return (namespaced map)
-             [env client-item]
+             [_ client-item]
              {::pco/op-name 'clients/undo-delete-client-item!}
              (mongo-db/add-document! collection-name client-item))
 
 (defmutation undo-delete-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
-             ; @param (map) env
-             ; @param (namespaced maps in vector) client-items
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
-             [env client-items]
+             [{:keys [items]}]
              {::pco/op-name 'clients/undo-delete-client-items!}
-             (mongo-db/add-documents! collection-name client-items))
+             (mongo-db/add-documents! collection-name items))
 
 (defmutation save-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -232,10 +232,22 @@
              (mongo-db/merge-document! collection-name client-item
                                        {:prototype-f #(a/sub-prot env % updated-client-item-prototype)}))
 
-(defmutation delete-client-item!
+(defmutation merge-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env {:keys [items]}]
+             {::pco/op-name 'clients/merge-client-items!}
+             (mongo-db/merge-documents! collection-name items
+                                        {:prototype-f #(a/sub-prot env % updated-client-item-prototype)}))
+
+(defmutation delete-client-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
              ; @param (map) mutation-props
              ;  {:item-id (string)}
              ;
@@ -247,7 +259,6 @@
 (defmutation delete-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
-             ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-ids (strings in vector)}
              ;
@@ -281,6 +292,7 @@
                undo-delete-client-items!
                save-client-item!
                merge-client-item!
+               merge-client-items!
                delete-client-item!
                delete-client-items!
                duplicate-client-item!])

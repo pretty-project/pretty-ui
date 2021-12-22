@@ -298,7 +298,7 @@
   ;
   ; @param (keyword)(opt) file-id
   ; @param (map) file-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)

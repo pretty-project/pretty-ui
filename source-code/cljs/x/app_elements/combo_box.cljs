@@ -277,7 +277,7 @@
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
@@ -297,13 +297,13 @@
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :left
+  ;    Default: :none
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :s
+  ;    Default: :none
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: DEFAULT-NO-OPTIONS-LABEL
   ;   :label (metamorphic-content)(opt)

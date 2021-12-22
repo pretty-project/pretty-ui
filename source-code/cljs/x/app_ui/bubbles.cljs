@@ -89,7 +89,7 @@
          (param bubble-props)
          {:hide-animated?   true
           :reveal-animated? true
-          :update-animated? false}))
+          :update-animated? true}))
 
 
 

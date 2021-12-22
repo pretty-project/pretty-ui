@@ -75,7 +75,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (get-in db [extension-id :item-editor/data-items]))
+  (get-in db [extension-id :item-editor/data-item]))
 
 (defn export-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +83,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [db [_ extension-id item-namespace]]
   (let [current-item (r get-current-item db extension-id)]
        (db/document->namespaced-document current-item item-namespace)))
@@ -100,7 +100,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/data-items item-key]))
+  (get-in db [extension-id :item-editor/data-item item-key]))
 
 (defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,10 +156,31 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [db [_ extension-id item-namespace item-id]]
   (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
        (db/document->namespaced-document backup-item item-namespace)))
+
+(defn export-marked-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) mark-props
+  ;  {:marker-key (keyword)
+  ;   :toggle-f (function)}
+  ;
+  ; @example
+  ;  (r subs/export-marked-item db :my-extension :my-type {:marker-key :archived? :toggle-f not})
+  ;  =>
+  ;  {:my-type/id "my-item" :my-type/archived? true}
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
+  (let [current-item-id (r get-current-item-id db extension-id)
+        marker-value    (get-in db [extension-id :item-editor/data-item marker-key])
+        marked-item     {:id current-item-id marker-key (toggle-f marker-value)}]
+       (db/document->namespaced-document marked-item item-namespace)))
 
 (defn get-local-changes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,7 +216,10 @@
   (let [current-item-id (r get-current-item-id db extension-id)
         current-item    (r get-current-item    db extension-id)
         backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
-       (not= current-item backup-item)))
+       ; Az elem {:archived? ...} és {:favorite? ...} tulajdonságait érintő változtatások
+       ; (UX-szempontból) nem számítanak az elemen végzett változtatásnak!
+       (not= (dissoc current-item :archived? :favorite?)
+             (dissoc backup-item  :archived? :favorite?))))
 
 (defn get-current-item-entity
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -227,9 +251,9 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [new-item?     (r new-item?      db extension-id item-namespace)
-        restore-mode? (r get-meta-value db extension-id item-namespace :recovery-mode?)]
-       (not (or new-item? restore-mode?))))
+  (let [new-item?      (r new-item?      db extension-id item-namespace)
+        recovery-mode? (r get-meta-value db extension-id item-namespace :recovery-mode?)]
+       (not (or new-item? recovery-mode?))))
 
 (defn download-data?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -241,25 +265,6 @@
   [db [_ extension-id item-namespace]]
   (or (r download-suggestions? db extension-id item-namespace)
       (r download-item?        db extension-id item-namespace)))
-
-(defn get-download-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  [(if (r download-item? db extension-id item-namespace)
-       ; If download item ...
-       (let [current-item-entity (r get-current-item-entity db extension-id item-namespace)
-             added-at-key        (keyword item-namespace "added-at")]
-            {current-item-entity [added-at-key '*]}))
-   (if (r download-suggestions? db extension-id item-namespace)
-       ; If download suggestions ...
-       (let [suggestion-keys (r get-meta-value db extension-id item-namespace :suggestion-keys)
-             resolver-id     (engine/resolver-id  extension-id item-namespace :suggestions)]
-           `(~resolver-id {:suggestion-keys ~suggestion-keys})))])
 
 (defn get-description
   ; @param (keyword) extension-id

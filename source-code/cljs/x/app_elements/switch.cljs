@@ -104,7 +104,7 @@
 (defn element
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :warning, :success, :muted, :default
   ;    Default: :primary

@@ -65,7 +65,7 @@
   ; @param (map) group-props
   ;  {:cards (maps in vector)
   ;    [{...} {...}]
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center

@@ -98,7 +98,7 @@
 (defn element
   ; @param (keyword)(opt) polarity-id
   ; @param (map) polarity-props
-  ;  {:class (string or vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :orientation (keyword)(opt)
   ;    :horizontal, vertical
   ;    Default: :horizontal

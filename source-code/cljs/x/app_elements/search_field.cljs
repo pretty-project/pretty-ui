@@ -65,7 +65,7 @@
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (string or vector)(opt)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :primary, :secondary, :default
   ;    Default: :default
@@ -85,6 +85,9 @@
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
   ;   :max-length (integer)(opt)
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;    Default: :none
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)

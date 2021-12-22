@@ -61,12 +61,18 @@
 
 /*** M ***/
 
+.x-body-a[data-min-width="m"] .x-form-a--input-row {
+  -max-width: 660px }
+
 .x-body-a[data-min-width="m"] {
   min-width: var( --content-width-m ) }
 
 /*** M ***/
 
 /*** L ***/
+
+.x-body-a[data-min-width="l"] .x-form-a--input-row {
+  -max-width: 920px }
 
 .x-body-a[data-min-width="l"] {
   min-width: var( --content-width-l ) }
@@ -75,12 +81,18 @@
 
 /*** XL ***/
 
+.x-body-a[data-min-width="xl"] .x-form-a--input-row {
+  -max-width: 920px }
+
 .x-body-a[data-min-width="xl"] {
   min-width: var( --content-width-xl ) }
 
 /*** XL ***/
 
 /*** XXL ***/
+
+.x-body-a[data-min-width="xxl"] .x-form-a--input-row {
+  -max-width: calc(var( --content-width-xxl ) - 72px) }
 
 .x-body-a[data-min-width="xxl"] {
   min-width: var( --content-width-xxl ) }
@@ -107,7 +119,7 @@
 .x-body-a--content-body {
   display: flex;
   flex-direction: column;
-  padding-left: var( --content-edge );
+  padding-left:  var( --content-edge );
   padding-right: var( --content-edge );
 
   /* XXX#0093
@@ -152,6 +164,37 @@ body[data-viewport-profile="xs"]  .x-body-a,
 body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 
 /***** Body A *****/
+
+
+
+/***** Form A *****/
+
+/* - A .x-form-a--input-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
+ *   gap távolságok használata nélkül lehetséges.
+ * - Az .x-form-a--input-row sorokban felsorolt .x-form-a--input-block elemekben
+ *   kell megoldalni az esztétikai távolságok beállítását! */
+
+
+.x-form-a--input-row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap }
+
+.x-form-a--input-column {
+  -max-width: 800px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap }
+
+.x-form-a--input-block {
+  flex-grow: 1;
+  padding: 0 12px }
+
+/***** Form A *****/
 
 
 
