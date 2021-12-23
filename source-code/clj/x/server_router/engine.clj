@@ -26,7 +26,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-router.engine
-(def valid-route-path              engine/valid-route-path)
 (def variable-route-string?        engine/variable-route-string?)
 (def resolve-variable-route-string engine/resolve-variable-route-string)
 (def route-props->server-route?    engine/route-props->server-route?)

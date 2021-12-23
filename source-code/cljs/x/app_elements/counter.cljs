@@ -31,13 +31,13 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [counter-id counter-props]
-  (merge {:color     :primary
-          :font-size :s
-          :layout    :row
+  (merge {:border-color :primary
+          :font-size    :s
+          :layout       :row
           :value-path (engine/default-value-path counter-id)}
          (param counter-props)))
 
@@ -140,8 +140,8 @@
 (defn element
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
-  ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;  {:border-color (keyword)(opt)
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (integer)(constant)(opt)
   ;   :disabled? (boolean)(opt)

@@ -142,10 +142,7 @@
 (defn element
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
-  ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
-  ;    Default: :primary
-  ;   :class (keyword or keywords in vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)

@@ -160,7 +160,7 @@
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :muted, :default
+  ;    :default, :muted, :primary, :secondary 
   ;    Default: :default
   ;    Only w/ {:label ...}
   ;   :font-size (keyword)(opt)
@@ -180,7 +180,7 @@
   ;    Default: :row
   ;   :sections (maps in vector)}
   ;    [{:color (keyword)(opt)
-  ;       :primary, :secondary, :warning, :success, :muted, :highlight, :default
+  ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;       Default: primary
   ;      :label (metamorphic-content)(opt)
   ;       TODO ...

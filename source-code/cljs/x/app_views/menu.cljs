@@ -154,7 +154,7 @@
 (defn- about-app
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [:<> [elements/label {:content (str details/app-name " | " details/app-description)
+  [:<> [elements/label {:content (str details/app-codename " | " details/app-description)
                         :horizontal-align :left
                         :color            :muted
                         :icon             :grade}]

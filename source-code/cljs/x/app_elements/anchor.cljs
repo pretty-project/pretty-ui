@@ -80,7 +80,7 @@
   ; @param (keyword)(opt) anchor-id
   ; @param (map) anchor-props
   ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)

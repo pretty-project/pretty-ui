@@ -32,14 +32,14 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [button-id button-props]
-  (merge {:color        :primary
+  (merge {:border-color :primary
           :layout       :row
           :options-path (engine/default-options-path button-id)
           :value-path   (engine/default-value-path   button-id)
@@ -147,10 +147,10 @@
 (defn element
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;  {:border-color (keyword)(opt)
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

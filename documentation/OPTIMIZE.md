@@ -6,18 +6,16 @@
 
 ```
 (defn xxx []
- [:div {:on-mouse-over #(do-something! ...)} "Hello"])
+  [:div {:on-mouse-over #(do-something! ...)} "Hello"])
 ```
 
 Helyett hasznald ezt, mert igy csak egyszer generalodik le az anonymous function:
 
 ```
 (defn xxx []
- (let [do-something-f #(do-something! ...)]
-      [:div {:on-mouse-over do-something-f} "Hello"]))
+  (let [do-something-f #(do-something! ...)]
+       [:div {:on-mouse-over do-something-f} "Hello"]))
 ```
-
-
 
 2. A reagent ugy donti el, hogy szukseges-e egy komponens ujrarenderelese, hogy
    osszehasonlitja a komponens parametereit azok valtozas elotti ertekevel, ezert fontos,
@@ -25,4 +23,22 @@ Helyett hasznald ezt, mert igy csak egyszer generalodik le az anonymous function
 
 
 
+
 # Re-Frame optimalizáció
+
+1. A Re-Frame adatbázis minden változtatásának következménye, az összes feliratkozás
+   ismételten megtörténő lefutása.
+
+2. Az egyes feliratkozások az azokra való hivatkozások számával megegyező számban futnak
+   le az egyes újra kiértékelések alkalmával.
+
+
+
+# CSS optimalizáció
+
+1. Az áttetszőség kiszámítása nagy számításigényű feladat (pl.: opacity, box-shadow, ...)
+
+2. Az elemek mozgatására használj transform tulajdonságot! Soha ne a pozíciót változtasd!
+
+3. Próbálj minél többször specifikusabb szelektort használni!
+   A szelektorok teljesítményigény szerinti csökkenő sorrendben: * div .class #id

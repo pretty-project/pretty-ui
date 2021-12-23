@@ -21,30 +21,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn valid-route-path
-  ; @param (string) route-path
-  ;
-  ; @example
-  ;  (router/valid-route-path "my-route")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (router/valid-route-path "/my-route")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (router/valid-route-path "/my-route/")
-  ;  =>
-  ;  "/my-route"
-  ;
-  ; @return (string)
-  [route-path]   ; 1.
-  (-> route-path (string/not-ends-with! "/")
-                 ; 2.
-                 (string/starts-with!   "/")))
-
 (defn variable-route-string?
   ; @param (string) route-string
   ;

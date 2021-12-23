@@ -79,7 +79,7 @@
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
   ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :muted, :highlight
+  ;    :highlight, :muted, :primary, :secondary
   ;    Default: :muted
   ;   :fade (keyword)(opt)
   ;    :in, :out, :in-out

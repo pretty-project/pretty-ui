@@ -14,16 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-router.api
-    (:require [x.mid-router.engine        :as engine]
+    (:require [x.mid-router.engine]
               [x.mid-router.route-handler :as route-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; x.mid-router.engine
-(def valid-route-path engine/valid-route-path)
 
 ; x.mid-router.route-handler
 (def get-app-home route-handler/get-app-home)

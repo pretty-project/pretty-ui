@@ -155,9 +155,8 @@
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :suggestions)
-        suggestions (get server-response resolver-id)
+  [db [_ extension-id _ server-response]]
+  (let [suggestions (get server-response :item-editor/get-item-suggestions)
         suggestions (validator/clean-validated-data suggestions)]
        (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions)))
 

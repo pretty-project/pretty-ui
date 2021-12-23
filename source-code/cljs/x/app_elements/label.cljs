@@ -99,7 +99,7 @@
   ; @param (map) label-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight, :default
+  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning    
   ;    Default: :default
   ;   :content (metamorphic-content)
   ;   :font-size (keyword)(opt)

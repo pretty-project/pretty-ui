@@ -39,9 +39,10 @@
             {current-item-entity [added-at-key '*]}))
    (if (r subs/download-suggestions? db extension-id item-namespace)
        ; If download suggestions ...
-       (let [suggestion-keys (r subs/get-meta-value db extension-id item-namespace :suggestion-keys)
-             resolver-id     (engine/resolver-id       extension-id item-namespace :suggestions)]
-           `(~resolver-id {:suggestion-keys ~suggestion-keys})))])
+       (let [suggestion-keys (r subs/get-meta-value db extension-id item-namespace :suggestion-keys)]
+           `(:item-editor/get-item-suggestions {:suggestion-keys ~suggestion-keys
+                                                :extension-id    ~extension-id
+                                                :item-namespace  ~item-namespace})))])
 
 (defn get-mark-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

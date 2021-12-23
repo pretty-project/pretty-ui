@@ -15,6 +15,7 @@
 
 (ns x.boot-loader
     (:require [x.server-developer.api]
+              [x.server-environment.api]
               [x.server-router.api]
               [mid-fruits.candy       :refer [param]]
               [mid-fruits.map         :as map]
@@ -79,7 +80,7 @@
   ;
   ; @param (map) server-props
   (fn [_ [_ server-props]]
-      (println details/app-name "running app ...")
+      (println details/app-codename "running app ...")
                        ; A szerver indítási paramétereinek eltárolása
       {:dispatch-tick [{:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
@@ -92,10 +93,10 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "checking installation ...")
+      (println details/app-codename "checking installation ...")
       (if (r installer/server-installed? db)
           (let [installed-at (r installer/get-installed-at db)]
-               (println details/app-name "installed at:" installed-at)
+               (println details/app-codename "installed at:" installed-at)
                [:boot-loader/initialize-app!])
           [:installer/install-server!])))
 
@@ -104,7 +105,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "initializing app ...")
+      (println details/app-codename "initializing app ...")
        ; 1. Az inicializálási események meghívása (Dispatch on-app-init events)
       {:dispatch-n (r a/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció
@@ -116,7 +117,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "booting app ...")
+      (println details/app-codename "booting app ...")
        ; 1. Az indítási események meghívása (Dispatch on-app-boot events)
       {:dispatch-n (r a/get-period-events db :on-app-boot)
        :dispatch-tick [; 2. A szerver indítása
@@ -129,7 +130,7 @@
   [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "launching app ...")
+      (println details/app-codename "launching app ...")
       ; A szerver indítása utáni események meghívása (Dispatch on-app-launch events)
       {:dispatch-n (r a/get-period-events db :on-app-launch)
        :dispatch   [:core/connect-to-database!]}))

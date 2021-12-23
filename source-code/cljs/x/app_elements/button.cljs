@@ -148,18 +148,18 @@
   ; @param (map) button-props
   ;  XXX#0714
   ;  {:badge-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success
+  ;    :primary, :secondary, :success, :warning
   ;   :background-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted
+  ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;    Only w/ {:variant :filled}
   ;   :border-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted
+  ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;    Only w/ {:variant :outlined}
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default, :invert
+  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;    Only w/ {:variant :transparent}
   ;   :disabled? (boolean)(opt)
@@ -197,7 +197,7 @@
   ;   :style (map)(opt)
   ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
-  ;    :outlined, :filled, :transparent, :placeholder
+  ;    :filled, :outlined, :placeholder, :transparent
   ;    Default: :outlined}
   ;
   ; @usage

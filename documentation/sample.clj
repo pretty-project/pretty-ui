@@ -1,12 +1,12 @@
 
-;; -- Header ------------------------------------------------------------------
+;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2020.xx.xx
-; Description:
-; Version: v0.1.0
-; Compatibility: x3.9.8
+; Created: 2020.04.20
+; Description:
+; Version: v0.4.6
+; Compatibility: x4.4.9
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @param (keyword) direction
-;  :ltr, :rtl
+;  :ltr, :rtl
 ;  Default: :ltr
 ;
 ; @syntax
@@ -25,9 +25,10 @@
 ;
 ; @example
 ;  (vector/conj-item [] :a)
-;  => [:a]
+;  =>
+;  [:a]
 ;
-; @return (map)
+; @return (map)
 ;  Visszatérési értéke az a és b változó szorzata
 
 
@@ -36,26 +37,33 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-name.module-name.file-name
-    (:require [x.another-sample]
-              [x.sample]
-              [x.mid-utils.map    :as map]
-              [x.mid-utils.string :as string]
-              [x.mid-utils.vector :as vector]))
+    (:require [x.my-sample.api]
+              [x.our-sample.api]
+              [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.map    :as map]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.your-sample.api :as your-sample]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def do-something? namespace/do-something?)
-(def do-something! namespace/do-something!)
+; x.your-sample.api
+(def do-something? your-sample/do-something?)
+(def do-something! your-sample/do-something!)
 
 
 
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def DISPLAY-SOMETHING?       true)
+; @constant (boolean)
+(def DISPLAY-SOMETHING? true)
+
+; @constant (string)
 (def ILLEGAL-UNMOUNTING-ERROR "Illegal onmounting error")
 
 
@@ -63,9 +71,13 @@
 ;; -- State -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def color     (atom "#fff"))
+; @atom (string)
+(def color (atom "#fff"))
+
+; @atom (boolean)
 (def expanded? (atom false))
 
+; @atom (map)
 (def state (atom {:color     "#fff"
                   :expanded? false}))
 
@@ -74,53 +86,50 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def db-path [:sometimes :db-paths :are :too :long])
-
-(defn- local-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn my-public-function
+  ; @param (keyword) my-id
+  ; @param (map) my-props
   ;
-  ; @return (nil)
-  [])
+  ; @return (*)
+  [my-id my-props]
+  (get-in my-props [:get :something]))
 
-
-
-;; -- Converters --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request->path-param
-  ; @param (map) request
-  ; @param (keyword) param-id
+(defn- my-private-function
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (*)
-  [request param-id]
-  (get-in request [:path-params param-id]))
+  ; @param (keyword) my-id
+  ; @param (map) my-props
+  ;
+  ; @return (*)
+  [my-id my-props]
+  (get-in my-props [:get :something :else]))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-sample
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn- get-my-sample
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (map)
+  ; @return (map)
   [db _]
   (get-in db [:sample-path]))
 
-(defn- get-another-sample
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn- get-your-sample
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (map)
+  ; @return (map)
   [db _]
   (get-in db [:sample-path]))
 
-(reg-sub ::get-another-sample get-another-sample)
+(reg-sub :my-namespace/get-your-sample get-your-sample)
 
 (defn- get-fruits-in-vector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (vector)
-  ;  [(keyword) apple
+  ; @return (vector)
+  ;  [(keyword) apple
   ;   (keyword) banana
   ;   (string) pineapple
   ;   (string) pear]
@@ -132,76 +141,80 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def menu-data-prototype
-     {:event   [:event-id]
-      :label   "Label"
-      :menu-id nil})
-
-(defn- article-data-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn- my-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) article-data
+  ; @param (map) my-props
   ;
-  ; @return (map)
-  [article-data]
-  (merge article-data
-         {:article-id   nil
-          :label        "Label"
-          :subscription [:subscription-id]}))
+  ; @return (map)
+  ;  {:color (keyword)
+  ;   :height (px)
+  ;   :width (px)}
+  [my-props]
+  (merge {:color  :my-default-color
+          :height 42
+          :width  42}
+         (param article-data)))
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-item!
-  ; @param (vector) item-path
-  ; @param (*) item
+(defn set-my-item!
+  ; @param (item-path vector) item-path
+  ; @param (*) item
   ;
-  ; @return (map)
+  ; @return (map)
   [db [_ item-path item]]
   (assoc-in db item-path item))
 
-(reg-event-db :x.app-db/set-item! set-item!)
+(defn set-your-item!
+  ; @param (item-path vector) item-path
+  ; @param (*) item
+  ;
+  ; @return (map)
+  [db [_ item-path item]]
+  (assoc-in db item-path item))
 
-(defn- store-item-ids!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keywords in vector) item-ids
-  ; 
-  ; @return (map)
-  [db [_ item-ids]]
-  (assoc-in db [:item-ids] item-ids))
+(reg-event-db :my-namespace/set-your-item! set-your-item!)
 
-(defn store-item-props!
-  ; @param (keyword) item-id
-  ; @param (map) item-props
-  ; @param (map)(optional) store-props
-  ;  {:store-backup? (boolean)}
+(defn- backup-my-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r store-item-props! :my-item-id {...})
-  ;  (r store-item-props! :my-item-id {... 1} {... 2})
+  ; @param (keyword) my-id
+  ; @param (map) my-props
   ;
-  ; @return (map)
-  [db [_ item-id item-props {:keys [store-backup?]}]]
-  (cond-> db store-backup? (assoc-in db [:backup-items item-id] item-props)
-             :always       (assoc-in db [:items item-id] item-props)))
+  ; @return (map)
+  [db [_ my-id my-props]]
+  (assoc-in db [:backup-items my-id] my-props))
+
+(defn store-my-props!
+  ; @param (keyword) my-id
+  ; @param (map) my-props
+  ;
+  ; @usage
+  ;  (r my-namespace/store-my-props! :my-item {...})
+  ;
+  ; @return (map)
+  [db [_ my-id my-props]]
+  (as-> db % (r backup-my-props! % my-id my-props)
+             (assoc-in % [:items my-id] my-props)))
 
 
 
 ;; -- Coeffect events ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn inject-item!
-  ; @param (vector) item-path
-  ; @param (*) item
+(defn inject-my-item!
+  ; @param (item-path vector) item-path
+  ; @param (*) item
   ;
-  ; @return (map)
+  ; @return (map)
   [cofx [_ item-path item]]
   (assoc-in cofx item-path item))
 
-(reg-cofx ::inject-item! inject-item!)
+(reg-cofx :my-namespace/inject-my-item! inject-my-item!)
 
 
 
@@ -209,26 +222,38 @@
 ;; ----------------------------------------------------------------------------
 
 (reg-event-fx
-  ::set-item!
-  ; @param (vector) item-path
-  ; @param (*) item
-  (fn [_ [_ item-path item]]
-      {:x.app-db [[:set! item-path item]]}))
-
-(reg-event-fx
-  ::do-something?!
-  (fn [{:keys [db]} _]
-      {:dispatch-if [(r do-something? db)
-                     [::do-something!]]}))
+  :my-namespace/do-something!
+  ; @param (keyword) my-id
+  ; @param (map) my-props
+  (fn [_ [_ my-id my-props]]
+      [:your-namespace/do-something-else! my-id my-props]))
 
 
 
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(reg-fx
- ::do-something!
- #(do-something!))
+(defn- do-something!
+  ; @param (map) pie-props
+  ;  {:pie-color (keyword)
+  ;   :pie-height (px)
+  ;   :pie-width (px)
+  ;   :slice-duration (ms)}
+  ;
+  ; @return (vector)
+  [pie-props]
+  (slice-the-pie! pie-props))
+
+(reg-fx :my-namespace/do-something! do-something!)
+
+(defn- try-something!
+  ; @param (map) joint-props
+  ;
+  ; @return (nil)
+  [joint-props]
+  (roll-a-joint! joint-props))
+
+(reg-handled-fx :my-namespace/try-something! try-something!)
 
 
 
@@ -236,10 +261,9 @@
 ;; ----------------------------------------------------------------------------
 
 (reg-event-fx
-  ::->data-fetched
-  (fn [_ _]
-      {:dispatch-n [[::show-message!]
-                    [::store-data!]]}))
+  :my-namespace/->data-fetched
+  {:dispatch-n [[:my-namespace/show-message!]
+                [:my-namespace/store-data!]]})
 
 
 
@@ -247,25 +271,26 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- submenu
-  ; @param (map) menu-data
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
   ;
-  ; @return (hiccup)
-  [{:keys [title]}]
+  ; @return (hiccup)
+  [_ {:keys [title]}]
   [:div#submenu title])
 
 (defn- menu
-  ; @param (map) menu-data
+  ; @param (keyword) menu-id
+  ; @param (map) menu-props
   ;
-  ; @return (hiccup)
-  [menu-data]
-  [:div#menu [submenu menu-data]])
+  ; @return (hiccup)
+  [menu-id menu-props]
+  [:div#menu [submenu menu-id menu-props]])
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(reg-lifecycles
+(a/reg-lifecycles
   ::lifecycles
-  {:on-logout
-   {:dispatch-n []}})
+  {:on-logout {:dispatch-n []}})

@@ -32,6 +32,9 @@
 ; @constant (integer)
 (def DEFAULT-DOWNLOAD-LIMIT 20)
 
+; @constant (keywords in vector)
+(def DEFAULT-SEARCH-KEYS [:name])
+
 
 
 ;; -- Prototypes --------------------------------------------------------------
@@ -53,7 +56,8 @@
           :handle-archived-items? true
           :handle-favorite-items? true
           :order-by         DEFAULT-ORDER-BY
-          :order-by-options DEFAULT-ORDER-BY-OPTIONS}
+          :order-by-options DEFAULT-ORDER-BY-OPTIONS
+          :search-keys      DEFAULT-SEARCH-KEYS}
          (param lister-props)))
 
 
@@ -87,13 +91,18 @@
   ;   :order-by (keyword)(opt)
   ;    Default: DEFAULT-ORDER-BY
   ;   :order-by-options (keywords in vector)(opt)
-  ;    Default: DEFAULT-ORDER-BY-OPTIONS}
+  ;    Default: DEFAULT-ORDER-BY-OPTIONS
+  ;   :search-keys (keywords in vector)(opt)
+  ;    Default: DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type]
   ;
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  [:item-lister/initialize! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [cofx [_ extension-id item-namespace lister-props]]
       (let [lister-props (a/prot lister-props lister-props-prototype)]
            (r add-route! cofx extension-id item-namespace lister-props))))

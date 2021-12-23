@@ -32,10 +32,10 @@
 ; @constant (keywords in vector)
 ;  A multi-combo-box elem mely paramétereit örökölje a combo-box elem
 (def INHERITED-FIELD-PROPS
-     [:auto-focus? :color :extendable? :min-width :get-label-f :get-value-f
-      :group-value :no-options-label :max-length :on-blur :on-empty
-      :on-focus :on-reset :on-select :on-type-ended :option-component
-      :options-path :placeholder
+     [:auto-focus? :border-color :extendable? :min-width :get-label-f
+      :get-value-f :group-value :no-options-label :max-length :on-blur
+      :on-empty :on-focus :on-reset :on-select :on-type-ended
+      :option-component :options-path :placeholder
       :debug])
 
 ; @constant (metamorphic-content)
@@ -228,10 +228,10 @@
   ; @param (map) group-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :primary, :secondary
   ;    Default: :default
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription vector)(opt)

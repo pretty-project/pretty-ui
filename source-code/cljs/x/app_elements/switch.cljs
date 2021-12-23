@@ -31,13 +31,13 @@
   ; @param (map) switch-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [switch-id switch-props]
-  (merge {:color     :primary
-          :font-size :s
-          :layout    :row
+  (merge {:border-color :primary
+          :font-size    :s
+          :layout       :row
           :value-path (engine/default-value-path switch-id)}
          (param switch-props)))
 
@@ -104,10 +104,10 @@
 (defn element
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;  {:border-color (keyword)(opt)
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (boolean)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

@@ -1,13 +1,15 @@
 
-- Something for your mind, your body and your soul!
+# Something for your mind, your body and your soul!
+
+
 
 # Mono-template
 - Compile-kor kitörli a /public/js/plugins mappát? @Paul
-- Mono-template project-details.edn {:authenticated-home "..."}
 - Mono-template project-name.css -> site.css és admin.css
 - Mono-template-ből hiányzik, hogy a /login route az admin.js -t inditsa
 - MONOTEMPLATE-bol kivenni az mt-logo-.png fileokat
-- demo user monotemplate be is!
+- demo user tenni a monotemplate be is!
+
 
 
 # x4.5.0
@@ -18,13 +20,8 @@
 
 - Loading animations: DEPRECATED
 
-- Ha az item-lister select-mode-ban a checkbox-ok képesek lennének egy vektorban elhelyezni és kivenni
-  a saját indexüket, aszerint, hogy be vannak-e pipálva, akkor javulna az item-lister renderelési sebessége
-  select-mode-ban. (Most érezhetően laggol egy nagyon picit, re-frame íráskor a popup-ok renderlése)
-
 - (def a [0 1 2 3 4 5])
   (println (str (apply > a)))
-
 
 - (ns xyz (:require [x.app-user.api :as user]))
   (println (str ::user/primary)) => :x.app-user.api/primary
@@ -35,10 +32,6 @@
   (ha igen, akkor a route-jai se system-route-ok legyenek!)
 
 - Ha kész a media, lehet hogy a listener komponensre sem lesz szükség
-
-- Amikor egy formot töltesz ki és van el nem mentett változás, akkor ha el akarod hagyni
-  az oldalt, akkor kérdezze meg, hogy biztos eldobod a nem mentett változásokat?
-  És nyugodtan legyn warning a gomb ami eldobja és továbbvisz máshova, mert ez oylan mint egy törlés
 
 - Multi-combobox elembe igy nézzen ki egy placeholder: "green, red, purple"
   Szóval vesszővel lehet elválasztani a tag-eket és a vessző billentyű leütése is viselkedjen
@@ -60,6 +53,7 @@
 - A go-back-surface-label-bar és go-back-popup-label-bar nem jo, hogy browser-back-et használ!
 
 - Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)
+
 - Text-field szélessége megváltozik az emptiable? true adornment (és más adornment) ki-bekapcsolásakor
 
 - A server-media modul pathom handler-ei media/xyz elnevezésről media-storage/xyz elnevezésre
@@ -105,8 +99,6 @@
 
 - Az on-scroll és on-touch-move események stopPropagation függvénye nem gátolja meg,
   hogy a modalon szkrollolás szkrollolja a modal mögött kontentet?
-
-- Legyen saját tooltip mert geci lassu a browser-szintű tooltip
 
 - Ha kész az SSC átnézni a monotemplate-et
   Ha le van tisztázva a monotemplate, csinálni egy új projektet a monotech.hu oldalnak
@@ -169,20 +161,28 @@
   {:extendable? ... :on-extend tulajdonságok}
 
 - Ha egy popup label bar label nem fér, ki -> akkor text-overflow: ellipsis
+
 - Peti: elementekre aria-label
+
 - DRAG-OVERLAY-t berakni!
+
 - Sortable mozgatás picit laggos iOS Chrome-on
+
 - A template resources/public/logo mappábol ki lehet venni az mt-logo- logókat
   elég ha a monosetben van benne. Ugyis ott van használva
+
 - EQL
   Kliens db / server db szinkronizáció
   Ha valamit modositasz, a kliens db-ben, akkor legyen olyan funkcio, hogy
   remote -> ami a szeron is modositja
+
 - Adatkezelés és ÁSZF
   https://policies.google.com/terms?hl=hu (ez is kell!, ?ezt fogadod el a cookie-val?)
   https://policies.google.com/technologies/cookies?hl=hu
   Localstorage vs süti / gdpr (a sütik elmennek a szerora a request-el)
+
 - A button elemnek legyen hover állapota, hogy egyértelmű legyen UX szempontbol
+
 - Megvizsgálni, hogy szükséges-e minden esetben, hogy a response-handler
   read-string-elje a szerver válaszát. Paul szerint talán a :transit-params megoldja,
   hogy clojure adatszerkezeket lehessen küldeni a kliensre
@@ -281,7 +281,7 @@
 
 
 ; Mentés több nyelven:
-; Az inputok saját set event-et kapnak ami kezeli ezt is!
+; Az inputok saját set event-et kapnak ami kezeli ezt is!
 ;
 ; Nyelvek kiválasztása:
 ; Jobb oldali menüben egy zászló ikon
@@ -299,7 +299,7 @@
 
 # Ideák
 
-- `@media only screen and (max-width: 50vh) {}`
+- `@media only screen and (max-width: 50vh) {}`
   Igy tudsz képernyő arány-t vizsgálni
 
 - "Stay-in-viewport" renderelés:

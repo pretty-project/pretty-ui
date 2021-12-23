@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.12.17
 ; Description:
-; Version: v0.2.2
+; Version: v0.2.6
 ; Compatibility: x4.4.9
 
 
@@ -25,7 +25,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-router.engine
-(def valid-route-path              engine/valid-route-path)
 (def variable-route-string?        engine/variable-route-string?)
 (def resolve-variable-route-string engine/resolve-variable-route-string)
 

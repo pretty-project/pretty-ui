@@ -52,6 +52,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn request->add-props
   ; @param (map) request
   ;
@@ -64,7 +65,9 @@
         timestamp    (time/timestamp-object)]
        {:added-at timestamp
         :added-by user-account}))
+; WARNING! DEPRECATED! DO NOT USE!
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn request->modify-props
   ; @param (map) request
   ;
@@ -77,7 +80,9 @@
         timestamp    (time/timestamp-object)]
        {:modified-at timestamp
         :modified-by user-account}))
+; WARNING! DEPRECATED! DO NOT USE!
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn request->create-props
   ; @param (map) request
   ;
@@ -90,7 +95,9 @@
         timestamp    (time/timestamp-object)]
        {:created-at timestamp
         :created-by user-account}))
+; WARNING! DEPRECATED! DO NOT USE!
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn request->delete-props
   ; @param (map) request
   ;
@@ -103,7 +110,9 @@
         timestamp    (time/timestamp-object)]
        {:deleted-at timestamp
         :deleted-by user-account}))
+; WARNING! DEPRECATED! DO NOT USE!
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn request->upload-props
   ; @param (map) request
   ;
@@ -116,3 +125,4 @@
         timestamp    (time/timestamp-object)]
        {:uploaded-at timestamp
         :uploaded-by user-account}))
+; WARNING! DEPRECATED! DO NOT USE!

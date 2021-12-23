@@ -26,6 +26,30 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn valid-path
+  ; @param (string) path
+  ;
+  ; @example
+  ;  (uri/valid-path "my-route")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @example
+  ;  (uri/valid-path "/my-route")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @example
+  ;  (uri/valid-path "/my-route/")
+  ;  =>
+  ;  "/my-route"
+  ;
+  ; @return (string)
+  [path]   ; 1.
+  (-> path (string/not-ends-with! "/")
+           ; 2.
+           (string/starts-with!   "/")))
+
 (defn uri->protocol
   ; @param (string) uri
   ;

@@ -10,4 +10,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-editor/initialize! :clients :client {:suggestion-keys [:client/city]}]})
+  {:on-app-boot [:item-editor/initialize! :clients :client {:suggestion-keys [:city]}]})

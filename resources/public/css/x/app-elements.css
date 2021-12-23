@@ -216,6 +216,7 @@ button.x-card:focus,
 .x-expandable--expand-icon,
 .x-file-drop-area--icon,
 .x-element--info-tooltip--icon,
+.x-menu-bar--menu-item--icon,
 .x-select--button-icon,
 .x-slideshow--controls--go-bwd,
 .x-slideshow--controls--go-fwd,
@@ -397,22 +398,21 @@ button.x-card:focus,
 
 .x-button[data-variant="outlined"][data-border-color="muted"]
 .x-button--body,
-.x-checkbox[data-color="muted"]
+.x-checkbox[data-border-color="muted"]
 .x-checkbox--button::before,
-.x-counter[data-color="muted"]
+.x-counter[data-border-color="muted"]
 .x-counter--decrease-button,
-.x-counter[data-color="muted"]
+.x-counter[data-border-color="muted"]
 .x-counter--increase-button,
-.x-radio-button[data-color="muted"]
+.x-radio-button[data-border-color="muted"]
 .x-radio-button--option-button,
-.x-switch[data-color="muted"]
+.x-switch[data-border-color="muted"]
 .x-switch--track {
   border-color: var( --border-color-muted ) }
 
 .x-horizontal-line[data-color="muted"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="muted"],
-.x-table[data-color="muted"] .x-table--header-cell,
 .x-vertical-line[data-color="muted"]
 .x-vertical-line--body {
   background-color: var( --border-color-muted ) }
@@ -446,14 +446,18 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
 
+.x-button[data-variant="filled"][data-background-color="highlight"] .x-button--body,
 .x-chip[data-background-color="highlight"] .x-chip--body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
+.x-button[data-variant="outlined"][data-border-color="highlight"]
+.x-button--body {
+  border-color: var( --border-color-muted ) }
+
 .x-horizontal-line[data-color="highlight"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="highlight"],
-.x-table[data-color="highlight"] .x-table--header-cell,
 .x-toggle[data-hover-color="highlight"]:hover,
 .x-vertical-line[data-color="highlight"]
 .x-vertical-line--body {
@@ -471,6 +475,8 @@ button.x-card:focus,
 .x-horizontal-line--body[data-fade="in-out"] {
   background: linear-gradient(90deg, transparent, var( --border-color-highlight ), transparent) }
 
+.x-button[data-variant="transparent"][data-color="highlight"]
+.x-button--body,
 .x-icon[data-color="highlight"],
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
@@ -498,21 +504,19 @@ button.x-card:focus,
 
 .x-button[data-variant="outlined"][data-border-color="primary"]
 .x-button--body,
-.x-checkbox[data-color="primary"]
+.x-checkbox[data-border-color="primary"]
 .x-checkbox--button::before,
-.x-counter[data-color="primary"]
+.x-counter[data-border-color="primary"]
 .x-counter--decrease-button,
-.x-counter[data-color="primary"]
+.x-counter[data-border-color="primary"]
 .x-counter--increase-button,
-.x-radio-button[data-color="primary"]
+.x-radio-button[data-border-color="primary"]
 .x-radio-button--option-button,
-.x-switch[data-color="primary"]
+.x-switch[data-border-color="primary"]
 .x-switch--track,
-.x-text-field[data-color="primary"]
-.x-text-field--shield,
-.x-text-field[data-color="primary"]
+.x-text-field[data-border-color="primary"]
 .x-text-field--input,
-.x-text-field[data-color="primary"]
+.x-text-field[data-border-color="primary"]
 .x-text-field--textarea {
   border-color: var( --border-color-primary ) }
 
@@ -520,7 +524,6 @@ button.x-card:focus,
 .x-horizontal-line[data-color="primary"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="primary"],
-.x-table[data-color="primary"] .x-table--header-cell,
 .x-vertical-line[data-color="primary"]
 .x-vertical-line--body {
   background-color: var( --border-color-primary ) }
@@ -561,21 +564,19 @@ button.x-card:focus,
 
 .x-button[data-variant="outlined"][data-border-color="secondary"]
 .x-button--body,
-.x-checkbox[data-color="secondary"]
+.x-checkbox[data-border-color="secondary"]
 .x-checkbox--button::before,
-.x-counter[data-color="secondary"]
+.x-counter[data-border-color="secondary"]
 .x-counter--decrease-button,
-.x-counter[data-color="secondary"]
+.x-counter[data-border-color="secondary"]
 .x-counter--increase-button,
-.x-radio-button[data-color="secondary"]
+.x-radio-button[data-border-color="secondary"]
 .x-radio-button--option-button,
-.x-switch[data-color="secondary"]
+.x-switch[data-border-color="secondary"]
 .x-switch--track,
-.x-text-field[data-color="secondary"]
-.x-text-field--shield,
-.x-text-field[data-color="secondary"]
+.x-text-field[data-border-color="secondary"]
 .x-text-field--input,
-.x-text-field[data-color="secondary"]
+.x-text-field[data-border-color="secondary"]
 .x-text-field--textarea {
   border-color: var( --border-color-secondary ) }
 
@@ -583,7 +584,6 @@ button.x-card:focus,
 .x-horizontal-line[data-color="secondary"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="secondary"],
-.x-table[data-color="secondary"] .x-table--header-cell,
 .x-vertical-line[data-color="secondary"]
 .x-vertical-line--body {
   background-color: var( --border-color-secondary ) }
@@ -624,27 +624,24 @@ button.x-card:focus,
 
 .x-button[data-variant="outlined"][data-border-color="success"]
 .x-button--body,
-.x-checkbox[data-color="success"]
+.x-checkbox[data-border-color="success"]
 .x-checkbox--button::before,
-.x-counter[data-color="success"]
+.x-counter[data-border-color="success"]
 .x-counter--decrease-button,
-.x-counter[data-color="success"]
+.x-counter[data-border-color="success"]
 .x-counter--increase-button,
-.x-radio-button[data-color="success"]
+.x-radio-button[data-border-color="success"]
 .x-radio-button--option-button,
-.x-switch[data-color="success"]
+.x-switch[data-border-color="success"]
 .x-switch--track,
-.x-text-field[data-color="success"]
-.x-text-field--shield,
-.x-text-field[data-color="success"]
+.x-text-field[data-border-color="success"]
 .x-text-field--input,
-.x-text-field[data-color="success"]
+.x-text-field[data-border-color="success"]
 .x-text-field--textarea {
   border-color: var( --border-color-success ) }
 
 .x-element-badge[data-color="success"],
 .x-line-diagram--section[data-color="success"],
-.x-table[data-color="success"] .x-table--header-cell,
 .x-vertical-line[data-color="success"]
 .x-vertical-line--body {
   background-color: var( --border-color-success ) }
@@ -671,27 +668,24 @@ button.x-card:focus,
 
 .x-button[data-variant="outlined"][data-border-color="warning"]
 .x-button--body,
-.x-checkbox[data-color="warning"]
+.x-checkbox[data-border-color="warning"]
 .x-checkbox--button::before,
-.x-counter[data-color="warning"]
+.x-counter[data-border-color="warning"]
 .x-counter--decrease-button,
-.x-counter[data-color="warning"]
+.x-counter[data-border-color="warning"]
 .x-counter--increase-button,
-.x-radio-button[data-color="warning"]
+.x-radio-button[data-border-color="warning"]
 .x-radio-button--option-button,
-.x-switch[data-color="warning"]
+.x-switch[data-border-color="warning"]
 .x-switch--track,
-.x-text-field[data-color="warning"]
-.x-text-field--shield,
-.x-text-field[data-color="warning"]
+.x-text-field[data-border-color="warning"]
 .x-text-field--input,
-.x-text-field[data-color="warning"]
+.x-text-field[data-border-color="warning"]
 .x-text-field--textarea {
   border-color: var( --border-color-warning ) }
 
 .x-element-badge[data-color="warning"],
 .x-line-diagram--section[data-color="warning"],
-.x-table[data-color="warning"] .x-table--header-cell,
 .x-vertical-line[data-color="warning"]
 .x-vertical-line--body {
   background-color: var( --border-color-warning ) }
@@ -2633,7 +2627,7 @@ body[data-viewport-profile="s"]
   height: var( --icon-size-default );
   margin: 0 12px;
   justify-content: center;
-  width: var( --icon-size-default ); }
+  width: var( --icon-size-default ) }
 
 .x-label--icon-placeholder {
   width: 32px }
@@ -2691,25 +2685,29 @@ body[data-viewport-profile="s"]
 /*** Menu wrapper ***/
 
 /*** Menu items ***/
-
-.x-menu-bar--menu-items {
-  column-gap: 24px }
-
 /*** Menu items ***/
 
 /*** Menu item ***/
 
+/* Az .x-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
+ * meg kell feleljenek a felsorolt felhasználási módoknak:
+ *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
+ *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
+ *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
 .x-menu-bar--menu-item {
+  align-items: center;
   color: var( --color-highlight );
+  /* Ha az .x-menu-bar--menu-item elem egyszerre feliratot és ikont is megjelenít,
+   * akkor a felirat és az ikon közötti esztétikai távolságot a column-gap
+   * tulajdonság határozza meg */
+  column-gap: 12px;
   display: flex;
-  flex-direction: column;
-  font-size: var( --font-size-s );
-  font-weight: 600;
-  justify-content: center;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  white-space: nowrap }
+  flex-direction: row;
+  /* Ha az .x-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
+   * akkor az ikon-gombként jelenik meg (12px + 24px + 12px = 48px szélesség) */
+  padding: 0 12px }
 
+/* WARNING! DEPRECATED! DO NOT USE! */
 .x-menu-bar--menu-item[data-active="true"]::after {
   background-color: var( --border-color-primary );
   bottom: 0;
@@ -2719,12 +2717,29 @@ body[data-viewport-profile="s"]
   left: 0;
   position: absolute;
   width: 100% }
+/* WARNING! DEPRECATED! DO NOT USE! */
 
 .x-menu-bar--menu-item[data-active="true"] {
   color: var( --color ) }
 
-.x-menu-bar[data-layout="row"] .x-menu-bar--menu-item {
-  height: 48px }
+.x-menu-bar[data-layout="fit"] .x-menu-bar--menu-item { height: 24px }
+.x-menu-bar[data-layout="row"] .x-menu-bar--menu-item { height: 48px }
+
+.x-menu-bar--menu-item--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var( --icon-size-xs );
+  height: var( --icon-size-default );
+  justify-content: center;
+  width: var( --icon-size-default ) }
+
+.x-menu-bar--menu-item--label {
+  font-size: var( --font-size-s );
+  font-weight: 600;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  white-space: nowrap }
 
 /*** Menu item ***/
 /***** Menu bar *****/
@@ -3188,6 +3203,10 @@ body[data-viewport-profile="s"]
 /*** Table label ***/
 
 /*** Table header ***/
+
+.x-table--header-cell {
+  background-color: var( --border-color-muted ) }
+
 /*** Table header ***/
 
 /*** Table header row ***/

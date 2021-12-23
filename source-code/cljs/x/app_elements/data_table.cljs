@@ -99,9 +99,6 @@
   ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)
   ;    Default: true
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight, :none
-  ;    Default: :highlight
   ;   :class (keyword or keywords in vector)(opt)
   ;   :columns (maps in vector or integer)
   ;    [{:horizontal-align (keyword)(opt)

@@ -263,6 +263,16 @@
   (let [search-term  (r get-meta-value db extension-id item-namespace :search-term)]
        (str search-term)))
 
+(defn any-filter-in-use?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (let [selected-filter (get-in db [extension-id :item-lister/meta-items :filter])]
+       (some? selected-filter)))
+
 (defn some-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -377,25 +387,6 @@
                         (vector/conj-item result {item-id-key item-id marker-key (toggle-f marker-value)})))
                (param [])
                (param item-ids))))
-
-(defn get-resolver-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  ;  {:downloaded-item-count (integer)
-  ;   :download-limit (integer)
-  ;   :filter (keyword)
-  ;   :order-by (keyword)
-  ;   :search-term (string)}
-  [db [_ extension-id item-namespace]]
-  {:downloaded-item-count (r get-downloaded-item-count db extension-id)
-   :download-limit        (r get-meta-value            db extension-id item-namespace :download-limit)
-   :filter                (r get-meta-value            db extension-id item-namespace :filter)
-   :order-by              (r get-meta-value            db extension-id item-namespace :order-by)
-   :search-term           (r get-search-term           db extension-id item-namespace)})
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

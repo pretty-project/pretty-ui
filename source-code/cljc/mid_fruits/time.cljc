@@ -453,6 +453,10 @@
   ; @return (integer)
   [])
 
+(defn get-date
+  ; @return (string)
+  [])
+
 (defn get-hours
   ; @return (integer)
   [])

@@ -277,10 +277,10 @@
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :primary, :secondary
   ;    Default: :default
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (*)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

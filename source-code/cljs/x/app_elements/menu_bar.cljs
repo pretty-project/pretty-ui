@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v0.8.2
+; Version: v1.0.4
 ; Compatibility: x4.4.9
 
 
@@ -77,13 +77,11 @@
   ;
   ; @return (map)
   ;  {:horizontal-align (keyword)
-  ;   :indent (keyword)
   ;   :layout (keyword)
   ;   :menu-items (map)
   ;   :orientation (keyword)}
   [{:keys [orientation] :as bar-props}]
-  (merge {:indent      :both
-          :layout      :row
+  (merge {:layout      :row
           :orientation :horizontal}
          (if-not (= orientation :vertical)
                  {:horizontal-align :center})
@@ -94,18 +92,44 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- menu-item-icon
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bar-id
+  ; @param (map) bar-props
+  ; @param (map) item-props
+  ;  {:icon (keyword)(opt)}
+  ;
+  ; @return (hiccup)
+  [_ _ {:keys [icon]}]
+  (if (some? icon)
+      [:div.x-menu-bar--menu-item--icon icon]))
+
+(defn- menu-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bar-id
+  ; @param (map) bar-props
+  ; @param (map) item-props
+  ;  {:label (metamorphic-content)(opt)}
+  ;
+  ; @return (hiccup)
+  [_ _ {:keys [label]}]
+  (if (some? label)
+      [:div.x-menu-bar--menu-item--label [components/content {:content label}]]))
+
 (defn- button-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [bar-id bar-props {:keys [label] :as item-props}]
+  [bar-id bar-props item-props]
   [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
-                                 [components/content {:content label}]])
+                                 [menu-item-icon       bar-id bar-props item-props]
+                                 [menu-item-label      bar-id bar-props item-props]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,12 +137,12 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [bar-id bar-props {:keys [label] :as item-props}]
+  [bar-id bar-props item-props]
   [:a.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
-                            [components/content {:content label}]])
+                            [menu-item-icon       bar-id bar-props item-props]
+                            [menu-item-label      bar-id bar-props item-props]])
 
 (defn- menu-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,7 +198,7 @@
   ;    Only w/ {:orientation :horizontal}
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :both
+  ;    Default: :none
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
@@ -192,7 +216,7 @@
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled
-  ;      :label (metamorphic-content)
+  ;      :label (metamorphic-content)(opt)
   ;      :on-click (metamorphic-event)(opt)}]
   ;   :orientation (keyword)(opt)
   ;    :horizontal, :vertical

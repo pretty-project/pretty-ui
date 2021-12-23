@@ -165,8 +165,8 @@
           :selected? (r selectable-selected?   db input-id)
           :value     (r input/get-input-value  db input-id)}
          (if (r input/input-required-warning? db input-id)
-             {:color  :warning
-              :helper :please-select-an-option})))
+             {:border-color :warning
+              :helper       :please-select-an-option})))
 
 
 

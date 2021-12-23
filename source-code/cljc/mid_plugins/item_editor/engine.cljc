@@ -179,7 +179,7 @@
   ; @example
   ;  (engine/resolver-name :my-extension :my-type :suggestions)
   ;  =>
-  ;  :my-extension/get-my-type-suggestions!
+  ;  :my-extension/get-my-type-suggestions
   ;
   ; @return (keyword)
   [extension-id item-namespace action-id]

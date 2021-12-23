@@ -92,4 +92,5 @@
                                            :handle-archived-items? false
                                            :handle-favorite-items? false
                                            :order-by         ORDER-BY
-                                           :order-by-options ORDER-BY-OPTIONS}]})
+                                           :order-by-options ORDER-BY-OPTIONS
+                                           :search-keys [:my-key :your-key]}]})

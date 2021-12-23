@@ -25,6 +25,27 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-resolver-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  ;  {:downloaded-item-count (integer)
+  ;   :download-limit (integer)
+  ;   :filter (keyword)
+  ;   :order-by (keyword)
+  ;   :search-keys (keywords in vector)
+  ;   :search-term (string)}
+  [db [_ extension-id item-namespace]]
+  {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
+   :download-limit        (r subs/get-meta-value            db extension-id item-namespace :download-limit)
+   :filter                (r subs/get-meta-value            db extension-id item-namespace :filter)
+   :order-by              (r subs/get-meta-value            db extension-id item-namespace :order-by)
+   :search-keys           (r subs/get-meta-value            db extension-id item-namespace :search-keys)
+   :search-term           (r subs/get-search-term           db extension-id item-namespace)})
+
 (defn get-delete-selected-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -85,6 +106,6 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [resolver-id    (engine/resolver-id           extension-id item-namespace)
-        resolver-props (r subs/get-resolver-props db extension-id item-namespace)]
+  (let [resolver-id    (engine/resolver-id      extension-id item-namespace)
+        resolver-props (r get-resolver-props db extension-id item-namespace)]
        [`(~resolver-id ~resolver-props)]))

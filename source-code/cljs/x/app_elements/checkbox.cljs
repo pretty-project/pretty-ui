@@ -31,14 +31,14 @@
   ; @param (map) checkbox-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [checkbox-id checkbox-props]
-  (merge {:color     :primary
-          :font-size :s
-          :layout    :row
-          :value-path (engine/default-value-path checkbox-id)}
+  (merge {:border-color :primary
+          :font-size    :s
+          :layout       :row
+          :value-path   (engine/default-value-path checkbox-id)}
          (param checkbox-props)))
 
 
@@ -104,8 +104,8 @@
 (defn element
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;  {:border-color (keyword)(opt)
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (boolean)(constant)(opt)
   ;   :disabled? (boolean)(opt)

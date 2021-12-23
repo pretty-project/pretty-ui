@@ -100,7 +100,7 @@
 
        ; *
        (let [server-port (get server-props :port)]
-            (println details/app-name "started on port:" server-port))))
+            (println details/app-codename "started on port:" server-port))))
 
 ; @usage
 ;  [:core/run-server! {...}]

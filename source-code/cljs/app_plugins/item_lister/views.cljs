@@ -44,7 +44,7 @@
   ; @return (maps in vector)
   [extension-id item-namespace {:keys [filter handle-archived-items? handle-favorite-items?]}]
   [{:label :all-items :active? (nil? filter)
-    :on-click [:item-lister/discard-filter! extension-id item-namespace]}
+    :on-click [:item-lister/discard-filter! extension-id]}
    (if handle-favorite-items? {:label :favorites :active? (= filter :favorite-items)
                                :on-click [:item-lister/use-filter! extension-id item-namespace :favorite-items]})
    (if handle-archived-items? {:label :archived-items :active? (= filter :archived-items)

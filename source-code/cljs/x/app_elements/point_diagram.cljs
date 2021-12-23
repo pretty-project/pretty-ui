@@ -69,7 +69,7 @@
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :muted, :default
+  ;    :default, :muted, :primary, :secondary
   ;    Default: :default
   ;    Only w/ {:label ...}
   ;   :points (integers in vector)

@@ -13,7 +13,6 @@
 {; @param (map) app-details
  ;  {:author (string)
  ;   :app-build (string)
- ;   :app-codename (string)
  ;   :app-home (string)
  ;   :app-languages (keywords in vector)
  ;   :app-themes (maps in vector)
@@ -33,7 +32,6 @@
  :app-details
  {:author        "bithandshake"
   :app-build     "0.0.1"
-  :app-codename  "x4"
   :app-home      "/admin"
   :app-languages [:en :hu]
   :app-themes    [{:id :light :name :light-theme}

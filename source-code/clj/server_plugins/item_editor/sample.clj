@@ -15,27 +15,6 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - Az [:item-editor/initialize! {...}] esemény számára {:suggestion-keys [...]} tulajdonságként
-;   átadott kulcsokhoz tartozó értékeket a get-my-type-suggestions resolver használatával
-;   tölti le a kliens-oldali item-editor plugin.
-; - A {:suggestion-keys [...]} tulajdonság használatához szükséges létrehozni a get-my-type-suggestions
-;   formula alapján elnevezett resolver függvényt!
-(defresolver get-my-type-suggestions
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (map)
-             ;  {:my-extension/get-my-type-suggestions (map)
-             [env _]
-             {:my-extension/get-my-type-suggestions
-              (let [all-documents     (mongo-db/get-all-documents  :my-collection)
-                    suggestion-keys   (pathom/env->param       env :suggestion-keys)
-                    suggestion-values (db/get-specified-values all-documents suggestion-keys string/nonempty?)]
-                   ; XXX#6074
-                   ; A validator alkalmazása nélkül a kliens-oldalra küldött adatokat
-                   ; az item-editor plugin nem nyitja meg, helyette egy hibaüzenetet jelenít meg.
-                   (validator/validate-data suggestion-values))})
-
 (defresolver get-my-type-item
              ; @param (map) env
              ; @param (map) resolver-props

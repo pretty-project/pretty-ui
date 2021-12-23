@@ -47,15 +47,15 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-color (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path-vector)}
   [group-id group-props]
-  (merge {:color  :primary
-          :layout :row
+  (merge {:border-color :primary
+          :layout       :row
           :options-path (engine/default-options-path group-id)
           :value-path   (engine/default-value-path   group-id)
           :get-label-f return
@@ -163,8 +163,8 @@
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)

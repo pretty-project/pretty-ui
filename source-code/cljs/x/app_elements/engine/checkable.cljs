@@ -142,8 +142,8 @@
   [db [_ input-id]]
   (merge {:checked? (r checkable-checked? db input-id)}
          (if (r input/input-required-warning? db input-id)
-             {:color  :warning
-              :helper :please-check-this-field})))
+             {:border-color :warning
+              :helper       :please-check-this-field})))
 
 
 

@@ -33,12 +33,10 @@
   ;  {:on-enter (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :emptiable? (boolean)
+  ;  {:emptiable? (boolean)
   ;   :start-adornments (maps in vector)}
   [_ {:keys [on-enter] :as field-props}]
-  (merge {:color      :default
-          :emptiable? true}
+  (merge {:emptiable? true}
          (if (some? on-enter)   ; XXX#6054
              {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false}]}
              {:start-adornments [{:icon :search}]})
@@ -65,10 +63,10 @@
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :primary, :secondary,
   ;    Default: :default
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

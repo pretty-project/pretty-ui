@@ -195,8 +195,8 @@
           :collected-value (r get-collected-value     db input-id)
           :options         (r get-collectable-options db input-id)}
          (if (r input/input-required-warning? db input-id)
-             {:color  :warning
-              :helper :please-select-an-option})))
+             {:border-color :warning
+              :helper       :please-select-an-option})))
 
 
 

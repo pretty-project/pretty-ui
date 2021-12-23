@@ -103,7 +103,7 @@
   ;  [:item-editor/initialize! :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:my-type/color :my-type/city ...]}]
+  ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [cofx [_ extension-id item-namespace editor-props]]
       (let [editor-props (a/prot editor-props editor-props-prototype)]
            (if-let [multi-view? (get editor-props :multi-view?)]

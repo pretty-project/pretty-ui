@@ -418,11 +418,11 @@
          ;     {:color :success}}
          ; 2.
          (if (r input/input-value-invalid-warning? db field-id)
-             {:color  :warning
+             {:border-color :warning
               :invalid-message (r input/get-input-invalid-message db field-id)})
          ; 3.
          (if (r input/input-required-warning? db field-id)
-             {:color  :warning
+             {:border-color :warning
               :invalid-message :please-fill-out-this-field})))
 
 

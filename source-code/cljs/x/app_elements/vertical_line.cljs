@@ -66,7 +66,7 @@
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
   ;  {:color (keyword)(opt)
-  ;    :primary, :secondary, :muted, :highlight, :success, :warning, :default
+  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :muted
   ;   :layout (keyword)(opt)
   ;    :fit, :row

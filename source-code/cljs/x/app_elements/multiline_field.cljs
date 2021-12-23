@@ -31,15 +31,13 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :layout (keyword)
+  ;  {:layout (keyword)
   ;   :max-height (integer)
   ;   :min-height (integer)
   ;   :multiline? (boolean)
   ;   :status-animation? (boolean)}
   [field-id field-props]
-  (merge {:color      :default
-          :layout     :row
+  (merge {:layout     :row
           :max-height 32
           :min-height 1
           :value-path (engine/default-value-path field-id)}
@@ -93,8 +91,8 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) initial-props
   ;  {:auto-focus? (boolean)(constant)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :primary, :secondary,
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)

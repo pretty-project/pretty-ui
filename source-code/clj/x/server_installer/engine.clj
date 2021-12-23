@@ -100,14 +100,14 @@
 (defn- ->server-installed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (println details/app-name "installed version:" details/app-version)
+  (println details/app-codename "installed version:" details/app-version)
   (let [install-details (install-details-prototype)]
        (if (io/file-exists?       a/SERVER-CONFIG-FILEPATH)
            (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))
            (do (io/create-file!   a/SERVER-CONFIG-FILEPATH)
                (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))))
   ;
-  (println details/app-name "exiting ...")
+  (println details/app-codename "exiting ...")
   (System/exit 0))
 
 (a/reg-handled-fx :installer/->server-installed ->server-installed)
@@ -121,7 +121,7 @@
   :installer/install-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
-      (println details/app-name "installing ...")
+      (println details/app-codename "installing ...")
        ; Installing modules
       {:dispatch-n [[:installer/install-db!]
                     [:installer/install-media!]
@@ -133,9 +133,9 @@
   :installer/self-test!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "self-testing installation ...")
+      (println details/app-codename "self-testing installation ...")
       (if (and (r module-installed? db :db)
                (r module-installed? db :media)
                (r module-installed? db :user))
           [:installer/->server-installed]
-          (println details/app-name "installation error"))))
+          (println details/app-codename "installation error"))))

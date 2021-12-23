@@ -1,11 +1,6 @@
 
-
 /***** Clients *****/
-/*** Client list ***/
-
-/*** Client list ***/
-
-/*** Client-list item ***/
+/*** Client list item ***/
 
 .clients--client-item {
   display: flex;
@@ -58,5 +53,5 @@
   overflow: hidden;
   white-space: nowrap }
 
-/*** Client-list item ***/
+/*** Client list item ***/
 /***** Clients *****/

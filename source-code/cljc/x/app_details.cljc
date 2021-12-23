@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.25
 ; Description:
-; Version: v0.2.4
+; Version: v0.3.2
 ; Compatibility: x4.4.9
 
 
@@ -20,7 +20,7 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def app-name              "x4")
+(def app-codename          "x4")
 (def app-description       "Are we alone in the universe?")
 (def app-version           "4.4.9")
 (def copyright-information "2021 Monotech.hu")

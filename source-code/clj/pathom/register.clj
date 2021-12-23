@@ -95,7 +95,7 @@
   ;  (pco/defmutation     do-something! [env] ...)
   ;  (pathom/reg-handler! do-something!)
   [handler-id handler-f]
-  (logger/write! REG-LOG-FILENAME (str "Registrating handler: " handler-f))
+  (logger/write! REG-LOG-FILENAME (str "Registrating handler: " handler-id))
   (swap! HANDLERS assoc handler-id handler-f)
   ; Minden handler-függvény regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor
@@ -113,7 +113,7 @@
   ;  (def HANDLERS [do-something! do-anything!])
   ;  (pathom/reg-handlers! HANDLERS)
   [handlers-id handler-fs]
-  (logger/write! REG-LOG-FILENAME (str "Registrating handlers: " handler-fs))
+  (logger/write! REG-LOG-FILENAME (str "Registrating handlers: " handlers-id))
   (swap! HANDLERS assoc handlers-id handler-fs)
   ; Minden handler-függvénycsoport regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor

@@ -29,5 +29,5 @@
   :installer/install-media!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "installing module: media")
+      (println details/app-codename "installing module: media")
       {:db (r engine/->module-installed db :media)}))

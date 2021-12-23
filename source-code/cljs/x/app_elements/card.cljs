@@ -104,7 +104,7 @@
   ; @param (map) card-props
   ;  XXX#3240
   ;  {:badge-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success
+  ;    :primary, :secondary, :success, :warning
   ;   :content (metamorphic-content)(opt)
   ;   :content-props (map)(opt)
   ;   :class (keyword or keywords in vector)(opt)

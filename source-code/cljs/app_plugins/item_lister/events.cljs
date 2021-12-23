@@ -80,10 +80,6 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  ; WARNING#4569
-  ; A {:filter-mode? true} az {:actions-mode? true} beállítással párhuzamosan fut, ezért
-  ; az {:actions-mode? true} módból bármelyik másik módba átlépéskor szükséges a {:filter-mode? true}
-  ; beállításból kilépni!
   (-> db (dissoc-in [extension-id :item-lister/meta-items :filter-mode?])
          (dissoc-in [extension-id :item-lister/meta-items :filter])))
 
@@ -96,8 +92,6 @@
   [db [_ extension-id]]
   (-> db (update-in [extension-id :item-lister/meta-items :filter-mode?] not)
          (dissoc-in [extension-id :item-lister/meta-items :filter])))
-
-(a/reg-event-db :item-lister/toggle-filter-mode! toggle-filter-mode!)
 
 (defn toggle-search-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -283,10 +277,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
+  [db [_ extension-id]]
   (dissoc-in db [extension-id :item-lister/meta-items :filter]))
 
 (defn receive-items!
@@ -431,8 +424,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  (fn [{:keys [db]} [_ extension-id]]
       {:db (as-> db % (r reset-downloads!  % extension-id)
                       (r reset-selections! % extension-id)
                       (r discard-filter!   % extension-id))
@@ -450,6 +442,22 @@
                       (r reset-selections! % extension-id)
                       (r use-filter!       % extension-id item-namespace filter-id))
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
+
+(a/reg-event-fx
+  :item-lister/toggle-filter-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  (fn [{:keys [db]} [_ extension-id]]
+      (if (r subs/any-filter-in-use? db extension-id)
+          ; If any filter in use ...
+          {:db (as-> db % (r reset-downloads!  % extension-id)
+                          (r reset-selections! % extension-id)
+                          (r discard-filter!   % extension-id)
+                          (r quit-filter-mode! % extension-id))
+           :dispatch [:tools/reload-infinite-loader! extension-id]}
+          ; If no filter in use ...
+          {:db (r toggle-filter-mode! db extension-id)})))
 
 (a/reg-event-fx
   :item-lister/receive-items!

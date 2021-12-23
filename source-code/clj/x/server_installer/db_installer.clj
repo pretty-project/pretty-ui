@@ -28,6 +28,6 @@
   :installer/install-db!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (println details/app-name "installing module: db")
+      (println details/app-codename "installing module: db")
       {:db       (r engine/->module-installed db :db)
        :dispatch [:mongo-db/connect!]}))

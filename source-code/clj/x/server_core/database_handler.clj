@@ -30,7 +30,7 @@
       (let [database-name (r config-handler/get-database-detail db :database-name)
             database-host (r config-handler/get-database-detail db :database-host)
             database-port (r config-handler/get-database-detail db :database-port)]
-           (println details/app-name "connecting to:" database-name
-                                     "database at:"   database-host
-                                     "on port:"       database-port)
+           (println details/app-codename "connecting to:" database-name
+                                         "database at:"   database-host
+                                         "on port:"       database-port)
            {:mongo-db/build-connection! [database-name database-host database-port]})))

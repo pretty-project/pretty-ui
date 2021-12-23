@@ -120,7 +120,7 @@
   ; @param (map) chip-props
   ;  XXX#7701
   ;  {:background-color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight
+  ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)
   ;   :delete-button-icon (keyword)(opt)

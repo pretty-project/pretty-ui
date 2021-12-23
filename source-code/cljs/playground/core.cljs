@@ -318,6 +318,7 @@
                               {:label "Radio-button"
                                :unselectable? true
                                :get-label-f :label
+                               :required? true
                                :initial-options [{:label "Option #1" :value "ot-1"}
                                                  {:label "Option #2" :value "ot-2"}]}]
        [section-footer surface-id {}]

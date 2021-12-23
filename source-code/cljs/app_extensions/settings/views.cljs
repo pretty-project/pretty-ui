@@ -51,50 +51,25 @@
 ;; -- Settings header components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn personal-settings-button
+(defn- menu-bar-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [view-id]}]
-  [elements/button ::personal-settings-button
-                   {:color    (if (not= view-id :personal) :muted)
-                    :icon     :person
-                    :on-click [:view-selector/go-to! :settings :personal]
-                    :preset   :default-icon-button}])
+  [_ {:keys [view-id]}]
+  [{:icon :person        :active? (= view-id :personal)      :on-click [:view-selector/go-to! :settings :personal]}
+   {:icon :security      :active? (= view-id :privacy)       :on-click [:view-selector/go-to! :settings :privacy]}
+   {:icon :notifications :active? (= view-id :notifications) :on-click [:view-selector/go-to! :settings :notifications]}
+   {:icon :auto_awesome  :active? (= view-id :appearance)    :on-click [:view-selector/go-to! :settings :appearance]}])
 
-(defn privacy-settings-button
+(defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [view-id]}]
-  [elements/button ::privacy-settings-button
-                   {:color    (if (not= view-id :privacy) :muted)
-                    :icon     :security
-                    :on-click [:view-selector/go-to! :settings :privacy]
-                    :preset   :default-icon-button}])
-
-(defn notification-settings-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [view-id]}]
-  [elements/button ::notification-settings-button
-                   {:color    (if (not= view-id :notifications) :muted)
-                    :icon     :notifications
-                    :on-click [:view-selector/go-to! :settings :notifications]
-                    :preset   :default-icon-button}])
-
-(defn appearance-settings-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id {:keys [view-id]}]
-  [elements/button ::appearance-settings-button
-                   {:color    (if (not= view-id :appearance) :muted)
-                    :icon     :auto_awesome
-                    :on-click [:view-selector/go-to! :settings :appearance]
-                    :preset   :default-icon-button}])
+  [header-id header-props]
+  [elements/menu-bar ::menu-bar
+                     {:menu-items (menu-bar-items header-id header-props)}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/polarity ::header
-                     {:middle-content [:<> [personal-settings-button     header-id header-props]
-                                           [privacy-settings-button      header-id header-props]
-                                           [notification-settings-button header-id header-props]
-                                           [appearance-settings-button   header-id header-props]]}])
+                     {:middle-content [menu-bar header-id header-props]}])
 
 
 

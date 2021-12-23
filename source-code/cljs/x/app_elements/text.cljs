@@ -30,14 +30,12 @@
   ; @param (map) text-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :font-size (keyword)
+  ;  {:font-size (keyword)
   ;   :horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :selectable? (boolean)}
   [text-props]
-  (merge {:color            :default
-          :font-size        :s
+  (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
           :layout           :row
@@ -71,7 +69,7 @@
   ; @param (map) text-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :default
+  ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)(opt)
   ;    XXX#8711

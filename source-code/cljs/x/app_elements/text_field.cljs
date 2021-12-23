@@ -48,14 +48,12 @@
   ;
   ; @return (map)
   ;  {:autocomplete? (boolean)
-  ;   :color (keyword)
   ;   :end-adornments (maps in vector)
   ;   :layout (keyword)
   ;   :name (keyword)
   ;   :type (keyword)}
   [field-id field-props]
-  (merge {:color      :default
-          :layout     :row
+  (merge {:layout     :row
           :type       :text
           :value-path (engine/default-value-path field-id)}
          (param field-props)
@@ -214,10 +212,10 @@
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;   :autocomplete? (boolean)(opt)
   ;    Default: false
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :boder-color (keyword)(opt)
+  ;    :default, :primary, :secondary
   ;    Default: :default
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

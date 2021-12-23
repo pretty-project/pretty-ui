@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v0.7.6
-; Compatibility: x4.4.6
+; Version: v0.8.0
+; Compatibility: x4.4.9
 
 
 
@@ -69,9 +69,10 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/text-field ::email-address-field
-                       {:label         :email-address
+                       {:autocomplete? true
+                        :min-width     :s
+                        :label         :email-address
                         :value-path    [:login-box :email-address]
-                        :autocomplete? true
                         :disabled?     synchronizing?}])
 
 (defn- password-field
@@ -83,10 +84,10 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/password-field ::password-field
-                           {:value-path    [:login-box :password]
-                            :autocomplete? true
+                           {:autocomplete? true
+                            :min-width     :s
+                            :value-path    [:login-box :password]
                             :disabled?     synchronizing?}])
-
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

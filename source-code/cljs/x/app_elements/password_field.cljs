@@ -33,16 +33,14 @@
   ;  {:validate? (boolean)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;  {:info-tooltip (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :type (keyword)(opt)
   ;   :validator (map)
   ;    {:f (function)
   ;     :invalid-message (keyword)}}
   [field-id {:keys [validate?] :as field-props}]
-  (merge {:color :default
-          :label :password
+  (merge {:label :password
           :type  :password
           :value-path (engine/default-value-path field-id)}
          (param field-props)
@@ -87,8 +85,8 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :default
+  ;   :border-color (keyword)(opt)
+  ;    :default, :primary, :secondary
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)

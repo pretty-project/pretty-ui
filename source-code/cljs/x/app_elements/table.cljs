@@ -123,13 +123,11 @@
   ;  {:columns (maps in vector or integer)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :columns (maps in vector)
+  ;  {:columns (maps in vector)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [{:keys [columns] :as table-props}]
-  (merge {:color     :highlight
-          :font-size :s
+  (merge {:font-size :s
           :layout    :row}
          (param table-props)
          (if (integer? columns)
@@ -259,9 +257,6 @@
   ; @param (map) table-props
   ;  {:alternating-rows? (boolean)(opt)
   ;    Default: false
-  ;   :color (keyword)(opt)
-  ;    :primary, :secondary, :warning, :success, :muted, :highlight, :none
-  ;    Default: :highlight
   ;   :class (keyword or keywords in vector)(opt)
   ;   :columns (maps in vector or integer)
   ;    [{:horizontal-align (keyword)(opt)

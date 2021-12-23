@@ -76,16 +76,15 @@
   ;  :ko4983l3-i8790-j93l3-lk8385u591o2/bar
   ;
   ; @return (keyword)
-  [n]
-        ; If n is keyword and namespaced ...
+  [n]   ; If n is keyword and namespaced ...
   (cond (and (keyword? n)
              (some? (namespace n)))
         (return n)
-        ; If n is keyword and not namespaced ...
+        ; If n is keyword and NOT namespaced ...
         (and (keyword? n))
         (let [namespace (random/generate-string)]
              (keyword namespace (name n)))))
-        ; If n is not keyword ...
+        ; If n is NOT keyword ...
         ; ... returning w/ nil
 
 (defn split-namespace
@@ -101,9 +100,8 @@
   (if-not (and (keyword? n)
                (some? (namespace n)))
           (return [])
-          (reduce (fn [%1 %2] (conj %1 (keyword %2)))
-                  (param [])
-                  (string/split (namespace n) #"."))))
+          (vec (reduce (fn [%1 %2] (conj %1 (keyword %2)))
+                       [] (string/split (namespace n) #".")))))
 
 (defn split-name
   ; @param (keyword) n
@@ -117,9 +115,8 @@
   [n]
   (if-not (keyword? n)
           (return   [])
-          (reduce (fn [%1 %2] (conj %1 (keyword %2)))
-                  (param [])
-                  (string/split (name n) #"."))))
+          (vec (reduce (fn [%1 %2] (conj %1 (keyword %2)))
+                       [] (string/split (name n) #".")))))
 
 (defn split
   ; @param (keyword) n
@@ -212,6 +209,22 @@
   [x n]
   (keyword (name x)
            (name n)))
+
+(defn add-items-namespace
+  ; @param (keyword) x
+  ; @param (keywords in vector) abc
+  ;
+  ; @example
+  ;  (keyword/add-items-namespace :foo [:bar :baz])
+  ;  =>
+  ;  [:foo/bar :foo/baz]
+  ;
+  ; @return (namespaced keywords in vector)
+  [x abc]
+  (vec (reduce (fn [result key]
+                   (conj result (keyword (name x)
+                                         (name key))))
+               [] abc)))
 
 (defn get-namespace
   ; @param (keyword) n

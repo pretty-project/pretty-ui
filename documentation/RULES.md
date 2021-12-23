@@ -8,7 +8,7 @@
 
 - Ha valami nem teljesen egyértelmű, kommentelj!
 - Ha egy egyedi megoldás több helyre, akár több fájlra is kiterjed, jelöld FLAG-gel!
-  ; XXX#0123
+  XXX#0123
 
 
 
