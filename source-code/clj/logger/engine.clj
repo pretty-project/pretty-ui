@@ -34,4 +34,4 @@
   (let [filepath  (str LOG-PATH "/" filename)
         timestamp (time/timestamp-string)
         output    (str timestamp " " content)]
-       (io/append-to-file! filepath output {:max-line-count MAX-LINE-COUNT :reverse? true})))
+       (io/append-to-file! filepath output {:max-line-count MAX-LINE-COUNT})))

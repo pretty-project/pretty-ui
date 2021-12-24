@@ -865,10 +865,17 @@
 (defn max-lines
   ; @param (string) n
   ; @param (integer) limit
+  ; @param (map)(opt) options
+  ;  {:reverse? (boolean)(opt)
+  ;    Default: false
+  ;    TODO: az utolsó x sort tartja meg }
   ;
   ; @return (string)
-  [n limit]
-  n)
+  ([n limit]
+   n)
+
+  ([n limit {:keys [reverse?]}]
+   n))
 
 (defn paren
   ; @param (string) n
