@@ -13,7 +13,7 @@
 ; @constant (maps in vector)
 (def CARDS [{:label :clients      :icon :people   :on-click [:router/go-to! "/:app-home/clients"]  :badge-color :secondary}
             {:label :products     :icon :category :on-click [:router/go-to! "/:app-home/products"] :badge-color :secondary}
-            {:label :file-storage :icon :folder   :on-click [:router/go-to! "/:app-home/media"]}
+            {:label :file-storage :icon :folder   :on-click [:router/go-to! "/:app-home/storage"]}
             {:label :sample       :icon :none     :on-click [:router/go-to! "/:app-home/sample"]}])
 
 
@@ -25,7 +25,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _])
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :home/get-view-props get-view-props)
 
 
 
@@ -45,7 +45,7 @@
 (a/reg-event-fx
   :home/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [::get-view-props]}}])
+  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:home/get-view-props]}}])
 
 (a/reg-event-fx
   :home/load!

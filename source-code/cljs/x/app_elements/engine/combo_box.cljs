@@ -68,9 +68,10 @@
   ;
   ; @return (boolean)
   [{:keys [get-label-f value]} option]
-  (string/starts-with? (get-label-f option)
-                       (param       value)
-                       {:case-sensitive? false}))
+  (and (string/not-pass-with? option value {:case-sensitive? false})
+       (string/starts-with? (get-label-f option)
+                            (param       value)
+                            {:case-sensitive? false})))
 
 (defn field-props->rendered-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

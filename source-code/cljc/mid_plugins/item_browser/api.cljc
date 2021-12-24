@@ -14,16 +14,4 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-browser.api
-    (:require [mid-plugins.item-browser.engine :as engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid-plugins.item-browser.engine
-(def request-id              engine/request-id)
-(def route-id                engine/route-id)
-(def extended-route-id       engine/extended-route-id)
-(def route-template          engine/route-template)
-(def extended-route-template engine/extended-route-template)
+    (:require [mid-plugins.item-browser.engine]))

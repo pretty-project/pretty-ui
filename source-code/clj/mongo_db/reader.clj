@@ -314,4 +314,4 @@
   ;
   ; @return (integer)
   [collection-name pipeline]
-  (count (get-documents-by-pipeline collection-name pipeline)))
+  (count (aggregation collection-name pipeline nil)))

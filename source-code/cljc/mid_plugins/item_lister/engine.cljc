@@ -106,7 +106,7 @@
   ; @example
   ;  (engine/route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/lister-route
+  ;  :my-extension/my-type-lister-route
   ;
   ; @return (keyword)
   [extension-id item-namespace]
@@ -117,15 +117,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/route-template :my-extension :my-type)
+  ;  (engine/route-template :my-extension)
   ;  =>
   ;  "/:app-home/my-extension"
   ;
   ; @return (keyword)
-  [extension-id _]
+  [extension-id]
   (str "/:app-home/" (name extension-id)))
 
 (defn add-new-item-event

@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.4.9
+; Compatibility: x4.5.0
 
 
 
@@ -73,7 +73,7 @@
   ; @param (map)(opt) lister-props
   [_ [_ extension-id item-namespace lister-props]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:route-template (engine/route-template     extension-id item-namespace)
+                      {:route-template (engine/route-template     extension-id)
                        :client-event   [:item-lister/load-lister! extension-id item-namespace lister-props]
                        :restricted?    true}])
 

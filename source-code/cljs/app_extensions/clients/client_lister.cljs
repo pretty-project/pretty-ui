@@ -71,7 +71,7 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [description]}]
+  [surface-id]
   [item-lister/view :clients :client {:list-element #'client-item}])
 
 

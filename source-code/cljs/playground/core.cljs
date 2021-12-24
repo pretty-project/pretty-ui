@@ -28,16 +28,7 @@
               [x.app-ui.api          :as ui]
 
               ; TEMP
-              [cljs-time.core :as cljs-time.core]
-
-              ; A project-emulator.core fájl közös használatának mellőzése miatt a fejlesztés alatt
-              ; lévő modulok behívása a playground.core névtérben történik.
-              [app-extensions.clients.api]
-              [app-extensions.home.api]
-              [app-extensions.media.api]
-              [app-extensions.products.api]
-              [app-extensions.settings.api]
-              [app-extensions.trader.api]))
+              [cljs-time.core :as cljs-time.core]))
 
 
 

@@ -11,6 +11,7 @@
               [server-extensions.home.api]
               [server-extensions.products.api]
               [server-extensions.settings.api]
+              [server-extensions.storage.api]
               [server-extensions.trader.api]
               [x.boot-loader]
               [project-emulator.server-router.api])

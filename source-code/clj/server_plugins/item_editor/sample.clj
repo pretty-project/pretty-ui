@@ -91,8 +91,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (vector)
-(def HANDLERS [get-my-type-suggestions
-               get-my-type-item
+(def HANDLERS [get-my-type-item
                undo-delete-my-type-item!
                save-my-type-item!
                merge-my-type-item!

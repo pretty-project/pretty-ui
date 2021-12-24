@@ -3,6 +3,13 @@
 
 (ns project-emulator.core
     (:require [x.boot-loader]
+              [app-extensions.clients.api]
+              [app-extensions.home.api]
+              [app-extensions.media.api]
+              [app-extensions.products.api]
+              [app-extensions.settings.api]
+              [app-extensions.storage.api]
+              [app-extensions.trader.api]
               ; TEMP
               [playground.api]))
 

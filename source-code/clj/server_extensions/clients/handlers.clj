@@ -32,6 +32,10 @@
   (let [request           (pathom/env->request env)
         selected-language (user/request->user-settings-item request :selected-language)
         name-order        (get locales/NAME-ORDERS selected-language)]
+       ; - A pipeline elejére fűz egy field-operation műveletet, amivel hozzáadja a :client/name tulajdonságot
+       ;   a dokumentumokhoz.
+       ; - A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által kiválaszott nyelv
+       ;   szerinti sorrendet alkalmazza.
        (case name-order :reversed (mongo-db/field-pattern->field-operation [:client/name [:client/last-name  :client/first-name]])
                                   (mongo-db/field-pattern->field-operation [:client/name [:client/first-name :client/last-name]]))))
 
@@ -40,9 +44,6 @@
   [env]
   (let [field-operation (env->field-operation             env)
         search-pipeline (item-lister/env->search-pipeline env :clients :client)]
-       ; XXX#0093
-       ; Az item-lister plugin működéséhez szükséges hozzáadni a dokumentumokhoz
-       ; a {:client/name "..."} tulajdonságot!
        (vector/cons-item search-pipeline field-operation)))
 
 (defn- env->count-pipeline
@@ -50,7 +51,6 @@
   [env]
   (let [field-operation (env->field-operation            env)
         count-pipeline  (item-lister/env->count-pipeline env :clients :client)]
-       ; XXX#0093
        (vector/cons-item count-pipeline field-operation)))
 
 

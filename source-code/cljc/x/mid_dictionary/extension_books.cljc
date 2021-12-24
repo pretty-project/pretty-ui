@@ -286,6 +286,11 @@
       {:en "Unnamed service"
        :hu "Névtelen szolgáltatás"}})
 
+(def storage
+     {:storage
+      {:en "Storage"
+       :hu "Tárhely"}})
+
 (def vehicles
      {:add-vehicle
       {:en "Add vehicle"
@@ -345,5 +350,6 @@
                             price-quotes
                             products
                             services
+                            storage
                             vehicles
                             websites))

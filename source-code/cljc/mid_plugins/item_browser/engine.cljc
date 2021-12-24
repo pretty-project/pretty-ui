@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.6
+; Version: v0.3.4
+; Compatibility: x4.5.0
 
 
 
@@ -32,11 +32,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn request-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/request-id :my-extension :my-type)
+  ;  (engine/request-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/synchronize-my-type-browser!
   ;
@@ -52,7 +54,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/route-id :my-extension :my-type)
+  ;  (engine/route-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/my-type-browser-route
   ;
@@ -62,11 +64,13 @@
            (str (name item-namespace) "-browser-route")))
 
 (defn extended-route-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-editor/extended-route-id :my-extension :my-type)
+  ;  (engine/extended-route-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/my-type-browser-extended-route
   ;
@@ -76,45 +80,46 @@
            (str (name item-namespace) "-browser-extended-route")))
 
 (defn route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/route-template :my-extension :my-type)
+  ;  (engine/route-template :my-extension)
   ;  =>
   ;  "/:app-home/my-extension"
   ;
   ; @return (string)
-  [extension-id _]
+  [extension-id]
   (str "/:app-home/" (name extension-id)))
 
 (defn extended-route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/extended-route-template :my-extension :my-type)
+  ;  (engine/extended-route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:my-type-id"
+  ;  "/:app-home/my-extension/:item-id"
   ;
   ; @return (string)
-  [extension-id item-namespace]
+  [extension-id]
   (str "/:app-home/" (name extension-id)
-       "/:"          (name item-namespace) "-id"))
+       "/:item-id"))
 
 (defn go-up-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/go-up-event :my-extension :my-type)
+  ;  (engine/go-up-event :my-extension)
   ;  =>
   ;  [:my-extension/go-up!]
   ;
   ; @return (keyword)
-  [extension-id _]
+  [extension-id]
   (let [event-id (keyword/add-namespace extension-id :go-up!)]
        [event-id]))
 
@@ -122,15 +127,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/go-home-event :my-extension :my-type)
+  ;  (item-browser/go-home-event :my-extension)
   ;  =>
   ;  [:my-extension/go-home!]
   ;
   ; @return (keyword)
-  [extension-id _]
+  [extension-id]
   (let [event-id (keyword/add-namespace extension-id :go-home!)]
        [event-id]))
 
@@ -141,7 +145,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (item-browser/render-event :my-extension :my-type)
+  ;  (engine/render-event :my-extension :my-type)
   ;  =>
   ;  [:my-extension/render-my-type-browser!]
   ;

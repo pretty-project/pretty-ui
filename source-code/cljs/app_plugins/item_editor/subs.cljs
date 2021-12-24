@@ -38,8 +38,6 @@
   ;
   ; @return (string)
   [db [_ extension-id]]
-  ; Az item-editor plugin a szerkesztendő dokumentum azonosítóját böngésző címsorába
-  ; írt útvonalból olvassa
   (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
