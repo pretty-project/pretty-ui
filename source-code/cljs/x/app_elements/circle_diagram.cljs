@@ -174,12 +174,10 @@
   ;
   ; @return (hiccup)
   [diagram-id {:keys [sections] :as diagram-props}]
-  (reduce (fn [circle-diagram-sections section-props]
-              (let [section-props (a/prot section-props section-props-prototype)]
-                   (vector/conj-item circle-diagram-sections
-                                     [circle-diagram-section diagram-id diagram-props section-props])))
-          (param [])
-          (param sections)))
+  (vec (reduce (fn [circle-diagram-sections section-props]
+                   (let [section-props (section-props-prototype section-props)]
+                        (conj circle-diagram-sections [circle-diagram-section diagram-id diagram-props section-props])))
+               [] sections)))
 
 (defn circle-diagram-circle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -255,5 +253,5 @@
    [element (a/id) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-props (a/prot diagram-props diagram-props-prototype)]
+   (let [diagram-props (diagram-props-prototype diagram-props)]
         [circle-diagram diagram-id diagram-props])))

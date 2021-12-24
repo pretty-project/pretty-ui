@@ -625,19 +625,17 @@
             (reduce-kv (fn [result k v]
                            (let [v (parse-date-time v)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (parse-date-time x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))]
+            (vec (reduce (fn [result x]
+                             (let [x (parse-date-time x)]
+                                  (conj result x)))
+                         [] n)))]
 
          ; parse-date-time
          (cond (date-string?      n) (parse-date      n)
@@ -664,19 +662,17 @@
             (reduce-kv (fn [result k v]
                            (let [v (unparse-date-time v)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (unparse-date-time x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))]
+            (vec (reduce (fn [result x]
+                             (let [x (unparse-date-time x)]
+                                  (conj result x)))
+                         [] n)))]
 
          ; unparse-date-time
          (cond (timestamp-object? n) (unparse-timestamp n)

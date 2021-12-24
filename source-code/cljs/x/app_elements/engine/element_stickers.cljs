@@ -107,6 +107,6 @@
   ; @return (hiccup)
   [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
-      (reduce (fn [%1 %2] (let [%2 (a/prot %2 sticker-props-prototype)]
-                               (vector/conj-item %1 [element-sticker element-id element-props %2])))
-              [:div.x-element--stickers] stickers)))
+      (vec (reduce (fn [%1 %2] (let [%2 (sticker-props-prototype %2)]
+                                    (conj %1 [element-sticker element-id element-props %2])))
+                   [:div.x-element--stickers] stickers))))

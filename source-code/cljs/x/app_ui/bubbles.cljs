@@ -202,7 +202,7 @@
   (fn [{:keys [db]} event-vector]
       (let [bubble-id    (a/event-vector->second-id   event-vector)
             bubble-props (a/event-vector->first-props event-vector)
-            bubble-props (a/prot bubble-id bubble-props bubble-props-prototype)]
+            bubble-props (bubble-props-prototype      bubble-id bubble-props)]
            {:dispatch-if [(r bubbles-enabled-by-user? db)
                           [:ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))
 

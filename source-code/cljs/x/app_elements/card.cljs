@@ -150,5 +150,5 @@
    [element (a/id) card-props])
 
   ([card-id card-props]
-   (let [card-props (a/prot card-props card-props-prototype)]
+   (let [card-props (card-props-prototype card-props)]
         [card card-id card-props])))

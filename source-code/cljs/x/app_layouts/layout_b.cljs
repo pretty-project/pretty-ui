@@ -81,10 +81,10 @@
   ;
   ; @return (component)
   [layout-id {:keys [cards] :as layout-props}]
-  (reduce (fn [card-list card-props]
-              (vector/conj-item card-list [card layout-id layout-props card-props]))
-          [:div.x-layout-b--card-group]
-          (param cards)))
+  (vec (reduce (fn [card-list card-props]
+                   (conj card-list [card layout-id layout-props card-props]))
+               [:div.x-layout-b--card-group]
+               (param cards))))
 
 (defn- layout-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -132,5 +132,5 @@
    [layout (a/id) layout-props])
 
   ([layout-id layout-props]
-   (let [] ;layout-props (a/prot layout-props layout-props-prototype)
+   (let [] ;layout-props (layout-props-prototype layout-props)
         [layout-b layout-id layout-props])))

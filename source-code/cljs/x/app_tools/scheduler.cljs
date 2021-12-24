@@ -62,12 +62,11 @@
   ;
   ; @return (vector)
   [schedules]
-  (reduce-kv (fn [events schedule-id {:keys [event] :as schedule-props}]
-                 (if (schedule-actual? schedule-props)
-                     (vector/conj-item events event)
-                     (return events)))
-             (param [])
-             (param schedules)))
+  (vec (reduce-kv (fn [events schedule-id {:keys [event] :as schedule-props}]
+                      (if (schedule-actual? schedule-props)
+                          (conj events event)
+                          (return events)))
+                  [] schedules)))
 
 
 

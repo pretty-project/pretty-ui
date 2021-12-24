@@ -111,7 +111,7 @@
   ;   :stretched? (boolean)
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
-  [db [popup-id popup-props]]
+  [db [_ popup-id popup-props]]
   (merge ; 1. popup-props prototype
          {:autopadding?     true
           :hide-animated?   true
@@ -275,7 +275,7 @@
   (fn [{:keys [db]} event-vector]
       (let [popup-id    (a/event-vector->second-id   event-vector)
             popup-props (a/event-vector->first-props event-vector)
-            popup-props (a/sub-prot db [popup-id popup-props] popup-props-prototype)]
+            popup-props (r popup-props-prototype db popup-id popup-props)]
            (if (popup-props->render-popup-exclusive? popup-props)
                [:ui/render-popup-exclusive! popup-id popup-props]
                [:ui/render-popup!           popup-id popup-props]))))

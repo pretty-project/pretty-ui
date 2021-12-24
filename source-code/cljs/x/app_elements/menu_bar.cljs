@@ -172,9 +172,9 @@
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
   ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
-  (reduce #(vector/conj-item %1 [menu-item bar-id bar-props %2])
-           [:div.x-menu-bar--menu-items]
-           (param menu-items)))
+  (vec (reduce #(conj %1 [menu-item bar-id bar-props %2])
+                [:div.x-menu-bar--menu-items]
+                (param menu-items))))
 
 (defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -234,5 +234,5 @@
    [element (a/id) bar-props])
 
   ([bar-id bar-props]
-   (let [bar-props (a/prot bar-props bar-props-prototype)]
+   (let [bar-props (bar-props-prototype bar-props)]
         [menu-bar bar-id bar-props])))

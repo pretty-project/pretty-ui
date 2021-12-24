@@ -171,13 +171,12 @@
   ;
   ; @return (vectors in vector)
   [routes]
-  (reduce-kv (fn [destructed-routes route-id {:keys [route-template] :as route-props}]
-                 (if (route-conflict? destructed-routes route-template)
-                     (return destructed-routes)
-                     (let [route-data (route-props->route-data route-props)]
-                          (vector/conj-item destructed-routes route-data))))
-             (param [])
-             (param routes)))
+  (vec (reduce-kv (fn [destructed-routes route-id {:keys [route-template] :as route-props}]
+                      (if (route-conflict? destructed-routes route-template)
+                          (return destructed-routes)
+                          (let [route-data (route-props->route-data route-props)]
+                               (conj destructed-routes route-data))))
+                  [] routes)))
 
 (defn destructed-routes->ordered-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!

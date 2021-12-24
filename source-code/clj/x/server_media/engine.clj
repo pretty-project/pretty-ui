@@ -148,9 +148,8 @@
   ; @param (map) updated-props
   ;
   ; @example
-  ;  (a/prot {:request {:session {:user-account/id "my-user"}}}
-  ;          [:my-directory {:my-key "My value"}]
-  ;          updated-props-prototype)
+  ;  (r updated-props-prototype {:request {:session {:user-account/id "my-user"}}}
+  ;                             :my-directory {:my-key "My value"})
   ;  =>
   ;  {:my-key "My value" :modified-at "..." :modified-by {:user-account/id "my-user"}}
   ;

@@ -108,7 +108,7 @@
   ;
   ; @return (map)
   [db [_ handler-id handler-props]]
-  (let [handler-props (a/prot handler-props handler-props-prototype)]
+  (let [handler-props (handler-props-prototype handler-props)]
        (assoc-in db (db/path ::select-handlers handler-id) handler-props)))
 
 (a/reg-event-db :gestures/init-select-handler! init-select-handler!)

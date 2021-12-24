@@ -232,7 +232,7 @@
   (fn [{:keys [db]} event-vector]
       (let [query-id      (a/event-vector->second-id   event-vector)
             query-props   (a/event-vector->first-props event-vector)
-            query-props   (a/prot query-props query-props-prototype)
+            query-props   (query-props-prototype       query-props)
             request-props (query-props->request-props  query-id query-props)
 
             ; BUG#5011

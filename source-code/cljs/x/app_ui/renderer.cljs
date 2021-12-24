@@ -938,7 +938,7 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   (fn [{:keys [db]} [_ renderer-id renderer-props]]
-      (let [partition-initializer (a/prot renderer-id renderer-props partition-initializer)]
+      (let [partition-initializer (partition-initializer renderer-id renderer-props)]
            {:dispatch partition-initializer})))
 
 (a/reg-event-fx
@@ -1213,13 +1213,12 @@
   ; @return (hiccup)
   [renderer-id {:keys [element] :as renderer-props} renderer-state]
   (let [elements (db/partition->data-items renderer-state)]
-       (reduce (fn [wrapper element-id]
-                   (let [element-props (get elements element-id)]
-                        (vector/conj-item (param wrapper)
-                                         ^{:key element-id}
-                                          [stated-element element element-id element-props])))
-               (wrapper renderer-id renderer-props renderer-state)
-               (db/partition-state->data-order renderer-state))))
+       (vec (reduce (fn [wrapper element-id]
+                        (let [element-props (get elements element-id)]
+                             (conj wrapper ^{:key element-id}
+                                            [stated-element element element-id element-props])))
+                    (wrapper renderer-id renderer-props renderer-state)
+                    (db/partition-state->data-order renderer-state)))))
 
 (defn renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1254,7 +1253,7 @@
   ; @return (component)
   [renderer-id renderer-props]
   (let [dom-id         (engine/renderer-id->dom-id renderer-id)
-        renderer-props (a/prot renderer-props renderer-props-prototype)]
+        renderer-props (renderer-props-prototype   renderer-props)]
        [components/stated dom-id
                           {:component    #'renderer
                            :static-props renderer-props

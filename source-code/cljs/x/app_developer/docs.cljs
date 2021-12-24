@@ -57,25 +57,25 @@
   (let [name-list (map/get-keys namespace-index)
        ;name-list ["my-module" "our-namespace.clj" "your-module"]
         name-list (vector/abc   name-list)]
-       (reduce (fn [tree name]
-                   (vector/conj-item tree
-                                     (let [depth     (dec (count path))
-                                           path      (vector/conj-item path name)]
-                                          [:div {:style {:font-size "13px" :line-height "22px" :padding-left (css/px (if (> depth 0) 10)) :cursor "pointer"}}
-                                                    ; If name points to a module (directory) ...
-                                                (if (map? (get namespace-index name))
-                                                    (let [expanded? (get-in meta [path :expanded?])]
-                                                         [:<> [:div {:on-click #(a/dispatch [:db/apply! [:docs :meta path :expanded?] not])
-                                                                     :style {:opacity ".6"}}
-                                                                    (str name)]
-                                                              (if expanded? [namespace-tree surface-id view-props (get namespace-index name) path])])
-                                                    ; If name points to a namespace (file) ...
-                                                    (let [namespace (get namespace-index name)
-                                                          selected? (= namespace (:namespace meta))]
-                                                         [:div {:on-click #(a/dispatch [:db/set-item! [:docs :meta :namespace] namespace]) :style {:opacity (if selected? "1" ".6")}}
-                                                               (str name "." (first path))]))])))
-               [:<>]
-               (param name-list))))
+       (vec (reduce (fn [tree name]
+                        (conj tree
+                              (let [depth     (dec (count path))
+                                    path      (vector/conj-item path name)]
+                                   [:div {:style {:font-size "13px" :line-height "22px" :padding-left (css/px (if (> depth 0) 10)) :cursor "pointer"}}
+                                             ; If name points to a module (directory) ...
+                                         (if (map? (get namespace-index name))
+                                             (let [expanded? (get-in meta [path :expanded?])]
+                                                  [:<> [:div {:on-click #(a/dispatch [:db/apply! [:docs :meta path :expanded?] not])
+                                                              :style {:opacity ".6"}}
+                                                             (str name)]
+                                                       (if expanded? [namespace-tree surface-id view-props (get namespace-index name) path])])
+                                             ; If name points to a namespace (file) ...
+                                             (let [namespace (get namespace-index name)
+                                                   selected? (= namespace (:namespace meta))]
+                                                  [:div {:on-click #(a/dispatch [:db/set-item! [:docs :meta :namespace] namespace]) :style {:opacity (if selected? "1" ".6")}}
+                                                        (str name "." (first path))]))])))
+                    [:<>]
+                    (param name-list)))))
 
 (defn- namespaces
   ; WARNING! NON-PUBLIC! DO NOT USE!

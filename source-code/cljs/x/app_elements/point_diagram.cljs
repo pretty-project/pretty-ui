@@ -89,5 +89,5 @@
    [element (a/id) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-props (a/prot diagram-props diagram-props-prototype)]
+   (let [diagram-props (diagram-props-prototype diagram-props)]
         [point-diagram diagram-id diagram-props])))

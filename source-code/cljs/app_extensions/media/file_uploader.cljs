@@ -72,11 +72,10 @@
   ;
   ; @return (integers in vector)
   [files-data]
-  (reduce-indexed (fn [result {:keys [aborted?]} dex]
-                      (if aborted? (return           result)
-                                   (vector/conj-item result dex)))
-                  (param [])
-                  (param files-data)))
+  (vec (reduce-indexed (fn [result {:keys [aborted?]} dex]
+                           (if aborted? (return           result)
+                                        (conj result dex)))
+                       [] files-data)))
 
 (defn- view-props->disable-upload-button?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -444,15 +443,15 @@
   ; @return (component)
   [popup-id {:keys [file-count files-data] :as view-props}]
   (let [file-selector (dom/get-element-by-id "x-file-selector")]
-       (reduce-indexed (fn [file-list {:keys [aborted?] :as file-props} file-dex]
-                           (if (boolean aborted?)
-                               (return file-list)
-                               (let [file-object-url (dom/file-selector->file-object-url file-selector file-dex)
-                                     file-props      (assoc file-props :file-object-url file-object-url)]
-                                    (vector/conj-item file-list ^{:key file-dex}
-                                                      [file-uploader-file popup-id view-props file-props file-dex]))))
-                       [:<>]
-                       (param files-data))))
+       (vec (reduce-indexed (fn [file-list {:keys [aborted?] :as file-props} file-dex]
+                                (if (boolean aborted?)
+                                    (return file-list)
+                                    (let [file-object-url (dom/file-selector->file-object-url file-selector file-dex)
+                                          file-props      (assoc file-props :file-object-url file-object-url)]
+                                         (conj file-list ^{:key file-dex}
+                                               [file-uploader-file popup-id view-props file-props file-dex]))))
+                            [:<>]
+                            (param files-data)))))
 
 (defn- file-uploader-no-files-to-upload
   ; WARNING! NON-PUBLIC! DO NOT USE!

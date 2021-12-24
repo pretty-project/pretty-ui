@@ -14,8 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.events
-    (:require [x.server-core.api :as a :refer [r]]
-              [server-plugins.item-browser.engine :as engine]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [x.server-core.api :as a :refer [r]]
+              [server-plugins.item-browser.engine :as engine]
+              [server-plugins.item-lister.api     :as item-lister]))
 
 
 
@@ -31,16 +33,6 @@
   [browser-props]
   (merge {}
          (param browser-props)))
-
-(defn lister-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) browser-props
-  ;
-  ; @return (map)
-  [browser-props]
-  (let [browser-props (a/prot browser-props browser-props-prototype)]
-       (a/prot browser-props item-lister/lister-props-prototype)))
 
 
 
@@ -80,6 +72,6 @@
   ; @usage
   ;  [:item-browser/initialize! :my-extension :my-type {...}]
   (fn [cofx [_ extension-id item-namespace browser-props]]
-      (let [browser-props (a/prot browser-props browser-props-prototype)]
+      (let [browser-props (-> browser-props item-lister/lister-props-prototype browser-props-prototype)]
            {:dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)
                          (r add-extended-route! cofx extension-id item-namespace browser-props)]})))

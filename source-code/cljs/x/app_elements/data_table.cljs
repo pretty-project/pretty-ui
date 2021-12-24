@@ -158,5 +158,5 @@
    [element (a/id) table-props])
 
   ([table-id table-props]
-   (let [table-props (a/prot table-props table-props-prototype)]
+   (let [table-props (table-props-prototype table-props)]
         [table table-id table-props])))

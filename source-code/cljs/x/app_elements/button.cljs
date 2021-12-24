@@ -214,8 +214,8 @@
    [element (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-props (engine/apply-preset BUTTON-PROPS-PRESETS button-props)
-         button-props (a/prot button-props button-props-prototype)]
+   (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
+         button-props (button-props-prototype button-props)]
         [engine/stated-element button-id
                                {:component     #'button
                                 :element-props button-props

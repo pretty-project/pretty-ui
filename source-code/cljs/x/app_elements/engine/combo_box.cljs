@@ -81,12 +81,11 @@
   ;
   ; @return (vector)
   [{:keys [options] :as field-props}]
-  (reduce (fn [rendered-options option]
-              (if (field-props->render-option? field-props option)
-                  (vector/conj-item rendered-options option)
-                  (return           rendered-options)))
-          (param [])
-          (param options)))
+  (vec (reduce (fn [rendered-options option]
+                   (if (field-props->render-option? field-props option)
+                       (conj   rendered-options option)
+                       (return rendered-options)))
+               [] options)))
 
 (defn field-props->value-extendable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -277,16 +276,15 @@
   ;    :selected? (boolean)}]
   [db [_ field-id]]
   (let [options (r selectable/get-selectable-options db field-id)]
-       (reduce (fn [rendered-options option]
-                   ; render-dex: A combo-box elem surface felületén hányadik elemként
-                   ; kerül kirenderelésre az opció (az opciók listájának szűrése után)
-                   (let [render-dex  (count rendered-options)
-                         option-data (r get-combo-box-option-data db field-id option render-dex)]
-                        (if (get option-data :rendered?)
-                            (vector/conj-item rendered-options option-data)
-                            (return           rendered-options))))
-               (param [])
-               (param options))))
+       (vec (reduce (fn [rendered-options option]
+                        ; render-dex: A combo-box elem surface felületén hányadik elemként
+                        ; kerül kirenderelésre az opció (az opciók listájának szűrése után)
+                        (let [render-dex  (count rendered-options)
+                              option-data (r get-combo-box-option-data db field-id option render-dex)]
+                             (if (get option-data :rendered?)
+                                 (conj   rendered-options option-data)
+                                 (return rendered-options))))
+                    [] options))))
 
 (defn any-combo-box-option-rendered?
   ; WARNING! NON-PUBLIC! DO NOT USE!

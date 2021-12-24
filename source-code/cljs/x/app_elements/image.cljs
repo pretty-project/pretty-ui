@@ -119,5 +119,5 @@
    [element (a/id) image-props])
 
   ([image-id image-props]
-   (let [];image-props (a/prot image-id image-props image-props-prototype)
+   (let [];image-props (image-props-prototype image-id image-props)
         [image image-id image-props])))

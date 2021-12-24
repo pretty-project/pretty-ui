@@ -204,9 +204,8 @@
   ; @return (vector)
   [db [_ key-code]]
   (let [keydown-event-ids (r get-cached-keydown-event-ids db key-code)]
-       (reduce #(vector/conj-item %1 (r get-event-prop db %2 :on-keydown))
-                (param [])
-                (param keydown-event-ids))))
+       (vec (reduce #(conj %1 (r get-event-prop db %2 :on-keydown))
+                    [] keydown-event-ids))))
 
 (defn- get-on-keyup-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -216,9 +215,8 @@
   ; @return (vector)
   [db [_ key-code]]
   (let [keyup-event-ids (r get-cached-keyup-event-ids db key-code)]
-       (reduce #(vector/conj-item %1 (r get-event-prop db %2 :on-keyup))
-                (param [])
-                (param keyup-event-ids))))
+       (vec (reduce #(conj %1 (r get-event-prop db %2 :on-keyup))
+                    [] keyup-event-ids))))
 
 (defn get-pressed-keys
   ; @return (vector)

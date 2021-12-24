@@ -91,5 +91,5 @@
    [element (a/id) icon-props])
 
   ([icon-id icon-props]
-   (let [icon-props (a/prot icon-props icon-props-prototype)]
+   (let [icon-props (icon-props-prototype icon-props)]
         [icon icon-id icon-props])))

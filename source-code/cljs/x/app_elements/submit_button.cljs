@@ -24,7 +24,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- submit-button-props-prototype
+(defn- button-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
@@ -34,16 +34,6 @@
   [button-props]
   (merge {:label :submit!}
          (param button-props)))
-
-(defn- button-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) button-props
-  ;
-  ; @return (map)
-  [button-props]
-  (let [submit-button-props (a/prot button-props submit-button-props-prototype)]
-       (a/prot submit-button-props button/button-props-prototype)))
 
 
 
@@ -92,7 +82,7 @@
    [element (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-props (a/prot button-props button-props-prototype)]
+   (let [button-props (-> button-props button-props-prototype button/button-props-prototype)]
         [engine/stated-element button-id
                                {:component     #'button
                                 :element-props button-props

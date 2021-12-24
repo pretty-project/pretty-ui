@@ -33,12 +33,10 @@
   ;
   ; @return (keywords in vector)
   [& xyz]
-  (reduce (fn [result x]
-              (cond (vector?  x) (vector/concat-items result x)
-                    (keyword? x) (vector/conj-item    result x)
-                    :else        (return              result)))
-          (param [])
-          (param xyz)))
+  (vec (reduce #(cond (vector?  %2) (concat %1 %2)
+                      (keyword? %2) (conj   %1 %2)
+                      :else         (return %1))
+                [] xyz)))
 
 (defn calc
   ; @param (string) n

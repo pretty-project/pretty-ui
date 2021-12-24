@@ -173,7 +173,7 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (a/prot field-id field-props field-props-prototype)]
+   (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
                                {:component     #'multiline-field
                                 :element-props field-props

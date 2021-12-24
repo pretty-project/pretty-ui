@@ -177,7 +177,7 @@
    [element (a/id) counter-props])
 
   ([counter-id counter-props]
-   (let [counter-props (a/prot counter-id counter-props counter-props-prototype)]
+   (let [counter-props (counter-props-prototype counter-id counter-props)]
         [engine/stated-element counter-id
                                {:component     #'counter
                                 :element-props counter-props

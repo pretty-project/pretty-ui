@@ -81,11 +81,10 @@
   ;  (http/send-request! {:method :get
   ;                       :uri    "/sample-uri"})
   ([request-props]
-   (send-request! nil request-props))
+   (send-request! (a/id) request-props))
 
   ([request-id request-props]
-   (let [request-id    (a/id   request-id)
-         request-props (a/prot request-id request-props request-props-prototype)]
+   (let [request-props (request-props-prototype request-id request-props)]
         (http/send-request! request-id request-props))))
 
 ; @usage

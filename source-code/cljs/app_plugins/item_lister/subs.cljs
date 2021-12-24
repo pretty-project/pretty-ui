@@ -173,11 +173,10 @@
   ; @return (strings in vector)
   [db [_ extension-id item-namespace]]
   (let [selected-items (r get-meta-value db extension-id item-namespace :selected-items)]
-       (reduce (fn [result item-dex]
-                   (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
-                        (vector/conj-item result item-id)))
-               (param [])
-               (param selected-items))))
+       (vec (reduce (fn [result item-dex]
+                        (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
+                             (conj result item-id)))
+                    [] selected-items))))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -323,12 +322,11 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ extension-id item-namespace item-ids]]
-  (reduce (fn [result item-id]
-              (let [backup-item   (get-in db [extension-id :item-lister/backup-items item-id])
-                    exported-item (db/document->namespaced-document backup-item item-namespace)]
-                   (vector/conj-item result exported-item)))
-          (param [])
-          (param item-ids)))
+  (vec (reduce (fn [result item-id]
+                   (let [backup-item   (get-in db [extension-id :item-lister/backup-items item-id])
+                         exported-item (db/document->namespaced-document backup-item item-namespace)]
+                        (conj result exported-item)))
+               [] item-ids)))
 
 (defn export-marked-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -350,13 +348,12 @@
   [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
   (let [item-dexes  (r get-selected-item-dexes db extension-id item-namespace)
         item-id-key (keyword item-namespace :id)]
-       (reduce (fn [result item-dex]
-                   (let [item-id      (get-in db [extension-id :item-lister/data-items item-dex :id])
-                         marker-value (get-in db [extension-id :item-lister/data-items item-dex marker-key])
-                         marker-key   (keyword item-namespace marker-key)]
-                        (vector/conj-item result {item-id-key item-id marker-key (toggle-f marker-value)})))
-               (param [])
-               (param item-dexes))))
+       (vec (reduce (fn [result item-dex]
+                        (let [item-id      (get-in db [extension-id :item-lister/data-items item-dex :id])
+                              marker-value (get-in db [extension-id :item-lister/data-items item-dex marker-key])
+                              marker-key   (keyword item-namespace marker-key)]
+                             (conj result {item-id-key item-id marker-key (toggle-f marker-value)})))
+                    [] item-dexes))))
 
 (defn export-unmarked-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -381,12 +378,11 @@
   ; Az elemek megjelőlésének visszavonásához szükséges azokról másolatot készíteni,
   ; mivel az item-lister plugin a megjelölt elemeket eltávolítja a letöltött elemek listájából.
   (let [item-id-key (keyword item-namespace :id)]
-       (reduce (fn [result item-id]
-                   (let [marker-value (get-in db [extension-id :item-lister/backup-items marker-key])
-                         marker-key   (keyword item-namespace marker-key)]
-                        (vector/conj-item result {item-id-key item-id marker-key (toggle-f marker-value)})))
-               (param [])
-               (param item-ids))))
+       (vec (reduce (fn [result item-id]
+                        (let [marker-value (get-in db [extension-id :item-lister/backup-items marker-key])
+                              marker-key   (keyword item-namespace marker-key)]
+                             (conj result {item-id-key item-id marker-key (toggle-f marker-value)})))
+                    [] item-ids))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -120,9 +120,9 @@
   ;
   ; @return (hiccup)
   [group-id {:keys [options] :as group-props}]
-  (reduce #(vector/conj-item %1 [checkbox-group-option group-id group-props %2])
-           [:div.x-checkbox-group--options]
-           (param options)))
+  (vec (reduce #(conj %1 [checkbox-group-option group-id group-props %2])
+                [:div.x-checkbox-group--options]
+                (param options))))
 
 (defn- checkbox-group-check-all-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -204,7 +204,7 @@
    [element (a/id) group-props])
 
   ([group-id group-props]
-   (let [group-props (a/prot group-id group-props group-props-prototype)]
+   (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
                                {:component     #'checkbox-group
                                 :element-props group-props

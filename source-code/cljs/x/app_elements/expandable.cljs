@@ -179,7 +179,7 @@
    [element (a/id) expandable-props])
 
   ([expandable-id expandable-props]
-   (let [expandable-props (a/prot expandable-props expandable-props-prototype)]
+   (let [expandable-props (expandable-props-prototype expandable-props)]
         [engine/stated-element expandable-id
                                {:component     #'expandable
                                 :element-props expandable-props

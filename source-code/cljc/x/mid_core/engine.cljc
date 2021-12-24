@@ -74,47 +74,6 @@
            (return   n)
            (random/generate-keyword))))
 
-(defn prot
-  ; @param (*) a
-  ; @param (*)(opt) b
-  ; @param (*)(opt) c
-  ; @param (function) prototype-f
-  ;
-  ; @usage
-  ;  (defn- my-prototype-f [my-props] (do-something-with my-props))
-  ;  (let [my-props (a/prot my-props my-prototype-f)])
-  ;
-  ; @usage
-  ;  (defn- my-prototype-f [my-id my-props] (r do-something-with db my-id my-props))
-  ;  (let [my-props (a/prot my-id my-props my-prototype-f)])
-  ;
-  ; @return (map)
-  ([a prototype-f]
-   (prototype-f a))
-
-  ([a b prototype-f]
-   (prototype-f a b))
-
-  ([a b c prototype-f]
-   (prototype-f a b c)))
-
-(defn sub-prot
-  ; @param (map) context
-  ; @param (vector) params
-  ; @param (function) prototype-f
-  ;
-  ; @usage
-  ;  (defn- my-prototype-f [db [my-id]] (r do-something-with db my-id))
-  ;  (let [my-props (a/sub-prot db [my-id] my-prototype-f)])
-  ;
-  ; @usage
-  ;  (defn- my-prototype-f [db [my-id my-props]] (r do-something-with db my-id my-props))
-  ;  (let [my-props (a/sub-prot db [my-id my-props] my-prototype-f)])
-  ;
-  ; @return (map)
-  [context params prototype-f]
-  (prototype-f context params))
-
 (defn get-namespace
   ; @param (namespaced keyword) sample
   ;

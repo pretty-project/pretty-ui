@@ -84,19 +84,17 @@
             (reduce-kv (fn [result k v]
                            (let [v (unkeywordize-values v)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (unkeywordize-values x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))
+            (vec (reduce (fn [result x]
+                             (let [x (unkeywordize-values x)]
+                                  (conj result x)))
+                         [] n)))
 
           (unkeywordize-keyword
             ; @param (keyword) n
@@ -132,19 +130,17 @@
             (reduce-kv (fn [result k v]
                            (let [v (keywordize-values v)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (keywordize-values x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))
+            (vec (reduce (fn [result x]
+                             (let [x (keywordize-values x)]
+                                  (conj result x)))
+                         [] n)))
 
           (keywordize-string
             ; @param (string) n
@@ -185,19 +181,17 @@
             (reduce-kv (fn [result k v]
                            (let [k (unkeywordize-keys k)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (unkeywordize-keys x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))
+            (vec (reduce (fn [result x]
+                             (let [x (unkeywordize-keys x)]
+                                  (conj result x)))
+                         [] n)))
 
           (unkeywordize-keyword
             ; @param (keyword) n
@@ -235,19 +229,17 @@
             (reduce-kv (fn [result k v]
                            (let [k (keywordize-keys k)]
                                 (assoc result k v)))
-                       (param {})
-                       (param n)))
+                       {} n))
 
           (reduce-vector
             ; @param (vector) n
             ;
             ; @return (vector)
             [n]
-            (reduce (fn [result x]
-                        (let [x (keywordize-keys x)]
-                             (vector/conj-item result x)))
-                    (param [])
-                    (param n)))
+            (vec (reduce (fn [result x]
+                             (let [x (keywordize-keys x)]
+                                  (conj result x)))
+                         [] n)))
 
           (keywordize-string
             ; @param (string) n

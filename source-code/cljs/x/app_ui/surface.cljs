@@ -36,14 +36,12 @@
   ;   :reveal-animated? (boolean)
   ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
-  [db [surface-id surface-props]]
+  [db [_ surface-id surface-props]]
   (merge {:hide-animated?   false
           :reveal-animated? false
           :trim-content?    false
           :update-animated? false}
          (param surface-props)))
-
-(a/reg-prototype :ui/surface-props-prototype surface-props-prototype)
 
 
 
@@ -108,7 +106,7 @@
   (fn [{:keys [db]} event-vector]
       (let [surface-id    (a/event-vector->second-id   event-vector)
             surface-props (a/event-vector->first-props event-vector)
-            surface-props (a/sub-prot db [surface-id surface-props] surface-props-prototype)]
+            surface-props (r surface-props-prototype db surface-id surface-props)]
            [:ui/render-surface! surface-id surface-props])))
 
 

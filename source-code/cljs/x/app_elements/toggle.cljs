@@ -104,5 +104,5 @@
    [element (a/id) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [toggle-props (a/prot toggle-props toggle-props-prototype)]
+   (let [toggle-props (toggle-props-prototype toggle-props)]
         [toggle toggle-id toggle-props])))

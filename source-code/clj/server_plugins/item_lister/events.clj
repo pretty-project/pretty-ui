@@ -104,5 +104,5 @@
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [cofx [_ extension-id item-namespace lister-props]]
-      (let [lister-props (a/prot lister-props lister-props-prototype)]
+      (let [lister-props (lister-props-prototype lister-props)]
            (r add-route! cofx extension-id item-namespace lister-props))))

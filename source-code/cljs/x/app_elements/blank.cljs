@@ -106,5 +106,5 @@
    [element (a/id) blank-props])
 
   ([blank-id blank-props]
-   (let [];blank-props (a/prot blank-props blank-props-prototype
+   (let [];blank-props (blank-props-prototype blank-props)
         [blank blank-id blank-props])))

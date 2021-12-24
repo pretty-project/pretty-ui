@@ -57,7 +57,7 @@
   ; @return (map)
   ;  {:middleware (vector)}
   []
-  (let [site-defaults (engine/prot site-defaults site-defaults-prototype)]
+  (let [site-defaults (site-defaults-prototype site-defaults)]
        {:middleware [#(wrap-reload           % {:dirs ["source-code"]})
                      #(wrap-keyword-params   %)
                      #(wrap-params           %)

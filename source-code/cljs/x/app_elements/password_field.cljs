@@ -25,7 +25,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- password-field-props-prototype
+(defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -47,17 +47,6 @@
          (if validate? {:tooltip   :valid-password-rules
                         :validator {:f form/password-valid?
                                     :invalid-message :password-is-too-weak}})))
-
-(defn- field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [field-id field-props]
-  (let [password-field-props (a/prot field-id field-props password-field-props-prototype)]
-       (a/prot field-id password-field-props text-field/field-props-prototype)))
 
 
 
@@ -127,7 +116,8 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (a/prot field-id field-props field-props-prototype)]
+   (let [field-props (as-> field-props % (field-props-prototype            field-id %)
+                                         (text-field/field-props-prototype field-id %))]
         [engine/stated-element field-id
                                {:component     #'text-field
                                 :element-props field-props

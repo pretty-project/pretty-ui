@@ -121,5 +121,5 @@
    [layout (a/id) layout-props])
 
   ([layout-id layout-props]
-   (let [layout-props (a/prot layout-props layout-props-prototype)]
+   (let [layout-props (layout-props-prototype layout-props)]
         [layout-a layout-id layout-props])))

@@ -214,7 +214,7 @@
    [element (a/id) slideshow-props])
 
   ([slideshow-id slideshow-props]
-   (let [slideshow-props    (a/prot slideshow-props slideshow-props-prototype)
+   (let [slideshow-props    (slideshow-props-prototype                   slideshow-props)
          step-handler-props (gestures/extended-props->step-handler-props slideshow-props)]
         [engine/stated-element slideshow-id
                                {:component     #'slideshow

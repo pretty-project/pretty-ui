@@ -54,8 +54,6 @@
 ; x.app-core.engine
 (def dom-value     engine/dom-value)
 (def id            engine/id)
-(def prot          engine/prot)
-(def sub-prot      engine/sub-prot)
 (def get-namespace engine/get-namespace)
 
 ; x.app-core.event-handler

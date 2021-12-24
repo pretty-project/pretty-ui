@@ -61,7 +61,7 @@
    :user-profile-picture-url (r user/get-user-profile-picture-url db)
    :view-id                  (r gestures/get-selected-view-id     db ::handler)})
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :menu/get-body-props get-body-props)
 
 
 
@@ -71,13 +71,13 @@
 (defn- language-selector-languages
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [app-languages selected-language]}]
-  (reduce #(let [language-selected? (= %2 selected-language)
-                 button-props       {:icon :placeholder :label %2 :on-click (set-language-event %2)
-                                     :preset (if language-selected? :primary-button :default-button)
-                                     :indent :left}]
-                (vector/conj-item %1 [elements/button button-props]))
-           [:div#x-app-menu--languages]
-           (param app-languages)))
+  (vec (reduce #(let [language-selected? (= %2 selected-language)
+                      button-props       {:icon :placeholder :label %2 :on-click (set-language-event %2)
+                                          :preset (if language-selected? :primary-button :default-button)
+                                          :indent :left}]
+                     (conj %1 [elements/button button-props]))
+                [:div#x-app-menu--languages]
+                (param app-languages))))
 
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -238,7 +238,7 @@
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
-                                 {:body   {:content #'body :subscriber [::get-body-props]}
+                                 {:body   {:content #'body :subscriber [:menu/get-body-props]}
                                   :header {:content #'ui/close-popup-header}
                                   :horizontal-align :left
                                   :min-width        :xs}]}))

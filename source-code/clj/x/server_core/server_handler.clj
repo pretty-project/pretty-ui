@@ -93,7 +93,7 @@
   ;  {:join? (boolean)(opt)
   ;   :port (integer)(opt)}
   [server-props]
-  (let [server-props (engine/prot server-props server-props-prototype)
+  (let [server-props (server-props-prototype server-props)
         server-state (run-server (ring-handler)
                                  (param server-props))]
        (event-handler/dispatch [:core/store-server-state! server-state])

@@ -84,7 +84,7 @@
    [element (a/id) picker-props])
 
   ([picker-id picker-props]
-   (let [];picker-props (a/prot picker-props picker-props-prototype)
+   (let [];picker-props (picker-props-prototype picker-props)
         [engine/stated-element picker-id
                                {:component     #'image-picker
                                 :element-props picker-props

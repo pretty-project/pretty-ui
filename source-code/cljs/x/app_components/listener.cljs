@@ -255,7 +255,7 @@
    [component (a/id) context-props])
 
   ([component-id context-props]
-   (let [context-props (a/prot context-props context-props-prototype)]
+   (let [context-props (context-props-prototype context-props)]
         (if (context-props->listen-to-request? context-props)
             [listener component-id context-props]
             [content  component-id context-props]))))

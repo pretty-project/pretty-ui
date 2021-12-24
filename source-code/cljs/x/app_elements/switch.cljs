@@ -143,7 +143,7 @@
    [element (a/id) switch-props])
 
   ([switch-id switch-props]
-   (let [switch-props (a/prot switch-id switch-props switch-props-prototype)]
+   (let [switch-props (switch-props-prototype switch-id switch-props)]
         [engine/stated-element switch-id
                                {:component     #'switch
                                 :element-props switch-props

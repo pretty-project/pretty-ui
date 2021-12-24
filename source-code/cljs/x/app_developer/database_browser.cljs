@@ -258,10 +258,10 @@
 (defn- toolbar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props & tools]
-  (reduce (fn [%1 %2] (vector/conj-item %1 [%2 body-id body-props]))
-          [:div.x-database-browser--toolbar
-            {:style {:display "flex" :margin-bottom "12px"}}]
-          (param tools)))
+  (vec (reduce #(conj %1 [%2 body-id body-props])
+                [:div.x-database-browser--toolbar
+                  {:style {:display "flex" :margin-bottom "12px"}}]
+                (param tools))))
 
 (defn- horizontal-line
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -290,11 +290,11 @@
          [horizontal-line body-id body-props]
          (if-not (map/nonempty? current-item)
                  (str "Empty"))
-         (reduce (fn [%1 %2] (if (render-map-item? %2 body-props)
-                                 (vector/conj-item %1 [map-key body-id body-props %2])
-                                 (return           %1)))
-                 [:div.x-database-browser--map-item--keys]
-                 (param map-keys))
+         (vec (reduce #(if (render-map-item? %2 body-props)
+                           (conj             %1 [map-key body-id body-props %2])
+                           (return           %1))
+                       [:div.x-database-browser--map-item--keys]
+                       (param map-keys)))
          (if show-original? [:pre.x-database-browser--map-item--original-view
                                {:style {:margin-top "24px" :font-size "12px"}}
                                (pretty/mixed->string current-item)])]))
@@ -302,16 +302,16 @@
 (defn- vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-item] :as body-props}]
-  (reduce (fn [%1 %2] (vector/conj-item %1 [:div (cond (nil?          %2) (str "nil")
-                                                       (string?       %2) (string/quotes %2)
-                                                       :else              (str           %2))]))
-          [:div.x-database-browser--vector-item
-            [header          body-id body-props "vector"]
-            [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
-            [horizontal-line body-id body-props]
-            (if-not (vector/nonempty? current-item)
-                    (str "Empty"))]
-          (param current-item)))
+  (vec (reduce #(conj %1 [:div (cond (nil?          %2) (str "nil")
+                                     (string?       %2) (string/quotes %2)
+                                     :else              (str           %2))])
+                [:div.x-database-browser--vector-item
+                  [header          body-id body-props "vector"]
+                  [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
+                  [horizontal-line body-id body-props]
+                  (if-not (vector/nonempty? current-item)
+                          (str "Empty"))]
+                (param current-item))))
 
 (defn- boolean-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -295,7 +295,7 @@
    [view (a/id) directory-props])
 
   ([directory-id directory-props]
-   (let [directory-props (a/prot directory-id directory-props directory-props-prototype)]
+   (let [directory-props (directory-props-prototype directory-id directory-props)]
         [engine/stated-element directory-id
                                {:component     #'directory
                                 :element-props directory-props

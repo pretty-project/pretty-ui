@@ -105,5 +105,5 @@
    [element (a/id) text-props])
 
   ([text-id text-props]
-   (let [text-props (a/prot text-props text-props-prototype)]
+   (let [text-props (text-props-prototype text-props)]
         [text text-id text-props])))

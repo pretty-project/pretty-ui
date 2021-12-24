@@ -105,7 +105,7 @@
   ; @usage
   ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [cofx [_ extension-id item-namespace editor-props]]
-      (let [editor-props (a/prot editor-props editor-props-prototype)]
+      (let [editor-props (editor-props-prototype editor-props)]
            (if-let [multi-view? (get editor-props :multi-view?)]
                    {:dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
                                  (r add-extended-route! cofx extension-id item-namespace editor-props)]}

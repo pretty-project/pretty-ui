@@ -104,7 +104,7 @@
   (fn [_ event-vector]
       (let [saver-id    (a/event-vector->second-id   event-vector)
             saver-props (a/event-vector->first-props event-vector)
-            saver-props (a/prot saver-props saver-props-prototype)]
+            saver-props (saver-props-prototype       saver-props)]
            [:tools/render-save-file-dialog! saver-id saver-props])))
 
 

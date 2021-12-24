@@ -72,7 +72,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- combo-box-props-prototype
+(defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -101,17 +101,6 @@
           :on-focus [:elements/reg-combo-box-controllers!    field-id]}
          (param field-props)
          {:on-change  [:elements/->combo-box-changed         field-id]}))
-
-(defn- field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  [field-id field-props]
-  (let [combo-box-props (a/prot field-id field-props combo-box-props-prototype)]
-       (a/prot field-id combo-box-props text-field/field-props-prototype)))
 
 
 
@@ -200,12 +189,12 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [rendered-options] :as field-props}]
-  (reduce-indexed (fn [rendered-options option-data option-dex]
-                      (vector/conj-item rendered-options
-                                      ;^{:key (random/generate-react-key)}
-                                        [combo-box-option field-id field-props option-data option-dex]))
-                  [:div.x-combo-box--options]
-                  (param rendered-options)))
+  (vec (reduce-indexed (fn [rendered-options option-data option-dex]
+                           (conj rendered-options
+                               ;^{:key (random/generate-react-key)}
+                                 [combo-box-option field-id field-props option-data option-dex]))
+                       [:div.x-combo-box--options]
+                       (param rendered-options))))
 
 (defn- combo-box-no-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -353,8 +342,9 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (a/prot               field-id field-props field-props-prototype)
-         field-props (field-props<-surface field-id field-props)]
+   (let [field-props (as-> field-props % (field-props-prototype            field-id %)
+                                         (text-field/field-props-prototype field-id %)
+                                         (field-props<-surface             field-id %))]
         [engine/stated-element field-id
                                {:component     #'text-field/text-field
                                 :element-props field-props

@@ -112,14 +112,14 @@
   [body request {:keys [app-build plugin-js-paths]}]
   (let [core-js-props (request->core-js-props request)
         js-paths      (vector/cons-item plugin-js-paths core-js-props)]
-       (reduce (fn [body {:keys [cache-control? uri] :as js-props}]
-                   (if cache-control?
-                       (let [cache-control-uri (cache-control-uri uri app-build)
-                             js-props          (assoc js-props :uri cache-control-uri)]
-                            (vector/conj-item body (include-js js-props)))
-                       (vector/conj-item      body (include-js js-props))))
-               (param body)
-               (param js-paths))))
+       (vec (reduce (fn [body {:keys [cache-control? uri] :as js-props}]
+                        (if cache-control?
+                            (let [cache-control-uri (cache-control-uri uri app-build)
+                                  js-props          (assoc js-props :uri cache-control-uri)]
+                                 (conj body (include-js js-props)))
+                            (conj      body (include-js js-props))))
+                    (param body)
+                    (param js-paths)))))
 
 
 

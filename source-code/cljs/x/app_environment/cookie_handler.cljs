@@ -450,7 +450,7 @@
   (fn [{:keys [db]} event-vector]
       (let [cookie-id    (a/event-vector->second-id   event-vector)
             cookie-props (a/event-vector->first-props event-vector)
-            cookie-props (a/prot cookie-props cookie-props-prototype)]
+            cookie-props (cookie-props-prototype cookie-props)]
            {:dispatch-if [(r set-cookie? db cookie-id cookie-props)
                           [:environment/store-browser-cookie! cookie-id cookie-props]]})))
 
@@ -468,7 +468,7 @@
   ; @usage
   ;  [:environment/remove-cookie! :my-cookie {:cookie-type :necessary}]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
-      (let [cookie-props (a/prot cookie-props cookie-props-prototype)]
+      (let [cookie-props (cookie-props-prototype cookie-props)]
            [:environment/remove-browser-cookie! cookie-id cookie-props])))
 
 (a/reg-event-fx

@@ -177,6 +177,6 @@
   ; @usage
   ;  [:value-editor/load! :my-extension :my-editor {...}]
   (fn [{:keys [db]} [_ extension-id editor-id editor-props]]
-    (let [editor-props (a/prot extension-id editor-id editor-props editor-props-prototype)]
+    (let [editor-props (editor-props-prototype extension-id editor-id editor-props)]
          {:db       (r initialize!      db extension-id editor-id editor-props)
           :dispatch [:value-editor/render! extension-id editor-id]})))

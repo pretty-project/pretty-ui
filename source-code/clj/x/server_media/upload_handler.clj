@@ -105,8 +105,8 @@
         generated-filename   (engine/filename->generated-filename     filename file-id)
         destination-filepath (engine/filename->media-storage-filepath generated-filename)
         file-document {:alias filename :filename generated-filename :filesize filesize}
-        file-document (a/sub-prot env [destination-directory-id file-id file-document]
-                                  engine/file-document-prototype)
+        file-document (engine/file-document-prototype env [destination-directory-id file-id file-document])
+
         file-link     (db/document-id->document-link file-id :file)]
 
        ; Copy the temporary file to storage

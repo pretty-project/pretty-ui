@@ -108,9 +108,9 @@
   ;
   ; @return (hiccup)
   [field-id field-props]
-  (reduce #(vector/conj-item %1 [digit])
-           [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
-           (range 4)))
+  (vec (reduce #(conj %1 [digit])
+                [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
+                (range 4))))
 
 (defn- digit-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,7 +143,7 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (a/prot field-props field-props-prototype)]
+   (let [field-props (field-props-prototype field-props)]
         [engine/stated-element field-id
                                {:component     #'digit-field
                                 :element-props field-props

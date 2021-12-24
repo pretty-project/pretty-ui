@@ -124,7 +124,7 @@
   ; @return (hiccup)
   [diagram-id {:keys [sections strength] :as diagram-props}]
   (reduce (fn [line-diagram-sections section-props]
-              (let [section-props (a/prot section-props section-props-prototype)]
+              (let [section-props (section-props-prototype section-props)]
                    (vector/conj-item line-diagram-sections
                                      [line-diagram-section diagram-id diagram-props section-props])))
           [:div.x-line-diagram--sections {:style {:height (css/px strength)}}]
@@ -160,7 +160,7 @@
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ;  {:color (keyword)(opt)
-  ;    :default, :muted, :primary, :secondary 
+  ;    :default, :muted, :primary, :secondary
   ;    Default: :default
   ;    Only w/ {:label ...}
   ;   :font-size (keyword)(opt)
@@ -205,5 +205,5 @@
    [element (a/id) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [diagram-props (a/prot diagram-props diagram-props-prototype)]
+   (let [diagram-props (diagram-props-prototype diagram-props)]
         [line-diagram diagram-id diagram-props])))

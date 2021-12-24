@@ -33,9 +33,7 @@
   ;
   ; @return (map)
   [n]
-  (reduce-kv (fn [%1 _ %3] (vector/conj-item %1 %3))
-             (param [])
-             (param n)))
+  (vec (reduce-kv (fn [%1 _ %3] (conj %1 %3)) [] n)))
 
 
 
@@ -576,11 +574,10 @@
   ;
   ; @return (vector)
   [n f]
-  (reduce-kv (fn [result k v]
-                 (if (f v) (vector/conj-item result k)
-                           (return           result)))
-             (param [])
-             (param n)))
+  (vec (reduce-kv (fn [result k v]
+                      (if (f v) (conj   result k)
+                                (return result)))
+                  [] n)))
 
 (defn get-ordered-keys
   ; @param (map) n
@@ -598,21 +595,21 @@
   ;
   ; @return (vector)
   [n comparator-f]
-  (reduce-kv (fn [result k v]
-                 (if (empty? result)
-                     [k]
-                     (reduce-indexed (fn [subresult x dex]
-                                         (let [lap         (inc dex)
-                                               k-lower?    (comparator-f v (x n))
-                                               k-injected? (vector/count? subresult dex)
-                                               last-lap?   (vector/count? result    lap)]
-                                              (cond (and k-lower?  k-injected?) (vector/concat-items subresult [k x])
-                                                    (and last-lap? k-injected?) (vector/concat-items subresult [x k])
-                                                    :else                       (vector/conj-item    subresult x))))
-                                     (param [])
-                                     (param result))))
-             (param [])
-             (param n)))
+  (vec (reduce-kv (fn [result k v]
+                      (if (empty? result)
+                          [k]
+                          (reduce-indexed (fn [subresult x dex]
+                                              (let [lap         (inc dex)
+                                                    k-lower?    (comparator-f v (x n))
+                                                    k-injected? (vector/count? subresult dex)
+                                                    last-lap?   (vector/count? result    lap)]
+                                                   (cond (and k-lower?  k-injected?) (concat subresult [k x])
+                                                         (and last-lap? k-injected?) (concat subresult [x k])
+                                                         :else                       (conj   subresult x))))
+                                          (param [])
+                                          (param result))))
+                  (param [])
+                  (param n))))
 
 (defn get-ordered-keys-by
   ; @param (map) n
@@ -634,21 +631,21 @@
   ;
   ; @return (vector)
   [n comparator-f value-f]
-  (reduce-kv (fn [result k v]
-                 (if (empty? result)
-                     [k]
-                     (reduce-indexed (fn [subresult x dex]
-                                         (let [lap         (inc dex)
-                                               k-lower?    (comparator-f (value-f v) (value-f (x n)))
-                                               k-injected? (vector/count? subresult dex)
-                                               last-lap?   (vector/count? result    lap)]
-                                              (cond (and k-lower?  k-injected?) (vector/concat-items subresult [k x])
-                                                    (and last-lap? k-injected?) (vector/concat-items subresult [x k])
-                                                    :else                       (vector/conj-item    subresult x))))
-                                     (param [])
-                                     (param result))))
-             (param [])
-             (param n)))
+  (vec (reduce-kv (fn [result k v]
+                      (if (empty? result)
+                          [k]
+                          (reduce-indexed (fn [subresult x dex]
+                                              (let [lap         (inc dex)
+                                                    k-lower?    (comparator-f (value-f v) (value-f (x n)))
+                                                    k-injected? (vector/count? subresult dex)
+                                                    last-lap?   (vector/count? result    lap)]
+                                                   (cond (and k-lower?  k-injected?) (concat subresult [k x])
+                                                         (and last-lap? k-injected?) (concat subresult [x k])
+                                                         :else                       (conj   subresult x))))
+                                          (param [])
+                                          (param result))))
+                  (param [])
+                  (param n))))
 
 
 

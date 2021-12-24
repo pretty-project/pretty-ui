@@ -169,10 +169,8 @@
 (defn- request-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [requests] :as body-props}]
-  (reduce-kv (fn [%1 %2 %3]
-                 (vector/conj-item %1 [xxx %2 %3 body-props]))
-             [:<>]
-             (param requests)))
+  (vec (reduce-kv #(conj %1 [xxx %2 %3 body-props])
+                   [:<>] requests)))
 
 (defn- request-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!

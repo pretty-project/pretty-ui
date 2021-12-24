@@ -110,5 +110,5 @@
    [element (a/id) area-props])
 
   ([area-id area-props]
-   (let [area-props (a/prot area-props area-props-prototype)]
+   (let [area-props (area-props-prototype area-props)]
         [file-drop-area area-id area-props])))

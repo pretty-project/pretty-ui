@@ -45,10 +45,9 @@
 (defn- route-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [client-routes] :as body-props}]
-  (reduce-kv (fn [route-list route-id route-props]
-                 (vector/conj-item route-list [route-list-item body-id body-props route-id route-props]))
-             [:<>]
-             (param client-routes)))
+  (vec (reduce-kv (fn [route-list route-id route-props]
+                      (conj route-list [route-list-item body-id body-props route-id route-props]))
+                  [:<>] client-routes)))
 
 (defn- route-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!

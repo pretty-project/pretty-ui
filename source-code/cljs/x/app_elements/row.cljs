@@ -110,5 +110,5 @@
    [element (a/id) row-props])
 
   ([row-id row-props]
-   (let [row-props (a/prot row-props row-props-prototype)]
+   (let [row-props (row-props-prototype row-props)]
         [row row-id row-props])))

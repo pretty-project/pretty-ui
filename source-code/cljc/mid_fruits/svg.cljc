@@ -91,16 +91,15 @@
 
   ([gradient-id {:keys [x1 y1 x2 y2 stops] :as gradient-props}]
    (let [attributes (dissoc gradient-props :x1 :y1 :x2 :y2 :stops)]
-        (reduce (fn [linear-gradient stop]
-                    (vector/conj-item linear-gradient
-                                      [:stop {:offset     (string/percent (first stop))
-                                              :stop-color (second stop)}]))
-                [:linearGradient (component-attributes gradient-id attributes
-                                                       {:x1 (string/percent x1)
-                                                        :y1 (string/percent y1)
-                                                        :x2 (string/percent x2)
-                                                        :y2 (string/percent y2)})]
-                (param stops)))))
+        (vec (reduce (fn [linear-gradient stop]
+                         (conj linear-gradient [:stop {:offset     (string/percent (first stop))
+                                                       :stop-color (second stop)}]))
+                     [:linearGradient (component-attributes gradient-id attributes
+                                                            {:x1 (string/percent x1)
+                                                             :y1 (string/percent y1)
+                                                             :x2 (string/percent x2)
+                                                             :y2 (string/percent y2)})]
+                     (param stops))))))
 
 (defn circle
   ; @param (string)(opt) circle-id
@@ -170,12 +169,12 @@
 
   ([svg-id {:keys [elements height width] :as svg-props}]
    (let [attributes (dissoc svg-props :elements :height :width)]
-        (reduce #(vector/conj-item %1 %2)
-                 [:svg (component-attributes svg-id attributes
-                                             {:style   {:height "100%" :width "100%"}
-                                              :viewBox (view-box width height)
-                                              :xmlns   "http://www.w3.org/2000/svg"})]
-                 (param elements)))))
+        (vec (reduce #(conj %1 %2)
+                      [:svg (component-attributes svg-id attributes
+                                                  {:style   {:height "100%" :width "100%"}
+                                                   :viewBox (view-box width height)
+                                                   :xmlns   "http://www.w3.org/2000/svg"})]
+                      (param elements))))))
 
 (defn wrapper
   ; @param (string)(opt) wrapper-id

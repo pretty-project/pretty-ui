@@ -628,15 +628,15 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [downloaded-items] :as body-props}]
-  (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
-                      (vector/conj-item item-list
-                                        ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
-                                        ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
-                                        ; az új indexükhöz!
-                                       ^{:key (str id item-dex)}
-                                        [list-item-structure extension-id item-namespace body-props item-dex item]))
-                  [:div.item-lister--item-list]
-                  (param downloaded-items)))
+  (vec (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
+                           (conj item-list
+                                 ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
+                                 ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
+                                 ; az új indexükhöz!
+                                ^{:key (str id item-dex)}
+                                 [list-item-structure extension-id item-namespace body-props item-dex item]))
+                       [:div.item-lister--item-list]
+                       (param downloaded-items))))
 
 (defn- item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!

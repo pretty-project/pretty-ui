@@ -100,5 +100,5 @@
    [element (a/id) line-props])
 
   ([line-id line-props]
-   (let [line-props (a/prot line-props line-props-prototype)]
+   (let [line-props (line-props-prototype line-props)]
         [horizontal-line line-id line-props])))

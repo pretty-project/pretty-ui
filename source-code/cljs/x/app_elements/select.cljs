@@ -240,9 +240,9 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [options] :as select-props} b]
-  (reduce #(vector/conj-item %1 [select-option popup-id select-props %2])
-           [:div.x-select--options]
-           (param options)))
+  (vec (reduce #(conj %1 [select-option popup-id select-props %2])
+                [:div.x-select--options]
+                (param options))))
 
 (defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -343,8 +343,8 @@
   ; @return (hiccup)
   [select-id {:keys [as-button?] :as select-props}]
   (if as-button? ; If {:as-button? true} ...
-                 (let [button-props (engine/apply-preset button/BUTTON-PROPS-PRESETS select-props)
-                       button-props (a/prot button-props button/button-props-prototype)]
+                 (let [button-props (as-> select-props % (engine/apply-preset button/BUTTON-PROPS-PRESETS %)
+                                                         (button/button-props-prototype %))]
                       [button/button select-id button-props])
                  ; If {:as-button? false} ...
                  [select-layout select-id select-props]))
@@ -409,7 +409,7 @@
    [element (a/id) select-props])
 
   ([select-id select-props]
-   (let [select-props (a/prot select-id select-props select-props-prototype)]
+   (let [select-props (select-props-prototype select-id select-props)]
         [engine/stated-element select-id
                                {:component     #'select
                                 :element-props select-props
@@ -443,7 +443,7 @@
       (let [select-id     (a/event-vector->second-id   event-vector)
             options-props (a/event-vector->first-props event-vector)
             options-id    (engine/element-id->extended-id select-id :popup)
-            options-props (a/prot select-id options-props options-props-prototype)]
+            options-props (options-props-prototype        select-id options-props)]
            [:ui/add-popup! options-id
                            {:body   {:content #'select-options-body   :content-props options-props}
                             :header {:content #'select-options-header :content-props options-props}

@@ -85,6 +85,6 @@
    [element (a/id) line-props])
 
   ([line-id line-props]
-   (let [line-props (a/prot line-props line-props-prototype)]
+   (let [line-props (line-props-prototype line-props)]
         [:div.x-vertical-line (engine/element-attributes line-id line-props)
                               [:div.x-vertical-line--body (line-body-attributes line-id line-props)]])))

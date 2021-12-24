@@ -47,8 +47,7 @@
   ;
   ; @return (vector)
   [routes]
-  (reduce-kv #(if-let [route-template (get %3 :route-template)]
-                      (vector/conj-item %1 [route-template %2])
-                      (return           %1))
-              (param [])
-              (param routes)))
+  (vec (reduce-kv #(if-let [route-template (get %3 :route-template)]
+                           (conj   %1 [route-template %2])
+                           (return %1))
+                   [] routes)))

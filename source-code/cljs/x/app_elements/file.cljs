@@ -361,7 +361,7 @@
    [view (a/id) file-props])
 
   ([file-id file-props]
-   (let [file-props (a/prot file-id file-props file-props-prototype)]
+   (let [file-props (file-props-prototype file-id file-props)]
         [engine/stated-element file-id
                                {:component     #'file
                                 :element-props file-props

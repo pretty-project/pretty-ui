@@ -88,10 +88,10 @@
   ;
   ; @return (vector)
   [db [_ period-id]]
-  (reduce-kv #(if-let [period (get %3 period-id)]
-                      (vector/conj-item %1 period) %1)
-              (param [])
-              (r get-lifes db)))
+  (vec (reduce-kv #(if-let [period (get %3 period-id)]
+                           (conj %1 period) %1)
+                   (param [])
+                   (r get-lifes db))))
 
 
 

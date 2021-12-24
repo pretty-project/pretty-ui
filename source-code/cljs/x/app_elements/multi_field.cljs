@@ -245,10 +245,10 @@
   ;
   ; @return (hiccup)
   [group-id {:keys [group-value] :as group-props}]
-  (reduce-indexed (fn [wrapper _ field-dex]
-                      (vector/conj-item wrapper [multi-field-text-field group-id group-props field-dex]))
-                  [:div.x-multi-field (engine/element-attributes group-id group-props)]
-                  (param group-value)))
+  (vec (reduce-indexed (fn [wrapper _ field-dex]
+                           (conj wrapper [multi-field-text-field group-id group-props field-dex]))
+                       [:div.x-multi-field (engine/element-attributes group-id group-props)]
+                       (param group-value))))
 
 (defn element
   ; @param (keyword)(opt) group-id
@@ -280,7 +280,7 @@
    [element (a/id) group-props])
 
   ([group-id group-props]
-   (let [group-props (a/prot group-id group-props group-props-prototype)]
+   (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
                                {:component     #'multi-field
                                 :element-props group-props

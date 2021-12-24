@@ -117,6 +117,6 @@
   (fn [{:keys [db]} event-vector]
       (let [bin-id    (a/event-vector->second-id   event-vector)
             bin-props (a/event-vector->first-props event-vector)
-            bin-props (a/prot bin-props bin-props-prototype)]
+            bin-props (bin-props-prototype bin-props)]
            [:ui/set-surface! :media/view
                              {:view {:content #'view}}])))

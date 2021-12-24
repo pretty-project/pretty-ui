@@ -99,7 +99,7 @@
   ; @param (map) label-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
-  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning    
+  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)
   ;   :font-size (keyword)(opt)
@@ -137,5 +137,5 @@
    [element (a/id) label-props])
 
   ([label-id label-props]
-   (let [label-props (a/prot label-props label-props-prototype)]
+   (let [label-props (label-props-prototype label-props)]
         [label label-id label-props])))

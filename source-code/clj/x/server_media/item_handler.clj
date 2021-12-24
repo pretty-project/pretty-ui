@@ -224,8 +224,8 @@
   ; @return (string)
   [env {:keys [directory-id updated-props]}]
   {::pathom.co/op-name 'media/update-directory!}
-
-  (let [updated-props (a/sub-prot env [directory-id updated-props] engine/updated-props-prototype)]
+                                                          ; Felesleges vektorba tenni?
+  (let [updated-props (engine/updated-props-prototype env [directory-id updated-props])]
        (local-db/update-document! "directories" directory-id merge updated-props)
        (return "Directory updated")))
 
@@ -241,7 +241,7 @@
   [env {:keys [file-id updated-props]}]
   {::pathom.co/op-name 'media/update-file!}
 
-  (let [updated-props (a/sub-prot env [file-id updated-props] engine/updated-props-prototype)]
+  (let [updated-props (engine/updated-props-prototype env [file-id updated-props])]
        (local-db/update-document! "files" file-id merge updated-props)
        (return "File updated")))
 
@@ -267,8 +267,8 @@
   (let [directory-id       (random/generate-string)
         directory-link     (db/document-id->document-link directory-id :directory)
         directory-document {:alias directory-alias}
-        directory-document (a/sub-prot env [destination-directory-id directory-id directory-document]
-                                       engine/directory-document-prototype)]
+        directory-document (engine/directory-document-prototype env [destination-directory-id directory-id directory-document])]
+
 
        ; Add the new directory document to the "directories" collection
        (local-db/add-document! "directories" directory-document)
@@ -411,8 +411,8 @@
         copy-filename      (engine/filename->generated-filename filename copy-file-id)
         copy-file-alias    (file-alias->copy-file-alias file-alias directory-files-alias-list copy-item-suffix)
         copy-filepath      (engine/filename->media-storage-filepath copy-filename)
-        copy-file-document (a/sub-prot env [destination-directory-id copy-file-id file-document]
-                                       engine/file-document-prototype)
+        copy-file-document (engine/file-document-prototype env [destination-directory-id copy-file-id file-document])
+
         copy-file-document (merge copy-file-document {:alias    copy-file-alias
                                                       :filename copy-filename})
         copy-file-link     (db/document-id->document-link copy-file-id :file)]
@@ -454,8 +454,8 @@
         directory-alias         (get directory-document :alias)
         copy-directory-id       (random/generate-string)
         copy-directory-alias    (directory-alias->copy-directory-alias directory-alias directory-subdirectories-alias-list copy-item-suffix)
-        copy-directory-document (a/sub-prot env [destination-directory-id copy-directory-id directory-document]
-                                            engine/directory-document-prototype)
+        copy-directory-document (engine/directory-document-prototype env [destination-directory-id copy-directory-id directory-document])
+
         copy-directory-document (merge copy-directory-document {:alias copy-directory-alias})
         copy-directory-link     (db/document-id->document-link copy-directory-id :directory)]
 

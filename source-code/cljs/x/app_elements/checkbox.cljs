@@ -142,7 +142,7 @@
    [element (a/id) checkbox-props])
 
   ([checkbox-id checkbox-props]
-   (let [checkbox-props (a/prot checkbox-id checkbox-props checkbox-props-prototype)]
+   (let [checkbox-props (checkbox-props-prototype checkbox-id checkbox-props)]
         [engine/stated-element checkbox-id
                                {:component     #'checkbox
                                 :element-props checkbox-props

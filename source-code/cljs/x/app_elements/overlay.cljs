@@ -84,5 +84,5 @@
    [element (a/id) overlay-props])
 
   ([overlay-id overlay-props]
-   (let [];overlay-props (a/prot overlay-props overlay-props-prototype)
+   (let [];overlay-props (overlay-props-prototype overlay-props)
         [overlay overlay-id overlay-props])))

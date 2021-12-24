@@ -143,7 +143,7 @@
              [env client-item]
              {::pco/op-name 'clients/save-client-item!}
              (mongo-db/upsert-document! collection-name client-item
-                                        {:prototype-f #(a/sub-prot env % item-editor/updated-item-prototype)}))
+                                        {:prototype-f #(item-editor/updated-item-prototype env %)}))
 
 (defmutation merge-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,7 +155,7 @@
              [env client-item]
              {::pco/op-name 'clients/merge-client-item!}
              (mongo-db/merge-document! collection-name client-item
-                                       {:prototype-f #(a/sub-prot env % item-editor/updated-item-prototype)}))
+                                       {:prototype-f #(item-editor/updated-item-prototype env %)}))
 
 (defmutation merge-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,7 +168,7 @@
              [env {:keys [items]}]
              {::pco/op-name 'clients/merge-client-items!}
              (mongo-db/merge-documents! collection-name items
-                                        {:prototype-f #(a/sub-prot env % item-lister/updated-item-prototype)}))
+                                        {:prototype-f #(item-lister/updated-item-prototype env %)}))
 
 (defmutation delete-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -202,7 +202,7 @@
              [env client-item]
              {::pco/op-name 'clients/duplicate-client-item!}
              (mongo-db/add-document! collection-name client-item
-                                     {:prototype-f #(a/sub-prot env % item-editor/duplicated-item-prototype)}))
+                                     {:prototype-f #(item-editor/duplicated-item-prototype env %)}))
 
 
 

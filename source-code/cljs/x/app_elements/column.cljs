@@ -107,5 +107,5 @@
    [element (a/id) column-props])
 
   ([column-id column-props]
-   (let [column-props (a/prot column-props column-props-prototype)]
+   (let [column-props (column-props-prototype column-props)]
         [column column-id column-props])))

@@ -105,9 +105,9 @@
   ;
   ; @return (hiccup)
   [button-id {:keys [options] :as button-props}]
-  (reduce #(vector/conj-item %1 [radio-button-option button-id button-props %2])
-           [:div.x-radio-button--options]
-           (param options)))
+  (vec (reduce #(conj %1 [radio-button-option button-id button-props %2])
+                [:div.x-radio-button--options]
+                (param options))))
 
 (defn- radio-button-unselect-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -192,7 +192,7 @@
    [element (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-props (a/prot button-id button-props button-props-prototype)]
+   (let [button-props (button-props-prototype button-id button-props)]
         [engine/stated-element button-id
                                {:component     #'radio-button
                                 :element-props button-props

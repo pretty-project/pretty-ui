@@ -112,5 +112,5 @@
    [element (a/id) anchor-props])
 
   ([anchor-id anchor-props]
-   (let [anchor-props (a/prot anchor-props anchor-props-prototype)]
+   (let [anchor-props (anchor-props-prototype anchor-props)]
         [anchor anchor-id anchor-props])))

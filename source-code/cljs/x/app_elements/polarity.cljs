@@ -125,5 +125,5 @@
    [element (a/id) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-props (a/prot polarity-props polarity-props-prototype)]
+   (let [polarity-props (polarity-props-prototype polarity-props)]
         [polarity polarity-id polarity-props])))

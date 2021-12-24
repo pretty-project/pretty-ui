@@ -71,10 +71,9 @@
   ;  [{:label (metamorphic-context)
   ;    :variant (keyword)}]
   [{:keys [get-label-f group-value]}]
-  (reduce (fn [result value]
-              (vector/conj-item result {:label (get-label-f value)}))
-          (param [])
-          (param group-value)))
+  (vec (reduce (fn [result value]
+                   (conj result {:label (get-label-f value)}))
+               [] group-value)))
 
 (defn- group-props->chip-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -206,8 +205,8 @@
   ;
   ; @return (hiccup)
   [group-id group-props]
-  (let [field-id    (group-id->field-id group-id)
-        field-props (a/prot             group-id group-props field-props-prototype)]
+  (let [field-id    (group-id->field-id    group-id)
+        field-props (field-props-prototype group-id group-props)]
        [:div.x-multi-combo-box--field [combo-box field-id field-props]]))
 
 (defn- multi-combo-box
@@ -287,7 +286,7 @@
    [element (a/id) group-props])
 
   ([group-id group-props]
-   (let [group-props (a/prot group-id group-props group-props-prototype)]
+   (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
                                {:component     #'multi-combo-box
                                 :element-props group-props

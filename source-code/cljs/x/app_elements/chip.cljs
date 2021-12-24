@@ -154,5 +154,5 @@
    [element (a/id) chip-props])
 
   ([chip-id chip-props]
-   (let [chip-props (a/prot chip-props chip-props-prototype)]
+   (let [chip-props (chip-props-prototype chip-props)]
         [chip chip-id chip-props])))

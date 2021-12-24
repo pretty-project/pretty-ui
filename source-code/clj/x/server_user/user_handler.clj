@@ -68,7 +68,7 @@
   ; @return (namespaced map)
   ;  {}
   [user-props]
-  (let [user-props   (a/prot user-props user-props-prototype)
+  (let [user-props   (user-props-prototype user-props)
         user-account (user-props->user-account user-props)]))
       ;(if (and (account-handler/user-account-valid? user-account))
            ; Check if email exists!!!
