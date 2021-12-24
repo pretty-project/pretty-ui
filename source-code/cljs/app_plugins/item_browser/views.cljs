@@ -20,7 +20,8 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
-              [app-plugins.item-browser.engine :as engine]))
+              [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-lister.api     :as item-lister]))
 
 
 
@@ -59,16 +60,33 @@
 
 
 
+;; -- Header components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header
+  [extension-id item-namespace]
+  [:div "header"])
+
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body
+  [extension-id item-namespace body-props]
+  [item-lister/body extension-id item-namespace body-props])
+
+
+
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [extension-id item-namespace {:keys [description] :as view-props}]
-  [:div "hello"])
-;  [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
-;                                  :header {:content [header extension-id item-namespace]}
-;                                  :description description}])
+  [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
+                                  :header {:content [header extension-id item-namespace]}
+                                  :description description}])
 
 (defn view
   ; @param (keyword) extension-id

@@ -42,8 +42,8 @@
   ;
   ; @return (map)
   [button-props]
-  (let [submit-button-props (submit-button-props-prototype button-props)]
-       (button/button-props-prototype submit-button-props)))
+  (let [submit-button-props (a/prot button-props submit-button-props-prototype)]
+       (a/prot submit-button-props button/button-props-prototype)))
 
 
 

@@ -19,6 +19,31 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn browser-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) browser-props
+  ;
+  ; @return (map)
+  [browser-props]
+  (merge {}
+         (param browser-props)))
+
+(defn lister-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) browser-props
+  ;
+  ; @return (map)
+  [browser-props]
+  (let [browser-props (a/prot browser-props browser-props-prototype)]
+       (a/prot browser-props item-lister/lister-props-prototype)))
+
+
+
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -55,5 +80,6 @@
   ; @usage
   ;  [:item-browser/initialize! :my-extension :my-type {...}]
   (fn [cofx [_ extension-id item-namespace browser-props]]
-      {:dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)
-                    (r add-extended-route! cofx extension-id item-namespace browser-props)]}))
+      (let [browser-props (a/prot browser-props browser-props-prototype)]
+           {:dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)
+                         (r add-extended-route! cofx extension-id item-namespace browser-props)]})))

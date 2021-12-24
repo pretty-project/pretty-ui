@@ -110,8 +110,8 @@
   ;
   ; @return (map)
   [field-id field-props]
-  (let [combo-box-props (combo-box-props-prototype field-id field-props)]
-       (text-field/field-props-prototype field-id combo-box-props)))
+  (let [combo-box-props (a/prot field-id field-props combo-box-props-prototype)]
+       (a/prot field-id combo-box-props text-field/field-props-prototype)))
 
 
 

@@ -40,7 +40,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- lister-props-prototype
+(defn lister-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) lister-props

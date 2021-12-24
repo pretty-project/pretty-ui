@@ -56,8 +56,8 @@
   ;
   ; @return (map)
   [field-id field-props]
-  (let [password-field-props (password-field-props-prototype field-id field-props)]
-       (text-field/field-props-prototype field-id password-field-props)))
+  (let [password-field-props (a/prot field-id field-props password-field-props-prototype)]
+       (a/prot field-id password-field-props text-field/field-props-prototype)))
 
 
 

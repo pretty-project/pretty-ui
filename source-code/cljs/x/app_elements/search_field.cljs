@@ -50,8 +50,8 @@
   ;
   ; @return (map)
   [field-id field-props]
-  (let [search-field-props (search-field-props-prototype field-id field-props)]
-       (text-field/field-props-prototype field-id search-field-props)))
+  (let [search-field-props (a/prot field-id field-props search-field-props-prototype)]
+       (a/prot field-id search-field-props text-field/field-props-prototype)))
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.4.9
+; Version: v0.3.4
+; Compatibility: x4.5.0
 
 
 
@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.api
-    (:require [server-plugins.item-lister.events]
-              [server-plugins.item-lister.engine :as engine]
+    (:require [server-plugins.item-lister.engine     :as engine]
+              [server-plugins.item-lister.events     :as events]
               [server-plugins.item-editor.prototypes :as prototypes]))
 
 
@@ -32,6 +32,9 @@
 (def env->search-props             engine/env->search-props)
 (def env->search-pipeline          engine/env->search-pipeline)
 (def env->count-pipeline           engine/env->count-pipeline)
+
+; server-plugins.item-editor.events
+(def lister-props-prototype events/lister-props-prototype)
 
 ; server-plugins.item-editor.prototypes
 (def updated-item-prototype prototypes/updated-item-prototype)
