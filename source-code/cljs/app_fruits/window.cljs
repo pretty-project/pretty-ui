@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-fruits.window
-    (:require [mid-fruits.uri  :as uri]))
+    (:require [mid-fruits.uri :as uri]))
 
 
 

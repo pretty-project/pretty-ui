@@ -65,16 +65,7 @@
 
 (defn header
   [extension-id item-namespace]
-  [:div ;"header"
-   ;(str (mid-fruits.string/use-replacements "%1 of %2 file downloaded" [3 3 3]))])
-   ;(str (not (empty? [])))
-   ;(str (some #(println %) [:a :b :c :b :d :d]))])
-   ;(str (get [:a :b] 0))])
-   ;(str (some keyword? ["a" :b]))])
-   ;(str (mid-fruits.vector/nth-filtered [:a "a" :b "b" :c "c" :d "d" :e "e" :f "f"] keyword? 3))
-   ;(str (mid-fruits.vector/compared-items-ordered? [0 1 3] [0 1 3 :a] <))])
-;   (str (some #(keyword? %) ["a" "b" :c]))])
-    (str (->> 2 (str "a" "b")))])
+  [:div "header"])
 
 
 

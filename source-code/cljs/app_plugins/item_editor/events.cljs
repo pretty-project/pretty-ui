@@ -384,7 +384,7 @@
   ;   :label (metamorphic-content)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)}
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [editor-label (r subs/get-editor-label extension-id item-namespace editor-props)]
+      (let [editor-label (r subs/get-editor-label db extension-id item-namespace editor-props)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
             :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
                          [:ui/set-header-title!  (param editor-label)]
