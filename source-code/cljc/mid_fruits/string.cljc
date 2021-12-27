@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.0.6
+; Version: v1.2.4
 
 
 
@@ -15,7 +15,6 @@
 (ns mid-fruits.string
     (:require [clojure.string   :as string]
               [mid-fruits.candy :refer [param return]]
-              [mid-fruits.loop  :refer [reduce-indexed]]
               [mid-fruits.math  :refer [between?]]))
 
 
@@ -41,8 +40,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (string? n)
-                (not (empty? n)))))
+  (and      (string? n)
+       (not (empty?  n))))
 
 (defn get-nth-character
   ; @param (string) n
@@ -51,8 +50,7 @@
   ; @param (nil or string)
   [n dex]
   (when (and (nonempty? n)
-             (> (count  n)
-                (param  dex)))
+             (> (count n) dex))
         (nth n dex)))
 
 (defn part
@@ -88,9 +86,7 @@
   ;
   ; @return (string)
   [n]
-  (if (nonempty?   n)
-      (string/trim n)
-      (return      n)))
+  (string/trim (str n)))
 
 (defn length
   ; @param (string) n
@@ -115,10 +111,10 @@
   ;
   ; @return (string)
   [coll separator]
-  (if (and (coll? coll)
-           (or (nil?    separator)
-               (string? separator)))
-      (string/join separator coll)))
+  (when (and (coll? coll)
+             (or (nil?    separator)
+                 (string? separator)))
+        (string/join separator coll)))
 
 (defn max-length
   ; @param (*) n
@@ -140,8 +136,7 @@
        (if (and (nonempty? n)
                 (integer?  limit)
                 (> (length n) limit))
-           (str (subs  n 0 limit)
-                (param suffix))
+           (str (subs  n 0 limit) suffix)
            (return n))))
 
 (defn min-length?
@@ -160,10 +155,9 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (and (string?  n)
-                (integer? x)
-                (>= (length n)
-                    (param  x)))))
+  (and     (string?  n)
+           (integer? x)
+       (>= (length   n) x)))
 
 (defn max-length?
   ; @param (string) n
@@ -181,10 +175,9 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (and (string?  n)
-                (integer? x)
-                (<= (length n)
-                    (param  x)))))
+  (and     (string?  n)
+           (integer? x)
+       (<= (length   n) x)))
 
 (defn length?
   ; @param (string) n
@@ -202,8 +195,8 @@
   ;
   ; @return (boolean)
   [n x]
-  (let [length (count n)]
-       (= length x)))
+  (and      (string? n)
+       (= x (count   n))))
 
 (defn split
   ; @param (string) n
@@ -265,12 +258,11 @@
   ;
   ; @return (string)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x)
-           (string/includes? n x))
-      (subs n 0 (dec (+ (string/index-of n x)
-                        (count x))))
-      (return nil)))
+  (when (and (nonempty? n)
+             (nonempty? x)
+             (string/includes? n x))
+        (subs n 0 (dec (+ (string/index-of n x)
+                          (count x))))))
 
 (defn before-last-occurence
   ; @param (string) n
@@ -292,11 +284,10 @@
   ;
   ; @return (nil or string)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x)
-           (string/includes? n x))
-      (subs   n 0 (string/last-index-of n x))
-      (return nil)))
+  (when (and (nonempty? n)
+             (nonempty? x)
+             (string/includes? n x))
+        (subs n 0 (string/last-index-of n x))))
 
 (defn after-first-occurence
   ; @param (string) n
@@ -318,12 +309,11 @@
   ;
   ; @return (nil string)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x)
-           (string/includes? n x))
-      (subs n (+ (string/index-of n x)
-                 (count x)))
-      (return nil)))
+  (when (and (nonempty? n)
+             (nonempty? x)
+             (string/includes? n x))
+        (subs n (+ (string/index-of n x)
+                   (count x)))))
 
 (defn after-last-occurence
   ; @param (string) n
@@ -345,12 +335,11 @@
   ;
   ; @return (nil or string)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x)
-           (string/includes? n x))
-      (subs n (+ (string/last-index-of n x)
-                 (count x)))
-      (return nil)))
+  (when (and (nonempty? n)
+             (nonempty? x)
+             (string/includes? n x))
+        (subs n (+ (string/last-index-of n x)
+                   (count x)))))
 
 (defn between-occurences
   ; @param (string) n
@@ -393,10 +382,9 @@
   ;
   ; @return (nil or integer)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x))
-      (string/index-of n x)
-      (return          nil)))
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/index-of n x)))
 
 (defn position-of-last-occurence
   ; @param (string) n
@@ -414,10 +402,9 @@
   ;
   ; @return (nil or integer)
   [n x]
-  (if (and (nonempty? n)
-           (nonempty? x))
-      (string/last-index-of n x)
-      (return               nil)))
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/last-index-of n x)))
 
 (defn ends-with?
   ; @param (string) n
@@ -450,10 +437,12 @@
                 ; (string/ends-with? ...)
                 (when (and (nonempty? n)
                            (nonempty? x))
-                      (if (param case-sensitive?)
-                          (string/ends-with? n x)
-                          (string/ends-with? (string/lower-case n)
-                                             (string/lower-case x))))))))
+                      (if case-sensitive? (string/ends-with? n x)
+                                          (string/ends-with? (string/lower-case n)
+                                                             (string/lower-case x))))))))
+
+(defn not-ends-with?
+  [n x])
 
 (defn ends-with!
   ; @param (string) n
@@ -542,10 +531,12 @@
                 ; (string/starts-with? ...)
                 (when (and (nonempty? n)
                            (nonempty? x))
-                      (if (param case-sensitive?)
-                          (string/starts-with? n x)
-                          (string/starts-with? (string/lower-case n)
-                                               (string/lower-case x))))))))
+                      (if case-sensitive? (string/starts-with? n x)
+                                          (string/starts-with? (string/lower-case n)
+                                                               (string/lower-case x))))))))
+
+(defn not-starts-with?
+  [n x])
 
 (defn starts-with!
   ; @param (string) n
@@ -686,9 +677,9 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (when (and (nonempty? n)
-                      (nonempty? x))
-                 (string/includes? n x))))
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/includes? n x)))
 
 (defn replace-part
   ; @param (string) n
@@ -735,16 +726,13 @@
   ;
   ; @return (string)
   [n replacements]
-  (if (vector? replacements)
-      (if (= 1 (count replacements))
-          (replace-part n "%" (nth replacements 0))
-          (first (reduce (fn [[result lap] replacement]
-                             (let [match (str "%" (inc lap))]
-                                  [(replace-part result match replacement)
-                                   (inc lap)]))
-                         [n 0]
-                         (param replacements))))
-      (return n)))
+  (when (and (nonempty? n)
+             (vector?   replacements))
+        (if (= 1 (count replacements))
+            ; Use one replacement ...
+            (replace-part n "%" (first replacements))
+            ; Use more replacements ...
+            (reduce-kv #(string/replace %1 (str "%" (inc %2)) %3) n replacements))))
 
 (defn use-replacement
   ; @param (string) n
@@ -759,57 +747,6 @@
   [n replacement]
   (replace-part n "%" replacement))
 
-(defn matrix
-  ; @param (string) n
-  ; @param (strings in vectors in vector) character-matrix
-  ;
-  ; @example
-  ;  (string/matrix "abcd" [["a" "b" "c"]
-  ;                         ["a" "b" "c"]
-  ;                         ["a" "b" "c"]
-  ;                         ["a" "b" "c"]])
-  ;  =>
-  ;  "abca"
-  ;
-  ; @example
-  ;  (string/matrix "abcd" [["a" "b" "c"]
-  ;                         ["a" "b" "c"]
-  ;                         ["a" "b" "c"]])
-  ;  =>
-  ;  "abc"
-  ;
-  ; @example
-  ;  (string/matrix "2014-07" [["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["/"]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["/"]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]
-  ;                            ["_" 0 1 2 3 4 5 6 7 8 9]])
-  ;  =>
-  ;  "2014/07/__"
-  ;
-  ; @return (string)
-  [n character-matrix]
-  (letfn [(contains-character?
-            ; @param (strings in vector)
-            ; @param (string)
-            ;
-            ; @return (boolean)
-            [character-matrix x]
-            (some? (some #(= x (str %)) character-matrix)))]
-         (reduce-indexed (fn [result allowed-characters dex]
-                             (let [x (get-nth-character n dex)]
-                                  (if (contains-character? allowed-characters x)
-                                      (str result x)
-                                      (let [replacement (first allowed-characters)]
-                                           (str result replacement)))))
-                         (param "")
-                         (param character-matrix))))
-
 (defn filter-characters
   ; @param (string) n
   ; @param (vector) allowed-characters
@@ -821,12 +758,9 @@
   ;
   ; @return (string)
   [n allowed-characters]
-  (reduce (fn [result character]
-              (if (some? (some #(= character %) allowed-characters))
-                  (str    result character)
-                  (return result)))
-          (param "")
-          (param n)))
+  (letfn [(filter-characters-f [o x] (if (some #(= x %) allowed-characters)
+                                         (str o x) o))]
+         (reduce filter-characters-f "" n)))
 
 (defn remove-part
   ; @param (string) n
@@ -837,7 +771,7 @@
   ;
   ; @return (string)
   [n x]
-  (replace-part n x empty-string))
+  (replace-part n x ""))
 
 (defn remove-newlines
   ; @param (string) n
@@ -858,8 +792,7 @@
   ; @return (integer)
   [n]
   (if (nonempty? n)
-      (get (frequencies n)
-           (param \newline))
+      (get (frequencies n) \newline)
       (return 0)))
 
 (defn max-lines
@@ -887,8 +820,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n)
-             (str   "(" n ")"))))
+  (str (when (some? n) (str "(" n ")"))))
 
 (defn bracket
   ; @param (string) n
@@ -900,8 +832,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n)
-             (str   "[" n "]"))))
+  (str (when (some? n) (str "[" n "]"))))
 
 (defn percent
   ; @param (string) n
@@ -913,8 +844,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n)
-             (str   n "%"))))
+  (str (when (some? n) (str n "%"))))
 
 (defn quotes
   ; @param (string) n
@@ -926,8 +856,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n)
-             (str   "\"" n "\""))))
+  (str (when (some? n) (str "\"" n "\""))))
 
 (defn capitalize
   ; @param (string) n
@@ -937,8 +866,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (nonempty?         n)
-             (string/capitalize n))))
+  (string/capitalize (str n)))
 
 (defn uppercase
   ; @param (string) n
@@ -948,8 +876,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (nonempty?         n)
-             (string/upper-case n))))
+  (string/upper-case (str n)))
 
 (defn lowercase
   ; @param (string) n
@@ -959,8 +886,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (nonempty?         n)
-             (string/lower-case n))))
+  (string/lower-case (str n)))
 
 (defn contains-lowercase-letter?
   ; @param (string) n
@@ -970,8 +896,7 @@
   ;
   ; @return (boolean)
   [n]
-  (not= (param     n)
-        (uppercase n)))
+  (not= n (uppercase n)))
 
 (defn contains-uppercase-letter?
   ; @param (string) n
@@ -981,8 +906,7 @@
   ;
   ; @return (boolean)
   [n]
-  (not= (param     n)
-        (lowercase n)))
+  (not= n (lowercase n)))
 
 (defn snake-case
   ; WARNING! INCOMPLETE! DO NOT USE!

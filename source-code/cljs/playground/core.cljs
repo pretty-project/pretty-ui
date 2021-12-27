@@ -6,7 +6,7 @@
               [mid-fruits.form       :as form]
               [mid-fruits.gestures   :as gestures]
               [mid-fruits.keyword    :as keyword]
-              [mid-fruits.loop       :as loop :refer [reduce-indexed reduce-while reduce-while-indexed]]
+              [mid-fruits.loop       :as loop :refer [reduce-indexed]]
               [mid-fruits.map        :as map]
               [mid-fruits.math       :refer [calc]]
               [mid-fruits.mixed      :as mixed]
@@ -187,8 +187,8 @@
   [:<> [section-footer surface-id {}]
        [section-header surface-id {:label "Circle diagram"}]
        [elements/circle-diagram {:sections [{:color :primary   :value 50}
-                                            {:color :secondary :value 10}
-                                            {:color :highlight :value 20}]}]
+                                            {:color :secondary :value 25}
+                                            {:color :highlight :value 25}]}]
        [section-footer surface-id {}]
        [section-header surface-id {:label "Line diagram"}]
        [elements/line-diagram {:sections [{:color :primary   :value 50}

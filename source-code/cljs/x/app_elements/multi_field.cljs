@@ -245,7 +245,7 @@
   ;
   ; @return (hiccup)
   [group-id {:keys [group-value] :as group-props}]
-  (vec (reduce-indexed (fn [wrapper _ field-dex]
+  (vec (reduce-indexed (fn [wrapper field-dex _]
                            (conj wrapper [multi-field-text-field group-id group-props field-dex]))
                        [:div.x-multi-field (engine/element-attributes group-id group-props)]
                        (param group-value))))

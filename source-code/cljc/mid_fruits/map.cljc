@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.0.8
+; Version: v1.3.2
 
 
 
@@ -13,32 +13,25 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.map
-    (:require [clojure.data      :as data]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.loop   :refer [reduce-indexed reduce-while reduce-kv-while]]
-              [mid-fruits.vector :as vector]))
+    (:require [clojure.data     :as data]
+              [mid-fruits.candy :refer [param return]]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn map->vector
-  ; @param (vector) n
+(defn to-vector
+  ; @param (map) n
   ;
   ; @example
   ;  (map/map->vector {0 :x 1 :y 2 :z})
   ;  =>
   ;  [:x :y :z]
   ;
-  ; @return (map)
+  ; @return (vector)
   [n]
-  (vec (reduce-kv (fn [%1 _ %3] (conj %1 %3)) [] n)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  (reduce-kv #(conj %1 %3) [] n))
 
 (defn nonempty?
   ; @param (map) n
@@ -48,8 +41,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (map? n)
-                (not (empty? n)))))
+  (and      (map?   n)
+       (not (empty? n))))
 
 (defn get-keys
   ; @param (map) n
@@ -135,21 +128,13 @@
   ;
   ; @return (*)
   [n & xyz]
-  (letfn [(deep-merge
-            ; @param (map) a
-            ; @param (map) b
-            ;
-            ; @return (map)
-            [a b]
-            (if (and (map? a)
-                     (map? b))
-                (merge-with deep-merge a b)
-                (return b)))]
-         ; deep-merge
-         (if (some identity xyz)
-             (reduce (fn [%1 %2] (deep-merge %1 %2))
-                     (param n)
-                     (param xyz))
+  (letfn [(deep-merge-f [o x]
+                        (if (and (map? o)
+                                 (map? x))
+                            (merge-with deep-merge-f o x)
+                            (return x)))]
+         (if (some         identity xyz)
+             (reduce deep-merge-f n xyz)
              (return n))))
 
 (defn reverse-merge
@@ -180,11 +165,9 @@
   ;
   ; @return (map)
   [n keys]
-  (reduce #(dissoc %1 %2) n keys))
+  (reduce dissoc n keys))
 
 (defn difference
-  ; Things only in a
-  ;
   ; @param (map) a
   ; @param (map) b
   ;
@@ -194,27 +177,9 @@
   ;  {:b "b"}
   ;
   ; @return (map)
+  ;  Things only in a
   [a b]
   (first (data/diff a b)))
-
-(defn inherit
-  ; @param (map) n
-  ; @param (vector) keys
-  ;
-  ; @example
-  ;  (map/inherit {:a "a" :b "b" :c "c"} [:a :c :d])
-  ;  =>
-  ;  {:a "a" :c "c"}
-  ;
-  ; @return (map)
-  [n keys]
-; (reduce (fn [%1 %2]
-;             (if-let [inherited-value (get n %2)]
-;                     (assoc  %1 %2 inherited-value)
-;                     (return %1))
-;         (param {})
-;         (param keys))
-  (select-keys n keys))
 
 (defn swap
   ; @param (map) n
@@ -226,8 +191,8 @@
   ;
   ; @return (map)
   [n]
-  (zipmap (get-values n)
-          (get-keys   n)))
+  (zipmap (vals n)
+          (keys n)))
 
 (defn dissoc-in
   ; Original: re-frame.utils/dissoc-in
@@ -307,10 +272,7 @@
   ;
   ; @return (boolean)
   [n xyz]
-  (reduce-while (fn [_ %2] (contains? n %2))
-                (param false)
-                (param xyz)
-                (fn [%1 _] (true? %1))))
+  (boolean (some #(contains? n %) xyz)))
 
 (defn contains-value?
   ; @param (map) n
@@ -329,8 +291,7 @@
   ;
   ; @return (boolean)
   [n x]
-  (some #(= x (val %))
-         (param n)))
+  (some #(= x (val %)) n))
 
 (defn values-equal?
   ; @param (map) n
@@ -339,7 +300,7 @@
   ;
   ; @example
   ;  (map/values-equal? {:a {:b "FOO"}
-  ;                     :c {:d "FOO"}}
+  ;                      :c {:d "FOO"}}
   ;                     [:a :b] [:c :d])
   ;  =>
   ;  true
@@ -528,35 +489,20 @@
   ;
   ; @return (boolean)
   ([n pattern]
-   (match-pattern? n pattern nil))
+   (match-pattern? n pattern {}))
 
   ([n pattern {:keys [strict-matching?]}]
    (let [difference (difference n pattern)]
-                     ; Non-strict matching
-        (boolean (or (and (not strict-matching?)
-                          (= (count n)
-                             (+ (count difference)
-                                (count pattern))))
-                     ; Strict matching
-                     (and (param strict-matching?)
-                          (= (count n)
-                             (count pattern))
-                          (empty? difference)))))))
-
-(defn keywordize
-  ; @param (map) n
-  ;
-  ; @example
-  ;  (map/keywordize {"my-key" "my-value"})
-  ;  =>
-  ;  {:my-key "my-value"}
-  ;
-  ; @return (map)
-  [n]
-  (reduce-kv (fn [%1 %2 %3]
-                 (assoc %1 (keyword %2) %3))
-             (param {})
-             (param n)))
+        (or ; If strict-matching? is true ...
+            (and (not strict-matching?)
+                 (= (count n)
+                    (+ (count difference)
+                       (count pattern))))
+            ; If strict-matching? is false ...
+            (and (boolean strict-matching?)
+                 (= (count n)
+                    (count pattern))
+                 (empty? difference))))))
 
 
 
@@ -574,78 +520,7 @@
   ;
   ; @return (vector)
   [n f]
-  (vec (reduce-kv (fn [result k v]
-                      (if (f v) (conj   result k)
-                                (return result)))
-                  [] n)))
-
-(defn get-ordered-keys
-  ; @param (map) n
-  ; @param (function) comparator-f
-  ;
-  ; @example
-  ;  (map/get-ordered-keys {:a "abc" :g "ghi" :d "def"} string/abc?)
-  ;  =>
-  ;  [:a :d :g]
-  ;
-  ; @example
-  ;  (map/get-ordered-keys {:a 1 :g 3 :d 2} <)
-  ;  =>
-  ;  [:a :d :g]
-  ;
-  ; @return (vector)
-  [n comparator-f]
-  (vec (reduce-kv (fn [result k v]
-                      (if (empty? result)
-                          [k]
-                          (reduce-indexed (fn [subresult x dex]
-                                              (let [lap         (inc dex)
-                                                    k-lower?    (comparator-f v (x n))
-                                                    k-injected? (vector/count? subresult dex)
-                                                    last-lap?   (vector/count? result    lap)]
-                                                   (cond (and k-lower?  k-injected?) (concat subresult [k x])
-                                                         (and last-lap? k-injected?) (concat subresult [x k])
-                                                         :else                       (conj   subresult x))))
-                                          (param [])
-                                          (param result))))
-                  (param [])
-                  (param n))))
-
-(defn get-ordered-keys-by
-  ; @param (map) n
-  ; @param (function) comparator-f
-  ; @param (function) value-f
-  ;
-  ; @example
-  ;  (map/get-ordered-keys-by {:a {:value "abc"} :g {:value "ghi"} :d {:value "def"}}
-  ;                           string/abc? :value)
-  ;  =>
-  ;  [:a :d :g]
-  ;
-  ; @example
-  ;  WARNING! NOT TESTED!
-  ;  (map/get-ordered-keys-by {:a {:value "abc"} :g {:value "ghi"} :d {:value "def"}}
-  ;                           string/abc? #(get % :value))
-  ;  =>
-  ;  [:a :d :g]
-  ;
-  ; @return (vector)
-  [n comparator-f value-f]
-  (vec (reduce-kv (fn [result k v]
-                      (if (empty? result)
-                          [k]
-                          (reduce-indexed (fn [subresult x dex]
-                                              (let [lap         (inc dex)
-                                                    k-lower?    (comparator-f (value-f v) (value-f (x n)))
-                                                    k-injected? (vector/count? subresult dex)
-                                                    last-lap?   (vector/count? result    lap)]
-                                                   (cond (and k-lower?  k-injected?) (concat subresult [k x])
-                                                         (and last-lap? k-injected?) (concat subresult [x k])
-                                                         :else                       (conj   subresult x))))
-                                          (param [])
-                                          (param result))))
-                  (param [])
-                  (param n))))
+  (reduce-kv #(if (f %3) (conj %1 %2) %1) [] n))
 
 
 
@@ -668,12 +543,7 @@
   ;
   ; @return (map)
   [n filter-f]
-  (reduce-kv (fn [result k v]
-                 (if (filter-f v)
-                     (assoc    result k v)
-                     (return   result)))
-             (param {})
-             (param n)))
+  (reduce-kv #(if (filter-f %3) (assoc %1 %2 %3) %1) {} n))
 
 (defn filter-values-by
   ; @param (map) n
@@ -694,12 +564,7 @@
   ;
   ; @return (map)
   [n filter-f value-f]
-  (reduce-kv (fn [result k v]
-                 (if (filter-f (value-f v))
-                     (assoc    result k v)
-                     (return   result)))
-             (param {})
-             (param n)))
+  (reduce-kv #(if (filter-f (value-f %3)) (assoc %1 %2 %3) %1) {} n))
 
 
 
@@ -722,10 +587,7 @@
   ;
   ; @return (boolean)
   [n test-f]
-  (reduce-kv-while (fn [_ %2 _] (test-f %2))
-                   (param false)
-                   (param n)
-                   (fn [%1 _ _] (boolean %1))))
+  (boolean (some #(test-f (first %)) n)))
 
 (defn any-value-match?
   ; @param (map) n
@@ -743,31 +605,7 @@
   ;
   ; @return (boolean)
   [n test-f]
-  (reduce-kv-while (fn [_ _ %3] (test-f %3))
-                   (param false)
-                   (param n)
-                   (fn [%1 _ _] (boolean %1))))
-
-(defn any-value-mismatch?
-  ; @param (map) n
-  ; @param (function) test-f
-  ;
-  ; @example
-  ;  (map/any-value-mismatch? {:a 1 :b "2"} string?)
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (map/any-value-mismatch? {:a "1" :b "2"} string?)
-  ;  =>
-  ;  false
-  ;
-  ; @return (boolean)
-  [n test-f]
-  (reduce-kv-while (fn [_ _ %3] (not (test-f %3)))
-                   (param false)
-                   (param n)
-                   (fn [%1 _ _] (boolean %1))))
+  (boolean (some #(test-f (second %)) n)))
 
 (defn all-values-match?
   ; @param (map) n
@@ -785,10 +623,7 @@
   ;
   ; @return (boolean)
   [n test-f]
-  (reduce-kv-while (fn [_ _ %3] (test-f %3))
-                   (param true)
-                   (param n)
-                   (fn [%1 _ _] (not %1))))
+  (every? #(test-f (second %)) n))
 
 (defn get-first-match-key
   ; @param (map) n
@@ -806,11 +641,7 @@
   ;
   ; @return (*)
   [n test-f]
-  (reduce-kv-while (fn [_ %2 _] (if (test-f %2)
-                                    (return %2)))
-                   (param nil)
-                   (param n)
-                   (fn [%1 _ _] (some? %1))))
+  (some #(if (test-f (second %)) (first %)) n))
 
 (defn get-first-match-value
   ; @param (map) n
@@ -833,8 +664,35 @@
   ;
   ; @return (*)
   [n test-f]
-  (reduce-kv-while (fn [_ _ %3] (if (test-f %3)
-                                    (return %3)))
-                   (param nil)
-                   (param n)
-                   (fn [%1 _ _] (some? %1))))
+  (some #(if (test-f (second %)) (second %)) n))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ->keys
+  ; @param (map) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (map/->keys {:a "A" :b "B"} name)
+  ;  =>
+  ;  {"a" "1" "b" "2"}
+  ;
+  ; @return (map)
+  [n f]
+  (reduce-kv #(assoc %1 (f %2) %3) {} n))
+
+(defn ->values
+  ; @param (map) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (map/->keys {:a "A" :b "B"} name)
+  ;  =>
+  ;  {:a :A :b :B}
+  ;
+  ; @return (map)
+  [n f]
+  (reduce-kv #(assoc %1 %2 (f %3)) {} n))

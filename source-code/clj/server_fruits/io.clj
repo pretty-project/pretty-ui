@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.29
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.3.5
+; Version: v0.6.8
+; Compatibility: x4.5.0
 
 
 
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def FILE-DOES-NOT-EXIST-ERROR "File does not exist: ")
+(def FILE-DOES-NOT-EXIST-ERROR "File does not exist:")
 
 
 
@@ -38,18 +38,18 @@
 (def file clojure.java.io/file)
 
 ; x.mid-utils.io
+(def MIME-TYPES              io/MIME-TYPES)
+(def EXTENSIONS              io/EXTENSIONS)
+(def IMAGE-EXTENSIONS        io/IMAGE-EXTENSIONS)
 (def B->KB                   io/B->KB)
 (def B->MB                   io/B->MB)
 (def KB->B                   io/KB->B)
 (def KB->MB                  io/KB->MB)
 (def MB->B                   io/MB->B)
 (def MB->KB                  io/MB->KB)
-(def mime-types              io/mime-types)
-(def extensions              io/extensions)
 (def mime-type->extension    io/mime-type->extension)
 (def extension->mime-type    io/extension->mime-type)
 (def unknown-mime-type?      io/unknown-mime-type?)
-(def image-extensions        io/image-extensions)
 (def extension->image?       io/extension->image?)
 (def mime-type->image?       io/mime-type->image?)
 (def filepath->filename      io/filepath->filename)
@@ -78,16 +78,17 @@
   ; @return (boolean)
   [filepath]
   (let [file (file filepath)]
-       (boolean (and (.exists file)
-                     (not (.isDirectory file))))))
+       (and (-> file .exists)
+            (-> file .isDirectory not))))
 
 (defn file-not-exists?
   ; @param (string) filepath
   ;
   ; @return (boolean)
   [filepath]
-  (let [file-exist? (file-exists? filepath)]
-       (not file-exist?)))
+  (let [file (file filepath)]
+       (or (-> file .extists not)
+           (-> file .isDirectory))))
 
 (defn get-filesize
   ; @param (string) filepath
@@ -96,7 +97,7 @@
   ;  The length of the file in bytes
   [filepath]
   (if (file-exists? filepath)
-      (.length (file filepath))
+      (-> filepath file .length)
       (println FILE-DOES-NOT-EXIST-ERROR filepath)))
 
 (defn max-filesize-reached?
@@ -200,7 +201,7 @@
   ;
   ; @return (boolean)
   [directory-path]
-  (boolean (.isDirectory (file directory-path))))
+  (-> directory-path file .isDirectory))
 
 (defn directory-exists?
   ; @param (string) directory-path
@@ -208,15 +209,15 @@
   ; @return (boolean)
   [directory-path]
   (let [directory (file directory-path)]
-       (boolean (and (.exists directory)
-                     (.isDirectory directory)))))
+       (and (.exists      directory)
+            (.isDirectory directory))))
 
 (defn create-directory!
   ; @param (string) directory-path
   ;
   ; @return (?)
   [directory-path]
-  (try (.mkdir (java.io.File. directory-path))
+  (try (-> directory-path java.io.File. .mkdir)
        (catch Exception e (str "Error while creating directory: "))))
 
 (defn file-list
@@ -235,8 +236,8 @@
   [directory-path]
   (let [directory (file       directory-path)
         file-seq  (.listFiles directory)]
-       (mapv str (filter #(and (.isFile        %)
-                               (not (.isHidden %)))
+       (mapv str (filter #(and (-> % .isFile)
+                               (-> % .isHidden not))
                           (param file-seq)))))
 
 (defn all-file-list
@@ -255,8 +256,8 @@
   [directory-path]
   (let [directory (file     directory-path)
         file-seq  (file-seq directory)]
-       (mapv str (filter #(and (.isFile        %)
-                               (not (.isHidden %)))
+       (mapv str (filter #(and (-> % .isFile)
+                               (-> % .isHidden not))
                           (param file-seq)))))
 
 (defn subdirectory-list
@@ -275,8 +276,8 @@
   [directory-path]
   (let [directory (file       directory-path)
         file-seq  (.listFiles directory)]
-       (mapv str (filter #(and (.isDirectory   %)
-                               (not (.isHidden %)))
+       (mapv str (filter #(and (-> % .isDirectory)
+                               (-> % .isHidden not))
                           (param file-seq)))))
 
 (defn all-subdirectory-list
@@ -295,8 +296,8 @@
   [directory-path]
   (let [directory (file     directory-path)
         file-seq  (file-seq directory)]
-       (mapv str (filter #(and (.isDirectory   %)
-                               (not (.isHidden %)))
+       (mapv str (filter #(and (-> % .isDirectory)
+                               (-> % .isHidden not))
                           (param file-seq)))))
 
 (defn item-list
@@ -313,7 +314,7 @@
   ;
   ; @return (strings in vector)
   [directory-path]
-  (vector/remove-item (mapv str (.listFiles (file directory-path)))
+  (vector/remove-item (mapv str (-> directory-path file .listFiles))
                       (param directory-path)))
 
 (defn all-item-list
@@ -330,7 +331,7 @@
   ;
   ; @return (strings in vector)
   [directory-path]
-  (vector/remove-item (mapv str (file-seq (file directory-path)))
+  (vector/remove-item (mapv str (-> directory-path file file-seq))
                       (param directory-path)))
 
 (defn empty-directory?
@@ -338,7 +339,7 @@
   ;
   ; @return (boolean)
   [directory-path]
-  (empty? (item-list directory-path)))
+  (-> directory-path item-list empty?))
 
 (defn delete-empty-directory!
   ; @param (string) directory-path
@@ -392,8 +393,8 @@
   ; @return (map)
   [filepath]
   (let [file-content (read-file filepath)]
-       (if (some? (string/trim file-content))
-           (reader/string->mixed file-content))))
+       (if (-> file-content string/trim some?)
+           (-> file-content reader/string->mixed))))
 
 (defn swap-edn-file!
   ; @param (string) filepath
@@ -408,6 +409,7 @@
   ;
   ; @return (nil)
   [filepath f & params]
-  (let [edn    (read-edn-file filepath)
-        output (apply f (vector/cons-item params edn))]
+  (let [edn    (read-edn-file    filepath)
+        params (vector/cons-item params edn)
+        output (apply          f params)]
        (write-edn-file! filepath output)))

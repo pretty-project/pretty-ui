@@ -43,18 +43,22 @@
 (defn lister-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) lister-props
   ;
   ; @return (map)
   ;  {:download-limit (integer)
   ;   :handle-archived-items? (boolean)
   ;   :handle-favorite-items? (boolean)
+  ;   :label (metamorphic-content)
   ;   :order-by (keyword)
   ;   :order-by-options (keywords in vector)}
-  [lister-props]
+  [extension-id _ lister-props]
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
           :handle-archived-items? true
           :handle-favorite-items? true
+          :label            extension-id
           :order-by         DEFAULT-ORDER-BY
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
           :search-keys      DEFAULT-SEARCH-KEYS}
@@ -88,6 +92,8 @@
   ;    Default: true
   ;   :handle-favorite-items? (boolean)(opt)
   ;    Default: true
+  ;   :label (metamorphic-content)(opt)
+  ;    Default: extension-id
   ;   :order-by (keyword)(opt)
   ;    Default: DEFAULT-ORDER-BY
   ;   :order-by-options (keywords in vector)(opt)
@@ -104,5 +110,5 @@
   ; @usage
   ;  [:item-lister/initialize! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [cofx [_ extension-id item-namespace lister-props]]
-      (let [lister-props (lister-props-prototype lister-props)]
+      (let [lister-props (lister-props-prototype extension-id item-namespace lister-props)]
            (r add-route! cofx extension-id item-namespace lister-props))))

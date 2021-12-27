@@ -49,7 +49,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [current-path (get-in db (db/path ::settings :current-path))]
-       (mixed/mixed->vector current-path)))
+       (mixed/to-vector current-path)))
 
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -282,7 +282,7 @@
 (defn- map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-item show-original?] :as body-props}]
-  (let [map-keys (vector/abc (map/get-keys current-item))]
+  (let [map-keys (vector/abc-items (map/get-keys current-item))]
        [:div.x-database-browser--map-item
          [header          body-id body-props "map"]
          [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button

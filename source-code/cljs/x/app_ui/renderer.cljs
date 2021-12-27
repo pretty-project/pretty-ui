@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v3.5.6
-; Compatibility: x4.4.9
+; Version: v3.6.8
+; Compatibility: x4.5.0
 
 
 
@@ -14,9 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.renderer
-    (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.loop      :refer [reduce+wormhole]]
-              [mid-fruits.map       :as map]
+    (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.time      :as time]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
@@ -163,7 +161,7 @@
   ;
   ; @return (map)
   [renderer-props]
-  (map/inherit renderer-props [:alternate-id :destructor :initializer :required? :partition-id
+  (select-keys renderer-props [:alternate-id :destructor :initializer :required? :partition-id
                                :rerender-same? :queue-behavior]))
 
 (defn renderer-props->component-props
@@ -173,7 +171,7 @@
   ;
   ; @return (map)
   [renderer-props]
-  (map/inherit renderer-props [:attributes :element]))
+  (select-keys renderer-props [:attributes :element]))
 
 
 
@@ -513,7 +511,7 @@
   [db [_ renderer-id element-id]]
   (if (r hide-element-animated? db renderer-id element-id)
       (+ HIDE-ANIMATION-TIMEOUT RENDER-DELAY-OFFSET)
-      (param RENDER-DELAY-OFFSET)))
+      (return RENDER-DELAY-OFFSET)))
 
 (defn- get-pushing-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -526,7 +524,7 @@
   (let [lower-visible-element-id (r get-lower-visible-element-id db renderer-id)]
        (if (r hide-element-animated? db renderer-id lower-visible-element-id)
            (+ HIDE-ANIMATION-TIMEOUT RENDER-DELAY-OFFSET)
-           (param RENDER-DELAY-OFFSET))))
+           (return RENDER-DELAY-OFFSET))))
 
 (defn- get-queue-rendering-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -538,7 +536,7 @@
   [db [_ renderer-id element-id]]
   (if (r hide-element-animated? db renderer-id element-id)
       (+ HIDE-ANIMATION-TIMEOUT RENDER-DELAY-OFFSET)
-      (param RENDER-DELAY-OFFSET)))
+      (return RENDER-DELAY-OFFSET)))
 
 (defn- get-destroying-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -550,7 +548,7 @@
   [db [_ renderer-id element-id]]
   (if (r hide-element-animated? db renderer-id element-id)
       (+ HIDE-ANIMATION-TIMEOUT DESTROY-DELAY-OFFSET)
-      (param DESTROY-DELAY-OFFSET)))
+      (return DESTROY-DELAY-OFFSET)))
 
 (defn- render-element-now?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -702,14 +700,20 @@
   ;    :dispatch (metamorphic-event)}]
   [db [_ renderer-id]]
   (let [visible-element-order (r get-visible-element-order db renderer-id)]
-       (reduce+wormhole (fn [event-list element-id delay]
-                            (let [event {:ms delay :dispatch [:ui/destroy-element! renderer-id element-id]}
-                                  destroying-delay (r get-destroying-delay db renderer-id element-id)]
-                                 [(vector/conj-item event-list event)
-                                  (+ delay destroying-delay)]))
-                        (param [])
-                        (param visible-element-order)
-                        (param 0))))
+       (letfn [(f [event-list dex element-id]
+                  ; Az időzített esemény-lista aktuális elemének eltűntetési eseményének időértéke,
+                  ; az utolsó (előző) elem időértéke ({:ms ...}), összeadva az előző elem eltűnéséhez
+                  ; szükséges idővel
+                  (if (= dex 0)
+                      ; The first destroying event in the list ...
+                      [{:dispatch [:ui/destroy-element! renderer-id element-id] :ms 0}]
+                      ; The other destroying events in the list ...
+                      (let [prev-element-id  (get-in event-list [(dec dex) :dispatch 2])
+                            prev-event-delay (get-in event-list [(dec dex) :ms])
+                            destroying-delay (r get-destroying-delay db renderer-id prev-element-id)]
+                           (conj event-list {:dispatch [:ui/destroy-element! renderer-id element-id]
+                                             :ms       (+ prev-event-delay destroying-delay)}))))]
+              (reduce-kv f [] visible-element-order))))
 
 (defn get-visible-elements-destroying-duration
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -719,11 +723,10 @@
   ; @return (ms)
   [db [_ renderer-id]]
   (let [visible-element-order (r get-visible-element-order db renderer-id)]
-       (reduce (fn [duration element-id]
-                   (let [destroying-delay (r get-destroying-delay db renderer-id element-id)]
-                        (+ duration destroying-delay)))
-               (param 0)
-               (param visible-element-order))))
+       (letfn [(f [duration element-id]
+                  (let [destroying-delay (r get-destroying-delay db renderer-id element-id)]
+                       (+ duration destroying-delay)))]
+              (reduce f 0 visible-element-order))))
 
 (defn get-render-log
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -769,8 +772,7 @@
   ; @return (map)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :reserved?)
-                    (param true))))
+       (assoc-in db (db/meta-item-path partition-id :reserved?) true)))
 
 (a/reg-event-db :ui/reserve-renderer! reserve-renderer!)
 
@@ -782,8 +784,7 @@
   ; @return (map)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :reserved?)
-                    (param false))))
+       (assoc-in db (db/meta-item-path partition-id :reserved?) false)))
 
 (defn- store-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -823,8 +824,7 @@
   [db [_ renderer-id element-id element-props]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (as-> db % (r update-render-log! % renderer-id element-id :updated-at)
-                  (r db/set-item!       % (db/path partition-id element-id)
-                                          (param   element-props)))))
+                  (r db/set-item!       % (db/path partition-id element-id) element-props))))
 
 (defn set-element-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -837,8 +837,7 @@
   ; @return (map)
   [db [_ renderer-id element-id prop-id prop-value]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/path partition-id element-id prop-id)
-                    (param prop-value))))
+       (assoc-in db (db/path partition-id element-id prop-id) prop-value)))
 
 (a/reg-event-db :ui/set-element-prop! set-element-prop!)
 
@@ -893,8 +892,7 @@
   ; @return (map)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :rendering-queue)
-                    (param []))))
+       (assoc-in db (db/meta-item-path partition-id :rendering-queue) [])))
 
 (a/reg-event-db :ui/empty-rendering-queue! empty-rendering-queue!)
 
@@ -1213,12 +1211,12 @@
   ; @return (hiccup)
   [renderer-id {:keys [element] :as renderer-props} renderer-state]
   (let [elements (db/partition->data-items renderer-state)]
-       (vec (reduce (fn [wrapper element-id]
-                        (let [element-props (get elements element-id)]
-                             (conj wrapper ^{:key element-id}
-                                            [stated-element element element-id element-props])))
-                    (wrapper renderer-id renderer-props renderer-state)
-                    (db/partition-state->data-order renderer-state)))))
+       (reduce (fn [wrapper element-id]
+                   (let [element-props (get elements element-id)]
+                        (conj wrapper ^{:key element-id}
+                                       [stated-element element element-id element-props])))
+               (wrapper renderer-id renderer-props renderer-state)
+               (db/partition-state->data-order renderer-state))))
 
 (defn renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!

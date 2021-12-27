@@ -67,7 +67,7 @@
   ;
   ; @return (list)
   []
-  (vals io/extensions))
+  (vals io/EXTENSIONS))
 
 (defn filename->media-storage-uri
   ; @param (string) filename

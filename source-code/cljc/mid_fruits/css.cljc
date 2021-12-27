@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.18
 ; Description:
-; Version: v0.2.8
+; Version: v0.4.8
 
 
 
@@ -13,10 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.css
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.loop   :refer [reduce-kv+last?]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.vector :as vector]))
+    (:require [mid-fruits.string :as string]))
 
 
 
@@ -33,10 +30,11 @@
   ;
   ; @return (keywords in vector)
   [& xyz]
-  (vec (reduce #(cond (vector?  %2) (concat %1 %2)
-                      (keyword? %2) (conj   %1 %2)
-                      :else         (return %1))
-                [] xyz)))
+  (letfn [(join-class-f [o x]
+                        (cond (vector?  x) (concat o x)
+                              (keyword? x) (conj   o x)
+                              :else o))]
+         (vec (reduce join-class-f [] xyz))))
 
 (defn calc
   ; @param (string) n
@@ -278,7 +276,7 @@
   ;
   ; @return (string)
   [n]
-  (horizontal-padding n))
+  (str n " 0"))
 
 (defn vertical-margin
   ; @param (string) n
@@ -290,7 +288,7 @@
   ;
   ; @return (string)
   [n]
-  (vertical-padding n))
+  (str "0 " n))
 
 
 
@@ -303,13 +301,10 @@
   ; @example
   ;  (css/parse {:opacity 1 :width "100%"})
   ;  =>
-  ;  "opacity: 1; width: 100%"
+  ;  "opacity: 1; width: 100%;"
   ;
   ; @return (string)
   [n]
-  (if (map/nonempty? n)
-      (reduce-kv+last? (fn [result k v last?]
-                           (str result (name k) ": " (str v)
-                               (if-not last? "; ")))
-                       (param nil)
-                       (param n))))
+  (letfn [(parse-f [o k v]
+                   (str o (name k) ": " (if (keyword? v) (name v) v) "; "))]
+         (string/trim (reduce-kv parse-f "" n))))

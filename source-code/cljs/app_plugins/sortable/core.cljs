@@ -21,7 +21,7 @@
               [mid-fruits.candy     :as candy :refer [param return]]
               [mid-fruits.json      :as json]
               [mid-fruits.loop      :refer [reduce-indexed]]
-              [mid-fruits.map       :as map :refer [dissoc-in]]
+              [mid-fruits.map       :refer [dissoc-in]]
               [mid-fruits.mixed     :as mixed]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
@@ -310,7 +310,7 @@
 
                ; WARNING! DEPRECATED!
 
-              (map/inherit attributes [:tabIndex])
+              (select-keys attributes [:tabIndex])
               (param       listeners))))
 
 (defn- sortable-element-data->sortable-element-attributes
@@ -346,7 +346,7 @@
                        :z-index    (if active-item? 999)}
 
                :data-drag-status   (if active-item? "active" "inactive")}
-              (map/inherit attributes [:aria-describedby :aria-pressed :aria-roledescription :role]))))
+              (select-keys attributes [:aria-describedby :aria-pressed :aria-roledescription :role]))))
 
 (defn- view-props->render-sortable-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -370,7 +370,7 @@
   ;
   ; @return (strings in vector)
   [sortable-id sortable-items]
-  (vec (reduce-indexed (fn [initial-item-order sortable-item sortable-item-dex]
+  (vec (reduce-indexed (fn [initial-item-order sortable-item-dex sortable-item]
                            (let [sortable-item-id (sortable-item-dex->sortable-item-id sortable-id sortable-item-dex)]
                                 (conj initial-item-order sortable-item-id)))
                        [] sortable-items)))
@@ -431,7 +431,7 @@
   [db [_ sortable-id]]
   (if-let [value-path (get-in db (db/path ::sortables sortable-id :value-path))]
           (let [sortable-items (get-in db value-path)]
-               (mixed/mixed->vector sortable-items))
+               (mixed/to-vector sortable-items))
           (return [])))
 
 (defn get-sortable-item-count
@@ -756,7 +756,7 @@
   ;
   ; @return (hiccup)
   [sortable-id {:keys [sortable-item-order] :as view-props}]
-  (vec (reduce-indexed (fn [sortable-elements sortable-item-id render-dex]
+  (vec (reduce-indexed (fn [sortable-elements render-dex sortable-item-id]
                            ; BUG#9084
                            ; Mozilla Firefox 89.0.2
                            ; macOS Catalina 10.15.7

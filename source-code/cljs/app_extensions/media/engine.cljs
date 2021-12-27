@@ -240,12 +240,12 @@
   ;   :order-by (keyword)}
   ;
   ; @return (keywords in vector)
-  [{:keys [filtered-subdirectories order-by]}]
-  (case order-by
-        :by-date (map/get-ordered-keys-by filtered-subdirectories string/abc? :directory/modified-at)
-        :by-name (map/get-ordered-keys-by filtered-subdirectories string/abc? :directory/alias)
-        :by-size (map/get-ordered-keys-by filtered-subdirectories <           :directory/content-size)
-                 (return                  filtered-subdirectories)))
+  [{:keys [filtered-subdirectories order-by]}])
+  ;(case order-by
+        ;:by-date (map/get-ordered-keys-by filtered-subdirectories string/abc? :directory/modified-at)
+  ;      :by-name (map/get-ordered-keys-by filtered-subdirectories string/abc? :directory/alias)
+  ;      :by-size (map/get-ordered-keys-by filtered-subdirectories <           :directory/content-size)
+  ;               (return                  filtered-subdirectories)]}])
 
 (defn- view-props->ordered-files
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -255,12 +255,12 @@
   ;   :order-by (keyword)}
   ;
   ; @return (keywords in vector)
-  [{:keys [filtered-files order-by]}]
-  (case order-by
-        :by-date (map/get-ordered-keys-by filtered-files string/abc? :file/modified-at)
-        :by-name (map/get-ordered-keys-by filtered-files string/abc? :file/alias)
-        :by-size (map/get-ordered-keys-by filtered-files <           :file/filesize)
-                 (return                  filtered-files)))
+  [{:keys [filtered-files order-by]}])
+  ;(case order-by
+  ;      :by-date (map/get-ordered-keys-by filtered-files string/abc? :file/modified-at)
+  ;      :by-name (map/get-ordered-keys-by filtered-files string/abc? :file/alias)
+  ;      :by-size (map/get-ordered-keys-by filtered-files <           :file/filesize)
+  ;               (return                  filtered-files)]}])
 
 (defn- directory-data->modified-directory-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

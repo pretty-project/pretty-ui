@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.2.6
+; Version: v0.5.2
+; Compatibility: x4.5.0
 
 
 
@@ -39,15 +39,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-ui.graphics
-(def app-logo            graphics/app-logo)
-(def app-title           graphics/app-title)
-(def loading-animation-a graphics/loading-animation-a)
-(def loading-animation-b graphics/loading-animation-b)
-(def loading-animation-c graphics/loading-animation-c)
-(def loading-animation-d graphics/loading-animation-d)
-(def success-animation-a graphics/success-animation-a)
-(def failure-animation-a graphics/failure-animation-a)
-
+(def app-logo          graphics/app-logo)
+(def app-title         graphics/app-title)
+(def loading-animation graphics/loading-animation)
 ; x.app-ui.header
 (def set-header-title! header/set-header-title!)
 

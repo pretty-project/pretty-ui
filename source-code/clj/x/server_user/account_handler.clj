@@ -92,7 +92,7 @@
   ;
   ; @return (map)
   [user-account]
-  (map/inherit user-account USER-PUBLIC-ACCOUNT-PROPS))
+  (select-keys user-account USER-PUBLIC-ACCOUNT-PROPS))
 
 (defn request->user-account
   ; @param (map) request

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.10.09
 ; Description:
-; Version: v0.4.8
+; Version: v0.8.2
 
 
 
@@ -13,9 +13,24 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.form
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.mixed  :as mixed]
+    (:require [mid-fruits.regex  :refer [re-match?]]
               [mid-fruits.string :as string]))
+
+
+
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+;  Minimum 8 characters, maximum 32 characters, at least one uppercase letter,
+;  one lowercase letter and one number
+(def PASSWORD-PATTERN #"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,32}$")
+
+; @constant (string)
+(def EMAIL-PATTERN #"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+
+; @constant (string)
+(def PHONE-NUMBER-PATTERN #"\+\d{10,20}")
 
 
 
@@ -28,20 +43,13 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/string->valid-string " abCd12 ")
+  ;  (form/valid-string " abCd12 ")
+  ;  =>
+  ;  "abCd12"
   ;
   ; @return (string)
   [n]
-  (string/trim (str n)))
-
-(defn valid-phone-number
-  ; @param (string) n
-  ;
-  ; @return (string)
-  [n]
-  (-> n (string/filter-characters ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"])
-        (string/starts-with!      "+")
-        (string/not-ends-with!    "+")))
+  (string/trim n))
 
 
 
@@ -59,9 +67,6 @@
   (string/length? n 4))
 
 (defn password-valid?
-  ; Password must contain at least 6 characters, both uppercase
-  ; and lowercase letters, and a number!
-  ;
   ; @param (string) n
   ;
   ; @usage
@@ -69,9 +74,7 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (string/min-length?                n 6)
-                (string/contains-uppercase-letter? n)
-                (mixed/mixed->contains-number?     n))))
+  (re-match? n PASSWORD-PATTERN))
 
 (defn email-address-valid?
   ; @param (string) n
@@ -81,10 +84,7 @@
   ;
   ; @return (boolean)
   [n]
-  (let [pattern #"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"]
-       ; Ha n valid email cím, akkor a re-matches függvény visszatérési értéke n
-       (boolean (and (string/nonempty? n)
-                     (re-matches       pattern n)))))
+  (re-match? n EMAIL-PATTERN))
 
 (defn phone-number-valid?
   ; @param (string) n
@@ -94,12 +94,4 @@
   ;
   ; @return (boolean)
   [n]
-  ; Ha n valid telefonszám, akkor a re-matches függvény visszatérési értéke n
-  (boolean (and (string/nonempty? n)
-                (or (re-matches #"\+\d{9}"  n)
-                    (re-matches #"\+\d{10}" n)
-                    (re-matches #"\+\d{11}" n)
-                    (re-matches #"\+\d{12}" n)
-                    (re-matches #"\+\d{13}" n)
-                    (re-matches #"\+\d{14}" n)
-                    (re-matches #"\+\d{15}" n)))))
+  (re-match? n PHONE-NUMBER-PATTERN))

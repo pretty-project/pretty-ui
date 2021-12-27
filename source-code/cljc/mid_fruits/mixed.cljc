@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.04
 ; Description:
-; Version: v0.6.8
+; Version: v0.8.0
 
 
 
@@ -14,29 +14,21 @@
 
 (ns mid-fruits.mixed
     (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.loop   :refer [reduce-while]]
               [mid-fruits.map    :as map]
+              [mid-fruits.regex  :refer [re-match?]]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]))
 
 
 
-;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
-(def DIGITS ["0" "1" "2" "3" "4" "5" "6" "7" "8" "9"])
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn mixed->string
+(defn to-string
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/mixed->string [{:a "a"}])
+  ;  (mixed/to-string [{:a "a"}])
   ;  =>
   ;  "[{:a a}]"
   ;
@@ -44,11 +36,11 @@
   [n]
   (str n))
 
-(defn mixed->data-url
+(defn to-data-url
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/mixed->data-url "My text file content")
+  ;  (mixed/to-data-url "My text file content")
   ;  =>
   ;  "data:text/plain;charset=utf-8,My text file content"
   ;
@@ -56,116 +48,109 @@
   [n]
   (str "data:text/plain;charset=utf-8," n))
 
-(defn mixed->vector
+(defn to-vector
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/mixed->vector [:a])
+  ;  (mixed/to-vector [:a])
   ;  =>
   ;  [:a]
   ;
   ; @example
-  ;  (mixed/mixed->vector nil)
+  ;  (mixed/to-vector nil)
   ;  =>
   ;  []
   ;
   ; @example
-  ;  (mixed/mixed->vector {:a "a" :b "b"})
+  ;  (mixed/to-vector {:a "a" :b "b"})
   ;  =>
   ;  ["a" "b"]
   ;
   ; @example
-  ;  (mixed/mixed->vector :x)
+  ;  (mixed/to-vector :x)
   ;  =>
   ;  [:x]
   ;
   ; @return (vector)
   [n]
-  (cond (vector? n) (return          n)
-        (nil? n)    (return          [])
-        (map? n)    (map/map->vector n)
-        :else       (return          [n])))
+  (cond (map?    n) (map/to-vector n)
+        (vector? n) (return        n)
+        (nil?    n) (return        [])
+        :else       (return        [n])))
 
-(defn mixed->map
+(defn to-map
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/mixed->map {:a})
+  ;  (mixed/to-map {:a})
   ;  =>
   ;  {:a}
   ;
   ; @example
-  ;  (mixed/mixed->map nil)
+  ;  (mixed/to-map nil)
   ;  =>
   ;  {}
   ;
   ; @example
-  ;  (mixed/mixed->map [:x :y :z])
+  ;  (mixed/to-map [:x :y :z])
   ;  =>
   ;  {0 :x 1 :y 2 :z}
   ;
   ; @example
-  ;  (mixed/mixed->map :x)
+  ;  (mixed/to-map :x)
   ;  =>
   ;  {0 :x}
   ;
   ; @return (map)
   [n]
-  (cond (map?    n) (return             n)
-        (nil?    n) (return             {})
-        (vector? n) (vector/vector->map n)
-        :else       (return             {0 n})))
+  (cond (vector? n) (vector/to-map n)
+        (map?    n) (return        n)
+        (nil?    n) (return        {})
+        :else       (return        {0 n})))
 
-(defn mixed->number?
+(defn str-number?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/mixed->number? "abCd12")
+  ;  (mixed/str-number? "abCd12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/mixed->number? "12")
+  ;  (mixed/str-number? "12")
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  ; BUG#7609
-  ;  A Java és JavaScript nyelvek különbségei miatt szükséges %2 helyett (str %2)
-  ;  vizsgálata.
-  ;  A Java nyelvben az egy elemű string típusa CHAR, nem pedig STRING!
-  (boolean (reduce-while (fn [_ %2] (vector/contains-item? DIGITS (str %2)))
-                         (param nil)
-                         (str   n)
-                         (fn [%1 _] (false? %1)))))
+  (re-match? n #"^[0-9]*$"))
 
-(defn mixed->update-number
+(defn update-str-number
   ; @param (*) n
   ; @param (function) f
   ; @param (*)(opt) x
   ;
   ; @example
-  ;  (mixed/mixed->update-number "12" inc)
+  ;  (mixed/update-str-number "12" inc)
   ;  =>
   ;  "13"
   ;
   ; @example
-  ;  (mixed/mixed->update-number "12" + 3)
+  ;  (mixed/update-str-number "12" + 3)
   ;  =>
   ;  "15"
   ;
   ; @example
-  ;  (mixed/mixed->update-number "abCd12" + 3)
+  ;  (mixed/update-str-number "abCd12" + 3)
   ;  =>
   ;  "abCd12"
   ;
   ; @return (*)
   ([n f]
-   (mixed->update-number n f nil))
+   (update-str-number n f nil))
 
   ([n f x]
-   (if (mixed->number? n)
+   (if (str-number? n)
        (let [integer (string/to-integer n)
              result  (if (some? x)
                          (f integer x)
@@ -173,16 +158,14 @@
             (str result))
        (return n))))
 
-(defn mixed->contains-number?
+(defn str-contains-number?
   ; @param (*) n
   ;
-  ; @usage
-  ;  (mixed/mixed->contains-number? "abCd12")
+  ; @example
+  ;  (mixed/str-contains-number? "abCd12")
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
-  ; BUG#7609
-  (reduce-while (fn [_ %2] (vector/contains-item? DIGITS (str %2)))
-                (param false)
-                (str   n)
-                (fn [%1 _] (true? %1))))
+  (re-match? n #""))

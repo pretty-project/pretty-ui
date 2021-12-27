@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.4.9
+; Version: v0.6.8
+; Compatibility: x4.5.0
 
 
 
@@ -500,12 +500,13 @@
   ; @param (map) lister-props
   ;  {:download-limit (integer)
   ;   :handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)}
-  (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
+  ;   :handle-favorite-items? (boolean)
+  ;   :label (metamorphic-content)}
+  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
       {:db (r load-lister! db extension-id item-namespace lister-props)
        :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
-                    [:ui/set-header-title!  (param             extension-id)]
-                    [:ui/set-window-title!  (param             extension-id)]
+                    [:ui/set-header-title!  (param label)]
+                    [:ui/set-window-title!  (param label)]
                     (engine/render-event extension-id item-namespace)]}))
 
 

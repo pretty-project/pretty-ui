@@ -77,8 +77,7 @@
   ;
   ; @return (boolean)
   [n]
-  (let [data-valid? (data-valid? n)]
-       (not data-valid?)))
+  (-> n data-valid? not))
 
 (defn clean-validated-data
   ; @param (map) n
@@ -180,6 +179,6 @@
   ;
   ; @return (map)
   [n]
-  (cond (map?    n) (reduce-kv #(assoc %1 %2         (clean-validated-data %3)) {} n)
-        (vector? n) (reduce    #(vector/conj-item %1 (clean-validated-data %2)) [] n)
+  (cond (map?    n) (reduce-kv #(assoc %1 %2 (clean-validated-data %3)) {} n)
+        (vector? n) (reduce    #(conj  %1    (clean-validated-data %2)) [] n)
         :else       (return false)))

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.0.8
+; Version: v1.3.8
 
 
 
@@ -14,32 +14,26 @@
 
 (ns mid-fruits.vector
     (:require [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.integer  :as integer]
-              [mid-fruits.keyword  :as keyword]
               [mid-fruits.math     :as math]
-              [mid-fruits.loop     :refer [reduce-while reduce-while-indexed]]
-              [mid-fruits.random   :as random]
-              [mid-fruits.sequence :as sequence]
-              [mid-fruits.string   :as string]))
+              [mid-fruits.loop     :refer [some-indexed]]
+              [mid-fruits.sequence :as sequence]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn vector->map
+(defn to-map
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/vector->map [:x :y :z])
+  ;  (vector/to-map [:x :y :z])
   ;  =>
   ;  {0 :x 1 :y 2 :z}
   ;
   ; @return (map)
   [n]
-  (reduce-kv (fn [%1 %2 %3] (assoc %1 (keyword (str %2)) %3))
-             (param {})
-             (param n)))
+  (reduce-kv #(assoc %1 (keyword (str %2)) %3) {} n))
 
 
 
@@ -55,8 +49,8 @@
   ; @return (boolean)
   ;  Is n a nonempty vector?
   [n]
-  (boolean (and (vector? n)
-                (not (empty? n)))))
+  (and (vector? n)
+       (->      n empty? not)))
 
 (defn dex-out-of-bounds?
   ; @param (vector) n
@@ -64,8 +58,8 @@
   ;
   ; @return (boolean)
   [n dex]
-  (boolean (or (<  dex 0)
-               (>= dex (count n)))))
+  (or (<  dex 0)
+      (>= dex (count n))))
 
 (defn dex-in-bounds?
   ; @param (vector) n
@@ -73,8 +67,8 @@
   ;
   ; @return (boolean)
   [n dex]
-  (let [dex-out-of-bounds? (dex-out-of-bounds? n dex)]
-       (not dex-out-of-bounds?)))
+  (and (>= dex 0)
+       (<  dex (count n))))
 
 (defn item-dex?
   ; @param (*) n
@@ -95,11 +89,7 @@
   ;
   ; @return (boolean)
   [n x]
-  ;(some? (some #(= x %) n)))
-  (reduce-while (fn [_ %2] (= %2 x))
-                (param false)
-                (param n)
-                (fn [%1 _] (true? %1))))
+  (boolean (some #(= x %) n)))
 
 (defn min?
   ; @param (vector) n
@@ -117,9 +107,8 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (and (nonempty? n)
-                (>= (count n)
-                    (param x)))))
+  (and (nonempty? n)
+       (>= (count n) x)))
 
 (defn max?
   ; @param (vector) n
@@ -137,9 +126,8 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (and (nonempty? n)
-                (<= (count n)
-                    (param x)))))
+  (and (nonempty? n)
+       (<= (count n) x)))
 
 (defn longer?
   ; @param (vector) a
@@ -175,8 +163,7 @@
   ;
   ; @return (vector)
   [n]
-  (let [result (reverse n)]
-       (vec result)))
+  (-> n reverse vec))
 
 (defn repeat-item
   ; @param (*) n
@@ -189,8 +176,7 @@
   ;
   ; @return (vector)
   [n x]
-  (let [result (repeat x n)]
-       (vec result)))
+  (vec (repeat x n)))
 
 
 
@@ -208,8 +194,7 @@
   ;
   ; @return (vector)
   [n x]
-  (let [result (cons x n)]
-       (vec result)))
+  (vec (cons x n)))
 
 (defn conj-item
   ; @param (vector) n
@@ -227,8 +212,7 @@
   ;
   ; @return (vector)
   [n & xyz]
-  (let [result (apply conj n xyz)]
-       (vec result)))
+  (vec (apply conj n xyz)))
 
 (defn conj-item-once
   ; Conj item to vector if vector does not contains it.
@@ -324,7 +308,7 @@
   ; @return (integer)
   [n]
   (if (nonempty? n)
-      (dec (count n))))
+      (->        n count dec)))
 
 (defn next-dex
   ; A vektor elemeinek szama alapjan meghatarozza, a dex utan kovetkezo indexet
@@ -345,7 +329,7 @@
   ; @return (integer)
   [n dex]
   (if (nonempty?         n)
-      (sequence/next-dex dex 0 (dec (count n)))
+      (sequence/next-dex dex 0 (-> n count dec))
       (return            0)))
 
 (defn inc-dex
@@ -363,8 +347,8 @@
   ; @return (integer)
   [n dex]
   (if (dex-last? n dex)
-      (return    dex)
-      (inc       dex)))
+      (return      dex)
+      (inc         dex)))
 
 (defn prev-dex
   ; A vektor elemeinek szama alapjan meghatarozza, a dex-et megelozo indexet
@@ -385,7 +369,7 @@
   ; @return (integer)
   [n dex]
   (if (nonempty?         n)
-      (sequence/prev-dex dex 0 (dec (count n)))
+      (sequence/prev-dex dex 0 (-> n count dec))
       (return            0)))
 
 (defn dec-dex
@@ -438,8 +422,8 @@
   ; @return (integer)
   [n dex]
   (let [n-count (count n)
-        x       (/ dex n-count)
-        x       (math/floor x)
+        x       (-> dex (/ n-count)
+                        (math/floor))
         y       (* x n-count)]
        (- dex y)))
 
@@ -493,8 +477,7 @@
   ;
   ; @return (boolean)
   [n x]
-  (= (last n)
-     (param x)))
+  (= (last n) x))
 
 (defn item-first?
   ; @param (vector) n
@@ -507,8 +490,7 @@
   ;
   ; @return (boolean)
   [n x]
-  (= (first n)
-     (param x)))
+  (= (first n) x))
 
 
 
@@ -531,14 +513,17 @@
   ;  [:c :d :e :f]
   ;
   ; @return (vector)
-  [n low & [high]]
-  (let [high (or  high (count n))
-        high (min high (count n))]
-       (if (and (nonempty? n)
-                (<  low high)
-                (>= low 0))
-           (subvec n low high)
-           (return []))))
+  ([n low]
+   (let [high (count n)]
+        (ranged-items n low high)))
+
+  ([n low high]
+   (let [high (min high (count n))]
+        (if (and (nonempty? n)
+                 (<  low high)
+                 (>= low 0))
+            (subvec n low high)
+            (return [])))))
 
 (defn last-items
   ; @param (vector) n
@@ -551,12 +536,9 @@
   ;
   ; @return (vector)
   [n length]
-  (if (<= (count n)
-          (param length))
+  (if (<= (count n) length)
       (return n)
-      (subvec (param n)
-              (- (count n)
-                 (param length)))))
+      (subvec n (-> n count (- length)))))
 
 (defn first-items
   ; @param (vector) n
@@ -569,8 +551,7 @@
   ;
   ; @return (vector)
   [n length]
-  (if (<= (count n)
-          (param length))
+  (if (<= (count n) length)
       (return n)
       (subvec n 0 length)))
 
@@ -601,8 +582,7 @@
   ; @return (vector)
   [n]
   (if (nonempty? n)
-      (let [length (count n)]
-           (subvec n 0 (dec length)))
+      (subvec n 0 (-> n count dec))
       (return [])))
 
 
@@ -621,10 +601,10 @@
   ;
   ; @return (boolean)
   [n x]
-  (boolean (or (and (nonempty? n)
-                    (= x (count n)))
-               (and (= n [])
-                    (= x 0)))))
+  (or (and      (nonempty? n)
+           (= x (count     n)))
+      (and (= n [])
+           (= x 0))))
 
 (defn count!
   ; @param (vector) n
@@ -699,13 +679,11 @@
   ;
   ; @return (vector)
   [n dexes]
-  (vec (first (reduce (fn [[result lap] x]
-                          (let [next-lap (inc lap)]
-                               (if (contains-item? dexes lap)
-                                   [result next-lap]
-                                   [(conj result x) next-lap])))
-                      (param [[] 0])
-                      (param n)))))
+  (letfn [(remove-nth-items-f [o dex x]
+                              (if (contains-item? dexes dex)
+                                  (return o)
+                                  (conj   o x)))]
+         (reduce-kv remove-nth-items-f [] n)))
 
 (defn remove-items
   ; @param (vector) n
@@ -723,12 +701,11 @@
   ;
   ; @return (vector)
   [n xyz]
-  (reduce (fn [%1 %2]
-              (if (contains-item? xyz %2)
-                  (return %1)
-                  (conj   %1 %2)))
-          (param [])
-          (param n)))
+  (letfn [(remove-items-f [o x]
+                          (if (contains-item? xyz x)
+                              (return o)
+                              (conj   o x)))]
+         (reduce remove-items-f [] n)))
 
 (defn difference
   ; @param (vector) a
@@ -754,12 +731,11 @@
   ;
   ; @return (vector)
   [n xyz]
-  (reduce (fn [%1 %2]
-              (if (contains-item? xyz %2)
-                  (conj %1 %2)
-                  (return %1)))
-          (param [])
-          (param n)))
+  (letfn [(keep-items-f [o x]
+                        (if (contains-item? xyz x)
+                            (conj   o x)
+                            (return o)))]
+         (reduce keep-items-f [] n)))
 
 (defn remove-items-kv
   ; @param (maps in vector) n
@@ -773,8 +749,7 @@
   ;
   ; @return (maps in vector)
   [n k v]
-  (vec (remove #(= (k %) v)
-                (param n))))
+  (vec (remove #(= (k %) v) n)))
 
 (defn remove-last-item
   ; @param (vector) n
@@ -784,7 +759,7 @@
   ;
   ; @return (vector)
   [n]
-  (vec (drop-last n)))
+  (-> n drop-last vec))
 
 (defn remove-first-item
   ; @param (vector) n
@@ -812,8 +787,9 @@
   ;
   ; @return (vector)
   [a b]
-  (let [c (remove-items a b)]
-       (vec (concat c b))))
+  (-> a (remove-items b)
+        (concat       b)
+        (vec)))
 
 
 
@@ -844,21 +820,18 @@
   [n from to]
   (if (dex-in-bounds? n from)
       (let [to (math/between! to 0 (count n))]
-                 ; Stay in place
-           (cond (= from to)
-                 (return n)
+           (cond ; Stay in place
+                 (= from to) (return n)
                  ; Move item fwd
-                 (< from to)
-                 (concat-items (ranged-items n 0 from)
-                               (ranged-items n (inc from) (inc to))
-                               (ranged-items n from (inc from))
-                               (ranged-items n (inc to)))
+                 (< from to) (concat-items (ranged-items n 0 from)
+                                           (ranged-items n (inc from) (inc to))
+                                           (ranged-items n from (inc from))
+                                           (ranged-items n (inc to)))
                  ; Move item bwd
-                 (> from to)
-                 (concat-items (ranged-items n 0 to)
-                               (ranged-items n from (inc from))
-                               (ranged-items n to from)
-                               (ranged-items n (inc from)))))
+                 (> from to) (concat-items (ranged-items n 0 to)
+                                           (ranged-items n from (inc from))
+                                           (ranged-items n to from)
+                                           (ranged-items n (inc from)))))
       (return n)))
 
 (defn move-item-to-last
@@ -877,8 +850,7 @@
   ;
   ; @return (vector)
   [n x]
-  (conj (remove-item n x)
-        (param x)))
+  (conj (remove-item n x) x))
 
 (defn move-item-to-first
   ; @param (vector) n
@@ -900,8 +872,8 @@
 
 (defn change-item
   ; @param (vector) n
-  ; @param (*) x
-  ; @param (*) y
+  ; @param (*) a
+  ; @param (*) b
   ;
   ; @example
   ;  (vector/change-item [:a :b :c :d :c] :c :x)
@@ -909,13 +881,12 @@
   ;  [:a :b :x :d :x]
   ;
   ; @return (vector)
-  [n x y]
-  (reduce (fn [%1 %2]
-              (if (= %2 x)
-                  (conj-item %1 y)
-                  (conj-item %1 %2)))
-          (param [])
-          (param n)))
+  [n a b]
+  (letfn [(change-item-f [o x]
+                         (if (= x a)
+                             (conj-item o b)
+                             (conj-item o x)))]
+         (reduce change-item-f [] n)))
 
 (defn change-nth-item
   ; @param (vector) n
@@ -990,12 +961,11 @@
   ;
   ; @return (vector)
   [n]
-  (reduce (fn [%1 %2]
-              (if (contains-item? %1 %2)
-                  (return %1)
-                  (conj-item %1 %2)))
-          (param [])
-          (param n)))
+  (letfn [(remove-duplicates-f [o x]
+                               (if (contains-item? o x)
+                                   (return         o)
+                                   (conj-item      o x)))]
+         (reduce remove-duplicates-f [] n)))
 
 (defn similars
   ; @param (vector) a
@@ -1008,12 +978,11 @@
   ;
   ; @return (vector)
   [a b]
-  (reduce (fn [%1 %2]
-              (if (contains-item? b %2)
-                  (conj-item %1 %2)
-                  (return    %1)))
-          (param [])
-          (param a)))
+  (letfn [(similars-f [o x]
+                      (if (contains-item? b x)
+                          (conj-item      o x)
+                          (return         o)))]
+         (reduce similars-f [] a)))
 
 (defn contains-similars?
   ; @param (vector) a
@@ -1031,7 +1000,9 @@
   ;
   ; @return (boolean)
   [a b]
-  (nonempty? (similars a b)))
+  (-> a (similars b)
+        (empty?)
+        (not)))
 
 
 
@@ -1049,16 +1020,9 @@
   ;
   ; @return (nil or integer)
   [n x]
-  (cond (not (vector? n))
-        (return nil)
-        (not (contains-item? n x))
-        (return nil)
-        :else (reduce-kv (fn [%1 %2 %3]
-                             (if (= x %3)
-                                 (string/to-integer (name %2))
-                                 (return %1)))
-                         (param nil)
-                         (vector->map n))))
+  (when (and (vector?        n)
+             (contains-item? n x))
+        (reduce-kv #(if (= %3 x) %2 %1) nil n)))
 
 (defn item-first-dex
   ; @param (vector) n
@@ -1071,15 +1035,9 @@
   ;
   ; @return (nil or integer)
   [n x]
-  (cond (not (vector? n))          nil
-        (not (contains-item? n x)) nil
-        :else
-        (reduce-kv (fn [%1 %2 %3]
-                       (cond (some? %1) (return %1)
-                             (= x %3)   (string/to-integer (name %2))
-                             :else      (return %1)))
-                   (param nil)
-                   (vector->map n))))
+  (when (and (vector?        n)
+             (contains-item? n x))
+        (some-indexed #(if (= %2 x) %1) n)))
 
 (defn items-before-first-occurence
   ; @param (vector) n
@@ -1171,66 +1129,75 @@
   [n test-f]
   (vec (filter test-f n)))
 
-(defn first-of-filtered
+(defn first-filtered
   ; @param (vector) n
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/first-of-filtered ["a" :b "c" :d "e"] keyword?)
+  ;  (vector/first-filtered ["a" :b "c" :d "e"] keyword?)
   ;  =>
   ;  :b
   ;
-  ;  (vector/first-of-filtered ["a" :b "c" :d "e"] #(string? %1))
+  ;  (vector/first-filtered ["a" :b "c" :d "e"] #(string? %1))
   ;  =>
   ;  "a"
   ;
   ; @return (*)
   [n test-f]
-  (reduce-while (fn [_ %2]
-                    (if (test-f %2)
-                        (return %2)))
-                (param nil)
-                (param n)
-                (fn [%1 _] (some? %1))))
+  (some #(if (test-f %) %) n))
 
-(defn last-of-filtered
+(defn last-filtered
   ; @param (vector) n
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/first-of-filtered ["a" :b "c" :d "e"] keyword?)
+  ;  (vector/first-filtered ["a" :b "c" :d "e"] keyword?)
   ;  =>
   ;  :d
   ;
-  ;  (vector/first-of-filtered ["a" :b "c" :d "e"] #(string? %1))
+  ;  (vector/first-filtered ["a" :b "c" :d "e"] #(string? %1))
   ;  =>
   ;  "e"
   ;
   ; @return (*)
   [n test-f]
-  (first-of-filtered (reverse-items n) test-f))
+  (reduce #(if (test-f %2) %2 %1) nil n))
 
-(defn nth-of-filtered
+(defn nth-filtered
   ; @param (vector) n
   ; @param (function) test-f
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/nth-of-filtered ["a" :b "c" :d "e"] keyword? 2)
+  ;  (vector/nth-filtered ["a" :b "c" :d "e"] keyword? 2)
   ;  =>
   ;  :d
   ;
-  ;  (vector/nth-of-filtered ["a" :b "c" :d "e"] #(string? %1) 2)
+  ;  (vector/nth-filtered ["a" :b "c" :d "e"] #(string? %1) 2)
   ;  =>
   ;  "c"
   ;
   ; @return (*)
   [n test-f dex]
-  (let [filtered-items (filter-items n test-f)]
-       (if (> (count filtered-items))
-           (return dex)
-           (nth (filter-items n test-f)
-                (param dex)))))
+  (letfn [(nth-filtered-f [x match-count f-dex]
+                          (if (-> x test-f not)
+                              ; If x is NOT matches ...
+                              (if (dex-last? n f-dex)
+                                  ; If NO more items in n ...
+                                  (return nil)
+                                  ; If more items in n ...
+                                  (nth-filtered-f (get n (inc f-dex)) match-count (inc f-dex)))
+                              ; If x is matches ...
+                              (if (< match-count dex)
+                                  ; If x is not the nth match ...
+                                  (if (dex-last? n f-dex)
+                                      ; If NO more items in n ...
+                                      (return nil)
+                                      ; If more items in n ...
+                                      (nth-filtered-f (get n (inc f-dex)) (inc match-count) (inc f-dex)))
+                                  ; If x is the nth match ...
+                                  (return x))))]
+         (nth-filtered-f (first n) 0 0)))
 
 (defn filtered-count
   ; @param (vector) n
@@ -1243,7 +1210,7 @@
   ;
   ; @return (integer)
   [n test-f]
-  (count (filter-items n test-f)))
+  (count (filter test-f n)))
 
 (defn filtered-count?
   ; @param (vector) n
@@ -1261,161 +1228,79 @@
 
 
 
-;; -- Alphabetical ordering ---------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- sortable-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) n
-  ;
-  ; @return (vector)
-  [n]
-  (reduce (fn [%1 %2]
-              (cond (keyword? %2) (conj-item %1 %2)
-                    (string?  %2) (conj-item %1 %2)
-                    :else         (return %1)))
-          (param [])
-          (param n)))
-
-(defn- unsortable-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) n
-  ;
-  ; @return (vector)
-  [n]
-  (reduce (fn [%1 %2]
-              (cond (keyword? %2) (return %1)
-                    (string?  %2) (return %1)
-                    :else         (conj-item %1 %2)))
-          (param [])
-          (param n)))
-
-(defn- sortable-items->strings
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) sortable-items
-  ;
-  ; @example
-  ;  (sortable-items->strings [:b "a"])
-  ;  =>
-  ;  ["b" "a"]
-  ;
-  ; @return (vector)
-  [sortable-items]
-  (reduce (fn [%1 %2]
-              (cond (keyword? %2) (conj-item %1 (keyword/to-string %2))
-                    (string?  %2) (conj-item %1 %2)))
-          (param [])
-          (param sortable-items)))
-
-(defn- sortable-items->ordered-strings
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) sortable-items
-  ;
-  ; @example
-  ;  (sortable-items->ordered-strings [:b "a"])
-  ;  =>
-  ;  ["a" "b"]
-  ;
-  ; @return (vector)
-  [sortable-items]
-  (vec (sort (sortable-items->strings sortable-items))))
-
-(defn- sortable-items->indexed-map
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) sortable-items
-  ;
-  ; @return (map)
-  [sortable-items]
-  (let [ordered-strings (sortable-items->ordered-strings sortable-items)]
-       (reduce (fn [%1 %2]
-                   (let [string-item    (cond (keyword? %2) (keyword/to-string %2) :else %2)
-                         ordinal-number (item-first-dex ordered-strings string-item)]
-                        (assoc %1 (integer/to-keyword ordinal-number) %2)))
-               (param {})
-               (param sortable-items))))
-
-(defn- sort-sortable-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) sortable-items
-  ;
-  ; @return (vector)
-  [sortable-items]
-  (let [indexed-map (sortable-items->indexed-map sortable-items)]
-       (reduce (fn [%1 %2]
-                   (conj-item (param %1)
-                              (get indexed-map (keyword (str %2)))))
-               (param [])
-               (range (count sortable-items)))))
-
-(defn abc
+(defn abc-items
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/abc [:a :b :d :c])
+  ;  (vector/abc-items [:b "b" :a "a" nil])
   ;  =>
-  ;  [:a :b :c :d]
+  ;  [nil "a" "b" :a :b]
   ;
   ; @return (vector)
   [n]
-  (let [sortable-items   (sortable-items   n)
-        unsortable-items (unsortable-items n)]
-       (concat-items unsortable-items (sort-sortable-items sortable-items))))
+  (letfn [(sort-item-f [o x] (cond (string?  x) (update o :string-items     conj x)
+                                   (keyword? x) (update o :keyword-items    conj x)
+                                   :else        (update o :unsortable-items conj x)))
+          (sort-items-f [n] (reduce sort-item-f {} n))]
+         (let [{:keys [string-items keyword-items unsortable-items]} (sort-items-f n)]
+              ; (sort) cannot compare string to keyword!
+              (vec (concat unsortable-items (sort string-items)
+                                            (sort keyword-items))))))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn order-items
+(defn sort-items
   ; @param (vector) n
-  ; @param (function) comparator-f
+  ; @param (function)(opt) comparator-f
   ;
   ; @example
-  ;  (vector/order-items ["a" "c" "b"] string/abc?)
+  ;  (vector/sort-items ["a" "c" "b"] string/abc?)
   ;  =>
   ;  ["a" "b" "c"]
   ;
   ; @return (vector)
-  [n comparator-f]
-  (vec (sort comparator-f n)))
+  ([n]
+   (-> n sort vec))
 
-(defn items-ordered?
+  ([n comparator-f]
+   (vec (sort comparator-f n))))
+
+(defn items-sorted?
   ; @param (vector) n
-  ; @param (function) order-f
+  ; @param (function) comparator-f
   ;
   ; @example
-  ;  (vector/items-ordered? ["a" "c" "b"] string/abc?)
+  ;  (vector/items-sorted? ["a" "c" "b"] string/abc?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/items-ordered? ["a" "b" "c"] string/abc?)
+  ;  (vector/items-sorted? ["a" "b" "c"] string/abc?)
   ;  =>
   ;  true
   ;
   ; @return (boolean)
-  [n order-f]
-  (let [sorted-n (order-items n order-f)]
-       (= n sorted-n)))
+  [n comparator-f]
+  (= n (sort-items n comparator-f)))
 
-(defn order-items-by
+(defn sort-items-by
   ; @param (vector) n
   ; @param (function)(opt) comparator-f
   ; @param (function) value-f
   ;
   ; @example
-  ;  (vector/order-items-by [{:a 3} {:a 2} {:a 1}] :a)
+  ;  (vector/sort-items-by [{:a 3} {:a 2} {:a 1}] :a)
   ;  =>
   ;  [{:a 1} {:a 2} {:a 3}]
   ;
   ; @example
-  ;  (vector/order-items-by [[1 2] [2 2] [2 3]] > first)
+  ;  (vector/sort-items-by [[1 2] [2 2] [2 3]] > first)
   ;  =>
   ;  [[2 2] [2 3] [1 2]]
   ;
@@ -1447,10 +1332,7 @@
   ;
   ; @return (boolean)
   [n test-f]
-  (reduce-while (fn [_ %2] (test-f %2))
-                (param false)
-                (param n)
-                (fn [%1 _] (boolean %1))))
+  (boolean (some test-f n)))
 
 (defn all-items-match?
   ; @param (vector) n
@@ -1486,11 +1368,7 @@
   ;
   ; @return (*)
   [n test-f]
-  (reduce-while (fn [_ %2] (if (test-f %2)
-                               (return %2)))
-                (param nil)
-                (param n)
-                (fn [%1 _] (some? %1))))
+  (some test-f n))
 
 (defn get-first-match-item-dex
   ; @param (vector) n
@@ -1508,11 +1386,7 @@
   ;
   ; @return (*)
   [n test-f]
-  (reduce-while-indexed (fn [_ %2 dex] (if (test-f %2)
-                                           (return dex)))
-                        (param nil)
-                        (param n)
-                        (fn [%1 _] (some? %1))))
+  (some-indexed #(if (test-f %2) %1) n))
 
 
 
@@ -1545,18 +1419,42 @@
   ;  true
   ;
   ; @return (boolean)
+  ;  A compared-items-ordered? függvény összehasonlítja a és b vektor azonos indexű elemeit.
+  ;  - Az első alkalommal, amikor két összehasonlított elem nem egyezik, visszatér
+  ;    a (comparator-f x y) függvény kimenetével
+  ;  - Ha a és b vektor elemei megegyeznek a visszatérési érték true
   [a b comparator-f]
-  (let [max-count (min (count a)
-                       (count b))
-        ; Ha a vagy b vektor elemeinek száma nem egyenlő, akkor az elemek
-        ; összehasonlítása az alacsonyabb elemszámig történik.
-        base      (trim a max-count)]
-       (boolean (reduce-while-indexed (fn [%1 %2 dex]
-                                          (let [x (param %2)
-                                                y (nth-item b dex)]
-                                               (if (= x y)
-                                                   (return %1)
-                                                   (comparator-f x y))))
-                                      (param :no-difference-found)
-                                      (param base)
-                                      (fn [%1 _ _] (boolean? %1))))))
+  ; Ha a vektor elemeinek száma és b vektor elemeinek száma nem egyenlő,
+  ; akkor az elemek összehasonlítása az alacsonyabb elemszámig történik!
+  (let [max-count (min (count a) (count b))]
+       (letfn [(compared-items-ordered-f [dex]
+                                         (let [x (get a dex)
+                                               y (get b dex)]
+                                              (if (= x y)
+                                                  ; If the compared items are equal ...
+                                                  (if (= (inc dex) max-count)
+                                                      ; If NO more items to compare (and NO difference found)...
+                                                      (return true)
+                                                      ; If more items to compare ...
+                                                      (compared-items-ordered-f (inc dex)))
+                                                  ; If the compared items are NOT equal ...
+                                                  (comparator-f x y))))]
+              (compared-items-ordered-f 0))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ->items
+  ; @param (map) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (vector/->items [:a :b :c] name)
+  ;  =>
+  ;  ["a" "b" "c"]
+  ;
+  ; @return (vector)
+  [n f]
+  (reduce #(conj %1 (f %2)) [] n))

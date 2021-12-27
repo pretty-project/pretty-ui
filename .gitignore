@@ -9,6 +9,7 @@ media/thumbnails/*
 
 # monoset files
 x.server-config.edn
+resources/public/robots.txt
 
 # system files
 .DS_Store

@@ -205,4 +205,4 @@
   ;
   ; @return (vectors in vector)
   [destructed-routes]
-  (vector/order-items-by destructed-routes route-templates-ordered? first))
+  (vector/sort-items-by destructed-routes route-templates-ordered? first))

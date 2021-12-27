@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.12
 ; Description:
-; Version: v0.3.6
+; Version: v0.4.2
 
 
 
@@ -56,8 +56,11 @@
   ;
   ; @return (*)
   ;  Ha a egyenlő b, akkor c különben d
-  [a b c & [d]]
-  (if (= a b) c d))
+  ([a b c]
+   (when (= a b) c))
+
+  ([a b c d]
+   (if (= a b) c d)))
 
 (defn not=?
   ; @param (*) a
@@ -72,8 +75,11 @@
   ;
   ; @return (*)
   ;  Ha a nem egyenlő b, akkor c különben d
-  [a b c & [d]]
-  (if-not (= a b) c d))
+  ([a b c]
+   (when-not (= a b) c))
+
+  ([a b c d]
+   (if-not (= a b) c d)))
 
 (defn if-or
   ; @param (*) a
@@ -88,8 +94,12 @@
   ;
   ; @return (*)
   ;  Ha a vagy b igaz, akkor c különben d
-  [a b c & [d]]
-  (if (or a b) c d))
+  ([a b c]
+   (when (or a b) c))
+
+  ([a b c d]
+   (if (or a b) c d)))
+
 
 (defn if-and
   ; @param (*) a
@@ -104,5 +114,8 @@
   ;
   ; @return (*)
   ;  Ha a és b igaz, akkor c különben d
-  [a b c & [d]]
-  (if (and a b) c d))
+  ([a b c]
+   (when (and a b) c))
+
+  ([a b c d]
+   (if (and a b) c d)))

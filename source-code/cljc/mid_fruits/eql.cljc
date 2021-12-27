@@ -5,8 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.06.16
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.9
+; Version: v0.6.0
 
 
 
@@ -58,7 +57,7 @@
 ;
 ; @name query-action
 ;  Egy mutation függvény neve és a függvény számára átadott paraméterek térképe
-;  egy ?-ban.
+;  egy listában.
 ;  Sample: (media/create-directory! {:source-directory-id \"root\"})
 ;
 ; @name query-response
@@ -83,7 +82,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn entity?
@@ -96,8 +95,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (vector? n)
-                (= 2 (count n))
+  (boolean (and      (vector? n)
+                (= 2 (count   n))
                 (keyword? (first  n))
                 (string?  (second n)))))
 
@@ -123,38 +122,9 @@
   ;
   ; @return (vector)
   [query & query-parts]
-  (let [query (or query [])]
-       (vector/concat-items query query-parts)))
-
-(defn concat-queries
-  ; @param (nil, vector) base-query
-  ; @param (nil, vector) additional-query
-  ;
-  ; @example
-  ;  (eql/concat-queries nil nil)
-  ;  =>
-  ;  []
-  ;
-  ; @example
-  ;  (eql/concat-queries [] [])
-  ;  =>
-  ;  []
-  ;
-  ; @example
-  ;  (eql/concat-queries [:all-users] [:all-games])
-  ;  =>
-  ;  [:all-users :all-games]
-  ;
-  ; @example
-  ;  (eql/concat-queries [] [:all-games])
-  ;  =>
-  ;  [:all-games]
-  ;
-  ; @return (vector)
-  [base-query additional-query]
-  (let [base-query       (or base-query       [])
-        additional-query (or additional-query [])]
-       (vector/concat-items base-query additional-query)))
+  (cond (vector?  query) (vec (concat query   query-parts))
+        (nil?     query) (vec (concat []      query-parts))
+        :else            (vec (concat [query] query-parts))))
 
 (defn id->placeholder
   ; @param (keyword or string) id
@@ -171,7 +141,8 @@
   ;
   ; @return (keyword)
   [id]
-  (keyword/join ">/" id))
+  (cond (string?  id) (keyword (str ">/"       id))
+        (keyword? id) (keyword (str ">/" (name id)))))
 
 (defn id->entity
   ; @param (string) id
@@ -188,10 +159,8 @@
   ;  [:directory/id "my-directory"]
   ;
   ; @return (vector)
-  [document-id & [namespace]]
-  (if (some? namespace)
-      [(keyword/add-namespace namespace :id) document-id]
-      [(param                           :id) document-id]))
+  ([document-id]           [:id document-id])
+  ([document-id namespace] [(keyword (name namespace) "id") document-id]))
 
 (defn entity->id
   ; @param (vector) entity

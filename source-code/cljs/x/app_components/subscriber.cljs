@@ -65,7 +65,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit extended-props SUBSRIBER-PROPS))
+  (select-keys extended-props SUBSRIBER-PROPS))
 
 
 

@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.engine
-    (:require [mid-fruits.candy        :refer [param]]
+    (:require [mid-fruits.candy        :refer [param return]]
               [mid-fruits.map          :as map]
               [mid-fruits.string       :as string]
               [x.app-core.api          :as a :refer [r]]
@@ -44,9 +44,7 @@
 (defn look-up
   ; @param (keyword) term-id
   ; @param (map)(opt) options
-  ;  {:language-id (keyword)(opt)
-  ;    Default: (r locales/get-selected-language db)
-  ;   :replacements (vector)(opt)
+  ;  {:replacements (vector)(opt)
   ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
@@ -56,22 +54,19 @@
   ;  "Mentés"
   ;
   ; @example
-  ;  (r dictionary/look-up :save! {:language-id :en})
-  ;  =>
-  ;  "Save"
-  ;
-  ; @example
   ;  (r dictionary/look-up :my-name-is {:replacements ["John"]})
   ;  =>
   ;  "Hi, my name is John"
   ;
   ; @return (string)
-  [db [_ term-id {:keys [language-id replacements suffix]}]]
-  (let [language-id       (or language-id (r locales/get-selected-language db))
-        multilingual-term (r get-term db term-id)
+  [db [_ term-id {:keys [replacements suffix]}]]
+  (let [language-id       (r locales/get-selected-language db)
+        multilingual-term (r get-term                      db term-id)
         translated-term   (get multilingual-term language-id)
         suffixed-term     (str translated-term suffix)]
-       (string/use-replacements suffixed-term replacements)))
+       (if (some? replacements)
+           (string/use-replacements suffixed-term replacements)
+           (return                  suffixed-term))))
 
 ; @usage
 ;  [:dictionary/look-up! :my-term]

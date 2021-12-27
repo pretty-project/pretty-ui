@@ -14,12 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.user-handler
-    (:require [mid-fruits.candy           :refer [param return]]
-              [mid-fruits.map             :as map]
-              [mongo-db.api               :as mongo-db]
-              [x.mid-user.account-handler :as account-handler]
-              [x.server-core.api          :as a]
-              [x.server-db.api            :as db]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mongo-db.api      :as mongo-db]
+              [x.server-core.api :as a]
+              [x.server-db.api   :as db]
+              [x.mid-user.account-handler :as account-handler]))
 
 
 
@@ -31,7 +30,7 @@
   ;
   ; @return (namespaced map)
   [user-props]
-  (let [user-account (map/inherit user-props [:email-address :password :pin :roles])]
+  (let [user-account (select-keys user-props [:email-address :password :pin :roles])]
        (db/document->namespaced-document user-account "user-account")))
 
 

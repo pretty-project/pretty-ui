@@ -15,7 +15,6 @@
 
 (ns x.app-components.value
     (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.map       :as map]
               [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]))
 
@@ -52,8 +51,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit (param extended-props)
-               [:suffix :value]))
+  (select-keys extended-props [:suffix :value]))
 
 
 

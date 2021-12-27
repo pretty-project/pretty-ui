@@ -80,26 +80,6 @@
   [request param-id]
   (get-in request [:path-params param-id]))
 
-(defn request->post-params
-  ; @param (map) request
-  ;  {:post-params (map)}
-  ;
-  ; @return (map)
-  [{:keys [post-params]}]
-  ; TODO
-  ; Létezik post-params?
-  (return post-params))
-
-(defn request->post-param
-  ; @param (map) request
-  ; @param (keyword) param-id
-  ;
-  ; @return (*)
-  [request param-id]
-  ; TODO
-  ; Ha ez post-param-ot szed ki, akkor miért a sima paramsból teszi?
-  (get-in request [:params param-id]))
-
 (defn request->params
   ; @param (map) request
   ;  {:params (map)}

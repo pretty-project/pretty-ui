@@ -160,7 +160,7 @@
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [filename (r request-handler/get-request-prop db request-id :filename)
-            data-url (mixed/mixed->data-url server-response-body)]
+            data-url (mixed/to-data-url server-response-body)]
           ;[:tools/save-file! ...]
            [:ui/blow-bubble! {:color :warning :content :service-not-available}])))
 

@@ -1,8 +1,7 @@
 
 (ns mongo-db.pipelines
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.loop    :refer [reduce+first?]]))
+              [mid-fruits.keyword :as keyword]))
 
 
 
@@ -111,6 +110,6 @@
   ;  {"$addFields" (map)}
   [[key keys :as field-pattern]]
   {"$addFields" {(keyword/to-string key)
-                 {"$concat" (vec (reduce+first? #(if %3 (conj   %1      (str "$" (keyword/to-string %2)))
-                                                        (concat %1 [" " (str "$" (keyword/to-string %2))]))
-                                                [] keys))}}})
+                 {"$concat" (vec (reduce #(if-not %1            [    (str "$" (keyword/to-string %2))]
+                                                     (concat %1 [" " (str "$" (keyword/to-string %2))]))
+                                          nil keys))}}})

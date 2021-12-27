@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v0.4.8
+; Version: v0.6.2
 
 
 
@@ -144,8 +144,8 @@
   ;
   ; @return (boolean)
   [n min max]
-  (boolean (and (<= n max)
-                (>= n min))))
+  (and (<= n max)
+       (>= n min)))
 
 (defn between!
   ; @param (float or integer) n
@@ -197,8 +197,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (or (zero?     n)
-               (positive? n))))
+  (or (zero?     n)
+      (positive? n)))
 
 (defn collection-minimum
   ; @param (collection) n
@@ -299,9 +299,7 @@
   ;
   ; @return (*)
   [n limit value-if-bigger & [value-if-smaller]]
-  (if (>= limit n)
-      (return value-if-smaller)
-      (return value-if-bigger)))
+  (if (>= limit n) value-if-smaller value-if-bigger))
 
 (defn calc
   ; A calc fuggveny kiszamolja egy A valtozo erteketol fuggo B valtozo

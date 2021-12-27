@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.01.02
 ; Description:
-; Version: v0.2.6
+; Version: v0.3.6
 
 
 
@@ -23,17 +23,17 @@
 (defn get-uri
   ; @return (string)
   []
-  (.-href (.-location js/window)))
+  (-> js/window .-location .-href))
 
 (defn get-protocol
   ; @return (string)
   []
-  (.-protocol (.-location js/window)))
+  (-> js/window .-location .-protocol))
 
 (defn get-hostname
   ; @return (string)
   []
-  (.-hostname (.-location js/window)))
+  (-> js/window .-location .-hostname))
 
 (defn get-uri-base
   ; @example
@@ -49,19 +49,19 @@
 (defn get-user-agent
   ; @return (string)
   []
-  (.-userAgent (.-navigator js/window)))
+  (-> js/window .-navigator .-userAgent))
 
 (defn get-language
   ; @return (string)
   []
-  (.-language (.-navigator js/window)))
+  (-> js/window .-navigator .-language))
 
 (defn browser-online?
   ; @return (boolean)
   []
-  (boolean (.-onLine (.-navigator js/window))))
+  (-> js/window .-navigator .-onLine boolean))
 
 (defn browser-offline?
   ; @return (boolean)
   []
-  (not (browser-online?)))
+  (-> js/window .-navigator .-onLine not))

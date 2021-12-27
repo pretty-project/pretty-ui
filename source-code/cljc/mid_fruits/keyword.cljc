@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.02.04
 ; Description:
-; Version: v0.6.8
+; Version: v0.8.2
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-;; -- Type converters ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn to-string
@@ -33,11 +33,11 @@
   ; @return (string)
   [n]
  ;(apply str (rest (str n)))
-  (cond (keyword? n) (if-let [namespace (namespace n)]
-                             (str namespace "/" (name n))
-                             (name n))
-        (string?  n)
-        (return   n)))
+  (if (keyword? n)
+      (if-let [namespace (namespace n)]
+              (str namespace "/" (name n))
+              (name n))
+      (return n)))
 
 
 
@@ -59,8 +59,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (keyword? n)
-                (some? (namespace n)))))
+  (and (keyword? n)
+       (some? (namespace n))))
 
 (defn namespaced!
   ; @param (keyword) n
@@ -76,72 +76,15 @@
   ;  :ko4983l3-i8790-j93l3-lk8385u591o2/bar
   ;
   ; @return (keyword)
-  [n]   ; If n is keyword and namespaced ...
-  (cond (and (keyword? n)
-             (some? (namespace n)))
-        (return n)
-        ; If n is keyword and NOT namespaced ...
-        (and (keyword? n))
-        (let [namespace (random/generate-string)]
-             (keyword namespace (name n)))))
-        ; If n is NOT keyword ...
-        ; ... returning w/ nil
-
-(defn split-namespace
-  ; @param (keyword) n
-  ;
-  ; @example
-  ;  (keyword/split-namespace :foo.bar/bar)
-  ;  =>
-  ;  [:foo :bar]
-  ;
-  ; @return (vector)
   [n]
-  (if-not (and (keyword? n)
-               (some? (namespace n)))
-          (return [])
-          (vec (reduce (fn [%1 %2] (conj %1 (keyword %2)))
-                       [] (string/split (namespace n) #".")))))
-
-(defn split-name
-  ; @param (keyword) n
-  ;
-  ; @example
-  ;  (keyword/split-name :foo.nat/bar.baz)
-  ;  =>
-  ;  [:bar :baz]
-  ;
-  ; @return (vector)
-  [n]
-  (if-not (keyword? n)
-          (return   [])
-          (vec (reduce (fn [%1 %2] (conj %1 (keyword %2)))
-                       [] (string/split (name n) #".")))))
-
-(defn split
-  ; @param (keyword) n
-  ;
-  ; @example
-  ;  (keyword/split :foo)
-  ;  =>
-  ;  [:foo]
-  ;
-  ; @example
-  ;  (keyword/split :foo.bar)
-  ;  =>
-  ;  [:foo :bar]
-  ;
-  ; @example
-  ;  (keyword/split :foo.bar/baz)
-  ;  =>
-  ;  [:foo :bar :baz]
-  ;
-  ; @return (vector)
-  [n]
-  (if-not (keyword? n)
-          (return   [])
-          (vec (concat (split-namespace n)
-                       (split-name      n)))))
+  (if (keyword? n)
+      (if (some? (namespace n))
+          ; If n is keyword and namespaced ...
+          (return n)
+          ; If n is keyword and NOT namespaced ...
+          (keyword (random/generate-uuid) (name n)))))
+      ; If n is NOT keyword ...
+      ; ... returning w/ nil
 
 (defn join
   ; @param (keywords and/or strings) abc
@@ -158,13 +101,9 @@
   ;
   ; @return (keyword)
   [& abc]
-  (keyword (reduce (fn [%1 %2]
-                       (cond (keyword? %2) (str %1 (name %2))
-                             (string?  %2) (str %1 %2)
-                             (integer? %2) (str %1 %2)
-                             :else         (return %1)))
-                   (str   nil)
-                   (param abc))))
+  (letfn [(join-f [o x] (if (keyword? x) (str o (name x))
+                                         (str o x)))]
+         (reduce join-f nil abc)))
 
 (defn append
   ; @param (keyword) n
@@ -187,17 +126,22 @@
   ;  :foo/bar--baz
   ;
   ; @return (keyword)
-  [n x & [separator]]
-  (if-let [namespace (namespace n)]
-          (keyword namespace (str (name n)
-                                  (param separator)
-                                  (name x)))
-          (keyword (str (name n)
-                        (param separator)
-                        (name x)))))
+  ([n x]
+   (if-let [namespace (namespace n)]
+           ; If n is namespaced ...
+           (keyword namespace (str (name n) (name x)))
+           ; If n is NOT namespaced ...
+           (keyword (str (name n) (name x)))))
+
+  ([n x separator]
+   (if-let [namespace (namespace n)]
+           ; If n is namespaced ...
+           (keyword namespace (str (name n) separator (name x)))
+           ; If n is NOT namespaced ...
+           (keyword (str (name n) separator (name x))))))
 
 (defn add-namespace
-  ; @param (keyword) x
+  ; @param (keyword) namespace
   ; @param (keyword) n
   ;
   ; @example
@@ -206,12 +150,11 @@
   ;  :foo/bar
   ;
   ; @return (keyword)
-  [x n]
-  (keyword (name x)
-           (name n)))
+  [namespace n]
+  (keyword (name namespace) (name n)))
 
 (defn add-items-namespace
-  ; @param (keyword) x
+  ; @param (keyword) namespace
   ; @param (keywords in vector) abc
   ;
   ; @example
@@ -220,11 +163,10 @@
   ;  [:foo/bar :foo/baz]
   ;
   ; @return (namespaced keywords in vector)
-  [x abc]
-  (vec (reduce (fn [result key]
-                   (conj result (keyword (name x)
-                                         (name key))))
-               [] abc)))
+  [namespace abc]
+  (letfn [(add-items-namespace-f [o x] (conj o (keyword (name namespace)
+                                                        (name x))))]
+         (vec (reduce add-items-namespace-f [] abc))))
 
 (defn get-namespace
   ; @param (keyword) n
@@ -321,7 +263,8 @@
   ;
   ; @return (boolean)
   [n x]
-  (not (starts-with? n x)))
+  (string/not-starts-with? (str n)
+                           (str x)))
 
 (defn ends-with?
   ; @param (keyword) n
@@ -358,4 +301,5 @@
   ;
   ; @return (boolean)
   [n x]
-  (not (ends-with? n x)))
+  (string/not-ends-with? (str n)
+                         (str x)))

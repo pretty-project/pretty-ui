@@ -66,6 +66,21 @@
   (let [derived-item-id (r get-derived-item-id db extension-id)]
        (= item-id derived-item-id)))
 
+(defn get-editor-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  ;  {:label (metamorphic-content)(opt)}
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace editor-props]]
+  (if-let [label (get editor-props :label)]
+          (return label)
+          (let [derived-item-id (r get-derived-item-id db extension-id)]
+               (engine/item-id->editor-label extension-id item-namespace derived-item-id))))
+
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

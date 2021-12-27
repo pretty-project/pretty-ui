@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.08
 ; Description:
-; Version: v0.6.8
+; Version: v0.9.2
 
 
 
@@ -23,15 +23,16 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- read-n
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn read-str
   ; @param (string) n
+  ;
+  ; @usage
+  ;  (reader/read-str "{:a "b"}")
   ;
   ; @return (*)
   [n]
-  #?(:cljs (try (reader/read-string n) (catch :default  e (str "Reader error #510")))
-     :clj  (try (edn/read-string    n) (catch Exception e (str "Reader error #509")))))
+  #?(:cljs (try (reader/read-string n) (catch :default  e (str "read-string error: " n)))
+     :clj  (try (edn/read-string    n) (catch Exception e (str "read-string error: " n)))))
 
 (defn mixed->string
   ; @param (*) n
@@ -66,15 +67,12 @@
   ; @return (nil, keyword, map, string or vector)
   [n]
   (if (string/nonempty? n)
-      (let [x (read-n n)]
-           (if (or (keyword? x)
-                   (map?     x)
-                   (vector?  x))
-               (return x)
-               ; XXX#8709
-               ; A string->mixed ha egy stringet kellene, hogy felismerjen,
-               ; akkor előfordulhat, hogy Error objektummal tér vissza
-               (return n)))
+      (let [x (read-str n)]
+           (cond (keyword? x) x
+                 (map?     x) x
+                 (vector?  x) x
+                 ; Előfordulhat, hogy a read-str függvény egy Error objektummal tér vissza
+                 :else n))
       (return nil)))
 
 (defn string->map
@@ -97,7 +95,8 @@
   ;
   ; @return (map)
   [n]
-  (let [x (string->mixed n)]
-       (cond (map? x) (return x)
-             (nil? n) (param  {})
-             :else    (return {:0 (str n)}))))
+  (if-let [x (string->mixed n)]
+          (cond (map? x) x
+                (nil? n) {}
+                :else    {:0 (str n)})
+          (return {})))

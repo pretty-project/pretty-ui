@@ -14,13 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content
-    (:require [mid-fruits.candy             :refer [param return]]
-              [mid-fruits.map               :as map]
-              [mid-fruits.string            :as string]
-              [mid-fruits.vector            :as vector]
-              [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-core.api               :as a :refer [r]]
-              [x.app-dictionary.api         :as dictionary]))
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-dictionary.api :as dictionary]
+              [x.app-components.transmitter :rename {component transmitter}]))
 
 
 
@@ -85,8 +84,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit (param extended-props)
-               [:base-props :content :content-props :prefix :replacements :subscriber :suffix]))
+  (select-keys extended-props [:base-props :content :content-props :prefix :replacements :subscriber :suffix]))
 
 (defn- context-props->subscribe?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,7 +113,9 @@
   ;
   ; @return (string)
   [_ {:keys [content prefix replacements suffix]}]
-  (string/use-replacements (str prefix content suffix) replacements))
+  (if (some? replacements)
+      (string/use-replacements (str prefix content suffix) replacements)
+      (str prefix content suffix)))
 
 (defn- dictionary-content
   ; WARNING! NON-PUBLIC! DO NOT USE!

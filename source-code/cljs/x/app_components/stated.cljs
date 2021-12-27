@@ -135,7 +135,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit extended-props STATED-PROPS))
+  (select-keys extended-props STATED-PROPS))
 
 (defn extended-props->stated-props?
   ; @param (map) extended-props

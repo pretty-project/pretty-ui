@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.io
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.loop    :refer [reduce-while]]
-              [mid-fruits.map     :as map]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.map    :as map]
+              [mid-fruits.regex  :refer [re-match? re-mismatch?]]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -47,16 +47,72 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def FILENAME-PATTERN #"^[\w\-. ]+$")
+
+; @constant (string)
+(def DIRECTORY-NAME-PATTERN #"^[\w\-. ]+$")
 
 ; @constant (integer)
 (def MAX-FILENAME-LENGTH 32)
 
-; @constant (vector)
-(def FILENAME-INVALID-CHARACTERS
-     ; TODO ...
-     ["@" "?" "/" "#" "&" "\\"])
+; @constant (map)
+(def MIME-TYPES {"aac"  "audio/aac"
+                 "avi"  "video/x-msvideo"
+                 "bin"  "application/octet-stream"
+                 "bmp"  "image/bmp"
+                 "bz"   "application/x-bzip"
+                 "bz2"  "application/x-bzip2"
+                 "css"  "text/css"
+                 "doc"  "application/msword"
+                 "docx" "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                 "gif"  "image/gif"
+                 "htm"  "text/html"
+                 "html" "text/html"
+                 "ico"  "image/vnd.microsoft.icon"
+                 "jar"  "application/java-archive"
+                 "jpg"  "image/jpeg"
+                 "jpeg" "image/jpeg"
+                 "js"   "text/javascript"
+                 "mpeg" "video/mpeg"
+                 "mp3"  "audio/mpeg"
+                 "mp4"  "video/mp4"
+                 "m4a"  "audio/m4a"
+                 "m4v"  "video/mp4"
+                 "odp"  "application/vnd.oasis.opendocument.presentation"
+                 "ods"  "application/vnd.oasis.opendocument.spreadsheet"
+                 "odt"  "application/vnd.oasis.opendocument.text"
+                 "otf"  "font/otf"
+                 "png"  "image/png"
+                 "pdf"  "application/pdf"
+                 "ppt"  "application/vnd.ms-powerpoint"
+                 "rar"  "application/x-rar-compressed"
+                 "rtf"  "application/rtf"
+                 "svg"  "image/svg+xml"
+                 "tar"  "application/x-tar"
+                 "tif"  "image/tiff"
+                 "tiff" "image/tiff"
+                 "ttf"  "font/ttf"
+                 "txt"  "text/plain"
+                 "wav"  "audio/wav"
+                 "weba" "audio/webm"
+                 "webm" "video/webm"
+                 "webp" "image/webp"
+                 "xml"  "text/xml"
+                 "xls"  "application/vnd.ms-excel"
+                 "xlsx" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                 "zip"  "application/zip"
+                 "7z"   "application/x-7z-compressed"})
+
+; @constant (map)
+(def EXTENSIONS (map/swap MIME-TYPES))
+
+; @constant (strings in vector)
+;  A rendszer által ismert képformátumok. A lista tetszés szerint bővíthető.
+(def IMAGE-EXTENSIONS ["jpg" "jpeg" "png"])
 
 
 
@@ -189,58 +245,6 @@
 ;; -- MIME types --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def mime-types
-  {"aac"  "audio/aac"
-   "avi"  "video/x-msvideo"
-   "bin"  "application/octet-stream"
-   "bmp"  "image/bmp"
-   "bz"   "application/x-bzip"
-   "bz2"  "application/x-bzip2"
-   "css"  "text/css"
-   "doc"  "application/msword"
-   "docx" "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-   "gif"  "image/gif"
-   "htm"  "text/html"
-   "html" "text/html"
-   "ico"  "image/vnd.microsoft.icon"
-   "jar"  "application/java-archive"
-   "jpg"  "image/jpeg"
-   "jpeg" "image/jpeg"
-   "js"   "text/javascript"
-   "mpeg" "video/mpeg"
-   "mp3"  "audio/mpeg"
-   "mp4"  "video/mp4"
-   "m4a"  "audio/m4a"
-   "m4v"  "video/mp4"
-   "odp"  "application/vnd.oasis.opendocument.presentation"
-   "ods"  "application/vnd.oasis.opendocument.spreadsheet"
-   "odt"  "application/vnd.oasis.opendocument.text"
-   "otf"  "font/otf"
-   "png"  "image/png"
-   "pdf"  "application/pdf"
-   "ppt"  "application/vnd.ms-powerpoint"
-   "rar"  "application/x-rar-compressed"
-   "rtf"  "application/rtf"
-   "svg"  "image/svg+xml"
-   "tar"  "application/x-tar"
-   "tif"  "image/tiff"
-   "tiff" "image/tiff"
-   "ttf"  "font/ttf"
-   "txt"  "text/plain"
-   "wav"  "audio/wav"
-   "weba" "audio/webm"
-   "webm" "video/webm"
-   "webp" "image/webp"
-   "xml"  "text/xml"
-   "xls"  "application/vnd.ms-excel"
-   "xlsx" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-   "zip"  "application/zip"
-   "7z"   "application/x-7z-compressed"})
-
-; @constant (map)
-(def extensions (map/swap mime-types))
-
 (defn mime-type->extension
   ; @param (string) mime-type
   ;
@@ -256,7 +260,7 @@
   ;
   ; @return (string)
   [mime-type]
-  (get extensions (string/lowercase mime-type)))
+  (get EXTENSIONS (string/lowercase mime-type) "unknown"))
 
 (defn extension->mime-type
   ; @param (extension)
@@ -273,8 +277,7 @@
   ;
   ; @return (string)
   [extension]
-  (get mime-types (string/lowercase extension)
-                  (param "unknown/unknown")))
+  (get MIME-TYPES (string/lowercase extension) "unknown/unknown"))
 
 (defn unknown-mime-type?
   ; @param (string) mime-type
@@ -291,17 +294,12 @@
   ;
   ; @return (boolean)
   [mime-type]
-  (let [extension (mime-type->extension mime-type)]
-       (nil? extension)))
+  (nil? (mime-type->extension mime-type)))
 
 
 
 ;; -- File --------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(def image-extensions
-     ; A rendszer által ismert képformátumok. A lista tetszés szerint bővíthető.
-     ["jpg" "jpeg" "png"])
 
 (defn extension->image?
   ; @param (string) extension
@@ -313,7 +311,7 @@
   ;
   ; @return (boolean)
   [extension]
-  (vector/contains-item? image-extensions extension))
+  (vector/contains-item? IMAGE-EXTENSIONS extension))
 
 (defn mime-type->image?
   ; @param (string) extension
@@ -345,7 +343,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (io/filepath->extension "a/b.png")
+  ;  (io/filepath->extension "a/b.PNG")
   ;  =>
   ;  "png"
   ;
@@ -361,8 +359,7 @@
   ;
   ; @return (string)
   [filepath]
-  (let [filename (filepath->filename          filepath)
-        filename (string/not-starts-with!     filename ".")]
+  (let [filename (-> filepath filepath->filename (string/not-starts-with! "."))]
        (if-let [extension (string/after-last-occurence filename ".")]
                (string/lowercase extension)
                (return nil))))
@@ -417,8 +414,7 @@
   ; @return (string)
   [filename]
   (if-let [extension (filename->extension filename)]
-          (let [trail (str "." extension)]
-               (string/before-last-occurence filename trail))
+          (string/before-last-occurence filename (str "." extension))
           (return filename)))
 
 (defn filepath->basename
@@ -441,8 +437,7 @@
   ;
   ; @return (string)
   [filepath]
-  (let [filename (filepath->filename filepath)]
-       (filename->basename filename)))
+  (-> filepath filepath->filename filename->basename))
 
 (defn filepath->mime-type
   ; @param (string) filepath
@@ -459,8 +454,7 @@
   ;
   ; @return (string)
   [filepath]
-  (let [extension (filepath->extension filepath)]
-       (extension->mime-type extension)))
+  (-> filepath filepath->extension extension->mime-type))
 
 (defn filename->mime-type
   ; @param (string) filename
@@ -477,8 +471,7 @@
   ;
   ; @return (boolean)
   [filepath]
-  (let [extension (filepath->extension filepath)]
-       (extension->image? extension)))
+  (-> filepath filepath->extension extension->image?))
 
 (defn filename->image?
   ; @param (string) filename
@@ -492,43 +485,30 @@
 ;; -- Validators ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- filename-contains-invalid-characters?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) filename
-  ;
-  ; @return (boolean)
-  [filename]
-  (reduce-while (fn [%1 %2] (string/contains-part? filename %2))
-                (param false)
-                (param FILENAME-INVALID-CHARACTERS)
-                (fn [%1 _] (boolean %1))))
-
 (defn filename-valid?
   ; @param (string) filename
   ;
   ; @return (boolean)
   [filename]
-  (boolean (and (string/nonempty? filename)
-                (not (filename-contains-invalid-characters? filename)))))
+  (re-match? filename FILENAME-PATTERN))
 
 (defn filename-invalid?
   ; @param (string) filename
   ;
   ; @return (boolean)
   [filename]
-  (not (filename-valid? filename)))
+  (re-mismatch? filename FILENAME-PATTERN))
 
 (defn directory-name-valid?
   ; @param (string) directory-name
   ;
   ; @return (boolean)
   [directory-name]
-  (filename-valid? directory-name))
+  (re-match? directory-name DIRECTORY-NAME-PATTERN))
 
 (defn directory-name-invalid?
   ; @param (string) directory-name
   ;
   ; @return (boolean)
   [directory-name]
-  (filename-invalid? directory-name))
+  (re-mismatch? directory-name DIRECTORY-NAME-PATTERN))

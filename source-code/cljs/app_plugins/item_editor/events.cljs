@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.8.2
-; Compatibility: x4.4.9
+; Compatibility: x4.5.0
 
 
 
@@ -39,7 +39,7 @@
   (if-let [recovery-mode? (r subs/get-meta-value db extension-id item-namespace :recovery-mode?)]
           ; If recovery-mode is enabled ...
           (-> db (dissoc-in [extension-id :item-editor/data-item])
-                 (update-in [extension-id :item-editor/meta-items] map/inherit [:recovery-mode? :local-changes]))
+                 (update-in [extension-id :item-editor/meta-items] select-keys [:recovery-mode? :local-changes]))
           ; If recovery-mode is NOT enabled ...
           (-> db (dissoc-in [extension-id :item-editor/data-item])
                  (dissoc-in [extension-id :item-editor/meta-items]))))
@@ -381,15 +381,14 @@
   ; @param (map) editor-props
   ;  {:handle-archived-items? (boolean)
   ;   :handle-archived-items? (boolean)
+  ;   :label (metamorphic-content)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)}
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [derived-item-id (r subs/get-derived-item-id db extension-id)
-            header-label    (engine/item-id->form-label    extension-id item-namespace derived-item-id)
-            new-item?       (engine/item-id->new-item?     extension-id item-namespace derived-item-id)]
+      (let [editor-label (r subs/get-editor-label extension-id item-namespace editor-props)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
             :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
-                         [:ui/set-header-title!  (param header-label)]
-                         [:ui/set-window-title!  (param header-label)]
+                         [:ui/set-header-title!  (param editor-label)]
+                         [:ui/set-window-title!  (param editor-label)]
                          [:item-editor/request-item! extension-id item-namespace]
                          (engine/render-event extension-id item-namespace)]})))
 

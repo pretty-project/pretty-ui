@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.19
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.6
+; Version: v0.7.2
+; Compatibility: x4.5.0
 
 
 
@@ -14,14 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body
-    (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [x.mid-ui.api       :as ui]
-              [x.server-core.api  :as a :refer [cache-control-uri]]
-              [x.server-ui.engine :refer [include-js]]
-              [x.server-ui.shield :refer [view] :rename {view app-shield}]
-              [x.server-user.api  :as user]))
+    (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [x.server-core.api    :as a :refer [cache-control-uri]]
+              [x.server-ui.engine   :refer [include-js]]
+              [x.server-ui.graphics :as graphics]
+              [x.server-ui.shield   :refer [view] :rename {view app-shield}]
+              [x.server-user.api    :as user]))
 
 
 
@@ -136,7 +136,7 @@
   ;  {:shield (hiccup)}
   [request body-props]
   (merge (a/subscribed [:core/get-destructed-configs])
-         {:shield (app-shield (ui/loading-animation-a))}
+         {:shield (app-shield (graphics/loading-animation))}
          (param body-props)))
 
 

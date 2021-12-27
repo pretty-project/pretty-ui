@@ -30,9 +30,9 @@
   ; @param (map) browser-props
   ;
   ; @return (map)
-  [browser-props]
+  [extension-id item-namespace browser-props]
   (merge {}
-         (param browser-props)))
+         (item-lister/lister-props-prototype extension-id item-namespace browser-props)))
 
 
 
@@ -72,6 +72,6 @@
   ; @usage
   ;  [:item-browser/initialize! :my-extension :my-type {...}]
   (fn [cofx [_ extension-id item-namespace browser-props]]
-      (let [browser-props (-> browser-props item-lister/lister-props-prototype browser-props-prototype)]
+      (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
            {:dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)
                          (r add-extended-route! cofx extension-id item-namespace browser-props)]})))

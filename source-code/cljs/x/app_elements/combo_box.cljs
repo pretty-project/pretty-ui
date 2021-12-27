@@ -189,7 +189,7 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [rendered-options] :as field-props}]
-  (vec (reduce-indexed (fn [rendered-options option-data option-dex]
+  (vec (reduce-indexed (fn [rendered-options option-dex option-data]
                            (conj rendered-options
                                ;^{:key (random/generate-react-key)}
                                  [combo-box-option field-id field-props option-data option-dex]))

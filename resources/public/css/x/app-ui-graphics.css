@@ -1,18 +1,5 @@
 
 /***** Material icons *****/
-
-.x-loading-animation-d--icon,
-.x-success-animation-a--icon,
-.x-failure-animation-a--icon {
-  font-style: normal;
-  font-family: 'Material Icons';
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased }
-
 /***** Material icons *****/
 
 
@@ -56,173 +43,13 @@
 
 
 
-/***** Loading animation A *****/
+/***** Loading animation *****/
 
-.x-loading-animation-a {
+.x-loading-animation {
   animation-duration: 20s; /* 1s = 5% */
   animation-iteration-count: infinite;
   animation-delay: 3s;
   animation-name: x-glow;
   opacity: 0; }
 
-/***** Loading animation A *****/
-
-
-
-/***** Loading animation B *****/
-
-.x-loading-animation-b {
-  height: 60px;
-  width: 60px }
-
-.x-loading-animation-b .x-mt-logo {
-  height: 60px;
-  left: 0;
-  opacity: .25;
-  position: absolute;
-  top: 0;
-  width: 60px }
-
-.x-loading-animation-b--primary-circle,
-.x-loading-animation-b--secondary-circle,
-.x-loading-animation-b--tertiary-circle {
-  fill: transparent;
-  stroke-width: 2px }
-
-.x-loading-animation-b--primary-circle {
-  opacity: .15;
-  stroke: var( --color-muted );
-  stroke-dasharray: 188 0 }
-
-.x-loading-animation-b--secondary-circle,
-.x-loading-animation-b--tertiary-circle {
-  animation-duration: 1.5s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  stroke: var( --primary );
-  transform-origin: center }
-
-.x-loading-animation-b--secondary-circle {
-  animation-name: kj8702;
-  transform: rotateZ( 90deg ) }
-
-.x-loading-animation-b--tertiary-circle {
-  animation-name: kj8703;
-  transform: rotateY( 180deg ) rotateZ( 90deg ) }
-
-@keyframes kj8702 {
-  0%   {stroke-dasharray: 188 0 }
-  50%  {stroke-dasharray: 0 188 }
-  100% {stroke-dasharray: 0 188 }}
-
-@keyframes kj8703 {
-  0%   {stroke-dasharray: 0 188 }
-  50%  {stroke-dasharray: 0 188 }
-  100% {stroke-dasharray: 188 0 }}
-
-/***** Loading animation B *****/
-
-
-
-/***** Loading animation C *****/
-
-.x-loading-animation-c {
-  height: 120px;
-  width: 120px }
-
-.x-loading-animation-c .x-mt-logo {
-  height: 60px;
-  left: 30px;
-  opacity: .25;
-  position: absolute;
-  top: 30px;
-  width: 60px }
-
-.x-loading-animation-c--primary-circle,
-.x-loading-animation-c--secondary-circle {
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-out;
-  fill: transparent;
-  stroke: var( --color-muted );
-  transform-origin: center }
-
-.x-loading-animation-c--primary-circle {
-  animation-name: ji8034 }
-
-.x-loading-animation-c--secondary-circle {
-  animation-name: ji8035;
-  animation-delay: .3s }
-
-@keyframes ji8034 {
-  0%   {opacity: 1;
-        stroke-width: 0px;
-        transform: scale(1) }
-  26%  {opacity: .5;
-        stroke-width: 0px;
-        transform: scale(1) }
-  66%  {opacity: 0;
-        stroke-width: 15px;
-        transform: scale(1.5) }
-  100% {opacity: 0;
-        stroke-width: 15px;
-        transform: scale(1.5) }}
-
-@keyframes ji8035 {
-  0%   {opacity: 1;
-        stroke-width: 0px;
-        transform: scale(1) }
-  26%  {opacity: .5;
-        stroke-width: 0px;
-        transform: scale(1) }
-  66%  {opacity: 0;
-        stroke-width: 15px;
-        transform: scale(1.5) }
-  100% {opacity: 0;
-        stroke-width: 15px;
-        transform: scale(1.5) }}
-
-/***** Loading animation C *****/
-
-
-
-/***** Loading animation D *****/
-
-.x-loading-animation-d {
-  display: flex;
-  flex-direction: row;
-  height: 48px;
-  justify-content: center;
-  width: 48px }
-
-.x-loading-animation-d--icon {
-  animation-delay: .25s;
-  animation-duration: .75s;
-  animation-iteration-count: infinite;
-  animation-name: x-rotate;
-  animation-timing-function: ease-in-out;
-  -color: var( --color-muted );
-  display: block;
-  font-size: 32px;
-  line-height: 48px;
-  transform-origin: center }
-
-/***** Loading animation D *****/
-
-
-
-/***** Success animation A *****/
-
-.x-success-animation-a--icon {
-  font-size: 32px;
-  line-height: 48px }
-
-/***** Success animation A *****/
-
-/***** Failure animation A *****/
-
-.x-failure-animation-a--icon {
-  font-size: 32px;
-  line-height: 48px }
-
-/***** Failure animation A *****/
+/***** Loading animation *****/

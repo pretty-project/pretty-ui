@@ -16,7 +16,6 @@
 (ns x.app-elements.multi-combo-box
     (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.keyword        :as keyword]
-              [mid-fruits.map            :as map]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -135,7 +134,7 @@
   ;   :select-option-event (event-vector)}
   [group-id group-props]
   (let [field-id (group-id->field-id group-id)]
-       (merge (map/inherit group-props INHERITED-FIELD-PROPS)
+       (merge (select-keys group-props INHERITED-FIELD-PROPS)
               {:on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
                :group-id            group-id
                :select-option-event [:elements/stack-to-group-value! group-id]})))

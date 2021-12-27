@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v1.2.8
-; Compatibility: x4.4.2
+; Version: v1.4.0
+; Compatibility: x4.5.0
 
 
 
@@ -14,8 +14,6 @@
 
 (ns x.mid-core.event-handler
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.loop    :refer [reduce-indexed]]
               [mid-fruits.map     :as map :refer [update-some]]
               [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]
@@ -198,12 +196,14 @@
   ;
   ; @return (boolean)
   [n {:keys [strict-mode?]}]
-  (boolean (and (vector? n)
-                (let [event-id (first n)]
-                     (if strict-mode? (and (keyword?                (param event-id))
-                                           (or (string/starts-with? (name  event-id) "->")
-                                               (string/ends-with?   (name  event-id) "!")))
-                                      (keyword? event-id))))))
+  (and (vector? n)
+       (let [event-id (first n)]
+            (if strict-mode? ; If strict-mode is enabled ...
+                             (and (keyword? event-id)
+                                  (or (-> event-id name (string/starts-with? "->"))
+                                      (-> event-id name (string/ends-with?   "!"))))
+                             ; If strict-mode is NOT enabled ...
+                             (keyword? event-id)))))
 
 (defn subscription-vector?
   ; @param (*) n
@@ -225,11 +225,11 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (vector? n)
-                (let [event-id (first n)]
-                     (and (keyword?                (param event-id))
-                          (or (string/starts-with? (name  event-id) "get-")
-                              (string/ends-with?   (name  event-id) "?")))))))
+  (and (vector? n)
+       (let [event-id (first n)]
+            (and (keyword? event-id)
+                 (or (-> event-id name (string/starts-with? "get-"))
+                     (-> event-id name (string/ends-with?   "?")))))))
 
 (defn event-group-vector?
   ; @param (*) n
@@ -241,10 +241,10 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (vector? n)
-                (let [event-map (first n)]
-                     (and (map? event-map)
-                          (map/contains-key? event-map :dispatch))))))
+  (and (vector? n)
+       (let [event-map (first n)]
+            (and (map? event-map)
+                 (map/contains-key? event-map :dispatch)))))
 
 (defn event-vector->param-vector
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -306,8 +306,7 @@
   ;
   ; @return (vector)
   [context]
-  (let [event-vector (context->event-vector context)]
-       (vector/shift-first-item event-vector)))
+  (-> context context->event-vector vector/shift-first-item))
 
 (defn context->event-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -316,8 +315,7 @@
   ;
   ; @return (keyword)
   [context]
-  (let [event-vector (context->event-vector context)]
-       (event-vector->event-id event-vector)))
+  (-> context context->event-vector event-vector->event-id))
 
 (defn context->db-before-effect
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -348,7 +346,7 @@
   ;
   ; @return (boolean)
   [context]
-  (not (map/nonempty? (context->db-before-effect context))))
+  (-> context context->db-before-effect map/nonempty? not))
 
 (defn context->error-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -368,9 +366,8 @@
   ;
   ; @return (boolean)
   [{:keys [error-event-id] :as context}]
-  (let [event-id (context->event-id context)]
-       (and (context->db-inconsistent? context)
-            (not (= event-id error-event-id)))))
+  (and (context->db-inconsistent? context)
+       (-> context context->event-id (= error-event-id) not)))
 
 
 
@@ -396,7 +393,7 @@
   ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték
   ;   egy random-uuid.
   [param-vector]
-  (engine/id (vector/first-of-filtered param-vector keyword?)))
+  (-> param-vector (vector/first-filtered keyword?) engine/id))
 
 (defn param-vector->second-id
   ; @param (vector) param-vector
@@ -424,8 +421,7 @@
   ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték
   ;   egy random-uuid.
   [param-vector]
-  (engine/id (if (>= (vector/filtered-count param-vector keyword?) 2)
-                 (vector/nth-of-filtered param-vector keyword? 1))))
+  (-> param-vector (vector/nth-filtered keyword? 1) engine/id))
 
 (defn param-vector->first-props
   ; @param (vector) param-vector
@@ -453,7 +449,8 @@
   ;  Ha a param-vector egy térképet sem tartalmaz, akkor a visszatérési érték
   ;   egy üres térkép.
   [param-vector]
-  (or (vector/first-of-filtered param-vector map?) (param {})))
+  (-> param-vector (vector/first-filtered map?)
+                   (or {})))
 
 (defn param-vector->second-props
   ; @param (vector) param-vector
@@ -481,9 +478,9 @@
   ;  Ha a param-vector egy térképet sem tartalmaz, akkor a visszatérési érték
   ;   egy üres térkép.
   [param-vector]
-  (if (>= (vector/filtered-count param-vector map?) 2)
-      (vector/nth-of-filtered param-vector map? 1)
-      (param {})))
+  (if-let [second-props (vector/nth-filtered param-vector map? 1)]
+          (return second-props)
+          (return {})))
 
 
 
@@ -521,8 +518,7 @@
   ;  Ha az event-vector kevesebb, mint kettő kulcsszót tartalmaz (az event-id
   ;   kulcsszót is számítva), akkor a visszatérési érték egy random-uuid.
   [event-vector]
-  (let [param-vector (event-vector->param-vector event-vector)]
-       (param-vector->first-id param-vector)))
+  (-> event-vector event-vector->param-vector param-vector->first-id))
 
 (defn event-vector->third-id
   ; @param (vector) event-vector
@@ -548,8 +544,7 @@
   ;  Ha az event-vector kevesebb, mint három kulcsszót tartalmaz (az event-id
   ;   kulcsszót is számítva), akkor a visszatérési érték egy random-uuid.
   [event-vector]
-  (let [param-vector (event-vector->param-vector event-vector)]
-       (param-vector->second-id param-vector)))
+  (-> event-vector event-vector->param-vector param-vector->second-id))
 
 (defn event-vector->first-props
   ; @param (vector) event-vector
@@ -577,8 +572,7 @@
   ;  Ha az event-vector egy térképet sem tartalmaz, akkor a visszatérési érték
   ;   egy üres térkép.
   [event-vector]
-  (let [param-vector (event-vector->param-vector event-vector)]
-       (param-vector->first-props param-vector)))
+  (-> event-vector event-vector->param-vector param-vector->first-props))
 
 (defn event-vector->second-props
   ; @param (vector) event-vector
@@ -606,8 +600,7 @@
   ;  Ha az event-vector egy térképet sem tartalmaz, akkor a visszatérési érték
   ;   egy üres térkép.
   [event-vector]
-  (let [param-vector (event-vector->param-vector event-vector)]
-       (param-vector->second-props param-vector)))
+  (-> event-vector event-vector->param-vector param-vector->second-props))
 
 
 
@@ -631,7 +624,7 @@
   ; @param (vector)(opt) event-vector
   ;
   ; @usage
-  ;  (db (fn [db [event-id] (assoc-in db [:a :b] :c)))
+  ;  (event-handler/db (fn [db [event-id] (assoc-in db [:a :b] :c)))
   ;
   ; @return (map)
   ([f] (db f [::db]))
@@ -676,18 +669,10 @@
         ; esemény csoport vektortól!
         ; [:do-something! ...]
         ; [{:ms 500 :dispatch [:do-something! ...]}]
-  (cond (event-vector?       n {:strict-mode? false})
-        (vector/concat-items n xyz)
-        (map?                n)
-        (reduce-kv (fn [result k v]
-                       (let [v (apply metamorphic-event<-params v xyz)]
-                            (assoc result k v)))
-                   (param {})
-                   (param n))
-        (event-group-vector? n)
-        ; TODO ...
-        (return n)
-        :else (return n)))
+  (cond (event-vector?       n {:strict-mode? false}) (vector/concat-items n xyz)
+        (map?                n) (map/->values n #(apply metamorphic-event<-params % xyz))
+        (event-group-vector? n) (return n) ; TODO ...
+        :else                   (return n)))
 
 
 
@@ -754,8 +739,8 @@
   ;
   ; @return (map)
   [n]
-  (cond (vector? n) (event-vector->effects-map n)
-        :else       (return n)))
+  (if (vector? n) (event-vector->effects-map n)
+                  (return n)))
 
 
 
@@ -849,10 +834,9 @@
        (registrar/clear-handlers :event event-id)
        (return context)))
 
-(def self-destruct!
-  (re-frame/->interceptor
-    :id    ::self-destruct!
-    :after <-self-destruct!))
+; @constant (?)
+(def self-destruct! (re-frame/->interceptor :id    ::self-destruct!
+                                            :after <-self-destruct!))
 
 
 
@@ -878,8 +862,8 @@
   ;
   ; @return (maps in list)
   [event-kind event-id]
-  (let [event-handlers (get-event-handlers)]
-       (get-in event-handlers [event-kind event-id])))
+  (-> (get-event-handlers)
+      (get-in [event-kind event-id])))
 
 (defn event-handler-registrated?
   ; @param (keyword) event-kind
@@ -891,8 +875,8 @@
   ;
   ; @return (function)
   [event-kind event-id]
-  (let [event-handler (get-event-handler event-kind event-id)]
-       (some? event-handler)))
+  (-> (get-event-handler event-kind event-id)
+      (some?)))
 
 
 
@@ -932,8 +916,7 @@
 
   ([event-id interceptors event-handler]
    (let [handler-function (metamorphic-event->handler-function event-handler)]
-        (re-frame/reg-event-fx event-id interceptors
-          #(metamorphic-effects->effects-map (handler-function %1 %2))))))
+        (re-frame/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-function %1 %2))))))
 
 (defn reg-handled-fx
   ; Kezelt mellékhatás-események (Handled side-effect events)
@@ -1000,19 +983,16 @@
 
   (cond ; @usage
         ;  (dispatch [:foo])
-        (vector?           event-handler)
-        (re-frame/dispatch event-handler)
+        (vector? event-handler) (re-frame/dispatch event-handler)
         ; @usage
         ;  (dispatch {:dispatch [:foo]})
-        (map? event-handler)
-        (dispatch-function (effects-map->handler-function event-handler))
+        (map? event-handler)    (-> event-handler effects-map->handler-function dispatch-function)
         ; @usage
         ;  (dispatch nil)
-        (nil?   event-handler)
-        (return :nil-handler-exception)
+        (nil? event-handler)    (return :nil-handler-exception)
         ; @usage
         ;  (dispatch (fn [_ _] {:dispatch [:foo]}))
-        :else (dispatch-function event-handler)))
+        :else                   (dispatch-function event-handler)))
 
 (registrar/clear-handlers :fx :dispatch)
 (re-frame/reg-fx :dispatch dispatch)
@@ -1068,17 +1048,17 @@
   ; @usage
   ;  (dispatch-if [true (fn [_ _] {:dispatch [:my-event]}) ...])
   [[condition if-event-handler else-event-handler]]
-  (if condition
-      (dispatch if-event-handler)
-      (if (some? else-event-handler)
-          (dispatch else-event-handler))))
+  (if condition (dispatch if-event-handler)
+                (if (some?    else-event-handler)
+                    (dispatch else-event-handler))))
 
 (re-frame/reg-fx :dispatch-if dispatch-if)
 
 (defn dispatch-cond
-  ; @param (*) condition
-  ; @param (metamorphic-event) if-event-handler
-  ; @param (metamorphic-event)(opt) else-event-handler
+  ; @param (vector) conditional-events
+  ; [(*) condition
+  ;  (metamorphic-event) if-event-handler
+  ;  ...]
   ;
   ; @usage
   ;  (dispatch-cond [(some? "a") [:my-event]
@@ -1092,12 +1072,11 @@
   ;  (dispatch-cond [(some? "a") (fn [_ _] {:dispatch [:my-event]})
   ;                  (nil?  "b") (fn [_ _] {:dispatch [:my-event]})])
   [conditional-events]
-  (reduce-indexed (fn [%1 %2 %3]
-                      (if (even? %3)
-                          (let [event (nth conditional-events (inc %3))]
-                               (if %2 (dispatch event)))))
-                  (param nil)
-                  (param conditional-events)))
+  (letfn [(dispatch-cond-f [_ dex x]
+                           (if (and (even? dex) x)
+                               (let [event (nth conditional-events (inc dex))]
+                                    (dispatch event))))]
+         (reduce-kv dispatch-cond-f nil conditional-events)))
 
 (re-frame/reg-fx :dispatch-cond dispatch-cond)
 
@@ -1146,8 +1125,7 @@
   ;
   ; @return (map)
   [merged-effects-map effects-map]
-  (update merged-effects-map :dispatch-tick vector/conj-item
-          (update effects-map :tick dec)))
+  (update merged-effects-map :dispatch-tick vector/conj-item (update effects-map :tick dec)))
 
 (defn dispatch-tick
   ; @param (maps in vector) effects-maps-vector
@@ -1200,7 +1178,7 @@
   ;
   ; @return (*)
   [subscriber]
-  (deref (re-frame/subscribe subscriber)))
+  (-> subscriber re-frame/subscribe deref))
 
 
 

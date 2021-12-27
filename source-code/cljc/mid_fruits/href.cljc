@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.08.05
 ; Description:
-; Version: v0.4.0
+; Version: v0.4.8
 
 
 
@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.href
-    (:require [mid-fruits.candy  :refer [param]]
-              [mid-fruits.string :as string]))
+    (:require [mid-fruits.string :as string]))
 
 
 
@@ -31,8 +30,8 @@
   ;
   ; @return (string)
   [n]
-  (str (param "mailto:")
-       (string/lowercase n)))
+  (if (string/nonempty? n)
+      (str "mailto:" (string/lowercase n))))
 
 (defn phone-number->href
   ; @param (string) n
@@ -44,5 +43,5 @@
   ;
   ; @return (string)
   [n]
-  (str (param "tel:")
-       (string/filter-characters n ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"])))
+  (if (string/nonempty? n)
+      (str "tel:" (string/filter-characters n ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"]))))

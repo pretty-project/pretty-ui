@@ -56,7 +56,7 @@
        ;name-list ["my-module" "your-module" "our-namespace.clj"]
   (let [name-list (map/get-keys namespace-index)
        ;name-list ["my-module" "our-namespace.clj" "your-module"]
-        name-list (vector/abc   name-list)]
+        name-list (vector/abc-items name-list)]
        (vec (reduce (fn [tree name]
                         (conj tree
                               (let [depth     (dec (count path))

@@ -212,7 +212,7 @@
   ; @return (maps in vector)
   [partition context-props]
   (let [data-order (partition->data-order partition)]
-       (vec (reduce-indexed (fn [collection data-item-id data-order]
+       (vec (reduce-indexed (fn [collection data-order data-item-id]
                                 (let [data-item        (partition->data-item partition data-item-id)
                                       document         (data-item->document data-item-id data-item context-props)
                                       ordered-document (document->ordered-document document data-order)]

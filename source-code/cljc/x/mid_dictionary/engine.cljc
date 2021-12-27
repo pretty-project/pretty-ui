@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-dictionary.engine
-    (:require [mid-fruits.candy       :refer [param]]
-              [mid-fruits.map         :as map]
-              [x.mid-core.api         :refer [r]]
-              [x.mid-db.api           :as db]))
+    (:require [mid-fruits.candy :refer [param]]
+              [mid-fruits.map   :as map]
+              [x.mid-core.api   :refer [r]]
+              [x.mid-db.api     :as db]))
 
 
 

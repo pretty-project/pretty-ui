@@ -13,9 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.hiccup
-    (:require [mid-fruits.candy  :refer [param]]
-              [mid-fruits.random :as random]
-              [mid-fruits.string :as string]))
+    (:require [mid-fruits.random :as random]))
 
 
 
@@ -27,8 +25,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (vector? n)
-                (keyword? (first n)))))
+  (and (vector? n)
+       (keyword? (first n))))
 
 (defn explode
   ; @param (string) n
@@ -44,10 +42,8 @@
   [n container]
   (if (and (string? n)
            (hiccup? container))
-      (reduce (fn [%1 %2]
-                  (vec (conj %1 ^{:key (random/generate-react-key)}[:span %2])))
-              (param container)
-              (param n))))
+      (reduce #(conj %1 ^{:key (random/generate-uuid)} [:span %2])
+               container n)))
 
 (defn tag-name?
   ; @param (hiccup) n
@@ -60,8 +56,7 @@
   ;
   ; @return (boolean)
   [n tag-name]
-  (= (first n)
-     (param tag-name)))
+  (= (first n) tag-name))
 
 (defn to-string
   ; @param (hiccup) n
@@ -73,12 +68,11 @@
   ;
   ; @return (string)
   [n]
-  (reduce (fn [%1 %2]
-              (cond (string? %2) (str %1 %2)
-                    (vector? %2) (str %1 (to-string %2))
-                    :else        (str %1)))
-          (param string/empty-string)
-          (param n)))
+  (letfn [(to-string-f [o x]
+                       (cond (string? x) (str o x)
+                             (vector? x) (str o (to-string x))
+                             :else o))]
+         (reduce to-string-f "" n)))
 
 (defn content-length
   ; @param (hiccup) n

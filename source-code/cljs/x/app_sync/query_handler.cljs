@@ -15,7 +15,6 @@
 
 (ns x.app-sync.query-handler
     (:require [mid-fruits.candy  :refer [param]]
-              [mid-fruits.map    :as map]
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
@@ -91,7 +90,7 @@
   ;   :params (map)
   ;    {:query (string)}}
   [query-id {:keys [body query] :as query-props}]
-  (let [request-props (map/inherit query-props [:body :idle-timeout :modifier :on-failure :on-sent :on-success
+  (let [request-props (select-keys query-props [:body :idle-timeout :modifier :on-failure :on-sent :on-success
                                                 :on-stalled :target-path :target-paths :uri])]
        (merge request-props {:method :post}
                             (if (some? query)

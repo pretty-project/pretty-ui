@@ -14,11 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.collection-handler
-    (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.keyword        :as keyword]
-              [mid-fruits.loop           :refer [reduce-while]]
-              [mid-fruits.map            :as map]
-              [mid-fruits.vector         :as vector]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :as map]
+              [mid-fruits.vector  :as vector]
               [x.mid-db.document-handler :as document-handler]))
 
 
@@ -153,10 +152,7 @@
   ;
   ; @return (maps in  vector)
   [collection namespace]
-  (vec (reduce (fn [collection document]
-                   (let [namespaced-document (document->namespaced-document document namespace)]
-                        (conj collection namespaced-document)))
-               [] collection)))
+  (vector/->items collection #(document->namespaced-document % namespace)))
 
 (defn collection->non-namespaced-collection
   ; @param (maps in vector) collection
@@ -168,10 +164,7 @@
   ;
   ; @return (maps in  vector)
   [collection]
-  (vec (reduce (fn [collection document]
-                   (let [non-namespaced-document (document->non-namespaced-document document)]
-                        (conj collection non-namespaced-document)))
-               [] collection)))
+  (vector/->items collection #(document->non-namespaced-document %)))
 
 (defn collection->collection-ordered?
   ; @param (maps in vector) collection
@@ -254,7 +247,7 @@
   ([collection sort-key {:keys [additional-namespace remove-namespace?]}]
    (if-let [first-document (first collection)]
            (let [sort-key (document->item-key first-document sort-key)
-                 sorted-collection (vector/order-items-by collection sort-key)]
+                 sorted-collection (vector/sort-items-by collection sort-key)]
                 (cond (some? additional-namespace)
                       (collection->namespaced-collection sorted-collection additional-namespace)
                       (boolean remove-namespace?)
@@ -277,19 +270,19 @@
    (filter-documents collection filter-f {}))
 
   ([collection filter-f {:keys [additional-namespace remove-namespace?]}]
-   (vec (reduce #(cond (and (filter-f %2)
-                            (some?    additional-namespace))
-                       (let [document (document->namespaced-document %2 additional-namespace)]
-                            (conj %1 document))
-                       (and (filter-f %2)
-                            (boolean remove-namespace?))
-                       (let [document (document->non-namespaced-document %2)]
-                            (conj %1 document))
-                       (filter-f %2)
-                       (conj %1 %2)
-                       :else (return %1))
-                (param [])
-                (param collection)))))
+   (letfn [(filter-documents-f [o x]
+                               (cond ; If x is NOT matches ...
+                                     (-> x filter-f not)
+                                     (return o)
+                                     ; If x is matches and add namespace ...
+                                     (some? additional-namespace)
+                                     (conj o (document->namespaced-document x additional-namespace))
+                                     ; If x is matches and remove namespace ...
+                                     (boolean remove-namespace?)
+                                     (conj o (document->non-namespaced-document x))
+                                     ; If x is matches ...
+                                     :else (conj o x)))]
+          (reduce filter-documents-f [] collection))))
 
 (defn filter-document
   ; @param (maps in vector) collection
@@ -306,17 +299,10 @@
    (filter-document collection filter-f {}))
 
   ([collection filter-f {:keys [additional-namespace remove-namespace?]}]
-   (reduce-while #(cond (and (filter-f %2)
-                             (some?   additional-namespace))
-                        (document->namespaced-document %2 additional-namespace)
-                        (and (filter-f %2)
-                             (boolean remove-namespace?))
-                        (document->non-namespaced-document %2)
-                        (filter-f %2)
-                        (return %2))
-                  (param nil)
-                  (param collection)
-                  (fn [%1 _] (map? %1)))))
+   (if-let [document (vector/first-filtered collection filter-f)]
+           (cond (some?   additional-namespace) (document->namespaced-document     document additional-namespace)
+                 (boolean remove-namespace?)    (document->non-namespaced-document document)
+                 :else                          (return                            document)))))
 
 (defn match-documents
   ; Get documents by pattern
@@ -337,19 +323,19 @@
    (match-documents collection pattern {}))
 
   ([collection pattern {:keys [additional-namespace remove-namespace?]}]
-   (vec (reduce #(cond (and (map/match-pattern? %2 pattern)
-                            (some? additional-namespace))
-                       (let [document (document->namespaced-document %2 additional-namespace)]
-                            (conj %1 document))
-                       (and (map/match-pattern? %2 pattern)
-                            (boolean remove-namespace?))
-                       (let [document (document->non-namespaced-document %2)]
-                            (conj %1 document))
-                       (map/match-pattern? %2 pattern)
-                       (conj %1 %2)
-                       :else (return %1))
-                (param [])
-                (param collection)))))
+   (letfn [(match-documents-f [o x]
+                              (cond ; If x is NOT matches ...
+                                    (-> x (map/match-pattern? pattern) not)
+                                    (return o)
+                                    ; If x is matches and add namespace ...
+                                    (some? additional-namespace)
+                                    (conj o (document->namespaced-document x additional-namespace))
+                                    ; If x is matches and remove namespace ...
+                                    (boolean remove-namespace?)
+                                    (conj o (document->non-namespaced-document x))
+                                    ; If x is matches ...
+                                    :else (conj o x)))]
+          (reduce match-documents-f [] collection))))
 
 (defn match-document
   ; Get first document by pattern
@@ -370,17 +356,10 @@
    (match-document collection pattern {}))
 
   ([collection pattern {:keys [additional-namespace remove-namespace?]}]
-   (reduce-while #(cond (and (map/match-pattern? %2 pattern)
-                             (some? additional-namespace))
-                        (document->namespaced-document %2 additional-namespace)
-                        (and (map/match-pattern? %2 pattern)
-                             (boolean remove-namespace?))
-                        (document->non-namespaced-document %2)
-                        (map/match-pattern? %2 pattern)
-                        (return %2))
-                  (param nil)
-                  (param collection)
-                  (fn [%1 _] (map? %1)))))
+   (if-let [document (vector/first-filtered collection #(map/match-pattern? % pattern))]
+           (cond (some?   additional-namespace) (document->namespaced-document     document additional-namespace)
+                 (boolean remove-namespace?)    (document->non-namespaced-document document)
+                 :else                          (return                            document)))))
 
 (defn get-documents-kv
   ; Get documents by value
@@ -402,22 +381,19 @@
    (get-documents-kv collection item-key item-value {}))
 
   ([collection item-key item-value {:keys [additional-namespace remove-namespace?]}]
-   (vec (reduce #(cond (and (= (param item-value)
-                               (get %2 item-key))
-                            (some? additional-namespace))
-                       (let [document (document->namespaced-document %2 additional-namespace)]
-                            (conj %1 document))
-                       (and (= (param item-value)
-                               (get %2 item-key))
-                            (boolean remove-namespace?))
-                       (let [document (document->non-namespaced-document %2)]
-                            (conj %1 document))
-                       (= (param item-value)
-                          (get %2 item-key))
-                       (conj %1 %2)
-                       :else (return %1))
-                 (param nil)
-                 (param collection)))))
+   (letfn [(get-documents-kv-f [o x]
+                               (cond ; If x is NOT matches ...
+                                     (not= item-value (get x item-key))
+                                     (return o)
+                                     ; If x is matches and add namespace ...
+                                     (some? additional-namespace)
+                                     (conj o (document->namespaced-document x additional-namespace))
+                                     ; If x is matches and remove namespace ...
+                                     (boolean remove-namespace?)
+                                     (conj o (document->non-namespaced-document x))
+                                     ; If x is matches ...
+                                     :else (conj o x)))]
+          (reduce get-documents-kv-f [] collection))))
 
 (defn get-document-kv
   ; Get first document by value
@@ -439,20 +415,10 @@
    (get-document-kv collection item-key item-value {}))
 
   ([collection item-key item-value {:keys [additional-namespace remove-namespace?]}]
-   (reduce-while #(cond (and (= (param item-value)
-                                (get %2 item-key))
-                             (some? additional-namespace))
-                        (document->namespaced-document %2 additional-namespace)
-                        (and (= (param item-value)
-                                (get %2 item-key))
-                             (boolean remove-namespace?))
-                        (document->non-namespaced-document %2)
-                        (= (param item-value)
-                           (get %2 item-key))
-                        (return %2))
-                  (param nil)
-                  (param collection)
-                  (fn [%1 _] (map? %1)))))
+   (if-let [document (vector/first-filtered collection #(= item-value (get % item-key)))]
+           (cond (some?   additional-namespace) (document->namespaced-document     document additional-namespace)
+                 (boolean remove-namespace?)    (document->non-namespaced-document document)
+                 :else                          (return                            document)))))
 
 (defn get-document
   ; Get (first) document by id
@@ -505,19 +471,19 @@
    (get-documents collection document-ids {}))
 
   ([collection document-ids {:keys [additional-namespace remove-namespace?]}]
-   (vec (reduce #(cond (and (vector/contains-item? document-ids (:id %2))
-                            (some? additional-namespace))
-                       (let [document (document->namespaced-document %2 additional-namespace)]
-                            (conj collection document))
-                       (and (vector/contains-item? document-ids (:id %2))
-                            (boolean remove-namespace?))
-                       (let [document (document->non-namespaced-document %2)]
-                            (conj collection document))
-                       (vector/contains-item? document-ids (:id %2))
-                       (conj %1 %2)
-                       :else (return %1))
-                 (param [])
-                 (param collection)))))
+   (letfn [(get-documents-f [o x]
+                            (cond ; If x is NOT matches ...
+                                  (not (vector/contains-item? document-ids (:id x)))
+                                  (return o)
+                                  ; If x is matches and add namespace ...
+                                  (some? additional-namespace)
+                                  (conj o (document->namespaced-document x additional-namespace))
+                                  ; If x is matches and remove namespace ...
+                                  (boolean remove-namespace?)
+                                  (conj o (document->non-namespaced-document x))
+                                  ; If x is matches ...
+                                  :else (conj o x)))]
+          (reduce get-documents-f [] collection))))
 
 (defn add-document
   ; @param (maps in vector) collection
@@ -560,11 +526,11 @@
   ;
   ; @return (maps in vector)
   [collection document-id]
-  (vec (reduce #(if (= document-id (document->document-id %2))
-                    (return %1)
-                    (conj %1 %2))
-                (param [])
-                (param collection))))
+  (letfn [(remove-document-f [o x]
+                             (if (= document-id (document->document-id x))
+                                 (return o)
+                                 (conj   o x)))]
+         (reduce remove-document-f [] collection)))
 
 (defn remove-documents
   ; @param (maps in vector) collection
@@ -577,11 +543,11 @@
   ;
   ; @return (maps in vector)
   [collection document-ids]
-  (vec (reduce #(if (vector/contains-item? document-ids (document->document-id %2))
-                    (return %1)
-                    (conj %1 %2))
-                (param [])
-                (param collection))))
+  (letfn [(remove-documents-f [o x]
+                              (if (vector/contains-item? document-ids (document->document-id x))
+                                  (return o)
+                                  (conj   o x)))]
+         (reduce remove-documents-f [] collection)))
 
 (defn update-document
   ; @param (maps in vector) collection
@@ -602,9 +568,8 @@
   (let [document         (get-document collection document-id)
         params           (cons document params)
         updated-document (apply f params)]
-       (-> (param collection)
-           (remove-document document-id)
-           (add-document    updated-document))))
+       (-> collection (remove-document document-id)
+                      (add-document    updated-document))))
 
 (defn update-document-item
   ; @param (maps in vector) collection
@@ -629,9 +594,8 @@
         params                (cons document-item params)
         updated-document-item (apply f params)
         updated-document      (assoc document item-key updated-document-item)]
-       (-> (param collection)
-           (remove-document document-id)
-           (add-document    updated-document))))
+       (-> collection (remove-document document-id)
+                      (add-document    updated-document))))
 
 (defn document-exists?
   ; @param (maps in vector) collection
@@ -639,7 +603,7 @@
   ;
   ; @return (boolean)
   [collection document-id]
-  (some? (get-document collection document-id)))
+  (boolean (get-document collection document-id)))
 
 (defn explode-collection
   ; @param (maps in vector) collection
@@ -655,11 +619,10 @@
   ;
   ; @return (map)
   [collection]
-  (reduce (fn [result document]
-              (let [namespace (document->namespace document)]
-                   (update result namespace vector/conj-item document)))
-          (param {})
-          (param collection)))
+  (letfn [(explode-collection-f [o x]
+                                (let [namespace (document->namespace x)]
+                                     (update o namespace conj x)))]
+         (reduce explode-collection-f {} collection)))
 
 (defn get-specified-values
   ; @param (maps in vector) collection
@@ -678,16 +641,15 @@
    (get-specified-values collection specified-keys some?))
 
   ([collection specified-keys test-f]
-   (reduce (fn [result document]
-               (reduce (fn [result specified-key]
-                           (let [specified-value (get document specified-key)]
-                                (if (test-f specified-value)
-                                    (update result specified-key vector/conj-item-once specified-value)
-                                    (return result))))
-                       (param result)
-                       (param specified-keys)))
-           (param {})
-           (param collection))))
+   (letfn [(get-specified-values-f [o x]
+                                   (reduce (fn [o k]
+                                               (let [v (get x k)]
+                                                    (if (test-f v)
+                                                        (update o k vector/conj-item-once v)
+                                                        (return o))))
+                                           (param o)
+                                           (param specified-keys)))]
+          (reduce get-specified-values-f {} collection))))
 
 
 

@@ -16,7 +16,6 @@
 (ns app-fruits.http
    (:require [ajax.core        :refer [GET POST]]
              [mid-fruits.candy :refer [param]]
-             [mid-fruits.map   :as map]
              [mid-fruits.math  :as math]))
 
 
@@ -79,7 +78,7 @@
   ;   :uri (string)}
   [request-id request-props]
   (merge (request-handlers request-id request-props)
-         (map/inherit      request-props [:uri])))
+         (select-keys      request-props [:uri])))
 
 (defn- post-request-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +98,7 @@
   ;   :uri (string)}
   [request-id request-props]
   (merge (request-handlers request-id request-props)
-         (map/inherit      request-props [:body :params :uri])))
+         (select-keys      request-props [:body :params :uri])))
 
 
 

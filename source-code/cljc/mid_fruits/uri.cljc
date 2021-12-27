@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.4.6
+; Version: v0.6.2
 
 
 
@@ -14,14 +14,10 @@
 
 (ns mid-fruits.uri
     (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.loop   :refer [reduce-indexed]]
               [mid-fruits.reader :as reader]
               [mid-fruits.string :as string]))
 
 
-
-;; -- Names -------------------------------------------------------------------
-;; -- XXX#3387 ----------------------------------------------------------------
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,7 +56,7 @@
   ;
   ; @example
   ;  (uri/uri->protocol "something.com/scooby-doo")
-  ;   =>
+  ;  =>
   ;  ""
   ;
   ; @return (string)
@@ -210,14 +206,13 @@
   (let [path           (uri->path       uri)
         path-parts     (uri->path-parts path)
         template-parts (uri->path-parts template)]
-       (reduce-indexed (fn [path-params template-part dex]
-                           (let [template-part (reader/string->mixed template-part)]
-                                (if (keyword? template-part)
-                                    (let [path-part (nth path-parts dex)]
-                                         (assoc path-params template-part path-part))
-                                    (return path-params))))
-                       (param {})
-                       (param template-parts))))
+       (letfn [(uri->path-params-f [o dex x]
+                                   (let [x (reader/string->mixed x)]
+                                        (if (keyword? x)
+                                            (let [path-part (nth path-parts dex)]
+                                                 (assoc o x path-part))
+                                            (return o))))]
+              (reduce-kv uri->path-params-f {} template-parts))))
 
 (defn uri->fragment
   ; @param (string) uri
@@ -251,9 +246,9 @@
   ;
   ; @return (string)
   [uri]
-  (if (string/contains-part? uri "#")
+  (if (string/contains-part?         uri "#")
       (string/before-first-occurence uri "#")
-      (return uri)))
+      (return                        uri)))
 
 (defn uri->query-string
   ; @param (string) uri
@@ -290,12 +285,12 @@
   ; @return (map)
   [uri]
   (let [query-string (uri->query-string uri)]
-       (reduce #(let [k-v (string/split %2 #"=")
-                      k   (keyword (first  k-v))
-                      v   (second k-v)]
-                     (assoc %1 k v))
-                (param {})
-                (string/split query-string #"&"))))
+       (letfn [(uri->query-params-f [o x]
+                                    (let [k-v (string/split x #"=")
+                                          k   (keyword (first  k-v))
+                                          v            (second k-v)]
+                                         (assoc o k v)))]
+              (reduce uri->query-params-f {} (string/split query-string #"&")))))
 
 (defn string->uri
   ; @param (string) n
@@ -351,18 +346,22 @@
   [uri query-param]
   (let [fragment     (uri->fragment     uri)
         query-string (uri->query-string uri)]
-       (cond (and (some? fragment)
+       (cond ; uri contains fragment & query-string ...
+             (and (some? fragment)
                   (some? query-string))
              (str (string/before-first-occurence uri "?")
                   (str "?" query-string "&" query-param "#" fragment))
+             ; uri contains fragment ...
              (and (some? fragment)
                   (nil?  query-string))
              (str (string/before-first-occurence uri "#")
                   (str "?" query-param "#" fragment))
+             ; uri contains query-string ...
              (and (nil?  fragment)
                   (some? query-string))
              (str (string/before-first-occurence uri "?")
                   (str "?" query-string "&" query-param))
+             ; uri NOT contains fragment or query-string ...
              (and (nil? fragment)
                   (nil? query-string))
              (str uri "?" query-param))))

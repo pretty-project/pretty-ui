@@ -251,9 +251,9 @@
   ;
   ; @usage
   ;  [:boot-loader/->app-synchronized #'app]
-  (fn [{:keys [db]} [_ app]]
+  (fn [{:keys [db]} [_ app x]]
       (let [app-build (r a/get-app-detail db :app-build)]
-                         ; 1.
-           {:dispatch-n [[:environment/set-cookie! :x-app-build {:value app-build}]
+           {:dispatch-n  ; 1.
+                        [[:environment/set-cookie! :x-app-build {:value app-build}]
                          ; 2.
                          [:boot-loader/initialize-app! app]]})))

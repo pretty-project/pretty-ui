@@ -15,7 +15,6 @@
 
 (ns app-plugins.value-editor.views
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :as map]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
               [app-plugins.value-editor.engine :as engine]
@@ -38,7 +37,7 @@
   ;  {:auto-focus? (boolean)
   ;   :value-path (item-path vector)}
   [_ _ {:keys [edit-path] :as editor-props}]
-  (merge (map/inherit editor-props [:label :validator])
+  (merge (select-keys editor-props [:label :validator])
          {:auto-focus? true
           :value-path  edit-path}))
 

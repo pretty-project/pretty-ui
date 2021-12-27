@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.09.11
 ; Description:
-; Version: v1.0.8
+; Version: v1.2.4
 
 
 
@@ -18,6 +18,7 @@
 
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.format :as format]
+              [mid-fruits.map    :as map]
               [mid-fruits.math   :as math]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]
@@ -34,8 +35,7 @@
 
 (defn elapsed
   ; @return (ms)
-  []
-     ; TODO ...
+  [] ; TODO ...
      ; The returned value represents the time elapsed since the application's lifetime.
   #?(:clj  (return 0)
      ; The returned value represents the time elapsed since the document's lifetime.
@@ -55,12 +55,13 @@
   ;  #<DateTime 2020-04-20T16:20:00.123+02:00>
   ;
   ; @return (object)
-  [& [time-zone]]
-  #?(:clj (let [timestamp (clj-time.core/now)]
-               (if (some? time-zone)
-                   (let [time-zone (clj-time.core/time-zone-for-id time-zone)]
-                        (clj-time.core/to-time-zone timestamp time-zone))
-                   (return timestamp)))))
+  ([]
+   #?(:clj (clj-time.core/now)))
+
+  ([time-zone]
+   #?(:clj (let [timestamp (clj-time.core/now)
+                 time-zone (clj-time.core/time-zone-for-id time-zone)]
+                (clj-time.core/to-time-zone timestamp time-zone)))))
 
 (defn timestamp-string
   ; @return (string)
@@ -617,32 +618,11 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [v (parse-date-time v)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (parse-date-time x)]
-                                  (conj result x)))
-                         [] n)))]
-
-         ; parse-date-time
-         (cond (date-string?      n) (parse-date      n)
-               (timestamp-string? n) (parse-timestamp n)
-               (map?              n) (reduce-map      n)
-               (vector?           n) (reduce-vector   n)
-               :else                 (return          n))))
+  (cond (date-string?      n) (parse-date      n)
+        (timestamp-string? n) (parse-timestamp n)
+        (map?              n) (map/->values    n parse-date-time)
+        (vector?           n) (vector/->items  n parse-date-time)
+        :else                 (return          n)))
 
 (defn unparse-date-time
   ; @param (*) n
@@ -654,28 +634,7 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [v (unparse-date-time v)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (unparse-date-time x)]
-                                  (conj result x)))
-                         [] n)))]
-
-         ; unparse-date-time
-         (cond (timestamp-object? n) (unparse-timestamp n)
-               (map?              n) (reduce-map        n)
-               (vector?           n) (reduce-vector     n)
-               :else                 (return            n))))
+  (cond (timestamp-object? n) (unparse-timestamp n)
+        (map?              n) (map/->values      n unparse-date-time)
+        (vector?           n) (vector/->items    n unparse-date-time)
+        :else                 (return            n)))

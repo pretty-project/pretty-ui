@@ -40,12 +40,14 @@
 (defn- editor-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
   ;
   ; @return (map)
   ;  {:handle-archived-items? (boolean)
   ;   :handle-favorite-items? (boolean)}
-  [editor-props]
+  [_ _ editor-props]
   (merge {:handle-archived-items? true
           :handle-favorite-items? true}
          (param editor-props)))
@@ -92,6 +94,7 @@
   ;    Default: true
   ;   :handle-favorite-items? (boolean)(opt)
   ;    Default: true
+  ;   :label (metamorphic-content)(opt)
   ;   :multi-view? (boolean)(opt)
   ;    Default: false
   ;   :suggestion-keys (keywords in vector)(opt)}
@@ -105,7 +108,7 @@
   ; @usage
   ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [cofx [_ extension-id item-namespace editor-props]]
-      (let [editor-props (editor-props-prototype editor-props)]
+      (let [editor-props (editor-props-prototype extension-id item-namespace editor-props)]
            (if-let [multi-view? (get editor-props :multi-view?)]
                    {:dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
                                  (r add-extended-route! cofx extension-id item-namespace editor-props)]}

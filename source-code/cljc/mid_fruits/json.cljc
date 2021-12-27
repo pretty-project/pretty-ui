@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.08
 ; Description:
-; Version: v0.2.4
+; Version: v0.4.8
 
 
 
@@ -42,22 +42,63 @@
 ;; -- Keywordize / unkeywordize -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn unkeywordized-string?
+(defn unkeywordized-value?
   ; @param (*) n
   ;
   ; @example
-  ;  (def KEYWORD-PREFIX "*")
-  ;  (json/unkeywordized-string? "*:apple")
+  ;  (json/unkeywordized-value? "*:apple")
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (string? n)
-                (= (str (nth n 0))
-                   (param KEYWORD-PREFIX))
-                (= (str (nth n 1))
-                   (param ":")))))
+  (and (string? n)
+       (= (str (nth n 0))
+          (param KEYWORD-PREFIX))
+       (= (str (nth n 1))
+          (param ":"))))
+
+(defn keywordize-value
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/keywordize-value "*:my-value")
+  ;  =>
+  ;  :my-value
+  ;
+  ; @return (*)
+  [n]
+  (if (unkeywordized-value? n)
+      (-> n (subs 2) keyword)
+      (return n)))
+
+(defn unkeywordize-value
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/unkeywordize-keyword :my-value)
+  ;  =>
+  ;  "*:my-value"
+  ;
+  ; @return (*)
+  [n]
+  (if (keyword?)
+      (str KEYWORD-PREFIX n)
+      (return n)))
+
+(defn unkeywordize-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/unkeywordize-key :my-namespace/key)
+  ;  =>
+  ;  "my-namespace/key"
+  ;
+  ; @return (*)
+  [n]
+  (if (keyword?)
+      (apply str (rest (str n)))
+      (return n)))
 
 (defn unkeywordize-values
   ; XXX#5914
@@ -76,38 +117,9 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [v (unkeywordize-values v)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (unkeywordize-values x)]
-                                  (conj result x)))
-                         [] n)))
-
-          (unkeywordize-keyword
-            ; @param (keyword) n
-            ;
-            ; @return (string)
-            [n]
-            (str KEYWORD-PREFIX n))]
-
-         ; unkeywordize
-         (cond (keyword? n) (unkeywordize-keyword n)
-               (map?     n) (reduce-map           n)
-               (vector?  n) (reduce-vector        n)
-               :else        (return               n))))
+  (cond (map?    n) (map/->values       n unkeywordize-values)
+        (vector? n) (vector/->items     n unkeywordize-values)
+        :else       (unkeywordize-value n)))
 
 (defn keywordize-values
   ; XXX#5914
@@ -122,46 +134,9 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [v (keywordize-values v)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (keywordize-values x)]
-                                  (conj result x)))
-                         [] n)))
-
-          (keywordize-string
-            ; @param (string) n
-            ;
-            ; @example
-            ;  (keywordize-string "*:my-value")
-            ;  =>
-            ;  :my-value
-            ;
-            ; @return (keyword)
-            [n]
-            (if (unkeywordized-string? n)
-                (let [n (subs n 2)]
-                     (keyword n))
-                (return n)))]
-
-         ; keywordize-values
-         (cond (string? n) (keywordize-string n)
-               (map?    n) (reduce-map        n)
-               (vector? n) (reduce-vector     n)
-               :else       (return            n))))
+  (cond (map?    n) (map/->values     n keywordize-values)
+        (vector? n) (vector/->items   n keywordize-values)
+        :else       (keywordize-value n)))
 
 (defn unkeywordize-keys
   ; @param (*) n
@@ -173,43 +148,9 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [k (unkeywordize-keys k)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (unkeywordize-keys x)]
-                                  (conj result x)))
-                         [] n)))
-
-          (unkeywordize-keyword
-            ; @param (keyword) n
-            ;
-            ; @example
-            ;  (unkeywordize-keyword :my-namespace/key)
-            ;  =>
-            ;  "my-namespace/key"
-            ;
-            ; @return (string)
-            [n]
-            (apply str (rest (str n))))]
-
-         ; unkeywordize-keys
-         (cond (keyword? n) (unkeywordize-keyword n)
-               (map?     n) (reduce-map           n)
-               (vector?  n) (reduce-vector        n)
-               :else        (return               n))))
+  (cond (map?    n) (map/->values     n unkeywordize-keys)
+        (vector? n) (vector/->items   n unkeywordize-keys)
+        :else       (unkeywordize-key n)))
 
 (defn keywordize-keys
   ; @param (*) n
@@ -221,40 +162,6 @@
   ;
   ; @return (*)
   [n]
-  (letfn [(reduce-map
-            ; @param (map) n
-            ;
-            ; @return (map)
-            [n]
-            (reduce-kv (fn [result k v]
-                           (let [k (keywordize-keys k)]
-                                (assoc result k v)))
-                       {} n))
-
-          (reduce-vector
-            ; @param (vector) n
-            ;
-            ; @return (vector)
-            [n]
-            (vec (reduce (fn [result x]
-                             (let [x (keywordize-keys x)]
-                                  (conj result x)))
-                         [] n)))
-
-          (keywordize-string
-            ; @param (string) n
-            ;
-            ; @example
-            ;  (keywordize-string "my-namespace/key")
-            ;  =>
-            ;  :my-namespace/key
-            ;
-            ; @return (keyword)
-            [n]
-            (keyword n))]
-
-         ; keywordize-keys
-         (cond (string? n) (keywordize-string n)
-               (map?    n) (reduce-map        n)
-               (vector? n) (reduce-vector     n)
-               :else       (return            n))))
+  (cond (map?    n) (map/->values   n keywordize-keys)
+        (vector? n) (vector/->items n keywordize-keys)
+        :else       (keyword        n)))

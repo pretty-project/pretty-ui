@@ -15,7 +15,6 @@
 
 (ns x.app-utils.http
    (:require [app-fruits.http :as http]
-             [mid-fruits.map  :as map]
              [x.app-core.api  :as a]))
 
 
@@ -37,7 +36,7 @@
   ;   :handler (function)
   ;   :progress-handler (function)}
   [request-id {:keys [error-handler-event handler-event progress-handler-event] :as request-props}]
-  (cond-> (map/inherit request-props [:body :method :params :timeout :uri])
+  (cond-> (select-keys request-props [:body :method :params :timeout :uri])
           (some? error-handler-event)
           (assoc :error-handler
                  (fn [request-id server-response]

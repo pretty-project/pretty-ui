@@ -497,17 +497,16 @@
   (fn [{:keys [db]} [_ field-id]]
       (let [emptiable? (r element/get-element-prop db field-id :emptiable?)
             on-enter   (r element/get-element-prop db field-id :on-enter)]
-           {:dispatch-cond
-            [(boolean emptiable?)
-             [:environment/reg-keypress-event! ::on-escape-pressed
-                                               {:key-code  27
-                                                :on-keyup  [:elements/empty-field! field-id]
-                                                :required? true}]
-             (some? on-enter)
-             [:environment/reg-keypress-event! ::on-enter-pressed
-                                               {:key-code  13
-                                                :on-keyup  on-enter
-                                                :required? true}]]})))
+           {:dispatch-cond [(boolean emptiable?)
+                            [:environment/reg-keypress-event! ::on-escape-pressed
+                                                              {:key-code  27
+                                                               :on-keyup  [:elements/empty-field! field-id]
+                                                               :required? true}]
+                            (some? on-enter)
+                            [:environment/reg-keypress-event! ::on-enter-pressed
+                                                              {:key-code  13
+                                                               :on-keyup  on-enter
+                                                               :required? true}]]})))
 
 (a/reg-event-fx
   :elements/remove-field-keypress-events?!
@@ -517,11 +516,10 @@
   (fn [{:keys [db]} [_ field-id]]
       (let [emptiable? (r element/get-element-prop db field-id :emptiable?)
             on-enter   (r element/get-element-prop db field-id :on-enter)]
-           {:dispatch-cond
-            [(boolean emptiable?)
-             [:environment/remove-keypress-event! ::on-escape-pressed]
-             (some? on-enter)
-             [:environment/remove-keypress-event! ::on-enter-pressed]]})))
+           {:dispatch-cond [(boolean emptiable?)
+                            [:environment/remove-keypress-event! ::on-escape-pressed]
+                            (some? on-enter)
+                            [:environment/remove-keypress-event! ::on-enter-pressed]]})))
 
 (a/reg-event-fx
   :elements/empty-field!

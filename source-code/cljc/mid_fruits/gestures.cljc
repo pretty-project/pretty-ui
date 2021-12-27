@@ -24,20 +24,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- suffix->trail-base
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/suffix->trail-base "copy")
-  ;  =>
-  ;  " copy "
-  ;
-  ; @return (string)
-  [suffix]
-  (str " " suffix " "))
-
 (defn- label->label-base
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,6 +48,7 @@
   ; WARNING!
   ;  A függvény nem vizsgálja, hogy a trail-base után következő szöveg
   ;  valóban csak számot tartalmaz!
+  ;
   ; @example
   ;  (gestures/label->label-base "My item copy 2 xyz" "copy")
   ;  =>
@@ -100,7 +87,7 @@
   ;
   ; @return (string)
   [n suffix]
-  (let [trail-base (suffix->trail-base suffix)]
+  (let [trail-base (str " " suffix " ")]
        (string/after-last-occurence n trail-base)))
 
 (defn- label->first-copy-label?
@@ -126,8 +113,8 @@
   ;
   ; @return (boolean)
   [n suffix]
-  (string/ends-with? (param n)
-                     (str " " suffix)))
+  (let [trail-base (str " " suffix)]
+       (string/ends-with? n trail-base)))
 
 (defn- label->nth-copy-label?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -152,9 +139,9 @@
   ;
   ; @return (boolean)
   [n suffix]
-  (let [trail-base (suffix->trail-base suffix)]
+  (let [trail-base (str " " suffix " ")]
        (boolean (if-let [trail-end (string/after-last-occurence n trail-base)]
-                        (mixed/mixed->number? trail-end)))))
+                        (mixed/str-number? trail-end)))))
 
 (defn- label->next-copy-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -185,9 +172,9 @@
 
         ; "My item copy 2" => "My item copy 3"
         (label->nth-copy-label?   n suffix)
-        (let [copy-dex      (label->nth-copy-dex        n suffix)
-              next-copy-dex (mixed/mixed->update-number copy-dex inc)
-              label-base    (label->label-base          n suffix)]
+        (let [copy-dex      (label->nth-copy-dex n suffix)
+              label-base    (label->label-base   n suffix)
+              next-copy-dex (mixed/update-str-number copy-dex inc)]
              (str label-base " " suffix " " next-copy-dex))
 
         ; "My item" => "My item copy"

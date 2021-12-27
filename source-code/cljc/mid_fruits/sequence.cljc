@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v0.2.0
+; Version: v0.2.4
 
 
 
@@ -39,7 +39,7 @@
   ;  nagyobb, mint max
   [dex min max]
   (cond (>= dex max) min
-        (< dex min)  min
+        (<  dex min) min
         :else (inc dex)))
 
 (defn prev-dex
@@ -62,7 +62,7 @@
   ;  mint max
   [dex min max]
   (cond (<= dex min) max
-        (> dex max)  max
+        (>  dex max) max
         :else (dec dex)))
 
 (defn prev-prev-dex
@@ -85,7 +85,7 @@
   ;  nagyobb, mint max
   [dex min max]
   (cond (not (> max min)) min  ; Ha max nem nagyobb, mint min, akkor min
-        (> dex max)  (dec max) ; Ha dex nagyobb, mint max, akkor max-1
+        (>  dex max) (dec max) ; Ha dex nagyobb, mint max, akkor max-1
         (<= dex min) (dec max) ; Ha dex kisebb-egyenlo, mint min, akkor max-1
         (= dex (inc min)) max  ; Ha dex eggyel tobb, mint min, akkor max
         :else (- dex 2)))      ; Kulonben dex-2

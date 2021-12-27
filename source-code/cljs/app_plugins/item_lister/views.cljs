@@ -23,8 +23,8 @@
               [x.app-layouts.api    :as layouts]
               [x.app-tools.api      :as tools]
               [app-fruits.react-transition    :as react-transition]
-              [app-plugins.item-lister.engine :as engine]
-              [app-plugins.sortable.core      :refer [sortable]]))
+              [app-plugins.item-lister.engine :as engine]))
+              ;[app-plugins.sortable.core      :refer [sortable]]))
 
 
 
@@ -628,7 +628,7 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [downloaded-items] :as body-props}]
-  (vec (reduce-indexed (fn [item-list {:keys [id] :as item} item-dex]
+  (vec (reduce-indexed (fn [item-list item-dex {:keys [id] :as item}]
                            (conj item-list
                                  ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
                                  ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak

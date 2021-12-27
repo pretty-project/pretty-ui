@@ -72,9 +72,9 @@
   ;
   ; @return (integers in vector)
   [files-data]
-  (vec (reduce-indexed (fn [result {:keys [aborted?]} dex]
-                           (if aborted? (return           result)
-                                        (conj result dex)))
+  (vec (reduce-indexed (fn [o dex {:keys [aborted?]}]
+                           (if aborted? (return o)
+                                        (conj   o dex)))
                        [] files-data)))
 
 (defn- view-props->disable-upload-button?
@@ -443,7 +443,7 @@
   ; @return (component)
   [popup-id {:keys [file-count files-data] :as view-props}]
   (let [file-selector (dom/get-element-by-id "x-file-selector")]
-       (vec (reduce-indexed (fn [file-list {:keys [aborted?] :as file-props} file-dex]
+       (vec (reduce-indexed (fn [file-list file-dex {:keys [aborted?] :as file-props}]
                                 (if (boolean aborted?)
                                     (return file-list)
                                     (let [file-object-url (dom/file-selector->file-object-url file-selector file-dex)

@@ -14,11 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.listener
-    (:require [mid-fruits.candy         :refer [param return]]
-              [mid-fruits.map           :as map]
-              [x.app-components.content :rename {component content}]
-              [x.app-core.api           :as a]
-              [x.mid-ui.api             :as ui]))
+    (:require [mid-fruits.candy :refer [param return]]
+              [x.app-core.api   :as a]
+              [x.app-components.content :rename {component content}]))
 
 
 
@@ -49,13 +47,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (metamorphic-content)
-(def DEFAULT-PENDING-CONTENT #'ui/loading-animation-d)
+(def DEFAULT-PENDING-CONTENT "")
 
 ; @constant (metamorphic-content)
-(def DEFAULT-FAILURE-CONTENT #'ui/failure-animation-a)
+(def DEFAULT-FAILURE-CONTENT "")
 
 ; @constant (metamorphic-content)
-(def DEFAULT-SUCCESS-CONTENT #'ui/success-animation-a)
+(def DEFAULT-SUCCESS-CONTENT "")
 
 
 
@@ -67,9 +65,8 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit (param extended-props)
-               [:content :content-props :failure-content :infinite-listening?
-                :listening? :pending-content :request-id :subscriber :success-content]))
+  (select-keys extended-props [:content :content-props :failure-content :infinite-listening?
+                               :listening? :pending-content :request-id :subscriber :success-content]))
 
 (defn- context-props->listen-to-request?
   ; WARNING! NON-PUBLIC! DO NOT USE!

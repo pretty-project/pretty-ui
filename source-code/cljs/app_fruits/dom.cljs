@@ -226,7 +226,11 @@
 (defn get-viewport-profile
   ; @return (keyword)
   []
-  (map/get-first-match-key VIEWPORT-PROFILES viewport-profile-match?))
+  (let [viewport-width (.-innerWidth js/window)]
+       (letfn [(match-f [{:keys [min max]}]
+                        (and (>= viewport-width min)
+                             (<= viewport-width max)))]
+              (map/get-first-match-key VIEWPORT-PROFILES match-f))))
 
 (defn get-viewport-orientation
   ; @return (keyword)

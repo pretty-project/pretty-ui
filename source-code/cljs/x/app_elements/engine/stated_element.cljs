@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.stated-element
-    (:require [mid-fruits.map :as map]
-              [x.app-components.api          :as components]
+    (:require [x.app-components.api          :as components]
               [x.app-elements.engine.element :as element]))
 
 
@@ -62,7 +61,7 @@
   ; @return (map)
   ;  {...}
   [base-props]
-  (map/inherit base-props CONSTANT-PROPS-KEYS))
+  (select-keys base-props CONSTANT-PROPS-KEYS))
 
 
 

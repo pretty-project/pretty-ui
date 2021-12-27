@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.16
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.4.0
+; Version: v0.3.8
+; Compatibility: x4.5.0
 
 
 
@@ -14,16 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.debug-handler
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.loop   :refer [reduce-while]]
-              [mid-fruits.string :as string]))
+    (:require [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
+; @constant (strings in vector)
 (def SAFEWORDS ["pineapple-juice" "avocado-juice"])
 
 
@@ -36,18 +35,11 @@
   ;
   ; @return (boolean)
   [query-string]
-  (reduce-while (fn [_ %2] (string/contains-part? query-string %2))
-                (param false)
-                (param SAFEWORDS)
-                (fn [%1 _] (true? %1))))
+  (vector/any-item-match? SAFEWORDS #(string/contains-part? query-string %)))
 
 (defn query-string->debug-mode
   ; @param (string) query-string
   ;
   ; @return (string)
   [query-string]
-  (reduce-while (fn [_ %2] (if (string/contains-part? query-string %2)
-                               (return %2)))
-                (param nil)
-                (param SAFEWORDS)
-                (fn [%1 _] (some? %1))))
+  (vector/first-filtered SAFEWORDS #(string/contains-part? query-string %)))

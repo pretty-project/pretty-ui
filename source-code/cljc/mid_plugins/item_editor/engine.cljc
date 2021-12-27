@@ -82,7 +82,7 @@
   [_ item-namespace item-id]
   (= item-id (str "new-" (name item-namespace))))
 
-(defn item-id->form-label
+(defn item-id->editor-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -90,12 +90,12 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (engine/item-id->form-label :my-extension :my-type "new-my-type")
+  ;  (engine/item-id->editor-label :my-extension :my-type "new-my-type")
   ;  =>
   ; :add-my-type
   ;
   ; @example
-  ;  (engine/item-id->form-label :my-extension :my-type "my-item")
+  ;  (engine/item-id->editor-label :my-extension :my-type "my-item")
   ;  =>
   ; :edit-my-type
   ;

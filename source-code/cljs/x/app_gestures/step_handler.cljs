@@ -29,7 +29,7 @@
 (def DEFAULT-STEP-INTERVAL 5000)
 
 ; @constant (ms)
-(def DEFAULT-STEP-DURATION    0)
+(def DEFAULT-STEP-DURATION 0)
 
 
 
@@ -41,8 +41,7 @@
   ;
   ; @return (map)
   [extended-props]
-  (map/inherit (param extended-props)
-               [:autostep? :infinite-stepping? :paused? :steps :step-duration :step-interval]))
+  (select-keys extended-props [:autostep? :infinite-stepping? :paused? :steps :step-duration :step-interval]))
 
 
 
