@@ -93,7 +93,7 @@
   ;  {:body (map)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
@@ -102,7 +102,7 @@
   ;     :content-props (map)(opt)
   ;     :sticky? (boolean)(opt)
   ;      Default: true
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center

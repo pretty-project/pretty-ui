@@ -35,7 +35,7 @@
   [db _]
   (get-in db (db/path ::primary :header-title)))
 
-(defn- get-view-props
+(defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -52,7 +52,7 @@
    :render-header?  (r interface/application-interface? db)
    :viewport-small? (r environment/viewport-small?      db)})
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :ui/get-header-props get-header-props)
 
 
 
@@ -79,7 +79,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;  {:at-home? (boolean)}
   ;
   ; @return (component)
@@ -95,7 +95,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;
   ; @return (component)
   [_ _]
@@ -107,7 +107,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;
   ; @return (component)
   [_ _]
@@ -119,7 +119,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;
   ; @return (component)
   [_ _]
@@ -132,7 +132,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;
   ; @return (component)
   [_ _]
@@ -144,7 +144,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;  {:header-title (metamorphic-content)(opt)
   ;   :viewport-small? (boolean)}
   ;
@@ -156,31 +156,31 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;  {:label (metamorphic-content)(opt)
   ;   :parent-path (string)(opt)}
   ;
   ; @return (component)
-  [header-id {:keys [header-title parent-path] :as view-props}]
-  [:<> [:div.x-app-header--block (if (some? parent-path)  [header-up-icon-button        header-id view-props]
-                                                          [header-apps-icon-button      header-id view-props])]
-       [:div.x-app-header--block (if (some? header-title) [header-label                 header-id view-props])]
-       [:div.x-app-header--block (if (a/debug-mode?) [:<> [header-dev-tools-icon-button header-id view-props]
-                                                          [header-menu-icon-button      header-id view-props]]
-                                                     [:<> [header-menu-icon-button      header-id view-props]])]])
+  [header-id {:keys [header-title parent-path] :as header-props}]
+  [:<> [:div.x-app-header--block (if (some? parent-path)  [header-up-icon-button        header-id header-props]
+                                                          [header-apps-icon-button      header-id header-props])]
+       [:div.x-app-header--block (if (some? header-title) [header-label                 header-id header-props])]
+       [:div.x-app-header--block (if (a/debug-mode?) [:<> [header-dev-tools-icon-button header-id header-props]
+                                                          [header-menu-icon-button      header-id header-props]]
+                                                     [:<> [header-menu-icon-button      header-id header-props]])]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) header-id
-  ; @param (map) view-props
+  ; @param (map) header-props
   ;  {:render-header? (boolean)}
   ;
   ; @return (component)
-  [header-id {:keys [render-header?] :as view-props}]
+  [header-id {:keys [render-header?] :as header-props}]
   (cond (boolean render-header?)
         [:div#x-app-header {:data-nosnippet true}
-                           [header-label-bar header-id view-props]]))
+                           [header-label-bar header-id header-props]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -189,4 +189,4 @@
   []
   [components/subscriber ::view
                          {:component  #'header
-                          :subscriber [::get-view-props]}])
+                          :subscriber [:ui/get-header-props]}])

@@ -245,7 +245,7 @@
   ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :height (px)(opt)
   ;   :item-count (integer)(opt)
   ;   :label (metamorphic-content)

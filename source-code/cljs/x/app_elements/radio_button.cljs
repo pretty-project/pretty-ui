@@ -154,7 +154,7 @@
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
+  ;   :disabler (subscription-vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return

@@ -25,7 +25,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- items-marked-dialog-body
+(defn items-marked-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -45,7 +45,7 @@
                               :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]
             [elements/horizontal-separator {:size :s}]]))
 
-(defn- items-deleted-dialog-body
+(defn items-deleted-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

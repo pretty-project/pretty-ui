@@ -23,7 +23,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-meta-value
+(defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -33,6 +33,32 @@
   ; @return (*)
   [db [_ extension-id editor-id prop-id]]
   (get-in db [extension-id :value-editor/meta-items editor-id prop-id]))
+
+(defn edit-original?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id editor-id]]
+  ; WARNING!
+  ; Az {:value-path nil} beállítással indított szerkesztő {:edit-path [...]} és {:value-path [...]}
+  ; tulajdonságai megegyeznek, ami megfelel az {:edit-original? true} beállítás használatának,
+  ; és függetlenül az {:edit-original? ...} beállítás értékétől!
+  (= (r get-meta-value db extension-id editor-id :edit-path)
+     (r get-meta-value db extension-id editor-id :value-path)))
+
+(defn get-original-value
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (string)
+  [db [_ extension-id editor-id]]
+  (let [value-path (r get-meta-value db extension-id editor-id :value-path)]
+       (get-in db value-path)))
 
 (defn get-editor-value
   ; @param (keyword) extension-id
@@ -86,8 +112,16 @@
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:helper (metamorphic-content)}
+  ;  {:edit-path (item-path vector)
+  ;   :helper (metamorphic-content)
+  ;   :label (metamorphic-content)
+  ;   :modifier (function)
+  ;   :validator (map)}
   [db [_ extension-id editor-id]]
-  {:helper (r get-meta-value db extension-id editor-id :helper)})
+  {:edit-path (r get-meta-value db extension-id editor-id :edit-path)
+   :helper    (r get-meta-value db extension-id editor-id :helper)
+   :label     (r get-meta-value db extension-id editor-id :label)
+   :modifier  (r get-meta-value db extension-id editor-id :modifier)
+   :validator (r get-meta-value db extension-id editor-id :validator)})
 
 (a/reg-sub :value-editor/get-body-props get-body-props)

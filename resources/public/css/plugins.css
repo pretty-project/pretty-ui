@@ -73,7 +73,7 @@
 /*** Item-lister header ***/
 
 #item-lister--header--structure {
-   -transition: .15s height;
+   height: 48px;
    width: 100% }
 
  /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként
@@ -83,6 +83,10 @@
   animation-duration: .25s;
   animation-iteration-count: 1;
   animation-fill-mode: both;
+  /* A különböző menü sávok eltűnése és megjelenése közben szükséges biztosítani,
+   * hogy az egyidőben és ezért egymás alatt/felett megjelenített sávok közül a z-tengelyen
+   * alacsonyabb pozícióban lévő sávot eltakarja a magasabb pozícióban lévő sáv */
+  background-color: var( --background-color );
   bottom: 0;
   display: flex;
   justify-content: space-between;
@@ -96,24 +100,11 @@
 .item-lister--header--menu-item-group {
   display: flex }
 
-.item-lister--header--item-filters {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100% }
-
-.item-lister--header--menu-bar,
-.item-lister--header--item-filters {
-  /* A különböző menü sávok eltűnése és megjelenése közben szükséges biztosítani,
-   * hogy az egyidőben és ezért egymás alatt/felett megjelenített sávok közül a z-tengelyen
-   * alacsonyabb pozícióban lévő sávot eltakarja a magasabb pozícióban lévő sáv */
-  background-color: var( --background-color ) }
-
 /*** Item-lister header ***/
 
 /*** Item-lister body ***/
 
-.item-lister--structure {
+.item-lister--body--structure {
   width: 100% }
 
 /*** Item-lister body ***/

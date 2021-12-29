@@ -140,6 +140,7 @@
 (def get-input-value        input/get-input-value)
 (def get-input-props        input/get-input-props)
 (def reset-input-value!     input/reset-input-value!)
+(def clear-input-value!     input/clear-input-value!)
 
 ; x.app-elements.engine.input-group
 (def get-input-group-props input-group/get-input-group-props)

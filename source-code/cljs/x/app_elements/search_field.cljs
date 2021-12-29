@@ -59,7 +59,7 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
+  ;   :disabler (subscription-vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: true
@@ -94,7 +94,7 @@
   ;   :surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
   ; @usage

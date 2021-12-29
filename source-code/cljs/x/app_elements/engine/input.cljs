@@ -181,8 +181,8 @@
   ; @return (boolean)
   [db [_ input-id]]
   (let [input-value (r get-input-value db input-id)]
-       (boolean (or (nil? input-value)
-                    (= input-value "")))))
+       (or (nil? input-value)
+           (=    input-value ""))))
 
 (defn input-nonempty?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -266,12 +266,12 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (boolean (or (and (r input-nonempty?           db input-id)
-                    (r pre-validate-input-value? db input-id)
-                    (not (r input-value-valid?   db input-id)))
-               (and (r input-visited?            db input-id)
-                    (r validate-input-value?     db input-id)
-                    (not (r input-value-valid?   db input-id))))))
+  (or (and (r input-nonempty?           db input-id)
+           (r pre-validate-input-value? db input-id)
+           (not (r input-value-valid?   db input-id)))
+      (and (r input-visited?            db input-id)
+           (r validate-input-value?     db input-id)
+           (not (r input-value-valid?   db input-id)))))
 
 (defn input-value-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -282,9 +282,9 @@
   ;  Az input-value értéke nem NIL, FALSE vagy ""
   [db [_ input-id]]
   (let [value (r get-input-value db input-id)]
-       (boolean (and (not= value nil)
-                     (not= value false)
-                     (not= value "")))))
+       (and (not= value nil)
+            (not= value false)
+            (not= value ""))))
 
 (defn input-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -295,10 +295,10 @@
   ;  Az input-value értéke nem NIL, FALSE vagy "" (vagy nem required),
   ;  és ha az inputot validálni kell, akkor az input-value értéke valid-e
   [db [_ input-id]]
-  (boolean (and (or (r input-value-passed?        db input-id)
-                    (not (r input-required?       db input-id)))
-                (or (not (r validate-input-value? db input-id))
-                    (r input-value-valid?         db input-id)))))
+  (and (or (r input-value-passed?        db input-id)
+           (not (r input-required?       db input-id)))
+       (or (not (r validate-input-value? db input-id))
+           (r input-value-valid?         db input-id))))
 
 (defn input-required-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -307,9 +307,9 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (boolean (and (r input-visited?           db input-id)
-                (r input-required?          db input-id)
-                (not (r input-value-passed? db input-id)))))
+  (and (r input-visited?           db input-id)
+       (r input-required?          db input-id)
+       (not (r input-value-passed? db input-id))))
 
 (defn input-required-success?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -318,9 +318,9 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (boolean (and (r input-visited?      db input-id)
-                (r input-required?     db input-id)
-                (r input-value-passed? db input-id))))
+  (and (r input-visited?      db input-id)
+       (r input-required?     db input-id)
+       (r input-value-passed? db input-id)))
 
 (defn autoclear-input?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -422,14 +422,19 @@
 (a/reg-event-db :elements/reset-input-value! reset-input-value!)
 
 (defn clear-input-value!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) input-id
+  ;
+  ; @usage
+  ;  (r elements/clear-input-value! db :my-input)
   ;
   ; @return (map)
   [db [_ input-id]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
        (dissoc-in db value-path)))
+
+; @usage
+;  [:elements/clear-input-value! :my-input]
+(a/reg-event-db :elements/clear-input-value! clear-input-value!)
 
 (defn set-input-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -441,19 +446,6 @@
   [db [_ input-id value]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
        (assoc-in db value-path value)))
-
-(defn- autoclear-input?!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (if (r autoclear-input?   db input-id)
-      (r clear-input-value! db input-id)
-      (return               db)))
-
-(a/reg-event-db :elements/autoclear-input?! autoclear-input?!)
 
 
 

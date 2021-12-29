@@ -696,3 +696,17 @@
   ; @return (map)
   [n f]
   (reduce-kv #(assoc %1 %2 (f %3)) {} n))
+
+(defn ->kv
+  ; @param (map) n
+  ; @param (function) k-f
+  ; @param (function) v-f
+  ;
+  ; @example
+  ;  (map/->keys {:a 1 :b 2} name inc)
+  ;  =>
+  ;  {"a" 2 "b" 3}
+  ;
+  ; @return (map)
+  [n k-f v-f]
+  (reduce-kv #(assoc %1 (k-f %2) (v-f %3)) {} n))

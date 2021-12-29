@@ -75,11 +75,11 @@
   ; @param (map) context-props
   ;  {:component (component)
   ;   :element-props (map)
-  ;    {:disabler (subscription vector)(opt)}
+  ;    {:disabler (subscription-vector)(opt)}
   ;   :destructor (metamorphic-event)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :modifier (function)(opt)
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;   :updater (metamorphic-event)(opt)}
   ;
   ; @return (component)

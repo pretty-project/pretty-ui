@@ -302,7 +302,7 @@
   ;   :context-surface (map)(opt)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :filesize (B)(opt)
   ;   :height (px)(opt)
   ;   :icon (keyword)(opt)

@@ -19,39 +19,39 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def collection-name "clients")
+(def COLLECTION-NAME "clients")
 
 
 
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- env->field-operation
+(defn- env->name-field-operation
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [request           (pathom/env->request env)
         selected-language (user/request->user-settings-item request :selected-language)
         name-order        (get locales/NAME-ORDERS selected-language)]
-       ; - A pipeline elejére fűz egy field-operation műveletet, amivel hozzáadja a :client/name tulajdonságot
-       ;   a dokumentumokhoz.
-       ; - A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által kiválaszott nyelv
-       ;   szerinti sorrendet alkalmazza.
+       ; - A pipeline elejére fűz egy field-operation műveletet, amivel hozzáadja a :client/name
+       ;   tulajdonságot a dokumentumokhoz.
+       ; - A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által
+       ;   kiválaszott nyelv szerinti sorrendet alkalmazza.
        (case name-order :reversed (mongo-db/field-pattern->field-operation [:client/name [:client/last-name  :client/first-name]])
                                   (mongo-db/field-pattern->field-operation [:client/name [:client/first-name :client/last-name]]))))
 
-(defn- env->search-pipeline
+(defn- env->get-pipeline
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
-  (let [field-operation (env->field-operation             env)
-        search-pipeline (item-lister/env->search-pipeline env :clients :client)]
-       (vector/cons-item search-pipeline field-operation)))
+  (let [name-field-operation (env->name-field-operation     env)
+        get-pipeline         (item-lister/env->get-pipeline env :clients :client)]
+       (vector/cons-item get-pipeline name-field-operation)))
 
 (defn- env->count-pipeline
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
-  (let [field-operation (env->field-operation            env)
+  (let [name-field-operation (env->name-field-operation  env)
         count-pipeline  (item-lister/env->count-pipeline env :clients :client)]
-       (vector/cons-item count-pipeline field-operation)))
+       (vector/cons-item count-pipeline name-field-operation)))
 
 
 
@@ -70,12 +70,10 @@
              ;     :documents (maps in vector)}}
              [env _]
              {:clients/get-client-items
-              (let [search-pipeline (env->search-pipeline env)
-                    count-pipeline  (env->count-pipeline  env)]
-                    ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
-                   {:documents      (mongo-db/get-documents-by-pipeline   collection-name search-pipeline)
-                    ; A keresési feltételeknek megfelelő dokumentumok száma
-                    :document-count (mongo-db/count-documents-by-pipeline collection-name count-pipeline)})})
+              (let [get-pipeline   (env->get-pipeline   env)
+                    count-pipeline (env->count-pipeline env)]
+                   {:documents      (mongo-db/get-documents-by-pipeline   COLLECTION-NAME get-pipeline)
+                    :document-count (mongo-db/count-documents-by-pipeline COLLECTION-NAME count-pipeline)})})
 
 (defresolver get-client-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,7 +101,7 @@
                             :client/phone-number
                             :client/vat-no
                             :client/zip-code]}
-             (if-let [document (mongo-db/get-document-by-id collection-name id)]
+             (if-let [document (mongo-db/get-document-by-id COLLECTION-NAME id)]
                      (validator/validate-data document)))
 
 
@@ -120,7 +118,7 @@
              ; @return (namespaced map)
              [_ client-item]
              {::pco/op-name 'clients/undo-delete-client-item!}
-             (mongo-db/add-document! collection-name client-item))
+             (mongo-db/add-document! COLLECTION-NAME client-item))
 
 (defmutation undo-delete-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -131,7 +129,7 @@
              ; @return (namespaced maps in vector)
              [{:keys [items]}]
              {::pco/op-name 'clients/undo-delete-client-items!}
-             (mongo-db/add-documents! collection-name items))
+             (mongo-db/add-documents! COLLECTION-NAME items))
 
 (defmutation save-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,8 +140,8 @@
              ; @return (namespaced map)
              [env client-item]
              {::pco/op-name 'clients/save-client-item!}
-             (mongo-db/upsert-document! collection-name client-item
-                                        {:prototype-f #(item-editor/updated-item-prototype env %)}))
+             (mongo-db/upsert-document! COLLECTION-NAME client-item
+                                        {:prototype-f #(item-editor/updated-item-prototype env :clients :client %)}))
 
 (defmutation merge-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -154,8 +152,8 @@
              ; @return (namespaced map)
              [env client-item]
              {::pco/op-name 'clients/merge-client-item!}
-             (mongo-db/merge-document! collection-name client-item
-                                       {:prototype-f #(item-editor/updated-item-prototype env %)}))
+             (mongo-db/merge-document! COLLECTION-NAME client-item
+                                       {:prototype-f #(item-editor/updated-item-prototype env :clients :client %)}))
 
 (defmutation merge-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,8 +165,8 @@
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
              {::pco/op-name 'clients/merge-client-items!}
-             (mongo-db/merge-documents! collection-name items
-                                        {:prototype-f #(item-lister/updated-item-prototype env %)}))
+             (mongo-db/merge-documents! COLLECTION-NAME items
+                                        {:prototype-f #(item-lister/updated-item-prototype env :clients :client %)}))
 
 (defmutation delete-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -179,7 +177,7 @@
              ; @return (string)
              [{:keys [item-id]}]
              {::pco/op-name 'clients/delete-client-item!}
-             (mongo-db/remove-document! collection-name item-id))
+             (mongo-db/remove-document! COLLECTION-NAME item-id))
 
 (defmutation delete-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -190,7 +188,7 @@
              ; @return (strings in vector)
              [{:keys [item-ids]}]
              {::pco/op-name 'clients/delete-client-items!}
-             (mongo-db/remove-documents! collection-name item-ids))
+             (mongo-db/remove-documents! COLLECTION-NAME item-ids))
 
 (defmutation duplicate-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -201,8 +199,8 @@
              ; @return (namespaced map)
              [env client-item]
              {::pco/op-name 'clients/duplicate-client-item!}
-             (mongo-db/add-document! collection-name client-item
-                                     {:prototype-f #(item-editor/duplicated-item-prototype env %)}))
+             (mongo-db/add-document! COLLECTION-NAME client-item
+                                     {:prototype-f #(item-editor/duplicated-item-prototype env :clients :client %)}))
 
 
 

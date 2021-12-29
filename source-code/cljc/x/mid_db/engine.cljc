@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.15
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.1.7
+; Version: v0.8.6
+; Compatibility: x4.5.0
 
 
 
@@ -31,7 +31,7 @@
   ;
   ; @example
   ;  (db/item-path->cofx-path [:my :item :path])
-  ;  => 
+  ;  =>
   ;  [:db :my :item :path]
   ;
   ; @return (item-path vector)
@@ -76,7 +76,20 @@
 (defn empty-db!
   ; @return (map)
   [_ _]
-  (param {}))
+  (return {}))
+
+(defn copy-item!
+  ; @param (item-path vector) from-item-path
+  ; @param (item-path vector) to-item-path
+  ;
+  ; @usage
+  ;  (r db/copy-item! [:move :from :path] [:move :to :path])
+  ;
+  ; @return (map)
+  [db [_ from-item-path to-item-path]]
+  (if-let [item (get-in db from-item-path)]
+          (assoc-in  db to-item-path item)
+          (dissoc-in db to-item-path)))
 
 (defn move-item!
   ; @param (item-path vector) from-item-path
@@ -87,10 +100,10 @@
   ;
   ; @return (map)
   [db [_ from-item-path to-item-path]]
-  (let [item (get-in db from-item-path)]
-       (if (some? item)
-           (-> db (assoc-in  to-item-path item)
-                  (dissoc-in from-item-path)))))
+  (if-let [item (get-in db from-item-path)]
+          (-> db (assoc-in  to-item-path item)
+                 (dissoc-in from-item-path))
+          (dissoc-in db to-item-path)))
 
 (defn set-item!
   ; @param (item-path vector) item-path
@@ -187,10 +200,7 @@
   ;
   ; @return (map)
   [db [_ & item-paths]]
-  (reduce (fn [updated-db item-path]
-              (r set-item! updated-db item-path nil))
-          (param db)
-          (param item-paths)))
+  (reduce #(r set-item! %1 %2 nil) db item-paths))
 
 (defn inc-item-n!
   ; @param (vectors in vector) item-paths
@@ -200,10 +210,7 @@
   ;
   ; @return (map)
   [db [_ & item-paths]]
-  (reduce (fn [updated-db item-path]
-              (assoc-in updated-db item-path (inc (get-in db item-path))))
-          (param db)
-          (param item-paths)))
+  (reduce #(assoc-in %1 %2 (inc (get-in db %2))) db item-paths))
 
 (defn dec-item-n!
   ; @param (vectors in vector) item-paths
@@ -213,10 +220,7 @@
   ;
   ; @return (map)
   [db [_ & item-paths]]
-  (reduce (fn [updated-db item-path]
-              (assoc-in updated-db item-path (dec (get-in db item-path))))
-          (param db)
-          (param item-paths)))
+  (reduce #(assoc-in %1 %2 (dec (get-in db %2))) db item-paths))
 
 (defn apply!
   ; @param (item-path vector) item-path
@@ -249,7 +253,7 @@
   [db [_ items item-paths]]
   ; Ahhoz, hogy a distribute-items! függvény egymásba ágyazott (nested) útvonalak kezelését
   ; is végezze, szükséges a függvényt rekurzívan alkalmazni.
-  (letfn [(distribute-items!
+  (letfn [(distribute-items-f!
             ; @param (map) items
             ; @param (map) item-paths
             ; @param (vector) base-path
@@ -285,5 +289,5 @@
          ; distribute-items!
          (if (and (map/nonempty? items)
                   (map/nonempty? item-paths))
-             (r distribute-items! db items item-paths [])
+             (r distribute-items-f! db items item-paths [])
              (return db))))

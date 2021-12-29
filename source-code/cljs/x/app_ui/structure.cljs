@@ -36,7 +36,7 @@
 (defn- ui-structure-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) structure-props
   ;  {:interface (keyword)(opt)
   ;   :scrolled-to-top? (boolean)(opt)}
   ;
@@ -52,7 +52,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-structure-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -63,7 +63,7 @@
    :interface        (r interface/get-interface      db)
    :scrolled-to-top? (r environment/scrolled-to-top? db)})
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :ui/get-structure-props get-structure-props)
 
 
 
@@ -73,23 +73,23 @@
 (defn- locked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) view-id
-  ; @param (map) view-props
+  ; @param (keyword) structure-id
+  ; @param (map) structure-props
   ;
   ; @return (hiccup)
-  [_ view-props]
-  [:div#x-app-ui-structure (ui-structure-attributes view-props)
+  [_ structure-props]
+  [:div#x-app-ui-structure (ui-structure-attributes structure-props)
                            [app-locker]])
 
 (defn- unlocked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) view-id
-  ; @param (map) view-props
+  ; @param (keyword) structure-id
+  ; @param (map) structure-props
   ;
   ; @return (hiccup)
-  [_ view-props]
-  [:div#x-app-ui-structure (ui-structure-attributes view-props)
+  [_ structure-props]
+  [:div#x-app-ui-structure (ui-structure-attributes structure-props)
                           ;[app-sounds]
                            [app-background]
                            [app-surface]
@@ -101,14 +101,14 @@
 (defn- client-lock-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) view-id
-  ; @param (map) view-props
+  ; @param (keyword) structure-id
+  ; @param (map) structure-props
   ;  {:client-locked? (boolean)}
   ;
   ; @return (hiccup)
-  [view-id {:keys [client-locked?] :as view-props}]
-  (if client-locked? [locked-ui-structure   view-id view-props]
-                     [unlocked-ui-structure view-id view-props]))
+  [structure-id {:keys [client-locked?] :as structure-props}]
+  (if client-locked? [locked-ui-structure   structure-id structure-props]
+                     [unlocked-ui-structure structure-id structure-props]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,4 +117,4 @@
   []
   [components/subscriber ::view
                          {:component  #'client-lock-controller
-                          :subscriber [::get-view-props]}])
+                          :subscriber [:ui/get-structure-props]}])

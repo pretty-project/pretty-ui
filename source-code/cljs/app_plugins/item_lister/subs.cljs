@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.4.9
+; Version: v0.6.8
+; Compatibility: x4.5.0
 
 
 
@@ -262,16 +262,6 @@
   (let [search-term  (r get-meta-value db extension-id item-namespace :search-term)]
        (str search-term)))
 
-(defn any-filter-in-use?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (boolean)
-  [db [_ extension-id]]
-  (let [selected-filter (get-in db [extension-id :item-lister/meta-items :filter])]
-       (some? selected-filter)))
-
 (defn some-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -322,11 +312,8 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ extension-id item-namespace item-ids]]
-  (vec (reduce (fn [result item-id]
-                   (let [backup-item   (get-in db [extension-id :item-lister/backup-items item-id])
-                         exported-item (db/document->namespaced-document backup-item item-namespace)]
-                        (conj result exported-item)))
-               [] item-ids)))
+  (vector/->items item-ids #(let [backup-item (get-in db [extension-id :item-lister/backup-items %])]
+                                 (db/document->namespaced-document backup-item item-namespace))))
 
 (defn export-marked-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -347,13 +334,11 @@
   ; @return (namespaced maps in vector)
   [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
   (let [item-dexes  (r get-selected-item-dexes db extension-id item-namespace)
-        item-id-key (keyword item-namespace :id)]
-       (vec (reduce (fn [result item-dex]
-                        (let [item-id      (get-in db [extension-id :item-lister/data-items item-dex :id])
-                              marker-value (get-in db [extension-id :item-lister/data-items item-dex marker-key])
-                              marker-key   (keyword item-namespace marker-key)]
-                             (conj result {item-id-key item-id marker-key (toggle-f marker-value)})))
-                    [] item-dexes))))
+        item-id-key (keyword item-namespace :id)
+        marker-key  (keyword item-namespace marker-key)]
+       (vector/->items item-dexes #(let [item-id      (get-in db [extension-id :item-lister/data-items % :id])
+                                         marker-value (get-in db [extension-id :item-lister/data-items % marker-key])]
+                                        {item-id-key item-id marker-key (toggle-f marker-value)}))))
 
 (defn export-unmarked-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -377,12 +362,10 @@
   ; XXX#7810
   ; Az elemek megjelőlésének visszavonásához szükséges azokról másolatot készíteni,
   ; mivel az item-lister plugin a megjelölt elemeket eltávolítja a letöltött elemek listájából.
-  (let [item-id-key (keyword item-namespace :id)]
-       (vec (reduce (fn [result item-id]
-                        (let [marker-value (get-in db [extension-id :item-lister/backup-items marker-key])
-                              marker-key   (keyword item-namespace marker-key)]
-                             (conj result {item-id-key item-id marker-key (toggle-f marker-value)})))
-                    [] item-ids))))
+  (let [item-id-key (keyword item-namespace :id)
+        marker-key  (keyword item-namespace marker-key)]
+       (vector/->items item-ids #(let [marker-value (get-in db [extension-id :item-lister/backup-items % marker-key])]
+                                      {item-id-key % marker-key (toggle-f marker-value)}))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -408,9 +391,6 @@
   ;  {:actions-mode? (boolean)
   ;   :all-items-selected? (boolean)
   ;   :any-item-selected? (boolean)
-  ;   :filter-mode? (boolean)
-  ;   :handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :order-changed? (boolean)
   ;   :reorder-mode? (boolean)
@@ -419,16 +399,12 @@
   ;   :synchronizing? (boolean)
   ;   :viewport-small? (boolean)}
   [db [_ extension-id item-namespace]]
-        ; If select-mode is enabled ...
-  (cond (r get-meta-value db extension-id item-namespace :select-mode?)
-        {:select-mode?           true
-         :all-items-selected?    (r all-items-selected? db extension-id item-namespace)
-         :any-item-selected?     (r any-item-selected?  db extension-id item-namespace)
-         :filter                 (r get-meta-value      db extension-id item-namespace :filter)
-         :filter-mode?           (r get-meta-value      db extension-id item-namespace :filter-mode?)
-         :handle-archived-items? (r get-meta-value      db extension-id item-namespace :handle-archived-items?)
-         :handle-favorite-items? (r get-meta-value      db extension-id item-namespace :handle-favorite-items?)
-         :synchronizing?         (r synchronizing?      db extension-id item-namespace)}
+  (cond ; If select-mode is enabled ...
+        (r get-meta-value db extension-id item-namespace :select-mode?)
+        {:select-mode?        true
+         :all-items-selected? (r all-items-selected? db extension-id item-namespace)
+         :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
+         :synchronizing?      (r synchronizing?      db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :search-mode?)
         {:search-mode?   true
@@ -440,14 +416,10 @@
          :synchronizing? (r synchronizing? db extension-id item-namespace)}
         ; Use actions-mode as default ...
         :default
-        {:actions-mode?          true
-         :filter                 (r get-meta-value    db extension-id item-namespace :filter)
-         :filter-mode?           (r get-meta-value    db extension-id item-namespace :filter-mode?)
-         :handle-archived-items? (r get-meta-value    db extension-id item-namespace :handle-archived-items?)
-         :handle-favorite-items? (r get-meta-value    db extension-id item-namespace :handle-favorite-items?)
-         :no-items-to-show?      (r no-items-to-show? db extension-id)
-         :synchronizing?         (r synchronizing?    db extension-id item-namespace)
-         :viewport-small?        (r environment/viewport-small? db)}))
+        {:actions-mode?     true
+         :no-items-to-show? (r no-items-to-show?           db extension-id)
+         :synchronizing?    (r synchronizing?              db extension-id item-namespace)
+         :viewport-small?   (r environment/viewport-small? db)}))
 
 (a/reg-sub :item-lister/get-header-props get-header-props)
 
@@ -469,8 +441,8 @@
   ;   :synchronized? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
-        ; If select-mode is enabled ...
-  (cond (r get-meta-value db extension-id item-namespace :select-mode?)
+  (cond ; If select-mode is enabled ...
+        (r get-meta-value db extension-id item-namespace :select-mode?)
         {:select-mode?      true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)

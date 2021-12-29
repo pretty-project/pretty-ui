@@ -124,9 +124,9 @@
   (let [min-value  (r element/get-element-prop db input-id :min-value)
         value-path (r element/get-element-prop db input-id :value-path)
         value      (get-in db value-path)]
-       (boolean (or (nil? min-value)
-                    (and (some? min-value)
-                         (>     min-value value))))))
+       (or (nil? min-value)
+           (and (some? min-value)
+                (>     min-value value)))))
 
 (defn- input-increasable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -138,9 +138,9 @@
   (let [max-value  (r element/get-element-prop db input-id :max-value)
         value-path (r element/get-element-prop db input-id :value-path)
         value      (get-in db value-path)]
-       (boolean (or (nil? max-value)
-                    (and (some? max-value)
-                         (> max-value value))))))
+       (or (nil? max-value)
+           (and (some? max-value)
+                (>     max-value value)))))
 
 (defn get-countable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

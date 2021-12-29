@@ -140,6 +140,7 @@
 (def get-input-stored-value engine/get-input-stored-value)
 (def get-input-value        engine/get-input-value)
 (def reset-input-value!     engine/reset-input-value!)
+(def clear-input-value!     engine/clear-input-value!)
 (def get-field-value        engine/get-field-value)
 (def set-element-prop!      engine/set-element-prop!)
 (def update-element-prop!   engine/update-element-prop!)

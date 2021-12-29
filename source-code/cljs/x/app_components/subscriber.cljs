@@ -80,7 +80,7 @@
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
   ;   :static-props (map)(opt)
-  ;   :subscriber (subscription vector)
+  ;   :subscriber (subscription-vector)
   ;    Return value must be a map!
   ;   :test-f (function)(opt)}
   ;

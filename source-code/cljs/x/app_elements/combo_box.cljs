@@ -247,13 +247,13 @@
   ;  {:surface (map)
   ;   {:base-props (map)
   ;    :content (metamorphic-content)
-  ;    :subscriber (subscription vector)}}
+  ;    :subscriber (subscription-vector)}}
   ;
   ; @return (map)
   ;  {:surface (map)
   ;   {:base-props (map)
   ;    :content (metamorphic-content)
-  ;    :subscriber (subscription vector)}}
+  ;    :subscriber (subscription-vector)}}
   [field-id {:keys [surface] :as field-props}]
   (let [surface-props (merge {:base-props field-props
                               :content    #'combo-box-surface
@@ -273,7 +273,7 @@
   ;   :default-value (*)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
+  ;   :disabler (subscription-vector)(opt)
   ;   :emptiable? (boolean)(opt)
   ;    Default: true
   ;   :extendable? (boolean)(opt)
@@ -318,7 +318,7 @@
   ;      Default: field-props
   ;     :content (metamorphic-content)(opt)
   ;      Default: #'combo-box-surface
-  ;     :subscriber (subscription vector)(opt)
+  ;     :subscriber (subscription-vector)(opt)
   ;      Default: [:elements/get-combo-box-surface-props field-id]}
   ;   :value-path (item-path vector)(constant)(opt)}
   ;

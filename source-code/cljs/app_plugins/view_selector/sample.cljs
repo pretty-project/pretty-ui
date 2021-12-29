@@ -23,7 +23,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-my-props
+(defn get-my-props
   [db _]
   {:view-id (r view-selector/get-selected-view-id db :my-extension)})
 

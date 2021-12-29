@@ -25,7 +25,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- editor-props->field-props
+(defn editor-props->field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -35,10 +35,12 @@
   ;
   ; @param (map)
   ;  {:auto-focus? (boolean)
+  ;   :min-width (keyword)
   ;   :value-path (item-path vector)}
   [_ _ {:keys [edit-path] :as editor-props}]
-  (merge (select-keys editor-props [:label :validator])
+  (merge (select-keys editor-props [:label :modifier :validator])
          {:auto-focus? true
+          :min-width   :l
           :value-path  edit-path}))
 
 
@@ -46,7 +48,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- save-button
+(defn save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -64,7 +66,7 @@
                     :label     save-button-label
                     :preset    :close-button}])
 
-(defn- cancel-button
+(defn cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -77,7 +79,7 @@
                     :preset   :cancel-button
                     :on-click [:value-editor/cancel-editing! extension-id editor-id]}])
 
-(defn- header
+(defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -90,12 +92,23 @@
                      {:start-content [cancel-button extension-id editor-id header-props]
                       :end-content   [save-button   extension-id editor-id header-props]}])
 
+(defn header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (component)
+  [extension-id editor-id]
+  (let [header-props (a/subscribe [:value-editor/get-header-props extension-id editor-id])]
+       (fn [] [header-structure extension-id editor-id @header-props])))
+
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- editor-helper
+(defn editor-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -104,12 +117,12 @@
   ;  {:helper (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [extension-id editor-id {:keys [helper]}]
+  [_ _ {:keys [helper]}]
   (if (some? helper)
       [:<> [elements/horizontal-separator {:size :l}]
            [elements/text                 {:content helper}]]))
 
-(defn- body
+(defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -124,17 +137,28 @@
             [editor-helper extension-id editor-id body-props]
             [elements/horizontal-separator {:size :l}]]))
 
+(defn body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (component)
+  [extension-id editor-id]
+  (let [body-props (a/subscribe [:value-editor/get-body-props extension-id editor-id])]
+       (fn [] [body-structure extension-id editor-id @body-props])))
+
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx :value-editor/render!
+(a/reg-event-fx :value-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   (fn [_ [_ extension-id editor-id]]
       [:ui/add-popup! (engine/popup-id extension-id editor-id)
-                      {:body   {:content #'body   :subscriber [:value-editor/get-body-props   extension-id editor-id]}
-                       :header {:content #'header :subscriber [:value-editor/get-header-props extension-id editor-id]}}]))
+                      {:body   {:content [body   extension-id editor-id]};
+                       :header {:content [header extension-id editor-id]}}]))

@@ -1,6 +1,7 @@
 
 (ns server-plugins.item-lister.sample
     (:require [mid-fruits.candy  :refer [param return]]
+              [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
               [server-plugins.item-lister.api        :as item-lister]
@@ -32,11 +33,12 @@
              ;     :documents (maps in vector)}}
              [env _]
              {:my-extension/get-my-type-items
-              (let []
+              (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
+                    count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
-                   {:documents []
+                   {:documents      (mongo-db/get-documents-by-pipeline   :my-collection get-pipeline)
                     ; A keresési feltételeknek megfelelő dokumentumok száma
-                    :document-count 0})})
+                    :document-count (mongo-db/count-documents-by-pipeline :my-collection count-pipeline)})})
 
 
 
@@ -89,8 +91,6 @@
   ::lifecycles
   {:on-app-boot [:item-lister/initialize! :my-extension :my-type
                                           {:download-limit         10
-                                           :handle-archived-items? false
-                                           :handle-favorite-items? false
                                            :order-by         ORDER-BY
                                            :order-by-options ORDER-BY-OPTIONS
                                            :search-keys [:my-key :your-key]}]})

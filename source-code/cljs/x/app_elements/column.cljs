@@ -85,7 +85,7 @@
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :vertical
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;   :vertical-align (keyword)(opt)
   ;    :top, :center, :bottom, :space-around, :space-between, :space-evenly
   ;    Default: :top

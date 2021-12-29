@@ -49,15 +49,11 @@
   ;
   ; @return (map)
   ;  {:download-limit (integer)
-  ;   :handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)
   ;   :label (metamorphic-content)
   ;   :order-by (keyword)
   ;   :order-by-options (keywords in vector)}
   [extension-id _ lister-props]
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
-          :handle-archived-items? true
-          :handle-favorite-items? true
           :label            extension-id
           :order-by         DEFAULT-ORDER-BY
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
@@ -69,7 +65,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-route!
+(defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -88,10 +84,7 @@
   ; @param (map)(opt) lister-props
   ;  {:download-limit (integer)(opt)
   ;    Default: DEFAULT-DOWNLOAD-LIMIT
-  ;   :handle-archived-items? (boolean)(opt)
-  ;    Default: true
-  ;   :handle-favorite-items? (boolean)(opt)
-  ;    Default: true
+  ;    Default: DEFAULT-FILTERS
   ;   :label (metamorphic-content)(opt)
   ;    Default: extension-id
   ;   :order-by (keyword)(opt)

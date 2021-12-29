@@ -72,9 +72,9 @@
   ;
   ; @return (boolean)
   []
-  (let [elapsed-time (time/elapsed)]
-       (> (- elapsed-time @separated-at)
-          (param SEPARATOR-DELAY))))
+  (-> (time/elapsed)
+      (- @separated-at)
+      (> SEPARATOR-DELAY)))
 
 (defn- separate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,7 +86,7 @@
        (reset! separated-at elapsed-time)
        (swap!  separator-no inc)
        ; *
-       (.log js/console (str "%c * Thin red line #" @separator-no " *") "color: red")))
+       (.log js/console (str "%c* Thin red line #" @separator-no " *") "color: red")))
 
 
 
@@ -98,34 +98,36 @@
   ;
   ; @return (integer)
   []
-  (let [elapsed-time (time/elapsed)]
-       (- elapsed-time DEBUG-STARTED)))
+  (-> (time/elapsed)
+      (- DEBUG-STARTED)))
 
 (defn timestamp
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (string)
   []
-  (string/bracket (str (time/ms->time (time/elapsed)) " elapsed")))
+  (-> (time/elapsed)
+      (time/ms->time)
+      (str " elapsed")
+      (string/bracket)))
 
 (defn console
   ; @param (string) group-label
   ; @param (*) n
   ;
   ; @return (?)
-  ([n]
-   (if (separate?)
-       (separate!))
-   (let [timestamp (timestamp)]
-        (.log js/console (str timestamp string/break n))))
-
-  ([group-label n]
-   (if (separate?)
-       (separate!))
-   (let [timestamp (timestamp)]
-        (.groupCollapsed js/console (str timestamp string/break group-label))
-        (.log js/console (str n))
-        (.groupEnd js/console))))
+  [n]
+  (let [timestamp (timestamp)]
+       (if (separate?)
+           (separate!))
+       (if (-> n str (string/max-length? 60))
+           ; If the message is shorter than 20 character ...
+           (.log js/console (str timestamp string/break n))
+           ; If the message is NOT shorter than 20 character ...
+           (let [header (string/max-length n 60 "...")]
+                (-> js/console (.groupCollapsed (str  "%c" timestamp string/break header) "font-weight: 400"))
+                (-> js/console (.log            (str n)))
+                (-> js/console (.groupEnd))))))
 
 
 

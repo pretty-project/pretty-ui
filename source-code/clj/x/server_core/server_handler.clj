@@ -48,7 +48,7 @@
   ;  {:port (integer)
   ;   :max-body (integer)
   [{:keys [port] :as server-props}]
-  (merge {:port     DEFAULT-PORT
+  (merge {:port DEFAULT-PORT
           ; {:max-body ...} is very important for projects which
           ; want to upload at least 1GB
           :max-body MAX-BODY}
@@ -97,7 +97,6 @@
         server-state (run-server (ring-handler)
                                  (param server-props))]
        (event-handler/dispatch [:core/store-server-state! server-state])
-
        ; *
        (let [server-port (get server-props :port)]
             (println details/app-codename "started on port:" server-port))))

@@ -162,7 +162,7 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @usage
   ;  XXX#7610

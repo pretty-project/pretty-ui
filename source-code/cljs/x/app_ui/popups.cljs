@@ -229,14 +229,14 @@
   ;   :body (map)
   ;    {:content (metamorphic-content)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :destructor (metamorphic-event)(opt)
   ;   :header (map)(opt)
   ;    {:content (metamorphic-content)
   ;      #'ui/go-back-popup-header, #'ui/close-popup-header, ...
   ;     :content-props (map)(opt)
   ;      {:label (metamorphic-content)(opt)}
-  ;     :subscriber (subscription vector)(opt)}
+  ;     :subscriber (subscription-vector)(opt)}
   ;   :hide-animated? (boolean)(opt)
   ;    Default: true
   ;   :horizontal-align (keyword)(opt)

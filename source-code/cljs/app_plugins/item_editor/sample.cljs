@@ -17,18 +17,18 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body-structure
+(defn body-structure
   [body-id body-props]
   [:<> [elements/field ::my-sample-field
                        {:form-id    (item-editor/form-id :my-extension :my-type)
                         :value-path [:my-extension :item-editor/data-items :my-value]}]])
 
-(defn- body
+(defn body
   [body-id]
   (let [body-props (a/subscribe [:item-editor/get-body-props :my-extension :my-type])]
        (fn [] [body-structure body-id @body-props])))
 
-(defn- view
+(defn view
   [surface-id]
   [item-editor/view :my-extension :my-type {:form-element #'body}])
 

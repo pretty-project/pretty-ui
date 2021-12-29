@@ -87,7 +87,7 @@
   ;    Default: :fit
   ;   :on-click (metamorphic-event)(constant)
   ;   :style (map)(opt)
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @usage
   ;  XXX#7610

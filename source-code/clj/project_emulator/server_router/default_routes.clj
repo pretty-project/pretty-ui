@@ -1,6 +1,4 @@
 
-; WARNING! THIS IS AN OUTDATED VERSION OF A MONO-TEMPLATE FILE!
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -17,21 +15,18 @@
 
 ; @constant (function)
 ;  No method matched
-(def METHOD-NOT-ALLOWED
-     #(http/html-wrap {:body   (ui/main %)
-                       :status (param 404)}))
+(def METHOD-NOT-ALLOWED #(http/html-wrap {:body   (ui/main %)
+                                          :status (param 404)}))
 
 ; @constant (function)
 ;  Handler returned nil
-(def NOT-ACCEPTABLE
-     #(http/html-wrap {:body   (ui/main %)
-                       :status (param 404)}))
+(def NOT-ACCEPTABLE #(http/html-wrap {:body   (ui/main %)
+                                      :status (param 404)}))
 
 ; @constant (function)
 ;  No route matched – {:status 200} handled at client-side
-(def NOT-FOUND
-     #(http/html-wrap {:body   (ui/main %)
-                       :status (param 200)}))
+(def NOT-FOUND #(http/html-wrap {:body   (ui/main %)
+                                 :status (param 200)}))
 
 
 

@@ -75,7 +75,7 @@
   ;      :on-click (metamorphic-event)(opt)
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :style (map)(opt)
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @usage
   ;  XXX#7610

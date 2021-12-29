@@ -160,7 +160,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) context-props
-  ;  {:subscriber (subscription vector)(opt)}
+  ;  {:subscriber (subscription-vector)(opt)}
   ;
   ; @return (boolean)
   [{:keys [subscriber]}]
@@ -170,7 +170,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) context-props
-  ;  {:disabler (subscription vector)(opt)}
+  ;  {:disabler (subscription-vector)(opt)}
   ;
   ; @return (boolean)
   [{:keys [disabler]}]
@@ -405,7 +405,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:disabler (subscription vector)}
+  ;  {:disabler (subscription-vector)}
   ;
   ; @return (component)
   [component-id {:keys [disabler] :as context-props}]
@@ -448,15 +448,15 @@
   ;  {:base-props (map)(opt)
   ;   :component (component)
   ;   :destructor (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props path Re-Frame adatbázis
-  ;    útvonalon tárolt értéket.
-  ;   :disabler (subscription vector)(opt)
+  ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
+  ;    útvonalon tárolt értéket
+  ;   :disabler (subscription-vector)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)
   ;   :initial-props-path (item-path vector)(opt)
   ;   :modifier (function)(opt)
   ;   :static-props (map)(opt)
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;    Return value must be a map!
   ;   :updater (metamorphic-event)(opt)}
   ;

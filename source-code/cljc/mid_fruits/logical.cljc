@@ -29,7 +29,7 @@
   ;
   ; @return (boolean)
   [n]
-  (not (= n false)))
+  (not= n false))
 
 (defn nontrue?
   ; @param (*) n
@@ -41,7 +41,7 @@
   ;
   ; @return (boolean)
   [n]
-  (not (= n true)))
+  (not= n true))
 
 (defn =?
   ; @param (*) a
@@ -119,3 +119,30 @@
 
   ([a b c d]
    (if (and a b) c d)))
+
+(defn nor
+  ; @param (list of *) abc
+  ;
+  ; @example
+  ;  (nor true false false)
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (nor false false false)
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (nor false nil)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [& abc]
+  ; WARNING! Az összes paraméter kiértelése minden esetben megtörténik!
+  ; Pl.: (nor (is-my-value-true?   ...)
+  ;           (is-your-value-true? ...))
+  ; Az is-your-value-true? függvény abban az esetben is lefut, ha az is-my-value-true? függvény
+  ; kimenete igaz!
+  (not-any? boolean abc))

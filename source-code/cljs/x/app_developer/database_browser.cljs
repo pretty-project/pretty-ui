@@ -27,8 +27,8 @@
 (defn- render-map-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [n {:keys [show-hidden?]}]
-  (or (not (map-item-hidden? n))
-      (boolean show-hidden?)))
+  (or (-> show-hidden?)
+      (-> n map-item-hidden? not)))
 
 
 
@@ -55,11 +55,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [current-path (r get-current-path db)]
-       {:bin            (get-in db (db/path ::settings :bin))
-        :current-path   (param current-path)
+       {:current-path   (param current-path)
         :current-item   (get-in db current-path)
-        :edit-string?   (get-in db (db/path ::settings :edit-string?))
         :root-level?    (item-path->root-level? current-path)
+        :bin            (get-in db (db/path ::settings :bin))
+        :edit-string?   (get-in db (db/path ::settings :edit-string?))
         :show-hidden?   (get-in db (db/path ::settings :show-hidden?))
         :show-original? (get-in db (db/path ::settings :show-original?))
         :subscribe?     (get-in db (db/path ::settings :subscribe?))}))
@@ -258,10 +258,9 @@
 (defn- toolbar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props & tools]
-  (vec (reduce #(conj %1 [%2 body-id body-props])
-                [:div.x-database-browser--toolbar
-                  {:style {:display "flex" :margin-bottom "12px"}}]
-                (param tools))))
+  (reduce #(conj %1 [%2 body-id body-props])
+           [:div.x-database-browser--toolbar {:style {:display "flex" :margin-bottom "12px"}}]
+           (param tools)))
 
 (defn- horizontal-line
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -288,30 +287,33 @@
          [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
                                              toggle-original-view-button toggle-visibility-button]
          [horizontal-line body-id body-props]
-         (if-not (map/nonempty? current-item)
-                 (str "Empty"))
-         (vec (reduce #(if (render-map-item? %2 body-props)
-                           (conj             %1 [map-key body-id body-props %2])
-                           (return           %1))
-                       [:div.x-database-browser--map-item--keys]
-                       (param map-keys)))
+         (if (empty? current-item) "Empty")
+         (reduce #(if (render-map-item? %2 body-props)
+                      (conj             %1 [map-key body-id body-props %2])
+                      (return           %1))
+                  [:div.x-database-browser--map-item--keys]
+                  (param map-keys))
          (if show-original? [:pre.x-database-browser--map-item--original-view
                                {:style {:margin-top "24px" :font-size "12px"}}
                                (pretty/mixed->string current-item)])]))
 
 (defn- vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item] :as body-props}]
-  (vec (reduce #(conj %1 [:div (cond (nil?          %2) (str "nil")
-                                     (string?       %2) (string/quotes %2)
-                                     :else              (str           %2))])
-                [:div.x-database-browser--vector-item
-                  [header          body-id body-props "vector"]
-                  [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button]
-                  [horizontal-line body-id body-props]
-                  (if-not (vector/nonempty? current-item)
-                          (str "Empty"))]
-                (param current-item))))
+  [body-id {:keys [current-item show-original?] :as body-props}]
+  [:div.x-database-browser--vector-item
+    [header          body-id body-props "vector"]
+    [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
+                                        toggle-original-view-button]
+    [horizontal-line body-id body-props]
+    (if (empty? current-item) "Empty")
+    (reduce #(conj %1 [:div (cond (nil?    %2) (str "nil")
+                                  (string? %2) (string/quotes %2)
+                                  :else        (str           %2))])
+             [:div.x-database-browser--vector-item--items]
+             (param current-item))
+    (if show-original? [:pre.x-database-browser--map-item--original-view
+                          {:style {:margin-top "24px" :font-size "12px"}}
+                          (pretty/mixed->string current-item)])])
 
 (defn- boolean-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

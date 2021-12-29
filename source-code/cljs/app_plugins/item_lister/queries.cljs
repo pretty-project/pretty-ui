@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.4.9
+; Version: v0.6.8
+; Compatibility: x4.5.0
 
 
 
@@ -18,7 +18,6 @@
               [x.app-core.api    :as a :refer [r]]
               [app-plugins.item-lister.engine :as engine]
               [app-plugins.item-lister.subs   :as subs]))
-
 
 
 
@@ -34,14 +33,14 @@
   ; @return (map)
   ;  {:downloaded-item-count (integer)
   ;   :download-limit (integer)
-  ;   :filter (keyword)
+  ;   :filter-pattern (map)
   ;   :order-by (keyword)
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
   {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
    :download-limit        (r subs/get-meta-value            db extension-id item-namespace :download-limit)
-   :filter                (r subs/get-meta-value            db extension-id item-namespace :filter)
+   :filter-pattern        (r subs/get-meta-value            db extension-id item-namespace :filter-pattern)
    :order-by              (r subs/get-meta-value            db extension-id item-namespace :order-by)
    :search-keys           (r subs/get-meta-value            db extension-id item-namespace :search-keys)
    :search-term           (r subs/get-search-term           db extension-id item-namespace)})

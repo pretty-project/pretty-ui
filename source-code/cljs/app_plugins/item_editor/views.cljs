@@ -126,7 +126,7 @@
 ;; -- Form components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- new-item-label
+(defn new-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -138,7 +138,7 @@
        [elements/label ::new-item-label
                        {:content new-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
-(defn- named-item-label
+(defn named-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -151,7 +151,7 @@
   [elements/label ::named-item-label
                   {:content item-name :font-weight :extra-bold :font-size :l}])
 
-(defn- unnamed-item-label
+(defn unnamed-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -181,7 +181,7 @@
 ;; -- Color-selector components -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-colors-button
+(defn add-colors-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -197,7 +197,7 @@
                     :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]}])
 
 
-(defn- selected-colors
+(defn selected-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -212,7 +212,7 @@
                [:div.item-editor--selected-colors]
                (param colors))))
 
-(defn- selected-colors-button
+(defn selected-colors-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -290,7 +290,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header-start-buttons
+(defn header-start-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -303,7 +303,7 @@
        [copy-item-button    extension-id item-namespace header-props]
        [archive-item-button extension-id item-namespace header-props]])
 
-(defn- header-end-buttons
+(defn header-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -315,7 +315,7 @@
   [:<> (if-not new-item? [favorite-item-button extension-id item-namespace header-props])
        [save-item-button extension-id item-namespace header-props]])
 
-(defn- header-structure
+(defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -346,7 +346,7 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout
+(defn layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

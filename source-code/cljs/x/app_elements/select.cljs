@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.19
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.4.9
+; Version: v1.0.6
+; Compatibility: x4.5.0
 
 
 
@@ -80,7 +80,7 @@
        {:dispatch-some  on-select
         :dispatch-later [{:ms CLOSE-POPUP-DELAY :dispatch [:ui/close-popup! popup-id]}
                          (when (boolean autoclear?) ; XXX#0134
-                               {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:db/remove-item! value-path]})
+                               {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:elements/clear-input-value! select-id]})
                          (when (some? on-popup-closed)
                                {:ms ON-POPUP-CLOSED-DELAY :dispatch on-popup-closed})]}))
 
@@ -97,6 +97,18 @@
   (if-let [selected-option (get select-props :value)]
           (get-label-f selected-option)
           (or select-button-label DEFAULT-SELECT-BUTTON-LABEL)))
+
+(defn- options-props->render-popup-header?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) options-props
+  ;  {:options-label (metamorphic-content)(opt)
+  ;   :user-close? (boolean)(opt)}
+  ;
+  ; @return (boolean)
+  [{:keys [options-label user-close?]}]
+  (or (some?   options-label)
+      (boolean user-close?)))
 
 
 
@@ -148,7 +160,6 @@
   ;   :on-select (metamorphic-event)
   ;   :options-id (keyword)
   ;   :options-path (item-path vector)
-  ;   :user-cancel? (boolean)
   ;   :value-path (item-path vector)}
   [select-id {:keys [options-label] :as options-props}]
   (let [on-select (on-select-events select-id options-props)]
@@ -156,7 +167,6 @@
                :get-value-f  return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
-              (if (nil? options-label) {:user-cancel? true})
               (param options-props)
               {:on-select  on-select
                :options-id (engine/element-id->extended-id select-id :options)})))
@@ -239,10 +249,10 @@
   ;  {:options (maps in vector)}
   ;
   ; @return (hiccup)
-  [popup-id {:keys [options] :as select-props} b]
-  (vec (reduce #(conj %1 [select-option popup-id select-props %2])
-                [:div.x-select--options]
-                (param options))))
+  [popup-id {:keys [options] :as select-props}]
+  (reduce #(conj %1 [select-option popup-id select-props %2])
+           [:div.x-select--options]
+           (param options)))
 
 (defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -362,7 +372,7 @@
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription vector)(opt)
+  ;   :disabler (subscription-vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
@@ -386,7 +396,7 @@
   ;    Default: false
   ;   :style (map)(opt)
   ;   :user-cancel? (boolean)(constant)(opt)
-  ;    Default: true
+  ;    Default: false
   ;    Only w/o {:options-label ...}
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
@@ -445,6 +455,7 @@
             options-id    (engine/element-id->extended-id select-id :popup)
             options-props (options-props-prototype        select-id options-props)]
            [:ui/add-popup! options-id
-                           {:body   {:content #'select-options-body   :content-props options-props}
-                            :header {:content #'select-options-header :content-props options-props}
+                           {:body   {:content #'select-options-body :content-props options-props}
+                            :header (if (options-props->render-popup-header? options-props)
+                                        {:content #'select-options-header :content-props options-props})
                             :min-width :xs}])))

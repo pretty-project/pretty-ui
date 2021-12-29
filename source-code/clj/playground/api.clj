@@ -12,8 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.api
-    (:require [playground.sample]
-              [playground.crypto]
+    (:require [playground.crypto]
               [playground.core :as core]))
 
 

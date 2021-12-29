@@ -93,21 +93,19 @@
 ;; -- System interceptors -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def log-event!
-     (re-frame/->interceptor
-       :id      ::log-event!
-       :before #(do (let [event-vector (context->event-vector %1)]
-                         (logger/write! EVENT-LOG-FILENAME event-vector))
-                    (return %1))))
+; @constant (?)
+(def LOG-EVENT! (re-frame/->interceptor :id ::log-event!
+                                        :before #(let [event-vector (context->event-vector %1)]
+                                                      (logger/write! EVENT-LOG-FILENAME event-vector)
+                                                      (return %1))))
 
-(def check-db!
-     (re-frame/->interceptor
-       :id      ::check-db!
-       :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
-                     error-event   [ERROR-EVENT-ID (context->error-props %1)]]
-                    (when (context->error-catched? error-context)
-                          (re-frame/dispatch error-event))
-                    (return %1))))
+; @constant (?)
+(def CHECK-DB! (re-frame/->interceptor :id ::check-db!
+                                       :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
+                                                     error-event   [ERROR-EVENT-ID (context->error-props %1)]]
+                                                    (when (context->error-catched? error-context)
+                                                          (re-frame/dispatch       error-event))
+                                                    (return %1))))
 
 (defn- interceptors<-system-interceptors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,8 +114,8 @@
   ;
   ; @return (vector)
   [interceptors]
-  (vector/concat-items interceptors [log-event!]))
-                                   ;[log-event! check-db!]
+  (vector/conj-item interceptors LOG-EVENT!))
+ ;(vector/conj-item interceptors LOG-EVENT! CHECK-DB!)
 
 
 

@@ -3,7 +3,7 @@
     (:import [com.mongodb MongoOptions ServerAddress]
              org.bson.types.BSONTimestamp)
     (:require [monger.core       :as mcr]
-              [x.server-core.api :as a :refer [r]]))
+              [x.server-core.api :as a]))
 
 
 

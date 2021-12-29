@@ -34,6 +34,9 @@
 ;  For the buddy authenticating services
 (def BACKEND (session-backend))
 
+; @constant (string)
+(def SOURCE-DIRECTORY-PATH "source-code")
+
 
 
 ;; -- Prototypes --------------------------------------------------------------
@@ -58,7 +61,7 @@
   ;  {:middleware (vector)}
   []
   (let [site-defaults (site-defaults-prototype site-defaults)]
-       {:middleware [#(wrap-reload           % {:dirs ["source-code"]})
+       {:middleware [#(wrap-reload           % {:dirs [SOURCE-DIRECTORY-PATH]})
                      #(wrap-keyword-params   %)
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})

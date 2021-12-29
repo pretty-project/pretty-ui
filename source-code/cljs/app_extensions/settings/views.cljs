@@ -63,7 +63,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/menu-bar ::menu-bar
-                     {:menu-items (menu-bar-items header-id header-props)}])
+                     {:menu-items (menu-bar-items header-id header-props)
+                      :horizontal-align :center}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

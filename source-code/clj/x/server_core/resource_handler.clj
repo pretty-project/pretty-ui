@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.resource-handler
-    (:require [mid-fruits.candy                :refer [param]]
-              [x.server-core.event-handler     :as event-handler]
+    (:require [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]))
 
 
@@ -55,8 +54,7 @@
   ;
   ; @return (map)
   [db [_ resource-handler-options]]
-  (assoc-in db [::options :data-items]
-               (param resource-handler-options)))
+  (assoc-in db [::options :data-items] resource-handler-options))
 
 (event-handler/reg-event-db :core/store-resource-handler-options! store-resource-handler-options!)
 

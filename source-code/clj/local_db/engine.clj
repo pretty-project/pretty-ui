@@ -98,8 +98,8 @@
   ;
   ; @return (boolean)
   [collection-id]
-  (and (collection-id->collection-exists?         collection-id)
-       (not (collection-id->max-filesize-reached? collection-id))))
+  (and (-> collection-id collection-id->collection-exists?)
+       (-> collection-id collection-id->max-filesize-reached? not)))
 
 (defn- collection-id->collection-readable?
   ; @param (string) collection-id
@@ -114,8 +114,8 @@
   ;
   ; @return (boolean)
   [collection-id]
-  (and (collection-id-valid? collection-id)
-       (not (collection-id->collection-exists? collection-id))))
+  (and (-> collection-id collection-id-valid?)
+       (-> collection-id collection-id->collection-exists? not)))
 
 
 

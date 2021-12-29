@@ -204,7 +204,7 @@
   ;    {:pending-content :use-default!}
   ;    => {:pending-content DEFAULT-PENDING-CONTENT}
   ;   :request-id (keyword)(opt)
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;    Return value must be a map!
   ;    XXX#8711
   ;   :success-content (metamorphic-content)(opt)

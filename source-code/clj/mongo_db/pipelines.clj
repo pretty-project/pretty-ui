@@ -1,7 +1,9 @@
 
 (ns mongo-db.pipelines
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]))
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :as map]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -9,11 +11,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name pipeline
+;  TODO ...
 ;
 ; @name stage
+;  TODO ...
 ;
 ; @name operation
-;
+;  TODO ...
 
 
 
@@ -32,20 +36,20 @@
   ;     ...]}
   ;
   ; @example
-  ;  (mongo-db/filter-pattern->filter-query {:or [[:my-namespace/my-key true] [...]]})
+  ;  (mongo-db/filter-pattern->filter-query {:or  [[:my-namespace/my-key   false]
+  ;                                                [:my-namespace/my-key   nil]]
+  ;                                          :and [[:my-namespace/your-key true]]})
   ;  =>
-  ;  {"$or" [{"my-namespace/my-key" true} {...}]}
+  ;  {"$or"  [{"my-namespace/my-key"   false}
+  ;           {"my-namespace/my-key"   nil}]
+  ;   "$and" [{"my-namespace/your-key" true}]}
   ;
   ; @return (maps in vector)
   [filter-pattern]
-  (reduce-kv (fn [query operator expressions]
-                 (let [operator (case operator :and "$and" :or "$or")]
-                      (assoc query operator
-                             (vec (reduce (fn [expressions [filter-key filter-value]]
-                                              (let [str-filter-key (keyword/to-string filter-key)]
-                                                   (conj expressions {str-filter-key filter-value})))
-                                          [] expressions)))))
-             {} filter-pattern))
+  (letfn [(f [[filter-key filter-value]]
+             {(keyword/to-string filter-key) filter-value})]
+         (map/->kv filter-pattern #(case           % :and "$and" :or "$or")
+                                  #(vector/->items % f))))
 
 (defn search-pattern->search-query
   ; @param (map) search-pattern
@@ -59,22 +63,20 @@
   ;     ...]}
   ;
   ; @example
-  ;  (mongo-db/search-pattern->search-query {:or [[:my-namespace/my-key "Xyz"] [...]]})
+  ;  (mongo-db/search-pattern->search-query {:or [[:my-namespace/my-key   "Xyz"]
+  ;                                               [:my-namespace/your-key "Xyz"]]})
   ;  =>
-  ;  {"$or" [{"my-namespace/my-key" {"$regex" "Xyz" "$options" "i"}} {...}]}
+  ;  {"$or" [{"my-namespace/my-key"   {"$regex" "Xyz" "$options" "i"}}
+  ;          {"my-namespace/your-key" {"$regex" "Xyz" "$options" "i"}}]}
   ;
   ; @return (map)
   ;  {:and (maps in vector)
   ;   :or (maps in vector)}
   [search-pattern]
-  (reduce-kv (fn [query operator expressions]
-                 (let [operator (case operator :and "$and" :or "$or")]
-                      (assoc query operator
-                             (vec (reduce (fn [expressions [search-key search-term]]
-                                              (let [str-search-key (keyword/to-string search-key)]
-                                                   (conj expressions {str-search-key {"$regex" search-term "$options" "i"}})))
-                                          [] expressions)))))
-            {} search-pattern))
+  (letfn [(f [[search-key search-term]]
+             {(keyword/to-string search-key) {"$regex" search-term "$options" "i"}})]
+         (map/->kv search-pattern #(case           % :and "$and" :or "$or")
+                                  #(vector/->items % f))))
 
 (defn sort-pattern->sort-query
   ; @param (vectors in vector) sort-pattern
@@ -88,10 +90,9 @@
   ;
   ; @return (map)
   [sort-pattern]
-  (reduce (fn [result [sort-key sort-direction]]
-              (let [sort-key (keyword/to-string sort-key)]
-                   (assoc result sort-key sort-direction)))
-          {} sort-pattern))
+  (letfn [(f [o [sort-key sort-direction]]
+             (assoc o (keyword/to-string sort-key) sort-direction))]
+         (reduce f {} sort-pattern)))
 
 
 
@@ -109,7 +110,52 @@
   ; @return (map)
   ;  {"$addFields" (map)}
   [[key keys :as field-pattern]]
-  {"$addFields" {(keyword/to-string key)
-                 {"$concat" (vec (reduce #(if-not %1            [    (str "$" (keyword/to-string %2))]
-                                                     (concat %1 [" " (str "$" (keyword/to-string %2))]))
-                                          nil keys))}}})
+  (letfn [(f [o x] (if (empty? o) (conj o     (str "$" (keyword/to-string x)))
+                                  (conj o " " (str "$" (keyword/to-string x)))))]
+         {"$addFields" {(keyword/to-string key) {"$concat" (reduce f [] keys)}}}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-pipeline
+  ; @param (map) pipeline-props
+  ;  {:filter-pattern (map)
+  ;   :max-count (integer)
+  ;   :search-pattern (map)
+  ;   :skip (integer)
+  ;   :sort-pattern (vectors in vector)}
+  ;
+  ; @usage
+  ;  (mongo-db/get-pipeline {:filter-pattern {:or [[:my-namespace/my-key   false]
+  ;                                                [:my-namespace/my-key   nil]]}
+  ;                          :search-pattern {:or [[:my-namespace/my-key   "Xyz"]
+  ;                                                [:my-namespace/your-key "Xyz"]]}
+  ;                          :sort-pattern [:my-namespace/my-key -1]
+  ;                          :max-count 20
+  ;                          :skip      40})
+  ;
+  ; @return (maps in vector)
+  [{:keys [filter-pattern max-count search-pattern skip sort-pattern]}]
+  (let [filter-query (filter-pattern->filter-query filter-pattern)
+        search-query (search-pattern->search-query search-pattern)
+        sort         (sort-pattern->sort-query     sort-pattern)]
+       [{"$match" {"$and" [filter-query search-query]}}
+        {"$sort"  sort}
+        {"$skip"  skip}
+        {"$limit" max-count}]))
+
+(defn count-pipeline
+  ; @param (map) pipeline-props
+  ;  {:filter-pattern (map)
+  ;   :search-pattern (map)}
+  ;
+  ; @usage
+  ;  (mongo-db/count-pipeline {...})
+  ;
+  ; @return (maps in vector)
+  [{:keys [filter-pattern search-pattern]}]
+  (let [filter-query (filter-pattern->filter-query filter-pattern)
+        search-query (search-pattern->search-query search-pattern)]
+       [{"$match" {"$and" [filter-query search-query]}}]))

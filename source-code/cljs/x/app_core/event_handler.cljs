@@ -112,31 +112,18 @@
 ;; -- System interceptors -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def log-event!
-     (->interceptor
-       :id ::log-event!
-       :before ;(debug-handler/console (context->empty-event-vector %1)
-               ;                       (string/join (context->event-props %1)
-               ;                                    (str string/break string/break)))
-               #(let [event-id        (context->event-id %1)
-                      event-namespace (keyword/get-namespace event-id)]
-                    ; TEMP
-                    ; A collapsable event-log megvalósításáig az x.app-components.stated
-                    ; névtér eseményei szűrésre kerülnek, a console átláthatóságának
-                    ; érdekében.
-                    (if-not (= event-namespace :components)
-                            (debug-handler/console (context->event-vector %1)))
-                           ;(debug-handler/console (context->event-vector %1)
-                    (return %1))))
+; @constant (?)
+(def LOG-EVENT! (->interceptor :id ::log-event!
+                               :before #(do (debug-handler/console (context->event-vector %1))
+                                            (return %1))))
 
-(def check-db!
-     (->interceptor
-       :id ::check-db!
-       :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
-                     error-event   [ERROR-EVENT-ID (context->error-props %1)]]
-                    (when (context->error-catched? error-context)
-                          (dispatch error-event))
-                    (return %1))))
+; @constant (?)
+(def CHECK-DB! (->interceptor :id ::check-db!
+                              :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
+                                            error-event   [ERROR-EVENT-ID (context->error-props %1)]]
+                                           (when (context->error-catched? error-context)
+                                                 (dispatch error-event))
+                                           (return %1))))
 
 (defn- interceptors<-system-interceptors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,8 +132,8 @@
   ;
   ; @return (vector)
   [interceptors]
-  (cond-> interceptors LOG-EVENTS? (vector/conj-item log-event!)
-                       :always     (vector/conj-item check-db!)))
+  (cond-> interceptors LOG-EVENTS? (vector/conj-item LOG-EVENT!)
+                       :check-db!  (vector/conj-item CHECK-DB!)))
 
 
 

@@ -51,10 +51,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def FILENAME-PATTERN #"^[\w\-. ]+$")
+(def FILENAME-PATTERN #"^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ._ -]+$")
 
 ; @constant (string)
-(def DIRECTORY-NAME-PATTERN #"^[\w\-. ]+$")
+(def DIRECTORY-NAME-PATTERN #"^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ._ -]+$")
 
 ; @constant (integer)
 (def MAX-FILENAME-LENGTH 32)

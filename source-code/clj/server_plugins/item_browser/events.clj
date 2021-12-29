@@ -17,7 +17,7 @@
     (:require [mid-fruits.candy  :refer [param return]]
               [x.server-core.api :as a :refer [r]]
               [server-plugins.item-browser.engine :as engine]
-              [server-plugins.item-lister.api     :as item-lister]))
+              [server-plugins.item-lister.events  :as events]))
 
 
 
@@ -32,14 +32,14 @@
   ; @return (map)
   [extension-id item-namespace browser-props]
   (merge {}
-         (item-lister/lister-props-prototype extension-id item-namespace browser-props)))
+         (events/lister-props-prototype extension-id item-namespace browser-props)))
 
 
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-route!
+(defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -51,7 +51,7 @@
                        :route-template (engine/route-template extension-id)
                        :restricted?    true}])
 
-(defn- add-extended-route!
+(defn add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

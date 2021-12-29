@@ -75,7 +75,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-header-props
+(defn- get-popup-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -86,7 +86,7 @@
   {:render-touch-anchor? false})
   ;:render-touch-anchor? (r geometry/render-touch-anchor? db popup-id)
 
-(a/reg-sub ::get-header-props get-header-props)
+(a/reg-sub :ui/get-popup-header-props get-popup-header-props)
 
 
 
@@ -150,7 +150,7 @@
   [components/subscriber popup-id
                          {:component  #'popup-header-structure
                           :base-props popup-props
-                          :subscriber [::get-header-props popup-id]}])
+                          :subscriber [:ui/get-popup-header-props popup-id]}])
 
 
 

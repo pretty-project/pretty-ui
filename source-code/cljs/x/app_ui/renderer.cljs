@@ -237,7 +237,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (r db/get-partition-state db partition-id)))
 
-(a/reg-sub ::get-renderer-state get-renderer-state)
+(a/reg-sub :ui/get-renderer-state get-renderer-state)
 
 (defn get-rendered-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1257,4 +1257,4 @@
                            :static-props renderer-props
                            :destructor   [:ui/destruct-renderer! renderer-id renderer-props]
                            :initializer  [:ui/init-renderer!     renderer-id renderer-props]
-                           :subscriber   [::get-renderer-state   renderer-id]}]))
+                           :subscriber   [:ui/get-renderer-state renderer-id]}]))

@@ -85,7 +85,7 @@
   ;    :left, :center, :right, :space-around, :space-between, :space-evenly
   ;    Default: :left
   ;   :style (map)(opt)
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :horizontal

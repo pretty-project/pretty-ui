@@ -24,7 +24,7 @@
 ;; -- Sbscriptions ------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-derived-item-id
+(defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

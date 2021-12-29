@@ -22,7 +22,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-route!
+(defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -33,7 +33,7 @@
                        :client-event   [:view-selector/load-selector! extension-id selector-props]
                        :restricted?    true}])
 
-(defn- add-extended-route!
+(defn add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

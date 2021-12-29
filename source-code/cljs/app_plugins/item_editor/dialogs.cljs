@@ -36,7 +36,7 @@
 ;; -- Popup components --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- color-picker-dialog-body
+(defn color-picker-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -52,7 +52,7 @@
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- notification-bubble-body
+(defn notification-bubble-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -68,7 +68,7 @@
                                        :on-click {:dispatch-n [button-event [:ui/pop-bubble! bubble-id]]}}]
        [elements/horizontal-separator {:size :s}]])
 
-(defn- undo-delete-dialog-body
+(defn undo-delete-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -82,7 +82,7 @@
        [notification-bubble-body dialog-id
                                  {:label :item-deleted :button-event undo-event :button-label :recover!}]))
 
-(defn- changes-discarded-dialog-body
+(defn changes-discarded-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -96,7 +96,7 @@
        [notification-bubble-body dialog-id
                                  {:label :unsaved-changes-discarded :button-event undo-event :button-label :restore!}]))
 
-(defn- item-duplicated-dialog-body
+(defn item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

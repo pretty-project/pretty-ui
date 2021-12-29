@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.json
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.vector :as vector]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :as map]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -53,10 +54,8 @@
   ; @return (boolean)
   [n]
   (and (string? n)
-       (= (str (nth n 0))
-          (param KEYWORD-PREFIX))
-       (= (str (nth n 1))
-          (param ":"))))
+       (= KEYWORD-PREFIX (str (nth n 0)))
+       (= ":"            (str (nth n 1)))))
 
 (defn keywordize-value
   ; @param (*) n
@@ -69,7 +68,7 @@
   ; @return (*)
   [n]
   (if (unkeywordized-value? n)
-      (-> n (subs 2) keyword)
+      (->     n (subs 2) keyword)
       (return n)))
 
 (defn unkeywordize-value
@@ -82,9 +81,9 @@
   ;
   ; @return (*)
   [n]
-  (if (keyword?)
+  (if (keyword?           n)
       (str KEYWORD-PREFIX n)
-      (return n)))
+      (return             n)))
 
 (defn unkeywordize-key
   ; @param (*) n
@@ -96,9 +95,7 @@
   ;
   ; @return (*)
   [n]
-  (if (keyword?)
-      (apply str (rest (str n)))
-      (return n)))
+  (keyword/to-string n))
 
 (defn unkeywordize-values
   ; XXX#5914
@@ -110,7 +107,6 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (def KEYWORD-PREFIX "*")
   ;  (json/unkeywordize-values {:a :b :c [:d "e"] :f {:g "h" :i :j}})
   ;  =>
   ;  {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}}
@@ -127,7 +123,6 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (def KEYWORD-PREFIX "*")
   ;  (json/keywordize-values {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}})
   ;  =>
   ;  {:a :b :c [:d "e"] :f {:g "h" :i :j}}
@@ -148,7 +143,7 @@
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->values     n unkeywordize-keys)
+  (cond (map?    n) (map/->keys       n unkeywordize-keys)
         (vector? n) (vector/->items   n unkeywordize-keys)
         :else       (unkeywordize-key n)))
 
@@ -162,6 +157,6 @@
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->values   n keywordize-keys)
+  (cond (map?    n) (map/->keys     n keywordize-keys)
         (vector? n) (vector/->items n keywordize-keys)
         :else       (keyword        n)))

@@ -95,7 +95,8 @@
    [elements/menu-bar {:menu-items [{:label "All" :on-click []}
                                     {:label "Active" :on-click []}
                                     {:label "Draft"  :on-click []}
-                                    {:label "Archived" :on-click []}]}]
+                                    {:label "Archived" :on-click []}]
+                       :horizontal-align :center}]
 
    [item-lister/body :products :product
                      {:list-element #'product-item}]])

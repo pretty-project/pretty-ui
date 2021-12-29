@@ -103,7 +103,7 @@
   [& abc]
   (letfn [(join-f [o x] (if (keyword? x) (str o (name x))
                                          (str o x)))]
-         (reduce join-f nil abc)))
+         (keyword (reduce join-f abc))))
 
 (defn append
   ; @param (keyword) n

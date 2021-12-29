@@ -1028,6 +1028,9 @@
       :untitled-directory
       {:en "Untitled directory"
        :hu "Névtelen mappa"}
+      :upload-file!
+      {:en "Upload file"
+       :hu "Fájl feltöltése"}
       :upload-files!
       {:en "Upload files"
        :hu "Fájlok feltöltése"}

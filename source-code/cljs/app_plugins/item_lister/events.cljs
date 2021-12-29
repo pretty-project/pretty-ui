@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.8
+; Version: v0.7.6
 ; Compatibility: x4.5.0
 
 
@@ -73,26 +73,6 @@
   [db [_ extension-id]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
-(defn quit-filter-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (-> db (dissoc-in [extension-id :item-lister/meta-items :filter-mode?])
-         (dissoc-in [extension-id :item-lister/meta-items :filter])))
-
-(defn toggle-filter-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (-> db (update-in [extension-id :item-lister/meta-items :filter-mode?] not)
-         (dissoc-in [extension-id :item-lister/meta-items :filter])))
-
 (defn toggle-search-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,8 +80,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (as-> db % (update-in % [extension-id :item-lister/meta-items :search-mode?] not)
-             (r quit-filter-mode! % extension-id)))
+  (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
 
 (a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
 
@@ -124,8 +103,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (as-> db % (update-in % [extension-id :item-lister/meta-items :reorder-mode?] not)
-             (r quit-filter-mode! % extension-id)))
+  (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
 
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
 
@@ -267,20 +245,11 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) filter-id
+  ; @param (map) filter-pattern
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace filter-id]]
-  (assoc-in db [extension-id :item-lister/meta-items :filter] filter-id))
-
-(defn discard-filter!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (dissoc-in db [extension-id :item-lister/meta-items :filter]))
+  [db [_ extension-id item-namespace filter-pattern]]
+  (assoc-in db [extension-id :item-lister/meta-items :filter-pattern] filter-pattern))
 
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -324,6 +293,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace lister-props]]
+  ; XXX#8705
+  ; Az item-lister plugin ...
+  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
+  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal,
+  ;     ezért nem törli ki a beállításokat!
   (as-> db % (r reset-downloads!    % extension-id)
              (r reset-search!       % extension-id)
              (r store-lister-props! % extension-id item-namespace lister-props)))
@@ -332,6 +306,20 @@
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/use-filter!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) filter-pattern
+  ;
+  ; @usage
+  ;  [:item-lister/use-filter! :my-extension :my-type {...}]
+  (fn [{:keys [db]} [_ extension-id item-namespace filter-pattern]]
+      {:db (as-> db % (r reset-downloads!  % extension-id)
+                      (r reset-selections! % extension-id)
+                      (r use-filter!       % extension-id item-namespace filter-pattern))
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/delete-selected-items!
@@ -420,46 +408,6 @@
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
-  :item-lister/discard-filter!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      {:db (as-> db % (r reset-downloads!  % extension-id)
-                      (r reset-selections! % extension-id)
-                      (r discard-filter!   % extension-id))
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
-
-(a/reg-event-fx
-  :item-lister/use-filter!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) filter-id
-  (fn [{:keys [db]} [_ extension-id item-namespace filter-id]]
-      {:db (as-> db % (r reset-downloads!  % extension-id)
-                      (r reset-selections! % extension-id)
-                      (r use-filter!       % extension-id item-namespace filter-id))
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
-
-(a/reg-event-fx
-  :item-lister/toggle-filter-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      (if (r subs/any-filter-in-use? db extension-id)
-          ; If any filter in use ...
-          {:db (as-> db % (r reset-downloads!  % extension-id)
-                          (r reset-selections! % extension-id)
-                          (r discard-filter!   % extension-id)
-                          (r quit-filter-mode! % extension-id))
-           :dispatch [:tools/reload-infinite-loader! extension-id]}
-          ; If no filter in use ...
-          {:db (r toggle-filter-mode! db extension-id)})))
-
-(a/reg-event-fx
   :item-lister/receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -498,10 +446,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
-  ;  {:download-limit (integer)
-  ;   :handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)
-  ;   :label (metamorphic-content)}
+  ;  {:label (metamorphic-content)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
       {:db (r load-lister! db extension-id item-namespace lister-props)
        :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]

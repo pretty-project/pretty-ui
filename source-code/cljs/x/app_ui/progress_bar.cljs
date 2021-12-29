@@ -26,7 +26,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-view-props
+(defn- get-progress-bar-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -44,7 +44,7 @@
                                              (or (= :active process-activity)
                                                  (= :idle   process-activity)))})))
 
-(a/reg-sub ::get-view-props get-view-props)
+(a/reg-sub :ui/get-progress-bar-props get-progress-bar-props)
 
 
 
@@ -86,14 +86,14 @@
 (defn- progress-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) view-props
+  ; @param (keyword) bar-id
+  ; @param (map) bar-props
   ;  {:process-progress (integer)(opt)
   ;   :render-progress-bar? (boolean)(opt)
   ;   :render-screen-overlay? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [component-id {:keys [process-progress render-progress-bar? render-screen-overlay?] :as view-props}]
+  [_ {:keys [process-progress render-progress-bar? render-screen-overlay?]}]
   (if render-progress-bar? [:div#x-app-progress-bar
                              (if render-screen-overlay? [:div#x-app-progress-bar--screen-overlay])
                              [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
@@ -104,4 +104,4 @@
   ; @return (component)
   []
   [components/subscriber ::view {:component  #'progress-bar
-                                 :subscriber [::get-view-props]}])
+                                 :subscriber [:ui/get-progress-bar-props]}])

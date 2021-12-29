@@ -17,7 +17,25 @@
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.subs   :as subs]))
+              [app-plugins.item-browser.subs   :as subs]
+              [app-plugins.item-lister.events  :as events]))
+
+
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn load-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace browser-props]]
+  (r events/load-lister! db extension-id item-namespace browser-props))
+
 
 
 
@@ -47,7 +65,8 @@
   ;  [:item-browser/load! :my-extension :my-type {:default-item-id :my-item}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [derived-item-id (r subs/get-derived-item-id db extension-id browser-props)]
-           {:db  db   ;  (-> db (dissoc-in [extension-id :browser-data])
+           {:db  (r load-browser! db extension-id item-namespace browser-props)
+                      ;  (-> db (dissoc-in [extension-id :browser-data])
                       ;         (dissoc-in [extension-id :browser-meta])
                       ;         (assoc-in  [extension-id :browser-meta :item-id] derived-item-id)
 

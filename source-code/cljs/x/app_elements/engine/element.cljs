@@ -52,8 +52,8 @@
   ;
   ; @return (boolean)
   [{:keys [icon label]}]
-  (boolean (or (some? icon)
-               (some? label))))
+  (or (some? icon)
+      (some? label)))
 
 (defn element-props-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

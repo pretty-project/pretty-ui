@@ -131,17 +131,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/add-new-item-event :my-extension :my-type)
+  ;  (engine/add-new-item-event :my-extension)
   ;  =>
-  ;  [:my-extension/add-new-my-type!]
+  ;  [:my-extension/add-new-item!]
   ;
   ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "add-new-" (name item-namespace) "!"))]
+  [extension-id]
+  (let [event-id (keyword (name extension-id) "add-new-item!")]
        [event-id]))
 
 (defn render-event

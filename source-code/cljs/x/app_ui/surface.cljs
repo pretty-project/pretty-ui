@@ -92,7 +92,7 @@
   ;   :view (map)
   ;    {:content (component)
   ;     :content-props (map)(opt)
-  ;     :subscriber (subscription vector)(opt)}}
+  ;     :subscriber (subscription-vector)(opt)}}
   ;
   ; @usage
   ;  [:ui/set-surface! {...}]

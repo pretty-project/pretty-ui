@@ -4,7 +4,6 @@
               [x.app-activities.api  :as activities]
               [x.app-core.api        :as a :refer [r]]
               [x.app-elements.api    :as elements]
-              [x.app-environment.api :as environment]
               [x.app-locales.api     :as locales]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
@@ -18,7 +17,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ _ {:keys [modified-at]}]]
   {:modified-at       (r activities/get-actual-timestamp db modified-at)
-   :viewport-small?   (r environment/viewport-small?     db)
    :selected-language (r locales/get-selected-language   db)})
 
 (a/reg-sub :clients/get-client-item-props get-item-props)
@@ -36,8 +34,8 @@
 (defn- client-item-primary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [email-address first-name last-name]} {:keys [selected-language]}]
-  (let [full-name (locales/name->ordered-name first-name last-name selected-language)]
-       [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     full-name]
+  (let [client-name (locales/name->ordered-name first-name last-name selected-language)]
+       [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     client-name]
                                                    [:div.clients--client-item--email-address email-address]]))
 
 (defn- client-item-details
@@ -49,11 +47,8 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex client-props item-props]
-  (if (= item-dex 2)
-      (println (str "3rd item rendered")))
   [:div.clients--client-item [item-editor/color-stamp :clients :client client-props]
                              [client-item-details item-dex client-props item-props]])
-                             ;(str (random-uuid))])
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

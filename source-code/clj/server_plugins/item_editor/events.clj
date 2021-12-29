@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.4.9
+; Version: v0.4.2
+; Compatibility: x4.5.0
 
 
 
@@ -37,7 +37,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- editor-props-prototype
+(defn editor-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -45,11 +45,8 @@
   ; @param (map)(opt) editor-props
   ;
   ; @return (map)
-  ;  {:handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)}
   [_ _ editor-props]
-  (merge {:handle-archived-items? true
-          :handle-favorite-items? true}
+  (merge {}
          (param editor-props)))
 
 
@@ -57,7 +54,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-route!
+(defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -71,7 +68,7 @@
                        :on-leave-event [:item-editor/->editor-leaved extension-id item-namespace]
                        :restricted?    true}])
 
-(defn- add-extended-route!
+(defn add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -91,9 +88,9 @@
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
   ;  {:handle-archived-items? (boolean)(opt)
-  ;    Default: true
+  ;    Default: false
   ;   :handle-favorite-items? (boolean)(opt)
-  ;    Default: true
+  ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;   :multi-view? (boolean)(opt)
   ;    Default: false
@@ -108,7 +105,7 @@
   ; @usage
   ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [cofx [_ extension-id item-namespace editor-props]]
-      (let [editor-props (editor-props-prototype extension-id item-namespace editor-props)]
+      (let [];editor-props (editor-props-prototype extension-id item-namespace editor-props)
            (if-let [multi-view? (get editor-props :multi-view?)]
                    {:dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
                                  (r add-extended-route! cofx extension-id item-namespace editor-props)]}

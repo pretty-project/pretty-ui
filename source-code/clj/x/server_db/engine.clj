@@ -29,6 +29,7 @@
 (def get-item             engine/get-item)
 (def item-exists?         engine/item-exists?)
 (def empty-db!            engine/empty-db!)
+(def copy-item!           engine/copy-item!)
 (def move-item!           engine/move-item!)
 (def set-item!            engine/set-item!)
 (def set-vector-item!     engine/set-vector-item!)

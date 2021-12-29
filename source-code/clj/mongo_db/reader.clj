@@ -3,9 +3,8 @@
     (:import org.bson.types.BSONTimestamp)
     (:require [mid-fruits.candy    :refer [param return]]
               [mid-fruits.json     :as json]
-              [mid-fruits.keyword  :as keyword]
-              [mid-fruits.random   :as random]
               [mid-fruits.time     :as time]
+              [mid-fruits.vector   :as vector]
               [monger.collection   :as mcl]
               [monger.conversion   :as mcv]
               [monger.core         :as mcr]
@@ -40,15 +39,14 @@
   ;
   ; @return (maps in vector)
   ([collection-name pipeline]
-   (aggregation collection-name pipeline {}))
+   (aggregation collection-name pipeline {:locale engine/DEFAULT-LOCALE}))
 
   ([collection-name pipeline {:keys [locale]}]
-   (let [locale      (or locale engine/DEFAULT-LOCALE)
-         aggregation (mcr/command @DB {:aggregate collection-name
-                                       :pipeline  pipeline
-                                       :collation {:locale locale :numericOrdering true}
-                                       :cursor    {}})]
-        (get-from-aggregation aggregation))))
+   (-> @DB (mcr/command {:aggregate collection-name
+                         :pipeline  pipeline
+                         :collation {:locale locale :numericOrdering true}
+                         :cursor    {}})
+           (get-from-aggregation))))
 
 
 
@@ -204,13 +202,8 @@
   ; @return (maps in vector)
   ;  [{:namespace/id (string)}]
   [collection-name & [projection]]
-  (vec (reduce (fn [result document]
-                   (let [document (-> document (engine/_id->id)
-                                               (json/keywordize-values)
-                                               (time/unparse-date-time))]
-                        (conj result document)))
-               (param [])
-               (find-all-documents collection-name projection))))
+  (let [all-documents (find-all-documents collection-name projection)]
+       (vector/->items all-documents #(-> % engine/_id->id json/keywordize-values time/unparse-date-time))))
 
 (defn get-documents-by-query
   ; @param (string) collection-name
@@ -230,14 +223,9 @@
   ;  [{:namespace/id (string)}]
   [collection-name query & [projection]]
   (let [query      (-> query json/unkeywordize-keys json/unkeywordize-values)
-        projection (json/unkeywordize-keys  projection)]
-       (vec (reduce (fn [result document]
-                        (let [document (-> document (engine/_id->id)
-                                                    (json/keywordize-values)
-                                                    (time/unparse-date-time))]
-                             (conj result document)))
-                    (param [])
-                    (find-documents-by-query collection-name query projection)))))
+        projection (json/unkeywordize-keys projection)
+        documents  (find-documents-by-query collection-name query projection)]
+       (vector/->items documents #(-> % engine/_id->id json/keywordize-values time/unparse-date-time))))
 
 (defn get-document-by-query
   ; @param (string) collection-name
@@ -302,8 +290,9 @@
   ;
   ; @return (maps in vector)
   [collection-name pipeline]
-  (-> (aggregation collection-name pipeline nil)
-      json/keywordize-values time/unparse-date-time))
+  (-> (aggregation collection-name pipeline)
+      (json/keywordize-values)
+      (time/unparse-date-time)))
 
 (defn count-documents-by-pipeline
   ; @param (string) collection-name
@@ -314,4 +303,5 @@
   ;
   ; @return (integer)
   [collection-name pipeline]
-  (count (aggregation collection-name pipeline nil)))
+  (-> (aggregation collection-name pipeline)
+      (count)))

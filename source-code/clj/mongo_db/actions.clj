@@ -51,15 +51,11 @@
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name document]
-  (let [namespace   (db/document->namespace document)
-        id-key      (keyword/add-namespace  namespace :id)
-        document-id (get document id-key)
-        document    (-> document ; Ha a dokumentum nem rendelkezne string típusú :_id kulcssal,
-                                 ; akkor a MongoDB BSON objektum típusú :_id kulcsot társítana hozzá!
-                                 engine/id->_id json/unkeywordize-keys json/unkeywordize-values
-                                 ; A dokumentumban string típusként tárolt dátumok és idők
-                                 ; átalakítása objektum típusra
-                                 time/parse-date-time)
+  (let [document (-> document ; - Ha a dokumentum nem rendelkezne string típusú :_id kulcssal,
+                              ;   akkor a MongoDB BSON objektum típusú :_id kulcsot társítana hozzá!
+                              ; - A dokumentumban string típusként tárolt dátumok és idők
+                              ;   átalakítása objektum típusra
+                              engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
         return (mcl/save-and-return @DB collection-name document)]
        (-> return json/keywordize-keys json/keywordize-values time/unparse-date-time engine/_id->id)))
 
@@ -158,10 +154,7 @@
    (add-documents! collection-name documents {}))
 
   ([collection-name documents options]
-   (vec (reduce (fn [result document]
-                    (let [return (add-document! collection-name document options)]
-                         (conj result return)))
-                [] documents))))
+   (vector/->items documents #(add-document! collection-name % options))))
 
 ; @usage
 ;  [:mongo-db/add-documents! "my-collection" [{...} {...}]]
@@ -316,10 +309,7 @@
    (merge-documents! collection-name documents {}))
 
   ([collection-name documents options]
-   (vec (reduce (fn [result document]
-                    (let [return (merge-document! collection-name document options)]
-                         (conj result return)))
-                [] documents))))
+   (vector/->items documents #(merge-document! collection-name % options))))
 
 ; @usage
 ;  [:mongo-db/merge-documents! "my-collection" [{...} {...}]]
@@ -406,10 +396,7 @@
    (remove-documents! collection-name document-ids {}))
 
   ([collection-name document-ids options]
-   (vec (reduce (fn [result document-id]
-                    (let [return (remove-document! collection-name document-id options)]
-                         (conj result return)))
-                [] document-ids))))
+   (vector/->items document-ids #(remove-document! collection-name % options))))
 
 ; @usage
 ;  [:mongo-db/remove-documents! "my-collection" ["my-document" "your-document"]]
@@ -587,8 +574,7 @@
   ; @return (vectors in vector)
   [collection-name document-order]
   (let [namespace (reader/get-collection-namespace collection-name)
-        order-key (keyword/add-namespace    namespace :order)]
-       (doseq [[document-id document-dex] document-order]
-              (mcl/update @DB collection-name {:_id document-id}
-                                              {"$set" {(keyword/to-string order-key) document-dex}}))
-       (return document-order)))
+        order-key (str (name namespace) "/order")]
+       (vector/->items document-order (fn [[document-id document-dex]]
+                                          (mcl/update @DB collection-name {:_id document-id}
+                                                                          {"$set" {order-key document-dex}})))))

@@ -147,7 +147,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:subscriber (subscription vector)(opt)}
+  ;  {:subscriber (subscription-vector)(opt)}
   ;
   ; @return (string)
   [_ {:keys [subscriber]}]
@@ -178,7 +178,7 @@
   ;  {:base-props (map)(opt)
   ;   :content (component)
   ;   :content-props (map)(opt)
-  ;   :subscriber (subscription vector)}
+  ;   :subscriber (subscription-vector)}
   ;
   ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
@@ -195,7 +195,7 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:content (component)
-  ;   :subscriber (subscription vector)(opt)}
+  ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
   [component-id context-props]
@@ -232,7 +232,7 @@
   ;   :replacements (vector)(opt)
   ;    XXX#4509
   ;    Only w/ {:content (keyword or string)}
-  ;   :subscriber (subscription vector)(opt)
+  ;   :subscriber (subscription-vector)(opt)
   ;    Return value must be a map!
   ;    Only w/ {:content (component)
   ;             :content (nil)}
