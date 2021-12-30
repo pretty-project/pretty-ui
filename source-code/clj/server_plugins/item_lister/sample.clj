@@ -36,9 +36,9 @@
               (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
                     count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
                     ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
-                   {:documents      (mongo-db/get-documents-by-pipeline   :my-collection get-pipeline)
+                   {:documents      (mongo-db/get-documents-by-pipeline   "my-collection" get-pipeline)
                     ; A keresési feltételeknek megfelelő dokumentumok száma
-                    :document-count (mongo-db/count-documents-by-pipeline :my-collection count-pipeline)})})
+                    :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)})})
 
 
 
@@ -52,6 +52,18 @@
              ; @return (namespaced maps in vector)
              [env my-type-items]
              {::pco/op-name 'my-extension/undo-delete-my-type-items!}
+             (return []))
+
+(defmutation merge-my-type-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env {:keys [items]}]
+             {::pco/op-name 'my-extension/merge-my-type-items!}
              (return []))
 
 (defmutation delete-my-type-items!
@@ -72,6 +84,7 @@
 ; @constant (vector)
 (def HANDLERS [get-my-type-items
                undo-delete-my-type-items!
+               merge-my-type-items!
                delete-my-type-items!])
 
 (pathom/reg-handlers! :my-extension HANDLERS)
@@ -93,4 +106,7 @@
                                           {:download-limit         10
                                            :order-by         ORDER-BY
                                            :order-by-options ORDER-BY-OPTIONS
-                                           :search-keys [:my-key :your-key]}]})
+                                           ; XXX#8092
+                                           ; A dokumentumoknak tartalmazniuk kell legalább egyet
+                                           ; az itt felsorolt kulcsok közül!
+                                           :search-keys [:my-key]}]})

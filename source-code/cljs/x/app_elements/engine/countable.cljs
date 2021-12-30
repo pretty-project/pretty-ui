@@ -65,30 +65,38 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :min-value (integer)(opt)
+  ;   :value (integer)}
   ;
   ; @return (map)
   ;  {:disabled (boolean)
   ;   :on-click (function)}
-  [input-id {:keys [disabled?]}]
-  (if disabled? {:disabled    (param true)}
-                {:on-click    (on-decrease-function            input-id)
-                 :on-mouse-up (focusable/blur-element-function input-id)}))
+  [input-id {:keys [disabled? min-value value]}]
+  (if (or disabled? (= min-value value))
+      {:disabled      true
+       :data-disabled true}
+      {:on-click    (on-decrease-function            input-id)
+       :on-mouse-up (focusable/blur-element-function input-id)}))
 
 (defn countable-increase-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :max-value (integer)(opt)
+  ;   :value (integer)}
   ;
   ; @return (map)
   ;  {:disabled (boolean)
   ;   :on-click (function)}
-  [input-id {:keys [disabled?]}]
-  (if disabled? {:disabled    (param true)}
-                {:on-click    (on-increase-function            input-id)
-                 :on-mouse-up (focusable/blur-element-function input-id)}))
+  [input-id {:keys [disabled? max-value value]}]
+  (if (or disabled? (= max-value value))
+      {:disabled      true
+       :data-disabled true}
+      {:on-click    (on-increase-function            input-id)
+       :on-mouse-up (focusable/blur-element-function input-id)}))
 
 (defn countable-reset-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

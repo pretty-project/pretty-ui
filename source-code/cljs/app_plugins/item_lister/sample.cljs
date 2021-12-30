@@ -2,6 +2,7 @@
 (ns app-plugins.item-lister.sample
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
+              [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
 
 
@@ -27,7 +28,7 @@
 (defn my-filters
   [surface-id]
   [elements/menu-bar {:menu-items [{:label "My filter"
-                                    :on-click [:item-lister/use-filter! :my-extension :my-type :my-filter]}]}])
+                                    :on-click [:item-lister/use-filter! :my-extension :my-type {}]}]}])
 
 (defn my-view
   [surface-id]

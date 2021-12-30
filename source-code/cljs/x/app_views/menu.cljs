@@ -71,13 +71,11 @@
 (defn- language-selector-languages
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [app-languages selected-language]}]
-  (vec (reduce #(let [language-selected? (= %2 selected-language)
-                      button-props       {:icon :placeholder :label %2 :on-click (set-language-event %2)
-                                          :preset (if language-selected? :primary-button :default-button)
-                                          :indent :left}]
-                     (conj %1 [elements/button button-props]))
-                [:div#x-app-menu--languages]
-                (param app-languages))))
+  (letfn [(f [o x] (let [language-selected? (= x selected-language)]
+                        (conj o [elements/button {:icon :placeholder :label x :indent :left
+                                                  :on-click (set-language-event x)
+                                                  :preset (if language-selected? :primary-button :default-button)}])))]
+         (reduce f [:div#x-app-menu--languages] app-languages)))
 
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -169,7 +167,7 @@
        [elements/button ::back-button
                         {:indent   :left
                          :label    :back!
-                         :on-click [:gestures/change-view! ::handler  :main]
+                         :on-click [:gestures/change-view! ::handler :main]
                          :preset   :back-button}]])
 
 
@@ -195,7 +193,7 @@
        [elements/button ::back-button
                         {:label    :back!
                          :indent   :left
-                         :on-click [:gestures/change-view! ::handler  :main]
+                         :on-click [:gestures/change-view! ::handler :main]
                          :preset   :back-button}]])
 
 

@@ -34,10 +34,10 @@
   ;   :render-progress-bar? (boolean)}
   [db _]
   (if-let [process-id (get-in db (db/meta-item-path ::primary :process-id))]
-          (let [process-progress (r a/get-process-progress db process-id)
-                process-activity (r a/get-process-activity db process-id)
+          (let [process-activity (r a/get-process-activity db process-id)
                 overlay-screen?  (get-in db (db/meta-item-path ::primary :overlay-screen?))]
-               {:process-progress       (param process-progress)
+               {:process-failured?      (r a/process-failured? db process-id)
+                :process-progress       (r a/get-process-progress db process-id)
                 :render-progress-bar?   (or (= :active process-activity)
                                             (= :idle   process-activity))
                 :render-screen-overlay? (and (boolean overlay-screen?)
@@ -88,15 +88,17 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:process-progress (integer)(opt)
+  ;  {:process-failured? (boolean)(opt)
+  ;   :process-progress (integer)(opt)
   ;   :render-progress-bar? (boolean)(opt)
   ;   :render-screen-overlay? (boolean)(opt)}
   ;
   ; @return (hiccup)
-  [_ {:keys [process-progress render-progress-bar? render-screen-overlay?]}]
+  [_ {:keys [process-failured? process-progress render-progress-bar? render-screen-overlay?]}]
   (if render-progress-bar? [:div#x-app-progress-bar
                              (if render-screen-overlay? [:div#x-app-progress-bar--screen-overlay])
-                             [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}}]]))
+                             [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}
+                                                                         :data-failured (boolean process-failured?)}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

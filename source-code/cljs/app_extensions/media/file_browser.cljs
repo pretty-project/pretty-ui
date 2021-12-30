@@ -785,7 +785,7 @@
    file-id      {:file/keys [alias filesize modified-at selected?] :as file-props}]
   (let [element-id           (engine/item-id->element-id file-id :file-browser)
         stickers             (file-browser-file-stickers component-id view-props file-id file-props)
-        timestamp            (time/timestamp-string->date-and-time modified-at :yyyymmdd :hhmm)
+        timestamp            (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)
         on-right-click-event [:elements/render-context-surface! element-id]
         thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
        [elements/file element-id

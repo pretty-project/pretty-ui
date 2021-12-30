@@ -158,7 +158,7 @@
                                                      request-successed? "var( --color-success )")}}]
               (str request-id)]
         [:pre {:style {:opacity ".5" :font-size "12px"}}
-              (time/timestamp-string->date-and-time sent-time)]])
+              (time/timestamp-string->date-time sent-time)]])
 
 (defn- xxx
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -289,6 +289,26 @@
              (string/includes? n x))
         (subs n 0 (string/last-index-of n x))))
 
+(defn first-index-of
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @return (integer)
+  [n x]
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/index-of n x)))
+
+(defn last-index-of
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @return (integer)
+  [n x]
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/last-index-of n x)))
+
 (defn after-first-occurence
   ; @param (string) n
   ; @param (string) x

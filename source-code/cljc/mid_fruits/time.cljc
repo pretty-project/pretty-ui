@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.09.11
 ; Description:
-; Version: v1.2.4
+; Version: v1.4.2
 
 
 
@@ -23,10 +23,53 @@
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]
 
+              #?(:clj  [clj-time.coerce  :as clj-time.coerce])
               #?(:clj  [clj-time.core    :as clj-time.core])
               #?(:clj  [clj-time.format  :as clj-time.format])
               #?(:cljs [cljs-time.core   :as cljs-time.core])
               #?(:cljs [cljs-time.format :as cljs-time.format])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn epoch-ms
+  ; @return (ms)
+  []
+  #?(:clj (-> (clj-time.core/now)
+              (clj-time.coerce/to-long))))
+
+(defn epoch-s
+  ; @return (s)
+  []
+  #?(:clj (-> (clj-time.core/now)
+              (clj-time.coerce/to-long)
+              (quot 1000))))
+
+(defn epoch-ms->timestamp-string
+  ; @param (ms) n
+  ;
+  ; @example
+  ;  (time/epoch-ms->timestamp-string 1640800860000)
+  ;  =>
+  ;  "2021-12-29T18:01:00.000Z"
+  ;
+  ; @return (string)
+  [n]
+  #?(:clj (str (clj-time.coerce/from-long n))))
+
+(defn epoch-s->timestamp-string
+  ; @param (s) n
+  ;
+  ; @example
+  ;  (time/epoch-s->timestamp-string 1640800860)
+  ;  =>
+  ;  "2021-12-29T18:01:00.000Z"
+  ;
+  ; @return (string)
+  [n]
+  #?(:clj (str (clj-time.coerce/from-long (* n 1000)))))
 
 
 
@@ -40,6 +83,11 @@
   #?(:clj  (return 0)
      ; The returned value represents the time elapsed since the document's lifetime.
      :cljs (.now js/performance)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn timestamp-object
   ; @param (string)(opt) time-zone
@@ -358,7 +406,7 @@
                          :hhmm   (str hours ":" minutes)
                          (return n))))))
 
-(defn timestamp-string->date-and-time
+(defn timestamp-string->date-time
   ; @param (string) n
   ; @param (keyword)(opt) date-format
   ;  :yyyymmdd, :yymmdd
@@ -368,16 +416,16 @@
   ;  Default: :hhmmss
   ;
   ; @example
-  ;  (time/timestamp->date-and-time "2020-04-20T16:20:00.123Z" :yyyymmdd :hhmmss)
+  ;  (time/timestamp->date-time "2020-04-20T16:20:00.123Z" :yyyymmdd :hhmmss)
   ;  =>
   ;  "2020/04/20 - 16:20:00"
   ;
   ; @return (string)
   ([n]
-   (timestamp-string->date-and-time n :yyyymmdd :hhmmss))
+   (timestamp-string->date-time n :yyyymmdd :hhmmss))
 
   ([n time-format]
-   (timestamp-string->date-and-time n :yyyymmdd time-format))
+   (timestamp-string->date-time n :yyyymmdd time-format))
 
   ([n date-format time-format]
    (if (string/nonempty? n)

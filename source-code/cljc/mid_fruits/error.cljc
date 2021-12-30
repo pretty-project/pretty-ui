@@ -31,5 +31,5 @@
   ;
   ; @return (*)
   [f & abc]
-  #?(:cljs (try (apply f abc) (catch :default  e (str "Error: " n)))
-     :clj  (try (apply f abc) (catch Exception e (str "Error: " n)))))
+  #?(:cljs (try (apply f abc) (catch :default  e (str e)))
+     :clj  (try (apply f abc) (catch Exception e (str e)))))

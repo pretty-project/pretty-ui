@@ -1,6 +1,7 @@
 
 (ns app-plugins.item-editor.sample
-    (:require [x.app-core.api :as a]
+    (:require [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]
               [app-plugins.item-editor.api :as item-editor]))
 
 
@@ -19,9 +20,10 @@
 
 (defn body-structure
   [body-id body-props]
-  [:<> [elements/field ::my-sample-field
-                       {:form-id    (item-editor/form-id :my-extension :my-type)
-                        :value-path [:my-extension :item-editor/data-items :my-value]}]])
+  [:<> [elements/text-field ::my-sample-field
+                            {:form-id    (item-editor/form-id :my-extension :my-type)
+                                         ; XXX#8092
+                             :value-path [:my-extension :item-editor/data-items :my-key]}]])
 
 (defn body
   [body-id]
@@ -38,3 +40,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx :my-extension/render-my-type-editor! [:ui/set-surface! ::view {:view {:content #'view}}])
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:dictionary/add-terms! {:add-my-type {:en "Add my type"
+                                                       :hu "Típusom hozzáadása"}
+                                         :edit-my-type {:en "Edit my type"
+                                                        :hu "Típusom szerkesztése"}}]})

@@ -31,8 +31,8 @@
   ;
   ; @return (*)
   [n]
-  #?(:cljs (try (reader/read-string n) (catch :default  e (str "read-string error: " n)))
-     :clj  (try (edn/read-string    n) (catch Exception e (str "read-string error: " n)))))
+  #?(:cljs (try (reader/read-string n) (catch :default  e (str e)))
+     :clj  (try (edn/read-string    n) (catch Exception e (str e)))))
 
 (defn mixed->string
   ; @param (*) n
@@ -68,11 +68,12 @@
   [n]
   (if (string/nonempty? n)
       (let [x (read-str n)]
-           (cond (keyword? x) x
-                 (map?     x) x
-                 (vector?  x) x
-                 ; Előfordulhat, hogy a read-str függvény egy Error objektummal tér vissza
-                 :else n))
+           (if (or (keyword? x)
+                   (map?     x)
+                   (vector?  x))
+               (return x)
+               ; Előfordulhat, hogy a read-str függvény egy Error objektummal tér vissza
+               (return n)))
       (return nil)))
 
 (defn string->map

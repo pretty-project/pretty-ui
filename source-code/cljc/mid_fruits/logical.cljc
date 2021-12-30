@@ -146,3 +146,26 @@
   ; Az is-your-value-true? függvény abban az esetben is lefut, ha az is-my-value-true? függvény
   ; kimenete igaz!
   (not-any? boolean abc))
+
+(defn or=
+  ; @param (*) a
+  ; @param (list of *) bcd
+  ;
+  ; @example
+  ;  (or= :a :b :c)
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (or= :a :b :a)
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (or= :a :a)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [a & bcd]
+  (boolean (some #(= a %) bcd)))

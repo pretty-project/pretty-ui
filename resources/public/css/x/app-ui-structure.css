@@ -469,6 +469,9 @@ body[data-viewport-profile="s"]   #x-app-header {
   transition: width .2s ease-in-out;
   width: 0% }
 
+#x-app-progress-bar--process-progress[data-failured="true"] {
+  background-color: var( --border-color-warning ) }  
+
 #x-app-progress-bar--screen-overlay {
   background-color: var( --app-overlay-color );
   height: 100%;

@@ -129,7 +129,8 @@
   [bar-id bar-props item-props]
   [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                                  [menu-item-icon       bar-id bar-props item-props]
-                                 [menu-item-label      bar-id bar-props item-props]])
+                                 [menu-item-label      bar-id bar-props item-props]
+                                 [engine/element-badge bar-id item-props]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -172,9 +173,9 @@
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
   ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
-  (vec (reduce #(conj %1 [menu-item bar-id bar-props %2])
-                [:div.x-menu-bar--menu-items]
-                (param menu-items))))
+  (reduce #(conj %1 [menu-item bar-id bar-props %2])
+           [:div.x-menu-bar--menu-items]
+           (param menu-items)))
 
 (defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -205,6 +206,8 @@
   ;   :menu-items (maps in vector)
   ;    [{:active? (boolean)(opt)
   ;       Default: false
+  ;      :badge-color (keyword)(opt)
+  ;       :primary, :secondary, :success, :warning
   ;      :disabled? (boolean)(opt)
   ;       Default: false
   ;      :href (string)(opt)

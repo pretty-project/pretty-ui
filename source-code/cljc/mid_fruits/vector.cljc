@@ -1458,3 +1458,20 @@
   ; @return (vector)
   [n f]
   (reduce #(conj %1 (f %2)) [] n))
+
+(defn ->>items
+  ; @param (map) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (vector/->>items [:a :b :c [:d :e {:e :f}]] name)
+  ;  =>
+  ;  ["a" "b" "c" ["d" "e" {:e "f"}]]
+  ;
+  ; @return (vector)
+  [n f]
+  ; A rekurzió a térképek értékein is végrehajtja az f függvényt, mivel azok a vektorok elemeinek megfelelői!
+  (letfn [(deep-f [n] (cond (vector? n) (reduce    #(conj  %1    (deep-f %2)) [] n)
+                            (map?    n) (reduce-kv #(assoc %1 %2 (deep-f %3)) {} n)
+                            :else (f n)))]
+         (deep-f n)))

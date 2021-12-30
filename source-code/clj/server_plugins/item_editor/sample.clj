@@ -30,7 +30,7 @@
                             :my-type/description
                             :my-type/favorite?
                             :my-type/modified-at]}
-             (if-let [document (mongo-db/get-document-by-id :my-collection id)]
+             (if-let [document (mongo-db/get-document-by-id "my-collection" id)]
                      ; XXX#6074
                      (validator/validate-data document)))
 
@@ -55,6 +55,17 @@
              ; @return (namespaced map)
              [env my-type-item]
              {::pco/op-name 'my-extension/save-my-type-item!}
+             (return {}))
+
+(defmutation merge-my-type-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (namespaced map) client-item
+             ;
+             ; @return (namespaced map)
+             [env client-item]
+             {::pco/op-name 'my-extension/merge-my-type-item!}
              (return {}))
 
 (defmutation merge-my-type-item!
@@ -94,6 +105,7 @@
 (def HANDLERS [get-my-type-item
                undo-delete-my-type-item!
                save-my-type-item!
+               merge-my-type-item!
                merge-my-type-item!
                delete-my-type-item!
                duplicate-my-type-item!])
