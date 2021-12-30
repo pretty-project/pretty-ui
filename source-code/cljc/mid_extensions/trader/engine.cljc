@@ -103,9 +103,3 @@
        (str PRIVATE-API-ADDRESS "/account/api-key"
             "?api-key="   api-key
             "&timestamp=" timestamp)))
-
-(defn signed-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uri]
-  (let [sign ""]
-       (str uri "&sign=" sign)))

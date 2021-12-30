@@ -6,7 +6,6 @@
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
-              [server-fruits.hash :as hash]
               [x.server-core.api  :as a]
               [server-extensions.trader.engine :as engine]))
 
@@ -18,12 +17,14 @@
 (defn get-api-key-info!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (let [api-key  (http/request->param request :api-key)
-        uri      (engine/api-key-info-uri {:api-key api-key})
-        response (client/get uri)]
+  (let [api-key    (http/request->param request :api-key)
+        api-secret (http/request->param request :api-secret)
+        uri        (engine/api-key-info-uri {:api-key api-key})
+        response   (client/get uri)]
        (println (str api-key))
        (println (str uri))
-       (println (str response))
+       (println (str (engine/signed-uri uri api-secret)))
+       ;(println (str response))
        {:x :y}))
 
 (defn download-api-key-info

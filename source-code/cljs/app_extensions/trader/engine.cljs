@@ -17,4 +17,3 @@
 (def query-from              engine/query-from)
 (def query-kline-uri         engine/query-kline-uri)
 (def api-key-info-uri        engine/api-key-info-uri)
-(def signed-uri              engine/signed-uri)

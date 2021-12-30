@@ -34,8 +34,12 @@
 ;  For the buddy authenticating services
 (def BACKEND (session-backend))
 
-; @constant (string)
-(def SOURCE-DIRECTORY-PATH "source-code")
+; @constant (strings in vector)
+; - A wrap-reload alapértelmezett beállítással használva az "src" mappa
+;   fájljait figyeli
+; - A monotech-hq/monoset könyvtárban a forráskód a "source-code" mappában van
+; - A projektekben elhelyezett monotech-hq/monoset könyvtár a "monoset" mappában van
+(def SOURCE-DIRECTORY-PATHS ["source-code" "monoset"])
 
 
 
@@ -61,7 +65,7 @@
   ;  {:middleware (vector)}
   []
   (let [site-defaults (site-defaults-prototype site-defaults)]
-       {:middleware [#(wrap-reload           % {:dirs [SOURCE-DIRECTORY-PATH]})
+       {:middleware [#(wrap-reload           % {:dirs SOURCE-DIRECTORY-PATHS})
                      #(wrap-keyword-params   %)
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})

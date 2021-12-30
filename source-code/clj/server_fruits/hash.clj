@@ -17,5 +17,5 @@
   ;
   ; @return (string)
   [n secret-key]
-  (-> (mac/hash n {:key secret-key :alg :hmac+sha256})
-      (codecs/bytes->hex)))
+  (-> n (mac/hash {:key secret-key :alg :hmac+sha256})
+        (codecs/bytes->hex)))

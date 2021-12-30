@@ -1,6 +1,7 @@
 
 (ns server-extensions.trader.engine
-    (:require [mid-extensions.trader.engine :as engine]))
+    (:require [server-fruits.hash :as hash]
+              [mid-extensions.trader.engine :as engine]))
 
 
 
@@ -17,4 +18,14 @@
 (def query-from              engine/query-from)
 (def query-kline-uri         engine/query-kline-uri)
 (def api-key-info-uri        engine/api-key-info-uri)
-(def signed-uri              engine/signed-uri)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn signed-uri
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uri api-secret]
+  (let [sign (hash/sha256 uri api-secret)]
+       (str uri "&sign=" sign)))
