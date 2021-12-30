@@ -58,7 +58,9 @@
        (case order-by :by-name-ascending  [[(keyword/add-namespace item-namespace :name)         1]]
                       :by-name-descending [[(keyword/add-namespace item-namespace :name)        -1]]
                       :by-date-ascending  [[(keyword/add-namespace item-namespace :modified-at)  1]]
-                      :by-date-descending [[(keyword/add-namespace item-namespace :modified-at) -1]])))
+                      :by-date-descending [[(keyword/add-namespace item-namespace :modified-at) -1]]
+                      ; Default
+                      [[(keyword/add-namespace item-namespace :name) 1]])))
 
 (defn env->search-pattern
   ; @param (map) env

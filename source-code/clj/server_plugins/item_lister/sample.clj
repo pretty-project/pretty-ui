@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
-(def ORDER-BY :by-price-ascending)
+(def ORDER-BY :by-date-ascending)
 
 ; @constant (keywords in vector)
-(def ORDER-BY-OPTIONS [:by-name-ascending :by-name-descending :by-price-ascending :by-price-descending])
+(def ORDER-BY-OPTIONS [:by-name-ascending :by-name-descending :by-date-ascending :by-date-descending])
 
 
 

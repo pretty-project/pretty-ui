@@ -6,6 +6,7 @@
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
+              [server-fruits.hash :as hash]
               [x.server-core.api  :as a]
               [server-extensions.trader.engine :as engine]))
 
