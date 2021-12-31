@@ -1,7 +1,8 @@
 
 (ns app-extensions.trader.styles
-    (:require [mid-fruits.css  :as css]
-              [mid-fruits.math :as math]))
+    (:require [mid-fruits.candy :refer [param]]
+              [mid-fruits.css   :as css]
+              [mid-fruits.math  :as math]))
 
 
 
@@ -71,9 +72,9 @@
   {:align-items     "center"
    :display         "flex"
    :flex-direction  "column"
+   :height          "100%"
    :justify-content "center"
    :left            "0"
-   :padding         "8px"
    :position        "absolute"
    :top             "0"
    :width           "100%"})
@@ -351,3 +352,49 @@
   {:display        "flex"
    :flex-direction "column"
    :padding        "12px 24px"})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn listener-list-structure-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:height "468px"
+   :padding "0 24px"
+   :width  "50vw"})
+
+(defn listener-list-body-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:background-color "var( --fill-color )"
+   :border-radius    "var( --border-radius-xxl )"
+   :height           "420px"
+   :overflow         "hidden"
+   :width            "100%"})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn overlay-center
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:align-items     "center"
+   :display         "flex"
+   :flex-direction  "column"
+   :height          "100%"
+   :justify-content "center"
+   :width           "100%"})
+
+(defn row
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ([]
+   (row {}))
+
+  ([x]
+   (merge {:display        "flex"
+           :flex-direction "row"}
+          (param x))))

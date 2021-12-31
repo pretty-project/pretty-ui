@@ -62,9 +62,9 @@
                             :settings  [settings/view controls-id])]
         [elements/horizontal-separator {:size :xxl}]])
 
-(defn view
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id]
-  [components/subscriber view-id
+  [body-id]
+  [components/subscriber body-id
                          {:component  #'controls
                           :subscriber [:trader/get-controls-props]}])

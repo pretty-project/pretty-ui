@@ -431,9 +431,9 @@
                       :initializer [:trader/init-monitor!     monitor-id]
                       :subscriber  [:trader/get-monitor-props monitor-id]}])
 
-(defn view
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [view-id]
+  [body-id]
   (let [monitor-ids (a/subscribe [:db/get-item [:trader :monitor :monitor-ids]])]
        (fn [] (reduce-indexed #(conj %1 ^{:key %3} [monitor %3 {:last-monitor?  (= %2 (dec (count @monitor-ids)))
                                                                 :first-monitor? (= %2 0)}])
@@ -476,9 +476,8 @@
            {:db (as-> db % (r store-received-kline-data! % monitor-id kline-data)
                            (r init-timer!                % monitor-id))
             :dispatch-later [{:ms 1000 :dispatch [:trader/update-time! monitor-id]}]
-            :dispatch-n     [[:trader/resolve-kline-data! monitor-id]
-                             [:trader/log! :trader/monitor (get kline-data :uri)
-                                                           (get kline-data :timestamp)]]})))
+            :dispatch       [:trader/log! :trader/monitor (get kline-data :uri)
+                                                          (get kline-data :timestamp)]})))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!

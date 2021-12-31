@@ -4,6 +4,7 @@
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
               [app-extensions.trader.controls :as controls]
+              [app-extensions.trader.listener :as listener]
               [app-extensions.trader.monitor  :as monitor]
               [app-extensions.trader.styles   :as styles]))
 
@@ -17,8 +18,9 @@
   [surface-id]
   [:<> [elements/horizontal-separator {:size :xxl}]
        [:div {:style (styles/box-list-style)}
-             [monitor/view  surface-id]
-             [controls/view surface-id]]])
+             [monitor/body  surface-id]
+             [controls/body surface-id]
+             [listener/body surface-id]]])
 
 
 

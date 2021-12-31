@@ -944,12 +944,20 @@ button.x-card:focus,
 .x-text[data-font-weight="bold"] .x-text--body {
   font-weight: 500 }
 
+.x-button[data-layout="fit"][data-font-weight="bold"] .x-button--label,
+.x-button[data-layout="row"][data-font-weight="bold"] .x-button--label {
+  font-weight: 500 }
+
 /*** Bold ***/
 
 /*** Extra bold ***/
 
 .x-label[data-font-weight="extra-bold"] .x-label--body,
 .x-text[data-font-weight="extra-bold"] .x-text--body {
+  font-weight: 600 }
+
+.x-button[data-layout="fit"][data-font-weight="extra-bold"] .x-button--label,
+.x-button[data-layout="row"][data-font-weight="extra-bold"] .x-button--label {
   font-weight: 600 }
 
 /*** Extra bold ***/
@@ -1643,7 +1651,7 @@ body[data-viewport-profile="s"]
 
 .x-button[data-layout="fit"] .x-button--label,
 .x-button[data-layout="row"] .x-button--label {
-  font-weight: 500;
+
   white-space: nowrap;
   word-wrap: normal }
 

@@ -64,13 +64,15 @@
   ; @return (map)
   ;  {:color (keyword)
   ;   :font-size (keyword)
+  ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
   ;   :icon-family (keyword)
   ;   :layout (keyword)
   ;   :variant (keyword)}
   [{:keys [icon label layout variant] :as button-props}]
-  (merge {:layout  :row}
+  (merge {:layout :row}
          (if (not= layout :icon-button) {:font-size        :s
+                                         :font-weight      :bold
                                          :horizontal-align :center})
          (if (some? icon)               {:icon-family :material-icons-filled})
          (if (= variant :filled)        {:background-color :primary})
@@ -169,6 +171,9 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;    Only w/ {:layout :fit} or {:layout :row}
+  ;   :font-weight (keyword)(opt)
+  ;    :bold, :extra-bold
+  ;    Default: :bold
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
