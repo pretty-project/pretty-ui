@@ -35,12 +35,12 @@
   [:<> [my-filters surface-id]
        ; Az item-lister plugint header és body komponensre felbontva is lehetséges használni
        [item-lister/header :my-extension :my-type]
-       [item-lister/body   :my-extension :my-type {:list-item #'my-list-item}]])
+       [item-lister/body   :my-extension :my-type {:list-element #'my-list-item}]])
 
 (defn your-view
   [surface-id]
   ; Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.
-  [item-lister/view :my-extension :my-type {:list-item #'my-list-item}])
+  [item-lister/view :my-extension :my-type {:list-element #'my-list-item}])
 
 
 
@@ -49,3 +49,8 @@
 
 (a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:view {:content #'my-view}}])
                                                     ;[:ui/set-surface! {:view {:content #'your-view}}])
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:dictionary/add-terms! {:my-extension {:en "My extension"
+                                                        :hu "Kiegészítőm"}}]})

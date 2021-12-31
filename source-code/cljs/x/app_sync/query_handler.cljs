@@ -184,7 +184,7 @@
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
   ;  {:body (map)(opt)
-  ;    {:query (string or vector)}
+  ;    {:query (vector)}
   ;    Only w/o {:query ...}
   ;   :idle-timeout (ms)(opt)
   ;    Default: x.app-sync/request-handler/DEFAULT-IDLE-TIMEOUT
@@ -209,9 +209,6 @@
   ;
   ; @usage
   ;  [:sync/send-query! :my-query {...}]
-  ;
-  ; @usage
-  ;  [:sync/send-query! {:query "[:all-users]"}]
   ;
   ; @usage
   ;  [:sync/send-query! {:query [:all-users]}]
@@ -240,7 +237,7 @@
             ; érték kerül, ami a szerver-oldali Pathom rendszerben hibához vezetne.
             ; Emiatt szükséges eltávolítani a query vektorból a nil értékeket,
             ; miután a {:query [...]} és a {:body {:query [...]}} tulajdonságok
-            ; egységesítése megtörtént.
+            ; összevonása megtörtént.
             request-props (update-in request-props [:params :query] vector/remove-item nil)]
 
            {:db       (r store-query-props! db query-id query-props)

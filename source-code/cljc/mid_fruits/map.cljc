@@ -320,9 +320,25 @@
   ;  =>
   ;  {:b "x"}
   ;
-  ; @return (*)
+  ; @return (map)
   [n from to]
   (dissoc (assoc n to (get n from)) from))
+
+(defn rekey-items
+  ; @param (map) n
+  ; @param (list of *) ks
+  ;
+  ; @example
+  ;  (map/rekey-items {:a "x" :c "y"} :a :b :c :d)
+  ;  =>
+  ;  {:b "x" :d "y"}
+  ;
+  ; @return (map)
+  [n & ks]
+  (letfn [(f [o dex x] (if (even? dex)
+                           (dissoc (assoc o (nth ks (inc dex)) (get o x)) x)
+                           (return o)))]
+         (reduce-kv f n (vec ks))))
 
 (defn update-some
   ; Update n map if v is something

@@ -1,6 +1,7 @@
 
 (ns app-extensions.trader.listener
-    (:require [x.app-core.api     :as a]
+    (:require [mid-fruits.format  :as format]
+              [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [mid-extensions.trader.listener :as listener]))
 
@@ -9,8 +10,10 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def inc-from-lowest?  listener/inc-from-lowest?)
-(def inc-from-minimum? listener/inc-from-minimum?)
+(def price-inc?              listener/price-inc?)
+(def price-inc-from-minimum? listener/price-inc-from-minimum?)
+(def drop-length             listener/drop-length)
+(def price-drop              listener/price-drop)
 
 
 
@@ -34,9 +37,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [kline-data (get-in db [:trader :monitor :kline-data])]
-           (if (inc-from-lowest? kline-data 10)
-               [:trader/log! :trader/listener "Price is increasing from the lowest of last 10 period!"
-                                              (get-in db [:trader :monitor :kline-data :timestamp])]))))
+           (if-let [x (drop-length kline-data)]
+                   (let [price-drop (format/decimals (price-drop kline-data) 2)
+                         drop-data  (str "(" x " period, " price-drop " USD)")]
+                        [:trader/log! :trader/listener
+                                      (str "Price is increasing from the last drop " drop-data)
+                                      (get-in db [:trader :monitor :kline-data :timestamp])])))))
 
 
 

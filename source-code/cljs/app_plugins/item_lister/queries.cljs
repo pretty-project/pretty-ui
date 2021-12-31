@@ -108,3 +108,4 @@
   (let [resolver-id    (engine/resolver-id      extension-id item-namespace)
         resolver-props (r get-resolver-props db extension-id item-namespace)]
        [`(~resolver-id ~resolver-props)]))
+       

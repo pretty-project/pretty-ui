@@ -149,9 +149,7 @@
   ;
   ; @return (?)
   [filepath content]
-  (if (file-exists? filepath)
-      (spit         filepath (str content))
-      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
+  (spit filepath (str content)))
 
 (defn append-to-file!
   ; @param (string) filepath

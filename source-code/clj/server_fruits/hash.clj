@@ -8,12 +8,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sha256
+(defn hmac-sha256
   ; @param (string) n
   ; @param (string) secret-key
   ;
   ; @usage
-  ;  (hash/sha256 "My text" "my-secret-key")
+  ;  (hash/hmac-sha256 "My text" "my-secret-key")
   ;
   ; @return (string)
   [n secret-key]

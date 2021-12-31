@@ -19,8 +19,7 @@
 (defn get-controls-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:symbol  (get-in db [:trader :settings :symbol :label])
-   :view-id (r gestures/get-selected-view-id db :trader/controls)})
+  {:view-id (r gestures/get-selected-view-id db :trader/controls)})
 
 (a/reg-sub :trader/get-controls-props get-controls-props)
 
@@ -46,23 +45,22 @@
 
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [controls-id {:keys [symbol] :as controls-props} ]
+  [controls-id {:keys [] :as controls-props}]
   [elements/polarity ::menu-bar
                      {:start-content [menu-items controls-id controls-props]
-                      :end-content   [elements/label {:content symbol
-                                                      :indent :right
-                                                      :color :highlight}]
-                      :orientation :horizontal}])
+                      :orientation   :horizontal}])
 
 (defn- controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [controls-id {:keys [view-id] :as controls-props}]
-  [:div {:style (styles/controls-box-style)}
-        [menu-bar controls-id controls-props]
-        (case view-id :log       [log/view      controls-id]
-                      :positions [log/view      controls-id]
-                      :account   [account/view  controls-id]
-                      :settings  [settings/view controls-id])])
+  [:div {:style (styles/controls-structure-style)}
+        [:div {:style (styles/controls-body-style)}
+              [menu-bar controls-id controls-props]
+              (case view-id :log       [log/view      controls-id]
+                            :positions [log/view      controls-id]
+                            :account   [account/view  controls-id]
+                            :settings  [settings/view controls-id])]
+        [elements/horizontal-separator {:size :xxl}]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -26,7 +26,41 @@
 ; A {:layout :icon-button} presetek nem tartalmazzák a :tooltip és :label tulajdonságokat,
 ; mert az a felhasználás helyén dől el, hogy egy ikon gomb felirattal vagy anélkül jelenik meg.
 (def BUTTON-PROPS-PRESETS
-     {:accept-button       {:color   :primary
+     {; Defaults:
+      :default-icon-button {:color   :default
+                            :layout  :icon-button
+                            :variant :transparent}
+      :default-button      {:color   :default
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
+      :muted-button        {:color   :muted
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
+      :muted-icon-button   {:color   :muted
+                            :layout  :icon-button
+                            :variant :transparent}
+      :primary-button      {:color   :primary
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
+      :primary-icon-button {:color   :primary
+                            :layout  :icon-button
+                            :variant :transparent}
+      :secondary-button    {:color   :secondary
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
+      :warning-button      {:color   :warning
+                            :horizontal-align :left
+                            :layout  :row
+                            :variant :transparent}
+      :warning-icon-button {:color   :warning
+                            :layout  :icon-button
+                            :variant :transparent}
+      ; *****
+      :accept-button       {:color   :primary
                             :label   :accept!
                             :layout  :row
                             :variant :transparent}
@@ -89,13 +123,6 @@
                             :icon    :close
                             :layout  :icon-button
                             :variant :transparent}
-      :default-icon-button {:color   :default
-                            :layout  :icon-button
-                            :variant :transparent}
-      :default-button      {:color   :default
-                            :horizontal-align :left
-                            :layout  :row
-                            :variant :transparent}
       :delete-button       {:color   :warning
                             :label   :delete!
                             :layout  :row
@@ -157,13 +184,6 @@
                             :label   :more-options
                             :layout  :row
                             :variant :transparent}
-      :muted-button        {:color   :muted
-                            :horizontal-align :left
-                            :layout  :row
-                            :variant :transparent}
-      :muted-icon-button   {:color   :muted
-                            :layout  :icon-button
-                            :variant :transparent}
       :next-icon-button    {:color   :default
                             :icon    :arrow_forward_ios
                             :layout  :icon-button
@@ -171,10 +191,6 @@
       :prev-icon-button    {:color   :default
                             :icon    :arrow_back_ios
                             :layout  :icon-button
-                            :variant :transparent}
-      :primary-button      {:color   :primary
-                            :horizontal-align :left
-                            :layout  :row
                             :variant :transparent}
       :reorder-mode-icon-button {:color   :default
                                  :icon    :reorder
@@ -190,10 +206,6 @@
       :search-icon-button  {:color   :default
                             :icon    :search
                             :layout  :icon-button
-                            :variant :transparent}
-      :secondary-button    {:color   :secondary
-                            :horizontal-align :left
-                            :layout  :row
                             :variant :transparent}
       :select-button       {:label   :select
                             :layout  :row
@@ -219,8 +231,4 @@
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button
-                              :variant :transparent}
-      :warning-button        {:color   :warning
-                              :horizontal-align :left
-                              :layout  :row
                               :variant :transparent}})

@@ -47,7 +47,7 @@
   [elements/button ::quit-search-mode-button
                    {:disabled? synchronizing?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
-                    :preset    :menu-bar-icon-button}])
+                    :preset    :close-icon-button}])
 
 (defn search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +116,7 @@
   [elements/button ::quit-select-mode-button
                    {:disabled? synchronizing?
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
-                    :preset    :menu-bar-icon-button}])
+                    :preset    :close-icon-button}])
 
 (defn unselect-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,7 +233,7 @@
   [elements/button ::quit-reorder-mode-button
                    {:disabled? synchronizing?
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
-                    :preset    :menu-bar-icon-button}])
+                    :preset    :close-icon-button}])
 
 
 

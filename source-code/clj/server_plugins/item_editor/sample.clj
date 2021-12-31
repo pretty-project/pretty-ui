@@ -68,15 +68,6 @@
              {::pco/op-name 'my-extension/merge-my-type-item!}
              (return {}))
 
-(defmutation merge-my-type-item!
-             ; @param (map) env
-             ; @param (namespaced map) my-type-item
-             ;
-             ; @return (namespaced map)
-             [env my-type-item]
-             {::pco/op-name 'my-extension/merge-my-type-item!}
-             (return {}))
-
 (defmutation delete-my-type-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -106,11 +97,10 @@
                undo-delete-my-type-item!
                save-my-type-item!
                merge-my-type-item!
-               merge-my-type-item!
                delete-my-type-item!
                duplicate-my-type-item!])
 
-(pathom/reg-handlers! :my-extension HANDLERS)
+(pathom/reg-handlers! :my-type-editor HANDLERS)
 
 
 

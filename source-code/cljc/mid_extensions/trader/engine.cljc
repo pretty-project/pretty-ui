@@ -14,7 +14,10 @@
 (def PUBLIC-TEST-API-ADDRESS "https://api-testnet.bybit.com/v2/public")
 
 ; @constant (string)
-(def PRIVATE-API-ADDRESS "https://api-testnet.bybit.com/v2/private")
+(def PRIVATE-API-ADDRESS "https://api.bybit.com/v2/private")
+
+; @constant (string)
+(def PRIVATE-TEST-API-ADDRESS "https://api-testnet.bybit.com/v2/private")
 
 
 
@@ -69,37 +72,3 @@
   [interval limit]
   (- (time/epoch-s)
      (query-duration interval limit)))
-
-;https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
-(defn query-kline-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) query-props
-  ;  {:interval (string)
-  ;    "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
-  ;   :limit (integer)
-  ;    Min: 1
-  ;    Max: 200
-  ;   :symbol (string)}
-  [{:keys [interval limit symbol]}]
-  (let [query-from (query-from interval limit)]
-       (str PUBLIC-API-ADDRESS "/kline/list"
-            "?symbol="   symbol
-            "&interval=" interval
-            "&limit="    limit
-            "&from="     query-from)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; "https://api-testnet.bybit.com/v2/private/account/api-key?api_key={api_key}&timestamp={timestamp}&sign={sign}"
-(defn api-key-info-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [api-key]}]
-  ; Please make sure that your timestamp is in sync with our server time. You can use the Server Time endpoint.
-  (let [timestamp (time/epoch-ms)]
-       (str PRIVATE-API-ADDRESS "/account/api-key"
-            "?api-key="   api-key
-            "&timestamp=" timestamp)))

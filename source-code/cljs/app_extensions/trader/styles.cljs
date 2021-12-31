@@ -8,14 +8,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn monitor-style-rules
-  [_ {:keys [watching?]}]
-  (str "#trader--price-box { opacity: 0 }"
-       "#trader--price-diagram:hover #trader--price-box { opacity: 1 }"
-       (if watching? ".trader--sensor:hover { background-color: var( --soft-purple ) }"
-                     ".trader--sensor:hover { background-color: var( --color-highlight ) }")))
+(defn monitors-style-rules
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (str ".trader--price-box { opacity: 0 }"
+       ".trader--monitor-chart.r-mounted, .trader--monitor-settings.r-mounted { opacity: 1 }"
+       ".trader--monitor-chart,           .trader--monitor-settings           { opacity: 0; transition: opacity .1s }"
+       ".trader--monitor-chart:hover .trader--price-box { opacity: 1 }"
+       "[data-watching=\"true\"]  .trader--sensor:hover { background-color: var( --soft-purple ) }"
+       "[data-watching=\"false\"] .trader--sensor:hover { background-color: var( --color-highlight ) }"))
 
 (defn log-style-rules
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (str ".trader--log-item:hover { background-color: red !important }"))
 
@@ -24,24 +28,70 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn price-diagram-style
+(defn box-list-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:display   "flex"
+   :flex-wrap "wrap"})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn monitor-structure-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:height "468px"
+   :padding "0 24px"
+   :width  "50vw"})
+
+(defn monitor-body-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:background-color "var( --fill-color )"
    :border-radius    "var( --border-radius-xxl )"
    :height           "420px"
-   :max-width        "1024px"
    :overflow         "hidden"
-   :padding          "60px 0 24px 0"
-   :width            "80vw"})
+   :width            "100%"})
 
-(defn price-diagram-svg-style
+(defn monitor-settings-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:align-items     "center"
+   :display         "flex"
+   :flex-direction  "column"
+   :height          "100%"
+   :justify-content "center"
+   :width           "100%"})
+
+(defn monitor-details-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:align-items     "center"
+   :display         "flex"
+   :flex-direction  "column"
+   :justify-content "center"
+   :left            "0"
+   :padding         "8px"
+   :position        "absolute"
+   :top             "0"
+   :width           "100%"})
+
+(defn monitor-chart-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:height  "100%"
+   :padding "60px 0 24px 0"
+   :width   "100%"})
+
+(defn monitor-chart-svg-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:height "100%"
    :width  "100%"})
 
-(defn price-diagram-line-style
+(defn monitor-chart-line-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [watching?]}]
   {:fill         "none"
@@ -49,7 +99,7 @@
                                "var( --color-highlight )")
    :stroke-width ".15px"})
 
-(defn price-diagram-price-data-style
+(defn monitor-chart-price-data-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:bottom          "0"
@@ -61,12 +111,12 @@
    :position        "absolute"
    :width           "100%"})
 
-(defn price-diagram-price-label-style
+(defn monitor-chart-price-label-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:padding "0 0 0 12px"})
 
-(defn price-diagram-price-value-style
+(defn monitor-chart-price-value-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:font-weight "600"
@@ -91,7 +141,7 @@
         :opacity ".5"
         :width   (css/percent sensor-width)}))
 
-(defn price-diagram-y-labels-style
+(defn monitor-chart-y-labels-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:color           "var( --color-muted )"
@@ -100,17 +150,31 @@
    :font-weight     "600"
    :justify-content "space-between"
    :line-height     "32px"
-   :max-width       "1024px"
    :height          "48px"
    :padding         "0 16px"
-   :width           "80vw"})
+   :width           "100%"})
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn monitor-controls-style
+(defn monitor-br-controls-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:bottom   "12px"
+   :display  "flex"
+   :position "absolute"
+   :right    "12px"})
+
+(defn monitor-bl-controls-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:bottom   "12px"
+   :left     "12px"
+   :position "absolute"})
+
+(defn monitor-tl-controls-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:left     "12px"
@@ -203,7 +267,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn controls-box-style
+(defn controls-structure-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:height  "468px"
+   :padding "0 24px"
+   :width   "50vw"})
+
+(defn controls-body-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:background-color "var( --fill-color )"
@@ -211,9 +282,8 @@
    :display          "flex"
    :flex-direction   "column"
    :height           "420px"
-   :max-width        "1024px"
    :overflow         "hidden"
-   :width            "80vw"})
+   :width            "100%"})
 
 
 
@@ -244,6 +314,14 @@
    :font-weight "600"
    :opacity     ".65"
    :width       "150px"})
+
+(defn log-item-timestamp-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:display     "inline-block"
+   :font-weight "600"
+   :opacity     ".65"
+   :width       "80px"})
 
 (defn log-item-message-style
   ; WARNING! NON-PUBLIC! DO NOT USE!

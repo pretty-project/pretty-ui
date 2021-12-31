@@ -23,7 +23,7 @@
   [:<> [elements/text-field ::my-sample-field
                             {:form-id    (item-editor/form-id :my-extension :my-type)
                                          ; XXX#8092
-                             :value-path [:my-extension :item-editor/data-items :my-key]}]])
+                             :value-path [:my-extension :item-editor/data-item :my-key]}]])
 
 (defn body
   [body-id]

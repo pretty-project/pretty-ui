@@ -366,8 +366,14 @@
   ; @return (map)
   [db [_ input-id]]
   (if-let [initial-value   (r element/get-element-prop db input-id :initial-value)]
+          ; If initial-value is NOT nil ...
           (let [value-path (r element/get-element-prop db input-id :value-path)]
-               (assoc-in db value-path initial-value))
+               (if (nil? (get-in db value-path))
+                   ; If the stored value is nil ...
+                   (assoc-in db value-path initial-value)
+                   ; If the stored value is NOT nil ...
+                   (return   db)))
+          ; If initial-value is nil ...
           (return db)))
 
 (defn mark-input-as-visited!

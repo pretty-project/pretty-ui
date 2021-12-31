@@ -47,15 +47,16 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:autocomplete? (boolean)
-  ;   :end-adornments (maps in vector)
+  ;  {:end-adornments (maps in vector)
+  ;   :disable-autofill? (boolean)
   ;   :layout (keyword)
   ;   :name (keyword)
   ;   :type (keyword)}
   [field-id field-props]
   (merge {:layout     :row
           :type       :text
-          :value-path (engine/default-value-path field-id)}
+          :value-path (engine/default-value-path field-id)
+          :disable-autofill? true}
          (param field-props)
          {:end-adornments (end-adornments-prototype field-id field-props)
           ; BUG#6782
@@ -210,13 +211,13 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
-  ;   :autocomplete? (boolean)(opt)
-  ;    Default: false
-  ;   :boder-color (keyword)(opt)
+  ;   :border-color (keyword)(opt)
   ;    :default, :primary, :secondary
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
+  ;   :disable-autofill? (boolean)(opt)
+  ;    Default: true
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :disabler (subscription-vector)(opt)

@@ -87,7 +87,7 @@
                merge-my-type-items!
                delete-my-type-items!])
 
-(pathom/reg-handlers! :my-extension HANDLERS)
+(pathom/reg-handlers! :my-type-lister HANDLERS)
 
 
 

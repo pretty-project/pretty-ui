@@ -13,8 +13,6 @@
 
 
 # x4.5.0
-- server-fruits.io/write-file! hozza létrea fájlt, ha nem létezik
-
 - mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
 
 - pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne

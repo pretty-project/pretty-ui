@@ -1,6 +1,7 @@
 
 (ns app-extensions.trader.log
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.time      :as time]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
@@ -43,8 +44,8 @@
   [:pre {:class ".trader--log-item" :style (if (not= module :trader/listener)
                                                {:opacity ".75"}
                                                {:font-weight 600})}
-        [:span {:style (styles/log-item-module-style)}
-               (str module)]
+        [:span {:style (styles/log-item-timestamp-style)}
+               (time/timestamp-string->time timestamp)]
         [:span {:style (styles/log-item-message-style)}
                (str message)]])
 

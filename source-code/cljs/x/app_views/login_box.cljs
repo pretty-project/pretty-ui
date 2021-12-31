@@ -69,11 +69,11 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/text-field ::email-address-field
-                       {:autocomplete? true
-                        :min-width     :s
-                        :label         :email-address
-                        :value-path    [:login-box :email-address]
-                        :disabled?     synchronizing?}])
+                       {:disable-autofill? false
+                        :min-width  :s
+                        :label      :email-address
+                        :value-path [:login-box :email-address]
+                        :disabled?  synchronizing?}])
 
 (defn- password-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,10 +84,10 @@
   ; @return (component)
   [_ {:keys [synchronizing?]}]
   [elements/password-field ::password-field
-                           {:autocomplete? true
-                            :min-width     :s
-                            :value-path    [:login-box :password]
-                            :disabled?     synchronizing?}])
+                           {:disable-autofill? false
+                            :min-width  :s
+                            :value-path [:login-box :password]
+                            :disabled?  synchronizing?}])
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
