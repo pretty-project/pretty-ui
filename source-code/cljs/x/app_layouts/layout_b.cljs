@@ -63,13 +63,14 @@
   ; @param (map) layout-props
   ; @param (map) card-props
   ;  {:badge-color (keyword)(opt)
+  ;   :min-width (keyword)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   ;
   ; @return (component)
-  [layout-id layout-props {:keys [badge-color on-click] :as card-props}]
+  [layout-id layout-props {:keys [badge-color min-width on-click] :as card-props}]
   [elements/card {:content [card-label layout-id layout-props card-props]
                   :horizontal-align :left :on-click on-click :badge-color badge-color
-                  :min-width :m}])
+                  :min-width (or min-width :m)}])
 
 (defn- card-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,6 +118,9 @@
   ;       Default: :material-icons-filled
   ;       Only w/ {:icon ...}
   ;      :label (metamorphic-content)
+  ;      :min-width (keyword)(opt)
+  ;       :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;       Default: :m
   ;      :on-click (metamorphic-event)(opt)}
   ;     {...}]
   ;   :horizontal-align (keyword)(opt)

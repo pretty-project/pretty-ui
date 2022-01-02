@@ -1,6 +1,7 @@
 
 (ns app-extensions.trader.monitor
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.css       :as css]
               [mid-fruits.format    :as format]
               [mid-fruits.keyword   :as keyword]
               [mid-fruits.loop      :refer [reduce-indexed]]
@@ -39,7 +40,7 @@
   []
   (keyword/add-namespace :monitor (random/generate-keyword)))
 
-(defn- monitor-props->diagram-points_
+(defn- monitor-props->diagram-close-points
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list price-max price-min]}]
   ; - Egy n sávos pont-diagram n+1 pont által írható le.
@@ -57,15 +58,30 @@
                        (if o (str o " "         x2 "," y2)
                              (str o "0," y1 " " x2 "," y2))))]
               (reduce-kv f nil kline-list))))
-; +5
-; 5x [8-10 10-12 12-13 13-12 12-11]
-; x1:    0    20    40    60    80
-; x2:   20    40    60    80    100
-; y1:
-; y2:
 
+(defn- monitor-props->diagram-bars
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [kline-list price-max price-min]}]
+  (let [range (- price-max price-min)
+        count (count kline-list)]
+       (letfn [(f [o dex {:keys [close open low high]}]
+                  (let [height (css/percent (math/percent range (math/absolute (- close open))))
+                        width  (css/percent (math/percent count 1))
+                        bottom (css/percent (math/percent range (- (min open close) price-min)))
+                        left   (css/percent (math/percent count dex))
+                        color (if (< 0 (- close open)) "rgba(0,255,170,.2)" "rgba(255,0,170,.2)")]
+                       (conj o [:div {:style {:position "absolute" :bottom bottom :left left :width width :height height
+                                              :background-color color}}
+                                     (let [range (math/absolute (- close open))
+                                           deep (min open close)
+                                           bottom (- deep low)
+                                           bottom (css/percent (- 0 (math/percent range (- deep low))))
+                                           height (css/percent (math/percent range (math/absolute (- high low))))]
+                                          [:div {:style {:position "absolute" :bottom bottom :left "calc(50% - 1px)"
+                                                         :height height :width "2px" :background-color color}}])])))]
+              (reduce-kv f [:<>] kline-list))))
 
-(defn- monitor-props->diagram-points
+(defn- monitor-props->diagram-period-points
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list price-max price-min]}]
   (let [range (- price-max price-min)
@@ -73,11 +89,10 @@
        (letfn [(f [o dex {:keys [close open]}]
                   (let [x1        (math/percent count dex)
                         x2        (math/percent count (inc dex))
-                        y1 (- 100 (math/percent range (- open price-min)))
+                        y1 (- 100 (math/percent range (- open  price-min)))
                         y2 (- 100 (math/percent range (- close price-min)))]
                       (str o " " x1 "," y1 " " x1 "," y2 " " x2 "," y2)))]
               (reduce-kv f nil kline-list))))
-
 
 (defn monitor-props->more-than-24h?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -246,7 +261,7 @@
 (defn- price-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [price-box] :as monitor-props}]
-  (if-let [{:keys [open-timestamp close-timestamp open close]} price-box]
+  (if-let [{:keys [open-timestamp close-timestamp open close high low]} price-box]
           [:div {:class "trader--price-box" :style (styles/price-box-style)}
                 (if (monitor-props->more-than-24h? monitor-props)
                     ; Open & close is on the same day ...
@@ -332,8 +347,10 @@
          :class "trader--monitor-chart"}
         [:svg {:preserve-aspect-ratio "none" :view-box "0 0 100 100"
                :style (styles/monitor-chart-svg-style)}
-              [:polyline {:points (monitor-props->diagram-points   monitor-props)
-                          :style  (styles/monitor-chart-line-style monitor-id monitor-props)}]]
+              [:polyline {:points (monitor-props->diagram-close-points monitor-props)
+                          :style  (styles/monitor-chart-line-style     monitor-id monitor-props)}]]
+        [:div {:style (styles/monitor-bars-overlay)}
+              (monitor-props->diagram-bars monitor-props)]
         [monitor-chart-price-data monitor-id monitor-props]
         [monitor-details          monitor-id monitor-props]
         [price-box                monitor-id monitor-props]

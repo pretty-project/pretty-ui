@@ -84,6 +84,15 @@
    :top             "0"
    :width           "100%"})
 
+(defn monitor-bars-overlay
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:height "calc(100% - 84px)"
+   :left "0"
+   :position "absolute"
+   :top "60px"
+   :width "100%"})
+
 (defn monitor-chart-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
