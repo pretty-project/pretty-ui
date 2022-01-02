@@ -45,13 +45,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (ms)
-(def CLOSE-POPUP-DELAY 250)
+(def CLOSE-POPUP-DELAY 150)
 
 ; @constant (ms)
-(def AUTOCLEAR-VALUE-DELAY 650)
+(def AUTOCLEAR-VALUE-DELAY 500)
 
 ; @constant (ms)
-(def ON-POPUP-CLOSED-DELAY 600)
+(def ON-POPUP-CLOSED-DELAY 350)
 
 ; @constant (metamorphic-content)
 (def DEFAULT-SELECT-BUTTON-LABEL :select!)

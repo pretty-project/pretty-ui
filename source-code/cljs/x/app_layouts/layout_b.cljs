@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.4.7
+; Version: v0.4.4
+; Compatibility: x4.5.0
 
 
 
@@ -15,12 +15,11 @@
 
 (ns x.app-layouts.layout-b
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.map       :as map]
-              [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]))
+              [x.app-elements.api   :as elements]
+              [x.app-layouts.engine :as engine]))
 
 
 
@@ -33,9 +32,9 @@
   ; @param (map) layout-props
   ;
   ; @return (map)
-  ;  {:min-width (keyword)}
+  ;  {:horizontal-align (keyword)}
   [layout-props]
-  (merge {}
+  (merge {:horizontal-align :center}
          (param layout-props)))
 
 
@@ -81,10 +80,10 @@
   ;
   ; @return (component)
   [layout-id {:keys [cards] :as layout-props}]
-  (vec (reduce (fn [card-list card-props]
-                   (conj card-list [card layout-id layout-props card-props]))
-               [:div.x-layout-b--card-group]
-               (param cards))))
+  (reduce (fn [card-list card-props]
+              (conj card-list [card layout-id layout-props card-props]))
+          [:div.x-layout-b--card-group]
+          (param cards)))
 
 (defn- layout-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,14 +93,14 @@
   ;
   ; @return (component)
   [layout-id layout-props]
-  [card-list layout-id layout-props])
+  [:div.x-body-b (engine/layout-body-attributes layout-id layout-props)
+                 [card-list layout-id layout-props]])
 
 (defn- layout-b
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {}
   ;
   ; @return (component)
   [layout-id layout-props]
@@ -119,7 +118,10 @@
   ;       Only w/ {:icon ...}
   ;      :label (metamorphic-content)
   ;      :on-click (metamorphic-event)(opt)}
-  ;     {...}]}
+  ;     {...}]
+  ;   :horizontal-align (keyword)(opt)
+  ;    :left, :center, :right
+  ;    Default: :center}
   ;
   ; @usage
   ;  [layouts/layout-b {...}]
@@ -132,5 +134,5 @@
    [layout (a/id) layout-props])
 
   ([layout-id layout-props]
-   (let [] ;layout-props (layout-props-prototype layout-props)
+   (let [layout-props (layout-props-prototype layout-props)]
         [layout-b layout-id layout-props])))

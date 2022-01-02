@@ -20,15 +20,16 @@
 
 (defn update-kline-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [close high interval low open open_time] :as kline-item}]
+  [{:keys [close high interval low open open_time volume] :as kline-item}]
   (let [close_time (engine/close-time open_time interval)]
-       (-> kline-item (dissoc :open_time :turnover :symbol :volume)
+       (-> kline-item (dissoc :open_time :symbol)
                       (assoc  :open-timestamp  (time/epoch-s->timestamp-string open_time))
                       (assoc  :close-timestamp (time/epoch-s->timestamp-string close_time))
                       (assoc  :close           (reader/read-str close))
                       (assoc  :open            (reader/read-str open))
                       (assoc  :high            (reader/read-str high))
-                      (assoc  :low             (reader/read-str low)))))
+                      (assoc  :low             (reader/read-str low))
+                      (assoc  :volume          (reader/read-str volume)))))
 
 (defn update-kline-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -56,33 +57,28 @@
           (dissoc kline-data :kline-list)
           (param  kline-list)))
 
-(defn update-time
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [time_now] :as kline-data}]
-  (let [epoch-ms (engine/time_now->epoch-ms time_now)]
-       (-> kline-data (assoc :timestamp (time/epoch-ms->timestamp-string epoch-ms)
-                             :time-now  (param epoch-ms))
-                      (dissoc :time_now))))
-
 (defn response->kline-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [response]
-  (-> response (engine/response->body)
-               (select-keys   [:result :time_now])
+  (-> response (engine/get-response->body)
                (map/rekey-item :result :kline-list)
-               (update-time)
                (update-kline-list)))
+
+(defn download-kline-data
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env _]
+  (let [uri (engine/query-kline-uri {:interval (pathom/env->param env :interval)
+                                     :limit    (pathom/env->param env :limit)
+                                     :symbol   (pathom/env->param env :symbol)})
+        response (client/get uri)]
+       (println ":trader/monitor" uri)
+       (-> response (response->kline-data)
+                    (assoc :uri uri))))
 
 (defresolver get-kline-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env _]
-             {:trader/get-kline-data (let [uri (engine/query-kline-uri {:interval (pathom/env->param env :interval)
-                                                                        :limit    (pathom/env->param env :limit)
-                                                                        :symbol   (pathom/env->param env :symbol)})
-                                           response (client/get uri)]
-                                          (println ":trader/monitor" uri)
-                                          (-> response (response->kline-data)
-                                                       (assoc :uri uri)))})
+             [env resolver-props]
+             {:trader/get-kline-data (download-kline-data env resolver-props)})
 
 
 

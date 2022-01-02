@@ -40,14 +40,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn monitor-structure-style
+(defn box-structure-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:height "468px"
    :padding "0 24px"
    :width  "50vw"})
 
-(defn monitor-body-style
+(defn box-body-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:background-color "var( --fill-color )"
@@ -55,6 +55,11 @@
    :height           "420px"
    :overflow         "hidden"
    :width            "100%"})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn monitor-settings-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,10 +99,10 @@
 
 (defn monitor-chart-line-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [watching?]}]
+  [_ {:keys [monitor-watching?]}]
   {:fill         "none"
-   :stroke       (if watching? "var( --color-secondary )"
-                               "var( --color-highlight )")
+   :stroke       (if monitor-watching? "var( --color-secondary )"
+                                       "var( --color-highlight )")
    :stroke-width ".15px"})
 
 (defn monitor-chart-price-data-style
@@ -160,7 +165,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn monitor-br-controls-style
+(defn box-br-controls-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:bottom   "12px"
@@ -168,26 +173,29 @@
    :position "absolute"
    :right    "12px"})
 
-(defn monitor-bl-controls-style
+(defn box-bl-controls-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:bottom   "12px"
+   :display  "flex"
    :left     "12px"
    :position "absolute"})
 
-(defn monitor-tl-controls-style
+(defn box-tl-controls-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  {:left     "12px"
+  {:display  "flex"
+   :left     "12px"
    :position "absolute"
    :top      "12px"})
 
-(defn monitor-controls-timer-style
+(defn box-tr-controls-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  {:left     "0"
+  {:display  "flex"
    :position "absolute"
-   :top      "0"})
+   :right    "12px"
+   :top      "12px"})
 
 
 
@@ -262,29 +270,6 @@
    :line-height "21px"
    :text-align  "center"
    :width       "120px"})
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn controls-structure-style
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  {:height  "468px"
-   :padding "0 24px"
-   :width   "50vw"})
-
-(defn controls-body-style
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  {:background-color "var( --fill-color )"
-   :border-radius    "var( --border-radius-xxl )"
-   :display          "flex"
-   :flex-direction   "column"
-   :height           "420px"
-   :overflow         "hidden"
-   :width            "100%"})
 
 
 
@@ -387,6 +372,7 @@
    :flex-direction  "column"
    :height          "100%"
    :justify-content "center"
+   :padding         "0 24px"
    :width           "100%"})
 
 (defn row
@@ -396,5 +382,18 @@
 
   ([x]
    (merge {:display        "flex"
-           :flex-direction "row"}
+           :flex-direction "row"
+           :flex-wrap      "wrap"}
           (param x))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn connection-timer-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:left     "0"
+   :position "absolute"
+   :top      "0"})

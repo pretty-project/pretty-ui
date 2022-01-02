@@ -124,6 +124,7 @@
 
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/
 
+/* Boxed popup on M, L, XL, XXL viewport */
 [data-viewport-profile="m"]
 .x-app-popups--element[data-layout="boxed"],
 [data-viewport-profile="l"]
@@ -132,7 +133,7 @@
 .x-app-popups--element[data-layout="boxed"],
 [data-viewport-profile="xxl"]
 .x-app-popups--element[data-layout="boxed"] {
-  animation-duration: .15s;
+  animation-duration: .1s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }
 

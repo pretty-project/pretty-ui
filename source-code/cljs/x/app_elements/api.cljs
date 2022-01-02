@@ -80,9 +80,12 @@
 ;  tulajdonságai elérhetetlenné válnak az elem számára.
 ;
 ; @name constant
-;  Pl.: {:value-path (item-path vector)(constant)(opt)}
-;  Az elemek azon tulajdonságai konstansak, amelyek a Re-Frame adatbázisba
-;  kerülnek az elem React-fába való csatolásakor.
+;  - Pl.: {:value-path (item-path vector)(constant)(opt)}
+;    Az elemek azon tulajdonságai konstansak, amelyek a Re-Frame adatbázisba kerülnek az elem
+;    React-fába való csatolásakor, ezért azokat a paraméterezés megváltoztatásával felülírni
+;    nem lehetséges.
+;  - XXX#8099 Az x.app-components.stated/component komponens nem képes :component-did-update
+;             életciklusban az elem megváltozott paramétereit a Re-Frame adatbázisban felülírni!
 ;
 ; @name default-value
 ;  Az egyes input elemek értéke a {:default-value ...} tulajdonságukkal kerül

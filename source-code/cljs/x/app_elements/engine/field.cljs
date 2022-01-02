@@ -274,8 +274,8 @@
   ;   :value (string)}
   ;
   ; @return (map)
-  ;  {:autoComplete (keyword)
-  ;   :autoFocus (boolean)
+  ;  {:auto-complete (keyword)
+  ;   :auto-focus (boolean)
   ;   :disabled (boolean)
   ;   :id (string)
   ;   :max-length (integer)
@@ -296,22 +296,24 @@
           ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
   (cond-> {:id (targetable/element-id->target-id field-id)}
           ; If field is disabled ...
-          (boolean disabled?) (merge {:disabled   true
-                                      :style      (field-props->field-style field-props)
-                                      :type       (param                    type)
-                                      :value      value
+          (boolean disabled?) (merge {:disabled true
+                                      :type     type
+                                      :value    value
+                                      :style    (field-props->field-style field-props)
                                       ; BUG#8809
                                       ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
                                       ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                                       :on-change #(let [])})
           ; If field is NOT disabled ...
-          (not disabled?) (merge {:autoFocus  auto-focus?
-                                  :max-length max-length
-                                  :on-blur    (on-blur-function         field-id)
-                                  :on-focus   (on-focus-function        field-id)
-                                  :style      (field-props->field-style field-props)
-                                  :type       (param                    type)
-                                  :value      value
+          (not disabled?) (merge {:auto-complete name
+                                  :auto-focus    auto-focus?
+                                  :max-length    max-length
+                                  :name          name
+                                  :type          type
+                                  :value         value
+                                  :on-blur  (on-blur-function         field-id)
+                                  :on-focus (on-focus-function        field-id)
+                                  :style    (field-props->field-style field-props)
                                   ; BUG#8041
                                   ;  Abban az esetben, ha egy input elem {:value-path [...]}
                                   ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
@@ -328,21 +330,13 @@
                                   ;  típus, ellentétben a kiválaszott opcióval.
                                   ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
                                   ;  függvény használatával kezeli.
-                                  :on-input   (field-props->on-change-function field-id field-props)
+                                  :on-input (field-props->on-change-function field-id field-props)
                                   ; BUG#8041
                                   ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
                                   ;  függvény nélküli input elemeket.
                                   :on-change #(let [])})
           ; If field has surface ...
-          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})
-          ; BUG#6782 https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
-          ;  A Chrome böngésző - ignorálja az {:autocomplete "off"} beállítást
-          ;                    - ignorálja az {:autocomplete "new-*"} beállítást
-          ;                    - figyelembe veszi a {:name ...} értékét
-          ;  Véletlenszerű {:name ...} érték használatakor az autofill nem képes megállapítani,
-          ;  mi alapján ajánljon értékeket a mezőhöz.
-          (boolean disable-autofill?) (merge {:name         name
-                                              :autoComplete name})))
+          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
 
 (defn field-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

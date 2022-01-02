@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.08
 ; Description:
-; Version: v0.4.8
+; Version: v0.6.6
 
 
 
@@ -15,6 +15,7 @@
 (ns mid-fruits.json
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.string  :as string]
               [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]))
 
@@ -40,7 +41,52 @@
 
 
 
-;; -- Keywordize / unkeywordize -----------------------------------------------
+;; -- Keywordize / unkeywordize / ... key -------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn unkeywordize-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/unkeywordize-key :my-namespace/key)
+  ;  =>
+  ;  "my-namespace/key"
+  ;
+  ; @return (*)
+  [n]
+  (keyword/to-string n))
+
+(defn underscore-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/underscore-key :my-namespace/key)
+  ;  =>
+  ;  :my_namespace/key
+  ;
+  ; @return (*)
+  [n]
+  (cond (string?  n) (string/replace-part n "-" "_")
+        (keyword? n) (-> n name underscore-key keyword)
+        :else     n))
+
+(defn hyphenize-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/hyphenize-key :my_namespace/key)
+  ;  =>
+  ;  :my-namespace/key
+  ;
+  ; @return (*)
+  [n]
+  (cond (string?  n) (string/replace-part n "_" "-")
+        (keyword? n) (-> n name hyphenize-key keyword)
+        :else     n))
+
+
+
+;; -- Keywordize / unkeywordize / ... value -----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn unkeywordized-value?
@@ -85,17 +131,73 @@
       (str KEYWORD-PREFIX n)
       (return             n)))
 
-(defn unkeywordize-key
+
+
+;; -- Keywordize / unkeywordize / ... keys ------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn unkeywordize-keys
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-key :my-namespace/key)
+  ;  (json/unkeywordize-keys {:my-namespace/key :my-value})
   ;  =>
-  ;  "my-namespace/key"
+  ;  {"my-namespace/key" :my-value}
   ;
   ; @return (*)
   [n]
-  (keyword/to-string n))
+  (cond (map?    n) (map/->>keys    n unkeywordize-keys)
+        (vector? n) (vector/->items n unkeywordize-keys)
+        ; Az unkeywordize-key függvény csak keyword típusokat módosít, ezért nincs szükség további
+        ; típus-vizsgálatra!
+        :else (unkeywordize-key n)))
+
+(defn keywordize-keys
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/keywordize-keys {"my-namespace/key" :my-value})
+  ;  =>
+  ;  {:my-namespace/key :my-value}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>keys    n keywordize-keys)
+        (vector? n) (vector/->items n keywordize-keys)
+        :else       (keyword        n)))
+
+(defn underscore-keys
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/underscore-keys {:my-namespace/key :my-value})
+  ;  =>
+  ;  {:my_namespace/key :my-value}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>keys    n underscore-keys)
+        (vector? n) (vector/->items n underscore-keys)
+        :else       (underscore-key n)))
+
+(defn hyphenize-keys
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/hyphenize-keys {:my_namespace/key :my-value})
+  ;  =>
+  ;  {:my-namespace/key :my-value}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>keys    n hyphenize-keys)
+        (vector? n) (vector/->items n hyphenize-keys)
+        :else       (hyphenize-key  n)))
+
+
+
+;; -- Keywordize / unkeywordize / ... values ----------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn unkeywordize-values
   ; XXX#5914
@@ -136,33 +238,3 @@
         ; A keywordize-value függvény csak string típusokat módosít, ezért nincs szükség további
         ; típus-vizsgálatra!
         :else (keywordize-value n)))
-
-(defn unkeywordize-keys
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (json/unkeywordize-keys {:my-namespace/key :my-value})
-  ;  =>
-  ;  {"my-namespace/key" :my-value}
-  ;
-  ; @return (*)
-  [n]
-  (cond (map?    n) (map/->>keys    n unkeywordize-keys)
-        (vector? n) (vector/->items n unkeywordize-keys)
-        ; Az unkeywordize-key függvény csak keyword típusokat módosít, ezért nincs szükség további
-        ; típus-vizsgálatra!
-        :else (unkeywordize-key n)))
-
-(defn keywordize-keys
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (json/keywordize-keys {"my-namespace/key" :my-value})
-  ;  =>
-  ;  {:my-namespace/key :my-value}
-  ;
-  ; @return (*)
-  [n]
-  (cond (map?    n) (map/->>keys    n keywordize-keys)
-        (vector? n) (vector/->items n keywordize-keys)
-        :else       (keyword        n)))

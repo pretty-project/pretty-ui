@@ -155,15 +155,18 @@
   [:<> [elements/label {:content (str details/app-codename " | " details/app-description)
                         :horizontal-align :left
                         :color            :muted
-                        :icon             :grade}]
+                        :icon             :grade
+                        :indent           :left}]
        [elements/label {:content details/app-version
                         :horizontal-align :left
                         :color            :muted
-                        :icon             :extension}]
+                        :icon             :extension
+                        :indent           :left}]
        [elements/label {:content details/copyright-information
                         :horizontal-align :left
                         :color            :muted
-                        :icon             :copyright}]
+                        :icon             :copyright
+                        :indent           :left}]
        [elements/button ::back-button
                         {:indent   :left
                          :label    :back!
@@ -214,8 +217,8 @@
   [_ {:keys [user-email-address user-name user-profile-picture-url]}]
   [elements/column {:content [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
                                   [elements/horizontal-separator {:size :s}]
-                                  [elements/label     {:content user-name :layout :fit :size :xl :font-weight :extra-bold}]
-                                  [elements/label     {:content user-email-address :color :highlight :layout :fit :font-size :xs}]]
+                                  [elements/label {:content user-name          :layout :fit :font-size :s  :font-weight :extra-bold}]
+                                  [elements/label {:content user-email-address :layout :fit :font-size :xs :color :highlight}]]
                     :stretch-orientation :horizontal}])
 
 (defn- body

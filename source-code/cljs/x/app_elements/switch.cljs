@@ -63,6 +63,53 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- switch-secondary-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;  {:secondary-label (metamorphic-content)}
+  ;
+  ; @return (hiccup)
+  [_ {:keys [secondary-label]}]
+  [:div.x-switch--secondary-label [components/content {:content secondary-label}]])
+
+(defn- switch-secondary-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;
+  ; @return (hiccup)
+  [switch-id switch-props]
+  [:button.x-switch--secondary-body (engine/checkable-secondary-body-attributes switch-id switch-props)
+                                    [switch-secondary-label                     switch-id switch-props]])
+
+(defn- switch-primary-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;  {:label (metamorphic-content)
+  ;   :required? (boolean)(opt)}
+  ;
+  ; @return (hiccup)
+  [_ {:keys [label required?]}]
+  [:div.x-switch--primary-label [components/content {:content label}]
+                                (if required? [:span.x-input--label-asterisk "*"])])
+
+(defn- switch-primary-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;
+  ; @return (hiccup)
+  [switch-id switch-props]
+  [:button.x-switch--primary-body (engine/checkable-primary-body-attributes switch-id switch-props)
+                                  [:div.x-switch--track [:div.x-switch--thumb]]
+                                  [switch-primary-label switch-id switch-props]])
+
 (defn- switch-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -93,11 +140,16 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
+  ;  {:secondary-label (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [switch-id switch-props]
+  [switch-id {:keys [secondary-label] :as switch-props}]
   [:div.x-switch (engine/checkable-attributes switch-id switch-props)
-                 [switch-body                 switch-id switch-props]
+                 (if (some? secondary-label)
+                     [:div {:style {:display :flex}}
+                           [switch-secondary-body switch-id switch-props]
+                           [switch-primary-body   switch-id switch-props]]
+                     [switch-body switch-id switch-props])
                  [engine/element-helper       switch-id switch-props]
                  [engine/element-info-tooltip switch-id switch-props]])
 
@@ -122,6 +174,7 @@
   ;    Default: :none
   ;   :initial-value (boolean)(constant)(opt)
   ;   :label (metamorphic-content)
+  ;   :secondary-label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row

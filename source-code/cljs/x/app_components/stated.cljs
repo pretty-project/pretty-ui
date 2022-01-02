@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.3.6
-; Compatibility: x4.4.9
+; Version: v2.4.2
+; Compatibility: x4.5.0
 
 
 
@@ -18,11 +18,11 @@
               [mid-fruits.candy    :refer [param return]]
               [mid-fruits.map      :as map :refer [dissoc-in]]
               [mid-fruits.vector   :as vector]
+              [x.app-core.api      :as a :refer [r]]
+              [x.app-db.api        :as db]
               [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
-              [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-core.api      :as a :refer [r]]
-              [x.app-db.api        :as db]))
+              [x.app-components.transmitter :rename {component transmitter}]))
 
 
 
@@ -34,12 +34,12 @@
 ;  tulajdonságként átadott komponens számára.
 ;
 ; @name destructor
-;  A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
-;  React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor
-;  megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
-;  Mivel a destructor esemény megtörténésekor a Re-Frame adatbázis már nem tartalmazza
-;  az initial-props-path Re-Frame adatbázis útvonalon tárolt értéket, így azt a destructor
-;  esemény utolsó paraméterként kapja meg.
+;  - A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
+;    React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor
+;    megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
+;  - Mivel a destructor esemény megtörténésekor a Re-Frame adatbázis már nem tartalmazza
+;    az initial-props-path Re-Frame adatbázis útvonalon tárolt értéket, így azt a destructor
+;    esemény utolsó paraméterként kapja meg.
 ;
 ; @name initializer
 ;  Az {:initializer ...} tulajdonságként átadott Re-Frame esemény a komponens
@@ -86,6 +86,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
+;  XXX#8099
+;  A :component-did-update életciklus nem kapja meg a komponens új paramétereit,
+;  ezért a stated komponens nem képes a komponens megváltozott initial-props
+;  paramétereit a Re-Frame adatbázisban felülírni!
+;
+; @description
 ;  Az egyes [stated] komponensek React-fába történő újracsatolódása (remounting)
 ;  esetlegesen hibát okozhat, ha a destructor esemény megtörténése vagy a komponens
 ;  tulajdonságainak Re-Frame adatbázisból való eltávolítása nem a megfelelő időben
@@ -121,9 +127,8 @@
 (def COMPONENT-DESTRUCTION-DELAY 50)
 
 ; @constant (keywords in vector)
-(def STATED-PROPS
-     [:component :destructor :disabler :initializer :initial-props
-      :initial-props-path :static-props :subscriber :updater])
+(def STATED-PROPS [:component :destructor :disabler :initializer :initial-props
+                   :initial-props-path :static-props :subscriber :updater])
 
 
 
@@ -142,7 +147,7 @@
   ;
   ; @return (map)
   [extended-props]
-  ; Ha egy térkép tartalmazza a :component kulcsot, attól még nem számít stated-props térképnek.
+  ; Ha egy térkép tartalmazza a :component kulcsot, attól még nem számít stated-props térképnek!
   (map/contains-of-keys? (param extended-props)
                          (vector/remove-item STATED-PROPS :component)))
 
@@ -181,7 +186,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-component-initial-props
+(defn- get-component-current-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -309,10 +314,10 @@
                (r component-mounted-as? db component-id mount-id))
           {:db (as-> db % (r engine/remove-component-props!  % component-id)
                           (r remove-component-initial-props! % component-id context-props))
-           :dispatch (if-let [initial-props (r get-component-initial-props db component-id context-props)]
-                             ; If initial-props is NOT nil ...
-                             (a/metamorphic-event<-params destructor initial-props)
-                             ; If initial-props is nil ...
+           :dispatch (if-let [current-props (r get-component-current-props db component-id context-props)]
+                             ; If current-props is NOT nil ...
+                             (a/metamorphic-event<-params destructor current-props)
+                             ; If current-props is nil ...
                              (param destructor))})))
 
 
@@ -328,7 +333,7 @@
   ; @param (map) context-props
   ;  {:initializer (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
+  (fn [{:keys [db]} [_ component-id {:keys [initializer initial-props initial-props-path] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
               ; If component is NOT initialized ...
               {:db (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
@@ -411,8 +416,7 @@
   [component-id {:keys [disabler] :as context-props}]
   (let [disabled? (a/subscribe disabler)]
        (fn [_ context-props]
-           (let [context-props (assoc-in context-props [:base-props :disabled?]
-                                                       (boolean @disabled?))]
+           (let [context-props (assoc-in context-props [:base-props :disabled?] (boolean @disabled?))]
                 [subscribe-controller component-id context-props]))))
 
 (defn- disable-controller
@@ -424,8 +428,8 @@
   ; @return (component)
   [component-id context-props]
   (if (context-props->disability? context-props)
-      [disabler     component-id  context-props]
-      [non-disabler component-id  context-props]))
+      [disabler      component-id context-props]
+      [non-disabler  component-id context-props]))
 
 (defn- lifecycle-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!

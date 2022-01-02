@@ -38,11 +38,20 @@
 .x-body-a[data-horizontal-align="left"] .x-body-a--content-body {
   align-items: flex-start }
 
+.x-body-b[data-horizontal-align="left"] .x-layout-b--card-group {
+  justify-content: flex-start }
+
 .x-body-a[data-horizontal-align="center"] .x-body-a--content-body {
   align-items: center }
 
+.x-body-b[data-horizontal-align="center"] .x-layout-b--card-group {
+  justify-content: center }
+
 .x-body-a[data-horizontal-align="right"] .x-body-a--content-body {
   align-items: flex-end }
+
+.x-body-b[data-horizontal-align="right"] .x-layout-b--card-group {
+  justify-content: flex-end }
 
 /*** Horizontal align ***/
 /***** Align profiles *****/
@@ -261,7 +270,6 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 .x-layout-b--card-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   grid-gap: 48px;
   padding: 48px var( --app-edge ) }
 

@@ -93,6 +93,14 @@ button.x-card:focus,
 .x-switch--label,
 .x-switch--body:focus
 .x-switch--label,
+.x-switch--primary-body:active
+.x-switch--primary-label,
+.x-switch--primary-body:focus
+.x-switch--primary-label,
+.x-switch--secondary-body:active
+.x-switch--secondary-label,
+.x-switch--secondary-body:focus
+.x-switch--secondary-label,
 .x-toggle--body:active,
 .x-toggle--body:focus {
   opacity: .5 }
@@ -192,6 +200,8 @@ button.x-card:focus,
 .x-select--button-icon,
 .x-select--option,
 .x-switch--label,
+.x-switch--primary-label,
+.x-switch--secondary-label,
 .x-text[data-selectable="false"] .x-text--body,
 .x-text-field--label,
 .x-text-field--placeholder,
@@ -746,6 +756,9 @@ button.x-card:focus,
   line-height: var( --line-height-xxs );
   min-height: var( --line-height-xxs ) }
 
+.x-label[data-font-size="xs"] .x-label--icon {
+  font-size: var( --icon-size-xxs ) }
+
 /*** XXS ***/
 
 /*** XS ***/
@@ -768,7 +781,9 @@ button.x-card:focus,
   line-height: var( --line-height-xs ) }
 
 .x-checkbox[data-font-size="xs"] .x-checkbox--label,
-.x-switch[data-font-size="xs"] .x-switch--label {
+.x-switch[data-font-size="xs"]   .x-switch--label,
+.x-switch[data-font-size="xs"]   .x-switch--primary-label,
+.x-switch[data-font-size="xs"]   .x-switch--secondary-label {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
 
@@ -778,6 +793,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs );
   min-height: var( --line-height-xs ) }
+
+.x-label[data-font-size="xs"] .x-label--icon {
+  font-size: var( --icon-size-xxs ) }
 
 /*** XS ***/
 
@@ -802,7 +820,9 @@ button.x-card:focus,
   line-height: var( --line-height-s ) }
 
 .x-checkbox[data-font-size="s"] .x-checkbox--label,
-.x-switch[data-font-size="s"] .x-switch--label {
+.x-switch[data-font-size="s"]   .x-switch--label,
+.x-switch[data-font-size="s"]   .x-switch--primary-label,
+.x-switch[data-font-size="s"]   .x-switch--secondary-label {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
 
@@ -812,6 +832,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
   min-height: var( --line-height-s ) }
+
+.x-label[data-font-size="s"] .x-label--icon {
+  font-size: var( --icon-size-xs ) }
 
 /*** S ***/
 
@@ -843,6 +866,9 @@ button.x-card:focus,
   line-height: var( --line-height-m );
   min-height: var( --line-height-m ) }
 
+.x-label[data-font-size="m"] .x-label--icon {
+  font-size: var( --icon-size-s ) }
+
 /*** M ***/
 
 /*** L ***/
@@ -869,6 +895,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-l );
   line-height: var( --line-height-l );
   min-height: var( --line-height-l ) }
+
+.x-label[data-font-size="l"] .x-label--icon {
+  font-size: var( --icon-size-m ) }
 
 /*** L ***/
 
@@ -897,6 +926,9 @@ button.x-card:focus,
   line-height: var( --line-height-xl );
   min-height: var( --line-height-xl ) }
 
+.x-label[data-font-size="xl"] .x-label--icon {
+  font-size: var( --icon-size-m ) }
+
 /*** XL ***/
 
 /*** XXL ***/
@@ -923,6 +955,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xxl );
   line-height: var( --line-height-xxl );
   min-height: var( --line-height-xxl ) }
+
+.x-label[data-font-size="xxl"] .x-label--icon {
+  font-size: var( --icon-size-m ) }
 
 /*** XXL ***/
 /***** Font-size profiles *****/
@@ -2633,11 +2668,11 @@ body[data-viewport-profile="s"]
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-size: var( --icon-size-xs );
-  height: var( --icon-size-default );
-  margin: 0 12px;
+  height: 100%;
+  line-height: 100%;
+  margin-right: 12px;
   justify-content: center;
-  width: var( --icon-size-default ) }
+  width: 24px }
 
 .x-label--icon-placeholder {
   width: 32px }
@@ -3167,7 +3202,8 @@ body[data-viewport-profile="s"]
 
 /*** Switch body ***/
 
-.x-switch--body {
+.x-switch--body,
+.x-switch--primary-body {
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -3177,9 +3213,15 @@ body[data-viewport-profile="s"]
 
 /***** Switch label *****/
 
-.x-switch--label {
+.x-switch--label,
+.x-switch--primary-label {
   font-weight: 500;
   margin-left: 12px;
+  line-height: 24px }
+
+.x-switch--secondary-label {
+  font-weight: 500;
+  margin-right: 12px;
   line-height: 24px }
 
 /***** Switch label *****/

@@ -14,6 +14,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn use-mainnet?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (get-in db [:trader :account :use-mainnet?]))
+
+(defn- get-api-details
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  {:api-key      (get-in db [:trader :account :api-key])
+   :api-secret   (get-in db [:trader :account :api-secret])
+   :use-mainnet? (r use-mainnet? db)})
+
 (defn get-account-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
@@ -26,62 +38,61 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-wallet-balance-button
+(defn mainnet-indicator
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [api-key api-secret]}]
-  [elements/button ::get-wallet-balance-button
-                   {:preset :primary-button
-                    :label "Get wallet balance"
-                    :on-click [:trader/request-wallet-balance!]
-                    :layout :fit :indent :right
-                    :disabled? (not (and (string/nonempty? api-key)
-                                         (string/nonempty? api-secret)))}])
+  [_ {:keys [use-mainnet?]}]
+  (if use-mainnet? [elements/icon {:layout :touch-target :icon :fingerprint
+                                   :color :warning}]))
 
 (defn- get-api-key-info-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [api-key api-secret]}]
   [elements/button ::get-api-key-info-button
-                   {:preset :primary-button
-                    :label "Get API key info"
+                   {:label "Get API key info" :layout :fit
                     :on-click [:trader/request-api-key-info!]
-                    :layout :fit :indent :right
                     :disabled? (not (and (string/nonempty? api-key)
                                          (string/nonempty? api-secret)))}])
 
 (defn- api-key-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [elements/text-field ::api-key-field
-                       {:label "API key"
-                        :min-width :s :indent :right :disable-autofill? false
+  [elements/text-field {:label "API key"
+                        :min-width :s :indent :both :disable-autofill? false :name :favorite-color ; az api-key name nem autofill
                         :value-path [:trader :account :api-key]}])
 
 (defn- api-secret-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  [elements/text-field ::api-secret-field
-                       {:label "API secret"
-                        :min-width :s :indent :left
+  [elements/text-field {:label "API secret"
+                        :min-width :s :indent :both
                         :value-path [:trader :account :api-secret]}])
 
 (defn- api-key-expiration-label
   [_ {:keys [api-key-info]}]
-  (if-let [expiration-date (get-in api-key-info [:result 0 :expired_at])]
+  (if-let [expiration-date (get-in api-key-info [:api-key-info 0 :expired_at])]
           [elements/label {:content (str "Expiration date: " (time/timestamp-string->date-time expiration-date))
-                           :layout :fit :indent :left :color :muted}]))
+                           :layout :fit :indent :left :color :primary :font-size :xs}]))
+
+(defn api-fields
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [account-id account-props]
+  [:<> [:div {:style (styles/row {:justify-content "center"})}
+             [api-key-field    account-id account-props]
+             [api-secret-field account-id account-props]]
+       [:div {:style (styles/row {:justify-content "flex-end"})}
+             [elements/switch {:label "api.bybit.com" :secondary-label "testnet-api.bybit.com"
+                               :font-size :xs :border-color :default :indent :right :initial-value false
+                               :value-path [:trader :account :use-mainnet?]}]]])
 
 (defn- account
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [account-id account-props]
-  [:div {:style (styles/account-style)}
-        [:div {:style {:display :flex}}
-              [api-key-field    account-id account-props]
-              [api-secret-field account-id account-props]]
-        [:div {:style {:display :flex}}
-              [get-api-key-info-button  account-id account-props]
-              [api-key-expiration-label account-id account-props]]
-        [:div {:style {:display :flex}}
-              [get-wallet-balance-button account-id account-props]]])
+  [:div {:style (styles/overlay-center)}
+        [:div [api-fields               account-id account-props]
+              [api-key-expiration-label account-id account-props]
+              [elements/horizontal-separator {:size :xxl}]
+              [:div {:style (styles/row {:justify-content "flex-end"})}
+                    [get-api-key-info-button  account-id account-props]]]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,44 +107,23 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :trader/receive-wallet-balance!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ wallet-balance]]
-      {:db (assoc-in db [:trader :account :wallet-balance] wallet-balance)
-       :dispatch [:trader/log! :trader/account (get wallet-balance :uri)]}))
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/request-wallet-balance!
-  (fn [{:keys [db]} _]
-      [:sync/send-request! :trader/synchronize!
-                           {:method :post
-                            :params {:api-key    (get-in db [:trader :account :api-key])
-                                     :api-secret (get-in db [:trader :account :api-secret])}
-                            :uri "/trader/get-wallet-balance"
-                            :on-failure [:trader/->account-network-error]
-                            :on-success [:trader/receive-wallet-balance!]
-                            :on-sent    [:trader/log! :trader/account "Fetching data from server ..."]}]))
-
-(a/reg-event-fx
   :trader/receive-api-key-info!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ api-key-info]]
-      {:db (assoc-in db [:trader :account :api-key-info] api-key-info)
-       :dispatch [:trader/log! :trader/account (get api-key-info :uri)]}))
+  (fn [{:keys [db]} [_ response]]
+      (let [api-key-info (get response :trader/get-api-key-info)]
+           {:db (assoc-in db [:trader :account :api-key-info] api-key-info)
+            :dispatch [:trader/log! :trader/account (get api-key-info :uri)
+                                                    (get api-key-info :timestamp)]})))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/request-api-key-info!
   (fn [{:keys [db]} _]
-      [:sync/send-request! :trader/synchronize!
-                           {:method :post
-                            :params {:api-key    (get-in db [:trader :account :api-key])
-                                     :api-secret (get-in db [:trader :account :api-secret])}
-                            :uri "/trader/get-api-key-info"
-                            :on-failure [:trader/->account-network-error]
-                            :on-success [:trader/receive-api-key-info!]
-                            :on-sent    [:trader/log! :trader/account "Fetching data from server ..."]}]))
+      [:sync/send-query! :trader/synchronize!
+                         {:on-failure [:trader/->account-network-error]
+                          :on-success [:trader/receive-api-key-info!]
+                          :on-sent    [:trader/log! :trader/account "Fetching data from server ..."]
+                          :query      [`(:trader/get-api-key-info ~(r get-api-details db))]}]))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!

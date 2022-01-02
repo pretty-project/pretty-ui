@@ -72,17 +72,19 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:no-items-to-show? (boolean)(opt)}
+  ;  {:new-item-options (vector)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [no-items-to-show?] :as header-props}]
+  [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      [views/new-item-select            extension-id item-namespace {:options [:upload-files! :create-directory!]}]
-      [go-home-button          extension-id item-namespace header-props]
-      [go-up-button            extension-id item-namespace header-props]
-      [views/sort-items-button          extension-id item-namespace header-props]
-      [views/toggle-select-mode-button  extension-id item-namespace header-props]]
+      (if new-item-options [views/new-item-select extension-id item-namespace header-props]
+                           [views/new-item-button extension-id item-namespace])
+      [go-home-button                  extension-id item-namespace header-props]
+      [go-up-button                    extension-id item-namespace header-props]
+      [views/sort-items-button         extension-id item-namespace header-props]
+      [views/toggle-select-mode-button extension-id item-namespace header-props]]
       ;[views/toggle-reorder-mode-button extension-id item-namespace header-props]]
     [:div.item-lister--header--menu-item-group
       [views/search-block extension-id item-namespace header-props]]])
@@ -101,6 +103,7 @@
   ; @return (component)
   [extension-id item-namespace {:keys [actions-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
  [:div {:style {:width "100%"}}
+  ;[:div (str header-props)]
   [:div#item-lister--header--structure
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
                                                  [actions-mode-header extension-id item-namespace header-props]]
@@ -118,13 +121,20 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) header-props
+  ;  {:new-item-options (vector)(opt)}
+  ;
+  ; @example
+  ;  [item-browser/header :my-extension :my-type]
+  ;
+  ; @example
+  ;  [item-browser/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   ([extension-id item-namespace]
    [header extension-id item-namespace {}])
 
   ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id item-namespace])]
+   (let [subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
         (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
 
 
@@ -134,7 +144,9 @@
 
 (defn body
   [extension-id item-namespace body-props]
-  [views/body extension-id item-namespace body-props])
+  [:<>
+       [views/body extension-id item-namespace body-props]])
+      ;[:div (str body-props)]
 
 
 
@@ -145,21 +157,23 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [extension-id item-namespace {:keys [description] :as view-props}]
   [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
-                                  :header {:content [header extension-id item-namespace]}
+                                  :header {:content [header extension-id item-namespace view-props]}
                                   :description description}])
 
 (defn view
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:list-element (component)}
+  ;  {:new-item-options (vector)(opt)
+  ;   :list-element (component)}
   ;
   ; @usage
   ;  [item-browser/view :my-extension :my-type {...}]
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  [item-browser/view :my-extension :my-type {:element #'my-list-element}]
+  ;  [item-browser/view :my-extension :my-type {:element #'my-list-element
+  ;                                             :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

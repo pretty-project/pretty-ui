@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.3
+; Version: v0.5.4
+; Compatibility: x4.5.0
 
 
 
@@ -356,7 +356,7 @@
   (if-let [value-path (r element/get-element-prop db input-id :value-path)]
           (assoc-in db (element/element-prop-path input-id :backup-value)
                        (get-in db value-path))
-          (return   db)))
+          (return db)))
 
 (defn use-input-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -365,16 +365,24 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-  (if-let [initial-value   (r element/get-element-prop db input-id :initial-value)]
-          ; If initial-value is NOT nil ...
-          (let [value-path (r element/get-element-prop db input-id :value-path)]
-               (if (nil? (get-in db value-path))
-                   ; If the stored value is nil ...
-                   (assoc-in db value-path initial-value)
-                   ; If the stored value is NOT nil ...
-                   (return   db)))
-          ; If initial-value is nil ...
-          (return db)))
+; (if-let [initial-value (r element/get-element-prop db input-id :initial-value)]
+; Az if-let függvény hamis ágra tér, ha az initial-value értéke false, ezért
+; szükséges let függvényt alkalmazni!
+  (let [initial-value (r element/get-element-prop db input-id :initial-value)]
+       (if (some? initial-value)
+           ; If initial-value is NOT nil ...
+           (let [value-path (r element/get-element-prop db input-id :value-path)]
+                (if (nil? (get-in db value-path))
+                    ; If the stored value is nil ...
+                    (let []
+                      (println "asdxxxx")
+                      (assoc-in db value-path initial-value))
+                    ; If the stored value is NOT nil ...
+                    (let []
+                      (println "sfgsdf")
+                      (return db))))
+           ; If initial-value is nil ...
+           (return db))))
 
 (defn mark-input-as-visited!
   ; WARNING! NON-PUBLIC! DO NOT USE!

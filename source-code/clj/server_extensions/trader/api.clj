@@ -4,4 +4,5 @@
               [server-extensions.trader.engine]
               [server-extensions.trader.monitor]
               [server-extensions.trader.order]
-              [server-extensions.trader.views]))
+              [server-extensions.trader.views]
+              [server-extensions.trader.wallet]))

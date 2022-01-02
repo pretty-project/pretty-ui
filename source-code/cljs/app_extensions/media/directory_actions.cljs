@@ -55,7 +55,7 @@
   (fn [{:keys [db]} [_ _ {:keys [namespace]}]]
       (let [rendered-directory-id (r engine/get-rendered-directory-id db namespace)
             uploader-props        {:destination-directory-id rendered-directory-id
-                                   :namespace    namespace}]
+                                   :namespace namespace}]
            [:file-uploader/load! uploader-props])))
 
 (a/reg-event-fx

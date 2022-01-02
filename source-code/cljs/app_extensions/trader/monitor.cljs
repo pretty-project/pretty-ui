@@ -1,34 +1,27 @@
 
 (ns app-extensions.trader.monitor
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.css       :as css]
               [mid-fruits.format    :as format]
               [mid-fruits.keyword   :as keyword]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.map       :as map :refer [dissoc-in]]
               [mid-fruits.math      :as math]
-              [mid-fruits.pretty    :as pretty]
-              [mid-fruits.reader    :as reader]
               [mid-fruits.random    :as random]
-              [mid-fruits.string    :as string]
-              [mid-fruits.svg       :as svg]
               [mid-fruits.time      :as time]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-sync.api       :as sync]
               [x.app-elements.api   :as elements]
-              [app-fruits.react-transition  :as react-transition]
-              [app-extensions.trader.engine :as engine]
-              [app-extensions.trader.styles :as styles]))
+              [app-fruits.react-transition      :as react-transition]
+              [app-extensions.trader.connection :as connection]
+              [app-extensions.trader.engine     :as engine]
+              [app-extensions.trader.styles     :as styles]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; @constant (map)
-(def DEFAULT-SYMBOL {:label "ETH / USD" :value "ETHUSD"})
 
 ; @constant (map)
 (def DEFAULT-INTERVAL {:label "3 minutes" :value "3"})
@@ -46,7 +39,7 @@
   []
   (keyword/add-namespace :monitor (random/generate-keyword)))
 
-(defn- monitor-props->diagram-points
+(defn- monitor-props->diagram-points_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list price-max price-min]}]
   ; - Egy n sávos pont-diagram n+1 pont által írható le.
@@ -57,12 +50,42 @@
   (let [range (- price-max price-min)
         count (count kline-list)]
        (letfn [(f [o dex {:keys [close open]}]
-                  (let [x-close        (math/percent count (inc dex))
-                        y-close (- 100 (math/percent range (- close price-min)))
-                        y-open  (- 100 (math/percent range (- open  price-min)))]
-                       (if o (str o " "             x-close "," y-close)
-                             (str o "0," y-open " " x-close "," y-close))))]
+                  (let [x1 nil
+                        y1 (- 100 (math/percent range (- open  price-min)))
+                        x2        (math/percent count (inc dex))
+                        y2 (- 100 (math/percent range (- close price-min)))]
+                       (if o (str o " "         x2 "," y2)
+                             (str o "0," y1 " " x2 "," y2))))]
               (reduce-kv f nil kline-list))))
+; +5
+; 5x [8-10 10-12 12-13 13-12 12-11]
+; x1:    0    20    40    60    80
+; x2:   20    40    60    80    100
+; y1:
+; y2:
+
+
+(defn- monitor-props->diagram-points
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [kline-list price-max price-min]}]
+  (let [range (- price-max price-min)
+        count (count kline-list)]
+       (letfn [(f [o dex {:keys [close open]}]
+                  (let [x1        (math/percent count dex)
+                        x2        (math/percent count (inc dex))
+                        y1 (- 100 (math/percent range (- open price-min)))
+                        y2 (- 100 (math/percent range (- close price-min)))]
+                      (str o " " x1 "," y1 " " x1 "," y2 " " x2 "," y2)))]
+              (reduce-kv f nil kline-list))))
+
+
+(defn monitor-props->more-than-24h?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [kline-list]}]
+  (let [close-timestamp (:close-timestamp (last  kline-list))
+        open-timestamp  (:open-timestamp  (first kline-list))]
+       (= (time/timestamp-string->date close-timestamp)
+          (time/timestamp-string->date open-timestamp))))
 
 
 
@@ -72,7 +95,7 @@
 (defn- monitor-watching?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ monitor-id]]
-  (get-in db [:trader :monitor monitor-id :watching?]))
+  (r connection/connection-watching? db monitor-id))
 
 (defn- get-time-left
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,7 +118,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ monitor-id]]
   (merge (get-in db [:trader :monitor monitor-id])
-         {:synchronizing? (r sync/listening-to-request? db :trader/synchronize!)}))
+         {:monitor-watching? (r monitor-watching?          db monitor-id)
+          :synchronizing?    (r sync/listening-to-request? db :trader/synchronize!)}))
 
 (a/reg-sub :trader/get-monitor-props get-monitor-props)
 
@@ -103,6 +127,14 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- init-monitor-connection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ monitor-id]]
+  (let [interval          (get-in db [:trader :monitor monitor-id :settings :interval :value])
+        interval-duration (engine/interval-duration interval)]
+       (r connection/init-connection! db monitor-id {:connection-interval interval-duration
+                                                     :on-connect [:trader/request-kline-data! monitor-id]})))
 
 (defn- add-monitor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,11 +153,12 @@
 (defn- init-monitor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ monitor-id]]
-  (-> db (assoc-in [:trader :monitor monitor-id :settings-mode?] true)
-         (assoc-in [:trader :monitor monitor-id :settings]
-                   {:symbol   DEFAULT-SYMBOL
-                    :limit    DEFAULT-LIMIT
-                    :interval DEFAULT-INTERVAL})))
+  (as-> db % (assoc-in % [:trader :monitor monitor-id :settings-mode?] true)
+             (assoc-in % [:trader :monitor monitor-id :settings]
+                         {:symbol   engine/DEFAULT-SYMBOL
+                          :limit    DEFAULT-LIMIT
+                          :interval DEFAULT-INTERVAL})
+             (r init-monitor-connection! % monitor-id)))
 
 (a/reg-event-db :trader/init-monitor! init-monitor!)
 
@@ -133,26 +166,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ monitor-id kline-data]]
   (update-in db [:trader :monitor monitor-id] merge kline-data))
-
-(defn- init-timer!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ monitor-id]]
-  (let [interval (get-in db [:trader :monitor monitor-id :kline-list 0 :interval])
-        interval-duration (engine/interval-duration interval)]
-       (-> db (assoc-in [:trader :monitor monitor-id :interval]          interval)
-              (assoc-in [:trader :monitor monitor-id :interval-duration] interval-duration)
-              (assoc-in [:trader :monitor monitor-id :time-left]         interval-duration))))
-
-(defn- pause-monitor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ monitor-id]]
-  (-> db (dissoc-in [:trader :monitor monitor-id :watching?])
-         (dissoc-in [:trader :monitor monitor-id :time-left])))
-
-(defn- start-monitor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ monitor-id]]
-  (assoc-in db [:trader :monitor monitor-id :watching?] true))
 
 (defn- show-monitor-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,11 +181,6 @@
 
 (a/reg-event-db :trader/show-monitor-chart! show-monitor-chart!)
 
-(defn- update-time!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ monitor-id]]
-  (update-in db [:trader :monitor monitor-id :time-left] dec))
-
 (defn- highlight-kline-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ monitor-id kline-item]]
@@ -185,32 +193,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- monitor-timer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [interval-duration time-left]}]
-  [elements/circle-diagram {:sections [{:value time-left                       :color :primary}
-                                       {:value (- interval-duration time-left) :color :highlight}]}])
-
-(defn- monitor-toggle-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [monitor-id {:keys [synchronizing? watching?]}]
-  [elements/button {:disabled? synchronizing?
-                    :icon      (if watching? :pause :play_arrow)
-                    :on-click  [:trader/toggle-monitor! monitor-id]
-                    :preset    :default-icon-button}])
-
 (defn- monitor-tl-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [monitor-id monitor-props]
-  [:div {:style (styles/monitor-tl-controls-style)}
-        [:div {:style (styles/monitor-controls-timer-style)}
-              [monitor-timer monitor-id monitor-props]]
-        [monitor-toggle-button monitor-id monitor-props]])
+  [monitor-id {:keys [settings] :as monitor-props}]
+  [:div {:style (styles/box-tl-controls-style)}
+        [connection/connection-toggle-button monitor-id]])
 
 (defn- monitor-bl-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [monitor-id {:keys [settings-mode?] :as monitor-props}]
-  [:div {:style (styles/monitor-bl-controls-style)}
+  [:div {:style (styles/box-bl-controls-style)}
         (if settings-mode? [elements/button {:icon :show_chart
                                              :preset :default-icon-button
                                              :on-click [:trader/show-monitor-chart! monitor-id]}]
@@ -235,7 +227,7 @@
 (defn- monitor-br-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [monitor-id {:keys [first-monitor? last-monitor?] :as monitor-props}]
-  [:div {:style (styles/monitor-br-controls-style)}
+  [:div {:style (styles/box-br-controls-style)}
         (if     last-monitor?  [add-monitor-button    monitor-id monitor-props])
         (if-not first-monitor? [remove-monitor-button monitor-id monitor-props])])
 
@@ -253,11 +245,10 @@
 
 (defn- price-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [price-box]}]
+  [_ {:keys [price-box] :as monitor-props}]
   (if-let [{:keys [open-timestamp close-timestamp open close]} price-box]
           [:div {:class "trader--price-box" :style (styles/price-box-style)}
-                (if (= (time/timestamp-string->date close-timestamp)
-                       (time/timestamp-string->date open-timestamp))
+                (if (monitor-props->more-than-24h? monitor-props)
                     ; Open & close is on the same day ...
                     [:div {:style (styles/price-box-timestamps-style)}
                           [:div (time/timestamp-string->time open-timestamp)]
@@ -312,19 +303,16 @@
 
 (defn- monitor-chart-y-labels
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [kline-list]}]
-  (let [close-timestamp (:close-timestamp (last  kline-list))
-        open-timestamp  (:open-timestamp  (first kline-list))]
-       (if (= (time/timestamp-string->date close-timestamp)
-              (time/timestamp-string->date open-timestamp))
-           ; Open & close is on the same day ...
-           [:div {:style (styles/monitor-chart-y-labels-style)}
-                 [:div (time/timestamp-string->time (:open-timestamp  (first kline-list)))]
-                 [:div (time/timestamp-string->time (:close-timestamp (last  kline-list)))]]
-           ; Open & close is on other days ...
-           [:div {:style (styles/monitor-chart-y-labels-style)}
-                 [:div (time/timestamp-string->date-time (:open-timestamp  (first kline-list)))]
-                 [:div (time/timestamp-string->date-time (:close-timestamp (last  kline-list)))]])))
+  [_ {:keys [kline-list] :as monitor-props}]
+  (if (monitor-props->more-than-24h? monitor-props)
+      ; Open & close is on the same day ...
+      [:div {:style (styles/monitor-chart-y-labels-style)}
+            [:div (time/timestamp-string->time (:open-timestamp  (first kline-list)))]
+            [:div (time/timestamp-string->time (:close-timestamp (last  kline-list)))]]
+      ; Open & close is on other days ...
+      [:div {:style (styles/monitor-chart-y-labels-style)}
+            [:div (time/timestamp-string->date-time (:open-timestamp  (first kline-list)))]
+            [:div (time/timestamp-string->date-time (:close-timestamp (last  kline-list)))]]))
 
 (defn- monitor-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -411,10 +399,10 @@
 
 (defn- monitor-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [monitor-id {:keys [settings-mode? watching?] :as monitor-props}]
-  [:div {:style (styles/monitor-structure-style)
-         :data-watching (boolean watching?)}
-        [:div {:style (styles/monitor-body-style)}
+  [monitor-id {:keys [settings-mode? monitor-watching?] :as monitor-props}]
+  [:div {:style (styles/box-structure-style)
+         :data-watching (boolean monitor-watching?)}
+        [:div {:style (styles/box-body-style)}
               [react-transition/mount-animation {:animation-timeout 150 :mounted? (not settings-mode?)}
                                                 [monitor-chart monitor-id monitor-props]]
               [react-transition/mount-animation {:animation-timeout 150 :mounted? settings-mode?}
@@ -446,54 +434,30 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :trader/toggle-monitor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ monitor-id]]
-      (if (r monitor-watching? db monitor-id)
-          {:db (r pause-monitor! db monitor-id)}
-          {:db (as-> db % (r start-monitor!      % monitor-id)
-                          (r show-monitor-chart! % monitor-id))
-           :dispatch [:trader/request-kline-data! monitor-id]})))
-
-(a/reg-event-fx
-  :trader/update-time!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ monitor-id]]
-      (cond ; If monitor is watching and time is elapsed ...
-            (and (r monitor-watching? db monitor-id)
-                 (r time-elapsed?     db monitor-id))
-            [:trader/request-kline-data! monitor-id]
-            ; If monitor is watching and time is NOT elapsed ...
-            (r monitor-watching? db monitor-id)
-            {:db (r update-time! db monitor-id)
-             :dispatch-later [{:ms 1000 :dispatch [:trader/update-time! monitor-id]}]})))
-
-(a/reg-event-fx
   :trader/receive-kline-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ monitor-id response]]
       (let [kline-data (:trader/get-kline-data response)]
-           {:db (as-> db % (r store-received-kline-data! % monitor-id kline-data)
-                           (r init-timer!                % monitor-id))
-            :dispatch-later [{:ms 1000 :dispatch [:trader/update-time! monitor-id]}]
-            :dispatch       [:trader/log! :trader/monitor (get kline-data :uri)
-                                                          (get kline-data :timestamp)]})))
+           {:db       (r store-received-kline-data! db monitor-id kline-data)
+            :dispatch [:trader/log! :trader/monitor (get kline-data :uri)
+                                                    (get kline-data :timestamp)]})))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/request-kline-data!
   (fn [{:keys [db]} [_ monitor-id]]
-      [:sync/send-query! :trader/synchronize!
-                         {:on-success [:trader/receive-kline-data! monitor-id]
-                          :on-failure [:trader/->monitor-network-error monitor-id]
-                          :on-sent    [:trader/log! :trader/monitor "Fetching data from server ..."]
-                          :query      [`(:trader/get-kline-data ~(r get-monitor-settings db monitor-id))]}]))
+      {:db (r show-monitor-chart! db monitor-id)
+       :dispatch [:sync/send-query! :trader/synchronize!
+                                    {:on-success [:trader/receive-kline-data! monitor-id]
+                                     :on-failure [:trader/->monitor-network-error monitor-id]
+                                     :on-sent    [:trader/log! :trader/monitor "Fetching data from server ..."]
+                                     :query      [`(:trader/get-kline-data ~(r get-monitor-settings db monitor-id))]}]}))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/->monitor-network-error
   (fn [{:keys [db]} [_ monitor-id]]
-      {:db (dissoc-in db [:trader :monitor :watching?])
+      {:db       (r connection/stop-connection! db monitor-id)
        :dispatch [:trader/log! :trader/monitor (str "Network error: " monitor-id)]}))
 
 (a/reg-event-fx
@@ -501,7 +465,8 @@
   :trader/->monitor-settings-changed
   (fn [{:keys [db]} [_ monitor-id]]
       (if (r monitor-watching? db monitor-id)
-          [:trader/toggle-monitor! monitor-id])))
+          {:db (r connection/stop-connection! db monitor-id)}
+          {:db (r init-monitor-connection!    db monitor-id)})))
 
 
 

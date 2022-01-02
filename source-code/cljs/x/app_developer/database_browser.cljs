@@ -143,12 +143,12 @@
 (defn- icon-button
   [{:keys [disabled? icon label on-click]}]
   (if (boolean disabled?)
-      [:div {:style {:padding "0 12px" :min-width "48px"}}
+      [:div {:style {:padding "0 12px" :min-width "60px"}}
         [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label true]]
       [:div.x-clickable {:on-click #(a/dispatch on-click)
-                         :style {:padding "0 12px" :min-width "48px"}}
+                         :style {:padding "0 12px" :min-width "60px"}}
         [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
                    (param icon)]
         [icon-button-label label]]))

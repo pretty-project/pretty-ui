@@ -78,8 +78,8 @@
          (if (= variant :filled)        {:background-color :primary})
          (if (= variant :outlined)      {:border-color     :primary})
          (if (= variant :transparent)   {:color            :primary})
-         (if (nil? variant)             {:border-color     :primary
-                                         :variant          :outlined})
+         (if (nil? variant)             {:background-color :primary
+                                         :variant          :filled})
          (param button-props)
          ; XXX#0523
          ; A button elemet {:layout :icon-button} beállítással használva,
@@ -203,7 +203,7 @@
   ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
   ;    :filled, :outlined, :placeholder, :transparent
-  ;    Default: :outlined}
+  ;    Default: :filled}
   ;
   ; @usage
   ;  [elements/button {...}]

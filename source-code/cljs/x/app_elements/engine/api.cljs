@@ -49,9 +49,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-elements.engine.checkable
-(def checkable-attributes      checkable/checkable-attributes)
-(def checkable-body-attributes checkable/checkable-body-attributes)
-(def get-checkable-props       checkable/get-checkable-props)
+(def checkable-attributes                checkable/checkable-attributes)
+(def checkable-body-attributes           checkable/checkable-body-attributes)
+(def checkable-primary-body-attributes   checkable/checkable-primary-body-attributes)
+(def checkable-secondary-body-attributes checkable/checkable-secondary-body-attributes)
+(def get-checkable-props                 checkable/get-checkable-props)
 
 ; x.app-elements.engine.collectable
 (def collectable-attributes        collectable/collectable-attributes)

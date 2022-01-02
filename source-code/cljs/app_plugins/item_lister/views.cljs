@@ -24,7 +24,7 @@
               [x.app-tools.api      :as tools]
               [app-fruits.react-transition    :as react-transition]
               [app-plugins.item-lister.engine :as engine]))
-              ;[app-plugins.sortable.core      :refer [sortable]]))
+             ;[app-plugins.sortable.core      :refer [sortable]]
 
 
 
@@ -260,18 +260,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:options (vector)}
+  ;  {:new-item-options (vector)}
   ;
   ; @usage
   ;  (a/reg-event-fx :my-extension/add-new-item! (fn [_ [_ selected-option]] ...))
   ;  [item-lister/new-item-select :my-extension :my-type {:options [...]}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [options]}]
+  [extension-id _ {:keys [new-item-options]}]
   [elements/select ::new-item-select
                    {:as-button?      true
                     :autoclear?      true
-                    :initial-options (param options)
+                    :initial-options (param new-item-options)
                     :on-select       (engine/add-new-item-event extension-id)
                     :preset          :add-icon-button}])
 
@@ -369,13 +369,15 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:no-items-to-show? (boolean)(opt)}
+  ;  {:new-item-options (vector)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [no-items-to-show?] :as header-props}]
+  [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      [new-item-button            extension-id item-namespace header-props]
+      (if new-item-options [new-item-select extension-id item-namespace header-props]
+                           [new-item-button extension-id item-namespace])
       [sort-items-button          extension-id item-namespace header-props]
       [toggle-select-mode-button  extension-id item-namespace header-props]
       [toggle-reorder-mode-button extension-id item-namespace header-props]]
@@ -425,6 +427,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) header-props
+  ;  {:new-item-options (vector)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/header :my-extension :my-type]
+  ;
+  ; @usage
+  ;  [item-lister/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   ([extension-id item-namespace]
@@ -646,14 +655,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:list-element (component)}
+  ;  {:list-element (component)
+  ;   :new-item-options (vector)(opt)}
   ;
   ; @usage
   ;  [item-lister/view :my-extension :my-type {...}]
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  [item-lister/view :my-extension :my-type {:element #'my-list-element}]
+  ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
+  ;                                            :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

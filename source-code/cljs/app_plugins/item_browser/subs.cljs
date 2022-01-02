@@ -17,7 +17,8 @@
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
               [x.app-router.api :as router]
-              [app-plugins.item-browser.engine :as engine]))
+              [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-lister.subs    :as subs]))
 
 
 
@@ -58,6 +59,19 @@
   [db [_ extension-id]]
   (let [current-path (r get-current-path db extension-id)]
        (empty? current-path)))
+
+(defn get-header-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (merge (r subs/get-header-props db extension-id item-namespace)
+         {:at-home? (r at-home? db extension-id)}))
+
+(a/reg-sub :item-browser/get-header-props get-header-props)
 
 (defn get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

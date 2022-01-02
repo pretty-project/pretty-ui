@@ -19,14 +19,23 @@
 
 .x-app-popups--element[data-horizontal-align="left"]
 .x-app-popups--element--body {
+  align-items: flex-start }
+
+.x-app-surface--element[data-horizontal-align="left"] .x-app-surface--element--view {
   align-items: flex-start; }
 
 .x-app-popups--element[data-horizontal-align="center"]
 .x-app-popups--element--body {
   align-items: center }
+  
+.x-app-surface--element[data-horizontal-align="center"] .x-app-surface--element--view {
+  align-items: center }
 
 .x-app-popups--element[data-horizontal-align="right"]
 .x-app-popups--element--body {
+  align-items: flex-end }
+
+.x-app-surface--element[data-horizontal-align="right"] .x-app-surface--element--view {
   align-items: flex-end }
 
 /*** Horizontal align ***/
@@ -470,7 +479,7 @@ body[data-viewport-profile="s"]   #x-app-header {
   width: 0% }
 
 #x-app-progress-bar--process-progress[data-failured="true"] {
-  background-color: var( --border-color-warning ) }  
+  background-color: var( --border-color-warning ) }
 
 #x-app-progress-bar--screen-overlay {
   background-color: var( --app-overlay-color );
@@ -599,7 +608,6 @@ body[data-viewport-profile="s"]   #x-app-header {
 /*** Surface body ***/
 
 .x-app-surface--element--view {
-  align-items: center;
   display: flex;
   flex-direction: column;
 

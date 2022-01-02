@@ -33,14 +33,16 @@
   ;
   ; @return (map)
   ;  {:hide-animated? (boolean)
+  ;   :horizontal-align (keyword)
   ;   :reveal-animated? (boolean)
   ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
-  [db [_ surface-id surface-props]]
+  [surface-props]
   (merge {:hide-animated?   false
           :reveal-animated? false
           :trim-content?    false
-          :update-animated? false}
+          :update-animated? false
+          :horizontal-align :center}
          (param surface-props)))
 
 
@@ -76,7 +78,8 @@
   ;   :hide-animated? (boolean)(opt)
   ;    Default: false
   ;   :horizontal-align (keyword)(opt)
-  ;    TODO ... (same as popup)
+  ;    :left, :center, :right
+  ;    Default: :center
   ;   :initializer (metamorphic-event)(opt)
   ;   :reveal-animated? (boolean)(opt)
   ;    Default: false
@@ -106,7 +109,7 @@
   (fn [{:keys [db]} event-vector]
       (let [surface-id    (a/event-vector->second-id   event-vector)
             surface-props (a/event-vector->first-props event-vector)
-            surface-props (r surface-props-prototype db surface-id surface-props)]
+            surface-props (surface-props-prototype     surface-props)]
            [:ui/render-surface! surface-id surface-props])))
 
 

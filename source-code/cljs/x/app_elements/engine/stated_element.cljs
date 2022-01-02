@@ -68,7 +68,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element
+(defn element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

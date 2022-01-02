@@ -277,7 +277,7 @@
   ; @param (integer) dex
   ;
   ; @usage
-  ;  (vector/dex-first? [:a :b] 1)
+  ;  (vector/dex-first? 1)
   ;
   ; @return (boolean)
   [dex]

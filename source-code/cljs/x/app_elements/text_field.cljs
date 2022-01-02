@@ -45,6 +45,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
+  ;  {:disable-autofill? (boolean)(opt)}
   ;
   ; @return (map)
   ;  {:end-adornments (maps in vector)
@@ -52,18 +53,24 @@
   ;   :layout (keyword)
   ;   :name (keyword)
   ;   :type (keyword)}
-  [field-id field-props]
+  [field-id {:keys [disable-autofill?] :as field-props}]
   (merge {:layout     :row
           :type       :text
           :value-path (engine/default-value-path field-id)
           :disable-autofill? true}
+          ; BUG#6782 https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
+          ; - A Chrome böngésző - ignorálja az {:autocomplete "off"} beállítást
+          ;                     - ignorálja az {:autocomplete "new-*"} beállítást
+          ;                     - figyelembe veszi a {:name ...} értékét
+          ; - Véletlenszerű {:name ...} érték használatával az autofill nem képes megállapítani,
+          ;   mi alapján ajánljon értékeket a mezőhöz.
+          ; - A mező {:name ...} tulajdonságát lehetséges paraméterként is beállítani, mert a
+          ;   a több helyen felhasznált mezők nem kaphatnak egyedi azonosítót, és generált
+          ;   azonosítóval nem műkdödik az autofill!
+         {:name (if (= disable-autofill? false) field-id (a/id))}
          (param field-props)
-         {:end-adornments (end-adornments-prototype field-id field-props)
-          ; BUG#6782
-          ; A field mezők számára szükséges {:name ...} tulajdonságot a komponens React-fába
-          ; csatolásakor szükséges generálni, mert az attributes térképben a felhasználás helyén
-          ; generált érték az attributes térkép minden megváltozásakor feleslegesen újragenerálódna.
-          :name (a/id)}))
+         {:end-adornments (end-adornments-prototype field-id field-props)}))
+
 
 
 
@@ -252,6 +259,7 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
   ;   :modifier (function)(opt)
+  ;   :name (keyword)(opt)
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)
   ;   :on-empty (metamorphic-event)(constant)(opt)

@@ -6,7 +6,8 @@
               [app-extensions.trader.controls :as controls]
               [app-extensions.trader.listener :as listener]
               [app-extensions.trader.monitor  :as monitor]
-              [app-extensions.trader.styles   :as styles]))
+              [app-extensions.trader.styles   :as styles]
+              [app-extensions.trader.wallet   :as wallet]))
 
 
 
@@ -19,8 +20,9 @@
   [:<> [elements/horizontal-separator {:size :xxl}]
        [:div {:style (styles/box-list-style)}
              [monitor/body  surface-id]
-             [controls/body surface-id]
-             [listener/body surface-id]]])
+             [wallet/body   surface-id]
+             [listener/body surface-id]
+             [controls/body surface-id]]])
 
 
 

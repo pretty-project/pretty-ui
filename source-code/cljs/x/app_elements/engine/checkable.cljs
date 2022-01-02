@@ -76,7 +76,8 @@
   ; @return (map)
   ;  {:disabled (boolean)
   ;   :id (string)
-  ;   :on-click (function)}
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
   [input-id {:keys [checked? disabled?]}]
   (cond-> {:id (targetable/element-id->target-id input-id)}
           (boolean disabled?) (merge {:disabled true})
@@ -84,6 +85,38 @@
                                       :on-mouse-up (focusable/blur-element-function input-id)})
           (not     checked?)  (merge {:on-click    (on-check-function               input-id)
                                       :on-mouse-up (focusable/blur-element-function input-id)})))
+
+(defn checkable-primary-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @return (map)
+  ;  {:disabled (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
+  [input-id {:keys [disabled?]}]
+  (if disabled? {:disabled true}
+                {:on-click    (on-check-function               input-id)
+                 :on-mouse-up (focusable/blur-element-function input-id)}))
+
+(defn checkable-secondary-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @return (map)
+  ;  {:disabled (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
+  [input-id {:keys [disabled?]}]
+  (if disabled? {:disabled true}
+                {:on-click    (on-uncheck-function             input-id)
+                 :on-mouse-up (focusable/blur-element-function input-id)}))
 
 (defn checkable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
