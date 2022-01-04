@@ -76,3 +76,25 @@
   ; @return (string)
   []
   (generate-uuid))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn pick-vector-item
+  ; @param (vector) n
+  ;
+  ; @usage
+  ;  (random/pick-vector-item [:a :b :c]
+  ;  =>
+  ;  :a
+  ;
+  ; @usage
+  ;  (random/pick-vector-item [:a :b :c]
+  ;  =>
+  ;  :c
+  ;
+  ; @return (*)
+  [n]
+  (nth n (-> n count rand-int)))

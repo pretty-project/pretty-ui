@@ -74,7 +74,7 @@
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
+; @constant (functions in vector)
 (def HANDLERS [get-item-suggestions])
 
 (pathom/reg-handlers! :item-editor HANDLERS)

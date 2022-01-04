@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.7.0
-; Compatibility: x4.4.6
+; Version: v0.7.4
+; Compatibility: x4.5.0
 
 
 
@@ -46,8 +46,65 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-db
-  [db _]
-  (return db))
-
+; @usage
+;  [:db/get-db]
 (a/reg-sub :db/get-db get-db)
+
+; @usage
+;  [:db/get-item [:my :item :path]]
+(a/reg-sub :db/get-item get-item)
+
+; @usage
+;  [:db/item-exists? [:my :item :path]]
+(a/reg-sub :db/item-exists? item-exists?)
+
+
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:db/empty-db!]
+(a/reg-event-db :db/empty-db! empty-db!)
+
+; @usage
+;  [:db/move-item! [:move :from :path] [:move :to :path]]
+(a/reg-event-db :db/move-item! move-item!)
+
+; @usage
+;  [:db/set-item! [:my :item :path] "My value"]
+(a/reg-event-db :db/set-item! set-item!)
+
+; @usage
+;  [:db/set-vector-item! [:my :item :path :0] "My value"]
+(a/reg-event-db :db/set-vector-item! set-vector-item!)
+
+; @usage
+;  [:db/remove-item! [:my :item :path]]
+(a/reg-event-db :db/remove-item! remove-item!)
+
+; @usage
+;  [:db/remove-vector-item! [:my :item :path 0]]
+(a/reg-event-db :db/remove-vector-item! remove-vector-item!)
+
+; @usage
+;  [:db/remove-item-n! [[:my :item :path] [...]]]
+(a/reg-event-db :db/remove-item-n! remove-item-n!)
+
+; @usage
+;  [:db/inc-item-n! [[:my :item :path] [...]]]
+(a/reg-event-db :db/inc-item-n! inc-item-n!)
+
+; @usage
+;  [:db/dec-item-n! [[:my :item :path] [...]]]
+(a/reg-event-db :db/dec-item-n! dec-item-n!)
+
+; @usage
+;  [:db/apply! [:my :item :path] merge {}]
+(a/reg-event-db :db/apply! apply!)
+
+; @usage
+;  [:db/distribute-items! {:apple "red" :banana "yellow"}]
+;                         {:apple  [:where :to :store :apples :color]
+;                          :banana [:where :to :store :bananas :color]}]
+(a/reg-event-db :db/distribute-items! distribute-items!)

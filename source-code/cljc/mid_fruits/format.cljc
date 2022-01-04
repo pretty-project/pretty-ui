@@ -126,3 +126,22 @@
                               (= diff 0) x))
                    ; If x is NOT contains "." ...
                    (str x "." (trailing-zeros nil length))))))
+
+(defn round
+  ; @param (number) n
+  ;
+  ; @example
+  ;  (format/round 1740)
+  ;  =>
+  ;  "2K"
+  ;
+  ; @example
+  ;  (format/round 1000420)
+  ;  =>
+  ;  "1M"
+  ;
+  ; @return (string)
+  [n]
+  (cond (>= n 1000000) (str (Math/round (/ n 1000000)) "M")
+        (>= n 1000)    (str (Math/round (/ n 1000))    "K")
+        :else          (str (Math/round n))))

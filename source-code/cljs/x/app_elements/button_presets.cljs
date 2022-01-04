@@ -52,6 +52,12 @@
                             :horizontal-align :left
                             :layout  :row
                             :variant :transparent}
+      :secondary-icon-button {:color  :secondary
+                              :layout  :icon-button
+                              :variant :transparent}
+      :success-icon-button {:color   :success
+                            :layout  :icon-button
+                            :variant :transparent}
       :warning-button      {:color   :warning
                             :horizontal-align :left
                             :layout  :row

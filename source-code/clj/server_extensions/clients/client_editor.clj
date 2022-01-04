@@ -4,6 +4,7 @@
               [mid-fruits.validator :as validator]
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
+              [prototypes.api       :as prototypes]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]
               [server-plugins.item-editor.api :as item-editor]
@@ -66,10 +67,10 @@
              ; @param (namespaced map) client-item
              ;
              ; @return (namespaced map)
-             [env client-item]
+             [{:keys [request]} client-item]
              {::pco/op-name 'clients/save-client-item!}
              (mongo-db/upsert-document! "clients" client-item
-                                        {:prototype-f #(item-editor/updated-item-prototype env :clients :client %)}))
+                                        {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
 (defmutation merge-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,10 +79,10 @@
              ; @param (namespaced map) client-item
              ;
              ; @return (namespaced map)
-             [env client-item]
+             [{:keys [request]} client-item]
              {::pco/op-name 'clients/merge-client-item!}
              (mongo-db/merge-document! "clients" client-item
-                                       {:prototype-f #(item-editor/updated-item-prototype env :clients :client %)}))
+                                       {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
 (defmutation delete-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,23 +102,19 @@
              ; @param (namespaced map) client-item
              ;
              ; @return (namespaced map)
-             [env client-item]
+             [{:keys [request]} client-item]
              {::pco/op-name 'clients/duplicate-client-item!}
              (mongo-db/add-document! "clients" client-item
-                                     {:prototype-f #(item-editor/duplicated-item-prototype env :clients :client %)}))
+                                     {:prototype-f #(prototypes/duplicated-document-prototype request :clients :client %)}))
 
 
 
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
-(def HANDLERS [get-client-item
-               undo-delete-client-item!
-               save-client-item!
-               merge-client-item!
-               delete-client-item!
-               duplicate-client-item!])
+; @constant (functions in vector)
+(def HANDLERS [delete-client-item! duplicate-client-item! get-client-item
+               merge-client-item!  save-client-item!      undo-delete-client-item!])
 
 (pathom/reg-handlers! :client-editor HANDLERS)
 

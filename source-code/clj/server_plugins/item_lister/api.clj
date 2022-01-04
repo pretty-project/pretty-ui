@@ -15,8 +15,7 @@
 
 (ns server-plugins.item-lister.api
     (:require [server-plugins.item-lister.events]
-              [server-plugins.item-lister.engine     :as engine]
-              [server-plugins.item-editor.prototypes :as prototypes]))
+              [server-plugins.item-lister.engine :as engine]))
 
 
 
@@ -29,6 +28,3 @@
 (def env->pipeline-props engine/env->pipeline-props)
 (def env->get-pipeline   engine/env->get-pipeline)
 (def env->count-pipeline engine/env->count-pipeline)
-
-; server-plugins.item-editor.prototypes
-(def updated-item-prototype prototypes/updated-item-prototype)

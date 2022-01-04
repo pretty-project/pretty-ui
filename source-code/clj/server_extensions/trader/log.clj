@@ -1,0 +1,79 @@
+
+(ns server-extensions.trader.log
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.time   :as time]
+              [mid-fruits.vector :as vector]
+              [pathom.api        :as pathom]
+              [x.server-core.api :as a]
+              [server-extensions.trader.engine       :as engine]
+              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn log!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) module-id
+  ; @param (string) log-entry
+  ; @param (map) options
+  ;  {:warning? (boolean)(opt)
+  ;    Default: false}
+  [db [_ module-id log-entry {:keys [warning?]}]]
+  (update-in db [:trader :log] vector/cons-item {:module-id module-id :log-entry log-entry
+                                                 :timestamp (time/timestamp-string)
+                                                 :warning?  (boolean warning?)}))
+
+; @usage
+;  [:trader/log! :my-module "My log entry" {:warning? true}]
+(a/reg-event-db :trader/log! log!)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-log-data-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;
+  ; @return (map)
+  ;  {:log-items (maps in vector)}
+  [env response-props]
+  (let [log-items (a/subscribed [:db/get-item [:trader :log]])]
+       {:log-items log-items}))
+
+(defresolver get-log-data
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) resolver-props
+             ;
+             ; @return (map)
+             ;  {:trader/get-log-data (map)
+             ;    {:log-items (maps in vector)}}
+             [env resolver-props]
+             {:trader/get-log-data (get-log-data-f env resolver-props)})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (functions in vector)
+(def HANDLERS [get-log-data])
+
+(pathom/reg-handlers! :trader/log HANDLERS)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-app-boot [:trader/log! :trader/log "Server initializing ..."]})

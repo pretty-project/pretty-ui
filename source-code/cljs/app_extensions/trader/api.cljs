@@ -1,12 +1,17 @@
 
 (ns app-extensions.trader.api
-    (:require [app-extensions.trader.engine]
+    (:require [app-extensions.trader.account]
+              [app-extensions.trader.editor]
+              [app-extensions.trader.engine]
               [app-extensions.trader.listener]
+              [app-extensions.trader.main]
               [app-extensions.trader.monitor]
               [app-extensions.trader.positions]
+              [app-extensions.trader.router]
               [app-extensions.trader.settings]
-              [app-extensions.trader.views]
+              [app-extensions.trader.sync]
               [app-extensions.trader.wallet]))
+
 
 
 

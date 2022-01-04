@@ -374,13 +374,9 @@
            (let [value-path (r element/get-element-prop db input-id :value-path)]
                 (if (nil? (get-in db value-path))
                     ; If the stored value is nil ...
-                    (let []
-                      (println "asdxxxx")
-                      (assoc-in db value-path initial-value))
+                    (assoc-in db value-path initial-value)
                     ; If the stored value is NOT nil ...
-                    (let []
-                      (println "sfgsdf")
-                      (return db))))
+                    (return db)))
            ; If initial-value is nil ...
            (return db))))
 

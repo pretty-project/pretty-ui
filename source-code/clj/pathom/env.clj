@@ -25,13 +25,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn environment-register
-  ; @param (vector) registry
-  ;
-  ; @return (map)
-  [registry]
-  (pathom.ci/register registry))
-
 (defn env->request
   ; @param (map) env
   ;  {:request (map)}
@@ -60,3 +53,17 @@
   [env param-id]
   (let [params (env->params env)]
        (get params param-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn environment-register
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (vector) registry
+  ;
+  ; @return (map)
+  [registry]
+  (pathom.ci/register registry))

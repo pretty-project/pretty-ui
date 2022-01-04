@@ -1,8 +1,8 @@
 
-(ns app-extensions.trader.views
+(ns app-extensions.trader.main
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
+              [app-extensions.trader.account  :as account]
               [app-extensions.trader.controls :as controls]
               [app-extensions.trader.listener :as listener]
               [app-extensions.trader.monitor  :as monitor]
@@ -30,15 +30,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :trader/render!
+  :trader/render-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view}}])
 
 (a/reg-event-fx
-  :trader/load!
+  :trader/load-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/listen-to-process! :trader/synchronize!]
                 [:gestures/init-view-handler! :trader/controls {:default-view-id :log}]
                 [:ui/set-header-title! "Trader"]
                 [:ui/set-window-title! "Trader"]
-                [:trader/render!]]})
+                [:trader/render-main!]]})

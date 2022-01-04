@@ -2,14 +2,9 @@
 (ns server-extensions.trader.order
     (:require [clj-http.client    :as client]
               [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.reader  :as reader]
-              [mid-fruits.string  :as string]
-              [mid-fruits.time    :as time]
-              [mid-fruits.vector  :as vector]
-              [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
               [x.server-core.api  :as a]
-              [server-extensions.trader.engine :as engine]
+              [server-extensions.trader.engine       :as engine]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
 
 
@@ -76,31 +71,32 @@
 ; @name Long position
 ;  A befektetők akkor vesznek fel long pozíciót a részvénytőzsdén, amikor részvényeket vásárolnak,
 ;  és tartják a részvényeket abban a reményben, hogy az áruk emelkedni fog.
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Buy
+;
+; @name Buy
 ;  - Veszel ETH-t, mert azt hiszed, hogy magasabb lesz később az ára
 ;  - Mikor lenn van, akkor BUY
 ;
-; Sell
+; @name Sell
 ;  - Eladsz ETH-t, mert azt hiszed, hogy alacsonyabb lesz később az ára és később visszaveszed
 ;  - Mikor fenn van, akkor SELL
-;
 
 
 
-(defn send-create-order
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn create-order-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;
+  ; @return (map)
   [env _]
   (let [api-key      (pathom/env->param env :api-key)
         api-secret   (pathom/env->param env :api-secret)
         use-mainnet? (pathom/env->param env :use-mainnet?)
-        uri          (if use-mainnet? (engine/create-order-uri)
-                                      (engine/create-order-test-uri))
+        uri          (engine/create-order-uri {:use-mainnet? use-mainnet?})
         form-params (engine/post-form-params {:api-key    api-key
                                               :api-secret api-secret
                                               :order-type    "Limit"
@@ -120,14 +116,21 @@
 
 (defresolver create-order!
              ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) resolver-props
+             ;
+             ; @return (map)
+             ;  {:trader/create-order! (map)}
              [env resolver-props]
-             {:trader/create-order! (send-create-order env resolver-props)})
+             {:trader/create-order! (create-order-f env resolver-props)})
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (functions in vector)
 (def HANDLERS [create-order!])
 
 (pathom/reg-handlers! :trader/order HANDLERS)

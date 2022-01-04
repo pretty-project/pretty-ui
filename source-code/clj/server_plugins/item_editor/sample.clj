@@ -92,13 +92,9 @@
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
-(def HANDLERS [get-my-type-item
-               undo-delete-my-type-item!
-               save-my-type-item!
-               merge-my-type-item!
-               delete-my-type-item!
-               duplicate-my-type-item!])
+; @constant (functions in vector)
+(def HANDLERS [delete-my-type-item! duplicate-my-type-item! get-my-type-item
+               merge-my-type-item!  save-my-type-item!      undo-delete-my-type-item!])
 
 (pathom/reg-handlers! :my-type-editor HANDLERS)
 

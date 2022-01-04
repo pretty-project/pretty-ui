@@ -22,6 +22,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (maps in vector)
+(def SYNC-TIMEOUT-OPTIONS [{:label "2 sec"  :value 2000}
+                           {:label "5 sec"  :value 5000}
+                           {:label "15 sec" :value 15000}
+                           {:label "30 sec" :value 30000}
+                           {:label "60 sec" :value 60000}])
+
+; @constant (maps in vector)
 (def INTERVAL-OPTIONS [{:label "1 minute"    :value "1"}
                        {:label "3 minutes"   :value "3"}
                        {:label "5 minutes"   :value "5"}

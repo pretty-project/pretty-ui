@@ -4,13 +4,14 @@
               [mid-fruits.vector    :as vector]
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
+              [prototypes.api       :as prototypes]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]
               [x.server-locales.api :as locales]
               [x.server-user.api    :as user]
               [server-plugins.item-lister.api :as item-lister]
               [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
-              
+
 
 
 ;; -- Pipelines ---------------------------------------------------------------
@@ -89,10 +90,10 @@
              ;  {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
-             [env {:keys [items]}]
+             [{:keys [request]} {:keys [items]}]
              {::pco/op-name 'clients/merge-client-items!}
              (mongo-db/merge-documents! "clients" items
-                                        {:prototype-f #(item-lister/updated-item-prototype env :clients :client %)}))
+                                        {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
 (defmutation delete-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,11 +111,8 @@
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
-(def HANDLERS [get-client-items
-               undo-delete-client-items!
-               merge-client-items!
-               delete-client-items!])
+; @constant (functions in vector)
+(def HANDLERS [delete-client-items! get-client-items merge-client-items! undo-delete-client-items!])
 
 (pathom/reg-handlers! :client-lister HANDLERS)
 

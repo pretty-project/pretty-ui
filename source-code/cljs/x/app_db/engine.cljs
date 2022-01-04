@@ -53,6 +53,10 @@
 ;  [:db/get-item [:my :item :path]]
 (a/reg-sub :db/get-item get-item)
 
+; @usage
+;  [:db/item-exists? [:my :item :path]]
+(a/reg-sub :db/item-exists? item-exists?)
+
 
 
 ;; -- DB events ---------------------------------------------------------------

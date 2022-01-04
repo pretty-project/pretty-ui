@@ -23,35 +23,6 @@
 
 
 
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;
-; (ns my-handlers
-;     (:require [pathom.api         :as pathom :refer [ENVIRONMENT]]
-;               [server-fruits.http :as http]))
-;
-; (defmutation         do-something! [env] ...)
-; (pathom/reg-handler! do-something!)
-;
-; (defresolver get-anything [env] ...)
-; (defmutation do-anything! [env] ...)
-; (def HANDLERS [get-anything do-anything!])
-; (pathom/reg-handlers! HANDLERS)
-
-; @usage
-;
-; (defn process-query!
-;   [request]
-;   (let [environment (assoc @ENVIRONMENT :request request)]
-;         query       (http/request->param request :query)
-;         result (pathom/process-query! (param environment)
-;                                       (pathom/read-query query)]
-;        (http/map-wrap {:body {...}})))
-
-
-
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
