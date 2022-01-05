@@ -33,7 +33,7 @@
   [picker-id]
   [:button {:style {:font-weight "600" :font-size "var(--font-size-xs)" :height "48px"
                     :width "100%" :display "flex" :justify-content "center" :align-items "center"
-                    :color "var(--color-secondary)" }}
+                    :color "var(--color-secondary)"}}
            (str "Download more items")])
 
 (defn- file-picker-directory

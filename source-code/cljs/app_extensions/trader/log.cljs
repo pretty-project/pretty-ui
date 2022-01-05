@@ -29,11 +29,11 @@
 
 (defn- log-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [module-id log-entry timestamp warning?]}]
-  [:div {:class ".trader--log-item" :style {:display "flex"}}
-        [:pre {:style (styles/log-item-timestamp-style warning?)}
+  [_ _ {:keys [module-id log-entry timestamp] :as log-item}]
+  [:div {:style {:display "flex"}}
+        [:div {:style (styles/log-item-timestamp-style log-item)}
               (time/timestamp-string->time timestamp)]
-        [:pre {:style (styles/log-item-message-style warning?)}
+        [:div {:style (styles/log-item-message-style log-item)}
               (str log-entry)]])
 
 (defn- log-items

@@ -9,7 +9,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! :home/route
-                                    {:route-template "/:app-home"
-                                     :client-event   [:home/load!]
-                                     :restricted?    true}]})
+  {:on-server-boot [:router/add-route! :home/route
+                                       {:route-template "/@app-home"
+                                        :client-event   [:home/load!]
+                                        :restricted?    true}]})

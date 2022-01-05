@@ -115,10 +115,10 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot {:dispatch-n [[:router/add-route! :docs/download-route
-                                                  {:route-template "/docs/download-docs"
-                                                   :get            #(download-docs %)}]
-                              [:router/add-route! :docs/route
-                                                  {:route-template "/:app-home/docs"
-                                                   :client-event   [:developer/load-docs!]
-                                                   :restricted?    true}]]}})
+  {:on-server-boot {:dispatch-n [[:router/add-route! :docs/download-route
+                                                     {:route-template "/docs/download-docs"
+                                                      :get            #(download-docs %)}]
+                                 [:router/add-route! :docs/route
+                                                     {:route-template "/@app-home/docs"
+                                                      :client-event   [:developer/load-docs!]
+                                                      :restricted?    true}]]}})

@@ -1,8 +1,7 @@
 
 (ns app-extensions.trader.router
-    (:require [mid-fruits.random :as random]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-router.api  :as router]))
+    (:require [x.app-core.api   :as a :refer [r]]
+              [x.app-router.api :as router]))
 
 
 

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.08
 ; Description:
-; Version: v0.6.6
+; Version: v0.7.0
 
 
 
@@ -99,7 +99,8 @@
   ;
   ; @return (boolean)
   [n]
-  (and (string? n)
+  (and    (string? n)
+       (> (count   n) 2)
        (= KEYWORD-PREFIX (str (nth n 0)))
        (= ":"            (str (nth n 1)))))
 

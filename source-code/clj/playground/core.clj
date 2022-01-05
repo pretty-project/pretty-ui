@@ -42,4 +42,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:view-selector/initialize! :playground {:default-view-id :anchors}]})
+  {:on-server-boot [:view-selector/initialize! :playground {:default-view-id :anchors}]})

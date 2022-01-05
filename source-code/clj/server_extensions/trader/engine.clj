@@ -101,6 +101,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING#6070
+; Előfordul, hogy az api-testnet.bybit.com szerver hibás kline-data adatot küld,
+; ahol az egyes periódusok értékei (high, low, close, open) az előző periódusok
+; értékeivel megegyeznek!
+; Pl.: https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=3&limit=200&from=1641303290
+
 ; https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
 ; https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
 (defn query-kline-uri

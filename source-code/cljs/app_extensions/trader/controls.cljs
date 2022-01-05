@@ -70,8 +70,7 @@
               (case view-id :log      [log/body      module-id]
                             :account  [account/body  module-id]
                             :settings [settings/body module-id])
-              [sync/synchronizing-label module-id module-props]]
-        [elements/horizontal-separator {:size :xxl}]])
+              [sync/synchronizing-label module-id module-props]]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,9 +1,8 @@
 
 (ns server-extensions.trader.order
-    (:require [clj-http.client    :as client]
-              [mid-fruits.candy   :refer [param return]]
-              [pathom.api         :as pathom]
-              [x.server-core.api  :as a]
+    (:require [clj-http.client   :as client]
+              [mid-fruits.candy  :refer [param return]]
+              [x.server-core.api :as a]
               [server-extensions.trader.engine       :as engine]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
 
@@ -85,7 +84,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn create-order-f
+(defn create-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -93,12 +92,12 @@
   ;
   ; @return (map)
   [env _]
-  (let [api-key      (pathom/env->param env :api-key)
-        api-secret   (pathom/env->param env :api-secret)
-        use-mainnet? (pathom/env->param env :use-mainnet?)
-        uri          (engine/create-order-uri {:use-mainnet? use-mainnet?})
-        form-params (engine/post-form-params {:api-key    api-key
-                                              :api-secret api-secret
+  (let [;api-key      (pathom/env->param env :api-key)
+        ;api-secret   (pathom/env->param env :api-secret)
+        ;use-mainnet? (pathom/env->param env :use-mainnet?)
+        uri          (engine/create-order-uri) ;{:use-mainnet? use-mainnet?})
+        form-params (engine/post-form-params {:api-key  ;  api-key
+                                              :api-secret ; api-secret
                                               :order-type    "Limit"
                                               :price         "3792"
                                               :side          "Sell"
@@ -113,24 +112,3 @@
        {:body (get response :body)}))
 ;      (-> response (engine/post-response->body response)
 ;                   (assoc :uri uri))
-
-(defresolver create-order!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (map)
-             ;  {:trader/create-order! (map)}
-             [env resolver-props]
-             {:trader/create-order! (create-order-f env resolver-props)})
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (functions in vector)
-(def HANDLERS [create-order!])
-
-(pathom/reg-handlers! :trader/order HANDLERS)

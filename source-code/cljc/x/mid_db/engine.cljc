@@ -40,6 +40,31 @@
 
 
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn subscribe-item
+  ; @param (item-path vector)
+  ;
+  ; @usage
+  ; (db/subscribe-item [:my :item :path])
+  ;
+  ; @return (atom)
+  [item-path]
+  (-> [:db/get-item item-path] re-frame.core/subscribe))
+
+(defn subscribed-item
+  ; @param (item-path vector)
+  ;
+  ; @usage
+  ; (db/subscribed-item [:my :item :path])
+  ;
+  ; @return (*)
+  [item-path]
+  (-> [:db/get-item item-path] re-frame.core/subscribe deref))
+
+
+
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

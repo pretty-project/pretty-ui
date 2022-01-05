@@ -6,12 +6,10 @@
               [app-extensions.trader.listener]
               [app-extensions.trader.main]
               [app-extensions.trader.monitor]
-              [app-extensions.trader.positions]
               [app-extensions.trader.router]
               [app-extensions.trader.settings]
               [app-extensions.trader.sync]
               [app-extensions.trader.wallet]))
-
 
 
 

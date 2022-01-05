@@ -38,10 +38,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-browser/view :storage :directory {:list-element     #'file-item
-                                          :new-item-options [:upload-files! :create-directory!]}]
+                                          :new-item-options [:upload-files! :create-directory!]}])
 
 
-  [app-extensions.storage.file-picker/view :my-picker {}])
+  ;[app-extensions.storage.file-picker/view :my-picker {}])
 
 
 

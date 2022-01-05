@@ -10,6 +10,50 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn kline-data-inconsistent?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; A kline-data-inconsistent? függvény megvizsgálja, hogy a kline-list elemei között,
+  ; van-e olyan elem, amelynek :open, :close, :high vagy :low értéke megegyezik a kline-list
+  ; előző öt elemének ugyanazon tulajdonságával (egymás utáni 6-szoros ismétlődés)
+  [{:keys [kline-list] :as kline-data}]
+  (letfn [(test-f [dex lap key]
+                  ; A test-f függvény megvizsgálja, hogy a kline-list dex sorszámú elemének key
+                  ; tulajdonsága megegyezik-e a kline-list előző öt elemének key tulajdonságával
+                  (cond ; Ha dex és (dex - lap) sorszámú elem key tulajdonsága nem egyezik meg ...
+                        (not= (get-in kline-list [(- dex 0)   key])
+                              (get-in kline-list [(- dex lap) key]))
+                        (return false)
+                        ; Ha dex és (dex - lap) sorszámú elem key tulajdonsága megegyezik ...
+                        (< lap 5) (test-f dex (inc lap) key)
+                        ; Ha a lap értéke nagyobb, mint 5, akkor az eddigi iterációkban megegyeztek
+                        ; az értékek ...
+                        :else (return true)))
+          (f [dex key]
+             (cond ; A test-f függvény lefutásához a dex értékének nagyobbnak kell lennie, mint 5!
+                   (< dex 5) (f (inc dex) key)
+                   ; Ha a dex értéke nagyobb, mint a sorozat utolsó elemének sorszáma, akkor
+                   ; az iteráció nem talált 6-szoros ismétlődést ...
+                   (= dex (count kline-list)) (return false)
+                   ; Ha a dex értéke megfelelő a test-f függvény lefutásához
+                   :else (if (test-f dex 1 key)
+                             ; Ha a test-f függvény visszatérési értéke true, akkor az iteráció
+                             ; talált 6-szoros ismétlődést ...
+                             (return true)
+                             ; Ha a test-f függvény visszatérési értéke false, akkor megviszgálja
+                             ; a vektor következő elemét ...
+                             (f (inc dex) key))))]
+         ; WARNING#6070
+         (or (f 0 :open)
+             (f 0 :close)
+             (f 0 :high)
+             (f 0 :low))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn kline-list-range-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -179,3 +223,16 @@
                     highest-price (kline-list-range-high kline-list (- count mountain-length 1) (- count 2))
                     dropped-price (get-in kline-list [(- count 1) :open])]
                    (- highest-price dropped-price)))))
+
+
+(defn price-bouncing-uwd?
+  ; Price bouncing upward?
+  [])
+
+(defn price-bouncing-dwd?
+  ; Price bouncing downward?
+  [])
+
+(defn price-bouncing-fwd?
+  ; Price bouncing forward?
+  [])

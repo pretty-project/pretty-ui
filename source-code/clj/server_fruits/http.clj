@@ -74,11 +74,11 @@
 
 (defn request->path-param
   ; @param (map) request
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:path-params param-id]))
+  [request param-key]
+  (get-in request [:path-params param-key]))
 
 (defn request->params
   ; @param (map) request
@@ -90,11 +90,11 @@
 
 (defn request->param
   ; @param (map) request
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:params param-id]))
+  [request param-key]
+  (get-in request [:params param-key]))
 
 (defn request->transit-params
   ; @param (map) request
@@ -106,11 +106,11 @@
 
 (defn request->transit-param
   ; @param (map) request
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:transit-params param-id]))
+  [request param-key]
+  (get-in request [:transit-params param-key]))
 
 (defn request->source-params
   ; @param (map) request
@@ -125,11 +125,11 @@
   ; @param (map) request
   ;  {:transit-params (map)
   ;   {:source (map)}}
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:transit-params :source param-id]))
+  [request param-key]
+  (get-in request [:transit-params :source param-key]))
 
 (defn request->multipart-params
   ; @param (map) request
@@ -142,11 +142,11 @@
 (defn request->multipart-param
   ; @param (map) request
   ;  {:multipart-params (map)}
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:multipart-params param-id]))
+  [request param-key]
+  (get-in request [:multipart-params param-key]))
 
 (defn request->session
   ; @param (map) request
@@ -158,11 +158,11 @@
 
 (defn request->session-param
   ; @param (map) request
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [request param-id]
-  (get-in request [:session param-id]))
+  [request param-key]
+  (get-in request [:session param-key]))
 
 (defn request->route-template
   ; @param (map) request

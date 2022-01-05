@@ -70,7 +70,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-template
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @example
   ;  (a/route-template->route-param "/my-route" :get)
@@ -78,9 +78,9 @@
   ;  {:handler my-route-handler}
   ;
   ; @return (*)
-  [route-template param-id]
+  [route-template param-key]
   (let [route-match (route-template->route-match route-template)]
-       (get-in route-match [:data param-id])))
+       (get-in route-match [:data param-key])))
 
 (defn request->route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,7 +97,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @example
   ;  (a/request->route-param {...} :get)
@@ -105,6 +105,6 @@
   ;  {:handler my-route-handler}
   ;
   ; @return (*)
-  [request param-id]
+  [request param-key]
   (let [route-template (http/request->route-template request)]
-       (route-template->route-param route-template param-id)))
+       (route-template->route-param route-template param-key)))

@@ -19,12 +19,15 @@
   ; @param (keyword) module-id
   ; @param (string) log-entry
   ; @param (map) options
-  ;  {:warning? (boolean)(opt)
+  ;  {:highlighted? (boolean)(opt)
   ;    Default: false}
-  [db [_ module-id log-entry {:keys [warning?]}]]
+  ;   :warning? (boolean)(opt)
+  ;    Default: false}
+  [db [_ module-id log-entry {:keys [highlighted? warning?]}]]
   (update-in db [:trader :log] vector/cons-item {:module-id module-id :log-entry log-entry
-                                                 :timestamp (time/timestamp-string)
-                                                 :warning?  (boolean warning?)}))
+                                                 :timestamp    (time/timestamp-string)
+                                                 :highlighted? (boolean highlighted?)
+                                                 :warning?     (boolean warning?)}))
 
 ; @usage
 ;  [:trader/log! :my-module "My log entry" {:warning? true}]
@@ -76,4 +79,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:trader/log! :trader/log "Server initializing ..."]})
+  {:on-server-boot [:trader/log! :trader/log "Initializing server ..."]})

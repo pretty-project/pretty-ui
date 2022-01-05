@@ -40,11 +40,11 @@
   ; @example
   ;  (item-editor/editor-uri :my-extension :my-type "my-item")
   ;  =>
-  ;  "/:app-home/my-extension/my-item"
+  ;  "/@app-home/my-extension/my-item"
   ;
   ; @return (string)
   [extension-id _ item-id]
-  (str "/:app-home/" (name  extension-id)
+  (str "/@app-home/" (name  extension-id)
        "/"           (param item-id)))
 
 (defn form-id
@@ -227,11 +227,11 @@
   ; @example
   ;  (engine/route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:item-id"
+  ;  "/@app-home/my-extension/:item-id"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)
+  (str "/@app-home/" (name extension-id)
        "/:item-id"))
 
 (defn extended-route-template
@@ -242,11 +242,11 @@
   ; @example
   ;  (engine/extended-route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:item-id/:view-id"
+  ;  "/@app-home/my-extension/:item-id/:view-id"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home" (name extension-id)
+  (str "/@app-home" (name extension-id)
        "/:item-id/:view-id"))
 
 (defn parent-uri
@@ -257,11 +257,11 @@
   ; @example
   ;  (engine/parent-uri :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension"
+  ;  "/@app-home/my-extension"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)))
+  (str "/@app-home/" (name extension-id)))
 
 (defn render-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

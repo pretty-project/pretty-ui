@@ -13,7 +13,7 @@
   ; @return (metamorphic-event)
   [_ _]
   [:router/add-route! :trader/route
-                      {:route-template "/:app-home/trader"
+                      {:route-template "/@app-home/trader"
                        :client-event   [:trader/load-router!]
                        :restricted?    true
                        :on-leave-event [:trader/->route-leaved]}])
@@ -24,10 +24,10 @@
   ; @return (metamorphic-event)
   [_ _]
   [:router/add-route! :trader/extended-route
-                      {:route-template "/:app-home/trader/:route-id"
+                      {:route-template "/@app-home/trader/:route-id"
                        :client-event   [:trader/load-router!]
                        :restricted?    true
-                       :route-parent   "/:app-home/trader"
+                       :route-parent   "/@app-home/trader"
                        :on-leave-event [:trader/->route-leaved]}])
 
 (a/reg-event-fx
@@ -39,4 +39,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:trader/initialize!]})
+  {:on-server-boot [:trader/initialize!]})

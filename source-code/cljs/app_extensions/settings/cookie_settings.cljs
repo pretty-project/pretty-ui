@@ -58,14 +58,14 @@
   [_]
   [elements/button ::policy-button
                    {:label :privacy-policy :preset :primary-button :layout :fit
-                    :on-click [:router/go-to! "/:app-home/privacy-policy"]}])
+                    :on-click [:router/go-to! "/@app-home/privacy-policy"]}])
 
 (defn- terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [elements/button ::terms-of-service-button
                    {:label :terms-of-service :preset :primary-button :layout :fit
-                    :on-click [:router/go-to! "/:app-home/terms-of-service"]}])
+                    :on-click [:router/go-to! "/@app-home/terms-of-service"]}])
 
 (defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!

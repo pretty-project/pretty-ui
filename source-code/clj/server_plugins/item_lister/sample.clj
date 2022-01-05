@@ -96,15 +96,15 @@
   ::lifecycles
   ; Az [:item-lister/initialize! ...] esemény hozzáadja a "/my-extension" útvonalat a rendszerhez,
   ; amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
-  {:on-app-boot [:item-lister/initialize! :my-extension :my-type]})
+  {:on-server-boot [:item-lister/initialize! :my-extension :my-type]})
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-lister/initialize! :my-extension :my-type
-                                          {:download-limit         10
-                                           :order-by         ORDER-BY
-                                           :order-by-options ORDER-BY-OPTIONS
-                                           ; XXX#8092
-                                           ; A dokumentumoknak tartalmazniuk kell legalább egyet
-                                           ; az itt felsorolt kulcsok közül!
-                                           :search-keys [:my-key]}]})
+  {:on-server-boot [:item-lister/initialize! :my-extension :my-type
+                                             {:download-limit         10
+                                              :order-by         ORDER-BY
+                                              :order-by-options ORDER-BY-OPTIONS
+                                              ; XXX#8092
+                                              ; A dokumentumoknak tartalmazniuk kell legalább egyet
+                                              ; az itt felsorolt kulcsok közül!
+                                              :search-keys [:my-key]}]})

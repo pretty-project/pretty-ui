@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v0.1.2
-; Compatibility: x4.4.9
+; Version: v0.1.4
+; Compatibility: x4.5.0
 
 
 
@@ -49,8 +49,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) app-home
-  ;  {:app-home (string)
-  ;   :app-name (string)}
   [app-home]
   (let [app-home     (uri/valid-path app-home)
         timestamp    (time/timestamp-string)
@@ -69,4 +67,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:environment/initialize-crawler-handler!]})
+  {:on-server-boot [:environment/initialize-crawler-handler!]})

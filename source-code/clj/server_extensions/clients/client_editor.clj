@@ -125,4 +125,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-editor/initialize! :clients :client {:suggestion-keys [:city]}]})
+  {:on-server-boot [:item-editor/initialize! :clients :client {:suggestion-keys [:city]}]})

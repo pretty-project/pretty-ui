@@ -20,16 +20,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn run-targeted-app!
+(defn start-targeted-server!
   ; @param (map)
   ;  {:port (integer)}
   [{:keys [port] :as server-props}]
-  (x.boot-loader/run-app! server-props)
+  (x.boot-loader/start-server! server-props)
   (println "project-emulator - Server started on port:" port))
 
-(defn run-app!
+(defn start-server!
   []
-  (x.boot-loader/run-app!)
+  (x.boot-loader/start-server!)
   (println "project-emulator - Server started"))
 
 
@@ -46,10 +46,8 @@
   ;
   ; @usage
   ;  java -jar {{namespace}}.jar 3000
-  [& [port :as args]]
-  (if (some? port)
-      (run-targeted-app! {:port port})
-      (run-app!)))
+  ([]     (start-server!))
+  ([port] (start-targeted-server! {:port port})))
 
 (defn dev
   ; @param (map) options

@@ -37,7 +37,6 @@
   ; @param (map) env
   ;  {:request (map)
   ;   {:params (map)}}
-  ; @param (keyword) param-id
   ;
   ; @return (map)
   [env]
@@ -47,12 +46,12 @@
   ; @param (map) env
   ;  {:request (map)
   ;   {:params (map)}}
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @return (*)
-  [env param-id]
+  [env param-key]
   (let [params (env->params env)]
-       (get params param-id)))
+       (get params param-key)))
 
 
 

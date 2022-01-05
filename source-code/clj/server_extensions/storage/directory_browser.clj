@@ -10,4 +10,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-browser/initialize! :storage :directory {}]})
+  {:on-server-boot [:item-browser/initialize! :storage :directory {}]})

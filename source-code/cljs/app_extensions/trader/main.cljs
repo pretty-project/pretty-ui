@@ -17,12 +17,11 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [:div {:style (styles/box-list-style)}
-             [monitor/body  surface-id]
-             [wallet/body   surface-id]
-             [listener/body surface-id]
-             [controls/body surface-id]]])
+  [:div {:style (styles/box-list-style)}
+        [monitor/body  surface-id]
+        [wallet/body   surface-id]
+        [listener/body surface-id]
+        [controls/body surface-id]])
 
 
 

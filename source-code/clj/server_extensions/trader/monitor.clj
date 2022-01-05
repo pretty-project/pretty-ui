@@ -3,6 +3,7 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [pathom.api         :as pathom]
               [x.server-core.api  :as a]
+              [server-extensions.trader.account      :as account]
               [server-extensions.trader.engine       :as engine]
               [server-extensions.trader.klines       :as klines]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
@@ -20,9 +21,10 @@
   ;
   ; @return (map)
   [env _]
-  (klines/query-kline-data {:interval (pathom/env->param env :interval)
-                            :limit    (pathom/env->param env :limit)
-                            :symbol   (pathom/env->param env :symbol)}))
+  (klines/query-kline-data {:interval     (pathom/env->param  env :interval)
+                            :limit        (pathom/env->param  env :limit)
+                            :symbol       (pathom/env->param  env :symbol)
+                            :use-mainnet? (account/get-api-detail :use-mainnet?)}))
 
 (defresolver get-monitor-data
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -107,11 +107,11 @@
   ::lifecycles
   ; Az [:item-editor/initialize! ...] esemény hozzáadja a "/my-extension/:my-type-id" útvonalat
   ; a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-editor plugin.
-  {:on-app-boot [:item-editor/initialize! :my-extension :my-type]})
+  {:on-server-boot [:item-editor/initialize! :my-extension :my-type]})
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-editor/initialize! :my-extension :my-type
-                                          {:handle-archived-items? false
-                                           :handle-favorite-items? false
-                                           :suggestion-keys [:city :address]}]})
+  {:on-server-boot [:item-editor/initialize! :my-extension :my-type
+                                             {:handle-archived-items? false
+                                              :handle-favorite-items? false
+                                              :suggestion-keys [:city :address]}]})

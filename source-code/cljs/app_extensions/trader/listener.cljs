@@ -36,10 +36,10 @@
            [:div {:style (styles/source-code-preview-icon-style)}
                  [elements/icon {:icon :code}]]])
 
-(defn- listener-state-button
+(defn- toggle-listener-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [listener-active?]}]
-  [elements/button ::listener-state-button
+  [elements/button ::toggle-listener-button
                    {:icon :power_settings_new :layout :icon-button :indent :right
                     :preset (if listener-active? :warning-icon-button :muted-icon-button)
                     :on-click [:trader/toggle-listener!]}])
@@ -54,7 +54,7 @@
               [:div {:style (styles/box-tc-controls-style)}
                     [elements/label {:content "Danger zone" :color :secondary :font-weight :extra-bold :font-size :l}]]
               [:div {:style (styles/box-tr-controls-style)}
-                    [listener-state-button module-id module-props]]
+                    [toggle-listener-button module-id module-props]]
               [sync/synchronizing-label module-id module-props]]])
 
 

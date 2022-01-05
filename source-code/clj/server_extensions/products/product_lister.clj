@@ -10,4 +10,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:item-lister/initialize! :products :product]})
+  {:on-server-boot [:item-lister/initialize! :products :product]})

@@ -21,5 +21,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:view-selector/initialize! :settings {:allowed-view-ids ALLOWED-VIEW-IDS
-                                                       :default-view-id  DEFAULT-VIEW-ID}]})
+  {:on-server-boot [:view-selector/initialize! :settings {:allowed-view-ids ALLOWED-VIEW-IDS
+                                                          :default-view-id  DEFAULT-VIEW-ID}]})

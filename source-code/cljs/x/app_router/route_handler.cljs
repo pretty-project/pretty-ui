@@ -272,30 +272,30 @@
 (a/reg-sub :router/get-current-route-path-params get-current-route-path-params)
 
 (defn get-current-route-path-param
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @usage
   ;  (r router/get-current-route-path-param db :my-param)
   ;
   ; @return (string)
-  [db [_ param-id]]
+  [db [_ param-key]]
   (let [current-route-path-params (r get-current-route-path-params db)]
-       (get current-route-path-params param-id)))
+       (get current-route-path-params param-key)))
 
 ; @usage
 ;  [:router/get-current-route-path-param :my-param]
 (a/reg-sub :router/get-current-route-path-param get-current-route-path-param)
 
 (defn current-route-path-param?
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ; @param (string) param-value
   ;
   ; @usage
   ;  (r router/current-route-path-param? db :my-param "My value")
   ;
   ; @return (boolean)
-  [db [_ param-id param-value]]
-  (let [current-route-path-param (r get-current-route-path-param db param-id)]
+  [db [_ param-key param-value]]
+  (let [current-route-path-param (r get-current-route-path-param db param-key)]
        (= current-route-path-param param-value)))
 
 ; @usage
@@ -316,30 +316,30 @@
 (a/reg-sub :router/get-current-route-query-params get-current-route-query-params)
 
 (defn get-current-route-query-param
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ;
   ; @usage
   ;  (r router/get-current-route-query-param db :my-param)
   ;
   ; @return (string)
-  [db [_ param-id]]
+  [db [_ param-key]]
   (let [current-route-query-params (r get-current-route-query-params db)]
-       (get current-route-query-params param-id)))
+       (get current-route-query-params param-key)))
 
 ; @usage
 ;  [:router/get-current-route-query-param :my-param]
 (a/reg-sub :router/get-current-route-query-param get-current-route-query-param)
 
 (defn current-route-query-param?
-  ; @param (keyword) param-id
+  ; @param (keyword) param-key
   ; @param (string) param-value
   ;
   ; @usage
   ;  (r router/current-route-query-param? db :my-param "My value")
   ;
   ; @return (boolean)
-  [db [_ param-id param-value]]
-  (let [current-route-query-param (r get-current-route-query-param db param-id)]
+  [db [_ param-key param-value]]
+  (let [current-route-query-param (r get-current-route-query-param db param-key)]
        (= current-route-query-param param-value)))
 
 ; @usage
@@ -552,7 +552,7 @@
   ;  [:router/go-to! "/my-app/your-route"]
   ;
   ; @usage
-  ;  [:router/go-to! "/:app-home/your-route"]
+  ;  [:router/go-to! "/@app-home/your-route"]
   (fn [{:keys [db]} [_ route-string]]
       (if (engine/variable-route-string? route-string)
 

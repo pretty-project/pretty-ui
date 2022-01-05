@@ -24,9 +24,9 @@
 ; paraméterként átadott útvonalra irányít át.
 (a/dispatch [:router-go-to! "/my-route"])
 
-; Az útvonalban használt "/:app-home" részt, az útvonal-kezelő behelyettesíti
+; Az útvonalban használt "/@app-home" részt, az útvonal-kezelő behelyettesíti
 ; az x.project-config.edn fájlban {:app-home "/..."} tulajdonságként beállított útvonal értékével.
-(a/dispatch [:router-go-to! "/:app-home/your-route"])
+(a/dispatch [:router-go-to! "/@app-home/your-route"])
 
 
 

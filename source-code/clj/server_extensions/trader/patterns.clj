@@ -8,9 +8,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-extensions.trader.patterns
-(def kline-dropped?          patterns/kline-dropped?)
-(def kline-increased?        patterns/kline-increased?)
-(def price-inc?              patterns/price-inc?)
-(def price-inc-from-minimum? patterns/price-inc-from-minimum?)
-(def mountain-length         patterns/mountain-length)
-(def mountain-highness       patterns/mountain-highness)
+(def kline-data-inconsistent? patterns/kline-data-inconsistent?)
+(def kline-dropped?           patterns/kline-dropped?)
+(def kline-increased?         patterns/kline-increased?)
+(def price-inc?               patterns/price-inc?)
+(def price-inc-from-minimum?  patterns/price-inc-from-minimum?)
+(def mountain-length          patterns/mountain-length)
+(def mountain-highness        patterns/mountain-highness)

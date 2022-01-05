@@ -2,6 +2,7 @@
 (ns server-extensions.trader.account
     (:require [clj-http.client    :as client]
               [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
@@ -75,7 +76,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-api-details
+(defn get-api-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -86,6 +87,19 @@
   (if-let [document (mongo-db/get-document-by-id "trader" "api-details")]
           (-> document (select-keys [:trader/api-key :trader/api-secret :trader/use-mainnet?])
                        (db/document->non-namespaced-document))))
+
+(defn get-api-detail
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) detail-key
+  ;
+  ; @usage
+  ;  (account/get-api-detail :use-mainnet?)
+  ;
+  ; @return (*)
+  [detail-key]
+  (if-let [document (mongo-db/get-document-by-id "trader" "api-details")]
+          (get document (keyword/add-namespace :trader detail-key))))
 
 (defn get-account-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!

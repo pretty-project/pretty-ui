@@ -9,5 +9,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:view-selector/initialize! :crypto {:allowed-view-ids [:main]
-                                                     :default-view-id  :main}]})
+  {:on-server-boot [:view-selector/initialize! :crypto {:allowed-view-ids [:main]
+                                                        :default-view-id   :main}]})

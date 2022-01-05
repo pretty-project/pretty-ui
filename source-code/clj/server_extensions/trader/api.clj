@@ -6,7 +6,9 @@
               [server-extensions.trader.klines]
               [server-extensions.trader.listener]
               [server-extensions.trader.log]
+              [server-extensions.trader.market]
               [server-extensions.trader.monitor]
               [server-extensions.trader.order]
               [server-extensions.trader.patterns]
-              [server-extensions.trader.router]))
+              [server-extensions.trader.router]
+              [server-extensions.trader.scheduler]))

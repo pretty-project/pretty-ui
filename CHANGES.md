@@ -1,12 +1,39 @@
 
+# x4.5.0
+- A route-template útvonalakban használt "/:app-home/..." változó szintaxisa megváltozott!
+  "/:app-home/my-route" => "/@app-home/my-route"
+  
+- A szerver-oldali (x.app-core.api/reg-lifecycles {}) függvényben használt életciklusok
+  nevei megváltoztak!
+  {:on-app-* ...} => {:on-server-* ...}
+
+
+
+# x4.4.9
+- Sry ...
+
+
+
+# x4.4.8
+- Sry ...
+
+
+
+# x4.4.7
+- Sry ...
+
+
+
 # x4.4.6
 - BREAKING CHANGE
   X Modulok Re-Frame esemény elnevezései megváltoznak:
   Pl.:
   [:x.app-router/...] -> [:router/...]
   ...
+
 - BREAKING CHANGE
   A route-okat a szerver-oldali x.server-router.api modullal lehetséges mostantól hozzáadni
+
 - BREAKING CHANGE
   x.server-views.api/main -> x.server-ui.api/body
 

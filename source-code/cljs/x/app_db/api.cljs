@@ -182,6 +182,8 @@
 
 ; x.app-db.engine
 (def item-path->cofx-path engine/item-path->cofx-path)
+(def subscribe-item       engine/subscribe-item)
+(def subscribed-item      engine/subscribed-item)
 (def get-db               engine/get-db)
 (def get-item             engine/get-item)
 (def item-exists?         engine/item-exists?)

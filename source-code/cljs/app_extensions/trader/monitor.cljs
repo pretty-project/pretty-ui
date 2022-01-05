@@ -412,7 +412,8 @@
               [react-transition/mount-animation {:animation-timeout 150 :mounted? settings-mode?}
                                                 [monitor-settings module-id module-props]]
               [monitor-controls module-id module-props]]
-        [monitor-chart-y-labels module-id module-props]])
+        [monitor-chart-y-labels module-id module-props]
+        [elements/horizontal-separator {:size :xxl}]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

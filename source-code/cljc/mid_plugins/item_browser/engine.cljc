@@ -87,11 +87,11 @@
   ; @example
   ;  (engine/route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension"
+  ;  "/@app-home/my-extension"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)))
+  (str "/@app-home/" (name extension-id)))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,11 +101,11 @@
   ; @example
   ;  (engine/extended-route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension/:item-id"
+  ;  "/@app-home/my-extension/:item-id"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)
+  (str "/@app-home/" (name extension-id)
        "/:item-id"))
 
 (defn go-up-event

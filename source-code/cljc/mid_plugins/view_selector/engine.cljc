@@ -69,7 +69,7 @@
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)))
+  (str "/@app-home/" (name extension-id)))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +83,7 @@
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)
+  (str "/@app-home/" (name extension-id)
        "/:view-id"))
 
 (defn route-string
@@ -94,11 +94,11 @@
   ; @example
   ;  (engine/route-string :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension"
+  ;  "/@app-home/my-extension"
   ;
   ; @return (string)
   [extension-id]
-  (str "/:app-home/" (name extension-id)))
+  (str "/@app-home/" (name extension-id)))
 
 (defn extended-route-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,11 +109,11 @@
   ; @example
   ;  (engine/extended-route-string :my-extension :my-view)
   ;  =>
-  ;  "/:app-home/my-extension/my-view"
+  ;  "/@app-home/my-extension/my-view"
   ;
   ; @return (string)
   [extension-id view-id]
-  (str "/:app-home/" (name extension-id)
+  (str "/@app-home/" (name extension-id)
        "/"           (name view-id)))
 
 (defn load-event

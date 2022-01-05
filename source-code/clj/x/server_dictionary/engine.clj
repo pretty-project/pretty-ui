@@ -112,4 +112,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:dictionary/add-terms! BOOKS]})
+  {:on-server-init [:dictionary/add-terms! BOOKS]})

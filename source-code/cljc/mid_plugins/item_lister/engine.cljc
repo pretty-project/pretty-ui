@@ -90,11 +90,11 @@
   ; @example
   ;  (engine/new-item-uri :my-extension :my-type)
   ;  =>
-  ;  "/:app-home/my-extension/new-my-type"
+  ;  "/@app-home/my-extension/new-my-type"
   ;
   ; @return (string)
   [extension-id item-namespace]
-  (str "/:app-home/" (name extension-id)
+  (str "/@app-home/" (name extension-id)
        "/new-"       (name item-namespace)))
 
 (defn route-id
@@ -121,11 +121,11 @@
   ; @example
   ;  (engine/route-template :my-extension)
   ;  =>
-  ;  "/:app-home/my-extension"
+  ;  "/@app-home/my-extension"
   ;
   ; @return (keyword)
   [extension-id]
-  (str "/:app-home/" (name extension-id)))
+  (str "/@app-home/" (name extension-id)))
 
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

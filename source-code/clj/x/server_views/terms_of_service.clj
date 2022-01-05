@@ -23,7 +23,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-boot [:router/add-route! :terms-of-service/route
-                                    {:client-event   [:views/render-terms-of-service!]
-                                     :restricted?    true
-                                     :route-template "/:app-home/terms-of-service"}]})
+  {:on-server-boot [:router/add-route! :terms-of-service/route
+                                       {:client-event   [:views/render-terms-of-service!]
+                                        :restricted?    true
+                                        :route-template "/@app-home/terms-of-service"}]})

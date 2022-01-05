@@ -61,6 +61,7 @@
   [:div {:style (styles/overlay-center-style)}
         [api-key-label          module-id module-props]
         [api-synchronized-label module-id module-props]
+        [elements/horizontal-separator {:size :m}]
         [wallet-data            module-id module-props]
         [:div {:style (styles/box-tr-controls-style)}
               [mainnet-indicator module-id module-props]]])

@@ -15,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (s)
-(def TIMER-INTERVAL 60)
+(def TIMER-INTERVAL 5)
 
 
 
@@ -36,8 +36,9 @@
   (if-let [source-code (get-source-code)]
           (if-let [result (try (load-string source-code)
                                (catch       Exception e (str e)))]
-                  (a/dispatch [:trader/log! :trader/listener result]))
-          (a/dispatch [:trader/log! :trader-listener "No source-code found error"])))
+                  (a/dispatch [:trader/log! :trader/listener result {:highlighted? true}]))
+          (a/dispatch [:trader/log! :trader-listener "No source-code found error"
+                                    {:warning? true}])))
 
 
 
@@ -77,7 +78,7 @@
           (stop-timer! timer)
           (start-timer!)))
 
-(defresolver toggle-listener!
+(defresolver toggle-listener!___
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -87,7 +88,7 @@
              ;  {:trader/toggle-listener! (keyword)
              ;    :timer-started, :timer-stopped}
              [env resolver-props]
-             {:trader/toggle-listener! (toggle-listener-f env resolver-props)})
+             {:trader/toggle-listener!___ (toggle-listener-f env resolver-props)})
 
 
 
@@ -126,6 +127,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-listener-data toggle-listener!])
+(def HANDLERS [get-listener-data]); toggle-listener!])
 
 (pathom/reg-handlers! :trader/listener HANDLERS)

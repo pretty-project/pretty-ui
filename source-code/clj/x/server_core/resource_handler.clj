@@ -65,4 +65,4 @@
 
 (lifecycle-handler/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:core/store-resource-handler-options! DEFAULT-OPTIONS]})
+  {:on-server-init [:core/store-resource-handler-options! DEFAULT-OPTIONS]})

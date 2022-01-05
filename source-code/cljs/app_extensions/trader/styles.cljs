@@ -77,7 +77,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:height "468px"
-   :padding "0 24px"
+   :padding "48px 24px 0 24px"
    :width  "50vw"})
 
 (defn box-body-style
@@ -385,7 +385,7 @@
    :line-height      "16px"
    :overflow-y       "auto"
    :padding          "12px 0 12px 12px"
-   :width "100%"})
+   :width            "100%"})
 
 (defn log-item-module-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -397,21 +397,25 @@
 
 (defn log-item-timestamp-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [warning?]
+  [{:keys [highlighted? warning?]}]
   {:display     "inline-block"
    :flex-shrink "0"
+   :font-family "monospace"
    :font-weight "600"
    :opacity     ".65"
    :width       "80px"
-   :color (if warning? "rgb(255,  80, 230)"
-                       "rgb(255, 230,  80)")})
+   :color (cond highlighted? "rgb( 80, 230, 255)"
+                warning?     "rgb(255,  80, 230)"
+                :default     "rgb(255, 230,  80)")})
 
 (defn log-item-message-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [warning?]
+  [{:keys [highlighted? warning?]}]
   {:white-space "normal"
-   :color (if warning? "rgb(255,  80, 230)"
-                       "rgb(255, 230,  80)")})
+   :font-family "monospace"
+   :color (cond highlighted? "rgb(80,  230, 255)"
+                warning?     "rgb(255,  80, 230)"
+                :default     "rgb(255, 230,  80)")})
 
 
 
@@ -449,26 +453,73 @@
    :padding "48px"
    :width   "100%"})
 
-(defn editor-textarea-style
+(defn editor-structure-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:background-color "rgb( 60,  60,  60)"
    :border-radius    "var( --border-radius-xxl )"
-   :color            "rgb(255, 230,  80)"
+   :display          "flex"
+   :flex-direction   "column"
    :font-family      "monospace"
+   :height           "100%"
+   :overflow         "hidden"
+   :width            "100%"})
+
+(defn editor-textarea-wrapper-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  ; A textarea elemet, az esetlegesen megjelenő scroll-bar elhelyezkedése
+  ; miatt szükséges egy wrapper elemben megjeleníteni!
+  {:flex-grow 1})
+
+(defn editor-textarea-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:color       "rgb(255, 230,  80)"
+   :font-size   "13px"
+   :font-weight "500"
+   :height      "calc(100% - 48px)"
+   :margin      "24px"
+   :resize      "none"
+   :width       "calc(100% - 48px)"})
+
+(defn editor-log-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [log-visible?]}]
+  {:bottom   "0"
+   :position "absolute"
+   :right    "0"
+   :transform (if log-visible? "translateY(0)"
+                               "translateY(144px)")})
+
+(defn editor-log-menu-bar-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:display  "flex"
+   :position "absolute"
+   :right    "0"
+   :top      "-48px"})
+
+(defn editor-log-body-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:background-color "rgb(40, 40, 40)"
+   :border-radius    "24px 0 0 0"
    :font-size        "13px"
    :font-weight      "500"
-   :height           "100%"
-   :padding          "48px"
-   :resize           "none"
-   :width            "100%"})
+   :height           "144px"
+   :line-height      "16px"
+   :opacity          ".6"
+   :overflow-y       "auto"
+   :padding          "12px 0 12px 12px"
+   :width            "720px"})
 
 (defn editor-menu-bar-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   {:position "absolute"
    :right    "0"
-   :top      "72px"})
+   :top      "24px"})
 
 
 

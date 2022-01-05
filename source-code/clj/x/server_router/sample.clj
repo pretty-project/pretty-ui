@@ -31,34 +31,34 @@
   ::lifecycles
   ; A szerver inicializálásakor szükséges beállítani a :method-not-allowed, :not-acceptable
   ; és :not-found alapértelmezett kezelőket!
-  {:on-app-init {:dispatch-n [[:router/set-default-route! :method-not-allowed {}]
-                              [:router/set-default-route! :not-acceptable     {}]
-                              [:router/set-default-route! :not-found          {}]]}})
+  {:on-server-init {:dispatch-n [[:router/set-default-route! :method-not-allowed {}]
+                                 [:router/set-default-route! :not-acceptable     {}]
+                                 [:router/set-default-route! :not-found          {}]]}})
 
 (a/reg-lifecycles
   ::lifecycles
-  ; - A [:router/add-route! ...] eseményeket {:on-app-boot ...} időzítéssel hívd meg!
+  ; - A [:router/add-route! ...] eseményeket {:on-server-boot ...} időzítéssel hívd meg!
   ; - A [:router/add-route! ...] eseményeket meghívhatod route-id azonosító megadásával
   ;   vagy anélkül (csak az útvonal tulajdonságait tartalmazó route-props térkép átadásával)
-  {:on-app-boot {:dispatch-n [[:router/add-route! {}]
-                              [:router/add-route! :my-route {}]]}})
+  {:on-server-boot {:dispatch-n [[:router/add-route! {}]
+                                 [:router/add-route! :my-route {}]]}})
 
 (a/reg-lifecycles
   ::lifecycles
   ; Az általad megadott route-id azonosítóval rendelkező útvonalakat könnyebb átlátni
   ; hibakereséskor, illetve lehetséges felülírni a rendszer által hozzáadott útvonalakat,
   ; ha megegyező azonosítóval adsz hozzá útvonalat (pl.: :page-not-found, ...)
-  {:on-app-boot [:router/add-route! :page-not-found {}]})
+  {:on-server-boot [:router/add-route! :page-not-found {}]})
 
 (a/reg-lifecycles
   ::lifecycles
   ; Ha az x.project-config.edn fájlban az {:app-home "/..."} tulajdonság értékét beállítod
   ; egy tetszőleges útvonalra, akkor az útvonalak {:route-template "/..."} tulajdonságainak
-  ; értékében az "/:app-home/..." formula használatával hivatkozhatsz az {:app-home "/..."}
+  ; értékében az "/@app-home/..." formula használatával hivatkozhatsz az {:app-home "/..."}
   ; értékére.
-  {:on-app-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
-                              [:router/add-route! {:route-template "/:app-home/your-route"
-                                                   :restricted?    true}]]}})
+  {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
+                                 [:router/add-route! {:route-template "/@app-home/your-route"
+                                                      :restricted?    true}]]}})
 
 (a/reg-lifecycles
   ::lifecycles
@@ -72,16 +72,16 @@
   ;   tulajdonság használata.
   ; - A [:router/go-up!] kliens-oldali esemény meghívása a {:route-parent "/..."} tulajdonságként
   ;   átadott útvonalra irányít át.
-  {:on-app-boot [:router/add-route! {:client-event   [:render-my-item-viewer!]
-                                     :route-template "/my-route/:my-item-id"
-                                     :route-parent   "/my-route"}]})
+  {:on-server-boot [:router/add-route! {:client-event   [:render-my-item-viewer!]
+                                        :route-template "/my-route/:my-item-id"
+                                        :route-parent   "/my-route"}]})
 
 (a/reg-lifecycles
   ::lifecycles
   ; A {:get ...} vagy {:post ...} tulajdonságok haszálatával a szerver-oldali útvonalakat lehetséges
   ; beállítani, amelyeket a rendszer nem küld el az egyes kliensek számára.
-  {:on-app-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
-                                                   :get  {:handler #(my-handler %)}}]
-                              [:router/add-route! {:route-template "/your-route"
-                                                   :post {:handler #(your-handler %)}
-                                                   :js "your-app.js"}]]}})
+  {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
+                                                      :get  {:handler #(my-handler %)}}]
+                                 [:router/add-route! {:route-template "/your-route"
+                                                      :post {:handler #(your-handler %)}
+                                                      :js "your-app.js"}]]}})

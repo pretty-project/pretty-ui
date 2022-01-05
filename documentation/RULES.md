@@ -12,9 +12,9 @@
 
 
 
-### Teljes névtér autonómia
+### Teljes modul autonómia
 
-- Egyik névtér sem tartalmazhat más névtérrel kapcsolatos műveletet!
+- Egyik modul se tartalmazzon más modul működéséhez szükséges műveletet!
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.4.6
+; Version: v0.3.0
+; Compatibility: x4.5.0
 
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def DEFAULT-APPLICATION-ERROR "Something went wrong :(")
+(def DEFAULT-SERVER-ERROR "Something went wrong :(")
 
 
 
@@ -36,4 +36,4 @@
   ;
   ; @param (map) error-props
   (fn [error-props]
-      (debug-handler/console DEFAULT-APPLICATION-ERROR)))
+      (debug-handler/console DEFAULT-SERVER-ERROR)))

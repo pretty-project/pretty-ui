@@ -86,14 +86,14 @@
   ;  false
   ;
   ; @return (boolean)
-  [a b] ; Both a and b are path-param-id identifiers.
+  [a b] ; Both a and b are path-param keys.
   (cond (and (string/starts-with? a ":")
              (string/starts-with? b ":"))
         (string/abc? a b)
-        ; Only a is path-param-id identifiers.
+        ; Only a is path-param keys.
         (string/starts-with? a ":")
         (return false)
-        ; Only b is path-param-id identifiers.
+        ; Only b is path-param keys.
         (string/starts-with? b ":")
         (return true)
         ; Both a and b are generic strings.

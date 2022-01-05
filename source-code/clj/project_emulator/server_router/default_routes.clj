@@ -35,6 +35,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init {:dispatch-n [[:router/set-default-route! :method-not-allowed METHOD-NOT-ALLOWED]
-                              [:router/set-default-route! :not-acceptable     NOT-ACCEPTABLE]
-                              [:router/set-default-route! :not-found          NOT-FOUND]]}})
+  {:on-server-init {:dispatch-n [[:router/set-default-route! :method-not-allowed METHOD-NOT-ALLOWED]
+                                 [:router/set-default-route! :not-acceptable     NOT-ACCEPTABLE]
+                                 [:router/set-default-route! :not-found          NOT-FOUND]]}})

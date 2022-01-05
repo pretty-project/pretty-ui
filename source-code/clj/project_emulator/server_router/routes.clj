@@ -41,4 +41,4 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-init [:router/add-routes! ROUTES]})
+  {:on-server-init [:router/add-routes! ROUTES]})

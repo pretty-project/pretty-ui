@@ -94,8 +94,8 @@
   ;   :port (integer)(opt)}
   [server-props]
   (let [server-props (server-props-prototype server-props)
-        server-state (run-server (ring-handler)
-                                 (param server-props))]
+        server-state (-> (ring-handler)
+                         (run-server server-props))]
        (event-handler/dispatch [:core/store-server-state! server-state])
        ; *
        (let [server-port (get server-props :port)]
