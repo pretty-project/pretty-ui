@@ -38,7 +38,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-log-data-f
+(defn download-log-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -50,17 +50,17 @@
   (let [log-items (a/subscribed [:db/get-item [:trader :log]])]
        {:log-items log-items}))
 
-(defresolver get-log-data
+(defresolver download-log-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:trader/get-log-data (map)
+             ;  {:trader/download-log-data (map)
              ;    {:log-items (maps in vector)}}
              [env resolver-props]
-             {:trader/get-log-data (get-log-data-f env resolver-props)})
+             {:trader/download-log-data (download-log-data-f env resolver-props)})
 
 
 
@@ -68,7 +68,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-log-data])
+(def HANDLERS [download-log-data])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

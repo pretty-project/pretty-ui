@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v1.7.2
-; Compatibility: x4.4.4
+; Version: v1.8.4
+; Compatibility: x4.5.2
 
 
 
@@ -71,17 +71,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn boot-app!
+(defn start-app!
   ; @param (component) app
   ;
   ; @usage
   ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
-  ;  (x.boot-loader/boot-app! #'app)
+  ;  (x.boot-loader/start-app! #'app)
   [app]
-  ; 1. Let's start!
-  (a/dispatch-sync [:boot-synchronizer/synchronize-app! app])
-  ; 2. A load-handler várjon az XXX#5030 jelre!
-  (a/dispatch-sync [:core/synchronize-loading! :boot-loader/build-app!]))
+  (a/dispatch-sync [:boot-loader/start-app! app]))
 
 (defn render-app!
   ; @param (component) app
@@ -166,6 +163,22 @@
   (fn [{:keys [db]} _]
       (let [restart-target (r get-restart-target db)]
            {:dispatch-later [{:ms RESTART-TIMEOUT :dispatch [:environment/go-to! restart-target]}]})))
+
+(a/reg-event-fx
+  :boot-loader/start-app!
+  [a/self-destruct!]
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (component) app
+  ;
+  ; @usage
+  ;  [:boot-loader/initialize-app! #'app]
+  (fn [_ [_ app]]
+      {:core/import-lifecycles! nil
+       :dispatch-n [; 1. Let's start!
+                    [:boot-synchronizer/synchronize-app! app]
+                    ; 2. A load-handler várjon az XXX#5030 jelre!
+                    [:core/synchronize-loading! :boot-loader/build-app!]]}))
 
 (a/reg-event-fx
   :boot-loader/initialize-app!

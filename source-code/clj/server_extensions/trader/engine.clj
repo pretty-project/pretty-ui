@@ -81,7 +81,7 @@
                     sign         (hash/hmac-sha256 query-string api-secret)]
                    (assoc form-params :sign sign)))))
 
-(defn post-form-params
+(defn POST-form-params
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) form-params
@@ -112,7 +112,7 @@
 
 ; https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
 ; https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
-(defn query-kline-uri
+(defn kline-data-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) uri-props
@@ -217,7 +217,7 @@
                            :time-now  (param                           epoch-ms))
                     (dissoc :time_now))))
 
-(defn get-response->body
+(defn GET-response->body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) response
@@ -238,7 +238,7 @@
                (select-keys [:result :time_now])
                (update-time)))
 
-(defn post-response->headers
+(defn POST-response->headers
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) response
@@ -248,7 +248,7 @@
   [response]
   (-> response (get :headers)))
 
-(defn post-response->body
+(defn POST-response->body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) response
@@ -293,7 +293,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn post-body-string
+(defn POST-body-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) n
@@ -305,7 +305,7 @@
         (string/replace-part #"\" " "\":")
         (string/replace-part #", "  ",")))
 
-(defn post-header-string
+(defn POST-header-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) n

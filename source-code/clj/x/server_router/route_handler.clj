@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.4.8
-; Compatibility: x4.4.9
+; Version: v1.6.4
+; Compatibility: x4.5.2
 
 
 
@@ -14,12 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [x.server-core.api :as a :refer [r]]
-              [x.server-db.api   :as db]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.map     :as map]
+              [server-fruits.http :as http]
+              [x.server-core.api  :as a :refer [r]]
+              [x.server-db.api    :as db]
+              [x.mid-router.route-handler :as route-handler]
               [x.server-router.engine     :as engine]
-              [x.mid-router.route-handler :as route-handler]))
+              [x.server-user.api          :as user]))
 
 
 
@@ -108,6 +110,58 @@
 
 ; x.mid-router.route-handler
 (def get-app-home route-handler/get-app-home)
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- route-authenticator
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (function)
+  ;
+  ; @return (function)
+  [handler]
+  (fn [request] (if (user/request->authenticated? request)
+                    (handler                      request)
+                    (http/error-wrap {:body "Access denied" :status 403}))))
+
+
+
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn handler-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (function or map) handler
+  ; @param (map) options
+  ;  {:restricted? (boolean)(opt)}
+  ;
+  ; @return (map)
+  ;  {:handler (function)}
+  [handler {:keys [restricted?]}]
+  (if restricted? (cond (fn?  handler) (return {:handler (route-authenticator handler)})
+                        (map? handler) (assoc   :handler (route-authenticator (:handler handler))))
+                  (cond (fn?  handler) (return {:handler handler})
+                        (map? handler) (return handler))))
+
+(defn- route-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) route-props
+  ;  {:get (function or map)(opt)
+  ;   :post (function or map)(opt)
+  ;   :restricted? (boolean)(opt)}
+  ;
+  ; @return (map)
+  ;  {:get (map)
+  ;   :post (map)}
+  [{:keys [get post restricted?] :as route-props}]
+  (merge route-props
+         (if (some? get)  {:get  (handler-prototype get  {:restricted? restricted?})})
+         (if (some? post) {:post (handler-prototype post {:restricted? restricted?})})))
 
 
 
@@ -232,7 +286,8 @@
   [db event-vector]
   (let [event-id    (a/event-vector->first-id    event-vector)
         route-id    (a/event-vector->second-id   event-vector)
-        route-props (a/event-vector->first-props event-vector)]
+        route-props (a/event-vector->first-props event-vector)
+        route-props (route-props-prototype       route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
                (if (engine/variable-route-string? route-template)

@@ -14,12 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [x.app-utils.http]
+              [mid-fruits.candy  :refer [param return]]
               [mid-fruits.reader :as reader]
               [mid-fruits.time   :as time]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
-              [x.app-utils.http]))
+              [x.app-sync.response-handler :as response-handler]))
 
 
 
@@ -37,10 +38,9 @@
 (def DEFAULT-FAILURE-MESSAGE :synchronization-error)
 
 ; @constant (map)
-(def REQUEST-HANDLERS
-     {:error-handler-event    :sync/->request-failure
-      :handler-event          :sync/->request-success
-      :progress-handler-event :sync/->request-progressed})
+(def REQUEST-HANDLERS {:error-handler-event    :sync/->request-failure
+                       :handler-event          :sync/->request-success
+                       :progress-handler-event :sync/->request-progressed})
 
 
 
@@ -50,38 +50,19 @@
 (defn get-requests-history
   ; @return (map)
   [db _]
-  (r db/get-partition-history db ::requests))
+  (r db/get-partition-history db :sync/requests))
 
 (defn get-request-history
   ; @param (keyword) request-id
   ;
   ; @return (map)
   [db [_ request-id]]
-  (r db/get-data-history db ::requests request-id))
+  (r db/get-data-history db :sync/requests request-id))
 
 (defn get-requests
   ; @return (map)
   [db _]
-  (get-in db (db/path ::requests)))
-
-(defn get-request-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (map)
-  [db [_ request-id]]
-  (get-in db (db/path ::requests request-id)))
-
-(defn get-request-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ; @param (keyword) prop-id
-  ;
-  ; @return (*)
-  [db [_ request-id prop-id]]
-  (get-in db (db/path ::requests request-id prop-id)))
+  (get-in db (db/path :sync/requests)))
 
 (defn get-request-status
   ; @param (keyword) request-id
@@ -109,7 +90,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [sent-time (r get-request-prop db request-id :sent-time)]
+  (let [sent-time (get-in db (db/path :sync/requests request-id :sent-time))]
        (some? sent-time)))
 
 (defn request-successed?
@@ -144,7 +125,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (r get-request-prop db request-id :silent-mode?))
+  (get-in db (db/path :sync/requests request-id :silent-mode?)))
 
 (defn- get-request-on-failure-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -154,7 +135,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ request-id server-response]]
-  (if-let [on-failure-event (r get-request-prop db request-id :on-failure)]
+  (if-let [on-failure-event(get-in db (db/path :sync/requests request-id :on-failure))]
           (a/metamorphic-event<-params on-failure-event server-response)))
 
 (defn- get-request-on-success-event
@@ -165,7 +146,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ request-id server-response]]
-  (if-let [on-success-event (r get-request-prop db request-id :on-success)]
+  (if-let [on-success-event (get-in db (db/path :sync/requests request-id :on-success))]
           (a/metamorphic-event<-params on-success-event server-response)))
 
 (defn- get-request-on-sent-event
@@ -175,7 +156,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ request-id]]
-  (r get-request-prop db request-id :on-sent))
+  (get-in db (db/path :sync/requests request-id :on-sent)))
 
 (defn- get-request-on-responsed-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -185,7 +166,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ request-id server-response]]
-  (if-let [on-responsed-event (r get-request-prop db request-id :on-responsed)]
+  (if-let [on-responsed-event (get-in db (db/path :sync/requests request-id :on-responsed))]
           (a/metamorphic-event<-params on-responsed-event server-response)))
 
 (defn- get-request-on-stalled-event
@@ -196,7 +177,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ request-id server-response]]
-  (if-let [on-stalled-event (r get-request-prop db request-id :on-stalled)]
+  (if-let [on-stalled-event (get-in db (db/path :sync/requests request-id :on-stalled))]
           (a/metamorphic-event<-params on-stalled-event server-response)))
 
 (defn- get-request-idle-timeout
@@ -206,8 +187,7 @@
   ;
   ; @return (integer)
   [db [_ request-id]]
-  (or (r get-request-prop db request-id :idle-timeout)
-      (param DEFAULT-IDLE-TIMEOUT)))
+  (get-in db (db/path :sync/requests request-id :idle-timeout) DEFAULT-IDLE-TIMEOUT))
 
 (defn get-request-state
   ; @param (keyword) request-id
@@ -250,9 +230,8 @@
   ;  {:params (map)
   ;   {:source (*)}}
   [db [_ {:keys [source-path] :as request-props}]]
-  (cond-> request-props
-          (vector? source-path)
-          (assoc-in [:params :source] (get-in db source-path))))
+  (cond-> request-props (vector? source-path)
+                        (assoc-in [:params :source] (get-in db source-path))))
 
 (defn- request-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -287,12 +266,12 @@
   ;
   ; @return (map)
   [db [_ request-id request-props]]
-  (as-> db % (r db/set-item! % (db/path ::requests request-id) request-props)
+  (as-> db % (r db/set-item! % (db/path :sync/requests request-id) request-props)
              ; DEBUG
-             (r db/set-item! % (db/path ::requests request-id :debug)
+             (r db/set-item! % (db/path :sync/requests request-id :debug)
                                [:sync/get-request-state request-id])
              ; DEBUG
-             (r db/update-data-history! % ::requests request-id)))
+             (r db/update-data-history! % :sync/requests request-id)))
 
 (defn clear-request!
   ; @param (keyword) request-id
@@ -302,7 +281,7 @@
   ;
   ; @return (map)
   [db [_ request-id]]
-  (as-> db % (r db/remove-item!  % (db/path ::requests request-id))
+  (as-> db % (r db/remove-item!  % (db/path :sync/requests request-id))
              (r a/clear-process! % request-id)))
 
 ; @usage
@@ -343,9 +322,6 @@
   ;    process állapotát visszajelző elemek aktívak.
   ;   :method (keyword)
   ;    :post, :get
-  ;   :modifier (database function)(opt)
-  ;    A szerver-válasz értéket eltárolása előtt módosító függvény.
-  ;    Only w/ {:target-path ...} or {:target-paths ...}
   ;   :on-failure (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-responsed (metamorphic-event)(opt)
@@ -390,13 +366,6 @@
   ;                                       :your-data-item [:db :your :data :item :path]
   ;                                       :my-item {:my-nested-item [:db :my :nested :item]}}
   ;                        :uri "/get-our-data"}]
-  ;
-  ; @usage
-  ;  (defn my-modifier [db [_ request-id response] (do-something-with! response))
-  ;  [:sync/send-request! {:method      :get
-  ;                        :modifier    my-modifier
-  ;                        :target-path [:my :response :path]
-  ;                        :uri         "/get-my-data"}]
   (fn [{:keys [db]} event-vector]
       (let [request-id    (a/event-vector->second-id   event-vector)
             request-props (a/event-vector->first-props event-vector)
@@ -438,17 +407,20 @@
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [server-response (reader/string->mixed server-response-body)]
-           {:dispatch-n
-            [[:sync/handle-request-response!      request-id server-response]
-             [:core/set-process-status!           request-id :success]
-             [:core/set-process-activity!         request-id :idle]
-             (r get-request-on-success-event   db request-id server-response)
-             (r get-request-on-responsed-event db request-id server-response)]
-            :dispatch-later
-            [{:ms       (r get-request-idle-timeout     db request-id)
-              :dispatch [:core/set-process-activity!       request-id :stalled]}
-             {:ms       (r get-request-idle-timeout     db request-id)
-              :dispatch (r get-request-on-stalled-event db request-id server-response)}]})))
+
+            ; TEMP
+            ; Fontos, hogy a szerver-válasz minél hamarabb a Re-Frame adatbázisba íródjon!
+           {:db (r response-handler/store-request-response! db request-id server-response)
+
+            :dispatch-n [;[:sync/handle-request-response!      request-id server-response]
+                         [:core/set-process-status!           request-id :success]
+                         [:core/set-process-activity!         request-id :idle]
+                         (r get-request-on-success-event   db request-id server-response)
+                         (r get-request-on-responsed-event db request-id server-response)]
+            :dispatch-later [{:ms       (r get-request-idle-timeout     db request-id)
+                              :dispatch [:core/set-process-activity!       request-id :stalled]}
+                             {:ms       (r get-request-idle-timeout     db request-id)
+                              :dispatch (r get-request-on-stalled-event db request-id server-response)}]})))
 
 (a/reg-event-fx
   :sync/->request-failure
@@ -463,18 +435,16 @@
   ;   :response (string)
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
-      {:dispatch-n
-       [[:core/set-process-status!           request-id :failure]
-        [:core/set-process-activity!         request-id :idle]
-        (r get-request-on-failure-event   db request-id server-response)
-        (r get-request-on-responsed-event db request-id server-response)
-        (if-not (r silent-mode? db request-id)
-                [:sync/show-request-failure-message! request-id status-text])]
-       :dispatch-later
-       [{:ms       (r get-request-idle-timeout     db request-id)
-         :dispatch [:core/set-process-activity!       request-id :stalled]}
-        {:ms       (r get-request-idle-timeout     db request-id)
-         :dispatch (r get-request-on-stalled-event db request-id server-response)}]}))
+      {:dispatch-n [[:core/set-process-status!           request-id :failure]
+                    [:core/set-process-activity!         request-id :idle]
+                    (r get-request-on-failure-event   db request-id server-response)
+                    (r get-request-on-responsed-event db request-id server-response)
+                    (if-not (r silent-mode? db request-id)
+                            [:sync/show-request-failure-message! request-id status-text])]
+       :dispatch-later [{:ms       (r get-request-idle-timeout     db request-id)
+                         :dispatch [:core/set-process-activity!       request-id :stalled]}
+                        {:ms       (r get-request-idle-timeout     db request-id)
+                         :dispatch (r get-request-on-stalled-event db request-id server-response)}]}))
 
 (a/reg-event-fx
   :sync/->request-progressed

@@ -21,9 +21,8 @@
   ; @return (namespaced map)
   ;  {:trader/source-code (string)
   ;   :trader/id (string)}
-  [{:keys [request] :as env} _]
-  (let [source-code (pathom/env->param env :source-code)
-        listener-id (pathom/env->param env :listener-id)
+  [{:keys [request]} mutation-props]
+  (let [source-code (get mutation-props :source-code)
         document    {:trader/source-code (param source-code)
                      :trader/id          "listener-details"}]
        (mongo-db/upsert-document! "trader" document
@@ -47,7 +46,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-editor-data-f
+(defn- download-editor-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -59,17 +58,17 @@
   (let [listener-details (mongo-db/get-document-by-id "trader" "listener-details")]
        {:source-code (get listener-details :trader/source-code)}))
 
-(defresolver get-editor-data
+(defresolver download-editor-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:trader/get-editor-data (map)
+             ;  {:trader/download-editor-data (map)
              ;    {:source-code (string)}}
              [env resolver-props]
-             {:trader/get-editor-data (get-editor-data-f env resolver-props)})
+             {:trader/download-editor-data (download-editor-data-f env resolver-props)})
 
 
 
@@ -77,6 +76,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-editor-data upload-source-code!])
+(def HANDLERS [download-editor-data upload-source-code!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

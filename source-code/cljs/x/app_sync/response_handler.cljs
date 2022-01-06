@@ -14,13 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.response-handler
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.mixed  :as mixed]
-              [mid-fruits.string :as string]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-sync.request-handler :as request-handler]))
+    (:require [mid-fruits.candy :refer [param return]]
+              [mid-fruits.map   :as map]
+              [mid-fruits.mixed :as mixed]
+              [x.app-core.api   :as a :refer [r]]
+              [x.app-db.api     :as db]))
 
 
 
@@ -32,7 +30,7 @@
   ;
   ; @return (map)
   [db _]
-  (r db/get-partition-history db ::responses))
+  (r db/get-partition-history db :sync/responses))
 
 (defn get-response-history
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -41,14 +39,14 @@
   ;
   ; @return (map)
   [db [_ request-id]]
-  (r db/get-data-history db ::responses request-id))
+  (r db/get-data-history db :sync/responses request-id))
 
 (defn get-responses
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::responses)))
+  (get-in db (db/path :sync/responses)))
 
 (defn- get-response-target-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,7 +55,7 @@
   ;
   ; @return (item-path vector)
   [db [_ request-id]]
-  (r request-handler/get-request-prop db request-id :target-path))
+  (get-in db (db/path :sync/requests request-id :target-path)))
 
 (defn- get-response-target-paths
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -66,23 +64,14 @@
   ;
   ; @return (map)
   [db [_ request-id]]
-  (r request-handler/get-request-prop db request-id :target-paths))
-
-(defn- get-response-modifier
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (map)
-  [db [_ request-id]]
-  (r request-handler/get-request-prop db request-id :modifier))
+  (get-in db (db/path :sync/requests request-id :target-paths)))
 
 (defn get-request-response
   ; @param (keyword) request-id
   ;
   ; @return (*)
   [db [_ request-id]]
-  (get-in db (db/path ::responses request-id)))
+  (get-in db (db/path :sync/responses request-id)))
 
 (defn- store-response-to-target?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,17 +93,6 @@
   (let [target-paths (r get-response-target-paths db request-id)]
        (map/nonempty? target-paths)))
 
-(defn- use-modifier?!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (*)
-  [db [_ request-id response]]
-  (if-let [modifier (r get-response-modifier db request-id)]
-          (r modifier db request-id response)
-          (return response)))
-
 
 
 ;; -- DB events ---------------------------------------------------------------
@@ -128,23 +106,19 @@
   ;
   ; @return (map)
   [db [event-id request-id server-response]]
-  (let [modified-response (r use-modifier?! db request-id server-response)
-        target-path       (r get-response-target-path  db request-id)
-        target-paths      (r get-response-target-paths db request-id)]
-                  ; Store original response
-       (cond-> db (param :store-original-response)
-                  (db/set-item! [event-id (db/path ::responses request-id)
-                                          (param server-response)])
-                  ; Distribute modified response items
+  (let [target-path  (r get-response-target-path  db request-id)
+        target-paths (r get-response-target-paths db request-id)]
+       (cond-> db :store-original-response
+                  (db/set-item! [event-id (db/path :sync/responses request-id) server-response])
+                  ; Distribute server-response items ...
                   (and (r distribute-response-items? db request-id)
-                       (map/nonempty? modified-response))
-                  (db/distribute-items! [event-id modified-response target-paths])
-                  ; Store modified response
+                       (map/nonempty? server-response))
+                  (db/distribute-items! [event-id server-response target-paths])
+                  ; Store server-response
                   (r store-response-to-target? db request-id)
-                  (db/set-item! [event-id target-path modified-response])
-                  ; DEBUG
-                  :update-response-history!
-                  (db/update-data-history! [event-id ::responses request-id]))))
+                  (db/set-item! [event-id target-path server-response])
+                  :update-response-history! ; DEBUG
+                  (db/update-data-history! [event-id :sync/responses request-id]))))
 
 
 
@@ -159,7 +133,7 @@
   ; @param (string) server-response-body
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
-      (let [filename (r request-handler/get-request-prop db request-id :filename)
+      (let [filename (get-in db (db/path :sync/requests request-id :filename))
             data-url (mixed/to-data-url server-response-body)]
           ;[:tools/save-file! ...]
            [:ui/blow-bubble! {:color :warning :content :service-not-available}])))
@@ -178,7 +152,7 @@
   ; @param (string) server-response-body
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
-      (let [response-action (r request-handler/get-request-prop db request-id :response-action)]
+      (let [response-action (get-in db (db/path :sync/requests request-id :response-action))]
            (case response-action
                  :save [:sync/save-request-response! request-id server-response-body]
                  ; Az :on-failure, :on-success és :on-responsed események megtörténése előtt

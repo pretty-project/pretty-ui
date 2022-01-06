@@ -35,5 +35,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn boot-app!   [] (x.boot-loader/boot-app!   #'app))
+(defn start-app!  [] (x.boot-loader/start-app!  #'app))
 (defn render-app! [] (x.boot-loader/render-app! #'app))

@@ -2,7 +2,7 @@
 (ns mid-extensions.trader.patterns
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.logical :refer [or=]]
-              [mid-fruits.loop    :refer [reduce-indexed]]
+              [mid-fruits.loop    :refer [reduce-indexed some-indexed]]
               [mid-fruits.vector  :as vector]))
 
 
@@ -10,14 +10,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn kline-data-inconsistent?
+(defn kline-value-repetition?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; A kline-data-inconsistent? függvény megvizsgálja, hogy a kline-list elemei között,
   ; van-e olyan elem, amelynek :open, :close, :high vagy :low értéke megegyezik a kline-list
   ; előző öt elemének ugyanazon tulajdonságával (egymás utáni 6-szoros ismétlődés)
-  [{:keys [kline-list] :as kline-data}]
-  (letfn [(test-f [dex lap key]
+  ;
+  ; @param (map) kline-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @return (boolean)
+  [{:keys [kline-list] :as kline-data} key]
+  (letfn [(test-f [dex lap]
                   ; A test-f függvény megvizsgálja, hogy a kline-list dex sorszámú elemének key
                   ; tulajdonsága megegyezik-e a kline-list előző öt elemének key tulajdonságával
                   (cond ; Ha dex és (dex - lap) sorszámú elem key tulajdonsága nem egyezik meg ...
@@ -25,29 +30,55 @@
                               (get-in kline-list [(- dex lap) key]))
                         (return false)
                         ; Ha dex és (dex - lap) sorszámú elem key tulajdonsága megegyezik ...
-                        (< lap 5) (test-f dex (inc lap) key)
+                        (< lap 5) (test-f dex (inc lap))
                         ; Ha a lap értéke nagyobb, mint 5, akkor az eddigi iterációkban megegyeztek
                         ; az értékek ...
                         :else (return true)))
-          (f [dex key]
+          (f [dex]
              (cond ; A test-f függvény lefutásához a dex értékének nagyobbnak kell lennie, mint 5!
-                   (< dex 5) (f (inc dex) key)
+                   (< dex 5) (f (inc dex))
                    ; Ha a dex értéke nagyobb, mint a sorozat utolsó elemének sorszáma, akkor
                    ; az iteráció nem talált 6-szoros ismétlődést ...
                    (= dex (count kline-list)) (return false)
                    ; Ha a dex értéke megfelelő a test-f függvény lefutásához
-                   :else (if (test-f dex 1 key)
+                   :else (if (test-f dex 1)
                              ; Ha a test-f függvény visszatérési értéke true, akkor az iteráció
                              ; talált 6-szoros ismétlődést ...
                              (return true)
                              ; Ha a test-f függvény visszatérési értéke false, akkor megviszgálja
                              ; a vektor következő elemét ...
-                             (f (inc dex) key))))]
+                             (f (inc dex)))))]
          ; WARNING#6070
-         (or (f 0 :open)
-             (f 0 :close)
-             (f 0 :high)
-             (f 0 :low))))
+         (f 0)))
+
+(defn- kline-data-timestamp-error?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) kline-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @return (boolean)
+  [{:keys [kline-list]}]
+  (letfn [(f [dex x]
+             (and (not= dex 0)
+                  (not= (get-in kline-list [(dec dex) :close-timestamp])
+                        (:open-timestamp x))))]
+         (boolean (some-indexed f kline-list))))
+
+(defn kline-data-inconsistent?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) kline-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @return (boolean)
+  [kline-data]
+  (cond (kline-data-timestamp-error? kline-data)    (return :inconsistent-timestamps)
+        (kline-value-repetition? kline-data :open)  (return :open-value-repetition)
+        (kline-value-repetition? kline-data :close) (return :close-value-repetition)
+        (kline-value-repetition? kline-data :high)  (return :high-value-repetition)
+        (kline-value-repetition? kline-data :low)   (return :low-value-repetition)
+        :else (return false)))
 
 
 
@@ -236,3 +267,7 @@
 (defn price-bouncing-fwd?
   ; Price bouncing forward?
   [])
+
+(defn trend-direction
+  ; Az utobbi interval hosszuságu idöben mi a trend iránya
+  [kline-data interval])

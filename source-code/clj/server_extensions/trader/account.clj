@@ -19,57 +19,8 @@
 
 (defn api-public-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [api-secret] :as api-details}]
-  (if (some?  api-secret)
-      (assoc  api-details :api-secret "************")
-      (return api-details)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn query-api-key-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) options
-  ;  {:api-key (string)
-  ;   :api-secret (string)
-  ;   :use-mainnet? (boolean)}
-  ;
-  ; @return (map)
-  ;  {:api-key-info (map)
-  ;   :timestamp (string)
-  ;   :uri (string)}
-  [options]
-  (let [uri      (engine/api-key-info-uri options)
-        response (client/get              uri)]
-       (if (engine/response->invalid-api-details? response)
-           (return {:error :invalid-api-details})
-           (-> response (engine/get-response->body)
-                        (map/rekey-item :result :api-key-info)
-                        (assoc          :uri uri)))))
-
-(defn query-wallet-balance
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) options
-  ;  {:api-key (string)
-  ;   :api-secret (string)
-  ;   :use-mainnet? (boolean)}
-  ;
-  ; @return (map)
-  ;  {:wallet-balance (map)
-  ;   :timestamp (string)
-  ;   :uri (string)}
-  [options]
-  (let [uri      (engine/wallet-balance-uri options)
-        response (client/get                uri)]
-       (if (engine/response->invalid-api-details? response)
-           (return {:error :invalid-api-details})
-           (-> response (engine/get-response->body)
-                        (map/rekey-item :result :wallet-balance)
-                        (assoc          :uri uri)))))
+  [{:keys [] :as api-details}]
+  (dissoc api-details :api-secret))
 
 
 
@@ -88,13 +39,13 @@
           (-> document (select-keys [:trader/api-key :trader/api-secret :trader/use-mainnet?])
                        (db/document->non-namespaced-document))))
 
-(defn get-api-detail
+(defn get-api-details-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) detail-key
   ;
   ; @usage
-  ;  (account/get-api-detail :use-mainnet?)
+  ;  (account/read-api-details-item :use-mainnet?)
   ;
   ; @return (*)
   [detail-key]
@@ -106,7 +57,56 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-account-data-f
+(defn request-api-key-info!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) options
+  ;  {:api-key (string)
+  ;   :api-secret (string)
+  ;   :use-mainnet? (boolean)}
+  ;
+  ; @return (map)
+  ;  {:api-key-info (map)
+  ;   :timestamp (string)
+  ;   :uri (string)}
+  [options]
+  (let [uri      (engine/api-key-info-uri options)
+        response (client/get              uri)]
+       (if (engine/response->invalid-api-details? response)
+           (return {:error :invalid-api-details})
+           (-> response (engine/GET-response->body)
+                        (map/rekey-item :result :api-key-info)
+                        (assoc          :api-key (-> :api-key get-api-details-item))
+                        (assoc          :uri uri)))))
+
+(defn request-wallet-balance!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) options
+  ;  {:api-key (string)
+  ;   :api-secret (string)
+  ;   :use-mainnet? (boolean)}
+  ;
+  ; @return (map)
+  ;  {:wallet-balance (map)
+  ;   :timestamp (string)
+  ;   :uri (string)}
+  [options]
+  (let [uri      (engine/wallet-balance-uri options)
+        response (client/get                uri)]
+       (if (engine/response->invalid-api-details? response)
+           (return {:error :invalid-api-details})
+           (-> response (engine/GET-response->body)
+                        (map/rekey-item :result :wallet-balance)
+                        (assoc          :api-key (-> :api-key get-api-details-item))
+                        (assoc          :uri uri)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn download-account-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -116,27 +116,55 @@
   ;  {:error (keyword)}
   [env response-props]
   (if-let [api-details (get-api-details)]
-          (let [api-public-details (api-public-details   api-details)
-                wallet-balance     (query-wallet-balance api-details)
-                api-key-info       (query-api-key-info   api-details)]
-               (merge api-public-details wallet-balance api-key-info))
+          (let [wallet-balance (request-wallet-balance! api-details)
+                api-key-info   (request-api-key-info!   api-details)]
+               (merge wallet-balance api-key-info))
           {:error :missing-api-details}))
 
-(defresolver get-account-data
+(defresolver download-account-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:trader/get-account-data (map)
+             ;  {:trader/download-account-data (map)
              ;    {:api-key-info (map)
              ;     :error (keyword)
              ;     :timestamp (string)
              ;     :uri (string)
              ;     :wallet-balance (map)}}
              [env resolver-props]
-             {:trader/get-account-data (get-account-data-f env resolver-props)})
+             {:trader/download-account-data (download-account-data-f env resolver-props)})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn download-api-details-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;
+  ; @return (map)
+  ;  {:error (keyword)}
+  [env response-props]
+  (if-let [api-details (get-api-details)]
+          (api-public-details api-details)
+          {:error :missing-api-details}))
+
+(defresolver download-api-details
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) resolver-props
+             ;
+             ; @return (map)
+             ;  {:trader/download-api-details (map)
+             [env resolver-props]
+             {:trader/download-api-details (download-api-details-f env resolver-props)})
 
 
 
@@ -153,15 +181,15 @@
   ;  {:trader/api-key (string)
   ;   :trader/api-secret (string)
   ;   :trader/use-mainnet? (boolean)}
-  [{:keys [request] :as env} _]
-  (let [document {:trader/api-key      (pathom/env->param env :api-key)
-                  :trader/api-secret   (pathom/env->param env :api-secret)
-                  :trader/use-mainnet? (pathom/env->param env :use-mainnet?)
+  [{:keys [request]} mutation-props]
+  (let [document {:trader/api-key      (get mutation-props :api-key)
+                  :trader/api-secret   (get mutation-props :api-secret)
+                  :trader/use-mainnet? (get mutation-props :use-mainnet?)
                   :trader/id           "api-details"}]
        (dissoc (mongo-db/upsert-document! "trader" document
                                           {:prototype-f #(prototypes/updated-document-prototype request :trader %)})
                ; Removing api-secret from the response ...
-               :api-secret)))
+               :trader/api-secret)))
 
 (defmutation upload-api-details!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -183,6 +211,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-account-data upload-api-details!])
+(def HANDLERS [download-account-data download-api-details upload-api-details!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

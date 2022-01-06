@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (ms)
-(def SYNC-TIMEOUT 2000)
+(def SYNC-TIMEOUT 1000)
 
 
 
@@ -83,8 +83,6 @@
   [db [_ subscription-id]]
   (dissoc-in db [:trader :sync :subscriptions subscription-id]))
 
-(a/reg-event-db :trader/remove-subscription! remove-subscription!)
-
 (defn- start-syncing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
@@ -131,14 +129,7 @@
           {:db (r stop-syncing! db)})))
 
 (a/reg-event-fx
-  :trader/start-syncing!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]}]
-      {:db       (r start-syncing! db)
-       :dispatch [:trader/sync-subscriptions!]}))
-
-(a/reg-event-fx
-  :trader/add-subscription!
+  :trader/subscribe-to-query!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) subscription-id
@@ -148,8 +139,15 @@
   (fn [{:keys [db]} [_ subscription-id subscription-props]]
       (if (r sync-active? db)
           {:db (r add-subscription! db subscription-id subscription-props)}
-          {:db (r add-subscription! db subscription-id subscription-props)
-           :dispatch [:trader/start-syncing!]})))
+          {:db (as-> db % (r add-subscription! % subscription-id subscription-props)
+                          (r start-syncing!    %))
+           :dispatch [:trader/sync-subscriptions!]})))
+
+(a/reg-event-fx
+  :trader/unsubscribe-from-query!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ subscription-id]]
+      {:db (r remove-subscription! db subscription-id)}))
 
 
 
@@ -158,15 +156,19 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) query-id
-  ; @param (map) query-props
-  ;  {:query (vector)}
-  ;
-  ; @usage
-  ;  [:trader/send-query! :trader/my-module {:query [`(trader/do-something! ~{})]}]
-  :trader/send-query!
-  (fn [{:keys [db]} [_ module-id {:keys [query]}]]
-      [:sync/send-query! :trader/synchronize!
-                         {:query       (vector/concat-items query (r get-subscription-queries db))
-                          :target-path [:trader :sync :responses]}]))
+  :trader/receive-app-data!
+  (fn [{:keys [db]} [_ server-response]]
+      {:db (-> db (assoc-in  [:trader :settings]       (:trader/download-settings      server-response))
+                  (assoc-in  [:trader :listener]       (:trader/download-listener-data server-response))
+                  (assoc-in  [:trader :editor]         (:trader/download-editor-data   server-response))
+                  (update-in [:trader :account]  merge (:trader/download-api-details   server-response)))}))
+
+(a/reg-event-fx
+  :trader/download-app-data!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:sync/send-query! :trader/synchronize!
+                     {:query [:debug `(:trader/download-listener-data ~{})
+                                     `(:trader/download-settings      ~{})
+                                     `(:trader/download-api-details   ~{})
+                                     `(:trader/download-editor-data   ~{})]
+                      :on-success [:trader/receive-app-data!]}])

@@ -18,7 +18,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :log])
-         (r sync/get-response db :trader/get-log-data)))
+         (r sync/get-response db :trader/download-log-data)))
 
 (a/reg-sub :trader/get-log-props get-log-props)
 
@@ -69,6 +69,5 @@
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/connect-to-log!
-  [:trader/add-subscription! :trader/log
-                             {:query      [`(:trader/get-log-data ~{})]
-                              :target-paths {:trader/get-log-data [:trader :log]}}])
+  [:trader/subscribe-to-query! :trader/log
+                               {:query [`(:trader/download-log-data ~{})]}])

@@ -30,8 +30,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (boolean)
-(def LOG-EVENTS? (= (debug-handler/debug-mode)
-                    (param "pineapple-juice")))
+(def LOG-EVENTS? (= "pineapple-juice" (debug-handler/debug-mode)))
 
 
 
@@ -119,6 +118,7 @@
                               :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
                                             error-event   [ERROR-EVENT-ID (context->error-props %1)]]
                                            (when (context->error-catched? error-context)
+                                                 ; TEMP
                                                  (do (dispatch error-event)
                                                      (println (str %1))))
                                            (return %1))))

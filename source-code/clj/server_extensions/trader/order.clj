@@ -84,7 +84,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn create-order!
+(defn request-create-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -96,7 +96,7 @@
         ;api-secret   (pathom/env->param env :api-secret)
         ;use-mainnet? (pathom/env->param env :use-mainnet?)
         uri          (engine/create-order-uri) ;{:use-mainnet? use-mainnet?})
-        form-params (engine/post-form-params {:api-key  ;  api-key
+        form-params (engine/POST-form-params {:api-key  ;  api-key
                                               :api-secret ; api-secret
                                               :order-type    "Limit"
                                               :price         "3792"
@@ -110,5 +110,5 @@
        (println "trader/order: post data to" uri)
        (println (str (get response :body)))
        {:body (get response :body)}))
-;      (-> response (engine/post-response->body response)
+;      (-> response (engine/POST-response->body response)
 ;                   (assoc :uri uri))

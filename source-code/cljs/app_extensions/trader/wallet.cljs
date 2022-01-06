@@ -17,8 +17,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :wallet])
-         (r sync/get-response db :trader/get-account-data)
-         {:responsed?  (r sync/responsed?  db :trader/get-account-data)
+         (r sync/get-response db :trader/download-account-data)
+         {:responsed?  (r sync/responsed?  db :trader/download-account-data)
           :subscribed? (r sync/subscribed? db :trader/account)}))
 
 (a/reg-sub :trader/get-wallet-props get-wallet-props)

@@ -1,7 +1,6 @@
 
 (ns x.app-developer.database-browser
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.map       :as map :refer [dissoc-in]]
               [mid-fruits.mixed     :as mixed]
               [mid-fruits.pretty    :as pretty]
@@ -19,16 +18,13 @@
 
 (defn- map-item-hidden?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [n]
-  (and (keyword? n)
-       (or (keyword/starts-with? n :x.)
-           (keyword/starts-with? n :plugins.))))
+  [n {:keys [root-level?]}]
+  (and root-level? (-> n namespace some?)))
 
 (defn- render-map-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [n {:keys [show-hidden?]}]
-  (or (-> show-hidden?)
-      (-> n map-item-hidden? not)))
+  [n {:keys [show-hidden?] :as body-props}]
+  (or show-hidden? (not (map-item-hidden? n body-props))))
 
 
 
@@ -141,6 +137,7 @@
          (param label)])
 
 (defn- icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [disabled? icon label on-click]}]
   (if (boolean disabled?)
       [:div {:style {:padding "0 12px" :min-width "60px"}}
@@ -271,9 +268,9 @@
 
 (defn- map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-path]} map-key]
+  [body-id {:keys [current-path] :as body-props} map-key]
   [:div.x-clickable {:on-click #(a/dispatch [::navigate! (vector/conj-item current-path map-key)])
-                     :style (if (map-item-hidden? map-key) {:opacity ".65"})}
+                     :style (if (map-item-hidden? map-key body-props) {:opacity ".65"})}
                     (if (string? map-key)
                         (string/quotes map-key)
                         (str           map-key))])

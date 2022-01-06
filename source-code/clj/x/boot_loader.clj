@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.1.6
+; Version: v1.2.0
 ; Compatibility: x4.5.2
 
 
@@ -79,8 +79,9 @@
   ; @param (map) server-props
   (fn [_ [_ server-props]]
       (println details/app-codename "starting server ...")
-                       ; A szerver indítási paramétereinek eltárolása
-      {:dispatch-tick [{:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
+      {:core/import-lifecycles! nil
+       :dispatch-tick [; A szerver indítási paramétereinek eltárolása
+                       {:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
                        {:tick   0 :dispatch [:core/config-server!]}
                        ; A telepítés vizsgálata
@@ -105,6 +106,7 @@
   (fn [{:keys [db]} _]
       (println details/app-codename "initializing server ...")
        ; 1. Az inicializálási események meghívása (Dispatch on-server-init events)
+      (println ":on-server-init-events:")
       (println (str (r a/get-period-events db :on-server-init)))
       {:dispatch-n (r a/get-period-events db :on-server-init)
        ; 2. Az inicializálási események lefutása után a szerver
@@ -118,6 +120,8 @@
   (fn [{:keys [db]} _]
       (println details/app-codename "booting server ...")
        ; 1. Az indítási események meghívása (Dispatch on-server-boot events)
+      (println ":on-server-boot-events:")
+      (println (str (r a/get-period-events db :on-server-boot)))
       {:dispatch-n (r a/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
                        {:tick  50 :dispatch [:core/run-server! (r get-server-props db)]}

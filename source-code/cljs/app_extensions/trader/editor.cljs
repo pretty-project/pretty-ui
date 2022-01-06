@@ -44,8 +44,8 @@
 
 (defn- get-editor-log-props
   [db _]
-  (merge (r sync/get-response db :trader/get-listener-data)
-         (r sync/get-response db :trader/get-log-data)
+  (merge (r sync/get-response db :trader/download-log-data)
+         (get-in db [:trader :listener])
          {:log-visible? (get-in db [:trader :editor :log-visible?])}))
 
 (a/reg-sub :trader/get-editor-log-props get-editor-log-props)
@@ -166,28 +166,13 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/receive-editor-data!
-  (fn [{:keys [db]} [_ response]]
-      (let [editor-data (get response :trader/get-editor-data)]
-           {:db (assoc-in db [:trader :editor] editor-data)})))
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/request-editor-data!
-  [:sync/send-query! :trader/synchronize!
-                     {:query      [:debug `(:trader/get-editor-data ~{})]
-                      :on-success [:trader/receive-editor-data!]}])
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/load-editor!
   {:dispatch-n [[:db/remove-item! [:trader :editor]]
-                [:ui/set-surface! ::view {:view {:content #'view}}]
-                [:trader/request-editor-data!]]})
+                [:ui/set-surface! ::view {:view {:content #'view}}]]})
 
 (a/reg-event-fx
   :trader/upload-source-code!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
-      [:trader/send-query! :trader/editor
-                           {:query [:debug `(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))
+      [:sync/send-query! :trader/synchronize!
+                         {:query [:debug `(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))

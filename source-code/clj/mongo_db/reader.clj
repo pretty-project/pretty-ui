@@ -15,6 +15,80 @@
 
 
 
+;; -- Error handling ----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- command
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) options
+  ;
+  ; @return (DBObject)
+  [options]
+  (try (mcr/command @DB options)
+       (catch Exception e (println (str e "\n" options)))))
+
+(defn- find-maps
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (map) query
+  ; @param (map)(opt) projection
+  ;
+  ; @return (vector)
+  ([collection-name query]
+   (try (vec (mcl/find-maps @DB collection-name query))
+        (catch Exception e (println (str e "\n" {:collection-name collection-name :query query})))))
+
+  ([collection-name query projection]
+   (try (vec (mcl/find-maps @DB collection-name query projection))
+        (catch Exception e (println (str e "\n" {:collection-name collection-name :query query :projection projection}))))))
+
+(defn- find-one-as-map
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (map) query
+  ;
+  ; @return (namespaced map)
+  [collection-name query]
+  (try (mcl/find-one-as-map @DB collection-name query)
+       (catch Exception e (println (str e "\n" {:collection-name collection-name :query query})))))
+
+(defn- find-map-by-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (string) document-id
+  ;
+  ; @return (namespaced map)
+  [collection-name document-id]
+  (try (mcl/find-map-by-id @DB collection-name document-id)
+       (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id})))))
+
+(defn- count-all
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ;
+  ; @return (integer)
+  [collection-name]
+  (try (mcl/count @DB collection-name)
+       (catch Exception e (println (str e "\n" {:collection-name collection-name})))))
+
+(defn- count-by-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (namespaced map) query
+  ;
+  ; @return (integer)
+  [collection-name query]
+  (try (mcl/count @DB collection-name query)
+       (catch Exception e (println (str e "\n" {:collection-name collection-name :query query})))))
+
+
+
 ;; -- Aggregation functions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -42,11 +116,11 @@
    (aggregation collection-name pipeline {:locale engine/DEFAULT-LOCALE}))
 
   ([collection-name pipeline {:keys [locale]}]
-   (-> @DB (mcr/command {:aggregate collection-name
-                         :pipeline  pipeline
-                         :collation {:locale locale :numericOrdering true}
-                         :cursor    {}})
-           (get-from-aggregation))))
+   (-> (command {:aggregate collection-name
+                 :pipeline  pipeline
+                 :collation {:locale locale :numericOrdering true}
+                 :cursor    {}})
+       (get-from-aggregation))))
 
 
 
@@ -73,10 +147,11 @@
   ; @return (namespaced maps in vector)
   ;  [{:_id (string)
   ;    :namespace/key (*)}]
-  [collection-name query & [projection]]
-  (if (some? projection)
-      (vec (mcl/find-maps @DB collection-name query projection))
-      (vec (mcl/find-maps @DB collection-name query))))
+  ([collection-name query]
+   (find-maps collection-name query))
+
+  ([collection-name query projection]
+   (find-maps collection-name query projection)))
 
 (defn find-all-documents
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,7 +198,7 @@
   ;  {:_id (string)
   ;   :namespace/key (*)}
   [collection-name query]
-  (mcl/find-one-as-map @DB collection-name query))
+  (find-one-as-map collection-name query))
 
 (defn find-document-by-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,7 +217,7 @@
   ;  {:_id (string)
   ;   :namespace/key (*)}
   [collection-name document-id]
-  (mcl/find-map-by-id @DB collection-name document-id))
+  (find-map-by-id collection-name document-id))
 
 
 
@@ -170,7 +245,7 @@
   ;
   ; @return (integer)
   [collection-name]
-  (mcl/count @DB collection-name))
+  (count-all collection-name))
 
 (defn get-document-count-by-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -180,7 +255,7 @@
   ;
   ; @return (integer)
   [collection-name query]
-  (mcl/count @DB collection-name query))
+  (count-by-query collection-name query))
 
 
 

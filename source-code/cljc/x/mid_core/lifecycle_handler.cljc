@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v1.6.8
+; Version: v2.0.6
 ; Compatibility: x4.5.2
 
 
@@ -49,6 +49,14 @@
 ;
 ; @name on-browser-offline
 ;  Nomen est omen.
+
+
+
+;; -- State -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (map)
+(def LIFES (atom {}))
 
 
 
@@ -100,45 +108,20 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A reg-lifecycles függvény fordítás-időben történő lefutása előtt nem minden esetben
-; történik meg a [:db/set-item! ...] esemény regisztrálása!
-(event-handler/reg-event-db
-  :core/store-lifecycles!
+(defn- import-lifecycles!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced keyword) life-id
-  ; @param (map) lifecycles
-  ;
-  ; @return (map)
-  (fn [db [_ life-id lifecycles]]
-      (assoc-in db [::lifes :data-items life-id] lifecycles)))
+  [_]
+  ; - A reg-lifecycles függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
+  ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
+  ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
+  (event-handler/dispatch [:db/set-item! [::lifes :data-items] @LIFES]))
+
+(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn reg-lifecycles!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced keyword) life-id
-  ; @param (map) lifecycles
-  ;
-  ; @return (map)
-  [life-id lifecycles]
-  (let [namespace (life-id->namespace life-id)]
-       (letfn [(f [lifecycles period-id event]
-                 (let [event-id (keyword namespace (name period-id))]
-                      (event-handler/reg-event-fx event-id event)
-                      (assoc lifecycles period-id [event-id])))]
-              (reduce-kv f {} lifecycles))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def c (atom 0))
 
 (defn reg-lifecycles
   ; @param (namespaced keyword)(opt) life-id
@@ -161,13 +144,12 @@
    (reg-lifecycles (generate-life-id) lifecycles))
 
   ([life-id lifecycles]
-
    ; DEBUG
-   (println (str @c ":" life-id))
-   (swap! c inc)
+   (println (str (count (keys @LIFES)))
+            (str life-id))
 
-   ; - Az x4.5.1 verzióig a reg-lifecycles függvény a reg-lifecycles! (felkiáltójellel a végén)
-   ;   függvény kimenetét közvetlenül (reset! függvény használatával) írta a Re-Frame adatbázisba.
+   ; - Az x4.5.1 verzióig a reg-lifecycles függvény az életciklusok adatait közvetlenül
+   ;   (reset! függvény használatával) írta a Re-Frame adatbázisba.
    ; - Ha a forráskódban fordításidőben meghívott adatbázis események is írtak a Re-Frame
    ;   adatbázisba, akkor a reset! függvénnyel írt adatbázis-változások nem minden esetben
    ;   maradtak meg, mivel a reset! függvény nem szinkronizált a Re-Frame event-queue időzítővel,
@@ -178,7 +160,9 @@
    ; - A Re-Frame adatbázis atomba NEM szabad reset! függvénnyel írni, mert az esetlegesen
    ;   az írással egy időben megtörténő adatbázis eseményekkel való konkurálás következtében egyes
    ;   változások elveszhetnek!
-   ; - A dispatch-sync függvény használata biztosítja, hogy az applikáció boot-loader névterében
-   ;   megtörténő indítási folyamat számára elérhetők legyenek a beregisztrált életciklus események
-   ;   adatai (szerver- és kliens-oldalon is)
-   (event-handler/dispatch-sync [:core/store-lifecycles! life-id (reg-lifecycles! life-id lifecycles)])))
+   (let [namespace (life-id->namespace life-id)]
+        (letfn [(f [lifecycles period-id event]
+                  (let [event-id (keyword namespace (name period-id))]
+                       (event-handler/reg-event-fx event-id event)
+                       (assoc lifecycles period-id [event-id])))]
+               (swap! LIFES assoc life-id (reduce-kv f {} lifecycles))))))

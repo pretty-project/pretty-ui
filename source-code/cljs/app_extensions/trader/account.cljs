@@ -77,26 +77,24 @@
 
 (defn- api-key-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [api-key]}]
+  [_ _]
   [elements/text-field ::api-key-field
                        {:label "API key"
-                        :placeholder api-key
                         :min-width :s :indent :both :disable-autofill? false :name :favorite-color
                         :value-path [:trader :account :api-key]}])
 
-
 (defn- api-secret-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [api-secret]}]
+  [_ _]
   [elements/text-field ::api-secret-field
                        {:label "API secret"
-                        :placeholder api-secret
+                        :placeholder "**************"
                         :min-width :s :indent :both
                         :value-path [:trader :account :api-secret]}])
 
 (defn- save-api-details-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [api-details-filled? subscribed?] :as module-props}]
+  [_ {:keys [api-details-filled?] :as module-props}]
   [elements/button ::save-account-button
                    {:label "Save"
                     :indent :right :disabled? (not api-details-filled?)
@@ -142,12 +140,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/connect-to-account!
   (fn [{:keys [db]} _]
-      [:trader/add-subscription! :trader/account
-                                 {:query [`(:trader/get-account-data ~{})]}]))
+      [:trader/subscribe-to-query! :trader/account
+                                   {:query [`(:trader/download-account-data ~{})]}]))
 
 (a/reg-event-fx
   :trader/upload-api-details!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      [:trader/send-query! :trader/account
-                           {:query [:debug `(trader/upload-api-details! ~(r get-api-details db))]}]))
+      [:sync/send-query! :trader/synchronize!
+                         {:query [:debug `(trader/upload-api-details! ~(r get-api-details db))]}]))

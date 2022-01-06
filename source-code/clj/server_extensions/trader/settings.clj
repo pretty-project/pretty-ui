@@ -1,6 +1,7 @@
 
 (ns server-extensions.trader.settings
     (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
               [prototypes.api     :as prototypes]
@@ -38,12 +39,21 @@
                        (db/document->non-namespaced-document))
           (return DEFAULT-SETTINGS)))
 
+(defn get-settings-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) item-key
+  [item-key]
+  (if-let [document (mongo-db/get-document-by-id "trader" "settings")]
+          (get document (keyword/add-namespace :trader item-key))
+          (get DEFAULT-SETTINGS item-key)))
+
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-settings-data-f
+(defn download-settings-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -53,17 +63,17 @@
   [_ _]
   (get-settings))
 
-(defresolver get-settings-data
+(defresolver download-settings
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:trader/get-settings-data (map)
+             ;  {:trader/download-settings (map)
              ;    {:symbol (map)}
              [env resolver-props]
-             {:trader/get-settings-data (get-settings-data-f env resolver-props)})
+             {:trader/download-settings (download-settings-f env resolver-props)})
 
 
 
@@ -78,8 +88,8 @@
   ;
   ; @return (namespaced map)
   ;  {:trader/symbol (map)}
-  [{:keys [request] :as env} _]
-  (let [document {:trader/symbol (pathom/env->param env :symbol)
+  [{:keys [request]} mutation-props]
+  (let [document {:trader/symbol (get mutation-props :symbol)
                   :trader/id     "settings"}]
        (mongo-db/upsert-document! "trader" document
                                   {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
@@ -102,6 +112,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-settings-data upload-settings!])
+(def HANDLERS [download-settings upload-settings!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

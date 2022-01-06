@@ -92,11 +92,11 @@
   ; @return (map)
   ;  {:kline-list (maps in vector)}
   [response]
-  (-> response (engine/get-response->body)
+  (-> response (engine/GET-response->body)
                (map/rekey-item :result :kline-list)
                (update-kline-data)))
 
-(defn query-kline-data
+(defn request-kline-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) options
@@ -114,11 +114,13 @@
   ;  {:high (integer)
   ;   :kline-list (maps in vector)
   ;   :low (integer)
+  ;   :symbol (string)
   ;   :time-now (integer)
   ;   :timestamp (string)
   ;   :uri (string)}
-  [options]
-  (let [uri      (engine/query-kline-uri options)
-        response (client/get             uri)]
+  [{:keys [symbol] :as options}]
+  (let [uri      (engine/kline-data-uri options)
+        response (client/get            uri)]
        (-> response (response->kline-data)
-                    (assoc :uri uri))))
+                    (assoc :symbol symbol)
+                    (assoc :uri    uri))))

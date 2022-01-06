@@ -35,6 +35,7 @@
 (defn get-controls-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
+  ; XXX#4066
   ; - A controls modul nem rendelkezik önálló subscription feliratkozással, amit
   ;   lehetne vizsgálni
   ; - A [sync/synchronizing-label ...] komponens működéséhez szükséges tulajdonságok:

@@ -54,14 +54,3 @@
                         (println "Limits NOT OK")
                         (a/dispatch [:trader/log! :trader/listener (str "mountain-highness tul kicsi: " mountain-highness " " mountain-duration) {:warning? true}])
                         (return false))))))
-
-(defn- read-market!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [kline-data (klines/query-kline-data {:interval "3" :symbol "ETHUSD" :limit 200})]
-      ;(a/dispatch [:trader/log! :trader/listener (get kline-data :uri)])
-       (println ".")
-       (if (resolve-market! kline-data)
-           (let [] (println "resolve-market! true"))
-           (let [] (println "resolve-market! false")))
-       (println ".")))

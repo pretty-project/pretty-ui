@@ -105,19 +105,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:interval (get-in db [:trader :monitor :settings :interval :value])
-   :limit    (get-in db [:trader :monitor :settings :limit])
-   :symbol   (get-in db [:trader :settings :symbol :value])})
+   :limit    (get-in db [:trader :monitor :settings :limit])})
 
 (defn- get-monitor-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [monitor-data  (r sync/get-response db :trader/get-monitor-data)
+  (let [monitor-data  (r sync/get-response db :trader/download-monitor-data)
         monitor-props (get-in db [:trader :monitor])]
        (merge (dissoc monitor-data :kline-data)
               (get    monitor-data :kline-data)
               (param  monitor-props)
               {:subscribed? (r sync/subscribed? db :trader/monitor)
-               :responsed?  (r sync/responsed?  db :trader/get-monitor-data)})))
+               :responsed?  (r sync/responsed?  db :trader/download-monitor-data)})))
 
 (a/reg-sub :trader/get-monitor-props get-monitor-props)
 
@@ -317,9 +316,9 @@
 
 (defn- monitor-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [settings]}]
+  [_ {:keys [settings symbol]}]
   [:div {:style (styles/monitor-details-style)}
-        [elements/label {:content (get-in settings [:symbol :label])
+        [elements/label {:content symbol
                          :font-weight :extra-bold :font-size :xxl :layout :fit
                          :style {:opacity ".1"}}]
         [elements/label {:content (get-in settings [:interval :label])
@@ -424,14 +423,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r sync/subscribed? db :trader/monitor)
-          [:trader/remove-subscription! :trader/monitor]
+          [:trader/unsubscribe-from-query! :trader/monitor]
           {:db (r show-monitor-chart! db)
-           :dispatch [:trader/add-subscription! :trader/monitor
-                                                {:query [`(:trader/get-monitor-data ~(r get-monitor-settings db))]}]})))
+           :dispatch [:trader/subscribe-to-query! :trader/monitor
+                                                  {:query [`(:trader/download-monitor-data ~(r get-monitor-settings db))]}]})))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/->monitor-settings-changed
   (fn [{:keys [db]} _]
       (if (r sync/subscribed? db :trader/monitor)
-          [:trader/remove-subscription! :trader/monitor])))
+          [:trader/unsubscribe-from-query! :trader/monitor])))

@@ -6,6 +6,7 @@
               [server-extensions.trader.account      :as account]
               [server-extensions.trader.engine       :as engine]
               [server-extensions.trader.klines       :as klines]
+              [server-extensions.trader.settings     :as settings]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
 
 
@@ -13,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-monitor-data-f
+(defn download-monitor-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -21,21 +22,21 @@
   ;
   ; @return (map)
   [env _]
-  (klines/query-kline-data {:interval     (pathom/env->param  env :interval)
-                            :limit        (pathom/env->param  env :limit)
-                            :symbol       (pathom/env->param  env :symbol)
-                            :use-mainnet? (account/get-api-detail :use-mainnet?)}))
+  (klines/request-kline-data! {:interval     (pathom/env->param env :interval)
+                               :limit        (pathom/env->param env :limit)
+                               :symbol       (-> :symbol       settings/get-settings-item :value)
+                               :use-mainnet? (-> :use-mainnet? account/get-api-details-item)}))
 
-(defresolver get-monitor-data
+(defresolver download-monitor-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:trader/get-monitor-data (map)}
+             ;  {:trader/download-monitor-data (map)}
              [env resolver-props]
-             {:trader/get-monitor-data (get-monitor-data-f env resolver-props)})
+             {:trader/download-monitor-data (download-monitor-data-f env resolver-props)})
 
 
 
@@ -43,6 +44,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-monitor-data])
+(def HANDLERS [download-monitor-data])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

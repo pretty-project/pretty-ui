@@ -57,8 +57,7 @@
   ; értékében az "/@app-home/..." formula használatával hivatkozhatsz az {:app-home "/..."}
   ; értékére.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
-                                 [:router/add-route! {:route-template "/@app-home/your-route"
-                                                      :restricted?    true}]]}})
+                                 [:router/add-route! {:route-template "/@app-home/your-route"}]]}})
 
 (a/reg-lifecycles
   ::lifecycles
@@ -72,7 +71,7 @@
   ;   tulajdonság használata.
   ; - A [:router/go-up!] kliens-oldali esemény meghívása a {:route-parent "/..."} tulajdonságként
   ;   átadott útvonalra irányít át.
-  {:on-server-boot [:router/add-route! {:client-event   [:render-my-item-viewer!]
+  {:on-server-boot [:router/add-route! {:client-event   [:render-my-view!]
                                         :route-template "/my-route/:my-item-id"
                                         :route-parent   "/my-route"}]})
 
@@ -85,3 +84,17 @@
                                  [:router/add-route! {:route-template "/your-route"
                                                       :post {:handler #(your-handler %)}
                                                       :js "your-app.js"}]]}})
+
+(a/reg-lifecycles
+  ::lifecycles
+  ; A {:restricted? true} tulajdonság beállításával a kliens- és szerver-oldali útvonalak kiszolgálása
+  ; és az útvonalak eseményeinek lefutásához a felhasználó azonosítása szükséges.
+  {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
+                                                      :get  {:handler #(my-handler %)}
+                                                      :restricted? true}]
+                                 [:router/add-route! {:route-template "/your-route"
+                                                      :post {:handler #(your-handler %)}
+                                                      :restricted? true}]
+                                 [:router/add-route! {:route-template "/our-route"
+                                                      :client-event [:render-our-view!]
+                                                      :restricted? true}]]}})

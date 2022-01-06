@@ -90,7 +90,7 @@
   ;   :params (map)
   ;    {:query (string)}}
   [query-id {:keys [body query] :as query-props}]
-  (let [request-props (select-keys query-props [:body :idle-timeout :modifier :on-failure :on-sent :on-success
+  (let [request-props (select-keys query-props [:body :idle-timeout :on-failure :on-sent :on-success
                                                 :on-stalled :target-path :target-paths :uri])]
        (merge request-props {:method :post}
                             (if (some? query)
@@ -188,8 +188,6 @@
   ;    Only w/o {:query ...}
   ;   :idle-timeout (ms)(opt)
   ;    Default: x.app-sync/request-handler/DEFAULT-IDLE-TIMEOUT
-  ;   :modifier (function)(opt)
-  ;    A szerver-válasz értéket eltárolása előtt módosító függvény.
   ;   :on-failure (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)

@@ -29,18 +29,6 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- init-settings!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (return db))
-
-(a/reg-event-db :trader/init-settings! init-settings!)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -48,7 +36,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/select {:initial-options engine/SYMBOL-OPTIONS
-                    :get-label-f :label :min-width :xxs :label "Symbol"
+                    :indent :both :get-label-f :label :min-width :s :label "Symbol"
                     :value-path [:trader :settings :symbol]}])
 
 (defn sync-timeout-select
@@ -68,6 +56,14 @@
                     :on-click [:trader/toggle-syncing!]
                     :icon :sync :indent :right :variant :transparent}])
 
+(defn- save-settings-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [elements/button ::save-settings-button
+                   {:label "Save"
+                    :indent :right
+                    :on-click [:trader/upload-settings!]}])
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -77,7 +73,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/overlay-center-style)}
-        [symbol-select module-id module-props]
+        [:div [symbol-select module-id module-props]
+              [elements/horizontal-separator {:size :xxl}]
+              [:div {:style (styles/row-style {:justify-content "flex-end"})}
+                    [save-settings-button module-id module-props]]]
         [elements/horizontal-separator {:size :xxl}]])
 
 (defn body
@@ -93,15 +92,8 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/connect-to-settings!
-  (fn [{:keys [db]} _]
-      [:trader/add-subscription! :trader/settings
-                                 {:query [`(:trader/get-settings-data ~{})]}]))
-
-(a/reg-event-fx
   :trader/upload-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      [:trader/send-query! :trader/settings
-                           {:query [:debug `(:trader/upload-settings! ~(r get-settings db))]}]))
+      [:sync/send-query! :trader/synchronize!
+                         {:query [:debug `(trader/upload-settings! ~(r get-settings db))]}]))

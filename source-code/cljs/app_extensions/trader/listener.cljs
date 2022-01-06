@@ -17,9 +17,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :listener])
-         (r sync/get-response db :trader/get-listener-data)
-         {:responsed?  (r sync/responsed?  db :trader/get-listener-data)
-          :subscribed? (r sync/subscribed? db :trader/listener)}))
+         ; XXX#4066
+         {:responsed?  (r sync/synchronized? db)
+          :subscribed? true}))
 
 (a/reg-sub :trader/get-listener-props get-listener-props)
 
@@ -77,14 +77,8 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/connect-to-listener!
-  [:trader/add-subscription! :trader/listener
-                             {:query [`(:trader/get-listener-data ~{})]}])
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/toggle-listener!
   (fn [{:keys [db]} _]
-      {:db (update-in db [:trader :sync :responses :trader/get-listener-data :listener-active?] not)
-       :dispatch [:trader/send-query! :trader/listener
-                                      {:query [:debug `(trader/toggle-listener! ~{})]}]}))
+      {:db (update-in db [:trader :listener :listener-active?] not)
+       :dispatch [:sync/send-query! :trader/synchronize!
+                                    {:query [:debug `(trader/toggle-listener! ~{})]}]}))
