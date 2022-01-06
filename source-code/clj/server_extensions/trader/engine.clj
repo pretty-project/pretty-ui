@@ -106,6 +106,9 @@
 ; ahol az egyes periódusok értékei (high, low, close, open) az előző periódusok
 ; értékeivel megegyeznek!
 ; Pl.: https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=3&limit=200&from=1641303290
+;
+; - Lehetséges, hogy a testnet hálózaton ezek valós adatok?
+; - A testnet hálózat saját árfolyammal rendelkezik?
 
 ; https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
 ; https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
@@ -113,7 +116,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) uri-props
-  ;  {:interval (string)
+  ;  {:from (s)(opt)
+  ;   :interval (string)
   ;    "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
   ;   :limit (integer)
   ;    Min: 1
@@ -123,8 +127,8 @@
   ;    Default: false}
   ;
   ; @return (string)
-  [{:keys [interval limit symbol use-mainnet?]}]
-  (let [query-from (query-from interval limit)
+  [{:keys [from interval limit symbol use-mainnet?]}]
+  (let [query-from (or from (query-from interval limit))
         address    (if use-mainnet? PUBLIC-API-ADDRESS PUBLIC-TEST-API-ADDRESS)]
        (str address "/kline/list"
                     "?symbol="   symbol

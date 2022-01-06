@@ -95,6 +95,13 @@
   [db _]
   (dissoc-in db [:trader :sync :active?]))
 
+(defn- toggle-syncing!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (update-in db [:trader :sync :active?] not))
+
+(a/reg-event-db :trader/toggle-syncing! toggle-syncing!)
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -143,3 +150,23 @@
           {:db (r add-subscription! db subscription-id subscription-props)}
           {:db (r add-subscription! db subscription-id subscription-props)
            :dispatch [:trader/start-syncing!]})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) query-id
+  ; @param (map) query-props
+  ;  {:query (vector)}
+  ;
+  ; @usage
+  ;  [:trader/send-query! :trader/my-module {:query [`(trader/do-something! ~{})]}]
+  :trader/send-query!
+  (fn [{:keys [db]} [_ module-id {:keys [query]}]]
+      [:sync/send-query! :trader/synchronize!
+                         {:query       (vector/concat-items query (r get-subscription-queries db))
+                          :target-path [:trader :sync :responses]}]))

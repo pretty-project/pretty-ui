@@ -189,5 +189,5 @@
   :trader/upload-source-code!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
-      [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(:trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))
+      [:trader/send-query! :trader/editor
+                           {:query [:debug `(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))

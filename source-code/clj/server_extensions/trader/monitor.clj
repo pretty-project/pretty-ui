@@ -45,4 +45,4 @@
 ; @constant (functions in vector)
 (def HANDLERS [get-monitor-data])
 
-(pathom/reg-handlers! :trader/monitor HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)

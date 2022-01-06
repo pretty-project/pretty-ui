@@ -96,7 +96,7 @@
 (def HANDLERS [delete-my-type-item! duplicate-my-type-item! get-my-type-item
                merge-my-type-item!  save-my-type-item!      undo-delete-my-type-item!])
 
-(pathom/reg-handlers! :my-type-editor HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

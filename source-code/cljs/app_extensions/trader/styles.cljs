@@ -511,7 +511,7 @@
    :line-height      "16px"
    :opacity          ".6"
    :overflow-y       "auto"
-   :padding          "12px 0 12px 12px"
+   :padding          "12px 24px "
    :width            "720px"})
 
 (defn editor-menu-bar-style

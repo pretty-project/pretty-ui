@@ -37,7 +37,6 @@
   :trader/load-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/listen-to-process! :trader/synchronize!]
-                [:gestures/init-view-handler! :trader/controls {:default-view-id :log}]
                 [:ui/set-header-title! "Trader"]
                 [:ui/set-window-title! "Trader"]
                 [:trader/render-main!]]})

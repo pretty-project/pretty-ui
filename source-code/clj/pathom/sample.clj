@@ -47,5 +47,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(pathom/reg-handler!  :my-handler    [get-my-resolver])
-(pathom/reg-handlers! :your-handlers [do-your-mutation!])
+(pathom/reg-handler!  ::handler  [get-my-resolver])
+(pathom/reg-handlers! ::handlers [do-your-mutation!])

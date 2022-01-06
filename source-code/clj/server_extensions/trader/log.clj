@@ -70,7 +70,7 @@
 ; @constant (functions in vector)
 (def HANDLERS [get-log-data])
 
-(pathom/reg-handlers! :trader/log HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

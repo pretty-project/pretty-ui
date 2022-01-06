@@ -809,37 +809,6 @@
 
 
 
-;; -- Event self-destructing --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A self-destruct! interceptor használatával az esemény megsemmisíti önmagát
-; az első meghívását követően, így azt többször már nem lehet meghívni.
-;
-; @usage
-;  (reg-event-fx
-;   ::my-event
-;   [self-destruct!]
-;   (fn [cofx event-vector]
-;       {:dispatch ...}))
-
-(defn <-self-destruct!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;
-  ; @return (map)
-  [context]
-  (let [event-vector (context->event-vector  context)
-        event-id     (event-vector->event-id event-vector)]
-       (registrar/clear-handlers :event event-id)
-       (return context)))
-
-; @constant (?)
-(def self-destruct! (re-frame/->interceptor :id    ::self-destruct!
-                                            :after <-self-destruct!))
-
-
-
 ;; -- Event checking ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

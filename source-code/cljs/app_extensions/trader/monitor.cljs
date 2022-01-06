@@ -104,9 +104,9 @@
 (defn- get-monitor-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:limit    (get-in db [:trader :monitor :settings :limit])
-   :symbol   (get-in db [:trader :monitor :settings :symbol   :value])
-   :interval (get-in db [:trader :monitor :settings :interval :value])})
+  {:interval (get-in db [:trader :monitor :settings :interval :value])
+   :limit    (get-in db [:trader :monitor :settings :limit])
+   :symbol   (get-in db [:trader :settings :symbol :value])})
 
 (defn- get-monitor-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -131,8 +131,7 @@
   [db _]
   (as-> db % (assoc-in % [:trader :monitor :settings-mode?] true)
              (assoc-in % [:trader :monitor :settings]
-                         {:symbol   engine/DEFAULT-SYMBOL
-                          :limit    DEFAULT-LIMIT
+                         {:limit    DEFAULT-LIMIT
                           :interval DEFAULT-INTERVAL})))
 
 (defn- show-monitor-settings!
@@ -368,24 +367,11 @@
                     :on-select  [:trader/->monitor-settings-changed]
                     :value-path [:trader :monitor :settings :limit]}])
 
-(defn- symbol-select
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [module-id _]
-  [elements/select {:initial-options engine/SYMBOL-OPTIONS
-                    :get-label-f :label
-                    :label "Symbol"
-                    :min-width :xxs
-                    :on-select  [:trader/->monitor-settings-changed]
-                    :value-path [:trader :monitor  :settings :symbol]}])
-
 (defn- monitor-settings-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:<> [:div {:style {:display :flex}}
              [interval-select module-id module-props]]
-       [elements/horizontal-separator {}]
-       [:div {:style {:display :flex}}
-             [symbol-select module-id module-props]]
        [elements/horizontal-separator {}]
        [:div {:style {:display :flex}}
              [period-limit-select module-id module-props]]])

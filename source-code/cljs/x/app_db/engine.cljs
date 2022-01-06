@@ -109,14 +109,3 @@
 ;                         {:apple  [:where :to :store :apples :color]
 ;                          :banana [:where :to :store :bananas :color]}]
 (a/reg-event-db :db/distribute-items! distribute-items!)
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :db/travel-db-in-time!
-  ; @param (ms) travel-duration
-  (fn [{:keys [db]} [_ travel-duration]]
-      {:dispatch-later [{:ms travel-duration :dispatch {:db db}}]}))

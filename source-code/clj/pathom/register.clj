@@ -63,8 +63,8 @@
   ; @param (handler function) handler-f
   ;
   ; @usage
-  ;  (pco/defmutation     do-something! [env] ...)
-  ;  (pathom/reg-handler! do-something!)
+  ;  (pco/defmutation do-something! [env] ...)
+  ;  (pathom/reg-handler! ::handler do-something!)
   [handler-id handler-f]
   (logger/write! REG-LOG-FILENAME (str "Registrating handler: " handler-id))
   (swap! HANDLERS assoc handler-id handler-f)
@@ -79,10 +79,10 @@
   ; @param (handler functions in vector) handler-fs
   ;
   ; @usage
-  ;  (pco/defmutation     do-something! [env] ...)
-  ;  (pco/defmutation     do-anything! [env] ...)
+  ;  (pco/defmutation do-something! [env] ...)
+  ;  (pco/defmutation do-anything!  [env] ...)
   ;  (def HANDLERS [do-something! do-anything!])
-  ;  (pathom/reg-handlers! HANDLERS)
+  ;  (pathom/reg-handlers! ::handlers HANDLERS)
   [handlers-id handler-fs]
   (logger/write! REG-LOG-FILENAME (str "Registrating handlers: " handlers-id))
   (swap! HANDLERS assoc handlers-id handler-fs)

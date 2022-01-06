@@ -582,8 +582,8 @@
   ; @return (vector)
   [n]
   (if (nonempty? n)
-      (subvec n 0 (-> n count dec))
-      (return [])))
+      (subvec    n 0 (-> n count dec))
+      (return    [])))
 
 
 
@@ -776,12 +776,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn concat-once
+(defn concat-items-once
   ; @param (vector) a
   ; @param (vector) b
   ;
   ; @example
-  ;  (vector/concat-once [:a :b :c] [:c :d :e :a])
+  ;  (vector/concat-items-once [:a :b :c] [:c :d :e :a])
   ;  =>
   ;  [:b :c :d :e :a]
   ;

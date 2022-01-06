@@ -17,6 +17,7 @@
     (:require [x.server-developer.api]
               [x.server-environment.api]
               [x.server-router.api]
+              [x.server-views.api]
               [mid-fruits.candy       :refer [param]]
               [mid-fruits.map         :as map]
               [server-fruits.http     :as http]

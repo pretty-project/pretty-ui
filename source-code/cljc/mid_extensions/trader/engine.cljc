@@ -69,8 +69,12 @@
   ; @param (integer) limit
   ;  Min: 1
   ;  Max: 200
+  ; @param (s)(opt) epoch-s
   ;
   ; @return (s)
-  [interval limit]
-  (- (time/epoch-s)
-     (query-duration interval limit)))
+  ([interval limit]
+   (- (time/epoch-s)
+      (query-duration interval limit)))
+
+  ([interval limit epoch-s]
+   (- epoch-s (query-duration interval limit))))

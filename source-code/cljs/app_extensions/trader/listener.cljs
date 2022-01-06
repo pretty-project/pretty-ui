@@ -4,6 +4,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
+              [app-extensions.trader.engine :as engine]
               [app-extensions.trader.styles :as styles]
               [app-extensions.trader.sync   :as sync]))
 
@@ -83,5 +84,7 @@
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/toggle-listener!
-  [:sync/send-query! :trader/synchronize!
-                     {:query [:debug `(:trader/toggle-listener! ~{})]}])
+  (fn [{:keys [db]} _]
+      {:db (update-in db [:trader :sync :responses :trader/get-listener-data :listener-active?] not)
+       :dispatch [:trader/send-query! :trader/listener
+                                      {:query [:debug `(trader/toggle-listener! ~{})]}]}))

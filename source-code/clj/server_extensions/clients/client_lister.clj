@@ -114,7 +114,7 @@
 ; @constant (functions in vector)
 (def HANDLERS [delete-client-items! get-client-items merge-client-items! undo-delete-client-items!])
 
-(pathom/reg-handlers! :client-lister HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

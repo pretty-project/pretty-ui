@@ -582,7 +582,7 @@
   ; @return (map)
   [db [_ partition-id data-order]]
   (let [expired-data-order (r get-data-order db partition-id)
-        updated-data-order (vector/concat-once expired-data-order data-order)]
+        updated-data-order (vector/concat-items-once expired-data-order data-order)]
        (assoc-in db [partition-id :data-order] updated-data-order)))
 
 (defn reg-partition!

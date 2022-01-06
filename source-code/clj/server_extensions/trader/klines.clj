@@ -27,15 +27,20 @@
   ;
   ; @return (map)
   ;  {:close (float or integer)
+  ;   :close-time (integer)
   ;   :close-timestamp (string)
   ;   :high (float or integer)
   ;   :low (float or integer)
   ;   :open (float or integer)
+  ;   :open-time (integer)
   ;   :open-timestamp (string)
   ;   :volume (float or integer)}
   [{:keys [close high interval low open open_time volume] :as kline-item}]
-  (let [close_time (engine/close-time open_time interval)]
+  (let [; WARNING! Az aktuális (éppen történő) periódus close-time értéke egy jövőbeni időpontra mutat!
+        close_time (engine/close-time open_time interval)]
        (-> kline-item (dissoc :open_time :symbol)
+                      (assoc  :close-time      (param close_time))
+                      (assoc  :open-time       (param open_time))
                       (assoc  :open-timestamp  (time/epoch-s->timestamp-string open_time))
                       (assoc  :close-timestamp (time/epoch-s->timestamp-string close_time))
                       (assoc  :close           (reader/read-str close))

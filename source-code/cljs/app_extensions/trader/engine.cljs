@@ -46,37 +46,3 @@
 ; @constant (maps in vector)
 (def SYMBOL-OPTIONS [{:label "ETH / USD" :value "ETHUSD"}
                      {:label "BTC / USD" :value "BTCUSD"}])
-
-; @constant (map)
-(def DEFAULT-SYMBOL {:label "ETH / USD" :value "ETHUSD"})
-
-; @constant (maps in vector)
-(def ELAPSED-TIME-OPTIONS [{:label "20 minutes"  :value 20}
-                           {:label "40 minutes"  :value 40}
-                           {:label "60 minutes"  :value 60}
-                           {:label "90 minutes"  :value 90}
-                           {:label "120 minutes" :value 120}
-                           {:label "180 minutes" :value 180}
-                           {:label "240 minutes" :value 240}
-                           {:label "300 minutes" :value 300}
-                           {:label "360 minutes" :value 360}
-                           {:label "420 minutes" :value 420}
-                           {:label "480 minutes" :value 480}])
-
-; @constant (maps in vector)
-(def MOVEMENT-OPTIONS [{:label "rising" :value :rising} {:label "falling" :value :falling}])
-
-; @constant (maps in vector)
-(def  DIRECTION-OPTIONS [{:label "at least" :value :at-least} {:label "at most" :value :at-most}])
-
-; @constant (maps in vector)
-(def PATTERN-OPTIONS [{:label "Rocky Mountains" :value :rocky-mountains}
-                      {:label "Grand Canyon"   :value :grand-canyon}])
-
-; @constant (maps in vector)
-(def PATTERN-VOLUME-OPTIONS [{:label "20 USD"  :value 20}
-                             {:label "40 USD"  :value 40}
-                             {:label "60 USD"  :value 60}
-                             {:label "80 USD"  :value 80}
-                             {:label "100 USD" :value 100}
-                             {:label "120 USD" :value 120}])

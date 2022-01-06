@@ -116,7 +116,7 @@
 (def HANDLERS [delete-client-item! duplicate-client-item! get-client-item
                merge-client-item!  save-client-item!      undo-delete-client-item!])
 
-(pathom/reg-handlers! :client-editor HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

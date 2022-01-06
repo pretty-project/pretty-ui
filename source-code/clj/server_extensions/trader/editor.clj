@@ -5,7 +5,7 @@
               [pathom.api        :as pathom]
               [prototypes.api    :as prototypes]
               [x.server-core.api :as a]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
 
@@ -16,7 +16,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ; @param (map) resolver-props
+  ; @param (map) mutation-props
   ;
   ; @return (namespaced map)
   ;  {:trader/source-code (string)
@@ -29,18 +29,18 @@
        (mongo-db/upsert-document! "trader" document
                                   {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
 
-(defresolver upload-source-code!
+(defmutation upload-source-code!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ; @param (map) resolver-props
+             ; @param (map) mutation-props
              ;
              ; @return (map)
-             ;  {:trader/upload-source-code! (namespaced map)
-             ;    {:trader/source-code (string)
-             ;     :trader/id (string)}}
-             [env resolver-props]
-             {:trader/upload-source-code! (upload-source-code-f env resolver-props)})
+             ;  {:trader/source-code (string)
+             ;   :trader/id (string)}}
+             [env mutation-props]
+             {::pco/op-name 'trader/upload-source-code!}
+             (upload-source-code-f env mutation-props))
 
 
 
@@ -79,4 +79,4 @@
 ; @constant (functions in vector)
 (def HANDLERS [get-editor-data upload-source-code!])
 
-(pathom/reg-handlers! :trader/editor HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)

@@ -10,7 +10,7 @@
               [x.server-core.api  :as a]
               [x.server-db.api    :as db]
               [server-extensions.trader.engine       :as engine]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
 
@@ -101,6 +101,11 @@
   (if-let [document (mongo-db/get-document-by-id "trader" "api-details")]
           (get document (keyword/add-namespace :trader detail-key))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-account-data-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -142,7 +147,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ; @param (map) resolver-props
+  ; @param (map) mutation-props
   ;
   ; @return (namespaced map)
   ;  {:trader/api-key (string)
@@ -158,19 +163,19 @@
                ; Removing api-secret from the response ...
                :api-secret)))
 
-(defresolver upload-api-details!
+(defmutation upload-api-details!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ; @param (map) resolver-props
+             ; @param (map) mutation-props
              ;
              ; @return (map)
-             ;  {:trader/upload-api-details! (namespaced map)
-             ;    {:trader/api-key (string)
-             ;     :trader/use-mainnet? (boolean)
-             ;     :trader/id (string)}}
-             [env resolver-props]
-             {:trader/upload-api-details! (upload-api-details-f env resolver-props)})
+             ;  {:trader/api-key (string)
+             ;   :trader/use-mainnet? (boolean)
+             ;   :trader/id (string)}}
+             [env mutation-props]
+             {::pco/op-name 'trader/upload-api-details!}
+             (upload-api-details-f env mutation-props))
 
 
 
@@ -180,4 +185,4 @@
 ; @constant (functions in vector)
 (def HANDLERS [get-account-data upload-api-details!])
 
-(pathom/reg-handlers! :trader/account HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)

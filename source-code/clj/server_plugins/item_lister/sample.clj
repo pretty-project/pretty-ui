@@ -85,7 +85,7 @@
 (def HANDLERS [delete-my-type-items! get-my-type-items merge-my-type-items!
                undo-delete-my-type-items!])
 
-(pathom/reg-handlers! :my-type-lister HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

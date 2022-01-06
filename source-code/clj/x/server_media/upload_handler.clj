@@ -163,4 +163,4 @@
 
   (return "Files uploaded"))
 
-(pathom/reg-handler! :upload-files upload-files!)
+(pathom/reg-handler! ::handler upload-files!)

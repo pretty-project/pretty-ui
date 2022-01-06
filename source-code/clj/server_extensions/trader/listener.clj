@@ -7,7 +7,7 @@
               [tea-time.core     :as tt]
               [x.server-core.api :as a]
               [server-extensions.trader.engine       :as engine]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
 
 
 
@@ -30,65 +30,47 @@
   (get (mongo-db/get-document-by-id "trader" "listener-details")
        :trader/source-code))
 
-(defn- run-listener!
+(defn run-listener!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (if-let [source-code (get-source-code)]
           (if-let [result (try (load-string source-code)
                                (catch       Exception e (str e)))]
                   (a/dispatch [:trader/log! :trader/listener result {:highlighted? true}]))
-          (a/dispatch [:trader/log! :trader-listener "No source-code found error"
-                                    {:warning? true}])))
+          (a/dispatch [:trader/log! :trader-listener "No source-code found error" {:warning? true}])))
+
+(a/reg-fx :trader/run-listener! run-listener!)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- start-timer!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (keyword)
-  []
-  (a/dispatch [:trader/log! :trader/listener "Listener initializing ..."])
-  (tt/start!)
-  (let [timer (tt/every! TIMER-INTERVAL (bound-fn [] (run-listener!)))]
-       (a/dispatch [:db/set-item! [:trader :timer] timer]))
-  (return :timer-started))
-
-(defn- stop-timer!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (object) timer
-  ;
-  ; @return (keyword)
-  [timer]
-  (a/dispatch [:trader/log! :trader/listener "Listener exiting ..."])
-  (tt/cancel! timer)
-  (tt/stop!)
-  (a/dispatch [:db/remove-item! [:trader :timer]])
-  (return :timer-stopped))
 
 (defn- toggle-listener-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (keyword)
+  ; @return (map)
+  ;  {:listener-active? (boolean)}
   [env _]
-  (if-let [timer (a/subscribed [:db/get-item [:trader :timer]])]
-          (stop-timer! timer)
-          (start-timer!)))
+  (if (a/subscribed [:db/get-item [:trader :listener :active?]])
+      (do (a/dispatch [:trader/log! :trader/listener "Deactivating listener ..."])
+          (a/dispatch [:db/set-item! [:trader :listener :active?] false])
+          {:listener-active? false})
+      (do (a/dispatch [:trader/log! :trader/listener "Activating listener ..."])
+          (a/dispatch [:db/set-item! [:trader :listener :active?] true])
+          {:listener-active? true})))
 
-(defresolver toggle-listener!___
+(defmutation toggle-listener!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ; @param (map) resolver-props
+             ; @param (map) mutation-props
              ;
              ; @return (map)
-             ;  {:trader/toggle-listener! (keyword)
-             ;    :timer-started, :timer-stopped}
-             [env resolver-props]
-             {:trader/toggle-listener!___ (toggle-listener-f env resolver-props)})
+             ;  {:listener-active? (boolean)}
+             [env mutation-props]
+             {::pco/op-name 'trader/toggle-listener!}
+             (toggle-listener-f env mutation-props))
 
 
 
@@ -105,7 +87,7 @@
   ;  {:listener-active? (boolean)
   ;   :source-code (string)}
   [env _]
-  {:listener-active? (a/subscribed [:db/item-exists? [:trader :timer]])
+  {:listener-active? (a/subscribed [:db/get-item [:trader :listener :active?]])
    :source-code      (get-source-code)})
 
 (defresolver get-listener-data
@@ -127,6 +109,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-listener-data]); toggle-listener!])
+(def HANDLERS [get-listener-data toggle-listener!])
 
-(pathom/reg-handlers! :trader/listener HANDLERS)
+(pathom/reg-handlers! ::handlers HANDLERS)

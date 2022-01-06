@@ -14,7 +14,10 @@
   {:dispatch-n [[:trader/connect-to-listener!]
                 [:trader/connect-to-log!]
                 [:trader/connect-to-account!]
-                [:trader/init-monitor!]]})
+                [:trader/connect-to-settings!]
+                [:trader/init-monitor!]
+                [:trader/init-settings!]
+                [:gestures/init-view-handler! :trader/controls {:default-view-id :log}]]})
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
