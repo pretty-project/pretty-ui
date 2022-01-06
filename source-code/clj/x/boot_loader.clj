@@ -6,7 +6,7 @@
 ; Created: 2021.04.14
 ; Description:
 ; Version: v1.1.6
-; Compatibility: x4.5.0
+; Compatibility: x4.5.2
 
 
 
@@ -19,8 +19,6 @@
               [x.server-router.api]
               [x.server-views.api]
               [mid-fruits.candy       :refer [param]]
-              [mid-fruits.map         :as map]
-              [server-fruits.http     :as http]
               [x.app-details          :as details]
               [x.server-core.api      :as a :refer [r]]
               [x.server-db.api        :as db]
@@ -107,6 +105,7 @@
   (fn [{:keys [db]} _]
       (println details/app-codename "initializing server ...")
        ; 1. Az inicializálási események meghívása (Dispatch on-server-init events)
+      (println (str (r a/get-period-events db :on-server-init)))
       {:dispatch-n (r a/get-period-events db :on-server-init)
        ; 2. Az inicializálási események lefutása után a szerver
        ;    betöltésének folytatása

@@ -66,14 +66,11 @@
 (def metamorphic-event<-params        event-handler/metamorphic-event<-params)
 (def metamorphic-effects->effects-map event-handler/metamorphic-effects->effects-map)
 (def merge-effects-maps               event-handler/merge-effects-maps)
-(def db                               event-handler/db)
 (def ->interceptor                    event-handler/->interceptor)
 (def inject-cofx                      event-handler/inject-cofx)
 (def reg-cofx                         event-handler/reg-cofx)
 (def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
-(def reg-prototype                    event-handler/reg-prototype)
-(def use-prototype                    event-handler/use-prototype)
 (def self-destruct!                   event-handler/self-destruct!)
 (def get-event-handlers               event-handler/get-event-handlers)
 (def get-event-handler                event-handler/get-event-handler)
@@ -122,7 +119,8 @@
                               :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
                                             error-event   [ERROR-EVENT-ID (context->error-props %1)]]
                                            (when (context->error-catched? error-context)
-                                                 (dispatch error-event))
+                                                 (do (dispatch error-event)
+                                                     (println (str %1))))
                                            (return %1))))
 
 (defn- interceptors<-system-interceptors

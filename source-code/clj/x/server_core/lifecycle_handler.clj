@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.9.8
-; Compatibility: x3.9.9
+; Version: v1.0.6
+; Compatibility: x4.5.2
 
 
 
@@ -22,7 +22,4 @@
 ;; ----------------------------------------------------------------------------
 
 (def get-period-events lifecycle-handler/get-period-events)
-(def get-lifes         lifecycle-handler/get-lifes)
-(def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
-(def reg-event!        lifecycle-handler/reg-event!)
 (def reg-lifecycles    lifecycle-handler/reg-lifecycles)

@@ -88,8 +88,9 @@
                    (println (str "time-now: " epoch-s))))
 
       (println (str "update-market-data!"))
-      (println (str        (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))))
-      (println (str (count (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items])))))))
+      (println (str (get-in db [:x.server-router.route-handler/client-routes])))))
+      ;(println (str       (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))))); :x.server-router.system-routes/lifecycles]))))
+      ;(println (str (count (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))))))); :x.server-router.system-routes/lifecycles])))))))
 
 
 (a/reg-event-fx
@@ -97,7 +98,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println (str "resolve-market-data!"))
-      (println (str        (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))))
-      (println (str (count (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items])))))
+      (println (str (get-in db [:x.server-router.route-handler/client-routes])))
+      ;(println (str        (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))); :x.server-router.system-routes/lifecycles]))))
+      ;(println (str (count (keys (get-in db [:x.mid-core.lifecycle-handler/lifes :data-items]))))); :x.server-router.system-routes/lifecycles])))))
       (if (r listener-active? db)
           {:trader/run-listener! nil})))

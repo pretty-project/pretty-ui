@@ -1,9 +1,6 @@
 
-(ns server-extensions.trader.account
-    (:require [clj-http.client    :as client]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
+(ns server-extensions.trader.settings
+    (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
               [prototypes.api     :as prototypes]
@@ -105,6 +102,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [upload-settings!])
+(def HANDLERS [get-settings-data upload-settings!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

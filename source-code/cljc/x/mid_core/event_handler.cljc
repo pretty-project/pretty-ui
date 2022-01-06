@@ -5,7 +5,7 @@
 ; Created: 2021.04.11
 ; Description:
 ; Version: v1.4.0
-; Compatibility: x4.5.0
+; Compatibility: x4.5.2
 
 
 
@@ -35,7 +35,6 @@
 ; Metamorphic handler functions
 ; Metamorphic effects functions
 ; Effects-map functions
-; Prototype functions
 ; Event self-destructing
 ; Event checking
 ; Event registrating
@@ -137,14 +136,6 @@
 
 ; @constant (string)
 (def INCONSISTENT-DB-ERROR "Inconsistent database error")
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-(def PROTOTYPES (atom {}))
 
 
 
@@ -388,10 +379,8 @@
   ;  :0ce14671-e916-43ab-b057-0939329d4c1b
   ;
   ; @return (keyword)
-  ;  Ha a param-vector legalább egy kulcsszót tartalmaz, akkor a visszatérési
-  ;   érték az első a kulcsszó.
-  ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték
-  ;   egy random-uuid.
+  ;  Ha a param-vector legalább egy kulcsszót tartalmaz, akkor a visszatérési érték az első a kulcsszó.
+  ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték egy random-uuid.
   [param-vector]
   (-> param-vector (vector/first-filtered keyword?) engine/id))
 
@@ -604,36 +593,6 @@
 
 
 
-;; -- DB functions ------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reset-db!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) value
-  ;
-  ; @return (map)
-  [value]
-  (if-not (identical? @app-db value)
-          (reset!      app-db value)))
-
-(defn db
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (function) f
-  ; @param (vector)(opt) event-vector
-  ;
-  ; @usage
-  ;  (event-handler/db (fn [db [event-id] (assoc-in db [:a :b] :c)))
-  ;
-  ; @return (map)
-  ([f] (db f [::db]))
-
-  ([f event-vector]
-   (reset-db! (f @app-db event-vector))))
-
-
-
 ;; -- Event param functions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -739,8 +698,9 @@
   ;
   ; @return (map)
   [n]
-  (if (vector? n) (event-vector->effects-map n)
-                  (return n)))
+  (if (vector?                   n)
+      (event-vector->effects-map n)
+      (return                    n)))
 
 
 
@@ -780,32 +740,34 @@
 
 
 
-;; -- Prototype functions -----------------------------------------------------
+;; -- Event self-destructing --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reg-prototype
-  ; @param (keyword) prototype-id
-  ; @param (function) prototype-f
-  ;
-  ; @usage
-  ;  (defn my-prototype [db [prototype-id my-param]])
-  ;  (a/reg-prototype :my-prototype my-prototype)
-  [prototype-id prototype-f]
-  (swap! PROTOTYPES assoc prototype-id prototype-f))
+; A self-destruct! interceptor használatával az esemény megsemmisíti önmagát
+; az első meghívását követően, így azt többször már nem lehet meghívni.
+;
+; @usage
+;  (reg-event-fx
+;   ::my-event
+;   [self-destruct!]
+;   (fn [cofx event-vector]
+;       {:dispatch ...}))
 
-(defn use-prototype
-  ; @param (keyword) prototype-id
+(defn <-self-destruct!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (a/use-prototype [:my-prototype "My param"])
+  ; @param (map) context
   ;
-  ; @usage
-  ;  (defn my-function
-  ;    (let [my-value (a/use-prototype [:my-prototype "My param"])]
-  ;         (do-something! my-value)))
-  [[prototype-id :as prototype-vector]]
-  (let [prototype-f (get @PROTOTYPES prototype-id)]
-       (prototype-f @app-db prototype-vector)))
+  ; @return (map)
+  [context]
+  (let [event-vector (context->event-vector  context)
+        event-id     (event-vector->event-id event-vector)]
+       (registrar/clear-handlers :event event-id)
+       (return context)))
+
+; @constant (?)
+(def self-destruct! (re-frame/->interceptor :id    ::self-destruct!
+                                            :after <-self-destruct!))
 
 
 
