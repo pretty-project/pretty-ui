@@ -52,7 +52,7 @@
 (def MAX-FILESIZE (io/MB->B 10))
 
 ; @constant (string)
-(def LOCAL-DB-PATH "db/")
+(def LOCAL-DB-PATH "monoset-config/db/")
 
 
 
