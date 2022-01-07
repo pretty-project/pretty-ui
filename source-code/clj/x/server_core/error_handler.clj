@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler
-    (:require [x.server-core.debug-handler :as debug-handler]
-              [x.server-core.event-handler :as event-handler]))
+    (:require [x.server-core.event-handler :as event-handler]
+              [x.server-core.print-handler :as print-handler]))
 
 
 
@@ -36,4 +36,4 @@
   ;
   ; @param (map) error-props
   (fn [error-props]
-      (debug-handler/console DEFAULT-SERVER-ERROR)))
+      (print-handler/console DEFAULT-SERVER-ERROR)))

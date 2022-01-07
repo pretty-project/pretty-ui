@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.08
 ; Description:
-; Version: v0.3.8
-; Compatibility: x3.9.9
+; Version: v0.4.0
+; Compatibility: x4.5.2
 
 
 
@@ -14,9 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.api
-    (:require [x.mid-core.cache-handler  :as cache-handler]
+    (:require [x.mid-core.debug-handler]
+              [x.mid-core.cache-handler  :as cache-handler]
               [x.mid-core.config-handler :as config-handler]
-              [x.mid-core.debug-handler  :as debug-handler]
               [x.mid-core.engine         :as engine]
               [x.mid-core.event-handler  :as event-handler]))
 
@@ -57,10 +57,6 @@
 (def get-destructed-configs config-handler/get-destructed-configs)
 (def get-config-item        config-handler/get-config-item)
 (def store-configs!         config-handler/store-configs!)
-
-; x.mid-core.debug-handler
-(def query-string->debug-mode? debug-handler/query-string->debug-mode?)
-(def query-string->debug-mode  debug-handler/query-string->debug-mode)
 
 ; x.mid-core.engine
 (def dom-value     engine/dom-value)

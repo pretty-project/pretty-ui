@@ -45,7 +45,9 @@
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  {:view-id (r gestures/get-selected-view-id db ::handler)})
+  (let [debug-mode (r a/get-debug-mode db)]
+       {:print-events? (= debug-mode "pineapple-juice")
+        :view-id       (r gestures/get-selected-view-id db ::handler)}))
 
 (a/reg-sub ::get-header-props get-header-props)
 
@@ -61,11 +63,20 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- toggle-print-events-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [print-events?]}]
+  [elements/button ::toggle-event-print-button
+                   {:preset (if print-events? :primary-icon-button :muted-icon-button)
+                    :icon :terminal :tooltip "Print events"
+                    :on-click [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]}])
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/polarity {:start-content [elements/menu-bar {:menu-items (menu-items header-id header-props)}]
-                      :end-content   [ui/popup-close-icon-button header-id header-props]}])
+                      :end-content   [:<> [toggle-print-events-button header-id header-props]
+                                          [ui/popup-close-icon-button header-id header-props]]}])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

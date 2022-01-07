@@ -175,6 +175,7 @@
   ;  [:boot-loader/initialize-app! #'app]
   (fn [_ [_ app]]
       {:core/import-lifecycles! nil
+       :core/detect-debug-mode! nil
        :dispatch-n [; 1. Let's start!
                     [:boot-synchronizer/synchronize-app! app]
                     ; 2. A load-handler várjon az XXX#5030 jelre!
@@ -190,12 +191,9 @@
   ; @usage
   ;  [:boot-loader/initialize-app! #'app]
   (fn [{:keys [db]} [_ app]]
-       ; 1. Debug módban indított applikáció bejegyzése
-      {:db (if-let [debug-mode (a/debug-mode)]
-                   (r a/store-debug-mode! db debug-mode))
-       ; 2. Az inicializálási események meghívása (Dispatch on-app-init events)
+      {; 1. Az inicializálási események meghívása (Dispatch on-app-init events)
        :dispatch-n (r a/get-period-events db :on-app-init)
-       ; 3. Az inicializálási események lefutása után az applikáció
+       ; 2. Az inicializálási események lefutása után az applikáció
        ;    betöltésének folytatása
        :dispatch-later [{:ms 100 :dispatch [:boot-loader/boot-app! app]}]}))
 

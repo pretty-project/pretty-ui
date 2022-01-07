@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.16
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.0
+; Version: v0.4.0
+; Compatibility: x4.5.2
 
 
 
@@ -29,13 +29,6 @@
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn query-string->debug-mode?
-  ; @param (string) query-string
-  ;
-  ; @return (boolean)
-  [query-string]
-  (vector/any-item-match? SAFEWORDS #(string/contains-part? query-string %)))
 
 (defn query-string->debug-mode
   ; @param (string) query-string

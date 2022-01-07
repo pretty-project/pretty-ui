@@ -11,7 +11,8 @@
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/init-app!
-  {:dispatch-n [[:trader/download-app-data!]
+  {:dispatch-n [[:ui/listen-to-process! :trader/synchronize!]
+                [:trader/download-app-data!]
                 [:trader/connect-to-log!]
                 [:trader/connect-to-account!]
                 [:trader/init-monitor!]

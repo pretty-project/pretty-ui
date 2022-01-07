@@ -32,8 +32,8 @@
 (defn debug!
   ; @param (map) request
   [request]
-  (if (a/request->debug-mode? request)
-      (playground             request)))
+  (if (a/request->debug-mode request)
+      (playground            request)))
 
 
 

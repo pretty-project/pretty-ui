@@ -28,14 +28,31 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- source-code-environment
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) source-code
+  ;
+  ; @return (string)
+  [source-code]
+  (let [market-data (a/subscribed [:db/get-item [:trader :market]])]
+       ; - A (load-str "...") függvény a clojure.core névtérben hozza létre a konstansokat
+       ; - A (load-str "...") függvény által lefuttatott forráskódban létrehozott konstansok és
+       ;   átirányított függvények elérhetők lesznek a clojure.core névtérben.
+       ; - A wrap-reload az átirányított függvényeket tartalmazó névtér újratöltésekor
+       ;   hibát jelez, hogy az átirányított függvények nevei már foglaltak a clojure.core névtérben,
+       ;   ezért szükséges azokat eltérő néven átirányítani.
+       (str "(def market-data " market-data ")\n "
+            "(def ^{:private true} mountain-highness server-extensions.trader.patterns/mountain-highness)\n "
+            "(def ^{:private false} mountain-length   server-extensions.trader.patterns/mountain-length)\n "
+            source-code)))
+
 (defn run-source-code!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) source-code
   [source-code]
-  (let [market-data (a/subscribed [:db/get-item [:trader :market]])
-        source-code (str "(defn operator [market-data] " source-code ") (operator \"x\")")
-        _ (println (str source-code))
+  (let [source-code (source-code-environment source-code)
         result (try (load-string source-code)
                     (catch       Exception e (a/dispatch [:trader/log! (str e) {:warning? true}])))]
        (if (string/nonempty? result)

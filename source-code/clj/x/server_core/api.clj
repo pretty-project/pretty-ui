@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v1.1.2
-; Compatibility: x3.9.9
+; Version: v1.1.6
+; Compatibility: x4.5.2
 
 
 
@@ -25,6 +25,7 @@
               [x.server-core.engine            :as engine]
               [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]
+              [x.server-core.print-handler     :as print-handler]
               [x.server-core.router-handler    :as router-handler]))
 
 
@@ -69,11 +70,7 @@
 (def get-config-item         config-handler/get-config-item)
 
 ; x.server-core.debug-handler
-(def query-string->debug-mode? debug-handler/query-string->debug-mode?)
-(def query-string->debug-mode  debug-handler/query-string->debug-mode)
-(def request->debug-mode?      debug-handler/request->debug-mode?)
-(def request->debug-mode       debug-handler/request->debug-mode)
-(def console                   debug-handler/console)
+(def request->debug-mode debug-handler/request->debug-mode)
 
 ; x.server-core.engine
 (def dom-value     engine/dom-value)
@@ -134,6 +131,9 @@
 ; x.server-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
 (def reg-lifecycles    lifecycle-handler/reg-lifecycles)
+
+; x.server-core.print-handler
+(def console print-handler/console)
 
 ; x.server-core.router-handler
 (def route-template->route-match router-handler/route-template->route-match)

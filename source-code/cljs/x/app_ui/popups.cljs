@@ -130,7 +130,7 @@
              {:stretched? true})
 
          ; DEBUG
-         (if (a/debug-mode?)
+         (if (r a/debug-mode-detected? db)
              {:minimizable? true})))
 
 

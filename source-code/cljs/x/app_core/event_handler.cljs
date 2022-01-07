@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v1.4.8
-; Compatibility: x4.4.9
+; Version: v1.5.2
+; Compatibility: x4.5.2
 
 
 
@@ -22,15 +22,8 @@
               [re-frame.core            :as re-frame]
               [re-frame.registrar       :as registrar]
               [x.app-core.debug-handler :as debug-handler]
+              [x.app-core.print-handler :as print-handler]
               [x.mid-core.event-handler :as event-handler]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (boolean)
-(def LOG-EVENTS? (= "pineapple-juice" (debug-handler/debug-mode)))
 
 
 
@@ -110,17 +103,18 @@
 
 ; @constant (?)
 (def LOG-EVENT! (->interceptor :id ::log-event!
-                               :before #(do (debug-handler/console (context->event-vector %1))
-                                            (return %1))))
+                               :before #(do (when (-> %1 context->db-before-effect debug-handler/log-events?)
+                                                  (-> %1 context->event-vector     print-handler/console))
+                                            (-> %1 return))))
 
 ; @constant (?)
 (def CHECK-DB! (->interceptor :id ::check-db!
-                              :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
-                                            error-event   [ERROR-EVENT-ID (context->error-props %1)]]
+                              :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)]
                                            (when (context->error-catched? error-context)
-                                                 ; TEMP
-                                                 (do (dispatch error-event)
-                                                     (println (str %1))))
+                                                 (let [error-event [ERROR-EVENT-ID (context->error-props %1)]]
+                                                      (do ; TEMP
+                                                          (println (str %1))
+                                                          (dispatch error-event))))
                                            (return %1))))
 
 (defn- interceptors<-system-interceptors
@@ -130,8 +124,7 @@
   ;
   ; @return (vector)
   [interceptors]
-  (cond-> interceptors LOG-EVENTS? (vector/conj-item LOG-EVENT!)
-                       :check-db!  (vector/conj-item CHECK-DB!)))
+  (vector/conj-item interceptors LOG-EVENT! CHECK-DB!))
 
 
 

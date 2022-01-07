@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.4.6
+; Version: v0.4.8
+; Compatibility: x4.5.2
 
 
 
@@ -35,17 +35,22 @@
 (defn- get-developer-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) error-id
+  ;
   ; @return (string)
-  [db _]
-  (param DEFAULT-APPLICATION-ERROR))
+  [db [_ error-id]]
+  (get-in db [::errors :data-items error-id :error]
+             (return DEFAULT-APPLICATION-ERROR)))
 
 (defn- get-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) error-id
+  ;
   ; @return (string)
-  [db _]
-  (if (debug-handler/debug-mode?)
-      (r get-developer-error-message db)
+  [db [_ error-id]]
+  (if (r debug-handler/debug-mode-detected? db)
+      (r get-developer-error-message        db error-id)
       (return DEFAULT-APPLICATION-ERROR)))
 
 
@@ -56,11 +61,14 @@
 (defn- store-error-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) error-id
   ; @param (map) error-props
+  ;  {:event-id (keyword)
+  ;   :error (string)}
   ;
   ; @return (map)
-  [db [_ error-props]]
-  (assoc-in db [::errors :data-items (engine/id)] error-props))
+  [db [_ error-id error-props]]
+  (assoc-in db [::errors :data-items error-id] error-props))
 
 
 
@@ -71,8 +79,13 @@
   :core/->error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) error-props
-  (fn [{:keys [db]} [_ error-props]]
-      {:db       (as-> db % (r store-error-props!               % error-props)
-                            (r load-handler/stop-synchronizing! %))
-       :dispatch [:ui/set-shield! {:content (r get-error-message db)}]}))
+  ; @param (keyword)(opt) error-id
+  ; @param (map) error-props
+  ;  {:event-id (keyword)
+  ;   :error (string)}
+  (fn [{:keys [db]} event-vector]
+      (let [error-id    (event-handler/event-vector->second-id   event-vector)
+            error-props (event-handler/event-vector->first-props event-vector)]
+           {:db (as-> db % (r store-error-props!               % error-id error-props)
+                           (r load-handler/stop-synchronizing! %))
+            :dispatch [:ui/set-shield! {:content (r get-error-message db error-id)}]})))

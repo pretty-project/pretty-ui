@@ -42,7 +42,8 @@
   [module-id {:keys [listener-active?]}]
   [elements/button ::toggle-listener-button
                    {:icon :power_settings_new :layout :icon-button :indent :right
-                    :preset (if listener-active? :warning-icon-button :muted-icon-button)
+                    :preset  (if listener-active? :warning-icon-button :muted-icon-button)
+                    :tooltip (if listener-active? "Stop listener" "Start listener")
                     :on-click [:trader/toggle-listener!]}])
 
 

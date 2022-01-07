@@ -32,7 +32,7 @@
                               (:close x))})]
               (reduce-indexed f {} ranged-kline-list))))
 
-(defn kline-list-range-high
+(defn kline-list-range-total-high
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (vectors in map) kline-list
@@ -43,6 +43,19 @@
   [kline-list from to]
   (let [ranged-kline-list (vector/ranged-items kline-list from to)]
        (letfn [(f [o x] (max o (:high x)))]
+              (reduce f 0 ranged-kline-list))))
+
+(defn kline-list-range-total-low
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (vectors in map) kline-list
+  ; @param (integer) from
+  ; @param (integer) to
+  ;
+  ; @return (integer)
+  [kline-list from to]
+  (let [ranged-kline-list (vector/ranged-items kline-list from to)]
+       (letfn [(f [o x] (min o (:low x)))]
               (reduce f 0 ranged-kline-list))))
 
 
@@ -114,55 +127,56 @@
   ; @param (map) kline-data
   ;  {:kline-list (maps in vector)}
   ;
-  ; @return (boolean or integer)
+  ; @return (integer)
+  ;  A visszatérési érték egy integer, ami kifejezi, hogy hány periódus óta nem volt annyira
+  ;  alacsony az ár, mint az utólsó periódus záró ára.
   [{:keys [kline-list]}]
-  ; - Ha az utolsó periódusban csökkent az ár, akkor a visszatérési érték false,
-  ;   mert még nem fejeződött be a csökkenés.
-  ; - Ha az utólsó periódusban nőtt az ár, de az utolsó előtti periódusban nem csökkent,
-  ;   akkor a visszatérési érték false, mert nem volt csökkenés.
-  ; - Ha az utólsó periódusban nő az ár, akkor a visszatérési érték egy integer,
-  ;   ami kifejezi, hogy hány periódus óta nem volt annyira alacsony az ár, mint az
-  ;   utólsó előtti periódus záró ára.
-  (let [count                (count  kline-list)
-        last-increased?      (kline-increased? (nth kline-list (- count 1)))
-        second-last-dropped? (kline-dropped?   (nth kline-list (- count 2)))
-        second-last-close    (get-in kline-list [(- count 2) :close])]
-;       (println "")
-;       (println "drop-length ...")
-;       (println "last-increased? " last-increased?)
-;       (println "last range:" (str (:open  (nth kline-list (- count 1))))
-;                "-"           (str (:close (nth kline-list (- count 1))))]
-;       (println "second-last-dropped? " second-last-dropped?)
-;       (println "second-last range:" (str (:open  (nth kline-list (- count 2))))
-;                "-"                  (str (:close (nth kline-list (- count 2))))]
-;       (println (str (mid-fruits.time/timestamp-string)))
-;       (println "")
-       (if ; If price is NOT increasing from a drop ...
-           (or (not last-increased?) (not second-last-dropped?))
-           (return false)
-           ; If price is increasing ...
-           (letfn [(f [o dex {:keys [close]}]
-                      (cond ; If x is the last or the second last ...
-                            ; ... then it is unnecessary to evaluate the test ...
-                            (or= dex (- count 1) (- count 2))
-                            ; If x is the last or the second last, but o is nil, ...
-                            ; ... then returns 0.
-                            (or o 0)
-                            ; If x close is NOT higher than the second last close ...
-                            ; ... then the second last is NOT the lowest yet.
-                            (<= close second-last-close) (return nil)
-                            ; If x close is higher than the second last close,
-                            ; and the result is nil ...
-                            ; ... then returns the distance from the second last.
-                            (nil? o) (- count 2 dex)
-                            ; If x close is higher than the second last close,
-                            ; and the result is NOT nil ...
-                            ; ... then returns the result.
-                            :else (return o)))]
-                  (let [mountain-length (reduce-indexed f nil kline-list)]
-                       (if (>      mountain-length 1)
-                           (return mountain-length)
-                           (return false)))))))
+  (let [count      (count  kline-list)
+        last-close (get-in kline-list [(- count 1) :close])]
+       (letfn [(f [lap]
+                  ; Az f függvény az utolsó elemtől az első elem irányába haladva vizsgálja
+                  ; a vektort (a lap érték növelésével egyre korábbi elemeket vizsgál)
+                  (cond ; Ha elfogytak az elemek ...
+                        (> lap count) (return nil)
+                        ; Az első lefutáskor az utolsó elemet nincs értelme önmagával összehasonlítani ...
+                        (= lap 1) (f (inc lap))
+                        ; A minta értelmezéséhez, legalább három elemet szükséges megvizsgálni ...
+                        (= lap 2) (f (inc lap))
+                        ; Ha a vizsgált elem záró ára alacsonyabb, mint az utolsó periódus záró ára ...
+                        ;(> last-close (get-in kline-list [(- count lap) :close])) (dec lap)
+                        (> last-close (get-in kline-list [(- count lap) :close])) (return (str " length: "     (dec lap)
+                                                                                               " last-close: " last-close
+                                                                                               " lap-close: "  (get-in kline-list [(- count lap) :close])))
+                        ; Ha a vizsgált elem záró ára NEM alacsonyabb, mint az utolsó periódus záró ára ...
+                        :else (f (inc lap))))]
+              (f 1))))
+
+(defn valley-length
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) kline-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @return (integer)
+  ;  A visszatérési érték egy integer, ami kifejezi, hogy hány periódus óta nem volt annyira
+  ;  magas az ár, mint az utólsó periódus záró ára.
+  [{:keys [kline-list]}]
+  (let [count      (count  kline-list)
+        last-close (get-in kline-list [(- count 1) :close])]
+       (letfn [(f [lap]
+                  ; Az f függvény az utolsó elemtől az első elem irányába haladva vizsgálja
+                  ; a vektort (a lap érték növelésével egyre korábbi elemeket vizsgál)
+                  (cond ; Ha elfogytak az elemek ...
+                        (> lap count) (return nil)
+                        ; Az első lefutáskor az utolsó elemet nincs értelme önmagával összehasonlítani ...
+                        (= lap 1) (f (inc lap))
+                        ; A minta értelmezéséhez, legalább három elemet szükséges megvizsgálni ...
+                        (= lap 2) (f (inc lap))
+                        ; Ha a vizsgált elem záró ára magasabb, mint az utolsó periódus záró ára ...
+                        (< last-close (get-in kline-list [(- count lap) :close])) (dec lap)
+                        ; Ha a vizsgált elem záró ára NEM magasabb, mint az utolsó periódus záró ára ...
+                        :else (f (inc lap))))]
+              (f 1))))
 
 (defn mountain-highness
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -171,15 +185,35 @@
   ;  {:kline-list (maps in vector)}
   ;
   ; @return (USD)
+  ;  Az utolsó periódus záró ára és a mountain legmagasabb értéke közötti különbség.
   [{:keys [kline-list] :as kline-data}]
-  ; - Az utolsó előtti periódus záró értéke és mountain legmagasabb értéke közötti különbség
   (if-let [mountain-length (mountain-length kline-data)]
           (if (> mountain-length 1)
-              (let [count         (count  kline-list)
-                    highest-price (kline-list-range-high kline-list (- count mountain-length 1) (- count 2))
-                    dropped-price (get-in kline-list [(- count 1) :open])]
-                   (- highest-price dropped-price)))))
+              (let [count         (count kline-list)
+                    highest-price (kline-list-range-total-high kline-list (- count mountain-length 1) (- count 1))
+                    current-price (get-in kline-list [(- count 1) :close])]
+                   (- highest-price current-price)))))
 
+(defn valley-deepness
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) kline-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @return (USD)
+  ;  Az utolsó periódus záró ára és a valley legalacsonyabb értéke közötti különbség.
+  [{:keys [kline-list] :as kline-data}]
+  (if-let [valley-length (valley-length kline-data)]
+          (if (> valley-length 1)
+              (let [count         (count kline-list)
+                    lowest-price  (kline-list-range-total-low kline-list (- count valley-length 1) (- count 1))
+                    current-price (get-in kline-list [(- count 1) :close])]
+                   (- current-price lowest-price)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn price-bouncing-uwd?
   ; Price bouncing upward?

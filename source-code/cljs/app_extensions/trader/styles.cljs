@@ -19,6 +19,10 @@
        "[data-subscribed=\"true\"]  .trader--sensor:hover { background-color: var( --soft-purple ) }"
        "[data-subscribed=\"false\"] .trader--sensor:hover { background-color: var( --color-highlight ) }"))
 
+(defn editor-style-rules
+  []
+  (str "#trader--editor [data-tooltip]:hover::after { background-color: rgb(60, 60, 60) !important; color: white }"))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -558,6 +562,7 @@
    :line-height      "12px"
    :overflow         "hidden"
    :padding          "6px"
+   :text-align       "left"
    :width            "356px"})
 
 (defn source-code-preview-icon-style

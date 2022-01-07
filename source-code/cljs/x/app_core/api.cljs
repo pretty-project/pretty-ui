@@ -23,6 +23,7 @@
               [x.app-core.event-handler      :as event-handler]
               [x.app-core.lifecycle-handler  :as lifecycle-handler]
               [x.app-core.login-handler      :as login-handler]
+              [x.app-core.print-handler      :as print-handler]
               [x.app-core.process-handler    :as process-handler]))
 
 
@@ -42,14 +43,9 @@
 (def get-storage-detail  config-handler/get-storage-detail)
 
 ; x.app-core.debug-handler
-(def console                   debug-handler/console)
-(def query-string->debug-mode? debug-handler/query-string->debug-mode?)
-(def query-string->debug-mode  debug-handler/query-string->debug-mode)
-(def debug-mode?               debug-handler/debug-mode?)
-(def debug-mode                debug-handler/debug-mode)
-(def get-debug-mode            debug-handler/get-debug-mode)
-(def debug-mode-detected?      debug-handler/debug-mode-detected?)
-(def store-debug-mode!         debug-handler/store-debug-mode!)
+(def get-debug-mode       debug-handler/get-debug-mode)
+(def debug-mode-detected? debug-handler/debug-mode-detected?)
+(def set-debug-mode!      debug-handler/set-debug-mode!)
 
 ; x.app-core.engine
 (def dom-value     engine/dom-value)
@@ -113,6 +109,9 @@
 ; x.app-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
 (def reg-lifecycles    lifecycle-handler/reg-lifecycles)
+
+; x.app-core.print-handler
+(def console print-handler/console)
 
 ; x.app-core.process-handler
 (def get-process-status    process-handler/get-process-status)

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.10.16
+; Created: 2022.01.07
 ; Description:
-; Version: v0.3.8
+; Version: v0.3.0
 ; Compatibility: x4.5.2
 
 
@@ -13,27 +13,26 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.debug-handler
-    (:require [server-fruits.http       :as http]
-              [x.mid-core.debug-handler :as debug-handler]))
+(ns x.server-core.print-handler
+    (:require [x.app-details :as details]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def query-string->debug-mode debug-handler/query-string->debug-mode)
+; @constant (string)
+(def CONSOLE-PREFIX (str "x" details/app-version " - "))
 
 
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request->debug-mode
-  ; @param (map) request
-  ;  {:query-string (string)}
+(defn console
+  ; @param (*) content
   ;
-  ; @return (string)
-  [request]
-  (let [query-string (http/request->query-string request)]
-       (query-string->debug-mode query-string)))
+  ; @return (*)
+  [content]
+  (let [prefixed-content (str CONSOLE-PREFIX content)]
+       (println prefixed-content)))

@@ -46,7 +46,7 @@
   [db _]
   (merge (r sync/get-response db :trader/download-log-data)
          (get-in db [:trader :listener])
-         {:log-visible? (get-in db [:trader :editor :log-visible?])}))
+         {:log-visible? (get-in db [:trader :editor :log-visible?] true)}))
 
 (a/reg-sub :trader/get-editor-log-props get-editor-log-props)
 
@@ -58,7 +58,9 @@
 (defn toggle-editor-log!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (update-in db [:trader :editor :log-visible?] not))
+  (if (some? (get-in db [:trader :editor :log-visible?]))
+      (update-in db [:trader :editor :log-visible?] not)
+      (assoc-in  db [:trader :editor :log-visible?] false)))
 
 (a/reg-event-db :trader/toggle-editor-log! toggle-editor-log!)
 
@@ -71,13 +73,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button {:layout :icon-button :icon :play_arrow :variant :transparent
-                    :indent :right :color :invert :on-click [:trader/test-source-code!]}])
+                    :indent :right :color :invert :on-click [:trader/test-source-code!]
+                    :tooltip "Test source code"}])
 
 (defn- toggle-log-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [log-visible?]}]
   [elements/button {:layout :icon-button :icon :terminal :variant :transparent
-                    :indent :right :color :invert :on-click [:trader/toggle-editor-log!]}])
+                    :indent :right :color :invert :on-click [:trader/toggle-editor-log!]
+                    :tooltip (if log-visible? "Hide log" "Show log")}])
 
 (defn- editor-log-menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -146,7 +150,8 @@
 (defn- editor
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
-  [:div {:style (styles/editor-style)}
+  [:div {:style (styles/editor-style) :id "trader--editor"}
+        [:style {:type "text/css"} (styles/editor-style-rules)]
         [:div {:style (styles/editor-structure-style)}
               [:div {:style (styles/editor-textarea-wrapper-style)}
                     [editor-textarea module-id module-props]]
@@ -175,7 +180,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/load-editor!
   {:dispatch-n [[:db/remove-item! [:trader :editor]]
-                [:ui/set-surface! ::view {:view {:content #'view}}]]})
+                [:ui/set-surface! ::view {:view {:content #'view}}]
+                [:ui/set-header-title! "Source code editor"]
+                [:ui/set-window-title! "Source code editor"]]})
 
 (a/reg-event-fx
   :trader/upload-source-code!
