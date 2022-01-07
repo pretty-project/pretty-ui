@@ -100,7 +100,7 @@
   [_ {:keys [synchronizing?]}]
   [elements/submit-button ::login-button
                           {:color      :primary
-                           :disabled?  synchronizing?
+                           :disabled?  synchronizing? 
                            :input-ids  [::email-address-field ::password-field]
                            :keypress   {:key-code 13 :required? true}
                            :label      :login!

@@ -122,7 +122,7 @@
   :trader/sync-subscriptions!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
-          {:dispatch-later [{:ms SYNC-TIMEOUT :dispatch [:trader/sync-subscriptions!]}]
+          {;:dispatch-later [{:ms SYNC-TIMEOUT :dispatch [:trader/sync-subscriptions!]}]
            :dispatch [:sync/send-query! :trader/sync-subscriptions!
                                         {:query       (r get-subscription-queries db)
                                          :target-path [:trader :sync :responses]}]}

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.29
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.0
+; Version: v0.7.4
+; Compatibility: x4.5.2
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-fruits.io
-    (:require [mid-fruits.candy  :refer [param]]
+    (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.io     :as io]
               [mid-fruits.pretty :as pretty]
               [mid-fruits.reader :as reader]
@@ -380,19 +380,22 @@
   ; @usage
   ;  (io/write-edn-file! "my-file.edn" {...})
   ;
-  ; @return (?)
+  ; @return (map)
   [filepath content & [options]]
   (let [output (pretty/mixed->string content options)]
-       (write-file! filepath (str "\n" output))))
+       (write-file! filepath (str "\n" output))
+       (return content)))
 
 (defn read-edn-file
   ; @param (string) filepath
   ;
-  ; @return (map)
+  ; @return (*)
   [filepath]
   (let [file-content (read-file filepath)]
        (if (-> file-content string/trim some?)
            (-> file-content reader/string->mixed))))
+           ; Az .edn fájl tartalma lehet string, map, vektor, stb. típus,
+           ; ezért a read-edn-file függvény kimenetén nem lehetséges típusvizsgálatot végezni!
 
 (defn swap-edn-file!
   ; @param (string) filepath
@@ -405,9 +408,10 @@
   ; @usage
   ;  (io/swap-edn-file! "my-file.edn" vector/conj-item "XYZ")
   ;
-  ; @return (nil)
+  ; @return (map)
   [filepath f & params]
   (let [edn    (read-edn-file    filepath)
         params (vector/cons-item params edn)
         output (apply          f params)]
-       (write-edn-file! filepath output)))
+       (write-edn-file! filepath output)
+       (return output)))

@@ -73,7 +73,6 @@
 
 (a/reg-event-fx
   :boot-loader/start-server!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
@@ -89,7 +88,6 @@
 
 (a/reg-event-fx
   :boot-loader/check-install!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-codename "checking installation ...")
@@ -101,13 +99,16 @@
 
 (a/reg-event-fx
   :boot-loader/initialize-server!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-codename "initializing server ...")
        ; 1. Az inicializálási események meghívása (Dispatch on-server-init events)
-      (println ":on-server-init-events:")
-      (println (str (r a/get-period-events db :on-server-init)))
+
+
+      ;(println ":on-server-init-events:")
+      ;(println (str (r a/get-period-events db :on-server-init)))
+
+
       {:dispatch-n (r a/get-period-events db :on-server-init)
        ; 2. Az inicializálási események lefutása után a szerver
        ;    betöltésének folytatása
@@ -115,13 +116,16 @@
 
 (a/reg-event-fx
   :boot-loader/boot-server!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-codename "booting server ...")
        ; 1. Az indítási események meghívása (Dispatch on-server-boot events)
-      (println ":on-server-boot-events:")
-      (println (str (r a/get-period-events db :on-server-boot)))
+
+
+      ;(println ":on-server-boot-events:")
+      ;(println (str (r a/get-period-events db :on-server-boot)))
+
+
       {:dispatch-n (r a/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
                        {:tick  50 :dispatch [:core/run-server! (r get-server-props db)]}
@@ -130,7 +134,6 @@
 
 (a/reg-event-fx
   :boot-loader/launch-server!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-codename "launching server ...")

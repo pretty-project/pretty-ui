@@ -67,7 +67,7 @@
   (let [site-defaults (site-defaults-prototype site-defaults)]
        {:middleware [#(wrap-reload           % {:dirs SOURCE-DIRECTORY-PATHS})
                      #(wrap-keyword-params   %)
-                     #(wrap-json-body        % {:keywords? true})
+                    ;#(wrap-json-body        % {:keywords? true})
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})
                      #(wrap-multipart-params %)

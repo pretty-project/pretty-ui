@@ -395,7 +395,7 @@
                       ; Szükséges a process-progress értékét nullázni!
                       ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
                       (r a/set-process-progress! % request-id 0))
-      ; Dispatch request on-sent event
+       ; Dispatch request on-sent event
        :dispatch (r get-request-on-sent-event db request-id)}))
 
 (a/reg-event-fx

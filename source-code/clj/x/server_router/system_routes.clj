@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.15
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.4.9
+; Version: v0.4.8
+; Compatibility: x4.5.2
 
 
 
@@ -14,10 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.system-routes
-    (:require [x.boot-synchronizer :as boot-synchronizer]
-              [x.server-core.api   :as a]
-              [x.server-media.api  :as media]
-              [x.server-user.api   :as user]))
+    (:require [x.boot-synchronizer      :as boot-synchronizer]
+              [x.server-core.api        :as a]
+              [x.server-environment.api :as environment]
+              [x.server-media.api       :as media]
+              [x.server-user.api        :as user]))
 
 
 
@@ -28,9 +29,13 @@
 ;  {:my-route {:route-template "/my-route"
 ;              :get  {:handler my-get-handler}
 ;              :post {:handler my-post-handler}}}
-(def SYSTEM-ROUTES {:synchronize-app
+(def SYSTEM-ROUTES {:boot-synchronizer/synchronize-app
                     {:route-template "/synchronize-app"
                      :get {:handler boot-synchronizer/download-sync-data}}
+
+                    :environment/robots.txt
+                    {:route-template "/robots.txt"
+                     :get {:handler environment/download-robots-txt}}
 
                     ; WARNING! DEPRECATED! DO NOT USE!
                     ;  Ha majd a media extension kezeli a szerver oldali fájlkezelést,

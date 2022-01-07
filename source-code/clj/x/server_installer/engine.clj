@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.4.6
+; Version: v0.5.6
+; Compatibility: x4.5.2
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.server-installer.engine
     (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
               [mid-fruits.time   :as time]
               [server-fruits.io  :as io]
               [x.app-details     :as details]
@@ -99,18 +98,19 @@
 
 (defn- ->server-installed
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (println details/app-codename "installed version:" details/app-version)
   (let [install-details (install-details-prototype)]
        (if (io/file-exists?       a/SERVER-CONFIG-FILEPATH)
            (do (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))
            (do (io/create-file!   a/SERVER-CONFIG-FILEPATH)
-               (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details))))
-  ;
-  (println details/app-codename "exiting ...")
-  (System/exit 0))
+               (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)))))
 
-(a/reg-handled-fx :installer/->server-installed ->server-installed)
+  ; Sikeres telepítés után elindítja a szervert ...
+  ; (println details/app-codename "exiting ...")
+  ; (System/exit 0)
+
+(a/reg-fx :installer/->server-installed ->server-installed)
 
 
 
@@ -137,5 +137,6 @@
       (if (and (r module-installed? db :db)
                (r module-installed? db :media)
                (r module-installed? db :user))
-          [:installer/->server-installed]
+          {:installer/->server-installed nil
+           :dispatch [:boot-loader/start-server!]}
           (println details/app-codename "installation error"))))

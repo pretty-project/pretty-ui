@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.5.0
+; Version: v0.9.6
+; Compatibility: x4.5.2
 
 
 
@@ -93,9 +93,9 @@
 (defn- config-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [project-config-file-content (io/read-edn-file PROJECT-CONFIG-FILEPATH)
-        server-config-file-content  (io/read-edn-file SERVER-CONFIG-FILEPATH)
-        server-configs              (merge project-config-file-content server-config-file-content)]
+  (let [project-config (io/read-edn-file PROJECT-CONFIG-FILEPATH)
+        server-config  (io/read-edn-file SERVER-CONFIG-FILEPATH)
+        server-configs (merge project-config server-config)]
        (event-handler/dispatch [:core/store-configs! server-configs])))
 
 (event-handler/reg-handled-fx :core/config-server! config-server!)

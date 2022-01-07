@@ -1,15 +1,17 @@
 
+# log files
+monoset-environment/log
+
 # uploaded files
-media/storage/*
-media/thumbnails/*
+monoset-environment/media/storage/*
+monoset-environment/media/thumbnails/*
 
 # default thumbnail & sample file
-!media/thumbnails/default.png
-!media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png
+!monoset-environment/media/thumbnails/default.png
+!monoset-environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png
 
 # monoset files
-x.server-config.edn
-resources/public/robots.txt
+monoset-environment/x.server-config.edn
 
 # system files
 .DS_Store

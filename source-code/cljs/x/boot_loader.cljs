@@ -166,7 +166,6 @@
 
 (a/reg-event-fx
   :boot-loader/start-app!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -183,7 +182,6 @@
 
 (a/reg-event-fx
   :boot-loader/initialize-app!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -199,7 +197,6 @@
 
 (a/reg-event-fx
   :boot-loader/boot-app!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -215,7 +212,6 @@
 
 (a/reg-event-fx
   :boot-loader/build-app!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -239,7 +235,6 @@
 
 (a/reg-event-fx
   :boot-loader/launch-app!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {; Az útvonalhoz tartozó esemény meghívása

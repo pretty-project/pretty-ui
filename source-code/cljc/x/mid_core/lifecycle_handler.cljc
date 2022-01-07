@@ -145,8 +145,8 @@
 
   ([life-id lifecycles]
    ; DEBUG
-   (println (str (count (keys @LIFES)))
-            (str life-id))
+;   (println (str (count (keys @LIFES)))
+;            (str life-id)]
 
    ; - Az x4.5.1 verzióig a reg-lifecycles függvény az életciklusok adatait közvetlenül
    ;   (reset! függvény használatával) írta a Re-Frame adatbázisba.

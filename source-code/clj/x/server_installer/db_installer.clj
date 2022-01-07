@@ -6,7 +6,7 @@
 ; Created: 2021.10.18
 ; Description:
 ; Version: v0.2.4
-; Compatibility: x4.4.6
+; Compatibility: x4.5.2
 
 
 
@@ -29,5 +29,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (println details/app-codename "installing module: db")
-      {:db       (r engine/->module-installed db :db)
-       :dispatch [:mongo-db/connect!]}))
+      {:db       (r engine/->module-installed db :db)}))
+      ;:dispatch [:mongo-db/build-connection!]

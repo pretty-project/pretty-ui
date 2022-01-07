@@ -615,7 +615,6 @@
 
 (a/reg-event-fx
   :router/initialize!
-  [a/self-destruct!]
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]; Set default routes
       {:db (as-> db % (r set-default-routes! % DEFAULT-ROUTES)
