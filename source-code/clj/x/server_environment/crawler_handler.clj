@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def ROBOTS-TXT-FILEPATH "monoset-config/robots.txt")
+(def ROBOTS-TXT-FILEPATH "monoset-environment/robots.txt")
 
 
 

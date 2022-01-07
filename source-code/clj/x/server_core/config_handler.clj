@@ -24,13 +24,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def PROJECT-CONFIG-FILEPATH "monoset-config/x.project-config.edn")
+(def PROJECT-CONFIG-FILEPATH "monoset-environment/x.project-config.edn")
 
 ; @constant (string)
-(def SITE-CONFIG-FILEPATH    "monoset-config/x.site-config.edn")
+(def SITE-CONFIG-FILEPATH    "monoset-environment/x.site-config.edn")
 
 ; @constant (string)
-(def SERVER-CONFIG-FILEPATH  "monoset-config/x.server-config.edn")
+(def SERVER-CONFIG-FILEPATH  "monoset-environment/x.server-config.edn")
 
 
 

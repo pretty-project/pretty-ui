@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def LOG-PATH "monoset-config/log")
+(def LOG-PATH "monoset-environment/log")
 
 ; @constant (integer)
 (def MAX-LINE-COUNT 500)
