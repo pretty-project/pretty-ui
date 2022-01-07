@@ -54,8 +54,6 @@
   ; @param (string) interval
   ;  "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
   ; @param (integer) limit
-  ;  Min: 1
-  ;  Max: 200
   ;
   ; @return (s)
   [interval limit]
@@ -67,8 +65,6 @@
   ; @param (string) interval
   ;  "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
   ; @param (integer) limit
-  ;  Min: 1
-  ;  Max: 200
   ; @param (s)(opt) epoch-s
   ;
   ; @return (s)

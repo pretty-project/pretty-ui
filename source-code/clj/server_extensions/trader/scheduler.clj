@@ -48,7 +48,7 @@
               (tt/start!)
               (initialize-tasks! options)
               (a/dispatch [:db/set-item! [:trader :scheduler :initialized?] true])
-              (a/dispatch [:trader/log! :trader/scheduler (str "Initializing scheduler {:boot-delay " DEFAULT-BOOT-DELAY "s :interval 60s} ...")]))))
+              (a/dispatch [:trader/log! (str "Initializing scheduler {:boot-delay " DEFAULT-BOOT-DELAY "s :interval 60s} ...")]))))
 
 
 

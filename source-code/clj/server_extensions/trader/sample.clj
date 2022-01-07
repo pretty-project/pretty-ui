@@ -38,7 +38,7 @@
                    ; Nincs elegendő adat a kline-datában, kellenek régebbi periodusok is!
                    ; Ha price-inc-from-minimum, akkor ne nyisson poziciot, mert nagy a zuhanas
                    (do (println "PRICE INC FROM MINIMUM WARNING!")
-                       (a/dispatch [:trader/log! :trader/listener "PRICE INC FROM MINIMUM WARNING!" {:warning? true}])))
+                       (a/dispatch [:trader/log! "PRICE INC FROM MINIMUM WARNING!" {:warning? true}])))
                (if (and (>= mountain-highness MINIMUM-MOUNTAIN-HIGHNESS)
                         (>= mountain-duration MINIMUM-MOUNTAIN-DURATION))
                    (let [_ (println "Limits OK")
@@ -47,10 +47,10 @@
                                                 " minutes long and " mountain-highness " USD high Rocky Mountains period")]
                         (println "mountain-highness:" mountain-highness "USD")
                         (println "message:"           message)
-                        (a/dispatch [:trader/log! :trader/listener message {:warning? true}])
+                        (a/dispatch [:trader/log! message {:warning? true}])
                         {:mountain-duration mountain-duration
                          :mountain-highness mountain-highness})
                    (let [] ; TEMP
                         (println "Limits NOT OK")
-                        (a/dispatch [:trader/log! :trader/listener (str "mountain-highness tul kicsi: " mountain-highness " " mountain-duration) {:warning? true}])
+                        (a/dispatch [:trader/log! (str "mountain-highness tul kicsi: " mountain-highness " " mountain-duration) {:warning? true}])
                         (return false))))))

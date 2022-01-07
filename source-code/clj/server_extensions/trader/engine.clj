@@ -136,6 +136,28 @@
                     "&limit="    limit
                     "&from="     query-from)))
 
+(defn kline-data-uri-list
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) uri-props
+  ;  {:interval (string)
+  ;   :limit (integer)}
+  ;
+  ; @return (strings in vector)
+  [{:keys [interval] :as uri-props}]
+  (letfn [(f [uri-list {:keys [limit] :as uri-props} lap]
+             (if (> limit 200)
+                 ; If limit is greater than 200 ...
+                 (let [uri-props (merge uri-props {:limit 200 :from (query-from interval (* lap 200))})]
+                      (f (cons (kline-data-uri uri-props) uri-list)
+                         (assoc uri-props :limit (- limit 200))
+                         (inc lap)))
+                 ; If limit is NOT greater than 200 ...
+                 (let [uri-props (merge uri-props {:limit limit :from (query-from interval (+ limit (* (dec lap) 200)))})]
+                      (cons (kline-data-uri uri-props) uri-list))))]
+         ; *
+         (vec (f [] uri-props 1))))
+
 
 
 ;; ----------------------------------------------------------------------------

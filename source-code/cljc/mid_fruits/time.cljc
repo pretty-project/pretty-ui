@@ -34,6 +34,32 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn ms->s [n] (/ n 1000))
+(defn ms->m [n] (/ n 60000))
+(defn ms->h [n] (/ n 3600000))
+(defn ms->D [n] (/ n 86400000))
+(defn ms->W [n] (/ n 604800000))
+(defn s->ms [n] (* n 1000))
+(defn s->m  [n] (/ n 60))
+(defn s->h  [n] (/ n 3600))
+(defn s->D  [n] (/ n 86400))
+(defn s->W  [n] (/ n 604800))
+(defn m->ms [n] (* n 60000))
+(defn m->s  [n] (* n 60))
+(defn m->h  [n] (/ n 60))
+(defn m->D  [n] (/ n 1440))
+(defn m->W  [n] (/ n 10800))
+(defn h->ms [n] (* n 3600000))
+(defn h->s  [n] (* n 3600))
+(defn h->m  [n] (* n 60))
+(defn h->D  [n] (/ n 24))
+(defn h->W  [n] (/ n 168))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn epoch-ms
   ; @return (ms)
   []
@@ -57,7 +83,7 @@
   ;
   ; @return (string)
   [n]
-  #?(:clj (str (clj-time.coerce/from-long n))))
+  #?(:clj (if n (-> n clj-time.coerce/from-long str))))
 
 (defn epoch-s->timestamp-string
   ; @param (s) n
@@ -69,7 +95,7 @@
   ;
   ; @return (string)
   [n]
-  #?(:clj (str (clj-time.coerce/from-long (* n 1000)))))
+  #?(:clj (if n (-> n s->ms clj-time.coerce/from-long str))))
 
 
 
@@ -464,10 +490,10 @@
 
   ([n format]
    (if (some? n)
-       (let [hours        (format/leading-zeros (math/floor (/ n 36000000))       2)
-             minutes      (format/leading-zeros (rem (math/floor (/ n 60000)) 60) 2)
-             seconds      (format/leading-zeros (rem (math/floor (/ n  1000)) 60) 2)
-             milliseconds (format/leading-zeros (rem (math/floor n) 1000)         3)]
+       (let [hours        (format/leading-zeros      (-> n ms->h math/floor)       2)
+             minutes      (format/leading-zeros (rem (-> n ms->m math/floor) 60)   2)
+             seconds      (format/leading-zeros (rem (-> n ms->s math/floor) 60)   2)
+             milliseconds (format/leading-zeros (rem (-> n       math/floor) 1000) 3)]
             (case format :hhmmssmmm (str hours ":" minutes ":" seconds "." milliseconds)
                          :hhmmss    (str hours ":" minutes ":" seconds))))))
 

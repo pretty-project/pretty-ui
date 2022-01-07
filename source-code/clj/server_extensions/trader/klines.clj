@@ -7,14 +7,26 @@
               [mid-fruits.time   :as time]
               [mid-fruits.vector :as vector]
               [x.server-core.api :as a]
+              [mid-extensions.trader.klines    :as klines]
               [server-extensions.trader.engine :as engine]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-extensions.trader.klines
+(def kline-data-repetition-error klines/kline-data-repetition-error)
+(def kline-data-time-error       klines/kline-data-time-error)
+(def kline-data-limit-error      klines/kline-data-limit-error)
+(def kline-data-error            klines/kline-data-error)
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn update-kline-item
+(defn receive-kline-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) kline-item
@@ -49,14 +61,16 @@
                       (assoc  :low             (reader/read-str low))
                       (assoc  :volume          (reader/read-str volume)))))
 
-(defn update-kline-data
+(defn receive-kline-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) kline-data
   ;  {:kline-list (maps in vector)}
   ;
   ; @return (map)
-  ;  {:kline-list (maps in vector)}
+  ;  {:kline-list (maps in vector)
+  ;   :total-high (integer)
+  ;   :total-low (integer)}
   [{:keys [kline-list] :as kline-data}]
   (letfn [(f [{:keys [total-high total-low] :as o} {:keys [close open] :as x}]
              (let [close (reader/read-str close)
@@ -76,7 +90,7 @@
                             (and (some? total-low)  (> total-low  close))
                             (assoc :total-low close)
                             ; Update kline-item ...
-                            :update-kline-item (update :kline-list vector/conj-item (update-kline-item x)))))]
+                            :update-kline-item (update :kline-list vector/conj-item (receive-kline-item x)))))]
          (reduce f (dissoc kline-data :kline-list) kline-list)))
 
 
@@ -84,17 +98,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn response->kline-data
+(defn check-kline-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) response
+  ; @param (map) kline-data
+  ; @param (map) options
   ;
   ; @return (map)
-  ;  {:kline-list (maps in vector)}
-  [response]
-  (-> response (engine/GET-response->body)
-               (map/rekey-item :result :kline-list)
-               (update-kline-data)))
+  ;  {:error (namespaced keyword)}
+  [kline-data options]
+  (if-let [error (kline-data-error kline-data options)]
+          (assoc  kline-data :error error)
+          (return kline-data)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn request-kline-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,8 +123,6 @@
   ;  {:interval (string)
   ;    "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
   ;   :limit (integer)
-  ;    Min: 1
-  ;    Max: 200
   ;   :symbol (string)
   ;    "ETHUSD", "BTCUSD"
   ;   :use-mainnet? (boolean)(opt)
@@ -116,11 +134,16 @@
   ;   :low (integer)
   ;   :symbol (string)
   ;   :time-now (integer)
-  ;   :timestamp (string)
-  ;   :uri (string)}
+  ;   :uri-list (strings in vector)}
   [{:keys [symbol] :as options}]
-  (let [uri      (engine/kline-data-uri options)
-        response (client/get            uri)]
-       (-> response (response->kline-data)
-                    (assoc :symbol symbol)
-                    (assoc :uri    uri))))
+  ; Az api.bybit.com szerver által elfogadott maximális limit érték 200, ezért az annál több
+  ; periódust igénylő lekéréseket több részletben küldi el, majd dolgozza fel a válaszokat.
+  (let [uri-list   (engine/kline-data-uri-list options)
+        kline-data {:symbol symbol :uri-list uri-list :time-now (time/epoch-s)}]
+       (letfn [(f [o uri]
+                  (let [response   (-> uri      client/get)
+                        kline-list (-> response engine/GET-response->body :result)]
+                       (-> o (update :kline-list vector/concat-items kline-list))))]
+              (-> (reduce f kline-data uri-list)
+                  (receive-kline-data)
+                  (check-kline-data options)))))

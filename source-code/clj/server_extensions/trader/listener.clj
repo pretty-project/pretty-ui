@@ -15,14 +15,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (s)
-(def TIMER-INTERVAL 5)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- get-source-code
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -36,16 +28,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn run-source-code!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) source-code
+  [source-code]
+  (let [market-data (a/subscribed [:db/get-item [:trader :market]])
+        source-code (str "(defn operator [market-data] " source-code ") (operator \"x\")")
+        _ (println (str source-code))
+        result (try (load-string source-code)
+                    (catch       Exception e (a/dispatch [:trader/log! (str e) {:warning? true}])))]
+       (if (string/nonempty? result)
+           (a/dispatch [:trader/log! result {:highlighted? true}]))))
+
 (defn run-listener!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [source-code (get-source-code)]
        (if (string/nonempty? source-code)
-           (let [result (try (load-string source-code)
-                             (catch       Exception e (str e)))]
-                (if (string/nonempty? result)
-                    (a/dispatch [:trader/log! :trader/listener result {:highlighted? true}])))
-           (a/dispatch [:trader/log! :trader-listener "No source-code found error" {:warning? true}]))))
+           (run-source-code! source-code)
+           (a/dispatch [:trader/log! "No source-code found error" {:warning? true}]))))
 
 (a/reg-fx :trader/run-listener! run-listener!)
 
@@ -61,12 +63,12 @@
   ;  {:listener-active? (boolean)}
   [env _]
   (if (a/subscribed [:db/get-item [:trader :listener :listener-active?]])
-      (do ;(a/dispatch [:trader/log! :trader/listener "Deactivating listener ..."])
-          (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] false])
+      (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] false])
+          (a/dispatch      [:trader/log! "Deactivating listener ..."])
           {:listener-active? false
            :check (a/subscribed [:db/get-item [:trader :listener :listener-active?]])})
-      (do ;(a/dispatch [:trader/log! :trader/listener "Activating listener ..."])
-          (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] true])
+      (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] true])
+          (a/dispatch      [:trader/log! "Activating listener ..."])
           {:listener-active? true
            :check (a/subscribed [:db/get-item [:trader :listener :listener-active?]])})))
 

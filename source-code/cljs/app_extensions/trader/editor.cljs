@@ -67,9 +67,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle-log-button
+(defn- test-source-code-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
+  [elements/button {:layout :icon-button :icon :play_arrow :variant :transparent
+                    :indent :right :color :invert :on-click [:trader/test-source-code!]}])
+
+(defn- toggle-log-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [log-visible?]}]
   [elements/button {:layout :icon-button :icon :terminal :variant :transparent
                     :indent :right :color :invert :on-click [:trader/toggle-editor-log!]}])
 
@@ -77,6 +83,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/editor-log-menu-bar-style)}
+        [test-source-code-button         module-id module-props]
         [toggle-log-button               module-id module-props]
         [listener/toggle-listener-button module-id module-props]])
 
@@ -176,3 +183,10 @@
   (fn [{:keys [db]}]
       [:sync/send-query! :trader/synchronize!
                          {:query [:debug `(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))
+
+(a/reg-event-fx
+  :trader/test-source-code!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]}]
+      [:sync/send-query! :trader/synchronize!
+                         {:query [:debug `(trader/test-source-code! ~{:source-code (r get-source-code db)})]}]))

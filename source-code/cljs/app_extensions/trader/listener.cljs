@@ -45,6 +45,7 @@
                     :preset (if listener-active? :warning-icon-button :muted-icon-button)
                     :on-click [:trader/toggle-listener!]}])
 
+
 (defn- listener
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]

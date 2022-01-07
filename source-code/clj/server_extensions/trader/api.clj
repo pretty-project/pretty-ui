@@ -1,6 +1,7 @@
 
 (ns server-extensions.trader.api
     (:require [server-extensions.trader.account]
+              [server-extensions.trader.debug]
               [server-extensions.trader.editor]
               [server-extensions.trader.engine]
               [server-extensions.trader.klines]

@@ -5,41 +5,8 @@
               [pathom.api        :as pathom]
               [prototypes.api    :as prototypes]
               [x.server-core.api :as a]
+              [server-extensions.trader.listener     :as listener]
               [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- upload-source-code-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;
-  ; @return (namespaced map)
-  ;  {:trader/source-code (string)
-  ;   :trader/id (string)}
-  [{:keys [request]} mutation-props]
-  (let [source-code (get mutation-props :source-code)
-        document    {:trader/source-code (param source-code)
-                     :trader/id          "listener-details"}]
-       (mongo-db/upsert-document! "trader" document
-                                  {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
-
-(defmutation upload-source-code!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (map)
-             ;  {:trader/source-code (string)
-             ;   :trader/id (string)}}
-             [env mutation-props]
-             {::pco/op-name 'trader/upload-source-code!}
-             (upload-source-code-f env mutation-props))
 
 
 
@@ -75,7 +42,68 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- test-source-code-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) mutation-props
+  ;
+  ; @return (?)
+  [{:keys [request]} mutation-props]
+  (let [source-code (get mutation-props :source-code)]
+       (listener/run-source-code! source-code)))
+
+(defmutation test-source-code!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;
+             ; @return (?)
+             [env mutation-props]
+             {::pco/op-name 'trader/test-source-code!}
+             (test-source-code-f env mutation-props))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- upload-source-code-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) mutation-props
+  ;
+  ; @return (namespaced map)
+  ;  {:trader/source-code (string)
+  ;   :trader/id (string)}
+  [{:keys [request]} mutation-props]
+  (let [source-code (get mutation-props :source-code)
+        document    {:trader/source-code (param source-code)
+                     :trader/id          "listener-details"}]
+       (mongo-db/upsert-document! "trader" document
+                                  {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
+
+(defmutation upload-source-code!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;
+             ; @return (namespaced map)
+             ;  {:trader/source-code (string)
+             ;   :trader/id (string)}}
+             [env mutation-props]
+             {::pco/op-name 'trader/upload-source-code!}
+             (upload-source-code-f env mutation-props))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @constant (functions in vector)
-(def HANDLERS [download-editor-data upload-source-code!])
+(def HANDLERS [download-editor-data test-source-code! upload-source-code!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
