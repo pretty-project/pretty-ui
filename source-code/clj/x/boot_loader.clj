@@ -18,7 +18,7 @@
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-views.api]
-              [mid-fruits.candy       :refer [param]]
+              [mid-fruits.candy       :refer [param return]]
               [x.app-details          :as details]
               [x.server-core.api      :as a :refer [r]]
               [x.server-db.api        :as db]

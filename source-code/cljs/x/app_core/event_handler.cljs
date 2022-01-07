@@ -112,9 +112,7 @@
                               :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)]
                                            (when (context->error-catched? error-context)
                                                  (let [error-event [ERROR-EVENT-ID (context->error-props %1)]]
-                                                      (do ; TEMP
-                                                          (println (str %1))
-                                                          (dispatch error-event))))
+                                                      (dispatch error-event)))
                                            (return %1))))
 
 (defn- interceptors<-system-interceptors
@@ -124,7 +122,8 @@
   ;
   ; @return (vector)
   [interceptors]
-  (vector/conj-item interceptors LOG-EVENT! CHECK-DB!))
+  (vector/conj-item interceptors LOG-EVENT!))
+ ;(vector/conj-item interceptors LOG-EVENT! CHECK-DB!)
 
 
 

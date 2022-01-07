@@ -337,7 +337,18 @@
   ;
   ; @return (boolean)
   [context]
-  (-> context context->db-before-effect map/nonempty? not))
+  (return false))
+
+  ; WARNING!
+  ; A Re-Frame adatbázis, esemény előtti vizsgálata az első esemény megtörténtekor hibát jelez,
+  ; mert az első esemény előtt még üres az adatbázis!
+  ; (-> context context->db-before-effect map/nonempty? not)
+
+  ; WARNING!
+  ; A Re-Frame adatbázis, esemény utáni vizsgálata minden olyan effect-event esemény után hibát
+  ; jelez, ahol nem történt adatbázis írás, mert olyankor az kontextus [:effects :db] értéke
+  ; üres marad!
+  ; (-> context context->db-after-effect  map/nonempty? not)
 
 (defn context->error-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -358,6 +369,9 @@
   ; @return (boolean)
   [{:keys [error-event-id] :as context}]
   (and (context->db-inconsistent? context)
+       ; - Szükséges megvizsgálni, hogy a vizsgált esemény azonosítója nem egyezik a hiba-esemény
+       ;   azonosítóval!
+       ; - A hiba-esemény vizsgálata végtelen ciklusba vezet!
        (-> context context->event-id (= error-event-id) not)))
 
 

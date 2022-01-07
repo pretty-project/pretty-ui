@@ -13,6 +13,8 @@
 
 
 # x4.5.0
+- A collection-handler kivándorolhat majd a local-db modulba
+
 - mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
 
 - pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne
