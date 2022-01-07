@@ -242,6 +242,19 @@
   (response-wrap (merge {:mime-type "text/html"
                          :status    200}
                         (param response-props))))
+  
+(defn json-wrap
+  ; @param (map) response-props
+  ;  {:body (string)}
+  ;
+  ; @usage
+  ;  (http/html-wrap {:body "<!DOCTYPE html> ..."})
+  ;
+  ; @return (map)
+  [response-props]
+  (response-wrap (merge {:mime-type "application/json"
+                         :status    200}
+                        (param response-props))))  
 
 (defn map-wrap
   ; @param (map) response-props

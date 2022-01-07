@@ -30,6 +30,7 @@
          venantius/accountant                            {:mvn/version "0.2.5"}
          yogthos/config                                  {:mvn/version "1.1.7"}
          cheshire/cheshire                               {:mvn/version "5.10.0"}
+         ring/ring-json                                  {:mvn/version "0.5.1"}
 
          ; Shadow-cljs
          com.google.javascript/closure-compiler-unshaded {:mvn/version "v20210302"}

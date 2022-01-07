@@ -21,6 +21,7 @@
               [ring.middleware.multipart-params :refer [wrap-multipart-params]]
               [ring.middleware.params           :refer [wrap-params]]
               [ring.middleware.reload           :refer [wrap-reload]]
+              [ring.middleware.json             :refer [wrap-json-body]]
               [ring.middleware.transit          :refer [wrap-transit-params]]
               [x.server-core.engine             :as engine]))
 
@@ -66,6 +67,7 @@
   (let [site-defaults (site-defaults-prototype site-defaults)]
        {:middleware [#(wrap-reload           % {:dirs SOURCE-DIRECTORY-PATHS})
                      #(wrap-keyword-params   %)
+                     #(wrap-json-body        % {:keywords? true})
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})
                      #(wrap-multipart-params %)
