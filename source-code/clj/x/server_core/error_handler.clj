@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.3.0
-; Compatibility: x4.5.0
+; Version: v0.3.2
+; Compatibility: x4.5.2
 
 
 
@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler
-    (:require [x.server-core.event-handler :as event-handler]
-              [x.server-core.print-handler :as print-handler]))
+    (:require [x.app-details :as details]
+              [x.server-core.event-handler :as event-handler]))
 
 
 
@@ -36,4 +36,4 @@
   ;
   ; @param (map) error-props
   (fn [error-props]
-      (print-handler/console DEFAULT-SERVER-ERROR)))
+      (println details/app-codename DEFAULT-SERVER-ERROR)))

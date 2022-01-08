@@ -25,7 +25,6 @@
               [x.server-core.engine            :as engine]
               [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]
-              [x.server-core.print-handler     :as print-handler]
               [x.server-core.router-handler    :as router-handler]))
 
 
@@ -117,9 +116,6 @@
 ; x.server-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
 (def reg-lifecycles    lifecycle-handler/reg-lifecycles)
-
-; x.server-core.print-handler
-(def console print-handler/console)
 
 ; x.server-core.router-handler
 (def route-template->route-match router-handler/route-template->route-match)

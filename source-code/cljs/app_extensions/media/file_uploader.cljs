@@ -21,9 +21,9 @@
               [x.app-ui.api         :as ui]
               [app-extensions.media.context-menu   :as context-menu]
               [app-extensions.media.engine         :as engine]
-              [app-extensions.media.popup-geometry :as popup-geometry]
-              [x.app-tools.temporary-component
-               :refer [append-temporary-component! remove-temporary-component!]]))
+              [app-extensions.media.popup-geometry :as popup-geometry]))
+              ;[x.app-tools.temporary-component
+              ; :refer [append-temporary-component! remove-temporary-component!]]))
 
 
 
@@ -516,14 +516,14 @@
   ; @param (keyword) uploader-id
   (fn [{:keys [db]} [event-id uploader-id]]
       (let [file-selector      (dom/get-element-by-id "x-file-selector")
-            any-file-selected? (dom/file-selector->any-file-selected? file-selector)
-            file-selector-data (dom/file-selector->file-selector-data file-selector)]
+            any-file-selected? (dom/file-selector->any-file-selected? file-selector)])))
+            ;file-selector-data (dom/file-selector->file-selector-data file-selector)]
             ; 1. Eltárolja a kiválasztott fájlok számát, méretét és egyéb adatait.
-           {:db (-> db (db/apply! [event-id (settings-item-path)
-                                   merge file-selector-data]))
+           ;{:db (-> db (db/apply! [event-id (settings-item-path)
+            ;                       merge file-selector-data)])))
             ; 2. Ha van kiválasztva fájl a fájltallózóval, akkor megnyitja
             ;    a fájlfeltöltő ablakot.
-            :dispatch-if [any-file-selected? [:file-uploader/render-file-previews! uploader-id]]})))
+            ;:dispatch-if [any-file-selected? [:file-uploader/render-file-previews! uploader-id]]])))
 
 (a/reg-event-fx
   :file-uploader/render-file-previews!
@@ -543,9 +543,9 @@
   ;
   ; @param (keyword) uploader-id
   ; @param (map) uploader-props
-  (fn [[uploader-id uploader-props]]
-      (append-temporary-component! [file-selector uploader-id uploader-props]
-                                   (param open-file-selector!))))
+  (fn [[uploader-id uploader-props]]))
+      ;(append-temporary-component! [file-selector uploader-id uploader-props]
+      ;                             (param open-file-selector!)]]))
 
 (a/reg-event-fx
   :file-uploader/load!

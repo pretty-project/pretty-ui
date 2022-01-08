@@ -117,7 +117,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def ILLEGAL-UNMOUNTING-ERROR "Illegal unmounting error")
+(def ILLEGAL-UNMOUNTING-ERROR "Illegal unmounting error!")
 
 ; @constant (ms)
 ;  A UI elem animált megjelenítésére rendelkezésre álló idő.

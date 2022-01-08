@@ -119,126 +119,15 @@
 ;; -- Filesize ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn B->KB
-  ; @param (B) filesize
-  ;
-  ; @example
-  ;  (io/B->KB 256)
-  ;  =>
-  ;  0.26
-  ;
-  ; @example
-  ;  (io/B->KB 65536)
-  ;  =>
-  ;  65.54
-  ;
-  ; @example
-  ;  (io/B->KB 1048576)
-  ;  =>
-  ;  1048.58
-  ;
-  ; @return (KB)
-  [filesize]
-  (.toFixed (/ filesize 1000) 2))
-
-(defn B->MB
-  ; @param (B) filesize
-  ;
-  ; @example
-  ;  (io/B->MB 256)
-  ;  =>
-  ;  0.00
-  ;
-  ; @example
-  ;  (io/B->MB 65536)
-  ;  =>
-  ;  0.07
-  ;
-  ; @example
-  ;  (io/B->MB 1048576)
-  ;  =>
-  ;  1.05
-  ;
-  ; @return (MB)
-  [filesize]
-  (.toFixed (/ filesize 1000000) 2))
-
-(defn B->GB
-  ; @param (B) filesize
-  ;
-  ; @example
-  ;  (io/B->GB 256)
-  ;  =>
-  ;  0.00
-  ;
-  ; @example
-  ;  (io/B->GB 33554432)
-  ;  =>
-  ;  0.03
-  ;
-  ; @return (GB)
-  [filesize]
-  (.toFixed (/ filesize 1000000000) 2))
-
-(defn KB->B
-  ; @param (KB) filesize
-  ;
-  ; @example
-  ;  (io/KB->B 10)
-  ;  =>
-  ;  10000
-  ;
-  ; @return (B)
-  [filesize]
-  (* filesize 1000))
-
-(defn KB->MB
-  ; @param (KB) filesize
-  ;
-  ; @example
-  ;  (io/KB->MB 10000)
-  ;  =>
-  ;  10.00
-  ;
-  ; @return (MB)
-  [filesize]
-  (.toFixed (/ filesize 1000) 2))
-
-(defn MB->B
-  ; @param (MB) filesize
-  ;
-  ; @example
-  ;  (io/MB->B 10)
-  ;  =>
-  ;  10000000
-  ;
-  ; @return (B)
-  [filesize]
-  (* filesize 1000000))
-
-(defn MB->KB
-  ; @param (MB) filesize
-  ;
-  ; @example
-  ;  (io/MB->KB 10)
-  ;  =>
-  ;  10000
-  ;
-  ; @return (KB)
-  [filesize]
-  (* filesize 1000))
-
-(defn MB->GB
-  ; @param (MB) filesize
-  ;
-  ; @example
-  ;  (io/MB->GB 400)
-  ;  =>
-  ;  0.4
-  ;
-  ; @return (GB)
-  [filesize]
-  (/ filesize 1000))
+(defn B->KB  [n] (/ n 1000))
+(defn B->MB  [n] (/ n 1000000))
+(defn B->GB  [n] (/ n 1000000000))
+(defn KB->B  [n] (* n 1000))
+(defn KB->MB [n] (/ n 1000))
+(defn KB->GB [n] (/ n 1000000))
+(defn MB->B  [n] (* n 1000000))
+(defn MB->KB [n] (* n 1000))
+(defn MB->GB [n] (/ n 1000))
 
 
 

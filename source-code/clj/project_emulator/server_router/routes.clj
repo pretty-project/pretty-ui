@@ -4,6 +4,7 @@
 
 (ns project-emulator.server-router.routes
     (:require [pathom.api         :as pathom]
+              [sente.api          :as sente]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]
               [project-emulator.server-ui.api :as ui]))
@@ -32,7 +33,13 @@
 
       :db/query
       {:route-template "/query"
-       :post #(http/map-wrap {:body (pathom/process-request! %)})}})
+       :post #(http/map-wrap {:body (pathom/process-request! %)})}
+
+      ; WebSocket
+      :wss/channel
+      {:route-template "/chsk"
+       :get  #(sente/ring-ajax-get-or-ws-handshake %)
+       :post #(sente/ring-ajax-post                %)}})
 
 
 

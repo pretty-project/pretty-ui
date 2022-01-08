@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body
-    (:require [mid-fruits.candy     :refer [param]]
+    (:require [ring.middleware.anti-forgery]
+              [mid-fruits.candy     :refer [param]]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
               [x.server-core.api    :as a :refer [cache-control-uri]]
@@ -155,6 +156,12 @@
   [request {:keys [shield]}]
   [:body#x-body-container
     {:data-theme (user/request->user-settings-item request :selected-theme)}
+
+
+    (let [csrf-token (force ring.middleware.anti-forgery/*anti-forgery-token*)]
+         [:div#sente-csrf-token {:data-csrf-token csrf-token}])
+
+
     [:div#x-app-container]
     (if (some? shield)
         (param shield))])

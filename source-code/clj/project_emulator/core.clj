@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns project-emulator.core
-    (:require [shadow.cljs.devtools.server :as server]
+    (:require [sente.api]
+              [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
               [server-extensions.clients.api]
               [server-extensions.home.api]

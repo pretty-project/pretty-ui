@@ -17,7 +17,7 @@
   :storage/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ selected-option]]
-      (case selected-option :upload-files!     [:storage]
+      (case selected-option :upload-files!     [:storage/load-file-uploader!]
                             :create-directory! [:storage/render-new-directory-name-dialog!])))
 
 

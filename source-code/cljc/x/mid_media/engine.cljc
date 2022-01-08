@@ -54,6 +54,9 @@
 ; @constant (string)
 (def TEMPORARY-FILEPATH-BASE "media/temp/")
 
+; @constant (integer)
+(def MAXIMUM-DIRECTORY-ITEM-COUNT 256)
+
 
 
 ;; -- Helpers -----------------------------------------------------------------

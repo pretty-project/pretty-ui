@@ -89,7 +89,8 @@
 
 (defn decimals
   ; @param (integer or string) n
-  ; @param (integer) length
+  ; @param (integer)(opt) length
+  ;  Default: 2
   ;
   ; @example
   ;  (format/decimals nil 2)
@@ -107,25 +108,28 @@
   ;  "11.000"
   ;
   ; @return (string)
-  [n length]
-  (let [x     (str   n)
-        count (count x)]
-       (if ; If x is an empty string ...
-           (< count 1) x
-           ; If x is NOT an empty string ...
-           (if-let [separator-index (string/first-index-of x ".")]
-                   ; If x is contains "." ...
-                   (let [diff (- count separator-index length 1)]
-                        (cond ; If x is too long ...
-                              (> diff 0)
-                              (subs x 0 (+ separator-index (inc length)))
-                              ; If x is too short ...
-                              (< diff 0)
-                              (str x (trailing-zeros nil (- 0 diff)))
-                              ; If x is ...
-                              (= diff 0) x))
-                   ; If x is NOT contains "." ...
-                   (str x "." (trailing-zeros nil length))))))
+  ([n]
+   (decimals n 2))
+
+  ([n length]
+   (let [x     (str   n)
+         count (count x)]
+        (if ; If x is an empty string ...
+            (< count 1) x
+            ; If x is NOT an empty string ...
+            (if-let [separator-index (string/first-index-of x ".")]
+                    ; If x is contains "." ...
+                    (let [diff (- count separator-index length 1)]
+                         (cond ; If x is too long ...
+                               (> diff 0)
+                               (subs x 0 (+ separator-index (inc length)))
+                               ; If x is too short ...
+                               (< diff 0)
+                               (str x (trailing-zeros nil (- 0 diff)))
+                               ; If x is ...
+                               (= diff 0) x))
+                    ; If x is NOT contains "." ...
+                    (str x "." (trailing-zeros nil length)))))))
 
 (defn round
   ; @param (number) n

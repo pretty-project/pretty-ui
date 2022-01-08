@@ -1007,8 +1007,7 @@
   ;
   ; @return (float)
   [file-selector]
-  (reduce #(+ %1 (.-size %2))
-           (-> file-selector .-files array-seq)))
+  (reduce #(+ %1 (.-size %2)) 0 (-> file-selector .-files array-seq)))
 
 (defn file-selector->file-count
   ; @param (DOM-element) file-selector
@@ -1029,30 +1028,24 @@
   ;
   ; @return (strings in vector)
   [file-selector]
-  (vec (reduce #(conj %1 (.-type %2))
-               [] (-> file-selector .-files array-seq))))
+  (reduce #(conj %1 (.-type %2)) [] (-> file-selector .-files array-seq)))
 
 (defn file-selector->files-data
   ; @param (DOM-element) file-selector
   ;
   ; @return (maps in vector)
   [file-selector]
-  (vec (reduce #(conj %1 (file->file-data %2))
-               [] (-> file-selector .-files array-seq))))
+  (reduce #(conj %1 (file->file-data %2)) [] (-> file-selector .-files array-seq)))
 
-(defn file-selector->file-selector-data
+(defn file-selector->files-meta
   ; @param (DOM-element) file-selector
   ;
   ; @return (map)
-  ;  {:any-file-selected? (boolean)
-  ;   :file-count (integer)
-  ;   :files-data (maps in vector)
+  ;  {:file-count (integer)
   ;   :files-size (B)}
   [file-selector]
-  {:any-file-selected? (file-selector->any-file-selected? file-selector)
-   :file-count         (file-selector->file-count         file-selector)
-   :files-data         (file-selector->files-data         file-selector)
-   :files-size         (file-selector->files-size         file-selector)})
+  {:file-count (file-selector->file-count file-selector)
+   :files-size (file-selector->files-size file-selector)})
 
 (defn file-selector->file-object-url
   ; @param (DOM-element) file-selector

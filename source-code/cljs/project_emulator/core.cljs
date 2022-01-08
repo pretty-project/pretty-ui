@@ -1,8 +1,7 @@
 
-; WARNING! THIS IS AN OUTDATED VERSION OF A MONO-TEMPLATE FILE!
-
 (ns project-emulator.core
-    (:require [x.boot-loader]
+    (:require [sente.api]
+              [x.boot-loader]
               [app-extensions.clients.api]
               [app-extensions.home.api]
               [app-extensions.media.api]
