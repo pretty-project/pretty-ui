@@ -41,11 +41,22 @@
        ;   átirányított függvények elérhetők lesznek a clojure.core névtérben.
        ; - A wrap-reload az átirányított függvényeket tartalmazó névtér újratöltésekor
        ;   hibát jelez, hogy az átirányított függvények nevei már foglaltak a clojure.core névtérben,
-       ;   ezért szükséges azokat eltérő néven átirányítani.
-       (str "(def market-data " market-data ")\n "
-            "(def ^{:private true} mountain-highness server-extensions.trader.patterns/mountain-highness)\n "
-            "(def ^{:private false} mountain-length   server-extensions.trader.patterns/mountain-length)\n "
-            source-code)))
+       ;   ezért szükséges az átirányításoknak ^{:private true} metaadattal private-scope teret beállítani!
+       (str ; Market data
+            "(def market-data " market-data ") "
+            ; Pattern functions
+            "(def ^{:private true} mountain-length   server-extensions.trader.patterns/mountain-length) "
+            "(def ^{:private true} valley-length     server-extensions.trader.patterns/valley-length) "
+            "(def ^{:private true} mountain-highness server-extensions.trader.patterns/mountain-highness) "
+            "(def ^{:private true} valley-deepness   server-extensions.trader.patterns/valley-deepness) "
+            "(def ^{:private true} rising-length     server-extensions.trader.patterns/rising-length) "
+            "(def ^{:private true} falling-length    server-extensions.trader.patterns/falling-length) "
+            "(def ^{:private true} rising-highness   server-extensions.trader.patterns/rising-highness) "
+            "(def ^{:private true} falling-deepness  server-extensions.trader.patterns/falling-deepness) "
+            ; Re-Frame functions
+            "(def ^{:private true} subscribed x.server-core.api/subscribed) "
+            "(def ^{:private true} dispatch   x.server-core.api/dispatch) "
+            (param source-code))))
 
 (defn run-source-code!
   ; WARNING! NON-PUBLIC! DO NOT USE!

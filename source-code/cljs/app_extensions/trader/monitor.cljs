@@ -301,6 +301,15 @@
         [:span {:style (styles/monitor-chart-price-value-style)}
                (format/decimals (+ 0 total-low) 2)]])
 
+(defn- monitor-chart-x-labels
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [total-high total-low]}]
+  [:div {:style (styles/monitor-chart-x-labels-style)}
+        [elements/label {:content total-high :indent :right :style {:opacity ".2" :margin-right "24px"}
+                         :font-weight :extra-bold :layout :fit :font-size :m}]
+        [elements/label {:content total-low  :indent :right :style {:opacity ".2" :margin-right "24px"}
+                         :font-weight :extra-bold :layout :fit :font-size :m}]])
+
 (defn- monitor-chart-y-labels
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [kline-list] :as module-props}]
@@ -330,6 +339,8 @@
   [module-id {:keys [kline-list total-high total-low] :as module-props}]
   [:div {:style (styles/monitor-chart-style)
          :class "trader--monitor-chart"}
+        [monitor-chart-x-labels module-id module-props]
+        [monitor-details        module-id module-props]
         [:svg {:preserve-aspect-ratio "none" :view-box "0 0 100 100"
                :style (styles/monitor-chart-svg-style)}
               [:polyline {:points (diagram-close-points                      module-props)
@@ -337,7 +348,6 @@
         [:div {:style (styles/monitor-bars-overlay)}
               (diagram-bars module-props)]
         [monitor-chart-price-data module-id module-props]
-        [monitor-details          module-id module-props]
         [price-box                module-id module-props]
         [price-sensors            module-id module-props]
         [sync/synchronizing-label module-id module-props]])

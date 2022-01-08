@@ -44,10 +44,10 @@
   ;
   ; @usage
   ;  [:boot-synchronizer/synchronize-app! #'app]
-  (fn [_ [_ app]]
+  (fn [cofx [_ app]]
       [:sync/send-request! :boot-synchronizer/synchronize-app!
                            {:method       :get
-                            :on-failure   [:core/->error-catched]
+                            :on-failure   [:core/->error-catched {:cofx cofx :error "Failed to synchronize app!"}]
                             :on-success   [:boot-loader/->app-synchronized app]
                             :target-paths TARGET-PATHS
                             :uri          "/synchronize-app"}]))

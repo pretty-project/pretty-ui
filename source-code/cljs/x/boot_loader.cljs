@@ -28,6 +28,7 @@
               [app-fruits.dom     :as dom]
               [app-fruits.reagent :as reagent]
               [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.map     :as map]
               [mid-fruits.string  :as string]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
@@ -254,12 +255,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
+  ; @param (map) server-response
   ;
   ; @usage
-  ;  [:boot-loader/->app-synchronized #'app]
-  (fn [{:keys [db]} [_ app x]]
+  ;  [:boot-loader/->app-synchronized #'app {...}]
+  (fn [{:keys [db] :as cofx} [_ app server-response]]
       (let [app-build (r a/get-app-detail db :app-build)]
-           {:dispatch-n  ; 1.
-                        [[:environment/set-cookie! :x-app-build {:value app-build}]
-                         ; 2.
-                         [:boot-loader/initialize-app! app]]})))
+           {:dispatch-if [(-> server-response map/nonempty? not)
+                          [:core/->error-catched {:cofx cofx :error "Failed to synchronize app!"}]]
+            :dispatch-n  ; 1.
+                         [[:environment/set-cookie! :x-app-build {:value app-build}]
+                          ; 2.
+                          [:boot-loader/initialize-app! app]]})))

@@ -17,9 +17,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :listener])
+         (r sync/get-response db :trader/download-listener-data)
          ; XXX#4066
          {:responsed?  (r sync/synchronized? db)
           :subscribed? true}))
+
 
 (a/reg-sub :trader/get-listener-props get-listener-props)
 
@@ -53,7 +55,11 @@
   [:div {:style (styles/box-structure-style)}
         [:div {:style (styles/box-body-style)}
               [:div {:style (styles/overlay-center-style)}
-                    [source-code-preview module-id module-props]]
+                    [source-code-preview module-id module-props]
+                    ; TEMP
+                    [elements/button {:label "Set margin"
+                                      :on-click [:trader/set-margin!]}]]
+
               [:div {:style (styles/box-tc-controls-style)}
                     [elements/label {:content "Danger zone" :color :secondary :font-weight :extra-bold :font-size :l}]]
               [:div {:style (styles/box-tr-controls-style)}
@@ -84,3 +90,17 @@
       {:db (update-in db [:trader :listener :listener-active?] not)
        :dispatch [:sync/send-query! :trader/synchronize!
                                     {:query [:debug `(trader/toggle-listener! ~{})]}]}))
+
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  :trader/connect-to-listener!
+  (fn [{:keys [db]} _]
+      [:trader/subscribe-to-query! :trader/listener
+                                   {:query [`(:trader/download-listener-data ~{})]}]))
+
+(a/reg-event-fx
+  :trader/set-margin!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ _]
+      [:sync/send-query! :trader/synchronize!
+                         {:query [:debug `(trader/upload-margin-data! ~{})]}]))

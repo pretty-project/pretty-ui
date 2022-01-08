@@ -25,9 +25,6 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def ERROR-EVENT-ID :core/->error-catched)
-
 ; @constant (string)
 (def EVENT-LOG-FILENAME "x.server-events.log")
 
@@ -42,15 +39,12 @@
 (def event-group-vector?              event-handler/event-group-vector?)
 (def event-vector->param-vector       event-handler/event-vector->param-vector)
 (def event-vector->event-id           event-handler/event-vector->event-id)
+(def cofx->event-vector               event-handler/cofx->event-vector)
+(def cofx->event-id                   event-handler/cofx->event-id)
 (def context->event-vector            event-handler/context->event-vector)
-(def context->empty-event-vector      event-handler/context->empty-event-vector)
-(def context->event-props             event-handler/context->event-props)
 (def context->event-id                event-handler/context->event-id)
 (def context->db-before-effect        event-handler/context->db-before-effect)
 (def context->db-after-effect         event-handler/context->db-after-effect)
-(def context->db-inconsistent?        event-handler/context->db-inconsistent?)
-(def context->error-props             event-handler/context->error-props)
-(def context->error-catched?          event-handler/context->error-catched?)
 (def param-vector->first-id           event-handler/param-vector->first-id)
 (def param-vector->second-id          event-handler/param-vector->second-id)
 (def param-vector->first-props        event-handler/param-vector->first-props)
@@ -77,7 +71,6 @@
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)
-(def dispatch-some                    event-handler/dispatch-some)
 (def dispatch-if                      event-handler/dispatch-if)
 (def dispatch-cond                    event-handler/dispatch-cond)
 (def dispatch-tick                    event-handler/dispatch-tick)
@@ -97,14 +90,6 @@
                                                      ;(logger/write! EVENT-LOG-FILENAME event-vector)
                                                       (return %1))))
 
-; @constant (?)
-(def CHECK-DB! (re-frame/->interceptor :id ::check-db!
-                                       :after #(let [error-context (assoc %1 :error-event-id ERROR-EVENT-ID)
-                                                     error-event   [ERROR-EVENT-ID (context->error-props %1)]]
-                                                    (when (context->error-catched? error-context)
-                                                          (re-frame/dispatch       error-event))
-                                                    (return %1))))
-
 (defn- interceptors<-system-interceptors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -113,7 +98,6 @@
   ; @return (vector)
   [interceptors]
   (vector/conj-item interceptors LOG-EVENT!))
- ;(vector/conj-item interceptors LOG-EVENT! CHECK-DB!)
 
 
 

@@ -4,7 +4,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.6
 ; Compatibility: x4.5.2
 
 
@@ -36,39 +36,26 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) error-id
+  ; @param (map) error-props
+  ;  {:error (string)(opt)}
   ;
   ; @return (string)
-  [db [_ error-id]]
-  (get-in db [::errors :data-items error-id :error]
-             (return DEFAULT-APPLICATION-ERROR)))
+  [_ [_ _ {:keys [error]}]]
+  (if (some? error)
+      (str error)
+      (str DEFAULT-APPLICATION-ERROR)))
 
 (defn- get-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) error-id
+  ; @param (map) error-props
   ;
   ; @return (string)
-  [db [_ error-id]]
-  (if (r debug-handler/debug-mode-detected? db)
-      (r get-developer-error-message        db error-id)
-      (return DEFAULT-APPLICATION-ERROR)))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- store-error-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) error-id
-  ; @param (map) error-props
-  ;  {:event-id (keyword)
-  ;   :error (string)}
-  ;
-  ; @return (map)
   [db [_ error-id error-props]]
-  (assoc-in db [::errors :data-items error-id] error-props))
+  (if (r debug-handler/debug-mode-detected? db)
+      (r get-developer-error-message        db error-id error-props)
+      (return DEFAULT-APPLICATION-ERROR)))
 
 
 
@@ -80,12 +67,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) error-id
-  ; @param (map) error-props
-  ;  {:event-id (keyword)
-  ;   :error (string)}
+  ; @param (map)(opt) error-props
+  ;  {:cofx (map)(opt)
+  ;   :error (string)(opt)}
+  ;
+  ; @usage
+  ;  [:core/->error-catched]
+  ;
+  ; @usage
+  ;  [:core/->error-catched {...}]
+  ;
+  ; @usage
+  ;  [:core/->error-catched :my-error {...}]
+  ;
+  ; @usage
+  ;  [:core/->error-catched {:error "An error occured ..."
+  ;                          :cofx  {...}}]
   (fn [{:keys [db]} event-vector]
-      (let [error-id    (event-handler/event-vector->second-id   event-vector)
-            error-props (event-handler/event-vector->first-props event-vector)]
-           {:db (as-> db % (r store-error-props!               % error-id error-props)
-                           (r load-handler/stop-synchronizing! %))
-            :dispatch [:ui/set-shield! {:content (r get-error-message db error-id)}]})))
+      (let [error-id      (event-handler/event-vector->second-id   event-vector)
+            error-props   (event-handler/event-vector->first-props event-vector)
+            error-message (r get-error-message db error-id error-props)
+            catched-event (-> error-props :cofx event-handler/cofx->event-vector)]
+           (.error js/console (str error-message "\n" catched-event))
+           {:db (r load-handler/stop-synchronizing! db)
+            :dispatch [:ui/set-shield! {:content error-message}]})))

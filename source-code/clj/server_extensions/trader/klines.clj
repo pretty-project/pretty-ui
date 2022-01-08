@@ -124,7 +124,7 @@
   ;    "1", "3", "5", "15", "30", "60", "120", "240", "360", "720", "D", "M", "W"
   ;   :limit (integer)
   ;   :symbol (string)
-  ;    "ETHUSD", "BTCUSD"
+  ;    "BTCUSD", "ETHUSD"
   ;   :use-mainnet? (boolean)(opt)
   ;    Default: false}
   ;

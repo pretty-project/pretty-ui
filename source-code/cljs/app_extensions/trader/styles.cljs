@@ -206,6 +206,18 @@
         :left  (css/percent sensor-left)
         :width (css/percent sensor-width)}))
 
+(defn monitor-chart-x-labels-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  {:display         "flex"
+   :flex-direction  "column"
+   :height          "100%"
+   :justify-content "space-between"
+   :padding         "60px 0 24px 0"
+   :position        "absolute"
+   :right           "0"
+   :top             "0"})
+
 (defn monitor-chart-y-labels-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []

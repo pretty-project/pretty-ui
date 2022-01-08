@@ -19,3 +19,7 @@
 (def valley-length               patterns/valley-length)
 (def mountain-highness           patterns/mountain-highness)
 (def valley-deepness             patterns/valley-deepness)
+(def rising-length               patterns/rising-length)
+(def falling-length              patterns/falling-length)
+(def rising-highness             patterns/rising-highness)
+(def falling-deepness            patterns/falling-deepness)

@@ -189,11 +189,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))
+                         {:query [`(trader/upload-source-code! ~{:source-code (r get-source-code db)})]}]))
 
 (a/reg-event-fx
   :trader/test-source-code!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(trader/test-source-code! ~{:source-code (r get-source-code db)})]}]))
+                         {:query [`(trader/test-source-code! ~{:source-code (r get-source-code db)})]}]))

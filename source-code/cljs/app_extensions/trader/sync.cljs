@@ -122,7 +122,7 @@
   :trader/sync-subscriptions!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
-          {;:dispatch-later [{:ms SYNC-TIMEOUT :dispatch [:trader/sync-subscriptions!]}]
+          {:dispatch-later [{:ms SYNC-TIMEOUT :dispatch [:trader/sync-subscriptions!]}]
            :dispatch [:sync/send-query! :trader/sync-subscriptions!
                                         {:query       (r get-subscription-queries db)
                                          :target-path [:trader :sync :responses]}]}
@@ -159,7 +159,7 @@
   :trader/receive-app-data!
   (fn [{:keys [db]} [_ server-response]]
       {:db (-> db (assoc-in  [:trader :settings]       (:trader/download-settings      server-response))
-                  (assoc-in  [:trader :listener]       (:trader/download-listener-data server-response))
+                  ;(assoc-in  [:trader :listener]       (:trader/download-listener-data server-response))
                   (assoc-in  [:trader :editor]         (:trader/download-editor-data   server-response))
                   (update-in [:trader :account]  merge (:trader/download-api-details   server-response)))}))
 
@@ -167,7 +167,7 @@
   :trader/download-app-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:sync/send-query! :trader/synchronize!
-                     {:query [:debug `(:trader/download-listener-data ~{})
+                     {:query [:debug ;`(:trader/download-listener-data ~{})
                                      `(:trader/download-settings      ~{})
                                      `(:trader/download-api-details   ~{})
                                      `(:trader/download-editor-data   ~{})]

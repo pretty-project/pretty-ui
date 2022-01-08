@@ -197,7 +197,7 @@
              ; @param (map) env
              ; @param (map) mutation-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/api-key (string)
              ;   :trader/use-mainnet? (boolean)
              ;   :trader/id (string)}}

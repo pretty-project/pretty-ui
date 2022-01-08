@@ -14,6 +14,7 @@
   {:dispatch-n [[:ui/listen-to-process! :trader/synchronize!]
                 [:trader/download-app-data!]
                 [:trader/connect-to-log!]
+                [:trader/connect-to-listener!]
                 [:trader/connect-to-account!]
                 [:trader/init-monitor!]
                 [:gestures/init-view-handler! :trader/controls {:default-view-id :log}]]})

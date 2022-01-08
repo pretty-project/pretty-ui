@@ -77,7 +77,7 @@
   ; @return (map)
   [select-id {:keys [autoclear? on-popup-closed on-select value-path]}]
   (let [popup-id (engine/element-id->extended-id select-id :popup)]
-       {:dispatch-some  on-select
+       {:dispatch on-select
         :dispatch-later [{:ms CLOSE-POPUP-DELAY :dispatch [:ui/close-popup! popup-id]}
                          (when (boolean autoclear?) ; XXX#0134
                                {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:elements/clear-input-value! select-id]})

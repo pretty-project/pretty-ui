@@ -120,22 +120,11 @@
 ;  {:dispatch-later [{:ms 100 :dispatch [...]}
 ;                    {:ms 200 :dispatch-n [[...] [...]]}]}
 ;
-; @name dispatch-some
-;  TODO ...
-;
 ; @name dispatch-if
 ;  TODO ...
 ;
 ; @name dispatch-cond
 ;  TODO ...
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def INCONSISTENT-DB-ERROR "Inconsistent database error")
 
 
 
@@ -238,8 +227,6 @@
                  (map/contains-key? event-map :dispatch)))))
 
 (defn event-vector->param-vector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (vector) event-vector
   ;
   ; @example
@@ -252,8 +239,6 @@
   (subvec event-vector 1))
 
 (defn event-vector->event-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (vector) event-vector
   ;
   ; @example
@@ -265,9 +250,34 @@
   [event-vector]
   (first event-vector))
 
-(defn context->event-vector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn cofx->event-vector
+  ; @param (map) cofx
+  ;  {:event (vector)}
   ;
+  ; @example
+  ;  (a/cofx->event-vector {:event [...]})
+  ;  =>
+  ;  [...]
+  ;
+  ; @return (vector)
+  [cofx]
+  (get cofx :event))
+
+(defn cofx->event-id
+  ; @param (map) cofx
+  ;  {:event (vector)
+  ;    [(keyword) event-id]}
+  ;
+  ; @example
+  ;  (a/cofx->event-vector {:event [:my-event ...]})
+  ;  =>
+  ;  :my-event
+  ;
+  ; @return (keyword)
+  [cofx]
+  (get-in cofx [:event 0]))
+
+(defn context->event-vector
   ; @param (map) context
   ;  {:coeffects (map)
   ;   {:event (vector)}}
@@ -276,32 +286,7 @@
   [context]
   (get-in context [:coeffects :event]))
 
-(defn context->empty-event-vector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;  {:coeffects (map)
-  ;   {:event (vector)}}
-  ;
-  ; @return (vector)
-  [context]
-  (let [event-vector (context->event-vector context)]
-       [(event-vector->event-id event-vector)]))
-
-(defn context->event-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;  {:coeffects (map)
-  ;   {:event (vector)}}
-  ;
-  ; @return (vector)
-  [context]
-  (-> context context->event-vector vector/shift-first-item))
-
 (defn context->event-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) context
   ;
   ; @return (keyword)
@@ -309,8 +294,6 @@
   (-> context context->event-vector event-vector->event-id))
 
 (defn context->db-before-effect
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) context
   ;  {:coeffects (map)
   ;   {:db (map)}}
@@ -320,8 +303,6 @@
   (get-in context [:coeffects :db]))
 
 (defn context->db-after-effect
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) context
   ;  {:effects (map)
   ;   {:db (map)}}
@@ -329,50 +310,6 @@
   ; @return (map)
   [context]
   (get-in context [:effects :db]))
-
-(defn context->db-inconsistent?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;
-  ; @return (boolean)
-  [context]
-  (return false))
-
-  ; WARNING!
-  ; A Re-Frame adatbázis, esemény előtti vizsgálata az első esemény megtörténtekor hibát jelez,
-  ; mert az első esemény előtt még üres az adatbázis!
-  ; (-> context context->db-before-effect map/nonempty? not)
-
-  ; WARNING!
-  ; A Re-Frame adatbázis, esemény utáni vizsgálata minden olyan effect-event esemény után hibát
-  ; jelez, ahol nem történt adatbázis írás, mert olyankor az kontextus [:effects :db] értéke
-  ; üres marad!
-  ; (-> context context->db-after-effect  map/nonempty? not)
-
-(defn context->error-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;
-  ; @return (map)
-  [context]
-  {:event-id (context->event-id context)
-   :error    INCONSISTENT-DB-ERROR})
-
-(defn context->error-catched?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context
-  ;  {:error-event-id (keyword)}
-  ;
-  ; @return (boolean)
-  [{:keys [error-event-id] :as context}]
-  (and (context->db-inconsistent? context)
-       ; - Szükséges megvizsgálni, hogy a vizsgált esemény azonosítója nem egyezik a hiba-esemény
-       ;   azonosítóval!
-       ; - A hiba-esemény vizsgálata végtelen ciklusba vezet!
-       (-> context context->event-id (= error-event-id) not)))
 
 
 
@@ -611,8 +548,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn event-vector<-params
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (event-vector) n
   ; @param (list of *) xyz
   ;
@@ -621,8 +556,6 @@
   (vector/concat-items n xyz))
 
 (defn metamorphic-event<-params
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (metamorphic-event) n
   ; @param (list of *) xyz
   ;
@@ -653,8 +586,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn event-vector->effects-map
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (vector) event-vector
   ;
   ; @return (map)
@@ -662,8 +593,6 @@
   {:dispatch event-vector})
 
 (defn event-vector->handler-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (vector) event-vector
   ;
   ; @return (function)
@@ -671,8 +600,6 @@
   (fn [_ _] {:dispatch event-vector}))
 
 (defn effects-map->handler-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) effects-map
   ;
   ; @return (function)
@@ -680,8 +607,6 @@
   (fn [_ _] effects-map))
 
 (defn metamorphic-event->handler-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (metamorphic-event) n
   ;
   ; @return (function)
@@ -696,8 +621,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn metamorphic-effects->effects-map
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (metamorphic-effects) n
   ;
   ; @example
@@ -768,8 +691,6 @@
 ;       {:dispatch ...}))
 
 (defn <-self-destruct!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) context
   ;
   ; @return (map)
@@ -955,29 +876,15 @@
   ; @param (metamorphic-events in vector) event-list
   ;
   ; @usage
-  ;  (dispatch-n
-  ;   [[:event-a]
-  ;    {:dispatch [:event-b]}
-  ;    (fn [_ _] {:dispatch [:event-c]})])
+  ;  (dispatch-n [[:event-a]
+  ;               {:dispatch [:event-b]}
+  ;               (fn [_ _] {:dispatch [:event-c]})])
   [event-list]
   (doseq [event (remove nil? event-list)]
          (dispatch event)))
 
 (registrar/clear-handlers :fx :dispatch-n)
 (re-frame/reg-fx :dispatch-n dispatch-n)
-
-(defn dispatch-some
-  ; @param (metamorphic-event) event
-  ;
-  ; @usage
-  ;  (dispatch-some [:my-event])
-  ;  (dispatch-some {:dispatch [:my-event]})
-  ;  (dispatch-some (fn [_ _] {:dispatch [:my-event]}))
-  [event-handler]
-  (if (some? event-handler)
-      (dispatch event-handler)))
-
-(re-frame/reg-fx :dispatch-some dispatch-some)
 
 (defn dispatch-if
   ; @param (*) condition
@@ -1043,35 +950,6 @@
 ;        [{:tick 10
 ;          :dispatch [:my-event]}]}))
 
-(defn- tick-now?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) effects-map
-  ;
-  ; @return (boolean)
-  [effects-map]
-  (= 0 (:tick effects-map)))
-
-(defn- tick-now!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) merged-effects-map
-  ; @param (map) effects-map
-  ;
-  ; @return (map)
-  [merged-effects-map effects-map]
-  (merge-effects-maps merged-effects-map effects-map))
-
-(defn- tick-later!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) merged-effects-map
-  ; @param (map) effects-map
-  ;
-  ; @return (map)
-  [merged-effects-map effects-map]
-  (update merged-effects-map :dispatch-tick vector/conj-item (update effects-map :tick dec)))
-
 (defn dispatch-tick
   ; @param (maps in vector) effects-maps-vector
   ;  [{ ... }
@@ -1096,7 +974,6 @@
   :dispatch-tick
   ; @param (maps in vector) effects-maps-vector
   ;  [{ ... }
-  ;
   ;   {:tick 10
   ;    :dispatch       [:my-event]
   ;    :dispatch-n     [[:my-event]]
@@ -1104,11 +981,14 @@
   ;
   ;   { ... }]
   (fn [_ [_ effects-maps-vector]]
-      (reduce #(if (tick-now?   %2)
-                   (tick-now!   %1 %2)
-                   (tick-later! %1 %2))
-               (param {})
-               (param effects-maps-vector))))
+      (letfn [(f [merged-effects-map effects-map]
+                 (if ; Tick now?
+                     (= 0 (:tick effects-map))
+                     ; Tick now!
+                     (merge-effects-maps merged-effects-map effects-map)
+                     ; Tick later!
+                     (update merged-effects-map :dispatch-tick vector/conj-item (update effects-map :tick dec))))]
+             (reduce f {} effects-maps-vector))))
 
 
 
@@ -1130,19 +1010,15 @@
 ;; -- Eyecandy functions ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A re-frame események függvényei a db paraméter után egy vektort fogadnak,
-; amelynek az első eleme az esemény azonosítója ami szinte kivétel nélkül soha
-; nincs használva.
-;
-; Ezeket a függvényeket a következő formula szerint kell használni:
-; (db/trim-partition! db [_ partition-id])
-;
-; Esztétikusabb ha nem kell ezzel a vektorral baszakodni, ezért létezik
-; az r nevű függvény, amelynek az egyetlen feladata, hogy egy másik
-; formula szerint is használhatóvá teszi a Re-frame események függvényeit.
-;
-; (r db/trim-partition! db partition-id)
-
+; - A Re-Frame események függvényei a db paraméter után egy paraméter-vektort fogadnak,
+;   amelynek az első eleme az esemény azonosítója, ami szinte kivétel nélkül soha
+;   nincs használva.
+; - A Re-Frame függvényeket a következő formula szerint lehetséges használni:
+;   (db/trim-partition! db [_ partition-id])
+; - Egyszerűbb, ha nem kell ezzel a vektorral baszakodni, ezért létezik
+;   az r nevű függvény, amelynek az egyetlen feladata, hogy egy másik
+;   formula szerint is használhatóvá teszi a Re-frame események függvényeit:
+;   (r db/trim-partition! db partition-id)
 (defn r
   ; @param (function) f
   ; @param (*) params

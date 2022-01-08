@@ -3,8 +3,18 @@
     (:require [clj-http.client   :as client]
               [mid-fruits.candy  :refer [param return]]
               [x.server-core.api :as a]
-              [server-extensions.trader.engine       :as engine]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [server-extensions.trader.engine :as engine]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; 2022.01.05 - 2022.01.07
+;  -650USD / 2d
+;
+; 2022.01.07, 3:00 AM - 8:20 AM
+;  -220USD / 5h
 
 
 
@@ -87,28 +97,30 @@
 (defn request-create-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) env
-  ; @param (map) resolver-props
+  ; @param (map) options
+  ;  {:api-key (string)
+  ;   :api-secret (string)
+  ;   :quantity (USD)
+  ;   :symbol (string)
+  ;    "BTCUSD", "ETHUSD"
+  ;   :use-mainnet? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @return (map)
-  [env _]
-  (let [;api-key      (pathom/env->param env :api-key)
-        ;api-secret   (pathom/env->param env :api-secret)
-        ;use-mainnet? (pathom/env->param env :use-mainnet?)
-        uri          (engine/create-order-uri) ;{:use-mainnet? use-mainnet?})
-        form-params (engine/POST-form-params {:api-key  ;  api-key
-                                              :api-secret ; api-secret
+  [{:keys [api-key api-secret quantity symbol use-mainnet?] :as options}]
+  (let [uri         (engine/create-order-uri {:use-mainnet?  use-mainnet?})
+        form-params (engine/POST-form-params {:api-key       api-key
+                                              :api-secret    api-secret
+                                              :qty           quantity
+                                              :symbol        symbol
                                               :order-type    "Limit"
                                               :price         "3792"
-                                              :side          "Sell"
-                                              :symbol        "ETHUSD"
-                                              :time-in-force "GoodTillCancel"
-                                              :qty           10000})
-        response     (client/post uri {:form-params form-params
-                                       :as :x-www-form-urlencoded})]
+                                              :side          "Buy"
+                                              :time-in-force "GoodTillCancel"})]))
 
-       (println "trader/order: post data to" uri)
-       (println (str (get response :body)))
-       {:body (get response :body)}))
+        ;response (client/post uri {:form-params form-params :as :x-www-form-urlencoded})]
+       ;(println "trader/order: post data to" uri)
+       ;(println (str (get response :body)))
+       ;{:body (get response :body)}))
 ;      (-> response (engine/POST-response->body response)
 ;                   (assoc :uri uri))

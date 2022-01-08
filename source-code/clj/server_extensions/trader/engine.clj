@@ -123,6 +123,7 @@
   ;    Min: 1
   ;    Max: 200
   ;   :symbol (string)
+  ;    "BTCUSD", "ETHUSD"
   ;   :use-mainnet? (boolean)(opt)
   ;    Default: false}
   ;

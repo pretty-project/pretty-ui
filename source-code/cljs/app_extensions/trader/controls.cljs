@@ -8,6 +8,7 @@
               [app-extensions.trader.account  :as account]
               [app-extensions.trader.engine   :as engine]
               [app-extensions.trader.log      :as log]
+              [app-extensions.trader.position :as position]
               [app-extensions.trader.settings :as settings]
               [app-extensions.trader.styles   :as styles]
               [app-extensions.trader.sync     :as sync]))
@@ -24,6 +25,8 @@
     :active? (= view-id :log)}
    {:label "Account" :on-click [:gestures/change-view! :trader/controls :account]
     :active? (= view-id :account)}
+   {:label "Position" :on-click [:gestures/change-view! :trader/controls :position]
+    :active? (= view-id :position)}
    {:label "Settings" :on-click [:gestures/change-view! :trader/controls :settings]
     :active? (= view-id :settings)}])
 
@@ -72,6 +75,7 @@
               [menu-bar module-id module-props]
               (case view-id :log      [log/body      module-id]
                             :account  [account/body  module-id]
+                            :position [position/body module-id]
                             :settings [settings/body module-id])
               [sync/synchronizing-label module-id module-props]]])
 

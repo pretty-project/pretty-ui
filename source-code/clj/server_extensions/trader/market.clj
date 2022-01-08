@@ -49,8 +49,8 @@
   ;   :uri (string)}
   [_]
   (a/dispatch [:db/set-item! [:trader :market]
-                             (-> {:interval MARKET-DATA-INTERVAL
-                                  :limit    MARKET-DATA-LIMIT
+                             (-> {:interval     (param MARKET-DATA-INTERVAL)
+                                  :limit        (param MARKET-DATA-LIMIT)
                                   :symbol       (-> :symbol       settings/get-settings-item :value)
                                   :use-mainnet? (-> :use-mainnet? account/get-api-details-item)}
                                  (klines/request-kline-data!))]))

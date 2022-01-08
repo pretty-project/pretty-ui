@@ -11,6 +11,7 @@
               [server-extensions.trader.monitor]
               [server-extensions.trader.order]
               [server-extensions.trader.patterns]
+              [server-extensions.trader.position]
               [server-extensions.trader.router]
               [server-extensions.trader.settings]
               [server-extensions.trader.scheduler]))
