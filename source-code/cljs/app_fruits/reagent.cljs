@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.10.14
 ; Description:
-; Version: v0.2.6
+; Version: v0.3.2
 
 
 
@@ -33,6 +33,24 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn component?
+  ; @param (*)
+  ;
+  ; @example
+  ;  (reagent/component? [:div "..."])
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (reagent/component? [my-component "..."])
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (and (-> n vector?)
+       (-> n first fn?)))
 
 (defn ndis!
   ; @param (atom) atom

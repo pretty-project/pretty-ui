@@ -14,7 +14,7 @@
               [x.app-tools.api    :as tools]))
 
 
- 
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -63,6 +63,12 @@
         upload-size           (get-in db [:storage :file-uploader/meta-items :files-size])]))
        ;(>= upload-size storage-free-capacity)))
 
+(defn- get-file-uploader-file-props
+  [db [_ uploader-id file-dex]]
+  (get-in db [:storage :file-uploader/data-items file-dex]))
+
+(a/reg-sub :storage/get-file-uploader-file-props get-file-uploader-file-props)
+
 (defn- get-file-uploader-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -86,7 +92,7 @@
   ; @return (map)
   [db [_ uploader-id]]
   {:all-files-aborted? (r all-files-aborted? db uploader-id)
-   :file-list          (get-in db [:storage :file-uploader/data-items])})
+   :file-count         (count (get-in db [:storage :file-uploader/data-items]))})
 
 (a/reg-sub :storage/get-file-uploader-body-props get-file-uploader-body-props)
 
@@ -243,12 +249,15 @@
   ; @param (map) file-props
   ;
   ; @return (component)
-  [popup-id body-props file-dex file-props]
+  [popup-id body-props file-dex]
   ;[:div.storage--file-uploader--file-item
-  [elements/row {:content [:<> [file-item-actions popup-id body-props file-dex file-props]
-                               [file-item-preview popup-id body-props file-dex file-props]
-                               [file-item-details popup-id body-props file-dex file-props]]
-                 :style {:margin "6px 0"}}])
+  (let [file-props (a/subscribe [:storage/get-file-uploader-file-props nil file-dex])]
+       (fn []
+           (if-not (get @file-props :aborted?)
+             [elements/row {:content [:<> [file-item-actions popup-id body-props file-dex @file-props]
+                                          [file-item-preview popup-id body-props file-dex @file-props]
+                                          [file-item-details popup-id body-props file-dex @file-props]]
+                            :style {:margin "6px 0"}}]))))
 
 (defn- file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -258,11 +267,11 @@
   ;  {}
   ;
   ; @return (component)
-  [popup-id {:keys [file-list] :as body-props}]
-  (letfn [(f [file-list file-dex file-props]
+  [popup-id {:keys [file-count] :as body-props}]
+  (letfn [(f [file-list file-dex]
              (conj file-list ^{:key (str popup-id file-dex)}
-                              [file-item popup-id body-props file-dex file-props]))]
-         (reduce-kv f [:<>] file-list)))
+                              [file-item popup-id body-props file-dex]))]
+         (reduce f [:<>] (range 0 file-count))))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -280,11 +289,13 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :storage/abort-file-upload!
+(defn- abort-file-upload!
+  [db [_ uploader-id]])
+
+(a/reg-event-db :storage/abort-file-upload!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-dex]]
-      {:db (update-in db [:storage :file-uploader/data-items] vector/remove-nth-item file-dex)}))
+      {:db (assoc-in db [:storage :file-uploader/data-items file-dex :aborted?] true)}))
 
 
 
@@ -336,7 +347,7 @@
   (fn [_ [_ uploader-id]]
       [:ui/add-popup! :storage/file-uploader
                       {:body   {:content #'body   :subscriber [:storage/get-file-uploader-body-props   uploader-id]}
-                       :header {:content #'header :subscriber [:storage/get-file-uploader-header-props uploader-id]}}]))
+                       :header {:content [header]}}])); :subscriber [:storage/get-file-uploader-header-props uploader-id]}}]))
 
 (a/reg-event-fx
   :storage/load-file-uploader!
@@ -359,4 +370,6 @@
       (let [uploader-id    (a/event-vector->second-id   event-vector)
             uploader-props (a/event-vector->first-props event-vector)]
            {;:db (r store-uploader-props! db uploader-id uploader-props)
-            :storage/open-file-selector! [uploader-id uploader-props]})))
+            :storage/open-file-selector! [uploader-id uploader-props]
+            :dispatch [:sync/send-query! :storage/synchronize-file-uploader! ; Silent / no progress-bar
+                                         {:query [:debug `(:storage/download-capacity-details ~{})]}]})))

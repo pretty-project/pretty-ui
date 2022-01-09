@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v2.2.4
-; Compatibility: x4.4.9
+; Version: v2.8.6
+; Compatibility: x4.5.2
 
 
 
@@ -14,9 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content
-    (:require [mid-fruits.candy     :refer [param return]]
+    (:require [app-fruits.reagent   :refer [component?]]
+              [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.hiccup    :refer [hiccup?]]
               [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
               [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]
               [x.app-components.transmitter :rename {component transmitter}]))
@@ -86,16 +87,6 @@
   [extended-props]
   (select-keys extended-props [:base-props :content :content-props :prefix :replacements :subscriber :suffix]))
 
-(defn- context-props->subscribe?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context-props
-  ;  {:suffix (string)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [subscriber]}]
-  (some? subscriber))
-
 
 
 ;; -- Components --------------------------------------------------------------
@@ -113,9 +104,8 @@
   ;
   ; @return (string)
   [_ {:keys [content prefix replacements suffix]}]
-  (if (some? replacements)
-      (string/use-replacements (str prefix content suffix) replacements)
-      (str prefix content suffix)))
+  (if replacements (string/use-replacements (str prefix content suffix) replacements)
+                   (str prefix content suffix)))
 
 (defn- dictionary-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,18 +120,6 @@
   [_ {:keys [content] :as context-props}]
   (dictionary/looked-up content context-props))
 
-(defn- multilingual-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:content (map)
-  ;   :suffix (string)(opt)}
-  ;
-  ; @return (string)
-  [_ {:keys [content suffix]}]
-  (str (dictionary/translated content) suffix))
-
 (defn- nil-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -151,9 +129,55 @@
   ;
   ; @return (string)
   [_ {:keys [subscriber]}]
-  (if (some? subscriber)
-      (let [content (a/subscribe subscriber)]
-           (fn [] (str @content)))))
+  (if subscriber (let [content (a/subscribe subscriber)]
+                      (fn [] (str @content)))))
+
+(defn- static-render-fn-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) component-id
+  ; @param (map) context-props
+  ;  {:base-props (map)(opt)
+  ;   :content (render-function)
+  ;   :content-props (map)(opt)}
+  ;
+  ; @return (component)
+  [component-id {:keys [base-props content content-props]}]
+  [transmitter component-id {:base-props   base-props
+                             :component    content
+                             :static-props content-props}])
+
+(defn- subscribed-render-fn-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) component-id
+  ; @param (map) context-props
+  ;  {:base-props (map)(opt)
+  ;   :content (render-function)
+  ;   :content-props (map)(opt)
+  ;   :subscriber (subscription-vector)}
+  ;
+  ; @return (component)
+  [component-id {:keys [subscriber] :as context-props}]
+  (let [subscribed-props (a/subscribe subscriber)]
+       (fn [_ {:keys [base-props content content-props]}]
+           [transmitter component-id {:base-props        base-props
+                                      :component         content
+                                      :static-props      content-props
+                                      :subscribed-props @subscribed-props}])))
+
+(defn- render-fn-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) component-id
+  ; @param (map) context-props
+  ;  {:content (render-function)
+  ;   :subscriber (subscription-vector)(opt)}
+  ;
+  ; @return (component)
+  [component-id {:keys [subscriber] :as context-props}]
+  (if subscriber [subscribed-render-fn-content component-id context-props]
+                 [static-render-fn-content     component-id context-props]))
 
 (defn- static-component-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -198,10 +222,9 @@
   ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
-  [component-id context-props]
-  (if (context-props->subscribe? context-props)
-      [subscribed-component-content component-id context-props]
-      [static-component-content     component-id context-props]))
+  [component-id {:keys [subscriber] :as context-props}]
+  (if subscriber [subscribed-component-content component-id context-props]
+                 [static-component-content     component-id context-props]))
 
 (defn- content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -212,12 +235,22 @@
   ;
   ; @return (component or string)
   [component-id {:keys [content] :as context-props}]
-  (cond (keyword? content) (dictionary-content   component-id context-props)
-        (var?     content) [component-content    component-id context-props]
-        (string?  content) (string-content       component-id context-props)
-        (map?     content) (multilingual-content component-id context-props)
-        (nil?     content) (nil-content          component-id context-props)
-        :else              (return content)))
+  (cond (keyword? content) (dictionary-content component-id context-props)
+        (string?  content) (string-content     component-id context-props)
+      ; #' The symbol must resolve to a var, and the Var object itself (not its value) is returned.
+      ;
+      ; (var? #'my-component) => true
+      ; (fn?  #'my-component) => true
+      ; (var?   my-component) => false
+      ; (fn?    my-component) => true
+      ;
+      ; (var?       content) [render-fn-content component-id context-props]
+        (fn?        content) [render-fn-content component-id context-props]
+        (component? content) ;[component-content component-id context-props]
+        (return content)
+        (hiccup?    content) (return      content)
+        (nil?       content) (nil-content component-id context-props)
+        :else                (return      content)))
 
 (defn component
   ; @param (keyword)(opt) component-id
@@ -225,7 +258,7 @@
   ;  XXX#8711
   ;  {:base-props (map)(opt)
   ;    Only w/ {:content (component)}
-  ;   :content (component, keyword, hiccup, map or string)(opt)
+  ;   :content (component, keyword, hiccup, render-function or string)(opt)
   ;   :content-props (map)(opt)
   ;    Only w/ {:content (component)}
   ;   :prefix (string)(opt)
@@ -245,7 +278,7 @@
   ; @usage
   ;  [components/content :my-component {...}]
   ;
-  ; @example (dictionary term as keyword)
+  ; @example (dictionary-term as keyword)
   ;  [components/content {:content :username}]
   ;  =>
   ;  "Username"
@@ -254,11 +287,6 @@
   ;  [components/content {:content "Hakuna Matata"}]
   ;  =>
   ;  "Hakuna Matata"
-  ;
-  ; @example (multilingual-item as map)
-  ;  [components/content {:content {:en "Window" :hu "Ablak"}}]
-  ;  =>
-  ;  "Window"
   ;
   ; @example (component)
   ;  (defn my-component [component-id])

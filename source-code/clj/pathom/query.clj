@@ -90,7 +90,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
   (-> env env->query str println)
-  (return {}))
+  (return "Follow the white rabbit"))
 
 (defresolver debug
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -411,13 +411,13 @@
   (cond (map? current-item)                                 [map-item                 body-id body-props]
         (a/event-vector? current-item {:strict-mode? true}) [event-vector-item        body-id body-props]
         (a/subscription-vector? current-item)               [subscription-vector-item body-id body-props]
-        (vector? current-item)                              [vector-item              body-id body-props]
-        (boolean? current-item)                             [boolean-item             body-id body-props]
-        (integer? current-item)                             [integer-item             body-id body-props]
-        (string? current-item)                              [string-item              body-id body-props]
-        (keyword? current-item)                             [keyword-item             body-id body-props]
-        (var? current-item)                                 [component-item           body-id body-props]
-        (nil? current-item)                                 [nil-item                 body-id body-props]
+        (vector?                current-item)               [vector-item              body-id body-props]
+        (boolean?               current-item)               [boolean-item             body-id body-props]
+        (integer?               current-item)               [integer-item             body-id body-props]
+        (string?                current-item)               [string-item              body-id body-props]
+        (keyword?               current-item)               [keyword-item             body-id body-props]
+        (var?                   current-item)               [component-item           body-id body-props]
+        (nil?                   current-item)               [nil-item                 body-id body-props]
         :else                                               [unknown-item             body-id body-props]))
 
 (defn database-browser

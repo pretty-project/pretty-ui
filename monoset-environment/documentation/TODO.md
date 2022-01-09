@@ -13,6 +13,9 @@
 
 
 # x4.5.0
+- Hogyha a mid-fruits.validator kizárólag a pathom miatt lesz használva, akkor
+  beépülhet a pathom-ba!
+
 - A collection-handler kivándorolhat majd a local-db modulba
 
 - mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!

@@ -76,7 +76,7 @@
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :component (component)
+  ;   :component (render-function)
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
   ;   :static-props (map)(opt)

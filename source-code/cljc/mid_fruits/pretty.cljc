@@ -164,7 +164,7 @@
   ; @param (function) n
   ;
   ; @return (string)
-  [_]
+  [n]
   (str "$FUNCTION"))
 
 (defn float->string

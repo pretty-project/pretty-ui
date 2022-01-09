@@ -27,8 +27,8 @@
 ;  A transmitter komponens valósítja meg az x.app-components modul komponenseinek
 ;  paraméterezési logikáját.
 ;  Az egyes komponensek számára első paraméterként átadja a komponens azonosítóját,
-;  utolsó paraméterként az ún. dynamic-props térképet, esetlegesen második
-;  paraméterként pedig a {:static-props {...}} tulajdonságként átadott térképet.
+;  utolsó paraméterként az ún. dynamic-props térképet, valamint esetlegesen második
+;  paraméterként a {:static-props {...}} tulajdonságként átadott térképet.
 ;
 ; @name dynamic-props
 ;  A base-props, initial-props és subscribed-props térképek XXX#0069 logika
@@ -113,11 +113,16 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;    {:disabled? (boolean)(opt)}
-  ;   :component (component)
+  ;   :component (render-function)
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
   ;   :static-props (map)(opt)
   ;   :subscribed-props (map)(opt)}
+  ;
+  ; @usage
+  ;  (defn my-component [component-id static-props])
+  ;  [components/transmitter {:component    my-component
+  ;                           :static-props {...}}]
   ;
   ; @usage
   ;  (defn my-component [component-id static-props])

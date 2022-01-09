@@ -450,7 +450,7 @@
   ;  XXX#4882
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :component (component)
+  ;   :component (render-function)
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
   ;    útvonalon tárolt értéket
