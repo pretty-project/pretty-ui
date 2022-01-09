@@ -13,6 +13,8 @@
 
 
 # x4.5.0
+- {:content :content-props :subscriber} formula kivezetése ...
+
 - Hogyha a mid-fruits.validator kizárólag a pathom miatt lesz használva, akkor
   beépülhet a pathom-ba!
 

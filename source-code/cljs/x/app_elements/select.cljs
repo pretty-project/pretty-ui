@@ -286,7 +286,7 @@
   ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
-                         {:component     #'select-options
+                         {:render-f      #'select-options
                           :element-props options-props
                           :subscriber    [:elements/get-select-props options-id]}])
 
@@ -443,7 +443,7 @@
   ([select-id select-props]
    (let [select-props (select-props-prototype select-id select-props)]
         [engine/stated-element select-id
-                               {:component     #'select
+                               {:render-f      #'select
                                 :element-props select-props
                                 :initializer   [:elements/init-selectable! select-id]
                                 :subscriber    [:elements/get-select-props select-id]}])))

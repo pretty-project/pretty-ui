@@ -282,6 +282,6 @@
   ([group-id group-props]
    (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
-                               {:component     #'multi-field
+                               {:render-f      #'multi-field
                                 :element-props group-props
                                 :subscriber    [:elements/get-multi-field-props group-id]}])))

@@ -138,13 +138,13 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :content (render-function)
+  ;   :content (function)
   ;   :content-props (map)(opt)}
   ;
   ; @return (component)
   [component-id {:keys [base-props content content-props]}]
   [transmitter component-id {:base-props   base-props
-                             :component    content
+                             :render-f     content
                              :static-props content-props}])
 
 (defn- subscribed-render-fn-content
@@ -153,7 +153,7 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :content (render-function)
+  ;   :content (function)
   ;   :content-props (map)(opt)
   ;   :subscriber (subscription-vector)}
   ;
@@ -162,7 +162,7 @@
   (let [subscribed-props (a/subscribe subscriber)]
        (fn [_ {:keys [base-props content content-props]}]
            [transmitter component-id {:base-props        base-props
-                                      :component         content
+                                      :render-f          content
                                       :static-props      content-props
                                       :subscribed-props @subscribed-props}])))
 
@@ -171,60 +171,13 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:content (render-function)
+  ;  {:content (function)
   ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
   (if subscriber [subscribed-render-fn-content component-id context-props]
                  [static-render-fn-content     component-id context-props]))
-
-(defn- static-component-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:base-props (map)(opt)
-  ;   :content (component)
-  ;   :content-props (map)(opt)}
-  ;
-  ; @return (component)
-  [component-id {:keys [base-props content content-props]}]
-  [transmitter component-id {:base-props   base-props
-                             :component    content
-                             :static-props content-props}])
-
-(defn- subscribed-component-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:base-props (map)(opt)
-  ;   :content (component)
-  ;   :content-props (map)(opt)
-  ;   :subscriber (subscription-vector)}
-  ;
-  ; @return (component)
-  [component-id {:keys [subscriber] :as context-props}]
-  (let [subscribed-props (a/subscribe subscriber)]
-       (fn [_ {:keys [base-props content content-props]}]
-           [transmitter component-id {:base-props        base-props
-                                      :component         content
-                                      :static-props      content-props
-                                      :subscribed-props @subscribed-props}])))
-
-(defn- component-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:content (component)
-  ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (component)
-  [component-id {:keys [subscriber] :as context-props}]
-  (if subscriber [subscribed-component-content component-id context-props]
-                 [static-component-content     component-id context-props]))
 
 (defn- content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -246,9 +199,9 @@
       ;
       ; (var?       content) [render-fn-content component-id context-props]
         (fn?        content) [render-fn-content component-id context-props]
-        (component? content) ;[component-content component-id context-props]
-        (return content)
-        (hiccup?    content) (return      content)
+      ; A cond feltétel-listájának :else ága kielégíti a (component? ...) és (hiccup? ...) feltételeket!
+      ; (component? content) (return      content)
+      ; (hiccup?    content) (return      content)
         (nil?       content) (nil-content component-id context-props)
         :else                (return      content)))
 
@@ -258,7 +211,7 @@
   ;  XXX#8711
   ;  {:base-props (map)(opt)
   ;    Only w/ {:content (component)}
-  ;   :content (component, keyword, hiccup, render-function or string)(opt)
+  ;   :content (component, function, keyword, hiccup or string)(opt)
   ;   :content-props (map)(opt)
   ;    Only w/ {:content (component)}
   ;   :prefix (string)(opt)
@@ -295,7 +248,7 @@
   ; @example (component)
   ;  (defn my-component [component-id view-props])
   ;  [components/content {:content    #'my-component
-  ;                       :subscriber [::get-view-props]}]
+  ;                       :subscriber [:get-my-props]}]
   ;
   ; @example (component)
   ;  (defn my-component [component-id content-props])
@@ -306,7 +259,7 @@
   ;  (defn my-component [component-id content-props view-props])
   ;  [components/content {:content       #'my-component
   ;                       :content-props {...}
-  ;                       :subscriber    [::get-view-props]}]
+  ;                       :subscriber    [:get-my-props]}]
   ;
   ; @example (component)
   ;  (defn my-component [])

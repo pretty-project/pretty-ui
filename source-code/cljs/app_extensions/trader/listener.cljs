@@ -75,7 +75,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/listener
-                         {:component  #'listener
+                         {:render-f   #'listener
                           :subscriber [:trader/get-listener-props]}])
 
 

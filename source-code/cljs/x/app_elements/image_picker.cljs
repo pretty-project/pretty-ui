@@ -86,6 +86,6 @@
   ([picker-id picker-props]
    (let [];picker-props (picker-props-prototype picker-props)
         [engine/stated-element picker-id
-                               {:component     #'image-picker
+                               {:render-f      #'image-picker
                                 :element-props picker-props
                                 :subscriber    [:elements/get-image-picker-props picker-id]}])))

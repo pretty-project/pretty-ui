@@ -179,7 +179,7 @@
   ([counter-id counter-props]
    (let [counter-props (counter-props-prototype counter-id counter-props)]
         [engine/stated-element counter-id
-                               {:component     #'counter
+                               {:render-f      #'counter
                                 :element-props counter-props
                                 :initializer   [:elements/init-input!       counter-id]
                                 :subscriber    [:elements/get-counter-props counter-id]}])))

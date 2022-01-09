@@ -40,7 +40,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/position
-                         {:component   #'position
+                         {:render-f   #'position
                           :subscriber [:trader/get-position-props]}])
 
 

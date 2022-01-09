@@ -62,15 +62,15 @@
 
 (defn middleware
   ; @return (map)
-  ;  {:middleware (vector)}
+  ;  {:middleware (functions in vector)}
   []
   (let [site-defaults (site-defaults-prototype site-defaults)]
        {:middleware [#(wrap-reload           % {:dirs SOURCE-DIRECTORY-PATHS})
                      #(wrap-keyword-params   %)
-                    ;#(wrap-json-body        % {:keywords? true})
                      #(wrap-params           %)
                      #(wrap-transit-params   % {:opts {}})
                      #(wrap-multipart-params %)
                      #(wrap-authentication   % BACKEND)
                      #(wrap-authorization    % BACKEND)
-                     #(wrap-defaults         % site-defaults)]}))
+                     #(wrap-defaults         % site-defaults)
+                     #(wrap-json-body        % {:keywords? true})]}))

@@ -297,6 +297,6 @@
   ([directory-id directory-props]
    (let [directory-props (directory-props-prototype directory-id directory-props)]
         [engine/stated-element directory-id
-                               {:component     #'directory
+                               {:render-f      #'directory
                                 :element-props directory-props
                                 :subscriber    [::get-view-props directory-id]}])))

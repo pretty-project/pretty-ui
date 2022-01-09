@@ -193,7 +193,7 @@
   [group-id group-props]
   [components/subscriber group-id
                          {:base-props group-props
-                          :component  #'xi8071
+                          :render-f   #'xi8071
                           :subscriber [:elements/get-multi-combo-box-chip-group-props group-id]}])
 
 (defn- multi-combo-box-field
@@ -287,7 +287,7 @@
   ([group-id group-props]
    (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
-                               {:component     #'multi-combo-box
+                               {:render-f      #'multi-combo-box
                                 :element-props group-props
                                 :initializer   [:elements/init-selectable!          group-id]
                                 :subscriber    [:elements/get-multi-combo-box-props group-id]}])))

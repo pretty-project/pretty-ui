@@ -189,5 +189,5 @@
   ; @return (component)
   []
   [components/subscriber ::view
-                         {:component  #'header
+                         {:render-f   #'header
                           :subscriber [:ui/get-header-props]}])

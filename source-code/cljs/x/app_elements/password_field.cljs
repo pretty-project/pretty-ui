@@ -119,7 +119,7 @@
    (let [field-props (as-> field-props % (field-props-prototype            field-id %)
                                          (text-field/field-props-prototype field-id %))]
         [engine/stated-element field-id
-                               {:component     #'text-field
+                               {:render-f      #'text-field
                                 :element-props field-props
                                 :initializer   [:elements/init-field!              field-id]
                                 :subscriber    [:elements/get-password-field-props field-id]}])))

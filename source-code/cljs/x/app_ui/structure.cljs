@@ -116,5 +116,5 @@
   ; @return (component)
   []
   [components/subscriber ::view
-                         {:component  #'client-lock-controller
+                         {:render-f   #'client-lock-controller
                           :subscriber [:ui/get-structure-props]}])

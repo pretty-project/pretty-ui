@@ -206,7 +206,7 @@
   ([group-id group-props]
    (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
-                               {:component     #'checkbox-group
+                               {:render-f      #'checkbox-group
                                 :element-props group-props
                                 :initializer   [:elements/init-collectable!        group-id]
                                 :subscriber    [:elements/get-checkbox-group-props group-id]}])))

@@ -222,7 +222,7 @@
    (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         [engine/stated-element button-id
-                               {:component     #'button
+                               {:render-f      #'button
                                 :element-props button-props
                                 :destructor    [:elements/destruct-clickable! button-id]
                                 :initializer   [:elements/init-clickable!     button-id]}])))

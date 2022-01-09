@@ -345,7 +345,7 @@
   ([field-id field-props]
    (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
-                               {:component     text-field
+                               {:render-f      text-field
                                 :element-props field-props
                                 :modifier      field-props-modifier
                                 :initializer   [:elements/init-field!          field-id]

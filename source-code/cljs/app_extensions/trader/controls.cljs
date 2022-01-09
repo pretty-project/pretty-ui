@@ -83,5 +83,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/controls
-                         {:component  #'controls
+                         {:render-f   #'controls
                           :subscriber [:trader/get-controls-props]}])

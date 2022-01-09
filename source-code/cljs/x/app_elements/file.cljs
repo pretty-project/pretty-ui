@@ -363,6 +363,6 @@
   ([file-id file-props]
    (let [file-props (file-props-prototype file-id file-props)]
         [engine/stated-element file-id
-                               {:component     #'file
+                               {:render-f      #'file
                                 :element-props file-props
                                 :subscriber    [::get-view-props file-id]}])))

@@ -120,5 +120,5 @@
   [menu-id menu-props]
   (let [menu-props (menu-props-prototype menu-props)]
        [components/subscriber menu-id {:base-props menu-props
-                                       :component  #'menu
+                                       :render-f   #'menu
                                        :subscriber [:website-menu/get-view-props]}]))

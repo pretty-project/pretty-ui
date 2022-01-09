@@ -87,5 +87,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/wallet
-                         {:component  #'wallet
+                         {:render-f   #'wallet
                           :subscriber [:trader/get-wallet-props]}])

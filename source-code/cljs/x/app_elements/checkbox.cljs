@@ -144,7 +144,7 @@
   ([checkbox-id checkbox-props]
    (let [checkbox-props (checkbox-props-prototype checkbox-id checkbox-props)]
         [engine/stated-element checkbox-id
-                               {:component     #'checkbox
+                               {:render-f      #'checkbox
                                 :element-props checkbox-props
                                 :initializer   [:elements/init-input!        checkbox-id]
                                 :subscriber    [:elements/get-checkbox-props checkbox-id]}])))

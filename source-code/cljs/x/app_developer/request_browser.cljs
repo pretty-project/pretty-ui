@@ -183,5 +183,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [components/subscriber ::body
-                         {:component  #'request-browser
+                         {:render-f   #'request-browser
                           :subscriber [::get-body-props]}])

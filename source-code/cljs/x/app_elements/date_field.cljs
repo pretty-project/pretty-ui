@@ -138,7 +138,7 @@
   ([field-id field-props]
    (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
-                               {:component     #'date-field
+                               {:render-f      #'date-field
                                 :element-props field-props
                                 :initializer   [:elements/init-field!          field-id]
                                 :subscriber    [:elements/get-date-field-props field-id]}])))

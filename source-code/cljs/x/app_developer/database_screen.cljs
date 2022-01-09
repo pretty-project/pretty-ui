@@ -19,5 +19,5 @@
   ; @return (component)
   []
   [components/subscriber ::view
-                         {:component  #'database-screen
+                         {:render-f   #'database-screen
                           :subscriber [:db/get-db]}])

@@ -140,5 +140,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber body-id
-                         {:component  #'personal-settings
+                         {:render-f   #'personal-settings
                           :subscriber [::get-body-props]}])

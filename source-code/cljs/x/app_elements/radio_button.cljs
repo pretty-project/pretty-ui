@@ -194,7 +194,7 @@
   ([button-id button-props]
    (let [button-props (button-props-prototype button-id button-props)]
         [engine/stated-element button-id
-                               {:component     #'radio-button
+                               {:render-f      #'radio-button
                                 :element-props button-props
                                 :initializer   [:elements/init-selectable!       button-id]
                                 :subscriber    [:elements/get-radio-button-props button-id]}])))

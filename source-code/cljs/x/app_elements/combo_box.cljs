@@ -346,7 +346,7 @@
                                          (text-field/field-props-prototype field-id %)
                                          (field-props<-surface             field-id %))]
         [engine/stated-element field-id
-                               {:component     #'text-field/text-field
+                               {:render-f      #'text-field/text-field
                                 :element-props field-props
                                 :modifier      text-field/field-props-modifier
                                 :initializer   [:elements/init-selectable!    field-id]

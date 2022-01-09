@@ -41,11 +41,6 @@
 ;
 ; @name static-props
 ;  XXX#0001
-;
-; @name test-f
-;  Ha a test-f paraméterként átadott függvény, (amelynek egyetlen paramétere
-;  a subscribed-props érték) kimenete igaz, akkor megtörténik a komponens React-Fába
-;  csatolása.
 
 
 
@@ -53,7 +48,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def SUBSRIBER-PROPS [:base-props :component :initial-props :static-props :subscriber :test-f])
+(def SUBSRIBER-PROPS [:base-props :initial-props :render-f :static-props :subscriber])
 
 
 
@@ -76,13 +71,12 @@
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :component (render-function)
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
+  ;   :render-f (function)
   ;   :static-props (map)(opt)
   ;   :subscriber (subscription-vector)
-  ;    Return value must be a map!
-  ;   :test-f (function)(opt)}
+  ;    Return value must be a map!}
   ;
   ; @usage
   ;  [components/subscriber {...}]
@@ -92,24 +86,21 @@
   ;
   ; @usage
   ;  (defn my-component [component-id dynamic-props])
-  ;  [components/subscriber {:component  #'my-component
-  ;                          :subscriber [::get-view-props]}]
+  ;  [components/subscriber {:render-f   #'my-component
+  ;                          :subscriber [:get-my-props]}]
   ;
   ; @usage
   ;  (defn my-component [component-id static-props dynamic-props])
-  ;  [components/subscriber {:component    #'my-component
-  ;                          :test-f       map?
+  ;  [components/subscriber {:render-f     #'my-component
   ;                          :static-props {...}
-  ;                          :subscriber   [::get-view-props]}]
+  ;                          :subscriber   [:get-my-props]}]
   ;
   ; @return (*)
   ([context-props]
    [component (a/id) context-props])
 
-  ([component-id {:keys [component initial-props subscriber test-f] :as context-props}]
+  ([component-id {:keys [subscriber] :as context-props}]
    (let [subscribed-props (a/subscribe subscriber)]
         (fn [_ context-props]
-            (if (or (nil?   test-f)
-                    (test-f @subscribed-props))
-                (let [context-props (assoc context-props :subscribed-props @subscribed-props)]
-                     [transmitter component-id context-props]))))))
+            (let [context-props (assoc context-props :subscribed-props @subscribed-props)]
+                 [transmitter component-id context-props])))))

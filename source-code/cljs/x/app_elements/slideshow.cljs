@@ -217,7 +217,7 @@
    (let [slideshow-props    (slideshow-props-prototype                   slideshow-props)
          step-handler-props (gestures/extended-props->step-handler-props slideshow-props)]
         [engine/stated-element slideshow-id
-                               {:component     #'slideshow
+                               {:render-f      #'slideshow
                                 :element-props slideshow-props
                                 :initializer   [:gestures/init-step-handler!  slideshow-id step-handler-props]
                                 :subscriber    [:elements/get-slideshow-props slideshow-id]}])))

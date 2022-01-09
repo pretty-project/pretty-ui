@@ -148,7 +148,7 @@
   ; @return (component)
   [popup-id popup-props]
   [components/subscriber popup-id
-                         {:component  #'popup-header-structure
+                         {:render-f   #'popup-header-structure
                           :base-props popup-props
                           :subscriber [:ui/get-popup-header-props popup-id]}])
 

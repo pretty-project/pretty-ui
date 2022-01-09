@@ -113,25 +113,26 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;    {:disabled? (boolean)(opt)}
-  ;   :component (render-function)
+
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
+  ;   :render-f (function)
   ;   :static-props (map)(opt)
   ;   :subscribed-props (map)(opt)}
   ;
   ; @usage
   ;  (defn my-component [component-id static-props])
-  ;  [components/transmitter {:component    my-component
+  ;  [components/transmitter {:render-f     my-component
   ;                           :static-props {...}}]
   ;
   ; @usage
   ;  (defn my-component [component-id static-props])
-  ;  [components/transmitter {:component    #'my-component
+  ;  [components/transmitter {:render-f     #'my-component
   ;                           :static-props {...}}]
   ;
   ; @usage
   ;  (defn my-component [component-id dynamic-props])
-  ;  [components/transmitter {:component        #'my-component
+  ;  [components/transmitter {:render-f         #'my-component
   ;                           :base-props       {...}
   ;                           :initial-props    {...}
   ;                           :subscribed-props {...}}]
@@ -139,7 +140,7 @@
   ; @usage
   ;  (defn my-modifier [component-id dynamic-props] (do-something-with dynamic-props))
   ;  (defn my-component [component-id static-props dynamic-props])
-  ;  [components/transmitter {:component        #'my-component
+  ;  [components/transmitter {:render-f         #'my-component
   ;                           :base-props       {...}
   ;                           :initial-props    {...}
   ;                           :modifier         my-modifier
@@ -150,17 +151,17 @@
   ([context-props]
    [component (a/id) context-props])
 
-  ([component-id {:keys [component static-props] :as context-props}]
+  ([component-id {:keys [render-f static-props] :as context-props}]
    (let [dynamic-props (context-props->dynamic-props component-id context-props)]
                    ; Both static-props and dynamic-props
         [:<> (cond (and (map/nonempty? static-props)
-                        (map/nonempty? dynamic-props)) [component component-id static-props dynamic-props]
+                        (map/nonempty? dynamic-props)) [render-f component-id static-props dynamic-props]
                    ; Only static-props
-                   (map/nonempty? static-props)        [component component-id static-props]
+                   (map/nonempty? static-props)        [render-f component-id static-props]
                    ; Only dynamic-props
-                   (map/nonempty? dynamic-props)       [component component-id dynamic-props]
+                   (map/nonempty? dynamic-props)       [render-f component-id dynamic-props]
                    ; *
-                   :else                               [component component-id])])))
+                   :else                               [render-f component-id])])))
 
              ; DEBUG
              ;[debug component-id static-props dynamic-props]

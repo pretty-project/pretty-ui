@@ -118,7 +118,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [components/subscriber :trader/editor-log
-                         {:component  #'editor-log-structure
+                         {:render-f   #'editor-log-structure
                           :subscriber [:trader/get-editor-log-props]}])
 
 
@@ -163,7 +163,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [view-id]
   [components/subscriber :trader/editor
-                         {:component #'editor
+                         {:render-f   #'editor
                           :subscriber [:trader/get-editor-props]}])
 
 

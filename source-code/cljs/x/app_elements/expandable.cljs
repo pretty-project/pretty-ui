@@ -181,6 +181,6 @@
   ([expandable-id expandable-props]
    (let [expandable-props (expandable-props-prototype expandable-props)]
         [engine/stated-element expandable-id
-                               {:component     #'expandable
+                               {:render-f      #'expandable
                                 :element-props expandable-props
                                 :subscriber    [:elements/get-expandable-props expandable-id]}])))

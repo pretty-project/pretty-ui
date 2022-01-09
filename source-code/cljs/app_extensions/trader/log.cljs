@@ -58,7 +58,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/log
-                         {:component  #'log
+                         {:render-f   #'log
                           :subscriber [:trader/get-log-props]}])
 
 

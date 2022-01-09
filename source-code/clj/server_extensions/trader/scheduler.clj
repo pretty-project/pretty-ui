@@ -50,10 +50,14 @@
               (a/dispatch [:db/set-item! [:trader :scheduler :initialized?] true])
               (a/dispatch [:trader/log! (str "Initializing scheduler {:boot-delay " DEFAULT-BOOT-DELAY "s :interval 60s} ...")]))))
 
+(a/reg-fx :trader/initialize-scheduler! initialize-scheduler!)
 
 
+
+;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(initialize-scheduler! {:boot-delay DEFAULT-BOOT-DELAY
-                        :interval   DEFAULT-INTERVAL})
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-server-launch {:trader/initialize-scheduler! {:boot-delay DEFAULT-BOOT-DELAY
+                                                     :interval   DEFAULT-INTERVAL}}})

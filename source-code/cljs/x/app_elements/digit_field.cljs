@@ -145,6 +145,6 @@
   ([field-id field-props]
    (let [field-props (field-props-prototype field-props)]
         [engine/stated-element field-id
-                               {:component     #'digit-field
+                               {:render-f      #'digit-field
                                 :element-props field-props
                                 :subscriber    [:elements/get-digit-field-props field-id]}])))

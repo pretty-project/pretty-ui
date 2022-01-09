@@ -414,7 +414,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/stated :trader/monitor
-                     {:component  #'monitor-structure
+                     {:render-f   #'monitor-structure
                       :subscriber [:trader/get-monitor-props]}])
 
 

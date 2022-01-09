@@ -30,8 +30,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name stated
-;  A stated komponens a Reagent életciklusait valósítja meg a {:component #'xyz}
-;  tulajdonságként átadott komponens számára.
+;  A stated komponens a Reagent életciklusait valósítja meg a {:render-f ...}
+;  tulajdonságként átadott komponensként meghívott render-függvény számára számára.
 ;
 ; @name destructor
 ;  - A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
@@ -127,8 +127,8 @@
 (def COMPONENT-DESTRUCTION-DELAY 50)
 
 ; @constant (keywords in vector)
-(def STATED-PROPS [:component :destructor :disabler :initializer :initial-props
-                   :initial-props-path :static-props :subscriber :updater])
+(def STATED-PROPS [:destructor :disabler :initializer :initial-props :initial-props-path
+                   :render-f :static-props :subscriber :updater])
 
 
 
@@ -147,9 +147,9 @@
   ;
   ; @return (map)
   [extended-props]
-  ; Ha egy térkép tartalmazza a :component kulcsot, attól még nem számít stated-props térképnek!
+  ; Ha egy térkép tartalmazza a :render-f kulcsot, attól még nem számít stated-props térképnek!
   (map/contains-of-keys? (param extended-props)
-                         (vector/remove-item STATED-PROPS :component)))
+                         (vector/remove-item STATED-PROPS :render-f)))
 
 (defn- context-props->initialize?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -450,7 +450,6 @@
   ;  XXX#4882
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :component (render-function)
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
   ;    útvonalon tárolt értéket
@@ -459,6 +458,7 @@
   ;   :initial-props (map)(opt)
   ;   :initial-props-path (item-path vector)(opt)
   ;   :modifier (function)(opt)
+  ;   :render-f (function)
   ;   :static-props (map)(opt)
   ;   :subscriber (subscription-vector)(opt)
   ;    Return value must be a map!
@@ -472,24 +472,24 @@
   ;
   ; @usage
   ;  (defn my-component [component-id static-props])
-  ;  [components/stated {:component    #'my-component
+  ;  [components/stated {:render-f     #'my-component
   ;                      :static-props {...}}]
   ;
   ; @usage
   ;  (defn my-component [component-id dynamic-props])
-  ;  [components/stated {:component  #'my-component
-  ;                      :subscriber [::get-view-props]}]
+  ;  [components/stated {:render-f   #'my-component
+  ;                      :subscriber [:get-my-props]}]
   ;
   ; @usage
   ;  (defn my-component [component-id static-props dynamic-props])
-  ;  [components/stated {:component    #'my-component
+  ;  [components/stated {:render-f     #'my-component
   ;                      :static-props {...}
-  ;                      :subscriber   [::get-view-props]}]
+  ;                      :subscriber   [:get-my-props]}]
   ;
   ; @usage
   ;  (defn my-component [component-id {:keys [disabled?] :as dynamic-props}])
-  ;  [components/stated {:component #'my-component
-  ;                      :disabler  [::component-disabled?]}]
+  ;  [components/stated {:render-f  #'my-component
+  ;                      :disabler  [:my-component-disabled?]}]
   ;
   ; @return (component)
   ([context-props]

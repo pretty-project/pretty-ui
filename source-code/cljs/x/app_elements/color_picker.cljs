@@ -183,7 +183,7 @@
   ([picker-id picker-props]
    (let [picker-props (picker-props-prototype picker-id picker-props)]
         [engine/stated-element picker-id
-                               {:component     #'color-picker
+                               {:render-f      #'color-picker
                                 :element-props picker-props
                                 :initializer   [:elements/init-collectable!      picker-id]
                                 :subscriber    [:elements/get-color-picker-props picker-id]}])))

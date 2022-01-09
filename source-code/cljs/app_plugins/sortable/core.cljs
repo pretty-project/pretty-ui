@@ -837,7 +837,7 @@
   ([sortable-id sortable-props]
    (let [sortable-id (a/id sortable-id)]
         [components/stated sortable-id
-          {:component   #'af0120
+          {:render-f    #'af0120
            :base-props  sortable-props
            :destructor  [:sortable/destruct-sortable! sortable-id]
            :initializer [:sortable/init-sortable!     sortable-id sortable-props]

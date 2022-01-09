@@ -1182,7 +1182,7 @@
   ;
   ; @return (component)
   [element element-id {:keys [destructor initializer] :as element-props}]
-  [components/stated element-id {:component    element
+  [components/stated element-id {:render-f     element
                                  :destructor   destructor
                                  :initializer  initializer
                                  :static-props element-props}])
@@ -1253,7 +1253,7 @@
   (let [dom-id         (engine/renderer-id->dom-id renderer-id)
         renderer-props (renderer-props-prototype   renderer-props)]
        [components/stated dom-id
-                          {:component    #'renderer
+                          {:render-f     #'renderer
                            :static-props renderer-props
                            :destructor   [:ui/destruct-renderer! renderer-id renderer-props]
                            :initializer  [:ui/init-renderer!     renderer-id renderer-props]

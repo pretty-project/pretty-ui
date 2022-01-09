@@ -175,7 +175,7 @@
   ([field-id field-props]
    (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
-                               {:component     #'multiline-field
+                               {:render-f      #'multiline-field
                                 :element-props field-props
                                 :initializer   [:elements/init-field!          field-id]
                                 :subscriber    [:elements/get-text-field-props field-id]}])))

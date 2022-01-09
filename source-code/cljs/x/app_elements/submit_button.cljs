@@ -84,7 +84,7 @@
   ([button-id button-props]
    (let [button-props (-> button-props button-props-prototype button/button-props-prototype)]
         [engine/stated-element button-id
-                               {:component     #'button
+                               {:render-f      #'button
                                 :element-props button-props
                                 :destructor    [:elements/destruct-clickable!     button-id]
                                 :initializer   [:elements/init-clickable!         button-id]

@@ -127,7 +127,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/account
-                         {:component   #'account
+                         {:render-f    #'account
                           :subscriber [:trader/get-account-props]}])
 
 

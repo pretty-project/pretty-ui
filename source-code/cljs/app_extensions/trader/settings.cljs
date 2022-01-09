@@ -83,7 +83,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber :trader/settings
-                         {:component #'settings
+                         {:render-f   #'settings
                           :subscriber [:trader/get-settings-props]}])
 
 

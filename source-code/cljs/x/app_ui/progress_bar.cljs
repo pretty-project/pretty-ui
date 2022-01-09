@@ -105,6 +105,6 @@
   ;
   ; @return (component)
   []
-  [components/subscriber ::view 
-                         {:component  #'progress-bar
+  [components/subscriber ::view
+                         {:render-f   #'progress-bar
                           :subscriber [:ui/get-progress-bar-props]}])

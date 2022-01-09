@@ -173,6 +173,10 @@
                                 {:start-content [cancel-upload-button popup-id header-props]
                                  :end-content   [upload-files-button  popup-id header-props]}])
 
+(defn abc
+  [_ _]
+  [:div "abc"])
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -181,8 +185,10 @@
   ;
   ; @return (component)
   [popup-id header-props]
-  [:<> [action-buttons      popup-id header-props]
-       [file-upload-summary popup-id header-props]])
+  (let [x (a/subscribe [:db/get-item [:a]])]
+       (fn [] [abc nil nil])))
+  ;[:<> [action-buttons      popup-id header-props]
+  ;     [file-upload-summary popup-id header-props]))
 
 
 
@@ -273,6 +279,11 @@
                               [file-item popup-id body-props file-dex]))]
          (reduce f [:<>] (range 0 file-count))))
 
+(defn- body-structure
+  [])
+  ;[:<> [file-list                popup-id body-props]
+  ;     [no-files-to-upload-label popup-id body-props]])
+
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -280,9 +291,9 @@
   ; @param (map) body-props
   ;
   ; @return (component)
-  [popup-id body-props]
-  [:<> [file-list                popup-id body-props]
-       [no-files-to-upload-label popup-id body-props]])
+  [uploader-id]
+  [components/subscriber :storage/file-uploader-body
+                         {:render-f #'body-structure}])
 
 
 
@@ -346,8 +357,8 @@
   :storage/render-file-uploader!
   (fn [_ [_ uploader-id]]
       [:ui/add-popup! :storage/file-uploader
-                      {:body   {:content #'body   :subscriber [:storage/get-file-uploader-body-props   uploader-id]}
-                       :header {:content [header]}}])); :subscriber [:storage/get-file-uploader-header-props uploader-id]}}]))
+                      {:body   [body   uploader-id]
+                       :header [header uploader-id]}]))
 
 (a/reg-event-fx
   :storage/load-file-uploader!

@@ -431,5 +431,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [components/subscriber ::body
-                         {:component  #'database-browser
+                         {:render-f   #'database-browser
                           :subscriber [::get-body-props]}])

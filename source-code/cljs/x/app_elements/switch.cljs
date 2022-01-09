@@ -198,7 +198,7 @@
   ([switch-id switch-props]
    (let [switch-props (switch-props-prototype switch-id switch-props)]
         [engine/stated-element switch-id
-                               {:component     #'switch
+                               {:render-f      #'switch
                                 :element-props switch-props
                                 :initializer   [:elements/init-input!      switch-id]
                                 :subscriber    [:elements/get-switch-props switch-id]}])))

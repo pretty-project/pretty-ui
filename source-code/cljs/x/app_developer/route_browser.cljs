@@ -58,5 +58,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [components/subscriber ::body
-                         {:component  #'route-browser
+                         {:render-f   #'route-browser
                           :subscriber [::get-body-props]}])
