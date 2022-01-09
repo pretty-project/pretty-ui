@@ -298,10 +298,10 @@
   ; @param (map) header-props
   ;
   ; @return (component)
-  [extension-id item-namespace header-props]
-  [:<> [delete-item-button  extension-id item-namespace header-props]
-       [copy-item-button    extension-id item-namespace header-props]
-       [archive-item-button extension-id item-namespace header-props]])
+  [extension-id item-namespace {:keys [new-item?] :as header-props}]
+  (if-not new-item? [:<> [delete-item-button  extension-id item-namespace header-props]
+                         [copy-item-button    extension-id item-namespace header-props]
+                         [archive-item-button extension-id item-namespace header-props]]))
 
 (defn header-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -324,9 +324,9 @@
   ;  {:new-item? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [new-item?] :as header-props}]
-  [elements/polarity {:start-content (if-not new-item? [header-start-buttons extension-id item-namespace header-props])
-                      :end-content   [header-end-buttons extension-id item-namespace header-props]}])
+  [extension-id item-namespace header-props]
+  [elements/horizontal-polarity {:start-content [header-start-buttons extension-id item-namespace header-props]
+                                 :end-content   [header-end-buttons   extension-id item-namespace header-props]}])
 
 (defn header
   ; @param (keyword) extension-id

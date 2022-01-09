@@ -29,13 +29,6 @@
 (def cache-control-uri cache-handler/cache-control-uri)
 
 ; x.mid-core.config-handler
-(def app-detail-path        config-handler/app-detail-path)
-(def browser-detail-path    config-handler/browser-detail-path)
-(def database-detail-path   config-handler/database-detail-path)
-(def install-detail-path    config-handler/install-detail-path)
-(def seo-detail-path        config-handler/seo-detail-path)
-(def storage-detail-path    config-handler/storage-detail-path)
-(def js-detail-path         config-handler/js-detail-path)
 (def get-app-details        config-handler/get-app-details)
 (def get-app-detail         config-handler/get-app-detail)
 (def get-browser-details    config-handler/get-browser-details)

@@ -217,6 +217,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :clients/render-client-editor!
+  :clients/load-client-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view}}])

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.19
 ; Description:
-; Version: v1.0.6
-; Compatibility: x4.5.0
+; Version: v1.1.0
+; Compatibility: x4.5.2
 
 
 
@@ -19,9 +19,9 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.button     :as button   :rename {element button}]
-              [x.app-elements.label      :as label    :rename {element label}]
-              [x.app-elements.polarity   :as polarity :rename {element polarity}]))
+              [x.app-elements.button     :as button :rename {element button}]
+              [x.app-elements.label                 :rename {element label}]
+              [x.app-elements.horizontal-polarity   :rename {element horizontal-polarity}]))
 
 
 
@@ -215,6 +215,28 @@
   [_ {:keys [options-label]}]
   [label {:content options-label}])
 
+(defn- select-options-label-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) options-props
+  ;
+  ; @return (component)
+  [popup-id options-props]
+  [horizontal-polarity ::select-options-label-header
+                       {:middle-content [select-options-label popup-id options-props]}])
+
+(defn- select-options-cancel-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) options-props
+  ;
+  ; @return (component)
+  [popup-id options-props]
+  [horizontal-polarity ::select-options-cancel-header
+                       {:end-content [select-options-close-button popup-id options-props]}])
+
 (defn- select-options-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -223,8 +245,8 @@
   ;
   ; @return (component)
   [popup-id {:keys [options-label user-cancel?] :as options-props}]
-  (cond (some?   options-label) [polarity {:middle-content [select-options-label        popup-id options-props]}]
-        (boolean user-cancel?)  [polarity {:end-content    [select-options-close-button popup-id options-props]}]))
+  (cond (some?   options-label) [select-options-label-header  popup-id options-props]
+        (boolean user-cancel?)  [select-options-cancel-header popup-id options-props]))
 
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!

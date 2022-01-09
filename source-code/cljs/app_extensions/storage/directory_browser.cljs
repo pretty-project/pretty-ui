@@ -49,6 +49,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-directory-browser!
+  :storage/load-directory-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view}}])

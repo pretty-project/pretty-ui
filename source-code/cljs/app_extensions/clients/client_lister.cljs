@@ -75,6 +75,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :clients/render-client-lister!
+  :clients/load-client-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view {:content #'view}}])

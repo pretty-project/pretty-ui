@@ -91,7 +91,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::prohibitions)))
+  (get-in db (db/path :environment/sroll-prohibitions)))
 
 (defn scroll-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,7 +110,7 @@
   ;
   ; @return (map)
   [db _]
-  (dissoc-in db (db/path ::prohibitions)))
+  (dissoc-in db (db/path :environment/sroll-prohibitions)))
 
 
 
@@ -181,14 +181,14 @@
   :environment/remove-scroll-prohibition!
   ; @param (keyword) prohibition-id
   (fn [{:keys [db]} [_ prohibition-id]]
-      {:db       (r db/remove-item! db (db/path ::prohibitions prohibition-id))
+      {:db       (r db/remove-item! db (db/path :environment/sroll-prohibitions prohibition-id))
        :dispatch [:environment/->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx
   :environment/add-scroll-prohibition!
   ; @param (keyword) prohibition-id
   (fn [{:keys [db]} [_ prohibition-id]]
-      {:db       (r db/set-item! db (db/path ::prohibitions prohibition-id) {})
+      {:db       (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})
        :dispatch [:environment/->scroll-prohibitions-changed]}))
 
 (a/reg-event-fx

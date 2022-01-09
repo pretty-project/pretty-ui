@@ -693,15 +693,15 @@
   ;
   ; @return (component)
   [popup-id view-props]
-  [:<> [elements/polarity {:start-content [file-browser-cancel-button popup-id view-props]
-                           :end-content   [file-browser-done-button   popup-id view-props]}]
+  [:<> [elements/horizontal-polarity {:start-content [file-browser-cancel-button popup-id view-props]
+                                      :end-content   [file-browser-done-button   popup-id view-props]}]
        [elements/horizontal-line {:color :highlight}]
-       [elements/polarity {:start-content [:<> [file-browser-home-button popup-id view-props]
-                                               [file-browser-up-button   popup-id view-props]
-                                               [file-browser-label       popup-id view-props]]
-                           :end-content   [:<> [file-browser-directory-action-select popup-id view-props]
-                                               [file-browser-order-by-select         popup-id view-props]]}]
-       [elements/polarity {:middle-content [file-browser-filter-items-field popup-id view-props]}]])
+       [elements/horizontal-polarity {:start-content [:<> [file-browser-home-button popup-id view-props]
+                                                          [file-browser-up-button   popup-id view-props]
+                                                          [file-browser-label       popup-id view-props]]
+                                      :end-content   [:<> [file-browser-directory-action-select popup-id view-props]
+                                                          [file-browser-order-by-select         popup-id view-props]]}]
+       [elements/horizontal-polarity {:middle-content [file-browser-filter-items-field popup-id view-props]}]])
 
 (defn- file-browser-subdirectory
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -856,8 +856,8 @@
   ; @return (component)
   [component-id {:keys [directory-empty?] :as view-props}]
   (if (boolean directory-empty?)
-      [elements/polarity ::directory-empty
-                         {:middle-content [file-browser-file-drop-area component-id view-props]}]))
+      [elements/horizontal-polarity ::directory-empty
+                                    {:middle-content [file-browser-file-drop-area component-id view-props]}]))
 
 (defn- file-browser-no-filtered-items-match
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -873,8 +873,8 @@
   (if (and (not directory-render-files?)
            (not directory-render-subdirectories?)
            (not directory-empty?))
-      [elements/polarity ::no-filtered-items-match
-                         {:middle-content [elements/label {:content :no-items-found :color :highlight}]}]))
+      [elements/horizontal-polarity ::no-filtered-items-match
+                                    {:middle-content [elements/label {:content :no-items-found :color :highlight}]}]))
 
 (defn- file-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!

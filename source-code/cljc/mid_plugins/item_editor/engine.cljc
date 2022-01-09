@@ -263,23 +263,6 @@
   [extension-id]
   (str "/@app-home/" (name extension-id)))
 
-(defn render-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/render-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension/render-my-type-editor!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "render-" (name item-namespace) "-editor!"))]
-       [event-id]))
-
 (defn dialog-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -301,3 +284,20 @@
   [extension-id _ action-id]
   (keyword (name extension-id)
            (str (name action-id) "-dialog")))
+
+(defn load-extension-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/load-extension-event :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension/load-my-type-editor!]
+  ;
+  ; @return (event-vector)
+  [extension-id item-namespace]
+  (let [event-id (keyword (name extension-id)
+                          (str "load-" (name item-namespace) "-editor!"))]
+       [event-id]))

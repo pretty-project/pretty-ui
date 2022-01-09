@@ -1,8 +1,19 @@
 
+# x4.5.2
+- Az item-lister és item-editor plugin kliens-oldali kezelője ezentúl nem az extension
+  "render" eseményét hanem a "load" eseményét indítja el az útvonal betöltésekor!
+  [:my-extension/render-my-type-lister! ...] => [:my-extension/load-my-type-lister! ...]
+  [:my-extension/render-my-type-editor! ...] => [:my-extension/load-my-type-editor! ...]
+  
+- Az x.app-elements.api/polarity komponens ezentúl .../horizontal-polarity és .../vertical-polarity
+  komponensekre felbontva használható!
+
+
+
 # x4.5.0
 - A route-template útvonalakban használt "/:app-home/..." változó szintaxisa megváltozott!
   "/:app-home/my-route" => "/@app-home/my-route"
-  
+
 - A szerver-oldali (x.app-core.api/reg-lifecycles {}) függvényben használt életciklusok
   nevei megváltoztak!
   {:on-app-* ...} => {:on-server-* ...}

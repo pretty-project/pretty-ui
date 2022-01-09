@@ -1,6 +1,6 @@
 
 (ns project-emulator.core
-    (:require [sente.api]
+    (:require ;[sente.api]
               [x.boot-loader]
               [app-extensions.clients.api]
               [app-extensions.home.api]
@@ -26,8 +26,8 @@
   ;
   ; @return (component or hiccup)
   [ui-structure]
- ;[:div#your-app [ui-structure]]
   [ui-structure])
+ ;[:div#your-app [ui-structure]]
 
 
 

@@ -75,7 +75,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::keypress-events)))
+  (get-in db (db/path :environment/keypress-events)))
 
 (defn- get-event-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,14 +89,14 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/meta-item-path ::keypress-events :cache)))
+  (get-in db (db/meta-item-path :environment/keypress-events :cache)))
 
 (defn- any-keypress-event-registrated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (map/nonempty? (get-in db (db/path ::keypress-events))))
+  (map/nonempty? (get-in db (db/path :environment/keypress-events))))
 
 (defn- handler-enabled-by-user?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,7 +110,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path ::keypress-events :enabled?))))
+  (boolean (get-in db (db/meta-item-path :environment/keypress-events :enabled?))))
 
 (defn- handler-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -144,7 +144,7 @@
   ;
   ; @return (*)
   [db [_ event-id prop-id]]
-  (get-in db (db/path ::keypress-events event-id prop-id)))
+  (get-in db (db/path :environment/keypress-events event-id prop-id)))
 
 (defn- keypress-prevented-by-event?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,7 +162,7 @@
   ;
   ; @return (boolean)
   [db [_ event-id]]
-  (let [keypress-events (get-in db (db/path ::keypress-events))
+  (let [keypress-events (get-in db (db/path :environment/keypress-events))
         other-events    (dissoc keypress-events event-id)]
        (map/any-key-match? other-events #(r keypress-prevented-by-event? db %))))
 
@@ -185,7 +185,7 @@
   ;
   ; @return (vector)
   [db [_ key-code]]
-  (get-in db (db/meta-item-path ::keypress-events :cache key-code :keydown-events)))
+  (get-in db (db/meta-item-path :environment/keypress-events :cache key-code :keydown-events)))
 
 (defn- get-cached-keyup-event-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -194,7 +194,7 @@
   ;
   ; @return (vector)
   [db [_ key-code]]
-  (get-in db (db/meta-item-path ::keypress-events :cache key-code :keyup-events)))
+  (get-in db (db/meta-item-path :environment/keypress-events :cache key-code :keyup-events)))
 
 (defn- get-on-keydown-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,7 +221,7 @@
 (defn get-pressed-keys
   ; @return (vector)
   [db _]
-  (get-in db (db/meta-item-path ::keypress-events :pressed-keys)))
+  (get-in db (db/meta-item-path :environment/keypress-events :pressed-keys)))
 
 (defn key-pressed?
   ; @param (integer) key-code
@@ -244,7 +244,7 @@
   ;
   ; @return (map)
   [db [_ event-id event-props]]
-  (assoc-in db (db/path ::keypress-events event-id) event-props))
+  (assoc-in db (db/path :environment/keypress-events event-id) event-props))
 
 (defn- remove-event-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -253,14 +253,14 @@
   ;
   ; @return (map)
   [db [_ event-id]]
-  (dissoc-in db (db/path ::keypress-events event-id)))
+  (dissoc-in db (db/path :environment/keypress-events event-id)))
 
 (defn- empty-cache!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
-  (dissoc-in db (db/meta-item-path ::keypress-events :cache)))
+  (dissoc-in db (db/meta-item-path :environment/keypress-events :cache)))
 
 (defn- cache-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -278,10 +278,10 @@
   ; @return (map)
   [db [_ event-id {:keys [key-code on-keydown on-keyup]}]]
   (cond-> db (some? on-keydown)
-             (update-in (db/meta-item-path ::keypress-events :cache key-code :keydown-events)
+             (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keydown-events)
                         vector/conj-item event-id)
              (some? on-keyup)
-             (update-in (db/meta-item-path ::keypress-events :cache key-code :keyup-events)
+             (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keyup-events)
                         vector/conj-item event-id)))
 
 (defn- uncache-event!
@@ -292,9 +292,9 @@
   ; @return (map)
   [db [_ event-id]]
   (let [key-code (r get-event-prop db event-id :key-code)]
-       (-> db (update-in (db/meta-item-path ::keypress-events :cache key-code :keydown-events)
+       (-> db (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keydown-events)
                          vector/remove-item event-id)
-              (update-in (db/meta-item-path ::keypress-events :cache key-code :keyup-events)
+              (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keyup-events)
                          vector/remove-item event-id))))
 
 (defn- rebuild-cache!
@@ -305,7 +305,7 @@
   (reduce-kv (fn [db event-id event-props]
                  (r cache-event! db event-id event-props))
              (r empty-cache! db)
-             (get-in db (db/path ::keypress-events))))
+             (get-in db (db/path :environment/keypress-events))))
 
 (defn- enable-non-required-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -445,7 +445,7 @@
   (fn [{:keys [db]} [_ key-code]]
       (let [keydown-events (r get-on-keydown-events db key-code)]
             ; Store key-code to pressed-keys vector
-           {:db (r db/apply! db (db/meta-item-path ::keypress-events :pressed-keys)
+           {:db (r db/apply! db (db/meta-item-path :environment/keypress-events :pressed-keys)
                    vector/conj-item-once key-code)
             ; Dispatch keydown events
             :dispatch-n keydown-events})))
@@ -458,7 +458,7 @@
   (fn [{:keys [db]} [_ key-code]]
       (let [keyup-events (r get-on-keyup-events db key-code)]
             ; Remove key-code from pressed-keys vector
-           {:db (r db/apply! db (db/meta-item-path ::keypress-events :pressed-keys)
+           {:db (r db/apply! db (db/meta-item-path :environment/keypress-events :pressed-keys)
                    vector/remove-item key-code)
             ; Dispatch keyup events
             :dispatch-n keyup-events})))
@@ -467,7 +467,7 @@
   :environment/->keypress-handler-enabled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r db/set-item! db (db/meta-item-path ::keypress-events :enabled?) true)
+      {:db (r db/set-item! db (db/meta-item-path :environment/keypress-events :enabled?) true)
        :dispatch-n [[:environment/add-event-listener! "keydown" keydown-listener]
                     [:environment/add-event-listener! "keyup"   keyup-listener]]}))
 
@@ -475,7 +475,7 @@
   :environment/->keypress-handler-disabled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r db/set-item! db (db/meta-item-path ::keypress-events :enabled?) false)
+      {:db (r db/set-item! db (db/meta-item-path :environment/keypress-events :enabled?) false)
        :dispatch-n [[:environment/remove-event-listener! "keydown" keydown-listener]
                     [:environment/remove-event-listener! "keyup"   keyup-listener]]}))
 

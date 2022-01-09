@@ -40,12 +40,12 @@
 (defn get-viewport-height
   ; @return (integer)
   [db _]
-  (get-in db (db/meta-item-path ::primary :viewport-height)))
+  (get-in db (db/meta-item-path :environment/viewport-data :viewport-height)))
 
 (defn get-viewport-width
   ; @return (integer)
   [db _]
-  (get-in db (db/meta-item-path ::primary :viewport-width)))
+  (get-in db (db/meta-item-path :environment/viewport-data :viewport-width)))
 
 (defn get-viewport-profile
   ; XXX#6408
@@ -53,7 +53,7 @@
   ; @return (keyword)
   ;  :xs, :s, :m, :l, :xl
   [db _]
-  (get-in db (db/meta-item-path ::primary :viewport-profile)))
+  (get-in db (db/meta-item-path :environment/viewport-data :viewport-profile)))
 
 (defn viewport-profile-match?
   ; @param (keyword) n
@@ -94,7 +94,7 @@
   ; @return (keyword)
   ;  :landscape, :portrait
   [db _]
-  (get-in db (db/meta-item-path ::primary :viewport-orientation)))
+  (get-in db (db/meta-item-path :environment/viewport-data :viewport-orientation)))
 
 
 
@@ -106,7 +106,7 @@
   ;
   ; @return (map)
   [db _]
-  (assoc-in db (db/meta-item-path ::primary)
+  (assoc-in db (db/meta-item-path :environment/viewport-data)
                {:viewport-height      (dom/get-viewport-height)
                 :viewport-orientation (dom/get-viewport-orientation)
                 :viewport-profile     (dom/get-viewport-profile)

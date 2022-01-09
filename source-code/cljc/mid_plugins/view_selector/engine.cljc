@@ -116,13 +116,13 @@
   (str "/@app-home/" (name extension-id)
        "/"           (name view-id)))
 
-(defn load-event
+(defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @example
-  ;  (engine/load-event :my-extension)
+  ;  (engine/load-extension-event :my-extension)
   ;  =>
   ;  [:my-extension/load!]
   ;

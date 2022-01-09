@@ -45,7 +45,7 @@
   ;
   ; @return (boolean)
   [db [_ interval-id]]
-  (some? (get-in db (db/path ::intervals interval-id))))
+  (some? (get-in db (db/path :environment/intervals interval-id))))
 
 (defn- timeout-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,12 +54,12 @@
   ;
   ; @return (boolean)
   [db [_ timeout-id]]
-  (some? (get-in db (db/path ::timeouts timeout-id))))
+  (some? (get-in db (db/path :environment/timeouts timeout-id))))
 
 (defn browser-online?
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path ::primary :browser-online?))))
+  (boolean (get-in db (db/meta-item-path :environment/window-data :browser-online?))))
 
 (defn browser-offline?
   ; @return (boolean)
@@ -175,7 +175,7 @@
         timeout-props (assoc timeout-props :js-id js-id)]
        ; TODO ...
        ; Re-Frame adatbázis helyett helyi atomban legyenek tárolva!
-       (a/dispatch [::store-timeout-props! timeout-id timeout-props])))
+       (a/dispatch [:environment/store-timeout-props! timeout-id timeout-props])))
 
 ; @usage
 ;  [:environment/set-timeout! :my-timeout {:event [:do-something!]
@@ -207,7 +207,7 @@
   ;
   ; @return (map)
   [db [_ interval-id interval-props]]
-  (assoc-in db (db/path ::intervals interval-id) interval-props))
+  (assoc-in db (db/path :environment/intervals interval-id) interval-props))
 
 (a/reg-event-db :environment/store-interval-props! store-interval-props!)
 
@@ -219,7 +219,7 @@
   ;
   ; @return (map)
   [db [_ timeout-id timeout-props]]
-  (assoc-in db (db/path ::timeouts timeout-id) timeout-props))
+  (assoc-in db (db/path :environment/timeouts timeout-id) timeout-props))
 
 (a/reg-event-db :environment/store-timeout-props! store-timeout-props!)
 
@@ -228,9 +228,9 @@
   ;
   ; @return (map)
   [db _]
-  (-> db (assoc-in (db/meta-item-path ::primary :browser-online?) (window/browser-online?))
-         (assoc-in (db/meta-item-path ::primary :language)        (window/get-language))
-         (assoc-in (db/meta-item-path ::primary :user-agent)      (window/get-user-agent))))
+  (-> db (assoc-in (db/meta-item-path :environment/window-data :browser-online?) (window/browser-online?))
+         (assoc-in (db/meta-item-path :environment/window-data :language)        (window/get-language))
+         (assoc-in (db/meta-item-path :environment/window-data :user-agent)      (window/get-user-agent))))
 
 (a/reg-event-db :environment/update-window-data! update-window-data!)
 
@@ -262,7 +262,7 @@
   ; @usage
   ;  [:environment/remove-interval! :my-interval]
   (fn [{:keys [db]} [_ interval-id]]
-      (let [{:keys [js-id]} (get-in db (db/path ::intervals interval-id))]
+      (let [{:keys [js-id]} (get-in db (db/path :environment/intervals interval-id))]
            [:environment/clear-interval! js-id])))
 
 (a/reg-event-fx
@@ -288,7 +288,7 @@
   ; @usage
   ;  [:environment/remove-timeout! :my-timeout]
   (fn [{:keys [db]} [_ timeout-id]]
-      (let [{:keys [js-id]} (get-in db (db/path ::timeouts timeout-id))]
+      (let [{:keys [js-id]} (get-in db (db/path :environment/timeouts timeout-id))]
            [:environment/clear-timeout! js-id])))
 
 
@@ -314,7 +314,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [browser-online? (window/browser-online?)]
-           {:db          (assoc-in db (db/meta-item-path ::primary :browser-online?) browser-online?)
+           {:db (assoc-in db (db/meta-item-path :environment/window-data :browser-online?) browser-online?)
             :dispatch-if [browser-online? [:core/connect-app!]
                                           [:core/disconnect-app!]]})))
 

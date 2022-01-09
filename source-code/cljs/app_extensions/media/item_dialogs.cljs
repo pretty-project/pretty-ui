@@ -48,8 +48,8 @@
   ;
   ; @return (component)
   [popup-id action-props]
-  [:<> [elements/polarity {:start-content [delete-item-dialog-cancel-button popup-id action-props]
-                           :end-content   [delete-item-dialog-delete-button popup-id action-props]}]])
+  [:<> [elements/horizontal-polarity {:start-content [delete-item-dialog-cancel-button popup-id action-props]
+                                      :end-content   [delete-item-dialog-delete-button popup-id action-props]}]])
 
 (defn- delete-subdirectory-dialog
   ; WARNING! NON-PUBLIC! DO NOT USE!

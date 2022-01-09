@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v3.6.8
-; Compatibility: x4.5.0
+; Version: v3.7.2
+; Compatibility: x4.5.2
 
 
 
@@ -1163,8 +1163,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
-  (fn [_ [_ renderer-id]]
-      [:core/->error-catched {:error ILLEGAL-UNMOUNTING-ERROR :renderer-id renderer-id}]))
+  (fn [cofx [_ renderer-id]]
+      [:core/->error-catched {:error ILLEGAL-UNMOUNTING-ERROR :cofx cofx}]))
 
 
 

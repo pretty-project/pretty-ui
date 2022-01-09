@@ -1005,11 +1005,7 @@ button.x-card:focus,
 
 .x-element-list[data-orientation="horizontal"],
 .x-menu-bar[data-orientation="horizontal"],
-.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items,
-.x-polarity[data-orientation="horizontal"],
-.x-polarity[data-orientation="horizontal"] .x-polarity--start-content,
-.x-polarity[data-orientation="horizontal"] .x-polarity--middle-content,
-.x-polarity[data-orientation="horizontal"] .x-polarity--end-content {
+.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items {
   display: flex;
   flex-direction: row }
 
@@ -1023,8 +1019,7 @@ button.x-card:focus,
 /*** Vertical orientation ***/
 
 .x-element-list[data-orientation="vertical"],
-.x-menu-bar[data-orientation="vertical"] .x-menu-bar--menu-items,
-.x-polarity[data-orientation="vertical"] {
+.x-menu-bar[data-orientation="vertical"] .x-menu-bar--menu-items {
   display: flex;
   flex-direction: column }
 
@@ -1042,7 +1037,7 @@ button.x-card:focus,
 
 
 
-
+/* TEMP */
 
 .x-element[data-min-height="xxs"] {
   min-height: 12px }
@@ -1065,7 +1060,7 @@ button.x-card:focus,
 .x-element[data-min-height="xxl"] {
   min-height: 48px }
 
-
+/* TEMP */
 
 
 
@@ -2938,19 +2933,35 @@ body[data-viewport-profile="s"]
 
 /***** Polarity *****/
 
-.x-polarity {
+.x-horizontal-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
   -height: 100%;
-  -width: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
-
-  justify-content: space-between }
-
-.x-polarity[data-orientation="horizontal"] {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100% }
 
-.x-polarity[data-orientation="vertical"] {
-  height: 100% }
+.x-horizontal-polarity--start-content,
+.x-horizontal-polarity--middle-content,
+.x-horizontal-polarity--end-content {
+  display: flex;
+  flex-direction: row }
+
+.x-vertical-polarity {
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  -width: 100%;
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between }
+
+.x-vertical-polarity--start-content,
+.x-vertical-polarity--middle-content,
+.x-vertical-polarity--end-content {
+  display: flex;
+  flex-direction: column }
 
 /***** Polarity *****/
 

@@ -33,9 +33,9 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id]
-  [elements/polarity ::header
-                     {:start-content [cancel-button header-id]
-                      :end-content   [remove-button header-id]}])
+  [elements/horizontal-polarity ::header
+                                {:start-content [cancel-button header-id]
+                                 :end-content   [remove-button header-id]}])
 
 
 

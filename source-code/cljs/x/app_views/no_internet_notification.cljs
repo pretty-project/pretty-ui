@@ -31,10 +31,10 @@
   ;
   ; @return (component)
   [bubble-id]
-  [elements/polarity {:start-content [elements/label  {:content  :no-internet-connection}]
-                      :end-content   [elements/button {:label    :refresh!
-                                                       :on-click [:boot-loader/refresh-app!]
-                                                       :preset   :primary-button}]}])
+  [elements/horizontal-polarity {:start-content [elements/label  {:content  :no-internet-connection}]
+                                 :end-content   [elements/button {:label    :refresh!
+                                                                  :on-click [:boot-loader/refresh-app!]
+                                                                  :preset   :primary-button}]}])
 
 
 

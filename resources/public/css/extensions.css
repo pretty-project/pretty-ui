@@ -62,38 +62,41 @@
 
 .storage--file-uploader--file-item {
   display: flex;
-  justify-content: space-between;
+  height: 64px;
+  -justify-content: space-between;
+  margin: 6px 0;
   width: 100%
 }
 
-.storage--file-uploader--file-item--file-details {
-  padding: 3px 0
+.storage--file-uploader--file-details {
+  flex-grow: 1;
+  -padding: 8px 12px
 }
 
-.storage--file-uploader--file-item--filename {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 21px
+.storage--file-uploader--file-preview {
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 64px;
+  justify-content: center;
+  margin: 0 12px;
+  width: 64px
 }
 
-.storage--file-uploader--file-item--filesize {
-  color: var( --color-muted );
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xs );
-  line-height: 21px
-}
-
-
-
-.storage--file-uploader--file-item--file-actions {
+.storage--file-uploader--file-actions {
   opacity: 0;
-  -transition: opacity .15s
+  padding: 8px 12px 0 0;
+  /* Google Chrome 95.0.4638.69 - a popup elem hátterén beállított opacity érték vibrál,
+   * a transition hatására
+  -transition: opacity .1s */
 }
 
 .storage--file-uploader--file-item:hover
-.storage--file-uploader--file-item--file-actions {
+.storage--file-uploader--file-actions {
   opacity: 1
 }
 

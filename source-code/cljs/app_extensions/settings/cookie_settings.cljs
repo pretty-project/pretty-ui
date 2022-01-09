@@ -43,10 +43,10 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id]
-  [elements/polarity ::header
-                     {:start-content  [cancel-button header-id]
-                      :middle-content [header-label  header-id]
-                      :end-content    [save-button   header-id]}])
+  [elements/horizontal-polarity ::header
+                                {:start-content  [cancel-button header-id]
+                                 :middle-content [header-label  header-id]
+                                 :end-content    [save-button   header-id]}])
 
 
 

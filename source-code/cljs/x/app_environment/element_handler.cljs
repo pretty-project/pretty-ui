@@ -84,7 +84,7 @@
       [:environment/set-element-style-value! element-id "display" "block"]))
 
 (a/reg-event-fx
-  ::hide-element!
+  :environment/hide-element!
   ; @param (string) element-id
   ;
   ; @usage

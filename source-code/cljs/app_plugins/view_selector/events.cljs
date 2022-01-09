@@ -79,4 +79,4 @@
   ;   :default-view-id (keyword)(opt)}
   (fn [{:keys [db]} [_ extension-id selector-props]]
       {:db (r load-selector! db extension-id selector-props)
-       :dispatch (engine/load-event extension-id)}))
+       :dispatch (engine/load-extension-event extension-id)}))

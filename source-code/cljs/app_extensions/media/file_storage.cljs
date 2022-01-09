@@ -524,16 +524,16 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [elements/polarity ::control-bar
-                     {:start-content [:<> [file-storage-directory-actions component-id view-props]
-                                         ;[elements/vertical-line {:color :default :layout :row}]
-                                          [elements/vertical-separator {:size :m}]
-                                          [file-storage-filter-items-field component-id view-props]]
-                      :end-content   [:<> [elements/vertical-separator {:size :m}]
-                                          ;[file-storage-capacity-indicator component-id view-props]
-                                          [elements/vertical-separator {:size :m}]]}])
-                                         ;[file-storage-bin-button component-id view-props]
-                                         ;[elements/vertical-separator {:size :m}]
+  [elements/horizontal-polarity ::control-bar
+                                {:start-content [:<> [file-storage-directory-actions component-id view-props]
+                                                    ;[elements/vertical-line {:color :default :layout :row}]
+                                                     [elements/vertical-separator {:size :m}]
+                                                     [file-storage-filter-items-field component-id view-props]]
+                                 :end-content   [:<> [elements/vertical-separator {:size :m}]
+                                                     ;[file-storage-capacity-indicator component-id view-props]
+                                                     [elements/vertical-separator {:size :m}]]}])
+                                                    ;[file-storage-bin-button component-id view-props]
+                                                    ;[elements/vertical-separator {:size :m}]
 
 
 
@@ -613,17 +613,17 @@
   ;
   ; @return (component)
   [component-id view-props]
-  [elements/polarity ::label-bar
-                     {:start-content [:<> [file-storage-home-button     component-id view-props]
-                                          [file-storage-up-button       component-id view-props]]
-                                          ;[elements/vertical-separator {:size :s}]
-                                          ;[file-storage-label           component-id view-props]]
-                      :end-content   [:<> [file-storage-filter-items-field component-id view-props]
-                                          [elements/vertical-separator {:size :xxs}]
-                                          [file-storage-directory-actions component-id view-props]
-                                          ;[file-storage-filter-items-field component-id view-props]
+  [elements/horizontal-polarity ::label-bar
+                                {:start-content [:<> [file-storage-home-button     component-id view-props]
+                                                     [file-storage-up-button       component-id view-props]]
+                                                     ;[elements/vertical-separator {:size :s}]
+                                                     ;[file-storage-label           component-id view-props]]
+                                 :end-content   [:<> [file-storage-filter-items-field component-id view-props]
+                                                     [elements/vertical-separator {:size :xxs}]
+                                                     [file-storage-directory-actions component-id view-props]
+                                                     ;[file-storage-filter-items-field component-id view-props]
 
-                                          [file-storage-order-by-select    component-id view-props]]}])
+                                                     [file-storage-order-by-select    component-id view-props]]}])
 
 (defn- file-storage-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -790,8 +790,8 @@
   [component-id {:keys [directory-empty? directory-exists?] :as view-props}]
   (if (and directory-empty? directory-exists?)
       [:<> [elements/horizontal-separator {:size :s}]
-           [elements/polarity ::directory-empty
-                              {:middle-content [file-storage-file-drop-area component-id view-props]}]
+           [elements/horizontal-polarity ::directory-empty
+                                         {:middle-content [file-storage-file-drop-area component-id view-props]}]
            [elements/horizontal-separator {:size :s}]]))
 
 (defn- file-storage-directory-not-exists
@@ -805,8 +805,8 @@
   [component-id {:keys [directory-exists?] :as view-props}]
   (if (not directory-exists?)
       [:<> [elements/horizontal-separator {:size :s}]
-           [elements/polarity ::directory-not-exists
-                              {:middle-content [elements/label {:content :directory-does-not-exists}]}]
+           [elements/horizontal-polarity ::directory-not-exists
+                                         {:middle-content [elements/label {:content :directory-does-not-exists}]}]
            [elements/horizontal-separator {:size :s}]]))
 
 (defn- file-storage-no-filtered-items-match
@@ -823,8 +823,8 @@
   (if (and (not directory-render-files?)
            (not directory-render-subdirectories?)
            (not directory-empty?))
-      [elements/polarity ::no-filtered-items-match
-                         {:middle-content [elements/label {:content :no-items-found :color :highlight}]}]))
+      [elements/horizontal-polarity ::no-filtered-items-match
+                                    {:middle-content [elements/label {:content :no-items-found :color :highlight}]}]))
 
 (defn- file-storage-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -234,6 +234,10 @@
                               :icon    :chevron_left
                               :layout  :icon-button
                               :variant :transparent}
+      :upload-button       {:color   :primary
+                            :label   :upload!
+                            :layout  :row
+                            :variant :transparent}
       :user-menu-icon-button {:color   :default
                               :icon    :account_circle
                               :layout  :icon-button

@@ -389,8 +389,8 @@
             :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
                          [:ui/set-header-title!  (param editor-label)]
                          [:ui/set-window-title!  (param editor-label)]
-                         [:item-editor/request-item! extension-id item-namespace]
-                         (engine/render-event extension-id item-namespace)]})))
+                         [:item-editor/request-item!  extension-id item-namespace]
+                         (engine/load-extension-event extension-id item-namespace)]})))
 
 
 

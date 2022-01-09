@@ -99,7 +99,7 @@
   ;
   ; @return (component)
   [popup-id bar-props]
-  [elements/polarity {:end-content [popup-accept-button popup-id bar-props]}])
+  [elements/horizontal-polarity {:end-content [popup-accept-button popup-id bar-props]}])
 
 (defn cancel-popup-header
   ; @param (keyword) popup-id
@@ -107,7 +107,7 @@
   ;
   ; @return (component)
   [popup-id bar-props]
-  [elements/polarity {:start-content [popup-cancel-button popup-id bar-props]}])
+  [elements/horizontal-polarity {:start-content [popup-cancel-button popup-id bar-props]}])
 
 (defn close-popup-header
   ; @param (keyword) popup-id
@@ -115,9 +115,9 @@
   ;
   ; @return (component)
   [popup-id bar-props]
-  [elements/polarity {:start-content  [popup-icon-button-placeholder popup-id bar-props]
-                      :middle-content [popup-label                   popup-id bar-props]
-                      :end-content    [popup-close-icon-button       popup-id bar-props]}])
+  [elements/horizontal-polarity {:start-content  [popup-icon-button-placeholder popup-id bar-props]
+                                 :middle-content [popup-label                   popup-id bar-props]
+                                 :end-content    [popup-close-icon-button       popup-id bar-props]}])
 
 (defn go-up-popup-header
   ; @param (keyword) popup-id
@@ -126,8 +126,8 @@
   ;
   ; @return (component)
   [popup-id bar-props]
-  [elements/polarity {:start-content [:<> [popup-up-icon-button popup-id bar-props]
-                                          [popup-label          popup-id bar-props]]}])
+  [elements/horizontal-polarity {:start-content [:<> [popup-up-icon-button popup-id bar-props]
+                                                     [popup-label          popup-id bar-props]]}])
 
 (defn go-back-popup-header
   ; @param (keyword) popup-id
@@ -136,5 +136,5 @@
   ;
   ; @return (component)
   [popup-id bar-props]
-  [elements/polarity {:start-content [:<> [popup-back-icon-button popup-id bar-props]
-                                          [popup-label            popup-id bar-props]]}])
+  [elements/horizontal-polarity {:start-content [:<> [popup-back-icon-button popup-id bar-props]
+                                                     [popup-label            popup-id bar-props]]}])

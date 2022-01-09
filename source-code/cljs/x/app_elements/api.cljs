@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.1.8
-; Compatibility: x4.4.3
+; Version: v1.2.0
+; Compatibility: x4.5.2
 
 
 
@@ -41,6 +41,7 @@
               [x.app-elements.expandable           :as expandable]
               [x.app-elements.file-drop-area       :as file-drop-area]
               [x.app-elements.horizontal-line      :as horizontal-line]
+              [x.app-elements.horizontal-polarity  :as horizontal-polarity]
               [x.app-elements.horizontal-separator :as horizontal-separator]
               [x.app-elements.icon                 :as icon]
               [x.app-elements.image                :as image]
@@ -53,7 +54,6 @@
               [x.app-elements.overlay              :as overlay]
               [x.app-elements.password-field       :as password-field]
               [x.app-elements.point-diagram        :as point-diagram]
-              [x.app-elements.polarity             :as polarity]
               [x.app-elements.radio-button         :as radio-button]
               [x.app-elements.row                  :as row]
               [x.app-elements.search-field         :as search-field]
@@ -66,6 +66,7 @@
               [x.app-elements.text-field           :as text-field]
               [x.app-elements.toggle               :as toggle]
               [x.app-elements.vertical-line        :as vertical-line]
+              [x.app-elements.vertical-polarity    :as vertical-polarity]
               [x.app-elements.vertical-separator   :as vertical-separator]))
 
 
@@ -177,6 +178,7 @@
 (def expandable           expandable/element)
 (def file-drop-area       file-drop-area/element)
 (def horizontal-line      horizontal-line/element)
+(def horizontal-polarity  horizontal-polarity/element)
 (def horizontal-separator horizontal-separator/element)
 (def icon                 icon/element)
 (def image                image/element)
@@ -189,7 +191,6 @@
 (def overlay              overlay/element)
 (def password-field       password-field/element)
 (def point-diagram        point-diagram/element)
-(def polarity             polarity/element)
 (def radio-button         radio-button/element)
 (def row                  row/element)
 (def search-field         search-field/element)
@@ -202,4 +203,5 @@
 (def text-field           text-field/element)
 (def toggle               toggle/element)
 (def vertical-line        vertical-line/element)
+(def vertical-polarity    vertical-polarity/element)
 (def vertical-separator   vertical-separator/element)

@@ -138,19 +138,19 @@
   (let [event-id (keyword/add-namespace extension-id :go-home!)]
        [event-id]))
 
-(defn render-event
+(defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/render-event :my-extension :my-type)
+  ;  (engine/load-extension-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension/render-my-type-browser!]
+  ;  [:my-extension/load-my-type-browser!]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
   (let [event-id (keyword (name extension-id)
-                          (str "render-" (name item-namespace) "-browser!"))]
+                          (str "load-" (name item-namespace) "-browser!"))]
        [event-id]))

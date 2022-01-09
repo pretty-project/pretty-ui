@@ -29,4 +29,4 @@
 (def extended-route-template engine/extended-route-template)
 (def go-up-event             engine/go-up-event)
 (def go-home-event           engine/go-home-event)
-(def render-event            engine/render-event)
+(def load-extension-event    engine/load-extension-event)

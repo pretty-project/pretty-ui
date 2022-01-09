@@ -27,7 +27,7 @@
 (defn touch-events-api-detected?
   ; @return (boolean)
   [db _]
-  (get-in db (db/meta-item-path ::primary :touch-events-api.detected?)))
+  (get-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?)))
 
 
 
@@ -50,14 +50,14 @@
   :environment/->touch-events-api-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) true)
+      {:db       (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) true)
        :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" true]}))
 
 (a/reg-event-fx
   :environment/->touch-events-api-not-detected
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (assoc-in db (db/meta-item-path ::primary :touch-events-api.detected?) false)
+      {:db       (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) false)
        :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" false]}))
 
 

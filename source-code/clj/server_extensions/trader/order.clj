@@ -88,6 +88,17 @@
 ; @name Sell
 ;  - Eladsz ETH-t, mert azt hiszed, hogy alacsonyabb lesz később az ára és később visszaveszed
 ;  - Mikor fenn van, akkor SELL
+;
+; @name LTP, last traded price
+;  - Az order-book legújabb bejegyzése szerinti ár.
+;  - Ne használd conditional order feltételként!
+;
+; @name Mark price (fair price)
+;  Aktuális piaci ár 6 kriptovaluta tőzsde átlagára alapján kalkulálva.
+;  Megvéd a pillanatnyi kiugóran magas értékek okozta hibáktól.
+;
+; @name Index price
+;  TODO ...
 
 
 

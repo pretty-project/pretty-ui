@@ -24,12 +24,11 @@
 
 ; @constant (map)
 (def TARGET-PATHS
-     {:app-details     (db/path :x.mid-core.config-handler/configs :app-details)
-      :storage-details (db/path :x.mid-core.config-handler/configs :storage-details)
-      :client-routes   (db/path :x.app-router.route-handler/client-routes)
-      :user-account    (db/path :x.app-user.account-handler/account)
-      :user-profile    (db/path :x.app-user.profile-handler/profile)
-      :user-settings   (db/path :x.app-user.settings-handler/settings)})
+     {:app-details   (db/path :core/configs :app-details)
+      :client-routes (db/path :x.app-router.route-handler/client-routes)
+      :user-account  (db/path :x.app-user.account-handler/account)
+      :user-profile  (db/path :x.app-user.profile-handler/profile)
+      :user-settings (db/path :x.app-user.settings-handler/settings)})
 
 
 

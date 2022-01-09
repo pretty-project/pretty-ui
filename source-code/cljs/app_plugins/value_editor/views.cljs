@@ -88,9 +88,9 @@
   ;
   ; @return (component)
   [extension-id editor-id header-props]
-  [elements/polarity ::header
-                     {:start-content [cancel-button extension-id editor-id header-props]
-                      :end-content   [save-button   extension-id editor-id header-props]}])
+  [elements/horizontal-polarity ::header
+                                {:start-content [cancel-button extension-id editor-id header-props]
+                                 :end-content   [save-button   extension-id editor-id header-props]}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!

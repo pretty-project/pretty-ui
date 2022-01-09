@@ -5,15 +5,15 @@
 ; Author: bithandshake
 ; Created: 2021.04.27
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.4.8
+; Version: v1.1.4
+; Compatibility: x4.5.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.polarity
+(ns x.app-elements.horizontal-polarity
     (:require [mid-fruits.candy          :refer [param]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
@@ -30,9 +30,8 @@
   ; @param (map) polarity-props
   ;
   ; @return (map)
-  ;  {:orientation (keyword)}
   [polarity-props]
-  (merge {:orientation :horizontal}
+  (merge {}
          (param polarity-props)))
 
 
@@ -45,44 +44,41 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:orientation (keyword)
-  ;   :start-content (metamorphic-content)}
+  ;  {:start-content (metamorphic-content)}
   ;
   ; @return (component)
-  [polarity-id {:keys [orientation start-content]}]
+  [_ {:keys [start-content]}]
   (if (some? start-content)
-      [:div.x-polarity--start-content [components/content {:content start-content}]]
-      [:div.x-polarity--placeholder]))
+      [:div.x-horizontal-polarity--start-content [components/content {:content start-content}]]
+      [:div.x-horizontal-polarity--placeholder]))
 
 (defn- middle-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:middle-content (metamorphic-content)
-  ;   :orientation (keyword)}
+  ;  {:middle-content (metamorphic-content)}
   ;
   ; @return (component)
-  [polarity-id {:keys [middle-content orientation]}]
+  [_ {:keys [middle-content]}]
   (if (some? middle-content)
-      [:div.x-polarity--middle-content [components/content {:content middle-content}]]
-      [:div.x-polarity--placeholder]))
+      [:div.x-horizontal-polarity--middle-content [components/content {:content middle-content}]]
+      [:div.x-horizontal-polarity--placeholder]))
 
 (defn- end-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:end-content (metamorphic-content)
-  ;   :orientation (keyword)}
+  ;  {:end-content (metamorphic-content)}
   ;
   ; @return (component)
-  [polarity-id {:keys [end-content orientation]}]
+  [_ {:keys [end-content orientation]}]
   (if (some? end-content)
-      [:div.x-polarity--end-content [components/content {:content end-content}]]
-      [:div.x-polarity--placeholder]))
+      [:div.x-horizontal-polarity--end-content [components/content {:content end-content}]]
+      [:div.x-horizontal-polarity--placeholder]))
 
-(defn- polarity
+(defn- horizontal-polarity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) polarity-id
@@ -90,18 +86,15 @@
   ;
   ; @return (hiccup)
   [polarity-id polarity-props]
-  [:div.x-polarity (engine/element-attributes polarity-id polarity-props)
-                   [start-content             polarity-id polarity-props]
-                   [middle-content            polarity-id polarity-props]
-                   [end-content               polarity-id polarity-props]])
+  [:div.x-horizontal-polarity (engine/element-attributes polarity-id polarity-props)
+                              [start-content             polarity-id polarity-props]
+                              [middle-content            polarity-id polarity-props]
+                              [end-content               polarity-id polarity-props]])
 
 (defn element
   ; @param (keyword)(opt) polarity-id
   ; @param (map) polarity-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :orientation (keyword)(opt)
-  ;    :horizontal, vertical
-  ;    Default: :horizontal
   ;   :end-content (metamorphic-content)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
@@ -111,19 +104,19 @@
   ;   :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  [elements/polarity {...}]
+  ;  [elements/horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [elements/polarity :my-polarity {...}]
+  ;  [elements/horizontal-polarity :my-horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [elements/polarity {:start-content [:<> [elements/label {:content "My label"}]
-  ;                                          [elements/label {:content "My label"}]]}]
+  ;  [elements/horizontal-polarity {:start-content [:<> [elements/label {:content "My label"}]
+  ;                                                     [elements/label {:content "My label"}]]}]
   ;
   ; @return (component)
   ([polarity-props]
    [element (a/id) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [polarity-props (polarity-props-prototype polarity-props)]
-        [polarity polarity-id polarity-props])))
+   (let [];polarity-props (polarity-props-prototype polarity-props)
+        [horizontal-polarity polarity-id polarity-props])))

@@ -165,9 +165,9 @@
   ;
   ; @return (component)
   [popup-id saver-props]
-  [elements/polarity ::header
-                     {:start-content [cancel-button popup-id saver-props]
-                      :end-content   [save-button   popup-id saver-props]}])
+  [elements/horizontal-polarity ::header
+                                {:start-content [cancel-button popup-id saver-props]
+                                 :end-content   [save-button   popup-id saver-props]}])
 
 
 

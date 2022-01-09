@@ -36,8 +36,8 @@
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
 (def parent-uri              engine/parent-uri)
-(def render-event            engine/render-event)
 (def dialog-id               engine/dialog-id)
+(def load-extension-event    engine/load-extension-event)
 
 
 

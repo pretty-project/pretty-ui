@@ -541,17 +541,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
-  [db _]
-  (r a/get-storage-detail db :storage-capacity))
+  [db _])
+  ;(r a/get-storage-detail db :storage-capacity))
 
 (defn get-storage-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
-  [db _]
-  (let [used-capacity  (r get-storage-used-capacity  db)
-        total-capacity (r get-storage-total-capacity db)]
-       (- total-capacity used-capacity)))
+  [db _])
+  ;(let [used-capacity  (r get-storage-used-capacity  db)
+  ;      total-capacity (r get-storage-total-capacity db)
+  ;     (- total-capacity used-capacity)])
 
 
 

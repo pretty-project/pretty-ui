@@ -60,7 +60,7 @@
                ; Store the change locally ...
            (do (reset! SCROLLED-TO-TOP? scrolled-to-top?)
                ; Store the change in the Re-Frame DB ...
-               (a/dispatch-sync [:db/set-item! [::primary :scrolled-to-top?] scrolled-to-top?])))))
+               (a/dispatch-sync [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])))))
 
 
 
@@ -73,7 +73,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db [::primary :scrolled-to-top?])))
+  (boolean (get-in db [:environment/sroll-data :scrolled-to-top?])))
 
 
 
@@ -128,7 +128,7 @@
   []
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
        (reset!     SCROLLED-TO-TOP? scrolled-to-top?)
-       (a/dispatch [:db/set-item! [::primary :scrolled-to-top?] scrolled-to-top?])))
+       (a/dispatch [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])))
 
 (a/reg-fx :environment/initialize-scroll-handler! initialize-scroll-handler!)
 

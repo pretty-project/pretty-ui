@@ -72,7 +72,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx :my-extension/render-my-type-lister! [:ui/set-surface! {:view {:content #'my-view}}])
+(a/reg-event-fx :my-extension/load-my-type-lister! [:ui/set-surface! {:view {:content #'my-view}}])
                                                    ; (example B)
                                                    ; [:ui/set-surface! {:view {:content #'your-view}}])
 

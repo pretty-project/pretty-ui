@@ -64,8 +64,8 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id]
-  [elements/polarity ::header
-                     {:end-content [got-it-button header-id]}])
+  [elements/horizontal-polarity ::header
+                                {:end-content [got-it-button header-id]}])
 
 
 

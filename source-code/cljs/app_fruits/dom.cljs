@@ -919,16 +919,24 @@
   (-> file .-type io/mime-type->image?))
 
 (defn file->file-data
+  ; @param (integer) file-dex
   ; @param (file object) file
   ;
   ; @return (map)
-  ;  {:filename (string)
+  ;  {:file-dex (integer)
+  ;   :filename (string)
   ;   :filesize (B)
-  ;   :mime-type (string)}
-  [file]
-  {:filename  (.-name file)
-   :filesize  (.-size file)
-   :mime-type (.-type file)})
+  ;   :mime-type (string)
+  ;   :object-url (string)}
+  ([file]
+   (file->file-data 0 file))
+
+  ([file-dex file]
+   {:file-dex   (param  file-dex)
+    :filename   (.-name file)
+    :filesize   (.-size file)
+    :mime-type  (.-type file)
+    :object-url (.createObjectURL js/URL file)}))
 
 
 
@@ -985,7 +993,7 @@
   ;
   ; @return (?)
   [file-selector]
-  (.-files file-selector))
+  (-> file-selector .-files))
 
 (defn file-selector->file-list
   ; @param (DOM-element) file-selector
@@ -1035,7 +1043,7 @@
   ;
   ; @return (maps in vector)
   [file-selector]
-  (reduce #(conj %1 (file->file-data %2)) [] (-> file-selector .-files array-seq)))
+  (reduce-kv #(conj %1 (file->file-data %2 %3)) [] (-> file-selector .-files array-seq vec)))
 
 (defn file-selector->files-meta
   ; @param (DOM-element) file-selector
@@ -1046,15 +1054,6 @@
   [file-selector]
   {:file-count (file-selector->file-count file-selector)
    :files-size (file-selector->files-size file-selector)})
-
-(defn file-selector->file-object-url
-  ; @param (DOM-element) file-selector
-  ; @param (integer) file-dex
-  ;
-  ; @return (string)
-  [file-selector file-dex]
-  (let [file (file-selector->file file-selector file-dex)]
-       (.createObjectURL js/URL file)))
 
 (defn file-selector->image-data-url
   ; @param (DOM-element) file-selector

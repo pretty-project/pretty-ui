@@ -14,4 +14,4 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.view-selector.api
-    (:require [mid-plugins.view-selector.engine ]))
+    (:require [mid-plugins.view-selector.engine]))

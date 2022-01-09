@@ -69,8 +69,8 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
-  [elements/polarity ::header
-                     {:middle-content [menu-bar header-id header-props]}])
+  [elements/horizontal-polarity ::header
+                                {:middle-content [menu-bar header-id header-props]}])
 
 
 

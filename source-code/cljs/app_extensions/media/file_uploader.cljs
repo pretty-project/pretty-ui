@@ -145,19 +145,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
-  [db _]
-  (let [max-upload-size (r a/get-storage-detail db :max-upload-size)
-        upload-size     (get-in db (settings-item-path :files-size))]
-       (>= upload-size max-upload-size)))
+  [db _])
+  ;(let [max-upload-size (r a/get-storage-detail db :max-upload-size)
+  ;      upload-size     (get-in db (settings-item-path :files-size))
+  ;     (>= upload-size max-upload-size)])
 
 (defn- storage-capacity-limit-exceeded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
-  [db _]
-  (let [storage-free-capacity (r engine/get-storage-free-capacity db)
-        upload-size           (get-in db (settings-item-path :files-size))]
-       (>= upload-size storage-free-capacity)))
+  [db _])
+  ;(let [storage-free-capacity (r engine/get-storage-free-capacity db)
+  ;      upload-size           (get-in db (settings-item-path :files-size))
+  ;     (>= upload-size storage-free-capacity)])
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -170,7 +170,7 @@
          {:all-files-aborted?               (r all-files-aborted?               db)
           :max-upload-size-reached?         (r max-upload-size-reached?         db)
           :storage-capacity-limit-exceeded? (r storage-capacity-limit-exceeded? db)
-          :max-upload-size                  (r a/get-storage-detail db :max-upload-size)
+          ;:max-upload-size                  (r a/get-storage-detail db :max-upload-size)
           :storage-free-capacity            (r engine/get-storage-free-capacity db)}))
 
 (a/reg-sub :file-uploader/get-header-props get-header-props)
@@ -404,8 +404,8 @@
   ;
   ; @return (component)
   [popup-id view-props]
-  [:<> [elements/polarity {:start-content [file-uploader-cancel-button popup-id view-props]
-                           :end-content   [file-uploader-upload-button popup-id view-props]}]
+  [:<> [elements/horizontal-polarity {:start-content [file-uploader-cancel-button popup-id view-props]
+                                      :end-content   [file-uploader-upload-button popup-id view-props]}]
        [file-uploader-summary popup-id view-props]
        [elements/horizontal-separator {:size :s}]])
 
@@ -446,8 +446,8 @@
        (vec (reduce-indexed (fn [file-list file-dex {:keys [aborted?] :as file-props}]
                                 (if (boolean aborted?)
                                     (return file-list)
-                                    (let [file-object-url (dom/file-selector->file-object-url file-selector file-dex)
-                                          file-props      (assoc file-props :file-object-url file-object-url)]
+                                    (let [];file-object-url (dom/file-selector->file-object-url file-selector file-dex)
+                                          ;file-props      (assoc file-props :file-object-url file-object-url)]
                                          (conj file-list ^{:key file-dex}
                                                [file-uploader-file popup-id view-props file-props file-dex]))))
                             [:<>]

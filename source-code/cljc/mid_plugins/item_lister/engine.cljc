@@ -142,23 +142,6 @@
   (let [event-id (keyword (name extension-id) "add-new-item!")]
        [event-id]))
 
-(defn render-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/render-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension/render-my-type-lister!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "render-" (name item-namespace) "-lister!"))]
-       [event-id]))
-
 (defn dialog-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -175,3 +158,20 @@
   [extension-id _ action-id]
   (keyword (name extension-id)
            (str (name action-id) "-dialog")))
+
+(defn load-extension-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/load-extension-event :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension/load-my-type-lister!]
+  ;
+  ; @return (event-vector)
+  [extension-id item-namespace]
+  (let [event-id (keyword (name extension-id)
+                          (str "load-" (name item-namespace) "-lister!"))]
+       [event-id]))

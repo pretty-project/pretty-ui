@@ -64,8 +64,8 @@
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
-  [elements/polarity {:start-content [menu-bar-menu                  module-id module-props]
-                      :end-content   [settings/toggle-syncing-button module-id module-props]}])
+  [elements/horizontal-polarity {:start-content [menu-bar-menu                  module-id module-props]
+                                 :end-content   [settings/toggle-syncing-button module-id module-props]}])
 
 (defn- controls
   ; WARNING! NON-PUBLIC! DO NOT USE!

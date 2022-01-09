@@ -18,81 +18,6 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn app-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/app-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :app-details config-item-id])
-
-(defn browser-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/browser-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :browser-details config-item-id])
-
-(defn database-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/database-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :database-details config-item-id])
-
-(defn install-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/install-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :install-details config-item-id])
-
-(defn seo-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/seo-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :seo-details config-item-id])
-
-(defn storage-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/storage-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :storage-details config-item-id])
-
-(defn js-detail-path
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (a/js-detail-path :my-config-item)
-  ;
-  ; @return (item-path vector)
-  [config-item-id]
-  [::configs :data-items :js-details config-item-id])
-
-
-
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -102,7 +27,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :app-details]))
+  (get-in db [:core/configs :data-items :app-details]))
 
 (defn get-app-detail
   ; @param (keyword) config-item-id
@@ -112,7 +37,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :app-details config-item-id]))
+  (get-in db [:core/configs :data-items :app-details config-item-id]))
 
 (defn get-browser-details
   ; @usage
@@ -120,7 +45,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :browser-details]))
+  (get-in db [:core/configs :data-items :browser-details]))
 
 (defn get-browser-detail
   ; @param (keyword) config-item-id
@@ -130,7 +55,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :browser-details config-item-id]))
+  (get-in db [:core/configs :data-items :browser-details config-item-id]))
 
 (defn get-database-details
   ; @usage
@@ -138,7 +63,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :database-details]))
+  (get-in db [:core/configs :data-items :database-details]))
 
 (defn get-database-detail
   ; @param (keyword) config-item-id
@@ -148,7 +73,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :database-details config-item-id]))
+  (get-in db [:core/configs :data-items :database-details config-item-id]))
 
 (defn get-install-details
   ; @usage
@@ -156,7 +81,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :install-details]))
+  (get-in db [:core/configs :data-items :install-details]))
 
 (defn get-install-detail
   ; @param (keyword) config-item-id
@@ -166,7 +91,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :install-details config-item-id]))
+  (get-in db [:core/configs :data-items :install-details config-item-id]))
 
 (defn get-seo-details
   ; @usage
@@ -174,7 +99,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :seo-details]))
+  (get-in db [:core/configs :data-items :seo-details]))
 
 (defn get-seo-detail
   ; @param (keyword) config-item-id
@@ -184,7 +109,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :seo-details config-item-id]))
+  (get-in db [:core/configs :data-items :seo-details config-item-id]))
 
 (defn get-storage-details
   ; @usage
@@ -192,7 +117,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :storage-details]))
+  (get-in db [:core/configs :data-items :storage-details]))
 
 (defn get-storage-detail
   ; @param (keyword) config-item-id
@@ -202,7 +127,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :storage-details config-item-id]))
+  (get-in db [:core/configs :data-items :storage-details config-item-id]))
 
 (defn get-js-details
   ; @usage
@@ -210,7 +135,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :js-details]))
+  (get-in db [:core/configs :data-items :js-details]))
 
 (defn get-js-detail
   ; @param (keyword) config-item-id
@@ -220,7 +145,7 @@
   ;
   ; @return (*)
   [db [_ config-item-id]]
-  (get-in db [::configs :data-items :js-details config-item-id]))
+  (get-in db [:core/configs :data-items :js-details config-item-id]))
 
 (defn get-css-paths
   ; @usage
@@ -228,7 +153,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :css-paths]))
+  (get-in db [:core/configs :data-items :css-paths]))
 
 (defn get-favicon-paths
   ; @usage
@@ -236,7 +161,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :favicon-paths]))
+  (get-in db [:core/configs :data-items :favicon-paths]))
 
 (defn get-plugin-js-paths
   ; @usage
@@ -244,7 +169,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items :plugin-js-paths]))
+  (get-in db [:core/configs :data-items :plugin-js-paths]))
 
 (defn get-configs
   ; @usage
@@ -252,7 +177,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::configs :data-items]))
+  (get-in db [:core/configs :data-items]))
 
 (defn get-destructed-configs
   ; @usage
@@ -290,4 +215,4 @@
   ;
   ; @return (map)
   [db [_ configs]]
-  (assoc-in db [::configs :data-items] configs))
+  (assoc-in db [:core/configs :data-items] configs))

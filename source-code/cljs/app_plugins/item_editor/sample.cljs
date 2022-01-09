@@ -39,7 +39,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx :my-extension/render-my-type-editor! [:ui/set-surface! ::view {:view {:content #'view}}])
+(a/reg-event-fx :my-extension/load-my-type-editor! [:ui/set-surface! ::view {:view {:content #'view}}])
 
 (a/reg-lifecycles
   ::lifecycles

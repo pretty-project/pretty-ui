@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.4.9
+; Version: v0.5.0
+; Compatibility: x4.5.2
 
 
 
@@ -36,5 +36,5 @@
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
 (def parent-uri              engine/parent-uri)
-(def render-event            engine/render-event)
 (def dialog-id               engine/dialog-id)
+(def load-extension-event    engine/load-extension-event)

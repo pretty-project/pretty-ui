@@ -2,6 +2,7 @@
 (ns app-extensions.storage.api
     (:require [app-extensions.storage.dialogs]
               [app-extensions.storage.directory-browser]
+              [app-extensions.storage.engine]
               [app-extensions.storage.file-uploader]
               [app-extensions.storage.file-picker :as file-picker]))
 
