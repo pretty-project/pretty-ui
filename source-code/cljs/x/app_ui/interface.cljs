@@ -30,7 +30,7 @@
   ; @return (keyword)
   ;  :application-ui, :website-ui
   [db _]
-  (get-in db (db/path ::primary :interface)))
+  (get-in db (db/path :ui/interface :interface)))
 
 (defn application-interface?
   ; @usage
@@ -64,7 +64,7 @@
   ;
   ; @return (map)
   [db [_ interface]]
-  (assoc-in db (db/path ::primary :interface) interface))
+  (assoc-in db (db/path :ui/interface :interface) interface))
 
 ; @usage
 ;  [:ui/set-interface! :application-ui]

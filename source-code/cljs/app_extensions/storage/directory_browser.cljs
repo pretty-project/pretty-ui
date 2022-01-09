@@ -51,4 +51,6 @@
 (a/reg-event-fx
   :storage/load-directory-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view}}])
+  {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
+                [:sync/send-query! :storage/synchronize-directory-browser!
+                                   {:query [:debug `(:storage/download-capacity-details ~{})]}]]})

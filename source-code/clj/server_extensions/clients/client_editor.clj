@@ -7,13 +7,25 @@
               [prototypes.api       :as prototypes]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]
-              [server-plugins.item-editor.api :as item-editor]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-plugins.item-editor.api        :as item-editor]))
 
 
 
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-client-item-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;  {:client/id (string)}
+  ;
+  ; @return (namespaced map)
+  [_ {:keys [client/id]}]
+  (if-let [document (mongo-db/get-document-by-id "clients" id)]
+          (validator/validate-data document)))
 
 (defresolver get-client-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -22,27 +34,26 @@
              ; @param (map) resolver-props
              ;  {:client/id (string)}
              ;
-             ; @return (map)
-             ;  {:clients/get-client-item (map)}
-             [env {:keys [client/id]}]
-             {::pco/output [:client/id
-                            :client/added-at
-                            :client/address
-                            :client/archived?
-                            :client/city
-                            :client/colors
-                            :client/country
-                            :client/description
-                            :client/email-address
-                            :client/favorite?
-                            :client/first-name
-                            :client/last-name
-                            :client/modified-at
-                            :client/phone-number
-                            :client/vat-no
-                            :client/zip-code]}
-             (if-let [document (mongo-db/get-document-by-id "clients" id)]
-                     (validator/validate-data document)))
+             ; @return (namespaced map)
+             ;  {:clients/get-client-item (namespaced map)}
+             [env resolver-props]
+             {::pathom.co/output [:client/id
+                                  :client/added-at
+                                  :client/address
+                                  :client/archived?
+                                  :client/city
+                                  :client/colors
+                                  :client/country
+                                  :client/description
+                                  :client/email-address
+                                  :client/favorite?
+                                  :client/first-name
+                                  :client/last-name
+                                  :client/modified-at
+                                  :client/phone-number
+                                  :client/vat-no
+                                  :client/zip-code]}
+             (get-client-item-f env resolver-props))
 
 
 
@@ -57,7 +68,7 @@
              ;
              ; @return (namespaced map)
              [_ client-item]
-             {::pco/op-name 'clients/undo-delete-client-item!}
+             {::pathom.co/op-name 'clients/undo-delete-client-item!}
              (mongo-db/add-document! "clients" client-item))
 
 (defmutation save-client-item!
@@ -68,7 +79,7 @@
              ;
              ; @return (namespaced map)
              [{:keys [request]} client-item]
-             {::pco/op-name 'clients/save-client-item!}
+             {::pathom.co/op-name 'clients/save-client-item!}
              (mongo-db/upsert-document! "clients" client-item
                                         {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
@@ -80,7 +91,7 @@
              ;
              ; @return (namespaced map)
              [{:keys [request]} client-item]
-             {::pco/op-name 'clients/merge-client-item!}
+             {::pathom.co/op-name 'clients/merge-client-item!}
              (mongo-db/merge-document! "clients" client-item
                                        {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
@@ -92,7 +103,7 @@
              ;
              ; @return (string)
              [{:keys [item-id]}]
-             {::pco/op-name 'clients/delete-client-item!}
+             {::pathom.co/op-name 'clients/delete-client-item!}
              (mongo-db/remove-document! "clients" item-id))
 
 (defmutation duplicate-client-item!
@@ -103,7 +114,7 @@
              ;
              ; @return (namespaced map)
              [{:keys [request]} client-item]
-             {::pco/op-name 'clients/duplicate-client-item!}
+             {::pathom.co/op-name 'clients/duplicate-client-item!}
              (mongo-db/add-document! "clients" client-item
                                      {:prototype-f #(prototypes/duplicated-document-prototype request :clients :client %)}))
 

@@ -5,8 +5,8 @@
               [pathom.api        :as pathom]
               [prototypes.api    :as prototypes]
               [x.server-core.api :as a]
-              [server-extensions.trader.listener     :as listener]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.trader.listener     :as listener]))
 
 
 
@@ -31,7 +31,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-editor-data (map)
              ;    {:source-code (string)}}
              [env resolver-props]
@@ -61,7 +61,7 @@
              ;
              ; @return (?)
              [env mutation-props]
-             {::pco/op-name 'trader/test-source-code!}
+             {::pathom.co/op-name 'trader/test-source-code!}
              (test-source-code-f env mutation-props))
 
 
@@ -95,7 +95,7 @@
              ;  {:trader/source-code (string)
              ;   :trader/id (string)}}
              [env mutation-props]
-             {::pco/op-name 'trader/upload-source-code!}
+             {::pathom.co/op-name 'trader/upload-source-code!}
              (upload-source-code-f env mutation-props))
 
 

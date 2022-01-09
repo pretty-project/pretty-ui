@@ -1,7 +1,7 @@
 
 (ns pathom.sample
     (:require [pathom.api :as pathom]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
 
 
 
@@ -39,7 +39,7 @@
 
 (defmutation do-your-mutation!
              [env mutation-props]
-             {::pco/op-name 'do-your-mutation!}
+             {::pathom.co/op-name 'do-your-mutation!}
              (do-your-mutation-f env mutation-props))
 
 

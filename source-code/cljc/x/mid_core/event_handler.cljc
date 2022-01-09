@@ -844,8 +844,7 @@
   ; interceptor-ban vizsgálni az események regisztráltságát.
   #?(:clj (let [event-id      (event-vector->event-id     event-handler)
                 event-exists? (event-handler-registrated? :event event-id)]
-               (if-not (boolean event-exists?)
-                       (println (str "re-frame: no :event handler registrated for: " event-id)))))
+               (if-not event-exists? (println (str "re-frame: no :event handler registrated for: " event-id)))))
 
   (cond ; @usage
         ;  (dispatch [:foo])

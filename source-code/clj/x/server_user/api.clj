@@ -27,6 +27,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.server-user.account-handler
+(def ANONYMOUS-USER-ACCOUNT       account-handler/ANONYMOUS-USER-ACCOUNT)
+(def SYSTEM-ACCOUNT               account-handler/SYSTEM-ACCOUNT)
 (def authenticate                 account-handler/authenticate)
 (def logout                       account-handler/logout)
 (def request->user-account        account-handler/request->user-account)

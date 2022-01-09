@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.15
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.9
+; Version: v0.4.4
+; Compatibility: x4.5.2
 
 
 
@@ -28,12 +28,11 @@
   ; @example
   ;  (renderer-id->partition-id :my-renderer)
   ;  =>
-  ;  :x.app-ui.my-renderer/elements
+  ;  :ui/my-renderer
   ;
   ; @return (keyword)
   [renderer-id]
-  (keyword (str "x.app-ui." (name renderer-id))
-           (str "elements")))
+  (keyword "ui" (name renderer-id)))
 
 (defn renderer-id->dom-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

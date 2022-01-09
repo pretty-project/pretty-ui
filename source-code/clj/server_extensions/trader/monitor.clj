@@ -33,7 +33,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-monitor-data (map)}
              [env resolver-props]
              {:trader/download-monitor-data (download-monitor-data-f env resolver-props)})

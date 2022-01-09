@@ -15,7 +15,6 @@
 
 (ns x.server-installer.api
     (:require [x.server-installer.db-installer]
-              [x.server-installer.media-installer]
               [x.server-installer.user-installer]
               [x.server-installer.engine :as engine]))
 

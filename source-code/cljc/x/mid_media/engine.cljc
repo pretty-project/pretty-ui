@@ -29,10 +29,10 @@
 ;  "0ce14671-ef916-43ab-b057-0939329d4c1b.png"
 ;
 ; @name thumbnail-filepath
-;  "/media/thumbnails/0ce14671-e916-43ab-b057-0939329d4c1b.png"
+;  "monoset-environment/media/thumbnails/0ce14671-e916-43ab-b057-0939329d4c1b.png"
 ;
 ; @name storage-filepath
-;  "/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png"
+;  "monoset-environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png"
 
 
 
@@ -46,13 +46,13 @@
 (def STORAGE-URI-BASE        "/media/storage/")
 
 ; @constant (string)
-(def THUMBNAIL-FILEPATH-BASE "media/thumbnails/")
+(def THUMBNAIL-FILEPATH-BASE "monoset-environment/media/thumbnails/")
 
 ; @constant (string)
-(def STORAGE-FILEPATH-BASE   "media/storage/")
+(def STORAGE-FILEPATH-BASE   "monoset-environment/media/storage/")
 
 ; @constant (string)
-(def TEMPORARY-FILEPATH-BASE "media/temp/")
+(def TEMPORARY-FILEPATH-BASE "monoset-environment/media/temp/")
 
 ; @constant (integer)
 (def MAXIMUM-DIRECTORY-ITEM-COUNT 256)
@@ -102,7 +102,7 @@
   ; @example
   ;  (media/filename->media-storage-filepath "ab3450.jpg")
   ;  =>
-  ;  "media/storage/ab3450.jpg"
+  ;  "monoset-environment/media/storage/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -114,7 +114,7 @@
   ; @example
   ;  (media/filename->media-thumbnail-filepath "ab3450.jpg")
   ;  =>
-  ;  "media/thumbnails/ab3450.jpg"
+  ;  "monoset-environment/media/thumbnails/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -126,7 +126,7 @@
   ; @example
   ;  (media/filename->temporary-filepath "ab3450.jpg")
   ;  =>
-  ;  "media/temp/ab3450.jpg"
+  ;  "monoset-environment/media/temp/ab3450.jpg"
   ;
   ; @return (string)
   [filename]

@@ -7,8 +7,8 @@
               [prototypes.api    :as prototypes]
               [tea-time.core     :as tt]
               [x.server-core.api :as a]
-              [server-extensions.trader.engine       :as engine]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.trader.engine       :as engine]))
 
 
 
@@ -109,7 +109,7 @@
              ; @return (map)
              ;  {:listener-active? (boolean)}
              [env mutation-props]
-             {::pco/op-name 'trader/toggle-listener!}
+             {::pathom.co/op-name 'trader/toggle-listener!}
              (toggle-listener-f env mutation-props))
 
 
@@ -136,7 +136,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-listener-data (map)
              ;    {:listener-active? (boolean)
              ;     :source-code (string)}}

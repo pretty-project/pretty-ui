@@ -4,8 +4,8 @@
               [mid-fruits.candy  :refer [param return]]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
-              [server-extensions.trader.engine :as engine]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.trader.engine       :as engine]))
 
 
 
@@ -21,13 +21,13 @@
   ; @return (namespaced map)
   [{:keys [request]} resolver-props])
 
-(defmutation download-position-data
+(defresolver download-position-data
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ; {:trader/download-position-data (map)}
              [env resolver-props]
              {:trader/download-position-data (download-position-data-f env resolver-props)})
@@ -43,7 +43,7 @@
   ; @param (map) env
   ; @param (map) mutation-props
   ;
-  ; @return (namespaced map)
+  ; @return (?)
   [{:keys [request]} mutation-props])
 
 (defmutation upload-position-data!
@@ -52,9 +52,9 @@
              ; @param (map) env
              ; @param (map) mutation-props
              ;
-             ; @return (namespaced map)
+             ; @return (?)
              [env mutation-props]
-             {::pco/op-name 'trader/upload-position-data!}
+             {::pathom.co/op-name 'trader/upload-position-data!}
              (upload-position-data-f env mutation-props))
 
 

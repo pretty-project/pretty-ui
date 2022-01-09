@@ -79,7 +79,8 @@
                               ; nem próbálná meg újra megnézni a szerón, hogy vannak-e elemek
                               ; mert emlékezne, hogy utoljára nulla volt, stb ...
                       ;         (dissoc-in [extension-id :lister-meta])
-
+                      
+            ; A request-id is *-browser! miközben az item-lister *-lister! request-eket indít!
             :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
                          [:ui/set-header-title!  (param      extension-id)]
                          [:ui/set-window-title!  (param      extension-id)]

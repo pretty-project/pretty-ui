@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.2.0
+; Version: v1.2.6
 ; Compatibility: x4.5.2
 
 
@@ -48,7 +48,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::primary :server-props)))
+  (get-in db (db/path :boot-loader/primary :server-props)))
 
 
 
@@ -62,7 +62,7 @@
   ;
   ; @return (map)
   [db [_ server-props]]
-  (assoc-in db (db/path ::primary :server-props) server-props))
+  (assoc-in db (db/path :boot-loader/primary :server-props) server-props))
 
 (a/reg-event-db :boot-loader/store-server-props! store-server-props!)
 
@@ -109,7 +109,8 @@
       ;(println (str (r a/get-period-events db :on-server-init)))
 
 
-      {:dispatch-n (r a/get-period-events db :on-server-init)
+      {:dispatch   [:core/connect-to-database!]
+       :dispatch-n (r a/get-period-events db :on-server-init)
        ; 2. Az inicializálási események lefutása után a szerver
        ;    betöltésének folytatása
        :dispatch-tick [{:tick 250 :dispatch [:boot-loader/boot-server!]}]}))
@@ -138,5 +139,4 @@
   (fn [{:keys [db]} _]
       (println details/app-codename "launching server ...")
       ; A szerver indítása utáni események meghívása (Dispatch on-server-launch events)
-      {:dispatch-n (r a/get-period-events db :on-server-launch)
-       :dispatch   [:core/connect-to-database!]}))
+      {:dispatch-n (r a/get-period-events db :on-server-launch)}))

@@ -33,9 +33,9 @@
   ;  {:process-progress (integer)
   ;   :render-progress-bar? (boolean)}
   [db _]
-  (if-let [process-id (get-in db (db/meta-item-path ::primary :process-id))]
+  (if-let [process-id (get-in db (db/meta-item-path :ui/progress-bar :process-id))]
           (let [process-activity (r a/get-process-activity db process-id)
-                overlay-screen?  (get-in db (db/meta-item-path ::primary :overlay-screen?))]
+                overlay-screen?  (get-in db (db/meta-item-path :ui/progress-bar :overlay-screen?))]
                {:process-failured?      (r a/process-failured? db process-id)
                 :process-progress       (r a/get-process-progress db process-id)
                 :render-progress-bar?   (or (= :active process-activity)
@@ -67,7 +67,7 @@
   ;
   ; @return (map)
   [db [_ process-id options]]
-  (assoc-in db (db/meta-item-path ::primary)
+  (assoc-in db (db/meta-item-path :ui/progress-bar)
                (merge {:process-id process-id}
                       (param       options))))
 
@@ -105,5 +105,6 @@
   ;
   ; @return (component)
   []
-  [components/subscriber ::view {:component  #'progress-bar
-                                 :subscriber [:ui/get-progress-bar-props]}])
+  [components/subscriber ::view 
+                         {:component  #'progress-bar
+                          :subscriber [:ui/get-progress-bar-props]}])

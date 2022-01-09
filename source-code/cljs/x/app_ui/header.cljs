@@ -33,7 +33,7 @@
   ;
   ; @return (metamorphic-content)
   [db _]
-  (get-in db (db/path ::primary :header-title)))
+  (get-in db (db/path :ui/header :header-title)))
 
 (defn- get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,7 +67,7 @@
   ;
   ; @return (map)
   [db [_ header-title]]
-  (assoc-in db (db/path ::primary :header-title) header-title))
+  (assoc-in db (db/path :ui/header :header-title) header-title))
 
 (a/reg-event-db :ui/set-header-title! set-header-title!)
 

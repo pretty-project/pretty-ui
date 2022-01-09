@@ -97,8 +97,8 @@
   ;  The length of the file in bytes
   [filepath]
   (if (file-exists? filepath)
-      (-> filepath file .length)
-      (println FILE-DOES-NOT-EXIST-ERROR filepath)))
+      (->           filepath file .length)
+      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
 
 (defn max-filesize-reached?
   ; @param (string) filepath

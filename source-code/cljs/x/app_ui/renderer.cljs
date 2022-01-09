@@ -947,7 +947,7 @@
   ; @param (map) renderer-props
   (fn [{:keys [db]} [_ renderer-id _]]
       {:dispatch-if [(r renderer-require-error?   db renderer-id)
-                     [::->renderer-unmounted-illegal renderer-id]]}))
+                     [:ui/->renderer-unmounted-illegal renderer-id]]}))
 
 (a/reg-event-fx
   :ui/render-element-animated!
@@ -1159,7 +1159,7 @@
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
 (a/reg-event-fx
-  ::->renderer-unmounted-illegal
+  :ui/->renderer-unmounted-illegal
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id

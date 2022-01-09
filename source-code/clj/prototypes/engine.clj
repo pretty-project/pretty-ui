@@ -9,6 +9,29 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn added-document-prototype
+  ; @param (map) request
+  ; @param (keyword) document-namespace
+  ; @param (namespaced map) updated-item
+  ;
+  ; @usage
+  ;  (prototypes/added-document-prototype {} :my-namespace {...})
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/added-at (object)
+  ;   :namespace/added-by (map)
+  ;   :namespace/modified-at (object)
+  ;   :namespace/modified-by (map)}
+  [request document-namespace updated-item]
+  (let [namespace (name document-namespace)
+        timestamp (time/timestamp-object)
+        user-link (user/request->user-link request)]
+       (merge (param updated-item)
+              {(keyword namespace "added-at")    timestamp
+               (keyword namespace "added-by")    user-link
+               (keyword namespace "modified-at") timestamp
+               (keyword namespace "modified-by") user-link})))
+
 (defn updated-document-prototype
   ; @param (map) request
   ; @param (keyword) document-namespace

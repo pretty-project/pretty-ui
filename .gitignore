@@ -8,7 +8,7 @@ monoset-environment/media/thumbnails/*
 
 # default thumbnail & sample file
 !monoset-environment/media/thumbnails/default.png
-!monoset-environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png
+!monoset-environment/media/storage/sample.png
 
 # monoset files
 monoset-environment/x.server-config.edn

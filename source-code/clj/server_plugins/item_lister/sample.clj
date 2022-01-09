@@ -4,8 +4,8 @@
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
-              [server-plugins.item-lister.api        :as item-lister]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-plugins.item-lister.api        :as item-lister]))
 
 
 
@@ -23,22 +23,31 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- get-my-type-items-f
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;
+  ; @return (map)
+  ;  {:document-count (integer)
+  ;   :documents (maps in vector)}}
+  [env _]
+  (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
+        count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
+        ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
+       {:documents      (mongo-db/get-documents-by-pipeline   "my-collection" get-pipeline)
+        ; A keresési feltételeknek megfelelő dokumentumok száma
+        :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)}))
+
 (defresolver get-my-type-items
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:my-extension/get-my-type-items (map)
              ;    {:document-count (integer)
              ;     :documents (maps in vector)}}
-             [env _]
-             {:my-extension/get-my-type-items
-              (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
-                    count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
-                    ; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
-                   {:documents      (mongo-db/get-documents-by-pipeline   "my-collection" get-pipeline)
-                    ; A keresési feltételeknek megfelelő dokumentumok száma
-                    :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)})})
+             [env resolver-props]
+             {:my-extension/get-my-type-items (get-my-type-items-f env resolver-props)})
 
 
 
@@ -51,7 +60,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env my-type-items]
-             {::pco/op-name 'my-extension/undo-delete-my-type-items!}
+             {::pathom.co/op-name 'my-extension/undo-delete-my-type-items!}
              (return []))
 
 (defmutation merge-my-type-items!
@@ -63,7 +72,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
-             {::pco/op-name 'my-extension/merge-my-type-items!}
+             {::pathom.co/op-name 'my-extension/merge-my-type-items!}
              (return []))
 
 (defmutation delete-my-type-items!
@@ -73,7 +82,7 @@
              ;
              ; @return (strings in vector)
              [{:keys [item-ids]}]
-             {::pco/op-name 'my-extension/delete-my-type-items!}
+             {::pathom.co/op-name 'my-extension/delete-my-type-items!}
              (return []))
 
 

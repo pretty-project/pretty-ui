@@ -104,8 +104,8 @@
   ;  [:ui/set-surface! :my-surface {...}]
   ;
   ; @usage
-  ;  (defn view [surface-id] [:div "My surface"])
-  ;  [:ui/set-surface! {:view {:content #'view}}]
+  ;  (defn my-view [surface-id] [:div "My surface"])
+  ;  [:ui/set-surface! {:view {:content #'my-view}}]
   (fn [{:keys [db]} event-vector]
       (let [surface-id    (a/event-vector->second-id   event-vector)
             surface-props (a/event-vector->first-props event-vector)

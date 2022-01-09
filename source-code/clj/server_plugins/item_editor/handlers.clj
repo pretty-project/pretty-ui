@@ -20,8 +20,8 @@
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
               [x.server-db.api      :as db]
-              [server-plugins.item-editor.engine     :as engine]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-plugins.item-editor.engine     :as engine]))
 
 
 

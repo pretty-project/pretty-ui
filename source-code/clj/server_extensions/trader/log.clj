@@ -55,7 +55,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-log-data (map)
              ;    {:log-items (maps in vector)}}
              [env resolver-props]

@@ -57,7 +57,7 @@
   ;
   ; @return (boolean)
   [db [_ module-id]]
-  (let [installed? (get-in db (db/path ::modules module-id :installed?))]
+  (let [installed? (get-in db (db/path :installer/modules module-id :installed?))]
        (boolean installed?)))
 
 (defn get-installed-at
@@ -86,7 +86,7 @@
   ;
   ; @return (map)
   [db [_ module-id]]
-  (assoc-in db (db/path ::modules module-id :installed?)
+  (assoc-in db (db/path :installer/modules module-id :installed?)
                (param true)))
 
 (a/reg-event-db :installer/->module-installed ->module-installed)
@@ -124,7 +124,6 @@
       (println details/app-codename "installing ...")
        ; Installing modules
       {:dispatch-n [[:installer/install-db!]
-                    [:installer/install-media!]
                     [:installer/install-user!]]
        ; Running self-test
        :dispatch-tick [{:tick 100 :dispatch [:installer/self-test!]}]}))

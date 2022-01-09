@@ -9,8 +9,8 @@
               [prototypes.api     :as prototypes]
               [x.server-core.api  :as a]
               [x.server-db.api    :as db]
-              [server-extensions.trader.engine       :as engine]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.trader.engine       :as engine]))
 
 
 
@@ -127,7 +127,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-account-data (map)
              ;    {:api-key-info (map)
              ;     :error (keyword)
@@ -161,7 +161,7 @@
              ; @param (map) env
              ; @param (map) resolver-props
              ;
-             ; @return (map)
+             ; @return (namespaced map)
              ;  {:trader/download-api-details (map)
              [env resolver-props]
              {:trader/download-api-details (download-api-details-f env resolver-props)})
@@ -202,7 +202,7 @@
              ;   :trader/use-mainnet? (boolean)
              ;   :trader/id (string)}}
              [env mutation-props]
-             {::pco/op-name 'trader/upload-api-details!}
+             {::pathom.co/op-name 'trader/upload-api-details!}
              (upload-api-details-f env mutation-props))
 
 

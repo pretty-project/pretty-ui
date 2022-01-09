@@ -6,7 +6,7 @@
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
               [x.server-user.api :as user]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
 
 
 

@@ -7,32 +7,41 @@
               [pathom.api           :as pathom]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]
-              [server-plugins.item-editor.api        :as item-editor]
-              [com.wsscode.pathom3.connect.operation :as pco :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-plugins.item-editor.api        :as item-editor]))
 
 
 
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- get-my-type-item-f
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;  {:my-type/id (string)}
+  ;
+  ; @return (namespaced map)
+  [_ {:my-type/keys [id]}]
+  (if-let [document (mongo-db/get-document-by-id "my-collection" id)]
+          ; XXX#6074
+          (validator/validate-data document)))
+
 (defresolver get-my-type-item
              ; @param (map) env
              ; @param (map) resolver-props
              ;  {:my-type/id (string)}
              ;
-             ; @return (map)
-             ;  {:my-extension/get-my-type-item (map)}
-             [env {:keys [my-type/id]}]
+             ; @return (namespaced map)
+             ;  {:my-extension/get-my-type-item (namespaced map)}
+             [env resolver-props]
              ; A felsorolt tulajdonságok szükségesek az item-editor plugin működéséhez:
-             {::pco/output [:my-type/id
-                            :my-type/added-at
-                            :my-type/archived?
-                            :my-type/description
-                            :my-type/favorite?
-                            :my-type/modified-at]}
-             (if-let [document (mongo-db/get-document-by-id "my-collection" id)]
-                     ; XXX#6074
-                     (validator/validate-data document)))
+             {::pathom.co/output [:my-type/id
+                                  :my-type/added-at
+                                  :my-type/archived?
+                                  :my-type/description
+                                  :my-type/favorite?
+                                  :my-type/modified-at]}
+             (get-my-type-item-f env resolver-props))
 
 
 
@@ -45,7 +54,7 @@
              ;
              ; @return (namespaced map)
              [env my-type-item]
-             {::pco/op-name 'my-extension/undo-delete-my-type-item!}
+             {::pathom.co/op-name 'my-extension/undo-delete-my-type-item!}
              (return {}))
 
 (defmutation save-my-type-item!
@@ -54,7 +63,7 @@
              ;
              ; @return (namespaced map)
              [env my-type-item]
-             {::pco/op-name 'my-extension/save-my-type-item!}
+             {::pathom.co/op-name 'my-extension/save-my-type-item!}
              (return {}))
 
 (defmutation merge-my-type-item!
@@ -65,7 +74,7 @@
              ;
              ; @return (namespaced map)
              [env client-item]
-             {::pco/op-name 'my-extension/merge-my-type-item!}
+             {::pathom.co/op-name 'my-extension/merge-my-type-item!}
              (return {}))
 
 (defmutation delete-my-type-item!
@@ -75,7 +84,7 @@
              ;
              ; @return (string)
              [{:keys [item-id]}]
-             {::pco/op-name 'my-extension/delete-my-type-item!}
+             {::pathom.co/op-name 'my-extension/delete-my-type-item!}
              (return ""))
 
 (defmutation duplicate-my-type-item!
@@ -84,7 +93,7 @@
              ;
              ; @return (namespaced map)
              [env my-type-item]
-             {::pco/op-name 'my-extension/duplicate-my-type-item!}
+             {::pathom.co/op-name 'my-extension/duplicate-my-type-item!}
              (return {}))
 
 
@@ -106,7 +115,7 @@
 (a/reg-lifecycles
   ::lifecycles
   ; Az [:item-editor/initialize! ...] esemény hozzáadja a "/@app-home/my-extension/:my-type-id"
-  ; útvonalat a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon 
+  ; útvonalat a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon
   ; az item-editor plugin.
   {:on-server-boot [:item-editor/initialize! :my-extension :my-type]})
 

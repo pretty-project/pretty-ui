@@ -16,6 +16,19 @@
 
 
 
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn connected?
+  ; @usage
+  ;  (mongo-db/connected?)
+  ;
+  ; @return (boolean)
+  []
+  (some? @DB))
+
+
+
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -25,7 +38,6 @@
   ; @param (string) database-name
   ; @param (string) database-host
   ; @param (integer) database-port
-  ;
   [[database-name database-host database-port]]
   (let [^MongoOptions  mongo-options  (mcr/mongo-options {:threads-allowed-to-block-for-connection-multiplier 300})
         ^ServerAddress server-address (mcr/server-address database-host  database-port)
