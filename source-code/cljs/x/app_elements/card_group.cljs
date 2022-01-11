@@ -51,9 +51,9 @@
   ;
   ; @return (hiccup)
   [group-id {:keys [cards] :as group-props}]
-  (vec (reduce #(conj %1 [card %2])
-                [:div.x-card-group (engine/element-attributes group-id group-props)]
-                (param cards))))
+  (reduce #(conj %1 [card %2])
+           [:div.x-card-group (engine/element-attributes group-id group-props)
+           (param cards)]))
 
 (defn element
   ; XXX#3240

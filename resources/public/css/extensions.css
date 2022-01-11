@@ -60,19 +60,6 @@
 
 /***** Storage *****/
 
-.storage--file-uploader--file-item {
-  display: flex;
-  height: 64px;
-  -justify-content: space-between;
-  margin: 6px 0;
-  width: 100%
-}
-
-.storage--file-uploader--file-details {
-  flex-grow: 1;
-  -padding: 8px 12px
-}
-
 .storage--file-uploader--file-preview {
   align-items: center;
   background-position: center;
@@ -83,21 +70,7 @@
   flex-direction: column;
   height: 64px;
   justify-content: center;
-  margin: 0 12px;
-  width: 64px
-}
-
-.storage--file-uploader--file-actions {
-  opacity: 0;
-  padding: 8px 12px 0 0;
-  /* Google Chrome 95.0.4638.69 - a popup elem hátterén beállított opacity érték vibrál,
-   * a transition hatására
-  -transition: opacity .1s */
-}
-
-.storage--file-uploader--file-item:hover
-.storage--file-uploader--file-actions {
-  opacity: 1
-}
+  margin: 6px 12px;
+  width: 64px }
 
 /***** Storage *****/

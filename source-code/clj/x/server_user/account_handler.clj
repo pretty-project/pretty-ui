@@ -142,7 +142,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn authenticate
+(defn authenticate_
   ; WARNING! NON PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
@@ -162,7 +162,13 @@
                              :session (param user-public-account)})
            (http/error-wrap {:error-message :permission-denied :status 401}))))
 
+(defn authenticate
+  [r]
+  (authenticate_ r))
+
 (defn logout
+  ; WARNING! NON PUBLIC! DO NOT USE!
+  ;
   ; @param (map) request
   ;
   ; @return (map)

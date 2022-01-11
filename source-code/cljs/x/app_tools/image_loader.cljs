@@ -62,16 +62,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-loader-props
+(defn- get-image-loader-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) loader-id
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (get-in db (db/path ::image-loaders loader-id)))
+  (get-in db (db/path :tools/image-loaders loader-id)))
 
-(a/reg-sub ::get-loader-props get-loader-props)
+(a/reg-sub :tools/get-image-loader-props get-image-loader-props)
 
 
 
@@ -86,7 +86,7 @@
   ;
   ; @return (map)
   [db [_ loader-id loader-props]]
-  (assoc-in db (db/path ::image-loaders loader-id) loader-props))
+  (assoc-in db (db/path :tools/image-loaders loader-id) loader-props))
 
 (a/reg-event-db :tools/init-image-loader! init-image-loader!)
 
@@ -97,7 +97,7 @@
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (dissoc-in db (db/path ::image-loaders loader-id)))
+  (dissoc-in db (db/path :tools/image-loaders loader-id)))
 
 (a/reg-event-db :tools/destruct-image-loader! destruct-image-loader!)
 
@@ -111,7 +111,7 @@
   ;
   ; @param (keyword) loader-id
   [db [_ loader-id]]
-  (assoc-in db (db/path ::image-loaders loader-id :image-loaded?) true))
+  (assoc-in db (db/path :tools/image-loaders loader-id :image-loaded?) true))
 
 (a/reg-event-db :tools/->image-loader-loaded ->image-loader-loaded)
 
@@ -184,5 +184,5 @@
    (reagent/lifecycles {:component-did-mount    #(a/dispatch [:tools/init-image-loader!     loader-id loader-props])
                         :component-did-update   #(a/dispatch [:tools/->image-loader-updated loader-id loader-props])
                         :component-will-unmount #(a/dispatch [:tools/destruct-image-loader! loader-id])
-                        :reagent-render (fn [] (let [loader-props (a/subscribe [::get-loader-props loader-id])]
+                        :reagent-render (fn [] (let [loader-props (a/subscribe [:tools/get-image-loader-props loader-id])]
                                                     [image-loader loader-id @loader-props]))})))

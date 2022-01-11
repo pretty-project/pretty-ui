@@ -84,7 +84,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (?)
-(def LOG-EVENT! (re-frame/->interceptor :id ::log-event!
+(def LOG-EVENT! (re-frame/->interceptor :id :core/log-event!
                                         :before #(let [event-vector (context->event-vector %1)]
                                                      ; Szükséges korlátozni a fájl maximális méretét!
                                                      ;(logger/write! EVENT-LOG-FILENAME event-vector)

@@ -31,8 +31,8 @@
   ;
   ; @return (boolean)
   [{:user-account/keys [email-address password pin]}]
-  (boolean (and (form/email-address-valid? email-address)
-                (form/pin-valid?           pin)
-                ; TEMP
-                (string/nonempty?          password))))
-               ;(form/password-valid?      password)
+  (and (form/email-address-valid? email-address)
+       (form/pin-valid?           pin)
+       ; TEMP
+       (string/nonempty?          password)))
+      ;(form/password-valid?      password)

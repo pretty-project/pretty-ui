@@ -3,12 +3,9 @@
     (:import org.bson.types.BSONTimestamp)
     (:require [mid-fruits.candy        :refer [param return]]
               [mid-fruits.gestures     :as gestures]
-              [mid-fruits.json         :as json]
               [mid-fruits.keyword      :as keyword]
-              [mid-fruits.time         :as time]
               [mid-fruits.vector       :as vector]
               [monger.collection       :as mcl]
-              [mongo-db.connection     :refer [DB]]
               [mongo-db.engine         :as engine]
               [mongo-db.reader         :as reader]
               [x.server-core.api       :as a]
@@ -17,47 +14,127 @@
               monger.joda-time))
 
 
-
-;; -- TODO --------------------------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @todo
-;  Az add-document!, upsert-document!, update-document! és merge-document! függvények
-;  a monger.collection save-and-return függvényét használják az egyes dokumentumok írására.
-;  A save-and-return függvény nem minden esetben a legalkalmasabb a teljesítmény-optimalizálás
-;  szempontjából!
+(def ADAPTATION-ERROR "Document adaptation error!")
+
+
+
+;; -- Error handling ----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- insert-and-return!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (map) document
+  ;  {:_id (string)}
+  ;
+  ; @return (map)
+  [collection-name document]
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (try (mcl/insert-and-return database collection-name document)
+            (catch Exception e (println (str e "\n" {:collection-name collection-name :document document}))))))
+
+(defn- save-and-return!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (namespaced map) document
+  ;
+  ; @return (?)
+  [collection-name document]
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (try (mcl/save-and-return database collection-name document)
+            (catch Exception e (println (str e "\n" {:collection-name collection-name :document document}))))))
+
+(defn- remove-by-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (string) document-id
+  ;
+  ; @return (?)
+  [collection-name document-id]
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (try (mcl/remove-by-id database collection-name document-id)
+            (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
+
+(defn- update!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (map) conditions
+  ; @param (map) document
+  ; @param (map)(opt) options
+  ;
+  ; @return (?)
+  ([collection-name conditions document])
+
+  ([collection-name conditions document options]
+   (let [database (a/subscribed [:mongo-db/get-connection])]
+        (try (mcl/update database collection-name conditions document options)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :conditions conditions
+                                                      :document document :options options})))))))
+
+
+
+;; -- Inserting document ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn insert-document!
+  ; @param (string) collection-name
+  ; @param (namespaced map) document
+  ;  {:namespace/id (string)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/insert-document! "my-collection" {:my-namespace/id "my-document" ...})
+  ;  =>
+  ;  {:my-namespace/id "my-document" ...}
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/id (string)}
+  ([collection-name document]
+   (insert-document! collection-name document {}))
+
+  ([collection-name document {:keys [ordered? prototype-f]}]
+   (let [document (if-not prototype-f document (prototype-f document))]
+        (if-let [document (engine/adapt-input document)]
+                (let [return (insert-and-return! collection-name document)]
+                     (engine/adapt-output return))
+                (println (str ADAPTATION-ERROR "\n" document))))))
 
 
 
 ;; -- Saving document ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- save-document!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn save-document!
   ; @param (string) collection-name
   ; @param (namespaced map) document
-  ;  {:namespace/id (string)}
+  ;  {:namespace/id (string)(opt)}
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (actions/save-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                           :my-namespace/your-string "your-value"
-  ;                                           :my-namespace/id          "my-document"})
+  ;  (mongo-db/save-document! "my-collection" {:my-namespace/id "my-document" ...})
   ;  =>
-  ;  {:my-namespace/my-keyword  :my-value
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "my-document"}
+  ;  {:my-namespace/id "my-document" ...}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
-  [collection-name document]
-  (let [document (-> document ; - Ha a dokumentum nem rendelkezne string típusú :_id kulcssal,
-                              ;   akkor a MongoDB BSON objektum típusú :_id kulcsot társítana hozzá!
-                              ; - A dokumentumban string típusként tárolt dátumok és idők
-                              ;   átalakítása objektum típusra
-                              engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-        return (mcl/save-and-return @DB collection-name document)]
-       (-> return json/keywordize-keys json/keywordize-values time/unparse-date-time engine/_id->id)))
+  ([collection-name document]
+   (save-document! collection-name document {}))
+
+  ([collection-name document {:keys [ordered? prototype-f]}]
+   (let [document (if-not prototype-f document (prototype-f document))]
+        (if-let [document (engine/adapt-input document)]
+                (let [return (save-and-return! collection-name document)]
+                     (engine/adapt-output return))
+                (println (str ADAPTATION-ERROR "\n" document))))))
 
 
 
@@ -113,11 +190,11 @@
 
                                    ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
                                    ; akkor szükséges a sorrendbeli pozícióját hozzáadni
-         document (cond-> document (boolean ordered?)
-                                   (db/document->ordered-document document-dex)
+;         document (cond-> document (boolean ordered?)
+;                                   (db/document->ordered-document document-dex)))
                                    ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
                                    ; egy generált azonosítót
-                                   :assoc-id engine/document<-id)
+                                   ;:assoc-id engine/document<-id)
 
          ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
          document (if (some?      modifier-f)
@@ -249,6 +326,23 @@
 
 
 
+;; -- Applying document -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn apply-document!
+  ; @param (string) collection-name
+  ; @param (string) document-id
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/apply-document! "my-collection")
+  ([collection-name document-id update-f])
+
+  ([collection-name document-id update-f {:keys [prototype-f]}]))
+
+
+
 ;; -- Merging document --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -328,8 +422,9 @@
   ;
   ; @return (string)
   [collection-name document-id]
-  (mcl/remove-by-id @DB collection-name document-id)
-  (return document-id))
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (remove-by-id! collection-name document-id)
+       (return        document-id)))
 
 (defn- remove-ordered-document!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -345,9 +440,9 @@
         order-key    (keyword/add-namespace     namespace :order)]
        ; A sorrendben a dokumentum után következő más dokumentumok sorrendbeli
        ; pozíciójának értékét eggyel csökkenti
-       (mcl/update @DB collection-name {order-key {"$gt" document-dex}}
-                                       {"$inc" {order-key -1}}
-                                       {:multi true})
+       (update! collection-name {order-key {"$gt" document-dex}}
+                                {"$inc" {order-key -1}}
+                                {:multi true})
        (remove-unordered-document! collection-name document-id)))
 
 (defn remove-document!
@@ -502,9 +597,9 @@
                           (return document-copy))
 
                                    ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-        document-copy (-> document (dissoc id-key)
+;        document-copy (-> document (dissoc id-key)
                                    ; A sorrendbeli pozíció értékének hozzáadása a másolathoz
-                                   (db/document->ordered-document document-copy-dex))
+;                                   (db/document->ordered-document document-copy-dex)))
 
         ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
         document-copy (if (some?      modifier-f)
@@ -516,9 +611,9 @@
              order-key (keyword/add-namespace  namespace :order)]
             ; A sorrendben a dokumentum után következő más dokumentumok sorrendbeli
             ; pozíciójának értékét eggyel növeli
-            (mcl/update @DB collection-name {order-key {"$gt" document-copy-dex}}
-                                            {"$inc" {order-key 1}}
-                                            {:multi true}))
+            (update! collection-name {order-key {"$gt" document-copy-dex}}
+                                     {"$inc" {order-key 1}}
+                                     {:multi true}))
 
        (add-document! collection-name document-copy)))
 
@@ -576,5 +671,5 @@
   (let [namespace (reader/get-collection-namespace collection-name)
         order-key (str (name namespace) "/order")]
        (vector/->items document-order (fn [[document-id document-dex]]
-                                          (mcl/update @DB collection-name {:_id document-id}
-                                                                          {"$set" {order-key document-dex}})))))
+                                          (update! collection-name {:_id document-id}
+                                                                   {"$set" {order-key document-dex}})))))

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.4.4
+; Version: v0.6.4
+; Compatibility: x4.5.2
 
 
 
@@ -26,41 +26,62 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-user-profile
+  ; @usage
+  ;  (r user/get-user-profile db)
+  ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::profile)))
+  (get-in db (db/path :user/profile)))
 
 (a/reg-sub :user/get-user-profile get-user-profile)
 
 (defn get-user-profile-item
   ; @param (keyword) item-key
   ;
+  ; @usage
+  ;  (r user/get-user-profile-item db :email-address)
+  ;
   ; @return (map)
   [db [_ item-key]]
-  (get-in db (db/path ::profile item-key)))
+  (get-in db (db/path :user/profile item-key)))
 
 (defn get-user-first-name
+  ; @usage
+  ;  (r user/get-user-first-name db)
+  ;
   ; @return (string)
   [db _]
   (r get-user-profile-item db :first-name))
 
 (defn get-user-last-name
+  ; @usage
+  ;  (r user/get-user-last-name db)
+  ;
   ; @return (string)
   [db _]
   (r get-user-profile-item db :last-name))
 
 (defn get-user-name
+  ; @usage
+  ;  (r user/get-user-name db)
+  ;
   ; @return (string)
   [db _]
-  (string/trim (str (r get-user-first-name db)
-                    (param string/tab)
-                    (r get-user-last-name db))))
+  (string/trim (str (r get-user-first-name db) " "
+                    (r get-user-last-name  db))))
 
 (defn get-user-phone-number
+  ; @usage
+  ;  (r user/get-user-phone-number db)
+  ;
+  ; @return (string)
   [db _]
   (r get-user-profile-item db :phone-number))
 
 (defn get-user-profile-picture-url
+  ; @usage
+  ;  (r user/get-user-profile-picture-url db)
+  ;
   ; @return (string)
   [db _]
   (or (return nil)
@@ -80,4 +101,4 @@
   ;
   ; @return (map)
   [db [_ item-key item-value]]
-  (assoc-in db (db/path ::profile item-key) item-value))
+  (assoc-in db (db/path :user/profile item-key) item-value))

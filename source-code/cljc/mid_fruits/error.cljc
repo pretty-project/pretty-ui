@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.03
 ; Description:
-; Version: v0.3.6
+; Version: v0.4.4
 
 
 
@@ -33,3 +33,14 @@
   [f & abc]
   #?(:cljs (try (apply f abc) (catch :default  e (str e)))
      :clj  (try (apply f abc) (catch Exception e (str e)))))
+
+(defn throw!
+  ; @param (string) e
+  ;
+  ; @usage
+  ;  (error/throw! "Something went wrong ...")
+  ;
+  ; @return (?)
+  [e]
+  #?(:cljs (throw (js/Error.  e))
+     :clj  (throw (Exception. e))))

@@ -166,7 +166,7 @@
   [namespace abc]
   (letfn [(add-items-namespace-f [o x] (conj o (keyword (name namespace)
                                                         (name x))))]
-         (vec (reduce add-items-namespace-f [] abc))))
+         (reduce add-items-namespace-f [] abc)))
 
 (defn get-namespace
   ; @param (keyword) n

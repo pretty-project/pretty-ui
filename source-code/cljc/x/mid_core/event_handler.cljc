@@ -685,7 +685,7 @@
 ;
 ; @usage
 ;  (reg-event-fx
-;   ::my-event
+;   :my-event
 ;   [self-destruct!]
 ;   (fn [cofx event-vector]
 ;       {:dispatch ...}))
@@ -701,7 +701,7 @@
        (return context)))
 
 ; @constant (?)
-(def self-destruct! (re-frame/->interceptor :id    ::self-destruct!
+(def self-destruct! (re-frame/->interceptor :id    :core/self-destruct!
                                             :after <-self-destruct!))
 
 

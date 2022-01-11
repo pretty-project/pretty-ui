@@ -1,10 +1,10 @@
 
 (ns mongo-db.api
-    (:require [mongo-db.engine]
-              [mongo-db.actions    :as actions]
-              [mongo-db.connection :as connection]
-              [mongo-db.pipelines  :as pipelines]
-              [mongo-db.reader     :as reader]))
+    (:require [mongo-db.connection]
+              [mongo-db.engine]
+              [mongo-db.actions   :as actions]
+              [mongo-db.pipelines :as pipelines]
+              [mongo-db.reader    :as reader]))
 
 
 
@@ -12,6 +12,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; mongo-db.actions
+(def insert-document!    actions/insert-document!)
+(def save-document!      actions/save-document!)
+
+
 (def add-document!       actions/add-document!)
 (def add-documents!      actions/add-documents!)
 (def upsert-document!    actions/upsert-document!)
@@ -22,9 +26,6 @@
 (def remove-documents!   actions/remove-documents!)
 (def duplicate-document! actions/duplicate-document!)
 (def reorder-documents!  actions/reorder-documents!)
-
-; mongo-db.connection
-(def connected? connection/connected?)
 
 ; mongo-db.pipelines
 (def filter-pattern->filter-query   pipelines/filter-pattern->filter-query)

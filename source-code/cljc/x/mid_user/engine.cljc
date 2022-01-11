@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.22
 ; Description:
-; Version: v0.3.6
-; Compatibility: x3.9.9
+; Version: v0.4.2
+; Compatibility: x4.5.2
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-user.engine
-    (:require [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]))
+    (:require [mid-fruits.vector :as vector]))
 
 
 
@@ -42,4 +41,4 @@
   ;
   ; @return (boolean)
   [user-roles]
-  (not (user-roles->user-unidentified? user-roles)))
+  (-> user-roles user-roles->user-identified? not))

@@ -36,34 +36,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request-response->query-answer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request-response
-  ; @param (keyword, vector or string) query-key
-  ;
-  ; @example (resolver-id as keyword)
-  ;  (request-response->query-answer {:all-users [{...} {...}]} :all-users)
-  ;  =>
-  ;  [{...} {...}]
-  ;
-  ; @example (entity as vector)
-  ;  (request-response->query-answer {[:directory/id "my-directory"] {:directory/id "my-directory"}}
-  ;                                  [:directory/id "my-directory"])
-  ;  =>
-  ;  {:directory/id "my-directory"}
-  ;
-  ; @example (mutation-f-name as string)
-  ;  (request-response->query-answer {media/update-item! "*"} "media/update-item!")
-  ;  =>
-  ;  "*"
-  ;
-  ; @return (*)
-  [request-response query-key]
-  (if (string? query-key)
-      (get request-response (symbol query-key))
-      (get request-response (param  query-key))))
-
 (defn query-props->request-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -93,8 +65,7 @@
   (let [request-props (select-keys query-props [:body :idle-timeout :on-failure :on-sent :on-success
                                                 :on-stalled :target-path :target-paths :uri])]
        (merge request-props {:method :post}
-                            (if (some? query)
-                                {:params {:query query}}))))
+                            (if query {:params {:query query}}))))
 
 
 
@@ -117,23 +88,6 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-queries
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db (db/path ::queries)))
-
-(defn- get-query-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) query-id
-  ; @param (keyword) prop-id
-  ;
-  ; @return (*)
-  [db [_ query-id prop-id]]
-  (get-in db (db/path ::queries query-id prop-id)))
-
 (defn get-query-response
   ; @param (keyword) query-id
   ;
@@ -146,7 +100,7 @@
 
 (defn get-query-answer
   ; @param (keyword) query-id
-  ; @param (keyword, string or vector) query-key
+  ; @param (*) query-question
   ;
   ; @example
   ;  (r sync/get-query-answer db :my-query :all-users)
@@ -154,9 +108,9 @@
   ;  [{...} {...}]
   ;
   ; @return (*)
-  [db [_ query-id query-key]]
+  [db [_ query-id query-question]]
   (let [query-response (r get-query-response db query-id)]
-       (get query-response query-key)))
+       (get query-response query-question)))
 
 
 
@@ -171,8 +125,7 @@
   ;
   ; @return (map)
   [db [_ query-id query-props]]
-  (assoc-in db (db/path ::queries query-id)
-               (param query-props)))
+  (assoc-in db (db/path :sync/queries query-id) query-props))
 
 
 

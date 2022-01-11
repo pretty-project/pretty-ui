@@ -120,18 +120,6 @@
   [_ {:keys [content] :as context-props}]
   (dictionary/looked-up content context-props))
 
-(defn- nil-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (string)
-  [_ {:keys [subscriber]}]
-  (if subscriber (let [content (a/subscribe subscriber)]
-                      (fn [] (str @content)))))
-
 (defn- static-render-fn-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -202,7 +190,6 @@
       ; A cond feltétel-listájának :else ága kielégíti a (component? ...) és (hiccup? ...) feltételeket!
       ; (component? content) (return      content)
       ; (hiccup?    content) (return      content)
-        (nil?       content) (nil-content component-id context-props)
         :else                (return      content)))
 
 (defn component

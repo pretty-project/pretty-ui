@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.6
+; Version: v0.7.4
+; Compatibility: x4.5.2
 
 
 
@@ -37,22 +37,34 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-user-id
+  ; @usage
+  ;  (r user/get-user-id db)
+  ;
   ; @return (string)
   [db _]
-  (get-in db (db/path ::account :id)))
+  (get-in db (db/path :user/account :id)))
 
 (defn get-user-email-address
+  ; @usage
+  ;  (r user/get-user-email-address db)
+  ;
   ; @return (string)
   [db _]
-  (get-in db (db/path ::account :email-address)))
+  (get-in db (db/path :user/account :email-address)))
 
 (defn get-user-roles
+  ; @usage
+  ;  (r user/get-user-roles db)
+  ;
   ; @return (strings in vector)
   [db _]
-  (get-in db (db/path ::account :roles)))
+  (get-in db (db/path :user/account :roles)))
 
 (defn user-has-role?
   ; @param (string) user-role
+  ;
+  ; @usage
+  ;  (r user/user-has-role? db)
   ;
   ; @return (boolean)
   [db [_ user-role]]
@@ -66,6 +78,9 @@
   ;  A felhasználói bejelentkezettség vizsgálatára használj (user-identified?)
   ;  függvényt!
   ;
+  ; @usage
+  ;  (r user/logged-in? db)
+  ;
   ; @return (boolean)
   [db _]
   (let [user-id (r get-user-id db)]
@@ -74,35 +89,57 @@
 (defn logged-out?
   ; WARNING#4003
   ;
+  ; @usage
+  ;  (r user/logged-out? db)
+  ;
   ; @return (boolean)
   [db _]
-  (not (r logged-in? db)))
+  (let [user-id (r get-user-id db)]
+       (nil? user-id)))
 
 (defn user-identified?
+  ; @usage
+  ;  (r user/user-identified? db)
+  ;
   ; @return (boolean)
   [db _]
   (let [user-roles (r get-user-roles db)]
        (engine/user-roles->user-identified? user-roles)))
 
 (defn user-unidentified?
+  ; @usage
+  ;  (r user/user-unidentified? db)
+  ;
   ; @return (boolean)
   [db _]
-  (not (r user-identified? db)))
+  (let [user-roles (r get-user-roles db)]
+       (engine/user-roles->user-unidentified? user-roles)))
 
 (defn get-last-login-attempt
+  ; @usage
+  ;  (r user/get-last-login-attempt db)
+  ;
   ; @return (string)
   [db _]
-  (get-in db (db/path ::account :last-login-attempt)))
+  (get-in db (db/path :user/account :last-login-attempt)))
 
 (defn login-attempted?
+  ; @usage
+  ;  (r user/login-attempted? db)
+  ;
   ; @return (boolean)
   [db _]
-  (some? (r get-last-login-attempt db)))
+  (let [last-login-attempt (r get-last-login-attempt db)]
+       (some? last-login-attempt)))
 
 (defn client-locked?
+  ; @usage
+  ;  (r user/client-locked? db)
+  ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/path ::account :client-locked?))))
+  (let [client-locked? (get-in db (db/path :user/account :client-locked?))]
+       (boolean client-locked?)))
 
 
 
@@ -114,7 +151,7 @@
   ;
   ; @return (map)
   [db _]
-  (assoc-in db (db/path ::account :last-login-attempt)
+  (assoc-in db (db/path :user/account :last-login-attempt)
                (time/elapsed)))
 
 (a/reg-event-db :user/reg-last-login-attempt! reg-last-login-attempt!)
@@ -124,7 +161,7 @@
   ;
   ; @return (map)
   [db _]
-  (dissoc-in db (db/path ::account :last-login-attempt)))
+  (dissoc-in db (db/path :user/account :last-login-attempt)))
 
 (a/reg-event-db :user/clear-last-login-attempt! clear-last-login-attempt!)
 

@@ -29,6 +29,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; DEBUG
+(def DEBUG? false)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn start-server!
   ; @param (map)(opt) server-props
   ;  {:join? (boolean)(opt)
@@ -105,8 +113,8 @@
        ; 1. Az inicializálási események meghívása (Dispatch on-server-init events)
 
 
-      ;(println ":on-server-init-events:")
-      ;(println (str (r a/get-period-events db :on-server-init)))
+      (if DEBUG? (println ":on-server-init-events:"))
+      (if DEBUG? (println (str (r a/get-period-events db :on-server-init))))
 
 
       {:dispatch   [:core/connect-to-database!]
@@ -122,9 +130,8 @@
       (println details/app-codename "booting server ...")
        ; 1. Az indítási események meghívása (Dispatch on-server-boot events)
 
-
-      ;(println ":on-server-boot-events:")
-      ;(println (str (r a/get-period-events db :on-server-boot)))
+      (if DEBUG? (println ":on-server-boot-events:"))
+      (if DEBUG? (println (str (r a/get-period-events db :on-server-boot))))
 
 
       {:dispatch-n (r a/get-period-events db :on-server-boot)

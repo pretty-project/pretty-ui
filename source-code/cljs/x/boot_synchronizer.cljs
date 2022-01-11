@@ -23,12 +23,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def TARGET-PATHS
-     {:app-details   (db/path :core/configs :app-details)
-      :client-routes (db/path :x.app-router.route-handler/client-routes)
-      :user-account  (db/path :x.app-user.account-handler/account)
-      :user-profile  (db/path :x.app-user.profile-handler/profile)
-      :user-settings (db/path :x.app-user.settings-handler/settings)})
+(def TARGET-PATHS {:app-details   (db/path :core/configs :app-details)
+                   :client-routes (db/path :router/client-routes)
+                   :user-account  (db/path :user/account)
+                   :user-profile  (db/path :user/profile)
+                   :user-settings (db/path :user/settings)})
 
 
 

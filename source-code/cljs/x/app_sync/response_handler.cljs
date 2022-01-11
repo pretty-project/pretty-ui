@@ -25,29 +25,6 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-responses-history
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (r db/get-partition-history db :sync/responses))
-
-(defn get-response-history
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (map)
-  [db [_ request-id]]
-  (r db/get-data-history db :sync/responses request-id))
-
-(defn get-responses
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db (db/path :sync/responses)))
-
 (defn- get-response-target-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

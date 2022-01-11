@@ -88,10 +88,10 @@
   ;
   ; @return (hiccup)
   [picker-id {:keys [options] :as picker-props}]
-  (vec (reduce (fn [color-list option]
-                   (conj color-list [color-picker-option picker-id picker-props option]))
-               [:div.x-color-picker--options]
-               (param options))))
+  (reduce (fn [color-list option]
+              (conj color-list [color-picker-option picker-id picker-props option]))
+          [:div.x-color-picker--options]
+          (param options)))
 
 (defn- color-picker-reset-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

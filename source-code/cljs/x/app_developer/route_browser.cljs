@@ -26,7 +26,7 @@
   [db _]
   {:client-routes (r router/get-client-routes db)})
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :route-browser/get-body-props get-body-props)
 
 
 
@@ -45,9 +45,9 @@
 (defn- route-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [client-routes] :as body-props}]
-  (vec (reduce-kv (fn [route-list route-id route-props]
-                      (conj route-list [route-list-item body-id body-props route-id route-props]))
-                  [:<>] client-routes)))
+  (reduce-kv (fn [route-list route-id route-props]
+                 (conj route-list [route-list-item body-id body-props route-id route-props]))
+             [:<>] client-routes))
 
 (defn- route-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -59,4 +59,4 @@
   []
   [components/subscriber ::body
                          {:render-f   #'route-browser
-                          :subscriber [::get-body-props]}])
+                          :subscriber [:route-browser/get-body-props]}])

@@ -90,7 +90,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (?)
-(def LOG-EVENT! (->interceptor :id ::log-event!
+(def LOG-EVENT! (->interceptor :id :core/log-event!
                                :before #(do (when (-> %1 context->db-before-effect debug-handler/log-events?)
                                                   (-> %1 context->event-vector     print-handler/console))
                                             (-> %1 return))))

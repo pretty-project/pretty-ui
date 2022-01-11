@@ -207,10 +207,10 @@
   ;
   ; @return (component)
   [_ _ {:keys [colors]}]
-  (vec (reduce (fn [selected-colors color]
-                   (conj selected-colors [:div.item-editor--selected-color {:style {:background-color color}}]))
-               [:div.item-editor--selected-colors]
-               (param colors))))
+  (reduce (fn [selected-colors color]
+              (conj selected-colors [:div.item-editor--selected-color {:style {:background-color color}}]))
+          [:div.item-editor--selected-colors]
+          (param colors)))
 
 (defn selected-colors-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -250,10 +250,10 @@
   ; @return (component)
   [_ _ {:keys [colors]}]
   (if (vector/nonempty? colors)
-      (vec (reduce (fn [color-stamp color]
-                       (conj color-stamp [:div.item-editor--color-stamp--color {:style {:background-color color}}]))
-                   [:div.item-editor--color-stamp]
-                   (param colors)))
+      (reduce (fn [color-stamp color]
+                  (conj color-stamp [:div.item-editor--color-stamp--color {:style {:background-color color}}]))
+              [:div.item-editor--color-stamp]
+              (param colors))
       [:div.item-editor--color-stamp-placeholder]))
 
 

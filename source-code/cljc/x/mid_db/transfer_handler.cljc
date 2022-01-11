@@ -190,10 +190,10 @@
   ; @return (maps in vector)
   [partition context-props]
   (let [data-items (partition->data-items partition)]
-       (vec (reduce-kv (fn [collection data-item-id data-item]
-                           (let [document (data-item->document data-item-id data-item context-props)]
-                                (conj collection document)))
-                       [] data-items))))
+       (reduce-kv (fn [collection data-item-id data-item]
+                      (let [document (data-item->document data-item-id data-item context-props)]
+                           (conj collection document)))
+                  [] data-items)))
 
 (defn ordered-partition->collection
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -212,12 +212,12 @@
   ; @return (maps in vector)
   [partition context-props]
   (let [data-order (partition->data-order partition)]
-       (vec (reduce-indexed (fn [collection data-order data-item-id]
-                                (let [data-item        (partition->data-item partition data-item-id)
-                                      document         (data-item->document data-item-id data-item context-props)
-                                      ordered-document (document->ordered-document document data-order)]
-                                     (conj collection ordered-document)))
-                            [] data-order))))
+       (reduce-indexed (fn [collection data-order data-item-id]
+                           (let [data-item        (partition->data-item partition data-item-id)
+                                 document         (data-item->document data-item-id data-item context-props)
+                                 ordered-document (document->ordered-document document data-order)]
+                                (conj collection ordered-document)))
+                       [] data-order)))
 
 (defn partition->collection
   ; @param (map) partition
@@ -275,13 +275,13 @@
   ;
   ; @return (vector)
   [collection {:keys [keywordize?]}]
-  (vec (reduce (fn [data-order document]
-                   (let [document-id  (document->document-id     document)
-                         data-item-id (document-id->data-item-id document-id)]
-                        (if (nonfalse? keywordize?)
-                            (conj data-order data-item-id)
-                            (conj data-order document-id))))
-               [] collection)))
+  (reduce (fn [data-order document]
+              (let [document-id  (document->document-id     document)
+                    data-item-id (document-id->data-item-id document-id)]
+                   (if (nonfalse? keywordize?)
+                       (conj data-order data-item-id)
+                       (conj data-order document-id))))
+          [] collection))
 
 (defn ordered-collection->data-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -299,14 +299,14 @@
   ;
   ; @return (vector)
   [collection {:keys [keywordize?]}]
-  (vec (reduce (fn [data-order document]
-                   (let [document-id  (document->document-id     document)
-                         data-item-id (document-id->data-item-id document-id)]
-                        (if (nonfalse? keywordize?)
-                            (conj data-order data-item-id)
-                            (conj data-order document-id))))
-               (param [])
-               (sort-collection collection :order))))
+  (reduce (fn [data-order document]
+              (let [document-id  (document->document-id     document)
+                    data-item-id (document-id->data-item-id document-id)]
+                   (if (nonfalse? keywordize?)
+                       (conj data-order data-item-id)
+                       (conj data-order document-id))))
+          (param [])
+          (sort-collection collection :order)))
 
 (defn collection->data-order
   ; @param (maps in vector) collection

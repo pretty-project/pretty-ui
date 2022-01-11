@@ -19,7 +19,6 @@
               [x.app-dictionary.api]
               [x.app-environment.api]
               [x.app-locales.api]
-              [x.app-log.api]
               [x.app-media.api]
               [x.app-sync.api]
               [x.app-tools.api]

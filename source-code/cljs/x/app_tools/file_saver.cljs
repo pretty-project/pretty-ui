@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.07.26
 ; Description: Fájl mentése a kliens eszközére
-; Version: v1.4.6
-; Compatibility: x4.4.6
+; Version: v1.5.0
+; Compatibility: x4.5.2
 
 
 
@@ -215,5 +215,5 @@
   ; @param (map) saver-props
   (fn [_ [_ saver-id saver-props]]
       [:ui/add-popup! saver-id
-                      {:body   {:content #'body   :content-props saver-props}
-                       :header {:content #'header :content-props saver-props}}]))
+                      {:body   [body   saver-id saver-props]
+                       :header [header saver-id saver-props]}]))

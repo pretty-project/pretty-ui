@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.0.4
-; Compatibility: x4.4.6
+; Version: v2.1.0
+; Compatibility: x4.5.2
 
 
 
@@ -82,7 +82,8 @@
   ;
   ; @return (vector)
   [db _]
-  (map/get-keys (r get-events db)))
+  (let [events (r get-events db)]
+       (map/get-keys events)))
 
 (defn- get-cache
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,45 +97,49 @@
   ;
   ; @return (boolean)
   [db _]
-  (map/nonempty? (get-in db (db/path :environment/keypress-events))))
+  (let [keypress-events (get-in db (db/path :environment/keypress-events))]
+       (map/nonempty? keypress-events)))
 
 (defn- handler-enabled-by-user?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (boolean (r user/get-user-settings-item db :hotkeys-enabled?)))
+  (let [hotkeys-enabled? (r user/get-user-settings-item db :hotkeys-enabled?)]
+       (boolean hotkeys-enabled?)))
 
 (defn- handler-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path :environment/keypress-events :enabled?))))
+  (let [handler-enabled? (get-in db (db/meta-item-path :environment/keypress-events :enabled?))]
+       (boolean handler-enabled?)))
 
 (defn- handler-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (not (r handler-enabled? db)))
+  (let [handler-enabled? (get-in db (db/meta-item-path :environment/keypress-events :enabled?))]
+       (not handler-enabled?)))
 
 (defn- enable-handler?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (boolean (and (r handler-disabled?               db)
-                (r handler-enabled-by-user?        db)
-                (r any-keypress-event-registrated? db))))
+  (and (r handler-disabled?               db
+       (r handler-enabled-by-user?        db)
+       (r any-keypress-event-registrated? db))))
 
 (defn- disable-handler?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (boolean (and (r handler-enabled?                     db)
-                (not (r any-keypress-event-registrated? db)))))
+  (and (r handler-enabled?                     db)
+       (not (r any-keypress-event-registrated? db))))
 
 (defn- get-event-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,7 +158,8 @@
   ;
   ; @return (boolean)
   [db [_ event-id]]
-  (boolean (r get-event-prop db event-id :prevent-default?)))
+  (let [prevent-default? (r get-event-prop db event-id :prevent-default?)]
+       (boolean prevent-default?)))
 
 (defn- keypress-prevented-by-other-events?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -166,7 +172,6 @@
         other-events    (dissoc keypress-events event-id)]
        (map/any-key-match? other-events #(r keypress-prevented-by-event? db %))))
 
-
 (defn- enable-default?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -174,7 +179,7 @@
   ;
   ; @return (boolean)
   [db [_ event-id]]
-  ; Enable default if prevented by event and not prevented by other events
+  ; Enable default if prevented by event and NOT prevented by other events
   (and (r keypress-prevented-by-event?             db event-id)
        (not (r keypress-prevented-by-other-events? db event-id))))
 
@@ -204,8 +209,8 @@
   ; @return (vector)
   [db [_ key-code]]
   (let [keydown-event-ids (r get-cached-keydown-event-ids db key-code)]
-       (vec (reduce #(conj %1 (r get-event-prop db %2 :on-keydown))
-                    [] keydown-event-ids))))
+       (reduce #(conj %1 (r get-event-prop db %2 :on-keydown))
+                [] keydown-event-ids)))
 
 (defn- get-on-keyup-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -215,8 +220,8 @@
   ; @return (vector)
   [db [_ key-code]]
   (let [keyup-event-ids (r get-cached-keyup-event-ids db key-code)]
-       (vec (reduce #(conj %1 (r get-event-prop db %2 :on-keyup))
-                    [] keyup-event-ids))))
+       (reduce #(conj %1 (r get-event-prop db %2 :on-keyup))
+                [] keyup-event-ids)))
 
 (defn get-pressed-keys
   ; @return (vector)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.4.6
+; Version: v0.8.6
+; Compatibility: x4.5.2
 
 
 
@@ -78,7 +78,8 @@
   ;
   ; @return (boolean)
   [db [_ handler-id]]
-  (map/nonempty? (get-in db (db/path ::step-handlers handler-id))))
+  (let [handler-props (get-in db (db/path :gestures/step-handlers handler-id))]
+       (map/nonempty? handler-props)))
 
 (defn- get-step-handler-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,7 +89,7 @@
   ;
   ; @return (*)
   [db [_ handler-id prop-id]]
-  (get-in db (db/path ::step-handlers handler-id prop-id)))
+  (get-in db (db/path :gestures/step-handlers handler-id prop-id)))
 
 (defn autostep?
   ; @param (keyword) handler-id
@@ -261,7 +262,7 @@
   ;
   ; @return (map)
   [db [_ handler-id prop-id prop-value]]
-  (assoc-in db (db/path ::step-handlers handler-id prop-id) prop-value))
+  (assoc-in db (db/path :gestures/step-handlers handler-id prop-id) prop-value))
 
 (a/reg-event-db :gestures/set-step-handler-prop! set-step-handler-prop!)
 
@@ -273,7 +274,7 @@
   ;
   ; @return (map)
   [db [_ handler-id prop-id]]
-  (dissoc-in db (db/path ::step-handlers handler-id prop-id)))
+  (dissoc-in db (db/path :gestures/step-handlers handler-id prop-id)))
 
 (a/reg-event-db :gestures/remove-step-handler-prop! remove-step-handler-prop!)
 
@@ -285,7 +286,7 @@
   ;
   ; @return (map)
   [db [_ handler-id handler-props]]
-  (assoc-in db (db/path ::step-handlers handler-id) handler-props))
+  (assoc-in db (db/path :gestures/step-handlers handler-id) handler-props))
 
 (a/reg-event-db :gestures/store-step-handler-props! store-step-handler-props!)
 
@@ -314,6 +315,10 @@
 
 (a/reg-event-fx
   :gestures/step-backward!
+  ; @param (keyword) handler-id
+  ;
+  ; @usage
+  ;  [:gestures/set-backward! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
       (let [prev-dex              (r get-prev-dex          db handler-id)
             progressive-stepping? (r progressive-stepping? db handler-id)
@@ -331,6 +336,10 @@
 
 (a/reg-event-fx
   :gestures/step-forward!
+  ; @param (keyword) handler-id
+  ;
+  ; @usage
+  ;  [:gestures/set-forward! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
       (let [next-dex              (r get-next-dex          db handler-id)
             progressive-stepping? (r progressive-stepping? db handler-id)
@@ -352,9 +361,8 @@
   (fn [{:keys [db]} [_ handler-id]]
       (if (r autostep? db handler-id)
           (let [step-timeout (r get-step-timeout db handler-id)]
-               {:dispatch-later
-                [{:ms step-timeout :dispatch [:gestures/step-forward!  handler-id]}
-                 {:ms step-timeout :dispatch [:gestures/run-autostep?! handler-id]}]}))))
+               {:dispatch-later [{:ms step-timeout :dispatch [:gestures/step-forward!  handler-id]}
+                                 {:ms step-timeout :dispatch [:gestures/run-autostep?! handler-id]}]}))))
 
 (a/reg-event-fx
   :gestures/init-step-handler!

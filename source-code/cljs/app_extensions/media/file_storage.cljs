@@ -683,13 +683,13 @@
   ;
   ; @return (component)
   [component-id {:keys [filtered-subdirectories] :as view-props}]
-  (vec (reduce (fn [directory-list subdirectory-id]
-                   (let [subdirectory-props (get filtered-subdirectories subdirectory-id)]
-                        (conj directory-list ^{:key subdirectory-id}
-                              [file-storage-subdirectory component-id
-                               view-props subdirectory-id subdirectory-props])))
-               [:<>]
-               (engine/view-props->ordered-subdirectories view-props))))
+  (reduce (fn [directory-list subdirectory-id]
+              (let [subdirectory-props (get filtered-subdirectories subdirectory-id)]
+                   (conj directory-list ^{:key subdirectory-id}
+                         [file-storage-subdirectory component-id
+                          view-props subdirectory-id subdirectory-props])))
+          [:<>]
+          (engine/view-props->ordered-subdirectories view-props)))
 
 (defn- file-storage-subdirectories
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -746,12 +746,12 @@
   ;
   ; @return (component)
   [component-id {:keys [filtered-files] :as view-props}]
-  (vec (reduce (fn [file-list file-id]
-                   (let [file-props (get filtered-files file-id)]
-                        (conj file-list ^{:key file-id}
-                              [file-storage-file component-id view-props file-id file-props])))
-               [:<>]
-               (engine/view-props->ordered-files view-props))))
+  (reduce (fn [file-list file-id]
+              (let [file-props (get filtered-files file-id)]
+                   (conj file-list ^{:key file-id}
+                         [file-storage-file component-id view-props file-id file-props])))
+          [:<>]
+          (engine/view-props->ordered-files view-props)))
 
 (defn- file-storage-files
   ; WARNING! NON-PUBLIC! DO NOT USE!

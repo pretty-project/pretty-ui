@@ -93,13 +93,13 @@
   ; @usage
   ;  (defn my-component [_ subscribed-props])
   ;  [elements/blank {:content    #'my-component
-  ;                   :subscriber [::get-subscribed-props]}]
+  ;                   :subscriber [:get-subscribed-props]}]
   ;
   ; @usage
   ;  (defn my-component [component-id static-props subscribed-props])
   ;  [elements/blank :my-component {:content       #'my-component
   ;                                 :content-props {...}
-  ;                                 :subscriber    [::get-subscribed-props]}]
+  ;                                 :subscriber    [:get-subscribed-props]}]
   ;
   ; @return (component)
   ([blank-props]

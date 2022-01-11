@@ -1,10 +1,11 @@
 
 (ns x.app-developer.developer-tools
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-elements.api :as elements]
-              [x.app-gestures.api :as gestures]
-              [x.app-ui.api       :as ui]
+    (:require [x.app-components.api :as components]
+              [x.app-core.api      :as a :refer [r]]
+              [x.app-db.api        :as db]
+              [x.app-elements.api  :as elements]
+              [x.app-gestures.api  :as gestures]
+              [x.app-ui.api        :as ui]
               [x.app-developer.database-browser :rename {body database-browser}]
               [x.app-developer.request-browser  :rename {body request-browser}]
               [x.app-developer.route-browser    :rename {body route-browser}]))
@@ -49,14 +50,14 @@
        {:print-events? (= debug-mode "pineapple-juice")
         :view-id       (r gestures/get-selected-view-id db ::handler)}))
 
-(a/reg-sub ::get-header-props get-header-props)
+(a/reg-sub :developer-tools/get-header-props get-header-props)
 
 (defn- get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:view-id (r gestures/get-selected-view-id db ::handler)})
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :developer-tools/get-body-props get-body-props)
 
 
 
@@ -71,19 +72,33 @@
                     :icon :terminal :tooltip "Print events"
                     :on-click [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]}])
 
-(defn- header
+(defn- header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [header-id header-props]
   [elements/horizontal-polarity {:start-content [elements/menu-bar {:menu-items (menu-items header-id header-props)}]
                                  :end-content   [:<> [toggle-print-events-button header-id header-props]
                                                      [ui/popup-close-icon-button header-id header-props]]}])
 
-(defn- body
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [popup-id]
+  [components/subscriber ::header
+                         {:render-f   #'header-structure
+                          :subscriber [:developer-tools/get-header-props]}])
+
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
   (case view-id :database-browser [database-browser]
                 :request-browser  [request-browser]
                 :route-browser    [route-browser]))
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [popup-id]
+  [components/subscriber ::body
+                         {:render-f   #'body-structure
+                          :subscriber [:developer-tools/get-body-props]}])
 
 
 
@@ -96,5 +111,5 @@
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
-                                 {:body   {:content #'body   :subscriber [::get-body-props]}
-                                  :header {:content #'header :subscriber [::get-header-props]}}]}))
+                                 {:body   #'body
+                                  :header #'header}]}))

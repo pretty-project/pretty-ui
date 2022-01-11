@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.4.6
+; Version: v0.9.2
+; Compatibility: x4.5.2
 
 
 
@@ -14,9 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.element-handler
-    (:require [app-fruits.dom :as dom]
-              [mid-fruits.css :as css]
-              [x.app-core.api :as a]))
+    (:require [app-fruits.dom   :as dom]
+              [mid-fruits.candy :refer [param return]]
+              [mid-fruits.css   :as css]
+              [x.app-core.api   :as a]))
 
 
 
@@ -28,8 +29,9 @@
   ;
   ; @return (boolean)
   [element-id]
-  (boolean (if-let [element (dom/get-element-by-id element-id)]
-                   (dom/element-disabled? element))))
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/element-disabled? element)
+          (return false)))
 
 
 
@@ -44,8 +46,8 @@
   ; @usage
   ;  [:environment/remove-element-animated! 500 "my-element"]
   (fn [_ [_ timeout element-id]]
-      {:dispatch-later [{:ms 0       :dispatch [:environment/set-element-attribute!  element-id "data-animation" "hide"]}
-                        {:ms timeout :dispatch [:environment/remove-element!         element-id]}]}))
+      {:dispatch-later [{:ms 0       :dispatch [:environment/set-element-attribute! element-id "data-animation" "hide"]}
+                        {:ms timeout :dispatch [:environment/remove-element!        element-id]}]}))
 
 (a/reg-event-fx
   :environment/hide-element-animated!

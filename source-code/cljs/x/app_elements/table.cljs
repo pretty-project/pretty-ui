@@ -162,9 +162,9 @@
   ; @return (hiccup)
   [table-id {:keys [columns] :as table-props} row-data row-dex]
   (let [row-data (vector/count! row-data (count columns))]
-       (vec (reduce-indexed #(conj %1 [table-row-cell table-id table-props %3 %2])
-                             [:tr.x-table--body-row (table-props->row-attributes table-props row-dex)]
-                             (param row-data)))))
+       (reduce-indexed #(conj %1 [table-row-cell table-id table-props %3 %2])
+                        [:tr.x-table--body-row (table-props->row-attributes table-props row-dex)]
+                        (param row-data))))
 
 (defn- table-rows
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -175,9 +175,9 @@
   ;
   ; @return (hiccup)
   [table-id {:keys [rows] :as table-props}]
-  (vec (reduce-indexed #(conj %1 [table-row table-id table-props %3 %2])
-                        [:tbody.x-table--body]
-                        (param rows))))
+  (reduce-indexed #(conj %1 [table-row table-id table-props %3 %2])
+                   [:tbody.x-table--body]
+                   (param rows)))
 
 (defn- table-header-cell-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,9 +214,9 @@
   ;
   ; @return (hiccup)
   [table-id {:keys [columns] :as table-props}]
-  (vec (reduce-indexed #(conj %1 [table-header-cell table-id table-props %3 %2])
-                        [:tr.x-table--header-row]
-                        (param columns))))
+  (reduce-indexed #(conj %1 [table-header-cell table-id table-props %3 %2])
+                   [:tr.x-table--header-row]
+                   (param columns)))
 
 (defn- table-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

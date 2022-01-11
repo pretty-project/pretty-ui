@@ -97,12 +97,12 @@
   ; @return (hiccup)
   [group-id {:keys [chips] :as group-props}]
   (if (vector/nonempty? chips)
-      (vec (reduce-indexed #(let [chip-props (group-props->chip-props group-id group-props %3 %2)
-                                  chip-props (chip-props-prototype    chip-props)]
-                                 (conj %1 [chip chip-props]))
-                            [:div.x-chip-group--chips]
-                            (param chips)))
-      [chip-group-no-chips-label group-id group-props]))
+      (reduce-indexed #(let [chip-props (group-props->chip-props group-id group-props %3 %2)
+                             chip-props (chip-props-prototype    chip-props)]
+                            (conj %1 [chip chip-props]))
+                       [:div.x-chip-group--chips]
+                       (param chips)))
+      [chip-group-no-chips-label group-id group-props])
 
 (defn- chip-group-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

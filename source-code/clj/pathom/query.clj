@@ -5,7 +5,6 @@
               [mid-fruits.reader  :as reader]
               [pathom.register    :as register]
               [server-fruits.http :as http]
-              [x.server-core.api  :as a]
               [com.wsscode.pathom3.connect.operation :as pathom.co]
               [com.wsscode.pathom3.interface.eql     :as pathom.eql]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
@@ -19,27 +18,32 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
-  ;  {:params (map)
-  ;    {:query (vector)(opt)}}
+  ;  {:params (map)(opt)
+  ;    {:query (string or vector)(opt)}
+  ;   :transit-params (map)(opt)
+  ;    {:query (string or vector)(opt)}}
   ;
   ; @usage
   ;  (pathom/request->query {...})
   ;
   ; @return (vector)
   [request]
-  ; BUG#4509
-  ; Abban az esetben ha a query értéke egy darab kulcsszó egy vektorban, akkor a transit-params
-  ; térkép helyett params térképből kiolvasott query hibás lenne, ezért szükséges a query értékét
-  ; a transit-params térképből kiolvasni!
-  ; Pl.: [:my-resolver]
-  ;      =>
-  ;      {:transit-params {:query [:my-resolver]}
-  ;       :params         {:query :my-resolver}}   <= ebben az esetben a query értéke nem vektor típus
-  (let [query (http/request->transit-param request :query)]
-       ; Fájlfeltöltéskor a request törzse egy FormData objektum, amiből string típusként
-       ; olvasható ki a query értéke ...
-       (cond (string? query) (reader/string->mixed query)
-             (vector? query) (return               query))))
+  ; Fájlfeltöltéskor a request törzse egy FormData objektum, amiből string típusként
+  ; olvasható ki a query értéke ...
+  (letfn [(f [query] (cond (vector? query) (return               query)
+                           (string? query) (reader/string->mixed query)))]
+         ; BUG#4509
+         ; Abban az esetben ha a query értéke egy darab kulcsszó egy vektorban, akkor a transit-params
+         ; térkép helyett params térképből kiolvasott query hibás lenne, ezért szükséges a query értékét
+         ; a transit-params térképből kiolvasni!
+         ; Pl.: [:my-resolver]
+         ;      =>
+         ;      {:transit-params {:query [:my-resolver]}
+         ;       :params         {:query :my-resolver}}   <= ebben az esetben a query értéke nem vektor típus
+         (if-let [query (http/request->transit-param request :query)]
+                 (f query)
+                 (if-let [query (http/request->param request :query)]
+                         (f query)))))
 
 (defn env->query
   ; WARNING! NON-PUBLIC! DO NOT USE!

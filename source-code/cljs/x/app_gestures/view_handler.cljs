@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.4.6
+; Version: v0.3.8
+; Compatibility: x4.5.2
 
 
 
@@ -32,7 +32,7 @@
   ;
   ; @return (keyword)
   [db [_ handler-id]]
-  (get-in db (db/path ::view-handlers handler-id :view-id)))
+  (get-in db (db/path :gestures/view-handlers handler-id :view-id)))
 
 
 
@@ -49,7 +49,7 @@
   ;
   ; @return (map)
   [db [_ handler-id {:keys [default-view-id]}]]
-  (assoc-in db (db/path ::view-handlers handler-id :view-id) default-view-id))
+  (assoc-in db (db/path :gestures/view-handlers handler-id :view-id) default-view-id))
 
 ; @usage
 ;  [:gestures/init-view-handler! :my-view-handler {:default-view-id :my-view}]
@@ -64,7 +64,7 @@
   ;
   ; @return (map)
   [db [_ handler-id view-id]]
-  (assoc-in db (db/path ::view-handlers handler-id :view-id) view-id))
+  (assoc-in db (db/path :gestures/view-handlers handler-id :view-id) view-id))
 
 ; @usage
 ;  [:gestures/change-view! :my-view-handler :my-view]

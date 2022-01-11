@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.30
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.4.6
+; Version: v0.6.8
+; Compatibility: x4.5.2
 
 
 
@@ -45,7 +45,8 @@
   ;
   ; @return (boolean)
   [db [_ interval-id]]
-  (some? (get-in db (db/path :environment/intervals interval-id))))
+  (let [interval-props (get-in db (db/path :environment/intervals interval-id))]
+       (some? interval-props)))
 
 (defn- timeout-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,17 +55,20 @@
   ;
   ; @return (boolean)
   [db [_ timeout-id]]
-  (some? (get-in db (db/path :environment/timeouts timeout-id))))
+  (let [timeout-props (get-in db (db/path :environment/timeouts timeout-id))]
+       (some? timeout-props)))
 
 (defn browser-online?
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path :environment/window-data :browser-online?))))
+  (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
+       (boolean browser-online?)))
 
 (defn browser-offline?
   ; @return (boolean)
   [db _]
-  (not (r browser-online? db)))
+  (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
+       (not browser-online?)))
 
 
 

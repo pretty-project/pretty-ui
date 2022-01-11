@@ -189,12 +189,12 @@
   ;
   ; @return (hiccup)
   [field-id {:keys [rendered-options] :as field-props}]
-  (vec (reduce-indexed (fn [rendered-options option-dex option-data]
-                           (conj rendered-options
-                               ;^{:key (random/generate-react-key)}
-                                 [combo-box-option field-id field-props option-data option-dex]))
-                       [:div.x-combo-box--options]
-                       (param rendered-options))))
+  (reduce-indexed (fn [rendered-options option-dex option-data]
+                      (conj rendered-options
+                          ;^{:key (random/generate-react-key)}
+                            [combo-box-option field-id field-props option-data option-dex]))
+                  [:div.x-combo-box--options]
+                  (param rendered-options)))
 
 (defn- combo-box-no-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -43,7 +43,8 @@
 
   ;[app-extensions.storage.file-picker/view :my-picker {}])
 
-
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,4 +54,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
                 [:sync/send-query! :storage/synchronize-directory-browser!
-                                   {:query [:debug `(:storage/download-capacity-details ~{})]}]]})
+                                   {:query      [:debug `(:storage/download-capacity-details ~{})]
+                                    :on-success [:storage/receive-server-response!]}]]})

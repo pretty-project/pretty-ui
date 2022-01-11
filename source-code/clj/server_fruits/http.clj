@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v0.5.6
+; Version: v1.0.4
 
 
 
@@ -13,9 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-fruits.http
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.reader :as reader]
-              [mid-fruits.string :as string]))
+    (:require [mid-fruits.candy :refer [param return]]))
 
 
 
@@ -191,108 +189,180 @@
 
 
 
-;; -- Wrappers ----------------------------------------------------------------
+;; -- Default wrapper ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn response-wrap
   ; @param (map) response-props
   ;  {:body (string)
-  ;   :mime-type (string)
-  ;   :error-message (keyword or string)
-  ;   :session (map)
-  ;   :status (integer)}
+  ;   :headers (map)(opt)
+  ;   :mime-type (string)(opt)
+  ;    Default: "text/plain"
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)
+  ;    Default: 200}
   ;
-  ; @usage
+  ; @example
+  ;  (http/response-wrap {:body "foo"})
+  ;  =>
+  ;  {:body    "foo"
+  ;   :headers {"Content-Type" "text/plain"}
+  ;   :status  200}
+  ;
+  ; @example
   ;  (http/response-wrap {:body      "foo"
-  ;                       :mime-type "text/plain"
-  ;                       :status    200})
+  ;                       :headers   {"Content-Disposition" "inline"}
+  ;                       :mime-type "text/plain"})
+  ;  =>
+  ;  {:body    "foo"
+  ;   :headers {"Content-Type"        "text/plain"
+  ;             "Content-Disposition" "inline"}
+  ;   :status  200}
   ;
   ; @return (map)
   ;  {:body (string)
   ;   :headers (map)
+  ;   :session (map)
   ;   :status (integer)}
-  [{:keys [mime-type] :as response-props}]
-  (merge {:headers {"Content-Type" mime-type}}
-         (dissoc response-props :mime-type)))
+  [{:keys [headers mime-type] :as response-props}]
+  ; WARNING!
+  ; A :body és :mime-type tulajdonságok megadása szükséges a response-wrap függvény használatához!
+  (let [headers (merge {"Content-Type" (or mime-type "text/plain")} headers)]
+       (merge {:headers headers
+               :status  200}
+              (select-keys response-props [:body :session :status]))))
+
+
+
+;; -- Specific wrappers -------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn error-wrap
   ; @param (map) response-props
   ;  {:error-message (string or keyword)
-  ;   :status (integer)}
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
   ;
-  ; @usage
+  ; @example
   ;  (http/error-wrap {:error-message :file-not-found
   ;                    :status        404}
+  ;  =>
+  ;  {:body    ":file-not-found"
+  ;   :headers {"Content-Type" "text/plain"}
+  ;   :status  404}
   ;
   ; @return (map)
   [{:keys [error-message] :as response-props}]
-  (response-wrap (merge {:body (str error-message)
-                         :mime-type "text/plain"}
-                        (param response-props))))
+  (response-wrap (merge {:body   (str   error-message)
+                         :status (param 500)}
+                        (select-keys response-props [:session :status]))))
 
 (defn html-wrap
   ; @param (map) response-props
-  ;  {:body (string)}
+  ;  {:body (string)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
   ;
-  ; @usage
+  ; @example
   ;  (http/html-wrap {:body "<!DOCTYPE html> ..."})
+  ;  =>
+  ;  {:body    "<!DOCTYPE html> ..."
+  ;   :headers {"Content-Type" "text/html"}
+  ;   :status  200}
   ;
   ; @return (map)
-  [response-props]
-  (response-wrap (merge {:mime-type "text/html"
-                         :status    200}
-                        (param response-props))))
+  [{:keys [body] :as response-props}]
+  (response-wrap (merge {:body      (str body)
+                         :mime-type "text/html"}
+                        (select-keys response-props [:session :status]))))
 
 (defn json-wrap
   ; @param (map) response-props
-  ;  {:body (string)}
+  ;  {:body (string)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
+
   ;
-  ; @usage
+  ; @example
   ;  (http/json-wrap {:body "{...}"})
+  ;  =>
+  ;  {:body    "{...}"
+  ;   :headers {"Content-Type" "application/json"}
+  ;   :status  200}
   ;
   ; @return (map)
-  [response-props]
-  (response-wrap (merge {:mime-type "application/json"
-                         :status    200}
-                        (param response-props))))
+  [{:keys [body] :as response-props}]
+  (response-wrap (merge {:body      (str body)
+                         :mime-type "application/json"}
+                        (select-keys response-props [:session :status]))))
 
 (defn map-wrap
   ; @param (map) response-props
-  ;  {:body (map)}
+  ;  {:body (map)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
   ;
-  ; @usage
+  ; @example
   ;  (http/map-wrap {:body {...})
+  ;  =>
+  ;  {:body    "{...}"
+  ;   :headers {"Content-Type" "text/plain"}
+  ;   :status  200}
   ;
   ; @return (map)
   [{:keys [body] :as response-props}]
-  (response-wrap (merge {:mime-type "text/plain"
-                         :status    200}
-                        (param response-props)
-                        {:body (str body)})))
+  (response-wrap (merge {:body (str body)}
+                        (select-keys response-props [:session :status]))))
 
 (defn media-wrap
   ; @param (map) response-props
-  ;  {:body (string)
-  ;   :mime-type (string)}
+  ;  {:body (java.io.File object)
+  ;   :filename (string)(opt)
+  ;   :mime-type (string)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
   ;
-  ; @usage
-  ;  (http/media-wrap {:body "..."
+  ; @example
+  ;  (http/media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
   ;                    :mime-type "image/png"})
+  ;  =>
+  ;  {:body    #object[java.io.File 0x4571e67a "/my-file.png"
+  ;   :headers {"Content-Type" "image/png"}
+  ;   :status  200}
+  ;
+  ; @example
+  ;  (http/media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
+  ;                    :filename  "my-file.png"
+  ;                    :mime-type "image/png"})
+  ;  =>
+  ;  {:body    #object[java.io.File 0x4571e67a "/my-file.png"
+  ;   :headers {"Content-Type"        "image/png"
+  ;             "Content-Disposition" "inline; filename=\"my-file.png\""}
+  ;   :status  200}
   ;
   ; @return (map)
-  [{:keys [body] :as response-props}]
-  (response-wrap (merge {:status 200}
-                        (param response-props))))
+  [{:keys [body filename] :as response-props}]
+  (response-wrap (merge {:body (param body)
+                       ; Az attachment beállítás használatával a böngésző akkor is felkínálja mentésre,
+                       ; a szerver válaszát, ha azt különben képes lenne megjeleníteni.
+                       ; :headers (if filename {"Content-Disposition" "attachment; filename=\""filename"\""})
+                         :headers (if filename {"Content-Disposition" "inline; filename=\""filename"\""})}
+                        (select-keys response-props [:mime-type :session :status]))))
 
 (defn text-wrap
   ; @param (map) response-props
-  ;  {:body (string)}
+  ;  {:body (string)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
   ;
-  ; @usage
+  ; @example
   ;  (http/text-wrap {:body "foo"})
+  ;  =>
+  ;  {:body    "foo"
+  ;   :headers {"Content-Type" "text/plain"}
+  ;   :status  200}
   ;
   ; @return (map)
-  [response-props]
-  (response-wrap (merge {:mime-type "text/plain"
-                         :status    200}
-                        (param response-props))))
+  [{:keys [body] :as response-props}]
+  (response-wrap (merge {:body (str body)}
+                        (select-keys response-props [:session :status]))))

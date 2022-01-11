@@ -38,7 +38,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::options :data-items]))
+  (get-in db [:resource-handler/options :data-items]))
 
 (event-handler/reg-sub :core/get-resource-handler-options get-resource-handler-options)
 
@@ -54,7 +54,7 @@
   ;
   ; @return (map)
   [db [_ resource-handler-options]]
-  (assoc-in db [::options :data-items] resource-handler-options))
+  (assoc-in db [:resource-handler/options :data-items] resource-handler-options))
 
 (event-handler/reg-event-db :core/store-resource-handler-options! store-resource-handler-options!)
 

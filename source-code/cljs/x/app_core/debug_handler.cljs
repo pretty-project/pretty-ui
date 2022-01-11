@@ -44,7 +44,7 @@
 (defn get-debug-mode
   ; @return (string)
   [db _]
-  (get-in db [::primary :meta-items :debug-mode]))
+  (get-in db [:core/debug-handler :meta-items :debug-mode]))
 
 (defn debug-mode-detected?
   ; @return (boolean)
@@ -69,7 +69,7 @@
   ;
   ; @return (map)
   [db [_ debug-mode]]
-  (assoc-in db [::primary :meta-items :debug-mode] debug-mode))
+  (assoc-in db [:core/debug-handler :meta-items :debug-mode] debug-mode))
 
 (re-frame/reg-event-db :core/set-debug-mode! set-debug-mode!)
 
@@ -83,7 +83,7 @@
   [_]
   (let [uri          (window/get-uri)
         query-string (uri/uri->query-string uri)]
-       (re-frame/dispatch [:db/set-item! [::primary :meta-items :debug-mode]
+       (re-frame/dispatch [:db/set-item! [:core/debug-handler :meta-items :debug-mode]
                                          (query-string->debug-mode query-string)])))
 
 (re-frame/reg-fx :core/detect-debug-mode! detect-debug-mode!)

@@ -609,14 +609,14 @@
   [db [_ directory-id directory-data]]
   (if-let [directory-items (get directory-data :directory/items)]
           (reduce (fn [db directory-item]
-                      (let [document-id  (db/document->document-id     directory-item)
-                            data-item-id (db/document-id->data-item-id document-id)
-                            data-item    (db/document->data-item       directory-item)]
-                           (if (db/document->namespace? directory-item :file)
-                               (assoc-in db (db/path ::files data-item-id)
-                                            (param data-item))
-                               (assoc-in db (db/path ::directories data-item-id)
-                                            (param data-item)))))
+                      (let [document-id  (db/document->document-id     directory-item)]))
+                            ;data-item-id (db/document-id->data-item-id document-id)
+                            ;data-item    (db/document->data-item       directory-item)]
+                           ;(if (db/document->namespace? directory-item :file)
+                            ;   (assoc-in db (db/path ::files data-item-id)
+                            ;                (param data-item))
+                            ;   (assoc-in db (db/path ::directories data-item-id)
+                            ;                (param data-item))]))
                   (param db)
                   (param directory-items))
           (return db)))

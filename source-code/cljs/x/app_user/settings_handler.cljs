@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.4.4
-; Compatibility: x3.9.9
+; Version: v0.6.0
+; Compatibility: x4.5.2
 
 
 
@@ -14,23 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.settings-handler
-    (:require [mid-fruits.candy  :refer [param]]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-user.engine :as engine]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn user-settings-item-path
-  ; @usage
-  ;  (user/user-settings-item-path :my-settings-item)
-  ;
-  ; @return (item-path vector)
-  [item-key]
-  (db/path ::settings item-key))
+    (:require [x.app-core.api :as a :refer [r]]
+              [x.app-db.api   :as db]))
 
 
 
@@ -43,7 +28,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::settings)))
+  (get-in db (db/path :user/settings)))
 
 (defn get-user-settings-item
   ; @param (keyword) item-key
@@ -53,7 +38,7 @@
   ;
   ; @return (map)
   [db [_ item-key]]
-  (get-in db (db/path ::settings item-key)))
+  (get-in db (db/path :user/settings item-key)))
 
 
 
@@ -69,8 +54,7 @@
   ;
   ; @return (map)
   [db [_ item-key item-value]]
-  (assoc-in db (db/path ::settings item-key)
-               (param item-value)))
+  (assoc-in db (db/path :user/settings item-key) item-value))
 
 ; @usage
 ;  [:user/set-user-settings-item! :my-settings-item "My value"]

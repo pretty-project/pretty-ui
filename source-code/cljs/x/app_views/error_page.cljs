@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.2.2
-; Compatibility: x4.4.7
+; Version: v1.3.4
+; Compatibility: x4.5.2
 
 
 
@@ -37,22 +37,6 @@
                     :under-maintenance  {:title  :page-is-under-maintenance
                                          :helper :please-check-back-soon...
                                          :icon   :self_improvement}})
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- error-id->content-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) error-id
-  ;
-  ; @return (map)
-  ;  {:title (metamorphic-content)
-  ;   :helper (metamorphic-content)}
-  [error-id]
-  (get ERROR-CONTENT error-id))
 
 
 
@@ -136,5 +120,6 @@
   ; @param (keyword) error-id
   ;  :no-connection, :no-permission, :page-not-found, :under-construction, :under-maintenance
   (fn [_ [_ error-id]]
-      [:ui/set-surface! ::view
-                        {:view {:content #'view :content-props (error-id->content-props error-id)}}]))
+      (let [content-props (get ERROR-CONTENT error-id)]
+           [:ui/set-surface! ::view
+                             {:view [view ::view content-props]}])))

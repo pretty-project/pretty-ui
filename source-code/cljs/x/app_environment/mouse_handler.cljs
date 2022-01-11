@@ -1,9 +1,10 @@
 
 ; WARNING#9904
-; Az egérmutató pozícióját és más egérmutatóval kapcsolatos adatot nem célszerű
-; a Re-Frame adatbásisban tárolni, mivel az nem alkalmas a gyors egymás-utáni
-; írások kezelésére, ugyanis minden Re-Frame adatbázis-írás következménye
-; az összes aktív feliratkozás (subscription) újbóli kiértékelődése.
+; Az egérmutató pozícióját és más egérmutatóval kapcsolatos gyorsan változó
+; adatot nem célszerű a Re-Frame adatbásisban tárolni, mivel az nem alkalmas
+; a gyors egymás-utáni írások hatékony kezelésére, ugyanis minden Re-Frame
+; adatbázis-írás következménye az összes aktív feliratkozás (subscription)
+; újbóli kiértékelődése.
 
 
 

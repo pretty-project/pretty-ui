@@ -304,16 +304,16 @@
   [db _]
   (let [directory-id (r get-rendered-directory-id db)
         element-ids  (r get-selected-files        db)]
-       (vec (reduce (fn [selected-file-uris element-id]
-                        (let [file-id    (engine/element-id->item-id element-id)
-                              filename   (r engine/get-file-prop     db directory-id file-id :file/filename)
-                              file-alias (r engine/get-file-prop     db directory-id file-id :file/alias)
-                              file-uri   (media/filename->media-storage-uri filename)]
-                             (if (boolean ATTACH-FILE-ALIAS?)
-                                 (conj selected-file-uris (str   file-uri "?file-alias=" file-alias))
-                                 (conj selected-file-uris (param file-uri)))))
-                    (param [])
-                    (param element-ids)))))
+       (reduce (fn [selected-file-uris element-id]
+                   (let [file-id    (engine/element-id->item-id element-id)
+                         filename   (r engine/get-file-prop     db directory-id file-id :file/filename)
+                         file-alias (r engine/get-file-prop     db directory-id file-id :file/alias)
+                         file-uri   (media/filename->media-storage-uri filename)]
+                        (if (boolean ATTACH-FILE-ALIAS?)
+                            (conj selected-file-uris (str   file-uri "?file-alias=" file-alias))
+                            (conj selected-file-uris (param file-uri)))))
+               (param [])
+               (param element-ids))))
 
 (defn- any-file-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -743,13 +743,13 @@
   ;
   ; @return (component)
   [component-id {:keys [filtered-subdirectories] :as view-props}]
-  (vec (reduce (fn [directory-list subdirectory-id]
-                   (let [subdirectory-props (get filtered-subdirectories subdirectory-id)]
-                        (conj directory-list ^{:key subdirectory-id}
-                              [file-browser-subdirectory component-id    view-props
-                                                         subdirectory-id subdirectory-props])))
-               [:<>]
-               (engine/view-props->ordered-subdirectories view-props))))
+  (reduce (fn [directory-list subdirectory-id]
+              (let [subdirectory-props (get filtered-subdirectories subdirectory-id)]
+                   (conj directory-list ^{:key subdirectory-id}
+                         [file-browser-subdirectory component-id    view-props
+                                                    subdirectory-id subdirectory-props])))
+          [:<>]
+          (engine/view-props->ordered-subdirectories view-props)))
 
 (defn- file-browser-subdirectories
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -811,12 +811,12 @@
   ;
   ; @return (component)
   [component-id {:keys [filtered-files] :as view-props}]
-  (vec (reduce (fn [file-list file-id]
-                   (let [file-props (get filtered-files file-id)]
-                        (conj file-list ^{:key file-id}
-                              [file-browser-file component-id view-props file-id file-props])))
-               [:<>]
-               (engine/view-props->ordered-files view-props))))
+  (reduce (fn [file-list file-id]
+              (let [file-props (get filtered-files file-id)]
+                   (conj file-list ^{:key file-id}
+                         [file-browser-file component-id view-props file-id file-props])))
+          [:<>]
+          (engine/view-props->ordered-files view-props)))
 
 (defn- file-browser-files
   ; WARNING! NON-PUBLIC! DO NOT USE!

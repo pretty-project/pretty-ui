@@ -6,7 +6,7 @@
 ; Created: 2020.02.13
 ; Description:
 ; Version: v0.9.4
-; Compatibility: x4.4.6
+; Compatibility: x4.5.2
 
 
 
@@ -59,7 +59,7 @@
   ;  Az applikáció betöltésének kezdete óta eltelt idő
   [db _]
   (let [elapsed-time    (time/elapsed)
-        load-started-at (get-in db [::primary :data-items :load-started-at])]
+        load-started-at (get-in db [:core/load-handler :data-items :load-started-at])]
        (- elapsed-time load-started-at)))
 
 (defn- get-app-status
@@ -67,14 +67,15 @@
   ;
   ; @return (keyword)
   [db _]
-  (get-in db [::primary :data-items :status]))
+  (get-in db [:core/load-handler :data-items :status]))
 
 (defn- timeout-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (> (r get-elapsed-time db) LOAD-TIMEOUT))
+  (let [elapsed-time (r get-elapsed-time db)]
+       (> elapsed-time LOAD-TIMEOUT)))
 
 (defn- synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -90,7 +91,7 @@
   ;
   ; @return (integer)
   [db _]
-  (get-in db [::primary :data-items :signals]))
+  (get-in db [:core/load-handler :data-items :signals]))
 
 (defn- synchronized?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -122,7 +123,7 @@
   ;
   ; @return (map)
   [db _]
-  (assoc-in db [::primary :data-items :load-started-at]
+  (assoc-in db [:core/load-handler :data-items :load-started-at]
                (time/elapsed)))
 
 (defn- set-app-status!
@@ -132,7 +133,7 @@
   ;
   ; @return (map)
   [db [_ status]]
-  (assoc-in db [::primary :data-items :status] status))
+  (assoc-in db [:core/load-handler :data-items :status] status))
 
 (event-handler/reg-event-db :core/set-app-status! set-app-status!)
 
@@ -143,7 +144,7 @@
   ;
   ; @return (map)
   [db [_ signal-id]]
-  (update-in db [::primary :data-items :signals] inc))
+  (update-in db [:core/load-handler :data-items :signals] inc))
 
 (event-handler/reg-event-db :core/synchronize-loading! synchronize-loading!)
 
@@ -182,7 +183,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
-          {:db       (update-in db [::primary :data-items :signals] dec)
+          {:db       (update-in db [:core/load-handler :data-items :signals] dec)
            :dispatch [:core/self-test!]})))
 
 (event-handler/reg-event-fx

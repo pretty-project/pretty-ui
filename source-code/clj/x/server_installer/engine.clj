@@ -48,7 +48,7 @@
   ; @return (boolean)
   [db _]
   (let [installed-version (r a/get-install-detail db :installed-version)]
-       (some? installed-version)))
+       (= installed-version details/app-version)))
 
 (defn- module-installed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,11 +106,16 @@
            (do (io/create-file!   a/SERVER-CONFIG-FILEPATH)
                (io/swap-edn-file! a/SERVER-CONFIG-FILEPATH assoc :install-details install-details)))))
 
-  ; Sikeres telepítés után elindítja a szervert ...
-  ; (println details/app-codename "exiting ...")
-  ; (System/exit 0)
-
 (a/reg-fx :installer/->server-installed ->server-installed)
+
+(defn ->installation-error
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (println details/app-codename "installation error")
+  (println details/app-codename "exiting ...")
+  (System/exit 0))
+
+(a/reg-fx :installer/->installation-error ->installation-error)
 
 
 
@@ -134,8 +139,8 @@
   (fn [{:keys [db]} _]
       (println details/app-codename "self-testing installation ...")
       (if (and (r module-installed? db :db)
-               (r module-installed? db :media)
                (r module-installed? db :user))
           {:installer/->server-installed nil
+           ; Sikeres telepítés után elindítja a szervert ...
            :dispatch [:boot-loader/start-server!]}
-          (println details/app-codename "installation error"))))
+          {:installer/->installation-error nil})))

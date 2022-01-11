@@ -47,23 +47,6 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-requests-history
-  ; @return (map)
-  [db _]
-  (r db/get-partition-history db :sync/requests))
-
-(defn get-request-history
-  ; @param (keyword) request-id
-  ;
-  ; @return (map)
-  [db [_ request-id]]
-  (r db/get-data-history db :sync/requests request-id))
-
-(defn get-requests
-  ; @return (map)
-  [db _]
-  (get-in db (db/path :sync/requests)))
-
 (defn get-request-status
   ; @param (keyword) request-id
   ;

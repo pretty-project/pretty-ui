@@ -93,7 +93,7 @@
 (defn get-filesize
   ; @param (string) filepath
   ;
-  ; @return (integer)
+  ; @return (B)
   ;  The length of the file in bytes
   [filepath]
   (if (file-exists? filepath)
@@ -102,8 +102,7 @@
 
 (defn max-filesize-reached?
   ; @param (string) filepath
-  ; @param (integer) max-filesize
-  ;  The length of the file in bytes
+  ; @param (B) max-filesize
   ;
   ; @return (boolean)
   [filepath max-filesize]

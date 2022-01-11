@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description: 'Failure is success in progress' – Albert Einstein
-; Version: v0.3.2
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.5.2
 
 
 
@@ -50,38 +50,38 @@
 ; (def IDLE-TIMEOUT 2000)
 ;
 ; (a/reg-event-fx
-;   ::lets-rock!
-;   {:dispatch-n [[:core/reg-process-status-event! :my-process :failure [::->my-process-failured]
-;                 [:core/reg-process-status-event! :my-process :success [::->my-process-successed]
-;                 [::initialize-something!]]})
+;   :lets-rock!
+;   {:dispatch-n [[:core/reg-process-status-event! :my-process :failure [:->my-process-failured]
+;                 [:core/reg-process-status-event! :my-process :success [:->my-process-successed]
+;                 [:initialize-something!]]})
 ;
 ; (a/reg-event-fx
-;   ::initialize-something!
+;   :initialize-something!
 ;   {:dispatch-n [[:core/set-process-status! :my-process :prepare]
-;                 [::start-something!]]})
+;                 [:start-something!]]})
 ;
 ; (a/reg-event-fx
-;   ::start-something!
+;   :start-something!
 ;   {:dispatch-n [[:core/set-process-status!   :my-process :progress]
 ;                 [:core/set-process-activity! :my-process :active]
-;                 [::do-something!]]})
+;                 [:do-something!]]})
 ;
 ; (a/reg-event-fx
-;  ::do-something!
+;  :do-something!
 ;  (fn [{:keys [db]} _])
 ;      (if (r something-success? db))
-;          {:dispatch [::->something-successed]}
-;          {:dispatch [::->something->failured]})
+;          {:dispatch [:->something-successed]}
+;          {:dispatch [:->something->failured]})
 ;
 ; (a/reg-event-fx
-;   ::->something-successed
+;   :->something-successed
 ;   {:dispatch-n     [[:core/set-process-status!   :my-process :success]
 ;                     [:core/set-process-activity! :my-process :idle]]
 ;    :dispatch-later [{:ms       IDLE-TIMEOUT
 ;                      :dispatch [:core/set-process-activity! :my-process :stalled]}]})
 ;
 ; (a/reg-event-fx
-;   ::->something-failured
+;   :->something-failured
 ;   {:dispatch-n     [[:core/set-process-status!   :my-process :failure]
 ;                     [:core/set-process-activity! :my-process :idle]]
 ;    :dispatch-later [{:ms       IDLE-TIMEOUT
@@ -97,7 +97,7 @@
   ;
   ; @return (keyword)
   [db [_ process-id]]
-  (let [process-status (get-in db [::processes :data-items process-id :status])]
+  (let [process-status (get-in db [:core/processes :data-items process-id :status])]
        (or process-status :ready)))
 
 (defn process-ready?
@@ -158,7 +158,7 @@
   ;
   ; @return (keyword)
   [db [_ process-id]]
-  (let [process-activity (get-in db [::processes :data-items process-id :activity])]
+  (let [process-activity (get-in db [:core/processes :data-items process-id :activity])]
        (or process-activity :inactive)))
 
 (defn process-inactive?
@@ -203,7 +203,7 @@
   ;
   ; @return (percent)
   [db [_ process-id]]
-  (let [process-progress (get-in db [::processes :data-items process-id :progress])]
+  (let [process-progress (get-in db [:core/processes :data-items process-id :progress])]
        (or process-progress 0)))
 
 (defn process-done?
@@ -263,7 +263,7 @@
   ;
   ; @return (vector)
   [db [_ process-id process-progress]]
-  (get-in db [::processes :data-items process-id :progress-events process-progress]))
+  (get-in db [:core/processes :data-items process-id :progress-events process-progress]))
 
 (defn- get-process-status-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -273,7 +273,7 @@
   ;
   ; @return (vector)
   [db [_ process-id process-status]]
-  (get-in db [::processes :data-items process-id :status-events process-status]))
+  (get-in db [:core/processes :data-items process-id :status-events process-status]))
 
 (defn- get-process-activity-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -283,7 +283,7 @@
   ;
   ; @return (vector)
   [db [_ process-id process-activity]]
-  (get-in db [::processes :data-items process-id :activity-events process-activity]))
+  (get-in db [:core/processes :data-items process-id :activity-events process-activity]))
 
 
 
@@ -303,7 +303,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-progress]]
-  (assoc-in db [::processes :data-items process-id :progress] process-progress))
+  (assoc-in db [:core/processes :data-items process-id :progress] process-progress))
 
 (defn set-process-status!
   ; WARNING#4067
@@ -314,7 +314,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-status]]
-  (assoc-in db [::processes :data-items process-id :status] process-status))
+  (assoc-in db [:core/processes :data-items process-id :status] process-status))
 
 (defn set-process-activity!
   ; WARNING#4067
@@ -325,7 +325,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-activity]]
-  (assoc-in db [::processes :data-items process-id :activity] process-activity))
+  (assoc-in db [:core/processes :data-items process-id :activity] process-activity))
 
 (defn- reg-process-status-event!
   ; @param (keyword) process-id
@@ -337,7 +337,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-status event]]
-  (update-in db [::processes :data-items process-id :status-events process-status]
+  (update-in db [:core/processes :data-items process-id :status-events process-status]
              vector/conj-item event))
 
 ; @usage
@@ -354,7 +354,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-activity event]]
-  (update-in db [::processes :data-items process-id :activity-events process-activity]
+  (update-in db [:core/processes :data-items process-id :activity-events process-activity]
              vector/conj-item event))
 
 ; @usage
@@ -372,7 +372,7 @@
   ;
   ; @return (map)
   [db [_ process-id process-progress event]]
-  (update-in db [::processes :data-items process-id :progress-events process-progress]
+  (update-in db [:core/processes :data-items process-id :progress-events process-progress]
              vector/conj-item event))
 
 ; @usage
@@ -387,7 +387,7 @@
   ;
   ; @return (map)
   [db [_ process-id]]
-  (dissoc-in db [::processes :data-items process-id]))
+  (dissoc-in db [:core/processes :data-items process-id]))
 
 (event-handler/reg-event-db :core/clear-process! clear-process!)
 

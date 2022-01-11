@@ -120,9 +120,9 @@
   ;
   ; @return (hiccup)
   [group-id {:keys [options] :as group-props}]
-  (vec (reduce #(conj %1 [checkbox-group-option group-id group-props %2])
-                [:div.x-checkbox-group--options]
-                (param options))))
+  (reduce #(conj %1 [checkbox-group-option group-id group-props %2])
+           [:div.x-checkbox-group--options]
+           (param options)))
 
 (defn- checkbox-group-check-all-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

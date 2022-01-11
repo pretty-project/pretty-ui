@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v3.4.0
-; Compatibility: x4.4.9
+; Version: v3.4.8
+; Compatibility: x4.5.2
 
 
 
@@ -108,7 +108,7 @@
 (defn get-client-routes
   ; @return (map)
   [db _]
-  (get-in db (db/path ::client-routes)))
+  (get-in db (db/path :router/client-routes)))
 
 (defn- get-router-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,7 +162,7 @@
   ;
   ; @return (*)
   [db [_ route-id prop-id]]
-  (get-in db (db/path ::client-routes route-id prop-id)))
+  (get-in db (db/path :router/client-routes route-id prop-id)))
 
 (defn- route-restricted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -212,7 +212,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db (db/meta-item-path ::client-routes :route-string)))
+  (get-in db (db/meta-item-path :router/client-routes :route-string)))
 
 ; @usage
 ;  [:router/get-current-route-string]
@@ -251,7 +251,7 @@
   ; @return (string)
   [db _]
   (let [current-route-id (r get-current-route-id db)]
-       (get-in db (db/path ::client-routes current-route-id :route-template))))
+       (get-in db (db/path :router/client-routes current-route-id :route-template))))
 
 ; @usage
 ;  [:router/get-current-route-template]
@@ -366,7 +366,7 @@
   ; @return (string)
   [db _]
   (let [current-route-id (r get-current-route-id db)]
-       (get-in db (db/path ::client-routes current-route-id :route-parent))))
+       (get-in db (db/path :router/client-routes current-route-id :route-parent))))
 
 ; @usage
 ;  [:router/get-current-route-parent]
@@ -417,7 +417,7 @@
   ;
   ; @return (keywords in vector)
   [db _]
-  (get-in db (db/meta-item-path ::client-routes :history)))
+  (get-in db (db/meta-item-path :router/client-routes :history)))
 
 (defn- get-previous-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -457,7 +457,7 @@
   ;
   ; @return (map)
   [db [_ route-string]]
-  (assoc-in db (db/meta-item-path ::client-routes :route-string) route-string))
+  (assoc-in db (db/meta-item-path :router/client-routes :route-string) route-string))
 
 (defn- store-current-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -478,7 +478,7 @@
        ; mint a DEFAULT-ROUTES útvonalak.
        ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni
        ; a kliens-oldali DEFAULT-ROUTES útvonalakat.
-       (assoc-in db (db/path ::client-routes) (merge DEFAULT-ROUTES client-routes))))
+       (assoc-in db (db/path :router/client-routes) (merge DEFAULT-ROUTES client-routes))))
 
 (defn- reg-to-history!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -487,7 +487,7 @@
   ;
   ; @return (map)
   [db [_ route-id]]
-  (r db/apply! db (db/meta-item-path ::client-routes :history) vector/conj-item route-id))
+  (r db/apply! db (db/meta-item-path :router/client-routes :history) vector/conj-item route-id))
 
 
 
@@ -619,7 +619,7 @@
   (fn [{:keys [db]} _]; Set default routes
       {:db (as-> db % (r set-default-routes! % DEFAULT-ROUTES)
                       ; Store debug subscriber
-                      (r db/set-item! % (db/meta-item-path ::client-routes :debug) [:router/get-router-data]))
+                      (r db/set-item! % (db/meta-item-path :router/client-routes :debug) [:router/get-router-data]))
        ; Configure navigation
        :router/configure-navigation! nil}))
 

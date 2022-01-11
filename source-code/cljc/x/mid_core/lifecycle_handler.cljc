@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v2.0.6
+; Version: v2.1.0
 ; Compatibility: x4.5.2
 
 
@@ -16,7 +16,16 @@
 (ns x.mid-core.lifecycle-handler
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.random        :as random]
+              [x.app-details            :as details]
               [x.mid-core.event-handler :as event-handler :refer [r]]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; DEBUG
+(def DEBUG? false)
 
 
 
@@ -89,7 +98,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [::lifes :data-items]))
+  (get-in db [:core/lifes :data-items]))
 
 (defn get-period-events
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -114,7 +123,7 @@
   ; - A reg-lifecycles függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
   ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
   ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
-  (event-handler/dispatch [:db/set-item! [::lifes :data-items] @LIFES]))
+  (event-handler/dispatch [:db/set-item! [:core/lifes :data-items] @LIFES]))
 
 (event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)
 
@@ -144,9 +153,12 @@
    (reg-lifecycles (generate-life-id) lifecycles))
 
   ([life-id lifecycles]
+   ;#?(:clj (println details/app-codename "registrating lifecycles ..." life-id))
+
+
    ; DEBUG
-;   (println (str (count (keys @LIFES)))
-;            (str life-id)]
+   (if DEBUG? (println (str (count (keys @LIFES)))
+                       (str life-id)))
 
    ; - Az x4.5.1 verzióig a reg-lifecycles függvény az életciklusok adatait közvetlenül
    ;   (reset! függvény használatával) írta a Re-Frame adatbázisba.

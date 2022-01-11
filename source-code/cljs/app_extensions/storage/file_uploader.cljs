@@ -1,17 +1,23 @@
 
 (ns app-extensions.storage.file-uploader
-    (:require [app-fruits.dom     :as dom]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.css     :as css]
-              [mid-fruits.io      :as io]
-              [mid-fruits.format  :as format]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-elements.api :as elements]
-              [x.app-media.api    :as media]
-              [x.app-tools.api    :as tools]))
+    (:require [app-fruits.dom       :as dom]
+              [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.css       :as css]
+              [mid-fruits.io        :as io]
+              [mid-fruits.format    :as format]
+              [mid-fruits.keyword   :as keyword]
+              [mid-fruits.map       :refer [dissoc-in]]
+              [mid-fruits.math      :as math]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-db.api         :as db]
+              [x.app-elements.api   :as elements]
+              [x.app-media.api      :as media]
+              [x.app-tools.api      :as tools]
+              [app-extensions.storage.capacity-handler :as capacity-handler]
+              [app-extensions.storage.engine           :as engine]))
 
 
 
@@ -39,7 +45,47 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; -- File upload subscriptions -----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-non-aborted-files
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ;
+  ; @return (vector)
+  [db [_ uploader-id]]
+  (letfn [(f [o file-dex {:keys [aborted?]}]
+             (if-not aborted? (conj   o file-dex)
+                              (return o)))]
+         (reduce-kv f [] (get-in db [:storage :file-uploader/data-items]))))
+
+(defn- get-upload-files-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ;
+  ; @return (vector)
+  [db [_ uploader-id]]
+  (let [directory-id (get-in db [:storage :file-uploader/meta-items :directory-id])]
+       [:debug `(storage/upload-files!              ~{:directory-id directory-id})
+               `(:storage/download-directory-data   ~{:directory-id directory-id})
+               `(:storage/download-capacity-details ~{})]))
+
+(defn- get-form-data
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ;
+  ; @return (FormData object)
+  [db [_ uploader-id]]
+  (let [non-aborted-files (r get-non-aborted-files db uploader-id)
+        file-selector     (dom/get-element-by-id "storage-file-selector")]
+       (dom/file-selector->form-data file-selector non-aborted-files)))
+
+
+
+;; -- View subscriptions ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- all-files-aborted?
@@ -48,9 +94,9 @@
   ; @param (keyword) uploader-id
   ;
   ; @return (boolean)
-  [db [_ uploader-id]]
-  (let [non-aborted-files (get-in db [:storage :file-uploader/data-items])]
-       (-> non-aborted-files vector/nonempty? not)))
+  [db [_ _]]
+  (letfn [(f [{:keys [aborted?]}] (not aborted?))]
+         (not (some f (get-in db [:storage :file-uploader/data-items])))))
 
 (defn- storage-capacity-limit-exceeded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,13 +104,31 @@
   ; @param (keyword) uploader-id
   ;
   ; @return (boolean)
-  [db [_ uploader-id]]
-  (let [;storage-free-capacity (r engine/get-storage-free-capacity db)
-        upload-size           (get-in db [:storage :file-uploader/meta-items :files-size])]))
-       ;(>= upload-size storage-free-capacity)))
+  [db [_ _]]
+  (let [storage-free-capacity (r capacity-handler/get-storage-free-capacity db)
+        upload-size           (get-in db [:storage :file-uploader/meta-items :files-size])]
+       (>= upload-size storage-free-capacity)))
+
+(defn- max-upload-size-reached?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ;
+  ; @return (boolean)
+  [db [_ _]]
+  (let [max-upload-size (r capacity-handler/get-max-upload-size db)
+        upload-size     (get-in db [:storage :file-uploader/meta-items :files-size])]
+       (> upload-size max-upload-size)))
 
 (defn- get-file-uploader-file-props
-  [db [_ uploader-id file-dex]]
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (integer) file-dex
+  ;
+  ; @return (map)
+  ;  {}
+  [db [_ _ file-dex]]
   (get-in db [:storage :file-uploader/data-items file-dex]))
 
 (a/reg-sub :storage/get-file-uploader-file-props get-file-uploader-file-props)
@@ -75,12 +139,14 @@
   ; @param (keyword) uploader-id
   ;
   ; @return (map)
+  ;  {}
   [db [_ uploader-id]]
-  {:all-files-aborted?               (r all-files-aborted?               db)
-   ;:max-upload-size-reached?         (r max-upload-size-reached?         db)
-   :storage-capacity-limit-exceeded? (r storage-capacity-limit-exceeded? db)})
-   ;:max-upload-size                  (r a/get-storage-detail db :max-upload-size)})
-   ;:storage-free-capacity            (r engine/get-storage-free-capacity db)})
+  {:all-files-aborted?               (r all-files-aborted?               db uploader-id)
+   :files-size                       (get-in db [:storage :file-uploader/meta-items :files-size])
+   :max-upload-size-reached?         (r max-upload-size-reached?         db uploader-id)
+   :storage-capacity-limit-exceeded? (r storage-capacity-limit-exceeded? db uploader-id)
+   :max-upload-size                  (r capacity-handler/get-max-upload-size       db)
+   :storage-free-capacity            (r capacity-handler/get-storage-free-capacity db)})
 
 (a/reg-sub :storage/get-file-uploader-header-props get-file-uploader-header-props)
 
@@ -90,11 +156,42 @@
   ; @param (keyword) uploader-id
   ;
   ; @return (map)
+  ;  {}
   [db [_ uploader-id]]
   {:all-files-aborted? (r all-files-aborted? db uploader-id)
    :file-count         (count (get-in db [:storage :file-uploader/data-items]))})
 
 (a/reg-sub :storage/get-file-uploader-body-props get-file-uploader-body-props)
+
+
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- abort-file-upload!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (integer) file-dex
+  ;
+  ; @return (map)
+  [db [_ uploader-id file-dex]]
+  (let [filesize (get-in db [:storage :file-uploader/data-items file-dex :filesize])]
+       (-> db (assoc-in  [:storage :file-uploader/data-items file-dex :aborted?] true)
+              (update-in [:storage :file-uploader/meta-items :files-size] - filesize)
+              (update-in [:storage :file-uploader/meta-items :file-count] dec))))
+
+(a/reg-event-db :storage/abort-file-upload! abort-file-upload!)
+
+(defn- store-uploader-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) uploader-props
+  ;
+  ; @return (map)
+  [db [_ uploader-id uploader-props]]
+  (assoc-in db [:storage :file-uploader/meta-items] uploader-props))
 
 
 
@@ -123,72 +220,107 @@
 (defn- cancel-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) header-props
   ;
   ; @return (component)
-  [_ _]
+  [uploader-id _]
   [elements/button ::cancel-upload-button
-                   {:preset :cancel-button
-                    :indent :both}])
+                   {:on-click [:storage/abort-file-uploading! uploader-id]
+                    :preset :cancel-button :indent :both :keypress {:key-code 27}}])
 
 (defn- upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) header-props
+  ;  {:all-files-aborted? (boolean)
+  ;   :max-upload-size-reached? (boolean)
+  ;   :storage-capacity-limit-exceeded? (boolean)}
   ;
   ; @return (component)
-  [_ _]
+  [uploader-id {:keys [all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?]}]
   [elements/button ::upload-files-button
-                   {:preset :upload-button
-                    :indent :both}])
+                   {:disabled? (or all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?)
+                    :on-click [:storage/upload-files! uploader-id]
+                    :preset :upload-button :indent :both :keypress {:key-code 13}}])
 
 (defn- available-capacity-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys []}])
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) header-props
+  ;  {:storage-capacity-limit-exceeded? (boolean)
+  ;   :storage-free-capacity (B)}
+  ;
+  ; @return (component)
+  [_ {:keys [storage-capacity-limit-exceeded? storage-free-capacity]}]
+  [elements/text {:content :available-capacity-in-storage-is :font-size :xs :font-weight :bold :layout :fit
+                  :replacements [(-> storage-free-capacity io/B->MB math/round)]
+                  :color        (if storage-capacity-limit-exceeded? :warning :muted)}])
+
+(defn- uploading-size-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) header-props
+  ;  {:files-size (B)
+  ;   :max-upload-size-reached? (boolean)
+  ;   :max-upload-size (B)}
+  ;
+  ; @return (component)
+  [_ {:keys [files-size max-upload-size-reached? max-upload-size]}]
+  [elements/text {:content :uploading-size-is :font-size :xs :font-weight :bold :layout :fit
+                  :replacements [(-> files-size io/B->MB      format/decimals)
+                                 (-> max-upload-size io/B->MB math/round)]
+                  :color        (if max-upload-size-reached? :warning :muted)}])
 
 (defn- file-upload-summary
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) header-props
   ;
   ; @return (component)
-  [popup-id header-props]
-  [elements/column {:content [:<> [available-capacity-label popup-id header-props]]
-                                  ;[elements/horizontal-separator {:size :s}]]
-                                  ;[file-uploader-uploading-size popup-id view-props]]
+  [uploader-id header-props]
+  [elements/column {:content [:<> [available-capacity-label uploader-id header-props]
+                                  [uploading-size-label     uploader-id header-props]
+                                  [elements/horizontal-separator {:size :s}]]
                     :horizontal-align :center}])
 
 (defn- action-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) header-props
   ;
   ; @return (component)
-  [popup-id header-props]
+  [uploader-id header-props]
   [elements/horizontal-polarity ::file-uploader-action-buttons
-                                {:start-content [cancel-upload-button popup-id header-props]
-                                 :end-content   [upload-files-button  popup-id header-props]}])
+                                {:start-content [cancel-upload-button uploader-id header-props]
+                                 :end-content   [upload-files-button  uploader-id header-props]}])
 
-(defn abc
-  [_ _]
-  [:div "abc"])
+(defn header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [uploader-id header-props]
+  [:<> [action-buttons      uploader-id header-props]
+       [file-upload-summary uploader-id header-props]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) header-props
+  ; @param (keyword) uploader-id
   ;
   ; @return (component)
-  [popup-id header-props]
-  (let [x (a/subscribe [:db/get-item [:a]])]
-       (fn [] [abc nil nil])))
-  ;[:<> [action-buttons      popup-id header-props]
-  ;     [file-upload-summary popup-id header-props]))
+  [uploader-id]
+  [components/subscriber uploader-id
+                         {:render-f   #'header-structure
+                          :subscriber [:storage/get-file-uploader-header-props uploader-id]}])
 
 
 
@@ -198,9 +330,9 @@
 (defn- no-files-to-upload-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) body-props
-  ;  {}
+  ;  {:all-files-aborted? (boolean)}
   ;
   ; @return (component)
   [_ {:keys [all-files-aborted?]}]
@@ -210,11 +342,12 @@
 (defn- file-item-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) body-props
   ; @param (integer) file-dex
   ; @param (map) file-props
-  ;  {}
+  ;  {:filename (string)
+  ;   :object-url (string)}
   ;
   ; @return (component)
   [_ _ _ {:keys [filename object-url]}]
@@ -225,16 +358,16 @@
 (defn- file-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) body-props
   ; @param (integer) file-dex
   ; @param (map) file-props
-  ;  {}
+  ;  {:filename (string)
+  ;   :filesize (B)}
   ;
   ; @return (component)
   [_ _ _ {:keys [filename filesize]}]
   [:div.storage--file-uploader--file-details
-
     [elements/label {:content (str filename)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
@@ -242,71 +375,100 @@
 
 (defn- file-item-actions
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ file-dex _]
-  ;[:div.storage--file-uploader--file-actions]
-  [elements/button {:preset :default-icon-button :icon :highlight_off :on-click [:storage/abort-file-upload! file-dex]}])
-
-(defn- file-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) body-props
   ; @param (integer) file-dex
   ; @param (map) file-props
   ;
   ; @return (component)
-  [popup-id body-props file-dex]
-  ;[:div.storage--file-uploader--file-item
-  (let [file-props (a/subscribe [:storage/get-file-uploader-file-props nil file-dex])]
-       (fn []
-           (if-not (get @file-props :aborted?)
-             [elements/row {:content [:<> [file-item-actions popup-id body-props file-dex @file-props]
-                                          [file-item-preview popup-id body-props file-dex @file-props]
-                                          [file-item-details popup-id body-props file-dex @file-props]]
-                            :style {:margin "6px 0"}}]))))
+  [uploader-id _ file-dex _]
+  [elements/button {:preset :default-icon-button :icon :highlight_off
+                    :on-click [:storage/abort-file-upload! uploader-id file-dex]}])
+
+(defn- file-item-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) body-props
+  ; @param (integer) file-dex
+  ; @param (map) file-props
+  ;  {:aborted? (boolean)}
+  ;
+  ; @return (component)
+  [uploader-id body-props file-dex {:keys [aborted?] :as file-props}]
+  (if-not aborted? [elements/row {:content [:<> [file-item-actions uploader-id body-props file-dex file-props]
+                                                [file-item-preview uploader-id body-props file-dex file-props]
+                                                [file-item-details uploader-id body-props file-dex file-props]]}]))
+
+(defn- file-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) body-props
+  ; @param (integer) file-dex
+  ; @param (map) file-props
+  ;
+  ; @return (component)
+  [uploader-id body-props file-dex]
+  (let [file-props (a/subscribe [:storage/get-file-uploader-file-props uploader-id file-dex])]
+       (fn [] [file-item-structure uploader-id body-props file-dex @file-props])))
 
 (defn- file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) uploader-id
   ; @param (map) body-props
-  ;  {}
+  ;  {:file-count (integer)}
   ;
   ; @return (component)
-  [popup-id {:keys [file-count] :as body-props}]
+  [uploader-id {:keys [file-count] :as body-props}]
   (letfn [(f [file-list file-dex]
-             (conj file-list ^{:key (str popup-id file-dex)}
-                              [file-item popup-id body-props file-dex]))]
+             (conj file-list ^{:key (str uploader-id file-dex)}
+                              [file-item uploader-id body-props file-dex]))]
          (reduce f [:<>] (range 0 file-count))))
 
 (defn- body-structure
-  [])
-  ;[:<> [file-list                popup-id body-props]
-  ;     [no-files-to-upload-label popup-id body-props]])
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ; @param (map) body-props
+  ;
+  ; @return (component)
+  [uploader-id body-props]
+  [:<> [file-list                uploader-id body-props]
+       [no-files-to-upload-label uploader-id body-props]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) body-props
+  ; @param (keyword) uploader-id
   ;
   ; @return (component)
   [uploader-id]
-  [components/subscriber :storage/file-uploader-body
-                         {:render-f #'body-structure}])
+  [components/subscriber uploader-id
+                         {:render-f   #'body-structure
+                          :subscriber [:storage/get-file-uploader-body-props uploader-id]}])
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- abort-file-upload!
-  [db [_ uploader-id]])
-
-(a/reg-event-db :storage/abort-file-upload!
+(a/reg-event-fx
+  :storage/upload-files!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ file-dex]]
-      {:db (assoc-in db [:storage :file-uploader/data-items file-dex :aborted?] true)}))
+  ;
+  ; @param (keyword) uploader-id
+  (fn [{:keys [db]} [_ uploader-id]]
+      (let [query     (r get-upload-files-query db uploader-id)
+            form-data (r get-form-data          db uploader-id)]
+           [:sync/send-query! (keyword/add-namespace uploader-id :upload-files!)
+                              {:body (dom/merge-to-form-data! form-data {:query query})
+                              ;:idle-timeout 1000
+                               :on-failure [:file-uploader/->upload-failure]
+                               :on-success {:dispatch-n [[:media/handle-request-response!]
+                                                         [:file-uploader/->files-uploaded]]}}])))
 
 
 
@@ -333,11 +495,10 @@
   :storage/->files-selected-to-upload
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; A file-selector input fájltallózójának on-change eseménye indítja el
-  ; a feltöltés inicializálását.
+  ; A file-selector input fájltallózójának on-change eseménye indítja el a feltöltés inicializálását.
   ;
   ; @param (keyword) uploader-id
-  (fn [{:keys [db]} [event-id uploader-id]]
+  (fn [{:keys [db]} [_ uploader-id]]
       (let [file-selector      (dom/get-element-by-id "storage-file-selector")
             any-file-selected? (dom/file-selector->any-file-selected? file-selector)
             files-data         (dom/file-selector->files-data         file-selector)
@@ -354,7 +515,20 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :storage/abort-file-uploading!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  (fn [{:keys [db]} [_ uploader-id]]
+      {;:db (-> db (dissoc-in [:storage :file-uploader/data-items])
+       ;           (dissoc-in [:storage :file-uploader/meta-items])
+       :dispatch [:ui/close-popup! :storage/file-uploader]}))
+
+(a/reg-event-fx
   :storage/render-file-uploader!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
   (fn [_ [_ uploader-id]]
       [:ui/add-popup! :storage/file-uploader
                       {:body   [body   uploader-id]
@@ -362,11 +536,12 @@
 
 (a/reg-event-fx
   :storage/load-file-uploader!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword)(opt) uploader-id
   ; @param (map) uploader-props
   ;  {:allowed-extensions (strings in vector)(opt)
-  ;   :destination-directory-id (keyword)
-  ;   :namespace (keyword)}
+  ;   :directory-id (keyword)}
   ;
   ; @usage
   ;  [:storage/load-file-uploader! {...}]
@@ -376,11 +551,11 @@
   ;
   ; @usage
   ;  [:storage/load-file-uploader! {:allowed-extensions ["htm" "html" "xml"]
-  ;                                 :destination-directory-id :home}]
+  ;                                 :directory-id :home}]
   (fn [{:keys [db]} event-vector]
       (let [uploader-id    (a/event-vector->second-id   event-vector)
             uploader-props (a/event-vector->first-props event-vector)]
-           {;:db (r store-uploader-props! db uploader-id uploader-props)
+           {:db (r store-uploader-props! db uploader-id uploader-props)
             :storage/open-file-selector! [uploader-id uploader-props]
             :dispatch [:sync/send-query! :storage/synchronize-file-uploader! ; Silent / no progress-bar
                                          {:query [:debug `(:storage/download-capacity-details ~{})]}]})))

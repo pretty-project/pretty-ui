@@ -18,7 +18,7 @@
   ;
   ; @return (map)
   ;  {:max-upload-size (B)
-  ;   :total-capacity (B)
+  ;   :storage-capacity (B)
   ;   :used-capacity (B)}
   []
   (if-let [root-directory-document (mongo-db/get-document-by-id "directories" engine/ROOT-DIRECTORY-ID)]

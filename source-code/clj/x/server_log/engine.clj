@@ -20,13 +20,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-log.engine
-    (:require [local-db.api       :as local-db]
-              [mid-fruits.candy   :refer [param]]
-              [mid-fruits.random  :as random]
-              [mid-fruits.time    :as time]
-              [server-fruits.http :as http]
-              [x.server-core.api  :as a]
-              [x.server-user.api  :as user]))
+    (:require [local-db.api      :as local-db]
+              [mid-fruits.candy  :refer [param]]
+              [mid-fruits.time   :as time]
+              [x.server-core.api :as a]))
 
 
 
@@ -60,17 +57,3 @@
   [entry-props]
   (let [entry-props (entry-props-prototype entry-props)]
        (local-db/add-document! "log" entry-props)))
-
-(defn upload-entry!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;  {:transit-params (map)
-  ;   {:entry-props (map)}}
-  ;
-  ; @return (map)
-  [request]
-  (if (user/request->authenticated? request)
-      (let [entry-props (http/request->transit-param request :entry-props)]
-           (add-entry! entry-props)
-           (http/text-wrap {:body "Thank you!"}))))

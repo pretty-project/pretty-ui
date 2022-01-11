@@ -7,8 +7,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
-              [x.app-elements.api   :as elements]
-              [x.app-sync.api       :as sync]))
+              [x.app-elements.api   :as elements]))
 
 
 
@@ -26,15 +25,15 @@
 (defn- get-selected-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (get-in db (db/path ::primary :selected-view) DEFAULT-VIEW))
+  (get-in db (db/path :request-browser/primary :selected-view) DEFAULT-VIEW))
 
 (defn- get-history-dex
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [selected-view (r get-selected-view db)]
-       (if-let [history-dex (get-in db (db/path ::primary :history-dex))]
+       (if-let [history-dex (get-in db (db/path :request-browser/primary :history-dex))]
                (return history-dex)
-               (let [request-history (r sync/get-request-history db selected-view)]
+               (let [request-history (r db/get-data-history db :sync/requests selected-view)]
                     (vector/last-dex request-history)))))
 
 (defn- get-body-props
@@ -42,14 +41,14 @@
   [db _]
   (let [selected-view (r get-selected-view db)]
        (if (= selected-view :requests)
-           {:requests         (r sync/get-requests         db)
+           {:requests         (get-in db [:sync/requests :data-items])
             :selected-view    (param selected-view)}
            {:history-dex      (r get-history-dex           db)
-            :request-history  (r sync/get-request-history  db selected-view)
-            :response-history (r sync/get-response-history db selected-view)
+            :request-history  (r db/get-data-history db :sync/requests  selected-view)
+            :response-history (r db/get-data-history db :sync/responses selected-view)
             :selected-view    (param selected-view)})))
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :request-browser/get-body-props get-body-props)
 
 
 
@@ -59,10 +58,10 @@
 (defn- change-view!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ view-id history-dex]]
-  (-> db (assoc-in (db/path ::primary :selected-view) view-id)
-         (assoc-in (db/path ::primary :history-dex)   history-dex)))
+  (-> db (assoc-in (db/path :request-browser/primary :selected-view) view-id)
+         (assoc-in (db/path :request-browser/primary :history-dex)   history-dex)))
 
-(a/reg-event-db ::change-view! change-view!)
+(a/reg-event-db :request-browser/change-view! change-view!)
 
 
 
@@ -94,14 +93,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button {:preset   :back-icon-button
-                    :on-click [::change-view! :requests]}])
+                    :on-click [:request-browser/change-view! :requests]}])
 
 (defn- go-bwd-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [history-dex request-history selected-view]}]
   (let [history-count (count request-history)]
        [elements/button {:disabled? (= history-dex 0)
-                         :on-click  [::change-view! selected-view (dec history-dex)]
+                         :on-click  [:request-browser/change-view! selected-view (dec history-dex)]
                          :preset    :back-icon-button}]))
 
 (defn- go-fwd-button
@@ -109,7 +108,7 @@
   [_ {:keys [history-dex request-history selected-view]}]
   (let [history-count (count request-history)]
        [elements/button {:disabled? (= history-count (inc history-dex))
-                         :on-click  [::change-view! selected-view (inc history-dex)]
+                         :on-click  [:request-browser/change-view! selected-view (inc history-dex)]
                          :preset    :forward-icon-button}]))
 
 (defn- request-data-control-bar
@@ -150,7 +149,7 @@
   [:div.x-clickable
         {:style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                  :margin "4px 0"}
-         :on-click #(a/dispatch [::change-view! request-id])}
+         :on-click #(a/dispatch [:request-browser/change-view! request-id])}
        ;(str debug-props)
         [:div {:style {:font-weight "500" :font-size "14px" :display "flex"}}
               [:div {:style {:width "6px" :margin-right "12px" :border-radius "3px"
@@ -169,8 +168,8 @@
 (defn- request-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [requests] :as body-props}]
-  (vec (reduce-kv #(conj %1 [xxx %2 %3 body-props])
-                   [:<>] requests)))
+  (reduce-kv #(conj %1 [xxx %2 %3 body-props])
+              [:<>] requests))
 
 (defn- request-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -184,4 +183,4 @@
   []
   [components/subscriber ::body
                          {:render-f   #'request-browser
-                          :subscriber [::get-body-props]}])
+                          :subscriber [:request-browser/get-body-props]}])

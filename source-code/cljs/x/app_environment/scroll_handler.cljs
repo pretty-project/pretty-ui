@@ -1,9 +1,10 @@
 
 ; WARNING#9904
-; A görgetés pozícióját és más görgetéssel kapcsolatos adatot nem célszerű
-; a Re-Frame adatbásisban tárolni, mivel az nem alkalmas a gyors egymás-utáni
-; írások kezelésére, ugyanis minden Re-Frame adatbázis-írás következménye
-; az összes aktív feliratkozás (subscription) újbóli kiértékelődése.
+; Az görgetés pozícióját és más görgetéssel kapcsolatos gyorsan változó
+; adatot nem célszerű a Re-Frame adatbásisban tárolni, mivel az nem alkalmas
+; a gyors egymás-utáni írások hatékony kezelésére, ugyanis minden Re-Frame
+; adatbázis-írás következménye az összes aktív feliratkozás (subscription)
+; újbóli kiértékelődése.
 
 
 
@@ -13,8 +14,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.8
+; Version: v0.7.0
+; Compatibility: x4.5.2
 
 
 
@@ -24,7 +25,6 @@
 (ns x.app-environment.scroll-handler
     (:require [app-fruits.dom   :as dom]
               [mid-fruits.candy :refer [param return]]
-              [mid-fruits.math  :as math]
               [x.app-core.api   :as a :refer [r]]
               [x.app-db.api     :as db]))
 
@@ -73,7 +73,8 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db [:environment/sroll-data :scrolled-to-top?])))
+  (let [scrolled-to-top? (get-in db [:environment/sroll-data :scrolled-to-top?])]
+       (boolean scrolled-to-top?)))
 
 
 

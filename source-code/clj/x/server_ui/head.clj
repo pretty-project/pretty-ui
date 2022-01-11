@@ -168,14 +168,13 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-build css-paths]}]
-  (vec (reduce (fn [head {:keys [cache-control? uri] :as css-props}]
-                   (if cache-control?
-                       (let [cache-control-uri (cache-control-uri uri app-build)
-                             css-props         (assoc css-props :uri cache-control-uri)]
-                            (conj head (include-css css-props)))
-                       (conj      head (include-css css-props))))
-               (param head)
-               (vector/concat-items css-paths SYSTEM-CSS-PATHS))))
+  (reduce (fn [head {:keys [cache-control? uri] :as css-props}]
+              (if cache-control? (let [cache-control-uri (cache-control-uri uri app-build)
+                                       css-props         (assoc css-props :uri cache-control-uri)]
+                                      (conj head (include-css css-props)))
+                                 (conj      head (include-css css-props))))
+          (param head)
+          (vector/concat-items css-paths SYSTEM-CSS-PATHS)))
 
 (defn- head<-favicon-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -192,14 +191,14 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-build favicon-paths]}]
-  (vec (reduce (fn [head {:keys [cache-control? uri] :as favicon-props}]
-                   (if cache-control?
-                       (let [cache-control-uri (cache-control-uri uri app-build)
-                             favicon-props     (assoc favicon-props :uri cache-control-uri)]
-                            (conj head (include-favicon favicon-props)))
-                       (conj      head (include-favicon favicon-props))))
-               (param head)
-               (param favicon-paths))))
+  (reduce (fn [head {:keys [cache-control? uri] :as favicon-props}]
+              (if cache-control?
+                  (let [cache-control-uri (cache-control-uri uri app-build)
+                        favicon-props     (assoc favicon-props :uri cache-control-uri)]
+                       (conj head (include-favicon favicon-props)))
+                  (conj      head (include-favicon favicon-props))))
+          (param head)
+          (param favicon-paths)))
 
 
 

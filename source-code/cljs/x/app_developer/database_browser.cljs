@@ -44,7 +44,7 @@
 (defn- get-current-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [current-path (get-in db (db/path ::settings :current-path))]
+  (let [current-path (get-in db (db/path :database-browser/settings :current-path))]
        (mixed/to-vector current-path)))
 
 (defn- get-body-props
@@ -54,13 +54,13 @@
        {:current-path   (param current-path)
         :current-item   (get-in db current-path)
         :root-level?    (item-path->root-level? current-path)
-        :bin            (get-in db (db/path ::settings :bin))
-        :edit-string?   (get-in db (db/path ::settings :edit-string?))
-        :show-hidden?   (get-in db (db/path ::settings :show-hidden?))
-        :show-original? (get-in db (db/path ::settings :show-original?))
-        :subscribe?     (get-in db (db/path ::settings :subscribe?))}))
+        :bin            (get-in db (db/path :database-browser/settings :bin))
+        :edit-string?   (get-in db (db/path :database-browser/settings :edit-string?))
+        :show-hidden?   (get-in db (db/path :database-browser/settings :show-hidden?))
+        :show-original? (get-in db (db/path :database-browser/settings :show-original?))
+        :subscribe?     (get-in db (db/path :database-browser/settings :subscribe?))}))
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :database-browser/get-body-props get-body-props)
 
 
 
@@ -70,46 +70,46 @@
 (defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ item-path]]
-  (-> db (assoc-in  (db/path ::settings :current-path) item-path)
-         (dissoc-in (db/path ::settings :bin))
-         (dissoc-in (db/path ::settings :edit-string?))
-         (dissoc-in (db/path ::settings :show-original?))
-         (dissoc-in (db/path ::settings :subscribe?))))
+  (-> db (assoc-in  (db/path :database-browser/settings :current-path) item-path)
+         (dissoc-in (db/path :database-browser/settings :bin))
+         (dissoc-in (db/path :database-browser/settings :edit-string?))
+         (dissoc-in (db/path :database-browser/settings :show-original?))
+         (dissoc-in (db/path :database-browser/settings :subscribe?))))
 
-(a/reg-event-db ::navigate! navigate!)
+(a/reg-event-db :database-browser/navigate! navigate!)
 
 (defn- toggle-subscription!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (if-let [subscribe? (get-in db (db/path ::settings :subscribe?))]
-          (assoc-in db (db/path ::settings :subscribe?)
+  (if-let [subscribe? (get-in db (db/path :database-browser/settings :subscribe?))]
+          (assoc-in db (db/path :database-browser/settings :subscribe?)
                        (param false))
-          (assoc-in db (db/path ::settings :subscribe?)
+          (assoc-in db (db/path :database-browser/settings :subscribe?)
                        (param true))))
 
-(a/reg-event-db ::toggle-subscription! toggle-subscription!)
+(a/reg-event-db :database-browser/toggle-subscription! toggle-subscription!)
 
 (defn- toggle-visibility!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (if-let [show-hidden? (get-in db (db/path ::settings :show-hidden?))]
-          (assoc-in db (db/path ::settings :show-hidden?)
+  (if-let [show-hidden? (get-in db (db/path :database-browser/settings :show-hidden?))]
+          (assoc-in db (db/path :database-browser/settings :show-hidden?)
                        (param false))
-          (assoc-in db (db/path ::settings :show-hidden?)
+          (assoc-in db (db/path :database-browser/settings :show-hidden?)
                        (param true))))
 
-(a/reg-event-db ::toggle-visibility! toggle-visibility!)
+(a/reg-event-db :database-browser/toggle-visibility! toggle-visibility!)
 
 (defn- toggle-original-view!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (if-let [show-original? (get-in db (db/path ::settings :show-original?))]
-          (assoc-in db (db/path ::settings :show-original?)
+  (if-let [show-original? (get-in db (db/path :database-browser/settings :show-original?))]
+          (assoc-in db (db/path :database-browser/settings :show-original?)
                        (param false))
-          (assoc-in db (db/path ::settings :show-original?)
+          (assoc-in db (db/path :database-browser/settings :show-original?)
                        (param true))))
 
-(a/reg-event-db ::toggle-original-view! toggle-original-view!)
+(a/reg-event-db :database-browser/toggle-original-view! toggle-original-view!)
 
 
 
@@ -117,12 +117,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  ::navigate-up!
+  :database-browser/navigate-up!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (vector) item-path
   (fn [_ [_ item-path]]
-      [::navigate! (vector/remove-last-item item-path)]))
+      [:database-browser/navigate! (vector/remove-last-item item-path)]))
 
 
 
@@ -190,13 +190,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [show-original?]}]
   (if (boolean show-original?)
-      [icon-button {:icon "code_off" :label "Hide data" :on-click [::toggle-original-view!]}]
-      [icon-button {:icon "code"     :label "Show data" :on-click [::toggle-original-view!]}]))
+      [icon-button {:icon "code_off" :label "Hide data" :on-click [:database-browser/toggle-original-view!]}]
+      [icon-button {:icon "code"     :label "Show data" :on-click [:database-browser/toggle-original-view!]}]))
 
 (defn- edit-string-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [edit-string?]}]
-  (let [toggle-event [:db/apply! (db/path ::settings :edit-string?) not]]
+  (let [toggle-event [:db/apply! (db/path :database-browser/settings :edit-string?) not]]
        (if (boolean edit-string?)
            [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
            [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
@@ -206,19 +206,19 @@
   [_ {:keys [current-path]}]
   (if (item-path->root-level? current-path)
       [icon-button {:icon "home" :label "Root" :disabled? true}]
-      [icon-button {:icon "home" :label "Root" :on-click [::navigate! []]}]))
+      [icon-button {:icon "home" :label "Root" :on-click [:database-browser/navigate! []]}]))
 
 (defn- navigate-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
   (if (item-path->root-level? current-path)
       [icon-button {:icon "chevron_left" :label "Go up" :disabled? true}]
-      [icon-button {:icon "chevron_left" :label "Go up" :on-click [::navigate-up! current-path]}]))
+      [icon-button {:icon "chevron_left" :label "Go up" :on-click [:database-browser/navigate-up! current-path]}]))
 
 (defn- remove-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  (let [remove-event [:db/move-item! current-path (db/path ::settings :bin)]]
+  (let [remove-event [:db/move-item! current-path (db/path :database-browser/settings :bin)]]
        (if (item-path->root-level? current-path)
            [icon-button {:icon "delete" :label "Remove" :disabled? true}]
            [icon-button {:icon "delete" :label "Remove" :on-click remove-event}])))
@@ -226,7 +226,7 @@
 (defn- recycle-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [bin current-path]}]
-  (let [revert-event [:db/move-item! (db/path ::settings :bin) current-path]]
+  (let [revert-event [:db/move-item! (db/path :database-browser/settings :bin) current-path]]
        (if (some? bin)
            [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}])))
 
@@ -239,18 +239,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-item subscribe?]}]
   (if (boolean subscribe?)
-      [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [::toggle-subscription!]}]
-      [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [::toggle-subscription!]}]))
+      [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:database-browser/toggle-subscription!]}]
+      [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:database-browser/toggle-subscription!]}]))
 
 (defn- toggle-visibility-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-item current-path show-hidden?]}]
   (cond (and (item-path->root-level? current-path)
              (boolean show-hidden?))
-        [icon-button {:icon "visibility_off" :label "Hide hidden" :on-click [::toggle-visibility!]}]
+        [icon-button {:icon "visibility_off" :label "Hide hidden" :on-click [:database-browser/toggle-visibility!]}]
         (and (item-path->root-level? current-path)
              (not show-hidden?))
-        [icon-button {:icon "visibility" :label "Show hidden" :on-click [::toggle-visibility!]}]))
+        [icon-button {:icon "visibility" :label "Show hidden" :on-click [:database-browser/toggle-visibility!]}]))
 
 (defn- toolbar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -269,7 +269,7 @@
 (defn- map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-path] :as body-props} map-key]
-  [:div.x-clickable {:on-click #(a/dispatch [::navigate! (vector/conj-item current-path map-key)])
+  [:div.x-clickable {:on-click #(a/dispatch [:database-browser/navigate! (vector/conj-item current-path map-key)])
                      :style (if (map-item-hidden? map-key body-props) {:opacity ".65"})}
                     (if (string? map-key)
                         (string/quotes map-key)
@@ -432,4 +432,4 @@
   []
   [components/subscriber ::body
                          {:render-f   #'database-browser
-                          :subscriber [::get-body-props]}])
+                          :subscriber [:database-browser/get-body-props]}])

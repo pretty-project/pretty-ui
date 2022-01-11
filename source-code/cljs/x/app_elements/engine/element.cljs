@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.9.8
-; Compatibility: x4.4.8
+; Compatibility: x4.5.2
 
 
 
@@ -17,11 +17,10 @@
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map :refer [dissoc-in]]
+              [mid-fruits.map     :refer [dissoc-in]]
               [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-sync.api     :as sync]))
+              [x.app-db.api       :as db]))
 
 
 
@@ -62,7 +61,7 @@
   ;
   ; @return (vector)
   [element-id]
-  (db/path ::elements element-id))
+  (db/path :elements/primary element-id))
 
 (defn element-prop-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,7 +71,7 @@
   ;
   ; @return (vector)
   [element-id prop-id]
-  (db/path ::elements element-id prop-id))
+  (db/path :elements/primary element-id prop-id))
 
 (defn element-default-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -226,7 +225,7 @@
   ;
   ; @return (map)
   [db [_ element-id]]
-  (get-in db (db/path ::elements element-id)))
+  (get-in db (db/path :elements/primary element-id)))
 
 (defn get-element-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -271,7 +270,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-id prop-value]]
-  (assoc-in db (db/path ::elements element-id prop-id) prop-value))
+  (assoc-in db (db/path :elements/primary element-id prop-id) prop-value))
 
 ; @usage
 ;  [:elements/set-element-prop! :my-element :my-prop "My value"]
@@ -301,7 +300,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-path prop-value]]
-  (let [prop-path (vector/concat-items (db/path ::elements element-id)
+  (let [prop-path (vector/concat-items (db/path :elements/primary element-id)
                                        (param prop-path))]
        (assoc-in db prop-path prop-value)))
 
@@ -318,7 +317,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-id]]
-  (dissoc-in db (db/path ::elements element-id prop-id)))
+  (dissoc-in db (db/path :elements/primary element-id prop-id)))
 
 ; @usage
 ;  [:elements/remove-element-prop! :my-element :my-prop]
@@ -333,7 +332,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-path]]
-  (let [prop-path (vector/concat-items (db/path ::elements element-id)
+  (let [prop-path (vector/concat-items (db/path :elements/primary element-id)
                                        (param prop-path))]
        (dissoc-in db prop-path)))
 

@@ -179,7 +179,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::server-routes)))
+  (get-in db (db/path :router/server-routes)))
 
 ; @usage
 ;  [:router/get-server-routes]
@@ -193,7 +193,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path ::client-routes)))
+  (get-in db (db/path :router/client-routes)))
 
 ; @usage
 ;  [:router/get-client-routes]
@@ -251,8 +251,8 @@
   ; @return (map)
   [db [_ route-id route-props]]
   (if (engine/route-props->server-route? route-props)
-      (assoc-in db (db/path ::server-routes route-id) route-props)
-      (assoc-in db (db/path ::client-routes route-id) route-props)))
+      (assoc-in db (db/path :router/server-routes route-id) route-props)
+      (assoc-in db (db/path :router/client-routes route-id) route-props)))
 
 (defn add-route!
   ; @param (keyword)(opt) route-id

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.9
+; Version: v0.5.4
+; Compatibility: x4.5.2
 
 
 
@@ -30,8 +30,9 @@
   ; @param (keyword) bubble-id
   ;
   ; @return (component)
-  [bubble-id]
-  [elements/horizontal-polarity {:start-content [elements/label  {:content  :no-internet-connection}]
+  [_]
+  [elements/horizontal-polarity ::body
+                                {:start-content [elements/label  {:content  :no-internet-connection}]
                                  :end-content   [elements/button {:label    :refresh!
                                                                   :on-click [:boot-loader/refresh-app!]
                                                                   :preset   :primary-button}]}])
@@ -48,7 +49,7 @@
       (if (and (r environment/browser-offline? db)
                (r ui/application-interface?    db))
           [:ui/blow-bubble! ::notification
-                            {:body        {:content #'body}
+                            {:body        #'body
                              :autopop?    false
                              :user-close? false}])))
 

@@ -370,10 +370,10 @@
   ;
   ; @return (strings in vector)
   [sortable-id sortable-items]
-  (vec (reduce-indexed (fn [initial-item-order sortable-item-dex sortable-item]
-                           (let [sortable-item-id (sortable-item-dex->sortable-item-id sortable-id sortable-item-dex)]
-                                (conj initial-item-order sortable-item-id)))
-                       [] sortable-items)))
+  (reduce-indexed (fn [initial-item-order sortable-item-dex sortable-item]
+                      (let [sortable-item-id (sortable-item-dex->sortable-item-id sortable-id sortable-item-dex)]
+                           (conj initial-item-order sortable-item-id)))
+                  [] sortable-items))
 
 (defn- view-props->sortable-context-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -756,25 +756,25 @@
   ;
   ; @return (hiccup)
   [sortable-id {:keys [sortable-item-order] :as view-props}]
-  (vec (reduce-indexed (fn [sortable-elements render-dex sortable-item-id]
-                           ; BUG#9084
-                           ; Mozilla Firefox 89.0.2
-                           ; macOS Catalina 10.15.7
-                           ; Abban az esetben, ha a sortable-element-component komponensek
-                           ; egyedi react-kulcs átadással kerülnek kirenderelésre, akkor
-                           ; az onDragEnd esemény megtörténésekor a target-element komponensen
-                           ; történik egy szükségtelen CSS transform.
-                           ; Ha például a felsorolt elemek magassága 100px, akkor a target-element
-                           ; komponens -100px távolságról (Y tengelyen) transzformálódik a végleges
-                           ; helyére.
-                           ; A target-element komponens onDragEnd esemény előtti {:transform ...}
-                           ; tulajdonságának értéke: {:transform "translate3d(0px -100px, 0) ...", ...}
-                           ; A target-element komponens onDragEnd esemény utáni {:transform ...}
-                           ; tulajdonságának értéke: {:transform nil, ...}
-                           (conj sortable-elements ;^{:key sortable-item-id}
-                                 [sortable-element-component sortable-id view-props sortable-item-id render-dex]))
-                       [:div.x-sortable--elements (sortable-elements-attributes sortable-id view-props)]
-                       (param sortable-item-order))))
+  (reduce-indexed (fn [sortable-elements render-dex sortable-item-id]
+                      ; BUG#9084
+                      ; Mozilla Firefox 89.0.2
+                      ; macOS Catalina 10.15.7
+                      ; Abban az esetben, ha a sortable-element-component komponensek
+                      ; egyedi react-kulcs átadással kerülnek kirenderelésre, akkor
+                      ; az onDragEnd esemény megtörténésekor a target-element komponensen
+                      ; történik egy szükségtelen CSS transform.
+                      ; Ha például a felsorolt elemek magassága 100px, akkor a target-element
+                      ; komponens -100px távolságról (Y tengelyen) transzformálódik a végleges
+                      ; helyére.
+                      ; A target-element komponens onDragEnd esemény előtti {:transform ...}
+                      ; tulajdonságának értéke: {:transform "translate3d(0px -100px, 0) ...", ...}
+                      ; A target-element komponens onDragEnd esemény utáni {:transform ...}
+                      ; tulajdonságának értéke: {:transform nil, ...}
+                      (conj sortable-elements ;^{:key sortable-item-id}
+                            [sortable-element-component sortable-id view-props sortable-item-id render-dex]))
+                  [:div.x-sortable--elements (sortable-elements-attributes sortable-id view-props)]
+                  (param sortable-item-order)))
 
 (defn- sortable-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

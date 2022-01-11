@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v0.8.0
-; Compatibility: x4.4.9
+; Version: v0.9.0
+; Compatibility: x4.5.2
 
 
 
@@ -14,13 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.login-box
-    (:require [mid-fruits.keyword   :as keyword]
-              [x.app-components.api :as components]
+    (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
               [x.app-elements.api   :as elements]
               [x.app-sync.api       :as sync]
-              [x.app-ui.api         :as ui]
               [x.app-user.api       :as user]))
 
 
@@ -41,7 +38,7 @@
    :username         (r user/get-user-name         db)
    :synchronizing?   (r sync/listening-to-request? db :user/authenticate!)})
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :login-box/get-body-props get-body-props)
 
 
 
@@ -100,7 +97,7 @@
   [_ {:keys [synchronizing?]}]
   [elements/submit-button ::login-button
                           {:color      :primary
-                           :disabled?  synchronizing? 
+                           :disabled?  synchronizing?
                            :input-ids  [::email-address-field ::password-field]
                            :keypress   {:key-code 13 :required? true}
                            :label      :login!
@@ -211,7 +208,7 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -223,6 +220,17 @@
   [:div#x-login-box (if user-identified? [logged-in-form popup-id body-props]
                                          [login-form     popup-id body-props])])
 
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ;
+  ; @return (component)
+  [popup-id]
+  [components/subscriber popup-id
+                         {:render-f   #'body-structure
+                          :subscriber [:login-box/get-body-props]}])
+
 
 
 ;; -- Lifecycle events --------------------------------------------------------
@@ -232,7 +240,7 @@
   :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
-                  {:body {:content #'body :subscriber [::get-body-props]}
+                  {:body              #'body
                    :min-width         :xs
                    :render-exclusive? true
                    :user-close?       false}])

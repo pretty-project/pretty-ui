@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
+; Version: v0.5.0
+; Compatibility: x4.5.2
 
 
 
@@ -32,7 +32,7 @@
   ; @return (keywords in vector)
   [db _]
   (let [app-languages (r a/get-app-detail db :app-languages)]
-       (vec (reduce #(conj %1 %2) [] app-languages))))
+       (reduce #(conj %1 %2) [] app-languages)))
 
 (defn app-multilingual?
   ; @usage

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.05
 ; Description:
-; Version: v0.1.4
-; Compatibility: x3.9.9
+; Version: v0.1.8
+; Compatibility: x4.5.2
 
 
 
@@ -21,5 +21,4 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def add-entry!    engine/add-entry!)
-(def upload-entry! engine/upload-entry!)
+(def add-entry! engine/add-entry!)

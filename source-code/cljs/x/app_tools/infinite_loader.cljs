@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.2
+; Compatibility: x4.5.2
 
 
 
@@ -74,11 +74,11 @@
   ;
   ; @return (boolean)
   [db [_ loader-id]]
-  (let [visible? (get-in db (db/path ::infinite-loaders loader-id :observer-visible?))]
+  (let [visible? (get-in db (db/path :tools/infinite-loaders loader-id :observer-visible?))]
       ;(= visible? nil) = (= visible? true)
        (= visible? false)))
 
-(a/reg-sub ::infinite-observer-hidden? infinite-observer-hidden?)
+(a/reg-sub :tools/infinite-observer-hidden? infinite-observer-hidden?)
 
 
 
@@ -92,7 +92,7 @@
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) false))
+  (assoc-in db (db/path :tools/infinite-loaders loader-id :observer-visible?) false))
 
 (a/reg-event-db :tools/hide-infinite-observer! hide-infinite-observer!)
 
@@ -103,7 +103,7 @@
   ;
   ; @return (map)
   [db [_ loader-id]]
-  (assoc-in db (db/path ::infinite-loaders loader-id :observer-visible?) true))
+  (assoc-in db (db/path :tools/infinite-loaders loader-id :observer-visible?) true))
 
 (a/reg-event-db :tools/show-infinite-observer! show-infinite-observer!)
 
@@ -167,7 +167,7 @@
   ; @return (component)
   [loader-id]
   (let [observer-id (loader-id->observer-id loader-id)
-        hidden?     (a/subscribe [::infinite-observer-hidden? loader-id])]
+        hidden?     (a/subscribe [:tools/infinite-observer-hidden? loader-id])]
        (fn [] [:div {:id    (a/dom-value observer-id)
                      :style (if (deref hidden?)
                                 {:position :fixed :bottom "-100px"})}])))

@@ -108,9 +108,9 @@
   ;
   ; @return (hiccup)
   [field-id field-props]
-  (vec (reduce #(conj %1 [digit])
-                [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
-                (range 4))))
+  (reduce #(conj %1 [digit])
+           [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
+           (range 4)))
 
 (defn- digit-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

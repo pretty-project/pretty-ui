@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.17
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.4.9
+; Version: v0.3.4
+; Compatibility: x4.5.2
 
 
 
@@ -15,8 +15,6 @@
 
 (ns x.app-router.engine
     (:require [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.string   :as string]
-              [mid-fruits.vector   :as vector]
               [x.mid-router.engine :as engine]))
 
 
@@ -47,7 +45,7 @@
   ;
   ; @return (vector)
   [routes]
-  (vec (reduce-kv #(if-let [route-template (get %3 :route-template)]
-                           (conj   %1 [route-template %2])
-                           (return %1))
-                   [] routes)))
+  (letfn [(f [o k v] (if-let [route-template (get v :route-template)]
+                             (conj   o [route-template k])
+                             (return o)))]
+         (reduce-kv f [] routes)))

@@ -31,7 +31,7 @@
   ;
   ; @return (map)
   [db [_ route-id]]
-  (get-in db (db/path ::default-routes)))
+  (get-in db (db/path :router/default-routes)))
 
 ; @usage
 ;  [:router/get-default-routes]
@@ -45,7 +45,7 @@
   ;
   ; @return (map)
   [db [_ route-id]]
-  (get-in db (db/path ::default-routes route-id)))
+  (get-in db (db/path :router/default-routes route-id)))
 
 ; @usage
 ;  [:router/get-default-route :my-default-route]
@@ -71,7 +71,7 @@
   ;
   ; @return (map)
   [db [_ route-id route-props]]
-  (assoc-in db (db/path ::default-routes route-id) route-props))
+  (assoc-in db (db/path :router/default-routes route-id) route-props))
 
 ; @usage
 ;  [:router/set-default-route! :my-default-route {...}]

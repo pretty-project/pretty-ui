@@ -173,10 +173,10 @@
   ; @return (strings in vector)
   [db [_ extension-id item-namespace]]
   (let [selected-items (r get-meta-value db extension-id item-namespace :selected-items)]
-       (vec (reduce (fn [result item-dex]
-                        (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
-                             (conj result item-id)))
-                    [] selected-items))))
+       (reduce (fn [result item-dex]
+                   (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
+                        (conj result item-id)))
+               [] selected-items)))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!

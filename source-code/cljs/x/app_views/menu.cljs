@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.9.2
-; Compatibility: x4.4.6
+; Version: v1.9.8
+; Compatibility: x4.5.2
 
 
 
@@ -16,9 +16,8 @@
 (ns x.app-views.menu
     (:require [mid-fruits.candy      :refer [param]]
               [mid-fruits.css        :as css]
-              [mid-fruits.vector     :as vector]
+              [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
-              [x.app-db.api          :as db]
               [x.app-details         :as details]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]
@@ -26,14 +25,6 @@
               [x.app-locales.api     :as locales]
               [x.app-ui.api          :as ui]
               [x.app-user.api        :as user]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keyword)
-(def DEFAULT-VIEW-ID :main)
 
 
 
@@ -80,19 +71,19 @@
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [popup-id body-props]
-  (vector/conj-item (language-selector-languages popup-id body-props)
-                    [elements/button ::back-button
-                                     {:indent   :left
-                                      :label    :back!
-                                      :on-click [:gestures/change-view! ::handler :main]
-                                      :preset   :back-button}]))
+  (conj (language-selector-languages popup-id body-props)
+        [elements/button ::back-button
+                         {:indent   :left
+                          :label    :back!
+                          :on-click [:gestures/change-view! ::handler :main]
+                          :preset   :back-button}]))
 
 (defn- language-selector-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [app-multilingual?]}]
   [elements/button ::language-selector-button
                    {:disabled? (not app-multilingual?)
-                    :indent   :left
+                    :indent    :left
                     :preset    :language-button
                     :on-click  [:gestures/change-view! ::handler :language-selector]}])
 
@@ -221,12 +212,19 @@
                                   [elements/label {:content user-email-address :layout :fit :font-size :xs :color :highlight}]]
                     :stretch-orientation :horizontal}])
 
-(defn- body
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [popup-id body-props]
   [:<> [user-card popup-id body-props]
        [elements/horizontal-separator {:size :l}]
        [app-menu  popup-id body-props]])
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [popup-id]
+  [components/subscriber popup-id
+                         {:render-f   #'body-structure
+                          :subscriber [:menu/get-body-props]}])
 
 
 
@@ -237,9 +235,9 @@
   :views/render-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
+      {:db       (r gestures/init-view-handler! db ::handler {:default-view-id :main})
        :dispatch [:ui/add-popup! ::view
-                                 {:body   {:content #'body :subscriber [:menu/get-body-props]}
-                                  :header {:content #'ui/close-popup-header}
+                                 {:body   #'body
+                                  :header #'ui/close-popup-header
                                   :horizontal-align :left
                                   :min-width        :xs}]}))
