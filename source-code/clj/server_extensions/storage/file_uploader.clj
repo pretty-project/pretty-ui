@@ -68,7 +68,7 @@
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:file/alias filename :filename generated-filename :file/filesize size :file/id file-id}]
-       (println (str "save-x: " (mongo-db/save-document! "directories" {:x/a :aaa})))))
+       (println (str "save-x : " (mongo-db/save-document! "directories" {:x/a :aaa})))))
        ; Copy the temporary file to storage, and delete the temporary file
        ;(io/copy-file!   tempfile filepath)
        ;(io/delete-file! tempfile)))

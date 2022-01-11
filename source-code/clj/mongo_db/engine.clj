@@ -152,3 +152,29 @@
   [document]
   (try (-> document json/keywordize-keys json/keywordize-values time/unparse-date-time _id->id)
        (catch Exception e (println (str e "\n" document)))))
+
+
+
+;; -- Document order ----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn document->order
+  ; @param (namespaced map) document
+  ;
+  ; @return (integer)
+  [document]
+  (if-let [namespace (db/document->namespace document)]
+          (get document (keyword/add-namespace namespace :order))
+          (throw (Exception. MISSING-NAMESPACE-ERROR))))
+
+(defn document<-order
+  ; @param (namespaced map) document
+  ; @param (integer) order
+  ;
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/order (integer)}
+  [document order]
+  (if-let [namespace (db/document->namespace document)]
+          (assoc document (keyword/add-namespace namespace :order) order)
+          (throw (Exception. MISSING-NAMESPACE-ERROR))))

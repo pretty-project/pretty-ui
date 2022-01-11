@@ -21,50 +21,8 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @name document-path
-;  [(string) collection-name
-;   (string) document-id
-;   (keyword)(opt) item-id
-;   (keyword)(opt) subitem-id
-;   ...]
-
-
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn document-path->collection-name
-  ; @param (document-path vector)
-  ;  [(string) collection-name
-  ;   (string) document-id
-  ;   (keyword)(opt) item-id]
-  ;
-  ; @example
-  ;  (db/document-path->collection-name ["my-collection" "my-document" :my-item])
-  ;  => 
-  ;  "my-collection"
-  ;
-  ; @return (string)
-  [document-path]
-  (first document-path))
-
-(defn document-path->document-id
-  ; @param (document-path vector)
-  ;  [(string) collection-name
-  ;   (string) document-id
-  ;   (keyword)(opt) item-id]
-  ;
-  ; @example
-  ;  (db/document-path->document-id ["my-collection" "my-document" :my-item])
-  ;  =>
-  ;  "my-document"
-  ;
-  ; @return (string)
-  [document-path]
-  (first document-path))
 
 (defn item-key->non-namespaced-item-key
   ; @param (keyword) item-key
@@ -197,11 +155,10 @@
   ;
   ; @return (map)
   [document namespace]
-  (reduce-kv (fn [document item-key item-value]
-                 (assoc document (item-key->namespaced-item-key item-key namespace)
-                                 (param item-value)))
-             (param {})
-             (param document)))
+  (letfn [(f [document item-key item-value]
+             (assoc document (item-key->namespaced-item-key item-key namespace)
+                             (param item-value)))]
+         (reduce-kv f {} document)))
 
 (defn document->non-namespaced-document
   ; @param (map) document
@@ -213,11 +170,10 @@
   ;
   ; @return (map)
   [document]
-  (reduce-kv (fn [document item-key item-value]
-                 (assoc document (item-key->non-namespaced-item-key item-key)
-                                 (param item-value)))
-             (param {})
-             (param document)))
+  (letfn [(f [document item-key item-value]
+             (assoc document (item-key->non-namespaced-item-key item-key)
+                             (param item-value)))]
+         (reduce-kv f {} document)))
 
 (defn document-contains-key?
   ; @param (map) document
@@ -350,19 +306,13 @@
   ; @param (map) document
   ;
   ; @example
-  ;  (db/document->unidentified-document {:foo/bar "baz" :foo/id "my-document" :foo/permissions {...}})
+  ;  (db/document->unidentified-document {:foo/bar "baz" :foo/id "my-document"})
   ;  =>
   ;  {:bar "baz"}
   ;
   ; @return (map)
   [document]
-  (-> document (document->unidentified-document)
-               (document->non-namespaced-document)
-
-               ; A dokumentum változtatásához szükséges jogosultságokot leíró térképet
-               ; szükségeses eltávolítani a dokumentumból, annak szerverről kliens eszközre
-               ; történő elküldése előtt.
-               (dissoc :permissions)))
+  (-> document document->unidentified-document document->non-namespaced-document))
 
 (defn document->identified-document
   ; @param (map) document
@@ -398,94 +348,6 @@
       (if (some? (get document :id))
           (return document)
           (assoc document :id (random/generate-string)))))
-
-(defn document->identified-document?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->identified-document? {:bar "baz" :id "my-document"})
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document->identified-document? {:foo/bar "baz" :foo/id "my-document"})
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document->identified-document {:bar "baz"})
-  ;  =>
-  ;  false
-  ;
-  ; @return (map)
-  [document]
-  (document-contains-key? document :id))
-
-(defn document->non-identified-document?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->non-identified-document? {:bar "baz" :id "my-document"})
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (db/document->non-identified-document? {:foo/bar "baz" :foo/id "my-document"})
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (db/document->non-identified-document {:bar "baz"})
-  ;  =>
-  ;  true
-  ;
-  ; @return (map)
-  [document]
-  (let [document-identified? (document->identified-document? document)]
-       (not document-identified?)))
-
-(defn document->ordered-document
-  ; @param (map) document
-  ; @param (integer) document-dex
-  ;
-  ; @example
-  ;  (db/document->ordered-document {:id "1"} 7)
-  ;  =>
-  ;  {:id "1" :order "7"}
-  ;
-  ; @return (map)
-  ;  {:order (string)}
-  [document document-dex]
-  (assoc-document-value document :order (str document-dex)))
-
-(defn document->ordered-document?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->ordered-document? {:bar "baz" :order "my-document"})
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document->ordered-document? {:foo/bar "baz" :foo/order "my-document"})
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document->ordered-document {:bar "baz"})
-  ;  =>
-  ;  false
-  ;
-  ; @return (map)
-  [document]
-  (document-contains-key? document :order))
-
-(defn document->document-dex
-  ; @param (map) document
-  ;
-  ; @return (integer)
-  [document]
-  (get-document-value document :order))
 
 (defn document->item-value
   ; @param (map) document

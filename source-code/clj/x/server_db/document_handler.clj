@@ -22,8 +22,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-db.document-handler
-(def document-path->collection-name     document-handler/document-path->collection-name)
-(def document-path->document-id         document-handler/document-path->document-id)
 (def item-key->non-namespaced-item-key  document-handler/item-key->non-namespaced-item-key)
 (def item-key->namespaced-item-key      document-handler/item-key->namespaced-item-key)
 (def document->namespace                document-handler/document->namespace)
@@ -40,10 +38,5 @@
 (def document->unidentified-document    document-handler/document->unidentified-document)
 (def document->pure-document            document-handler/document->pure-document)
 (def document->identified-document      document-handler/document->identified-document)
-(def document->identified-document?     document-handler/document->identified-document?)
-(def document->non-identified-document? document-handler/document->non-identified-document?)
-(def document->ordered-document         document-handler/document->ordered-document)
-(def document->ordered-document?        document-handler/document->ordered-document?)
-(def document->document-dex             document-handler/document->document-dex)
 (def document->item-value               document-handler/document->item-value)
 (def document->item-key                 document-handler/document->item-key)

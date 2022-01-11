@@ -285,8 +285,8 @@
         directory-files          (get exploded-items :file)
         directory-subdirectories (get exploded-items :directory)]
        (-> (param directory-data)
-           (assoc  :directory/files          (db/collection->map directory-files))
-           (assoc  :directory/subdirectories (db/collection->map directory-subdirectories))
+;           (assoc  :directory/files          (db/collection->map directory-files))
+;           (assoc  :directory/subdirectories (db/collection->map directory-subdirectories))
            (dissoc :directory/items))))
 
 (defn- file-props->thumbnail-uri

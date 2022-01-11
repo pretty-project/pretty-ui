@@ -23,15 +23,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-db.collection-handler
-(def remote-path->collection-id             collection-handler/remote-path->collection-id)
-(def remote-path->document-id               collection-handler/remote-path->document-id)
-(def remote-path->item-key                  collection-handler/remote-path->item-key)
 (def collection->namespace                  collection-handler/collection->namespace)
 (def collection->collection-namespaced?     collection-handler/collection->collection-namespaced?)
 (def collection->collection-non-namespaced? collection-handler/collection->collection-non-namespaced?)
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
-(def collection->collection-ordered?        collection-handler/collection->collection-ordered?)
 (def trim-collection                        collection-handler/trim-collection)
 (def sort-collection                        collection-handler/sort-collection)
 (def filter-documents                       collection-handler/filter-documents)

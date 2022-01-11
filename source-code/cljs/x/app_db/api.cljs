@@ -24,8 +24,7 @@
               [x.app-db.engine               :as engine]
               [x.app-db.id-handler           :as id-handler]
               [x.app-db.partition-handler    :as partition-handler]
-              [x.app-db.partition-state      :as partition-state]
-              [x.app-db.transfer-handler     :as transfer-handler]))
+              [x.app-db.partition-state      :as partition-state]))
 
 
 
@@ -65,15 +64,11 @@
 (def remove-backup-item!         backup-handler/remove-backup-item!)
 
 ; x.app-db.collection-handler
-(def remote-path->collection-id             collection-handler/remote-path->collection-id)
-(def remote-path->document-id               collection-handler/remote-path->document-id)
-(def remote-path->item-key                  collection-handler/remote-path->item-key)
 (def collection->namespace                  collection-handler/collection->namespace)
 (def collection->collection-namespaced?     collection-handler/collection->collection-namespaced?)
 (def collection->collection-non-namespaced? collection-handler/collection->collection-non-namespaced?)
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
-(def collection->collection-ordered?        collection-handler/collection->collection-ordered?)
 (def trim-collection                        collection-handler/trim-collection)
 (def sort-collection                        collection-handler/sort-collection)
 (def filter-documents                       collection-handler/filter-documents)
@@ -154,8 +149,6 @@
 (def trim-partition!                   data-range-handler/trim-partition!)
 
 ; x.app-db.document-handler
-(def document-path->collection-name     document-handler/document-path->collection-name)
-(def document-path->document-id         document-handler/document-path->document-id)
 (def item-key->non-namespaced-item-key  document-handler/item-key->non-namespaced-item-key)
 (def item-key->namespaced-item-key      document-handler/item-key->namespaced-item-key)
 (def document->namespace                document-handler/document->namespace)
@@ -172,11 +165,6 @@
 (def document->unidentified-document    document-handler/document->unidentified-document)
 (def document->pure-document            document-handler/document->pure-document)
 (def document->identified-document      document-handler/document->identified-document)
-(def document->identified-document?     document-handler/document->identified-document?)
-(def document->non-identified-document? document-handler/document->non-identified-document?)
-(def document->ordered-document         document-handler/document->ordered-document)
-(def document->ordered-document?        document-handler/document->ordered-document?)
-(def document->document-dex             document-handler/document->document-dex)
 (def document->item-value               document-handler/document->item-value)
 (def document->item-key                 document-handler/document->item-key)
 
@@ -257,17 +245,3 @@
 (def partition-state->data-order          partition-state/partition-state->data-order)
 (def partition-state->in-range-data-order partition-state/partition-state->in-range-data-order)
 (def get-partition-state                  partition-state/get-partition-state)
-
-; x.app-db.transfer-handler
-(def document-id->data-item-id            transfer-handler/document-id->data-item-id)
-(def data-item-value->document-item-value transfer-handler/data-item-value->document-item-value)
-(def document-item-value->data-item-value transfer-handler/document-item-value->data-item-value)
-(def data-item->document                  transfer-handler/data-item->document)
-(def document->data-item                  transfer-handler/document->data-item)
-(def partition->collection                transfer-handler/partition->collection)
-(def collection->data-items               transfer-handler/collection->data-items)
-(def collection->data-order               transfer-handler/collection->data-order)
-(def collection->partition                transfer-handler/collection->partition)
-(def collection->map                      transfer-handler/collection->map)
-(def export-partition                     transfer-handler/export-partition)
-(def import-collection!                   transfer-handler/import-collection!)

@@ -21,6 +21,39 @@
 
 
 
+;; -- Preparing document ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- document<-last-order
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (namespacedd map) document
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/order (integer)}
+  [collection-name document]
+  (let [last-order (reader/get-all-document-count collection-name)]
+       (engine/document<-order document last-order)))
+
+(defn- prepare-document
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (namespacedd map) document
+  ; @param (map) options
+  ;  {:ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/order (integer)}
+  [collection-name document {:keys [ordered? prototype-f]}]
+  (cond->> document ordered?    (document<-last-order collection-name)
+                    prototype-f (prototype-f)))
+
+
+
 ;; -- Error handling ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -98,8 +131,8 @@
   ([collection-name document]
    (insert-document! collection-name document {}))
 
-  ([collection-name document {:keys [ordered? prototype-f]}]
-   (let [document (if-not prototype-f document (prototype-f document))]
+  ([collection-name document options]
+   (let [document (prepare-document collection-name document options)]
         (if-let [document (engine/adapt-input document)]
                 (let [return (insert-and-return! collection-name document)]
                      (engine/adapt-output return))
@@ -129,8 +162,8 @@
   ([collection-name document]
    (save-document! collection-name document {}))
 
-  ([collection-name document {:keys [ordered? prototype-f]}]
-   (let [document (if-not prototype-f document (prototype-f document))]
+  ([collection-name document options]
+   (let [document (prepare-document collection-name document options)]
         (if-let [document (engine/adapt-input document)]
                 (let [return (save-and-return! collection-name document)]
                      (engine/adapt-output return))
@@ -191,7 +224,7 @@
                                    ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
                                    ; akkor szükséges a sorrendbeli pozícióját hozzáadni
 ;         document (cond-> document (boolean ordered?)
-;                                   (db/document->ordered-document document-dex)))
+;                                   (engine/document<-order document-dex)))
                                    ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
                                    ; egy generált azonosítót
                                    ;:assoc-id engine/document<-id)
@@ -435,9 +468,9 @@
   ; @return (string)
   [collection-name document-id]
   (let [document     (reader/get-document-by-id collection-name document-id)
-        document-dex (db/document->document-dex document)
-        namespace    (db/document->namespace    document)
-        order-key    (keyword/add-namespace     namespace :order)]
+        document-dex (engine/document->order document)
+        namespace    (db/document->namespace document)
+        order-key    (keyword/add-namespace  namespace :order)]
        ; A sorrendben a dokumentum után következő más dokumentumok sorrendbeli
        ; pozíciójának értékét eggyel csökkenti
        (update! collection-name {order-key {"$gt" document-dex}}
@@ -599,7 +632,7 @@
                                    ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
 ;        document-copy (-> document (dissoc id-key)
                                    ; A sorrendbeli pozíció értékének hozzáadása a másolathoz
-;                                   (db/document->ordered-document document-copy-dex)))
+;                                   (engine/document<-order document-copy-dex)))
 
         ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
         document-copy (if (some?      modifier-f)

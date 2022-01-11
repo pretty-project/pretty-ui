@@ -28,9 +28,6 @@
 ; @name collection
 ;  [{:id "my-data" :my-prop "my-value"} {...} {...}]
 ;
-; @name ordered-collection
-;  [{:id "my-data" :my-prop "my-value" :order 7} {...} {...}]
-;
 ; @name {:additional-namespace ...}
 ;  XXX#3209
 ;  Az {:additional-namespace ...} tulajdonság átadásával a függvény visszatérési
@@ -64,51 +61,6 @@
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn remote-path->collection-id
-  ; @param (document-path vector) remote-path
-  ;  [(string) collection-id
-  ;   (string) document-id
-  ;   (keyword) item-key]
-  ;
-  ; @example
-  ;  (db/remote-path/collection-id ["my-collection" "my-document" :my-item])
-  ;  =>
-  ;  "my-collection"
-  ;
-  ; @return (string)
-  [[collection-id _ _]]
-  (return collection-id))
-
-(defn remote-path->document-id
-  ; @param (document-path vector) remote-path
-  ;  [(string) collection-id
-  ;   (string) document-id
-  ;   (keyword) item-key]
-  ;
-  ; @example
-  ;  (db/remote-path/document-id ["my-collection" "my-document" :my-item])
-  ;  =>
-  ;  "my-document"
-  ;
-  ; @return (string)
-  [[_ document-id _]]
-  (return document-id))
-
-(defn remote-path->item-key
-  ; @param (document-path vector) remote-path
-  ;  [(string) collection-id
-  ;   (string) document-id
-  ;   (keyword) item-key]
-  ;
-  ; @example
-  ;  (db/remote-path/item-key ["my-collection" "my-document" :my-item])
-  ;  =>
-  ;  :my-item
-  ;
-  ; @return (string)
-  [[_ _ item-key]]
-  (return item-key))
 
 (defn collection->namespace
   ; @param (maps in vector) collection
@@ -165,30 +117,6 @@
   ; @return (maps in  vector)
   [collection]
   (vector/->items collection #(document->non-namespaced-document %)))
-
-(defn collection->collection-ordered?
-  ; @param (maps in vector) collection
-  ;
-  ; @example
-  ;  (db/collection->collection-ordered? [{:id "1"} {:id "2"}])
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (db/collection->collection-ordered? [{:id "1" :order 1} {:id "2" :order 0}])
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/collection->collection-ordered? [{:foo/id "1" :foo/order 1} {:foo/id "2" :foo/order 0}])
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [collection]
-  (boolean (if-let [first-document (first collection)]
-                   (let [order-key (document->item-key first-document :order)]
-                        (map/contains-key? first-document order-key)))))
 
 
 

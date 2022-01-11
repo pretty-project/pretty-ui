@@ -13,12 +13,12 @@
 
 
 # x4.5.0
+- A mongo-db kezelje a permission-öket, a local-db ne kezelje a permission-öket
+
 - {:content :content-props :subscriber} formula kivezetése ...
 
 - Hogyha a mid-fruits.validator kizárólag a pathom miatt lesz használva, akkor
   beépülhet a pathom-ba!
-
-- A collection-handler kivándorolhat majd a local-db modulba
 
 - mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
 
