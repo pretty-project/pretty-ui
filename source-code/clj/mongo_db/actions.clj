@@ -1,40 +1,48 @@
 
 (ns mongo-db.actions
-    (:import org.bson.types.BSONTimestamp)
-    (:require [mid-fruits.candy        :refer [param return]]
+   ; WARNING! DEPRECATED! DO NOT USE!
+   ;(:import org.bson.types.BSONTimestamp)
+   ; WARNING! DEPRECATED! DO NOT USE!
+    (:require monger.joda-time
+              [mid-fruits.candy        :refer [param return]]
               [mid-fruits.gestures     :as gestures]
               [mid-fruits.keyword      :as keyword]
               [mid-fruits.vector       :as vector]
               [monger.collection       :as mcl]
+              [monger.operators        :refer :all]
+              [monger.result           :as mrt]
+              [mongo-db.adaptation     :as adaptation]
               [mongo-db.engine         :as engine]
+              [mongo-db.errors         :as errors]
               [mongo-db.reader         :as reader]
               [x.server-core.api       :as a]
               [x.server-db.api         :as db]
-              [x.server-dictionary.api :as dictionary]
-              monger.joda-time))
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def ADAPTATION-ERROR "Document adaptation error!")
+              [x.server-dictionary.api :as dictionary]))
 
 
 
 ;; -- Preparing document ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- document<-last-order
+(defn- prepare-document-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (namespacedd map) document
+  ; @param (namespaced map) document
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document]
-  (let [last-order (reader/get-all-document-count collection-name)]
-       (engine/document<-order document last-order)))
+  (if-let [namespace (db/document->namespace document)]
+          (let [order-key (keyword/add-namespace namespace :order)]
+               (if-let ; Ha a dokumentum tartalmaz :namespace/order tulajdonságot ...
+                       [order (get document order-key)]
+                       ; ... növeli a dokumentum :namespace/order tulajdonságának értékét.
+                       (update document order-key inc)
+                       ; ... a dokumentum kapja a kollekció sorrendbeli utolsó pozícióját.
+                       (let [last-order (reader/get-all-document-count collection-name)]
+                            (assoc document order-key last-order))))
+          (throw (Exception. errors/MISSING-NAMESPACE-ERROR))))
 
 (defn- prepare-document
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,8 +57,9 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document {:keys [ordered? prototype-f]}]
-  (cond->> document ordered?    (document<-last-order collection-name)
-                    prototype-f (prototype-f)))
+  (try (cond->> document ordered?    (prepare-document-order collection-name)
+                         prototype-f (prototype-f))
+       (catch Exception e (println (str e "\n" {:collection-name collection-name :document document})))))
 
 
 
@@ -62,7 +71,7 @@
   ;
   ; @param (string) collection-name
   ; @param (map) document
-  ;  {:_id (string)}
+  ;  {"_id" (org.bson.types.ObjectId object)}
   ;
   ; @return (map)
   [collection-name document]
@@ -75,8 +84,9 @@
   ;
   ; @param (string) collection-name
   ; @param (namespaced map) document
+  ;  {"_id" (org.bson.types.ObjectId object)}
   ;
-  ; @return (?)
+  ; @return (map)
   [collection-name document]
   (let [database (a/subscribed [:mongo-db/get-connection])]
        (try (mcl/save-and-return database collection-name document)
@@ -86,7 +96,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (string) document-id
+  ; @param (org.bson.types.ObjectId object) document-id
   ;
   ; @return (?)
   [collection-name document-id]
@@ -99,15 +109,42 @@
   ;
   ; @param (string) collection-name
   ; @param (map) conditions
+  ;  {"_id" (org.bson.types.ObjectId object)(opt)}
   ; @param (map) document
   ; @param (map)(opt) options
+  ;  {:multi (boolean)(opt)
+  ;    Default: false
+  ;   :upsert (boolean)(opt)
+  ;    Default: false}
   ;
-  ; @return (?)
-  ([collection-name conditions document])
+  ; @return (com.mongodb.WriteResult object)
+  ([collection-name conditions document]
+   (update! collection-name conditions document {}))
 
   ([collection-name conditions document options]
    (let [database (a/subscribed [:mongo-db/get-connection])]
         (try (mcl/update database collection-name conditions document options)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :conditions conditions
+                                                      :document document :options options})))))))
+
+(defn- upsert!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ; @param (map) conditions
+  ;  {"_id" (org.bson.types.ObjectId object)(opt)}
+  ; @param (map) document
+  ; @param (map)(opt) options
+  ;  {:multi (boolean)(opt)
+  ;    Default: false}
+  ;
+  ; @return (com.mongodb.WriteResult object)
+  ([collection-name conditions document]
+   (upsert! collection-name conditions document {}))
+
+  ([collection-name conditions document options]
+   (let [database (a/subscribed [:mongo-db/get-connection])]
+        (try (mcl/upsert database collection-name conditions document options)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :conditions conditions
                                                       :document document :options options})))))))
 
@@ -120,11 +157,15 @@
   ; @param (string) collection-name
   ; @param (namespaced map) document
   ;  {:namespace/id (string)(opt)}
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/insert-document! "my-collection" {:my-namespace/id "my-document" ...})
+  ;  (mongo-db/insert-document! "my-collection" {:namespace/id "MyObjectId" ...})
   ;  =>
-  ;  {:my-namespace/id "my-document" ...}
+  ;  {:namespace/id "MyObjectId" ...}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
@@ -132,11 +173,45 @@
    (insert-document! collection-name document {}))
 
   ([collection-name document options]
-   (let [document (prepare-document collection-name document options)]
-        (if-let [document (engine/adapt-input document)]
-                (let [return (insert-and-return! collection-name document)]
-                     (engine/adapt-output return))
-                (println (str ADAPTATION-ERROR "\n" document))))))
+   (if-let [document (prepare-document collection-name document options)]
+           (if-let [document (adaptation/insert-input document)]
+                   (let [result (insert-and-return! collection-name document)]
+                        (adaptation/insert-output result))))))
+
+; @usage
+;  [:mongo-db/insert-document! "my-collection" {:namespace/id "MyObjectId" ...}]
+(a/reg-handled-fx :mongo-db/insert-document! insert-document!)
+
+
+
+;; -- Inserting documents -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn insert-documents!
+  ; @param (string) collection-name
+  ; @param (namespaced maps in vector) documents
+  ;  [{:namespace/id (string)(opt)}]
+  ; @param (map)(opt) options
+  ;  {:ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/insert-documents! "my-collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}])
+  ;  =>
+  ;  [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}]
+  ;
+  ; @return (namespaced maps in vector)
+  ;  [{:namespace/id (string)}]
+  ([collection-name documents]
+   (insert-documents! collection-name documents {}))
+
+  ([collection-name documents options]
+   (vector/->items documents #(insert-document! collection-name % options))))
+
+; @usage
+;  [:mongo-db/insert-documents! "my-collection" [{:namespace/id "MyObjectId" ...}]]
+(a/reg-handled-fx :mongo-db/insert-documents! insert-documents!)
 
 
 
@@ -153,9 +228,9 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/save-document! "my-collection" {:my-namespace/id "my-document" ...})
+  ;  (mongo-db/save-document! "my-collection" {:namespace/id "MyObjectId" ...})
   ;  =>
-  ;  {:my-namespace/id "my-document" ...}
+  ;  {:namespace/id "MyObjectId" ...}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
@@ -163,82 +238,190 @@
    (save-document! collection-name document {}))
 
   ([collection-name document options]
-   (let [document (prepare-document collection-name document options)]
-        (if-let [document (engine/adapt-input document)]
-                (let [return (save-and-return! collection-name document)]
-                     (engine/adapt-output return))
-                (println (str ADAPTATION-ERROR "\n" document))))))
+   (if-let [document (prepare-document collection-name document options)]
+           (if-let [document (adaptation/save-input document)]
+                   (let [result (save-and-return! collection-name document)]
+                        (adaptation/save-output result))))))
+
+; @usage
+;  [:mongo-db/save-document! "my-collection" {:namespace/id "MyObjectId" ...}]
+(a/reg-handled-fx :mongo-db/save-document! save-document!)
 
 
 
-;; -- Adding document ---------------------------------------------------------
+;; -- Saving documents --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn add-document!
-  ; Az add-document! függvény a számára azonosító nélkül átadott dokumentumot
-  ; újonnan generált azonosítóval látja el az eltárolás előtt, míg a számára
-  ; azonosítóval átadott dokumentumot annak azonosítójának változtatása nélkül
-  ; tárolja el.
-  ;
+(defn save-documents!
   ; @param (string) collection-name
-  ; @param (namespaced map) document
-  ;  {:namespace/id (string)(opt)}
+  ; @param (namespaced maps in vector) documents
+  ;  [{:namespace/id (string)(opt)}]
   ; @param (map)(opt) options
-  ;  {:modifier-f (function)(opt)
-  ;   :ordered? (boolean)
+  ;  {:ordered? (boolean)(opt)
   ;    Default: false
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/add-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                           :my-namespace/your-string "your-value"})
+  ;  (mongo-db/save-documents! "my-collection" [{:namespace/id "MyObjectId" ...}])
   ;  =>
-  ;  {:my-namespace/my-keyword  :my-value}
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "240b9771-05f2-4c06-8f64-177468e2c730"}
+  ;  [{:namespace/id "MyObjectId" ...}]
   ;
-  ; @example
-  ;  (mongo-db/add-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                           :my-namespace/your-string "your-value"
-  ;                                           :my-namespace/id          "my-document"})
-  ;  =>
-  ;  {:my-namespace/my-keyword  :my-value}
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "my-document"}
-  ;
-  ; @return (namespaced map)
-  ;  {:namespace/id (string)}
-  ([collection-name document]
-   (add-document! collection-name document {}))
+  ; @return (namespaced maps in vector)
+  ;  [{:namespace/id (string)}]
+  ([collection-name documents]
+   (save-documents! collection-name documents {}))
 
-  ([collection-name document {:keys [ordered? modifier-f prototype-f]}]
-         ; A dokumentum sorrendbeli pozíciója egyenlő a hozzáadás előtti dokumentumok számával.
-   (let [document-dex (reader/get-all-document-count collection-name)
-
-         ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt az add-document! függvény
-         ; végrehajtana rajta bármilyen változtatást.
-         document (if (some?       prototype-f)
-                      (prototype-f document)
-                      (return      document))
-
-                                   ; Ha a dokumentum rendezett dokumentumként kerül hozzáadásra,
-                                   ; akkor szükséges a sorrendbeli pozícióját hozzáadni
-;         document (cond-> document (boolean ordered?)
-;                                   (engine/document<-order document-dex)))
-                                   ; Ha a dokumentum nem tartalmaz azonosítót, akkor hozzáfűz
-                                   ; egy generált azonosítót
-                                   ;:assoc-id engine/document<-id)
-
-         ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
-         document (if (some?      modifier-f)
-                      (modifier-f document)
-                      (return     document))]
-
-        (save-document! collection-name document))))
+  ([collection-name documents options]
+   (vector/->items documents #(save-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/add-document! "my-collection" {...}]
-(a/reg-handled-fx :mongo-db/add-document! add-document!)
+;  [:mongo-db/save-documents! "my-collection" [{:namespace/id "MyObjectId" ...}]]
+(a/reg-handled-fx :mongo-db/save-documents! save-documents!)
+
+
+
+;; -- Updating document -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn update-document!
+  ; @param (string) collection-name
+  ; @param (namespaced map) conditions
+  ; @param (namespaced map) document
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/update-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;
+  ; @return (boolean)
+  ([collection-name conditions document]
+   (update-document! collection-name conditions document {}))
+
+  ([collection-name conditions document options]
+   (boolean (if-let [document (prepare-document collection-name document options)]
+                    (if-let [conditions (adaptation/update-conditions conditions)]
+                            (if-let [document (adaptation/update-input document)]
+                                    (let [result (update! collection-name conditions document {:multi false :upsert false})]
+                                         (mrt/updated-existing? result))))))))
+
+; @usage
+;  [:mongo-db/update-document! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+(a/reg-handled-fx :mongo-db/update-document! update-document!)
+
+
+
+;; -- Updating document -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn update-documents!
+  ; @param (string) collection-name
+  ; @param (namespaced map) conditions
+  ; @param (namespaced map) document
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/update-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;
+  ; @return (boolean)
+  ([collection-name conditions document]
+   (update-documents! collection-name conditions document {}))
+
+  ([collection-name conditions document options]
+   (boolean (if-let [document (prepare-document collection-name document options)]
+                    (if-let [conditions (adaptation/update-conditions conditions)]
+                            (if-let [document (adaptation/update-input document)]
+                                    ; WARNING! DO NOT USE!
+                                    ; java.lang.IllegalArgumentException: Replacements can not be multi
+                                    (let [result (update! collection-name conditions document {:multi true :upsert false})]
+                                         (mrt/updated-existing? result))))))))
+
+; @usage
+;  [:mongo-db/update-documents! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+(a/reg-handled-fx :mongo-db/update-documents! update-documents!)
+
+
+
+;; -- Upserting document ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn upsert-document!
+  ; @param (string) collection-name
+  ; @param (namespaced map) conditions
+  ; @param (namespaced map) document
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;
+  ; @return (namespaced map)
+  ([collection-name conditions document]
+   (upsert-document! collection-name conditions document {}))
+
+  ([collection-name conditions document options]
+   (if-let [document (prepare-document collection-name document options)]
+           (if-let [conditions (adaptation/upsert-conditions conditions)]
+                   (if-let [document (adaptation/upsert-input document)]
+                           (let [result (upsert! collection-name conditions document {:multi false})]
+                                (mrt/acknowledged? result)))))))
+
+; @usage
+;  [:mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+(a/reg-handled-fx :mongo-db/upsert-document! upsert-document!)
+
+
+
+;; -- Upserting documents -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn upsert-documents!
+  ; @param (string) collection-name
+  ; @param (namespaced map) conditions
+  ; @param (namespaced map) document
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;
+  ; @return (namespaced map)
+  ([collection-name conditions document]
+   (upsert-documents! collection-name conditions document {}))
+
+  ([collection-name conditions document options]
+   (if-let [document (prepare-document collection-name document options)]
+           (if-let [conditions (adaptation/upsert-conditions conditions)]
+                   (if-let [document (adaptation/upsert-input document)]
+                           ; WARNING! DO NOT USE!
+                           ; java.lang.IllegalArgumentException: Replacements can not be multi
+                           (let [result (upsert! collection-name conditions document {:multi true})]
+                                (mrt/acknowledged? result)))))))
+
+; @usage
+;  [:mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+(a/reg-handled-fx :mongo-db/upsert-documents! upsert-documents!)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -263,8 +446,8 @@
   ([collection-name documents]
    (add-documents! collection-name documents {}))
 
-  ([collection-name documents options]
-   (vector/->items documents #(add-document! collection-name % options))))
+  ([collection-name documents options]))
+   ;(vector/->items documents #(add-document! collection-name % options))))
 
 ; @usage
 ;  [:mongo-db/add-documents! "my-collection" [{...} {...}]]
@@ -272,56 +455,12 @@
 
 
 
-;; -- Upserting document ------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn upsert-document!
-  ; @param (string) collection-name
-  ; @param (namespaced map) document
-  ;  {:namespace/id (string)}
-  ; @param (map)(opt) options
-  ;  {:ordered? (boolean)
-  ;    Ha a dokumentum nem létezik a kollekcióban, akkor az upsert-document! függvény
-  ;    hozzáadja azt a kollekcióhoz az add-document! függvény használatával.
-  ;    Az {:ordered? ...} tulajdonság az add-document! függvény paramétere!
-  ;    Default: false
-  ;   :prototype-f (function)(opt)}
-  ;
-  ; @example
-  ;  (mongo-db/upsert-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                              :my-namespace/your-string "your-value"
-  ;                                              :my-namespace/id          "my-document"})
-  ;  =>
-  ;  {:my-namespace/my-keyword  :my-value}
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "my-document"}
-  ;
-  ; @return (namespaced map)
-  ;  {:namespace/id (string)}
-  ([collection-name document]
-   (upsert-document! collection-name document {}))
-
-  ([collection-name document {:keys [prototype-f] :as options}]
-   (let [document-id (db/document->document-id document)]
-        (if (reader/document-exists? collection-name document-id)
-            ; If document exists ...
-            (let [document (if (some?       prototype-f)
-                               (prototype-f document)
-                               (return      document))]
-                 (save-document! collection-name document))
-            ; If document NOT exists ...
-            (add-document! collection-name document options)))))
-
-; @usage
-;  [:mongo-db/upsert-document! "my-collection" {:my-namespace/id "my-document"}]
-(a/reg-handled-fx :mongo-db/upsert-document! upsert-document!)
-
 
 
 ;; -- Updating document -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn update-document!
+(defn update-document!_
   ; @param (string) collection-name
   ; @param (namespaced map) document
   ;  {:namespace/id (string)}
@@ -329,18 +468,18 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/update-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                              :my-namespace/your-string "your-value"
-  ;                                              :my-namespace/id          "my-document"})
+  ;  (mongo-db/update-document! "my-collection" {:namespace/my-keyword  :my-value
+  ;                                              :namespace/your-string "your-value"
+  ;                                              :namespace/id          "MyObjectId"})
   ;  =>
-  ;  {:my-namespace/my-keyword  :my-value}
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "my-document"}
+  ;  {:namespace/my-keyword  :my-value}
+  ;   :namespace/your-string "your-value"
+  ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
   ([collection-name document]
-   (update-document! collection-name document {}))
+   (update-document!_ collection-name document {}))
 
   ([collection-name document {:keys [prototype-f]}]
    (let [document-id (db/document->document-id document)]
@@ -351,11 +490,11 @@
                                (return      document))]
                  (save-document! collection-name document))
             ; If document NOT exists ...
-            (println "Document does not exists error" collection-name document-id)))))
+            (println errors/DOCUMENT-DOES-NOT-EXISTS-ERROR collection-name document-id)))))
 
 ; @usage
-;  [:mongo-db/update-document! "my-collection" {:my-namespace/id "my-document"}]
-(a/reg-handled-fx :mongo-db/update-document! update-document!)
+;  [:mongo-db/update-document! "my-collection" {:namespace/id "MyObjectId"}]
+(a/reg-handled-fx :mongo-db/update-document!_ update-document!_)
 
 
 
@@ -387,13 +526,13 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/merge-document! "my-collection" {:my-namespace/my-keyword  :my-value
-  ;                                             :my-namespace/your-string "your-value"
-  ;                                             :my-namespace/id          "my-document"})
+  ;  (mongo-db/merge-document! "my-collection" {:namespace/my-keyword  :my-value
+  ;                                             :namespace/your-string "your-value"
+  ;                                             :namespace/id          "MyObjectId"})
   ;  =>
-  ;  {:my-namespace/my-keyword  :my-value}
-  ;   :my-namespace/your-string "your-value"
-  ;   :my-namespace/id          "my-document"}
+  ;  {:namespace/my-keyword  :my-value}
+  ;   :namespace/your-string "your-value"
+  ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
@@ -410,10 +549,10 @@
                                    (return      document))]
                      (save-document! collection-name document))
                 ; If document NOT exists ...
-                (println "Document does not exists error" collection-name document-id)))))
+                (println errors/DOCUMENT-DOES-NOT-EXISTS-ERROR collection-name document-id)))))
 
 ; @usage
-;  [:mongo-db/merge-document! "my-collection" {:my-namespace/id "my-document"}]
+;  [:mongo-db/merge-document! "my-collection" {:namespace/id "MyObjectId"}]
 (a/reg-handled-fx :mongo-db/merge-document! merge-document!)
 
 
@@ -455,7 +594,8 @@
   ;
   ; @return (string)
   [collection-name document-id]
-  (let [database (a/subscribed [:mongo-db/get-connection])]
+  (let [database (a/subscribed [:mongo-db/get-connection])
+        document-id (adaptation/document-id-input document-id)]
        (remove-by-id! collection-name document-id)
        (return        document-id)))
 
@@ -486,9 +626,9 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-document "my-collection" "my-document")
+  ;  (mongo-db/remove-document "my-collection" "MyObjectId")
   ;  =>
-  ;  "my-document"
+  ;  "MyObjectId"
   ;
   ; @return (string)
   ([collection-name document-id]
@@ -499,7 +639,7 @@
                 (remove-unordered-document! collection-name document-id))))
 
 ; @usage
-;  [:mongo-db/remove-document! "my-collection" "my-document"]
+;  [:mongo-db/remove-document! "my-collection" "MyObjectId"]
 (a/reg-handled-fx :mongo-db/remove-document! remove-document!)
 
 
@@ -515,9 +655,9 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-documents! "my-collection" ["my-document" "your-document"])
+  ;  (mongo-db/remove-documents! "my-collection" ["MyObjectId" "your-document"])
   ;  =>
-  ;  ["my-document" "your-document"]
+  ;  ["MyObjectId" "your-document"]
   ;
   ; @return (string)
   ([collection-name document-ids]
@@ -527,7 +667,7 @@
    (vector/->items document-ids #(remove-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/remove-documents! "my-collection" ["my-document" "your-document"]]
+;  [:mongo-db/remove-documents! "my-collection" ["MyObjectId" "your-document"]]
 (a/reg-handled-fx :mongo-db/remove-document! remove-document!)
 
 
@@ -549,7 +689,7 @@
   ; A dokumentumról készült másolat :label-key tulajdonságként átadott kulcsának
   ; értéke a label-suffix toldalék értékével kerül kiegészítése
   (let [document            (reader/get-document-by-id collection-name document-id)
-        all-documents       (reader/find-all-documents collection-name)
+        all-documents       (reader/get-all-documents  collection-name)
         label-suffix        (dictionary/looked-up :copy {:language-id language-id})
         document-label      (get document label-key)
         all-document-labels (mapv label-key all-documents)]
@@ -561,39 +701,15 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (namespaced keyword)
-  ;   :language-id (keyword)
-  ;   :modifier-f (function)(opt)
-  ;   :prototype-f (function)(opt)}
   ;
   ; @return (namespaced map)
-  ;  {:namespace/id (string)}
-  [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
-  (let [document  (reader/get-document-by-id collection-name document-id)
-        namespace (db/document->namespace document)
-        id-key    (keyword/add-namespace  namespace :id)
-
-        ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt a duplicate-ordered-document!
-        ; függvény végrehajtana rajta bármilyen változtatást.
-        document-copy (if (some?       prototype-f)
-                          (prototype-f document)
-                          (return      document))
-
-        ; A label-suffix toldalék értékével kiegészített címke asszociálása
-        document-copy (if (some? label-key)
-                          (let [copy-label (get-document-copy-label collection-name document-id options)]
-                               (assoc document-copy label-key copy-label))
-                          (return document-copy))
-
-        ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-        document-copy (dissoc document-copy id-key)
-
-        ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
-        document-copy (if (some?      modifier-f)
-                          (modifier-f document-copy)
-                          (return     document-copy))]
-
-       (add-document! collection-name document-copy)))
+  [collection-name document-id options]
+  (if-let [document (reader/get-document-by-id collection-name document-id)]
+          (if-let [document-copy (prepare-document collection-name document options)]
+                  (if-let [document-copy (adaptation/duplicate-input document-copy)]
+                          (let [result (insert-and-return! collection-name document-copy)]
+                               (adaptation/duplicate-output result))))
+          (throw (Exception. errors/DOCUMENT-DOES-NOT-EXISTS-ERROR))))
 
 (defn- duplicate-ordered-document!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -601,54 +717,28 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (namespaced keyword)
-  ;   :modifier-f (function)(opt)
-  ;   :prototype-f (function)(opt)}
   ;
   ; @return (namespaced map)
-  ;  {:namespace/id (string)}
-  [collection-name document-id {:keys [label-key modifier-f prototype-f] :as options}]
-  (let [document     (reader/get-document-by-id collection-name document-id)
-        document-dex (db/get-document-value  document :order)
-        namespace    (db/document->namespace document)
-        id-key       (keyword/add-namespace  namespace :id)
+  [collection-name document-id options]
 
-        ; Ha a dokumentum nem rendelkezik {:namespace/order ...} tulajdonsággal ...
-        document-copy-dex (try (inc document-dex)
-                               (catch Exception e (println "Document corrupted error" collection-name document-id)))
-
-        ; A prototype-f függvény azelőtt módosítja a dokumentumot, mielőtt a duplicate-ordered-document!
-        ; függvény végrehajtana rajta bármilyen változtatást.
-        document-copy (if (some?       prototype-f)
-                          (prototype-f document)
-                          (return      document))
-
-        ; A label-suffix toldalék értékével kiegészített címke asszociálása
-        document-copy (if (some? label-key)
-                          (let [copy-label (get-document-copy-label collection-name document-id options)]
-                               (assoc document-copy label-key copy-label))
-                          (return document-copy))
-
-                                   ; Az eredeti dokumentum azonosítójának eltávolítása a másolatból
-;        document-copy (-> document (dissoc id-key)
-                                   ; A sorrendbeli pozíció értékének hozzáadása a másolathoz
-;                                   (engine/document<-order document-copy-dex)))
-
-        ; Ha a dokumentumot annak mentése előtt szeretnéd módosítani, használj modifier-f függvényt!
-        document-copy (if (some?      modifier-f)
-                          (modifier-f document-copy)
-                          (return     document-copy))]
-
-
-       (let [namespace (db/document->namespace document)
-             order-key (keyword/add-namespace  namespace :order)]
-            ; A sorrendben a dokumentum után következő más dokumentumok sorrendbeli
-            ; pozíciójának értékét eggyel növeli
-            (update! collection-name {order-key {"$gt" document-copy-dex}}
-                                     {"$inc" {order-key 1}}
-                                     {:multi true}))
-
-       (add-document! collection-name document-copy)))
+          ; WARNING! NEM TÖRTÉNIK MEG A DOKUMENTUMOK POZÍCIÓJÁNAK NÖVELÉSE!
+          ; A sorrendben a másolat után következő dokumentumok sorrendbeli pozíciójának növelése
+  (letfn [(increase-documents-order! [collection-name document-copy]
+                                     (let [namespace         (db/document->namespace document-copy)
+                                           order-key         (keyword/add-namespace namespace :order)
+                                           document-copy-dex (get document-copy order-key)
+                                           result (update! collection-name {order-key {"$gt" document-copy-dex}}
+                                                                           {"$inc" {order-key 1}}
+                                                                           {:multi true})]
+                                          (if-not (mrt/acknowledged? result)
+                                                  (throw (Exception. errors/UPDATING-DOCUMENTS-ORDER-FAILURE)))))]
+         (if-let [document (reader/get-document-by-id collection-name document-id)]
+                 (if-let [document-copy (prepare-document collection-name document options)]
+                         (do (increase-documents-order! collection-name document-copy)
+                             (if-let [document-copy (adaptation/duplicate-input document-copy)]
+                                     (let [result (insert-and-return! collection-name document-copy)]
+                                          (adaptation/duplicate-output result)))))
+                 (throw (Exception. errors/DOCUMENT-DOES-NOT-EXISTS-ERROR)))))
 
 (defn duplicate-document!
   ; @param (string) collection-name
@@ -658,23 +748,22 @@
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "copy" kifejezést
   ;    Only w/ {:language-id ...}
   ;   :language-id (keyword)(opt)
-  ;    Milyen nyelven használja a "copy" kifejezést a névhez hozzáfűzéskor
+  ;    Milyen nyelven használja a "copy" kifejezést a hozzáfűzéskor
   ;    Only w/ {:label-key ...}
-  ;   :modifier-f (function)(opt)
   ;   :ordered? (boolean)(opt)
   ;    Default: false
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/duplicate-document! "my-collection" "my-document")
+  ;  (mongo-db/duplicate-document! "my-collection" "MyObjectId")
   ;  =>
-  ;  {:my-namespace/id "..." :my-namespace/label "My document"}
+  ;  {:namespace/id "MyObjectId" :namespace/label "My document"}
   ;
   ; @example
-  ;  (mongo-db/duplicate-document! "my-collection" "my-document" {:label-key   :my-namespace/label
-  ;                                                               :language-id :en})
+  ;  (mongo-db/duplicate-document! "my-collection" "MyObjectId" {:label-key   :namespace/label
+  ;                                                              :language-id :en})
   ;  =>
-  ;  {:my-namespace/id "..." :my-namespace/label "My document copy"}
+  ;  {:namespace/id "MyObjectId" :namespace/label "My document copy"}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
@@ -682,8 +771,9 @@
    (duplicate-document! collection-name document-id {:ordered? false}))
 
   ([collection-name document-id {:keys [ordered?] :as options}]
-   (if ordered? (duplicate-ordered-document!   collection-name document-id options)
-                (duplicate-unordered-document! collection-name document-id options))))
+   (try (if ordered? (duplicate-ordered-document!   collection-name document-id options)
+                     (duplicate-unordered-document! collection-name document-id options))
+        (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
 
 
 
@@ -697,7 +787,7 @@
   ;    (integer) document-dex]]
   ;
   ; @usage
-  ;  (mongo-db/reorder-documents "my-collection" [["my-document" 1] ["your-document" 2]])
+  ;  (mongo-db/reorder-documents "my-collection" [["MyObjectId" 1] ["your-document" 2]])
   ;
   ; @return (vectors in vector)
   [collection-name document-order]

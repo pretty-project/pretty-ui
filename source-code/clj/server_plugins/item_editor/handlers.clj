@@ -38,7 +38,7 @@
         suggestion-keys   (pathom/env->param env :suggestion-keys)
         all-documents     (mongo-db/get-all-documents  extension-id)
         suggestion-keys   (keyword/add-items-namespace item-namespace suggestion-keys)
-        suggestion-values (db/get-specified-values all-documents suggestion-keys string/nonempty?)]
+        suggestion-values (db/get-specified-values     all-documents  suggestion-keys string/nonempty?)]
        (validator/validate-data suggestion-values)))
 
 

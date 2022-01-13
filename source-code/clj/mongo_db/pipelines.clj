@@ -36,13 +36,13 @@
   ;     ...]}
   ;
   ; @example
-  ;  (mongo-db/filter-pattern->filter-query {:or  [[:my-namespace/my-key   false]
-  ;                                                [:my-namespace/my-key   nil]]
-  ;                                          :and [[:my-namespace/your-key true]]})
+  ;  (mongo-db/filter-pattern->filter-query {:or  [[:namespace/my-key   false]
+  ;                                                [:namespace/my-key   nil]]
+  ;                                          :and [[:namespace/your-key true]]})
   ;  =>
-  ;  {"$or"  [{"my-namespace/my-key"   false}
-  ;           {"my-namespace/my-key"   nil}]
-  ;   "$and" [{"my-namespace/your-key" true}]}
+  ;  {"$or"  [{"namespace/my-key"   false}
+  ;           {"namespace/my-key"   nil}]
+  ;   "$and" [{"namespace/your-key" true}]}
   ;
   ; @return (maps in vector)
   [filter-pattern]
@@ -63,11 +63,11 @@
   ;     ...]}
   ;
   ; @example
-  ;  (mongo-db/search-pattern->search-query {:or [[:my-namespace/my-key   "Xyz"]
-  ;                                               [:my-namespace/your-key "Xyz"]]})
+  ;  (mongo-db/search-pattern->search-query {:or [[:namespace/my-key   "Xyz"]
+  ;                                               [:namespace/your-key "Xyz"]]})
   ;  =>
-  ;  {"$or" [{"my-namespace/my-key"   {"$regex" "Xyz" "$options" "i"}}
-  ;          {"my-namespace/your-key" {"$regex" "Xyz" "$options" "i"}}]}
+  ;  {"$or" [{"namespace/my-key"   {"$regex" "Xyz" "$options" "i"}}
+  ;          {"namespace/your-key" {"$regex" "Xyz" "$options" "i"}}]}
   ;
   ; @return (map)
   ;  {:and (maps in vector)
@@ -84,9 +84,9 @@
   ;    (integer) sort-direction]]
   ;
   ; @example
-  ;  (mongo-db/sort-pattern->sort-query [[:my-namespace/my-key -1] [...]])
+  ;  (mongo-db/sort-pattern->sort-query [[:namespace/my-key -1] [...]])
   ;  =>
-  ;  {"my-namespace/my-key" -1 ...}
+  ;  {"namespace/my-key" -1 ...}
   ;
   ; @return (map)
   [sort-pattern]
@@ -103,9 +103,9 @@
   ; @param (vector) field-pattern
   ;
   ; @example
-  ;  (mongo-db/field-pattern->field-operation [:my-namespace/name [:my-namespace/first-name :my-namespace/last-name]])
+  ;  (mongo-db/field-pattern->field-operation [:namespace/name [:namespace/first-name :namespace/last-name]])
   ;  =>
-  ;  {"$addFields" {"my-namespace/name" {"$concat" ["$my-namespace/first-name" " " "$my-namespace/last-name"]}}}
+  ;  {"$addFields" {"namespace/name" {"$concat" ["$namespace/first-name" " " "$namespace/last-name"]}}}
   ;
   ; @return (map)
   ;  {"$addFields" (map)}
@@ -128,11 +128,11 @@
   ;   :sort-pattern (vectors in vector)}
   ;
   ; @usage
-  ;  (mongo-db/get-pipeline {:filter-pattern {:or [[:my-namespace/my-key   false]
-  ;                                                [:my-namespace/my-key   nil]]}
-  ;                          :search-pattern {:or [[:my-namespace/my-key   "Xyz"]
-  ;                                                [:my-namespace/your-key "Xyz"]]}
-  ;                          :sort-pattern [:my-namespace/my-key -1]
+  ;  (mongo-db/get-pipeline {:filter-pattern {:or [[:namespace/my-key   false]
+  ;                                                [:namespace/my-key   nil]]}
+  ;                          :search-pattern {:or [[:namespace/my-key   "Xyz"]
+  ;                                                [:namespace/your-key "Xyz"]]}
+  ;                          :sort-pattern [:namespace/my-key -1]
   ;                          :max-count 20
   ;                          :skip      40})
   ;

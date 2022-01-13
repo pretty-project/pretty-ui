@@ -15,7 +15,6 @@
 
 (ns app-plugins.item-editor.subs
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.eql       :as eql]
               [mid-fruits.vector    :as vector]
               [x.app-activities.api :as activities]
               [x.app-components.api :as components]
@@ -100,6 +99,18 @@
   [db [_ extension-id item-namespace]]
   (let [current-item (r get-current-item db extension-id)]
        (db/document->namespaced-document current-item item-namespace)))
+
+(defn export-copy-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace]]
+  (let [current-item (r get-current-item db extension-id)
+        copy-item    (dissoc current-item :added-at :added-by :id :modified-at :modified-by)]
+       (db/document->namespaced-document copy-item item-namespace)))
 
 (defn get-data-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,17 +244,6 @@
        ; (UX-szempontból) nem számítanak az elemen végzett változtatásnak!
        (not= (dissoc current-item :archived? :favorite?)
              (dissoc backup-item  :archived? :favorite?))))
-
-(defn get-current-item-entity
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)]
-       (eql/id->entity current-item-id item-namespace)))
 
 (defn download-suggestions?
   ; WARNING! NON-PUBLIC! DO NOT USE!

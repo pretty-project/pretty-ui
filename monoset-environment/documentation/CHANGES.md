@@ -1,5 +1,15 @@
 
+# x4.5.3
+- Az item-editor plugin példányaiban a pathom handler függvények a megváltozott mongo-db névtér
+  függvényeit használják!
+
+
+
 # x4.5.2
+- A mongo-db adatbázisban tárolt dokumentumok azonsítói ezentúl BSON ObjectId objektumként tárolódnak
+  az adatbázisban. Az átálláshoz szükséges az összes kollekciót kiüríteni és a dokumentokat újból
+  hozzáadni!
+
 - Az x.app-components.api/stated és x.app-components.api/subscriber komponensek
   {:component ...} tulajdonsága ezentúl {:render-f ...} néven használható!
   [components/subscriber {:component ...}] -> [components/subscriber {:render-f ...}]

@@ -1,6 +1,7 @@
 
 (ns mongo-db.api
-    (:require [mongo-db.connection]
+    (:require [mongo-db.adaptation]
+              [mongo-db.connection]
               [mongo-db.engine]
               [mongo-db.actions   :as actions]
               [mongo-db.pipelines :as pipelines]
@@ -13,13 +14,17 @@
 
 ; mongo-db.actions
 (def insert-document!    actions/insert-document!)
+(def insert-documents!   actions/insert-documents!)
 (def save-document!      actions/save-document!)
-
-
-(def add-document!       actions/add-document!)
-(def add-documents!      actions/add-documents!)
-(def upsert-document!    actions/upsert-document!)
+(def save-documents!     actions/save-documents!)
 (def update-document!    actions/update-document!)
+(def update-documents!   actions/update-documents!)
+(def upsert-document!    actions/upsert-document!)
+(def upsert-documents!   actions/upsert-documents!)
+
+
+
+(def add-documents!      actions/add-documents!)
 (def merge-document!     actions/merge-document!)
 (def merge-documents!    actions/merge-documents!)
 (def remove-document!    actions/remove-document!)
@@ -36,6 +41,9 @@
 (def count-pipeline                 pipelines/count-pipeline)
 
 ; mongo-db.reader
+(def get-collection-namespace    reader/get-collection-namespace)
+(def get-all-document-count      reader/get-all-document-count)
+(def get-document-count-by-query reader/get-document-count-by-query)
 (def get-all-documents           reader/get-all-documents)
 (def get-documents-by-query      reader/get-documents-by-query)
 (def get-document-by-query       reader/get-document-by-query)

@@ -18,13 +18,13 @@
 (defn- get-my-type-item-f
   ; @param (map) env
   ; @param (map) resolver-props
-  ;  {:my-type/id (string)}
   ;
   ; @return (namespaced map)
-  [_ {:my-type/keys [id]}]
-  (if-let [document (mongo-db/get-document-by-id "my-collection" id)]
-          ; XXX#6074
-          (validator/validate-data document)))
+  [env _]
+  (let [item-id (pathom/env->param env :item-id)]
+       (if-let [document (mongo-db/get-document-by-id "my-collection" item-id)]
+               ; XXX#6074
+               (validator/validate-data document))))
 
 (defresolver get-my-type-item
              ; @param (map) env
@@ -34,14 +34,7 @@
              ; @return (namespaced map)
              ;  {:my-extension/get-my-type-item (namespaced map)}
              [env resolver-props]
-             ; A felsorolt tulajdonságok szükségesek az item-editor plugin működéséhez:
-             {::pathom.co/output [:my-type/id
-                                  :my-type/added-at
-                                  :my-type/archived?
-                                  :my-type/description
-                                  :my-type/favorite?
-                                  :my-type/modified-at]}
-             (get-my-type-item-f env resolver-props))
+             {:my-extension/get-my-type-item (get-my-type-item-f env resolver-props)})
 
 
 
@@ -94,6 +87,8 @@
              ; @return (namespaced map)
              [env my-type-item]
              {::pathom.co/op-name 'my-extension/duplicate-my-type-item!}
+             ; Az item-editor plugin az elem aktuális (nem feltétlenül az elmentett) változatát
+             ; küldi el a szerver számára, hogy az új elemként hozza létre az elküldött másolatot.
              (return {}))
 
 

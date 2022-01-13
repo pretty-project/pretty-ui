@@ -91,7 +91,7 @@
              ; @return (namespaced maps in vector)
              [{:keys [items]}]
              {::pathom.co/op-name 'clients/undo-delete-client-items!}
-             (mongo-db/add-documents! "clients" items))
+             (mongo-db/insert-documents! "clients" items))
 
 (defmutation merge-client-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!

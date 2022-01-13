@@ -174,6 +174,9 @@
 ; x.app-elements.engine.table
 (def table-attributes table/table-attributes)
 
+; x.app-elements.engine.targetable
+(def element-id->target-id targetable/element-id->target-id)
+
 ; x.app-elements.engine.visible
 (def on-hide-function                visible/on-hide-function)
 (def on-show-function                visible/on-show-function)

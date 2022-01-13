@@ -177,9 +177,9 @@
   ; @param (keyword) action-id
   ;
   ; @example
-  ;  (engine/resolver-name :my-extension :my-type :suggestions)
+  ;  (engine/resolver-id :my-extension :my-type :item)
   ;  =>
-  ;  :my-extension/get-my-type-suggestions
+  ;  :my-extension/get-my-type-item
   ;
   ; @return (keyword)
   [extension-id item-namespace action-id]

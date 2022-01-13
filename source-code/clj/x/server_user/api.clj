@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.api
-    (:require [x.server-user.account-handler  :as account-handler]
+    (:require ;[x.server-user.installer]
+              [x.server-user.account-handler  :as account-handler]
               [x.server-user.engine           :as engine]
               [x.server-user.profile-handler  :as profile-handler]
               [x.server-user.session-handler  :as session-handler]

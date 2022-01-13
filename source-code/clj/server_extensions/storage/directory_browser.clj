@@ -21,8 +21,9 @@
   ;
   ; @return (namespaced map)
   [{:keys [request]} directory-item]
-  (mongo-db/add-document! "directories" directory-item
-                          {:prototype-f #(prototypes/added-document-prototype request :directory %)}))
+  (mongo-db/insert-document! "directories" directory-item
+                             {:prototype-f #(prototypes/added-document-prototype request :directory %)
+                              :ordered? true}))
 
 (defmutation add-directory-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,8 +44,8 @@
   ;
   ; @return (namespaced map)
   [{:keys [request]} file-item]
-  (mongo-db/add-document! "files" file-item
-                          {:prototype-f #(prototypes/added-document-prototype request :file %)}))
+  (mongo-db/insert-document! "files" file-item
+                             {:prototype-f #(prototypes/added-document-prototype request :file %)}))
 
 (defmutation add-file-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!

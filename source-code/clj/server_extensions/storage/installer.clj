@@ -3,7 +3,6 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
               [server-fruits.io   :as io]
-              [x.app-details      :as details]
               [x.server-core.api  :as a :refer [r]]
               [x.server-media.api :as media]
               [x.server-user.api  :as user]
@@ -29,17 +28,18 @@
                            :file/filename    engine/SAMPLE-FILE-FILENAME
                            :file/description ""
                            :file/filesize    0
-                           :file/colors     []
-                           :file/path       [{:directory/id engine/ROOT-DIRECTORY-ID}]})
+                           :file/colors      []
+                           :file/path        [{:directory/id engine/ROOT-DIRECTORY-ID}]})
 
 
 
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- add-root-directory!
+(defn add-root-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
+  (println "[:storage] Adding root directory document ...")
   (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
         sample-file-filesize (io/get-filesize sample-file-filepath)]
        (directory-browser/add-directory-item-f {:request {:session user/SYSTEM-ACCOUNT}}
@@ -48,6 +48,7 @@
 (defn- add-sample-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
+  (println "[:storage] Adding sample file document ...")
   (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
         sample-file-filesize (io/get-filesize sample-file-filepath)]
        (directory-browser/add-file-item-f {:request {:session user/SYSTEM-ACCOUNT}}
@@ -57,11 +58,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (if-let [root-directory-document (mongo-db/get-document-by-id "directories" engine/ROOT-DIRECTORY-ID)]
-          (let [root-directory-added-at (get root-directory-document :directory/added-at)])
-             ;(println "[:storage] installed at:" root-directory-added-at)
-          (do (println "[:storage] Installing extension ...")
-              (add-root-directory!)
-              (add-sample-file!))))
+          (return nil)
+          (add-root-directory!))
+  (if-let [sample-file-document (mongo-db/get-document-by-id "files" engine/SAMPLE-FILE-ID)]
+          (return nil)
+          (add-sample-file!)))
 
 (a/reg-fx :storage/check-install! check-install!)
 

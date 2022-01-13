@@ -50,7 +50,7 @@
   ; @param (nil or string)
   [n dex]
   (when (and (nonempty? n)
-             (> (count n) dex))
+             (>  (count n) dex))
         (nth n dex)))
 
 (defn part

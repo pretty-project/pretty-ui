@@ -68,7 +68,17 @@
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:file/alias filename :filename generated-filename :file/filesize size :file/id file-id}]
-       (println (str "save-x : " (mongo-db/save-document! "directories" {:x/a :aaa})))))
+
+
+
+       (println (str "kkkkk : " (mongo-db/duplicate-document! "directories" "61de13a1ffc7a6839cde858c"
+                                                           {:prototype-f #(prototypes/duplicated-document-prototype ;{:session x.server-user.api/SYSTEM-ACCOUNT}
+                                                                                                                    (:request env)
+                                                                                                                    :directory %)
+                                                            :ordered? true})))))
+
+
+
        ; Copy the temporary file to storage, and delete the temporary file
        ;(io/copy-file!   tempfile filepath)
        ;(io/delete-file! tempfile)))

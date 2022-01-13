@@ -16,7 +16,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.digit-field
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [app-fruits.dom            :as dom]
+              [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
               [mid-fruits.vector         :as vector]
               [x.app-core.api            :as a :refer [r]]
@@ -31,7 +32,7 @@
 (def DIGIT-WIDTH 36)
 
 ; @constant (px)
-(def DIGIT-SPACE 12)
+(def DIGIT-GAP 12)
 
 ; @constant (integer)
 (def DEFAULT-DIGIT-COUNT 4)
@@ -49,7 +50,7 @@
   ; @return (integer)
   [field-props]
   (+ (* DIGIT-WIDTH 4)
-     (* DIGIT-SPACE 3)))
+     (* DIGIT-GAP   3)))
 
 
 
@@ -59,12 +60,15 @@
 (defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) field-id
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:digit-count (integer)}
-  [field-props]
-  (merge {:digit-count DEFAULT-DIGIT-COUNT}
+  ;  {:digit-count (integer)
+  ;   :value-path (item-path vector)}
+  [field-id field-props]
+  (merge {:digit-count DEFAULT-DIGIT-COUNT
+          :value-path  (engine/default-value-path field-id)}
          (param field-props)))
 
 
@@ -90,7 +94,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- digit
+(defn- digit-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -98,9 +102,12 @@
   ;
   ; @return (hiccup)
   [field-id field-props]
-  [:div.x-digit-field--digit])
+  [:input.x-digit-field--input {:type "text"
+                                :id (engine/element-id->target-id field-id)
+                                :on-change #(let [v (dom/event->value %)]
+                                                 (a/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
 
-(defn- digits
+(defn- digit-field-cover
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -108,9 +115,12 @@
   ;
   ; @return (hiccup)
   [field-id field-props]
-  (reduce #(conj %1 [digit])
-           [:div.x-digit-field--digits {:style {:width (css/px (field-props->digits-width field-props))}}]
-           (range 4)))
+  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (engine/element-id->target-id field-id)))
+                                                                  ; prevent selecting
+                                                                  :on-mouse-down #(.preventDefault %)}
+                                                                 (mid-fruits.string/get-nth-character (:value field-props) %2)]))
+    [:div.x-digit-field--cover {:style {:width (-> field-props field-props->digits-width css/px)}}]
+    (range 4)))
 
 (defn- digit-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,7 +131,8 @@
   ; @return (hiccup)
   [field-id field-props]
   [:div.x-digit-field (engine/element-attributes field-id field-props)
-                      [digits                    field-id field-props]])
+                      [digit-field-input field-id field-props]
+                      [digit-field-cover field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -130,7 +141,8 @@
   ;    Default: DEFAULT-DIGIT-COUNT
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
-  ;    Default: :none}
+  ;    Default: :none
+  ;   :value-path (item-path vector)}
   ;
   ; @usage
   ;  [elements/digit-field {...}]
@@ -143,7 +155,7 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (field-props-prototype field-props)]
+   (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
                                {:render-f      #'digit-field
                                 :element-props field-props

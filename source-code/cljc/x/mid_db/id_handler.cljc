@@ -55,10 +55,10 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (vector? n)
-                (= 2 (count n))
-                (keyword? (first  n))
-                (string?  (second n)))))
+  (and (vector? n)
+       (= 2 (count n))
+       (-> n first  keyword?)
+       (-> n second string?)))
 
 (defn document-link?
   ; @param (vector) n
@@ -70,10 +70,10 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (map? n)
-                (= 1 (count n))
-                (keyword? (first (keys n)))
-                (string?  (first (vals n))))))
+  (and (map? n)
+       (= 1 (count n))
+       (-> n keys first keyword?)
+       (-> n vals first string?)))
 
 (defn document-id->document-link
   ; @param (string) document-id

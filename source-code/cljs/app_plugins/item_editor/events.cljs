@@ -156,9 +156,13 @@
   ;
   ; @return (map)
   [db [_ extension-id _ server-response]]
-  (let [suggestions (get server-response :item-editor/get-item-suggestions)
-        suggestions (validator/clean-validated-data suggestions)]
-       (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions)))
+  (let [suggestions (get server-response :item-editor/get-item-suggestions)]
+       (if (validator/data-valid? suggestions)
+           ; If the received suggestions is valid ...
+           (let [suggestions (validator/clean-validated-data suggestions)]
+                (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions))
+           ; If the received suggestions is NOT valid ...
+           (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -169,14 +173,17 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [current-item-entity (r subs/get-current-item-entity db extension-id item-namespace)
-        document            (get server-response current-item-entity)
-        ; XXX#3907
-        ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
-        ; a letöltött dokumentumot
-        document (-> document validator/clean-validated-data db/document->non-namespaced-document)]
-       (as-> db % (assoc-in % [extension-id :item-editor/data-item] document)
-                  (r backup-current-item! % extension-id))))
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :item)
+        document    (get server-response resolver-id)]
+       (if (validator/data-valid? document)
+           ; XXX#3907
+           ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
+           ; a letöltött dokumentumot
+           (let [document (-> document validator/clean-validated-data db/document->non-namespaced-document)]
+                (as-> db % (assoc-in % [extension-id :item-editor/data-item] document)
+                           (r backup-current-item! % extension-id)))
+           ; If the received document is NOT valid ...
+           (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
 
 (defn store-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -210,16 +217,12 @@
   ;
   ; @return (map)
   [db [event-id extension-id item-namespace server-response]]
-  (if-let [error-occured? (validator/data-structure-invalid? server-response)]
-          ; If document or suggestions are NOT valid ...
-          (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true)
-          ; If document and suggestions are valid ...
-          (cond-> db (r subs/download-item?                db extension-id item-namespace)
-                     (store-downloaded-item!        [event-id extension-id item-namespace server-response])
-                     (r subs/download-suggestions?         db extension-id item-namespace)
-                     (store-downloaded-suggestions! [event-id extension-id item-namespace server-response])
-                     (r subs/get-meta-value                db extension-id item-namespace :recovery-mode?)
-                     (recover-item!                 [event-id extension-id item-namespace]))))
+  (cond-> db (r subs/download-item?                db extension-id item-namespace)
+             (store-downloaded-item!        [event-id extension-id item-namespace server-response])
+             (r subs/download-suggestions?         db extension-id item-namespace)
+             (store-downloaded-suggestions! [event-id extension-id item-namespace server-response])
+             (r subs/get-meta-value                db extension-id item-namespace :recovery-mode?)
+             (recover-item!                 [event-id extension-id item-namespace])))
 
 (a/reg-event-db :item-editor/receive-item! receive-item!)
 

@@ -13,6 +13,13 @@
 
 
 # x4.5.0
+- user-ek jelszavait hash-elve tárolni
+
+- user-ek mongo-db-be
+  az isntaller csináljon egy demo(pw: mono) és egy developer(pw: mono) user-t
+  a developer usernek legyen egy "developer" role-ja. A developer role inditsa el a developer-modot
+  legyen eltárolva a developer user-nek, a mongo-ban, hogy print-events? ...
+
 - A mongo-db kezelje a permission-öket, a local-db ne kezelje a permission-öket
 
 - {:content :content-props :subscriber} formula kivezetése ...

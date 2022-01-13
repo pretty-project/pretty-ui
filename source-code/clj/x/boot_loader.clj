@@ -18,11 +18,10 @@
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-views.api]
-              [mid-fruits.candy       :refer [param return]]
-              [x.app-details          :as details]
-              [x.server-core.api      :as a :refer [r]]
-              [x.server-db.api        :as db]
-              [x.server-installer.api :as installer]))
+              [mid-fruits.candy  :refer [param return]]
+              [x.app-details     :as details]
+              [x.server-core.api :as a :refer [r]]
+              [x.server-db.api   :as db]))
 
 
 
@@ -91,19 +90,8 @@
                        {:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
                        ; A konfigurációs fájlok tartalmának eltárolása
                        {:tick   0 :dispatch [:core/config-server!]}
-                       ; A telepítés vizsgálata
-                       {:tick 500 :dispatch [:boot-loader/check-install!]}]}))
-
-(a/reg-event-fx
-  :boot-loader/check-install!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (println details/app-codename "checking installation ...")
-      (if (r installer/server-installed? db)
-          (let [installed-at (r installer/get-installed-at db)]
-               (println details/app-codename "installed at:" installed-at)
-               [:boot-loader/initialize-server!])
-          [:installer/install-server!])))
+                       ; A szerver inicializálása
+                       {:tick 500 :dispatch [:boot-loader/initialize-server!]}]}))
 
 (a/reg-event-fx
   :boot-loader/initialize-server!

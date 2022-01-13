@@ -20,40 +20,23 @@
   ;
   ; @param (map) env
   ; @param (map) resolver-props
-  ;  {:client/id (string)}
   ;
   ; @return (namespaced map)
-  [_ {:keys [client/id]}]
-  (if-let [document (mongo-db/get-document-by-id "clients" id)]
-          (validator/validate-data document)))
+  [env _]
+  (let [item-id (pathom/env->param env :item-id)]
+       (if-let [document (mongo-db/get-document-by-id "clients" item-id)]
+               (validator/validate-data document))))
 
 (defresolver get-client-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
-             ;  {:client/id (string)}
              ;
              ; @return (namespaced map)
              ;  {:clients/get-client-item (namespaced map)}
              [env resolver-props]
-             {::pathom.co/output [:client/id
-                                  :client/added-at
-                                  :client/address
-                                  :client/archived?
-                                  :client/city
-                                  :client/colors
-                                  :client/country
-                                  :client/description
-                                  :client/email-address
-                                  :client/favorite?
-                                  :client/first-name
-                                  :client/last-name
-                                  :client/modified-at
-                                  :client/phone-number
-                                  :client/vat-no
-                                  :client/zip-code]}
-             (get-client-item-f env resolver-props))
+             {:clients/get-client-item (get-client-item-f env resolver-props)})
 
 
 
@@ -69,7 +52,7 @@
              ; @return (namespaced map)
              [_ client-item]
              {::pathom.co/op-name 'clients/undo-delete-client-item!}
-             (mongo-db/add-document! "clients" client-item))
+             (mongo-db/insert-document! "clients" client-item))
 
 (defmutation save-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -80,8 +63,8 @@
              ; @return (namespaced map)
              [{:keys [request]} client-item]
              {::pathom.co/op-name 'clients/save-client-item!}
-             (mongo-db/upsert-document! "clients" client-item
-                                        {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
+             (mongo-db/save-document! "clients" client-item
+                                      {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
 (defmutation merge-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,8 +98,8 @@
              ; @return (namespaced map)
              [{:keys [request]} client-item]
              {::pathom.co/op-name 'clients/duplicate-client-item!}
-             (mongo-db/add-document! "clients" client-item
-                                     {:prototype-f #(prototypes/duplicated-document-prototype request :clients :client %)}))
+             (mongo-db/insert-document! "clients" client-item
+                                        {:prototype-f #(prototypes/duplicated-document-prototype request :client %)}))
 
 
 
