@@ -50,11 +50,13 @@
  ; @param (map) database-details
  ;  {:database-host (string)
  ;   :database-name (string)
- ;   :database-port (integer)}
+ ;   :database-port (integer)
+ ;   :docker-database-host (string)}
  :database-details
  {:database-host "127.0.0.1"
   :database-name "x"
-  :database-port 27017}
+  :database-port 27017
+  :docker-database-host "mongo"}
 
 
  ; @param (map) seo-details

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.4.9
+; Version: v0.8.8
+; Compatibility: x4.5.2
 
 
 
@@ -214,7 +214,7 @@
   ; @return (map)
   [db [_ extension-id]]
   (let [current-item-id (r get-current-item-id db extension-id)]
-       (get-in db [extension-id :item-editor/meta-items :local-changes current-item-id])))
+       (get-in db [extension-id :item-editor/local-changes current-item-id])))
 
 (defn get-recovered-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.6.6
-; Compatibility: x4.1.5
+; Version: v0.7.0
+; Compatibility: x4.5.2
 
 
 
@@ -17,7 +17,6 @@
     (:require [x.app-db.backup-handler       :as backup-handler]
               [x.app-db.collection-handler   :as collection-handler]
               [x.app-db.data-history-handler :as data-history-handler]
-              [x.app-db.data-item-handler    :as data-item-handler]
               [x.app-db.data-order-handler   :as data-order-handler]
               [x.app-db.data-range-handler   :as data-range-handler]
               [x.app-db.document-handler     :as document-handler]
@@ -65,8 +64,6 @@
 
 ; x.app-db.collection-handler
 (def collection->namespace                  collection-handler/collection->namespace)
-(def collection->collection-namespaced?     collection-handler/collection->collection-namespaced?)
-(def collection->collection-non-namespaced? collection-handler/collection->collection-non-namespaced?)
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
 (def trim-collection                        collection-handler/trim-collection)
@@ -97,11 +94,6 @@
 (def get-data-history-result    data-history-handler/get-data-history-result)
 (def clear-data-history!        data-history-handler/clear-data-history!)
 (def update-data-history!       data-history-handler/update-data-history!)
-
-; x.app-db.data-item-handler
-(def data-item->namespace   data-item-handler/data-item->namespace)
-(def data-item->namespaced? data-item-handler/data-item->namespaced?)
-(def data-item<-id          data-item-handler/data-item<-id)
 
 ; x.app-db.data-order-handler
 (def data-item-last?          data-order-handler/data-item-last?)

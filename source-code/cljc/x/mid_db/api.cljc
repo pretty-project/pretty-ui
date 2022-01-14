@@ -17,7 +17,6 @@
     (:require [x.mid-db.backup-handler       :as backup-handler]
               [x.mid-db.collection-handler   :as collection-handler]
               [x.mid-db.data-history-handler :as data-history-handler]
-              [x.mid-db.data-item-handler    :as data-item-handler]
               [x.mid-db.data-order-handler   :as data-order-handler]
               [x.mid-db.data-range-handler   :as data-range-handler]
               [x.mid-db.document-handler     :as document-handler]
@@ -42,8 +41,6 @@
 
 ; x.mid-db.collection-handler
 (def collection->namespace                  collection-handler/collection->namespace)
-(def collection->collection-namespaced?     collection-handler/collection->collection-namespaced?)
-(def collection->collection-non-namespaced? collection-handler/collection->collection-non-namespaced?)
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
 (def trim-collection                        collection-handler/trim-collection)
@@ -74,11 +71,6 @@
 (def get-data-history-result    data-history-handler/get-data-history-result)
 (def clear-data-history!        data-history-handler/clear-data-history!)
 (def update-data-history!       data-history-handler/update-data-history!)
-
-; x.mid-db.data-item-handler
-(def data-item->namespace   data-item-handler/data-item->namespace)
-(def data-item->namespaced? data-item-handler/data-item->namespaced?)
-(def data-item<-id          data-item-handler/data-item<-id)
 
 ; x.mid-db.data-order-handler
 (def data-item-last?          data-order-handler/data-item-last?)

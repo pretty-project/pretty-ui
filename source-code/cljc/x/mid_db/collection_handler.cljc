@@ -73,26 +73,6 @@
   (if-let [first-document (first collection)]
           (document->namespace first-document)))
 
-(defn collection->collection-namespaced?
-  ; @param (maps in vector) collection
-  ;
-  ; @usage
-  ;  (db/collection->collection-namespaced? [{...} {...} {...}])
-  ;
-  ; @return (boolean)
-  [collection]
-  (boolean (collection->namespace collection)))
-
-(defn collection->collection-non-namespaced?
-  ; @param (maps in vector) collection
-  ;
-  ; @usage
-  ;  (db/collection->collection-non-namespaced? [{...} {...} {...}])
-  ;
-  ; @return (boolean)
-  [collection]
-  (not (collection->collection-namespaced? collection)))
-
 (defn collection->namespaced-collection
   ; @param (maps in vector) collection
   ; @param (keyword) namespace
@@ -365,11 +345,10 @@
    (get-document collection document-id {}))
 
   ([collection document-id context-props]
-   (if (collection->collection-namespaced? collection)
-       (let [namespace (collection->namespace collection)]
-            (get-document-kv collection (keyword/add-namespace namespace :id)
-                             document-id context-props))
-       (get-document-kv collection :id document-id context-props))))
+   (if-let [namespace (collection->namespace collection)]
+           (get-document-kv collection (keyword/add-namespace namespace :id)
+                            document-id context-props)
+           (get-document-kv collection :id document-id context-props))))
 
 (defn get-document-item
   ; @param (maps in vector) collection
@@ -435,13 +414,11 @@
   ; @return (maps in vector)
   [collection document]
   (let [document (document->identified-document document)]
-       (cond (collection->collection-namespaced? collection)
-             (let [namespace (collection->namespace         collection)
-                   document  (document->namespaced-document document namespace)]
-                  (vector/conj-item collection document))
-             (collection->collection-non-namespaced? collection)
-             (let [document (document->non-namespaced-document document)]
-                  (vector/conj-item collection document)))))
+       (if-let [namespace (collection->namespace collection)]
+               (let [document (document->namespaced-document document namespace)]
+                    (vector/conj-item collection document))
+               (let [document (document->non-namespaced-document document)]
+                    (vector/conj-item collection document)))))
 
 (defn remove-document
   ; @param (maps in vector) collection

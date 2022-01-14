@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.5.0
+; Version: v0.8.8
+; Compatibility: x4.5.2
 
 
 
@@ -36,13 +36,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (if-let [recovery-mode? (r subs/get-meta-value db extension-id item-namespace :recovery-mode?)]
-          ; If recovery-mode is enabled ...
-          (-> db (dissoc-in [extension-id :item-editor/data-item])
-                 (update-in [extension-id :item-editor/meta-items] select-keys [:recovery-mode? :local-changes]))
-          ; If recovery-mode is NOT enabled ...
-          (-> db (dissoc-in [extension-id :item-editor/data-item])
-                 (dissoc-in [extension-id :item-editor/meta-items]))))
+  (-> db (dissoc-in [extension-id :item-editor/data-item])
+         ; A {:recovery-mode? ...} tulajdonság kivételével törli az :item-editor/meta-items térképet
+         (update-in [extension-id :item-editor/meta-items] select-keys [:recovery-mode?])))
 
 (defn store-editor-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +95,7 @@
         current-item    (r subs/get-current-item    db extension-id)
         backup-item     (r subs/get-backup-item     db extension-id item-namespace current-item-id)
         local-changes   (map/difference current-item backup-item)]
-       (assoc-in db [extension-id :item-editor/meta-items :local-changes current-item-id] local-changes)))
+       (assoc-in db [extension-id :item-editor/local-changes current-item-id] local-changes)))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,8 +111,8 @@
   (if-not (r subs/editing-item? db extension-id item-namespace item-id)
           ; Ha clean-recovery-data! függvény lefutásának pillanatában ismételten az item-id
           ; azonosítójú elem van megnyitva a szerkesztőben, akkor a másolatok eltávolítása szükségtelen!
-          (-> db (dissoc-in [extension-id :item-editor/backup-items item-id])
-                 (dissoc-in [extension-id :item-editor/meta-items :local-changes item-id]))
+          (-> db (dissoc-in [extension-id :item-editor/backup-items  item-id])
+                 (dissoc-in [extension-id :item-editor/local-changes item-id]))
           (return db)))
 
 (a/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
@@ -203,10 +199,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [recovered-item (r subs/get-recovered-item db extension-id item-namespace)]
+  (let [current-item-id (r subs/get-current-item-id db extension-id)
+        recovered-item  (r subs/get-recovered-item  db extension-id item-namespace)]
        (-> db (assoc-in  [extension-id :item-editor/data-item] recovered-item)
               (dissoc-in [extension-id :item-editor/meta-items :recovery-mode?])
-              (dissoc-in [extension-id :item-editor/meta-items :local-changes]))))
+              (dissoc-in [extension-id :item-editor/local-changes current-item-id]))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

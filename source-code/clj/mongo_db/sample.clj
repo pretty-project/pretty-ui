@@ -85,8 +85,8 @@
 (defn merge-my-document!
   []
   ; @description (mongo-db/merge-document! ...)
-  ; - Ha NEM létezik a megadott azonsítóval rendelkező dokumentum a kollekcióban, akkor NEM hozza létre!
-  ; - Ha létezik a megadott azonsítóval rendelkező dokumentum a kollekcióban, akkor összefésüli.
+  ; - Ha NEM létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor NEM hozza létre!
+  ; - Ha létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor összefésüli.
   ; - A függvény visszatérési értéke sikeres írás esetén true, minden más esetben false.
   (mongo-db/merge-document! "my-collection" {:namespace/my-keyword  :my-value
                                              :namespace/your-string "your-value"
@@ -96,7 +96,7 @@
 (defn remove-my-document!
   []
   ; @description (mongo-db/remove-document! ...)
-  ; - A függvény visszatérési értéke sikeres törlés esetén a dokumentum azonsítója.
+  ; - A függvény visszatérési értéke sikeres törlés esetén a dokumentum azonosítója.
   (mongo-db/remove-document! "my-collection" "MyObjectId"))
 
 (defn duplicate-my-document!

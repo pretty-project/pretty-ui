@@ -24,8 +24,6 @@
 
 ; x.mid-db.collection-handler
 (def collection->namespace                  collection-handler/collection->namespace)
-(def collection->collection-namespaced?     collection-handler/collection->collection-namespaced?)
-(def collection->collection-non-namespaced? collection-handler/collection->collection-non-namespaced?)
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
 (def trim-collection                        collection-handler/trim-collection)
