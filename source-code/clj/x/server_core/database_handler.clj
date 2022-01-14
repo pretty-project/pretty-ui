@@ -27,8 +27,10 @@
   :core/connect-to-database!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [database-name (r config-handler/get-database-detail db :database-name)
-            database-host (r config-handler/get-database-detail db :database-host)
+      (let [is-docker?    (System/getenv "DOCKER")
+            database-name (r config-handler/get-database-detail db :database-name)
+            database-host (if is-docker? (r config-handler/get-database-detail db :docker-database-host)
+                                         (r config-handler/get-database-detail db :database-host))
             database-port (r config-handler/get-database-detail db :database-port)]
            (println details/app-codename "connecting to:" database-name
                                          "database at:"   database-host
