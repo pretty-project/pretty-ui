@@ -21,6 +21,9 @@
 ; @constant (map)
 (def DEFAULT-SETTINGS {:symbol DEFAULT-SYMBOL})
 
+; @constant (string)
+(def SETTINGS-DOCUMENT-ID "61de15aaffc7a6839cde85d9")
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -34,7 +37,7 @@
   ;   {:label (string)
   ;    :value (string)}}
   []
-  (if-let [document (mongo-db/get-document-by-id "trader" "settings")]
+  (if-let [document (mongo-db/get-document-by-id "trader" SETTINGS-DOCUMENT-ID)]
           (-> document (select-keys [:trader/symbol])
                        (db/document->non-namespaced-document))
           (return DEFAULT-SETTINGS)))
@@ -44,7 +47,7 @@
   ;
   ; @param (keyword) item-key
   [item-key]
-  (if-let [document (mongo-db/get-document-by-id "trader" "settings")]
+  (if-let [document (mongo-db/get-document-by-id "trader" SETTINGS-DOCUMENT-ID)]
           (get document (keyword/add-namespace :trader item-key))
           (get DEFAULT-SETTINGS item-key)))
 
@@ -90,9 +93,9 @@
   ;  {:trader/symbol (map)}
   [{:keys [request]} mutation-props]
   (let [document {:trader/symbol (get mutation-props :symbol)
-                  :trader/id     "settings"}]
-       (mongo-db/upsert-document! "trader" document
-                                  {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
+                  :trader/id     SETTINGS-DOCUMENT-ID}]
+       (mongo-db/save-document! "trader" document
+                                {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
 
 (defmutation upload-settings!
              ; WARNING! NON-PUBLIC! DO NOT USE!

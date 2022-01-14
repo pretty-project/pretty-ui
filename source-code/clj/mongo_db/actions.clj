@@ -66,6 +66,17 @@
 ;; -- Error handling ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- drop!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) collection-name
+  ;
+  ; @return (?)
+  [collection-name]
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (try (mcl/drop database collection-name)
+            (catch Exception e (println e (str e "\n" {:collection-name collection-name}))))))
+
 (defn- insert-and-return!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -73,7 +84,7 @@
   ; @param (map) document
   ;  {"_id" (org.bson.types.ObjectId object)}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [collection-name document]
   (let [database (a/subscribed [:mongo-db/get-connection])]
        (try (mcl/insert-and-return database collection-name document)
@@ -86,7 +97,7 @@
   ; @param (namespaced map) document
   ;  {"_id" (org.bson.types.ObjectId object)}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [collection-name document]
   (let [database (a/subscribed [:mongo-db/get-connection])]
        (try (mcl/save-and-return database collection-name document)
@@ -456,10 +467,11 @@
   ([collection-name document-id f options]
    (if-let [conditions (adaptation/apply-conditions document-id)]
            (if-let [document (reader/get-document-by-id collection-name document-id)]
-                   (if-let [document (-> document f adaptation/apply-input)]
-                           (let [result (update! collection-name conditions document {:multi false :upsert false})]
-                                (if (mrt/updated-existing? result)
-                                    (return document))))))))
+                   (if-let [document (prepare-document collection-name document options)]
+                           (if-let [document (-> document f adaptation/apply-input)]
+                                   (let [result (update! collection-name conditions document {:multi false :upsert false})]
+                                        (if (mrt/updated-existing? result)
+                                            (return document)))))))))
 
 ; @usage
 ;  [:mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue")]
@@ -550,6 +562,25 @@
 ; @usage
 ;  [:mongo-db/remove-documents! "my-collection" ["MyObjectId" "YourObjectId"]]
 (a/reg-handled-fx :mongo-db/remove-documents! remove-documents!)
+
+
+
+;; -- Removing documents ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn remove-all-documents!
+  ; @param (string) collection-name
+  ;
+  ; @usage
+  ;  (mongo-db/remove-all-documents! "my-collection")
+  ;
+  ; @return (?)
+  [collection-name]
+  (drop! collection-name))
+
+; @usage
+;  [:mongo-db/remove-all-documents! "my-collection"]
+(a/reg-handled-fx :mongo-db/remove-all-documents! remove-all-documents!)
 
 
 

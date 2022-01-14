@@ -29,7 +29,7 @@
   ;
   ; @return (map)
   ;  {:document-count (integer)
-  ;   :documents (maps in vector)}}
+  ;   :documents (namespaced maps in vector)}}
   [env _]
   (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
         count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
@@ -45,7 +45,7 @@
              ; @return (namespaced map)
              ;  {:my-extension/get-my-type-items (map)
              ;    {:document-count (integer)
-             ;     :documents (maps in vector)}}
+             ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
              {:my-extension/get-my-type-items (get-my-type-items-f env resolver-props)})
 

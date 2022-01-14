@@ -41,7 +41,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [name-field-operation (env->name-field-operation  env)
-        count-pipeline  (item-lister/env->count-pipeline env :clients :client)]
+        count-pipeline       (item-lister/env->count-pipeline env :clients :client)]
        (vector/cons-item count-pipeline name-field-operation)))
 
 
@@ -57,7 +57,7 @@
   ;
   ; @return (map)
   ;  {:document-count (integer)
-  ;   :documents (maps in vector)}}
+  ;   :documents (namespaced maps in vector)}}
   [env _]
   (let [get-pipeline   (env->get-pipeline   env)
         count-pipeline (env->count-pipeline env)]
@@ -73,7 +73,7 @@
              ; @return (namespaced map)
              ;  {:clients/get-client-items (map)
              ;    {:document-count (integer)
-             ;     :documents (maps in vector)}}
+             ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
              {:clients/get-client-items (get-client-items-f env resolver-props)})
 

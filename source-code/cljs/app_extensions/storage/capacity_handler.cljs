@@ -20,7 +20,7 @@
   ;
   ; @return (B)
   [db _]
-  (get-in db [:storage :capacity-handler/meta-items :storage-capacity]))
+  (get-in db [:storage :capacity-handler/meta-items :total-capacity]))
 
 (defn get-storage-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,15 +1,14 @@
 
 (ns server-extensions.storage.file-uploader
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.random  :as random]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [prototypes.api     :as prototypes]
               [server-fruits.http :as http]
               [server-fruits.io   :as io]
               [x.server-core.api  :as a]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
+              [com.wsscode.pathom3.connect.operation       :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.storage.directory-browser :as directory-browser]))
 
 
 
@@ -64,21 +63,13 @@
   ;
   ; @return (namespaced map)
   [env {:keys [directory-id]} {:keys [filename size tempfile]}]
-  (let [file-id            (random/generate-string)
+  (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:file/alias filename :filename generated-filename :file/filesize size :file/id file-id}]
 
-       ;(println "\u001B[0m")
-
-       (println (str "kkkkk : " (mongo-db/merge-document! "playground" {:x/z :zzz :x/id "61e17ba0d617ee83355c80fa"})))))
-                                                                       ;{:x/z :zzz})))))
-
-       ;"61de13a1ffc7a6839cde858c"
-                                                           ;{:prototype-f #(prototypes/duplicated-document-prototype ;{:session x.server-user.api/SYSTEM-ACCOUNT}
-                                                            ;                                                        (:request env)
-                                                                          ;                                          :directory %}
-;                                                            :)))));ordered? true)))))
+       (directory-browser/attach-item!    env directory-id {:file/id file-id})
+       (directory-browser/add-file-item-f env file-item)))
 
 
 

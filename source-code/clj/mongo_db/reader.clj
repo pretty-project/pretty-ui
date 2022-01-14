@@ -8,6 +8,7 @@
               [mid-fruits.vector    :as vector]
               [monger.collection    :as mcl]
               [monger.core          :as mcr]
+              [monger.db            :as mdb]
               [mongo-db.adaptation  :as adaptation]
               [mongo-db.aggregation :as aggregation]
               [mongo-db.engine      :as engine]
@@ -88,6 +89,15 @@
 
 ;; -- Collection functions ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-collection-names
+  ; @usage
+  ;  (mongo-db/get-collection-names)
+  ;
+  ; @return (strings in vector)
+  []
+  (let [database (a/subscribed [:mongo-db/get-connection])]
+       (vec (mdb/get-collection-names database))))
 
 (defn get-collection-namespace
   ; @param (string) collection-name

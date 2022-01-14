@@ -10,6 +10,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def LISTENER-DOCUMENT-ID "61df813dd617ee732f3a0eff")
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -22,7 +30,7 @@
   ; @return (map)
   ;  {:source-code (string)}
   [env _]
-  (let [listener-details (mongo-db/get-document-by-id "trader" "listener-details")]
+  (let [listener-details (mongo-db/get-document-by-id "trader" LISTENER-DOCUMENT-ID)]
        {:source-code (get listener-details :trader/source-code)}))
 
 (defresolver download-editor-data
@@ -81,9 +89,9 @@
   [{:keys [request]} mutation-props]
   (let [source-code (get mutation-props :source-code)
         document    {:trader/source-code (param source-code)
-                     :trader/id          "listener-details"}]
-       (mongo-db/upsert-document! "trader" document
-                                  {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
+                     :trader/id          LISTENER-DOCUMENT-ID}]
+       (mongo-db/save-document! "trader" document
+                                 {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
 
 (defmutation upload-source-code!
              ; WARNING! NON-PUBLIC! DO NOT USE!

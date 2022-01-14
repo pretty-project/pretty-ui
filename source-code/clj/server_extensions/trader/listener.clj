@@ -12,6 +12,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def LISTENER-DOCUMENT-ID "61de13a1ffc7a6839cde858c")
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -20,7 +28,7 @@
   ;
   ; @return (string)
   []
-  (get (mongo-db/get-document-by-id "trader" "listener-details")
+  (get (mongo-db/get-document-by-id "trader" LISTENER-DOCUMENT-ID)
        :trader/source-code))
 
 

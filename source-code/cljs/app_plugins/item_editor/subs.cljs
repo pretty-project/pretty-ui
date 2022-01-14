@@ -40,9 +40,10 @@
   (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-editor/get-current-item-id db :my-extension)
   ;
   ; @return (string)
   [db [_ extension-id]]

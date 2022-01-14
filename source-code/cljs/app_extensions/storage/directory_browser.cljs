@@ -16,18 +16,20 @@
 (a/reg-event-fx
   :storage/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ selected-option]]
-      (case selected-option :upload-files!     [:storage/load-file-uploader!]
-                            :create-directory! [:storage/render-new-directory-name-dialog!])))
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [directory-id (r item-browser/get-current-item-id db :storage)]
+           (case selected-option :upload-files!     [:storage/load-file-uploader! {:directory-id directory-id}]
+                                 :create-directory! []))))
 
 
 
 ;; -- File-item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn file-item
+(defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [id] :as file-props}])
+  [item-dex {:keys [id] :as item-props}]
+  [:div (str item-props)])
 
 
 
@@ -37,7 +39,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-browser/view :storage :directory {:list-element     #'file-item
+  [item-browser/view :storage :directory {:list-element     #'directory-item
                                           :new-item-options [:upload-files! :create-directory!]}])
 
 

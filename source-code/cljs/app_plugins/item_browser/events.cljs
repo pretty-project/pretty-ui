@@ -25,6 +25,18 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn store-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace browser-props]]
+  (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace browser-props)]
+       (assoc-in db [extension-id :item-browser/meta-items :item-id] derived-item-id)))
+
 (defn load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -34,7 +46,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (r events/load-lister! db extension-id item-namespace browser-props))
+  (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
+             (r events/load-lister!    % extension-id item-namespace browser-props)))
 
 
 
@@ -59,12 +72,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:default-item-id (keyword)(opt)}
+  ;  {:default-item-id (string)(opt)}
   ;
   ; @usage
-  ;  [:item-browser/load! :my-extension :my-type {:default-item-id :my-item}]
+  ;  [:item-browser/load! :my-extension :my-type {:default-item-id "my-item"}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
-      (let [derived-item-id (r subs/get-derived-item-id db extension-id browser-props)]
+      (let []
            {:db  (r load-browser! db extension-id item-namespace browser-props)
                       ;  (-> db (dissoc-in [extension-id :browser-data])
                       ;         (dissoc-in [extension-id :browser-meta])
@@ -79,7 +92,7 @@
                               ; nem próbálná meg újra megnézni a szerón, hogy vannak-e elemek
                               ; mert emlékezne, hogy utoljára nulla volt, stb ...
                       ;         (dissoc-in [extension-id :lister-meta])
-                      
+
             ; A request-id is *-browser! miközben az item-lister *-lister! request-eket indít!
             :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
                          [:ui/set-header-title!  (param      extension-id)]

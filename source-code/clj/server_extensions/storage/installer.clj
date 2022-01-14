@@ -19,7 +19,6 @@
                               :directory/alias        ":my-storage"
                               :directory/description  ""
                               :directory/content-size 0
-                              :directory/colors       []
                               :directory/items        []
                               :directory/path         []})
 
@@ -28,7 +27,6 @@
                            :file/filename    engine/SAMPLE-FILE-FILENAME
                            :file/description ""
                            :file/filesize    0
-                           :file/colors      []
                            :file/path        [{:directory/id engine/ROOT-DIRECTORY-ID}]})
 
 

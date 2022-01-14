@@ -31,8 +31,9 @@
 (def form-id    engine/form-id)
 
 ; app-plugins.item-editor.subs
-(def get-body-props   subs/get-body-props)
-(def get-header-props subs/get-header-props)
+(def get-current-item-id subs/get-current-item-id)
+(def get-body-props      subs/get-body-props)
+(def get-header-props    subs/get-header-props)
 
 ; app-plugins.item-editor.views
 (def item-label         views/item-label)

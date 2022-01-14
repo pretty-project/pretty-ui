@@ -14,6 +14,14 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def API-DOCUMENT-ID "61e17f85d617ee83355c80fe")
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -35,7 +43,7 @@
   ;   :api-secret (string)
   ;   :use-mainnet? (boolean)}
   []
-  (if-let [document (mongo-db/get-document-by-id "trader" "api-details")]
+  (if-let [document (mongo-db/get-document-by-id "trader" API-DOCUMENT-ID)]
           (-> document (select-keys [:trader/api-key :trader/api-secret :trader/use-mainnet?])
                        (db/document->non-namespaced-document))))
 
@@ -49,7 +57,7 @@
   ;
   ; @return (*)
   [detail-key]
-  (if-let [document (mongo-db/get-document-by-id "trader" "api-details")]
+  (if-let [document (mongo-db/get-document-by-id "trader" API-DOCUMENT-ID)]
           (get document (keyword/add-namespace :trader detail-key))))
 
 
@@ -185,9 +193,9 @@
   (let [document {:trader/api-key      (get mutation-props :api-key)
                   :trader/api-secret   (get mutation-props :api-secret)
                   :trader/use-mainnet? (get mutation-props :use-mainnet?)
-                  :trader/id           "api-details"}]
-       (dissoc (mongo-db/upsert-document! "trader" document
-                                          {:prototype-f #(prototypes/updated-document-prototype request :trader %)})
+                  :trader/id           API-DOCUMENT-ID}]
+       (dissoc (mongo-db/save-document! "trader" document
+                                        {:prototype-f #(prototypes/updated-document-prototype request :trader %)})
                ; Removing api-secret from the response ...
                :trader/api-secret)))
 

@@ -77,7 +77,7 @@
   [header-id header-props]
   [elements/horizontal-polarity {:start-content [elements/menu-bar {:menu-items (menu-items header-id header-props)}]
                                  :end-content   [:<> [toggle-print-events-button header-id header-props]
-                                                     [ui/popup-close-icon-button header-id header-props]]}])
+                                                     [ui/popup-close-icon-button ::view]]}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -68,9 +68,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
+  ;  {:default-item-id (string)(opt)
+  ;   :search-keys (keywords in vector)(opt)
+  ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-browser/initialize! :my-extension :my-type {...}]
+  ;  [:item-browser/initialize! :my-extension :my-type {:default-item-id "my-item"
+  ;                                                     :search-keys     [:name :email-address]}]
   (fn [cofx [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
            {:dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)

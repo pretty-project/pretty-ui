@@ -504,8 +504,8 @@
             files-data         (dom/file-selector->files-data         file-selector)
             files-meta         (dom/file-selector->files-meta         file-selector)]
             ; 1. Eltárolja a kiválasztott fájlok számát, méretét és egyéb adatait.
-           {:db (-> db (assoc-in [:storage :file-uploader/data-items] files-data)
-                       (assoc-in [:storage :file-uploader/meta-items] files-meta))
+           {:db (-> db (assoc-in  [:storage :file-uploader/data-items]       files-data)
+                       (update-in [:storage :file-uploader/meta-items] merge files-meta))
             ; 2. Ha van kiválasztva fájl a fájltallózóval, akkor megnyitja a fájlfeltöltő ablakot.
             :dispatch-if [any-file-selected? [:storage/render-file-uploader! uploader-id]]})))
 

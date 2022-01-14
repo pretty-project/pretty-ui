@@ -90,7 +90,7 @@
   ; - Ha NEM létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor NEM hozza létre!
   ; - Ha létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor végrehajtja rajta a függvényt.
   ; - A függvény visszatérési értéke sikeres írás esetén a módosított dokumentum.
-  (mongo-db/merge-document! "my-collection" "MyObjectId"  #(merge % {:namespace/my-keyword :my-value})
+  (mongo-db/apply-document! "my-collection" "MyObjectId"  #(merge % {:namespace/my-keyword :my-value})
                                             {:prototype-f #(update-prototype %)}))
 
 (defn remove-my-document!

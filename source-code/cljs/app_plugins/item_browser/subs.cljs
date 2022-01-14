@@ -29,16 +29,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) browser-props
   ;  {:default-item-id (keyword)(opt)}
   ;
   ; @return (keyword)
   ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id.
-  [db [_ extension-id {:keys [default-item-id]}]]
+  [db [_ extension-id item-namespace {:keys [default-item-id]}]]
   (if-let [derived-item-id (r router/get-current-route-path-param db :item-id)]
           (let [derived-item-id (keyword derived-item-id)]
                (return derived-item-id))
           (return default-item-id)))
+
+(defn get-current-item-id
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-browser/get-current-item-id db :my-extension)
+  ;
+  ; @return (string)
+  [db [_ extension-id]]
+  (get-in db [extension-id :item-browser/meta-items :item-id]))
 
 (defn get-current-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

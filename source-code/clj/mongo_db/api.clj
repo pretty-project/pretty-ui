@@ -2,8 +2,8 @@
 (ns mongo-db.api
     (:require [mongo-db.adaptation]
               [mongo-db.connection]
-              [mongo-db.engine]
               [mongo-db.actions   :as actions]
+              [mongo-db.engine    :as engine]
               [mongo-db.pipelines :as pipelines]
               [mongo-db.reader    :as reader]))
 
@@ -13,19 +13,23 @@
 ;; ----------------------------------------------------------------------------
 
 ; mongo-db.actions
-(def insert-document!    actions/insert-document!)
-(def insert-documents!   actions/insert-documents!)
-(def save-document!      actions/save-document!)
-(def save-documents!     actions/save-documents!)
-(def update-document!    actions/update-document!)
-(def update-documents!   actions/update-documents!)
-(def upsert-document!    actions/upsert-document!)
-(def upsert-documents!   actions/upsert-documents!)
-(def apply-document!     actions/apply-document!)
-(def remove-document!    actions/remove-document!)
-(def remove-documents!   actions/remove-documents!)
-(def duplicate-document! actions/duplicate-document!)
-(def reorder-documents!  actions/reorder-documents!)
+(def insert-document!      actions/insert-document!)
+(def insert-documents!     actions/insert-documents!)
+(def save-document!        actions/save-document!)
+(def save-documents!       actions/save-documents!)
+(def update-document!      actions/update-document!)
+(def update-documents!     actions/update-documents!)
+(def upsert-document!      actions/upsert-document!)
+(def upsert-documents!     actions/upsert-documents!)
+(def apply-document!       actions/apply-document!)
+(def remove-document!      actions/remove-document!)
+(def remove-documents!     actions/remove-documents!)
+(def remove-all-documents! actions/remove-all-documents!)
+(def duplicate-document!   actions/duplicate-document!)
+(def reorder-documents!    actions/reorder-documents!)
+
+; mongo-db.engine
+(def generate-id engine/generate-id)
 
 ; mongo-db.pipelines
 (def filter-pattern->filter-query   pipelines/filter-pattern->filter-query)
@@ -36,6 +40,7 @@
 (def count-pipeline                 pipelines/count-pipeline)
 
 ; mongo-db.reader
+(def get-collection-names        reader/get-collection-names)
 (def get-collection-namespace    reader/get-collection-namespace)
 (def get-all-document-count      reader/get-all-document-count)
 (def get-document-count-by-query reader/get-document-count-by-query)
