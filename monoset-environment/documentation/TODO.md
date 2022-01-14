@@ -13,6 +13,9 @@
 
 
 # x4.5.0
+- project-details.edn fájl ne tartalmazzon kommenteket, az legyen egy külön fájlban és akkor
+  lehet függvénnyel írni a fájlba az app-build értékét automtikusan (vagy legyen máshova írva az app-build?)
+
 - user-ek jelszavait hash-elve tárolni
 
 - user-ek mongo-db-be
