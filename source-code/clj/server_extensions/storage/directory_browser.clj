@@ -22,8 +22,7 @@
   ; @return (namespaced map)
   [{:keys [request]} directory-item]
   (mongo-db/insert-document! "directories" directory-item
-                             {:prototype-f #(prototypes/added-document-prototype request :directory %)
-                              :ordered? true}))
+                             {:prototype-f #(prototypes/added-document-prototype request :directory %)}))
 
 (defmutation add-directory-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!

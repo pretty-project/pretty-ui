@@ -54,7 +54,7 @@
   [_ {:keys [title]}]
   [elements/text ::error-title
                  {:content title :font-size :xxl :horizontal-align :center :layout :fit :selectable? false
-                  :font-weight :bold}])
+                  :font-weight :bold :indent :both}])
 
 (defn- error-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -66,7 +66,8 @@
   ; @return (component)
   [_ {:keys [helper]}]
   [elements/text ::error-helper
-                 {:content helper :font-size :s :horizontal-align :center :layout :fit :selectable? false}])
+                 {:content helper :font-size :s :horizontal-align :center :layout :fit :selectable? false
+                  :indent :both}])
 
 (defn- error-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!

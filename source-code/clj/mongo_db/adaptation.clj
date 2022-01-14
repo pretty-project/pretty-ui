@@ -5,18 +5,9 @@
               [mid-fruits.json  :as json]
               [mid-fruits.map   :as map]
               [mid-fruits.time  :as time]
-              [mongo-db.engine  :as engine]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def DOCUMENT-ADAPTATION-ERROR "Document adaptation error!")
-
-; @constant (string)
-(def DOCUMENT-ID-ADAPTATION-ERROR "Document ID adaptation error!")
+              [mongo-db.engine  :as engine]
+              [mongo-db.errors  :as errors]
+              [x.server-db.api  :as db]))
 
 
 
@@ -24,6 +15,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn document-id-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (string) document-id
   ;
   ; @example
@@ -37,6 +30,8 @@
        (catch Exception e (println (str e "\n" {:document-id document-id})))))
 
 (defn document-id-output
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (org.bson.types.ObjectId object) document-id
   ;
   ; @example
@@ -69,6 +64,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-document-output
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @return (namespaced map)
@@ -85,6 +82,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn query-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) query
   ;
   ; @return (namespaced map)
@@ -106,6 +105,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn insert-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -129,6 +130,8 @@
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn insert-output
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -157,6 +160,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn save-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -180,6 +185,8 @@
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn save-output
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -208,6 +215,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn update-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -227,6 +236,8 @@
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn update-conditions
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -258,6 +269,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn upsert-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -277,6 +290,8 @@
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn upsert-conditions
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -304,10 +319,62 @@
 
 
 
+;; -- Merging document --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn merge-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (namespaced map) document
+  ;
+  ; @example
+  ;  (adaptation/merge-conditions {:namespace/id            "MyObjectId"
+  ;                                :namespace/my-keyword    :my-value
+  ;                                :namespace/your-string   "your-value"
+  ;                                :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
+  ;  =>
+  ;  {"namespace/my-keyword"    "*:my-value"
+  ;   "namespace/your-string"   "your-value"
+  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
+  ;
+  ; @return (namespaced map)
+  [document]
+  ; 1. A dokumentum :namespace/id tulajdonságának eltávolítása
+  ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
+  ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
+  (try (-> document engine/dissoc-id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+       (catch Exception e (println (str e "\n" {:document document})))))
+
+(defn merge-conditions
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (namespaced map) document
+  ;
+  ; @example
+  ;  (adaptation/merge-conditions {:namespace/id            "MyObjectId"
+  ;                                :namespace/my-keyword    :my-value
+  ;                                :namespace/your-string   "your-value"
+  ;                                :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
+  ;  =>
+  ;  {"_id" #<ObjectId MyObjectId>}
+  ;
+  ; @return (namespaced map)
+  [document]
+  ; 1. A dokumentum azonosításához elegendő annak azonsítóját megtartani és objektum típusra alakítani
+  (try (if-let [document-id (db/document->document-id document)]
+               (if-let [document-id (document-id-input document-id)]
+                       {"_id" document-id})
+               (throw (Exception. errors/MISSING-DOCUMENT-ID-ERROR)))
+       (catch Exception e (println (str e "\n" {:document document})))))
+
+
+
 ;; -- Duplicating document ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn duplicate-input
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example
@@ -329,6 +396,8 @@
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn duplicate-output
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced map) document
   ;
   ; @example

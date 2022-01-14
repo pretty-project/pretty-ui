@@ -269,7 +269,7 @@
   ; @example
   ;  (db/document->document-id {:bar "baz"})
   ;  =>
-  ;  "i5o28977-d2310-k5432-lk98u784k819"
+  ;  nil
   ;
   ; @example
   ;  (db/document->document-id {:bar "baz" :id "my-document"})
@@ -283,9 +283,7 @@
   ;
   ; @return (string)
   [document]
-  (if-let [document-id (get-document-value document :id)]
-          (return document-id)
-          (random/generate-string)))
+  (get-document-value document :id))
 
 (defn document->unidentified-document
   ; @param (map) document

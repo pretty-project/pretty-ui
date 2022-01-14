@@ -69,13 +69,16 @@
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:file/alias filename :filename generated-filename :file/filesize size :file/id file-id}]
 
+       ;(println "\u001B[0m")
 
+       (println (str "kkkkk : " (mongo-db/merge-document! "playground" {:x/z :zzz :x/id "61e17ba0d617ee83355c80fa"})))))
+                                                                       ;{:x/z :zzz})))))
 
-       (println (str "kkkkk : " (mongo-db/duplicate-document! "directories" "61de13a1ffc7a6839cde858c"
-                                                           {:prototype-f #(prototypes/duplicated-document-prototype ;{:session x.server-user.api/SYSTEM-ACCOUNT}
-                                                                                                                    (:request env)
-                                                                                                                    :directory %)
-                                                            :ordered? true})))))
+       ;"61de13a1ffc7a6839cde858c"
+                                                           ;{:prototype-f #(prototypes/duplicated-document-prototype ;{:session x.server-user.api/SYSTEM-ACCOUNT}
+                                                            ;                                                        (:request env)
+                                                                          ;                                          :directory %}
+;                                                            :)))));ordered? true)))))
 
 
 

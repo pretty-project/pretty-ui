@@ -21,10 +21,6 @@
 (def update-documents!   actions/update-documents!)
 (def upsert-document!    actions/upsert-document!)
 (def upsert-documents!   actions/upsert-documents!)
-
-
-
-(def add-documents!      actions/add-documents!)
 (def merge-document!     actions/merge-document!)
 (def merge-documents!    actions/merge-documents!)
 (def remove-document!    actions/remove-document!)

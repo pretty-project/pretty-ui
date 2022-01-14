@@ -121,6 +121,16 @@
    * max-width tulajdonsága nélkül nem kapcsolna be rajta a vízszintes görgetés */
   max-width: var( --app-width ) }
 
+/* - A szerverről letöltött adatok betöltésekor a kirenderelt tartalom méretének megváltozása
+ *   miatt a body elem magassága a betöltési folyamat alatt többször is megváltozhat.
+ * - Hogy ne történjen meg a rövid időn belüli ismételt magasság változás, a body elem
+ *   min-height tulajdonsággal rendelkezik. */
+#x-app-ui-structure[data-interface="application-ui"] .x-body-a {
+  min-height: calc(100vh - 144px) }
+
+#x-app-ui-structure[data-interface="website-ui"] .x-body-a {
+  min-height: calc(100vh - 96px) }
+
 .x-body-a--content-structure {
   display: flex;
   flex-direction: column-reverse }
@@ -140,8 +150,8 @@
 .x-body-a--content-tail {
   /* XXX#0093
    * A {position: sticky} tulajdonságú content-header görgetéskor az content-tail elemhez
-   * érve folytatja a tartalommal együtt való gördülést és így nem takarja el a content-body
-   * lekerekített sarkait. */
+   * érve folytatja a tartalommal együtt való gördülést és így content-header nem takarja el
+   * a content-body lekerekített alsó sarkait. */
   height: var( --border-radius-m ) }
 
 .x-body-a--content-header {
