@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.5.2
+; Version: v0.6.8
+; Compatibility: x4.5.3
 
 
 
@@ -43,22 +43,6 @@
                   `(:item-editor/get-item-suggestions {:suggestion-keys ~suggestion-keys
                                                        :extension-id    ~extension-id
                                                        :item-namespace  ~item-namespace})))])
-
-(defn get-mark-item-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace mark-props]]
-        ; XXX#4460
-        ; Az item-lister pluginnal megegyezően az item-editor plugin is a {:toggle-f ...}
-        ; tulajdonságként átadott függvény használatával jelöli meg az elemeket.
-  (let [mutation-name (engine/mutation-name         extension-id item-namespace :merge)
-        exported-item (r subs/export-marked-item db extension-id item-namespace mark-props)]
-       [:debug `(~(symbol mutation-name) ~exported-item)]))
 
 (defn get-save-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

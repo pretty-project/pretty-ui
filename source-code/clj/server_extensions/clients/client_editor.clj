@@ -66,18 +66,6 @@
              (mongo-db/save-document! "clients" client-item
                                       {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
-(defmutation merge-client-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) client-item
-             ;
-             ; @return (namespaced map)
-             [{:keys [request]} client-item]
-             {::pathom.co/op-name 'clients/merge-client-item!}
-             (mongo-db/merge-document! "clients" client-item
-                                       {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
-
 (defmutation delete-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
@@ -108,7 +96,7 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [delete-client-item! duplicate-client-item! get-client-item
-               merge-client-item!  save-client-item!      undo-delete-client-item!])
+               save-client-item!   undo-delete-client-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.5.2
+; Version: v0.9.4
+; Compatibility: x4.5.3
 
 
 
@@ -51,19 +51,6 @@
   [db [_ extension-id _ editor-props]]
   ; XXX#8705
   (update-in db [extension-id :item-editor/meta-items] map/reverse-merge editor-props))
-
-(defn mark-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marker-key (keyword)
-  ;   :toggle-f (function)}
-  ;
-  ; @return (map)
-  [db [_ extension-id _ {:keys [marker-key toggle-f]}]]
-  (update-in db [extension-id :item-editor/data-item marker-key] toggle-f))
 
 (defn backup-current-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -262,30 +249,6 @@
        [:router/go-to! parent-uri]))
 
 (a/reg-event-fx
-  :item-editor/mark-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marked-message (metamorphic-content)
-  ;   :marker-key (keyword)
-  ;   :toggle-f (function)}
-  ;
-  ; @usage
-  ;  [:item-editor/mark-item! :my-extension :my-type {:marked-message :added-to-favorites
-  ;                                                   :marker-key     :favorite?
-  ;                                                   :toggle-f       not}]
-  (fn [{:keys [db]} [_ extension-id item-namespace mark-props]]
-       ; Megjelöli az elem kliens-oldalon tárolt változatát a marker-key kulccsal
-      {:db (r mark-item! db extension-id item-namespace mark-props)
-       ; Elküldi az elem jelölést tartalmazó kivonatát a szervernek
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/->item-marked extension-id item-namespace mark-props]
-                                     :on-failure [:ui/blow-bubble! {:body {:content :network-error}}]
-                                     :query      (r queries/get-mark-item-query db extension-id item-namespace mark-props)}]}))
-
-(a/reg-event-fx
   :item-editor/save-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -379,9 +342,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  ;  {:handle-archived-items? (boolean)
-  ;   :handle-archived-items? (boolean)
-  ;   :label (metamorphic-content)(opt)
+  ;  {:label (metamorphic-content)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)}
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace editor-props)]
@@ -396,18 +357,6 @@
 
 ;; -- Status events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-editor/->item-marked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marked-message (metamorphic-content)}
-  (fn [_ [_ extension-id item-namespace {:keys [marked-message]}]]
-      (let [dialog-id (engine/dialog-id extension-id item-namespace :marked)]
-           [:ui/blow-bubble! dialog-id {:body {:content marked-message}}])))
 
 (a/reg-event-fx
   :item-editor/->item-duplicated

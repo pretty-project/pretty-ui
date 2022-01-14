@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.0
+; Version: v0.7.2
+; Compatibility: x4.5.3
 
 
 
@@ -314,58 +314,6 @@
   [db [_ extension-id item-namespace item-ids]]
   (vector/->items item-ids #(let [backup-item (get-in db [extension-id :item-lister/backup-items %])]
                                  (db/document->namespaced-document backup-item item-namespace))))
-
-(defn export-marked-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marker-key (keyword)
-  ;   :toggle-f (function)}
-  ;
-  ; @example
-  ;  (r subs/export-marked-items db :my-extension :my-type {:marker-key :archived? :toggle-f not}
-  ;                                                        ["my-item" "your-item"])
-  ;  =>
-  ;  [{:my-type/id "my-item"   :my-type/archived? true}
-  ;   {:my-type/id "your-item" :my-type/archived? true}]
-  ;
-  ; @return (namespaced maps in vector)
-  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
-  (let [item-dexes  (r get-selected-item-dexes db extension-id item-namespace)
-        item-id-key (keyword item-namespace :id)
-        marker-key  (keyword item-namespace marker-key)]
-       (vector/->items item-dexes #(let [item-id      (get-in db [extension-id :item-lister/data-items % :id])
-                                         marker-value (get-in db [extension-id :item-lister/data-items % marker-key])]
-                                        {item-id-key item-id marker-key (toggle-f marker-value)}))))
-
-(defn export-unmarked-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marker-key (keyword)
-  ;   :toggle-f (function)}
-  ; @param (strings in vector) item-ids
-  ;
-  ; @example
-  ;  (r subs/export-unmarked-items db :my-extension :my-type {:marker-key :archived? :toggle-f not}
-  ;                                                          ["my-item" "your-item"])
-  ;  =>
-  ;  [{:my-type/id "my-item"   :my-type/archived? false}
-  ;   {:my-type/id "your-item" :my-type/archived? false}]
-  ;
-  ; @return (namespaced maps in vector)
-  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]} item-ids]]
-  ; XXX#7810
-  ; Az elemek megjelőlésének visszavonásához szükséges azokról másolatot készíteni,
-  ; mivel az item-lister plugin a megjelölt elemeket eltávolítja a letöltött elemek listájából.
-  (let [item-id-key (keyword item-namespace :id)
-        marker-key  (keyword item-namespace marker-key)]
-       (vector/->items item-ids #(let [marker-value (get-in db [extension-id :item-lister/backup-items % marker-key])]
-                                      {item-id-key % marker-key (toggle-f marker-value)}))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

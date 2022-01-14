@@ -319,19 +319,19 @@
 
 
 
-;; -- Merging document --------------------------------------------------------
+;; -- Applying document -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn merge-input
+(defn apply-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (namespaced map) document
   ;
   ; @example
-  ;  (adaptation/merge-conditions {:namespace/id            "MyObjectId"
-  ;                                :namespace/my-keyword    :my-value
-  ;                                :namespace/your-string   "your-value"
-  ;                                :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
+  ;  (adaptation/apply-input {:namespace/id            "MyObjectId"
+  ;                           :namespace/my-keyword    :my-value
+  ;                           :namespace/your-string   "your-value"
+  ;                           :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
   ;  =>
   ;  {"namespace/my-keyword"    "*:my-value"
   ;   "namespace/your-string"   "your-value"
@@ -345,27 +345,20 @@
   (try (-> document engine/dissoc-id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
        (catch Exception e (println (str e "\n" {:document document})))))
 
-(defn merge-conditions
+(defn apply-conditions
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (namespaced map) document
+  ; @param (string) document-id
   ;
   ; @example
-  ;  (adaptation/merge-conditions {:namespace/id            "MyObjectId"
-  ;                                :namespace/my-keyword    :my-value
-  ;                                :namespace/your-string   "your-value"
-  ;                                :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
+  ;  (adaptation/merge-conditions "MyObjectId")
   ;  =>
   ;  {"_id" #<ObjectId MyObjectId>}
   ;
-  ; @return (namespaced map)
-  [document]
-  ; 1. A dokumentum azonosításához elegendő annak azonsítóját megtartani és objektum típusra alakítani
-  (try (if-let [document-id (db/document->document-id document)]
-               (if-let [document-id (document-id-input document-id)]
-                       {"_id" document-id})
-               (throw (Exception. errors/MISSING-DOCUMENT-ID-ERROR)))
-       (catch Exception e (println (str e "\n" {:document document})))))
+  ; @return (map)
+  [document-id]
+  (if-let [document-id (document-id-input document-id)]
+          {"_id" document-id}))
 
 
 

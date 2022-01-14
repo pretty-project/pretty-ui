@@ -26,3 +26,6 @@
 
 ; @constant (string)
 (def REMOVING-DOCUMENT-FAILED "Removing document failed")
+
+; @constant (string)
+(def APPLYING-FUNCTION-FAILED "Applying function failed")

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.5.2
+; Version: v0.9.2
+; Compatibility: x4.5.3
 
 
 
@@ -185,27 +185,6 @@
   (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
        (db/document->namespaced-document backup-item item-namespace)))
 
-(defn export-marked-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marker-key (keyword)
-  ;   :toggle-f (function)}
-  ;
-  ; @example
-  ;  (r subs/export-marked-item db :my-extension :my-type {:marker-key :archived? :toggle-f not})
-  ;  =>
-  ;  {:my-type/id "my-item" :my-type/archived? true}
-  ;
-  ; @return (namespaced map)
-  [db [_ extension-id item-namespace {:keys [marker-key toggle-f]}]]
-  (let [current-item-id (r get-current-item-id db extension-id)
-        marker-value    (get-in db [extension-id :item-editor/data-item marker-key])
-        marked-item     {:id current-item-id marker-key (toggle-f marker-value)}]
-       (db/document->namespaced-document marked-item item-namespace)))
-
 (defn get-local-changes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -240,10 +219,7 @@
   (let [current-item-id (r get-current-item-id db extension-id)
         current-item    (r get-current-item    db extension-id)
         backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
-       ; Az elem {:archived? ...} és {:favorite? ...} tulajdonságait érintő változtatások
-       ; (UX-szempontból) nem számítanak az elemen végzett változtatásnak!
-       (not= (dissoc current-item :archived? :favorite?)
-             (dissoc backup-item  :archived? :favorite?))))
+       (not= current-item backup-item)))
 
 (defn download-suggestions?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -321,25 +297,17 @@
   ;  (r item-editor/get-header-props db :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:archived? (boolean)
-  ;   :error-mode? (boolean)
-  ;   :favorite? (boolean)
+  ;  {:error-mode? (boolean)
   ;   :form-completed? (boolean)
-  ;   :handle-archived-items? (boolean)
-  ;   :handle-favorite-items? (boolean)
   ;   :new-item? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           (let [form-id (engine/form-id extension-id item-namespace)]
-               {:archived?              (r get-data-value db extension-id item-namespace :archived?)
-                :favorite?              (r get-data-value db extension-id item-namespace :favorite?)
-                :handle-archived-items? (r get-meta-value db extension-id item-namespace :handle-archived-items?)
-                :handle-favorite-items? (r get-meta-value db extension-id item-namespace :handle-favorite-items?)
-                :new-item?              (r new-item?      db extension-id item-namespace)
-                :synchronizing?         (r synchronizing? db extension-id item-namespace)
-                :form-completed?        (r elements/form-completed? db form-id)})))
+               {:new-item?       (r new-item?      db extension-id item-namespace)
+                :synchronizing?  (r synchronizing? db extension-id item-namespace)
+                :form-completed? (r elements/form-completed? db form-id)})))
 
 ; @usage
 ;  [:item-editor/get-header-props :my-namespace :my-type]

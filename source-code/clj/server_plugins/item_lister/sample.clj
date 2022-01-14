@@ -63,18 +63,6 @@
              {::pathom.co/op-name 'my-extension/undo-delete-my-type-items!}
              (return []))
 
-(defmutation merge-my-type-items!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:items (namespaced maps in vector)}
-             ;
-             ; @return (namespaced maps in vector)
-             [env {:keys [items]}]
-             {::pathom.co/op-name 'my-extension/merge-my-type-items!}
-             (return []))
-
 (defmutation delete-my-type-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -91,8 +79,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-my-type-items! get-my-type-items merge-my-type-items!
-               undo-delete-my-type-items!])
+(def HANDLERS [delete-my-type-items! get-my-type-items undo-delete-my-type-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

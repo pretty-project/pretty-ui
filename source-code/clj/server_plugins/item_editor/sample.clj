@@ -59,17 +59,6 @@
              {::pathom.co/op-name 'my-extension/save-my-type-item!}
              (return {}))
 
-(defmutation merge-my-type-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) client-item
-             ;
-             ; @return (namespaced map)
-             [env client-item]
-             {::pathom.co/op-name 'my-extension/merge-my-type-item!}
-             (return {}))
-
 (defmutation delete-my-type-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -98,7 +87,7 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [delete-my-type-item! duplicate-my-type-item! get-my-type-item
-               merge-my-type-item!  save-my-type-item!      undo-delete-my-type-item!])
+               save-my-type-item!   undo-delete-my-type-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 
@@ -117,6 +106,4 @@
 (a/reg-lifecycles
   ::lifecycles
   {:on-server-boot [:item-editor/initialize! :my-extension :my-type
-                                             {:handle-archived-items? false
-                                              :handle-favorite-items? false
-                                              :suggestion-keys [:city :address]}]})
+                                             {:suggestion-keys [:city :address]}]})

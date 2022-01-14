@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.6
-; Compatibility: x4.5.0
+; Version: v0.8.0
+; Compatibility: x4.5.3
 
 
 
@@ -353,41 +353,6 @@
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
 
 (a/reg-event-fx
-  :item-lister/mark-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;  {:marked-message (metamorphic-content)
-  ;   :marker-key (keyword)
-  ;   :toggle-f (function)}
-  (fn [{:keys [db]} [_ extension-id item-namespace mark-props]]
-      ; XXX#4460
-      ; A {:toggle-f ...} függvény használatával megjelölt elemeken a jelölés visszavonásakor
-      ; ismételten lefutatott {:toggle-f ...} függvény negálja a jelölés értékét,
-      ; így nem szükséges [:item-lister/mark-* ...] és [:item-lister/unmark-* ...]
-      ; eseményeket is alkalmazni.
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-lister/->selected-items-marked extension-id item-namespace mark-props]
-                          :on-failure [:ui/blow-bubble! {:body {:content :network-error}}]
-                          :query      (r queries/get-mark-selected-items-query db extension-id item-namespace mark-props)}]))
-
-(a/reg-event-fx
-  :item-lister/undo-mark-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ; @param (strings in vector) item-ids
-  (fn [{:keys [db]} [_ extension-id item-namespace mark-props item-ids]]
-    [:sync/send-query! (engine/request-id extension-id item-namespace)
-                       {:on-success [:item-lister/->mark-items-undid extension-id]
-                        :on-failure [:ui/blow-bubble! {:body {:content :network-error}}]
-                        :query      (r queries/get-undo-mark-items-query db extension-id item-namespace mark-props item-ids)}]))
-
-(a/reg-event-fx
   :item-lister/search-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -488,36 +453,5 @@
       ; A törölt elemek visszaállítása után feleslegesen komplex művelet lenne megállapítani,
       ; hogy a visszaállított elemek megjelenjenek-e a listában és ha igen, milyen pozícióban,
       ; ezért a sikeres visszaállítás után az item-lister plugin újratölti a listát.
-      {:db       (r reset-downloads!          db extension-id)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
-
-(a/reg-event-fx
-  :item-lister/->selected-items-marked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  (fn [{:keys [db]} [_ extension-id item-namespace mark-props]]
-      (let [item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
-           ; XXX#7810
-           ; A megjelölt elemeket az item-lister plugin eltávolítja a letöltött elemek listájából,
-           ; mivel megjelölést kizárólag az archiválás és dearchiválás folyamatok használják
-           ; és egy dearchivált elem nem jelenik meg az archívumban és vica-versa.
-           {:db (as-> db % (r backup-selected-items! % extension-id item-namespace)
-                           (r remove-selected-items! % extension-id item-namespace)
-                           (r reset-selections!      % extension-id item-namespace)
-                           (r enable-all-items!      % extension-id item-namespace))
-            :dispatch-n [[:item-lister/render-items-marked-dialog! extension-id item-namespace mark-props item-ids]
-                         ; XXX#5501
-                         [:tools/reload-infinite-loader! extension-id]]})))
-
-(a/reg-event-fx
-  :item-lister/->mark-items-undid
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      ; XXX#5561
       {:db       (r reset-downloads!          db extension-id)
        :dispatch [:tools/reload-infinite-loader! extension-id]}))

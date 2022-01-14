@@ -19,7 +19,7 @@
 ;; -- Error handling ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- find-maps
+(defn find-maps
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -37,7 +37,7 @@
         (try (vec (mcl/find-maps database collection-name query projection))
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query query :projection projection})))))))
 
-(defn- find-one-as-map
+(defn find-one-as-map
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -49,7 +49,7 @@
        (try (mcl/find-one-as-map database collection-name query)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
 
-(defn- find-map-by-id
+(defn find-map-by-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -61,7 +61,7 @@
        (try (mcl/find-map-by-id database collection-name document-id)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
 
-(defn- count-documents
+(defn count-documents
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
@@ -72,7 +72,7 @@
        (try (mcl/count database collection-name)
             (catch Exception e (println (str e "\n" {:collection-name collection-name}))))))
 
-(defn- count-documents-by-query
+(defn count-documents-by-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name

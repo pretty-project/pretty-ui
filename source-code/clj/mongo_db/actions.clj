@@ -387,16 +387,16 @@
   ; @usage
   ;  (mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
-  ; @return (namespaced map)
+  ; @return (boolean)
   ([collection-name conditions document]
    (upsert-document! collection-name conditions document {}))
 
   ([collection-name conditions document options]
-   (if-let [document (prepare-document collection-name document options)]
-           (if-let [conditions (adaptation/upsert-conditions conditions)]
-                   (if-let [document (adaptation/upsert-input document)]
-                           (let [result (upsert! collection-name conditions document {:multi false})]
-                                (mrt/acknowledged? result)))))))
+   (boolean (if-let [document (prepare-document collection-name document options)]
+                    (if-let [conditions (adaptation/upsert-conditions conditions)]
+                            (if-let [document (adaptation/upsert-input document)]
+                                    (let [result (upsert! collection-name conditions document {:multi false})]
+                                         (mrt/acknowledged? result))))))))
 
 ; @usage
 ;  [:mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0}]
@@ -417,18 +417,18 @@
   ; @usage
   ;  (mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
-  ; @return (namespaced map)
+  ; @return (boolean)
   ([collection-name conditions document]
    (upsert-documents! collection-name conditions document {}))
 
   ([collection-name conditions document options]
-   (if-let [document (prepare-document collection-name document options)]
-           (if-let [conditions (adaptation/upsert-conditions conditions)]
-                   (if-let [document (adaptation/upsert-input document)]
-                           ; WARNING! DO NOT USE!
-                           ; java.lang.IllegalArgumentException: Replacements can not be multi
-                           (let [result (upsert! collection-name conditions document {:multi true})]
-                                (mrt/acknowledged? result)))))))
+   (boolean (if-let [document (prepare-document collection-name document options)]
+                    (if-let [conditions (adaptation/upsert-conditions conditions)]
+                            (if-let [document (adaptation/upsert-input document)]
+                                    ; WARNING! DO NOT USE!
+                                    ; java.lang.IllegalArgumentException: Replacements can not be multi
+                                    (let [result (upsert! collection-name conditions document {:multi true})]
+                                         (mrt/acknowledged? result))))))))
 
 ; @usage
 ;  [:mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0}]
@@ -436,66 +436,34 @@
 
 
 
-;; -- Merging document --------------------------------------------------------
+;; -- Applying document -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn merge-document!
+(defn apply-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) document
-  ;  {:namespace/id (string)}
-  ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
-  ;
-  ; @example
-  ;  (mongo-db/merge-document! "my-collection" {:namespace/my-keyword  :my-value
-  ;                                             :namespace/your-string "your-value"
-  ;                                             :namespace/id          "MyObjectId"})
-  ;  =>
-  ;  {:namespace/my-keyword  :my-value}
-  ;   :namespace/your-string "your-value"
-  ;   :namespace/id          "MyObjectId"}
-  ;
-  ; @return (boolean)
-  ([collection-name document]
-   (merge-document! collection-name document {}))
-
-  ([collection-name document options]
-   (boolean (if-let [document (prepare-document collection-name document options)]
-                    (if-let [conditions (adaptation/merge-conditions document)]
-                            (if-let [document (adaptation/merge-input document)]
-                                    (let [result (update! collection-name conditions {"$set" document}
-                                                                                     {:multi false :upsert false})]
-                                         (mrt/updated-existing? result))))))))
-
-; @usage
-;  [:mongo-db/merge-document! "my-collection" {:namespace/id "MyObjectId"}]
-(a/reg-handled-fx :mongo-db/merge-document! merge-document!)
-
-
-
-;; -- Merging documents -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn merge-documents!
-  ; @param (string) collection-name
-  ; @param (namespaced map) document
-  ;  {:namespace/id (string)}
+  ; @param (namespaced map) document-id
+  ; @param (function) f
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/merge-documents! "my-collection" [{...} {...}])
+  ;  (mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue"))
   ;
-  ; @return (namespaced maps in vector)
-  ([collection-name documents]
-   (merge-documents! collection-name documents {}))
+  ; @return (namespaced map)
+  ([collection-name document-id f]
+   (apply-document! collection-name document-id f {}))
 
-  ([collection-name documents options]
-   (vector/->items documents #(merge-document! collection-name % options))))
+  ([collection-name document-id f options]
+   (if-let [conditions (adaptation/apply-conditions document-id)]
+           (if-let [document (reader/get-document-by-id collection-name document-id)]
+                   (if-let [document (-> document f adaptation/apply-input)]
+                           (let [result (update! collection-name conditions document {:multi false :upsert false})]
+                                (if (mrt/updated-existing? result)
+                                    (return document))))))))
 
 ; @usage
-;  [:mongo-db/merge-documents! "my-collection" [{...} {...}]]
-(a/reg-handled-fx :mongo-db/merge-documents! merge-documents!)
+;  [:mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue")]
+(a/reg-handled-fx :mongo-db/apply-document! apply-document!)
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.2
-; Compatibility: x4.5.2
+; Version: v0.7.6
+; Compatibility: x4.5.3
 
 
 
@@ -68,33 +68,6 @@
   [db [_ extension-id item-namespace item-ids]]
   (let [mutation-name  (engine/mutation-name          extension-id item-namespace :undo-delete)
         exported-items (r subs/export-backup-items db extension-id item-namespace item-ids)]
-       [:debug `(~(symbol mutation-name) ~{:items exported-items})]))
-
-(defn get-mark-selected-items-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace mark-props]]
-  (let [mutation-name  (engine/mutation-name          extension-id item-namespace :merge)
-        exported-items (r subs/export-marked-items db extension-id item-namespace mark-props)]
-       [:debug `(~(symbol mutation-name) ~{:items exported-items})]))
-
-(defn get-undo-mark-items-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) mark-props
-  ; @param (strings in vector) item-ids
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace mark-props item-ids]]
-  (let [mutation-name  (engine/mutation-name            extension-id item-namespace :merge)
-        exported-items (r subs/export-unmarked-items db extension-id item-namespace mark-props item-ids)]
        [:debug `(~(symbol mutation-name) ~{:items exported-items})]))
 
 (defn get-request-items-query

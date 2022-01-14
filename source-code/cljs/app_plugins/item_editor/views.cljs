@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.4.9
+; Version: v0.6.2
+; Compatibility: x4.5.3
 
 
 
@@ -40,57 +40,6 @@
                    {:tooltip :delete! :preset :delete-icon-button
                     :disabled? (or error-mode? synchronizing?)
                     :on-click  [:item-editor/delete-item! extension-id item-namespace]}])
-
-(defn archive-item-button
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:archived? (boolean)(opt)
-  ;   :error-mode? (boolean)(opt)
-  ;   :handle-archived-items? (boolean)
-  ;   :synchronizing? (boolean)(opt)}
-
-  ;
-  ; @return (component)
-  [extension-id item-namespace {:keys [archived? error-mode? handle-archived-items? synchronizing?]}]
-  (cond (and handle-archived-items? archived?)
-        [elements/button ::archive-item-button
-                         {:tooltip :unarchive! :preset :archived-icon-button
-                          :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                       {:marker-key :archived? :toggle-f not :marked-message :item-unarchived}]}]
-        (and handle-archived-items? (not archived?))
-        [elements/button ::archive-item-button
-                         {:tooltip :archive! :preset :archive-icon-button
-                          :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                       {:marker-key :archived? :toggle-f not :marked-message :item-archived}]}]))
-
-(defn favorite-item-button
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:favorite? (boolean)(opt)
-  ;   :error-mode? (boolean)(opt)
-  ;   :handle-favorite-items? (boolean)
-  ;   :synchronizing? (boolean)(opt)}
-  ;
-  ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? favorite? handle-favorite-items? synchronizing?]}]
-  (cond (and handle-favorite-items? favorite?)
-        [elements/button ::favorite-item-button
-                         ; Az :added-to-favorites tooltip túlságosan széles, ezért a favorite-item-button
-                         ; elemen a tooltip feliratok ki vannak kapcsolva
-                         {:preset :added-to-favorites-icon-button ;:tooltip :added-to-favorites
-                          :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                       {:marker-key :favorite? :toggle-f not :marked-message :removed-from-favorites}]}]
-        (and handle-favorite-items? (not favorite?))
-        [elements/button ::favorite-item-button
-                         {:preset :add-to-favorites-icon-button ;:tooltip :add-to-favorites!
-                          :disabled? (or error-mode? synchronizing?)
-                          :on-click  [:item-editor/mark-item! extension-id item-namespace
-                                       {:marker-key :favorite? :toggle-f not :marked-message :added-to-favorites}]}]))
 
 (defn copy-item-button
   ; @param (keyword) extension-id
@@ -299,9 +248,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [new-item?] :as header-props}]
-  (if-not new-item? [:<> [delete-item-button  extension-id item-namespace header-props]
-                         [copy-item-button    extension-id item-namespace header-props]
-                         [archive-item-button extension-id item-namespace header-props]]))
+  (if-not new-item? [:<> [delete-item-button extension-id item-namespace header-props]
+                         [copy-item-button   extension-id item-namespace header-props]]))
 
 (defn header-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -311,9 +259,8 @@
   ; @param (map) header-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [new-item?] :as header-props}]
-  [:<> (if-not new-item? [favorite-item-button extension-id item-namespace header-props])
-       [save-item-button extension-id item-namespace header-props]])
+  [extension-id item-namespace header-props]
+  [save-item-button extension-id item-namespace header-props])
 
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

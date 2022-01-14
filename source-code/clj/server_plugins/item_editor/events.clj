@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.0
+; Version: v0.4.6
+; Compatibility: x4.5.3
 
 
 
@@ -87,11 +87,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
-  ;  {:handle-archived-items? (boolean)(opt)
-  ;    Default: false
-  ;   :handle-favorite-items? (boolean)(opt)
-  ;    Default: false
-  ;   :label (metamorphic-content)(opt)
+  ;  {:label (metamorphic-content)(opt)
   ;   :multi-view? (boolean)(opt)
   ;    Default: false
   ;   :suggestion-keys (keywords in vector)(opt)}
