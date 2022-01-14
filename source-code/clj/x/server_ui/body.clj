@@ -43,7 +43,7 @@
   [request]
   (if-let [core-js-filename (a/request->route-param request :js)]
           (string/not-starts-with! core-js-filename  "/")
-          (let [default-core-js-filename (a/subscribed [:core/get-config-item :default-core-js])]
+          (let [default-core-js-filename (a/subscribed [:core/get-app-config-item :default-core-js])]
                (string/not-starts-with! default-core-js-filename  "/"))))
 
 (defn- request->core-js-uri-base
@@ -58,7 +58,7 @@
   ;
   ; @return (string)
   [request]
-  (let [core-js-dir (a/subscribed [:core/get-config-item :core-js-dir])]
+  (let [core-js-dir (a/subscribed [:core/get-app-config-item :core-js-dir])]
        (-> core-js-dir (string/starts-with! "/")
                        (string/ends-with!   "/"))))
 
@@ -136,7 +136,7 @@
   ; @return (map)
   ;  {:shield (hiccup)}
   [request body-props]
-  (merge (a/subscribed [:core/get-destructed-configs])
+  (merge (a/subscribed [:core/get-app-config])
          {:shield (app-shield (graphics/loading-animation))}
          (param body-props)))
 

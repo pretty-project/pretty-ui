@@ -23,7 +23,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def TARGET-PATHS {:app-details   (db/path :core/configs :app-details)
+(def TARGET-PATHS {:app-config    (db/path :core/app-config)
+                   :site-config   (db/path :core/site-config)
                    :client-routes (db/path :router/client-routes)
                    :user-account  (db/path :user/account)
                    :user-profile  (db/path :user/profile)

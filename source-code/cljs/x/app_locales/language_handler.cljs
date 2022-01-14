@@ -31,7 +31,7 @@
   ;
   ; @return (keywords in vector)
   [db _]
-  (let [app-languages (r a/get-app-detail db :app-languages)]
+  (let [app-languages (r a/get-app-config-item db :app-languages)]
        (reduce #(conj %1 %2) [] app-languages)))
 
 (defn app-multilingual?

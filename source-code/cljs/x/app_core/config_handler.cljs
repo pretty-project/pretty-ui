@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.16
 ; Description:
-; Version: v0.5.0
-; Compatibility: x4.5.2
+; Version: v0.8.0
+; Compatibility: x4.5.3
 
 
 
@@ -23,13 +23,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.config-handler
-(def get-app-details config-handler/get-app-details)
-(def get-app-detail  config-handler/get-app-detail)
+(def get-app-config      config-handler/get-app-config)
+(def get-app-config-item config-handler/get-app-config-item)
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-sub :core/get-app-details get-app-details)
-(event-handler/reg-sub :core/get-app-detail  get-app-detail)
+(event-handler/reg-sub :core/get-app-config      get-app-config)
+(event-handler/reg-sub :core/get-app-config-item get-app-config-item)

@@ -28,10 +28,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [is-docker?    (System/getenv "DOCKER")
-            database-name (r config-handler/get-database-detail db :database-name)
-            database-host (if is-docker? (r config-handler/get-database-detail db :docker-database-host)
-                                         (r config-handler/get-database-detail db :database-host))
-            database-port (r config-handler/get-database-detail db :database-port)]
+            database-name (r config-handler/get-server-config-item db :database-name)
+            database-host (if is-docker? (r config-handler/get-server-config-item db :docker-database-host)
+                                         (r config-handler/get-server-config-item db :database-host))
+            database-port (r config-handler/get-server-config-item db :database-port)]
            (println details/app-codename "connecting to:" database-name
                                          "database at:"   database-host
                                          "on port:"       database-port)

@@ -212,9 +212,9 @@
   ;
   ; @return (string)
   [db]
-  (str (r a/get-app-detail   db :app-title)
+  (str (r a/get-app-config-item db :app-title)
        (param " ")
-       (r dictionary/look-up db :file-storage)))
+       (r dictionary/look-up    db :file-storage)))
 
 (defn- get-order-by
   ; WARNING! NON-PUBLIC! DO NOT USE!

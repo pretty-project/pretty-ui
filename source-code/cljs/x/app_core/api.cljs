@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.03.01
 ; Description:
-; Version: v0.3.0
-; Compatibility: x4.4.6
+; Version: v0.3.4
+; Compatibility: x4.5.3
 
 
 
@@ -35,8 +35,8 @@
 (def cache-control-uri cache-handler/cache-control-uri)
 
 ; x.app-core.config-handler
-(def get-app-details config-handler/get-app-details)
-(def get-app-detail  config-handler/get-app-detail)
+(def get-app-config      config-handler/get-app-config)
+(def get-app-config-item config-handler/get-app-config-item)
 
 ; x.app-core.debug-handler
 (def get-debug-mode       debug-handler/get-debug-mode)

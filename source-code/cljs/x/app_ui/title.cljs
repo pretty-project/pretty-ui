@@ -30,7 +30,7 @@
   ; @return (string)
   [db [_ window-title]]
   (if-let [window-title (r components/get-metamorphic-value db {:value window-title})]
-          (let [app-title (r a/get-app-detail db :app-title)]
+          (let [app-title (r a/get-app-config-item db :app-title)]
                (str window-title " - " app-title))))
 
 
@@ -41,7 +41,7 @@
 (a/reg-event-fx
   :ui/restore-default-window-title!
   (fn [{:keys [db]} _]
-      (let [window-title (r a/get-app-detail db :app-title)]
+      (let [window-title (r a/get-app-config-item db :app-title)]
            [:environment/set-window-title! window-title])))
 
 (a/reg-event-fx

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.07.18
 ; Description:
-; Version: v0.6.6
-; Compatibility: x4.3.3
+; Version: v0.1.0.2
+; Compatibility: x4.5.3
 
 
 
@@ -21,189 +21,59 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-app-details
+(defn get-app-config
   ; @usage
-  ;  (r a/get-app-details db)
+  ;  (r a/get-app-config db)
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core/configs :data-items :app-details]))
+  (get-in db [:core/app-config :data-items]))
 
-(defn get-app-detail
-  ; @param (keyword) config-item-id
+(defn get-app-config-item
+  ; @param (keyword) config-item-key
   ;
   ; @usage
-  ;  (r a/get-app-detail db :my-config-item)
+  ;  (r a/get-app-config-item db :my-config-item)
   ;
   ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :app-details config-item-id]))
+  [db [_ config-item-key]]
+  (get-in db [:core/app-config :data-items config-item-key]))
 
-(defn get-browser-details
+(defn get-server-config
   ; @usage
-  ;  (r a/get-browser-details db)
+  ;  (r a/get-server-config db)
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core/configs :data-items :browser-details]))
+  (get-in db [:core/server-config :data-items]))
 
-(defn get-browser-detail
-  ; @param (keyword) config-item-id
+(defn get-server-config-item
+  ; @param (keyword) config-item-key
   ;
   ; @usage
-  ;  (r a/get-browser-detail db :my-config-item)
+  ;  (r a/get-server-config-item db :my-config-item)
   ;
   ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :browser-details config-item-id]))
+  [db [_ config-item-key]]
+  (get-in db [:core/server-config :data-items config-item-key]))
 
-(defn get-database-details
+(defn get-site-config
   ; @usage
-  ;  (r a/get-database-details db)
+  ;  (r a/get-site-config db)
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core/configs :data-items :database-details]))
+  (get-in db [:core/site-config :data-items]))
 
-(defn get-database-detail
-  ; @param (keyword) config-item-id
+(defn get-site-config-item
+  ; @param (keyword) config-item-key
   ;
   ; @usage
-  ;  (r a/get-database-detail db :my-config-item)
+  ;  (r a/get-site-config-item db :my-config-item)
   ;
   ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :database-details config-item-id]))
-
-(defn get-install-details
-  ; @usage
-  ;  (r a/get-install-details db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :install-details]))
-
-(defn get-install-detail
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (r a/get-install-detail db :my-config-item)
-  ;
-  ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :install-details config-item-id]))
-
-(defn get-seo-details
-  ; @usage
-  ;  (r a/get-seo-details db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :seo-details]))
-
-(defn get-seo-detail
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (r a/get-seo-detail db :my-config-item)
-  ;
-  ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :seo-details config-item-id]))
-
-(defn get-storage-details
-  ; @usage
-  ;  (r a/get-storage-details db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :storage-details]))
-
-(defn get-storage-detail
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (r a/get-storage-detail db :my-config-item)
-  ;
-  ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :storage-details config-item-id]))
-
-(defn get-js-details
-  ; @usage
-  ;  (r a/get-js-details db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :js-details]))
-
-(defn get-js-detail
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (r a/get-js-detail db :my-config-item)
-  ;
-  ; @return (*)
-  [db [_ config-item-id]]
-  (get-in db [:core/configs :data-items :js-details config-item-id]))
-
-(defn get-css-paths
-  ; @usage
-  ;  (r a/get-css-paths db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :css-paths]))
-
-(defn get-favicon-paths
-  ; @usage
-  ;  (r a/get-favicon-paths db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :favicon-paths]))
-
-(defn get-plugin-js-paths
-  ; @usage
-  ;  (r a/get-plugin-js-paths db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items :plugin-js-paths]))
-
-(defn get-configs
-  ; @usage
-  ;  (r a/get-configs db)
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:core/configs :data-items]))
-
-(defn get-destructed-configs
-  ; @usage
-  ;  (r a/get-destructed-configs db)
-  ;
-  ; @return (map)
-  [db _]
-  (merge (r get-app-details     db)
-         (r get-browser-details db)
-         (r get-seo-details     db)
-         (r get-storage-details db)
-         (r get-js-details      db)
-         {:css-paths       (r get-css-paths       db)
-          :favicon-paths   (r get-favicon-paths   db)
-          :plugin-js-paths (r get-plugin-js-paths db)}))
-
-(defn get-config-item
-  ; @param (keyword) config-item-id
-  ;
-  ; @usage
-  ;  (r a/get-config-item db :my-config-item)
-  ;
-  ; @return (*)
-  [db [_ config-item-id]]
-  (let [destructed-configs (r get-destructed-configs db)]
-       (get destructed-configs config-item-id)))
+  [db [_ config-item-key]]
+  (get-in db [:core/site-config :data-items config-item-key]))
 
 
 
@@ -212,7 +82,12 @@
 
 (defn store-configs!
   ; @param (map) configs
+  ;  {:app-config (map)
+  ;   :server-config (map)
+  ;   :site-config (map)}
   ;
   ; @return (map)
-  [db [_ configs]]
-  (assoc-in db [:core/configs :data-items] configs))
+  [db [_ {:keys [app-config server-config site-config]}]]
+  (-> db (assoc-in [:core/app-config    :data-items] app-config)
+         (assoc-in [:core/server-config :data-items] server-config)
+         (assoc-in [:core/site-config   :data-items] site-config)))

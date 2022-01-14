@@ -1,0 +1,79 @@
+
+; @param (map) app-config
+;  {:author (string)
+;   :app-build (string)
+;   :app-home (string)
+;   :app-languages (keywords in vector)
+;   :app-themes (maps in vector)
+;    [{:name (metamorphic-content)
+;      :id (keyword)}]
+;   :app-title (string)
+;   :core-js-dir (string)
+;   :css-paths (maps in vector)
+;    [{:cache-control? (boolean)(opt)
+;       Default: false
+;      :uri (string)}]
+;   :default-js-dir (string)
+;   :favicon-paths (maps in vector)
+;    [{:cache-control? (boolean)(opt)
+;       Default: false
+;      :uri (string)}]
+;   :meta-description (string)
+;   :meta-keywords (strings in vector or string)
+;   :og-preview-path (string)
+;    Recommended preview-size: 1200x630px
+;   :plugins-js-dir (string)
+;   :plugin-js-paths (maps in vector)
+;    [{:cache-control? (boolean)(opt)
+;       Default: false
+;      :uri (string)}]
+;   :theme-color (string)
+;    Theme color must be hex!
+;    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color
+;
+; @usage
+;  {:app-home      "/"
+;   :app-home      "/admin"
+;   :app-themes    [{:id :my-theme :name "My theme"}
+;                   {:id :light    :name :light-theme}]
+;   :meta-keywords ["a" "b" "c"]
+;   :meta-keywords "a, b, c"
+;   :plugin-js-paths [{:uri "/js/plugins/external-plugin.js" :cache-control? true}
+;                     {:uri "https://external-plugin.com/plugin.js"}]}
+
+{; App details
+ :author        "bithandshake"
+ :app-build     "0.0.1"
+ :app-home      "/admin"
+ :app-languages [:en :hu]
+ :app-themes    [{:id :light :name :light-theme}
+                 {:id :dark  :name :dark-theme}]
+ :app-title     "x4"
+
+ ; Browser details
+ :theme-color "#111111"
+
+ ; SEO details
+ :meta-description "The Matrix is everywhere. It is all around us."
+ :meta-keywords    ["Follow the white rabbit!"]
+ :og-preview-path  "/og/og-preview-1200x630.png"
+
+ ; CSS paths
+ :css-paths
+ [{:uri "/css/site.css" :cache-control? true}]
+
+ ; Favicon paths
+ :favicon-paths
+ [{:uri "/favicon/blue/favicon-16.png"  :cache-control? true :size "16x16"}
+  {:uri "/favicon/blue/favicon-32.png"  :cache-control? true :size "32x32"}
+  {:uri "/favicon/blue/favicon-96.png"  :cache-control? true :size "96x96"}
+  {:uri "/favicon/blue/favicon-144.png" :cache-control? true :size "144x144"}]
+
+ ; JavaScript details
+ :core-js-dir     "/js/core"
+ :plugins-js-dir  "/js/plugins"
+ :default-core-js "app.js"
+
+ ; JavaScript paths
+ :plugin-js-paths
+ []}

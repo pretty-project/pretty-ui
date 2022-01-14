@@ -10,6 +10,9 @@ monoset-environment/media/thumbnails/*
 !monoset-environment/media/thumbnails/default.png
 !monoset-environment/media/storage/sample.png
 
+# site-config
+monoset-environment/x.site-config.edn
+
 # system files
 .DS_Store
 node_modules

@@ -104,7 +104,7 @@
   [db _]
   (if-let [restart-target (get-in db (db/path ::primary :restart-target))]
           (return restart-target)
-          (r a/get-app-detail db :app-home)))
+          (r a/get-app-config-item db :app-home)))
 
 
 
@@ -259,7 +259,7 @@
   ; @usage
   ;  [:boot-loader/->app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
-      (let [app-build (r a/get-app-detail db :app-build)]
+      (let [app-build (r a/get-app-config-item db :app-build)]
            {:dispatch-if [(-> server-response map/nonempty? not)
                           [:core/->error-catched {:cofx cofx :error "Failed to synchronize app!"}]]
             :dispatch-n  ; 1.

@@ -37,5 +37,5 @@
   ; @return (boolean)
   [request]
   (let [cached-version  (http/request->cookie request "x-app-build")
-        current-version (event-handler/subscribed [:core/get-config-item :app-build])]
+        current-version (event-handler/subscribed [:core/get-app-config-item :app-build])]
        (= cached-version current-version)))

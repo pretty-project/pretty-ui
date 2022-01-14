@@ -215,7 +215,7 @@
   ;  {:crawler-rules (?)
   ;   :selected-language (keyword)}
   [request head-props]
-  (merge (a/subscribed [:core/get-destructed-configs])
+  (merge (a/subscribed [:core/get-app-config])
          {:crawler-rules     (crawler-rules request)
           :selected-language (user/request->user-settings-item request :selected-language)}
          (param head-props)))

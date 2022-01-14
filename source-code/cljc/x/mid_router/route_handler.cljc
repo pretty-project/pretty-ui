@@ -27,5 +27,5 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-home (r a/get-app-detail db :app-home)]
+  (let [app-home (r a/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))

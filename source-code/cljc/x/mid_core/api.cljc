@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.08
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.2
+; Version: v0.4.8
+; Compatibility: x4.5.3
 
 
 
@@ -29,27 +29,12 @@
 (def cache-control-uri cache-handler/cache-control-uri)
 
 ; x.mid-core.config-handler
-(def get-app-details        config-handler/get-app-details)
-(def get-app-detail         config-handler/get-app-detail)
-(def get-browser-details    config-handler/get-browser-details)
-(def get-browser-detail     config-handler/get-browser-detail)
-(def get-database-details   config-handler/get-database-details)
-(def get-database-detail    config-handler/get-database-detail)
-(def get-install-details    config-handler/get-install-details)
-(def get-install-detail     config-handler/get-install-detail)
-(def get-seo-details        config-handler/get-seo-details)
-(def get-seo-detail         config-handler/get-seo-detail)
-(def get-storage-details    config-handler/get-storage-details)
-(def get-storage-detail     config-handler/get-storage-detail)
-(def get-js-details         config-handler/get-js-details)
-(def get-js-detail          config-handler/get-js-detail)
-(def get-css-paths          config-handler/get-css-paths)
-(def get-favicon-paths      config-handler/get-favicon-paths)
-(def get-plugin-js-paths    config-handler/get-plugin-js-paths)
-(def get-configs            config-handler/get-configs)
-(def get-destructed-configs config-handler/get-destructed-configs)
-(def get-config-item        config-handler/get-config-item)
-(def store-configs!         config-handler/store-configs!)
+(def get-app-config         config-handler/get-app-config)
+(def get-app-config-item    config-handler/get-app-config-item)
+(def get-server-config      config-handler/get-server-config)
+(def get-server-config-item config-handler/get-server-config-item)
+(def get-site-config        config-handler/get-site-config)
+(def get-site-config-item   config-handler/get-site-config-item)
 
 ; x.mid-core.engine
 (def dom-value     engine/dom-value)
