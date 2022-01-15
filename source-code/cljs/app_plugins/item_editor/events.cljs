@@ -206,7 +206,8 @@
              (r subs/download-suggestions?         db extension-id item-namespace)
              (store-downloaded-suggestions! [event-id extension-id item-namespace server-response])
              (r subs/get-meta-value                db extension-id item-namespace :recovery-mode?)
-             (recover-item!                 [event-id extension-id item-namespace])))
+             (recover-item!                 [event-id extension-id item-namespace])
+             :->item-received (assoc-in [extension-id :item-editor/meta-items :item-received?] true)))
 
 (a/reg-event-db :item-editor/receive-item! receive-item!)
 
@@ -333,8 +334,12 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if (r subs/download-data? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:on-success [:item-editor/receive-item!   extension-id item-namespace]
-                              :query      (r queries/get-download-query db extension-id item-namespace)}])))
+                             {:on-success [:item-editor/receive-item!      extension-id item-namespace]
+                              :query      (r queries/get-download-query db extension-id item-namespace)}]
+          ; Ha az elem szerkesztéséhez nincs szükség adatok letöltéséhez, akkor is szükséges
+          ; a szerkesztőt {:item-received? true} állapotba léptetni!
+          {:db (assoc-in db [extension-id :item-editor/meta-items :item-received?] true)})))
+
 (a/reg-event-fx
   :item-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!

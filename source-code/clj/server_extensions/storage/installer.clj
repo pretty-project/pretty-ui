@@ -16,7 +16,7 @@
 
 ; @constant (namespaced map)
 (def ROOT-DIRECTORY-DOCUMENT {:media/id           engine/ROOT-DIRECTORY-ID
-                              :media/alias        ":my-storage"
+                              :media/alias        :my-storage
                               :media/description  ""
                               :media/mime-type    "storage/directory"
                               :media/content-size 0

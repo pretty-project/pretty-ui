@@ -51,17 +51,17 @@
   ; @example
   ;  (item-lister/env->sort-pattern {...} :my-extension :my-type)
   ;  =>
-  ;  [[:my-type/name 1]]
+  ;  {:my-type/name 1}
   ;
-  ; @return (vectors in vector)
+  ; @return (map)
   [env _ item-namespace]
   (let [order-by (pathom/env->param env :order-by)]
-       (case order-by :by-name-ascending  [[(keyword/add-namespace item-namespace :name)         1]]
-                      :by-name-descending [[(keyword/add-namespace item-namespace :name)        -1]]
-                      :by-date-ascending  [[(keyword/add-namespace item-namespace :modified-at)  1]]
-                      :by-date-descending [[(keyword/add-namespace item-namespace :modified-at) -1]]
+       (case order-by :by-name-ascending  {(keyword/add-namespace item-namespace :name)         1}
+                      :by-name-descending {(keyword/add-namespace item-namespace :name)        -1}
+                      :by-date-ascending  {(keyword/add-namespace item-namespace :modified-at)  1}
+                      :by-date-descending {(keyword/add-namespace item-namespace :modified-at) -1}
                       ; Default
-                      [[(keyword/add-namespace item-namespace :name) 1]])))
+                      {(keyword/add-namespace item-namespace :name) 1})))
 
 (defn env->search-pattern
   ; @param (map) env
@@ -71,14 +71,14 @@
   ; @example
   ;  (item-lister/env->search-pattern {...} :my-extension :my-type)
   ;  =>
-  ;  {:or [[:my-type/name "..."] [...]]}
+  ;  {:$or [{:my-type/name "..."} {...}]}
   ;
   ; @return (map)
-  ;  {:or (vectors in vector)}
+  ;  {:$or (maps in vector)}
   [env _ item-namespace]
   (let [search-keys (pathom/env->param env :search-keys)
         search-term (pathom/env->param env :search-term)]
-       {:or (vector/->items search-keys #(return [(keyword/add-namespace item-namespace %) search-term]))}))
+       {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))}))
 
 (defn env->pipeline-props
   ; @param (map) env
@@ -90,19 +90,21 @@
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
-  ;   :filter-pattern {:or [{:my-type/my-key "..."} {...}]}
-  ;   :search-pattern {:or [[:my-type/name   "..."] [...]]}
-  ;   :sort-pattern   [[:my-type/name 1]]}
+  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
+  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
+  ;   :sort-pattern   {:my-type/name 1}}
   ;
   ; @return (map)
-  ;  {:filter-pattern (map)
+  ;  {:field-pattern (map)
+  ;   :filter-pattern (map)
   ;   :max-count (integer)
   ;   :search-pattern (map)
   ;   :skip (integer)
-  ;   :sort-pattern (vectors in vector)}
+  ;   :sort-pattern (map)}
   [env extension-id item-namespace]
   {:max-count      (pathom/env->param   env :download-limit)
    :skip           (pathom/env->param   env :downloaded-item-count)
+   :field-pattern  (pathom/env->param   env :field-pattern)
    :filter-pattern (pathom/env->param   env :filter-pattern)
    :search-pattern (env->search-pattern env extension-id item-namespace)
    :sort-pattern   (env->sort-pattern   env extension-id item-namespace)})

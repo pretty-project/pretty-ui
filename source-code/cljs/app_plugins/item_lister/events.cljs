@@ -53,7 +53,7 @@
   (-> db (dissoc-in [extension-id :item-lister/data-items])
          (dissoc-in [extension-id :item-lister/meta-items :document-count])
          (dissoc-in [extension-id :item-lister/meta-items :received-count])
-         (dissoc-in [extension-id :item-lister/meta-items :synchronized?])))
+         (dissoc-in [extension-id :item-lister/meta-items :items-received?])))
 
 (defn reset-search!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -275,7 +275,7 @@
                   ; dokumentumok számát, mert annak megváltozhat az értéke!
                   (assoc-in % [extension-id :item-lister/meta-items :document-count] document-count)
                   ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-                  (assoc-in % [extension-id :item-lister/meta-items :synchronized?] true)
+                  (assoc-in % [extension-id :item-lister/meta-items :items-received?] true)
                   ; BUG#7009
                   ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
                   ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor

@@ -35,8 +35,6 @@
 
 (defn env->params
   ; @param (map) env
-  ;  {:request (map)
-  ;   {:params (map)}}
   ;
   ; @return (map)
   [env]
@@ -44,14 +42,23 @@
 
 (defn env->param
   ; @param (map) env
-  ;  {:request (map)
-  ;   {:params (map)}}
   ; @param (keyword) param-key
   ;
   ; @return (*)
   [env param-key]
   (let [params (env->params env)]
        (get params param-key)))
+
+(defn env<-param
+  ; @param (map) env
+  ; @param (keyword) param-key
+  ; @param (*) param-value
+  ;
+  ; @return (map)
+  [env param-key param-value]
+  ; https://github.com/wilkerlucio/pathom3/blob/main/src/main/com/wsscode/pathom3/connect/operation.cljc
+  (assoc-in env [:com.wsscode.pathom3.connect.planner/node :com.wsscode.pathom3.connect.planner/params param-key] 
+            param-value))
 
 
 

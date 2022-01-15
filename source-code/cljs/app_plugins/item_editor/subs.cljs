@@ -152,6 +152,18 @@
   (let [request-id (engine/request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
+(defn disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [item-received? (get-in db [extension-id :item-editor/meta-items :item-received?])
+        synchronizing? (r synchronizing? db extension-id item-namespace)]
+       (or (not item-received?) synchronizing?)))
+
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -276,15 +288,15 @@
   ;
   ; @return (map)
   ;  {:colors (strings in vector)
+  ;   :disabled? (boolean)
   ;   :error-mode? (boolean)
-  ;   :synchronizing? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
-          {:colors         (r get-data-value db extension-id item-namespace :colors)
-           :new-item?      (r new-item?      db extension-id item-namespace)
-           :synchronizing? (r synchronizing? db extension-id item-namespace)}))
+          {:colors    (r get-data-value db extension-id item-namespace :colors)
+           :disabled? (r disabled?      db extension-id item-namespace)
+           :new-item? (r new-item?      db extension-id item-namespace)}))
 
 ; @usage
 ;  [:item-editor/get-body-props :my-namespace :my-type]
@@ -298,16 +310,16 @@
   ;  (r item-editor/get-header-props db :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:error-mode? (boolean)
+  ;  {:disabled? (boolean)
+  ;   :error-mode? (boolean)
   ;   :form-completed? (boolean)
-  ;   :new-item? (boolean)
-  ;   :synchronizing? (boolean)}
+  ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           (let [form-id (engine/form-id extension-id item-namespace)]
-               {:new-item?       (r new-item?      db extension-id item-namespace)
-                :synchronizing?  (r synchronizing? db extension-id item-namespace)
+               {:disabled?       (r disabled? db extension-id item-namespace)
+                :new-item?       (r new-item? db extension-id item-namespace)
                 :form-completed? (r elements/form-completed? db form-id)})))
 
 ; @usage

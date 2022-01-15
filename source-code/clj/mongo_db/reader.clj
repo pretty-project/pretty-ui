@@ -131,7 +131,7 @@
   ;
   ; @return (integer)
   [collection-name query]
-  (if-let [query (adaptation/query-input query)]
+  (if-let [query (adaptation/find-query query)]
           (count-documents-by-query collection-name query)))
 
 (defn get-all-documents
@@ -153,7 +153,7 @@
            (vector/->items all-documents #(adaptation/get-document-output %))))
 
   ([collection-name projection]
-   (if-let [projection (adaptation/projection-input projection)]
+   (if-let [projection (adaptation/find-projection projection)]
            (if-let [all-documents (find-maps collection-name {} projection)]
                    (vector/->items all-documents #(adaptation/get-document-output %))))))
 
@@ -174,13 +174,13 @@
   ; @return (namespaced maps in vector)
   ;  [{:namespace/id (string)}]
   ([collection-name query]
-   (if-let [query (adaptation/query-input query)]
+   (if-let [query (adaptation/find-query query)]
            (if-let [documents (find-maps collection-name query)]
                    (vector/->items documents #(adaptation/get-document-output %)))))
 
   ([collection-name query projection]
-   (if-let [query (adaptation/query-input query)]
-           (if-let [projection (adaptation/projection-input projection)]
+   (if-let [query (adaptation/find-query query)]
+           (if-let [projection (adaptation/find-projection projection)]
                    (if-let [documents (find-maps collection-name query projection)]
                            (vector/->items documents #(adaptation/get-document-output %)))))))
 
@@ -203,7 +203,7 @@
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name query]
-  (if-let [query (adaptation/query-input query)]
+  (if-let [query (adaptation/find-query query)]
           (if-let [document (find-one-as-map collection-name query)]
                   (adaptation/get-document-output document))))
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.5.3
+; Version: v0.6.8
+; Compatibility: x4.5.4
 
 
 
@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.views
-    (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
+    (:require [mid-fruits.candy   :refer [param]]
+              [mid-fruits.string  :as string]
+              [mid-fruits.vector  :as vector]
+              [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
               [app-plugins.item-editor.engine :as engine]))
 
 
@@ -31,43 +31,52 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-mode? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :error-mode? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-editor/delete-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled? error-mode?]}]
   [elements/button ::delete-item-button
                    {:tooltip :delete! :preset :delete-icon-button
-                    :disabled? (or error-mode? synchronizing?)
+                    :disabled? (or disabled? error-mode?)
                     :on-click  [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn copy-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:error-mode? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :error-mode? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-editor/copy-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled? error-mode?]}]
   [elements/button ::copy-item-button
                    {:tooltip :duplicate! :preset :duplicate-icon-button
-                    :disabled? (or error-mode? synchronizing?)
+                    :disabled? (or disabled? error-mode?)
                     :on-click  [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:error-mode? (boolean)(opt)
-  ;   :form-completed? (boolean)
-  ;   :synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :error-mode? (boolean)(opt)
+  ;   :form-completed? (boolean)}
+  ;
+  ; @usage
+  ;  [item-editor/save-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [error-mode? form-completed? synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled? error-mode? form-completed?]}]
   [elements/button ::save-item-button
                    {:tooltip :save! :preset :save-icon-button
-                    :disabled? (or (not form-completed?) error-mode? synchronizing?)
+                    :disabled? (or (not form-completed?) disabled? error-mode?)
                     :on-click [:item-editor/save-item! extension-id item-namespace]}])
 
 
@@ -119,6 +128,9 @@
   ;  {:item-name (metamorphic-content)(opt)
   ;   :new-item? (boolean)(opt)}
   ;
+  ; @usage
+  ;  [item-editor/item-label :my-extension :my-type {...}]
+  ;
   ; @return (component)
   [extension-id item-namespace {:keys [item-name new-item?] :as element-props}]
   (cond (string/nonempty? item-name) [named-item-label   extension-id item-namespace element-props]
@@ -136,15 +148,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/button ::add-colors-button
                    {:label :add-color! :preset :muted-button :layout :row :font-size :xs
-                    :disabled? synchronizing?
+                    :disabled? disabled?
                     :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]}])
-
 
 (defn selected-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,12 +178,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [synchronizing?] :as element-props}]
+  [extension-id item-namespace {:keys [disabled?] :as element-props}]
   [elements/toggle ::selected-colors-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
                     :content   [selected-colors extension-id item-namespace element-props]}])
 
@@ -181,6 +192,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:colors (strings in vector)(opt)}
+  ;
+  ; @usage
+  ;  [item-editor/color-selector :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [colors] :as element-props}]
@@ -195,6 +209,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:colors (strings in vector)(opt)}
+  ;
+  ; @usage
+  ;  [item-editor/color-stamp :my-extension :my-type {...}]
   ;
   ; @return (component)
   [_ _ {:keys [colors]}]
@@ -213,11 +230,17 @@
 (defn description-field
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-editor/color-stamp :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/multiline-field ::description-field
-                            {:value-path [extension-id :item-editor/data-item :description]}])
+                            {:value-path [extension-id :item-editor/data-item :description]
+                             :disabled?  disabled?}])
 
 
 
@@ -226,6 +249,9 @@
 
 (defn error-body
   ; @param (keyword) body-id
+  ;
+  ; @usage
+  ;  [item-editor/error-body :my-body]
   ;
   ; @return (component)
   [body-id]
@@ -280,6 +306,9 @@
   ; @param (keyword) item-namespace
   ; @param (map)(opt) header-props
   ;
+  ; @usage
+  ;  [item-editor/header :my-extension :my-type {...}]
+  ;
   ; @return (component)
   ([extension-id item-namespace]
    [header extension-id item-namespace {}])
@@ -318,6 +347,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) view-props
   ;  {:form-element (component)}
+  ;
+  ; @usage
+  ;  [item-editor/view :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

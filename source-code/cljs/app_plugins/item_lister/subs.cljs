@@ -59,7 +59,7 @@
   (let [request-id (engine/request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
-(defn synchronized?
+(defn items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -70,7 +70,8 @@
   ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
   ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
   ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
-  (boolean (r get-meta-value db extension-id item-namespace :synchronized?)))
+  (let [items-received? (r get-meta-value db extension-id item-namespace :items-received?)]
+       (boolean items-received?)))
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -284,7 +285,7 @@
        ; XXX#0791
        ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
        ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-  (and (or (not (r synchronized?         db extension-id item-namespace))
+  (and (or (not (r items-received?       db extension-id item-namespace))
            (not (r all-items-downloaded? db extension-id item-namespace)))
        ; BUG#7009
        (r some-items-received? db extension-id item-namespace)))
@@ -325,9 +326,9 @@
   [db [_ extension-id item-namespace]]
   (let [downloaded-item-count (r get-downloaded-item-count db extension-id)
         all-item-count        (r get-all-item-count        db extension-id item-namespace)
-        synchronized?         (r synchronized?             db extension-id item-namespace)]
-       (if synchronized? (components/content {:content      :npn-items-downloaded
-                                              :replacements [downloaded-item-count all-item-count]}))))
+        items-received?       (r items-received?           db extension-id item-namespace)]
+       (if items-received? (components/content {:content      :npn-items-downloaded
+                                                :replacements [downloaded-item-count all-item-count]}))))
 
 (defn get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -382,11 +383,11 @@
   ;   :downloaded-items (vector)
   ;   :downloading-items? (boolean)
   ;   :disabled-items (integers in vector)
+  ;   :items-received? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :reorder-mode? (boolean)
   ;   :search-mode? (boolean)
   ;   :select-mode? (boolean)
-  ;   :synchronized? (boolean)
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
   (cond ; If select-mode is enabled ...
@@ -394,32 +395,32 @@
         {:select-mode?      true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :items-received?    (r items-received?      db extension-id item-namespace)
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
-         :synchronized?      (r synchronized?        db extension-id item-namespace)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :search-mode?)
         {:search-mode?      true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :items-received?    (r items-received?      db extension-id item-namespace)
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
-         :synchronized?      (r synchronized?        db extension-id item-namespace)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (r get-meta-value db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?     true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :items-received?    (r items-received?      db extension-id item-namespace)
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
-         :synchronized?      (r synchronized?        db extension-id item-namespace)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
+         :items-received?    (r items-received?      db extension-id item-namespace)
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
-         :synchronized?      (r synchronized?        db extension-id item-namespace)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)

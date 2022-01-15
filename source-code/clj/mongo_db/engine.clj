@@ -20,13 +20,40 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn document?
+(defn query?
   ; @param (*) n
+  ;
+  ; @example
+  ;  (engine/query? {:namespace/my-key "..."})
+  ;  =>
+  ;  true
   ;
   ; @return (boolean)
   [n]
   (and (-> n map?)
        (-> n db/document->namespace some?)))
+
+(defn document?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (engine/document? {:namespace/my-key "..."})
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (engine/document? {:namespace/my-key "..."
+  ;                     :namespace/id     "..."})
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (and (-> n map?)
+       (boolean (if-let [namespace (db/document->namespace n)]
+                        (let [id-key      (keyword namespace "id")
+                              document-id (get n id-key)]
+                             (some? document-id))))))
 
 (defn DBObject->edn
   ; WARNING! NON-PUBLIC! DO NOT USE!

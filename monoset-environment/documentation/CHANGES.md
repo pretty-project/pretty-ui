@@ -1,4 +1,15 @@
 
+# x4.5.4
+- Az item-editor plugin [:item-editor/get-header-props ...] és [:item-editor/get-body-props ...]
+  feliratkozásában a {:synchronizing? ...} tulajdonság helyett a {:disabled? ...} tulajdonság
+  segítségével lehet az inputok {:disabled? ...} állapotát beállítani
+
+- A mongo-db.pipelines névtér összes függvényének paraméterezése megváltozott!
+
+- A mongo-db field-pattern, filter-pattern, search-pattern, sort-pattern szintaxisa megváltozott!
+
+
+
 # x4.5.3
 - Az item-editor plugin példányaiban a pathom handler függvények a megváltozott mongo-db névtér
   függvényeit használják!

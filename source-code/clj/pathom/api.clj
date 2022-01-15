@@ -13,6 +13,7 @@
 (def env->request env/env->request)
 (def env->params  env/env->params)
 (def env->param   env/env->param)
+(def env<-param   env/env<-param)
 
 ; pathom.query
 (def process-query!   query/process-query!)

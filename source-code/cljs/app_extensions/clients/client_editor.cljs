@@ -51,46 +51,46 @@
 
 (defn- client-vat-no-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::vat-no-field
                        {:label :vat-no :min-width :s
                         :value-path [:clients :item-editor/data-item :vat-no]
-                        :disabled?  synchronizing?}])
+                        :disabled?  disabled?}])
 
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [selected-language synchronizing?]}]
+  [_ {:keys [disabled? selected-language]}]
   [elements/select ::country-select
                    {:label :country ;:user-cancel? false
                     :initial-value   (locales/country-native-name selected-language)
                     :initial-options (param locales/EU-COUNTRY-NAMES)
                     :value-path      [:clients :item-editor/data-item :country]
-                    :disabled?       synchronizing?}])
+                    :disabled?       disabled?}])
 
 (defn- client-zip-code-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::zip-code-field
                        {:label :zip-code
                         :value-path [:clients :item-editor/data-item :zip-code]
-                        :disabled?  synchronizing?}])
+                        :disabled?  disabled?}])
 
 (defn- client-city-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/combo-box ::city-field
                       {:label :city :emptiable? false :min-width :s
                        :options-path [:clients :item-editor/meta-items :suggestions :client/city]
                        :value-path   [:clients :item-editor/data-item :city]
-                       :disabled? synchronizing?}])
+                       :disabled?    disabled?}])
 
 (defn- client-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::address-field
                        {:label :address
                         :value-path [:clients :item-editor/data-item :address]
-                        :disabled? synchronizing?}])
+                        :disabled?  disabled?}])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,7 +110,7 @@
 
 (defn- client-phone-number-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::phone-number-field
                        {:label :phone-number :required? true :min-width :s
                         :value-path [:clients :item-editor/data-item :phone-number]
@@ -119,17 +119,17 @@
                         ;:modifier form/valid-phone-number
                         :modifier #(string/starts-with! % "+")
                         :form-id   (item-editor/form-id :clients :client)
-                        :disabled? synchronizing?}])
+                        :disabled? disabled?}])
 
 (defn- client-email-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::email-address-field
                        {:label :email-address :required? true :min-width :s
                         :value-path [:clients :item-editor/data-item :email-address]
                         :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                         :form-id   (item-editor/form-id :clients :client)
-                        :disabled? synchronizing?}])
+                        :disabled? disabled?}])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,21 +142,21 @@
 
 (defn- client-last-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::last-name-field
                        {:label :last-name :required? true :min-width :s
                         :value-path [:clients :item-editor/data-item :last-name]
                         :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  synchronizing?}])
+                        :disabled?  disabled?}])
 
 (defn- client-first-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [synchronizing?]}]
+  [_ {:keys [disabled?]}]
   [elements/text-field ::first-name-field
                        {:label :first-name :required? true :min-width :s
                         :value-path [:clients :item-editor/data-item :first-name]
                         :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  synchronizing?}])
+                        :disabled?  disabled?}])
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -170,11 +170,11 @@
 
 (defn- client-additional-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  [_ body-props]
   [:div (layouts/input-column-attributes)
         [layouts/input-group-header {:label :description}]
         [:div (layouts/input-block-attributes {:ratio 100})
-              [item-editor/description-field :clients :client]]])
+              [item-editor/description-field :clients :client body-props]]])
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

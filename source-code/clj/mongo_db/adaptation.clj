@@ -81,7 +81,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn query-input
+(defn find-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (namespaced map) query
@@ -91,7 +91,7 @@
   (try (-> query json/unkeywordize-keys json/unkeywordize-values)
        (catch Exception e (println (str e "\n" {:query query})))))
 
-(defn projection-input
+(defn find-projection
   ; @param (namespaced map) projection
   ;
   ; @return (namespaced map)
@@ -252,16 +252,16 @@
   ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
   ;
   ; @return (namespaced map)
-  [document]
-  (if (map/nonempty? document)
+  [query]
+  (if (map/nonempty? query)
       ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
       ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
       ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
       ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> document engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:document document}))))
+      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+           (catch Exception e (println (str e "\n" {:query query}))))
       ; A query paraméterként lehetséges üres térképet is átadni.
-      (return document)))
+      (return query)))
 
 
 
@@ -306,16 +306,16 @@
   ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
   ;
   ; @return (namespaced map)
-  [document]
-  (if (map/nonempty? document)
+  [query]
+  (if (map/nonempty? query)
       ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
       ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
       ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
       ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> document engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:document document}))))
+      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+           (catch Exception e (println (str e "\n" {:query query}))))
       ; A query paraméterként lehetséges üres térképet is átadni.
-      (return document)))
+      (return query)))
 
 
 
@@ -448,39 +448,13 @@
   ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
   ;
   ; @return (namespaced map)
-  [document]
-  (if (map/nonempty? document)
+  [query]
+  (if (map/nonempty? query)
       ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
       ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
       ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
       ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> document engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:document document}))))
+      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+           (catch Exception e (println (str e "\n" {:query query}))))
       ; A query paraméterként lehetséges üres térképet is átadni.
-      (return document)))
-
-(defn pipeline-input
-  ; @param (map) pipeline
-  ;
-  ; @example
-  ;  (adaptation/pipeline-input {:or  [{:namespace/my-key false}
-  ;                                    {:namespace/my-key nil}]
-  ;                              :and [{:namespace/your-key true}
-  ;                                    {:or [{:namespace/our-key true}
-  ;                                          {:namespace/our-key nil}]}]})
-  ;  =>
-  ;  {"$or"  [{"namespace/my-key" false}
-  ;           {"namespace/my-key" nil}]
-  ;   "$and" [{"namespace/your-key" true}
-  ;           {"$or" [{"namespace/our-key" true}
-  ;                   {"namespace/our-key" nil}]}]}
-  ;
-  ; @return (map)
-  [pipeline]
-  ; 1. Ha a vizsgált elem egy dokumentum, akkor a pipeline-query függvényt alkalmazásával adaptálja
-  ; 2. Ha a vizsgált elem egy térkép, akkor a kulcsait operátorként adaptálja
-  ; 3. Ha a vizsgált elem egy vektor, akkor végigiterál az elemein és az 1. és 2. pont szerint jár el
-  (letfn [(f [n] (cond (engine/document? n) (pipeline-query n)
-                       (map?             n) (reduce-kv #(assoc %1 (operator-input %2) (f %3)) {} n)
-                       (vector?          n) (reduce    #(conj  %1                     (f %2)) [] n)))]
-         (f pipeline)))
+      (return query)))

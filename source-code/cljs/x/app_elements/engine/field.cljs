@@ -53,7 +53,8 @@
 
 ; @constant (ms)
 ;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
-(def TYPE-ENDED-AFTER 250)
+;(def TYPE-ENDED-AFTER 250) <- Nem mindenki programozó! :)
+(def TYPE-ENDED-AFTER 350)
 
 ; @constant (px)
 (def CARET-OFFSET 4)
@@ -76,7 +77,7 @@
   {:icon :clear :on-click [:elements/empty-field! field-id]
    ; XXX#8073
    ; Az adornment a {:preset ...} tulajdonság értékével azonosítható
-   :preset  :empty-field-adornment
+   :preset :empty-field-adornment
    ; A mező kiürítése az ESC billentyű lenyomásával is vezérelhető, ezért nem szükséges indexelni.
    ; XXX#6054
    ; Az indexelt adornment gombok a TAB billentyűvel való mezők közötti váltást nehezítik!

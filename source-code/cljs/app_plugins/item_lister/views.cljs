@@ -466,16 +466,16 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:downloading-items? (boolean)(opt)
-  ;   :synchronized? (boolean)(opt)}
+  ;   :items-received? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloading-items? synchronized?] :as body-props}]
+  [extension-id item-namespace {:keys [downloading-items? items-received?] :as body-props}]
   (if (or (boolean downloading-items?)
           ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
           ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
           ; feltétel hozzáadása nélkül:
           (and (not downloading-items?)
-               (not synchronized?)))
+               (not items-received?)))
       [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
                      :horizontal-align :center}]))
 
@@ -497,15 +497,15 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:downloading-items? (boolean)(opt)
-  ;   :no-items-to-show? (boolean)(opt)
-  ;   :synchronized? (boolean)(opt)}
+  ;   :items-received? (boolean)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloading-items? no-items-to-show? synchronized?] :as body-props}]
+  [extension-id item-namespace {:keys [downloading-items? items-received? no-items-to-show?] :as body-props}]
   (if (and (boolean no-items-to-show?)
-           ; Szükséges a synchronized? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
+           ; Szükséges a items-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
            ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
-           (boolean synchronized?)
+           (boolean items-received?)
            ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
            ; ne jelenjen meg a no-items-to-show-label felirat!
            (not downloading-items?))

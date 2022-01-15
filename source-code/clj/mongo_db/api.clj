@@ -32,12 +32,12 @@
 (def generate-id engine/generate-id)
 
 ; mongo-db.pipelines
-(def filter-pattern->filter-query   pipelines/filter-pattern->filter-query)
-(def search-pattern->search-query   pipelines/search-pattern->search-query)
-(def sort-pattern->sort-query       pipelines/sort-pattern->sort-query)
-(def field-pattern->field-operation pipelines/field-pattern->field-operation)
-(def get-pipeline                   pipelines/get-pipeline)
-(def count-pipeline                 pipelines/count-pipeline)
+(def add-fields-query pipelines/add-fields-query)
+(def filter-query     pipelines/filter-query)
+(def search-query     pipelines/search-query)
+(def sort-query       pipelines/sort-query)
+(def get-pipeline     pipelines/get-pipeline)
+(def count-pipeline   pipelines/count-pipeline)
 
 ; mongo-db.reader
 (def get-collection-names        reader/get-collection-names)

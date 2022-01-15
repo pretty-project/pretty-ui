@@ -17,32 +17,30 @@
 ;; -- Pipelines ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn env->name-field-operation
+(defn env->name-field-pattern
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [request           (pathom/env->request env)
         selected-language (user/request->user-settings-item request :selected-language)
         name-order        (get locales/NAME-ORDERS selected-language)]
-       ; - A pipeline elejére fűz egy field-operation műveletet, amivel hozzáadja a :client/name
-       ;   tulajdonságot a dokumentumokhoz.
-       ; - A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által
-       ;   kiválaszott nyelv szerinti sorrendet alkalmazza.
-       (case name-order :reversed (mongo-db/field-pattern->field-operation [:client/name [:client/last-name  :client/first-name]])
-                                  (mongo-db/field-pattern->field-operation [:client/name [:client/first-name :client/last-name]]))))
+       ; A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által
+       ; kiválaszott nyelv szerinti sorrendet alkalmazza.
+       (case name-order :reversed {:client/name {:$concat [:$client/last-name  " " :$client/first-name]}}
+                                  {:client/name {:$concat [:$client/first-name " " :$client/last-name]}})))
 
 (defn env->get-pipeline
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
-  (let [name-field-operation (env->name-field-operation     env)
-        get-pipeline         (item-lister/env->get-pipeline env :clients :client)]
-       (vector/cons-item get-pipeline name-field-operation)))
+  (let [name-field-pattern (env->name-field-pattern env)
+        env (pathom/env<-param env :field-pattern name-field-pattern)]
+       (item-lister/env->get-pipeline env :clients :client)))
 
 (defn env->count-pipeline
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
-  (let [name-field-operation (env->name-field-operation  env)
-        count-pipeline       (item-lister/env->count-pipeline env :clients :client)]
-       (vector/cons-item count-pipeline name-field-operation)))
+  (let [name-field-pattern (env->name-field-pattern env)
+        env (pathom/env<-param env :field-pattern name-field-pattern)]
+       (item-lister/env->count-pipeline env :clients :client)))
 
 
 
