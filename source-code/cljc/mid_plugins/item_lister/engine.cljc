@@ -81,6 +81,20 @@
   (keyword (name extension-id)
            (str "get-" (name item-namespace) "-items")))
 
+(defn collection-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @example
+  ;  (engine/collection-name :my-extension)
+  ;  =>
+  ;  "my-extension"
+  ;
+  ; @return (string)
+  [extension-id]
+  (name extension-id))
+
 (defn new-item-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

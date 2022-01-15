@@ -17,8 +17,7 @@
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
               [x.app-router.api :as router]
-              [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-lister.subs    :as subs]))
+              [app-plugins.item-browser.engine :as engine]))
 
 
 
@@ -78,8 +77,11 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
+  ;  {:at-home? (boolean)}
   [db [_ extension-id item-namespace]]
-  (merge (r subs/get-header-props db extension-id item-namespace)
+
+            ; TEMP
+  (merge (r app-plugins.item-lister.subs/get-header-props db extension-id item-namespace)
          {:at-home? (r at-home? db extension-id)}))
 
 (a/reg-sub :item-browser/get-header-props get-header-props)
@@ -91,6 +93,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]])
+  [db [_ extension-id item-namespace]]
+  {})
 
 (a/reg-sub :item-browser/get-view-props get-view-props)

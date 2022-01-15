@@ -21,11 +21,11 @@
   ;   :total-capacity (B)
   ;   :used-capacity (B)}
   []
-  (if-let [root-directory-document (mongo-db/get-document-by-id "directories" engine/ROOT-DIRECTORY-ID)]
+  (if-let [root-directory-document (mongo-db/get-document-by-id "storage" engine/ROOT-DIRECTORY-ID)]
           (if-let [server-config (a/subscribed [:core/get-server-config])]
                   {:max-upload-size (get server-config           :max-upload-size)
                    :total-capacity  (get server-config           :storage-capacity)
-                   :used-capacity   (get root-directory-document :directory/content-size)})))
+                   :used-capacity   (get root-directory-document :media/content-size)})))
 
 
 

@@ -30,6 +30,7 @@
 (def request-id           engine/request-id)
 (def mutation-name        engine/mutation-name)
 (def resolver-id          engine/resolver-id)
+(def collection-name      engine/collection-name)
 (def new-item-uri         engine/new-item-uri)
 (def add-new-item-event   engine/add-new-item-event)
 (def route-id             engine/route-id)
@@ -89,7 +90,7 @@
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
-  ;   :filter-pattern {:or [[:my-type/my-key "..."] [...]]}
+  ;   :filter-pattern {:or [{:my-type/my-key "..."} {...}]}
   ;   :search-pattern {:or [[:my-type/name   "..."] [...]]}
   ;   :sort-pattern   [[:my-type/name 1]]}
   ;

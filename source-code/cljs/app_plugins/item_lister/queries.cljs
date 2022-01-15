@@ -43,7 +43,11 @@
    :filter-pattern        (r subs/get-meta-value            db extension-id item-namespace :filter-pattern)
    :order-by              (r subs/get-meta-value            db extension-id item-namespace :order-by)
    :search-keys           (r subs/get-meta-value            db extension-id item-namespace :search-keys)
-   :search-term           (r subs/get-search-term           db extension-id item-namespace)})
+   :search-term           (r subs/get-search-term           db extension-id item-namespace)
+
+   ; TEMP
+   ; Az {:item-id ...} értéke az item-browser plugin számára szükséges!
+   :item-id (get-in db [extension-id :item-browser/meta-items :item-id])})
 
 (defn get-delete-selected-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

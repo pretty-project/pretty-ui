@@ -47,6 +47,36 @@
   (keyword (name extension-id)
            (str "synchronize-" (name item-namespace) "-browser!")))
 
+(defn resolver-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/resolver-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension/get-my-type-items!
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (name extension-id)
+           (str "get-" (name item-namespace) "-items")))
+
+(defn collection-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @example
+  ;  (engine/collection-name :my-extension)
+  ;  =>
+  ;  "my-extension"
+  ;
+  ; @return (string)
+  [extension-id]
+  (name extension-id))
+
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

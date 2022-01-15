@@ -16,6 +16,7 @@
 (ns app-plugins.item-browser.api
     (:require [app-plugins.item-browser.engine]
               [app-plugins.item-browser.events]
+              [app-plugins.item-browser.queries]
               [app-plugins.item-browser.subs  :as subs]
               [app-plugins.item-browser.views :as views]))
 

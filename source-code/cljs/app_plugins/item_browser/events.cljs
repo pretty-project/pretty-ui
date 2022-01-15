@@ -17,8 +17,7 @@
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.subs   :as subs]
-              [app-plugins.item-lister.events  :as events]))
+              [app-plugins.item-browser.subs   :as subs]))
 
 
 
@@ -47,7 +46,9 @@
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
   (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
-             (r events/load-lister!    % extension-id item-namespace browser-props)))
+
+             ; TEMP
+             (r app-plugins.item-lister.events/load-lister!    % extension-id item-namespace browser-props)))
 
 
 

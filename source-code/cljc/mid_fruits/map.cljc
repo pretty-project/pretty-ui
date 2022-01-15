@@ -711,7 +711,7 @@
   ;
   ; @return (map)
   [n f]
-  ; A rekurzió a vektorok elemen NEM hajtja végre az f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein NEM hajtja végre az f függvényt, mivel azok a térképek értékeinek megfelelői!
   (letfn [(deep-f [n] (cond (vector? n) (reduce    #(conj  %1        (deep-f %2)) [] n)
                             (map?    n) (reduce-kv #(assoc %1 (f %2) (deep-f %3)) {} n)
                             :else    n))]
@@ -741,7 +741,7 @@
   ;
   ; @return (map)
   [n f]
-  ; A rekurzió a vektorok elemen is végrehajtja az f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein is végrehajtja az f függvényt, mivel azok a térképek értékeinek megfelelői!
   (letfn [(deep-f [n] (cond (vector? n) (reduce    #(conj  %1    (deep-f %2)) [] n)
                             (map?    n) (reduce-kv #(assoc %1 %2 (deep-f %3)) {} n)
                             :else (f n)))]

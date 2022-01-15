@@ -1,5 +1,5 @@
 
-(ns app-extensions.storage.directory-browser
+(ns app-extensions.storage.media-browser
     (:require [mid-fruits.candy   :refer [param return]]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
@@ -26,10 +26,10 @@
 ;; -- File-item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn directory-item
+(defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [id] :as item-props}]
-  [:div (str item-props)])
+  [item-dex {:keys [alias id] :as item-props}]
+  [:div (str alias)])
 
 
 
@@ -39,8 +39,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-browser/view :storage :directory {:list-element     #'directory-item
-                                          :new-item-options [:upload-files! :create-directory!]}])
+  [item-browser/view :storage :media {:list-element     #'media-item
+                                      :new-item-options [:upload-files! :create-directory!]}])
 
 
   ;[app-extensions.storage.file-picker/view :my-picker {}])
@@ -52,9 +52,9 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/load-directory-browser!
+  :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
-                [:sync/send-query! :storage/synchronize-directory-browser!
+                [:sync/send-query! :storage/synchronize-media-browser!
                                    {:query      [:debug `(:storage/download-capacity-details ~{})]
                                     :on-success [:storage/receive-server-response!]}]]})

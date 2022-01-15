@@ -119,7 +119,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) conditions
+  ; @param (map) query
   ;  {"_id" (org.bson.types.ObjectId object)(opt)}
   ; @param (map) document
   ; @param (map)(opt) options
@@ -129,20 +129,20 @@
   ;    Default: false}
   ;
   ; @return (com.mongodb.WriteResult object)
-  ([collection-name conditions document]
-   (update! collection-name conditions document {}))
+  ([collection-name query document]
+   (update! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (let [database (a/subscribed [:mongo-db/get-connection])]
-        (try (mcl/update database collection-name conditions document options)
-             (catch Exception e (println (str e "\n" {:collection-name collection-name :conditions conditions
-                                                      :document        document        :options    options})))))))
+        (try (mcl/update database collection-name query document options)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :query   query
+                                                      :document        document        :options options})))))))
 
 (defn- upsert!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (map) conditions
+  ; @param (map) query
   ;  {"_id" (org.bson.types.ObjectId object)(opt)}
   ; @param (map) document
   ; @param (map)(opt) options
@@ -150,14 +150,14 @@
   ;    Default: false}
   ;
   ; @return (com.mongodb.WriteResult object)
-  ([collection-name conditions document]
-   (upsert! collection-name conditions document {}))
+  ([collection-name query document]
+   (upsert! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (let [database (a/subscribed [:mongo-db/get-connection])]
-        (try (mcl/upsert database collection-name conditions document options)
-             (catch Exception e (println (str e "\n" {:collection-name collection-name :conditions conditions
-                                                      :document        document        :options    options})))))))
+        (try (mcl/upsert database collection-name query document options)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :query   query
+                                                      :document        document        :options options})))))))
 
 
 
@@ -326,7 +326,7 @@
 
 (defn update-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) conditions
+  ; @param (namespaced map) query
   ;  {:namespace/id (string)(opt)}
   ; @param (namespaced map) document
   ; @param (map)(opt) options
@@ -336,14 +336,14 @@
   ;  (mongo-db/update-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
-  ([collection-name conditions document]
-   (update-document! collection-name conditions document {}))
+  ([collection-name query document]
+   (update-document! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (boolean (if-let [document (prepare-document collection-name document options)]
-                    (if-let [conditions (adaptation/update-conditions conditions)]
+                    (if-let [query (adaptation/update-query query)]
                             (if-let [document (adaptation/update-input document)]
-                                    (let [result (update! collection-name conditions document {:multi false :upsert false})]
+                                    (let [result (update! collection-name query document {:multi false :upsert false})]
                                          (mrt/updated-existing? result))))))))
 
 ; @usage
@@ -357,7 +357,7 @@
 
 (defn update-documents!
   ; @param (string) collection-name
-  ; @param (namespaced map) conditions
+  ; @param (namespaced map) query
   ;  {:namespace/id (string)(opt)}
   ; @param (namespaced map) document
   ; @param (map)(opt) options
@@ -367,16 +367,16 @@
   ;  (mongo-db/update-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
-  ([collection-name conditions document]
-   (update-documents! collection-name conditions document {}))
+  ([collection-name query document]
+   (update-documents! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (boolean (if-let [document (prepare-document collection-name document options)]
-                    (if-let [conditions (adaptation/update-conditions conditions)]
+                    (if-let [query (adaptation/update-query query)]
                             (if-let [document (adaptation/update-input document)]
                                     ; WARNING! DO NOT USE!
                                     ; java.lang.IllegalArgumentException: Replacements can not be multi
-                                    (let [result (update! collection-name conditions document {:multi true :upsert false})]
+                                    (let [result (update! collection-name query document {:multi true :upsert false})]
                                          (mrt/updated-existing? result))))))))
 
 ; @usage
@@ -390,7 +390,7 @@
 
 (defn upsert-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) conditions
+  ; @param (namespaced map) query
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
@@ -399,14 +399,14 @@
   ;  (mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
-  ([collection-name conditions document]
-   (upsert-document! collection-name conditions document {}))
+  ([collection-name query document]
+   (upsert-document! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (boolean (if-let [document (prepare-document collection-name document options)]
-                    (if-let [conditions (adaptation/upsert-conditions conditions)]
+                    (if-let [query (adaptation/upsert-query query)]
                             (if-let [document (adaptation/upsert-input document)]
-                                    (let [result (upsert! collection-name conditions document {:multi false})]
+                                    (let [result (upsert! collection-name query document {:multi false})]
                                          (mrt/acknowledged? result))))))))
 
 ; @usage
@@ -420,7 +420,7 @@
 
 (defn upsert-documents!
   ; @param (string) collection-name
-  ; @param (namespaced map) conditions
+  ; @param (namespaced map) query
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
@@ -429,16 +429,16 @@
   ;  (mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
-  ([collection-name conditions document]
-   (upsert-documents! collection-name conditions document {}))
+  ([collection-name query document]
+   (upsert-documents! collection-name query document {}))
 
-  ([collection-name conditions document options]
+  ([collection-name query document options]
    (boolean (if-let [document (prepare-document collection-name document options)]
-                    (if-let [conditions (adaptation/upsert-conditions conditions)]
+                    (if-let [query (adaptation/upsert-query query)]
                             (if-let [document (adaptation/upsert-input document)]
                                     ; WARNING! DO NOT USE!
                                     ; java.lang.IllegalArgumentException: Replacements can not be multi
-                                    (let [result (upsert! collection-name conditions document {:multi true})]
+                                    (let [result (upsert! collection-name query document {:multi true})]
                                          (mrt/acknowledged? result))))))))
 
 ; @usage
@@ -465,11 +465,11 @@
    (apply-document! collection-name document-id f {}))
 
   ([collection-name document-id f options]
-   (if-let [conditions (adaptation/apply-conditions document-id)]
+   (if-let [query (adaptation/apply-query document-id)]
            (if-let [document (reader/get-document-by-id collection-name document-id)]
                    (if-let [document (prepare-document collection-name document options)]
                            (if-let [document (-> document f adaptation/apply-input)]
-                                   (let [result (update! collection-name conditions document {:multi false :upsert false})]
+                                   (let [result (update! collection-name query document {:multi false :upsert false})]
                                         (if (mrt/updated-existing? result)
                                             (return document)))))))))
 

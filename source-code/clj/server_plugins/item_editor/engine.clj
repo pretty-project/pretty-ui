@@ -31,6 +31,7 @@
 (def request-id              engine/request-id)
 (def mutation-name           engine/mutation-name)
 (def resolver-id             engine/resolver-id)
+(def collection-name         engine/collection-name)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)

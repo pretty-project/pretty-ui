@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.5.0
+; Version: v0.4.6
+; Compatibility: x4.5.3
 
 
 
@@ -20,8 +20,8 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
-              [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-lister.views   :as views]))
+              [x.app-tools.api      :as tools]
+              [app-plugins.item-browser.engine :as engine]))
 
 
 
@@ -79,15 +79,15 @@
   [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      (if new-item-options [views/new-item-select extension-id item-namespace header-props]
-                           [views/new-item-button extension-id item-namespace])
+      (if new-item-options [app-plugins.item-lister.views/new-item-select extension-id item-namespace header-props]
+                           [app-plugins.item-lister.views/new-item-button extension-id item-namespace])
       [go-home-button                  extension-id item-namespace header-props]
       [go-up-button                    extension-id item-namespace header-props]
-      [views/sort-items-button         extension-id item-namespace header-props]
-      [views/toggle-select-mode-button extension-id item-namespace header-props]]
-      ;[views/toggle-reorder-mode-button extension-id item-namespace header-props]]
+      [app-plugins.item-lister.views/sort-items-button         extension-id item-namespace header-props]
+      [app-plugins.item-lister.views/toggle-select-mode-button extension-id item-namespace header-props]]
+      ;[app-plugins.item-lister.views/toggle-reorder-mode-button extension-id item-namespace header-props]]
     [:div.item-lister--header--menu-item-group
-      [views/search-block extension-id item-namespace header-props]]])
+      [app-plugins.item-lister.views/search-block extension-id item-namespace header-props]]])
 
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -108,11 +108,11 @@
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
                                                  [actions-mode-header extension-id item-namespace header-props]]
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
-                                                 [views/search-mode-header  extension-id item-namespace]]
+                                                 [app-plugins.item-lister.views/search-mode-header  extension-id item-namespace]]
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                                 [views/select-mode-header  extension-id item-namespace header-props]]
+                                                 [app-plugins.item-lister.views/select-mode-header  extension-id item-namespace header-props]]
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                                 [views/reorder-mode-header extension-id item-namespace header-props]]]
+                                                 [app-plugins.item-lister.views/reorder-mode-header extension-id item-namespace header-props]]]
   [:div {:style {:display "none"}}
    [go-home-button          extension-id item-namespace header-props]
    [go-up-button            extension-id item-namespace header-props]]])
@@ -144,9 +144,7 @@
 
 (defn body
   [extension-id item-namespace body-props]
-  [:<>
-       [views/body extension-id item-namespace body-props]])
-      ;[:div (str body-props)]
+  [app-plugins.item-lister.views/body extension-id item-namespace body-props])
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.07
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.3
+; Version: v0.5.6
+; Compatibility: x4.5.4
 
 
 
@@ -30,21 +30,21 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
   (if (string/nonempty? collection-name)
-      (str "<div><a href=\"?\">..</a></div>")
-      (str "<div>..</div>")))
+      (str "<div><a href=\"?\">[ .. ]</a></div>")
+      (str "<div>Collections:</div>")))
 
 (defn- document
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]} document]
   (let [document-id (db/document->document-id document)]
-       (str "<br/><div><a href=\"?collection-name="collection-name"&remove-document="document-id"\">Remove document!</a></div>"
+       (str "<br/><div><a href=\"?collection-name="collection-name"&remove-document="document-id"\">[ Remove document! ]</a></div>"
             "<pre>" (pretty/mixed->string document) "</pre>")))
 
 (defn- collection
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name] :as browser-props}]
   (let [all-documents (mongo-db/get-all-documents collection-name)]
-       (str "<br/><div><a href=\"?empty-collection=" collection-name "\">Empty collection!</a></div>"
+       (str "<br/><div><a href=\"?empty-collection=" collection-name "\">[ Empty collection! ]</a></div>"
             (reduce #(str %1 (document browser-props %2))
                     "" all-documents))))
 
@@ -53,7 +53,14 @@
   [_]
   (let [collection-names (mongo-db/get-collection-names)]
        (reduce #(str %1 (str "<div><a href=\"?collection-name="%2"\">"%2"</a></div>"))
-               "" collection-names)))
+               "<br/>" collection-names)))
+
+(defn- refresh-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [collection-name remove-document]}]
+  (if remove-document
+      (str "<div><a href=\"?collection-name="collection-name"\">[ Refresh ]</a></div>")
+      (str "<div><a href=\"?\">[ Refresh ]</a></div>")))
 
 (defn- mongo-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,10 +68,14 @@
   (str (up-button browser-props)
        (cond (string/nonempty? empty-collection)
              (do (mongo-db/remove-all-documents! empty-collection)
-                 (db browser-props))
+                 (str "WARNING! DO NOT REFRESH THIS PAGE MANUALLY!"
+                      (refresh-button browser-props)
+                      (db             browser-props)))
              (string/nonempty? remove-document)
              (do (mongo-db/remove-document! collection-name remove-document)
-                 (collection browser-props))
+                 (str "WARNING! DO NOT REFRESH THIS PAGE MANUALLY!"
+                      (refresh-button browser-props)
+                      (collection browser-props)))
              (string/nonempty? collection-name)
              (collection browser-props)
              :else (db browser-props))))

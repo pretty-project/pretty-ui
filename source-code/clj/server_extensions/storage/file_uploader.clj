@@ -7,8 +7,8 @@
               [server-fruits.io   :as io]
               [x.server-core.api  :as a]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation       :as pathom.co :refer [defresolver defmutation]]
-              [server-extensions.storage.directory-browser :as directory-browser]))
+              [com.wsscode.pathom3.connect.operation   :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.storage.media-browser :as media-browser]))
 
 
 
@@ -66,10 +66,11 @@
   (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
-        file-item {:file/alias filename :filename generated-filename :file/filesize size :file/id file-id}]
+        file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
+                   :media/path []}]
 
-       (directory-browser/attach-item!    env directory-id {:file/id file-id})
-       (directory-browser/add-file-item-f env file-item)))
+       (media-browser/attach-media-item! env directory-id file-id)
+       (media-browser/add-media-item-f   env file-item)))
 
 
 

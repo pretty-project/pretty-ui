@@ -37,7 +37,7 @@
 (defn quit-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyw) extension-id
+  ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:synchronizing? (boolean)(opt)}
@@ -106,7 +106,7 @@
 (defn quit-select-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyw) extension-id
+  ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:synchronizing? (boolean)(opt)}
@@ -223,7 +223,7 @@
 (defn quit-reorder-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyw) extension-id
+  ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:synchronizing? (boolean)(opt)}
@@ -559,7 +559,7 @@
                                           [list-element item-dex item]]
              ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
-             ; - A {:display :flex :flex-direction :row-reverse} tulajdonság beállításával a checkbox
+             ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
              ;   elem a lista-elem előtt jelenik meg.
              (if select-mode? [list-item-checkbox extension-id item-namespace body-props item-dex])])))
 
@@ -611,13 +611,6 @@
     [no-items-to-show      extension-id item-namespace body-props]])
 
 (defn body
-  ; WARNING!
-  ; A body komponens nem kaphatja meg paraméterként a listaelemek számára átadandó közös
-  ; paraméter térképet (common-props)!
-  ; Ha a body komponens paraméterként kapná meg a common-props térképet, akkor a common-props
-  ; megváltozása a teljes body komponens újrarendelődésével járna, ami az infinite-loader
-  ; komponens újratöltését okozná!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props

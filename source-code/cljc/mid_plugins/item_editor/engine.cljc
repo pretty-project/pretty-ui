@@ -186,6 +186,20 @@
   (keyword (name extension-id)
            (str "get-" (name item-namespace)
                 "-"    (name action-id))))
+                
+(defn collection-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @example
+  ;  (engine/collection-name :my-extension)
+  ;  =>
+  ;  "my-extension"
+  ;
+  ; @return (string)
+  [extension-id]
+  (name extension-id))
 
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

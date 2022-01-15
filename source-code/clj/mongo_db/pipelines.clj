@@ -1,9 +1,10 @@
 
 (ns mongo-db.pipelines
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
-              [mid-fruits.vector  :as vector]))
+    (:require [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.keyword  :as keyword]
+              [mid-fruits.map      :as map]
+              [mid-fruits.vector   :as vector]
+              [mongo-db.adaptation :as adaptation]))
 
 
 
@@ -26,19 +27,13 @@
 
 (defn filter-pattern->filter-query
   ; @param (map) filter-pattern
-  ;  {:or (vectors in vector)(opt)
-  ;    [[(namespaced-keyword) filter-key
-  ;      (*) filter-value]
-  ;     ...]
-  ;   :and (vectors in vector)(opt)
-  ;    [[(namespaced-keyword) filter-key
-  ;      (*) filter-value]
-  ;     ...]}
+  ;  {:or (maps in vector)(opt)
+  ;   :and (maps in vector)(opt)
   ;
   ; @example
-  ;  (mongo-db/filter-pattern->filter-query {:or  [[:namespace/my-key   false]
-  ;                                                [:namespace/my-key   nil]]
-  ;                                          :and [[:namespace/your-key true]]})
+  ;  (mongo-db/filter-pattern->filter-query {:or  [{:namespace/my-key   false}
+  ;                                                {:namespace/my-key   nil}]
+  ;                                          :and [{:namespace/your-key true}]})
   ;  =>
   ;  {"$or"  [{"namespace/my-key"   false}
   ;           {"namespace/my-key"   nil}]
@@ -46,10 +41,9 @@
   ;
   ; @return (maps in vector)
   [filter-pattern]
-  (letfn [(f [[filter-key filter-value]]
-             {(keyword/to-string filter-key) filter-value})]
-         (map/->kv filter-pattern #(case           % :and "$and" :or "$or")
-                                  #(vector/->items % f))))
+  (try (map/->kv filter-pattern #(case           % :and "$and" :or "$or")
+                                #(vector/->items % adaptation/pipeline-query))
+       (catch Exception e (println e))))
 
 (defn search-pattern->search-query
   ; @param (map) search-pattern
@@ -75,8 +69,9 @@
   [search-pattern]
   (letfn [(f [[search-key search-term]]
              {(keyword/to-string search-key) {"$regex" search-term "$options" "i"}})]
-         (map/->kv search-pattern #(case           % :and "$and" :or "$or")
-                                  #(vector/->items % f))))
+         (try (map/->kv search-pattern #(case           % :and "$and" :or "$or")
+                                       #(vector/->items % f))
+              (catch Exception e (println e)))))
 
 (defn sort-pattern->sort-query
   ; @param (vectors in vector) sort-pattern
@@ -92,7 +87,8 @@
   [sort-pattern]
   (letfn [(f [o [sort-key sort-direction]]
              (assoc o (keyword/to-string sort-key) sort-direction))]
-         (reduce f {} sort-pattern)))
+         (try (reduce f {} sort-pattern)
+              (catch Exception e (println e)))))
 
 
 
@@ -112,7 +108,8 @@
   [[key keys :as field-pattern]]
   (letfn [(f [o x] (if (empty? o) (conj o     (str "$" (keyword/to-string x)))
                                   (conj o " " (str "$" (keyword/to-string x)))))]
-         {"$addFields" {(keyword/to-string key) {"$concat" (reduce f [] keys)}}}))
+         (try {"$addFields" {(keyword/to-string key) {"$concat" (reduce f [] keys)}}}
+              (catch Exception e (println e)))))
 
 
 
@@ -128,8 +125,8 @@
   ;   :sort-pattern (vectors in vector)}
   ;
   ; @usage
-  ;  (mongo-db/get-pipeline {:filter-pattern {:or [[:namespace/my-key   false]
-  ;                                                [:namespace/my-key   nil]]}
+  ;  (mongo-db/get-pipeline {:filter-pattern {:or [{:namespace/my-key   false}
+  ;                                                {:namespace/my-key   nil}]}
   ;                          :search-pattern {:or [[:namespace/my-key   "Xyz"]
   ;                                                [:namespace/your-key "Xyz"]]}
   ;                          :sort-pattern [:namespace/my-key -1]

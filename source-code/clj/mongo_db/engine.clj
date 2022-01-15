@@ -20,10 +20,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn generate-id
-  ; @return (string)
-  []
-  (str (ObjectId.)))
+(defn document?
+  ; @param (*) n
+  ;
+  ; @return (boolean)
+  [n]
+  (and (-> n map?)
+       (-> n db/document->namespace some?)))
 
 (defn DBObject->edn
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -34,6 +37,16 @@
   [n]
   (try (mcv/from-db-object n true)
        (catch Exception e (println e))))
+
+
+
+;; -- Document ID -------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn generate-id
+  ; @return (string)
+  []
+  (str (ObjectId.)))
 
 (defn dissoc-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -70,7 +83,7 @@
   (if-let [namespace (db/document->namespace document)]
           (let [id-key (keyword/add-namespace namespace :id)]
                ; A paraméterként átadott dokumentum NEM szükséges, hogy rendelkezzen {:namespace/id ...}
-               ; tulajdonsággal (pl.: conditions paraméterként átadott térképek, ...)
+               ; tulajdonsággal (pl.: query paraméterként átadott térképek, ...)
                (if-let [document-id (get document id-key)]
                        (let [object-id (ObjectId. document-id)]
                             (-> document (assoc  :_id object-id)
