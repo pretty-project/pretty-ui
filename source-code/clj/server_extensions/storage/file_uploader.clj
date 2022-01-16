@@ -68,15 +68,12 @@
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
                    :media/path []}]
-
-       (media-browser/attach-media-item! env directory-id file-id)
-       (media-browser/add-media-item-f   env file-item)))
-
-
-
-       ; Copy the temporary file to storage, and delete the temporary file
-       ;(io/copy-file!   tempfile filepath)
-       ;(io/delete-file! tempfile)))
+       (if (media-browser/attach-media-item! env directory-id file-id)
+           (if-let [file-item (media-browser/add-media-item-f env file-item)]
+                   ; Copy the temporary file to storage, and delete the temporary file
+                   (do (io/copy-file!   tempfile filepath)
+                       (io/delete-file! tempfile)
+                       (return file-item))))))
 
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,8 +84,8 @@
   ; @return (namespaced map)
   [{:keys [request] :as env} mutation-props]
   (let [files-data (request->files-data request)]
-       (doseq [[_ file-data] files-data]
-              (upload-file-f env mutation-props file-data))))
+       (letfn [(f [o _ file-data] (conj o (upload-file-f env mutation-props file-data)))]
+              (reduce-kv f [] files-data))))
 
 (defmutation upload-files!
              ; WARNING! NON-PUBLIC! DO NOT USE!

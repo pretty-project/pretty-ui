@@ -114,10 +114,10 @@
   ;
   ; @return (?)
   [filepath]
-  (if (file-exists? filepath)
-      (try (clojure.java.io/delete-file filepath)
-           (catch Exception e (str "Error while deleting: ")))
-      (println FILE-DOES-NOT-EXIST-ERROR filepath)))
+  (try (if (file-exists? filepath)
+           (clojure.java.io/delete-file filepath)
+           (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
+      (catch Exception e (println e filepath))))
 
 (defn copy-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -127,11 +127,11 @@
   ;
   ; @return (?)
   [source-filepath destination-filepath]
-  (if (file-exists? source-filepath)
-      (try (clojure.java.io/copy (clojure.java.io/file source-filepath)
+  (try (if (file-exists? source-filepath)
+           (clojure.java.io/copy (clojure.java.io/file source-filepath)
                                  (clojure.java.io/file destination-filepath))
-           (catch Exception e (str "Error while copying: ")))
-      (println FILE-DOES-NOT-EXIST-ERROR source-filepath)))
+           (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
+       (catch Exception e (println e source-filepath))))
 
 (defn read-file
   ; @param (string) filepath
@@ -186,7 +186,7 @@
   (try (with-open [input  (clojure.java.io/input-stream  uri)
                    output (clojure.java.io/output-stream file)]
                   (clojure.java.io/copy input output))
-       (catch Exception e (str "Error while copying: "))))
+       (catch Exception e (println e))))
 
 
 
@@ -215,7 +215,7 @@
   ; @return (?)
   [directory-path]
   (try (-> directory-path java.io.File. .mkdir)
-       (catch Exception e (str "Error while creating directory: "))))
+       (catch Exception e (println e))))
 
 (defn file-list
   ; @description

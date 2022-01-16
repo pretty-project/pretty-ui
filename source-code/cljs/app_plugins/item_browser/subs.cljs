@@ -94,6 +94,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  {})
+  ; TEMP
+  ; Milyen néven legyen beimportolva a subs névtér?
+  (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace))
 
 (a/reg-sub :item-browser/get-view-props get-view-props)

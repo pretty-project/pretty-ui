@@ -69,7 +69,7 @@
   [db [_ uploader-id]]
   (let [directory-id (get-in db [:storage :file-uploader/meta-items :directory-id])]
        [:debug `(storage/upload-files!              ~{:directory-id directory-id})
-               `(:storage/download-directory-data   ~{:directory-id directory-id})
+               `(:storage/get-media-items           ~{:directory-id directory-id})
                `(:storage/download-capacity-details ~{})]))
 
 (defn- get-form-data
@@ -411,6 +411,9 @@
   ;
   ; @return (component)
   [uploader-id body-props file-dex]
+  ; - A file-item komponens minden példánya feliratkozik az adott fájl tulajdonságira a Re-Frame
+  ;   adatbázisban, így az egyes komponensek nem paraméterként kapják a file-list listából az adatot.
+  ; - Ha egy fájl eltávolításra kerül a felsorolásból, akkor nem renderelődik újra az egész lista.
   (let [file-props (a/subscribe [:storage/get-file-uploader-file-props uploader-id file-dex])]
        (fn [] [file-item-structure uploader-id body-props file-dex @file-props])))
 

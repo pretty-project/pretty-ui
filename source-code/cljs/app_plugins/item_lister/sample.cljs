@@ -25,6 +25,11 @@
       (case :add-my-type!   [:do-something!]
             :add-your-type! [:do-something-else!])))
 
+(a/reg-event-fx
+  :my-extension/use-my-type-lister-filter!
+  (fn [_ [_ filter-pattern]]
+      [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
+
 
 
 ;; -- List-item components ----------------------------------------------------
@@ -45,7 +50,7 @@
   [surface-id]
   ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
   [elements/menu-bar {:menu-items [{:label "My filter"
-                                    :on-click [:item-lister/use-filter! :my-extension :my-type {}]}]}])
+                                    :on-click [:my-extension/use-my-type-lister-filter! {}]}]}])
 
 (defn my-view
   [surface-id]
