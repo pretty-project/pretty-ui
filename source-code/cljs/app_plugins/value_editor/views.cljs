@@ -160,5 +160,5 @@
   ; @param (keyword) editor-id
   (fn [_ [_ extension-id editor-id]]
       [:ui/add-popup! (engine/popup-id extension-id editor-id)
-                      {:body   {:content [body   extension-id editor-id]};
-                       :header {:content [header extension-id editor-id]}}]))
+                      {:body   [body   extension-id editor-id];
+                       :header [header extension-id editor-id]}]))

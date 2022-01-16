@@ -34,7 +34,7 @@
   [db [_ extension-id item-namespace]]
   [:debug (if (r subs/download-item? db extension-id item-namespace)
               ; If download item ...
-              (let [resolver-id     (engine/resolver-id extension-id item-namespace :item)
+              (let [resolver-id     (engine/resolver-id extension-id item-namespace :get)
                     current-item-id (r subs/get-current-item-id db extension-id)]
                   `(~resolver-id ~{:item-id current-item-id})))
           (if (r subs/download-suggestions? db extension-id item-namespace)

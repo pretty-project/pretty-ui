@@ -1,46 +1,12 @@
 
 (ns server-extensions.storage.media-browser
     (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.vector :as vector]
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
-              [prototypes.api    :as prototypes]
               [x.server-core.api :as a]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [server-extensions.storage.engine      :as engine]
-              [server-plugins.item-browser.api       :as item-browser]
-              [server-plugins.item-lister.api        :as item-lister]))
-
-
-
-;; -- Attach/detach item functions --------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn attach-media-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (string) directory-id
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} directory-id item-id]
-  (mongo-db/apply-document! "storage" directory-id #(update % :media/items vector/conj-item {:media/id item-id})
-                            {:prototype-f #(prototypes/updated-document-prototype request :media %)}))
-
-(defn detach-media-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (string) directory-id
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} directory-id item-id]
-  (mongo-db/apply-document! "storage" directory-id #(update % :media/items vector/remove-item {:media/id item-id})
-                            {:prototype-f #(prototypes/updated-document-prototype request :media %)}))
+              [server-plugins.item-browser.api       :as item-browser]))
 
 
 
@@ -77,38 +43,11 @@
 
 
 
-;; -- Mutations ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn add-media-item-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (namespaced map) media-item
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} media-item]
-  (mongo-db/insert-document! "storage" media-item
-                             {:prototype-f #(prototypes/added-document-prototype request :media %)}))
-
-(defmutation add-media-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) media-item
-             ;
-             ; @return (namespaced map)
-             [env media-item]
-             {::pathom.co/op-name 'storage/add-media-item!}
-             (add-media-item-f env media-item))
-
-
-
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-media-items add-media-item!])
+(def HANDLERS [get-media-items])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

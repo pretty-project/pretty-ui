@@ -6,8 +6,7 @@
               [x.server-core.api  :as a :refer [r]]
               [x.server-media.api :as media]
               [x.server-user.api  :as user]
-              [server-extensions.storage.engine        :as engine]
-              [server-extensions.storage.media-browser :as media-browser]))
+              [server-extensions.storage.engine :as engine]))
 
 
 
@@ -43,8 +42,8 @@
   (println "[:storage] Adding root directory document ...")
   (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
         sample-file-filesize (io/get-filesize sample-file-filepath)]
-       (media-browser/add-media-item-f {:request {:session user/SYSTEM-ACCOUNT}}
-                                       (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize))))
+       (engine/insert-media-item! {:request {:session user/SYSTEM-ACCOUNT}}
+                                  (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize))))
 
 (defn- add-sample-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,8 +51,8 @@
   (println "[:storage] Adding sample file document ...")
   (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
         sample-file-filesize (io/get-filesize sample-file-filepath)]
-       (media-browser/add-media-item-f {:request {:session user/SYSTEM-ACCOUNT}}
-                                       (assoc SAMPLE-FILE-DOCUMENT :media/filesize sample-file-filesize))))
+       (engine/insert-media-item! {:request {:session user/SYSTEM-ACCOUNT}}
+                                  (assoc SAMPLE-FILE-DOCUMENT :media/filesize sample-file-filesize))))
 
 (defn- check-install!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -56,7 +56,7 @@
   ; @example
   ;  (engine/resolver-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/get-my-type-items!
+  ;  :my-extension/get-my-type-items
   ;
   ; @return (keyword)
   [extension-id item-namespace]

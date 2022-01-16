@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.17
 ; Description:
-; Version: v0.8.4
-; Compatibility: x4.5.0
+; Version: v0.8.8
+; Compatibility: x4.5.4
 
 
 
@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.events
-    (:require [mid-fruits.candy   :refer [param return]]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-elements.api :as elements]
+    (:require [mid-fruits.candy :refer [param return]]
+              [mid-fruits.map   :refer [dissoc-in]]
+              [x.app-core.api   :as a :refer [r]]
+              [x.app-db.api     :as db]
               [app-plugins.value-editor.engine :as engine]
               [app-plugins.value-editor.subs   :as subs]))
 
@@ -41,7 +41,7 @@
   ;   :save-button-label (metamorphic-content)(opt)
   ;   :value-path (item-path vector)}
   [extension-id editor-id {:keys [edit-original? value-path] :as editor-props}]
-  (merge {:required?         true
+  (merge {:required?          true
           :save-button-label :save!
           :edit-path  (engine/default-edit-path extension-id editor-id)
           :value-path (engine/default-edit-path extension-id editor-id)}
@@ -96,6 +96,19 @@
                   (return db))
           (return db)))
 
+(defn reset-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ extension-id editor-id]]
+  ; A value-editor plugin minden elindulásakor kitörli a default-edit-path útvonalon található
+  ; értéket, így az előző szerkesztésből esetlegesen megmaradt érték törlésre kerül.
+  (let [default-edit-path (engine/default-edit-path extension-id editor-id)]
+       (dissoc-in db default-edit-path)))
+
 (defn load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -105,7 +118,8 @@
   ;
   ; @return (map)
   [db [event-id extension-id editor-id editor-props]]
-  (as-> db % (r store-editor-props! % extension-id editor-id editor-props)
+  (as-> db % (r reset-editor!       % extension-id editor-id)
+             (r store-editor-props! % extension-id editor-id editor-props)
              (r use-initial-value!  % extension-id editor-id)
              (r use-original-value! % extension-id editor-id)))
 
@@ -135,11 +149,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ extension-id editor-id]]
-       ; TODO ...
-       ; Leírni, miért szükséges a reset-input-value! függvény végrehajtása!
-       ; Minden esetben szükséges a végrehajtás? edit-original? true és false esetén is?
-      {:db       (r elements/reset-input-value! db :value-editor/editor-field)
-       :dispatch [:ui/close-popup! (engine/popup-id extension-id editor-id)]}))
+      [:ui/close-popup! (engine/popup-id extension-id editor-id)]))
 
 (a/reg-event-fx
   :value-editor/save-value!
@@ -149,10 +159,11 @@
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ extension-id editor-id]]
       {:db (r save-value! db extension-id editor-id)
-       :dispatch-n [(r subs/get-meta-value db extension-id editor-id :on-save)
+       :dispatch-n [(r subs/get-on-save-event db extension-id editor-id)
                     [:ui/close-popup! (engine/popup-id extension-id editor-id)]]}))
 
-(a/reg-event-fx :value-editor/load-editor!
+(a/reg-event-fx
+  :value-editor/load-editor!
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ; @param (map) editor-props

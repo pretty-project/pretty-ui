@@ -9,10 +9,8 @@
               [mid-fruits.map       :refer [dissoc-in]]
               [mid-fruits.math      :as math]
               [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
               [x.app-elements.api   :as elements]
               [x.app-media.api      :as media]
               [x.app-tools.api      :as tools]
@@ -67,9 +65,8 @@
   ;
   ; @return (vector)
   [db [_ uploader-id]]
-  (let [directory-id (get-in db [:storage :file-uploader/meta-items :directory-id])]
-       [:debug `(storage/upload-files!              ~{:directory-id directory-id})
-               `(:storage/get-media-items           ~{:directory-id directory-id})
+  (let [destination-id (get-in db [:storage :file-uploader/meta-items :destination-id])]
+       [:debug `(storage/upload-files!              ~{:destination-id destination-id})
                `(:storage/download-capacity-details ~{})]))
 
 (defn- get-form-data
@@ -175,7 +172,7 @@
   ; @param (integer) file-dex
   ;
   ; @return (map)
-  [db [_ uploader-id file-dex]]
+  [db [_ _ file-dex]]
   (let [filesize (get-in db [:storage :file-uploader/data-items file-dex :filesize])]
        (-> db (assoc-in  [:storage :file-uploader/data-items file-dex :aborted?] true)
               (update-in [:storage :file-uploader/meta-items :files-size] - filesize)
@@ -190,7 +187,7 @@
   ; @param (map) uploader-props
   ;
   ; @return (map)
-  [db [_ uploader-id uploader-props]]
+  [db [_ _ uploader-props]]
   (assoc-in db [:storage :file-uploader/meta-items] uploader-props))
 
 
@@ -351,9 +348,14 @@
   ;
   ; @return (component)
   [_ _ _ {:keys [filename object-url]}]
-  (if (io/filename->image? filename)
-      [:div.storage--file-uploader--file-preview {:style {:background-image (css/url object-url)}}]
-      [:div.storage--file-uploader--file-preview [elements/icon {:icon :insert_drive_file}]]))
+  [:div.storage--media-item--preview {:style {:background-image (css/url object-url)}}])
+
+(defn- file-item-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id body-props file-dex {:keys [filename] :as file-props}]
+  [:div.storage--media-item--header [elements/icon {:icon :insert_drive_file}]
+                                    (if (io/filename->image? filename)
+                                        [file-item-preview uploader-id body-props file-dex file-props])])
 
 (defn- file-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -367,7 +369,7 @@
   ;
   ; @return (component)
   [_ _ _ {:keys [filename filesize]}]
-  [:div.storage--file-uploader--file-details
+  [:div.storage--media-item--details
     [elements/label {:content (str filename)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
@@ -398,7 +400,7 @@
   ; @return (component)
   [uploader-id body-props file-dex {:keys [aborted?] :as file-props}]
   (if-not aborted? [elements/row {:content [:<> [file-item-actions uploader-id body-props file-dex file-props]
-                                                [file-item-preview uploader-id body-props file-dex file-props]
+                                                [file-item-header  uploader-id body-props file-dex file-props]
                                                 [file-item-details uploader-id body-props file-dex file-props]]}]))
 
 (defn- file-item
@@ -467,11 +469,10 @@
       (let [query     (r get-upload-files-query db uploader-id)
             form-data (r get-form-data          db uploader-id)]
            [:sync/send-query! (keyword/add-namespace uploader-id :upload-files!)
-                              {:body (dom/merge-to-form-data! form-data {:query query})
+                              {:body (dom/merge-to-form-data! form-data {:query query})}])))
                               ;:idle-timeout 1000
-                               :on-failure [:file-uploader/->upload-failure]
-                               :on-success {:dispatch-n [[:media/handle-request-response!]
-                                                         [:file-uploader/->files-uploaded]]}}])))
+                               ;:on-failure [:xxx]
+                               ;:on-success [:xxx]}])))
 
 
 
@@ -544,7 +545,7 @@
   ; @param (keyword)(opt) uploader-id
   ; @param (map) uploader-props
   ;  {:allowed-extensions (strings in vector)(opt)
-  ;   :directory-id (keyword)}
+  ;   :destination-id (string)}
   ;
   ; @usage
   ;  [:storage/load-file-uploader! {...}]
@@ -554,8 +555,10 @@
   ;
   ; @usage
   ;  [:storage/load-file-uploader! {:allowed-extensions ["htm" "html" "xml"]
-  ;                                 :directory-id :home}]
+  ;                                 :destination-id "..."}]
   (fn [{:keys [db]} event-vector]
+      ; Az uploader-id egyedi azonosító alkalmazása lehetővé teszi, hogy a különböző névterek
+      ; által indított fájlfeltöltők ...
       (let [uploader-id    (a/event-vector->second-id   event-vector)
             uploader-props (a/event-vector->first-props event-vector)]
            {:db (r store-uploader-props! db uploader-id uploader-props)

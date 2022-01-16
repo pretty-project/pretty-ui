@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-lister.subs
     (:require [mid-fruits.candy      :refer [param return]]
+              [mid-fruits.keyword    :as keyword]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -36,6 +37,26 @@
   ; @return (maps in vector)
   [db [_ extension-id]]
   (get-in db [extension-id :item-lister/data-items]))
+
+
+
+; TEMP
+(defn extract-downloaded-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (maps in vector)
+  ;  [{:namespace/id "..."}]
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-items (r get-downloaded-items db extension-id)
+        item-id-key      (keyword/add-namespace item-namespace :id)]
+       (letfn [(f [result item] (conj result {item-id-key (:id item)}))]
+              (reduce f [] downloaded-items))))
+; TEMP
+
+
 
 (defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!

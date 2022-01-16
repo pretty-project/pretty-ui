@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.5.4
-; Compatibility: x4.5.0
+; Compatibility: x4.5.4
 
 
 
@@ -14,14 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.input
-    (:require [mid-fruits.candy              :refer [param return]]
-              [mid-fruits.map                :refer [dissoc-in]]
-              [mid-fruits.random             :as random]
-              [mid-fruits.vector             :as vector]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-db.api                  :as db]
-              [x.app-elements.engine.element :as element]
-              [x.app-locales.api             :as locales]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.map     :refer [dissoc-in]]
+              [mid-fruits.vector  :as vector]
+              [x.app-core.api     :as a :refer [r]]
+              [x.app-db.api       :as db]
+              [x.app-locales.api  :as locales]
+              [x.app-elements.engine.element :as element]))
 
 
 
@@ -44,7 +43,7 @@
   ;
   ; @return (item-path vector)
   [element-id]
-  (db/path ::options element-id))
+  (db/path :elements/options element-id))
 
 (defn default-value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -53,14 +52,7 @@
   ;
   ; @return (item-path vector)
   [element-id]
-  (db/path ::values element-id))
-
-(defn generate-value-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (item-path vector)
-  []
-  (db/path ::values (random/generate-keyword)))
+  (db/path :elements/values element-id))
 
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!

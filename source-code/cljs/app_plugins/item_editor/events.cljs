@@ -156,7 +156,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :item)
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
        (if (validator/data-valid? document)
            ; XXX#3907

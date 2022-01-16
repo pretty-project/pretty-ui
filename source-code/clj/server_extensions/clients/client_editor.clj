@@ -69,11 +69,12 @@
 (defmutation delete-client-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
+             ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-id (string)}
              ;
              ; @return (string)
-             [{:keys [item-id]}]
+             [_ {:keys [item-id]}]
              {::pathom.co/op-name 'clients/delete-client-item!}
              (mongo-db/remove-document! "clients" item-id))
 

@@ -65,7 +65,7 @@
              ;  {:item-id (string)}
              ;
              ; @return (string)
-             [{:keys [item-id]}]
+             [env {:keys [item-id]}]
              {::pathom.co/op-name 'my-extension/delete-my-type-item!}
              (return ""))
 

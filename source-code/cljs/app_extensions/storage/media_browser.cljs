@@ -21,49 +21,54 @@
   :storage/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ selected-option]]
-      (let [directory-id (r item-browser/get-current-item-id db :storage)]
-           (case selected-option :upload-files!     [:storage/load-file-uploader! {:directory-id directory-id}]
-                                 :create-directory! []))))
+      (let [destination-id (r item-browser/get-current-item-id db :storage)]
+           (case selected-option :upload-files!
+                                 [:storage/load-file-uploader!     :storage/media-browser {:destination-id destination-id}]
+                                 :create-directory!
+                                 [:storage/load-directory-creator! :storage/media-browser {:destination-id destination-id}]))))
 
 
 
-;; -- File-item components ----------------------------------------------------
+;; -- Media-item components ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- directory-item-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [:div.storage--media-item--header [elements/icon {:icon :folder}]])
+
+(defn- directory-item-details
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [alias content-size]}]
+  [:div.storage--media-item--details
+    [elements/label {:content (str alias)
+                     :layout :fit :selectable? true  :color :default}]
+    [elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
+                     :layout :fit :selectable? false :color :muted}]])
 
 (defn- directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias] :as item-props}]
-  [:div "" alias])
+  [item-dex item-props]
+  [elements/row {:content [:<> [directory-item-header  item-dex item-props]
+                               [directory-item-details item-dex item-props]]}])
 
 (defn- file-item-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) uploader-id
-  ; @param (map) body-props
-  ; @param (integer) file-dex
-  ; @param (map) file-props
-  ;  {:filename (string)
-  ;   :object-url (string)}
-  ;
-  ; @return (component)
-  [_ {:keys [alias filename]}]
-  (if (io/filename->image? alias)
-      [:div.storage--file-uploader--file-preview {:style {:background-image (-> filename media/filename->media-storage-uri css/url)}}]
-      [:div.storage--file-uploader--file-preview [elements/icon {:icon :insert_drive_file}]]))
+  [_ {:keys [filename]}]
+  (let [preview-uri (media/filename->media-storage-uri filename)]
+       [:div.storage--media-item--preview {:style {:background-image (css/url preview-uri)}}]))
+
+(defn- file-item-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex {:keys [alias] :as item-props}]
+  [:div.storage--media-item--header [elements/icon {:icon :insert_drive_file}]
+                                    (if (io/filename->image? alias)
+                                        [file-item-preview item-dex item-props])])
 
 (defn- file-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) uploader-id
-  ; @param (map) body-props
-  ; @param (integer) file-dex
-  ; @param (map) file-props
-  ;  {:filename (string)
-  ;   :filesize (B)}
-  ;
-  ; @return (component)
   [_ {:keys [alias filesize]}]
-  [:div.storage--file-uploader--file-details
+  [:div.storage--media-item--details
     [elements/label {:content (str alias)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
@@ -72,15 +77,15 @@
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex item-props]
-  [elements/row {:content [:<> [file-item-preview item-dex item-props]
+  [elements/row {:content [:<> [file-item-header  item-dex item-props]
                                [file-item-details item-dex item-props]]}])
                               ;[file-item-actions item-dex item-props]
 
 (defn- media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [mime-type] :as item-props}]
-  (case mime-type :storage/directory [directory-item item-dex item-props]
-                                     [file-item      item-dex item-props]))
+  (case mime-type "storage/directory" [directory-item item-dex item-props]
+                                      [file-item      item-dex item-props]))
 
 
 

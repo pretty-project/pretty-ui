@@ -1,5 +1,5 @@
 
-(ns server-extensions.storage.file-uploader
+(ns server-extensions.storage.file-handler
     (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
@@ -7,8 +7,8 @@
               [server-fruits.io   :as io]
               [x.server-core.api  :as a]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation   :as pathom.co :refer [defresolver defmutation]]
-              [server-extensions.storage.media-browser :as media-browser]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.storage.engine      :as engine]))
 
 
 
@@ -58,18 +58,18 @@
   ;
   ; @param (map) env
   ; @param (map) mutation-props
-  ;  {:directory-id (string)}
+  ;  {:destination-id (string)}
   ; @param (map) file-data
   ;
   ; @return (namespaced map)
-  [env {:keys [directory-id]} {:keys [filename size tempfile]}]
+  [env {:keys [destination-id]} {:keys [filename size tempfile]}]
   (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
-                   :media/path []}]
-       (if (media-browser/attach-media-item! env directory-id file-id)
-           (if-let [file-item (media-browser/add-media-item-f env file-item)]
+                   :media/path [] :description ""}]
+       (if (engine/attach-media-item! env destination-id file-id)
+           (if-let [file-item (engine/insert-media-item! env file-item)]
                    ; Copy the temporary file to storage, and delete the temporary file
                    (do (io/copy-file!   tempfile filepath)
                        (io/delete-file! tempfile)

@@ -137,7 +137,6 @@
 ; x.app-elements.engine.input
 (def default-options-path   input/default-options-path)
 (def default-value-path     input/default-value-path)
-(def generate-value-path    input/generate-value-path)
 (def get-input-stored-value input/get-input-stored-value)
 (def get-input-value        input/get-input-value)
 (def get-input-props        input/get-input-props)

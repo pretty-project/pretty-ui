@@ -46,6 +46,7 @@
   ; Az {:value-path nil} beállítással indított szerkesztő {:edit-path [...]} és {:value-path [...]}
   ; tulajdonságai megegyeznek, ami megfelel az {:edit-original? true} beállítás használatának,
   ; és függetlenül az {:edit-original? ...} beállítás értékétől!
+  ; Ezért az edit-original? függvény nem az {:edit-original? ...} beállítás értékét vizsgálja!
   (= (r get-meta-value db extension-id editor-id :edit-path)
      (r get-meta-value db extension-id editor-id :value-path)))
 
@@ -72,6 +73,18 @@
 ; @usage
 ;  [:value-editor/get-editor-value :my-extension :my-editor]
 (a/reg-sub :value-editor/get-editor-value get-editor-value)
+
+(defn get-on-save-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (metamorphic-event)
+  [db [_ extension-id editor-id prop-id]]
+  (if-let [on-save-event (r get-meta-value db extension-id editor-id :on-save)]
+          (let [editor-value (r get-editor-value db extension-id editor-id)]
+               (a/metamorphic-event<-params on-save-event editor-value))))
 
 (defn disable-save-button?
   ; WARNING! NON-PUBLIC! DO NOT USE!
