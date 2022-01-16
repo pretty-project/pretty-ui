@@ -60,10 +60,10 @@
 
 
 
-;; -- Get document ------------------------------------------------------------
+;; -- Find document -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-document-output
+(defn find-output
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (namespaced map) document
@@ -75,11 +75,6 @@
   ; 3. A dokumentum :_id tulajdonságának átnevezése :namespace/id tulajdonságra
   (try (-> document json/keywordize-values time/unparse-date-time engine/_id->id)
        (catch Exception e (println (str e "\n" {:document document})))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn find-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -415,32 +410,19 @@
 
 
 
-;; -- Filtering documents -----------------------------------------------------
+;; -- Aggregation -------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn operator-input
-  ; @param (keyword) operator
-  ;
-  ; @example
-  ;  (adaptation/operator-input :and)
-  ;  =>
-  ;  "$and"
-  ;
-  ; @return (string)
-  [operator]
-  (when (keyword? operator)
-        (str "$" (name operator))))
-
-(defn pipeline-query
+(defn filter-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (namespaced map) document
+  ; @param (namespaced map) query
   ;
   ; @example
-  ;  (adaptation/pipeline-query {:namespace/id            "MyObjectId"
-  ;                              :namespace/my-keyword    :my-value
-  ;                              :namespace/your-string   "your-value"
-  ;                              :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
+  ;  (adaptation/filter-query {:namespace/id            "MyObjectId"
+  ;                            :namespace/my-keyword    :my-value
+  ;                            :namespace/your-string   "your-value"
+  ;                            :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
   ;  =>
   ;  {"_id"                     #<ObjectId MyObjectId>
   ;   "namespace/my-keyword"    "*:my-value"
@@ -458,3 +440,18 @@
            (catch Exception e (println (str e "\n" {:query query}))))
       ; A query paraméterként lehetséges üres térképet is átadni.
       (return query)))
+
+(defn search-query
+  ; @param (namespaced map) query
+  ;
+  ; @example
+  ;  (mongo-db/search-query {:namespace/my-key "Xyz"}
+  ;  =>
+  ;  {"namespace/my-key" {"$regex" "Xyz" "$options" "i"}}
+  ;
+  ; @return (namespaced map)
+  [query]
+  (letfn [(adapt-value [v] {"$regex" v "$options" "i"})]
+         (try (map/->kv query #(json/unkeywordize-key %)
+                              #(adapt-value           %))
+              (catch Exception e (println (str e "\n" {:query query}))))))

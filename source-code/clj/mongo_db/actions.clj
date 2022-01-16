@@ -33,6 +33,9 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document]
+  ; - A prepare-document-order függvény beállítja a dokumentum :namespace/order tulajdonságát.
+  ; - Egy dokumentum duplikálásakor a másolat az egyel nagyobb pozíciót kapja.
+  ; - Új dokumentum hozzáadásakor a dokumentum az utolsó pozíciót kapja.
   (if-let [namespace (db/document->namespace document)]
           (let [order-key (keyword/add-namespace namespace :order)]
                (if-let ; Ha a dokumentum tartalmaz :namespace/order tulajdonságot ...
@@ -57,6 +60,9 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document {:keys [ordered? prototype-f]}]
+  ; - A prepare-document függvény előkészíti a dokumentumot az adatbázisba való írás előtt.
+  ; - Esetlegesen alkalmazza rajta a prototípus függvényt és ha a dokumentum rendezett kollekcióban
+  ;   kerül tárolásra, akkor a dokumentum :namespace/order tulajdonságát is beállítja.
   (try (cond->> document ordered?    (prepare-document-order collection-name)
                          prototype-f (prototype-f))
        (catch Exception e (println (str e "\n" {:collection-name collection-name :document document})))))
@@ -164,6 +170,7 @@
 ;; -- Reordering following documents ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! NEM TÖRTÉNIK MEG A DOKUMENTUMOK POZÍCIÓJÁNAK ELTOLÁSA!
 (defn- reorder-following-documents!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -175,7 +182,10 @@
   ;
   ; @return (namespaced map)
   [collection-name document-id {:keys [operation]}]
-  ; WARNING! NEM TÖRTÉNIK MEG A DOKUMENTUMOK POZÍCIÓJÁNAK ELTOLÁSA!
+  ; - Egy rendezett kollekcióból történő dokumentum eltávolítása a dokumentum után sorrendben
+  ;   következő többi dokumentum pozíciójának csökkentését teszi szükségessé.
+  ; - Egy rendezett kollekcióba történő dokumentum beszúrása a dokumentum után sorrendben következő
+  ;   többi dokumentum pozíciójának növelését teszi szükségessé.
   (if-let [document (reader/get-document-by-id collection-name document-id)]
           (let [namespace    (db/document->namespace document)
                 order-key    (keyword/add-namespace  namespace :order)
@@ -587,10 +597,6 @@
 ;; -- Duplicating document ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING
-; A get-document-copy-label függvény nincs használatban!
-; Ha szükséges a dokumentumról készülő másolat címkéjét megjelölni másolat-jelzővel,
-; akkor talán célszerűbb a "My document copy 1" kifejezés helyett a "My document #1" jelölést alkalmazni!
 (defn- get-document-copy-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

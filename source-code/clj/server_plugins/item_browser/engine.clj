@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.3
+; Version: v0.4.8
+; Compatibility: x4.5.4
 
 
 
@@ -42,6 +42,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn env->item-links
+  ; @param (map) env
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (item-browser/env->item-links {...} :my-extension :my-type)
+  ;
+  ; @return (maps in vector)
+  [env extension-id item-namespace]
+  (let [collection-name (collection-name extension-id)
+        items-key       (keyword/add-namespace item-namespace :items)
+        item-id         (pathom/env->param env :item-id)
+        item            (mongo-db/get-document-by-id collection-name item-id)]
+       (get item items-key)))
+
 (defn env->sort-pattern
   ; @param (map) env
   ; @param (keyword) extension-id
@@ -50,7 +66,7 @@
   ; @usage
   ;  (item-browser/env->sort-pattern {...} :my-extension :my-type)
   ;
-  ; @return (vectors in vector)
+  ; @return (map)
   [env extension-id item-namespace]
   (item-lister/env->sort-pattern env extension-id item-namespace))
 
@@ -63,7 +79,7 @@
   ;  (item-browser/env->search-pattern {...} :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:or (vectors in vector)}
+  ;  {:$or (maps in vector)}
   [env extension-id item-namespace]
   (item-lister/env->search-pattern env extension-id item-namespace))
 
@@ -77,30 +93,19 @@
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
-  ;   :filter-pattern {:or [{:my-type/my-key "..."} {...}]}
-  ;   :search-pattern {:or [[:my-type/name   "..."] [...]]}
-  ;   :sort-pattern   [[:my-type/name 1]]}
+  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
+  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
+  ;   :sort-pattern   {:my-type/name 1}}
   ;
   ; @return (map)
-  ;  {:filter-pattern (map)
-  ;   :max-count (integer)
-  ;   :search-pattern (map)
-  ;   :skip (integer)
-  ;   :sort-pattern (vectors in vector)}
   [env extension-id item-namespace]
-  (let [item-id (pathom/env->param env :item-id)
-        collection-name (collection-name extension-id)
-        item (mongo-db/get-document-by-id collection-name item-id)
-        items-key (keyword/add-namespace item-namespace :items)
-        item-links (get item items-key)
-        ;_ (println "tie:" (str item-links))
+  ; Az item-lister plugin env->pipeline-props függvényénét kiegészíti, az kollekció elemeinek
+  ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
+  ; aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
+  (let [item-links     (env->item-links   env extension-id item-namespace)
         filter-pattern (pathom/env->param env :filter-pattern)
-        ;filter-pattern {:and {}}
-        filter-pattern {:and [{:or item-links}]}
-        filter-pattern {:and [{:or [{:a "b"} {:a "b"} {:a "b"}]}]}]
-       ;(println (str (mid-fruits.map/->>values {:a "A" :b "B" :c [:x "y" {:d "D"}]} keyword)))
-       (merge (item-lister/env->pipeline-props env extension-id item-namespace))))
-              ;{:filter-pattern filter-pattern})))
+        env            (pathom/env<-param env :filter-pattern {:$or item-links})]
+       (item-lister/env->pipeline-props env extension-id item-namespace)))
 
 (defn env->get-pipeline
   ; @param (map) env

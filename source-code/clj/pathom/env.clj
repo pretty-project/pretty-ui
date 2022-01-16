@@ -1,22 +1,6 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.07.21
-; Description:
-; Version: v0.4.8
-; Compatibility: x4.3.3
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns pathom.env
-    (:require [mid-fruits.candy   :refer [return]]
-              [mid-fruits.time    :as time]
-              [server-fruits.http :as http]
+    (:require [mid-fruits.candy :refer [param return]]
               [com.wsscode.pathom3.connect.indexes   :as pathom.ci]
               [com.wsscode.pathom3.connect.operation :as pathom.co]))
 
@@ -57,7 +41,7 @@
   ; @return (map)
   [env param-key param-value]
   ; https://github.com/wilkerlucio/pathom3/blob/main/src/main/com/wsscode/pathom3/connect/operation.cljc
-  (assoc-in env [:com.wsscode.pathom3.connect.planner/node :com.wsscode.pathom3.connect.planner/params param-key] 
+  (assoc-in env [:com.wsscode.pathom3.connect.planner/node :com.wsscode.pathom3.connect.planner/params param-key]
             param-value))
 
 

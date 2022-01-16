@@ -150,12 +150,12 @@
   ;  [{:namespace/id (string)}]
   ([collection-name]
    (if-let [all-documents (find-maps collection-name {})]
-           (vector/->items all-documents #(adaptation/get-document-output %))))
+           (vector/->items all-documents #(adaptation/find-output %))))
 
   ([collection-name projection]
    (if-let [projection (adaptation/find-projection projection)]
            (if-let [all-documents (find-maps collection-name {} projection)]
-                   (vector/->items all-documents #(adaptation/get-document-output %))))))
+                   (vector/->items all-documents #(adaptation/find-output %))))))
 
 (defn get-documents-by-query
   ; @param (string) collection-name
@@ -176,13 +176,13 @@
   ([collection-name query]
    (if-let [query (adaptation/find-query query)]
            (if-let [documents (find-maps collection-name query)]
-                   (vector/->items documents #(adaptation/get-document-output %)))))
+                   (vector/->items documents #(adaptation/find-output %)))))
 
   ([collection-name query projection]
    (if-let [query (adaptation/find-query query)]
            (if-let [projection (adaptation/find-projection projection)]
                    (if-let [documents (find-maps collection-name query projection)]
-                           (vector/->items documents #(adaptation/get-document-output %)))))))
+                           (vector/->items documents #(adaptation/find-output %)))))))
 
 
 
@@ -205,7 +205,7 @@
   [collection-name query]
   (if-let [query (adaptation/find-query query)]
           (if-let [document (find-one-as-map collection-name query)]
-                  (adaptation/get-document-output document))))
+                  (adaptation/find-output document))))
 
 (defn get-document-by-id
   ; @param (string) collection-name
@@ -223,7 +223,7 @@
   [collection-name document-id]
   (if-let [document-id (adaptation/document-id-input document-id)]
           (if-let [document (find-map-by-id collection-name document-id)]
-                  (adaptation/get-document-output document))))
+                  (adaptation/find-output document))))
 
 (defn document-exists?
   ; @param (string) collection-name
@@ -252,7 +252,7 @@
   ; @return (maps in vector)
   [collection-name pipeline]
   (if-let [documents (aggregation/process collection-name pipeline)]
-          (vector/->items documents #(adaptation/get-document-output %))))
+          (vector/->items documents #(adaptation/find-output %))))
 
 (defn count-documents-by-pipeline
   ; @param (string) collection-name

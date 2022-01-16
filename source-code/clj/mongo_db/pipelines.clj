@@ -44,8 +44,8 @@
 
 (defn filter-query
   ; @param (map) filter-pattern
-  ;  {:or (maps in vector)(opt)
-  ;   :and (maps in vector)(opt)
+  ;  {:$or (maps in vector)(opt)
+  ;   :$and (maps in vector)(opt)
   ;
   ; @example
   ;  (mongo-db/filter-query {:$or  [{:namespace/my-key   false}
@@ -58,8 +58,8 @@
   ;
   ; @return (maps in vector)
   [{:keys [$and $or]}]
-  (cond-> {} $and (assoc "$and" (vector/->items $and adaptation/pipeline-query))
-             $or  (assoc "$or"  (vector/->items $or  adaptation/pipeline-query))))
+  (cond-> {} $and (assoc "$and" (vector/->items $and adaptation/filter-query))
+             $or  (assoc "$or"  (vector/->items $or  adaptation/filter-query))))
 
 (defn search-query
   ; @param (map) search-pattern
@@ -77,11 +77,8 @@
   ;  {"$and" (maps in vector)
   ;   "$or" (maps in vector)}
   [{:keys [$and $or]}]
-  (letfn [(adapt-value [v] {"$regex" v "$options" "i"})
-          (f [n] (map/->kv n #(json/unkeywordize-key %)
-                             #(adapt-value           %)))]
-         (cond-> {} $and (assoc "$and" (vector/->items $and f))
-                    $or  (assoc "$or"  (vector/->items $or  f)))))
+  (cond-> {} $and (assoc "$and" (vector/->items $and adaptation/search-query))
+             $or  (assoc "$or"  (vector/->items $or  adaptation/search-query))))
 
 (defn sort-query
   ; @param (map) sort-pattern
@@ -93,7 +90,7 @@
   ;
   ; @return (map)
   [sort-pattern]
-  (map/->keys sort-pattern json/unkeywordize-keys))
+  (map/->keys sort-pattern json/unkeywordize-key))
 
 
 
@@ -122,7 +119,8 @@
   ; @return (maps in vector)
   [{:keys [field-pattern filter-pattern max-count search-pattern skip sort-pattern]}]
   (cond-> [] field-pattern  (conj {"$addFields"      (add-fields-query field-pattern)})
-             :match         (conj {"$match" {"$and" [(filter-query     filter-pattern) (search-query search-pattern)]}})
+             :match         (conj {"$match" {"$and" [(filter-query     filter-pattern)
+                                                     (search-query     search-pattern)]}})
              sort-pattern   (conj {"$sort"           (sort-query       sort-pattern)})
              skip           (conj {"$skip"           (param            skip)})
              max-count      (conj {"$limit"          (param            max-count)})))

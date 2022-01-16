@@ -23,6 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-lister.engine
+(def env->item-links     engine/env->item-links)
 (def env->sort-pattern   engine/env->sort-pattern)
 (def env->search-pattern engine/env->search-pattern)
 (def env->pipeline-props engine/env->pipeline-props)

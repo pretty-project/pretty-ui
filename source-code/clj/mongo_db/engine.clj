@@ -148,6 +148,11 @@
 (defn document->order
   ; @param (namespaced map) document
   ;
+  ; @example
+  ;  (engine/document->order {:namespace/order 3})
+  ;  =>
+  ;  3
+  ;
   ; @return (integer)
   [document]
   (if-let [namespace (db/document->namespace document)]
