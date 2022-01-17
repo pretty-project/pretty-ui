@@ -1,4 +1,25 @@
 
+
+
+; Mondjuk feltöltesz 3 elemet ...
+; - Nem szükséges a letöltött elemek azonosítóit elküldeni a szervernek (ez tök felesleges)!
+; - Ha pl. a limit értéke 20, és eddig 2 adagot kértél le, akkor változáskor
+;   kérd le 0-40-ig az elemeket, mert te akkor a 0-40 range-et látod és tök mindegy, hogy ebben
+;   a range-ben eddig csak mondjuk 21 volt, akkor is a 0-40 ranget látod, szoval azt kérjed!
+; - Hogy ha van letöltve 21/21 és a legaljára vagy szkrollova, akkor
+;   elindul a request (0-40) és lejön 24/24 elem esetleg ha sok az új elem,
+;   akkor az infinite-loader addig tölt, amig ki nem ér a viewport-bol.
+; - Nem baj, ha esetleg nem jön le egy olyan elem ami eddig lennt volt!
+;   Szóval nem cink ha az uj elemek kitolják a 0-40 range-böl amik eddig lennt voltak,
+;   mert csak akkor tehetik meg, ha nem vagy az alján és nem látod az infinite-loader-t!
+;   Ha látnád az infinite-loader-t, akkor nem tudná kitolni, mert az már kapásbol szedné is le
+;   a többi elemet, ami kifér a képernyőre!
+;   mert az infinite-loader miatt csak olyan, mint ha kiszuszna abbol a range-böl,
+;   amit belátsz, de ha leszkrollosz, mert keresed akkor jön le ujbol az infinite-loader-rel!
+; Végiggondoltam, próbáld ki kajak zura igy!
+
+
+
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -6,7 +27,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.7.6
-; Compatibility: x4.5.3
+; Compatibility: x4.5.4
 
 
 
@@ -24,7 +45,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-resolver-props
+(defn get-request-items-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -35,6 +56,7 @@
   ;   :download-limit (integer)
   ;   :filter-pattern (map)
   ;   :order-by (keyword)
+  ;   :reload-items? (boolean)
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
@@ -42,6 +64,7 @@
    :download-limit        (r subs/get-meta-value            db extension-id item-namespace :download-limit)
    :filter-pattern        (r subs/get-meta-value            db extension-id item-namespace :filter-pattern)
    :order-by              (r subs/get-meta-value            db extension-id item-namespace :order-by)
+   :reload-items?         (r subs/get-meta-value            db extension-id item-namespace :reload-mode?)
    :search-keys           (r subs/get-meta-value            db extension-id item-namespace :search-keys)
    :search-term           (r subs/get-search-term           db extension-id item-namespace)
 
@@ -82,6 +105,6 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [resolver-id    (engine/resolver-id      extension-id item-namespace)
-        resolver-props (r get-resolver-props db extension-id item-namespace)]
+  (let [resolver-id    (engine/resolver-id                    extension-id item-namespace :get)
+        resolver-props (r get-request-items-resolver-props db extension-id item-namespace)]
        [:debug `(~resolver-id ~resolver-props)]))

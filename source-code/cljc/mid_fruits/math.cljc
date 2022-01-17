@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v0.6.2
+; Version: v0.7.4
 
 
 
@@ -280,6 +280,113 @@
   ; @return (float or integer)
   [total value]
   (/ value (/ total 100)))
+
+
+
+;; -- Domain functions --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Egy n szám milyen tulajdonságokkal rendelkezik egy tartományban.
+; Pl.: 5 tartományai: -4–0, 1–5, 6–10, 11–15, ...
+
+(defn domain-inchoate
+  ; @param (integer) n
+  ; @param (integer) domain
+  ;
+  ; @example
+  ;  (math/domain-inchoate 9 5)
+  ;  =>
+  ;  2
+  ;
+  ; @example
+  ;  (math/domain-inchoate 10 5)
+  ;  =>
+  ;  2
+  ;
+  ; @example
+  ;  (math/domain-inchoate 11 5)
+  ;  =>
+  ;  3
+  ;
+  ; @example
+  ;  (math/domain-inchoate 0 5)
+  ;  =>
+  ;  0
+  ;
+  ; @return (integer)
+  [n domain]
+  ; Az n értéke hányadik domain tartományban helyezkedik el
+  (let [quot (quot n domain)
+        rem  (rem  n domain)]
+       (if (= rem 0)
+           (return quot)
+           (inc    quot))))
+
+(defn domain-floor
+  ; @param (integer) n
+  ; @param (integer) domain
+  ;
+  ; @example
+  ;  (math/domain-floor 9 5)
+  ;  =>
+  ;  6
+  ;
+  ; @example
+  ;  (math/domain-floor 10 5)
+  ;  =>
+  ;  6
+  ;
+  ; @example
+  ;  (math/domain-floor 11 5)
+  ;  =>
+  ;  11
+  ;
+  ; @example
+  ;  (math/domain-floor 0 5)
+  ;  =>
+  ;  -4
+  ;
+  ; @return (integer)
+  [n domain]
+  ; Az n értékéhez tartozó tartomány kezdő értéke
+  (let [quot (quot n domain)
+        rem  (rem  n domain)]
+       (if (= rem 0)
+           (inc (* (dec quot) domain))
+           (inc (*      quot  domain)))))
+
+(defn domain-ceil
+  ; @param (integer) n
+  ; @param (integer) domain
+  ;
+  ; @example
+  ;  (math/domain-ceil 9 5)
+  ;  =>
+  ;  10
+  ;
+  ; @example
+  ;  (math/domain-ceil 10 5)
+  ;  =>
+  ;  10
+  ;
+  ; @example
+  ;  (math/domain-ceil 11 5)
+  ;  =>
+  ;  15
+  ;
+  ; @example
+  ;  (math/domain-ceil 0 5)
+  ;  =>
+  ;  0
+  ;
+  ; @return (integer)
+  [n domain]
+  ; Az n értékéhez tartozó tartomány záró értéke
+  (let [quot (quot n domain)
+        rem  (rem  n domain)]
+       (if (= rem 0)
+           (*      quot  domain)
+           (* (inc quot) domain))))
 
 
 

@@ -36,12 +36,15 @@
   ; @param (map) lister-props
   ;
   ; @return (map)
-  [db [_ extension-id _ lister-props]]
-  ; XXX#8705
-  ; Az item-lister betöltésekor felülírás nélkül aláfűzi a lister-props térképet
-  ; az item-lister/meta-items térképnek, így az item-lister plugin legutóbbi
-  ; beállításai elérhetők maradnak.
-  (update-in db [extension-id :item-lister/meta-items] map/reverse-merge lister-props))
+  [db [_ extension-id item-namespace lister-props]]
+         ; XXX#8705
+         ; Az item-lister betöltésekor felülírás nélkül aláfűzi a lister-props térképet
+         ; az item-lister/meta-items térképnek, így az item-lister plugin legutóbbi
+         ; beállításai elérhetők maradnak.
+  (-> db (update-in [extension-id :item-lister/meta-items] map/reverse-merge lister-props)
+         ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
+         ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
+         (assoc-in  [extension-id :item-lister/meta-items :item-namespace] item-namespace)))
 
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,6 +109,15 @@
   (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
 
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
+
+(defn toggle-reload-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (update-in db [extension-id :item-lister/meta-items :reload-mode?] not))
 
 (defn select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -251,31 +263,61 @@
   [db [_ extension-id item-namespace filter-pattern]]
   (assoc-in db [extension-id :item-lister/meta-items :filter-pattern] filter-pattern))
 
-(defn receive-items!
+(defn ->items-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (as-> db % ; XXX#0499
+             ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
+             (assoc-in % [extension-id :item-lister/meta-items :items-received?] true)
+             (if-let [reload-mode? (r subs/get-meta-value db extension-id item-namespace :reload-mode?)]
+                     ; A {:reload-mode? true} beállítással indított letöltés befejezésekor kilép
+                     ; a {:reload-mode? true} beállításból
+                     (r toggle-reload-mode! % extension-id)
+                     (return                %))))
+
+(defn store-received-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id    (engine/resolver-id extension-id item-namespace)
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        documents   (get-in server-response [resolver-id :documents])
+        ; XXX#3907
+        ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
+        ; a lista-elemek felsorolásakor és egyes Re-Frame feliratkozásokban
+        ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel,
+        ; ha nem szükséges az értékek kulcsaihoz az aktuális névteret hozzáfűzni.
+        documents (db/collection->non-namespaced-collection documents)]
+       (if-let [reload-mode? (r subs/get-meta-value db extension-id item-namespace :reload-mode?)]
+               (assoc-in  db [extension-id :item-lister/data-items]                     documents)
+               (update-in db [extension-id :item-lister/data-items] vector/concat-items documents))))
+
+(defn receive-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id    (engine/resolver-id extension-id item-namespace :get)
         documents      (get-in server-response [resolver-id :documents])
         document-count (get-in server-response [resolver-id :document-count])
         received-count (count documents)]
-                  ; XXX#3907
-                  ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
-                  ; a lista-elemek felsorolásakor és egyes Re-Frame feliratkozásokban
-                  ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel.
-       (as-> db % (r db/store-collection! % [extension-id :item-lister/data-items] documents {:remove-namespace? true})
-                  ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
-                  ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
-                  (assoc-in % [extension-id :item-lister/meta-items :item-namespace] item-namespace)
-                  ; Szükséges frissíteni a keresési feltételeknek megfelelő
-                  ; dokumentumok számát, mert annak megváltozhat az értéke!
+       (as-> db % (r store-received-items! % extension-id item-namespace server-response)
+                  ; Szükséges frissíteni a keresési feltételeknek megfelelő dokumentumok számát,
+                  ; mert annak megváltozhat az értéke!
                   (assoc-in % [extension-id :item-lister/meta-items :document-count] document-count)
-                  ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-                  (assoc-in % [extension-id :item-lister/meta-items :items-received?] true)
                   ; BUG#7009
                   ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
                   ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor
@@ -306,6 +348,17 @@
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/reload-lister!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/reload-lister! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r toggle-reload-mode! db extension-id)
+       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
 
 (a/reg-event-fx
   :item-lister/use-filter!
@@ -380,7 +433,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      {:db (r receive-items! db extension-id item-namespace server-response)
+      {:db (as-> db % (r receive-items!   % extension-id item-namespace server-response)
+                      (r ->items-received % extension-id item-namespace))
        ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
        ; hogy az a viewport területén van-e még és szükséges-e további elemeket letölteni.
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
@@ -394,7 +448,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
       ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
-      (if (r subs/download-more-items? db extension-id item-namespace)
+      (if (r subs/request-items? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
                               ; A letöltött dokumentumok on-success helyett on-stalled időpontban
                               ; kerülnek tárolásra a Re-Frame adatbázisba, így elkerülhető,

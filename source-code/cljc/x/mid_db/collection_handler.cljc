@@ -555,28 +555,3 @@
                                            (param o)
                                            (param specified-keys)))]
           (reduce get-specified-values-f {} collection))))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn store-collection!
-  ; @param (item-path vector) collection-path
-  ; @param (maps in vector) collection
-  ; @param (map)(opt) context-props
-  ;  {:additional-namespace (keyword)(opt)
-  ;   :remove-namespace? (boolean)(opt)}
-  ;
-  ; @usage
-  ;  (r db/store-collection! db [:my-collection] [{...} {...}])
-  ;
-  ; @return (map)
-  [db [_ collection-path collection {:keys [additional-namespace remove-namespace?]}]]
-  (cond (some? additional-namespace)
-        (let [collection (collection->namespaced-collection collection additional-namespace)]
-             (update-in db collection-path vector/concat-items collection))
-        (boolean remove-namespace?)
-        (let [collection (collection->non-namespaced-collection collection)]
-             (update-in db collection-path vector/concat-items collection))
-        :else (update-in db collection-path vector/concat-items collection)))

@@ -70,16 +70,19 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
   ;
   ; @example
-  ;  (engine/resolver-id :my-extension :my-type)
+  ;  (engine/resolver-id :my-extension :my-type :get)
   ;  =>
   ;  :my-extension/get-my-type-items!
   ;
   ; @return (keyword)
-  [extension-id item-namespace]
+  [extension-id item-namespace action-id]
   (keyword (name extension-id)
-           (str "get-" (name item-namespace) "-items")))
+           (str     (name action-id)
+                "-" (name item-namespace)
+                "-items")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!

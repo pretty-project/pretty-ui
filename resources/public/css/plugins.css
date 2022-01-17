@@ -115,6 +115,10 @@
 /*** Item-lister list-item ***/
 
 .item-lister--list-item--structure {
+  /* A 48px értéknél magasabb lista-elemekben az {align-items: center} tulajdonság
+   * állítja be a list-item-checkbox komponens függőleges igazítását */
+  align-items: center;
+
   display: flex;
   flex-direction: row-reverse }
 

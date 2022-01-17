@@ -16,6 +16,7 @@
 (ns server-plugins.item-lister.engine
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.math    :as math]
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
@@ -37,6 +38,35 @@
 (def route-template       engine/route-template)
 (def dialog-id            engine/dialog-id)
 (def load-extension-event engine/load-extension-event)
+
+
+
+;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- env->max-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ;
+  ; @return (integer)
+  [env]
+  (let [download-limit (pathom/env->param env :download-limit)]
+       (if-let [reload-items? (pathom/env->param env :reload-items?)]
+               (let [downloaded-item-count (pathom/env->param env :downloaded-item-count)]
+                    (math/domain-ceil downloaded-item-count download-limit))
+               (return download-limit))))
+
+(defn- env->skip
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ;
+  ; @return (integer)
+  [env]
+  (if-let [reload-items? (pathom/env->param env :reload-items?)]
+          (return 0)
+          (pathom/env->param env :downloaded-item-count)))
 
 
 
@@ -102,8 +132,8 @@
   ;   :skip (integer)
   ;   :sort-pattern (map)}
   [env extension-id item-namespace]
-  {:max-count      (pathom/env->param   env :download-limit)
-   :skip           (pathom/env->param   env :downloaded-item-count)
+  {:max-count      (env->max-count      env)
+   :skip           (env->skip           env)
    :field-pattern  (pathom/env->param   env :field-pattern)
    :filter-pattern (pathom/env->param   env :filter-pattern)
    :search-pattern (env->search-pattern env extension-id item-namespace)

@@ -38,26 +38,6 @@
   [db [_ extension-id]]
   (get-in db [extension-id :item-lister/data-items]))
 
-
-
-; TEMP
-(defn extract-downloaded-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (maps in vector)
-  ;  [{:namespace/id "..."}]
-  [db [_ extension-id item-namespace]]
-  (let [downloaded-items (r get-downloaded-items db extension-id)
-        item-id-key      (keyword/add-namespace item-namespace :id)]
-       (letfn [(f [result item] (conj result {item-id-key (:id item)}))]
-              (reduce f [] downloaded-items))))
-; TEMP
-
-
-
 (defn get-meta-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,6 +68,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; XXX#0499
   ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
   ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
   ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
@@ -132,14 +113,14 @@
   ;
   ; @return (integer)
   [db [_ extension-id item-namespace]]
-  ; XXX#0791
   ; - Ha a tárolt érték nil, akkor a visszatérési érték 0
   ; - Ha a szerver hibásan nil értéket küld le, akkor a 0 visszatérési érték miatt
   ;   az all-items-downloaded? függvény visszatérési értéke true lesz ezért megáll
   ;   az újabb elemek letöltése.
   ; - Hibás szerver-működés esetén szükséges, hogy az infinite-loader komponens
   ;   ne próbálja újra és újra letölteni a további feltételezett elemeket.
-  ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
+  ; - XXX#0499
+  ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
   ;   függvény visszatérési értéke nem tekinthető mérvadónak!
   ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
   (let [all-item-count (r get-meta-value db extension-id item-namespace :document-count)]
@@ -268,7 +249,8 @@
        ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
        ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
        ;   akkor ne próbáljon további feltételezett elemeket letölteni.
-       ; - Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
+       ; - XXX#0499
+       ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
        ;   függvény visszatérési értéke nem tekinthető mérvadónak!
        ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
        (>= downloaded-item-count all-item-count)))
@@ -303,13 +285,24 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-       ; XXX#0791
+       ; XXX#0499
        ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
        ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
   (and (or (not (r items-received?       db extension-id item-namespace))
            (not (r all-items-downloaded? db extension-id item-namespace)))
        ; BUG#7009
        (r some-items-received? db extension-id item-namespace)))
+
+(defn request-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (boolean (or (r download-more-items? db extension-id item-namespace)
+               (r get-meta-value       db extension-id item-namespace :reload-mode?))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
