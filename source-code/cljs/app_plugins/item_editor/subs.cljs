@@ -113,6 +113,18 @@
         copy-item    (dissoc current-item :added-at :added-by :id :modified-at :modified-by)]
        (db/document->namespaced-document copy-item item-namespace)))
 
+(defn get-data-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r subs/get-data-item :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (get-in db [extension-id :item-editor/data-item]))
+
 (defn get-data-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -127,7 +139,7 @@
   [db [_ extension-id _ item-key]]
   (get-in db [extension-id :item-editor/data-item item-key]))
 
-(defn get-meta-value
+(defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -135,7 +147,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r subs/get-meta-value :my-extension :my-type :error-mode?)
+  ;  (r subs/get-meta-item :my-extension :my-type :error-mode?)
   ;
   ; @return (map)
   [db [_ extension-id _ item-key]]
@@ -242,7 +254,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [suggestion-keys (r get-meta-value db extension-id item-namespace :suggestion-keys)]
+  (let [suggestion-keys (r get-meta-item db extension-id item-namespace :suggestion-keys)]
        (vector/nonempty? suggestion-keys)))
 
 (defn download-item?
@@ -253,8 +265,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [new-item?      (r new-item?      db extension-id item-namespace)
-        recovery-mode? (r get-meta-value db extension-id item-namespace :recovery-mode?)]
+  (let [new-item?      (r new-item?     db extension-id item-namespace)
+        recovery-mode? (r get-meta-item db extension-id item-namespace :recovery-mode?)]
        (not (or new-item? recovery-mode?))))
 
 (defn download-data?
@@ -292,7 +304,7 @@
   ;   :error-mode? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
+  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           {:colors    (r get-data-value db extension-id item-namespace :colors)
            :disabled? (r disabled?      db extension-id item-namespace)
@@ -315,7 +327,7 @@
   ;   :form-completed? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
+  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           (let [form-id (engine/form-id extension-id item-namespace)]
                {:disabled?       (r disabled? db extension-id item-namespace)
@@ -338,7 +350,7 @@
   ;   :error-mode? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-value db extension-id item-namespace :error-mode?)]
+  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           {:description (r get-description db extension-id item-namespace)
            :new-item?   (r new-item?       db extension-id item-namespace)}))

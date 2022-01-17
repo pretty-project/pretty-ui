@@ -22,4 +22,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.engine
-(def request-id engine/request-id)
+(def browser-uri engine/browser-uri)
+(def request-id  engine/request-id)

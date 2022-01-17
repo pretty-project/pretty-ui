@@ -40,11 +40,11 @@
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
   {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
-   :download-limit        (r subs/get-meta-value            db extension-id item-namespace :download-limit)
-   :filter-pattern        (r subs/get-meta-value            db extension-id item-namespace :filter-pattern)
-   :order-by              (r subs/get-meta-value            db extension-id item-namespace :order-by)
-   :reload-items?         (r subs/get-meta-value            db extension-id item-namespace :reload-mode?)
-   :search-keys           (r subs/get-meta-value            db extension-id item-namespace :search-keys)
+   :download-limit        (r subs/get-meta-item             db extension-id item-namespace :download-limit)
+   :filter-pattern        (r subs/get-meta-item             db extension-id item-namespace :filter-pattern)
+   :order-by              (r subs/get-meta-item             db extension-id item-namespace :order-by)
+   :reload-items?         (r subs/get-meta-item             db extension-id item-namespace :reload-mode?)
+   :search-keys           (r subs/get-meta-item             db extension-id item-namespace :search-keys)
    :search-term           (r subs/get-search-term           db extension-id item-namespace)
 
    ; TEMP

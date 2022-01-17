@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-fruits.dom
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.css     :as css]
-              [mid-fruits.io      :as io]
-              [mid-fruits.map     :as map]
-              [mid-fruits.math    :as math]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.css    :as css]
+              [mid-fruits.io     :as io]
+              [mid-fruits.map    :as map]
+              [mid-fruits.math   :as math]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -692,6 +692,14 @@
 
 ;; -- Set DOM-element attribute helpers ---------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-element-attribute
+  ; @param (DOM-element) element
+  ; @param (string) attribute-name
+  ;
+  ; @return (string)
+  [element attribute-name]
+  (.getAttribute element attribute-name))
 
 (defn set-element-attribute!
   ; @param (DOM-element) element

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.6
+; Version: v0.3.8
 ; Compatibility: x4.5.4
 
 
@@ -15,7 +15,8 @@
 
 (ns mid-plugins.item-browser.engine
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]))
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -29,7 +30,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn browser-uri
@@ -48,13 +49,11 @@
        "/"           (param item-id)))
 
 (defn request-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/request-id :my-extension :my-type)
+  ;  (item-browser/request-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/synchronize-my-type-browser!
   ;
@@ -62,6 +61,41 @@
   [extension-id item-namespace]
   (keyword (name extension-id)
            (str "synchronize-" (name item-namespace) "-browser!")))
+
+
+
+;; -- Private helpers ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn data-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/data-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-browser/data-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [data-items-key (keyword (str (name item-namespace) "-browser/data-items"))]
+       (vector/concat-items [extension-id data-items-key] xyz)))
+
+(defn meta-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/meta-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-browser/meta-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [meta-items-key (keyword (str (name item-namespace) "-browser/meta-items"))]
+       (vector/concat-items [extension-id meta-items-key] xyz)))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

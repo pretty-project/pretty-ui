@@ -37,8 +37,8 @@
   ; @return (maps in vector)
   [db [_ extension-id]]
   (get-in db [extension-id :item-lister/data-items]))
-
-(defn get-meta-value
+  
+(defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -72,7 +72,7 @@
   ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
   ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
   ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
-  (let [items-received? (r get-meta-value db extension-id item-namespace :items-received?)]
+  (let [items-received? (r get-meta-item db extension-id item-namespace :items-received?)]
        (boolean items-received?)))
 
 (defn no-items-to-show?
@@ -123,7 +123,7 @@
   ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
   ;   függvény visszatérési értéke nem tekinthető mérvadónak!
   ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
-  (let [all-item-count (r get-meta-value db extension-id item-namespace :document-count)]
+  (let [all-item-count (r get-meta-item db extension-id item-namespace :document-count)]
        (if (integer? all-item-count)
            (return   all-item-count)
            (return   0))))
@@ -136,7 +136,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (r get-meta-value db extension-id item-namespace :disabled-items))
+  (r get-meta-item db extension-id item-namespace :disabled-items))
 
 (defn item-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -165,7 +165,7 @@
   ;
   ; @return (integers in vector)
   [db [_ extension-id item-namespace]]
-  (r get-meta-value db extension-id item-namespace :selected-items))
+  (r get-meta-item db extension-id item-namespace :selected-items))
 
 (defn get-selected-item-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -175,7 +175,7 @@
   ;
   ; @return (strings in vector)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r get-meta-value db extension-id item-namespace :selected-items)]
+  (let [selected-items (r get-meta-item db extension-id item-namespace :selected-items)]
        (reduce (fn [result item-dex]
                    (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
                         (conj result item-id)))
@@ -263,7 +263,7 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
-  (let [search-term  (r get-meta-value db extension-id item-namespace :search-term)]
+  (let [search-term  (r get-meta-item db extension-id item-namespace :search-term)]
        (str search-term)))
 
 (defn some-items-received?
@@ -274,7 +274,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [received-count (r get-meta-value db extension-id item-namespace :received-count)]
+  (let [received-count (r get-meta-item db extension-id item-namespace :received-count)]
        (not= received-count 0)))
 
 (defn download-more-items?
@@ -302,7 +302,7 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (boolean (or (r download-more-items? db extension-id item-namespace)
-               (r get-meta-value       db extension-id item-namespace :reload-mode?))))
+               (r get-meta-item        db extension-id item-namespace :reload-mode?))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -363,17 +363,17 @@
   ;   :viewport-small? (boolean)}
   [db [_ extension-id item-namespace]]
   (cond ; If select-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :select-mode?)
+        (r get-meta-item db extension-id item-namespace :select-mode?)
         {:select-mode?        true
          :all-items-selected? (r all-items-selected? db extension-id item-namespace)
          :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
          :synchronizing?      (r synchronizing?      db extension-id item-namespace)}
         ; If search-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :search-mode?)
+        (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode?   true
          :synchronizing? (r synchronizing? db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :reorder-mode?)
+        (r get-meta-item db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?  true
          :order-changed? false
          :synchronizing? (r synchronizing? db extension-id item-namespace)}
@@ -405,7 +405,7 @@
   ;   :synchronizing? (boolean)}
   [db [_ extension-id item-namespace]]
   (cond ; If select-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :select-mode?)
+        (r get-meta-item db extension-id item-namespace :select-mode?)
         {:select-mode?      true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
@@ -413,7 +413,7 @@
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If search-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :search-mode?)
+        (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode?      true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)
@@ -421,7 +421,7 @@
          :no-items-to-show?  (r no-items-to-show?    db extension-id)
          :synchronizing?     (r synchronizing?       db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
-        (r get-meta-value db extension-id item-namespace :reorder-mode?)
+        (r get-meta-item db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?     true
          :downloaded-items   (r get-downloaded-items db extension-id)
          :downloading-items? (r downloading-items?   db extension-id item-namespace)

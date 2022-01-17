@@ -275,7 +275,7 @@
   (as-> db % ; XXX#0499
              ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
              (assoc-in % [extension-id :item-lister/meta-items :items-received?] true)
-             (if-let [reload-mode? (r subs/get-meta-value db extension-id item-namespace :reload-mode?)]
+             (if-let [reload-mode? (r subs/get-meta-item db extension-id item-namespace :reload-mode?)]
                      ; A {:reload-mode? true} beállítással indított letöltés befejezésekor kilép
                      ; a {:reload-mode? true} beállításból
                      (r toggle-reload-mode! % extension-id)
@@ -298,7 +298,7 @@
         ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel,
         ; ha nem szükséges az értékek kulcsaihoz az aktuális névteret hozzáfűzni.
         documents (db/collection->non-namespaced-collection documents)]
-       (if-let [reload-mode? (r subs/get-meta-value db extension-id item-namespace :reload-mode?)]
+       (if-let [reload-mode? (r subs/get-meta-item db extension-id item-namespace :reload-mode?)]
                (assoc-in  db [extension-id :item-lister/data-items]                     documents)
                (update-in db [extension-id :item-lister/data-items] vector/concat-items documents))))
 

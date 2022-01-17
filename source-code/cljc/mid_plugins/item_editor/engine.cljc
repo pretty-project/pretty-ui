@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.0
-; Compatibility: x4.4.9
+; Version: v0.3.6
+; Compatibility: x4.5.4
 
 
 
@@ -15,7 +15,8 @@
 
 (ns mid-plugins.item-editor.engine
     (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.keyword :as keyword]))
+              [mid-fruits.keyword :as keyword]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -29,7 +30,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn editor-uri
@@ -60,6 +61,55 @@
   [extension-id item-namespace]
   (keyword (name extension-id)
            (str (name item-namespace) "-editor-form")))
+
+(defn request-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (item-editor/request-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension/synchronize-my-type-editor!
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (name extension-id)
+           (str "synchronize-" (name item-namespace) "-editor!")))
+
+
+
+;; -- Private helpers ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn data-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/data-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-editor/data-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [data-items-key (keyword (str (name item-namespace) "-editor/data-items"))]
+       (vector/concat-items [extension-id data-items-key] xyz)))
+
+(defn meta-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/meta-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-editor/meta-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [meta-items-key (keyword (str (name item-namespace) "-editor/meta-items"))]
+       (vector/concat-items [extension-id meta-items-key] xyz)))
 
 (defn item-id->new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,22 +184,6 @@
   ; @return (metamorphic-content)
   [_ item-namespace]
   (keyword (str "unnamed-" (name item-namespace))))
-
-(defn request-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/request-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension/synchronize-my-type-editor!
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "synchronize-" (name item-namespace) "-editor!")))
 
 (defn mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -206,7 +206,7 @@
              (store-downloaded-item!        [event-id extension-id item-namespace server-response])
              (r subs/download-suggestions?         db extension-id item-namespace)
              (store-downloaded-suggestions! [event-id extension-id item-namespace server-response])
-             (r subs/get-meta-value                db extension-id item-namespace :recovery-mode?)
+             (r subs/get-meta-item                 db extension-id item-namespace :recovery-mode?)
              (recover-item!                 [event-id extension-id item-namespace])
              :->item-received (assoc-in [extension-id :item-editor/meta-items :item-received?] true)))
 
@@ -411,7 +411,7 @@
       ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
       ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
       ; annak törlésének visszavonása esemény esetleges megtörténtekor.
-      (if-let [delete-mode? (r subs/get-meta-value db extension-id item-namespace :delete-mode?)]
+      (if-let [delete-mode? (r subs/get-meta-item db extension-id item-namespace :delete-mode?)]
               {:db (r store-local-changes! db extension-id item-namespace)}
               ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
               ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról

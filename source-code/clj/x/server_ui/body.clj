@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.19
 ; Description:
-; Version: v0.7.2
-; Compatibility: x4.5.0
+; Version: v0.7.8
+; Compatibility: x4.5.4
 
 
 
@@ -14,15 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body
-    (:require [ring.middleware.anti-forgery]
-              [mid-fruits.candy     :refer [param]]
+    (:require [mid-fruits.candy     :refer [param]]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
               [x.server-core.api    :as a :refer [cache-control-uri]]
               [x.server-ui.engine   :refer [include-js]]
               [x.server-ui.graphics :as graphics]
               [x.server-ui.shield   :refer [view] :rename {view app-shield}]
-              [x.server-user.api    :as user]))
+              [x.server-user.api    :as user]
+              [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 
 
@@ -156,12 +156,8 @@
   [request {:keys [shield]}]
   [:body#x-body-container
     {:data-theme (user/request->user-settings-item request :selected-theme)}
-
-
-    (let [csrf-token (force ring.middleware.anti-forgery/*anti-forgery-token*)]
+    (let [csrf-token (force *anti-forgery-token*)]
          [:div#sente-csrf-token {:data-csrf-token csrf-token}])
-
-
     [:div#x-app-container]
     (if (some? shield)
         (param shield))])

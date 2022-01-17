@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.19
 ; Description:
-; Version: v1.0.8
-; Compatibility: x4.2.4
+; Version: v1.3.2
+; Compatibility: x4.5.4
 
 
 
@@ -14,13 +14,28 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-fruits.http
-   (:require [ajax.core        :refer [GET POST]]
-             [mid-fruits.candy :refer [param]]
+   (:require [ajax.core        :as ajax]
+             [app-fruits.dom   :as dom]
+             [mid-fruits.candy :refer [param return]]
              [mid-fruits.math  :as math]))
 
 
 
 ;; -- Helpers --------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request->local-request?
+  ; @param (map) request
+  ;  {:uri (string)}
+  ;
+  ; @return (boolean)
+  [{:keys [uri]}]
+  (let [uri-external? (re-find #"^\w+?://" uri)]
+       (not uri-external?)))
+
+
+
+;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- progress-event->request-progress
@@ -126,5 +141,33 @@
   ;                                   :uri "/my-uri"})
   [request-id {:keys [method uri] :as request-props}]
   (if (= method :get)
-      (GET  uri (get-request-props-prototype  request-id request-props))
-      (POST uri (post-request-props-prototype request-id request-props))))
+      (ajax/GET  uri (get-request-props-prototype  request-id request-props))
+      (ajax/POST uri (post-request-props-prototype request-id request-props))))
+
+
+
+;; -- CSRF token --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (string)
+(def ?csrf-token (when-let [element (dom/get-element-by-id "sente-csrf-token")]
+                           (dom/get-element-attribute element "data-csrf-token")))
+
+(defn default-headers
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (if (request->local-request? request)
+      (update request :headers merge {"x-csrf-token" ?csrf-token})
+      (return request)))
+
+(defn load-interceptors!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (swap! ajax/default-interceptors conj (ajax/to-interceptor {:name   "default headers"
+                                                              :request default-headers})))
+
+(load-interceptors!)

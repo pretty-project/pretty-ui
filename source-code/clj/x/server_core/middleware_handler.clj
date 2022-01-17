@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.24
 ; Description:
-; Version: v0.8.8
-; Compatibility: x3.9.9
+; Version: v0.9.2
+; Compatibility: x4.5.4
 
 
 
@@ -16,14 +16,14 @@
 (ns x.server-core.middleware-handler
     (:require [buddy.auth.backends.session      :refer [session-backend]]
               [buddy.auth.middleware            :refer [wrap-authentication wrap-authorization]]
+              [ring.middleware.anti-forgery     :refer [wrap-anti-forgery]]
               [ring.middleware.defaults         :refer [site-defaults wrap-defaults]]
               [ring.middleware.keyword-params   :refer [wrap-keyword-params]]
               [ring.middleware.multipart-params :refer [wrap-multipart-params]]
               [ring.middleware.params           :refer [wrap-params]]
               [ring.middleware.reload           :refer [wrap-reload]]
               [ring.middleware.json             :refer [wrap-json-body]]
-              [ring.middleware.transit          :refer [wrap-transit-params]]
-              [x.server-core.engine             :as engine]))
+              [ring.middleware.transit          :refer [wrap-transit-params]]))
 
 
 
@@ -73,4 +73,5 @@
                      #(wrap-authentication   % BACKEND)
                      #(wrap-authorization    % BACKEND)
                      #(wrap-defaults         % site-defaults)
-                     #(wrap-json-body        % {:keywords? true})]}))
+                     #(wrap-json-body        % {:keywords? true})
+                     #(wrap-anti-forgery     %)]}))

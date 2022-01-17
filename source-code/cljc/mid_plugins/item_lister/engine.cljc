@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.4.6
+; Version: v0.3.2
+; Compatibility: x4.5.4
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-lister.engine
-    (:require [mid-fruits.keyword :as keyword]))
+    (:require [mid-fruits.keyword :as keyword]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -28,17 +29,15 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn request-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/request-id :my-extension :my-type)
+  ;  (item-lister/request-id :my-extension :my-type)
   ;  =>
   ;  :my-extension/synchronize-my-type-lister!
   ;
@@ -46,6 +45,41 @@
   [extension-id item-namespace]
   (keyword (name extension-id)
            (str "synchronize-" (name item-namespace) "-lister!")))
+
+
+
+;; -- Private helpers ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn data-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/data-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-lister/data-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [data-items-key (keyword (str (name item-namespace) "-lister/data-items"))]
+       (vector/concat-items [extension-id data-items-key] xyz)))
+
+(defn meta-item-path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (list of *) xyz
+  ;
+  ; @example
+  ;  (engine/meta-item-path :my-extension :my-type :my-value)
+  ;  =>
+  ;  [:my-extension :my-type-lister/meta-items :my-value]
+  ;
+  ; @return (item-path vector)
+  [extension-id item-namespace & xyz]
+  (let [meta-items-key (keyword (str (name item-namespace) "-lister/meta-items"))]
+       (vector/concat-items [extension-id meta-items-key] xyz)))
 
 (defn mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
