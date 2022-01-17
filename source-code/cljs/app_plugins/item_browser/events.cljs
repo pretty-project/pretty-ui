@@ -48,7 +48,7 @@
   (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
 
              ; TEMP
-             (r app-plugins.item-lister.events/load-lister!    % extension-id item-namespace browser-props)))
+             (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace browser-props)))
 
 
 
@@ -64,7 +64,17 @@
 
 ; WARNING!
 
-
+(a/reg-event-fx
+  :item-browser/browse-item!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
+  (fn [_ [_ extension-id item-namespace item-id]]
+      (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
+           [:router/go-to! browser-uri])))
 
 (a/reg-event-fx
   :item-browser/load-browser!
@@ -94,8 +104,14 @@
                               ; mert emlékezne, hogy utoljára nulla volt, stb ...
                       ;         (dissoc-in [extension-id :lister-meta])
 
-            ; A request-id is *-browser! miközben az item-lister *-lister! request-eket indít!
-            :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
-                         [:ui/set-header-title!  (param      extension-id)]
-                         [:ui/set-window-title!  (param      extension-id)]
-                         (engine/load-extension-event extension-id item-namespace)]})))
+
+
+            :dispatch-n [[:ui/set-header-title!  (param extension-id)]
+                         [:ui/set-window-title!  (param extension-id)]
+                         (engine/load-extension-event extension-id item-namespace)
+
+                         ; Nem tudom itt-e a helye.
+                         ; Amikor böngészel és a viewport-ban volt az inf-loader, és megnyitsz
+                         ; egy elemet, akkor nem kerül ki és vissza a viewportba a loader, ezért
+                         ; manuál kell ujrainditani
+                         [:tools/reload-infinite-loader! extension-id]]})))

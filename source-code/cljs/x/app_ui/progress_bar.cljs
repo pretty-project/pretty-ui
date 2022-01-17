@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.26
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.3
+; Version: v0.2.6
+; Compatibility: x4.5.4
 
 
 
@@ -51,9 +51,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- listen-to-process!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn listen-to-process!
   ; @param (keyword) process-id
   ; @param (map) options
   ;  {:overlay-screen? (boolean)(opt)
@@ -98,7 +96,7 @@
   (if render-progress-bar? [:div#x-app-progress-bar
                              (if render-screen-overlay? [:div#x-app-progress-bar--screen-overlay])
                              [:div#x-app-progress-bar--process-progress {:style {:width (css/percent process-progress)}
-                                                                         :data-failured (boolean process-failured?)}]]))
+                                                                         :data-failured (boolean     process-failured?)}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

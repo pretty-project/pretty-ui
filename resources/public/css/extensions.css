@@ -60,6 +60,10 @@
 
 /***** Storage *****/
 
+.storage--media-item {
+  align-items: center;
+  display: flex }
+
 .storage--media-item--header {
   align-items: center;
   border-radius: 12px;

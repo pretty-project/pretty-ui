@@ -136,16 +136,18 @@
   flex-direction: column-reverse }
 
 .x-body-a--content-body {
+  /* XXX#0093
+   * A content-body alsó padding távolságát a content-tail helyettesíti.
+   * A content-body felső padding mérete megegyezik a content-tail magasságával.
+   * Az x4.5.4 verzió óta ki van kapcsolva a felső padding, az egyes tartalmak
+   * maguknak állítják be, ha szükséges.
+   * padding-bottom: 0;
+   * padding-top: var( --border-radius-m ) */
+
   display: flex;
   flex-direction: column;
   padding-left:  var( --content-edge );
-  padding-right: var( --content-edge );
-
-  /* XXX#0093
-   * A content-body alsó padding távolságát a content-tail helyettesíti.
-   * A content-body felső padding mérete megegyezik a content-tail magasságával. */
-  padding-bottom: 0;
-  padding-top: var( --border-radius-m )  }
+  padding-right: var( --content-edge ) }
 
 .x-body-a--content-tail {
   /* XXX#0093

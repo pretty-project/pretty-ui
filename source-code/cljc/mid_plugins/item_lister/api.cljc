@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.7
+; Version: v0.3.2
+; Compatibility: x4.5.4
 
 
 
@@ -14,4 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-lister.api
-    (:require [mid-plugins.item-lister.engine]))
+    (:require [mid-plugins.item-lister.engine :as engine]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-lister.engine
+(def request-id engine/request-id)

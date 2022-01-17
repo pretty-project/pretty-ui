@@ -380,12 +380,7 @@
                            [new-item-button extension-id item-namespace])
       [sort-items-button          extension-id item-namespace header-props]
       [toggle-select-mode-button  extension-id item-namespace header-props]
-      [toggle-reorder-mode-button extension-id item-namespace header-props]
-
-      ; TEMP
-      [elements/button {:icon :refresh :preset :primary-icon-button
-                        :on-click [:item-lister/reload-lister! extension-id item-namespace]}]]
-
+      [toggle-reorder-mode-button extension-id item-namespace header-props]]
     [:div.item-lister--header--menu-item-group
       [search-block extension-id item-namespace header-props]]])
 

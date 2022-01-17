@@ -13,6 +13,14 @@
 
 
 # x4.5.0
+- A  re-frame-browser és mongo-browser csak developer fordításkor müködjön system-environment változoval
+
+- Legyen a monoset-environment mappában vagy inkább a project-emulator mappában egy
+  project-dictionary.cljc vagy valami fájl, hogy a projekben ne eventekkel kelljen hozzáadogatni
+  a dictionary-termeket
+
+- Az item-lister pluginban amikor elemeket keresel, akkor ne legyen érzékeny az ékezetekre
+
 - project-details.edn fájl ne tartalmazzon kommenteket, az legyen egy külön fájlban és akkor
   lehet függvénnyel írni a fájlba az app-build értékét automtikusan (vagy legyen máshova írva az app-build?)
 

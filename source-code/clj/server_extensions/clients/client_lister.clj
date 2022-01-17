@@ -87,7 +87,7 @@
              ;  {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
-             [{:keys [items]}]
+             [_ {:keys [items]}]
              {::pathom.co/op-name 'clients/undo-delete-client-items!}
              (mongo-db/insert-documents! "clients" items))
 
@@ -98,7 +98,7 @@
              ;  {:item-ids (strings in vector)}
              ;
              ; @return (strings in vector)
-             [{:keys [item-ids]}]
+             [_ {:keys [item-ids]}]
              {::pathom.co/op-name 'clients/delete-client-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 

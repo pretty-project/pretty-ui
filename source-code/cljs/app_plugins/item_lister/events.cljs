@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.8.0
-; Compatibility: x4.5.3
+; Version: v0.9.4
+; Compatibility: x4.5.4
 
 
 
@@ -19,6 +19,7 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
+              [x.app-ui.api      :as ui]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.queries :as queries]
               [app-plugins.item-lister.subs    :as subs]))
@@ -340,9 +341,11 @@
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal,
   ;     ezért nem törli ki a beállításokat!
-  (as-> db % (r reset-downloads!    % extension-id)
-             (r reset-search!       % extension-id)
-             (r store-lister-props! % extension-id item-namespace lister-props)))
+  (let [request-id (engine/request-id extension-id item-namespace)]
+       (as-> db % (r ui/listen-to-process! % request-id)
+                  (r reset-downloads!      % extension-id)
+                  (r reset-search!         % extension-id)
+                  (r store-lister-props!   % extension-id item-namespace lister-props))))
 
 
 
@@ -401,7 +404,7 @@
                           ; esemény, ami újratölti az elemek listáját, akkor az [.../undo-delete-items! ...]
                           ; esemény által küldött request állapotjelző sávjának megjelenítésére nem
                           ; jutna elegendő idő
-                         {:on-stalled [:item-lister/->delete-items-undid extension-id]
+                         {:on-stalled [:item-lister/->delete-items-undid extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
 
@@ -468,9 +471,8 @@
   ;  {:label (metamorphic-content)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
       {:db (r load-lister! db extension-id item-namespace lister-props)
-       :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
-                    [:ui/set-header-title!  (param label)]
-                    [:ui/set-window-title!  (param label)]
+       :dispatch-n [[:ui/set-header-title! (param label)]
+                    [:ui/set-window-title! (param label)]
                     (engine/load-extension-event extension-id item-namespace)]}))
 
 
@@ -502,10 +504,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      ; XXX#5561
-      ; A törölt elemek visszaállítása után feleslegesen komplex művelet lenne megállapítani,
-      ; hogy a visszaállított elemek megjelenjenek-e a listában és ha igen, milyen pozícióban,
-      ; ezért a sikeres visszaállítás után az item-lister plugin újratölti a listát.
-      {:db       (r reset-downloads!          db extension-id)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      [:item-lister/refresh-item-list! extension-id item-namespace]))

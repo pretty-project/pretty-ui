@@ -22,6 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.engine
+(def browser-uri             engine/browser-uri)
 (def request-id              engine/request-id)
 (def resolver-id             engine/resolver-id)
 (def collection-name         engine/collection-name)

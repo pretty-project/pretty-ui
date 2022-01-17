@@ -30,6 +30,12 @@
   (fn [_ [_ filter-pattern]]
       [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
 
+(a/reg-event-fx
+  :my-extension/refresh-my-type-list!
+  ; Az [:item-lister/refresh-item-list! ...] esemény újra letölti az összes elemet az aktuális
+  ; beállításokkal. Így lehetséges az szerveren tárolt adatokat aktualizálni a kliens-oldalon.
+  [:item-lister/refresh-item-list! :my-extension :my-type])
+
 
 
 ;; -- List-item components ----------------------------------------------------

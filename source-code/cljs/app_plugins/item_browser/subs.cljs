@@ -32,12 +32,11 @@
   ; @param (map) browser-props
   ;  {:default-item-id (keyword)(opt)}
   ;
-  ; @return (keyword)
+  ; @return (string)
   ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id.
   [db [_ extension-id item-namespace {:keys [default-item-id]}]]
   (if-let [derived-item-id (r router/get-current-route-path-param db :item-id)]
-          (let [derived-item-id (keyword derived-item-id)]
-               (return derived-item-id))
+          (return derived-item-id)
           (return default-item-id)))
 
 (defn get-current-item-id

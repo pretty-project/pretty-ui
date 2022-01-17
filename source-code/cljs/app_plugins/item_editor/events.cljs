@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.9.4
-; Compatibility: x4.5.3
+; Version: v0.9.8
+; Compatibility: x4.5.4
 
 
 
@@ -19,6 +19,7 @@
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
+              [x.app-ui.api         :as ui]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.queries :as queries]
               [app-plugins.item-editor.subs    :as subs]))
@@ -220,9 +221,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
-  (as-> db % (r reset-editor!          % extension-id item-namespace)
-             (r store-current-item-id! % extension-id)
-             (r store-editor-props!    % extension-id item-namespace editor-props)))
+  (let [request-id (engine/request-id extension-id item-namespace)]
+       (as-> db % (r ui/listen-to-process!  % request-id)
+                  (r reset-editor!          % extension-id item-namespace)
+                  (r store-current-item-id! % extension-id)
+                  (r store-editor-props!    % extension-id item-namespace editor-props))))
 
 
 
@@ -334,8 +337,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if (r subs/download-data? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:on-success [:item-editor/receive-item!      extension-id item-namespace]
-                              :query      (r queries/get-download-query db extension-id item-namespace)}]
+                             {:on-success [:item-editor/receive-item!           extension-id item-namespace]
+                              :query      (r queries/get-download-item-query db extension-id item-namespace)}]
           ; Ha az elem szerkesztéséhez nincs szükség adatok letöltéséhez, akkor is szükséges
           ; a szerkesztőt {:item-received? true} állapotba léptetni!
           {:db (assoc-in db [extension-id :item-editor/meta-items :item-received?] true)})))
@@ -352,9 +355,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace editor-props)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
-            :dispatch-n [[:ui/listen-to-process! (engine/request-id extension-id item-namespace)]
-                         [:ui/set-header-title!  (param editor-label)]
-                         [:ui/set-window-title!  (param editor-label)]
+            :dispatch-n [[:ui/set-header-title! (param editor-label)]
+                         [:ui/set-window-title! (param editor-label)]
                          [:item-editor/request-item!  extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)]})))
 

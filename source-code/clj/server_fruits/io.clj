@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.29
 ; Description:
-; Version: v0.7.4
-; Compatibility: x4.5.2
+; Version: v0.7.8
+; Compatibility: x4.5.4
 
 
 
@@ -27,6 +27,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
+;  Hibaüzenet kiírásakor a fájl neve idézőjelekben legyen kiírva, hogy a nil
+;  értékű fájlnevek is egyértelműek legyenek.
 (def FILE-DOES-NOT-EXIST-ERROR "File does not exist:")
 
 
@@ -96,9 +98,10 @@
   ; @return (B)
   ;  The length of the file in bytes
   [filepath]
-  (if (file-exists? filepath)
-      (->           filepath file .length)
-      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
+  (try (if (file-exists? filepath)
+           (->           filepath file .length)
+           (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
+      (catch Exception e (println (str e " \"" filepath "\"")))))
 
 (defn max-filesize-reached?
   ; @param (string) filepath
@@ -117,7 +120,7 @@
   (try (if (file-exists? filepath)
            (clojure.java.io/delete-file filepath)
            (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
-      (catch Exception e (println e filepath))))
+      (catch Exception e (println (str e " \"" filepath "\"")))))
 
 (defn copy-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -131,16 +134,17 @@
            (clojure.java.io/copy (clojure.java.io/file source-filepath)
                                  (clojure.java.io/file destination-filepath))
            (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
-       (catch Exception e (println e source-filepath))))
+       (catch Exception e (println (str e " \"" source-filepath "\"")))))
 
 (defn read-file
   ; @param (string) filepath
   ;
   ; @return (string)
   [filepath]
-  (if (file-exists? filepath)
-      (slurp        filepath)
-      (println      FILE-DOES-NOT-EXIST-ERROR filepath)))
+  (try (if (file-exists? filepath)
+           (slurp        filepath)
+           (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
+      (catch Exception e (println (str e " \"" filepath "\"")))))
 
 (defn write-file!
   ; @param (string) filepath

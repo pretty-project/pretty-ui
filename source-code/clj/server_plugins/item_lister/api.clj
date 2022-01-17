@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.5.0
+; Version: v0.3.6
+; Compatibility: x4.5.4
 
 
 
@@ -23,6 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-lister.engine
+(def request-id          engine/request-id)
 (def env->sort-pattern   engine/env->sort-pattern)
 (def env->search-pattern engine/env->search-pattern)
 (def env->pipeline-props engine/env->pipeline-props)

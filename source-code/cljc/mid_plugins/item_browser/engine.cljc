@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.5.0
+; Version: v0.3.6
+; Compatibility: x4.5.4
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-browser.engine
-    (:require [mid-fruits.keyword :as keyword]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]))
 
 
 
@@ -30,6 +31,21 @@
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn browser-uri
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @example
+  ;  (item-browser/browser-uri :my-extension :my-type "my-item")
+  ;  =>
+  ;  "/@app-home/my-extension/my-item"
+  ;
+  ; @return (string)
+  [extension-id _ item-id]
+  (str "/@app-home/" (name  extension-id)
+       "/"           (param item-id)))
 
 (defn request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

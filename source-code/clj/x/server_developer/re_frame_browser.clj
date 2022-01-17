@@ -79,7 +79,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-boot {:dispatch-n [[:router/add-route! :developer/re-frame-browser-route
-                                                     {:route-template "/developer/re-frame-browser"
-                                                      :get (fn [request] (download-re-frame-browser request))}]]}})
-                                                     ;:restricted? true]]}})
+  {:on-server-boot {:dispatch-if [(= (System/getenv "DEVELOPER") "true")
+                                  [:router/add-route! :developer/re-frame-browser-route
+                                                      {:route-template "/developer/re-frame-browser"
+                                                       :get (fn [request] (download-re-frame-browser request))}]]}})

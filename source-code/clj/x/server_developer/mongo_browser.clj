@@ -109,7 +109,7 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-boot {:dispatch-n [[:router/add-route! :developer/mongo-browser-route
-                                                     {:route-template "/developer/mongo-browser"
-                                                      :get (fn [request] (download-mongo-browser request))}]]}})
-                                                     ;:restricted? true]]}})
+  {:on-server-boot {:dispatch-if [(= (System/getenv "DEVELOPER") "true")
+                                  [:router/add-route! :developer/mongo-browser-route
+                                                      {:route-template "/developer/mongo-browser"
+                                                       :get (fn [request] (download-mongo-browser request))}]]}})

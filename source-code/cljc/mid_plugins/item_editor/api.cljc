@@ -24,3 +24,4 @@
 ; mid-plugins.item-editor.engine
 (def editor-uri engine/editor-uri)
 (def form-id    engine/form-id)
+(def request-id engine/request-id)

@@ -154,6 +154,10 @@
                             :icon    :arrow_forward
                             :layout  :icon-button
                             :variant :transparent}
+      :fullscreen-icon-button {:color   :default
+                               :icon    :fullscreen
+                               :layout  :icon-button
+                               :variant :transparent}
       :help-button         {:color   :default
                             :horizontal-align :left
                             :icon    :help_outline

@@ -14,6 +14,15 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-load-media-browser-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [directory-id (r item-browser/get-current-item-id db :storage)]
+       [:debug `(:storage/download-capacity-details  ~{})
+               `(:storage/download-directory-details ~{:directory-id directory-id})]))
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -49,8 +58,8 @@
 (defn- directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex item-props]
-  [elements/row {:content [:<> [directory-item-header  item-dex item-props]
-                               [directory-item-details item-dex item-props]]}])
+  [:div.storage--media-item [directory-item-header  item-dex item-props]
+                            [directory-item-details item-dex item-props]])
 
 (defn- file-item-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,15 +86,23 @@
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex item-props]
-  [elements/row {:content [:<> [file-item-header  item-dex item-props]
-                               [file-item-details item-dex item-props]]}])
-                              ;[file-item-actions item-dex item-props]
+  [:div.storage--media-item [file-item-header  item-dex item-props]
+                            [file-item-details item-dex item-props]])
+                           ;[file-item-actions item-dex item-props]
 
-(defn- media-item
+(defn- media-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [mime-type] :as item-props}]
   (case mime-type "storage/directory" [directory-item item-dex item-props]
                                       [file-item      item-dex item-props]))
+
+(defn- media-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex {:keys [id mime-type] :as item-props}]
+  [elements/toggle {:content [media-item-structure item-dex item-props]
+                    :hover-color :highlight
+                    :on-click (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
+                                                                  [:xx])}])
 
 
 
@@ -110,7 +127,8 @@
 (a/reg-event-fx
   :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
-                [:sync/send-query! :storage/synchronize-media-browser!
-                                   {:query      [:debug `(:storage/download-capacity-details ~{})]
-                                    :on-success [:storage/receive-server-response!]}]]})
+  (fn [{:keys [db]} _]
+      {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
+                    [:sync/send-query! (item-browser/request-id :storage :media)
+                                       {:query      (r get-load-media-browser-query db)
+                                        :on-success [:storage/receive-server-response!]}]]}))

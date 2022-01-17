@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.4.9
+; Version: v0.4.4
+; Compatibility: x4.5.4
 
 
 
@@ -15,16 +15,19 @@
 
 (ns app-plugins.item-lister.api
     (:require [app-plugins.item-lister.dialogs]
-              [app-plugins.item-lister.engine]
               [app-plugins.item-lister.events]
               [app-plugins.item-lister.queries]
               [app-plugins.item-lister.subs]
-              [app-plugins.item-lister.views :as views]))
+              [app-plugins.item-lister.engine :as engine]
+              [app-plugins.item-lister.views  :as views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; app-plugins.item-lister.engine
+(def request-id engine/request-id)
 
 ; app-plugins.item-lister.views
 (def header views/header)

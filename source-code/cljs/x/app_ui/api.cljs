@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.5.0
+; Version: v0.5.8
+; Compatibility: x4.5.4
 
 
 
@@ -20,18 +20,19 @@
               [x.app-ui.engine]
               [x.app-ui.popups]
               [x.app-ui.presets]
-              [x.app-ui.progress-bar]
               [x.app-ui.shield]
               [x.app-ui.surface]
-              [x.app-ui.graphics        :as graphics]
-              [x.app-ui.header          :as header]
-              [x.app-ui.interface       :as interface]
-              [x.app-ui.popup-header-presets :as popup-header-presets]
-              [x.app-ui.renderer        :as renderer]
-              [x.app-ui.sounds          :as sounds]
-              [x.app-ui.structure       :as structure]
-              [x.app-ui.themes          :as themes]
-              [x.app-ui.title           :as title]))
+              [x.app-ui.graphics     :as graphics]
+              [x.app-ui.header       :as header]
+              [x.app-ui.interface    :as interface]
+              [x.app-ui.progress-bar :as progress-bar]
+              [x.app-ui.renderer     :as renderer]
+              [x.app-ui.sounds       :as sounds]
+              [x.app-ui.structure    :as structure]
+              [x.app-ui.themes       :as themes]
+              [x.app-ui.title        :as title]
+              [x.app-ui.popup-header-presets :as popup-header-presets]))
+
 
 
 
@@ -63,6 +64,9 @@
 (def close-popup-header            popup-header-presets/close-popup-header)
 (def go-up-popup-header            popup-header-presets/go-up-popup-header)
 (def go-back-popup-header          popup-header-presets/go-back-popup-header)
+
+; x.app-ui.progress-bar
+(def listen-to-process! progress-bar/listen-to-process!)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

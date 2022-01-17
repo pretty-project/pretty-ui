@@ -29,6 +29,8 @@
 ; app-plugins.item-editor.engine
 (def editor-uri engine/editor-uri)
 (def form-id    engine/form-id)
+(def request-id engine/request-id)
+
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
