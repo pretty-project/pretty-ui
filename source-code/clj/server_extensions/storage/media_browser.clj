@@ -14,11 +14,6 @@
 ;; -- Resolver ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-media-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -87,5 +82,8 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-boot [:item-browser/initialize! :storage :media {:default-item-id engine/ROOT-DIRECTORY-ID
-                                                               :search-keys [:alias]}]})
+  {:on-server-boot [:item-browser/initialize! :storage :media
+                                              {:default-item-id engine/ROOT-DIRECTORY-ID
+                                               :label-key    :alias
+                                               :path-key     :path
+                                               :search-keys [:alias]}]})

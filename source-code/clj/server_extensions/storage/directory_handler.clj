@@ -20,10 +20,14 @@
   ;
   ; @return (namespaced map)
   [env {:keys [alias destination-id]}]
-  (let [directory-item {:media/alias alias :media/content-size 0 :media/path [] :media/description ""
-                        :media/items []    :media/mime-type "storage/directory"}]
-       (if-let [{:media/keys [id]} (engine/insert-media-item! env directory-item)]
-               (engine/attach-media-item! env destination-id id))))
+  (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
+          (let [destination-path (get  destination-item :media/path)
+                directory-path   (conj destination-path {:media/id destination-id})
+                directory-item {:media/alias alias :media/content-size 0 :media/description ""
+                                :media/items []    :media/path directory-path
+                                :media/mime-type "storage/directory"}]
+               (if-let [{:media/keys [id]} (engine/insert-media-item! env directory-item)]
+                       (engine/attach-media-item! env destination-id id)))))
 
 (defmutation create-directory!
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -212,7 +212,7 @@
   ; @usage
   ;  (map/dissoc-in {:a {:b "a/b"}} [:a])
   ;
-  ; @return (*)
+  ; @return (map)
   [n [key & keys :as value-path]]
   (if keys (if-let [next-n (get n key)]
                    (let [new-n (dissoc-in next-n keys)]
@@ -221,6 +221,19 @@
                             (dissoc n key)))
                    (return n))
            (dissoc n key)))
+
+(defn dissoc-items
+  ; @param (map) n
+  ; @param (* in vector) keys
+  ;
+  ; @example
+  ;  (dissoc-items {:a "A" :b "B" :c "C"} [:a :b])
+  ;  =>
+  ;  {:c "C"}
+  ;
+  ; @return (map)
+  [n keys]
+  (apply dissoc n keys))
 
 (defn inject-in
   ; @param (map) n

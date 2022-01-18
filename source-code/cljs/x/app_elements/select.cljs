@@ -476,7 +476,7 @@
             options-id    (engine/element-id->extended-id select-id :popup)
             options-props (options-props-prototype        select-id options-props)]
            [:ui/add-popup! options-id
-                           {:body   {:content #'select-options-body :content-props options-props}
+                           {:body   [select-options-body options-id options-props]
                             :header (if (options-props->render-popup-header? options-props)
-                                        {:content #'select-options-header :content-props options-props})
+                                        [select-options-header options-id options-props])
                             :min-width :xs}])))

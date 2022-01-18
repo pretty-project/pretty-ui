@@ -43,8 +43,6 @@
                    {:disabled? (and at-home? (not error-mode?))
                     :on-click  [:item-browser/go-home! extension-id item-namespace]
                     :preset    :home-icon-button}])
-                    ;:icon-family :material-icons-outlined}])
-                    ;:color :secondary}])
 
 (defn go-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,8 +58,7 @@
   [elements/button ::go-up-button
                    {:disabled? (or at-home? disabled?)
                     :on-click  [:item-browser/go-up! extension-id item-namespace]
-                    :preset    :up-icon-button}])
-                    ;:color :secondary}])
+                    :preset    :back-icon-button}])
 
 
 
@@ -76,7 +73,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  [:<> [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
        [elements/horizontal-separator {:size :xs}]
        [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
        [elements/horizontal-separator {:size :xs}]])
@@ -123,7 +121,6 @@
   ; @return (component)
   [extension-id item-namespace {:keys [actions-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
  [:div {:style {:width "100%"}}
-  ;[:div (str header-props)]
   [:div#item-lister--header--structure
     [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
                                                  [actions-mode-header extension-id item-namespace header-props]]

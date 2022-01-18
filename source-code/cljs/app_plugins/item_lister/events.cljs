@@ -54,18 +54,21 @@
          ; az item-lister/meta-items térképnek, így az item-lister plugin legutóbbi
          ; beállításai elérhetők maradnak.
   (-> db (update-in [extension-id :item-lister/meta-items] map/reverse-merge lister-props)
+         ; XXX#8706
          ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
          ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
          (assoc-in  [extension-id :item-lister/meta-items :item-namespace] item-namespace)))
 
-(defn reset-error-mode!
+(defn reset-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (dissoc-in db [extension-id :item-lister/meta-items :error-mode?]))
+  (-> db (dissoc-in [extension-id :item-lister/meta-items :error-mode?])
+         (dissoc-in [extension-id :item-lister/meta-items :select-mode?])
+         (dissoc-in [extension-id :item-lister/meta-items :selected-items])))
 
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -177,8 +180,10 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
   (if (r subs/item-selected? db extension-id item-namespace item-dex)
-      (update-in db [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex)
-      (update-in db [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex)))
+      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+             (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
+      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+             (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex))))
 
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
@@ -363,7 +368,7 @@
   ;     ezért nem törli ki a beállításokat!
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r ui/listen-to-process! % request-id)
-                  (r reset-error-mode!     % extension-id)
+                  (r reset-lister!         % extension-id)
                   (r reset-downloads!      % extension-id)
                   (r reset-search!         % extension-id)
                   (r store-lister-props!   % extension-id item-namespace lister-props))))
@@ -492,8 +497,13 @@
   ;  {:label (metamorphic-content)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
       {:db (r load-lister! db extension-id item-namespace lister-props)
-       :dispatch-n [[:ui/set-header-title! (param label)]
-                    [:ui/set-window-title! (param label)]
+       :dispatch-n [; XXX#5499
+                    ; Az item-lister plugin beöltésekor regisztrált keypress-listener használatával
+                    ; megvalósítható, hogy a SHIFT billentyű lenyomása közben a listaelemekre
+                    ; kattintva azok a csoportos kijelöléshez adódjanak.
+                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]
+                    [:ui/set-header-title! label]
+                    [:ui/set-window-title! label]
                     (engine/load-extension-event extension-id item-namespace)]}))
 
 
@@ -528,3 +538,12 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:item-lister/refresh-item-list! extension-id item-namespace]))
+
+(a/reg-event-fx
+  :item-lister/->lister-leaved
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; XXX#5499
+  [:environment/remove-keypress-listener! :item-lister/keypress-listener])

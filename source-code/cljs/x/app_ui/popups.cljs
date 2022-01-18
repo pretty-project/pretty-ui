@@ -181,7 +181,8 @@
   (fn [{:keys [db]} [_ popup-id]]
       {:dispatch-n [[:ui/destroy-element! :popups popup-id]
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
-                    [:environment/remove-scroll-prohibition! popup-id]]}))
+                    [:environment/remove-scroll-prohibition! popup-id]
+                    [:environment/remove-keypress-event! :ui/on-escape-pressed]]}))
 
 (a/reg-event-fx
   :ui/close-upper-popup!
@@ -275,10 +276,15 @@
   (fn [{:keys [db]} event-vector]
       (let [popup-id    (a/event-vector->second-id   event-vector)
             popup-props (a/event-vector->first-props event-vector)
-            popup-props (r popup-props-prototype db popup-id popup-props)]
+            popup-props (r popup-props-prototype db popup-id popup-props)
+            keypress-event-props {:key-code 27 :on-keyup [:ui/close-popup! popup-id]}]
            (if (popup-props->render-popup-exclusive? popup-props)
-               [:ui/render-popup-exclusive! popup-id popup-props]
-               [:ui/render-popup!           popup-id popup-props]))))
+               {:dispatch [:ui/render-popup-exclusive! popup-id popup-props]
+                :dispatch-if [(get popup-props :user-close?)
+                              [:environment/reg-keypress-event! :ui/on-escape-pressed keypress-event-props]]}
+               {:dispatch [:ui/render-popup! popup-id popup-props]
+                :dispatch-if [(get popup-props :user-close?)
+                              [:environment/reg-keypress-event! :ui/on-escape-pressed keypress-event-props]]}))))
 
 
 

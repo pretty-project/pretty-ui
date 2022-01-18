@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.0
+; Version: v0.4.0
+; Compatibility: x4.5.4
 
 
 
@@ -73,8 +73,9 @@
   ; @param (map)(opt) lister-props
   [_ [_ extension-id item-namespace lister-props]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:route-template (engine/route-template     extension-id)
-                       :client-event   [:item-lister/load-lister! extension-id item-namespace lister-props]
+                      {:route-template (engine/route-template        extension-id)
+                       :client-event   [:item-lister/load-lister!    extension-id item-namespace lister-props]
+                       :on-leave-event [:item-lister/->lister-leaved extension-id item-namespace]
                        :restricted?    true}])
 
 (a/reg-event-fx
@@ -84,7 +85,6 @@
   ; @param (map)(opt) lister-props
   ;  {:download-limit (integer)(opt)
   ;    Default: DEFAULT-DOWNLOAD-LIMIT
-  ;    Default: DEFAULT-FILTERS
   ;   :label (metamorphic-content)(opt)
   ;    Default: extension-id
   ;   :order-by (keyword)(opt)

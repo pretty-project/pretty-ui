@@ -99,12 +99,29 @@
 
 (defn- media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [id mime-type] :as item-props}]
+  [item-dex item-props]
   [elements/toggle {:content [media-item-structure item-dex item-props]
                     :hover-color :highlight
-                    :on-click (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                                                  [:xx])}])
+                    :on-click [:storage/->item-clicked item-dex item-props]}])
 
+(a/reg-event-fx
+  :storage/->item-clicked
+  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type]}]]
+      (if (or (r x.app-environment.api/key-pressed? db 16)
+              (r x.app-environment.api/key-pressed? db 91))
+          [:item-lister/toggle-item-selection! :storage :media item-dex]
+          (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
+                                              [:storage/save-files!]))))
+
+(a/reg-event-fx
+  :storage/save-files!
+  (fn [_ _]
+      [:ui/add-popup! :xxxx
+                      {:body [:div [:div "Fájl letöltése"]
+                                   ; Ha több van kijelölve akkor:
+                                   ; És mivel nincs tömörítönk ezért most még disabled lesz
+                                   [:div "Kijelölt fájlok letöltése"]]
+                       :min-width :xs}]))
 
 
 ;; -- View components ---------------------------------------------------------
@@ -126,10 +143,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  :storage/render-media-browser!
+  [:ui/set-surface! ::view {:view #'view}])
+
+(a/reg-event-fx
   :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]]}))
+      {:dispatch-n [[:storage/render-media-browser!]]}))
 ;                    [:sync/send-query! (item-browser/request-id :storage :media)
 ;                                       {:query      (r get-load-media-browser-query db)
 ;                                        :on-success [:storage/receive-server-response!]]]}))

@@ -36,7 +36,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  ; Az item-editor plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor 
+  ; Az item-editor plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor
   ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
   (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))
 
@@ -366,8 +366,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace editor-props)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
-            :dispatch-n [[:ui/set-header-title! (param editor-label)]
-                         [:ui/set-window-title! (param editor-label)]
+            :dispatch-n [[:ui/set-header-title! editor-label]
+                         [:ui/set-window-title! editor-label]
                          [:item-editor/request-item!  extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)]})))
 

@@ -30,25 +30,6 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- button-props->ignore-button-label?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) button-props
-  ;  {:content (metamorphic-content)(opt)
-  ;   :layout (keyword)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [content layout variant]}]
-               ; XXX#0523
-  (boolean (or (nil? content)
-               (and (= layout  :icon-button)
-                    (= variant :outlined)))))
-
-
-
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -76,7 +57,6 @@
                                          :horizontal-align :center})
          (if icon                   {:icon-family :material-icons-filled})
          (case variant :filled      {:background-color :primary}
-                       :outlined    {:border-color     :primary}
                        :transparent {:color            :primary}
                                     {:background-color :primary
                                      :variant          :filled})
@@ -97,13 +77,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ;  {:content (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [_ button-props]
-  (if-not (button-props->ignore-button-label? button-props)
-          (let [content-props (components/extended-props->content-props button-props)]
-               ; XXX#0523
-               [:div.x-button--label [components/content content-props]])))
+  [_ {:keys [content]}]
+  ; XXX#0523
+  (if content [:div.x-button--label [components/content {:content content}]]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,10 +132,6 @@
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;    Only w/ {:variant :filled}
-  ;   :border-color (keyword)(opt)
-  ;    :highlight, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;    Only w/ {:variant :outlined}
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -190,7 +165,6 @@
   ;     :required? (boolean)(opt)
   ;      Default: false}
   ;   :label (metamorphic-content)(opt)
-  ;    Not w/ {:layout :icon-button :variant :outlined}
   ;   :layout (keyword)(opt)
   ;    :fit, :icon-button, :row
   ;    Default: :row
@@ -200,7 +174,7 @@
   ;   :style (map)(opt)
   ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
-  ;    :filled, :outlined, :placeholder, :transparent
+  ;    :filled, :placeholder, :transparent
   ;    Default: :filled}
   ;
   ; @usage

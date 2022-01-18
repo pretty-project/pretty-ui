@@ -406,8 +406,6 @@ button.x-card:focus,
   background-color: var( --background-color-muted );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="muted"]
-.x-button--body,
 .x-checkbox[data-border-color="muted"]
 .x-checkbox--button::before,
 .x-counter[data-border-color="muted"]
@@ -461,10 +459,6 @@ button.x-card:focus,
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="highlight"]
-.x-button--body {
-  border-color: var( --border-color-muted ) }
-
 .x-horizontal-line[data-color="highlight"]
 .x-horizontal-line--body,
 .x-line-diagram--section[data-color="highlight"],
@@ -512,8 +506,6 @@ button.x-card:focus,
   background-color: var( --soft-blue );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="primary"]
-.x-button--body,
 .x-checkbox[data-border-color="primary"]
 .x-checkbox--button::before,
 .x-counter[data-border-color="primary"]
@@ -572,8 +564,6 @@ button.x-card:focus,
   background-color: var( --soft-purple );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="secondary"]
-.x-button--body,
 .x-checkbox[data-border-color="secondary"]
 .x-checkbox--button::before,
 .x-counter[data-border-color="secondary"]
@@ -632,8 +622,6 @@ button.x-card:focus,
   background-color: var( --soft-green );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="success"]
-.x-button--body,
 .x-checkbox[data-border-color="success"]
 .x-checkbox--button::before,
 .x-counter[data-border-color="success"]
@@ -676,8 +664,6 @@ button.x-card:focus,
   background-color: var( --soft-red );
   color: var( --black ) }
 
-.x-button[data-variant="outlined"][data-border-color="warning"]
-.x-button--body,
 .x-checkbox[data-border-color="warning"]
 .x-checkbox--button::before,
 .x-counter[data-border-color="warning"]
@@ -1537,9 +1523,7 @@ body[data-viewport-profile="s"]
 /*** Button wrapper ***/
 
 .x-button[data-layout="fit"][data-variant="filled"],
-.x-button[data-layout="row"][data-variant="filled"],
-.x-button[data-layout="fit"][data-variant="outlined"],
-.x-button[data-layout="row"][data-variant="outlined"] {
+.x-button[data-layout="row"][data-variant="filled"] {
   -min-width: var( --element-min-width-xs ) }
 
 .x-button[data-layout="row"] {
@@ -1578,19 +1562,9 @@ body[data-viewport-profile="s"]
   /* A transparent gombok magassága a beállított betűmérettől függ */
   height: auto }
 
-.x-button[data-layout="fit"][data-variant="outlined"] .x-button--body,
-.x-button[data-layout="row"][data-variant="outlined"] .x-button--body {
-  border-style: solid;
-  border-width: 2px;
-  padding: 0 36px }
-
 .x-button[data-layout="fit"][data-variant="filled"] .x-button--body,
 .x-button[data-layout="row"][data-variant="filled"] .x-button--body {
   padding: 0 36px }
-
-.x-button[data-variant="outlined"][data-layout="fit"] .x-button--body,
-.x-button[data-variant="outlined"][data-layout="row"] .x-button--body {
-  background-color: var( --fill-color ) }
 
 /*** Button body ***/
 

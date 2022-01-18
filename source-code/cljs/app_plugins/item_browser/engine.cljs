@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.5.0
+; Compatibility: x4.5.4
 
 
 
@@ -22,6 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.engine
+(def BROWSER-PROPS-KEYS      engine/BROWSER-PROPS-KEYS)
 (def browser-uri             engine/browser-uri)
 (def request-id              engine/request-id)
 (def data-item-path          engine/data-item-path)

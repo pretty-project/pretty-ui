@@ -145,11 +145,6 @@
                         {:label "Filled button" :variant :filled :background-color :warning :icon :people
                          :on-click [:developer/test!]}]
        [section-footer surface-id {}]
-       [section-header surface-id {:label "Outlined button"}]
-       [elements/button ::outlined-button
-                        {:label "Outlined button"
-                         :on-click [:developer/test!]}]
-       [section-footer surface-id {}]
        [section-header surface-id {:label "Transparent button"}]
        [elements/button ::transparent-button-1
                         {:label "Transparent button #1"

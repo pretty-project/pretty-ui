@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.4
+; Version: v0.7.0
+; Compatibility: x4.5.5
 
 
 
@@ -253,7 +253,8 @@
   ;
   ; @return (component)
   [_ _]
-  [:<> [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
        [elements/horizontal-separator {:size :xs}]
        [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
        [elements/horizontal-separator {:size :xs}]])

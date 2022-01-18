@@ -32,6 +32,15 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keywords in vector)
+; A browser-props térkép mely kulcsai nem az item-lister plugin beállításához szükségesek:
+(def BROWSER-PROPS-KEYS [:default-item-id :label-key :path-key])
+
+
+
 ;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -101,6 +110,8 @@
   [extension-id item-namespace & xyz]
   (let [meta-items-key (keyword (str (name item-namespace) "-browser/meta-items"))]
        (vector/concat-items [extension-id meta-items-key] xyz)))
+
+
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

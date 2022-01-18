@@ -119,4 +119,5 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-boot [:item-lister/initialize! :clients :client {:search-keys [:name :email-address]}]})
+  {:on-server-boot [:item-lister/initialize! :clients :client
+                                             {:search-keys [:name :email-address]}]})

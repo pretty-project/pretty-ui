@@ -47,7 +47,8 @@
   [elements/button ::quit-search-mode-button
                    {:disabled? disabled?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
-                    :preset    :close-icon-button}])
+                    :preset    :close-icon-button
+                    :keypress  {:key-code 27}}])
 
 (defn search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +117,8 @@
   [elements/button ::quit-select-mode-button
                    {:disabled? disabled?
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
-                    :preset    :close-icon-button}])
+                    :preset    :close-icon-button
+                    :keypress  {:key-code 27}}])
 
 (defn unselect-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,7 +235,8 @@
   [elements/button ::quit-reorder-mode-button
                    {:disabled? disabled?
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
-                    :preset    :close-icon-button}])
+                    :preset    :close-icon-button
+                    :keypress  {:key-code 27}}])
 
 
 
@@ -253,8 +256,9 @@
        [elements/button ::new-item-button
                         {:disabled? disabled?
                          :on-click  [:router/go-to! new-item-uri]
-                         :preset    :add-icon-button
-                         :tooltip   :add-new!}]))
+                         :preset    :primary-icon-button
+                         :tooltip   :add-new!
+                         :icon      :add_circle}]))
 
 (defn new-item-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -277,7 +281,9 @@
                     :disabled?       disabled?
                     :initial-options (param new-item-options)
                     :on-select       (engine/add-new-item-event extension-id)
-                    :preset          :add-icon-button}])
+                    :preset          :primary-icon-button
+                    :tooltip         :add-new!
+                    :icon            :add_circle}])
 
 (defn toggle-select-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

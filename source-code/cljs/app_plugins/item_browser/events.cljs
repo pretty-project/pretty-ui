@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-browser.events
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.map       :as map]
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
@@ -35,6 +36,19 @@
   ; @return (map)
   [db [_ extension-id]]
   (r app-plugins.item-lister.events/set-error-mode! db extension-id))
+
+(defn store-browser-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace browser-props]]
+  (-> db (assoc-in [extension-id :item-browser/meta-items] browser-props)
+         ; XXX#8706
+         (assoc-in [extension-id :item-browser/meta-items :item-namespace] item-namespace)))
 
 (defn store-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -80,8 +94,6 @@
   [db [_ extension-id item-namespace server-response]]
   (r store-downloaded-item! db extension-id item-namespace server-response))
 
-(a/reg-event-db :item-browser/receive-item! receive-item!)
-
 (defn load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -91,13 +103,17 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
+  (let [lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
+        browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
+       (as-> db % (r store-browser-props!   % extension-id item-namespace browser-props)
+                  (r store-current-item-id! % extension-id item-namespace browser-props)
+                  ; TEMP
+                  (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace lister-props))))
 
-             ; TEMP
-             (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace browser-props)))
 
 
-
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; WARNING!
 
@@ -134,6 +150,29 @@
            [:router/go-to! browser-uri])))
 
 (a/reg-event-fx
+  :item-browser/go-up!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-browser/go-up! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      (let [parent-id   (r subs/get-parent-id db extension-id item-namespace)
+            browser-uri (engine/browser-uri      extension-id item-namespace parent-id)]
+           [:router/go-to! browser-uri])))
+
+(a/reg-event-fx
+  :item-browser/receive-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [db (r receive-item! db extension-id item-namespace server-response)]
+           (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]
+                   {:dispatch-n [[:ui/set-header-title! item-label]
+                                 [:ui/set-window-title! item-label]]
+                    :db db}
+                   {:db db}))))
+
+(a/reg-event-fx
   :item-browser/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -151,11 +190,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:default-item-id (string)(opt)}
+  ;  {:default-item-id (string)(opt)
+  ;   :label (metamorphic-content)}
   ;
   ; @usage
   ;  [:item-browser/load! :my-extension :my-type {:default-item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
+  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as browser-props}]]
       (let []
            {:db  (r load-browser! db extension-id item-namespace browser-props)
                       ;  (-> db (dissoc-in [extension-id :browser-data])
@@ -174,8 +214,10 @@
 
 
 
-            :dispatch-n [[:ui/set-header-title!  (param extension-id)]
-                         [:ui/set-window-title!  (param extension-id)]
+            :dispatch-n [; XXX#5499
+                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
+                         [:ui/set-header-title! label]
+                         [:ui/set-window-title! label]
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
 
@@ -184,3 +226,17 @@
                          ; egy elemet, akkor nem kerül ki és vissza a viewportba a loader, ezért
                          ; manuál kell ujrainditani
                          [:tools/reload-infinite-loader! extension-id]]})))
+
+
+
+;; -- Status events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-browser/->browser-leaved
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; XXX#5499
+  [:environment/remove-keypress-listener! :item-browser/keypress-listener])

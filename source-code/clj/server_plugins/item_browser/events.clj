@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.5.0
+; Version: v0.3.8
+; Compatibility: x4.5.4
 
 
 
@@ -21,6 +21,17 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keyword)
+(def DEFAULT-LABEL-KEY :name)
+
+; @constant (keyword)
+(def DEFAULT-PATH-KEY :path)
+
+
+
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -30,8 +41,11 @@
   ; @param (map) browser-props
   ;
   ; @return (map)
+  ;  {:label-key (keyword)
+  ;   :path-key (keyword)}
   [extension-id item-namespace browser-props]
-  (merge {}
+  (merge {:label-key DEFAULT-LABEL-KEY
+          :path-key  DEFAULT-PATH-KEY}
          (events/lister-props-prototype extension-id item-namespace browser-props)))
 
 
@@ -47,8 +61,9 @@
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:client-event   [:item-browser/load-browser! extension-id item-namespace browser-props]
-                       :route-template (engine/route-template extension-id)
+                      {:route-template (engine/route-template          extension-id)
+                       :client-event   [:item-browser/load-browser!    extension-id item-namespace browser-props]
+                       :on-leave-event [:item-browser/->browser-leaved extension-id item-namespace]
                        :restricted?    true}])
 
 (defn add-extended-route!
@@ -59,8 +74,9 @@
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
   [:router/add-route! (engine/extended-route-id extension-id item-namespace)
-                      {:client-event   [:item-browser/load-browser! extension-id item-namespace browser-props]
-                       :route-template (engine/extended-route-template extension-id)
+                      {:route-template (engine/extended-route-template extension-id)
+                       :client-event   [:item-browser/load-browser!    extension-id item-namespace browser-props]
+                       :on-leave-event [:item-browser/->browser-leaved extension-id item-namespace]
                        :restricted?    true}])
 
 (a/reg-event-fx
@@ -69,6 +85,18 @@
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   ;  {:default-item-id (string)(opt)
+  ;   :download-limit (integer)(opt)
+  ;    Default: item-lister/DEFAULT-DOWNLOAD-LIMIT
+  ;   :label (metamorphic-content)(opt)
+  ;    Default: extension-id
+  ;   :label-key (keyword)(opt)
+  ;    Default: DEFAULT-LABEL-KEY
+  ;   :order-by (keyword)(opt)
+  ;    Default: item-lister/DEFAULT-ORDER-BY
+  ;   :order-by-options (keywords in vector)(opt)
+  ;    Default: item-lister/DEFAULT-ORDER-BY-OPTIONS
+  ;   :path-keys (keyword)(opt)
+  ;    Default: DEFAULT-PATH-KEY
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;

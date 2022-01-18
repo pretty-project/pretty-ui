@@ -281,7 +281,7 @@
   (let [search-term  (r get-meta-item db extension-id item-namespace :search-term)]
        (str search-term)))
 
-(defn some-items-received?
+(defn no-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -290,7 +290,7 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [received-count (r get-meta-item db extension-id item-namespace :received-count)]
-       (not= received-count 0)))
+       (= received-count 0)))
 
 (defn download-more-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -306,7 +306,7 @@
   (and (or (not (r items-received?       db extension-id item-namespace))
            (not (r all-items-downloaded? db extension-id item-namespace)))
        ; BUG#7009
-       (r some-items-received? db extension-id item-namespace)))
+       (not (r no-items-received? db extension-id item-namespace))))
 
 (defn request-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -316,8 +316,13 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (boolean (or (r download-more-items? db extension-id item-namespace)
-               (r get-meta-item        db extension-id item-namespace :reload-mode?))))
+       ; BUG#4506
+       ; Ha a keresőmezőbe írsz egy karaktert, majd azonnal megnyomod az ESC billentyűt,
+       ; akkor kétszer történik meg az on-type-ended esemény, ami miatt két lekérés indulna,
+       ; ezért szükséges vizsgálni a synchronizing? függvény kimenetét!
+  (and         (not (r synchronizing?       db extension-id item-namespace))
+       (or          (r download-more-items? db extension-id item-namespace)
+           (boolean (r get-meta-item        db extension-id item-namespace :reload-mode?)))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!

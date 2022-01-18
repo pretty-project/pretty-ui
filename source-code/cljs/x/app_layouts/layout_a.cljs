@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.22
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.9
+; Version: v0.4.2
+; Compatibility: x4.5.5
 
 
 
@@ -28,18 +28,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) layout-props
-  ;  {:header (map)(opt)}
   ;
   ; @return (map)
   ;  {:header (map)(opt)
   ;   :horizontal-align (keyword)
-  ;   :min-width (keyword)
-  ;   :sticky-header? (boolean)}
-  [{:keys [header] :as layout-props}]
+  ;   :min-width (keyword)}
+  [layout-props]
   (merge {:horizontal-align :center
           :min-width        :l}
-         (param layout-props)
-         (if header {:sticky-header? true})))
+         (param layout-props)))
 
 
 
@@ -83,7 +80,8 @@
   [layout-id {:keys [description] :as layout-props}]
   [:<> (if description [:div.x-description-a (components/content {:content description})]
                        [:div.x-description-a--placeholder])
-       [layout-body layout-id layout-props]])
+       [layout-body layout-id layout-props]
+       [:div.x-footer-a]])
 
 (defn layout
   ; @param (keyword)(opt) layout-id
@@ -106,10 +104,7 @@
   ;    Default: :center
   ;   :min-width (keyword)(opt)
   ;    :m, :l, :xl, :xxl
-  ;    Default: :l
-  ;   :sticky-header? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:header ...}}
+  ;    Default: :l}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]
