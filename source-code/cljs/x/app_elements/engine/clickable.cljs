@@ -99,8 +99,7 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
-      (if (some? keypress)
-          [:environment/remove-keypress-event! element-id])))
+      (if keypress [:environment/remove-keypress-event! element-id])))
 
 
 

@@ -123,9 +123,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [data-url filename uri] :as saver-props}]
-  [:a#x-file-saver (if (some? data-url)
-                       {:download filename :href data-url}
-                       {:download filename :href uri})])
+  [:a#x-file-saver (if data-url {:download filename :href data-url}
+                                {:download filename :href uri})])
 
 
 

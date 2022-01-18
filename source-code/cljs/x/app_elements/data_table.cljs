@@ -45,7 +45,7 @@
   ;   :data-odd (boolean)}
   [{:keys [alternating-rows?]} row-dex]
   (if (and (boolean alternating-rows?)
-           (even? row-dex))
+           (even?   row-dex))
       {:data-even true}
       {:data-odd  true}))
 
@@ -59,8 +59,7 @@
   ;  {:style (map)
   ;   {:width (string)}}
   [{:keys [width]}]
-  (if (some? width)
-      {:style {:width width}}))
+  (if width {:style {:width width}}))
 
 
 

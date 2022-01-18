@@ -145,11 +145,10 @@
   ; @return (hiccup)
   [switch-id {:keys [secondary-label] :as switch-props}]
   [:div.x-switch (engine/checkable-attributes switch-id switch-props)
-                 (if (some? secondary-label)
-                     [:div {:style {:display :flex}}
-                           [switch-secondary-body switch-id switch-props]
-                           [switch-primary-body   switch-id switch-props]]
-                     [switch-body switch-id switch-props])
+                 (if secondary-label [:div {:style {:display :flex}}
+                                           [switch-secondary-body switch-id switch-props]
+                                           [switch-primary-body   switch-id switch-props]]
+                                     [switch-body switch-id switch-props])
                  [engine/element-helper       switch-id switch-props]
                  [engine/element-info-tooltip switch-id switch-props]])
 

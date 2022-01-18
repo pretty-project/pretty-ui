@@ -254,9 +254,8 @@
   ;
   ; @return (vector)
   [n x]
-  (if (some?     x)
-      (conj-item n x)
-      (return    n)))
+  (if x (conj-item n x)
+        (return    n)))
 
 (defn concat-items
   ; @param (list of vectors) abc

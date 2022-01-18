@@ -73,9 +73,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if (some? label)
-      [:div.x-checkbox--label [components/content {:content label}]
-                              (if required? [:span.x-input--label-asterisk "*"])]))
+  (if label [:div.x-checkbox--label [components/content {:content label}]
+                                    (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- checkbox-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

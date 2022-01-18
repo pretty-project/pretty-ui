@@ -489,13 +489,12 @@
    (ms->time n :hhmmssmmm))
 
   ([n format]
-   (if (some? n)
-       (let [hours        (format/leading-zeros      (-> n ms->h math/floor)       2)
-             minutes      (format/leading-zeros (rem (-> n ms->m math/floor) 60)   2)
-             seconds      (format/leading-zeros (rem (-> n ms->s math/floor) 60)   2)
-             milliseconds (format/leading-zeros (rem (-> n       math/floor) 1000) 3)]
-            (case format :hhmmssmmm (str hours ":" minutes ":" seconds "." milliseconds)
-                         :hhmmss    (str hours ":" minutes ":" seconds))))))
+   (if n (let [hours        (format/leading-zeros      (-> n ms->h math/floor)       2)
+               minutes      (format/leading-zeros (rem (-> n ms->m math/floor) 60)   2)
+               seconds      (format/leading-zeros (rem (-> n ms->s math/floor) 60)   2)
+               milliseconds (format/leading-zeros (rem (-> n       math/floor) 1000) 3)]
+              (case format :hhmmssmmm (str hours ":" minutes ":" seconds "." milliseconds)
+                           :hhmmss    (str hours ":" minutes ":" seconds))))))
 
 
 

@@ -102,8 +102,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [icon]}]
-  (if (some? icon)
-      [:div.x-menu-bar--menu-item--icon icon]))
+  (if icon [:div.x-menu-bar--menu-item--icon icon]))
 
 (defn- menu-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,8 +114,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [label]}]
-  (if (some? label)
-      [:div.x-menu-bar--menu-item--label [components/content {:content label}]]))
+  (if label [:div.x-menu-bar--menu-item--label [components/content {:content label}]]))
 
 (defn- button-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -32,8 +32,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [helper]}]
-  (if (some? helper)
-      [:div.x-element--helper [components/content {:content helper}]]))
+  (if helper [:div.x-element--helper [components/content {:content helper}]]))
 
 (defn- element-info-tooltip
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,8 +43,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [info-tooltip]}]
-  (if (some? info-tooltip)
-      [:div.x-element--info-tooltip
-         [:i.x-element--info-tooltip--icon :info_outline]
-         [:div.x-element--info-tooltip--body
-            [:div.x-element--info-tooltip--content [components/content {:content info-tooltip}]]]]))
+  (if info-tooltip [:div.x-element--info-tooltip
+                     [:i.x-element--info-tooltip--icon :info_outline]
+                     [:div.x-element--info-tooltip--body
+                        [:div.x-element--info-tooltip--content [components/content {:content info-tooltip}]]]]))

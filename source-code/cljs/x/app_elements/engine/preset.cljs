@@ -38,7 +38,6 @@
   ;
   ; @return (map)
   [presets {:keys [preset] :as element-props}]
-  (if (some? preset)
-      (let [preset-props (get presets preset)]
-           (merge preset-props element-props))
-      (return element-props)))
+  (if preset (let [preset-props (get presets preset)]
+                  (merge preset-props element-props))
+             (return element-props)))

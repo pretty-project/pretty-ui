@@ -160,8 +160,8 @@
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
   (merge route-props
-         (if (some? get)  {:get  (handler-prototype get  {:restricted? restricted?})})
-         (if (some? post) {:post (handler-prototype post {:restricted? restricted?})})))
+         (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
+         (if post {:post (handler-prototype post {:restricted? restricted?})})))
 
 
 

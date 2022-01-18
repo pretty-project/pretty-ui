@@ -74,12 +74,12 @@
          (if (not= layout :icon-button) {:font-size        :s
                                          :font-weight      :bold
                                          :horizontal-align :center})
-         (if (some? icon)               {:icon-family :material-icons-filled})
-         (if (= variant :filled)        {:background-color :primary})
-         (if (= variant :outlined)      {:border-color     :primary})
-         (if (= variant :transparent)   {:color            :primary})
-         (if (nil? variant)             {:background-color :primary
-                                         :variant          :filled})
+         (if icon                   {:icon-family :material-icons-filled})
+         (case variant :filled      {:background-color :primary}
+                       :outlined    {:border-color     :primary}
+                       :transparent {:color            :primary}
+                                    {:background-color :primary
+                                     :variant          :filled})
          (param button-props)
          ; XXX#0523
          ; A button elemet {:layout :icon-button} beállítással használva,
@@ -126,11 +126,9 @@
   ; @return (hiccup)
   [button-id {:keys [icon] :as button-props}]
   [:button.x-button--body (engine/clickable-body-attributes button-id button-props)
-                          (if (some? icon)
-                              [button-icon button-id button-props])
+                          (if icon [button-icon button-id button-props])
                           [button-label button-id button-props]
-                          (if (some? icon)
-                              [:div.x-button--icon-placeholder])
+                          (if icon [:div.x-button--icon-placeholder])
                           [engine/element-badge button-id button-props]])
 
 (defn- button

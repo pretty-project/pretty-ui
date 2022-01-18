@@ -159,8 +159,7 @@
     (let [csrf-token (force *anti-forgery-token*)]
          [:div#sente-csrf-token {:data-csrf-token csrf-token}])
     [:div#x-app-container]
-    (if (some? shield)
-        (param shield))])
+    (param shield)])
 
 (defn view
   ; @param (map) request

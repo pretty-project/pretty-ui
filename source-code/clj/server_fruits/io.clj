@@ -167,12 +167,11 @@
   (let [file-content (read-file filepath)
         output       (if reverse? (str content      "\n" file-content)
                                   (str file-content "\n" content))]
-       (if (some? max-line-count)
-           ; If maximum number of lines is limited ...
-           (let [output (string/max-lines output max-line-count)]
-                (write-file! filepath output))
-           ; If maximum number of lines is NOT limited ...
-           (write-file! filepath output))))
+       (if max-line-count ; If maximum number of lines is limited ...
+                          (let [output (string/max-lines output max-line-count)]
+                               (write-file! filepath output))
+                          ; If maximum number of lines is NOT limited ...
+                          (write-file! filepath output))))
 
 (defn create-file!
   ; @param (string) filepath

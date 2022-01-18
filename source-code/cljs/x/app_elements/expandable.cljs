@@ -37,7 +37,7 @@
   [{:keys [icon] :as expandable-props}]
   (merge {:expanded? false
           :layout    :row}
-         (if (some? icon) {:icon-family :material-icons-filled})
+         (if icon {:icon-family :material-icons-filled})
          (param expandable-props)))
 
 
@@ -84,8 +84,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-expandable--icon icon]))
+  (if icon [:i.x-expandable--icon icon]))
 
 (defn- expandable-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,8 +95,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if (some? label)
-      [:div.x-expandable--label [components/content {:content label}]]))
+  (if label [:div.x-expandable--label [components/content {:content label}]]))
 
 (defn- expandable-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

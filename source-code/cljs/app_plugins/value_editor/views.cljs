@@ -118,9 +118,8 @@
   ;
   ; @return (component)
   [_ _ {:keys [helper]}]
-  (if (some? helper)
-      [:<> [elements/horizontal-separator {:size :l}]
-           [elements/text                 {:content helper}]]))
+  (if helper [:<> [elements/horizontal-separator {:size :l}]
+                  [elements/text                 {:content helper}]]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

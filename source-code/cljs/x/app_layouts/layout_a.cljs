@@ -61,7 +61,7 @@
   [:div.x-body-a (engine/layout-body-attributes layout-id layout-props)
                  [:div.x-body-a--content-structure
                    [:div.x-body-a--content-body [components/content layout-id body]]
-                   (if (some? header) [:div.x-body-a--content-header [components/content layout-id header]])]
+                   (if header [:div.x-body-a--content-header [components/content layout-id header]])]
                  ; XXX#0093
                  ; A layout-body sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
                  ; a {position: sticky} content-header alsó sarkai kilógnának, amikor a content-header
@@ -81,9 +81,8 @@
   ;
   ; @return (component)
   [layout-id {:keys [description] :as layout-props}]
-  [:<> (if (some? description)
-           [:div.x-description-a (components/content {:content description})]
-           [:div.x-description-a--placeholder])
+  [:<> (if description [:div.x-description-a (components/content {:content description})]
+                       [:div.x-description-a--placeholder])
        [layout-body layout-id layout-props]])
 
 (defn layout

@@ -34,11 +34,10 @@
   ;
   ; @return (component)
   [_ {:directory/keys [modified-at]}]
-  (if (some? modified-at)
-      (let [modified-at (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)]
-           [:<> [elements/horizontal-line {:color :highlight :layout :row}]
-                [elements/label {:content :last-modified :layout :fit :color :muted}]
-                [elements/label {:content modified-at :layout :fit :selectable? true}]])))
+  (if modified-at (let [modified-at (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)]
+                       [:<> [elements/horizontal-line {:color :highlight :layout :row}]
+                            [elements/label {:content :last-modified :layout :fit :color :muted}]
+                            [elements/label {:content modified-at :layout :fit :selectable? true}]])))
 
 (defn- directory-content-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,11 +48,10 @@
   ;
   ; @return (component)
   [_ {:directory/keys [content-size]}]
-  (if (some? content-size)
-      (let [content-size (io/B->MB content-size)]
-           [:<> [elements/horizontal-line {:color :highlight :layout :row}]
-                [elements/label {:content :content-size :layout :fit :color :muted}]
-                [elements/label {:content (str content-size " MB") :layout :fit}]])))
+  (if content-size (let [content-size (io/B->MB content-size)]
+                        [:<> [elements/horizontal-line {:color :highlight :layout :row}]
+                             [elements/label {:content :content-size :layout :fit :color :muted}]
+                             [elements/label {:content (str content-size " MB") :layout :fit}]])))
 
 (defn- directory-properties
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,11 +83,10 @@
   ;
   ; @return (component)
   [_ {:file/keys [modified-at]}]
-  (if (some? modified-at)
-      (let [modified-at (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)]
-           [:<> [elements/horizontal-line {:color :highlight :layout :row}]
-                [elements/label {:content :last-modified :layout :fit :color :muted}]
-                [elements/label {:content modified-at :layout :fit :selectable? true}]])))
+  (if modified-at (let [modified-at (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)]
+                       [:<> [elements/horizontal-line {:color :highlight :layout :row}]
+                            [elements/label {:content :last-modified :layout :fit :color :muted}]
+                            [elements/label {:content modified-at :layout :fit :selectable? true}]])))
 
 (defn- file-filesize
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,11 +97,10 @@
   ;
   ; @return (component)
   [_ {:file/keys [filesize]}]
-  (if (some? filesize)
-      (let [filesize (io/B->MB filesize)]
-           [:<> [elements/horizontal-line {:color :highlight :layout :row}]
-                [elements/label {:content :filesize :layout :fit :color :muted}]
-                [elements/label {:content (str filesize " MB") :layout :fit}]])))
+  (if filesize (let [filesize (io/B->MB filesize)]
+                    [:<> [elements/horizontal-line {:color :highlight :layout :row}]
+                         [elements/label {:content :filesize :layout :fit :color :muted}]
+                         [elements/label {:content (str filesize " MB") :layout :fit}]])))
 
 (defn- file-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,10 +111,9 @@
   ;
   ; @return (component)
   [_ {:file/keys [description]}]
-  (if (some? description)
-      [:<> [elements/horizontal-line {:color :highlight :layout :row}]
-           [elements/label {:content :description :layout :fit :color :muted}]
-           [elements/label {:content description  :layout :fit}]]))
+  (if description [:<> [elements/horizontal-line {:color :highlight :layout :row}]
+                       [elements/label {:content :description :layout :fit :color :muted}]
+                       [elements/label {:content description  :layout :fit}]]))
 
 (defn- file-filename
   ; WARNING! NON-PUBLIC! DO NOT USE!

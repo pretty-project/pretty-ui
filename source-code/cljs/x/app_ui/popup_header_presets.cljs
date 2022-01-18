@@ -90,8 +90,7 @@
   ;
   ; @return (component)
   [_ {:keys [label]}]
-  (if (some? label)
-      [elements/label {:content label}]))
+  (if label [elements/label {:content label}]))
 
 (defn accept-popup-header
   ; @param (keyword) popup-id

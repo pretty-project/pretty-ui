@@ -339,13 +339,13 @@
   [document]
   (if (document->document-namespaced? document)
       (let [namespace (document->namespace document)]
-           (if (some? (get document (keyword/add-namespace namespace :id)))
+           (if (get    document (keyword/add-namespace namespace :id))
                (return document)
-               (assoc document (keyword/add-namespace namespace :id)
-                               (random/generate-string))))
-      (if (some? (get document :id))
+               (assoc  document (keyword/add-namespace namespace :id)
+                                (random/generate-string))))
+      (if (get    document :id)
           (return document)
-          (assoc document :id (random/generate-string)))))
+          (assoc  document :id (random/generate-string)))))
 
 (defn document->item-value
   ; @param (map) document

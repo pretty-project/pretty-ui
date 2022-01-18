@@ -37,9 +37,9 @@
   ;   :start-adornments (maps in vector)}
   [_ {:keys [on-enter] :as field-props}]
   (merge {:emptiable? true}
-         (if (some? on-enter)   ; XXX#6054
-             {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false}]}
-             {:start-adornments [{:icon :search}]})
+         (if on-enter ; XXX#6054
+                      {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false}]}
+                      {:start-adornments [{:icon :search}]})
          (param field-props)))
 
 

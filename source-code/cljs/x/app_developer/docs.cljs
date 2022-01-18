@@ -110,11 +110,11 @@
        [:div {:style {:padding "12px 12px" :opacity ".6" :line-height "22px"}}
              [:div {:style {:font-size "16px"}} namespace]
              [:div {:style {:display "flex"}}
-                   (if (some? author)        [:div {:style {:font-size "13px" :min-width "250px"}} "Author: "        author])
-                   (if (some? created)       [:div {:style {:font-size "13px"}} "Created: "       created])]
+                   (if author  [:div {:style {:font-size "13px" :min-width "250px"}} "Author: "  author])
+                   (if created [:div {:style {:font-size "13px"}}                    "Created: " created])]
              [:div {:style {:display "flex"}}
-                   (if (some? version)       [:div {:style {:font-size "13px" :min-width "250px"}} "Version: "       version])
-                   (if (some? compatibility) [:div {:style {:font-size "13px"}} "Compatibility: " compatibility])]])
+                   (if version       [:div {:style {:font-size "13px" :min-width "250px"}} "Version: "       version])
+                   (if compatibility [:div {:style {:font-size "13px"}}                    "Compatibility: " compatibility])]])
 
  (defn- docs
    ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -122,7 +122,7 @@
    [:div {:style {:display "flex" :width "100%" :font-family "monospace"}}
          [scopes        surface-id view-props]
          [namespaces    surface-id view-props]
-         (if (some? (:namespace meta))
+         (if (:namespace meta)
              [:div [namespace-header surface-id view-props]
                    [function-list    surface-id view-props]]
              [:div {:style {:font-size "16px" :padding "12px 12px" :opacity ".6"}} "No namespace selected"])]))

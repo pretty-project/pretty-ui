@@ -139,16 +139,15 @@
 (defn- icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [disabled? icon label on-click]}]
-  (if (boolean disabled?)
-      [:div {:style {:padding "0 12px" :min-width "60px"}}
-        [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
-                   (param icon)]
-        [icon-button-label label true]]
-      [:div.x-clickable {:on-click #(a/dispatch on-click)
-                         :style {:padding "0 12px" :min-width "60px"}}
-        [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
-                   (param icon)]
-        [icon-button-label label]]))
+  (if disabled? [:div {:style {:padding "0 12px" :min-width "60px"}}
+                  [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
+                             (param icon)]
+                  [icon-button-label label true]]
+                [:div.x-clickable {:on-click #(a/dispatch on-click)
+                                   :style {:padding "0 12px" :min-width "60px"}}
+                  [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
+                             (param icon)]
+                  [icon-button-label label]]))
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,24 +181,21 @@
 (defn- swap-boolean-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-item current-path]}]
-  (if (boolean current-item)
-      [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/apply! current-path not]}]
-      [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/apply! current-path not]}]))
+  (if current-item [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/apply! current-path not]}]
+                   [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/apply! current-path not]}]))
 
 (defn- toggle-original-view-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [show-original?]}]
-  (if (boolean show-original?)
-      [icon-button {:icon "code_off" :label "Hide data" :on-click [:database-browser/toggle-original-view!]}]
-      [icon-button {:icon "code"     :label "Show data" :on-click [:database-browser/toggle-original-view!]}]))
+  (if show-original? [icon-button {:icon "code_off" :label "Hide data" :on-click [:database-browser/toggle-original-view!]}]
+                     [icon-button {:icon "code"     :label "Show data" :on-click [:database-browser/toggle-original-view!]}]))
 
 (defn- edit-string-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [edit-string?]}]
   (let [toggle-event [:db/apply! (db/path :database-browser/settings :edit-string?) not]]
-       (if (boolean edit-string?)
-           [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
-           [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
+       (if edit-string? [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
+                        [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
 
 (defn- go-home-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -227,8 +223,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [bin current-path]}]
   (let [revert-event [:db/move-item! (db/path :database-browser/settings :bin) current-path]]
-       (if (some? bin)
-           [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}])))
+       (if bin [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}])))
 
 (defn- dispatch-event-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -238,9 +233,8 @@
 (defn- toggle-subscription-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-item subscribe?]}]
-  (if (boolean subscribe?)
-      [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:database-browser/toggle-subscription!]}]
-      [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:database-browser/toggle-subscription!]}]))
+  (if subscribe? [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:database-browser/toggle-subscription!]}]
+                 [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:database-browser/toggle-subscription!]}]))
 
 (defn- toggle-visibility-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -339,9 +333,8 @@
     [toolbar         body-id body-props go-home-button navigate-up-button remove-item-button
                                         edit-string-button]
     [horizontal-line body-id body-props]
-    (if (boolean edit-string?)
-        [elements/text-field {:value-path current-path}]
-        [:div.x-database-browser--item (string/quotes current-item)])])
+    (if edit-string? [elements/text-field {:value-path current-path}]
+                     [:div.x-database-browser--item (string/quotes current-item)])])
 
 (defn- keyword-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

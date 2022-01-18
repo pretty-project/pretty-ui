@@ -98,9 +98,8 @@
   ;
   ; @return (component)
   [element-id element-props {:keys [on-click] :as adornment-props}]
-  (if (some? on-click)
-      [element-adornment-button element-id element-props adornment-props]
-      [element-adornment-icon   element-id element-props adornment-props]))
+  (if on-click [element-adornment-button element-id element-props adornment-props]
+               [element-adornment-icon   element-id element-props adornment-props]))
 
 (defn- element-end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!

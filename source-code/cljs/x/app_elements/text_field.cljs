@@ -140,9 +140,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if (some? label)
-      [:div.x-text-field--label [components/content {:content label}]
-                                (if required? [:span.x-input--label-asterisk "*"])]))
+  (if label [:div.x-text-field--label [components/content {:content label}]
+                                      (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- text-field-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -177,8 +176,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [invalid-message]}]
-  (if (some? invalid-message)
-      [:div.x-text-field--invalid-message [components/content {:content invalid-message}]]))
+  (if invalid-message [:div.x-text-field--invalid-message [components/content {:content invalid-message}]]))
 
 (defn- text-field-input-container
   ; WARNING! NON-PUBLIC! DO NOT USE!

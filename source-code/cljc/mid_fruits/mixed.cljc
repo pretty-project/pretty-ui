@@ -152,9 +152,8 @@
   ([n f x]
    (if (str-number? n)
        (let [integer (string/to-integer n)
-             result  (if (some? x)
-                         (f integer x)
-                         (f integer))]
+             result  (if x (f integer x)
+                           (f integer))]
             (str result))
        (return n))))
 

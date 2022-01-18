@@ -139,9 +139,8 @@
   ;
   ; @return (map)
   [db [_ item-path item]]
-  (if (some? item)
-      (assoc-in  db item-path item)
-      (dissoc-in db item-path)))
+  (if item (assoc-in  db item-path item)
+           (dissoc-in db item-path)))
 
 (defn set-vector-item!
   ; Biztosítja, hogy az item-path Re-Frame adatbázis útvonalon tárolt

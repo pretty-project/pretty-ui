@@ -32,7 +32,5 @@
   ;
   ; @return (hiccup)
   [_ {:keys [badge-color badge-content]}]
-  (if (some? badge-color)
-      [:div.x-element-badge {:data-color badge-color}
-                            (if (some? badge-content)
-                                [:div.x-element-badge--content (components/content {:content badge-content})])]))
+  (if badge-color [:div.x-element-badge {:data-color badge-color}
+                                        (if badge-content [:div.x-element-badge--content (components/content badge-content)])]))

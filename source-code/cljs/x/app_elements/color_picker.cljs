@@ -111,9 +111,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if (some? label)
-      [:div.x-color-picker--label [components/content {:content label}]
-                                  (if required? [:span.x-input--label-asterisk "*"])]))
+  (if label [:div.x-color-picker--label [components/content {:content label}]
+                                        (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- color-picker-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

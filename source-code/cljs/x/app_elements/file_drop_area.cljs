@@ -54,8 +54,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if (some? label)
-      [:div.x-file-drop-area--label [components/content {:content label}]]))
+  (if label [:div.x-file-drop-area--label [components/content {:content label}]]))
 
 (defn- file-drop-area-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

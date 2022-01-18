@@ -67,8 +67,7 @@
   ; @return (map)
   ;  {:data-autopadding (boolean)}
   [_ {:keys [autopadding?]}]
-  (merge {} (if (some? autopadding?)
-                {:data-autopadding (boolean autopadding?)})))
+  (merge {} (if autopadding? {:data-autopadding (boolean autopadding?)})))
 
 
 
@@ -135,9 +134,9 @@
   ;
   ; @return (hiccup)
   [popup-id {:keys [header render-touch-anchor?] :as popup-props}]
-  [:<> (if (boolean render-touch-anchor?) [:div.x-app-popups--element--touch-anchor])
-       (if (some?   header)               [:div.x-app-popups--element--header [components/content popup-id header]]
-                                          [:div.x-app-popups--element--header-placeholder])])
+  [:<> (if render-touch-anchor? [:div.x-app-popups--element--touch-anchor])
+       (if header               [:div.x-app-popups--element--header [components/content popup-id header]]
+                                [:div.x-app-popups--element--header-placeholder])])
 
 (defn popup-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

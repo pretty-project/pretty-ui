@@ -174,9 +174,8 @@
                                                                         (param select-option-event)]))
                                      :data-selected    (param selected?)
                                      :data-highlighted (param highlighted?)}
-                                    (if (some? option-component)
-                                        [option-component         field-id field-props option]
-                                        [default-option-component field-id field-props option])]))
+                                    (if option-component [option-component         field-id field-props option]
+                                                         [default-option-component field-id field-props option])]))
 
 (defn- combo-box-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -78,7 +78,7 @@
   ; @return (keyword)
   [n]
   (if (keyword? n)
-      (if (some? (namespace n))
+      (if (namespace n)
           ; If n is keyword and namespaced ...
           (return n)
           ; If n is keyword and NOT namespaced ...

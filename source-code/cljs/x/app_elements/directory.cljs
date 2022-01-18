@@ -135,9 +135,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [item-count]}]
-  (if (some? item-count)
-      [:div.x-directory--item-count (components/content {:content :n-items :replacements [item-count]})]
-      [:div.x-directory--item-count-placeholder]))
+  (if item-count [:div.x-directory--item-count (components/content {:content :n-items :replacements [item-count]})]
+                 [:div.x-directory--item-count-placeholder]))
 
 (defn- directory-content-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -148,9 +147,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [content-size]}]
-  (if (some? content-size)
-      [:div.x-directory--content-size (io/B->MB content-size)
-                                      (str " MB")]))
+  (if content-size [:div.x-directory--content-size (io/B->MB content-size)
+                                                   (str " MB")]))
 
 (defn- directory-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -226,9 +224,8 @@
   [:div.x-directory
     (engine/selectable-attributes directory-id view-props)
     [:<> [directory-highlighter directory-id view-props]
-         (if (some? on-click)
-             [directory-button-body directory-id view-props]
-             [directory-static-body directory-id view-props])
+         (if on-click [directory-button-body directory-id view-props]
+                      [directory-static-body directory-id view-props])
          [engine/element-stickers directory-id view-props]]])
 
 (defn view

@@ -41,9 +41,8 @@
   ;
   ; @return (string)
   [_ [_ _ {:keys [error]}]]
-  (if (some? error)
-      (str error)
-      (str DEFAULT-APPLICATION-ERROR)))
+  (if error (str error)
+            (str DEFAULT-APPLICATION-ERROR)))
 
 (defn- get-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!

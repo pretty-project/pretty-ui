@@ -87,12 +87,12 @@
   (merge {:layout   :row
           :strength 2
           :width    128}
-         (if (some? label) {:color          :default
-                            :font-size      :s
-                            :label-position :left})
+         (if label {:color          :default
+                    :font-size      :s
+                    :label-position :left})
          {:total-value (diagram-props->total-value diagram-props)}
          (param diagram-props)
-         (if (some? strength) {:strength (math/between! strength 1 6)})))
+         (if strength {:strength (math/between! strength 1 6)})))
 
 
 
@@ -140,9 +140,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label label-position]}]
-  (if (some? label)
-      [:div.x-line-diagram--label {:data-position label-position}
-                                  [components/content {:content label}]]))
+  (if label [:div.x-line-diagram--label {:data-position label-position}
+                                        [components/content {:content label}]]))
 
 (defn line-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -175,9 +175,8 @@
   ;  {:timeout (ms)(opt)
   ;    Default: 0}
   (fn [{:keys [db]} [_ bubble-id {:keys [timeout]}]]
-      (if (some? timeout)
-          {:dispatch-later [{:ms timeout :dispatch [:ui/destroy-element! :bubbles bubble-id]}]}
-          [:ui/destroy-element! :bubbles bubble-id])))
+      (if timeout {:dispatch-later [{:ms timeout :dispatch [:ui/destroy-element! :bubbles bubble-id]}]}
+                  [:ui/destroy-element! :bubbles bubble-id])))
 
 (a/reg-event-fx
   :ui/blow-bubble!

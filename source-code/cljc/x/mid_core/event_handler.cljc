@@ -900,8 +900,7 @@
   ;  (dispatch-if [true (fn [_ _] {:dispatch [:my-event]}) ...])
   [[condition if-event-handler else-event-handler]]
   (if condition (dispatch if-event-handler)
-                (if (some?    else-event-handler)
-                    (dispatch else-event-handler))))
+                (if else-event-handler (dispatch else-event-handler))))
 
 (re-frame/reg-fx :dispatch-if dispatch-if)
 

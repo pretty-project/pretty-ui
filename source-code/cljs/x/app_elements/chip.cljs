@@ -47,7 +47,7 @@
   (merge {:background-color   :primary
           :layout             :row
           :delete-button-icon DEFAULT-DELETE-BUTTON-ICON}
-         (if (some? icon) {:icon-family :material-icons-filled})
+         (if icon {:icon-family :material-icons-filled})
          (param chip-props)))
 
 
@@ -64,8 +64,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [icon]}]
-  (if (some? icon)
-      [:i.x-chip--icon icon]))
+  (if icon [:i.x-chip--icon icon]))
 
 (defn- chip-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,9 +87,8 @@
   ;
   ; @return (hiccup)
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
-  (if (some? on-delete)
-      [:button.x-chip--delete-button (engine/deletable-body-attributes chip-id chip-props)
-                                     [:i.x-chip--delete-button-icon delete-button-icon]]))
+  (if on-delete [:button.x-chip--delete-button (engine/deletable-body-attributes chip-id chip-props)
+                                               [:i.x-chip--delete-button-icon delete-button-icon]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

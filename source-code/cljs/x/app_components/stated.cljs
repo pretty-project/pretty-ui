@@ -195,8 +195,7 @@
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props-path]}]]
-  (if (some?     initial-props-path)
-      (get-in db initial-props-path)))
+  (if initial-props-path (get-in db initial-props-path)))
 
 (defn- component-mounted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -267,9 +266,8 @@
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props initial-props-path]}]]
-  (if (some?    initial-props-path)
-      (assoc-in db initial-props-path initial-props)
-      (return   db)))
+  (if initial-props-path (assoc-in db initial-props-path initial-props)
+                         (return   db)))
 
 (defn- remove-component-initial-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -280,9 +278,8 @@
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props-path]}]]
-  (if (some?        initial-props-path)
-      (dissoc-in db initial-props-path)
-      (return    db)))
+  (if initial-props-path (dissoc-in db initial-props-path)
+                         (return    db)))
 
 
 

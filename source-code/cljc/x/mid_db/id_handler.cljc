@@ -91,9 +91,8 @@
   ;
   ; @return (map)
   [document-id & [namespace]]
-  (if (some? namespace)
-      {(keyword/add-namespace namespace :id) document-id}
-      {(param                           :id) document-id}))
+  (if namespace {(keyword/add-namespace namespace :id) document-id}
+                {(param                           :id) document-id}))
 
 (defn item-id->document-link
   ; @param (keyword) item-id
@@ -192,9 +191,8 @@
   ;
   ; @return (vector)
   [document-id & [namespace]]
-  (if (some? namespace)
-      [(keyword/add-namespace namespace :id) document-id]
-      [(param                           :id) document-id]))
+  (if namespace [(keyword/add-namespace namespace :id) document-id]
+                [(param                           :id) document-id]))
 
 (defn item-id->document-entity
   ; @param (keyword) item-id

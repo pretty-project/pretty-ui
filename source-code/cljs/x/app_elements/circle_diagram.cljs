@@ -153,8 +153,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if (some? label)
-      [:div.x-circle-diagram--label]))
+  (if label [:div.x-circle-diagram--label]))
 
 (defn circle-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!

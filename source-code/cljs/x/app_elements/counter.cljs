@@ -84,9 +84,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if (some? label)
-      [:div.x-counter--label [components/content {:content label}]
-                             (if required? [:span.x-input--label-asterisk "*"])]))
+  (if label [:div.x-counter--label [components/content {:content label}]
+                                   (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- counter-increase-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

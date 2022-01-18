@@ -43,7 +43,7 @@
           :horizontal-align :left
           :layout           :row
           :selectable?      false}
-         (if (some? icon) {:icon-family :material-icons-filled})
+         (if icon {:icon-family :material-icons-filled})
          (param label-props)))
 
 
@@ -86,9 +86,9 @@
   ; @return (hiccup)
   [label-id {:keys [icon] :as label-props}]
   [:div.x-label (engine/element-attributes label-id label-props)
-                (if (some? icon) [label-icon label-id label-props])
+                (if icon [label-icon label-id label-props])
                 [label-body label-id label-props]
-                (if (some? icon) [:div.x-label--icon-placeholder])])
+                (if icon [:div.x-label--icon-placeholder])])
 
 (defn element
   ; XXX#0439

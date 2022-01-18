@@ -73,8 +73,7 @@
   ;
   ; @return (string)
   [{:keys [vertical-gap]}]
-  (if (some? vertical-gap)
-      (css/px (/ vertical-gap 2))))
+  (if vertical-gap (css/px (/ vertical-gap 2))))
 
 (defn- table-props->row-cell-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -189,8 +188,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [label]}]
-  (if (some? label)
-      [:div.x-table--header-cell--label [components/content {:content label}]]))
+  (if label [:div.x-table--header-cell--label [components/content {:content label}]]))
 
 (defn- table-header-cell
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -236,8 +234,7 @@
   ;
   ; @return (hiccup)
   [table-id {:keys [label]}]
-  (if (some? label)
-      [:div.x-table--label [components/content {:content label}]]))
+  (if label [:div.x-table--label [components/content {:content label}]]))
 
 (defn- table
   ; WARNING! NON-PUBLIC! DO NOT USE!

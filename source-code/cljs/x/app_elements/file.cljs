@@ -77,11 +77,10 @@
   ; @return (map)
   ;  {:style (map)}
   [{:keys [thumbnail-uri]}]
-  (if (some? thumbnail-uri)
-      {:style {:background-image    (css/url thumbnail-uri)
-               :background-position :center
-               :background-repeat   :no-repeat
-               :background-size     :cover}}))
+  (if thumbnail-uri {:style {:background-image    (css/url thumbnail-uri)
+                             :background-position :center
+                             :background-repeat   :no-repeat
+                             :background-size     :cover}}))
 
 (defn- view-props->render-file-preview-icon?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -192,9 +191,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [timestamp]}]
-  (if (some? timestamp)
-      [:div.x-file--timestamp (str timestamp)]
-      [:div.x-file--timestamp-placeholder]))
+  (if timestamp [:div.x-file--timestamp (str timestamp)]
+                [:div.x-file--timestamp-placeholder]))
 
 (defn- file-filesize
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -205,9 +203,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [filesize]}]
-  (if (some? filesize)
-      [:div.x-file--filesize (io/B->MB filesize)
-                             (str   " MB")]))
+  (if filesize [:div.x-file--filesize (io/B->MB filesize)
+                                      (str   " MB")]))
 
 (defn- file-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -284,9 +281,8 @@
   [file-id {:keys [on-click] :as view-props}]
   [:div.x-file (engine/selectable-attributes file-id view-props)
                [:<> [file-highlighter file-id view-props]
-                    (if (some? on-click)
-                        [file-button-body file-id view-props]
-                        [file-static-body file-id view-props])
+                    (if on-click [file-button-body file-id view-props]
+                                 [file-static-body file-id view-props])
                     [engine/element-stickers file-id view-props]]])
 
 (defn view

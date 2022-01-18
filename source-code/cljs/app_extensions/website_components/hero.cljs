@@ -16,5 +16,5 @@
   ; @return (hiccup)
   [_ {:keys [height scroll-y top]}]
   [:div#x-website-hero--scroll-down
-    (if (some? scroll-y) {:style {:opacity (math/choose scroll-y 40 0 1)}})
+    (if scroll-y {:style {:opacity (math/choose scroll-y 40 0 1)}})
     [:div#x-website-hero--scroll-down-icon (a/dom-value :arrow_downward)]])

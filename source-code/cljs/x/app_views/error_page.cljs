@@ -78,9 +78,8 @@
   ;
   ; @return (component)
   [_ {:keys [icon]}]
-  (if (some? icon)
-      [elements/icon ::error-icon
-                     {:icon icon :size :xxl}]))
+  (if icon [elements/icon ::error-icon
+                          {:icon icon :size :xxl}]))
 
 (defn- go-back-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

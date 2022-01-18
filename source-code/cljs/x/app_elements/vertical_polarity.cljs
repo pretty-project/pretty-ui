@@ -48,9 +48,8 @@
   ;
   ; @return (component)
   [_ {:keys [start-content]}]
-  (if (some? start-content)
-      [:div.x-vertical-polarity--start-content [components/content {:content start-content}]]
-      [:div.x-vertical-polarity--placeholder]))
+  (if start-content [:div.x-vertical-polarity--start-content [components/content {:content start-content}]]
+                    [:div.x-vertical-polarity--placeholder]))
 
 (defn- middle-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,9 +60,8 @@
   ;
   ; @return (component)
   [_ {:keys [middle-content]}]
-  (if (some? middle-content)
-      [:div.x-vertical-polarity--middle-content [components/content {:content middle-content}]]
-      [:div.x-vertical-polarity--placeholder]))
+  (if middle-content [:div.x-vertical-polarity--middle-content [components/content {:content middle-content}]]
+                     [:div.x-vertical-polarity--placeholder]))
 
 (defn- end-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,9 +72,8 @@
   ;
   ; @return (component)
   [_ {:keys [end-content orientation]}]
-  (if (some? end-content)
-      [:div.x-vertical-polarity--end-content [components/content {:content end-content}]]
-      [:div.x-vertical-polarity--placeholder]))
+  (if end-content [:div.x-vertical-polarity--end-content [components/content {:content end-content}]]
+                  [:div.x-vertical-polarity--placeholder]))
 
 (defn- vertical-polarity
   ; WARNING! NON-PUBLIC! DO NOT USE!

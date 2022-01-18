@@ -214,14 +214,13 @@
   ;
   ; @return (*)
   [n [key & keys :as value-path]]
-  (if (some? keys)
-      (if-let [next-n (get n key)]
-              (let [new-n (dissoc-in next-n keys)]
-                   (if (seq new-n)
-                       (assoc  n key new-n)
-                       (dissoc n key)))
-              (return n))
-      (dissoc n key)))
+  (if keys (if-let [next-n (get n key)]
+                   (let [new-n (dissoc-in next-n keys)]
+                        (if (seq new-n)
+                            (assoc  n key new-n)
+                            (dissoc n key)))
+                   (return n))
+           (dissoc n key)))
 
 (defn inject-in
   ; @param (map) n
@@ -360,9 +359,8 @@
   ;
   ; @return (map)
   [n x f v]
-  (if (some? v)
-      (update n x f v)
-      (return n)))
+  (if v (update n x f v)
+        (return n)))
 
 (defn update-in-some
   ; Update-in n map if v is something
@@ -384,9 +382,8 @@
   ;
   ; @return (map)
   [n value-path update-f value]
-  (if (some?     value)
-      (update-in n value-path update-f value)
-      (return    n)))
+  (if value (update-in n value-path update-f value)
+            (return    n)))
 
 (defn assoc-some
   ; Assoc value to n map if value is something
@@ -407,9 +404,8 @@
   ;
   ; @return (map)
   [n key value]
-  (if (some?  value)
-      (assoc  n key value)
-      (return n)))
+  (if value (assoc  n key value)
+            (return n)))
 
 (defn assoc-in-some
   ; Assoc-in value to n map if value is something
@@ -430,9 +426,8 @@
   ;
   ; @return (map)
   [n value-path value]
-  (if (some?    value)
-      (assoc-in n value-path value)
-      (return   n)))
+  (if value (assoc-in n value-path value)
+            (return   n)))
 
 (defn assoc-or
   ; Assoc value to n map if key's value is nil

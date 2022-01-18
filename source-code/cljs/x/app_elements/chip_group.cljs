@@ -39,10 +39,9 @@
   ; @return (map)
   ;  {:on-delete (metamorphic-event)}
   [group-id {:keys [on-delete] :as group-props} chip-props chip-dex]
-  (if (some? on-delete)
-      (let [on-delete (a/metamorphic-event<-params on-delete group-id chip-dex)]
-           (assoc chip-props :on-delete on-delete))
-      (return chip-props)))
+  (if on-delete (let [on-delete (a/metamorphic-event<-params on-delete group-id chip-dex)]
+                     (assoc chip-props :on-delete on-delete))
+                (return chip-props)))
 
 
 
@@ -84,8 +83,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [no-chips-label]}]
-  (if (some? no-chips-label)
-      [:div.x-chip-group--no-chips-label [components/content {:content no-chips-label}]]))
+  (if no-chips-label [:div.x-chip-group--no-chips-label [components/content {:content no-chips-label}]]))
 
 (defn- chip-group-chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,7 +100,7 @@
                             (conj %1 [chip chip-props]))
                        [:div.x-chip-group--chips]
                        (param chips)))
-      [chip-group-no-chips-label group-id group-props])
+  [chip-group-no-chips-label group-id group-props])
 
 (defn- chip-group-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,8 +111,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if (some? label)
-      [:div.x-chip-group--label [components/content {:content label}]]))
+  (if label [:div.x-chip-group--label [components/content {:content label}]]))
 
 (defn- chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -48,7 +48,7 @@
   (let [x (cond (keyword? n) (keyword/to-string n)
                 (string?  n) (return            n))]
        (str (reduce #(case %2 "." (str %1 "--") "/" (str %1 "--") "?" %1 "!" %1 ">" %1 (str %1 %2)) nil x)
-            (if (some? flag) (str "--" flag)))))
+            (if flag (str "--" flag)))))
 
 (defn id
   ; @param (keyword or nil)(opt) n

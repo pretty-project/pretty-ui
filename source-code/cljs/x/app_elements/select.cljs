@@ -349,9 +349,8 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if (some? label)
-      [:div.x-select--label [components/content {:content label}]
-                            (if required? [:span.x-input--label-asterisk "*"])]))
+  (if label [:div.x-select--label [components/content {:content label}]
+                                  (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!

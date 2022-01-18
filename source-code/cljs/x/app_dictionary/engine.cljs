@@ -64,9 +64,8 @@
         multilingual-term (r get-term                      db term-id)
         translated-term   (get multilingual-term language-id)
         suffixed-term     (str translated-term suffix)]
-       (if (some? replacements)
-           (string/use-replacements suffixed-term replacements)
-           (return                  suffixed-term))))
+       (if replacements (string/use-replacements suffixed-term replacements)
+                        (return                  suffixed-term))))
 
 ; @usage
 ;  [:dictionary/look-up! :my-term]

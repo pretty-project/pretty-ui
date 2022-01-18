@@ -30,9 +30,8 @@
   ;
   ; @return (DOM-element)
   [element-id]
-  (if (some?                 element-id)
-      (dom/get-element-by-id element-id)
-      (return                js/window)))
+  (if element-id (dom/get-element-by-id element-id)
+                 (return                js/window)))
 
 
 

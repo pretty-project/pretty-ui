@@ -163,12 +163,12 @@
   ;
   ; @return (component)
   [header-id {:keys [debug-mode? header-title parent-path] :as header-props}]
-  [:<> [:div.x-app-header--block (if (some?   parent-path)      [header-up-icon-button        header-id header-props]
-                                                                [header-apps-icon-button      header-id header-props])]
-       [:div.x-app-header--block (if (some?   header-title)     [header-label                 header-id header-props])]
-       [:div.x-app-header--block (if (boolean debug-mode?) [:<> [header-dev-tools-icon-button header-id header-props]
-                                                                [header-menu-icon-button      header-id header-props]]
-                                                           [:<> [header-menu-icon-button      header-id header-props]])]])
+  [:<> [:div.x-app-header--block (if parent-path  [header-up-icon-button        header-id header-props]
+                                                  [header-apps-icon-button      header-id header-props])]
+       [:div.x-app-header--block (if header-title [header-label                 header-id header-props])]
+       [:div.x-app-header--block (if debug-mode?  [:<> [header-dev-tools-icon-button header-id header-props]
+                                                       [header-menu-icon-button      header-id header-props]]
+                                                  [:<> [header-menu-icon-button      header-id header-props]])]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
