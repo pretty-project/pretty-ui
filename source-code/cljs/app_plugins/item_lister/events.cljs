@@ -29,6 +29,17 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-error-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  ; Az item-lister plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor
+  ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
+  (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
+
 (defn store-lister-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -46,6 +57,15 @@
          ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
          ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
          (assoc-in  [extension-id :item-lister/meta-items :item-namespace] item-namespace)))
+
+(defn reset-error-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (dissoc-in db [extension-id :item-lister/meta-items :error-mode?]))
 
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -343,6 +363,7 @@
   ;     ezért nem törli ki a beállításokat!
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r ui/listen-to-process! % request-id)
+                  (r reset-error-mode!     % extension-id)
                   (r reset-downloads!      % extension-id)
                   (r reset-search!         % extension-id)
                   (r store-lister-props!   % extension-id item-namespace lister-props))))

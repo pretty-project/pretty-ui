@@ -29,6 +29,17 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-error-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  ; Az item-editor plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor 
+  ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
+  (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))
+
 (defn reset-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -146,7 +157,7 @@
            (let [suggestions (validator/clean-validated-data suggestions)]
                 (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions))
            ; If the received suggestions is NOT valid ...
-           (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
+           (r set-error-mode! db extension-id))))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

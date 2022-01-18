@@ -172,8 +172,11 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [item-received? (get-in db [extension-id :item-editor/meta-items :item-received?])
+  (let [item-received? (r get-meta-item  db extension-id item-namespace :item-received?)
         synchronizing? (r synchronizing? db extension-id item-namespace)]
+       ; Azért szükséges vizsgálni az {:item-received? ...} tulajdonság értékét, hogy
+       ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
+       ; a szinkronizálás!
        (or (not item-received?) synchronizing?)))
 
 (defn new-item?
@@ -305,7 +308,8 @@
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:error-mode? true}
+          {:disabled?   true
+           :error-mode? true}
           {:colors    (r get-data-value db extension-id item-namespace :colors)
            :disabled? (r disabled?      db extension-id item-namespace)
            :new-item? (r new-item?      db extension-id item-namespace)}))
@@ -328,7 +332,8 @@
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:error-mode? true}
+          {:disabled?   true
+           :error-mode? true}
           (let [form-id (engine/form-id extension-id item-namespace)]
                {:disabled?       (r disabled? db extension-id item-namespace)
                 :new-item?       (r new-item? db extension-id item-namespace)

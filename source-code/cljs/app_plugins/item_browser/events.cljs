@@ -27,6 +27,15 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-error-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (r app-plugins.item-lister.events/set-error-mode! db extension-id))
+
 (defn store-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -58,7 +67,7 @@
                  document-id (get document :id)]
                 (assoc-in db [extension-id :item-browser/data-items document-id] document))
            ; If the received document is NOT valid ...
-           (assoc-in db [extension-id :item-browser/meta-items :error-mode?] true))))
+           (r set-error-mode! db extension-id))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,6 +120,17 @@
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
   (fn [_ [_ extension-id item-namespace item-id]]
       (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
+           [:router/go-to! browser-uri])))
+
+(a/reg-event-fx
+  :item-browser/go-home!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-browser/go-home! :my-extension :my-type]
+  (fn [_ [_ extension-id item-namespace item-id]]
+      (let [browser-uri (engine/browser-uri extension-id item-namespace)]
            [:router/go-to! browser-uri])))
 
 (a/reg-event-fx

@@ -32,6 +32,4 @@
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
 (def extended-route-template engine/extended-route-template)
-(def go-up-event             engine/go-up-event)
-(def go-home-event           engine/go-home-event)
 (def load-extension-event    engine/load-extension-event)

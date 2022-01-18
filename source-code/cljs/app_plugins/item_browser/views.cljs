@@ -34,13 +34,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:at-home? (boolean)}
+  ;  {:at-home? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [at-home?]}]
+  [extension-id item-namespace {:keys [at-home? error-mode?]}]
   [elements/button ::go-home-button
-                   {:disabled? at-home?
-                    :on-click  (engine/go-home-event extension-id)
+                   ; A go-home-button gomb a böngésző {:error-mode? true} állapotában használható!
+                   {:disabled? (and at-home? (not error-mode?))
+                    :on-click  [:item-browser/go-home! extension-id item-namespace]
                     :preset    :home-icon-button}])
                     ;:icon-family :material-icons-outlined}])
                     ;:color :secondary}])
@@ -51,13 +52,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:at-home? (boolean)}
+  ;  {:at-home? (boolean)(opt)
+  ;   :disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [at-home?]}]
+  [extension-id item-namespace {:keys [at-home? disabled?]}]
   [elements/button ::go-up-button
-                   {:disabled? at-home?
-                    :on-click  (engine/go-up-event extension-id)
+                   {:disabled? (or at-home? disabled?)
+                    :on-click  [:item-browser/go-up! extension-id item-namespace]
                     :preset    :up-icon-button}])
                     ;:color :secondary}])
 

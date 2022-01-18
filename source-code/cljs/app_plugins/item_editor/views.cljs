@@ -31,34 +31,32 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :error-mode? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-editor/delete-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled? error-mode?]}]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/button ::delete-item-button
                    {:tooltip :delete! :preset :delete-icon-button
-                    :disabled? (or disabled? error-mode?)
+                    :disabled? disabled?
                     :on-click  [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn copy-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :error-mode? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-editor/copy-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled? error-mode?]}]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/button ::copy-item-button
                    {:tooltip :duplicate! :preset :duplicate-icon-button
-                    :disabled? (or disabled? error-mode?)
+                    :disabled? disabled?
                     :on-click  [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
@@ -66,17 +64,16 @@
   ; @param (keyword) item-namespace
   ; @param (map) header-props
   ;  {:disabled? (boolean)(opt)
-  ;   :error-mode? (boolean)(opt)
   ;   :form-completed? (boolean)}
   ;
   ; @usage
   ;  [item-editor/save-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled? error-mode? form-completed?]}]
+  [extension-id item-namespace {:keys [disabled? form-completed?]}]
   [elements/button ::save-item-button
                    {:tooltip :save! :preset :save-icon-button
-                    :disabled? (or (not form-completed?) disabled? error-mode?)
+                    :disabled? (or (not form-completed?) disabled?)
                     :on-click [:item-editor/save-item! extension-id item-namespace]}])
 
 
@@ -335,7 +332,6 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [description error-mode? form-element]}]
-
   (if error-mode? ; If error-mode is enabled ...
                   [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
                                                   :header [header     extension-id item-namespace]}]
@@ -343,7 +339,7 @@
                   [layouts/layout-a extension-id {:description description
                                                   :body   [form-element extension-id item-namespace]
                                                   :header [header       extension-id item-namespace]}]))
-  
+
 (defn view
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace

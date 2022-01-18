@@ -38,7 +38,7 @@
 (defn browser-uri
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
+  ; @param (string)(opt) item-id
   ;
   ; @example
   ;  (item-browser/browser-uri :my-extension :my-type "my-item")
@@ -46,9 +46,12 @@
   ;  "/@app-home/my-extension/my-item"
   ;
   ; @return (string)
-  [extension-id _ item-id]
-  (str "/@app-home/" (name  extension-id)
-       "/"           (param item-id)))
+  ([extension-id _]
+   (str "/@app-home/" (name extension-id)))
+
+  ([extension-id _ item-id]
+   (str "/@app-home/" (name  extension-id)
+        "/"           (param item-id))))
 
 (defn request-id
   ; @param (keyword) extension-id
@@ -189,36 +192,6 @@
   [extension-id]
   (str "/@app-home/" (name extension-id)
        "/:item-id"))
-
-(defn go-up-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @example
-  ;  (engine/go-up-event :my-extension)
-  ;  =>
-  ;  [:my-extension/go-up!]
-  ;
-  ; @return (keyword)
-  [extension-id]
-  (let [event-id (keyword/add-namespace extension-id :go-up!)]
-       [event-id]))
-
-(defn go-home-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @example
-  ;  (item-browser/go-home-event :my-extension)
-  ;  =>
-  ;  [:my-extension/go-home!]
-  ;
-  ; @return (keyword)
-  [extension-id]
-  (let [event-id (keyword/add-namespace extension-id :go-home!)]
-       [event-id]))
 
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

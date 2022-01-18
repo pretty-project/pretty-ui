@@ -40,12 +40,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/button ::quit-search-mode-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
                     :preset    :close-icon-button}])
 
@@ -55,13 +55,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [synchronizing?]}]
+  [extension-id item-namespace {:keys [disabled?]}]
   [elements/search-field ::search-items-field
                          {:auto-focus?   true
-                          :disabled?     synchronizing?
+                          :disabled?     disabled?
                           :layout        :row
                           :min-width     :xs
                           :on-empty      [:item-lister/search-items! extension-id item-namespace]
@@ -75,12 +75,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::toggle-search-mode-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
                     :preset    :search-icon-button
                     :tooltip   :search}])
@@ -109,12 +109,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::quit-select-mode-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                     :preset    :close-icon-button}])
 
@@ -124,12 +124,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::unselect-all-items-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/unselect-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :check_box}])
@@ -140,12 +140,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::unselect-some-items-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/unselect-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :indeterminate_check_box}])
@@ -156,12 +156,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::select-all-items-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/select-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :check_box_outline_blank}])
@@ -188,12 +188,12 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:any-item-selected? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;   :disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [any-item-selected? synchronizing?]}]
+  [extension-id item-namespace {:keys [any-item-selected? disabled?]}]
   [elements/button ::delete-selected-items-button
-                   {:disabled? (-> any-item-selected? not (or synchronizing?))
+                   {:disabled? (-> any-item-selected? not (or disabled?))
                     :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
@@ -210,12 +210,12 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:order-changed? (boolean)(opt)
-  ;   :synchronizing? (boolean)(opt)}
+  ;   :disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [order-changed? synchronizing?]}]
+  [extension-id _ {:keys [order-changed? disabled?]}]
   [elements/button ::save-order-button
-                   {:disabled? (-> order-changed? not (or synchronizing?))
+                   {:disabled? (-> order-changed? not (or disabled?))
                     :on-click  [:item-lister/save-order! extension-id]
                     :label     :save-order!
                     :preset    :primary-button}])
@@ -226,12 +226,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [synchronizing?]}]
+  [extension-id _ {:keys [disabled?]}]
   [elements/button ::quit-reorder-mode-button
-                   {:disabled? synchronizing?
+                   {:disabled? disabled?
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
                     :preset    :close-icon-button}])
 
@@ -245,14 +245,16 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [extension-id item-namespace {:keys [disabled?]}]
   (let [new-item-uri (engine/new-item-uri extension-id item-namespace)]
        [elements/button ::new-item-button
-                        {:on-click [:router/go-to! new-item-uri]
-                         :preset   :add-icon-button
-                         :tooltip  :add-new!}]))
+                        {:disabled? disabled?
+                         :on-click  [:router/go-to! new-item-uri]
+                         :preset    :add-icon-button
+                         :tooltip   :add-new!}]))
 
 (defn new-item-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -260,17 +262,19 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:new-item-options (vector)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :new-item-options (vector)}
   ;
   ; @usage
   ;  (a/reg-event-fx :my-extension/add-new-item! (fn [_ [_ selected-option]] ...))
   ;  [item-lister/new-item-select :my-extension :my-type {:options [...]}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [new-item-options]}]
+  [extension-id _ {:keys [disabled? new-item-options]}]
   [elements/select ::new-item-select
                    {:as-button?      true
                     :autoclear?      true
+                    :disabled?       disabled?
                     :initial-options (param new-item-options)
                     :on-select       (engine/add-new-item-event extension-id)
                     :preset          :add-icon-button}])
@@ -281,12 +285,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:no-items-to-show? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [no-items-to-show?]}]
+  [extension-id _ {:keys [disabled? no-items-to-show?]}]
   [elements/button ::toggle-select-mode-button
-                   {:disabled? no-items-to-show?
+                   {:disabled? (or no-items-to-show? disabled?)
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                     :preset    :select-mode-icon-button
                     :tooltip   :select}])
@@ -297,12 +302,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:no-items-to-show? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [no-items-to-show?]}]
+  [extension-id _ {:keys [disabled? no-items-to-show?]}]
   [elements/button ::toggle-reorder-mode-button
-                   {:disabled? no-items-to-show?
+                   {:disabled? (or no-items-to-show? disabled?)
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
                     :preset    :reorder-mode-icon-button
                     :tooltip   :reorder}])
@@ -313,12 +319,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
+  ;  {:disabled? (boolean)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [no-items-to-show?]}]
+  [extension-id item-namespace {:keys [disabled? no-items-to-show?]}]
   [elements/select ::sort-items-button
                    {:as-button?    true
-                    :disabled?     no-items-to-show?
+                    :disabled?     (or no-items-to-show? disabled?)
                     :on-select     [:item-lister/order-items! extension-id item-namespace]
                     :options-label :order-by
                     :preset        :order-by-icon-button
@@ -529,14 +537,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:synchronizing? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}
   ; @param (integer) item-dex
   ;
   ; @return (component)
   [extension-id item-namespace body-props item-dex]
   (let [item-selected? (a/subscribe [:item-lister/item-selected? extension-id item-namespace item-dex])]
-       (fn [_ _ {:keys [synchronizing?]} item-dex]
-           [elements/button {:disabled? synchronizing?
+       (fn [_ _ {:keys [disabled?]} item-dex]
+           [elements/button {:disabled? disabled?
                              :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
                              :preset    (if @item-selected? :checked-icon-button :unchecked-icon-button)}])))
 

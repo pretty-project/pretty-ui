@@ -89,9 +89,8 @@
   ; @return (map)
   ;  {:at-home? (boolean)}
   [db [_ extension-id item-namespace]]
-
-            ; TEMP
-  (merge (r app-plugins.item-lister.subs/get-header-props db extension-id item-namespace)
+  (merge ; TEMP
+         (r app-plugins.item-lister.subs/get-header-props db extension-id item-namespace)
          {:at-home? (r at-home? db extension-id)}))
 
 (a/reg-sub :item-browser/get-header-props get-header-props)
@@ -104,10 +103,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-              ; TEMP
-              ; Milyen néven legyen beimportolva a subs névtér?
-       (merge (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace)
-              (if error-mode? {:description ""}))))
+  ; TEMP
+  ; Milyen néven legyen beimportolva a subs névtér?
+  (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace))
 
 (a/reg-sub :item-browser/get-view-props get-view-props)
