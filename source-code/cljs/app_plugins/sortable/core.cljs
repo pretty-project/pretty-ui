@@ -630,7 +630,7 @@
   (let [value-path          (r get-sortable-prop       db sortable-id :value-path)
         sortable-item-order (r get-sortable-item-order db sortable-id)
         sortable-item-count (r get-sortable-item-count db sortable-id)
-        sortable-item-id     (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
+        sortable-item-id    (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
       (-> db (db/apply!    [event-id value-path vector/inject-item sortable-item target-dex])
              ; XXX#6511
              (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
@@ -837,8 +837,8 @@
   ([sortable-id sortable-props]
    (let [sortable-id (a/id sortable-id)]
         [components/stated sortable-id
-          {:render-f    #'af0120
-           :base-props  sortable-props
-           :destructor  [:sortable/destruct-sortable! sortable-id]
-           :initializer [:sortable/init-sortable!     sortable-id sortable-props]
-           :subscriber  [:sortable/get-view-props     sortable-id]}])))
+                           {:render-f    #'af0120
+                            :base-props  sortable-props
+                            :destructor  [:sortable/destruct-sortable! sortable-id]
+                            :initializer [:sortable/init-sortable!     sortable-id sortable-props]
+                            :subscriber  [:sortable/get-view-props     sortable-id]}])))

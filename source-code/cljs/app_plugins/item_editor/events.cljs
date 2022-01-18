@@ -37,7 +37,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (-> db (dissoc-in [extension-id :item-editor/data-item])
+  (-> db (dissoc-in [extension-id :item-editor/data-items])
          ; A {:recovery-mode? ...} tulajdonság kivételével törli az :item-editor/meta-items térképet
          (update-in [extension-id :item-editor/meta-items] select-keys [:recovery-mode?])))
 
@@ -161,10 +161,10 @@
         document    (get server-response resolver-id)]
        (if (validator/data-valid? document)
            ; XXX#3907
-           ; Az item-lister pluginnal megegyezően az item-editor is névtér nélkül tárolja
+           ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
            ; a letöltött dokumentumot
            (let [document (-> document validator/clean-validated-data db/document->non-namespaced-document)]
-                (as-> db % (assoc-in % [extension-id :item-editor/data-item] document)
+                (as-> db % (assoc-in % [extension-id :item-editor/data-items] document)
                            (r backup-current-item! % extension-id)))
            ; If the received document is NOT valid ...
            (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
@@ -189,7 +189,7 @@
   [db [_ extension-id item-namespace]]
   (let [current-item-id (r subs/get-current-item-id db extension-id)
         recovered-item  (r subs/get-recovered-item  db extension-id item-namespace)]
-       (-> db (assoc-in  [extension-id :item-editor/data-item] recovered-item)
+       (-> db (assoc-in  [extension-id :item-editor/data-items] recovered-item)
               (dissoc-in [extension-id :item-editor/meta-items :recovery-mode?])
               (dissoc-in [extension-id :item-editor/local-changes current-item-id]))))
 
@@ -337,8 +337,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if (r subs/download-data? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:on-success [:item-editor/receive-item!           extension-id item-namespace]
-                              :query      (r queries/get-download-item-query db extension-id item-namespace)}]
+                             {:on-success [:item-editor/receive-item!          extension-id item-namespace]
+                              :query      (r queries/get-request-item-query db extension-id item-namespace)}]
           ; Ha az elem szerkesztéséhez nincs szükség adatok letöltéséhez, akkor is szükséges
           ; a szerkesztőt {:item-received? true} állapotba léptetni!
           {:db (assoc-in db [extension-id :item-editor/meta-items :item-received?] true)})))

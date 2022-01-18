@@ -21,8 +21,19 @@
 
 
 
-;; -- Sbscriptions ------------------------------------------------------------
+;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @return (*)
+  [db [_ extension-id _ item-key]]
+  (get-in db [extension-id :item-browser/meta-items item-key]))
 
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,8 +104,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; TEMP
-  ; Milyen néven legyen beimportolva a subs névtér?
-  (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace))
+  (let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
+              ; TEMP
+              ; Milyen néven legyen beimportolva a subs névtér?
+       (merge (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace)
+              (if error-mode? {:description ""}))))
 
 (a/reg-sub :item-browser/get-view-props get-view-props)

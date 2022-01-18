@@ -17,11 +17,12 @@
 (defn get-load-media-browser-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [directory-id (r item-browser/get-current-item-id db :storage)]
-       [:debug `(:storage/download-capacity-details  ~{})
-               `(:storage/download-directory-details ~{:directory-id directory-id})]))
+  [:debug `(:storage/download-capacity-details  ~{})])
 
 
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -128,7 +129,7 @@
   :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]
-                    [:sync/send-query! (item-browser/request-id :storage :media)
-                                       {:query      (r get-load-media-browser-query db)
-                                        :on-success [:storage/receive-server-response!]}]]}))
+      {:dispatch-n [[:ui/set-surface! ::view {:view {:content #'view}}]]}))
+;                    [:sync/send-query! (item-browser/request-id :storage :media)
+;                                       {:query      (r get-load-media-browser-query db)
+;                                        :on-success [:storage/receive-server-response!]]]}))

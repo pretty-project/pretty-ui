@@ -1,8 +1,22 @@
 
 (ns prototypes.engine
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.time   :as time]
-              [x.server-user.api :as user]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.time    :as time]
+              [server-fruits.http :as http]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request->user-link
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:user-account/id (string)}
+  [request]
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          {:user-account/id user-account-id}))
 
 
 
@@ -25,7 +39,7 @@
   [request document-namespace updated-item]
   (let [namespace (name document-namespace)
         timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
+        user-link (request->user-link request)]
        (merge (param updated-item)
               {(keyword namespace "added-at")    timestamp
                (keyword namespace "added-by")    user-link
@@ -48,7 +62,7 @@
   [request document-namespace updated-item]
   (let [namespace (name document-namespace)
         timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
+        user-link (request->user-link request)]
        (merge {(keyword namespace "added-at") timestamp
                (keyword namespace "added-by") user-link}
               (param updated-item)
@@ -72,7 +86,7 @@
   [request document-namespace duplicated-item]
   (let [namespace (name document-namespace)
         timestamp (time/timestamp-object)
-        user-link (user/request->user-link request)]
+        user-link (request->user-link request)]
        (merge (dissoc duplicated-item (keyword namespace "id"))
               {(keyword namespace "added-at")    timestamp
                (keyword namespace "added-by")    user-link

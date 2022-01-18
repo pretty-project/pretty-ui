@@ -31,16 +31,15 @@
   ;  {:header (map)(opt)}
   ;
   ; @return (map)
-  ;  {:header (map)
-  ;    {:sticky? (boolean)}
+  ;  {:header (map)(opt)
   ;   :horizontal-align (keyword)
-  ;   :min-width (keyword)}
+  ;   :min-width (keyword)
+  ;   :sticky-header? (boolean)}
   [{:keys [header] :as layout-props}]
   (merge {:horizontal-align :center
-          :min-width :l}
+          :min-width        :l}
          (param layout-props)
-         (if (some? header)
-             {:header (merge {:sticky? true} header)})))
+         (if header {:sticky-header? true})))
 
 
 
@@ -108,7 +107,10 @@
   ;    Default: :center
   ;   :min-width (keyword)(opt)
   ;    :m, :l, :xl, :xxl
-  ;    Default: :l}
+  ;    Default: :l
+  ;   :sticky-header? (boolean)(opt)
+  ;    Default: true
+  ;    Only w/ {:header ...}}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]

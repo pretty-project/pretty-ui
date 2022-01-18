@@ -23,10 +23,10 @@
   [:<> [elements/text-field ::my-sample-field
                             {:form-id    (item-editor/form-id :my-extension :my-type)
                                          ; XXX#8092
-                             :value-path [:my-extension :item-editor/data-item :my-key]}]])
+                             :value-path [:my-extension :item-editor/data-items :my-key]}]])
 
 (defn body
-  [body-id]
+  [extension-id item-namespace]
   (let [body-props (a/subscribe [:item-editor/get-body-props :my-extension :my-type])]
        (fn [] [body-structure body-id @body-props])))
 

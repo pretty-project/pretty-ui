@@ -24,9 +24,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;  Pl.: :my-extension/synchronize-item-editor! => :my-extension/synchronize-my-type-editor!
-;  Így biztosítható, hogy egy névtér több különböző item-editor szerkesztőt tudjon megvalósítani.
+; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
+;   Pl.: :my-extension/synchronize-item-editor! => :my-extension/synchronize-my-type-editor!
+;   Így biztosítható, hogy egy névtér több különböző item-editor szerkesztőt tudjon megvalósítani.
+; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
+;   hogy egy extension több szerkesztőt alkalmazhasson.
 
 
 

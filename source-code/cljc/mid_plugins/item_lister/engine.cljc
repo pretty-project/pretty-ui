@@ -23,9 +23,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;  Pl.: :my-extension/synchronize-item-lister! => :my-extension/synchronize-my-type-lister!
-;  Így biztosítható, hogy egy névtér több különböző item-lister listázót tudjon megvalósítani.
+; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
+;   Pl.: :my-extension/synchronize-item-lister! => :my-extension/synchronize-my-type-lister!
+;   Így biztosítható, hogy egy névtér több különböző item-lister listázót tudjon megvalósítani.
+; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
+;   hogy egy extension több listázót alkalmazhasson.
 
 
 

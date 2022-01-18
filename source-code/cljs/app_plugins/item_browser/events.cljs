@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.3.0
-; Compatibility: x4.5.0
+; Compatibility: x4.5.4
 
 
 
@@ -14,10 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.events
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.subs   :as subs]))
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.validator :as validator]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-db.api         :as db]
+              [app-plugins.item-browser.engine  :as engine]
+              [app-plugins.item-browser.queries :as queries]
+              [app-plugins.item-browser.subs    :as subs]))
 
 
 
@@ -35,6 +38,40 @@
   [db [_ extension-id item-namespace browser-props]]
   (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace browser-props)]
        (assoc-in db [extension-id :item-browser/meta-items :item-id] derived-item-id)))
+
+(defn store-downloaded-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        document    (get server-response resolver-id)]
+       (if (validator/data-valid? document)
+           ; XXX#3907
+           ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja
+           ; a letöltött dokumentumot
+           (let [document    (->  document validator/clean-validated-data db/document->non-namespaced-document)
+                 document-id (get document :id)]
+                (assoc-in db [extension-id :item-browser/data-items document-id] document))
+           ; If the received document is NOT valid ...
+           (assoc-in db [extension-id :item-browser/meta-items :error-mode?] true))))
+
+(defn receive-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (r store-downloaded-item! db extension-id item-namespace server-response))
+
+(a/reg-event-db :item-browser/receive-item! receive-item!)
 
 (defn load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,6 +114,17 @@
            [:router/go-to! browser-uri])))
 
 (a/reg-event-fx
+  :item-browser/request-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {:on-success [:item-browser/receive-item!         extension-id item-namespace]
+                          :query      (r queries/get-request-item-query db extension-id item-namespace)}]))
+
+(a/reg-event-fx
   :item-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -108,6 +156,7 @@
 
             :dispatch-n [[:ui/set-header-title!  (param extension-id)]
                          [:ui/set-window-title!  (param extension-id)]
+                         [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
 
                          ; Nem tudom itt-e a helye.

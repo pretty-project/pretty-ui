@@ -104,8 +104,8 @@
        (merge {:description ""
                :tags        []}
               (param file-document)
-              (user/request->modify-props request)
-              (user/request->upload-props request)
+              ;(user/request->modify-props request)
+              ;(user/request->upload-props request)
               {:id          file-id
                :path        file-path})))
               ;:permissions document-permissions
@@ -133,8 +133,8 @@
        (merge {:description ""
                :tags        []}
               (param directory-document)
-              (user/request->create-props request)
-              (user/request->modify-props request)
+              ;(user/request->create-props request)
+              ;(user/request->modify-props request)
               {:content-size 0
                :id           directory-id
                :items        []
@@ -155,8 +155,8 @@
   ;
   ; @return (map)
   [{:keys [request]} [_ updated-props]]
-  (merge (param updated-props)
-         (user/request->modify-props request)))
+  (merge (param updated-props)))
+         ;(user/request->modify-props request)))
 
 
 
@@ -184,9 +184,9 @@
   [{:keys [request]} {:keys [source-directory-id selected-item]}]
   (local-db/update-document! "directories" source-directory-id
                                            ; Remove file link from :items vector
-                             (fn [%] (-> % (update :items vector/remove-item selected-item)
+                             (fn [%] (-> % (update :items vector/remove-item selected-item))))
                                            ; Update modify data in source-directory document
-                                           (merge (user/request->modify-props request)))))
+                                           ;(merge (user/request->modify-props request)))))
   (return "Item detached"))
 
 (defn attach-item!
@@ -210,9 +210,9 @@
   [{:keys [request]} {:keys [destination-directory-id selected-item]}]
   (local-db/update-document! "directories" destination-directory-id
                                            ; Add file link from :items vector
-                             (fn [%] (-> % (update :items vector/conj-item selected-item)
+                             (fn [%] (-> % (update :items vector/conj-item selected-item))))
                                            ; Update modify data in source-directory document
-                                           (merge (user/request->modify-props request)))))
+                                           ;(merge (user/request->modify-props request)))))
   (return "Item attached"))
 
 

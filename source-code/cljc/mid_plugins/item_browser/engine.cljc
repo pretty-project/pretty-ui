@@ -24,9 +24,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;  Pl.: :my-extension/synchronize-item-browser! => :my-extension/synchronize-my-type-browser!
-;  Így biztosítható, hogy egy névtér több különböző item-browser böngészőt tudjon megvalósítani.
+; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
+;   Pl.: :my-extension/synchronize-item-browser! => :my-extension/synchronize-my-type-browser!
+;   Így biztosítható, hogy egy névtér több különböző item-browser böngészőt tudjon megvalósítani.
+; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
+;   hogy egy extension több böngészőt alkalmazhasson.
 
 
 
@@ -106,12 +108,12 @@
   ; @example
   ;  (engine/resolver-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/get-my-type-items
+  ;  :my-extension/get-my-type-item
   ;
   ; @return (keyword)
   [extension-id item-namespace]
   (keyword (name extension-id)
-           (str "get-" (name item-namespace) "-items")))
+           (str "get-" (name item-namespace) "-item")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!

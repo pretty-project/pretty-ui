@@ -19,8 +19,8 @@
 (defn- get-client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [first-name (get-in db [:clients :item-editor/data-item :first-name])
-        last-name  (get-in db [:clients :item-editor/data-item :last-name])]
+  (let [first-name (get-in db [:clients :item-editor/data-items :first-name])
+        last-name  (get-in db [:clients :item-editor/data-items :last-name])]
        (r locales/get-ordered-name db first-name last-name)))
 
 (defn- get-body-props
@@ -54,7 +54,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::vat-no-field
                        {:label :vat-no :min-width :s
-                        :value-path [:clients :item-editor/data-item :vat-no]
+                        :value-path [:clients :item-editor/data-items :vat-no]
                         :disabled?  disabled?}])
 
 (defn- client-country-select
@@ -64,7 +64,7 @@
                    {:label :country ;:user-cancel? false
                     :initial-value   (locales/country-native-name selected-language)
                     :initial-options (param locales/EU-COUNTRY-NAMES)
-                    :value-path      [:clients :item-editor/data-item :country]
+                    :value-path      [:clients :item-editor/data-items :country]
                     :disabled?       disabled?}])
 
 (defn- client-zip-code-field
@@ -72,7 +72,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::zip-code-field
                        {:label :zip-code
-                        :value-path [:clients :item-editor/data-item :zip-code]
+                        :value-path [:clients :item-editor/data-items :zip-code]
                         :disabled?  disabled?}])
 
 (defn- client-city-field
@@ -81,7 +81,7 @@
   [elements/combo-box ::city-field
                       {:label :city :emptiable? false :min-width :s
                        :options-path [:clients :item-editor/meta-items :suggestions :client/city]
-                       :value-path   [:clients :item-editor/data-item :city]
+                       :value-path   [:clients :item-editor/data-items :city]
                        :disabled?    disabled?}])
 
 (defn- client-address-field
@@ -89,7 +89,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::address-field
                        {:label :address
-                        :value-path [:clients :item-editor/data-item :address]
+                        :value-path [:clients :item-editor/data-items :address]
                         :disabled?  disabled?}])
 
 (defn- client-secondary-contacts
@@ -113,7 +113,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::phone-number-field
                        {:label :phone-number :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-item :phone-number]
+                        :value-path [:clients :item-editor/data-items :phone-number]
                         :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
                         ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
                         ;:modifier form/valid-phone-number
@@ -126,7 +126,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::email-address-field
                        {:label :email-address :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-item :email-address]
+                        :value-path [:clients :item-editor/data-items :email-address]
                         :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                         :form-id   (item-editor/form-id :clients :client)
                         :disabled? disabled?}])
@@ -145,7 +145,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::last-name-field
                        {:label :last-name :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-item :last-name]
+                        :value-path [:clients :item-editor/data-items :last-name]
                         :form-id    (item-editor/form-id :clients :client)
                         :disabled?  disabled?}])
 
@@ -154,7 +154,7 @@
   [_ {:keys [disabled?]}]
   [elements/text-field ::first-name-field
                        {:label :first-name :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-item :first-name]
+                        :value-path [:clients :item-editor/data-items :first-name]
                         :form-id    (item-editor/form-id :clients :client)
                         :disabled?  disabled?}])
 
@@ -197,9 +197,9 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
+  [extension-id item-namespace]
   (let [body-props (a/subscribe [:client-editor/get-body-props])]
-       (fn [] [body-structure body-id @body-props])))
+       (fn [] [body-structure extension-id @body-props])))
 
 
 

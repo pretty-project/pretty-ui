@@ -30,6 +30,46 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-data-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r subs/get-data-item :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (get-in db [extension-id :item-editor/data-items]))
+
+(defn get-data-value
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (r subs/get-data-value :my-extension :my-type :modified-at)
+  ;
+  ; @return (map)
+  [db [_ extension-id _ item-key]]
+  (get-in db [extension-id :item-editor/data-items item-key]))
+
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (r subs/get-meta-item :my-extension :my-type :error-mode?)
+  ;
+  ; @return (map)
+  [db [_ extension-id _ item-key]]
+  (get-in db [extension-id :item-editor/meta-items item-key]))
+
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,7 +128,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (get-in db [extension-id :item-editor/data-item]))
+  (get-in db [extension-id :item-editor/data-items]))
 
 (defn export-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,46 +152,6 @@
   (let [current-item (r get-current-item db extension-id)
         copy-item    (dissoc current-item :added-at :added-by :id :modified-at :modified-by)]
        (db/document->namespaced-document copy-item item-namespace)))
-
-(defn get-data-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r subs/get-data-item :my-extension)
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (get-in db [extension-id :item-editor/data-item]))
-
-(defn get-data-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @usage
-  ;  (r subs/get-data-value :my-extension :my-type :modified-at)
-  ;
-  ; @return (map)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/data-item item-key]))
-
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @usage
-  ;  (r subs/get-meta-item :my-extension :my-type :error-mode?)
-  ;
-  ; @return (map)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/meta-items item-key]))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v0.5.0
-; Compatibility: x3.9.9
+; Version: v0.5.6
+; Compatibility: x4.5.4
 
 
 
@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.api
-    (:require ;[x.server-user.installer]
+    (:require [x.server-user.installer]
               [x.server-user.account-handler  :as account-handler]
               [x.server-user.engine           :as engine]
               [x.server-user.profile-handler  :as profile-handler]
@@ -35,7 +35,6 @@
 (def request->user-account        account-handler/request->user-account)
 (def request->user-public-account account-handler/request->user-public-account)
 (def request->authenticated?      account-handler/request->authenticated?)
-(def request->user-link           account-handler/request->user-link)
 
 ; x.server-user.engine
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
@@ -48,11 +47,6 @@
 
 ; x.server-user.session-handler
 (def session->session-valid? session-handler/session->session-valid?)
-(def request->add-props      session-handler/request->add-props)
-(def request->modify-props   session-handler/request->modify-props)
-(def request->create-props   session-handler/request->create-props)
-(def request->delete-props   session-handler/request->delete-props)
-(def request->upload-props   session-handler/request->upload-props)
 
 ; x.server-user.settings-handler
 (def request->user-settings      settings-handler/request->user-settings)

@@ -58,9 +58,8 @@
   ; @usage
   ;  (dev {:shadow-build :my-build})
   [{:keys [port shadow-build]}]
-  (if (some? port)
-      (-main port)
-      (-main))
+  (if port (-main port)
+           (-main))
   (server/stop!)
   (server/start!)
   (shadow/watch shadow-build)

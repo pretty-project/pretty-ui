@@ -640,8 +640,8 @@
 (defn layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [extension-id item-namespace {:keys [description] :as view-props}]
-  [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
-                                  :header {:content [header extension-id item-namespace view-props]}
+  [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
+                                  :header [header extension-id item-namespace view-props]
                                   :description description}])
 
 (defn view

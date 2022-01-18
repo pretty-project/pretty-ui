@@ -13,7 +13,7 @@
 
 
 # x4.5.0
-- A  re-frame-browser és mongo-browser csak developer fordításkor müködjön system-environment változoval
+- prototypes névtér újra a mongo-db névtér része lehet, mert már enm circular-dep w/ x.server-user.api
 
 - Legyen a monoset-environment mappában vagy inkább a project-emulator mappában egy
   project-dictionary.cljc vagy valami fájl, hogy a projekben ne eventekkel kelljen hozzáadogatni

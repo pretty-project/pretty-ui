@@ -426,8 +426,8 @@
     (engine/update-path-content-size! destination-directory-id filesize +)
 
     ; Update file document modify data
-    (let [modify-props (user/request->modify-props request)]
-         (local-db/update-document! "files" file-id merge modify-props))
+    ;(let [modify-props (user/request->modify-props request)]
+    ;     (local-db/update-document! "files" file-id merge modify-props))
 
     ; Add the new file link to destination-directory document
     (engine/attach-item! env {:destination-directory-id destination-directory-id
@@ -466,8 +466,8 @@
                               :selected-item            copy-directory-link})
 
     ; Update directory document modify data
-    (let [modify-props (user/request->modify-props request)]
-         (local-db/update-document! "directories" destination-directory-id merge modify-props))
+    ;(let [modify-props (user/request->modify-props request)]
+    ;     (local-db/update-document! "directories" destination-directory-id merge modify-props))
 
     ; Iterates through items in directory
     (let [directory-items                     (get directory-document :items)
@@ -559,8 +559,8 @@
                                  :selected-item            selected-item})
 
        ; Update file document modify data
-       (let [modify-props (user/request->modify-props request)]
-            (local-db/update-document! "files" file-id merge modify-props))
+       ;(let [modify-props (user/request->modify-props request)]
+        ;    (local-db/update-document! "files" file-id merge modify-props))
 
        (return "File moved")))
 
@@ -587,9 +587,9 @@
                             :selected-item            selected-item})
 
   ; Update directory documents modify data
-  (let [modify-props (user/request->modify-props request)]
-       (local-db/update-document! "directories" destination-directory-id merge modify-props)
-       (local-db/update-document! "directories" source-directory-id      merge modify-props))
+  ;(let [modify-props (user/request->modify-props request)]
+  ;     (local-db/update-document! "directories" destination-directory-id merge modify-props)
+  ;     (local-db/update-document! "directories" source-directory-id      merge modify-props))
 
   (return "Directory moved"))
 

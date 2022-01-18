@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.4.2
+; Version: v0.6.8
+; Compatibility: x4.5.4
 
 
 
@@ -128,21 +128,12 @@
        (and (engine/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))
 
-(defn request->user-link
-  ; @param (map) request
-  ;
-  ; @return (map)
-  ;  {:user-account/id (string)}
-  [request]
-  (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          {:user-account/id user-account-id}))
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn authenticate_
+(defn authenticate
   ; WARNING! NON PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
@@ -161,10 +152,6 @@
            (http/text-wrap  {:body    (param "Speak, friend, and enter")
                              :session (param user-public-account)})
            (http/error-wrap {:error-message :permission-denied :status 401}))))
-
-(defn authenticate
-  [r]
-  (authenticate_ r))
 
 (defn logout
   ; WARNING! NON PUBLIC! DO NOT USE!

@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.engine
-    (:require [mid-fruits.keyword :as keyword]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
               [mid-plugins.item-browser.engine :as engine]
@@ -57,9 +58,14 @@
   [env extension-id item-namespace]
   (let [collection-name (collection-name extension-id)
         items-key       (keyword/add-namespace item-namespace :items)
-        item-id         (pathom/env->param env :item-id)
-        item            (mongo-db/get-document-by-id collection-name item-id)]
-       (get item items-key)))
+        item-id         (pathom/env->param env :item-id)]
+       (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
+               (get document items-key)
+               ; WARNING!
+               ; Az env->item-links függvény visszatérési értéke egy vektor kell legyen!
+               ; Ha az item-links értéke nil, akkor az így létrehozott filter-pattern alkalmazásával
+               ; az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
+               (return []))))
 
 (defn env->sort-pattern
   ; @param (map) env

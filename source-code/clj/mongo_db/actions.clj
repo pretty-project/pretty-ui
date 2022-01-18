@@ -226,8 +226,8 @@
   ([collection-name document options]
    (if-let [document (prepare-document collection-name document options)]
            (if-let [document (adaptation/insert-input document)]
-                   (let [result (insert-and-return! collection-name document)]
-                        (adaptation/insert-output result))))))
+                   (if-let [result (insert-and-return! collection-name document)]
+                           (adaptation/insert-output result))))))
 
 ; @usage
 ;  [:mongo-db/insert-document! "my-collection" {:namespace/id "MyObjectId" ...}]
@@ -291,8 +291,8 @@
   ([collection-name document options]
    (if-let [document (prepare-document collection-name document options)]
            (if-let [document (adaptation/save-input document)]
-                   (let [result (save-and-return! collection-name document)]
-                        (adaptation/save-output result))))))
+                   (if-let [result (save-and-return! collection-name document)]
+                           (adaptation/save-output result))))))
 
 ; @usage
 ;  [:mongo-db/save-document! "my-collection" {:namespace/id "MyObjectId" ...}]

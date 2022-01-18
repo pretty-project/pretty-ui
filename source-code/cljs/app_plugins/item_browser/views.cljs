@@ -63,6 +63,24 @@
 
 
 
+;; -- Error components --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (component)
+  [extension-id item-namespace]
+  [:<> [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
+       [elements/horizontal-separator {:size :xs}]
+       [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
+       [elements/horizontal-separator {:size :xs}]])
+
+
+
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -153,10 +171,14 @@
 
 (defn- layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace {:keys [description] :as view-props}]
-  [layouts/layout-a extension-id {:body   {:content [body   extension-id item-namespace view-props]}
-                                  :header {:content [header extension-id item-namespace view-props]}
-                                  :description description}])
+  [extension-id item-namespace {:keys [description error-mode?] :as view-props}]
+  (if error-mode? ; If error-mode is enabled ...
+                  [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
+                                                  :header [header     extension-id item-namespace view-props]}]
+                  ; If error-mode is NOT enabled ...
+                  [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
+                                                  :header [header extension-id item-namespace view-props]
+                                                  :description description}]))
 
 (defn view
   ; @param (keyword) extension-id

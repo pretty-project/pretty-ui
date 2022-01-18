@@ -1,4 +1,10 @@
 
+# x4.5.5
+- Az item-editor ezentúl a [:my-extension :item-editor/data-item ...] útvonal helyett,
+  a [:my-extension :item-editor/data-items ...] útvonalat használja!
+
+
+
 # x4.5.4
 - Az item-editor plugin [:item-editor/get-header-props ...] és [:item-editor/get-body-props ...]
   feliratkozásában a {:synchronizing? ...} tulajdonság helyett a {:disabled? ...} tulajdonság

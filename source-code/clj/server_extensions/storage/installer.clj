@@ -2,6 +2,7 @@
 (ns server-extensions.storage.installer
     (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
+              [prototypes.api     :as prototypes]
               [server-fruits.io   :as io]
               [x.server-core.api  :as a :refer [r]]
               [x.server-media.api :as media]
@@ -36,33 +37,20 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn add-root-directory!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (println "[:storage] Adding root directory document ...")
-  (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
-        sample-file-filesize (io/get-filesize sample-file-filepath)]
-       (engine/insert-media-item! {:request {:session user/SYSTEM-ACCOUNT}}
-                                  (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize))))
-
-(defn- add-sample-file!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (println "[:storage] Adding sample file document ...")
-  (let [sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
-        sample-file-filesize (io/get-filesize sample-file-filepath)]
-       (engine/insert-media-item! {:request {:session user/SYSTEM-ACCOUNT}}
-                                  (assoc SAMPLE-FILE-DOCUMENT :media/filesize sample-file-filesize))))
-
 (defn- check-install!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (if-let [root-directory-document (mongo-db/get-document-by-id "storage" engine/ROOT-DIRECTORY-ID)]
-          (return nil)
-          (add-root-directory!))
-  (if-let [sample-file-document (mongo-db/get-document-by-id "storage" engine/SAMPLE-FILE-ID)]
-          (return nil)
-          (add-sample-file!)))
+  (let [request {:session user/SYSTEM-ACCOUNT}
+        options {:prototype-f #(prototypes/added-document-prototype request :media %)}
+        ; Get sample file filesize
+        sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
+        sample-file-filesize (io/get-filesize sample-file-filepath)]
+       (if-not (mongo-db/get-document-by-id "storage" engine/SAMPLE-FILE-ID)
+               (let [sample-file-document (assoc SAMPLE-FILE-DOCUMENT :media/filesize sample-file-filesize)]
+                    (mongo-db/insert-document! "storage" sample-file-document options)))
+       (if-not (mongo-db/get-document-by-id "storage" engine/ROOT-DIRECTORY-ID)
+               (let [root-directory-document (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize)]
+                    (mongo-db/insert-document! "storage" root-directory-document options)))))
 
 (a/reg-fx :storage/check-install! check-install!)
 

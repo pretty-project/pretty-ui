@@ -239,7 +239,7 @@
   ; @return (component)
   [extension-id item-namespace {:keys [disabled?]}]
   [elements/multiline-field ::description-field
-                            {:value-path [extension-id :item-editor/data-item :description]
+                            {:value-path [extension-id :item-editor/data-items :description]
                              :disabled?  disabled?}])
 
 
@@ -248,13 +248,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn error-body
-  ; @param (keyword) body-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [item-editor/error-body :my-body]
+  ;  [item-editor/error-body :my-extension :my-type]
   ;
   ; @return (component)
-  [body-id]
+  [_ _]
   [:<> [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
        [elements/horizontal-separator {:size :xs}]
        [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
@@ -334,14 +335,15 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [description error-mode? form-element]}]
+
   (if error-mode? ; If error-mode is enabled ...
-                  [layouts/layout-a extension-id {:body   {:content [error-body]}
-                                                  :header {:content [header extension-id item-namespace]}}]
+                  [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
+                                                  :header [header     extension-id item-namespace]}]
                   ; If error-mode is NOT enabled ...
                   [layouts/layout-a extension-id {:description description
-                                                  :body   {:content [form-element]}
-                                                  :header {:content [header extension-id item-namespace]}}]))
-
+                                                  :body   [form-element extension-id item-namespace]
+                                                  :header [header       extension-id item-namespace]}]))
+  
 (defn view
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace

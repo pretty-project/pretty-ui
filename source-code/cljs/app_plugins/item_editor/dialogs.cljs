@@ -45,7 +45,7 @@
   [extension-id]
   [elements/color-picker ::color-picker
                          {:initial-options COLORS
-                          :value-path [extension-id :item-editor/data-item :colors]}])
+                          :value-path [extension-id :item-editor/data-items :colors]}])
 
 
 

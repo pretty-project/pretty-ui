@@ -16,6 +16,6 @@
   ;
   ; @return (map)
   [db [_ server-response]]
-  (as-> db % (r capacity-handler/receive-capacity-details! db server-response)))
+  (as-> db % (r capacity-handler/receive-capacity-details! % server-response)))
 
 (a/reg-event-db :storage/receive-server-response! receive-server-response!)
