@@ -4,6 +4,7 @@
               [mid-fruits.css     :as css]
               [mid-fruits.format  :as format]
               [mid-fruits.io      :as io]
+              [mid-fruits.vector  :as vector]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
               [x.app-media.api    :as media]
@@ -44,8 +45,11 @@
 
 (defn- directory-item-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [:div.storage--media-item--header [elements/icon {:icon :folder}]])
+  [_ {:keys [items]}]
+  (let [icon-family (if (vector/nonempty? items) :material-icons-filled :material-icons-outlined)]
+       [:div.storage--media-item--header [elements/icon {:icon :folder
+                                                         :icon-family icon-family
+                                                         :size :xxl}]]))
 
 (defn- directory-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,6 +58,9 @@
     [elements/label {:content (str alias)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
+                     :layout :fit :selectable? false :color :muted
+                     :font-size :xs}]
+    [elements/label {:content "0 elem" :font-size :xs
                      :layout :fit :selectable? false :color :muted}]])
 
 (defn- directory-item
@@ -82,7 +89,9 @@
     [elements/label {:content (str alias)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
-                     :layout :fit :selectable? false :color :muted}]])
+                     :layout :fit :selectable? false :color :muted :font-size :xs}]
+    [elements/label {:content ""
+                     :layout :fit :selectable? false :color :muted :font-size :xs}]])
 
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,15 +115,15 @@
 
 (a/reg-event-fx
   :storage/->item-clicked
-  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type]}]]
+  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
       (if (or (r x.app-environment.api/key-pressed? db 16)
               (r x.app-environment.api/key-pressed? db 91))
           [:item-lister/toggle-item-selection! :storage :media item-dex]
           (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                              [:storage/save-files!]))))
+                                              [:storage/->file-clicked item-dex item-props]))))
 
 (a/reg-event-fx
-  :storage/save-files!
+  :storage/->file-clicked
   (fn [_ _]
       [:ui/add-popup! :xxxx
                       {:body [:div [:div "Fájl letöltése"]
@@ -122,6 +131,7 @@
                                    ; És mivel nincs tömörítönk ezért most még disabled lesz
                                    [:div "Kijelölt fájlok letöltése"]]
                        :min-width :xs}]))
+
 
 
 ;; -- View components ---------------------------------------------------------

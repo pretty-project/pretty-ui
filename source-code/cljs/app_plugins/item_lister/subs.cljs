@@ -420,6 +420,7 @@
   ;
   ; @return (map)
   ;  {:actions-mode? (boolean)
+  ;   :all-items-downloaded? (boolean)
   ;   :disabled? (boolean)
   ;   :error-mode? (boolean)
   ;   :downloaded-items (vector)
@@ -438,35 +439,39 @@
         ; If select-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :select-mode?)
         {:select-mode?      true
-         :disabled?          (r disabled?            db extension-id item-namespace)
-         :downloaded-items   (r get-downloaded-items db extension-id)
-         :downloading-items? (r downloading-items?   db extension-id item-namespace)
-         :items-received?    (r items-received?      db extension-id item-namespace)
-         :no-items-to-show?  (r no-items-to-show?    db extension-id)}
+         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
+         :disabled?             (r disabled?             db extension-id item-namespace)
+         :downloaded-items      (r get-downloaded-items  db extension-id)
+         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
+         :items-received?       (r items-received?       db extension-id item-namespace)
+         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode?      true
-         :disabled?          (r disabled?            db extension-id item-namespace)
-         :downloaded-items   (r get-downloaded-items db extension-id)
-         :downloading-items? (r downloading-items?   db extension-id item-namespace)
-         :items-received?    (r items-received?      db extension-id item-namespace)
-         :no-items-to-show?  (r no-items-to-show?    db extension-id)}
+         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
+         :disabled?             (r disabled?             db extension-id item-namespace)
+         :downloaded-items      (r get-downloaded-items  db extension-id)
+         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
+         :items-received?       (r items-received?       db extension-id item-namespace)
+         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
         ; If reorder-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?     true
-         :disabled?          (r disabled?            db extension-id item-namespace)
-         :downloaded-items   (r get-downloaded-items db extension-id)
-         :downloading-items? (r downloading-items?   db extension-id item-namespace)
-         :items-received?    (r items-received?      db extension-id item-namespace)
-         :no-items-to-show?  (r no-items-to-show?    db extension-id)}
+         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
+         :disabled?             (r disabled?             db extension-id item-namespace)
+         :downloaded-items      (r get-downloaded-items  db extension-id)
+         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
+         :items-received?       (r items-received?       db extension-id item-namespace)
+         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
         ; Use actions-mode as default ...
         :default
         {:actions-mode?     true
-         :disabled?          (r disabled?            db extension-id item-namespace)
-         :downloaded-items   (r get-downloaded-items db extension-id)
-         :downloading-items? (r downloading-items?   db extension-id item-namespace)
-         :items-received?    (r items-received?      db extension-id item-namespace)
-         :no-items-to-show?  (r no-items-to-show?    db extension-id)}))
+         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
+         :disabled?             (r disabled?             db extension-id item-namespace)
+         :downloaded-items      (r get-downloaded-items  db extension-id)
+         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
+         :items-received?       (r items-received?       db extension-id item-namespace)
+         :no-items-to-show?     (r no-items-to-show?     db extension-id)}))
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 

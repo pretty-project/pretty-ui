@@ -468,10 +468,24 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
+  ;  {:all-items-downloaded? (boolean)(opt)
+  ;   :downloading-items? (boolean)(opt)
+  ;   :items-received? (boolean)(opt)}
   ;
   ; @return (component)
-  [_ _ _]
-  [elements/label {:content :downloading-items... :font-size :xs :color :highlight :font-weight :bold}])
+  [extension-id item-namespace {:keys [all-items-downloaded? downloading-items? items-received?]}]
+  (cond (or (boolean downloading-items?)
+            ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
+            ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
+            ; feltétel hozzáadása nélkül:
+            (and (not downloading-items?)
+                 (not items-received?)))
+        [elements/label {:content :downloading-items... :font-size :xs :color :highlight :font-weight :bold}]
+        ; Ha még nincs letöltve az összes elem és várható a request-indicator-label felirat megjelenése,
+        ; addig a placeholder használata biztosítja, hogy a felirat megjelenésekor és eltűnésekor ne
+        ; változzon a lista magassága.
+        (not all-items-downloaded?)
+        [elements/label {:content "" :font-size :xs}]))
 
 (defn request-indicator
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -479,19 +493,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:downloading-items? (boolean)(opt)
-  ;   :items-received? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloading-items? items-received?] :as body-props}]
-  (if (or (boolean downloading-items?)
-          ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
-          ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
-          ; feltétel hozzáadása nélkül:
-          (and (not downloading-items?)
-               (not items-received?)))
-      [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
-                     :horizontal-align :center}]))
+  [extension-id item-namespace body-props]
+  [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
+                 :horizontal-align :center}])
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
