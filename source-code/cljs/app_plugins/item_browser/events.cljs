@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.0
-; Compatibility: x4.5.4
+; Version: v0.3.8
+; Compatibility: x4.5.5
 
 
 
@@ -21,7 +21,8 @@
               [x.app-db.api         :as db]
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
-              [app-plugins.item-browser.subs    :as subs]))
+              [app-plugins.item-browser.subs    :as subs]
+              [app-plugins.item-lister.api      :as item-lister]))
 
 
 
@@ -95,20 +96,23 @@
   (r store-downloaded-item! db extension-id item-namespace server-response))
 
 (defn load-browser!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   ;
+  ; @usage
+  ;  (r item-browser/load-browser! :my-extension :my-type {...})
+  ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
+  ; Az item-browser plugin számára átadott browser-props térképet két részre osztja, aszerint,
+  ; hogy mely tulajdonságok szükségesek az item-lister plugin és melyek az item-browser
+  ; plugin beállításához.
   (let [lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
         browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
-       (as-> db % (r store-browser-props!   % extension-id item-namespace browser-props)
-                  (r store-current-item-id! % extension-id item-namespace browser-props)
-                  ; TEMP
-                  (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace lister-props))))
+       (as-> db % (r store-browser-props!     % extension-id item-namespace browser-props)
+                  (r store-current-item-id!   % extension-id item-namespace browser-props)
+                  (r item-lister/load-lister! % extension-id item-namespace lister-props))))
 
 
 

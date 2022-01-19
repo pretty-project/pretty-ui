@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.0
+; Version: v0.5.6
+; Compatibility: x4.5.5
 
 
 
@@ -15,8 +15,8 @@
 
 (ns app-plugins.item-lister.views
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.logical   :refer [nor]]
               [mid-fruits.loop      :refer [reduce-indexed]]
-              [mid-fruits.vector    :as vector]
               [x.app-core.api       :as a :refer [r]]
               [x.app-components.api :as components]
               [x.app-elements.api   :as elements]
@@ -27,9 +27,6 @@
              ;[app-plugins.sortable.core      :refer [sortable]]
 
 
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 ;; -- Search-mode header components -------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,12 +84,13 @@
                     :tooltip   :search}])
 
 (defn search-block
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:viewport-small? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/search-block :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [viewport-small?] :as element-props}]
@@ -200,6 +198,23 @@
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
 
+(defn duplicate-selected-items-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) element-props
+  ;  {:any-item-selected? (boolean)(opt)
+  ;   :disabled? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [any-item-selected? disabled?]}]
+  [elements/button ::duplicate-selected-items-button
+                   {:disabled? (-> any-item-selected? not (or disabled?))
+                    :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
+                    :preset    :duplicate-icon-button
+                    :tooltip   :duplicate!}])
+
 
 
 ;; -- Reorder-mode header components ------------------------------------------
@@ -240,15 +255,16 @@
 
 
 
-;; -- Actions-mode header components ------------------------------------------
+;; -- Menu-mode header components ---------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn new-item-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;  {:disabled? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/new-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [disabled?]}]
@@ -261,8 +277,6 @@
                          :icon      :add_circle}]))
 
 (defn new-item-select
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
@@ -286,13 +300,14 @@
                     :icon            :add_circle}])
 
 (defn toggle-select-mode-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/toggle-select-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id _ {:keys [disabled? no-items-to-show?]}]
@@ -303,13 +318,14 @@
                     :tooltip   :select}])
 
 (defn toggle-reorder-mode-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/toggle-reorder-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id _ {:keys [disabled? no-items-to-show?]}]
@@ -320,13 +336,14 @@
                     :tooltip   :reorder}])
 
 (defn sort-items-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-lister/sort-items-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [disabled? no-items-to-show?]}]
@@ -374,29 +391,32 @@
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
       [toggle-all-items-selection-button extension-id item-namespace header-props]
-      [delete-selected-items-button      extension-id item-namespace header-props]]
+      [delete-selected-items-button      extension-id item-namespace header-props]
+      [duplicate-selected-items-button   extension-id item-namespace header-props]]
     [quit-select-mode-button extension-id item-namespace header-props]])
 
-(defn actions-mode-header
+(defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item-options (vector)(opt)
+  ;  {:menu (metamorphic-content)(opt)
+  ;   :new-item-options (vector)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
-  [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group
-      (if new-item-options [new-item-select extension-id item-namespace header-props]
-                           [new-item-button extension-id item-namespace])
-      [sort-items-button          extension-id item-namespace header-props]
-      [toggle-select-mode-button  extension-id item-namespace header-props]
-      [toggle-reorder-mode-button extension-id item-namespace header-props]]
-    [:div.item-lister--header--menu-item-group
-      [search-block extension-id item-namespace header-props]]])
+  [extension-id item-namespace {:keys [menu new-item-options no-items-to-show?] :as header-props}]
+  (if menu [menu extension-id item-namespace header-props]
+           [:div.item-lister--header--menu-bar
+             [:div.item-lister--header--menu-item-group
+               (if new-item-options [new-item-select extension-id item-namespace header-props]
+                                    [new-item-button extension-id item-namespace])
+               [sort-items-button          extension-id item-namespace header-props]
+               [toggle-select-mode-button  extension-id item-namespace header-props]
+               [toggle-reorder-mode-button extension-id item-namespace header-props]]
+             [:div.item-lister--header--menu-item-group
+               [search-block extension-id item-namespace header-props]]]))
 
 (defn reorder-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -420,16 +440,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:actions-mode? (boolean)(opt)
+  ;  {:menu-mode? (boolean)(opt)
   ;   :reorder-mode? (boolean)(opt)
   ;   :search-mode? (boolean)(opt)
   ;   :select-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [actions-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
+  [extension-id item-namespace {:keys [menu-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
   [:div#item-lister--header--structure
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
-                                      [actions-mode-header extension-id item-namespace header-props]]
+    [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
+                                      [menu-mode-header    extension-id item-namespace header-props]]
     [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
                                       [search-mode-header  extension-id item-namespace]]
     [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
@@ -441,13 +461,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) header-props
-  ;  {:new-item-options (vector)(opt)}
+  ;  {:menu (metamorphic-content)(opt)
+  ;   :new-item-options (vector)(opt)}
   ;
   ; @usage
   ;  [item-lister/header :my-extension :my-type]
   ;
   ; @usage
-  ;  [item-lister/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
+  ;  (defn my-menu [extension-id item-namespace header-props] [:div ...])
+  ;  [item-lister/header :my-extension :my-type {:menu #'my-menu
+  ;                                              :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   ([extension-id item-namespace]
@@ -455,7 +478,7 @@
 
   ([extension-id item-namespace header-props]
    (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id item-namespace])]
-        (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+        (fn [_ _ header-props] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
 
 
 
@@ -474,18 +497,14 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [all-items-downloaded? downloading-items? items-received?]}]
-  (cond (or (boolean downloading-items?)
-            ; Az adatok letöltésének megkezdése előtti pillanatban nem jelenne meg a request-indicator
-            ; felirat és a tartalmazó elem magassága egy rövid pillanatra összeugrana a következő
-            ; feltétel hozzáadása nélkül:
-            (and (not downloading-items?)
-                 (not items-received?)))
-        [elements/label {:content :downloading-items... :font-size :xs :color :highlight :font-weight :bold}]
-        ; Ha még nincs letöltve az összes elem és várható a request-indicator-label felirat megjelenése,
-        ; addig a placeholder használata biztosítja, hogy a felirat megjelenésekor és eltűnésekor ne
-        ; változzon a lista magassága.
-        (not all-items-downloaded?)
-        [elements/label {:content "" :font-size :xs}]))
+  ; - Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
+  ;   a request-indicator-label feliratot
+  ; - Ha még nincs letöltve az összes elem és várható a request-indicator-label felirat megjelenése,
+  ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
+  ;   és eltűnésekor ne változzon a lista magassága.
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold
+                   :content (if (or downloading-items? (nor downloading-items? items-received?))
+                                :downloading-items...)}])
 
 (defn request-indicator
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -495,9 +514,9 @@
   ; @param (map) body-props
   ;
   ; @return (component)
-  [extension-id item-namespace body-props]
-  [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
-                 :horizontal-align :center}])
+  [extension-id item-namespace {:keys [all-items-downloaded?] :as body-props}]
+  (if-not all-items-downloaded? [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
+                                               :horizontal-align :center}]))
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -665,7 +684,7 @@
   ; @return (component)
   [extension-id item-namespace body-props]
   (let [subscribed-props (a/subscribe [:item-lister/get-body-props extension-id item-namespace])]
-       (fn [] [item-lister-structure extension-id item-namespace (merge body-props @subscribed-props)])))
+       (fn [_ _ body-props] [item-lister-structure extension-id item-namespace (merge body-props @subscribed-props)])))
 
 
 
@@ -690,20 +709,23 @@
   ; @param (keyword) item-namespace
   ; @param (map) view-props
   ;  {:list-element (metamorphic-content)
+  ;   :menu (metamorphic-content)(opt)
   ;   :new-item-options (vector)(opt)
   ;   :on-click (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait}
+  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és az elemet}
   ;
   ; @usage
   ;  [item-lister/view :my-extension :my-type {...}]
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
+  ;                                            :menu         #'my-menu
   ;                                            :new-item-options [:add-my-type! :add-your-type!]
   ;                                            :on-click         [:->my-item-clicked]}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
   (let [subscribed-props (a/subscribe [:item-lister/get-view-props extension-id item-namespace])]
-       (fn [] [layout extension-id item-namespace (merge view-props @subscribed-props)])))
+       (fn [_ _ view-props] [layout extension-id item-namespace (merge view-props @subscribed-props)])))

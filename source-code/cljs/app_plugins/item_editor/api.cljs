@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.4.9
+; Compatibility: x4.5.5
 
 
 
@@ -15,11 +15,11 @@
 
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
-              [app-plugins.item-editor.events]
               [app-plugins.item-editor.queries]
-              [app-plugins.item-editor.engine  :as engine]
-              [app-plugins.item-editor.subs    :as subs]
-              [app-plugins.item-editor.views   :as views]))
+              [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.events :as events]
+              [app-plugins.item-editor.subs   :as subs]
+              [app-plugins.item-editor.views  :as views]))
 
 
 
@@ -31,13 +31,19 @@
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
 
+; app-plugins.item-editor.events
+(def load-editor! events/load-editor!)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
 (def get-body-props      subs/get-body-props)
 (def get-header-props    subs/get-header-props)
+(def get-view-props      subs/get-view-props)
 
 ; app-plugins.item-editor.views
+(def delete-item-button views/delete-item-button)
+(def copy-item-button   views/copy-item-button)
+(def save-item-button   views/save-item-button)
 (def item-label         views/item-label)
 (def color-selector     views/color-selector)
 (def color-stamp        views/color-stamp)

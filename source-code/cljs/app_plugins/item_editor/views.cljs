@@ -264,7 +264,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-start-buttons
+(defn menu-start-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -276,7 +276,7 @@
   (if-not new-item? [:<> [delete-item-button extension-id item-namespace header-props]
                          [copy-item-button   extension-id item-namespace header-props]]))
 
-(defn header-end-buttons
+(defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -287,18 +287,30 @@
   [extension-id item-namespace header-props]
   [save-item-button extension-id item-namespace header-props])
 
+(defn menu-mode-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace header-props]
+  [elements/horizontal-polarity {:start-content [menu-start-buttons extension-id item-namespace header-props]
+                                 :end-content   [menu-end-buttons   extension-id item-namespace header-props]}])
+
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item? (boolean)(opt)}
+  ;  {:menu (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace header-props]
-  [elements/horizontal-polarity {:start-content [header-start-buttons extension-id item-namespace header-props]
-                                 :end-content   [header-end-buttons   extension-id item-namespace header-props]}])
+  [extension-id item-namespace {:keys [menu] :as header-props}]
+  (if menu [menu             extension-id item-namespace header-props]
+           [menu-mode-header extension-id item-namespace header-props]))
 
 (defn header
   ; @param (keyword) extension-id
@@ -345,10 +357,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:form-element (metamorphic-content)}
+  ;  {:form-element (metamorphic-content)
+  ;   :menu (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-editor/view :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  (defn my-form-element [extension-id item-namespace] [:div ...])
+  ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
+  ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

@@ -56,10 +56,11 @@
 
 (defmutation undo-delete-my-type-items!
              ; @param (map) env
-             ; @param (namespaced maps in vector) my-type-items
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
-             [env my-type-items]
+             [env {:keys [items]}]
              {::pathom.co/op-name 'my-extension/undo-delete-my-type-items!}
              (return []))
 
@@ -69,8 +70,28 @@
              ;  {:item-ids (strings in vector)}
              ;
              ; @return (strings in vector)
-             [{:keys [item-ids]}]
+             [env {:keys [item-ids]}]
              {::pathom.co/op-name 'my-extension/delete-my-type-items!}
+             (return []))
+
+(defmutation undo-duplicate-my-type-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension/undo-duplicate-my-type-items!}
+             (return []))
+
+(defmutation duplicate-my-type-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension/duplicate-my-type-items!}
              (return []))
 
 
@@ -79,7 +100,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-my-type-items! get-my-type-items undo-delete-my-type-items!])
+(def HANDLERS [get-my-type-items delete-my-type-items!    undo-delete-my-type-items!
+                                 duplicate-my-type-items! undo-duplicate-my-type-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

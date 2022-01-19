@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.4
+; Version: v0.6.0
+; Compatibility: x4.5.5
 
 
 
@@ -18,7 +18,8 @@
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a :refer [r]]
               [x.app-router.api   :as router]
-              [app-plugins.item-browser.engine :as engine]))
+              [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-lister.api     :as item-lister]))
 
 
 
@@ -108,32 +109,51 @@
                (get parent-link (keyword/add-namespace item-namespace :id)))))
 
 (defn get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-browser/get-header-props :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:at-home? (boolean)
   ;   :item-path (maps in vector)}
   [db [_ extension-id item-namespace]]
-  (merge ; TEMP
-         (r app-plugins.item-lister.subs/get-header-props db extension-id item-namespace)
-         {:at-home?  (r at-home?      db extension-id item-namespace)
-          :item-path (r get-item-path db extension-id item-namespace)}))
+  {:at-home?  (r at-home?      db extension-id item-namespace)
+   :item-path (r get-item-path db extension-id item-namespace)})
 
+; @usage
+;  [:item-browser/get-header-props :my-extension :my-type]
 (a/reg-sub :item-browser/get-header-props get-header-props)
 
-(defn get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn get-body-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-browser/get-body-props :my-extension :my-type)
+  ;
+  ; @return (map)
+  ;  {:at-home? (boolean)
+  ;   :item-path (maps in vector)}
+  [db [_ extension-id item-namespace]]
+  (r item-lister/get-body-props extension-id item-namespace))
+
+; @usage
+;  [:item-browser/get-body-props :my-extension :my-type]
+(a/reg-sub :item-browser/get-body-props get-header-props)
+
+(defn get-view-props
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-browser/get-view-props :my-extension :my-type)
+  ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; TEMP
-  ; Milyen néven legyen beimportolva a subs névtér?
-  (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace))
+  (r item-lister/get-view-props db extension-id item-namespace))
 
+; @usage
+;  [:item-browser/get-view-props :my-extension :my-type]
 (a/reg-sub :item-browser/get-view-props get-view-props)

@@ -3,6 +3,12 @@
 - Az item-editor ezentúl a [:my-extension :item-editor/data-item ...] útvonal helyett,
   a [:my-extension :item-editor/data-items ...] útvonalat használja!
 
+- Az item-lister plugin ezentúl kezeli a lista elemek :on-click eseményét, amit tulajdonságként
+  át kell adni neki!
+
+- Az item-lister plugin használatához szükséges létrehozni a duplicate-my-type-items
+  és undo-duplicate-my-type-items mutation függvényeket
+
 
 
 # x4.5.4

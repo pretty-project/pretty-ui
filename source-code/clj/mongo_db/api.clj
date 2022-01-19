@@ -26,6 +26,7 @@
 (def remove-documents!     actions/remove-documents!)
 (def remove-all-documents! actions/remove-all-documents!)
 (def duplicate-document!   actions/duplicate-document!)
+(def duplicate-documents!  actions/duplicate-documents!)
 (def reorder-documents!    actions/reorder-documents!)
 
 ; mongo-db.engine

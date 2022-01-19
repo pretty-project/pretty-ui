@@ -17,8 +17,6 @@
 
 (a/reg-event-fx
   :my-extension/add-new-item!
-  ; - A [:my-extension/add-new-item! ...] eseményt a {:new-item-options [...]} beállítással
-  ;   elindított item-lister plugin működéséhez szükséges létrehozni!
   ; - Ha nem használsz {:new-item-options [...]} beállítást, akkor az [:my-extension/add-new-item! ...]
   ;   eseményt NEM szükséges létrehozni!
   (fn [_ [_ selected-option]]
@@ -27,6 +25,7 @@
 
 (a/reg-event-fx
   :my-extension/use-my-type-lister-filter!
+  ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
   (fn [_ [_ filter-pattern]]
       [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
 
@@ -50,17 +49,25 @@
 ;; -- Layout components (example A) -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; - A header komponens számára átadott {:menu #'...} tulajdonság beállításával lehetséges
+;   egyedi menüt használni.
+; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
+;  tudsz a különbözű módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
+(defn my-menu
+  [extension-id item-namespace header-props]
+  [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace header-props]
+                          [item-lister/toggle-select-button extension-id item-namespace header-props]}])
+
 (defn my-filters
   [surface-id]
-  ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
   [elements/menu-bar {:menu-items [{:label "My filter"
                                     :on-click [:my-extension/use-my-type-lister-filter! {}]}]}])
 
+; Az item-lister plugint header és body komponensre felbontva is lehetséges használni
 (defn my-view
   [surface-id]
   [:<> [my-filters surface-id]
-       ; Az item-lister plugint header és body komponensre felbontva is lehetséges használni
-       [item-lister/header :my-extension :my-type]
+       [item-lister/header :my-extension :my-type {:menu         #'my-menu}]
        [item-lister/body   :my-extension :my-type {:list-element #'my-list-element}]])
 
 
@@ -68,15 +75,15 @@
 ;; -- Layout components (example B) -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; - Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.
+; - A {:new-item-options ...} tulajdonság használatával, új elem hozzáadásakor lehetséges
+;   több opció kiválasztását felajánlani a felhasználónak.
 (defn your-view
   [surface-id]
-  ; Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.
   [item-lister/view :my-extension :my-type
-                    {:list-element #'my-list-element
-                     :on-click     [:my-extension/->my-type-item-clicked]}])
-                     ; Új elem hozzáadásakor lehetséges több opció kiválasztását
-                     ; felajánlani:
-                     ; :new-item-options [:add-my-type! :add-your-type!]
+                    {:list-element     #'my-list-element
+                     :on-click         [:my-extension/->my-type-item-clicked]
+                     :new-item-options [:add-my-type! :add-your-type!]}])
 
 
 
@@ -94,9 +101,11 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; (example A)
 (a/reg-event-fx :my-extension/load-my-type-lister! [:ui/set-surface! {:view {:content #'my-view}}])
-                                                   ; (example B)
-                                                   ; [:ui/set-surface! {:view {:content #'your-view}}])
+
+; (example B)
+(a/reg-event-fx :my-extension/load-my-type-lister! [:ui/set-surface! {:view {:content #'your-view}}])
 
 (a/reg-lifecycles
   ::lifecycles

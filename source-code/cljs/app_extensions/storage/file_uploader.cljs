@@ -562,5 +562,5 @@
             uploader-props (a/event-vector->first-props event-vector)]
            {:db (r store-uploader-props! db uploader-id uploader-props)
             :storage/open-file-selector! [uploader-id uploader-props]
-            :dispatch [:sync/send-query! :storage/synchronize-file-uploader! ; Silent / no progress-bar
+            :dispatch [:sync/send-query! :storage/synchronize-file-uploader! ; Silent-mode / no progress-bar
                                          {:query [:debug `(:storage/download-capacity-details ~{})]}]})))

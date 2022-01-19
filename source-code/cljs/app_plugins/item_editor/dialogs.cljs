@@ -123,8 +123,8 @@
   ; @param (keyword) item-namespace
   (fn [_ [_ extension-id item-namespace]]
       [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                      {:body   {:content [color-picker-dialog-body extension-id]}
-                      ;:header {:content #'ui/close-popup-header}
+                      {:body   [color-picker-dialog-body extension-id]
+                      ;:header #'ui/close-popup-header}
                        :min-width :none}]))
 
 (a/reg-event-fx
@@ -136,7 +136,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
-                             {:body       {:content [undo-delete-dialog-body extension-id item-namespace current-item-id]}
+                             {:body       [undo-delete-dialog-body           extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
@@ -148,7 +148,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
-                             {:body {:content [changes-discarded-dialog-body extension-id item-namespace current-item-id]}
+                             {:body       [changes-discarded-dialog-body     extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
@@ -160,4 +160,4 @@
   ; @param (string) copy-id
   (fn [_ [_ extension-id item-namespace copy-id]]
       [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-duplicated)
-                        {:body {:content [item-duplicated-dialog-body extension-id item-namespace copy-id]}}]))
+                        {:body [item-duplicated-dialog-body extension-id item-namespace copy-id]}]))

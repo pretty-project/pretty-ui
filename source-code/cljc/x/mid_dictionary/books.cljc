@@ -614,6 +614,9 @@
       :n-items-deleted
       {:en "% item(s) deleted"
        :hu "% elem törölve"}
+      :n-items-duplicated
+      {:en "% item(s) duplicated"
+       :hu "% elem duplikálva"}
       :paste!
       {:en "Paste"
        :hu "Beillesztés"}
@@ -746,7 +749,10 @@
        :hu "Sikertelen törlés"}
       :failed-to-undo-delete
       {:en "Failed to undo delete"
-       :hu "A törlés visszaállítása sikertelen"}
+       :hu "A törlés visszavonása sikertelen"}
+      :failed-to-undo-duplicate
+      {:en "Failed to undo duplicate"
+       :hu "A duplikálás visszavonása sikertelen"}
       :failed-to-save
       {:en "Failed to save"
        :hu "Sikertelen mentés"}

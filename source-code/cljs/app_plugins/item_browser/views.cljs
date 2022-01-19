@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.5.3
+; Version: v0.6.8
+; Compatibility: x4.5.5
 
 
 
@@ -21,7 +21,8 @@
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
               [x.app-tools.api      :as tools]
-              [app-plugins.item-browser.engine :as engine]))
+              [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-lister.api     :as item-lister]))
 
 
 
@@ -29,12 +30,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn go-home-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:at-home? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-browser/go-home-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [at-home? error-mode?]}]
@@ -45,13 +47,14 @@
                     :preset    :home-icon-button}])
 
 (defn go-up-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:at-home? (boolean)(opt)
   ;   :disabled? (boolean)(opt)}
+  ;
+  ; @usage
+  ;  [item-browser/go-up-button :my-extension :my-type {...}]
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [at-home? disabled?]}]
@@ -84,7 +87,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn actions-mode-header
+(defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -97,42 +100,15 @@
   [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      (if new-item-options [app-plugins.item-lister.views/new-item-select extension-id item-namespace header-props]
-                           [app-plugins.item-lister.views/new-item-button extension-id item-namespace])
-      [go-home-button                  extension-id item-namespace header-props]
       [go-up-button                    extension-id item-namespace header-props]
-      [app-plugins.item-lister.views/sort-items-button         extension-id item-namespace header-props]
-      [app-plugins.item-lister.views/toggle-select-mode-button extension-id item-namespace header-props]]
-      ;[app-plugins.item-lister.views/toggle-reorder-mode-button extension-id item-namespace header-props]]
+      [go-home-button                  extension-id item-namespace header-props]
+      (if new-item-options [item-lister/new-item-select extension-id item-namespace header-props]
+                           [item-lister/new-item-button extension-id item-namespace])
+      [item-lister/sort-items-button         extension-id item-namespace header-props]
+      [item-lister/toggle-select-mode-button extension-id item-namespace header-props]]
+     ;[item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]
     [:div.item-lister--header--menu-item-group
-      [app-plugins.item-lister.views/search-block extension-id item-namespace header-props]]])
-
-(defn header-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;  {:actions-mode? (boolean)(opt)
-  ;   :reorder-mode? (boolean)(opt)
-  ;   :search-mode? (boolean)(opt)
-  ;   :select-mode? (boolean)(opt)}
-  ;
-  ; @return (component)
-  [extension-id item-namespace {:keys [actions-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
- [:div {:style {:width "100%"}}
-  [:div#item-lister--header--structure
-    [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
-                                                 [actions-mode-header extension-id item-namespace header-props]]
-    [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
-                                                 [app-plugins.item-lister.views/search-mode-header  extension-id item-namespace]]
-    [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                                 [app-plugins.item-lister.views/select-mode-header  extension-id item-namespace header-props]]
-    [app-fruits.react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                                 [app-plugins.item-lister.views/reorder-mode-header extension-id item-namespace header-props]]]
-  [:div {:style {:display "none"}}
-   [go-home-button          extension-id item-namespace header-props]
-   [go-up-button            extension-id item-namespace header-props]]])
+      [item-lister/search-block extension-id item-namespace header-props]]])
 
 (defn header
   ; @param (keyword) extension-id
@@ -151,8 +127,9 @@
    [header extension-id item-namespace {}])
 
   ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
-        (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+   (let [header-props     (assoc header-props :menu #'menu-mode-header)
+         subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
+        (fn [_ _ header-props] [item-lister/header extension-id item-namespace (merge header-props @subscribed-props)]))))
 
 
 
@@ -160,8 +137,21 @@
 ;; ----------------------------------------------------------------------------
 
 (defn body
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map)(opt) body-props
+  ;  {:list-element (metamorphic-content)}
+  ;
+  ; @example
+  ;  [item-browser/body :my-extension :my-type {...}]
+  ;
+  ; @example
+  ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element}]
+  ;
+  ; @return (component)
   [extension-id item-namespace body-props]
-  [app-plugins.item-lister.views/body extension-id item-namespace body-props])
+  [item-lister/body extension-id item-namespace body-props])
 
 
 

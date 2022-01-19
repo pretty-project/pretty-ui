@@ -224,11 +224,12 @@
 (a/reg-event-db :item-editor/receive-item! receive-item!)
 
 (defn load-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
+  ;
+  ; @usage
+  ;  (r item-editor/load-editor! :my-extension :my-type {...})
   ;
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]

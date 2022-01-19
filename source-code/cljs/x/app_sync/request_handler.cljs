@@ -424,10 +424,12 @@
                     (r get-request-on-responsed-event db request-id server-response)
                     (if-not (r silent-mode? db request-id)
                             [:sync/show-request-failure-message! request-id status-text])]
-       :dispatch-later [{:ms       (r get-request-idle-timeout     db request-id)
-                         :dispatch [:core/set-process-activity!       request-id :stalled]}
-                        {:ms       (r get-request-idle-timeout     db request-id)
-                         :dispatch (r get-request-on-stalled-event db request-id server-response)}]}))
+       :dispatch-later [{:ms       (r get-request-idle-timeout db request-id)
+                         :dispatch [:core/set-process-activity!   request-id :stalled]}]}))
+                         ; A [:sync/->request-failure ...] esemény nem hívja meg az {:on-stalled ...}
+                         ; tulajdonságként átadott eseményt, így az nem történik meg hibás teljesítés
+                         ; esetén, ezért az {:on-stalled ...] esemény használható az {:on-success ...}
+                         ; esemény alternatívájaként!
 
 (a/reg-event-fx
   :sync/->request-progressed

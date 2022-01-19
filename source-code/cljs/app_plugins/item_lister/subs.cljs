@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.2
-; Compatibility: x4.5.3
+; Version: v0.7.8
+; Compatibility: x4.5.5
 
 
 
@@ -300,10 +300,10 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-       ; XXX#0499
+  (and ; XXX#0499
        ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
        ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-  (and (or (not (r items-received?       db extension-id item-namespace))
+       (or (not (r items-received?       db extension-id item-namespace))
            (not (r all-items-downloaded? db extension-id item-namespace)))
        ; BUG#7009
        (not (r no-items-received? db extension-id item-namespace))))
@@ -316,13 +316,12 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-       ; BUG#4506
+  (and ; BUG#4506
        ; Ha a keresőmezőbe írsz egy karaktert, majd azonnal megnyomod az ESC billentyűt,
        ; akkor kétszer történik meg az on-type-ended esemény, ami miatt két lekérés indulna,
        ; ezért szükséges vizsgálni a synchronizing? függvény kimenetét!
-  (and         (not (r synchronizing?       db extension-id item-namespace))
-       (or          (r download-more-items? db extension-id item-namespace)
-           (boolean (r get-meta-item        db extension-id item-namespace :reload-mode?)))))
+            (r download-more-items? db extension-id item-namespace)
+       (not (r synchronizing?       db extension-id item-namespace))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -365,17 +364,18 @@
                                                 :replacements [downloaded-item-count all-item-count]}))))
 
 (defn get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-lister/get-header-props :my-extension :my-type)
+  ;
   ; @return (map)
-  ;  {:actions-mode? (boolean)
-  ;   :all-items-selected? (boolean)
+  ;  {:all-items-selected? (boolean)
   ;   :any-item-selected? (boolean)
   ;   :disabled? (boolean)
   ;   :error-mode? (boolean)
+  ;   :menu-mode? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :order-changed? (boolean)
   ;   :reorder-mode? (boolean)
@@ -385,48 +385,51 @@
   [db [_ extension-id item-namespace]]
   (cond ; If error-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :error-mode?)
-        {:actions-mode? true
-         :disabled?     true
-         :error-mode?   true}
+        {:disabled?   true
+         :error-mode? true
+         :menu-mode?  true}
         ; If select-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :select-mode?)
-        {:select-mode?        true
+        {:select-mode? true
          :all-items-selected? (r all-items-selected? db extension-id item-namespace)
          :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
          :disabled?           (r disabled?           db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
-        {:search-mode?   true
+        {:search-mode? true
          :disabled? (r disabled? db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?  true
          :order-changed? false
          :disabled? (r disabled? db extension-id item-namespace)}
-        ; Use actions-mode as default ...
+        ; Use menu-mode as default ...
         :default
-        {:actions-mode?     true
+        {:menu-mode? true
          :disabled?         (r disabled?                   db extension-id item-namespace)
          :no-items-to-show? (r no-items-to-show?           db extension-id)
          :viewport-small?   (r environment/viewport-small? db)}))
 
+; @usage
+;  [:item-lister/get-header-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-header-props get-header-props)
 
 (defn get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-lister/get-body-props :my-extension :my-type)
+  ;
   ; @return (map)
-  ;  {:actions-mode? (boolean)
-  ;   :all-items-downloaded? (boolean)
+  ;  {:all-items-downloaded? (boolean)
   ;   :disabled? (boolean)
   ;   :error-mode? (boolean)
   ;   :downloaded-items (vector)
   ;   :downloading-items? (boolean)
   ;   :disabled-items (integers in vector)
   ;   :items-received? (boolean)
+  ;   :menu-mode? (boolean)
   ;   :no-items-to-show? (boolean)
   ;   :reorder-mode? (boolean)
   ;   :search-mode? (boolean)
@@ -438,7 +441,7 @@
          :error-mode? true}
         ; If select-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :select-mode?)
-        {:select-mode?      true
+        {:select-mode? true
          :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
          :disabled?             (r disabled?             db extension-id item-namespace)
          :downloaded-items      (r get-downloaded-items  db extension-id)
@@ -447,7 +450,7 @@
          :no-items-to-show?     (r no-items-to-show?     db extension-id)}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
-        {:search-mode?      true
+        {:search-mode? true
          :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
          :disabled?             (r disabled?             db extension-id item-namespace)
          :downloaded-items      (r get-downloaded-items  db extension-id)
@@ -456,16 +459,16 @@
          :no-items-to-show?     (r no-items-to-show?     db extension-id)}
         ; If reorder-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :reorder-mode?)
-        {:reorder-mode?     true
+        {:reorder-mode? true
          :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
          :disabled?             (r disabled?             db extension-id item-namespace)
          :downloaded-items      (r get-downloaded-items  db extension-id)
          :downloading-items?    (r downloading-items?    db extension-id item-namespace)
          :items-received?       (r items-received?       db extension-id item-namespace)
          :no-items-to-show?     (r no-items-to-show?     db extension-id)}
-        ; Use actions-mode as default ...
+        ; Use menu-mode as default ...
         :default
-        {:actions-mode?     true
+        {:menu-mode? true
          :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
          :disabled?             (r disabled?             db extension-id item-namespace)
          :downloaded-items      (r get-downloaded-items  db extension-id)
@@ -473,13 +476,16 @@
          :items-received?       (r items-received?       db extension-id item-namespace)
          :no-items-to-show?     (r no-items-to-show?     db extension-id)}))
 
+; @usage
+;  [:item-lister/get-body-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
 (defn get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-lister/get-view-props :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:description (metamorphic-content)
@@ -489,4 +495,6 @@
           {:error-mode? true}
           {:description (r get-description db extension-id item-namespace)}))
 
+; @usage
+;  [:item-lister/get-view-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-view-props get-view-props)

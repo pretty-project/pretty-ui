@@ -102,13 +102,37 @@
              {::pathom.co/op-name 'clients/delete-client-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
+(defmutation undo-duplicate-client-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [_ {:keys [item-ids]}]
+             {::pathom.co/op-name 'clients/undo-duplicate-client-items!}
+             (mongo-db/remove-documents! "clients" item-ids))
+
+(defmutation duplicate-client-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [{:keys [request]} {:keys [item-ids]}]
+             {::pathom.co/op-name 'clients/duplicate-client-items!}
+             (mongo-db/duplicate-documents! "clients" item-ids
+                                            {:prototype-f #(prototypes/duplicated-document-prototype request :client %)}))
+
 
 
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-client-items! get-client-items undo-delete-client-items!])
+(def HANDLERS [get-client-items delete-client-items!    undo-delete-client-items!
+                                duplicate-client-items! undo-duplicate-client-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

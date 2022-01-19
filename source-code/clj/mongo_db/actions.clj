@@ -562,7 +562,7 @@
   ;  =>
   ;  ["MyObjectId" "YourObjectId"]
   ;
-  ; @return (string)
+  ; @return (strings in vector)
   ([collection-name document-ids]
    (remove-documents! collection-name document-ids {}))
 
@@ -681,6 +681,45 @@
   ([collection-name document-id {:keys [ordered?] :as options}]
    (if ordered? (duplicate-ordered-document!   collection-name document-id options)
                 (duplicate-unordered-document! collection-name document-id options))))
+
+; @usage
+;  [:mongo-db/duplicate-document! "my-collection" "MyObjectId"]
+(a/reg-handled-fx :mongo-db/duplicate-document! duplicate-document!)
+
+
+
+;; -- Duplicating documents ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn duplicate-documents!
+  ; @param (string) collection-name
+  ; @param (strings in vector) document-ids
+  ; @param (map)(opt) options
+  ;  {:label-key (namespaced keyword)(opt)
+  ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "copy" kifejezést
+  ;    Only w/ {:language-id ...}
+  ;   :language-id (keyword)(opt)
+  ;    Milyen nyelven használja a "copy" kifejezést a hozzáfűzéskor
+  ;    Only w/ {:label-key ...}
+  ;   :ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
+  ;
+  ; @example
+  ;  (mongo-db/duplicate-documents! "my-collection" ["MyObjectId" "YourObjectId"])
+  ;  =>
+  ;  [{...} {...}]
+  ;
+  ; @return (namespaced maps in vector)
+  ([collection-name document-ids]
+   (duplicate-documents! collection-name document-ids {}))
+
+  ([collection-name document-ids options]
+   (vector/->items document-ids #(duplicate-document! collection-name % options))))
+
+; @usage
+;  [:mongo-db/duplicate-documents! "my-collection" ["MyObjectId" "YourObjectId"]]
+(a/reg-handled-fx :mongo-db/duplicate-documents! duplicate-documents!)
 
 
 

@@ -30,6 +30,49 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn toggle-search-mode!
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-search-mode! db :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
+
+; @usage
+;  [:item-lister/toggle-search-mode! :my-extension]
+(a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
+
+(defn toggle-select-mode!
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-select-mode! db :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
+             (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
+
+; @usage
+;  [:item-lister/toggle-select-mode! :my-extension]
+(a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
+
+(defn toggle-reorder-mode!
+  ; @param (keyword) extension-id
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-reorder-mode! db :my-extension)
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
+
+; @usage
+;  [:item-lister/toggle-reorder-mode! :my-extension]
+(a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
+
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,40 +143,6 @@
   ; @return (map)
   [db [_ extension-id]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
-
-(defn toggle-search-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
-
-(a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
-
-(defn toggle-select-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
-             (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
-
-(a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
-
-(defn toggle-reorder-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
-
-(a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
 
 (defn toggle-reload-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -298,14 +307,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (as-> db % ; XXX#0499
-             ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-             (assoc-in % [extension-id :item-lister/meta-items :items-received?] true)
-             (if-let [reload-mode? (r subs/get-meta-item db extension-id item-namespace :reload-mode?)]
-                     ; A {:reload-mode? true} beállítással indított letöltés befejezésekor kilép
-                     ; a {:reload-mode? true} beállításból
-                     (r toggle-reload-mode! % extension-id)
-                     (return                %))))
+  ; XXX#0499
+  ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
+  (assoc-in db [extension-id :item-lister/meta-items :items-received?] true))
 
 (defn store-received-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -324,9 +328,31 @@
         ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel,
         ; ha nem szükséges az értékek kulcsaihoz az aktuális névteret hozzáfűzni.
         documents (db/collection->non-namespaced-collection documents)]
-       (if-let [reload-mode? (r subs/get-meta-item db extension-id item-namespace :reload-mode?)]
-               (assoc-in  db [extension-id :item-lister/data-items]                     documents)
-               (update-in db [extension-id :item-lister/data-items] vector/concat-items documents))))
+       (update-in db [extension-id :item-lister/data-items] vector/concat-items documents)))
+
+(defn store-received-document-count!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id    (engine/resolver-id extension-id item-namespace :get)
+        document-count (get-in server-response [resolver-id :document-count])
+        documents      (get-in server-response [resolver-id :documents])
+        received-count (count documents)]
+      (-> db ; A document-count értéke NEM a fogadott dokumentumok mennyiségére utal, hanem
+             ; hány dokumentum van a szerveren, ami megfelel a letöltési feltételeknek.
+             (assoc-in [extension-id :item-lister/meta-items :document-count] document-count)
+             ; BUG#7009
+             ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
+             ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor
+             ; az elemek letöltésével kapcsolatban valamilyen hiba történt.
+             ; Az ilyen típusú hibák megállapításához szükséges a received-count
+             ; értéket eltárolni, ami a fogadott dokumentumok mennyiségére utal.
+             (assoc-in [extension-id :item-lister/meta-items :received-count] received-count))))
 
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -337,28 +363,51 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id    (engine/resolver-id extension-id item-namespace :get)
-        documents      (get-in server-response [resolver-id :documents])
-        document-count (get-in server-response [resolver-id :document-count])
-        received-count (count documents)]
-       (as-> db % (r store-received-items! % extension-id item-namespace server-response)
-                  ; Szükséges frissíteni a keresési feltételeknek megfelelő dokumentumok számát,
-                  ; mert annak megváltozhat az értéke!
-                  (assoc-in % [extension-id :item-lister/meta-items :document-count] document-count)
-                  ; BUG#7009
-                  ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
-                  ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor
-                  ; az elemek letöltésével kapcsolatban valamilyen hiba történt.
-                  ; Az ilyen típusú hibák megállapításához szükséges a received-count
-                  ; értéket eltárolni.
-                  (assoc-in % [extension-id :item-lister/meta-items :received-count] received-count))))
+  (as-> db % (r store-received-items!          % extension-id item-namespace server-response)
+             (r store-received-document-count! % extension-id item-namespace server-response)))
 
-(defn load-lister!
+(defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        documents   (get-in server-response [resolver-id :documents])
+        ; XXX#3907
+        documents (db/collection->non-namespaced-collection documents)]
+       (assoc-in db [extension-id :item-lister/data-items] documents)))
+
+(defn reload-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace server-response]]
+  (as-> db % (r store-reloaded-items!          % extension-id item-namespace server-response)
+             (r store-received-document-count! % extension-id item-namespace server-response)
+             ; A listaelemeken végzett műveletek közben esetlegesen egyes listaelemek
+             ; {:disabled? true} állapotba lépnek (pl. törlés), amíg a művelet befejeződik.
+             ; A művelet akkor tekinthető befejezettnek, amikor a lista állapota frissült
+             ; a kliens-oldalon, ezért a reload-items! függvény szünteti meg a listaelemek
+             ; {:disabled? true} állapotát!
+             (r enable-all-items! % extension-id item-namespace)))
+
+(a/reg-event-db :item-lister/reload-items! reload-items!)
+
+(defn load-lister!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) lister-props
+  ;
+  ; @usage
+  ;  (r item-lister/load-lister! :my-extension :my-type {...})
   ;
   ; @return (map)
   [db [_ extension-id item-namespace lister-props]]
@@ -380,17 +429,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/reload-lister!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/reload-lister! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r toggle-reload-mode! db extension-id)
-       :dispatch [:item-lister/request-items! extension-id item-namespace]}))
-
-(a/reg-event-fx
   :item-lister/use-filter!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -405,55 +443,17 @@
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
-  :item-lister/delete-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+  :item-lister/reload-lister!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/reload-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r disable-selected-items! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                     ; XXX#3701
-                                    {:on-stalled [:item-lister/->selected-items-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-delete}}]
-                                     :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
-
-(a/reg-event-fx
-  :item-lister/undo-delete-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
-  (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                          ; Ha {:on-success ...} időzítéssel történne meg a [.../->delete-items-undid ...]
-                          ; esemény, ami újratölti az elemek listáját, akkor az [.../undo-delete-items! ...]
-                          ; esemény által küldött request állapotjelző sávjának megjelenítésére nem
-                          ; jutna elegendő idő
-                         {:on-stalled [:item-lister/->delete-items-undid extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
-                          :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
-
-(a/reg-event-fx
-  :item-lister/search-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (r reset-downloads!          db extension-id)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
-
-(a/reg-event-fx
-  :item-lister/order-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (r reset-downloads!          db extension-id)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+      (let [db (r toggle-reload-mode! db extension-id)]
+           [:sync/send-query! :item-lister/reload-items! ; Silent-mode / no progress-bar
+                              {:on-success [:item-lister/reload-items!           extension-id item-namespace]
+                               :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
 
 (a/reg-event-fx
   :item-lister/receive-items!
@@ -476,17 +476,88 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
-      ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
-      (if (r subs/request-items? db extension-id item-namespace)
+      (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
+          ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
+          (r subs/request-items? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                              ; A letöltött dokumentumok on-success helyett on-stalled időpontban
+                             {; A letöltött dokumentumok on-success helyett on-stalled időpontban
                               ; kerülnek tárolásra a Re-Frame adatbázisba, így elkerülhető,
                               ; hogy a request idle-timeout ideje alatt az újonnan letöltött
                               ; dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
                               ; felirat még megjelenik a lista végén.
-                             {:on-stalled [:item-lister/receive-items! extension-id item-namespace]
+                              :on-stalled [:item-lister/receive-items!          extension-id item-namespace]
                               :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
+
+(a/reg-event-fx
+  :item-lister/delete-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r disable-selected-items! db extension-id item-namespace)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-lister/->selected-items-deleted extension-id item-namespace]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                     :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
+
+(a/reg-event-fx
+  :item-lister/undo-delete-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
+  (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {:on-success [:item-lister/reload-lister! extension-id item-namespace]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
+                          :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
+
+(a/reg-event-fx
+  :item-lister/duplicate-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {:on-success [:item-lister/->selected-items-duplicated extension-id item-namespace]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
+                          :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]))
+
+(a/reg-event-fx
+  :item-lister/undo-duplicate-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
+  (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {:on-success [:item-lister/reload-lister! extension-id item-namespace]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
+                          :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace item-ids)}]))
+
+(a/reg-event-fx
+  :item-lister/search-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db       (r reset-downloads!          db extension-id)
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+
+(a/reg-event-fx
+  :item-lister/order-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db       (r reset-downloads!          db extension-id)
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-lister/load-lister!
@@ -515,26 +586,27 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
+      (let [; XXX#7891
+            ; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
+            ; listája nem tud megváltozni a szerver válaszának megérkezéséig.
+            item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
            {:db (as-> db % (r backup-selected-items! % extension-id item-namespace)
-                           (r remove-selected-items! % extension-id item-namespace)
-                           (r reset-selections!      % extension-id item-namespace)
-                           (r enable-all-items!      % extension-id item-namespace))
+                           (r reset-selections!      % extension-id item-namespace))
             :dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
-                         ; XXX#5501
-                         ; A törölt lista-elemek listából való eltávolítása után újratölti
-                         ; az infinite-loader komponenst, hogy megállapítsa, szükségés-e további
-                         ; elemeket letölteni.
-                         [:tools/reload-infinite-loader! extension-id]]})))
+                         [:item-lister/reload-lister!               extension-id item-namespace]]})))
 
 (a/reg-event-fx
-  :item-lister/->delete-items-undid
+  :item-lister/->selected-items-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:item-lister/refresh-item-list! extension-id item-namespace]))
+      (let [; XXX#7891
+            item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
+           {:db (r reset-selections! db extension-id item-namespace)
+            :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace item-ids]
+                         [:item-lister/reload-lister!                  extension-id item-namespace]]})))
 
 (a/reg-event-fx
   :item-lister/->lister-leaved
