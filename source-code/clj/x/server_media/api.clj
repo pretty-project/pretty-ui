@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.3.3
+; Version: v0.4.0
+; Compatibility: x4.5.5
 
 
 
@@ -42,4 +42,5 @@
 (def download-temporary-file temporary-handler/download-temporary-file)
 
 ; x.server-media.thumbnail-handler
-(def download-thumbnail thumbnail-handler/download-thumbnail)
+(def download-thumbnail  thumbnail-handler/download-thumbnail)
+(def generate-thumbnail! thumbnail-handler/generate-thumbnail!)

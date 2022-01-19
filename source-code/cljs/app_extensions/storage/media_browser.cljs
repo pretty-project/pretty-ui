@@ -12,15 +12,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-load-media-browser-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  [:debug `(:storage/download-capacity-details  ~{})])
-
-
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -72,7 +63,7 @@
 (defn- file-item-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [filename]}]
-  (let [preview-uri (media/filename->media-storage-uri filename)]
+  (let [preview-uri (media/filename->media-thumbnail-uri filename)]
        [:div.storage--media-item--preview {:style {:background-image (css/url preview-uri)}}]))
 
 (defn- file-item-header
@@ -109,18 +100,13 @@
 (defn- media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex item-props]
-  [elements/toggle {:content [media-item-structure item-dex item-props]
-                    :hover-color :highlight
-                    :on-click [:storage/->item-clicked item-dex item-props]}])
+  [media-item-structure item-dex item-props])
 
 (a/reg-event-fx
-  :storage/->item-clicked
+  :storage/->media-item-clicked
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
-      (if (or (r x.app-environment.api/key-pressed? db 16)
-              (r x.app-environment.api/key-pressed? db 91))
-          [:item-lister/toggle-item-selection! :storage :media item-dex]
-          (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                              [:storage/->file-clicked item-dex item-props]))))
+      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
+                                          [:storage/->file-clicked item-dex item-props])))
 
 (a/reg-event-fx
   :storage/->file-clicked
@@ -141,7 +127,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-browser/view :storage :media {:list-element     #'media-item
-                                      :new-item-options [:upload-files! :create-directory!]}])
+                                      :new-item-options [:upload-files! :create-directory!]
+                                      :on-click         [:storage/->media-item-clicked]}])
 
 
   ;[app-extensions.storage.file-picker/view :my-picker {}])
@@ -162,6 +149,3 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-n [[:storage/render-media-browser!]]}))
-;                    [:sync/send-query! (item-browser/request-id :storage :media)
-;                                       {:query      (r get-load-media-browser-query db)
-;                                        :on-success [:storage/receive-server-response!]]]}))

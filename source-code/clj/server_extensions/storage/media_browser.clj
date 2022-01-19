@@ -5,9 +5,10 @@
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
               [x.server-core.api    :as a]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [server-extensions.storage.engine      :as engine]
-              [server-plugins.item-browser.api       :as item-browser]))
+              [com.wsscode.pathom3.connect.operation      :as pathom.co :refer [defresolver defmutation]]
+              [server-extensions.storage.capacity-handler :as capacity-handler]
+              [server-extensions.storage.engine           :as engine]
+              [server-plugins.item-browser.api            :as item-browser]))
 
 
 
@@ -24,7 +25,9 @@
   [env response-props]
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id "storage" item-id)]
-               (validator/validate-data document))))
+               (if-let [capacity-details (capacity-handler/get-capacity-details)]
+                       (let [media-item (merge document capacity-details)]
+                            (validator/validate-data media-item))))))
 
 (defresolver get-media-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

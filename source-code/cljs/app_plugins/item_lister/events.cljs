@@ -20,6 +20,7 @@
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
               [x.app-ui.api      :as ui]
+              [x.app-environment.api           :as environment]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.queries :as queries]
               [app-plugins.item-lister.subs    :as subs]))
@@ -497,11 +498,7 @@
   ;  {:label (metamorphic-content)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
       {:db (r load-lister! db extension-id item-namespace lister-props)
-       :dispatch-n [; XXX#5499
-                    ; Az item-lister plugin beöltésekor regisztrált keypress-listener használatával
-                    ; megvalósítható, hogy a SHIFT billentyű lenyomása közben a listaelemekre
-                    ; kattintva azok a csoportos kijelöléshez adódjanak.
-                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]
+       :dispatch-n [[:environment/reg-keypress-listener! :item-lister/keypress-listener]
                     [:ui/set-header-title! label]
                     [:ui/set-window-title! label]
                     (engine/load-extension-event extension-id item-namespace)]}))
@@ -545,5 +542,21 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; XXX#5499
   [:environment/remove-keypress-listener! :item-lister/keypress-listener])
+
+(a/reg-event-fx
+  :item-lister/->item-clicked
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) event-props
+  ;  {:on-click (metamorphic-event)}
+  ; @param (integer) item-dex
+  ; @param (map) item
+  (fn [{:keys [db]} [_ extension-id item-named {:keys [on-click]} item-dex item]]
+      (if (or (r environment/key-pressed? db 16)
+              (r environment/key-pressed? db 91))
+          [:item-lister/toggle-item-selection! extension-id item-named item-dex]
+          (let [on-click (a/metamorphic-event<-params on-click item-dex item)]
+               (return on-click)))))

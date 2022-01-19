@@ -66,8 +66,7 @@
   ; @return (vector)
   [db [_ uploader-id]]
   (let [destination-id (get-in db [:storage :file-uploader/meta-items :destination-id])]
-       [:debug `(storage/upload-files!              ~{:destination-id destination-id})
-               `(:storage/download-capacity-details ~{})]))
+       [:debug `(storage/upload-files! ~{:destination-id destination-id})]))
 
 (defn- get-form-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

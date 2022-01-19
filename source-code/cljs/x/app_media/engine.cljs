@@ -22,6 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-media.engine
+(def DEFAULT-THUMBNAIL-SIZE             engine/DEFAULT-THUMBNAIL-SIZE)
 (def allowed-extensions                 engine/allowed-extensions)
 (def filename->media-storage-uri        engine/filename->media-storage-uri)
 (def filename->media-thumbnail-uri      engine/filename->media-thumbnail-uri)

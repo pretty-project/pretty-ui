@@ -1,7 +1,8 @@
 
 (ns app-extensions.storage.capacity-handler
     (:require [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.engine :as engine]))
+              [app-extensions.storage.engine :as engine]
+              [app-plugins.item-browser.api  :as item-browser]))
 
 
 
@@ -13,14 +14,16 @@
   ;
   ; @return (B)
   [db _]
-  (get-in db [:storage :capacity-handler/meta-items :used-capacity]))
+  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
+       (get-in db [:storage :item-browser/data-items current-item-id :used-capacity])))
 
 (defn get-storage-total-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
   [db _]
-  (get-in db [:storage :capacity-handler/meta-items :total-capacity]))
+  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
+       (get-in db [:storage :item-browser/data-items current-item-id :total-capacity])))
 
 (defn get-storage-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,19 +39,5 @@
   ;
   ; @return (B)
   [db _]
-  (get-in db [:storage :capacity-handler/meta-items :max-upload-size]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- receive-capacity-details!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) server-response
-  ;  {:storage/download-capacity-details (map)}
-  ;
-  ; @return (map)
-  [db [_ {:storage/keys [download-capacity-details]}]]
-  (assoc-in db [:storage :capacity-handler/meta-items] download-capacity-details))
+  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
+       (get-in db [:storage :item-browser/data-items current-item-id :max-upload-size])))

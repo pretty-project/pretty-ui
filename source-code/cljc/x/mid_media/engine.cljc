@@ -57,6 +57,9 @@
 ; @constant (integer)
 (def MAXIMUM-DIRECTORY-ITEM-COUNT 256)
 
+; @constant (px)
+(def DEFAULT-THUMBNAIL-SIZE 128)
+
 
 
 ;; -- Helpers -----------------------------------------------------------------

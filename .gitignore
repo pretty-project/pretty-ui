@@ -8,6 +8,7 @@ monoset-environment/media/thumbnails/*
 
 # default thumbnail & sample file
 !monoset-environment/media/thumbnails/default.png
+!monoset-environment/media/thumbnails/sample.png
 !monoset-environment/media/storage/sample.png
 
 # site-config

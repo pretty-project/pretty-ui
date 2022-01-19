@@ -214,9 +214,7 @@
 
 
 
-            :dispatch-n [; XXX#5499
-                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
-                         [:ui/set-header-title! label]
+            :dispatch-n [[:ui/set-header-title! label]
                          [:ui/set-window-title! label]
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
@@ -226,17 +224,3 @@
                          ; egy elemet, akkor nem kerül ki és vissza a viewportba a loader, ezért
                          ; manuál kell ujrainditani
                          [:tools/reload-infinite-loader! extension-id]]})))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-browser/->browser-leaved
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; XXX#5499
-  [:environment/remove-keypress-listener! :item-browser/keypress-listener])

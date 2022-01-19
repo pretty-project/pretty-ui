@@ -1,73 +1,126 @@
 
+;; -- Header ------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Author: bithandshake
+; Created: 2022.01.19
+; Description:
+; Version: v0.3.8
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-fruits.image
-    (:import [javax.imageio ImageIO])
-    (:import [javax.imageio.plugins.jpeg JPEGImageWriteParam])
-    (:import [javax.imageio.stream FileImageOutputStream])
-    (:import [javax.imageio IIOImage])
-    (:import [javax.imageio ImageWriteParam])
-    (:import [java.awt.image BufferedImage])
-    (:import [java.awt AlphaComposite])
-    (:import [java.awt Image])
-    (:import [java.io  File]))
+    (:import [javax.imageio ImageIO]
+             [javax.imageio.plugins.jpeg JPEGImageWriteParam]
+             [javax.imageio.stream FileImageOutputStream]
+             [javax.imageio IIOImage]
+             [javax.imageio ImageWriteParam]
+             [java.awt.image BufferedImage]
+             [java.awt AlphaComposite]
+             [java.awt Image]
+             [java.io  File])
+    (:require [mid-fruits.candy :refer [param return]]
+              [server-fruits.io :as io]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-scaled-dimension
-  [[width height] wanted-width]
-  (let [ratio (/ wanted-width width)
-        new-height (* ratio height)]
-       [wanted-width new-height]))
+(defn image-dimensions
+  ; @param (java.awt.image.BufferedImage object) image
+  ;
+  ; @return (integers in vector)
+  ;  [(integer) width
+  ;   (integer) height]
+  [image]
+  [(-> image .getWidth)
+   (-> image .getHeight)])
 
-(defn resize-img
-  [img type-int wanted-width]
-  (let [original-dimension [(.getWidth img)  (.getHeight img)]
-        [new-width new-height] (get-scaled-dimension original-dimension wanted-width)
-        resized (new BufferedImage new-width new-height type-int);BufferedImage/TYPE_INT_ARGB)
-        g2d (.createGraphics resized)
-        tmp (.getScaledInstance img new-width new-height Image/SCALE_SMOOTH)]
+(defn scale-dimensions
+  ; @param (integers in vector) size
+  ; @param (integers in vector) max-size
+  ;
+  ; @example
+  ;  (image/scale-dimensions [1200 600] [400 150])
+  ;  =>
+  ;  [300 150]
+  ;
+  ; @example
+  ;  (image/scale-dimensions [400 150] [1200 600])
+  ;  =>
+  ;  [1200 450]
+  ;
+  ; @return (integers in vector)
+  ;  [(integer) width
+  ;   (integer) height]
+  [[width height] [max-width max-height]]
+  (let [ratio (max (/ width  max-width)
+                   (/ height max-height))]
+       [(/ width ratio) (/ height ratio)]))
 
-    (.drawImage g2d tmp 0 0 nil)
-    (.dispose g2d)
-    resized))
 
 
-(defn save-in-good-quality
-  [idk-img output-path quality]
-  (let [jpeg-params (new JPEGImageWriteParam nil)
-        mime-type   (last (clojure.string/split output-path #"\."))
-        writer      (.next (ImageIO/getImageWritersByFormatName mime-type))
-        set-output  (.setOutput writer
-                      (new FileImageOutputStream
-                           (clojure.java.io/file output-path)))]
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
-       (.setCompressionMode jpeg-params ImageWriteParam/MODE_EXPLICIT)
+(defn resize-image
+  ; @param (java.awt.image.BufferedImage object) input
+  ; @param (map) options
+  ;  {:max-height (px)
+  ;   :max-width (px)
+  ;   :type-int (integer)}
+  ;
+  ; @return (java.awt.image.BufferedImage object)
+  [input {:keys [max-height max-width type-int]}]
+  (let [[input-width  input-height]  (image-dimensions input)
+        [output-width output-height] (scale-dimensions [input-width input-height] [max-width max-height])
+        output    (new BufferedImage output-width output-height type-int)
+        graphics  (.createGraphics    output)
+        temporary (.getScaledInstance input output-width output-height Image/SCALE_SMOOTH)]
+       (.drawImage graphics temporary 0 0 nil)
+       (.dispose   graphics)
+       (return     output)))
+
+(defn save-thumbnail!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (java.awt.image.BufferedImage object) input
+  ; @param (string) output-path
+  ; @param (map) options
+  ;  {:quality (number)}
+  [input output-path {:keys [quality]}]
+  (let [jpeg-params   (new JPEGImageWriteParam nil)
+        extension     (io/filepath->extension output-path)
+        writer        (-> extension ImageIO/getImageWritersByFormatName .next)
+        output-file   (clojure.java.io/file output-path)
+        output-stream (new FileImageOutputStream output-file)]
+       (.setCompressionMode    jpeg-params ImageWriteParam/MODE_EXPLICIT)
        (.setCompressionQuality jpeg-params quality)
-       (.write writer nil (new IIOImage idk-img nil nil) jpeg-params)))
+       (.setOutput writer output-stream)
+       (.write     writer nil (new IIOImage input nil nil) jpeg-params)))
 
-(defn make-image
-  [input-path output-path & [config]]
-  (let [input-img (ImageIO/read (clojure.java.io/file input-path))
-        img-width (.getWidth input-img)
-
-        mime-type (last (clojure.string/split output-path #"\."))
-        type-int  (if (= "png" mime-type)
-                    BufferedImage/TYPE_INT_ARGB
-                    BufferedImage/TYPE_INT_RGB)
-        input     (if (> 1600 img-width)
-                    input-img
-                    (resize-img input-img type-int
-                        (get config :width 1600)))
-
-        [x y]     [(.getWidth input)  (.getHeight input)]
-        new-img   (new BufferedImage x y type-int)
-        g2d       (.getGraphics new-img)]
-
-    (.drawImage g2d input 0 0 nil)
-    (save-in-good-quality new-img output-path
-                          (get config :quality 1.0))
-    (.dispose g2d)
-
-    (clojure.java.io/file output-path)))
+(defn generate-thumbnail!
+  ; @param (string) input-path
+  ; @param (string) output-path
+  ; @param (map) options
+  ;  {:max-size (px)}
+  ;
+  ; @usage
+  ;  (image/generate-thumbnail! "my-file.png" "my-thumbnail.png" {:max-size 512})
+  [input-path output-path {:keys [max-size] :as options}]
+  (let [input       (-> input-path clojure.java.io/file ImageIO/read)
+        input-width (-> input .getWidth)
+        mime-type   (io/filepath->mime-type input-path)
+        type-int    (case mime-type "image/png" BufferedImage/TYPE_INT_ARGB BufferedImage/TYPE_INT_RGB)
+        output      (resize-image input {:max-height max-size :max-width max-size :type-int type-int})
+        [output-width output-height] (image-dimensions output)
+        temporary (new BufferedImage output-width output-height type-int)
+        graphics  (.getGraphics temporary)]
+       (.drawImage graphics output 0 0 nil)
+       (.dispose   graphics)
+       (save-thumbnail! temporary output-path {:quality 1.0})
+       (clojure.java.io/file output-path)))

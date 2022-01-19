@@ -329,7 +329,7 @@
   ; @param (map) view-props
   ;  {:description (metamorphic-content)(opt)
   ;   :error-mode? (boolean)(opt)
-  ;   :form-element (component)}
+  ;   :form-element (metamorphic-content)}
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [description error-mode? form-element]}]
@@ -345,7 +345,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:form-element (component)}
+  ;  {:form-element (metamorphic-content)}
   ;
   ; @usage
   ;  [item-editor/view :my-extension :my-type {...}]

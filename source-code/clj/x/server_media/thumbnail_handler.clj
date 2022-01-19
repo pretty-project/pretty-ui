@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.30
 ; Description:
-; Version: v0.1.2
-; Compatibility: x4.1.6
+; Version: v0.3.8
+; Compatibility: x4.5.5
 
 
 
@@ -16,6 +16,7 @@
 (ns x.server-media.thumbnail-handler
     (:require [local-db.api          :as local-db]
               [server-fruits.http    :as http]
+              [server-fruits.image   :as image]
               [server-fruits.io      :as io]
               [x.server-media.engine :as engine]))
 
@@ -42,40 +43,28 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn download-thumbnail
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request])
-  ; TODO ...
-  ; Nem kizárólag képekhez készíthető thumbnail, de elsősorban most a képekhez
-  ; lesz kidolgozva
-
 (defn generate-image-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) filepath
-  [filepath])
-;  (if (io/file-exists? filepath)
-;      (let [input (as-file filepath)
-;            image (javax.imageio.ImageIO/read input)])
+  ; @param (string) filename
+  [filename]
+  (let [filepath       (engine/filename->media-storage-filepath   filename)
+        thumbnail-path (engine/filename->media-thumbnail-filepath filename)]
+       (image/generate-thumbnail! filepath thumbnail-path {:max-size engine/DEFAULT-THUMBNAIL-SIZE})))
 
 (defn generate-pdf-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) filepath
-  [filepath])
+  ; @param (string) filename
+  [filename])
   ; TODO ...
 
 (defn generate-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) file-id
-  [file-id]
-  (let [filename  (local-db/get-document-item "files" file-id :filename)
-        mime-type (io/filename->mime-type             filename)
+  ; @param (string) filename
+  [filename]
+  (let [mime-type (io/filename->mime-type             filename)
         filepath  (engine/filename->media-storage-uri filename)]
        (case mime-type "image/bmp"       (generate-image-thumbnail! filepath)
                        "image/gif"       (generate-image-thumbnail! filepath)
@@ -83,3 +72,24 @@
                        "image/png"       (generate-image-thumbnail! filepath)
                        "image/webp"      (generate-image-thumbnail! filepath)
                        "application/pdf" (generate-pdf-thumbnail!   filepath))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn download-thumbnail
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (let [filename (http/request->path-param                  request :filename)
+        filepath (engine/filename->media-thumbnail-filepath filename)]
+       (if (io/file-exists? filepath)
+           (http/media-wrap {:body      (io/file                filepath)
+                             :mime-type (io/filepath->mime-type filepath)})
+           (let [filepath (engine/filename->media-thumbnail-filepath DEFAULT-THUMBNAIL-FILENAME)]
+                (http/media-wrap {:body      (io/file                filepath)
+                                  :mime-type (io/filepath->mime-type filepath)})))))

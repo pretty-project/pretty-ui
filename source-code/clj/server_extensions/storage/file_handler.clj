@@ -4,7 +4,6 @@
               [mongo-db.api        :as mongo-db]
               [pathom.api          :as pathom]
               [server-fruits.http  :as http]
-              [server-fruits.image :as image]
               [server-fruits.io    :as io]
               [x.server-core.api   :as a]
               [x.server-media.api  :as media]
@@ -66,7 +65,7 @@
   [env {:keys [destination-id]} {:keys [file-path filename size tempfile]}]
   (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
-        filepath           (media/filename->media-storage-filepath generated-filename)
+        filepath           (media/filename->media-storage-filepath   generated-filename)
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
                    :media/path file-path :description ""}]
        (if (engine/attach-media-item! env destination-id file-id)
@@ -74,7 +73,7 @@
                    ; Copy the temporary file to storage, and delete the temporary file
                    (do (io/copy-file!   tempfile filepath)
                        (io/delete-file! tempfile)
-                       (image/make-image filepath (str filepath "x"))
+                       (media/generate-thumbnail! generated-filename)
                        (return file-item))))))
 
 (defn- upload-files-f

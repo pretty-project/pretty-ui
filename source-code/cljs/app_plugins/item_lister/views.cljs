@@ -560,7 +560,7 @@
                              :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
                              :preset    (if @item-selected? :checked-icon-button :unchecked-icon-button)}])))
 
-(defn list-item-structure
+(defn list-item-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -571,12 +571,28 @@
   ; @param (map) item
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [list-element]} item-dex item]
+  [extension-id item-namespace {:keys [list-element] :as body-props} item-dex item]
+  (let [on-click [:item-lister/->item-clicked extension-id item-namespace body-props item-dex item]]
+       [elements/toggle {:on-click on-click
+                         :content [list-element item-dex item]
+                         :hover-color :highlight}]))
+
+(defn list-item-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ; @param (integer) item-dex
+  ; @param (map) item
+  ;
+  ; @return (component)
+  [extension-id item-namespace body-props item-dex item]
   (let [item-disabled? (a/subscribe [:item-lister/item-disabled? extension-id item-namespace item-dex])]
        (fn [_ _ {:keys [select-mode?] :as body-props} item-dex _]
            [:div.item-lister--list-item--structure
              [:div.item-lister--list-item {:data-disabled @item-disabled?}
-                                          [list-element item-dex item]]
+                                          [list-item-toggle extension-id item-namespace body-props item-dex item]]
              ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
              ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
@@ -634,18 +650,17 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:list-element (component)}
+  ;  {:list-element (metamorphic-content)
+  ;   :on-click (metamorphic-event)(opt)
+  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait}
   ;
   ; @usage
   ;  [item-lister/body :my-extension :my-type {...}]
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  [item-lister/body :my-extension :my-type {:element #'my-list-element}]
-  ;
-  ; @usage
-  ;  (defn my-list-element [item-dex item ] [:div ...])
-  ;  [item-lister/body :my-extension :my-type {:element #'my-list-element}]
+  ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
+  ;                                            :on-click     [:->my-item-clicked]}]
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
@@ -659,6 +674,12 @@
 
 (defn layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) view-props
+  ;  {:description (metamorphic-content)(opt)}
+  ;
+  ; @return (component)
   [extension-id item-namespace {:keys [description] :as view-props}]
   [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
                                   :header [header extension-id item-namespace view-props]
@@ -668,8 +689,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
-  ;  {:list-element (component)
-  ;   :new-item-options (vector)(opt)}
+  ;  {:list-element (metamorphic-content)
+  ;   :new-item-options (vector)(opt)
+  ;   :on-click (metamorphic-event)(opt)
+  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait}
   ;
   ; @usage
   ;  [item-lister/view :my-extension :my-type {...}]
@@ -677,7 +700,8 @@
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
-  ;                                            :new-item-options [:add-my-type! :add-your-type!]}]
+  ;                                            :new-item-options [:add-my-type! :add-your-type!]
+  ;                                            :on-click         [:->my-item-clicked]}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

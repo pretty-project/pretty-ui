@@ -6,7 +6,6 @@
               [app-extensions.storage.engine]
               [app-extensions.storage.file-uploader]
               [app-extensions.storage.media-browser]
-              [app-extensions.storage.sync]
               [app-extensions.storage.media-picker :as media-picker]))
 
 

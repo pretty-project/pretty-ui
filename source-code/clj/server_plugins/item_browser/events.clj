@@ -61,9 +61,8 @@
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:route-template (engine/route-template          extension-id)
-                       :client-event   [:item-browser/load-browser!    extension-id item-namespace browser-props]
-                       :on-leave-event [:item-browser/->browser-leaved extension-id item-namespace]
+                      {:route-template (engine/route-template       extension-id)
+                       :client-event   [:item-browser/load-browser! extension-id item-namespace browser-props]
                        :restricted?    true}])
 
 (defn add-extended-route!
@@ -76,7 +75,6 @@
   [:router/add-route! (engine/extended-route-id extension-id item-namespace)
                       {:route-template (engine/extended-route-template extension-id)
                        :client-event   [:item-browser/load-browser!    extension-id item-namespace browser-props]
-                       :on-leave-event [:item-browser/->browser-leaved extension-id item-namespace]
                        :restricted?    true}])
 
 (a/reg-event-fx

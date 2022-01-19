@@ -53,11 +53,8 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [id] :as client-props}]
-  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])
-        client-uri (item-editor/editor-uri :clients :client id)]
-       (fn [] [elements/toggle {:on-click [:router/go-to! client-uri]
-                                :content  [client-item-structure item-dex client-props @item-props]
-                                :hover-color :highlight}])))
+  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])]
+       (fn [] [client-item-structure item-dex client-props @item-props])))
 
 
 
@@ -67,9 +64,22 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-lister/view :clients :client {:list-element #'client-item}])
+  [item-lister/view :clients :client {:list-element #'client-item
+                                      :on-click [:clients/->client-item-clicked]}])
 
 
+
+;; -- Status events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  :clients/->client-item-clicked
+  (fn [_ [_ _ {:keys [id]}]]
+      (let [client-uri (item-editor/editor-uri :clients :client id)]
+           [:router/go-to! client-uri])))
+
+  
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------

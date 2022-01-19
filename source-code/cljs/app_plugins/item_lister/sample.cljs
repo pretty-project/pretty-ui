@@ -42,10 +42,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-list-element
-  [item-dex {:keys [id] :as item}]
-  (let [editor-uri (item-editor/editor-uri :my-extension :my-type id)]
-       [:button {:on-click #(a/dispatch [:router/go-to! editor-uri])}
-                (str "My list item")]))
+  [item-dex item]
+  [:div (str "My list item")])
 
 
 
@@ -73,10 +71,23 @@
 (defn your-view
   [surface-id]
   ; Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.
-  [item-lister/view :my-extension :my-type {:list-element #'my-list-element}])
-                                          ; Új elem hozzáadásakor lehetséges több opció kiválasztását
-                                          ; felajánlani:
-                                          ; :new-item-options [:add-my-type! :add-your-type!]
+  [item-lister/view :my-extension :my-type
+                    {:list-element #'my-list-element
+                     :on-click     [:my-extension/->my-type-item-clicked]}])
+                     ; Új elem hozzáadásakor lehetséges több opció kiválasztását
+                     ; felajánlani:
+                     ; :new-item-options [:add-my-type! :add-your-type!]
+
+
+
+;; -- Status events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :my-extension/->my-type-item-clicked
+  (fn [_ [_ item-dex {:keys [id] :as item}]]
+      (let [editor-uri (item-editor/editor-uri :my-extension :my-type id)]
+           [:router/go-to! editor-uri])))
 
 
 

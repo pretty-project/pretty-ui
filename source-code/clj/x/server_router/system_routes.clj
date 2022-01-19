@@ -37,19 +37,13 @@
                     {:route-template "/robots.txt"
                      :get {:handler environment/download-robots-txt}}
 
-                    ; WARNING! DEPRECATED! DO NOT USE!
-                    ;  Ha majd a media extension kezeli a szerver oldali fájlkezelést,
-                    ;  akkor (mivel extension) nem rendszer-szintű lesz a hozzá tartozó útvonal
                     :media/download-file
                     {:route-template "/media/storage/:filename"
                      :get {:handler media/download-file}}
-                    ; WARNING! DEPRECATED! DO NOT USE!
 
-                    ; WARNING! DEPRECATED! DO NOT USE!
                     :media/download-thumbnail
                     {:route-template "/media/thumbnails/:filename"
                      :get {:handler media/download-thumbnail}}
-                    ; WARNING! DEPRECATED! DO NOT USE!
 
                     :user/authenticate
                     {:route-template "/user/authenticate"
