@@ -721,18 +721,18 @@
         stickers             (file-browser-subdirectory-stickers component-id view-props subdirectory-id subdirectory-props)
         disabled?            (subdirectory-disabled?             component-id view-props subdirectory-id subdirectory-props)
         on-click-event       [:file-browser/go-to!              subdirectory-id]
-        on-right-click-event [:elements/render-context-surface! element-id]]
-       [elements/directory element-id
-                           {:content-size    content-size
-                            :disabled?       disabled?
-                            :item-count      item-count
-                            :label           alias
-                            :on-click        on-click-event
-                            :on-right-click  on-right-click-event
-                            :stickers        stickers
-                            :context-surface
-                            {:content       (view-props->subdirectory-context-menu view-props)
-                             :content-props subdirectory-props}}]))
+        on-right-click-event [:elements/render-context-surface! element-id]]))
+;       [elements/directory element-id
+;                           {:content-size    content-size
+;                            :disabled?       disabled?
+;;;                            :item-count      item-count
+  ;                          :label           alias
+  ;                          :on-click        on-click-event]))
+  ;                          :on-right-click  on-right-click-event
+  ;                          :stickers        stickers
+  ;                          :context-surface
+  ;                          {:content       (view-props->subdirectory-context-menu view-props)
+  ;                           :content-props subdirectory-props]))
 
 (defn- file-browser-subdirectory-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -787,20 +787,20 @@
         stickers             (file-browser-file-stickers component-id view-props file-id file-props)
         timestamp            (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)
         on-right-click-event [:elements/render-context-surface! element-id]
-        thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
-       [elements/file element-id
-                      {:filesize       filesize
-                       :label          alias
-                       :multiple-selection? (view-props->multiple-file-selection? view-props)
-                       :on-right-click on-right-click-event
-                       :selectable?    (view-props->file-selectable? view-props)
-                       :stickers       stickers
-                       :value-path     (settings-item-path :selected-files)
-                       :thumbnail-uri  thumbnail-uri
-                       :timestamp      timestamp
-                       :context-surface
-                       {:content       (view-props->file-context-menu view-props)
-                        :content-props file-props}}]))
+        thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]))
+;       [elements/file element-id
+;                      {:filesize       filesize
+;                       :label          alias
+;                       :multiple-selection? (view-props->multiple-file-selection? view-props)
+;                       :on-right-click on-right-click-event
+;                       :selectable?    (view-props->file-selectable? view-props)
+;                       :stickers       stickers
+;                       :value-path     (settings-item-path :selected-files)
+;                       :thumbnail-uri  thumbnail-uri
+;                       :timestamp      timestamp
+;                       :context-surface
+;                       {:content       (view-props->file-context-menu view-props)
+;                        :content-props file-props]))
 
 (defn- file-browser-file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!

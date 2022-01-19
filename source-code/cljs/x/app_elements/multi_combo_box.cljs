@@ -172,7 +172,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- xi8071
+(defn- multi-combo-box-chip-group-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
@@ -193,7 +193,7 @@
   [group-id group-props]
   [components/subscriber group-id
                          {:base-props group-props
-                          :render-f   #'xi8071
+                          :render-f   multi-combo-box-chip-group-structure
                           :subscriber [:elements/get-multi-combo-box-chip-group-props group-id]}])
 
 (defn- multi-combo-box-field

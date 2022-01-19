@@ -91,10 +91,7 @@
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :surface (map)(opt)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :surface (metamorphic-content)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
   ; @usage

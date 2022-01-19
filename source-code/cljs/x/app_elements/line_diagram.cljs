@@ -81,15 +81,13 @@
   ;   :label-position (keyword)
   ;   :layout (keyword)
   ;   :strength (px)
-  ;   :total-value (integer)
-  ;   :width (px)}
+  ;   :total-value (integer)}
   [{:keys [label strength] :as diagram-props}]
   (merge {:layout   :row
-          :strength 2
-          :width    128}
+          :strength 2}
          (if label {:color          :default
                     :font-size      :s
-                    :label-position :left})
+                    :label-position :center})
          {:total-value (diagram-props->total-value diagram-props)}
          (param diagram-props)
          (if strength {:strength (math/between! strength 1 6)})))
@@ -141,7 +139,7 @@
   ; @return (hiccup)
   [_ {:keys [label label-position]}]
   (if label [:div.x-line-diagram--label {:data-position label-position}
-                                        [components/content {:content label}]]))
+                                        [components/content label]]))
 
 (defn line-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -189,9 +187,7 @@
   ;     Min: 1
   ;     Max: 6
   ;   :total-value (integer)(opt)
-  ;    Default: A szakaszok aktuális értékének összege
-  ;   :width (px)(opt)
-  ;    Default: 128}
+  ;    Default: A szakaszok aktuális értékének összege}
   ;
   ; @usage
   ;  [elements/line-diagram {...}]

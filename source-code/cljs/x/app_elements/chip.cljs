@@ -75,7 +75,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  [:div.x-chip--label [components/content {:content label}]])
+  [:div.x-chip--label [components/content label]])
 
 (defn- chip-delete-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

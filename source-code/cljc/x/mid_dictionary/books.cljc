@@ -91,7 +91,10 @@
 ;; ----------------------------------------------------------------------------
 
 (def application
-     {:about-app
+     {:abort!
+      {:en "Abort"
+       :hu "Megszakítás"}
+      :about-app
       {:en "About app"
        :hu "Az alkalmazás névjegye"}
       :accept!
@@ -1057,7 +1060,13 @@
        :hu "Feltöltésre váró fájlok száma"}
       :uploading-files-size
       {:en "Uploading files size"
-       :hu "Feltöltésre váró fájlok mérete"}})
+       :hu "Feltöltésre váró fájlok mérete"}
+      :uploading-n-files...
+      {:en "Uploading % files ..."
+       :hu "% fájl feltöltése ..."}
+      :uploading-n-files-in-progress...
+      {:en "Uploading % files in progress ..."
+       :hu "% fájl feltöltése folyamatban ..."}})
 
 
 

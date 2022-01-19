@@ -45,12 +45,12 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
+  ;  {:content (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [toggle-id toggle-props]
-  (let [content-props (components/extended-props->content-props toggle-props)]
-       [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
-                               [components/content content-props]]))
+  [toggle-id {:keys [content] :as toggle-props}]
+  [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
+                          [components/content content]])
 
 (defn- toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -64,17 +64,10 @@
                  [toggle-body               toggle-id toggle-props]])
 
 (defn element
-  ; XXX#8711
-  ; A toggle elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content tulajdonságként átadott tartalmat.
-  ; A toggle elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
-  ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
-  ;
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
-  ;   :content-props (map)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :hover-color (keyword)(opt)
@@ -86,12 +79,7 @@
   ;    :fit, :row
   ;    Default: :fit
   ;   :on-click (metamorphic-event)(constant)
-  ;   :style (map)(opt)
-  ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @usage
-  ;  XXX#7610
-  ;  A toggle elemen megjelenő tartalom használatának leírását a blank elem dokumentációjában találod.
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/toggle {...}]

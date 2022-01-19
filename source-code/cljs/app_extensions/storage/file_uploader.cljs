@@ -13,6 +13,7 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-media.api      :as media]
+              [x.app-sync.api       :as sync]
               [x.app-tools.api      :as tools]
               [app-extensions.storage.capacity-handler :as capacity-handler]
               [app-extensions.storage.engine           :as engine]))
@@ -116,6 +117,20 @@
         upload-size     (get-in db [:storage :file-uploader/meta-items :files-size])]
        (> upload-size max-upload-size)))
 
+(defn- get-upload-progress-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  ;
+  ; @return (map)
+  [db [_ uploader-id]]
+  (let [request-id (keyword/add-namespace uploader-id :upload-files!)]
+       {:request-progress (r sync/get-request-progress db request-id)
+        :file-count       (get-in db [:storage :file-uploader/meta-items :file-count])
+        :files-size       (get-in db [:storage :file-uploader/meta-items :files-size])}))
+
+(a/reg-sub :storage/get-upload-progress-props get-upload-progress-props)
+
 (defn- get-file-uploader-file-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -207,6 +222,56 @@
                                  :accept     (uploader-props->allowed-extensions-list         uploader-props)
                                  :multiple   (param 1)
                                  :type       (param "file")}])
+
+
+
+;; -- Dialog components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- abort-upload-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
+  [elements/button {:label :abort! :preset :warning-button}])
+
+(defn- upload-progress-diagram
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [file-count request-progress]}]
+  (let [;total-size    (io/B->MB            files-size)
+        ;uploaded-size (math/percent-result total-size request-progress)
+        ;total-size    (format/decimals     total-size)
+        ;uploaded-size (format/decimals     uploaded-size)
+        sections [{:color :primary :value request-progress} {:color :highlight :value (- 100 request-progress)}]]
+       [elements/line-diagram {:layout :row :width "100%" :font-size :xs :sections sections
+                               ;:label (str  uploaded-size " MB / " total-size " MB")}]))
+                               :label {:content :uploading-n-files-in-progress...
+                                       :replacements [file-count]}}]))
+
+(defn- upload-in-progress-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ {:keys [files-size request-progress]}]
+  (let [total-size    (io/B->MB            files-size)
+        uploaded-size (math/percent-result total-size request-progress)
+        total-size    (format/decimals     total-size)
+        uploaded-size (format/decimals     uploaded-size)]
+       [elements/label {;:content :uploading-n-files-in-progress... :replacements [file-count]
+                        :layout :fit :font-size :xs :color :muted
+                        :content (str  uploaded-size " MB / " total-size " MB")}]))
+
+(defn- upload-progress-notification
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id upload-progress-props]
+  [:<> [elements/horizontal-separator {:size :s}]
+       [upload-progress-diagram uploader-id upload-progress-props]
+       [:div {:style {:display :flex :justify-content :space-between :width "100%"}}
+         [upload-in-progress-label uploader-id upload-progress-props]
+         [abort-upload-button uploader-id upload-progress-props]]])
+
+
+(defn- upload-progress-notification-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id]
+  [components/subscriber {:render-f   #'upload-progress-notification
+                          :subscriber [:storage/get-upload-progress-props uploader-id]}])
 
 
 
@@ -467,11 +532,12 @@
   (fn [{:keys [db]} [_ uploader-id]]
       (let [query     (r get-upload-files-query db uploader-id)
             form-data (r get-form-data          db uploader-id)]
-           [:sync/send-query! (keyword/add-namespace uploader-id :upload-files!)
-                              {:body (dom/merge-to-form-data! form-data {:query query})}])))
-                              ;:idle-timeout 1000
-                               ;:on-failure [:xxx]
-                               ;:on-success [:xxx]}])))
+           {:dispatch-n [[:storage/->file-uploading-in-progress uploader-id]
+                         [:sync/send-query! (keyword/add-namespace uploader-id :upload-files!)
+                                            {:body    (dom/merge-to-form-data! form-data {:query query})}]]})))
+                                            ;:idle-timeout 1000
+                                             ;:on-failure [:xxx]
+                                             ;:on-success [:xxx]}])))
 
 
 
@@ -485,7 +551,7 @@
   ; @param (map) uploader-props
   [[uploader-id uploader-props]]
   (tools/append-temporary-component! [file-selector uploader-id uploader-props]
-                                     #(-> "storage-file-selector" dom/get-element-by-id .click)))
+                                    #(-> "storage-file-selector" dom/get-element-by-id .click)))
 
 (a/reg-fx :storage/open-file-selector! open-file-selector!)
 
@@ -493,6 +559,16 @@
 
 ;; -- Status events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage/->file-uploading-in-progress
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) uploader-id
+  (fn [{:keys [db]} [_ uploader-id]]
+      [:ui/blow-bubble! {:body        [upload-progress-notification-body uploader-id]
+                         :autopop?    false
+                         :user-close? false}]))
 
 (a/reg-event-fx
   :storage/->files-selected-to-upload

@@ -31,12 +31,6 @@
               [x.app-elements.data-table           :as data-table]
               [x.app-elements.date-field           :as date-field]
               [x.app-elements.digit-field          :as digit-field]
-
-              ; WARNING! DEPRECATED! DO NOT USE!
-              [x.app-elements.directory :as directory]
-              [x.app-elements.file      :as file]
-              ; WARNING! DEPRECATED! DO NOT USE!
-
               [x.app-elements.engine.api           :as engine]
               [x.app-elements.expandable           :as expandable]
               [x.app-elements.file-drop-area       :as file-drop-area]
@@ -117,12 +111,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  XXX#7610
-;  Az [x.app-components/content] komponens névterében rögzített szabvány szerint
-;  lehetséges a {:content ... :content-props {...} :subscriber [...]} tulajdonságokat
-;  fogadó elemeket használni.
-;
-; @usage
 ;  Amikor egy elem paraméterei kívülről megváltoznak, akkor az elemen lévő fókusz,
 ;  szövegkijelölés és/vagy kurzor-pozíció a paraméterváltozás miatti újrarenderelődés
 ;  hatására elveszik.
@@ -169,12 +157,6 @@
 (def data-table        data-table/element)
 (def date-field        date-field/element)
 (def digit-field       digit-field/element)
-
-; WARNING! DEPRECATED! DO NOT USE!
-(def directory directory/view)
-(def file      file/view)
-; WARNING! DEPRECATED! DO NOT USE!
-
 (def expandable           expandable/element)
 (def file-drop-area       file-drop-area/element)
 (def horizontal-line      horizontal-line/element)

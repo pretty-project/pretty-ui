@@ -114,7 +114,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [label]}]
-  (if label [:div.x-menu-bar--menu-item--label [components/content {:content label}]]))
+  (if label [:div.x-menu-bar--menu-item--label [components/content label]]))
 
 (defn- button-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

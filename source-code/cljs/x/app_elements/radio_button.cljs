@@ -79,7 +79,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  [:div.x-radio-button--label [components/content {:content label}]
+  [:div.x-radio-button--label [components/content label]
                               (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- radio-button-option
@@ -94,7 +94,7 @@
   (let [option-label (get-label-f option)]
        [:button.x-radio-button--option (engine/selectable-option-attributes button-id button-props option)
                                        [:div.x-radio-button--option-button]
-                                       [:div.x-radio-button--option-label [components/content {:content option-label}]]]))
+                                       [:div.x-radio-button--option-label [components/content option-label]]]))
 
 (defn- radio-button-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

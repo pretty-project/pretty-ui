@@ -47,24 +47,16 @@
   ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [blank-id blank-props]
-  (let [content-props (components/extended-props->content-props blank-props)]
-       [:div.x-blank (engine/element-attributes blank-id blank-props)
-                     [components/content        blank-id content-props]
-                     [engine/element-stickers   blank-id blank-props]]))
+  [blank-id {:keys [content] :as blank-props}]
+  [:div.x-blank (engine/element-attributes blank-id blank-props)
+                [components/content        blank-id content]
+                [engine/element-stickers   blank-id blank-props]])
 
 (defn element
-  ; XXX#8711
-  ; A blank elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content tulajdonságként átadott tartalmat.
-  ; A blank elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
-  ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
-  ;
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)(opt)
-  ;   :content-props (map)(opt)
   ;   :stickers (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
@@ -74,11 +66,7 @@
   ;       Default: :material-icons-filled
   ;      :on-click (metamorphic-event)(opt)
   ;      :tooltip (metamorphic-content)(opt)}]
-  ;   :style (map)(opt)
-  ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @usage
-  ;  XXX#7610
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/blank {:content "My text"}]
@@ -89,17 +77,6 @@
   ; @usage
   ;  (defn my-component [_ _])
   ;  [elements/blank {:content #'my-component}]
-  ;
-  ; @usage
-  ;  (defn my-component [_ subscribed-props])
-  ;  [elements/blank {:content    #'my-component
-  ;                   :subscriber [:get-subscribed-props]}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id static-props subscribed-props])
-  ;  [elements/blank :my-component {:content       #'my-component
-  ;                                 :content-props {...}
-  ;                                 :subscriber    [:get-subscribed-props]}]
   ;
   ; @return (component)
   ([blank-props]

@@ -74,7 +74,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if label [:div.x-date-field--label (components/content {:content label})]))
+  (if label [:div.x-date-field--label [components/content label]]))
 
 (defn- date-field-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

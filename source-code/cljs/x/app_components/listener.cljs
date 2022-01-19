@@ -60,14 +60,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn extended-props->listener-props
-  ; @param (map) extended-props
-  ;
-  ; @return (map)
-  [extended-props]
-  (select-keys extended-props [:content :content-props :failure-content :infinite-listening?
-                               :listening? :pending-content :request-id :subscriber :success-content]))
-
 (defn- context-props->listen-to-request?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

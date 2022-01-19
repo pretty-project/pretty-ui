@@ -94,12 +94,10 @@
   ; @return (metamorphic-content)
   [group-id {:keys [label] :as group-props} field-dex]
         ; Single-field label
-  (cond (and (some? label)
-             (group-props->single-field? group-id group-props field-dex))
+  (cond (and    label (group-props->single-field? group-id group-props field-dex))
         (return label)
         ; Multi-field label
-        (and (some? label)
-             (group-props->multi-field? group-id group-props field-dex))
+        (and label (group-props->multi-field? group-id group-props field-dex))
         (components/content {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn- field-dex->end-adornments

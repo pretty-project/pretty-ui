@@ -261,7 +261,7 @@
   [popup-id {:keys [get-label-f options-id] :as select-props} option]
   (let [option-label (get-label-f option)]
        [:button.x-select--option (engine/selectable-option-attributes options-id select-props option)
-                                 [components/content {:content option-label}]]))
+                                 [components/content option-label]]))
 
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -314,7 +314,7 @@
   ; @return (hiccup)
   [_ select-props]
   (let [button-label (select-props->select-button-label select-props)]
-       [:div.x-select--button-label [components/content {:content button-label}]]))
+       [:div.x-select--button-label [components/content button-label]]))
 
 (defn- select-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -349,7 +349,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if label [:div.x-select--label [components/content {:content label}]
+  (if label [:div.x-select--label [components/content label]
                                   (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- select-layout

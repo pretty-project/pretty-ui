@@ -13,6 +13,8 @@
 
 
 # x4.5.0
+- elements / context-surface DEPRECATED
+
 - prototypes névtér újra a mongo-db névtér része lehet, mert már enm circular-dep w/ x.server-user.api
 
 - Legyen a monoset-environment mappában vagy inkább a project-emulator mappában egy

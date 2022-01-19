@@ -77,18 +77,6 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn extended-props->content-props
-  ; @param (map) extended-props
-  ;
-  ; @return (map)
-  [extended-props]
-  (select-keys extended-props [:base-props :content :content-props :prefix :replacements :subscriber :suffix]))
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

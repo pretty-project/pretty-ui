@@ -90,7 +90,6 @@
         element-props-path (element/element-props-path   element-id)]
        [components/stated element-id
                           {:base-props         element-props
-
                            :destructor         destructor
                            :disabler           disabler
                            :initial-props      initial-props

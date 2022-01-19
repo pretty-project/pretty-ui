@@ -48,7 +48,7 @@
   ;
   ; @return (component)
   [_ {:keys [start-content]}]
-  (if start-content [:div.x-vertical-polarity--start-content [components/content {:content start-content}]]
+  (if start-content [:div.x-vertical-polarity--start-content [components/content start-content]]
                     [:div.x-vertical-polarity--placeholder]))
 
 (defn- middle-content
@@ -60,7 +60,7 @@
   ;
   ; @return (component)
   [_ {:keys [middle-content]}]
-  (if middle-content [:div.x-vertical-polarity--middle-content [components/content {:content middle-content}]]
+  (if middle-content [:div.x-vertical-polarity--middle-content [components/content middle-content]]
                      [:div.x-vertical-polarity--placeholder]))
 
 (defn- end-content
@@ -72,7 +72,7 @@
   ;
   ; @return (component)
   [_ {:keys [end-content orientation]}]
-  (if end-content [:div.x-vertical-polarity--end-content [components/content {:content end-content}]]
+  (if end-content [:div.x-vertical-polarity--end-content [components/content end-content]]
                   [:div.x-vertical-polarity--placeholder]))
 
 (defn- vertical-polarity

@@ -147,7 +147,7 @@
   ; @return (hiccup)
   [_ {:keys [get-label-f]} option]
   (let [option-label (get-label-f option)]
-       [:div.x-combo-box--option-label [components/content {:content option-label}]]))
+       [:div.x-combo-box--option-label [components/content option-label]]))
 
 (defn- combo-box-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -207,7 +207,7 @@
                                       ; BUG#2105
   [:div.x-combo-box--no-options-label {:on-mouse-down #(.preventDefault %)
                                        :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
-                                      [components/content {:content no-options-label}]])
+                                      [components/content no-options-label]])
 
 (defn- combo-box-extender
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -223,7 +223,7 @@
                                         [:i.x-combo-box--extender-icon    (param :add)]
                                         [:div.x-combo-box--extender-label (str   value)]])
 
-(defn- combo-box-surface
+(defn- combo-box-surface-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -238,27 +238,31 @@
                              (if (engine/field-props->render-extender? field-props)
                                  [combo-box-extender          field-id field-props])])
 
+(defn- combo-box-surface
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (component)
+  [field-id field-props]
+  [components/subscriber field-id
+                         {:base-props field-props
+                          :render-f   #'combo-box-surface-structure
+                          :subscriber [:elements/get-combo-box-surface-props field-id]}])
+
 (defn field-props<-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:surface (map)
-  ;   {:base-props (map)
-  ;    :content (metamorphic-content)
-  ;    :subscriber (subscription-vector)}}
+  ;  {:surface (metamorphic-content)(opt)
   ;
   ; @return (map)
-  ;  {:surface (map)
-  ;   {:base-props (map)
-  ;    :content (metamorphic-content)
-  ;    :subscriber (subscription-vector)}}
+  ;  {:surface (metamorphic-content)
   [field-id {:keys [surface] :as field-props}]
-  (let [surface-props (merge {:base-props field-props
-                              :content    #'combo-box-surface
-                              :subscriber [:elements/get-combo-box-surface-props field-id]}
-                             (param surface))]
-       (assoc field-props :surface surface-props)))
+  (if surface (return field-props)
+              (assoc  field-props :surface [combo-box-surface field-id field-props])))
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -312,13 +316,7 @@
   ;   :select-option-event (event-vector)(opt)
   ;    Default: DEFAULT-SELECT-OPTION-EVENT
   ;   :style (map)(opt)
-  ;   :surface (map)(opt)
-  ;    {:base-props (map)(opt)
-  ;      Default: field-props
-  ;     :content (metamorphic-content)(opt)
-  ;      Default: #'combo-box-surface
-  ;     :subscriber (subscription-vector)(opt)
-  ;      Default: [:elements/get-combo-box-surface-props field-id]}
+  ;   :surface (metamorphic-content)(opt)
   ;   :value-path (item-path vector)(constant)(opt)}
   ;
   ; @usage

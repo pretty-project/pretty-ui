@@ -420,17 +420,17 @@
   ; @return (component)
   [popup-id view-props {:keys [filename filesize file-object-url] :as file-props} file-dex]
   (let [element-id           (engine/file-dex->element-id file-dex :file-uploader)
-        on-right-click-event [:elements/render-context-surface! element-id]]
-       [elements/file element-id
-                      {:label          filename
-                       :filesize       filesize
-                       :on-right-click on-right-click-event
-                       :stickers       (file-stickers popup-id view-props file-props file-dex)
-                       :thumbnail-uri  (if (io/filename->image? filename)
-                                           (param file-object-url))
-                       :width          popup-geometry/FILE-PREVIEW-CARD-WIDTH
-                       :context-surface {:content       #'context-menu/file-uploader-file-context-menu
-                                         :content-props file-props}}]))
+        on-right-click-event [:elements/render-context-surface! element-id]]))
+       ;[elements/file element-id
+        ;;              {:label          filename
+          ;             :filesize       filesize
+          ;             :on-right-click on-right-click-event
+          ;             :stickers       (file-stickers popup-id view-props file-props file-dex)
+          ;             :thumbnail-uri  (if (io/filename->image? filename)
+          ;                                 (param file-object-url)]
+          ;             :width          popup-geometry/FILE-PREVIEW-CARD-WIDTH
+          ;             :context-surface {:content       #'context-menu/file-uploader-file-context-menu
+          ;                               :content-props file-props]]))
 
 (defn- file-uploader-file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!

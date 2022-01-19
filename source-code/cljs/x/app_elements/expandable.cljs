@@ -95,7 +95,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if label [:div.x-expandable--label [components/content {:content label}]]))
+  (if label [:div.x-expandable--label [components/content label]]))
 
 (defn- expandable-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,12 +116,12 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:expanded? (boolean)}
+  ;  {:content (metamorphic-content)(opt)
+  ;   :expanded? (boolean)}
   ;
   ; @return (hiccup)
-  [expandable-id {:keys [expanded?] :as expandable-props}]
-  (if expanded? (let [content-props (components/extended-props->content-props expandable-props)]
-                     [:div.x-expandable--body [components/content expandable-id content-props]])))
+  [expandable-id {:keys [content expanded?]}]
+  (if expanded? [:div.x-expandable--body [components/content expandable-id content]]))
 
 (defn expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -136,16 +136,9 @@
                      [expandable-body           expandable-id expandable-props]])
 
 (defn element
-  ; XXX#8711
-  ; Az expandable elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content tulajdonságként átadott tartalmat.
-  ; Az expandable elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
-  ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
-  ;
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
   ;  {:content (metamorphic-content)
-  ;   :content-props (map)(opt)
   ;   :expanded? (boolean)(opt)
   ;    Default: true
   ;   :icon (keyword)(opt)
@@ -159,12 +152,7 @@
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :fit, :row
-  ;    Default: :row
-  ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @usage
-  ;  XXX#7610
-  ;  Az expandable elemen megjelenő tartalom használatának leírását a blank elem dokumentációjában találod.
+  ;    Default: :row}
   ;
   ; @usage
   ;  [elements/expandable {...}]

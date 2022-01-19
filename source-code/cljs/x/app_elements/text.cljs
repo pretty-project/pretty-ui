@@ -55,10 +55,9 @@
   ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [text-id text-props]
-  (let [content-props (components/extended-props->content-props text-props)]
-       [:div.x-text (engine/element-attributes text-id text-props)
-                    [:div.x-text--body [components/content text-id content-props]]]))
+  [text-id {:keys [content] :as text-props}]
+  [:div.x-text (engine/element-attributes text-id text-props)
+               [:div.x-text--body [components/content text-id content]]])
 
 (defn element
   ; XXX#0439
@@ -72,9 +71,6 @@
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)(opt)
-  ;    XXX#8711
-  ;   :content-props (map)(opt)
-  ;    XXX#8711
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s

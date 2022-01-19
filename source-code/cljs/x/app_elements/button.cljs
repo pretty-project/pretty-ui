@@ -82,7 +82,7 @@
   ; @return (hiccup)
   [_ {:keys [content]}]
   ; XXX#0523
-  (if content [:div.x-button--label [components/content {:content content}]]))
+  (if content [:div.x-button--label [components/content content]]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!

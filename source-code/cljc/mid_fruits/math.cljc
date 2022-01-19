@@ -281,6 +281,21 @@
   [total value]
   (/ value (/ total 100)))
 
+; TEMP
+; Ennek mi az igazi neve?
+(defn percent-result
+  ; @param (float or integer) total
+  ; @param (float or integer) percentage
+  ;
+  ; @example
+  ;  (math/percent 50 40)
+  ;  =>
+  ;  20
+  ;
+  ; @return (float or integer)
+  [total percentage]
+  (/ (* total percentage) 100))
+
 
 
 ;; -- Domain functions --------------------------------------------------------

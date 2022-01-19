@@ -72,9 +72,8 @@
   ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [_ label-props]
-  (let [content-props (components/extended-props->content-props label-props)]
-       [:div.x-label--body [components/content content-props]]))
+  [_ {:keys [content]}]
+  [:div.x-label--body [components/content content]])
 
 (defn- label
   ; WARNING! NON-PUBLIC! DO NOT USE!

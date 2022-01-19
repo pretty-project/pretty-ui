@@ -121,13 +121,12 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:surface (map)(opt)
+  ;  {:surface (metamorphic-content)(opt)
   ;   :surface-visible? (boolean)(opt)}
   ;
   ; @return (hiccup)
   [field-id {:keys [surface surface-visible?]}]
-  (if (and (some?   surface)
-           (boolean surface-visible?))
+  (if (and surface surface-visible?)
       [:div.x-text-field--surface [components/content field-id surface]]))
 
 (defn- text-field-label
@@ -140,7 +139,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if label [:div.x-text-field--label [components/content {:content label}]
+  (if label [:div.x-text-field--label [components/content label]
                                       (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- text-field-placeholder
@@ -154,7 +153,7 @@
   [field-id {:keys [placeholder] :as field-props}]
   (if (engine/field-props->render-field-placeholder? field-props)
       [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id field-props)
-                                      [components/content {:content placeholder}]]))
+                                      [components/content placeholder]]))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -176,7 +175,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [invalid-message]}]
-  (if invalid-message [:div.x-text-field--invalid-message [components/content {:content invalid-message}]]))
+  (if invalid-message [:div.x-text-field--invalid-message [components/content invalid-message]]))
 
 (defn- text-field-input-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -286,10 +285,7 @@
   ;    :horizontal, :none
   ;    Default: :none
   ;   :style (map)(opt)
-  ;   :surface (map)(opt)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :surface (metamorphic-content)(opt)
   ;   :unemptiable? (boolean)(opt)
   ;    Default: false
   ;    TODO ...

@@ -53,7 +53,7 @@
   [group-id {:keys [cards] :as group-props}]
   (reduce #(conj %1 [card %2])
            [:div.x-card-group (engine/element-attributes group-id group-props)
-           (param cards)]))
+            (param cards)]))
 
 (defn element
   ; XXX#3240

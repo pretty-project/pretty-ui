@@ -147,7 +147,7 @@
   ; @return (hiccup)
   [table-id table-props cell-content cell-index]
   [:td.x-table--body-cell (table-props->row-cell-attributes table-props cell-index)
-                          [components/content {:content cell-content}]])
+                          [components/content cell-content]])
 
 (defn- table-row
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,7 +188,7 @@
   ;
   ; @return (hiccup)
   [_ _ {:keys [label]}]
-  (if label [:div.x-table--header-cell--label [components/content {:content label}]]))
+  (if label [:div.x-table--header-cell--label [components/content label]]))
 
 (defn- table-header-cell
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -234,7 +234,7 @@
   ;
   ; @return (hiccup)
   [table-id {:keys [label]}]
-  (if label [:div.x-table--label [components/content {:content label}]]))
+  (if label [:div.x-table--label [components/content label]]))
 
 (defn- table
   ; WARNING! NON-PUBLIC! DO NOT USE!

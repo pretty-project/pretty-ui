@@ -49,12 +49,12 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
+  ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [anchor-id anchor-props]
-  (let [content-props (components/extended-props->content-props anchor-props)]
-       [:a.x-anchor--body (engine/clickable-body-attributes anchor-id anchor-props)
-                          [components/content content-props]]))
+  [anchor-id {:keys [content] :as anchor-props}]
+  [:a.x-anchor--body (engine/clickable-body-attributes anchor-id anchor-props)
+                     [components/content content]])
 
 (defn- anchor
   ; WARNING! NON-PUBLIC! DO NOT USE!

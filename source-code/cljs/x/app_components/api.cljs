@@ -27,26 +27,20 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-components.content
-(def extended-props->content-props content/extended-props->content-props)
-(def content                       content/component)
+(def content content/component)
 
 ; x.app-components.listener
-(def extended-props->listener-props listener/extended-props->listener-props)
-(def listener                       listener/component)
+(def listener listener/component)
 
 ; x.app-components.stated
-(def extended-props->stated-props  stated/extended-props->stated-props)
-(def extended-props->stated-props? stated/extended-props->stated-props?)
-(def stated                        stated/component)
+(def stated stated/component)
 
 ; x.app-components.subscriber
-(def extended-props->subscriber-props subscriber/extended-props->subscriber-props)
-(def subscriber                       subscriber/component)
+(def subscriber subscriber/component)
 
 ; x.app-components.transmitter
 (def transmitter transmitter/component)
 
 ; x.app-components.value
-(def extended-props->value-props value/extended-props->value-props)
-(def get-metamorphic-value       value/get-metamorphic-value)
-(def value                       value/component)
+(def get-metamorphic-value value/get-metamorphic-value)
+(def value                 value/component)

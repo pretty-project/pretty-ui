@@ -83,7 +83,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [no-chips-label]}]
-  (if no-chips-label [:div.x-chip-group--no-chips-label [components/content {:content no-chips-label}]]))
+  (if no-chips-label [:div.x-chip-group--no-chips-label [components/content no-chips-label]]))
 
 (defn- chip-group-chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,7 +111,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label]}]
-  (if label [:div.x-chip-group--label [components/content {:content label}]]))
+  (if label [:div.x-chip-group--label [components/content label]]))
 
 (defn- chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!

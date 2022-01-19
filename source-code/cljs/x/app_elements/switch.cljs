@@ -72,7 +72,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [secondary-label]}]
-  [:div.x-switch--secondary-label [components/content {:content secondary-label}]])
+  [:div.x-switch--secondary-label [components/content secondary-label]])
 
 (defn- switch-secondary-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,7 +95,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  [:div.x-switch--primary-label [components/content {:content label}]
+  [:div.x-switch--primary-label [components/content label]
                                 (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- switch-primary-body
@@ -120,13 +120,13 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  [:div.x-switch--label [components/content {:content label}]
+  [:div.x-switch--label [components/content label]
                         (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- switch-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) switch-id
+  ; (keyword) switch-id
   ; @param (map) switch-props
   ;
   ; @return (hiccup)

@@ -94,7 +94,7 @@
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  [:div.x-checkbox-group--label [components/content {:content label}]
+  [:div.x-checkbox-group--label [components/content label]
                                 (if required? [:span.x-input--label-asterisk "*"])])
 
 (defn- checkbox-group-option
@@ -109,7 +109,7 @@
   (let [option-label (get-label-f option)]
        [:button.x-checkbox-group--option (engine/collectable-option-attributes group-id group-props option)
                                          [:div.x-checkbox-group--option-button]
-                                         [:div.x-checkbox-group--option-label [components/content {:content option-label}]]]))
+                                         [:div.x-checkbox-group--option-label [components/content option-label]]]))
 
 (defn- checkbox-group-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

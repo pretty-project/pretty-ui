@@ -663,16 +663,16 @@
   (let [element-id           (engine/item-id->element-id subdirectory-id :file-storage)
         stickers             (file-storage-subdirectory-stickers component-id view-props subdirectory-id subdirectory-props)
         on-click-event       [:file-storage/go-to! subdirectory-id]
-        on-right-click-event [:elements/render-context-surface! element-id]]
-       [elements/directory element-id
-                           {:content-size   content-size
-                            :item-count     item-count
-                            :label          alias
-                            :on-click       on-click-event
-                            :on-right-click on-right-click-event
-                            :stickers       stickers
-                            :context-surface {:content      #'context-menu/file-storage-subdirectory-context-menu
-                                              :content-props subdirectory-props}}]))
+        on-right-click-event [:elements/render-context-surface! element-id]]))
+       ;[elements/directory element-id
+        ;                   {:content-size   content-size
+        ;                    :item-count     item-count
+        ;                    :label          alias
+        ;                    :on-click       on-click-event
+        ;                    :on-right-click on-right-click-event
+        ;                    :stickers       stickers
+        ;                    :context-surface {:content      #'context-menu/file-storage-subdirectory-context-menu
+        ;                                      :content-props subdirectory-props]]))
 
 (defn- file-storage-subdirectory-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -726,16 +726,16 @@
         stickers             (file-storage-file-stickers component-id view-props file-id file-props)
         timestamp            (time/timestamp-string->date-time modified-at :yyyymmdd :hhmm)
         on-right-click-event [:elements/render-context-surface! element-id]
-        thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]
-       [elements/file element-id
-                      {:filesize       filesize
-                       :label          alias
-                       :on-right-click on-right-click-event
-                       :stickers       stickers
-                       :timestamp      timestamp
-                       :thumbnail-uri  thumbnail-uri
-                       :context-surface {:content       #'context-menu/file-storage-file-context-menu
-                                         :content-props file-props}}]))
+        thumbnail-uri        (engine/file-props->thumbnail-uri file-props)]))
+;       [elements/file element-id
+;                      {:filesize       filesize
+;                       :label          alias
+;                       :on-right-click on-right-click-event
+;;                       :stickers       stickers
+  ;                     :timestamp      timestamp
+  ;                     :thumbnail-uri  thumbnail-uri
+  ;                     :context-surface {:content       #'context-menu/file-storage-file-context-menu
+  ;                                       :content-props file-props)]))
 
 (defn- file-storage-file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -108,10 +108,12 @@
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
+  ;  {:label (metamorphic-content)(opt)
+  ;   :required? (boolean)(opt)}
   ;
   ; @return (hiccup)
   [_ {:keys [label required?]}]
-  (if label [:div.x-color-picker--label [components/content {:content label}]
+  (if label [:div.x-color-picker--label [components/content label]
                                         (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- color-picker-header

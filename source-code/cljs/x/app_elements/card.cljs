@@ -47,11 +47,11 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
+  ;  {:content (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [card-id card-props]
-  (let [content-props (components/extended-props->content-props card-props)]
-       [:div.x-card--body [components/content card-id content-props]]))
+  [card-id {:keys [content]}]
+  [:div.x-card--body [components/content card-id content]])
 
 (defn- button-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,19 +94,12 @@
         (nil?  on-click) [static-card card-id card-props]))
 
 (defn element
-  ; XXX#8711
-  ; A card elem az x.app-components.api/content komponens használatával jeleníti meg
-  ; a számára :content tulajdonságként átadott tartalmat.
-  ; A card elemnél alkalmazott :content, :content-props és :subscriber tulajdonságok
-  ; használatának leírását az x.app-components.api/content komponens dokumentációjában találod.
-  ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
   ;  {:badge-color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :content (metamorphic-content)(opt)
-  ;   :content-props (map)(opt)
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
@@ -132,12 +125,7 @@
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :vertical
-  ;   :style (map)(opt)
-  ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @usage
-  ;  XXX#7610
-  ;  A card elemen megjelenő tartalom használatának leírását a blank elem dokumentációjában találod.
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/card {...}]

@@ -135,22 +135,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn extended-props->stated-props
-  ; @param (map) extended-props
-  ;
-  ; @return (map)
-  [extended-props]
-  (select-keys extended-props STATED-PROPS))
-
-(defn extended-props->stated-props?
-  ; @param (map) extended-props
-  ;
-  ; @return (map)
-  [extended-props]
-  ; Ha egy térkép tartalmazza a :render-f kulcsot, attól még nem számít stated-props térképnek!
-  (map/contains-of-keys? (param extended-props)
-                         (vector/remove-item STATED-PROPS :render-f)))
-
 (defn- context-props->initialize?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
