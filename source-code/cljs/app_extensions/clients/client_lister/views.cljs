@@ -1,25 +1,10 @@
 
-(ns app-extensions.clients.client-lister
-    (:require [mid-fruits.candy      :refer [param return]]
-              [x.app-activities.api  :as activities]
-              [x.app-core.api        :as a :refer [r]]
-              [x.app-elements.api    :as elements]
-              [x.app-locales.api     :as locales]
+(ns app-extensions.clients.client-lister.views
+    (:require [mid-fruits.candy  :refer [param return]]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-locales.api :as locales]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-item-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ _ {:keys [modified-at]}]]
-  {:modified-at       (r activities/get-actual-timestamp db modified-at)
-   :selected-language (r locales/get-selected-language   db)})
-
-(a/reg-sub :clients/get-client-item-props get-item-props)
 
 
 
@@ -68,18 +53,6 @@
                                       :on-click [:clients/->client-item-clicked]}])
 
 
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  :clients/->client-item-clicked
-  (fn [_ [_ _ {:keys [id]}]]
-      (let [client-uri (item-editor/editor-uri :clients :client id)]
-           [:router/go-to! client-uri])))
-
-  
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------

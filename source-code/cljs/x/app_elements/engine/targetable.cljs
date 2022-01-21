@@ -48,7 +48,7 @@
   ; @return (boolean)
   [element-id]
   (let [target-id (element-id->target-id element-id)]
-       (environment/element-id->element-disabled? target-id)))
+       (environment/element-disabled? target-id)))
 
 (defn element-id->target-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,4 +57,5 @@
   ;
   ; @return (boolean)
   [element-id]
-  (not (element-id->target-disabled? element-id)))
+  (let [target-id (element-id->target-id element-id)]
+       (environment/element-enabled? target-id)))

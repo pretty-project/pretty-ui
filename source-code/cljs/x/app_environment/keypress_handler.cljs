@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.3.6
+; Version: v2.4.0
 ; Compatibility: x4.5.5
 
 
@@ -235,6 +235,7 @@
   ;
   ; @return (map)
   [db [_ event-id event-props]]
+  ; XXX#1160 A regisztrált keypress események újra regisztrálásakor azok tulajdonságai felülíródnak
   (assoc-in db (db/path :environment/keypress-events event-id) event-props))
 
 (defn- remove-event-props!
@@ -268,12 +269,11 @@
   ;
   ; @return (map)
   [db [_ event-id {:keys [key-code on-keydown on-keyup]}]]
-  (cond-> db (some? on-keydown)
-             (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keydown-events)
-                        vector/conj-item event-id)
-             (some? on-keyup)
-             (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keyup-events)
-                        vector/conj-item event-id)))
+  ; XXX#1160 A regisztrált keypress események újra regisztrálásakor azok azonosítói nem ismétlődnek a cache vektorban
+  (cond-> db on-keydown (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keydown-events)
+                                   vector/conj-item-once event-id)
+             on-keyup   (update-in (db/meta-item-path :environment/keypress-events :cache key-code :keyup-events)
+                                   vector/conj-item-once event-id)))
 
 (defn- uncache-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!

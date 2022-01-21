@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.5.2
+; Version: v0.9.8
+; Compatibility: x4.5.5
 
 
 
@@ -24,14 +24,27 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn element-id->element-disabled?
+(defn element-disabled?
   ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/element-disabled? "my-element")
   ;
   ; @return (boolean)
   [element-id]
-  (if-let [element (dom/get-element-by-id element-id)]
-          (dom/element-disabled? element)
-          (return false)))
+  (boolean (if-let [element (dom/get-element-by-id element-id)]
+                   (dom/element-disabled? element))))
+
+(defn element-enabled?
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/element-enabled? "my-element")
+  ;
+  ; @return (boolean)
+  [element-id]
+  (boolean (if-let [element (dom/get-element-by-id element-id)]
+                   (dom/element-enabled? element))))
 
 
 

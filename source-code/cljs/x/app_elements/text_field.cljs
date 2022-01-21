@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v1.0.8
-; Compatibility: x4.4.8
+; Version: v1.1.6
+; Compatibility: x4.5.5
 
 
 
@@ -37,8 +37,8 @@
   ;
   ; @return (map)
   [field-id {:keys [emptiable? end-adornments resetable?]}]
-  (cond-> end-adornments (boolean resetable?) (vector/conj-item (engine/reset-field-adornment-preset field-id))
-                         (boolean emptiable?) (vector/conj-item (engine/empty-field-adornment-preset field-id))))
+  (cond-> end-adornments resetable? (vector/conj-item (engine/reset-field-adornment-preset field-id))
+                         emptiable? (vector/conj-item (engine/empty-field-adornment-preset field-id))))
 
 (defn- field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,13 +85,13 @@
   ;  {:field-empty? (boolean)}
   ;
   ; @return (map)
-  [_ {:keys [end-adornments field-empty?] :as field-props}]
-                      ; XXX#8073
-  (cond-> field-props (boolean field-empty?)
-                      (update :end-adornments vector/remove-items-kv :preset :empty-field-adornment)
-                      ; XXX#8073
-                      (boolean field-empty?)
-                      (update :end-adornments vector/remove-items-kv :preset :reset-field-adornment)))
+  [_ {:keys [field-empty?] :as field-props}]
+  (letfn [(f [end-adornments {:keys [preset] :as end-adornment}]
+             (case preset :empty-field-adornment (return end-adornments)
+                          :reset-field-adornment (return end-adornments)
+                                                 (conj   end-adornments end-adornment)))]
+         (if-not field-empty? (return field-props)
+                              (update field-props :end-adornments #(reduce f [] %))))) ; XXX#8073
 
 
 

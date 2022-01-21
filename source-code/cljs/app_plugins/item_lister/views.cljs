@@ -448,6 +448,7 @@
   ; @return (component)
   [extension-id item-namespace {:keys [menu-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
   [:div#item-lister--header--structure
+
     [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
                                       [menu-mode-header    extension-id item-namespace header-props]]
     [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}

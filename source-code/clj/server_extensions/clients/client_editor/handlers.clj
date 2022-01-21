@@ -1,5 +1,5 @@
 
-(ns server-extensions.clients.client-editor
+(ns server-extensions.clients.client-editor.handlers
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.validator :as validator]
               [mongo-db.api         :as mongo-db]
@@ -7,8 +7,7 @@
               [prototypes.api       :as prototypes]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [server-plugins.item-editor.api        :as item-editor]))
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
 
 
 
@@ -100,13 +99,3 @@
                save-client-item!   undo-delete-client-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-server-boot [:item-editor/initialize! :clients :client
-                                             {:suggestion-keys [:city]}]})

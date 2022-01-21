@@ -16,7 +16,6 @@
 (ns x.mid-db.engine
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map :refer [dissoc-in]]
-              [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]
               [x.mid-core.api     :refer [r]]))
@@ -92,6 +91,29 @@
   ; @return (boolean)
   [db [_ item-path]]
   (some? (r get-item db item-path)))
+
+(defn get-item-count
+  ; @param (item-path vector) item-path
+  ;
+  ; @usage
+  ;  (r db/get-item-count [:my :item :path])
+  ;
+  ; @return (integer)
+  [db [_ item-path]]
+  (let [item (get-in db item-path)]
+       (count item)))
+
+(defn get-applied-item
+  ; @param (item-path vector) item-path
+  ; @param (function) f
+  ;
+  ; @usage
+  ;  (r db/get-applied-item [:my :item :path] #(< 5 (count %)))
+  ;
+  ; @return (integer)
+  [db [_ item-path f]]
+  (let [item (get-in db item-path)]
+       (f item)))
 
 
 

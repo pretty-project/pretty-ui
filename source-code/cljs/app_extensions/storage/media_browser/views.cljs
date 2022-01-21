@@ -1,33 +1,15 @@
 
-(ns app-extensions.storage.media-browser
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.css     :as css]
-              [mid-fruits.format  :as format]
-              [mid-fruits.io      :as io]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [x.app-media.api    :as media]
+(ns app-extensions.storage.media-browser.views
+    (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.css       :as css]
+              [mid-fruits.format    :as format]
+              [mid-fruits.io        :as io]
+              [mid-fruits.vector    :as vector]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-elements.api   :as elements]
+              [x.app-media.api      :as media]
               [app-plugins.item-browser.api :as item-browser]))
-
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage/add-new-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ selected-option]]
-      (let [destination-id (r item-browser/get-current-item-id db :storage)]
-           (case selected-option :upload-files!
-                                 [:storage/load-file-uploader!     :storage/media-browser {:destination-id destination-id}]
-                                 :create-directory!
-                                 [:storage/load-directory-creator! :storage/media-browser {:destination-id destination-id}]))))
 
 
 
@@ -131,10 +113,6 @@
                                       :on-click         [:storage/->media-item-clicked]}])
 
 
-  ;[app-extensions.storage.file-picker/view :my-picker {}])
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -143,9 +121,3 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage/render-media-browser!
   [:ui/set-surface! ::view {:view #'view}])
-
-(a/reg-event-fx
-  :storage/load-media-browser!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:dispatch-n [[:storage/render-media-browser!]]}))

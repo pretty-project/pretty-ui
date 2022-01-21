@@ -29,6 +29,8 @@
 (def get-db               engine/get-db)
 (def get-item             engine/get-item)
 (def item-exists?         engine/item-exists?)
+(def get-item-count       engine/get-item-count)
+(def get-applied-item     engine/get-applied-item)
 (def empty-db!            engine/empty-db!)
 (def copy-item!           engine/copy-item!)
 (def move-item!           engine/move-item!)

@@ -1,5 +1,4 @@
 
 (ns app-extensions.clients.api
-    (:require [app-extensions.clients.client-editor]
-              [app-extensions.clients.client-lister]
-              [app-extensions.clients.engine]))
+    (:require [app-extensions.clients.client-editor.api]
+              [app-extensions.clients.client-lister.api]))

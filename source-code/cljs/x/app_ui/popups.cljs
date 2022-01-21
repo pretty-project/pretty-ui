@@ -182,7 +182,7 @@
       {:dispatch-n [[:ui/destroy-element! :popups popup-id]
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
                     [:environment/remove-scroll-prohibition! popup-id]
-                    [:environment/remove-keypress-event! :ui/on-escape-pressed]]}))
+                    [:environment/remove-keypress-event! ::on-escape-pressed]]}))
 
 (a/reg-event-fx
   :ui/close-upper-popup!
@@ -281,10 +281,10 @@
            (if (popup-props->render-popup-exclusive? popup-props)
                {:dispatch [:ui/render-popup-exclusive! popup-id popup-props]
                 :dispatch-if [(get popup-props :user-close?)
-                              [:environment/reg-keypress-event! :ui/on-escape-pressed keypress-event-props]]}
+                              [:environment/reg-keypress-event! ::on-escape-pressed keypress-event-props]]}
                {:dispatch [:ui/render-popup! popup-id popup-props]
                 :dispatch-if [(get popup-props :user-close?)
-                              [:environment/reg-keypress-event! :ui/on-escape-pressed keypress-event-props]]}))))
+                              [:environment/reg-keypress-event! ::on-escape-pressed keypress-event-props]]}))))
 
 
 

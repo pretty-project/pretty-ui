@@ -1,5 +1,5 @@
 
-(ns server-extensions.storage.media-browser
+(ns server-extensions.storage.media-browser.handlers
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.validator :as validator]
               [mongo-db.api         :as mongo-db]
@@ -12,7 +12,7 @@
 
 
 
-;; -- Resolver ----------------------------------------------------------------
+;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-media-item-f
@@ -70,23 +70,43 @@
 
 
 
+;; -- Mutations ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- create-directory-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) mutation-props
+  ;
+  ; @return (namespaced map)
+  [env {:keys [alias destination-id]}]
+  (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
+          (let [destination-path (get  destination-item :media/path)
+                directory-path   (conj destination-path {:media/id destination-id})
+                directory-item {:media/alias alias :media/content-size 0 :media/description ""
+                                :media/items []    :media/path directory-path
+                                :media/mime-type "storage/directory"}]
+               (if-let [{:media/keys [id]} (engine/insert-media-item! env directory-item)]
+                       (engine/attach-media-item! env destination-id id)))))
+
+(defmutation create-directory!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;
+             ; @return (?)
+             [env mutation-props]
+             {::pathom.co/op-name 'storage/create-directory!}
+             (create-directory-f env mutation-props))
+
+
+
 ;; -- Handlers ----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-media-item get-media-items])
+(def HANDLERS [create-directory! get-media-item get-media-items])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-server-boot [:item-browser/initialize! :storage :media
-                                              {:default-item-id engine/ROOT-DIRECTORY-ID
-                                               :label-key    :alias
-                                               :path-key     :path
-                                               :search-keys [:alias]}]})

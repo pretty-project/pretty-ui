@@ -127,9 +127,9 @@
    [header extension-id item-namespace {}])
 
   ([extension-id item-namespace header-props]
-   (let [header-props     (assoc header-props :menu #'menu-mode-header)
-         subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
-        (fn [_ _ header-props] [item-lister/header extension-id item-namespace (merge header-props @subscribed-props)]))))
+   (let [subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
+        (fn [_ _ header-props] (let [header-props (merge header-props {:menu #'menu-mode-header} @subscribed-props)]
+                                    [item-lister/header extension-id item-namespace header-props])))))
 
 
 

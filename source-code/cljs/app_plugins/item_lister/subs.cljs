@@ -317,9 +317,11 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (and ; BUG#4506
-       ; Ha a keresőmezőbe írsz egy karaktert, majd azonnal megnyomod az ESC billentyűt,
-       ; akkor kétszer történik meg az on-type-ended esemény, ami miatt két lekérés indulna,
-       ; ezért szükséges vizsgálni a synchronizing? függvény kimenetét!
+       ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
+       ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
+       ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
+       ; Ezért szükséges vizsgálni a synchronizing? függvény kimenetét, hogy ha már elindult
+       ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
             (r download-more-items? db extension-id item-namespace)
        (not (r synchronizing?       db extension-id item-namespace))))
 

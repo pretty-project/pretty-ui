@@ -1,7 +1,6 @@
 
-(ns server-extensions.clients.client-lister
+(ns server-extensions.clients.client-lister.handlers
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.vector    :as vector]
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
               [prototypes.api       :as prototypes]
@@ -135,13 +134,3 @@
                                 duplicate-client-items! undo-duplicate-client-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-server-boot [:item-lister/initialize! :clients :client
-                                             {:search-keys [:name :email-address]}]})

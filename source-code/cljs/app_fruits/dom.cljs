@@ -389,6 +389,13 @@
   [element]
   (-> element .-disabled boolean))
 
+(defn element-enabled?
+  ; @param (DOM-element) element
+  ;
+  ; @return (boolean)
+  [element]
+  (-> element .-disabled not))
+
 (defn get-element-width
   ; @param (DOM-element) element
   ;

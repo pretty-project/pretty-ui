@@ -1,38 +1,13 @@
 
-(ns app-extensions.clients.client-editor
-    (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.form       :as form]
-              [mid-fruits.string     :as string]
-              [x.app-core.api        :as a :refer [r]]
-              [x.app-db.api          :as db]
-              [x.app-elements.api    :as elements]
-              [x.app-environment.api :as environment]
-              [x.app-layouts.api     :as layouts]
-              [x.app-locales.api     :as locales]
+(ns app-extensions.clients.client-editor.views
+    (:require [mid-fruits.candy   :refer [param]]
+              [mid-fruits.form    :as form]
+              [mid-fruits.string  :as string]
+              [x.app-core.api     :as a :refer [r]]
+              [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
+              [x.app-locales.api  :as locales]
               [app-plugins.item-editor.api :as item-editor]))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-client-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [first-name (get-in db [:clients :item-editor/data-items :first-name])
-        last-name  (get-in db [:clients :item-editor/data-items :last-name])]
-       (r locales/get-ordered-name db first-name last-name)))
-
-(defn- get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (merge (r item-editor/get-body-props db :clients :client)
-         {:item-name         (r get-client-name               db)
-          :name-order        (r locales/get-name-order        db)
-          :selected-language (r locales/get-selected-language db)
-          :viewport-large?   (r environment/viewport-large?   db)}))
-
-(a/reg-sub :client-editor/get-body-props get-body-props)
 
 
 

@@ -1,12 +1,12 @@
 
-(ns server-extensions.storage.file-handler
-    (:require [mid-fruits.candy    :refer [param return]]
-              [mongo-db.api        :as mongo-db]
-              [pathom.api          :as pathom]
-              [server-fruits.http  :as http]
-              [server-fruits.io    :as io]
-              [x.server-core.api   :as a]
-              [x.server-media.api  :as media]
+(ns server-extensions.storage.file-uploader.handlers
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mongo-db.api       :as mongo-db]
+              [pathom.api         :as pathom]
+              [server-fruits.http :as http]
+              [server-fruits.io   :as io]
+              [x.server-core.api  :as a]
+              [x.server-media.api :as media]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [server-extensions.storage.engine      :as engine]))
 
@@ -75,6 +75,10 @@
                        (io/delete-file! tempfile)
                        (media/generate-thumbnail! generated-filename)
                        (return file-item))))))
+
+       ; Itt is ellenőrizni, kell a kapacitást, hogy ha egyszerre két feltöltés futna  párhuzamosan,
+       ; akkor ne lehessen átlépni a max-ot
+
 
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
