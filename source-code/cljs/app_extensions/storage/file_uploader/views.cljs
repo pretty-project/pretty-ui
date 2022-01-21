@@ -96,15 +96,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _]
   [elements/button ::cancel-upload-button
-                   {:on-click [:storage/abort-file-uploading! uploader-id]
+                   {:on-click [:storage/cancel-file-uploader! uploader-id]
                     :preset :cancel-button :indent :both :keypress {:key-code 27}}])
 
 (defn- upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id {:keys [all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?]}]
+  [uploader-id {:keys [all-files-cancelled? max-upload-size-reached? storage-capacity-limit-exceeded?]}]
   [elements/button ::upload-files-button
-                   {:disabled? (or all-files-aborted? max-upload-size-reached? storage-capacity-limit-exceeded?)
-                    :on-click [:storage/upload-files! uploader-id]
+                   {:disabled? (or all-files-cancelled? max-upload-size-reached? storage-capacity-limit-exceeded?)
+                    :on-click [:storage/start-file-uploader-progress! uploader-id]
                     :preset :upload-button :indent :both :keypress {:key-code 13}}])
 
 (defn- available-capacity-label
@@ -159,9 +159,9 @@
 
 (defn- no-files-to-upload-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [all-files-aborted?]}]
-  (if all-files-aborted? [elements/label ::no-files-to-upload-label
-                                         {:content :no-files-selected :color :muted}]))
+  [_ {:keys [all-files-cancelled?]}]
+  (if all-files-cancelled? [elements/label ::no-files-to-upload-label
+                                           {:content :no-files-selected :color :muted}]))
 
 (defn- file-item-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,28 +188,31 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _ file-dex _]
   [elements/button {:preset :default-icon-button :icon :highlight_off
-                    :on-click [:storage/abort-file-upload! uploader-id file-dex]}])
+                    :on-click [:storage/cancel-file-upload! uploader-id file-dex]}])
 
 (defn- file-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id body-props file-dex {:keys [aborted?] :as file-props}]
-  (if-not aborted? [elements/row {:content [:<> [file-item-actions uploader-id body-props file-dex file-props]
-                                                [file-item-header  uploader-id body-props file-dex file-props]
-                                                [file-item-details uploader-id body-props file-dex file-props]]}]))
+  [uploader-id body-props file-dex {:keys [cancelled?] :as file-props}]
+  (if-not cancelled? [elements/row {:content [:<> [file-item-actions uploader-id body-props file-dex file-props]
+                                                  [file-item-header  uploader-id body-props file-dex file-props]
+                                                  [file-item-details uploader-id body-props file-dex file-props]]}]))
 
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id body-props file-dex]
   ; - A file-item komponens minden példánya feliratkozik az adott fájl tulajdonságira a Re-Frame
   ;   adatbázisban, így az egyes komponensek nem paraméterként kapják a file-list listából az adatot.
-  ; - Ha egy fájl eltávolításra kerül a felsorolásból és megváltoznak a lista adatai, akkor
-  ;   az változásban nem értintett fájlok nem renderelődnek újra
+  ; - Ha egy fájl felöltése visszavonsára kerül és megváltoznak a lista adatai, akkor a változásban
+  ;   nem értintett fájlok nem renderelődnek újra
   (let [file-props (a/subscribe [:storage/get-file-uploader-file-props uploader-id file-dex])]
        (fn [] [file-item-structure uploader-id body-props file-dex @file-props])))
 
 (defn- file-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id {:keys [file-count] :as body-props}]
+  ; A file-list komponens a feltöltésre kijelölt fájlok számának kezdő értékére iratkozik fel,
+  ; így ha egy fájl feltöltése visszavonsára kerül, akkor sem változik meg a file-list komponens
+  ; body-props paramétere, ami miatt újra renderelődne a lista.
   (letfn [(f [file-list file-dex]
              (conj file-list ^{:key (str uploader-id file-dex)}
                               [file-item uploader-id body-props file-dex]))]

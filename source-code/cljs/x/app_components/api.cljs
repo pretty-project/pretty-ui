@@ -15,7 +15,6 @@
 
 (ns x.app-components.api
     (:require [x.app-components.content     :as content]
-              [x.app-components.listener    :as listener]
               [x.app-components.stated      :as stated]
               [x.app-components.subscriber  :as subscriber]
               [x.app-components.transmitter :as transmitter]
@@ -28,9 +27,6 @@
 
 ; x.app-components.content
 (def content content/component)
-
-; x.app-components.listener
-(def listener listener/component)
 
 ; x.app-components.stated
 (def stated stated/component)

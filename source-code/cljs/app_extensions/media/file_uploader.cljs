@@ -290,12 +290,7 @@
   ;
   ; @return (component)
   [bubble-id {:keys [namespace] :as context-props}]
-  (let [query-id (engine/namespace->query-id namespace)]
-       [components/listener {:request-id      query-id
-                             :pending-content #'file-uploader-pending-bubble
-                             :success-content :files-uploaded
-                             :failure-content :file-upload-failure
-                             :content-props   context-props}]))
+  (let [query-id (engine/namespace->query-id namespace)]))
 
 (defn- file-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!

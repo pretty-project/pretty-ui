@@ -3,11 +3,10 @@
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.io        :as io]
               [mid-fruits.format    :as format]
-              [mid-fruits.keyword   :as keyword]
-              [mid-fruits.math      :as math]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]))
+              [x.app-elements.api   :as elements]
+              [app-extensions.storage.file-uploader.engine :as engine]))
 
 
 
@@ -16,48 +15,70 @@
 
 (defn- abort-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id {:keys [files-uploaded?]}]
-  (if-not files-uploaded? [elements/button {:label :abort! :preset :warning-button :indent :both
-                                            :on-click [:storage/abort-file-uploading! uploader-id]}]))
+  [_ {:keys [files-uploaded?]}]
+  (if-not false [elements/button {:tooltip :abort! :preset :close-icon-button :indent :both
+                                  :on-click [:storage/abort-file-uploading!]}]))
 
 (defn- upload-progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [file-count request-progress files-uploaded? request-failured?]}]
+  [_ {:keys [file-count files-uploaded? request-progress] :as x}]
   (let [sections      [{:color :primary :value request-progress} {:color :highlight :value (- 100 request-progress)}]
         progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
-        label (cond request-failured? :file-upload-failure files-uploaded? :files-uploaded :else progress-label)]
+        label          (if files-uploaded? :files-uploaded progress-label)]
        [:div {:style {:width "100%"}}
-             [elements/line-diagram {:layout :row :font-size :xs :sections sections :indent :both
-                                     :label label}]]))
+             [elements/line-diagram {:sections sections :indent :both}]])); :label label}]]))
+                                     ;:min-height :s}]]))
+             ;(str x)]))
 
 (defn- upload-progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [total-size uploaded-size]}]
-  (let [total-size    (io/B->MB            total-size)
-        ;uploaded-size (math/percent-result total-size request-progress)
-        uploaded-size (io/B->MB uploaded-size)
-        total-size    (format/decimals     total-size)
-        uploaded-size (format/decimals     uploaded-size)]
-       [elements/label {:content (str  uploaded-size " MB / " total-size " MB")
-                        :font-size :xs :color :muted :indent :both}]))
+  [_ {:keys [file-count files-size files-uploaded? uploaded-size] :as x}]
+  (let [progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
+        label          (if files-uploaded? :files-uploaded progress-label)]
+       [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left
+                        :min-height :s}]))
 
-    ; Akkor is hozzászámolja a cuccokat, ha még nincs elidnitva
+(defn- upload-progress-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id {:keys [request-sent?] :as uploader-props}]
+  (if request-sent? [:<> [elements/row {:content [:<> [upload-progress-label   uploader-id uploader-props]
+                                                      [abort-upload-button   uploader-id uploader-props]]
+                                        :horizontal-align :space-between}]
+                         [upload-progress-diagram uploader-id uploader-props]]))
+    ;[:div])) ;[:div (str uploader-props)]
+;                         [elements/horizontal-separator {:size :l}]]))
+
+;                         [elements/horizontal-separator {:size :xs}]]))
+;                         [upload-progress-diagram uploader-id uploader-props]]))
+;                         [elements/button {:preset :close-icon-button}]]))
+
+(defn- upload-progress
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id]
+  [components/subscriber uploader-id
+                         {:render-f #'upload-progress-structure
+                          :subscriber [:storage/get-file-uploader-props uploader-id]}])
+
+(defn- upload-progress-list
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [dialog-id {:keys [uploader-ids]}]
+  (reduce #(conj %1 [upload-progress %2])
+           [:<>] uploader-ids))
+
+(defn- upload-progress-notification-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [dialog-id upload-props]
+  [:<>
+       ;[elements/horizontal-separator {:size :xxs}]
+       [upload-progress-list dialog-id upload-props]])
+       ;[elements/horizontal-separator {:size :m}]])
 
 (defn- upload-progress-notification
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id progress-props]
-  [:<> [elements/horizontal-separator {:size :s}]
-       [upload-progress-diagram uploader-id progress-props]
-       [elements/row {:horizontal-align :space-between
-                      :content [:<> [upload-progress-label uploader-id progress-props]
-                                    [abort-upload-button   uploader-id progress-props]]}]])
-  ;[:div (str progress-props)])
-
-(defn- upload-progress-notification-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id]
-  [components/subscriber {:render-f   #'upload-progress-notification
-                          :subscriber [:storage/get-progress-props uploader-id]}])
+  [dialog-id]
+  [components/subscriber dialog-id
+                         {:render-f   #'upload-progress-notification-structure
+                          :subscriber [:storage/get-file-upload-props]}])
 
 
 
@@ -65,10 +86,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-file-uploading-progress-notification!
+  :storage/render-file-uploader-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ uploader-id]]
-      [:ui/blow-bubble! (keyword/add-namespace :storage uploader-id)
-                        {:body        [upload-progress-notification-body uploader-id]
-                         :autopop?    false
-                         :user-close? false}]))
+  (fn [_ _]
+      ; Az egy időben történő feltöltési folyamatok értékei összevonva jelennek meg egy folyamatjelzőn
+      [:ui/blow-bubble! :storage/file-uploader-progress-notification
+                        {:body #'upload-progress-notification
+                         :autopop? false :user-close? false}]))

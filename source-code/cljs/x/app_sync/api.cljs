@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.2
+; Version: v0.4.2
+; Compatibility: x4.5.5
 
 
 
@@ -29,6 +29,7 @@
 ; x.app-sync.request-handler
 (def get-request-status    request-handler/get-request-status)
 (def get-request-activity  request-handler/get-request-activity)
+(def request-active?       request-handler/request-active?)
 (def get-request-progress  request-handler/get-request-progress)
 (def request-sent?         request-handler/request-sent?)
 (def request-successed?    request-handler/request-successed?)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.4.2
-; Compatibility: x4.5.0
+; Version: v2.5.4
+; Compatibility: x4.5.5
 
 
 
@@ -125,45 +125,6 @@
 
 ; @constant (ms)
 (def COMPONENT-DESTRUCTION-DELAY 50)
-
-; @constant (keywords in vector)
-(def STATED-PROPS [:destructor :disabler :initializer :initial-props :initial-props-path
-                   :render-f :static-props :subscriber :updater])
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- context-props->initialize?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context-props
-  ;  {:initializer (metamorphic-event)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [initializer]}]
-  (some? initializer))
-
-(defn- context-props->subscribe?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context-props
-  ;  {:subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [subscriber]}]
-  (some? subscriber))
-
-(defn- context-props->disability?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) context-props
-  ;  {:disabler (subscription-vector)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [disabler]}]
-  (some? disabler))
 
 
 
@@ -334,8 +295,8 @@
   ;  {:updater (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id {:keys [updater] :as context-props} _]]
-      {:db       (r engine/set-component-prop! db component-id :status :updated)
-       :dispatch (param updater)}))
+      {:db (r engine/set-component-prop! db component-id :status :updated)
+       :dispatch updater}))
 
 (a/reg-event-fx
   :components/->component-unmounted
@@ -346,7 +307,7 @@
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id context-props mount-id]]
       {:db (r engine/set-component-prop! db component-id :status :unmounted)
-       :dispatch-later [{:ms       (param COMPONENT-DESTRUCTION-DELAY)
+       :dispatch-later [{:ms COMPONENT-DESTRUCTION-DELAY
                          :dispatch [:components/destruct-component! component-id context-props mount-id]}]}))
 
 
@@ -369,12 +330,12 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
+  ;  {:subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
   [component-id context-props]
-  (if (context-props->subscribe?   context-props)
-      [subscriber     component-id context-props]
-      [non-subscriber component-id context-props]))
+  (if (:subscriber context-props) [subscriber     component-id context-props]
+                                  [non-subscriber component-id context-props]))
 
 (defn- non-disabler
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -405,12 +366,12 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
+  ;  {:disabler (subscription-vector)}
   ;
   ; @return (component)
   [component-id context-props]
-  (if (context-props->disability? context-props)
-      [disabler      component-id context-props]
-      [non-disabler  component-id context-props]))
+  (if (:disabler context-props) [disabler     component-id context-props]
+                                [non-disabler component-id context-props]))
 
 (defn- lifecycle-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!

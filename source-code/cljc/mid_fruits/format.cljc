@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.27
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.6
 
 
 
@@ -14,7 +14,9 @@
 
 (ns mid-fruits.format
     (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]))
+              [mid-fruits.mixed  :as mixed]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -149,3 +151,26 @@
   (cond (>= n 1000000) (str (Math/round (/ n 1000000)) "M")
         (>= n 1000)    (str (Math/round (/ n 1000))    "K")
         :else          (str (Math/round n))))
+
+(defn inc-version
+  ; @param (string) n
+  ;
+  ; @example
+  ;  (format/inc-version "1.2.19")
+  ;  =>
+  ;  "1.2.20"
+  ;
+  ; @return (string)
+  [n]
+  (letfn [(f [n x]
+             (if (:increased? x)
+                 (if (-> x :separators vector/nonempty?)
+                     (f (string/insert-part n "." (-> x :separators first))
+                        (update x :separators vector/shift-first-item))
+                     (return n))
+                 (if-let [separator (string/first-index-of n ".")]
+                         (f (string/remove-first-occurence n ".")
+                            (update x :separators conj separator))
+                         (f (mixed/update-str-number n inc)
+                            (assoc x :increased? true)))))]
+         (f n {})))

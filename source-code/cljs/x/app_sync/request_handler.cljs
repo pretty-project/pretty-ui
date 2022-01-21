@@ -67,6 +67,15 @@
   ; @return (keyword)
   [db [_ request-id]]
   (r a/get-process-progress db request-id))
+  
+(defn request-active?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ;
+  ; @return (boolean)
+  [db [_ request-id]]
+  (r a/process-active? db request-id))
 
 (defn request-sent?
   ; @param (keyword) request-id

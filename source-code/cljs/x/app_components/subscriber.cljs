@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.subscriber
-    (:require [mid-fruits.candy             :refer [param]]
-              [mid-fruits.map               :as map]
-              [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-core.api               :as a]))
+    (:require [mid-fruits.candy :refer [param]]
+              [mid-fruits.map   :as map]
+              [x.app-core.api   :as a]
+              [x.app-components.transmitter :rename {component transmitter}]))
 
 
 
@@ -41,14 +41,6 @@
 ;
 ; @name static-props
 ;  XXX#0001
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keywords in vector)
-(def SUBSRIBER-PROPS [:base-props :initial-props :render-f :static-props :subscriber])
 
 
 

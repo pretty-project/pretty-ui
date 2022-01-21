@@ -15,7 +15,7 @@
 (ns mid-fruits.string
     (:require [clojure.string   :as string]
               [mid-fruits.candy :refer [param return]]
-              [mid-fruits.math  :refer [between?]]))
+              [mid-fruits.math  :as math]))
 
 
 
@@ -47,7 +47,7 @@
   ; @param (string) n
   ; @param (integer) dex
   ;
-  ; @param (nil or string)
+  ; @param (string)
   [n dex]
   (when (and (nonempty? n)
              (>  (count n) dex))
@@ -71,8 +71,8 @@
   ; @return (string)
   [n start end]
   (if (and (nonempty? n)
-           (between? end   0 (count n))
-           (between? start 0 (count n)))
+           (math/between? end   0 (count n))
+           (math/between? start 0 (count n)))
       (subs   n start end)
       (return n)))
 
@@ -219,8 +219,7 @@
   ;
   ; @return (vector)
   [n delimiter]
-  (if (and (nonempty? n)
-           (some?     delimiter))
+  (if (and delimiter (nonempty? n))
       (string/split n delimiter)
       (return [])))
 
@@ -236,6 +235,23 @@
   (if (and (nonempty? n)
            (nonempty? suffix))
       (str    n tab suffix)
+      (return n)))
+
+(defn insert-part
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @example
+  ;  (string/insert-part "ABCD" "xx" 2)
+  ;  =>
+  ;  "ABxxCD"
+  ;
+  ; @return (string)
+  [n x dex]
+  (if (nonempty? x)
+      (let [count (count n)
+            dex   (math/between! x 0 count)]
+           (str (subs n 0 dex) x (subs n dex)))
       (return n)))
 
 (defn before-first-occurence
@@ -282,7 +298,7 @@
   ;  =>
   ;  nil
   ;
-  ; @return (nil or string)
+  ; @return (string)
   [n x]
   (when (and (nonempty? n)
              (nonempty? x)
@@ -353,13 +369,40 @@
   ;  =>
   ;  nil
   ;
-  ; @return (nil or string)
+  ; @return (string)
   [n x]
   (when (and (nonempty? n)
              (nonempty? x)
              (string/includes? n x))
         (subs n (+ (string/last-index-of n x)
                    (count x)))))
+
+(defn remove-first-occurence
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @example
+  ;  (string/remove-first-occurence
+  ;   "ABC-DEF-GHI" "-")
+  ;  =>
+  ;  "ABCDEF-GHI"
+  ;
+  ; @example
+  ;  (string/remove-first-occurence
+  ;   "ABC-DEF-GHI" "%")
+  ;  =>
+  ;  "ABC-DEF-GHI"
+  ;
+  ; @return (string)
+  [n x]
+  (if (and (nonempty? n)
+           (nonempty? x)
+           (string/includes? n x))
+      (let [dex   (string/index-of n x)
+            count (count             x)]
+           (str (subs n 0 (dec (+ dex count)))
+                (subs n        (+ dex count))))
+      (return n)))
 
 (defn between-occurences
   ; @param (string) n
@@ -381,50 +424,10 @@
   ;  =>
   ;  nil
   ;
-  ; @return (nil or string)
+  ; @return (string)
   [n x y]
   (-> n (after-first-occurence x)
         (before-last-occurence y)))
-
-(defn position-of-first-occurence
-  ; @param (string) n
-  ; @param (string) x
-  ;
-  ; @example
-  ;  (string/position-of-first-occurence "Apple" "p")
-  ;  =>
-  ;  1
-  ;
-  ; @example
-  ;  (string/position-of-first-occurence "Apple" "x")
-  ;  =>
-  ;  nil
-  ;
-  ; @return (nil or integer)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/index-of n x)))
-
-(defn position-of-last-occurence
-  ; @param (string) n
-  ; @param (string) x
-  ;
-  ; @example
-  ;  (string/position-of-last-occurence "Apple" "p")
-  ;  =>
-  ;  2
-  ;
-  ; @example
-  ;  (string/position-of-last-occurence "Apple" "x")
-  ;  =>
-  ;  nil
-  ;
-  ; @return (nil or integer)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/last-index-of n x)))
 
 (defn ends-with?
   ; @param (string) n
@@ -718,9 +721,7 @@
   ;
   ; @return (string)
   [n x y]
-  (str (when (and (nonempty? n)
-                  (some?     x)
-                  (some?     y))
+  (str (when (and x y (nonempty? n))
              (string/replace n x y))))
 
 (defn use-replacements
@@ -840,7 +841,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n) (str "(" n ")"))))
+  (str (when n (str "(" n ")"))))
 
 (defn bracket
   ; @param (string) n
@@ -852,7 +853,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n) (str "[" n "]"))))
+  (str (when n (str "[" n "]"))))
 
 (defn percent
   ; @param (string) n
@@ -864,7 +865,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n) (str n "%"))))
+  (str (when n (str n "%"))))
 
 (defn quotes
   ; @param (string) n
@@ -876,7 +877,7 @@
   ;
   ; @return (string)
   [n]
-  (str (when (some? n) (str "\"" n "\""))))
+  (str (when n (str "\"" n "\""))))
 
 (defn capitalize
   ; @param (string) n
@@ -886,7 +887,8 @@
   ;
   ; @return (string)
   [n]
-  (string/capitalize (str n)))
+  (-> n str string/capitalize))
+
 
 (defn uppercase
   ; @param (string) n
@@ -896,7 +898,7 @@
   ;
   ; @return (string)
   [n]
-  (string/upper-case (str n)))
+  (-> n str string/upper-case))
 
 (defn lowercase
   ; @param (string) n
@@ -906,7 +908,7 @@
   ;
   ; @return (string)
   [n]
-  (string/lower-case (str n)))
+  (-> n str string/lower-case))
 
 (defn contains-lowercase-letter?
   ; @param (string) n

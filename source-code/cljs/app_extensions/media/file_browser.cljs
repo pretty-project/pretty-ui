@@ -911,11 +911,7 @@
   ; @return (component)
   [_]
   (let [namespace (a/get-namespace ::this)
-        query-id  (engine/namespace->query-id namespace)]
-       [components/listener {:content         #'view
-                             :pending-content :use-default!
-                             :request-id      query-id}]))
-
+        query-id  (engine/namespace->query-id namespace)]))
 
 
 ;; -- Lifecycle events --------------------------------------------------------

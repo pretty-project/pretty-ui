@@ -305,7 +305,6 @@ button.x-card:focus,
   align-items: flex-start;
   text-align: left }
 
-.x-line-diagram--label[data-position="left"],
 .x-table--header-cell[data-horizontal-align="left"],
 .x-table--body-cell[data-horizontal-align="left"] {
   text-align: left }
@@ -325,7 +324,6 @@ button.x-card:focus,
   align-items: center;
   text-align: center }
 
-.x-line-diagram--label[data-position="center"],
 .x-table--header-cell[data-horizontal-align="center"],
 .x-table--body-cell[data-horizontal-align="center"] {
   text-align: center }
@@ -345,7 +343,6 @@ button.x-card:focus,
   align-items: flex-end;
   text-align: right }
 
-.x-line-diagram--label[data-position="right"],
 .x-table--header-cell[data-horizontal-align="right"],
 .x-table--body-cell[data-horizontal-align="right"] {
   text-align: right }
@@ -442,8 +439,6 @@ button.x-card:focus,
 .x-button--body,
 .x-icon[data-color="muted"],
 .x-label[data-color="muted"],
-.x-line-diagram[data-color=muted]
-.x-line-diagram--label,
 .x-text[data-color="muted"] {
   color: var( --color-muted ) }
 
@@ -547,8 +542,6 @@ button.x-card:focus,
 .x-button--body,
 .x-icon[data-color="primary"],
 .x-label[data-color="primary"],
-.x-line-diagram[data-color=primary]
-.x-line-diagram--label,
 .x-text[data-color="primary"] {
   color: var( --color-primary ) }
 
@@ -605,8 +598,6 @@ button.x-card:focus,
 .x-button--body,
 .x-icon[data-color="secondary"],
 .x-label[data-color="secondary"],
-.x-line-diagram[data-color=secondary]
-.x-line-diagram--label,
 .x-text[data-color="secondary"] {
   color: var( --color-secondary ) }
 
@@ -722,8 +713,6 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xxs"],
 .x-button[data-font-size="xxs"],
-.x-line-diagram[data-font-size="xxs"]
-.x-line-diagram--label,
 .x-table[data-font-size="xxs"],
 .x-text[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
@@ -758,8 +747,6 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="xs"],
 .x-button[data-font-size="xs"],
-.x-line-diagram[data-font-size="xs"]
-.x-line-diagram--label,
 .x-table[data-font-size="xs"],
 .x-text[data-font-size="xs"] {
   font-size: var( --font-size-xs );
@@ -797,8 +784,6 @@ button.x-card:focus,
 .x-anchor[data-font-size="s"],
 .x-button[data-font-size="s"],
 .x-label[data-font-size="s"],
-.x-line-diagram[data-font-size="s"]
-.x-line-diagram--label,
 .x-table[data-font-size="s"],
 .x-text[data-font-size="s"] {
   font-size: var( --font-size-s );
@@ -837,8 +822,6 @@ button.x-card:focus,
 .x-anchor[data-font-size="m"],
 .x-button[data-font-size="m"],
 .x-label[data-font-size="m"],
-.x-line-diagram[data-font-size="m"]
-.x-line-diagram--label,
 .x-table[data-font-size="m"],
 .x-text[data-font-size="m"] {
   font-size: var( --font-size-m );
@@ -2641,13 +2624,6 @@ body[data-viewport-profile="s"]
   text-overflow: ellipsis;
   white-space: nowrap }
 
-.x-label[data-layout="row"] .x-label--body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 48px;
-  padding: 6px 0 }
-
 /*** Label body ***/
 
 /*** Label icon ***/
@@ -2676,24 +2652,9 @@ body[data-viewport-profile="s"]
 .x-line-diagram {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end }
-
-.x-line-diagram[data-layout="row"] {
-  height: 48px;
-  padding-bottom: 12px }
+  justify-content: center }
 
 /*** Line diagram wrapper ***/
-
-/*** Line diagram label ***/
-
-.x-line-diagram--label {
-  font-weight: 500;
-  overflow: hidden;
-  padding-bottom: 4px;
-  text-overflow: ellipsis;
-  white-space: nowrap }
-
-/*** Line diagram label ***/
 
 /*** Line diagram sections ***/
 

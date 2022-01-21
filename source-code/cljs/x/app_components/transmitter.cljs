@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.16
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.4.6
+; Version: v0.7.0
+; Compatibility: x4.5.5
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-components.transmitter
     (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.map   :as map]
               [x.app-core.api   :as a]))
 
 
@@ -80,11 +79,9 @@
   ;; -----------------------------------------
 
   ; XXX#0069
-  (let [dynamic-props (merge (param base-props)
-                             (or    subscribed-props initial-props))]
-       (if (fn?      modifier)
-           (modifier component-id dynamic-props)
-           (return   dynamic-props))))
+  (let [dynamic-props (merge base-props (or subscribed-props initial-props))]
+       (if modifier (modifier component-id dynamic-props)
+                    (return                dynamic-props))))
 
 
 
@@ -113,7 +110,6 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;    {:disabled? (boolean)(opt)}
-
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)
@@ -153,15 +149,10 @@
 
   ([component-id {:keys [render-f static-props] :as context-props}]
    (let [dynamic-props (context-props->dynamic-props component-id context-props)]
-                   ; Both static-props and dynamic-props
-        [:<> (cond (and (map/nonempty? static-props)
-                        (map/nonempty? dynamic-props)) [render-f component-id static-props dynamic-props]
-                   ; Only static-props
-                   (map/nonempty? static-props)        [render-f component-id static-props]
-                   ; Only dynamic-props
-                   (map/nonempty? dynamic-props)       [render-f component-id dynamic-props]
-                   ; *
-                   :else                               [render-f component-id])])))
+        [:<> (cond (and static-props dynamic-props) [render-f component-id static-props dynamic-props]
+                   static-props                     [render-f component-id static-props]
+                   dynamic-props                    [render-f component-id dynamic-props]
+                   :else                            [render-f component-id])])))
 
              ; DEBUG
              ;[debug component-id static-props dynamic-props]

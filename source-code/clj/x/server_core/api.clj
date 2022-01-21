@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v1.2.0
-; Compatibility: x4.5.3
+; Version: v1.2.6
+; Compatibility: x4.5.5
 
 
 
@@ -19,6 +19,7 @@
               [x.server-core.middleware-handler]
               [x.server-core.resource-handler]
               [x.server-core.server-handler]
+              [x.server-core.build-handler     :as build-handler]
               [x.server-core.cache-handler     :as cache-handler]
               [x.server-core.config-handler    :as config-handler]
               [x.server-core.debug-handler     :as debug-handler]
@@ -31,6 +32,9 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.server-core.build-handler
+(def ->app-built build-handler/->app-built)
 
 ; x.server-core.cache-handler
 (def request->app-cached? cache-handler/request->app-cached?)

@@ -84,22 +84,6 @@
   [item-dex item-props]
   [media-item-structure item-dex item-props])
 
-(a/reg-event-fx
-  :storage/->media-item-clicked
-  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
-      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          [:storage/->file-clicked item-dex item-props])))
-
-(a/reg-event-fx
-  :storage/->file-clicked
-  (fn [_ _]
-      [:ui/add-popup! :xxxx
-                      {:body [:div [:div "Fájl letöltése"]
-                                   ; Ha több van kijelölve akkor:
-                                   ; És mivel nincs tömörítönk ezért most még disabled lesz
-                                   [:div "Kijelölt fájlok letöltése"]]
-                       :min-width :xs}]))
-
 
 
 ;; -- View components ---------------------------------------------------------

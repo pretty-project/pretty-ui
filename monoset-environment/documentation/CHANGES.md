@@ -1,5 +1,9 @@
 
 # x4.5.5
+- A következő elemeken a {:layout ...} tulajdonságot leváltotta a {:min-height ...} tulajdonság:
+  - label
+  - line-diagram
+
 - Az item-editor ezentúl a [:my-extension :item-editor/data-item ...] útvonal helyett,
   a [:my-extension :item-editor/data-items ...] útvonalat használja!
 

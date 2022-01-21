@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.20
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.6
+; Compatibility: x4.5.5
 
 
 
@@ -72,23 +72,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:label (metamorphic-content)(opt)
-  ;   :strength (integer)(opt)}
+  ;  {:strength (integer)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :font-size (keyword)
-  ;   :label-position (keyword)
-  ;   :layout (keyword)
-  ;   :strength (px)
+  ;  {:strength (px)
   ;   :total-value (integer)}
-  [{:keys [label strength] :as diagram-props}]
-  (merge {:layout   :row
-          :strength 2}
-         (if label {:color          :default
-                    :font-size      :s
-                    :label-position :center})
-         {:total-value (diagram-props->total-value diagram-props)}
+  [{:keys [strength] :as diagram-props}]
+  (merge {:strength 2
+          :total-value (diagram-props->total-value diagram-props)}
          (param diagram-props)
          (if strength {:strength (math/between! strength 1 6)})))
 
@@ -128,19 +119,6 @@
           [:div.x-line-diagram--sections {:style {:height (css/px strength)}}]
           (param sections)))
 
-(defn- line-diagram-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ;  {:label (metamorphic-content)(opt)
-  ;   :label-position (keyword)}
-  ;
-  ; @return (hiccup)
-  [_ {:keys [label label-position]}]
-  (if label [:div.x-line-diagram--label {:data-position label-position}
-                                        [components/content label]]))
-
 (defn line-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -150,31 +128,16 @@
   ; @return (hiccup)
   [diagram-id diagram-props]
   [:div.x-line-diagram (engine/element-attributes diagram-id diagram-props)
-                       [line-diagram-label        diagram-id diagram-props]
                        [line-diagram-sections     diagram-id diagram-props]])
 
 (defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ;  {:color (keyword)(opt)
-  ;    :default, :muted, :primary, :secondary
-  ;    Default: :default
-  ;    Only w/ {:label ...}
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m
-  ;    Default: :s
-  ;    Only w/ {:label ...}
-  ;   :indent (keyword)(opt)
+  ;  {:indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none
-  ;   :label (metamorphic-content)(opt)
-  ;   :label-position (keyword)(opt)
-  ;    :left, :center :right
-  ;    Default: :left
-  ;    Only w/ {:label ...}
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
+  ;   :min-height (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   :sections (maps in vector)}
   ;    [{:color (keyword)(opt)
   ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning

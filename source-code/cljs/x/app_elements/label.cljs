@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.6
+; Compatibility: x4.5.5
 
 
 
@@ -41,7 +41,6 @@
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :left
-          :layout           :row
           :selectable?      false}
          (if icon {:icon-family :material-icons-filled})
          (param label-props)))
@@ -118,9 +117,6 @@
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
   ;   :selectable? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)}

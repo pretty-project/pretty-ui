@@ -99,10 +99,7 @@
   ; @param (keyword) surface-id
   ;
   ; @return (component)
-  [_]
-  [components/listener {:content         #'view
-                        :pending-content #'ghost-view
-                        :request-id      :media/synchronize!}])
+  [_])
 
 
 
