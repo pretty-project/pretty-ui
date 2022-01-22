@@ -1,12 +1,13 @@
 
 (ns app-extensions.storage.file-uploader.subs
-    (:require [app-fruits.dom   :as dom]
-              [mid-fruits.candy :refer [param return]]
-              [mid-fruits.map   :as map]
-              [mid-fruits.math  :as math]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]
-              [x.app-sync.api   :as sync]
+    (:require [app-fruits.dom    :as dom]
+              [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.map    :as map]
+              [mid-fruits.math   :as math]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]
+              [x.app-sync.api    :as sync]
               [app-extensions.storage.capacity-handler     :as capacity-handler]
               [app-extensions.storage.file-uploader.engine :as engine]))
 
@@ -62,7 +63,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [meta-items (get-in db [:storage :file-uploader/meta-items])]
-       {:uploader-ids (map/get-keys meta-items)}))
+       {:uploader-ids (-> meta-items map/get-keys vector/reverse-items)}))
 
 (a/reg-sub :storage/get-file-upload-props get-file-upload-props)
 
@@ -72,11 +73,19 @@
   (let [request-id       (engine/request-id uploader-id)
         request-progress (r sync/get-request-progress db request-id)
         uploader-props   (get-in db [:storage :file-uploader/meta-items uploader-id])]
-       (merge uploader-props {:files-uploaded? (= request-progress 100)
-                              :request-progress request-progress
-                              :request-sent?   (r sync/request-sent? db request-id)})))
+       (merge uploader-props {:files-uploaded?  (= request-progress 100)
+                              :request-sent?    (r sync/request-sent?    db request-id)
+                              :request-aborted? (r sync/request-aborted? db request-id)})))
 
 (a/reg-sub :storage/get-file-uploader-props get-file-uploader-props)
+
+(defn get-file-uploader-progress
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id]]
+  (let [request-id (engine/request-id uploader-id)]
+       (r sync/get-request-progress db request-id)))
+
+(a/reg-sub :storage/get-file-uploader-progress get-file-uploader-progress)
 
 (defn get-progress-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

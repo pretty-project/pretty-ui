@@ -79,6 +79,8 @@ button.x-card:focus,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
 .x-file-drop-area--body:focus,
+.x-icon-button--body:active,
+.x-icon-button--body:focus,
 .x-menu-bar--menu-item:active,
 .x-menu-bar--menu-item:focus,
 .x-radio-button--unselect-button:active,
@@ -189,6 +191,8 @@ button.x-card:focus,
 .x-file-drop-area--label,
 .x-file-drop-area--icon,
 .x-icon,
+.x-icon-button--icon,
+.x-icon-button--label,
 .x-label[data-selectable="false"] .x-label--icon,
 .x-label[data-selectable="false"] .x-label--body,
 .x-line-diagram--label,
@@ -237,6 +241,7 @@ button.x-card:focus,
 .x-file[data-icon-family="material-icons-filled"] .x-file--icon,
 .x-file[data-icon-family="material-icons-filled"] .x-file--preview-icon,
 .x-icon[data-icon-family="material-icons-filled"],
+.x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
 .x-element--adornment-button[data-icon-family="material-icons-filled"],
 .x-element--adornment-icon[data-icon-family="material-icons-filled"],
@@ -258,6 +263,7 @@ button.x-card:focus,
 .x-file[data-icon-family="material-icons-outlined"] .x-file--icon,
 .x-file[data-icon-family="material-icons-outlined"] .x-file--preview-icon,
 .x-icon[data-icon-family="material-icons-outlined"],
+.x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-button,
 .x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-icon,
@@ -399,7 +405,8 @@ button.x-card:focus,
   stroke: var( --border-color-muted ) }
 
 .x-button[data-variant="filled"][data-background-color="muted"] .x-button--body,
-.x-chip[data-background-color="muted"] .x-chip--body {
+.x-chip[data-background-color="muted"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="muted"] .x-icon-button--body {
   background-color: var( --background-color-muted );
   color: var( --black ) }
 
@@ -435,9 +442,9 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-muted ), transparent) }
 
 .x-anchor[data-color="muted"],
-.x-button[data-variant="transparent"][data-color="muted"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="muted"] .x-button--body,
 .x-icon[data-color="muted"],
+.x-icon-button[data-variant="transparent"][data-color="muted"] .x-icon-button--body,
 .x-label[data-color="muted"],
 .x-text[data-color="muted"] {
   color: var( --color-muted ) }
@@ -450,7 +457,8 @@ button.x-card:focus,
   stroke: var( --border-color-highlight ) }
 
 .x-button[data-variant="filled"][data-background-color="highlight"] .x-button--body,
-.x-chip[data-background-color="highlight"] .x-chip--body {
+.x-chip[data-background-color="highlight"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="highlight"] .x-icon-button--body {
   background-color: var( --background-color-highlight );
   color: var( --black ) }
 
@@ -474,9 +482,9 @@ button.x-card:focus,
 .x-horizontal-line--body[data-fade="in-out"] {
   background: linear-gradient(90deg, transparent, var( --border-color-highlight ), transparent) }
 
-.x-button[data-variant="transparent"][data-color="highlight"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="highlight"] .x-button--body,
 .x-icon[data-color="highlight"],
+.x-icon-button[data-variant="transparent"][data-color="highlight"] .x-icon-button--body,
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
@@ -485,8 +493,8 @@ button.x-card:focus,
 
 /*** Invert ***/
 
-.x-button[data-variant="transparent"][data-color="invert"]
-.x-button--body {
+.x-button[data-variant="transparent"][data-color="invert"] .x-button--body,
+.x-icon-button[data-variant="transparent"][data-color="invert"] .x-icon-button--body {
   color: var( --color-invert ) }
 
 /*** Invert ***/
@@ -497,7 +505,8 @@ button.x-card:focus,
   stroke: var( --border-color-primary ) }
 
 .x-button[data-variant="filled"][data-background-color="primary"] .x-button--body,
-.x-chip[data-background-color="primary"] .x-chip--body {
+.x-chip[data-background-color="primary"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="primary"] .x-icon-button--body {
   background-color: var( --soft-blue );
   color: var( --black ) }
 
@@ -538,9 +547,9 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-primary ), transparent) }
 
 .x-anchor[data-color="primary"],
-.x-button[data-variant="transparent"][data-color="primary"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="primary"] .x-button--body,
 .x-icon[data-color="primary"],
+.x-icon-button[data-variant="transparent"][data-color="primary"] .x-icon-button--body,
 .x-label[data-color="primary"],
 .x-text[data-color="primary"] {
   color: var( --color-primary ) }
@@ -553,7 +562,8 @@ button.x-card:focus,
   stroke: var( --border-color-secondary ) }
 
 .x-button[data-variant="filled"][data-background-color="secondary"] .x-button--body,
-.x-chip[data-background-color="secondary"] .x-chip--body {
+.x-chip[data-background-color="secondary"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="secondary"] .x-icon-button--body {
   background-color: var( --soft-purple );
   color: var( --black ) }
 
@@ -594,9 +604,9 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-secondary ), transparent) }
 
 .x-anchor[data-color="secondary"],
-.x-button[data-variant="transparent"][data-color="secondary"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="secondary"] .x-button--body,
 .x-icon[data-color="secondary"],
+.x-icon-button[data-variant="transparent"][data-color="secondary"] .x-icon-button--body,
 .x-label[data-color="secondary"],
 .x-text[data-color="secondary"] {
   color: var( --color-secondary ) }
@@ -609,7 +619,8 @@ button.x-card:focus,
   stroke: var( --border-color-success ) }
 
 .x-button[data-variant="filled"][data-background-color="success"] .x-button--body,
-.x-chip[data-background-color="success"] .x-chip--body {
+.x-chip[data-background-color="success"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="success"] .x-icon-button--body {
   background-color: var( --soft-green );
   color: var( --black ) }
 
@@ -636,9 +647,9 @@ button.x-card:focus,
   background-color: var( --border-color-success ) }
 
 .x-anchor[data-color="success"],
-.x-button[data-variant="transparent"][data-color="success"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="success"] .x-button--body,
 .x-icon[data-color="success"],
+.x-icon-button[data-variant="transparent"][data-color="success"] .x-icon-button--body,
 .x-label[data-color="success"],
 .x-text[data-color="success"] {
   color: var( --color-success ) }
@@ -651,7 +662,8 @@ button.x-card:focus,
   stroke: var( --border-color-warning ) }
 
 .x-button[data-variant="filled"][data-background-color="warning"] .x-button--body,
-.x-chip[data-background-color="warning"] .x-chip--body {
+.x-chip[data-background-color="warning"] .x-chip--body,
+.x-icon-button[data-variant="filled"][data-background-color="warning"] .x-icon-button--body {
   background-color: var( --soft-red );
   color: var( --black ) }
 
@@ -678,9 +690,9 @@ button.x-card:focus,
   background-color: var( --border-color-warning ) }
 
 .x-anchor[data-color="warning"],
-.x-button[data-variant="transparent"][data-color="warning"]
-.x-button--body,
+.x-button[data-variant="transparent"][data-color="warning"] .x-button--body,
 .x-icon[data-color="warning"],
+.x-icon-button[data-variant="transparent"][data-color="warning"] .x-icon-button--body,
 .x-label[data-color="warning"],
 .x-text[data-color="warning"] {
   color: var( --color-warning ) }
@@ -1029,6 +1041,26 @@ button.x-card:focus,
 .x-element[data-min-height="xxl"] {
   min-height: 48px }
 
+.x-element[data-height="xxs"] {
+  height: 12px }
+
+.x-element[data-height="xs"] {
+  height: 18px }
+
+.x-element[data-height="s"] {
+  height: 24px }
+
+.x-element[data-height="m"] {
+  height: 30px }
+
+.x-element[data-height="l"] {
+  height: 36px }
+
+.x-element[data-height="xl"] {
+  height: 42px }
+
+.x-element[data-height="xxl"] {
+  height: 48px }
 /* TEMP */
 
 
@@ -1291,14 +1323,15 @@ button.x-card:focus,
    * és ikon csere történt. */
   transition: .1s transform, .1s background-color }
 
-.x-button [data-tooltip]::after {
+.x-button [data-tooltip]::after,
+.x-icon-button [data-tooltip]::after {
   /* - Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
    *   sarkú menükön elhelyezett ikon-gombokon a tooltip pszeudo-elem sarka ne lógjon túl
    *   a menü lekerekített sarkán.
    * - 36px elég, hogy eltakaraja a gomb ikonját, és 2 sor szöveg elfér benne.
    * - Abban az esetben, ha a tooltip tartalma 3 sorban jelenik meg, akkor a tooltip pszeudo-elem
    *   magassága 48px értékre növekszik. */
-  min-height: 36px }
+  -min-height: 36px }
 
 [data-touch-detected="false"] [data-tooltip]:active:hover::after {
   /* BUG#4140
@@ -2244,109 +2277,6 @@ body[data-viewport-profile="s"]
 
 
 
-/* WARNING! DEPRECATED! DO NOT USE! */
-/***** Directory *****/
-/*** Directory wrapper ***/
-
-.x-directory {
-  padding: 8px }
-
-/*** Directory wrapper ***/
-
-/*** Directory body ***/
-
-.x-directory--body {
-  align-items: center;
-  background-color: var( --fill-color );
-  border-color: var( --border-color );
-  border-radius: var( --border-radius-m );
-  border-style: solid;
-  border-width: 1px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  height: 100%;
-  width: 100% }
-
-/*** Directory body ***/
-
-/*** Directory highlighter ***/
-
-.x-directory--highlighter {
-  border-radius: var( --border-radius-m );
-  height: calc(100% - 16px);
-  left: 0;
-  margin: 8px;
-  position: absolute;
-  width: calc(100% - 16px);
-  top: 0 }
-
-.x-directory--highlighter[data-selected="true"] {
-  box-shadow: var( --box-shadow-primary ) }
-
-/*** Directory highlighter ***/
-
-/*** Directory label ***/
-
-.x-directory--label {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: row;
-  height: 28px }
-
-/*** Directory label ***/
-
-/*** Directory icon ***/
-
-.x-directory--icon {
-  flex-shrink: 0;
-  font-size: var( --icon-size-xxs );
-  margin: 0 4px 0 6px;
-  text-align: center;
-  width: 21px }
-
-/*** Directory icon ***/
-
-/*** Directory name ***/
-
-.x-directory--name {
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: var( --line-height-s );
-  font-weight: 500;
-  overflow: hidden;
-  padding-right: 12px;
-  text-overflow: ellipsis;
-  white-space: nowrap }
-
-/*** Directory name ***/
-
-/*** Directory details ***/
-
-.x-directory--details {
-  width: 100% }
-
-.x-directory--item-count-and-content-size {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 12px }
-
-.x-directory--item-count,
-.x-directory--content-size {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: 24px;
-  text-align: right }
-
-/*** Directory details ***/
-/***** Directory *****/
-/* WARNING! DEPRECATED! DO NOT USE! */
-
-
-
 /***** Expandable *****/
 /*** Expandable header ***/
 
@@ -2396,133 +2326,6 @@ body[data-viewport-profile="s"]
 
 /*** Expandable expand icon ***/
 /***** Expandable *****/
-
-
-
-/* WARNING! DEPRECATED! DO NOT USE! */
-/***** File *****/
-/*** File wrapper ***/
-
-.x-file {
-  padding: 8px }
-
-/*** File wrapper ***/
-
-/*** File body ***/
-
-.x-file--body {
-  background-color: var( --fill-color );
-  border-color: var( --border-color );
-  border-radius: var( --border-radius-m );
-  border-style: solid;
-  border-width: 1px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  width: 100% }
-
-/*** File body ***/
-
-/*** File highlighter ***/
-
-.x-file--highlighter {
-  border-radius: var( --border-radius-m );
-  height: calc(100% - 16px);
-  left: 0;
-  margin: 8px;
-  position: absolute;
-  width: calc(100% - 16px);
-  top: 0 }
-
-.x-file--highlighter[data-selected="true"] {
-  box-shadow: var( --box-shadow-primary ) }
-
-/*** File highlighter ***/
-
-/*** File preview ***/
-
-.x-file--preview {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  width: 100% }
-
-/*** File preview ***/
-
-/*** File label ***/
-
-.x-file--label {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: row;
-  height: 28px }
-
-/*** File label ***/
-
-/*** File preview ***/
-
-.x-file--preview {
-  -background: linear-gradient(45deg, #e66465, #9198e5);
-  background: linear-gradient(45deg, #aaffbb, #bbaaff) }
-
-.x-file--preview-icon {
-  color: white;
-  font-size: var( --icon-size-xxl );
-  line-height: 48px }
-
-/*** File preview ***/
-
-/*** File icon ***/
-
-.x-file--icon {
-  flex-shrink: 0;
-  font-size: var( --icon-size-xxs );
-  margin: 0 4px 0 6px;
-  text-align: center;
-  width: 21px }
-
-/*** File icon ***/
-
-/*** File name ***/
-
-.x-file--name {
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: var( --line-height-s );
-  font-weight: 500;
-  overflow: hidden;
-  padding-right: 12px;
-  text-overflow: ellipsis;
-  white-space: nowrap }
-
-/*** File name ***/
-
-/*** File details ***/
-
-.x-file--details {
-  width: 100% }
-
-.x-file--timestamp-and-filesize {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 12px }
-
-.x-file--timestamp,
-.x-file--filesize {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: 24px;
-  text-align: right }
-
-/*** File details ***/
-/***** File *****/
-/* WARNING! DEPRECATED! DO NOT USE! */
 
 
 
@@ -2671,6 +2474,81 @@ body[data-viewport-profile="s"]
 
 /*** Line diagram section ***/
 /***** Line diagram *****/
+
+
+
+/***** Icon-button *****/
+/*** Icon-button wrapper ***/
+
+.x-icon-button {
+  /* A min-width tulajdonság azért szükséges, hogy az icon-button elemet a környező tartalom ne
+   * kényszerítse méretcsökkenésre */
+  min-width: 48px }
+
+/*** Icon-button wrapper ***/
+
+/*** Icon-button badge ***/
+
+.x-icon-button .x-element-badge {
+  right: 12px;
+  top: 12px }
+
+/*** Icon-button badge ***/
+
+/*** Icon-button body ***/
+
+.x-icon-button--body {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100% }
+
+.x-icon-button[data-variant="filled"] .x-icon-button--body {
+  border-radius: var( --border-radius-xs ) }
+
+.x-icon-button[data-variant="placeholder"] .x-icon-button--body {
+  cursor: default }
+
+/*** Icon-button body ***/
+
+/*** Icon-button icon ***/
+
+.x-icon-button--icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: var( --icon-size-s );
+
+  /* BUG#0983
+   * height, overflow, width:
+   * A material-icon font-készlet letöltődése előtt felvillanó FOIT/FOUT okozta méretváltozás megelőzése */
+  height: var( --icon-size-default );
+  overflow: hidden;
+  width: var( --icon-size-default ) }
+
+/*** Icon-button icon ***/
+
+/*** Icon-button label ***/
+
+.x-icon-button--label {
+  font-size: 9px;
+  font-weight: 600;
+  height: 15px;
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 15px;
+  opacity: .75;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100% }
+
+/*** Icon-button label ***/
+/***** Icon-button *****/
 
 
 

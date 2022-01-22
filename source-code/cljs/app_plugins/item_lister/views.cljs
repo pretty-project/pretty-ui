@@ -37,12 +37,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [lister-disabled?]}]
   [elements/button ::quit-search-mode-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
                     :preset    :close-icon-button
                     :keypress  {:key-code 27}}])
@@ -53,13 +53,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [lister-disabled?]}]
   [elements/search-field ::search-items-field
                          {:auto-focus?   true
-                          :disabled?     disabled?
+                          :disabled?     lister-disabled?
                           :layout        :row
                           :min-width     :xs
                           :on-empty      [:item-lister/search-items! extension-id item-namespace]
@@ -73,12 +73,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::toggle-search-mode-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/toggle-search-mode! extension-id]
                     :preset    :search-icon-button
                     :tooltip   :search}])
@@ -108,12 +108,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::quit-select-mode-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                     :preset    :close-icon-button
                     :keypress  {:key-code 27}}])
@@ -124,12 +124,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::unselect-all-items-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/unselect-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :check_box}])
@@ -140,12 +140,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::unselect-some-items-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/unselect-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :indeterminate_check_box}])
@@ -156,12 +156,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::select-all-items-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/select-all-items! extension-id]
                     :preset    :default-icon-button
                     :icon      :check_box_outline_blank}])
@@ -188,12 +188,12 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:any-item-selected? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)}
+  ;   :lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [any-item-selected? disabled?]}]
+  [extension-id item-namespace {:keys [any-item-selected? lister-disabled?]}]
   [elements/button ::delete-selected-items-button
-                   {:disabled? (-> any-item-selected? not (or disabled?))
+                   {:disabled? (-> any-item-selected? not (or lister-disabled?))
                     :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
                     :preset    :delete-icon-button
                     :tooltip   :delete!}])
@@ -205,12 +205,12 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:any-item-selected? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)}
+  ;   :lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [any-item-selected? disabled?]}]
+  [extension-id item-namespace {:keys [any-item-selected? lister-disabled?]}]
   [elements/button ::duplicate-selected-items-button
-                   {:disabled? (-> any-item-selected? not (or disabled?))
+                   {:disabled? (-> any-item-selected? not (or lister-disabled?))
                     :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
                     :preset    :duplicate-icon-button
                     :tooltip   :duplicate!}])
@@ -227,12 +227,12 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:order-changed? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)}
+  ;   :lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [order-changed? disabled?]}]
+  [extension-id _ {:keys [order-changed? lister-disabled?]}]
   [elements/button ::save-order-button
-                   {:disabled? (-> order-changed? not (or disabled?))
+                   {:disabled? (-> order-changed? not (or lister-disabled?))
                     :on-click  [:item-lister/save-order! extension-id]
                     :label     :save-order!
                     :preset    :primary-button}])
@@ -243,12 +243,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled?]}]
+  [extension-id _ {:keys [lister-disabled?]}]
   [elements/button ::quit-reorder-mode-button
-                   {:disabled? disabled?
+                   {:disabled? lister-disabled?
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
                     :preset    :close-icon-button
                     :keypress  {:key-code 27}}])
@@ -261,16 +261,16 @@
 (defn new-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/new-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [lister-disabled?]}]
   (let [new-item-uri (engine/new-item-uri extension-id item-namespace)]
        [elements/button ::new-item-button
-                        {:disabled? disabled?
+                        {:disabled? lister-disabled?
                          :on-click  [:router/go-to! new-item-uri]
                          :preset    :primary-icon-button
                          :tooltip   :add-new!
@@ -280,7 +280,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:lister-disabled? (boolean)(opt)
   ;   :new-item-options (vector)}
   ;
   ; @usage
@@ -288,11 +288,11 @@
   ;  [item-lister/new-item-select :my-extension :my-type {:options [...]}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled? new-item-options]}]
+  [extension-id _ {:keys [lister-disabled? new-item-options]}]
   [elements/select ::new-item-select
                    {:as-button?      true
                     :autoclear?      true
-                    :disabled?       disabled?
+                    :disabled?       lister-disabled?
                     :initial-options (param new-item-options)
                     :on-select       (engine/add-new-item-event extension-id)
                     :preset          :primary-icon-button
@@ -303,16 +303,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:lister-disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/toggle-select-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled? no-items-to-show?]}]
+  [extension-id _ {:keys [lister-disabled? no-items-to-show?]}]
   [elements/button ::toggle-select-mode-button
-                   {:disabled? (or no-items-to-show? disabled?)
+                   {:disabled? (or no-items-to-show? lister-disabled?)
                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                     :preset    :select-mode-icon-button
                     :tooltip   :select}])
@@ -321,16 +321,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:lister-disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/toggle-reorder-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [disabled? no-items-to-show?]}]
+  [extension-id _ {:keys [lister-disabled? no-items-to-show?]}]
   [elements/button ::toggle-reorder-mode-button
-                   {:disabled? (or no-items-to-show? disabled?)
+                   {:disabled? (or no-items-to-show? lister-disabled?)
                     :on-click  [:item-lister/toggle-reorder-mode! extension-id]
                     :preset    :reorder-mode-icon-button
                     :tooltip   :reorder}])
@@ -339,17 +339,17 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:lister-disabled? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/sort-items-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled? no-items-to-show?]}]
+  [extension-id item-namespace {:keys [lister-disabled? no-items-to-show?]}]
   [elements/select ::sort-items-button
                    {:as-button?    true
-                    :disabled?     (or no-items-to-show? disabled?)
+                    :disabled?     (or no-items-to-show? lister-disabled?)
                     :on-select     [:item-lister/order-items! extension-id item-namespace]
                     :options-label :order-by
                     :preset        :order-by-icon-button
@@ -448,7 +448,6 @@
   ; @return (component)
   [extension-id item-namespace {:keys [menu-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
   [:div#item-lister--header--structure
-
     [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
                                       [menu-mode-header    extension-id item-namespace header-props]]
     [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
@@ -483,15 +482,15 @@
 
 
 
-;; -- Body components ---------------------------------------------------------
+;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request-indicator-label
+(defn downloading-items-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
+  ; @param (map) indicator-props
   ;  {:all-items-downloaded? (boolean)(opt)
   ;   :downloading-items? (boolean)(opt)
   ;   :items-received? (boolean)(opt)}
@@ -499,24 +498,24 @@
   ; @return (component)
   [extension-id item-namespace {:keys [all-items-downloaded? downloading-items? items-received?]}]
   ; - Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
-  ;   a request-indicator-label feliratot
-  ; - Ha még nincs letöltve az összes elem és várható a request-indicator-label felirat megjelenése,
+  ;   a downloading-items-label feliratot
+  ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
   [elements/label {:font-size :xs :color :highlight :font-weight :bold
                    :content (if (or downloading-items? (nor downloading-items? items-received?))
                                 :downloading-items...)}])
 
-(defn request-indicator
+(defn downloading-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
+  ; @param (map) indicator-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [all-items-downloaded?] :as body-props}]
-  (if-not all-items-downloaded? [elements/row {:content [request-indicator-label extension-id item-namespace body-props]
+  [extension-id item-namespace {:keys [all-items-downloaded?] :as indicator-props}]
+  (if-not all-items-downloaded? [elements/row {:content [downloading-items-label extension-id item-namespace indicator-props]
                                                :horizontal-align :center}]))
 
 (defn no-items-to-show-label
@@ -524,7 +523,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
+  ; @param (map) indicator-props
   ;
   ; @return (component)
   [_ _ _]
@@ -535,13 +534,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
+  ; @param (map) indicator-props
   ;  {:downloading-items? (boolean)(opt)
   ;   :items-received? (boolean)(opt)
   ;   :no-items-to-show? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloading-items? items-received? no-items-to-show?] :as body-props}]
+  [extension-id item-namespace {:keys [downloading-items? items-received? no-items-to-show?] :as indicator-props}]
   (if (and (boolean no-items-to-show?)
            ; Szükséges a items-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
            ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
@@ -549,8 +548,36 @@
            ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
            ; ne jelenjen meg a no-items-to-show-label felirat!
            (not downloading-items?))
-      [elements/row {:content [no-items-to-show-label extension-id item-namespace body-props]
+      [elements/row {:content [no-items-to-show-label extension-id item-namespace indicator-props]
                      :horizontal-align :center}]))
+
+(defn indicators-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) indicator-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace indicator-props]
+  [:<> [downloading-items extension-id item-namespace indicator-props]
+       [no-items-to-show  extension-id item-namespace indicator-props]])
+
+(defn indicators
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (component)
+  [extension-id item-namespace]
+  (let [indicator-props (a/subscribe [:item-lister/get-indicator-props extension-id item-namespace])]
+       (fn [] [indicators-structure extension-id item-namespace @indicator-props])))
+
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn sortable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -562,23 +589,36 @@
   ; @return (component)
   [extension-id item-namespace body-props]
   [:div "sortable"])
+  ; Ne renderelődjenek újra a listaelemek, amikor átvált {:reorder-mode? true} állapotra!
+
+(defn list-item-checkbox-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ; @param (map) checkbox-props
+  ;  {:item-selected? (boolean)
+  ;   :lister-disabled? (boolean)
+  ;   :select-mode? (boolean)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace item-dex {:keys [item-selected? lister-disabled? select-mode?] :as checkbox-props}]
+  (if select-mode? [elements/button {:disabled? lister-disabled?
+                                     :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+                                     :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}]))
 
 (defn list-item-checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;  {:disabled? (boolean)(opt)}
   ; @param (integer) item-dex
   ;
   ; @return (component)
-  [extension-id item-namespace body-props item-dex]
-  (let [item-selected? (a/subscribe [:item-lister/item-selected? extension-id item-namespace item-dex])]
-       (fn [_ _ {:keys [disabled?]} item-dex]
-           [elements/button {:disabled? disabled?
-                             :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
-                             :preset    (if @item-selected? :checked-icon-button :unchecked-icon-button)}])))
+  [extension-id item-namespace item-dex]
+  (let [checkbox-props (a/subscribe [:item-lister/get-checkbox-props extension-id item-namespace item-dex])]
+       (fn [] [list-item-checkbox-structure extension-id item-namespace item-dex @checkbox-props])))
 
 (defn list-item-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -617,7 +657,7 @@
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
              ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
              ;   elem a lista-elem előtt jelenik meg.
-             (if select-mode? [list-item-checkbox extension-id item-namespace body-props item-dex])])))
+             [list-item-checkbox extension-id item-namespace body-props item-dex]])))
 
 (defn selectable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -663,8 +703,7 @@
   [:div.item-lister--body--structure
     [item-list             extension-id item-namespace body-props]
     [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
-    [request-indicator     extension-id item-namespace body-props]
-    [no-items-to-show      extension-id item-namespace body-props]])
+    [indicators            extension-id item-namespace]])
 
 (defn body
   ; @param (keyword) extension-id

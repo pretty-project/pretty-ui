@@ -34,9 +34,9 @@
 (def request-sent?         request-handler/request-sent?)
 (def request-successed?    request-handler/request-successed?)
 (def request-failured?     request-handler/request-failured?)
+(def request-aborted?      request-handler/request-aborted?)
 (def listening-to-request? request-handler/listening-to-request?)
 (def get-request-state     request-handler/get-request-state)
-(def clear-request!        request-handler/clear-request!)
 
 ; x.app-sync.response-handler
 (def get-request-response  response-handler/get-request-response)

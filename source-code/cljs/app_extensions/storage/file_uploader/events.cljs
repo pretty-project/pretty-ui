@@ -97,15 +97,15 @@
   :storage/end-file-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      {:dispatch-later []})); A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
+      {:dispatch-later [; A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
                         ; látszódó folyamatjelző számára elérhetők maradjanak az adatok.
-;                        {:ms 500 :dispatch [:storage/clean-file-uploader! uploader-id]}]}))
-;       :dispatch-n [(if-not ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
+                        {:ms 500 :dispatch [:storage/clean-file-uploader! uploader-id]}]
+       :dispatch-n [(if-not ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
                             ; a folyamatjelzőt.
                             ; Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
                             ; közötti időben is indítható új feltöltési folyamat!
-;                            (r subs/file-upload-in-progress? db)
-;                            [:ui/pop-bubble! :storage/file-uploader-progress-notification]}]}))
+                            (r subs/file-upload-in-progress? db)
+                            [:ui/pop-bubble! :storage/file-uploader-progress-notification])]}))
 
 
 

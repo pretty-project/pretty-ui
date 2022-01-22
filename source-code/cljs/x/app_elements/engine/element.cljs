@@ -212,7 +212,8 @@
   (cond-> {} height     (apply-dimension :height     :data-height     height)
              width      (apply-dimension :width      :data-width      width)
              min-height (apply-dimension :min-height :data-min-height min-height)
-             min-width  (apply-dimension :min-width  :data-min-width  min-width)))
+             min-width  (apply-dimension :min-width  :data-min-width  min-width)
+             size       (assoc                       :data-size       size)))
 
 (defn element-generic-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

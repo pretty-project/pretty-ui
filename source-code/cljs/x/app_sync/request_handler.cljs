@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler
-    (:require [x.app-utils.http]
-              [mid-fruits.candy  :refer [param return]]
+    (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.reader :as reader]
               [mid-fruits.time   :as time]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
+              [x.app-sync.engine :as engine]
               [x.app-sync.response-handler :as response-handler]))
 
 
@@ -36,11 +36,6 @@
 
 ; @constant (metamorphic-content)
 (def DEFAULT-FAILURE-MESSAGE :synchronization-error)
-
-; @constant (map)
-(def REQUEST-HANDLERS {:error-handler-event    :sync/->request-failure
-                       :handler-event          :sync/->request-success
-                       :progress-handler-event :sync/->request-progressed})
 
 
 
@@ -67,7 +62,7 @@
   ; @return (keyword)
   [db [_ request-id]]
   (r a/get-process-progress db request-id))
-  
+
 (defn request-active?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,6 +95,13 @@
   [db [_ request-id]]
   (let [request-status (r a/get-process-status db request-id)]
        (= request-status :failure)))
+
+(defn request-aborted?
+  ; @param (keyword) request-id
+  ;
+  ; @return (boolean)
+  [db [_ request-id]]
+  (get-in db (db/path :sync/requests request-id :aborted?)))
 
 (defn listening-to-request?
   ; @param (keyword) request-id
@@ -222,8 +224,8 @@
   ;  {:params (map)
   ;   {:source (*)}}
   [db [_ {:keys [source-path] :as request-props}]]
-  (cond-> request-props (vector? source-path)
-                        (assoc-in [:params :source] (get-in db source-path))))
+  (if source-path (assoc-in request-props [:params :source] (get-in db source-path))
+                  (return   request-props)))
 
 (defn- request-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -236,14 +238,14 @@
   ;   :silent-mode? (boolean)
   ;   :timeout (integer)}
   [db [_ {:keys [response-action] :as request-props}]]
-         ; 1.
-  (merge {:response-action :store
-          :silent-mode?    true
-          :timeout DEFAULT-REQUEST-TIMEOUT}
-         ; 2.
-         (r request-props<-source-data db request-props)
-         ; 3.
-         {:sent-time (time/timestamp-string)}))
+  (merge {:error-handler-event    :sync/->request-failure
+          :handler-event          :sync/->request-success
+          :progress-handler-event :core/set-process-progress!
+          :response-action        :store
+          :silent-mode?           true
+          :timeout DEFAULT-REQUEST-TIMEOUT
+          :sent-time (time/timestamp-string)}
+         (r request-props<-source-data db request-props)))
 
 
 
@@ -265,20 +267,14 @@
              ; DEBUG
              (r db/update-data-history! % :sync/requests request-id)))
 
-(defn clear-request!
-  ; @param (keyword) request-id
+(defn ->request-aborted
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r sync/clear-request! db :my-request)
+  ; @param (keyword) request-id
   ;
   ; @return (map)
   [db [_ request-id]]
-  (as-> db % (r db/remove-item!  % (db/path :sync/requests request-id))
-             (r a/clear-process! % request-id)))
-
-; @usage
-;  [:sync/clear-request! :my-request]
-(a/reg-event-db :sync/clear-request! clear-request!)
+  (assoc-in db (db/path :sync/requests request-id :aborted?) true))
 
 
 
@@ -295,6 +291,16 @@
       [:ui/blow-bubble! request-id
                         {:content (or status-text DEFAULT-FAILURE-MESSAGE)
                          :color   :warning}]))
+
+(a/reg-event-fx
+  :sync/abort-request!
+  ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  [:sync/abort-request! :my-request]
+  (fn [{:keys [db]} [_ request-id]]
+      {:db (r ->request-aborted db request-id)
+       :sync/abort-request! [request-id]}))
 
 (a/reg-event-fx
   :sync/send-request!
@@ -363,10 +369,9 @@
             request-props (a/event-vector->first-props event-vector)
             request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
-               {:db         (r store-request-props! db request-id request-props)
-                :dispatch-n [[:sync/->request-sent request-id]
-                             (let [request-props (merge request-props REQUEST-HANDLERS)]
-                                  [:http/send-request! request-id request-props])]}))))
+               {:db                 (r store-request-props! db request-id request-props)
+                :sync/send-request! [request-id request-props]
+                :dispatch           [:sync/->request-sent request-id]}))))
 
 
 
@@ -399,11 +404,10 @@
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [server-response (reader/string->mixed server-response-body)]
-
             ; TEMP
             ; Fontos, hogy a szerver-válasz minél hamarabb a Re-Frame adatbázisba íródjon!
            {:db (r response-handler/store-request-response! db request-id server-response)
-
+            :sync/remove-reference! [request-id]
             :dispatch-n [;[:sync/handle-request-response!      request-id server-response]
                          [:core/set-process-status!           request-id :success]
                          [:core/set-process-activity!         request-id :idle]
@@ -427,7 +431,8 @@
   ;   :response (string)
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
-      {:dispatch-n [[:core/set-process-status!           request-id :failure]
+      {:sync/remove-reference! [request-id]
+       :dispatch-n [[:core/set-process-status!           request-id :failure]
                     [:core/set-process-activity!         request-id :idle]
                     (r get-request-on-failure-event   db request-id server-response)
                     (r get-request-on-responsed-event db request-id server-response)
@@ -439,12 +444,3 @@
                          ; tulajdonságként átadott eseményt, így az nem történik meg hibás teljesítés
                          ; esetén, ezért az {:on-stalled ...] esemény használható az {:on-success ...}
                          ; esemény alternatívájaként!
-
-(a/reg-event-fx
-  :sync/->request-progressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ; @param (integer) request-progress
-  (fn [_ [_ request-id request-progress]]
-      [:core/set-process-progress! request-id request-progress]))

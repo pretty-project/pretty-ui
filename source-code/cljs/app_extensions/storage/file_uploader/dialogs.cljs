@@ -1,8 +1,6 @@
 
 (ns app-extensions.storage.file-uploader.dialogs
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.io        :as io]
-              [mid-fruits.format    :as format]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
@@ -15,42 +13,38 @@
 
 (defn- abort-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [files-uploaded?]}]
-  (if-not false [elements/button {:tooltip :abort! :preset :close-icon-button :indent :both
-                                  :on-click [:storage/abort-file-uploading!]}]))
+  [uploader-id {:keys [files-uploaded? request-aborted?]}]
+  (let [request-id (engine/request-id uploader-id)]
+       (if-not (or files-uploaded? request-aborted?)
+               [elements/icon-button {:tooltip :abort! :preset :close :height :l
+                                      :on-click [:sync/abort-request! request-id]}])))
 
 (defn- upload-progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [file-count files-uploaded? request-progress] :as x}]
-  (let [sections      [{:color :primary :value request-progress} {:color :highlight :value (- 100 request-progress)}]
-        progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
-        label          (if files-uploaded? :files-uploaded progress-label)]
-       [:div {:style {:width "100%"}}
-             [elements/line-diagram {:sections sections :indent :both}]])); :label label}]]))
-                                     ;:min-height :s}]]))
-             ;(str x)]))
+  [uploader-id _]
+  ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
+  ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre
+  (let [uploader-progress (a/subscribe [:storage/get-file-uploader-progress uploader-id])]
+       (fn [] [elements/line-diagram {:indent :both :sections [{:color :primary   :value @uploader-progress}
+                                                               {:color :highlight :value (- 100 @uploader-progress)}]}])))
 
 (defn- upload-progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [file-count files-size files-uploaded? uploaded-size] :as x}]
+  [_ {:keys [file-count files-size files-uploaded? request-aborted? uploaded-size]}]
   (let [progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
-        label          (if files-uploaded? :files-uploaded progress-label)]
-       [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left
-                        :min-height :s}]))
+        label          (cond files-uploaded? :files-uploaded request-aborted? :aborted :else progress-label)]
+       [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left :min-height :l}]))
 
 (defn- upload-progress-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id {:keys [request-sent?] :as uploader-props}]
-  (if request-sent? [:<> [elements/row {:content [:<> [upload-progress-label   uploader-id uploader-props]
+  (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
+                         [elements/row {:content [:<> [upload-progress-label   uploader-id uploader-props]
                                                       [abort-upload-button   uploader-id uploader-props]]
                                         :horizontal-align :space-between}]
-                         [upload-progress-diagram uploader-id uploader-props]]))
-    ;[:div])) ;[:div (str uploader-props)]
-;                         [elements/horizontal-separator {:size :l}]]))
-
-;                         [elements/horizontal-separator {:size :xs}]]))
-;                         [upload-progress-diagram uploader-id uploader-props]]))
-;                         [elements/button {:preset :close-icon-button}]]))
+                         [:div {:style {:width "100%"}}
+                               [upload-progress-diagram uploader-id uploader-props]]
+                         [elements/horizontal-separator {:size :xs}]]))
 
 (defn- upload-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,16 +56,14 @@
 (defn- upload-progress-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id {:keys [uploader-ids]}]
-  (reduce #(conj %1 [upload-progress %2])
+  (reduce #(conj %1 ^{:key %2} [upload-progress %2])
            [:<>] uploader-ids))
 
 (defn- upload-progress-notification-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id upload-props]
-  [:<>
-       ;[elements/horizontal-separator {:size :xxs}]
-       [upload-progress-list dialog-id upload-props]])
-       ;[elements/horizontal-separator {:size :m}]])
+  [:<> [upload-progress-list dialog-id upload-props]
+       [elements/horizontal-separator {:size :m}]])
 
 (defn- upload-progress-notification
   ; WARNING! NON-PUBLIC! DO NOT USE!

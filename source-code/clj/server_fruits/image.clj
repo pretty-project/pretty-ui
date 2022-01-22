@@ -13,15 +13,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-fruits.image
-    (:import [javax.imageio ImageIO]
-             [javax.imageio.plugins.jpeg JPEGImageWriteParam]
-             [javax.imageio.stream FileImageOutputStream]
-             [javax.imageio IIOImage]
-             [javax.imageio ImageWriteParam]
-             [java.awt.image BufferedImage]
-             [java.awt AlphaComposite]
-             [java.awt Image]
-             [java.io  File])
+    (:import  [javax.imageio ImageIO]
+              [javax.imageio.plugins.jpeg JPEGImageWriteParam]
+              [javax.imageio.stream FileImageOutputStream]
+              [javax.imageio IIOImage]
+              [javax.imageio ImageWriteParam]
+              [java.awt.image BufferedImage]
+              [java.awt AlphaComposite]
+              [java.awt Image]
+              [java.io  File])
     (:require [mid-fruits.candy :refer [param return]]
               [server-fruits.io :as io]))
 

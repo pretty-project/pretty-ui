@@ -31,49 +31,49 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:editor-disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-editor/delete-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [editor-disabled?]}]
   [elements/button ::delete-item-button
                    {:tooltip :delete! :preset :delete-icon-button
-                    :disabled? disabled?
+                    :disabled? editor-disabled?
                     :on-click  [:item-editor/delete-item! extension-id item-namespace]}])
 
 (defn copy-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:editor-disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-editor/copy-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [editor-disabled?]}]
   [elements/button ::copy-item-button
                    {:tooltip :duplicate! :preset :duplicate-icon-button
-                    :disabled? disabled?
+                    :disabled? editor-disabled?
                     :on-click  [:item-editor/duplicate-item! extension-id item-namespace]}])
 
 (defn save-item-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:editor-disabled? (boolean)(opt)
   ;   :form-completed? (boolean)}
   ;
   ; @usage
   ;  [item-editor/save-item-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled? form-completed?]}]
+  [extension-id item-namespace {:keys [editor-disabled? form-completed?]}]
   [elements/button ::save-item-button
                    {:tooltip :save! :preset :save-icon-button
-                    :disabled? (or (not form-completed?) disabled?)
+                    :disabled? (or (not form-completed?) editor-disabled?)
                     :on-click [:item-editor/save-item! extension-id item-namespace]}])
 
 
@@ -144,14 +144,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ; @param (map) color-props
+  ;  {:editor-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [editor-disabled?]}]
   [elements/button ::add-colors-button
                    {:label :add-color! :preset :muted-button :layout :row :font-size :xs
-                    :disabled? disabled?
+                    :disabled? editor-disabled?
                     :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]}])
 
 (defn selected-colors
@@ -159,7 +159,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
+  ; @param (map) color-props
   ;  {:colors (strings in vector)(opt)}
   ;
   ; @return (component)
@@ -174,32 +174,43 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ; @param (map) color-props
+  ;  {:editor-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?] :as element-props}]
+  [extension-id item-namespace {:keys [editor-disabled?] :as color-props}]
   [elements/toggle ::selected-colors-button
-                   {:disabled? disabled?
+                   {:disabled? editor-disabled?
                     :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
-                    :content   [selected-colors extension-id item-namespace element-props]}])
+                    :content   [selected-colors extension-id item-namespace color-props]}])
+
+(defn color-selector-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) color-props
+  ;  {:colors (strings in vector)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [colors] :as color-props}]
+  [elements/row ::color-selector
+                {:horizontal-align :center
+                 :content (if (vector/nonempty? colors)
+                              [selected-colors-button extension-id item-namespace color-props]
+                              [add-colors-button      extension-id item-namespace color-props])}])
 
 (defn color-selector
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:colors (strings in vector)(opt)}
   ;
   ; @usage
   ;  [item-editor/color-selector :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [colors] :as element-props}]
-  [elements/row ::color-selector
-                {:horizontal-align :center
-                 :content (if (vector/nonempty? colors)
-                              [selected-colors-button extension-id item-namespace element-props]
-                              [add-colors-button      extension-id item-namespace element-props])}])
+  [extension-id item-namespace]
+  (let [color-props (a/subscribe [:item-editor/get-color-props extension-id item-namespace])]
+       (fn [] [color-selector-structure extension-id item-namespace @color-props])))
 
 (defn color-stamp
   ; @param (keyword) extension-id
@@ -228,16 +239,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:editor-disabled? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-editor/color-stamp :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [disabled?]}]
+  [extension-id item-namespace {:keys [editor-disabled?]}]
   [elements/multiline-field ::description-field
                             {:value-path [extension-id :item-editor/data-items :description]
-                             :disabled?  disabled?}])
+                             :disabled?  editor-disabled?}])
 
 
 

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.04.30
 ; Description:
-; Version: v0.3.8
+; Version: v0.4.2
 ; Compatibility: x4.5.5
 
 
@@ -64,14 +64,13 @@
   ;
   ; @param (string) filename
   [filename]
-  (let [mime-type (io/filename->mime-type             filename)
-        filepath  (engine/filename->media-storage-uri filename)]
-       (case mime-type "image/bmp"       (generate-image-thumbnail! filepath)
-                       "image/gif"       (generate-image-thumbnail! filepath)
-                       "image/jpeg"      (generate-image-thumbnail! filepath)
-                       "image/png"       (generate-image-thumbnail! filepath)
-                       "image/webp"      (generate-image-thumbnail! filepath)
-                       "application/pdf" (generate-pdf-thumbnail!   filepath))))
+  (let [mime-type (io/filename->mime-type filename)]
+       (case mime-type "image/bmp"       (generate-image-thumbnail! filename)
+                       "image/gif"       (generate-image-thumbnail! filename)
+                       "image/jpeg"      (generate-image-thumbnail! filename)
+                       "image/png"       (generate-image-thumbnail! filename)
+                       "image/webp"      (generate-image-thumbnail! filename)
+                       "application/pdf" (generate-pdf-thumbnail!   filename))))
 
 
 

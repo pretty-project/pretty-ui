@@ -65,7 +65,7 @@
   [env {:keys [destination-id]} {:keys [file-path filename size tempfile]}]
   (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
-        filepath           (media/filename->media-storage-filepath   generated-filename)
+        filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
                    :media/path file-path :description ""}]
        (if (engine/attach-media-item! env destination-id file-id)

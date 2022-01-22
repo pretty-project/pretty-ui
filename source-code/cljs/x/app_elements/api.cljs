@@ -38,6 +38,7 @@
               [x.app-elements.horizontal-polarity  :as horizontal-polarity]
               [x.app-elements.horizontal-separator :as horizontal-separator]
               [x.app-elements.icon                 :as icon]
+              [x.app-elements.icon-button          :as icon-button]
               [x.app-elements.image                :as image]
               [x.app-elements.label                :as label]
               [x.app-elements.line-diagram         :as line-diagram]
@@ -140,29 +141,30 @@
 (def blur-element-function  engine/blur-element-function)
 
 ; x.app-elements.*
-(def anchor            anchor/element)
-(def blank             blank/element)
-(def button            button/element)
-(def card              card/element)
-(def card-group        card-group/element)
-(def checkbox          checkbox/element)
-(def checkbox-group    checkbox-group/element)
-(def chip-group        chip-group/element)
-(def chip              chip/element)
-(def circle-diagram    circle-diagram/element)
-(def color-picker      color-picker/element)
-(def column            column/element)
-(def combo-box         combo-box/element)
-(def counter           counter/element)
-(def data-table        data-table/element)
-(def date-field        date-field/element)
-(def digit-field       digit-field/element)
+(def anchor               anchor/element)
+(def blank                blank/element)
+(def button               button/element)
+(def card                 card/element)
+(def card-group           card-group/element)
+(def checkbox             checkbox/element)
+(def checkbox-group       checkbox-group/element)
+(def chip-group           chip-group/element)
+(def chip                 chip/element)
+(def circle-diagram       circle-diagram/element)
+(def color-picker         color-picker/element)
+(def column               column/element)
+(def combo-box            combo-box/element)
+(def counter              counter/element)
+(def data-table           data-table/element)
+(def date-field           date-field/element)
+(def digit-field          digit-field/element)
 (def expandable           expandable/element)
 (def file-drop-area       file-drop-area/element)
 (def horizontal-line      horizontal-line/element)
 (def horizontal-polarity  horizontal-polarity/element)
 (def horizontal-separator horizontal-separator/element)
 (def icon                 icon/element)
+(def icon-button          icon-button/element)
 (def image                image/element)
 (def label                label/element)
 (def line-diagram         line-diagram/element)

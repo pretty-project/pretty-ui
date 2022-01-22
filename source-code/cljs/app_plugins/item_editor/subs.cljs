@@ -164,7 +164,7 @@
   (let [request-id (engine/request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
-(defn disabled?
+(defn editor-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -284,6 +284,8 @@
       (r download-item?        db extension-id item-namespace)))
 
 (defn get-description
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
@@ -294,6 +296,21 @@
                 actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
 
+(defn get-color-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  ;  {:colors (strings in vector)
+  ;   :editor-disabled? (boolean)}
+  [db [_ extension-id item-namespace]]
+  {:colors           (r get-data-value   db extension-id item-namespace :colors)
+   :editor-disabled? (r editor-disabled? db extension-id item-namespace)})
+
+(a/reg-sub :item-editor/get-color-props get-color-props)
+
 (defn get-body-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -302,17 +319,15 @@
   ;  (r item-editor/get-body-props db :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:colors (strings in vector)
-  ;   :disabled? (boolean)
+  ;  {:editor-disabled? (boolean)
   ;   :error-mode? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:disabled?   true
-           :error-mode? true}
-          {:colors    (r get-data-value db extension-id item-namespace :colors)
-           :disabled? (r disabled?      db extension-id item-namespace)
-           :new-item? (r new-item?      db extension-id item-namespace)}))
+          {:editor-disabled? true
+           :error-mode?      true}
+          {:editor-disabled? (r editor-disabled? db extension-id item-namespace)
+           :new-item?        (r new-item?        db extension-id item-namespace)}))
 
 ; @usage
 ;  [:item-editor/get-body-props :my-namespace :my-type]
@@ -326,18 +341,18 @@
   ;  (r item-editor/get-header-props db :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:disabled? (boolean)
+  ;  {:editor-disabled? (boolean)
   ;   :error-mode? (boolean)
   ;   :form-completed? (boolean)
   ;   :new-item? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:disabled?   true
-           :error-mode? true}
+          {:editor-disabled? true
+           :error-mode?      true}
           (let [form-id (engine/form-id extension-id item-namespace)]
-               {:disabled?       (r disabled? db extension-id item-namespace)
-                :new-item?       (r new-item? db extension-id item-namespace)
-                :form-completed? (r elements/form-completed? db form-id)})))
+               {:editor-disabled? (r editor-disabled? db extension-id item-namespace)
+                :new-item?        (r new-item?        db extension-id item-namespace)
+                :form-completed?  (r elements/form-completed? db form-id)})))
 
 ; @usage
 ;  [:item-editor/get-header-props :my-namespace :my-type]

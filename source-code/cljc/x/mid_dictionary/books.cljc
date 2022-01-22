@@ -94,6 +94,9 @@
      {:abort!
       {:en "Abort"
        :hu "Megszakítás"}
+      :aborted
+      {:en "Aborted"
+       :hu "Megszakítva"}
       :about-app
       {:en "About app"
        :hu "Az alkalmazás névjegye"}

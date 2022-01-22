@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.5.0
+; Version: v0.4.8
+; Compatibility: x4.5.5
 
 
 
@@ -15,7 +15,6 @@
 
 (ns x.app-layouts.layout-b
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map]
               [x.app-components.api :as components]
               [x.app-core.api       :as a]
               [x.app-elements.api   :as elements]
@@ -52,9 +51,8 @@
   ;   :label (metamorphic-content)}
   ;
   ; @return (component)
-  [_ _ card-props]
-  (let [label-props (map/rekey-item card-props :label :content)]
-       [elements/label label-props]))
+  [_ _ {:keys [icon label]}]
+  [elements/label {:content label :icon icon :min-height :xxl}])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

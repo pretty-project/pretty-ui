@@ -23,8 +23,3 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (keyword/add-namespace :storage uploader-id))
-
-(defn dialog-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id]
-  (keyword/add-namespace :storage uploader-id))

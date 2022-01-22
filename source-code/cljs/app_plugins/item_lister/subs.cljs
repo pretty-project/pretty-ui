@@ -75,7 +75,7 @@
   (let [items-received? (r get-meta-item db extension-id item-namespace :items-received?)]
        (boolean items-received?)))
 
-(defn disabled?
+(defn lister-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -83,12 +83,12 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [items-received? (r items-received? db extension-id item-namespace)
-        synchronizing?  (r synchronizing?  db extension-id item-namespace)]
-       ; Azért szükséges vizsgálni az {:items-received? ...} tulajdonság értékét, hogy
-       ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-       ; a szinkronizálás!
-       (or (not items-received?) synchronizing?)))
+  (or ; Azért szükséges vizsgálni az {:items-received? ...} tulajdonság értékét, hogy
+      ; a listázó {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
+      ; a szinkronizálás!
+           (r get-meta-item   db extension-id item-namespace :error-mode?)
+           (r synchronizing?  db extension-id item-namespace)
+      (not (r items-received? db extension-id item-namespace))))
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,10 +221,6 @@
   [db [_ extension-id item-namespace item-dex]]
   (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
        (vector/contains-item? selected-item-dexes item-dex)))
-
-; @usage
-;  [:item-lister/item-selected? :my-extension :my-type 0]
-(a/reg-sub :item-lister/item-selected? item-selected?)
 
 (defn all-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -365,6 +361,39 @@
        (if items-received? (components/content {:content      :npn-items-downloaded
                                                 :replacements [downloaded-item-count all-item-count]}))))
 
+(defn get-checkbox-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r engine/get-checkbox-props db :my-extension :my-type 0)
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-dex]]
+  {:item-selected?   (r item-selected?   db extension-id item-namespace item-dex)
+   :lister-disabled? (r lister-disabled? db extension-id item-namespace)
+   :select-mode?     (r get-meta-item    db extension-id item-namespace :select-mode?)})
+
+(a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
+
+(defn get-indicator-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  {:all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
+   :downloading-items?    (r downloading-items?    db extension-id item-namespace)
+   :items-received?       (r items-received?       db extension-id item-namespace)
+   :no-items-to-show?     (r no-items-to-show?     db extension-id)})
+
+(a/reg-sub :item-lister/get-indicator-props get-indicator-props)
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -375,7 +404,7 @@
   ; @return (map)
   ;  {:all-items-selected? (boolean)
   ;   :any-item-selected? (boolean)
-  ;   :disabled? (boolean)
+  ;   :lister-disabled? (boolean)
   ;   :error-mode? (boolean)
   ;   :menu-mode? (boolean)
   ;   :no-items-to-show? (boolean)
@@ -387,28 +416,28 @@
   [db [_ extension-id item-namespace]]
   (cond ; If error-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :error-mode?)
-        {:disabled?   true
-         :error-mode? true
-         :menu-mode?  true}
+        {:lister-disabled? true
+         :error-mode?      true
+         :menu-mode?       true}
         ; If select-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :select-mode?)
         {:select-mode? true
          :all-items-selected? (r all-items-selected? db extension-id item-namespace)
          :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-         :disabled?           (r disabled?           db extension-id item-namespace)}
+         :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode? true
-         :disabled? (r disabled? db extension-id item-namespace)}
+         :lister-disabled? (r lister-disabled? db extension-id item-namespace)}
         ; If reorder-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :reorder-mode?)
         {:reorder-mode?  true
          :order-changed? false
-         :disabled? (r disabled? db extension-id item-namespace)}
+         :lister-disabled? (r lister-disabled? db extension-id item-namespace)}
         ; Use menu-mode as default ...
         :default
         {:menu-mode? true
-         :disabled?         (r disabled?                   db extension-id item-namespace)
+         :lister-disabled?  (r lister-disabled?            db extension-id item-namespace)
          :no-items-to-show? (r no-items-to-show?           db extension-id)
          :viewport-small?   (r environment/viewport-small? db)}))
 
@@ -424,59 +453,13 @@
   ;  (r item-lister/get-body-props :my-extension :my-type)
   ;
   ; @return (map)
-  ;  {:all-items-downloaded? (boolean)
-  ;   :disabled? (boolean)
-  ;   :error-mode? (boolean)
-  ;   :downloaded-items (vector)
-  ;   :downloading-items? (boolean)
-  ;   :disabled-items (integers in vector)
-  ;   :items-received? (boolean)
-  ;   :menu-mode? (boolean)
-  ;   :no-items-to-show? (boolean)
-  ;   :reorder-mode? (boolean)
-  ;   :search-mode? (boolean)
-  ;   :select-mode? (boolean)}
+  ;  {:error-mode? (boolean)
+  ;   :downloaded-item-count (vector)
+  ;   :reorder-mode? (boolean)}
   [db [_ extension-id item-namespace]]
-  (cond ; If error-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :error-mode?)
-        {:disabled?   true
-         :error-mode? true}
-        ; If select-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :select-mode?)
-        {:select-mode? true
-         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
-         :disabled?             (r disabled?             db extension-id item-namespace)
-         :downloaded-items      (r get-downloaded-items  db extension-id)
-         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
-         :items-received?       (r items-received?       db extension-id item-namespace)
-         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
-        ; If search-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :search-mode?)
-        {:search-mode? true
-         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
-         :disabled?             (r disabled?             db extension-id item-namespace)
-         :downloaded-items      (r get-downloaded-items  db extension-id)
-         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
-         :items-received?       (r items-received?       db extension-id item-namespace)
-         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
-        ; If reorder-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :reorder-mode?)
-        {:reorder-mode? true
-         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
-         :disabled?             (r disabled?             db extension-id item-namespace)
-         :downloaded-items      (r get-downloaded-items  db extension-id)
-         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
-         :items-received?       (r items-received?       db extension-id item-namespace)
-         :no-items-to-show?     (r no-items-to-show?     db extension-id)}
-        ; Use menu-mode as default ...
-        :default
-        {:menu-mode? true
-         :all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
-         :disabled?             (r disabled?             db extension-id item-namespace)
-         :downloaded-items      (r get-downloaded-items  db extension-id)
-         :downloading-items?    (r downloading-items?    db extension-id item-namespace)
-         :items-received?       (r items-received?       db extension-id item-namespace)
-         :no-items-to-show?     (r no-items-to-show?     db extension-id)}))
+  (merge {:downloaded-item-count (r get-downloaded-item-count db extension-id)}
+         (cond (r get-meta-item db extension-id item-namespace :error-mode?)   {:error-mode?   true}
+               (r get-meta-item db extension-id item-namespace :reorder-mode?) {:reorder-mode? true})))
 
 ; @usage
 ;  [:item-lister/get-body-props :my-extension :my-type]
