@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2022.01.21
 ; Description:
-; Version: v0.2.0
+; Version: v0.3.6
 ; Compatibility: x4.5.5
 
 
@@ -25,6 +25,9 @@
 ; @constant (string)
 (def APP-BUILD-FILEPATH "monoset-environment/x.app-build.edn")
 
+; @constant (string)
+(def INITIAL-APP-BUILD "0.0.1")
+
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -34,4 +37,7 @@
   ; @usage
   ;  (core/->app-built)
   []
-  (io/swap-edn-file! APP-BUILD-FILEPATH #(update % :app-build format/inc-version)))
+  (letfn [(f [{:keys [app-build]}] (if app-build {:app-build (try (format/inc-version app-build)
+                                                                  (catch Exception e (println e)))}
+                                                 {:app-build INITIAL-APP-BUILD}))]
+         (io/swap-edn-file! APP-BUILD-FILEPATH f)))

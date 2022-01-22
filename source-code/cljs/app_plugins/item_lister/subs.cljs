@@ -38,6 +38,8 @@
   [db [_ extension-id]]
   (get-in db [extension-id :item-lister/data-items]))
 
+(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
+
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -454,12 +456,10 @@
   ;
   ; @return (map)
   ;  {:error-mode? (boolean)
-  ;   :downloaded-item-count (vector)
   ;   :reorder-mode? (boolean)}
   [db [_ extension-id item-namespace]]
-  (merge {:downloaded-item-count (r get-downloaded-item-count db extension-id)}
-         (cond (r get-meta-item db extension-id item-namespace :error-mode?)   {:error-mode?   true}
-               (r get-meta-item db extension-id item-namespace :reorder-mode?) {:reorder-mode? true})))
+  (cond (r get-meta-item db extension-id item-namespace :error-mode?)   {:error-mode?   true}
+        (r get-meta-item db extension-id item-namespace :reorder-mode?) {:reorder-mode? true}))
 
 ; @usage
 ;  [:item-lister/get-body-props :my-extension :my-type]

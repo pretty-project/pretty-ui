@@ -126,7 +126,7 @@
   (re-match? n #"^[0-9]*$"))
 
 (defn update-str-number
-  ; @param (*) n
+  ; @param (string) n
   ; @param (function) f
   ; @param (*)(opt) x
   ;
@@ -145,17 +145,17 @@
   ;  =>
   ;  "abCd12"
   ;
-  ; @return (*)
+  ; @return (string)
   ([n f]
    (update-str-number n f nil))
 
   ([n f x]
-   (if (str-number? n)
-       (let [integer (string/to-integer n)
-             result  (if x (f integer x)
-                           (f integer))]
-            (str result))
-       (return n))))
+   (letfn [(update-f [n] (let [integer (string/to-integer n)]
+                              (if x (f integer x)
+                                    (f integer))))]
+          (if (-> n str-number?)
+              (-> n update-f str)
+              (-> n return)))))
 
 (defn str-contains-number?
   ; @param (*) n

@@ -121,14 +121,6 @@
       (if DEBUG? (println ":on-server-boot-events:"))
       (if DEBUG? (println (str (r a/get-period-events db :on-server-boot))))
 
-
-
-      ; TEMP
-      (a/->app-built)
-
-      
-
-
       {:dispatch-n (r a/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
                        {:tick  50 :dispatch [:core/run-server! (r get-server-props db)]}

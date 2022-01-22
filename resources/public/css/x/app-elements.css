@@ -20,6 +20,28 @@
 
 
 
+/***** Element debug *****/
+
+@keyframes x-debug {
+  from { transform: scale(1) }
+  to   { transform: scale(0) }}
+
+.x-element_::after {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-name: x-debug;
+  background-color: rgba(200, 50, 50, .1);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+/***** Element debug *****/
+
+
+
 /***** Element profiles *****/
 
 body {

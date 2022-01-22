@@ -23,17 +23,17 @@
        [:div.storage--media-item--header [elements/icon {:icon :folder
                                                          :icon-family icon-family
                                                          :size :xxl}]]))
-
+ 
 (defn- directory-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [alias content-size]}]
+  [_ {:keys [alias content-size items]}]
   [:div.storage--media-item--details
     [elements/label {:content (str alias)
                      :layout :fit :selectable? true  :color :default}]
     [elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
                      :layout :fit :selectable? false :color :muted
                      :font-size :xs}]
-    [elements/label {:content "0 elem" :font-size :xs
+    [elements/label {:content {:content :n-items :replacements [(count items)]} :font-size :xs
                      :layout :fit :selectable? false :color :muted}]])
 
 (defn- directory-item

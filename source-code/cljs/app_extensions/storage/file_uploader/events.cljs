@@ -91,7 +91,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       ; Az egy feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt
-      {:dispatch-later [{:ms 3000 :dispatch [:storage/end-file-uploader! uploader-id]}]}))
+      {:dispatch-later [{:ms 3000 :dispatch [:storage/end-file-uploader! uploader-id]}]
+       :dispatch [:item-lister/reload-lister! :storage :media]}))
 
 (a/reg-event-fx
   :storage/end-file-uploader!

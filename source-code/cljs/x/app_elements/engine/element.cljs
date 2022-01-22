@@ -231,10 +231,10 @@
   ;   :data-selectable (boolean)
   ;   :src (string)}
   [_ {:keys [alt disabled? selectable? src]}]
-  (cond-> {} alt         (assoc :alt alt)
-             src         (assoc :src src)
-             disabled?   (assoc :data-disabled   disabled?)
-             selectable? (assoc :data-selectable selectable?)))
+  (cond-> {} alt (assoc :alt alt)
+             src (assoc :src src)
+             (some? disabled?)   (assoc :data-disabled   disabled?)
+             (some? selectable?) (assoc :data-selectable selectable?)))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -250,7 +250,7 @@
   [n x dex]
   (if (nonempty? x)
       (let [count (count n)
-            dex   (math/between! x 0 count)]
+            dex   (math/between! dex 0 count)]
            (str (subs n 0 dex) x (subs n dex)))
       (return n)))
 

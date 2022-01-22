@@ -318,49 +318,6 @@
 
 
 
-;; -- Applying document -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn apply-input
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced map) document
-  ;
-  ; @example
-  ;  (adaptation/apply-input {:namespace/id            "MyObjectId"
-  ;                           :namespace/my-keyword    :my-value
-  ;                           :namespace/your-string   "your-value"
-  ;                           :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
-  ;  =>
-  ;  {"namespace/my-keyword"    "*:my-value"
-  ;   "namespace/your-string"   "your-value"
-  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
-  ;
-  ; @return (namespaced map)
-  [document]
-  ; 1. A dokumentum :namespace/id tulajdonságának eltávolítása
-  ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
-  ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-  (try (-> document engine/dissoc-id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-       (catch Exception e (println (str e "\n" {:document document})))))
-
-(defn apply-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) document-id
-  ;
-  ; @example
-  ;  (adaptation/apply-query "MyObjectId")
-  ;  =>
-  ;  {"_id" #<ObjectId MyObjectId>}
-  ;
-  ; @return (map)
-  [document-id]
-  (if-let [document-id (document-id-input document-id)]
-          {"_id" document-id}))
-
-
-
 ;; -- Duplicating document ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

@@ -165,12 +165,12 @@
   (letfn [(f [n x]
              (if (:increased? x)
                  (if (-> x :separators vector/nonempty?)
-                     (f (string/insert-part n "." (-> x :separators first))
-                        (update x :separators vector/shift-first-item))
+                     (f (string/insert-part n "." (-> x :separators last))
+                        (update x :separators vector/pop-last-item))
                      (return n))
                  (if-let [separator (string/first-index-of n ".")]
                          (f (string/remove-first-occurence n ".")
                             (update x :separators conj separator))
-                         (f (mixed/update-str-number n inc)
+                         (f (leading-zeros (mixed/update-str-number n inc) (count n))
                             (assoc x :increased? true)))))]
-         (f n {})))
+         (f n {:separators []})))

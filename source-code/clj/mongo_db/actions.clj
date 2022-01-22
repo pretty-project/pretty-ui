@@ -475,13 +475,11 @@
    (apply-document! collection-name document-id f {}))
 
   ([collection-name document-id f options]
-   (if-let [query (adaptation/apply-query document-id)]
-           (if-let [document (reader/get-document-by-id collection-name document-id)]
-                   (if-let [document (prepare-document collection-name document options)]
-                           (if-let [document (-> document f adaptation/apply-input)]
-                                   (let [result (update! collection-name query document {:multi false :upsert false})]
-                                        (if (mrt/updated-existing? result)
-                                            (return document)))))))))
+   (if-let [document (reader/get-document-by-id collection-name document-id)]
+           (if-let [document (prepare-document collection-name document options)]
+                   (if-let [document (-> document f adaptation/save-input)]
+                           (let [result (save-and-return! collection-name document)]
+                                (adaptation/save-output result)))))))
 
 ; @usage
 ;  [:mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue")]

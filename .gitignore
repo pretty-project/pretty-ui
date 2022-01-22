@@ -11,7 +11,8 @@ monoset-environment/media/thumbnails/*
 !monoset-environment/media/thumbnails/sample.png
 !monoset-environment/media/storage/sample.png
 
-# site-config
+# config files
+monoset-environment/x.app-build.edn
 monoset-environment/x.site-config.edn
 
 # system files

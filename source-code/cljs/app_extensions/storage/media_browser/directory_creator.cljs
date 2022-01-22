@@ -1,5 +1,5 @@
 
-(ns app-extensions.storage.directory-creator
+(ns app-extensions.storage.media-browser.directory-creator
     (:require [mid-fruits.io        :as io]
               [mid-fruits.keyword   :as keyword]
               [x.app-core.api       :as a :refer [r]]
@@ -40,8 +40,9 @@
   :storage/create-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id directory-name]]
-      [:sync/send-query! (keyword/add-namespace creator-id :create-directory!)
-                         {:query (r get-create-directory-query db creator-id directory-name)}]))
+      [:sync/send-query! (keyword/add-namespace :storage creator-id)
+                         {:query (r get-create-directory-query db creator-id directory-name)
+                          :on-success [:item-lister/reload-lister! :storage :media]}]))
 
 
 
@@ -52,7 +53,7 @@
   :storage/render-new-directory-name-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id]]
-      [:value-editor/load-editor! creator-id :new-directory-name
+      [:value-editor/load-editor! :storage :new-directory-name
                                   {:label :directory-name :save-button-label :create!
                                    :initial-value (r dictionary/look-up db :new-directory)
                                    :on-save       [:storage/create-directory! creator-id]

@@ -502,7 +502,7 @@
   ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
-  [elements/label {:font-size :xs :color :highlight :font-weight :bold
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold :min-height :xxl
                    :content (if (or downloading-items? (nor downloading-items? items-received?))
                                 :downloading-items...)}])
 
@@ -527,7 +527,7 @@
   ;
   ; @return (component)
   [_ _ _]
-  [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}])
+  [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold :min-height :xxl}])
 
 (defn no-items-to-show
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -560,8 +560,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace indicator-props]
-  [:<> [downloading-items extension-id item-namespace indicator-props]
-       [no-items-to-show  extension-id item-namespace indicator-props]])
+  [:<> [no-items-to-show  extension-id item-namespace indicator-props]
+       [downloading-items extension-id item-namespace indicator-props]])
 
 (defn indicators
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -576,20 +576,8 @@
 
 
 
-;; -- Body components ---------------------------------------------------------
+;; -- List-item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn sortable-item-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (component)
-  [extension-id item-namespace body-props]
-  [:div "sortable"])
-  ; Ne renderelődjenek újra a listaelemek, amikor átvált {:reorder-mode? true} állapotra!
 
 (defn list-item-checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -659,6 +647,11 @@
              ;   elem a lista-elem előtt jelenik meg.
              [list-item-checkbox extension-id item-namespace body-props item-dex]])))
 
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn selectable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -667,16 +660,31 @@
   ; @param (map) body-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [downloaded-items] :as body-props}]
-  (reduce-indexed (fn [item-list item-dex {:keys [id] :as item}]
-                      (conj item-list
-                            ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
-                            ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
-                            ; az új indexükhöz!
-                           ^{:key (str id item-dex)}
-                            [list-item-structure extension-id item-namespace body-props item-dex item]))
-                  [:div.item-lister--item-list]
-                  (param downloaded-items)))
+  [extension-id item-namespace body-props]
+  ; Ha a downloaded-items a get-body-props feliratkozásban lenne, akkor az újonnan letöltött
+  ; elemek kirenderelése a meglévő elemek újrarenderelését okozná.
+  (let [downloaded-items (a/subscribe [:item-lister/get-downloaded-items extension-id])]
+       (fn [] (reduce-kv (fn [item-list item-dex {:keys [id] :as item}]
+                             (conj item-list
+                                   ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
+                                   ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
+                                   ; az új indexükhöz!
+                                  ^{:key (str id item-dex)}
+                                   [list-item-structure extension-id item-namespace body-props item-dex item]))
+                         [:div.item-lister--item-list]
+                         (param @downloaded-items)))))
+
+(defn sortable-item-list
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (component)
+  [extension-id item-namespace body-props]
+  [:div "sortable"])
+  ; Ne renderelődjenek újra a listaelemek, amikor átvált {:reorder-mode? true} állapotra!
 
 (defn item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
