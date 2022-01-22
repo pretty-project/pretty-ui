@@ -19,23 +19,21 @@
               [x.app-core.api     :as a :refer [r]]
               [x.app-router.api   :as router]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-lister.api     :as item-lister]))
+              [app-plugins.item-lister.api     :as item-lister]
+              [mid-plugins.item-browser.subs   :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-browser.subs
+(def get-meta-item subs/get-meta-item)
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-browser/meta-items item-key]))
 
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

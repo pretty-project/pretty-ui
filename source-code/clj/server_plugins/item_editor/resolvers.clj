@@ -13,14 +13,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-plugins.item-editor.handlers
+(ns server-plugins.item-editor.resolvers
     (:require [mid-fruits.string    :as string]
               [mid-fruits.keyword   :as keyword]
               [mid-fruits.validator :as validator]
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
               [x.server-db.api      :as db]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [com.wsscode.pathom3.connect.operation :refer [defresolver]]
               [server-plugins.item-editor.engine     :as engine]))
 
 

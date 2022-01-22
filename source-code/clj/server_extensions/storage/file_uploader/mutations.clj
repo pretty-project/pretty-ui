@@ -1,13 +1,12 @@
 
-(ns server-extensions.storage.file-uploader.handlers
+(ns server-extensions.storage.file-uploader.mutations
     (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
               [server-fruits.http :as http]
               [server-fruits.io   :as io]
-              [x.server-core.api  :as a]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
               [server-extensions.storage.engine      :as engine]))
 
 
@@ -69,12 +68,13 @@
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
                    :media/path file-path :description ""}]
        (if (engine/attach-media-item! env destination-id file-id)
-           (if-let [file-item (engine/insert-media-item! env file-item)]
-                   ; Copy the temporary file to storage, and delete the temporary file
-                   (do (io/copy-file!   tempfile filepath)
-                       (io/delete-file! tempfile)
-                       (media/generate-thumbnail! generated-filename)
-                       (return file-item))))))
+           (when-let [file-item (engine/insert-media-item! env file-item)]
+                     ; Copy the temporary file to storage, and delete the temporary file
+                     (io/copy-file!   tempfile filepath)
+                     (io/delete-file! tempfile)
+                     (media/generate-thumbnail! generated-filename)
+                     (engine/update-path-directories! env file-item +)
+                     (return file-item)))))
 
        ; Itt is ellenőrizni, kell a kapacitást, hogy ha egyszerre két feltöltés futna  párhuzamosan,
        ; akkor ne lehessen átlépni a max-ot

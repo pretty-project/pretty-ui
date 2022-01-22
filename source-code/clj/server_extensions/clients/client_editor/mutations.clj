@@ -1,41 +1,10 @@
 
-(ns server-extensions.clients.client-editor.handlers
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.validator :as validator]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
-              [prototypes.api       :as prototypes]
-              [x.server-core.api    :as a]
-              [x.server-db.api      :as db]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
-
-
-
-;; -- Resolvers ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-client-item-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) resolver-props
-  ;
-  ; @return (namespaced map)
-  [env _]
-  (let [item-id (pathom/env->param env :item-id)]
-       (if-let [document (mongo-db/get-document-by-id "clients" item-id)]
-               (validator/validate-data document))))
-
-(defresolver get-client-item
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (namespaced map)
-             ;  {:clients/get-client-item (namespaced map)}
-             [env resolver-props]
-             {:clients/get-client-item (get-client-item-f env resolver-props)})
+(ns server-extensions.clients.client-editor.mutations
+    (:require [mid-fruits.candy :refer [param return]]
+              [mongo-db.api     :as mongo-db]
+              [pathom.api       :as pathom]
+              [prototypes.api   :as prototypes]
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]))
 
 
 
@@ -95,7 +64,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-client-item! duplicate-client-item! get-client-item
-               save-client-item!   undo-delete-client-item!])
+(def HANDLERS [delete-client-item! duplicate-client-item! save-client-item! undo-delete-client-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

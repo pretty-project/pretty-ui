@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.5.3
+; Version: v0.6.2
+; Compatibility: x4.5.5
 
 
 
@@ -31,13 +31,15 @@
   ;
   ; @return (map)
   [request]
-  (let [app-config    (a/subscribed [:core/get-app-config])
+  (let [app-build     (a/subscribed [:core/get-app-build])
+        app-config    (a/subscribed [:core/get-app-config])
         site-config   (a/subscribed [:core/get-site-config])
         client-routes (a/subscribed [:router/get-client-routes])
         user-account  (user/request->user-public-account request)
         user-profile  (user/request->user-profile        request)
         user-settings (user/request->user-settings       request)]
-       (http/map-wrap {:body {:app-config    (param app-config)
+       (http/map-wrap {:body {:app-build     (param app-build)
+                              :app-config    (param app-config)
                               :site-config   (param site-config)
                               :client-routes (param client-routes)
                               :user-account  (db/document->non-namespaced-document user-account)

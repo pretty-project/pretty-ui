@@ -52,7 +52,7 @@
   ;
   ; @return (component)
   [_ _ {:keys [icon label]}]
-  [elements/label {:content label :icon icon :min-height :xxl}])
+  [elements/label {:content label :icon icon}])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

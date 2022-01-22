@@ -15,6 +15,7 @@
 
 (ns server-plugins.item-browser.api
     (:require [server-plugins.item-browser.events]
+              [server-plugins.item-browser.subs]
               [server-plugins.item-browser.engine :as engine]))
 
 
@@ -31,3 +32,6 @@
 (def env->pipeline-props engine/env->pipeline-props)
 (def env->get-pipeline   engine/env->get-pipeline)
 (def env->count-pipeline engine/env->count-pipeline)
+(def item->path          engine/item->path)
+(def item->parent-link   engine/item->parent-link)
+(def item->parent-id     engine/item->parent-id)

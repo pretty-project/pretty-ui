@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.5.4
+; Version: v0.2.8
+; Compatibility: x4.5.5
 
 
 
@@ -14,7 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-browser.api
-    (:require [mid-plugins.item-browser.engine :as engine]))
+    (:require [mid-plugins.item-browser.events]
+              [mid-plugins.item-browser.subs]
+              [mid-plugins.item-browser.engine :as engine]))
 
 
 

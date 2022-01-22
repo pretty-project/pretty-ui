@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.api
-    (:require [x.server-core.database-handler]
+    (:require [x.server-core.build-handler]
+              [x.server-core.database-handler]
               [x.server-core.error-handler]
               [x.server-core.middleware-handler]
               [x.server-core.resource-handler]

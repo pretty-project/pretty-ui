@@ -16,6 +16,7 @@
 (ns server-plugins.item-editor.events
     (:require [mid-fruits.candy  :refer [param return]]
               [x.server-core.api :as a :refer [r]]
+              [mid-plugins.item-editor.events    :as events]
               [server-plugins.item-editor.engine :as engine]))
 
 
@@ -34,6 +35,14 @@
 
 
 
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-editor.events
+(def store-editor-props! events/store-editor-props!)
+
+
+
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -48,6 +57,22 @@
   [_ _ editor-props]
   (merge {}
          (param editor-props)))
+
+
+
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn initialize!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map)(opt) editor-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace editor-props]]
+  (r store-editor-props! db extension-id item-namespace editor-props))
 
 
 
@@ -100,9 +125,11 @@
   ;
   ; @usage
   ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
-  (fn [cofx [_ extension-id item-namespace editor-props]]
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace editor-props]]
       (let [];editor-props (editor-props-prototype extension-id item-namespace editor-props)
            (if-let [multi-view? (get editor-props :multi-view?)]
-                   {:dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
+                   {:db          (r initialize!           db extension-id item-namespace editor-props)
+                    :dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
                                  (r add-extended-route! cofx extension-id item-namespace editor-props)]}
-                   {:dispatch    (r add-route!          cofx extension-id item-namespace editor-props)}))))
+                   {:db          (r initialize!           db extension-id item-namespace editor-props)
+                    :dispatch    (r add-route!          cofx extension-id item-namespace editor-props)}))))

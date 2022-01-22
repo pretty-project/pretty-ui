@@ -23,7 +23,17 @@
               [x.app-elements.api   :as elements]
               [x.app-router.api     :as router]
               [x.app-sync.api       :as sync]
-              [app-plugins.item-editor.engine :as engine]))
+              [app-plugins.item-editor.engine :as engine]
+              [mid-plugins.item-editor.subs   :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-editor.subs
+(def get-meta-item subs/get-meta-item)
+
 
 
 
@@ -55,20 +65,6 @@
   ; @return (map)
   [db [_ extension-id _ item-key]]
   (get-in db [extension-id :item-editor/data-items item-key]))
-
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @usage
-  ;  (r subs/get-meta-item :my-extension :my-type :error-mode?)
-  ;
-  ; @return (map)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/meta-items item-key]))
 
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

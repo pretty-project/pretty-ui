@@ -43,7 +43,9 @@
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
   ([]             (start-server! {}))
-  ([server-props] (a/dispatch [:boot-loader/start-server! server-props])))
+  ([server-props] (a/dispatch [:boot-loader/start-server! server-props])
+                  ; TEMP
+                  (a/->app-built)))
 
 
 
@@ -69,9 +71,8 @@
   ;
   ; @return (map)
   [db [_ server-props]]
+  ; A szerver indítási paramétereinek eltárolása
   (assoc-in db (db/path :boot-loader/primary :server-props) server-props))
-
-(a/reg-event-db :boot-loader/store-server-props! store-server-props!)
 
 
 
@@ -83,15 +84,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
-  (fn [_ [_ server-props]]
+  (fn [{:keys [db]} [_ server-props]]
       (println details/app-codename "starting server ...")
-      {:core/import-lifecycles! nil
-       :dispatch-tick [; A szerver indítási paramétereinek eltárolása
-                       {:tick   0 :dispatch [:boot-loader/store-server-props! server-props]}
-                       ; A konfigurációs fájlok tartalmának eltárolása
-                       {:tick   0 :dispatch [:core/config-server!]}
-                       ; A szerver inicializálása
-                       {:tick 500 :dispatch [:boot-loader/initialize-server!]}]}))
+      {:db (r store-server-props! db server-props)
+       :core/import-lifecycles! nil
+       :core/import-app-build!  nil
+       :core/config-server!     nil
+       :dispatch-tick [{:tick 500 :dispatch [:boot-loader/initialize-server!]}]}))
 
 (a/reg-event-fx
   :boot-loader/initialize-server!

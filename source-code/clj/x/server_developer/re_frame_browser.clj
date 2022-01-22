@@ -68,7 +68,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [query-params]}]
   (let [db           (a/subscribed [:db/get-db])
-        path         (reader/string->mixed (get query-params "path"))
+        path         (reader/string->mixed (get query-params "path" "[]"))
         current-item (get-in db path)]
        (http/html-wrap {:body (print-re-frame-browser {:current-item current-item :path path})})))
 

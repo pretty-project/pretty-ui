@@ -35,12 +35,14 @@
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
+  ;   :min-height (keyword)
   ;   :selectable? (boolean)}
   [{:keys [icon] :as label-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :left
+          :min-height       :xxl
           :selectable?      false}
          (if icon {:icon-family :material-icons-filled})
          (param label-props)))
@@ -117,6 +119,9 @@
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none
+  ;   :min-height (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :xxl
   ;   :selectable? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)}

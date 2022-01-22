@@ -20,6 +20,34 @@
 
 
 
+;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-database-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (r config-handler/get-server-config-item db :database-name))
+
+(defn- get-database-host
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (if-let [is-docker? (System/getenv "DOCKER")]
+          (r config-handler/get-server-config-item db :docker-database-host)
+          (r config-handler/get-server-config-item db :database-host)))
+
+(defn- get-database-port
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (r config-handler/get-server-config-item db :database-port))
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -27,12 +55,10 @@
   :core/connect-to-database!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [is-docker?    (System/getenv "DOCKER")
-            database-name (r config-handler/get-server-config-item db :database-name)
-            database-host (if is-docker? (r config-handler/get-server-config-item db :docker-database-host)
-                                         (r config-handler/get-server-config-item db :database-host))
-            database-port (r config-handler/get-server-config-item db :database-port)]
+      (let [database-name (r get-database-name db)
+            database-host (r get-database-host db)
+            database-port (r get-database-port db)]
            (println details/app-codename "connecting to:" database-name
-                                         "database at:"   database-host
-                                         "on port:"       database-port)
+                                           "database at:" database-host
+                                               "on port:" database-port)
            {:mongo-db/build-connection! [database-name database-host database-port]})))

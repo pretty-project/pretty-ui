@@ -72,7 +72,7 @@
 
 (defn- config-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (let [app-config    (io/read-edn-file APP-CONFIG-FILEPATH)
         server-config (io/read-edn-file SERVER-CONFIG-FILEPATH)
         site-config   (io/read-edn-file SITE-CONFIG-FILEPATH)]
@@ -80,4 +80,4 @@
                                                       :server-config server-config
                                                       :site-config   site-config}])))
 
-(event-handler/reg-handled-fx :core/config-server! config-server!)
+(event-handler/reg-fx :core/config-server! config-server!)

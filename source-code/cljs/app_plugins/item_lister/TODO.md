@@ -1,2 +1,6 @@
 
-# app-plugins.item-lister
+# app-plugins.item-lister.views
+
+- Ha az [:item-lister/reload-lister! ...] esemény megtörténése után megváltozik az elemek száma,
+  akkor a újrarenderelődnek az egyes elemek (pl fájlkezelőben kikapcsolt cache mellett villannak
+  a bélyegképek)

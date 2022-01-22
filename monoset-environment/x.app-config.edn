@@ -1,7 +1,6 @@
 
 ; @param (map) app-config
 ;  {:author (string)
-;   :app-build (string)
 ;   :app-home (string)
 ;   :app-languages (keywords in vector)
 ;   :app-themes (maps in vector)
@@ -43,7 +42,6 @@
 
 {; App details
  :author        "bithandshake"
- :app-build     "0.0.1"
  :app-home      "/admin"
  :app-languages [:en :hu]
  :app-themes    [{:id :light :name :light-theme}

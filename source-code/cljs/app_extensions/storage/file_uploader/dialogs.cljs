@@ -23,7 +23,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
-  ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre
+  ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre!
   (let [uploader-progress (a/subscribe [:storage/get-file-uploader-progress uploader-id])]
        (fn [] [elements/line-diagram {:indent :both :sections [{:color :primary   :value @uploader-progress}
                                                                {:color :highlight :value (- 100 @uploader-progress)}]}])))

@@ -22,7 +22,16 @@
               [x.app-db.api          :as db]
               [x.app-environment.api :as environment]
               [x.app-sync.api        :as sync]
-              [app-plugins.item-lister.engine :as engine]))
+              [app-plugins.item-lister.engine :as engine]
+              [mid-plugins.item-lister.subs   :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-lister.subs
+(def get-meta-item subs/get-meta-item)
 
 
 
@@ -39,17 +48,6 @@
   (get-in db [extension-id :item-lister/data-items]))
 
 (a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
-
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-lister/meta-items item-key]))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

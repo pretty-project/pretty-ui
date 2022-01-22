@@ -36,12 +36,9 @@
   [extension-id item-namespace item-ids]
   (let [dialog-id  (engine/dialog-id extension-id item-namespace :items-deleted)
         undo-event [:item-lister/undo-delete-items! extension-id item-namespace item-ids]]
-       [:<> [elements/horizontal-separator {:size :s}]
-            [elements/label {:content :n-items-deleted :layout :fit :replacements [(count item-ids)]}]
-            [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :recover! :preset :primary-button :layout :fit
-                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]
-            [elements/horizontal-separator {:size :s}]]))
+       [:<> [elements/label {:content {:content :n-items-deleted :replacements [(count item-ids)]}}]
+            [elements/button {:label :recover! :preset :primary-button
+                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]]))
 
 (defn items-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,12 +51,9 @@
   [extension-id item-namespace item-ids]
   (let [dialog-id  (engine/dialog-id extension-id item-namespace :items-duplicated)
         undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace item-ids]]
-       [:<> [elements/horizontal-separator {:size :s}]
-            [elements/label {:content :n-items-duplicated :layout :fit :replacements [(count item-ids)]}]
-            [elements/horizontal-separator {:size :s}]
-            [elements/button {:label :recover! :preset :primary-button :layout :fit
-                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]
-            [elements/horizontal-separator {:size :s}]]))
+       [:<> [elements/label {:content {:content :n-items-duplicated :replacements [(count item-ids)]}}]
+            [elements/button {:label :recover! :preset :primary-button
+                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]]))
 
 
 

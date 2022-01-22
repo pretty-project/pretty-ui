@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.7.8
-; Compatibility: x4.5.0
+; Compatibility: x4.5.5
 
 
 
@@ -55,7 +55,11 @@
   [env]
   (let [download-limit (pathom/env->param env :download-limit)]
        (if-let [reload-items? (pathom/env->param env :reload-items?)]
-               (let [downloaded-item-count (pathom/env->param env :downloaded-item-count)]
+               (let [downloaded-item-count (pathom/env->param env :downloaded-item-count)
+                     ; A downloaded-item-count értéke nem lehet 0, mert akkor matematikai
+                     ; szempontból nem tartozna az első tartományba (1-20 elem) és a math/domain-ceil
+                     ; függvény visszatérési értéke is 0 lenne!
+                     downloaded-item-count (max downloaded-item-count 1)]
                     (math/domain-ceil downloaded-item-count download-limit))
                (return download-limit))))
 

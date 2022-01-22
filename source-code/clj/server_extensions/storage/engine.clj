@@ -27,18 +27,12 @@
   ;  {:request (map)}
   ; @param (string) directory-id
   ; @param (string) item-id
-  ; @param (map)(opt) attach-props
-  ;  {:content-size (B)(opt)}
   ;
   ; @return (namespaced map)
-  ([env directory-id item-id]
-   (attach-media-item! env directory-id item-id {}))
-
-  ([{:keys [request]} directory-id item-id {:keys [content-size]}]
-   (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
-           (attach-f    [document] (cond-> document content-size (update :media/content-size + content-size)
-                                                    :attach-item (update :media/items vector/conj-item {:media/id item-id})))]
-          (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f}))))
+  [{:keys [request]} directory-id item-id]
+  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+          (attach-f    [document] (update document :media/items vector/conj-item {:media/id item-id}))]
+         (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f})))
 
 (defn detach-media-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,31 +41,71 @@
   ;  {:request (map)}
   ; @param (string) directory-id
   ; @param (string) item-id
-  ; @param (map)(opt) detach-props
-  ;  {:content-size (B)(opt)}
   ;
   ; @return (namespaced map)
-  ([env directory-id item-id]
-   (detach-media-item! env directory-id item-id {}))
-
-  ([{:keys [request]} directory-id item-id {:keys [content-size]}]
-   (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
-           (detach-f    [document] (cond-> document content-size (update :media/content-size - content-size)
-                                                    :detach-item (update :media/items vector/remove-item {:media/id item-id})))]
-          (mongo-db/apply-document! "storage" directory-id detach-f {:prototype-f prototype-f}))))
+  [{:keys [request]} directory-id item-id]
+  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+          (detach-f    [document] (update document :media/items vector/remove-item {:media/id item-id}))]
+         (mongo-db/apply-document! "storage" directory-id detach-f {:prototype-f prototype-f})))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn update-path-directories!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (namespaced map) media-item
+  ;  {:media/filesize (B)
+  ;   :media/path (namespaced maps in vector)}
+  ; @param (function) operation
+  ;  -, +
+  ;
+  ; @return (namespaced map)
+  [{:keys [request]} {:media/keys [filesize path]} operation]
+  ; Mappa létrehozásakor és fájlok feltöltésekor szükséges a tartalmazó (felmenő) mappák adatait frissíteni:
+  ; - Utolsó módosítás dátuma, és a felhasználó azonosítója {:media/modified-at ... :media/modified-by ...}
+  ; - Tartalom mérete {:media/content-size ...}
+  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+          (update-f    [document] (update document :media/content-size operation filesize))
+          (f [path] (when-let [{:media/keys [id]} (last path)]
+                              (mongo-db/apply-document! "storage" id update-f {:prototype-f prototype-f})
+                              (-> path vector/pop-last-item f)))]
+         (f path)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-media-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [_ item-id]
+  (mongo-db/get-document-by-id "storage" item-id))
 
 (defn insert-media-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ; @param (namespaced map) media-item
+  ; @param (namespaced map) item
   ;
   ; @return (namespaced map)
-  [{:keys [request]} media-item]
-  (mongo-db/insert-document! "storage" media-item
-                             {:prototype-f #(prototypes/added-document-prototype request :media %)}))
+  [{:keys [request]} item]
+  (mongo-db/insert-document! "storage" item {:prototype-f #(prototypes/added-document-prototype request :media %)}))
+
+(defn remove-media-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (string) item-id
+  ;
+  ; @return (string)
+  [_ item-id]
+  (mongo-db/remove-document! "storage" item-id))

@@ -22,7 +22,16 @@
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
               [app-plugins.item-browser.subs    :as subs]
-              [app-plugins.item-lister.api      :as item-lister]))
+              [app-plugins.item-lister.api      :as item-lister]
+              [mid-plugins.item-browser.events  :as events]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-browser.events
+(def store-browser-props! events/store-browser-props!)
 
 
 
@@ -37,19 +46,6 @@
   ; @return (map)
   [db [_ extension-id]]
   (r app-plugins.item-lister.events/set-error-mode! db extension-id))
-
-(defn store-browser-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace browser-props]]
-  (-> db (assoc-in [extension-id :item-browser/meta-items] browser-props)
-         ; XXX#8706
-         (assoc-in [extension-id :item-browser/meta-items :item-namespace] item-namespace)))
 
 (defn store-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,10 +101,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  ; Az item-browser plugin számára átadott browser-props térképet két részre osztja, aszerint,
-  ; hogy mely tulajdonságok szükségesek az item-lister plugin és melyek az item-browser
-  ; plugin beállításához.
-  (let [lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
+  (let [; XXX#0551
+        ; Az item-browser plugin számára átadott browser-props térképet két részre osztja, aszerint,
+        ; hogy mely tulajdonságok szükségesek az item-lister plugin és melyek az item-browser
+        ; plugin beállításához.
+        lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
         browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
        (as-> db % (r store-browser-props!     % extension-id item-namespace browser-props)
                   (r store-current-item-id!   % extension-id item-namespace browser-props)

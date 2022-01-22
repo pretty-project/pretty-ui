@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.28
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.6
+; Version: v0.4.0
+; Compatibility: x4.5.5
 
 
 
@@ -23,7 +23,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def TARGET-PATHS {:app-config    (db/path :core/app-config)
+(def TARGET-PATHS {:app-build     (db/meta-item-path :core/build-handler :app-build)
+                   :app-config    (db/path :core/app-config)
                    :site-config   (db/path :core/site-config)
                    :client-routes (db/path :router/client-routes)
                    :user-account  (db/path :user/account)

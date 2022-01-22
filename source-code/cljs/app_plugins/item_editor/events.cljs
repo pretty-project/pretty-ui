@@ -22,7 +22,16 @@
               [x.app-ui.api         :as ui]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.queries :as queries]
-              [app-plugins.item-editor.subs    :as subs]))
+              [app-plugins.item-editor.subs    :as subs]
+              [mid-plugins.item-editor.events  :as events]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-editor.events
+(def store-editor-props! events/store-editor-props!)
 
 
 
@@ -49,20 +58,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (-> db (dissoc-in [extension-id :item-editor/data-items])
-         ; A {:recovery-mode? ...} tulajdonság kivételével törli az :item-editor/meta-items térképet
-         (update-in [extension-id :item-editor/meta-items] select-keys [:recovery-mode?])))
-
-(defn store-editor-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;
-  ; @return (map)
-  [db [_ extension-id _ editor-props]]
-  ; XXX#8705
-  (update-in db [extension-id :item-editor/meta-items] map/reverse-merge editor-props))
+         (dissoc-in [extension-id :item-editor/meta-items])))
 
 (defn backup-current-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -236,8 +232,11 @@
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r ui/listen-to-process!  % request-id)
                   (r reset-editor!          % extension-id item-namespace)
+                  (r store-editor-props!    % extension-id item-namespace editor-props)
                   (r store-current-item-id! % extension-id)
-                  (r store-editor-props!    % extension-id item-namespace editor-props))))
+                  ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét
+                  (assoc-in % [extension-id :item-lister/meta-items :recovery-mode?]
+                              (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)))))
 
 
 

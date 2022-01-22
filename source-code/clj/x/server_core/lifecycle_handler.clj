@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v1.0.6
-; Compatibility: x4.5.2
+; Version: v1.1.0
+; Compatibility: x4.5.5
 
 
 
@@ -14,12 +14,21 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.lifecycle-handler
-    (:require [x.mid-core.lifecycle-handler :as lifecycle-handler]))
+    (:require [x.mid-core.lifecycle-handler :as lifecycle-handler]
+              [x.server-core.event-handler  :as event-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def get-period-events lifecycle-handler/get-period-events)
-(def reg-lifecycles    lifecycle-handler/reg-lifecycles)
+(def get-period-events  lifecycle-handler/get-period-events)
+(def reg-lifecycles     lifecycle-handler/reg-lifecycles)
+(def import-lifecycles! lifecycle-handler/import-lifecycles!)
+
+
+
+;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)

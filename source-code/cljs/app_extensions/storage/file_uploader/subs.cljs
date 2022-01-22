@@ -70,12 +70,11 @@
 (defn get-file-uploader-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (let [request-id       (engine/request-id uploader-id)
-        request-progress (r sync/get-request-progress db request-id)
-        uploader-props   (get-in db [:storage :file-uploader/meta-items uploader-id])]
-       (merge uploader-props {:files-uploaded?  (= request-progress 100)
-                              :request-sent?    (r sync/request-sent?    db request-id)
-                              :request-aborted? (r sync/request-aborted? db request-id)})))
+  (let [request-id     (engine/request-id uploader-id)
+        uploader-props (get-in db [:storage :file-uploader/meta-items uploader-id])]
+       (merge uploader-props {:files-uploaded?  (r sync/request-successed? db request-id)
+                              :request-sent?    (r sync/request-sent?      db request-id)
+                              :request-aborted? (r sync/request-aborted?   db request-id)})))
 
 (a/reg-sub :storage/get-file-uploader-props get-file-uploader-props)
 

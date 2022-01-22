@@ -23,7 +23,16 @@
               [x.app-environment.api           :as environment]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.queries :as queries]
-              [app-plugins.item-lister.subs    :as subs]))
+              [app-plugins.item-lister.subs    :as subs]
+              [mid-plugins.item-lister.events  :as events]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-lister.events
+(def store-lister-props! events/store-lister-props!)
 
 
 
@@ -83,25 +92,6 @@
   ; Az item-lister plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor
   ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
   (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
-
-(defn store-lister-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) lister-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace lister-props]]
-         ; XXX#8705
-         ; Az item-lister betöltésekor felülírás nélkül aláfűzi a lister-props térképet
-         ; az item-lister/meta-items térképnek, így az item-lister plugin legutóbbi
-         ; beállításai elérhetők maradnak.
-  (-> db (update-in [extension-id :item-lister/meta-items] map/reverse-merge lister-props)
-         ; XXX#8706
-         ; A névtér nélkül tárolt dokumentumokon végzett műveletkhez egyes külső
-         ; moduloknak szüksége lehet a dokumentumok névterének ismeretére!
-         (assoc-in  [extension-id :item-lister/meta-items :item-namespace] item-namespace)))
 
 (defn reset-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -502,7 +502,7 @@
   ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
-  [elements/label {:font-size :xs :color :highlight :font-weight :bold :min-height :xxl
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold
                    :content (if (or downloading-items? (nor downloading-items? items-received?))
                                 :downloading-items...)}])
 
@@ -527,7 +527,7 @@
   ;
   ; @return (component)
   [_ _ _]
-  [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold :min-height :xxl}])
+  [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}])
 
 (defn no-items-to-show
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -645,7 +645,7 @@
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
              ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
              ;   elem a lista-elem előtt jelenik meg.
-             [list-item-checkbox extension-id item-namespace body-props item-dex]])))
+             [list-item-checkbox extension-id item-namespace item-dex]])))
 
 
 

@@ -51,7 +51,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (namespacedd map) document
+  ; @param (namespaced map) document
   ; @param (map) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false

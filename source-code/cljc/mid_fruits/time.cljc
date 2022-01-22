@@ -26,6 +26,7 @@
               #?(:clj  [clj-time.coerce  :as clj-time.coerce])
               #?(:clj  [clj-time.core    :as clj-time.core])
               #?(:clj  [clj-time.format  :as clj-time.format])
+              #?(:clj  [tea-time.core    :as tea-time.core])
               #?(:cljs [cljs-time.core   :as cljs-time.core])
               #?(:cljs [cljs-time.format :as cljs-time.format])))
 
@@ -54,6 +55,14 @@
 (defn h->m  [n] (* n 60))
 (defn h->D  [n] (/ n 24))
 (defn h->W  [n] (/ n 168))
+
+
+
+;; -- aphyr/tea-time ----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+;https://github.com/aphyr/tea-time
+#?(:clj (tea-time.core/start!))
 
 
 
@@ -582,26 +591,35 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-timeout!
-  ; @param (integer) timeout
+  ; @param (ms) timeout
   ; @param (function) f
   ;
+  ; @usage
+  ;  (time/set-timeout! 3000 #(println "3 sec"))
+  ;
+  ; @return (tea_time.core.Once object)
   ; @return (integer)
   [timeout f]
-  #?(:clj  (f)
+  #?(:clj  (tea-time.core/after! (ms->s timeout) f)
      :cljs (.setTimeout js/window f timeout)))
 
 (defn set-interval!
-  ; @param (integer) interval
+  ; @param (ms) interval
   ; @param (function) f
   ;
+  ; @usage
+  ;  (time/set-interval! 3000 #(println "3 sec"))
+  ;
+  ; @return (tea_time.core.Every object)
   ; @return (integer)
   [interval f]
-  #?(:clj  (f)
+  #?(:clj  (tea-time.core/every! (ms->s interval) 0 f)
      :cljs (.setInterval js/window f interval)))
 
 (defn clear-interval!
   ; @param (integer) interval-id
   ;
+  ; @return (nil)
   ; @return (nil)
   [interval-id]
   #?(:clj  (return nil)
@@ -621,8 +639,8 @@
   ;  (time/reduce-interval my-function [:a :b :c] 500)
   ;  =>
   ;  (time/set-timeout!    0 #(my-function :a))
-  ;     (time/set-timeout!  500 #(my-function :b))
-  ;     (time/set-timeout! 1000 #(my-function :c))
+  ;  (time/set-timeout!  500 #(my-function :b))
+  ;  (time/set-timeout! 1000 #(my-function :c))
   ;
   ; @return (*)
   [f coll interval]

@@ -18,6 +18,7 @@
               [mid-fruits.keyword :as keyword]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
+              [x.server-core.api  :as a]
               [mid-plugins.item-browser.engine :as engine]
               [server-plugins.item-lister.api  :as item-lister]))
 
@@ -140,3 +141,47 @@
   [env extension-id item-namespace]
   (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
        (mongo-db/count-pipeline pipeline-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn item->path
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (namespaced map) item
+  ;
+  ; @usage
+  ;  (item-browser/item->path :my-extension :my-type {...})
+  ;
+  ; @return (maps in vector)
+  [extension-id item-namespace item]
+  (let [path-key (a/subscribed [:item-browser/get-meta-item extension-id item-namespace :path-key])]
+       (get item (keyword/add-namespace item-namespace path-key))))
+
+(defn item->parent-link
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (namespaced map) item
+  ;
+  ; @usage
+  ;  (item-browser/item->parent-link :my-extension :my-type {...})
+  ;
+  ; @return (namespaced map)
+  [extension-id item-namespace item]
+  (if-let [path (item->path extension-id item-namespace item)]
+          (last path)))
+
+(defn item->parent-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (namespaced map) item
+  ;
+  ; @usage
+  ;  (item-browser/item->parent-id :my-extension :my-type {...})
+  ;
+  ; @return (string)
+  [extension-id item-namespace item]
+  (if-let [parent-link (item->parent-link extension-id item-namespace item)]
+          (get parent-link (keyword/add-namespace item-namespace :id))))

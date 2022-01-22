@@ -114,18 +114,16 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- import-lifecycles!
+(defn import-lifecycles!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   ; - A reg-lifecycles függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
   ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
   ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
   (event-handler/dispatch [:db/set-item! [:core/lifes :data-items] @LIFES]))
-
-(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)
 
 
 

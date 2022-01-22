@@ -23,18 +23,18 @@
        [:div.storage--media-item--header [elements/icon {:icon :folder
                                                          :icon-family icon-family
                                                          :size :xxl}]]))
- 
+
 (defn- directory-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [alias content-size items]}]
   [:div.storage--media-item--details
     [elements/label {:content (str alias)
-                     :layout :fit :selectable? true  :color :default}]
+                     :min-height :xs :selectable? true  :color :default}]
     [elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
-                     :layout :fit :selectable? false :color :muted
+                     :min-height :xs :selectable? false :color :muted
                      :font-size :xs}]
     [elements/label {:content {:content :n-items :replacements [(count items)]} :font-size :xs
-                     :layout :fit :selectable? false :color :muted}]])
+                     :min-height :xs :selectable? false :color :muted}]])
 
 (defn- directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,11 +60,11 @@
   [_ {:keys [alias filesize]}]
   [:div.storage--media-item--details
     [elements/label {:content (str alias)
-                     :layout :fit :selectable? true  :color :default}]
+                     :min-height :xs :selectable? true  :color :default}]
     [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
-                     :layout :fit :selectable? false :color :muted :font-size :xs}]
+                     :min-height :xs :selectable? false :color :muted :font-size :xs}]
     [elements/label {:content ""
-                     :layout :fit :selectable? false :color :muted :font-size :xs}]])
+                     :min-height :xs :selectable? false :color :muted :font-size :xs}]])
 
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,7 +93,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-browser/view :storage :media {:list-element     #'media-item
-                                      :new-item-options [:upload-files! :create-directory!]
+                                      :new-item-options [:create-directory! :upload-files!]
                                       :on-click         [:storage/->media-item-clicked]}])
 
 
