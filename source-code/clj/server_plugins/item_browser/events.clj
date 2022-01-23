@@ -19,6 +19,7 @@
               [x.server-core.api :as a :refer [r]]
               [mid-plugins.item-browser.events    :as events]
               [server-plugins.item-browser.engine :as engine]
+              [server-plugins.item-browser.subs   :as subs]
               [server-plugins.item-lister.api     :as item-lister]
               [server-plugins.item-lister.events  :refer [lister-props-prototype]]))
 
@@ -40,6 +41,7 @@
 
 ; mid-plugins.item-browser.events
 (def store-browser-props! events/store-browser-props!)
+(def store-lister-props!  events/store-lister-props!)
 
 
 
@@ -71,27 +73,45 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (let [; XXX#0551
-        lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
+  (let [lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
         browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
-       (as-> db % (r store-browser-props! % extension-id item-namespace browser-props)
-                  (r server-plugins.item-lister.events/initialize! % extension-id item-namespace lister-props))))
+       (as-> db % (r store-lister-props!  % extension-id item-namespace lister-props)
+                  (r store-browser-props! % extension-id item-namespace browser-props))))
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn add-route!
+(defn transfer-browser-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
+  [:core/reg-transfer! {:data-f (fn [_] (select-keys browser-props engine/BROWSER-PROPS-KEYS))
+                        :target-path [extension-id :item-browser/meta-items]}])
+
+(defn transfer-lister-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  [_ [_ extension-id item-namespace browser-props]]
+  [:core/reg-transfer! {:data-f (fn [_] (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS))
+                        :target-path [extension-id :item-lister/meta-items]}])
+
+(defn add-route!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [_ [_ extension-id item-namespace]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
                       {:route-template (engine/route-template       extension-id)
-                       :client-event   [:item-browser/load-browser! extension-id item-namespace browser-props]
+                       :client-event   [:item-browser/load-browser! extension-id item-namespace]
                        :restricted?    true}])
 
 (defn add-extended-route!
@@ -99,11 +119,10 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  [_ [_ extension-id item-namespace browser-props]]
+  [_ [_ extension-id item-namespace]]
   [:router/add-route! (engine/extended-route-id extension-id item-namespace)
                       {:route-template (engine/extended-route-template extension-id)
-                       :client-event   [:item-browser/load-browser!    extension-id item-namespace browser-props]
+                       :client-event   [:item-browser/load-browser!    extension-id item-namespace]
                        :restricted?    true}])
 
 (a/reg-event-fx
@@ -132,6 +151,8 @@
   ;                                                     :search-keys     [:name :email-address]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
-           {:db          (r initialize!           db extension-id item-namespace browser-props)
-            :dispatch-n [(r add-route!          cofx extension-id item-namespace browser-props)
-                         (r add-extended-route! cofx extension-id item-namespace browser-props)]})))
+           {:db (r initialize! db extension-id item-namespace browser-props)
+            :dispatch-n [(r transfer-browser-props! cofx extension-id item-namespace browser-props)
+                         (r transfer-lister-props!  cofx extension-id item-namespace browser-props)
+                         (r add-route!              cofx extension-id item-namespace)
+                         (r add-extended-route!     cofx extension-id item-namespace)]})))

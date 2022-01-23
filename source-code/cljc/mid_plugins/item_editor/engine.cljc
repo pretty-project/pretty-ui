@@ -254,22 +254,6 @@
   (keyword (name extension-id)
            (str (name item-namespace) "-editor-route")))
 
-(defn extended-route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/extended-route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension/my-type-editor-extended-route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-editor-extended-route")))
-
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -284,21 +268,6 @@
   [extension-id]
   (str "/@app-home/" (name extension-id)
        "/:item-id"))
-
-(defn extended-route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @example
-  ;  (engine/extended-route-template :my-extension)
-  ;  =>
-  ;  "/@app-home/my-extension/:item-id/:view-id"
-  ;
-  ; @return (string)
-  [extension-id]
-  (str "/@app-home" (name extension-id)
-       "/:item-id/:view-id"))
 
 (defn parent-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!

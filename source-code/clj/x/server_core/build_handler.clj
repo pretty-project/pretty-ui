@@ -86,6 +86,6 @@
 
 (lifecycle-handler/reg-lifecycles
   ::lifecycles
-  {:on-server-init [:core/reg-transfer! :core/app-build
+  {:on-server-init [:core/reg-transfer! :core/transfer-app-build!
                                         {:data-f      transfer-app-build
                                          :target-path [:core/build-handler :meta-items :app-build]}]})

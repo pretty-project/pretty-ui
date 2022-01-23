@@ -90,9 +90,9 @@
 
 (lifecycle-handler/reg-lifecycles
   ::lifecycles
-  {:on-server-init {:dispatch-n [[:core/reg-transfer! :core/app-config
+  {:on-server-init {:dispatch-n [[:core/reg-transfer! :core/transfer-app-config!
                                                       {:data-f      transfer-app-config
                                                        :target-path [:core/app-config :data-items]}]
-                                 [:core/reg-transfer! :core/site-config
+                                 [:core/reg-transfer! :core/transfer-site-config!
                                                       {:data-f      transfer-site-config
                                                        :target-path [:core/site-config :data-items]}]]}})

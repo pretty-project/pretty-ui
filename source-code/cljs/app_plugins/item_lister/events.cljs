@@ -28,14 +28,6 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid-plugins.item-lister.events
-(def store-lister-props! events/store-lister-props!)
-
-
-
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -392,26 +384,21 @@
 (a/reg-event-db :item-lister/reload-items! reload-items!)
 
 (defn load-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) lister-props
-  ;
-  ; @usage
-  ;  (r item-lister/load-lister! :my-extension :my-type {...})
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace lister-props]]
-  ; XXX#8705
+  [db [_ extension-id item-namespace]]
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
-  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal,
-  ;     ezért nem törli ki a beállításokat!
+  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r ui/listen-to-process! % request-id)
                   (r reset-lister!         % extension-id)
                   (r reset-downloads!      % extension-id)
-                  (r reset-search!         % extension-id)
-                  (r store-lister-props!   % extension-id item-namespace lister-props))))
+                  (r reset-search!         % extension-id))))
 
 
 
@@ -555,14 +542,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) lister-props
-  ;  {:label (metamorphic-content)}
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as lister-props}]]
-      {:db (r load-lister! db extension-id item-namespace lister-props)
-       :dispatch-n [[:environment/reg-keypress-listener! :item-lister/keypress-listener]
-                    [:ui/set-header-title! label]
-                    [:ui/set-window-title! label]
-                    (engine/load-extension-event extension-id item-namespace)]}))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
+           {:db (r load-lister! db extension-id item-namespace)
+            :dispatch-n [[:environment/reg-keypress-listener! :item-lister/keypress-listener]
+                         [:ui/set-header-title! lister-label]
+                         [:ui/set-window-title! lister-label]
+                         (engine/load-extension-event extension-id item-namespace)]})))
 
 
 

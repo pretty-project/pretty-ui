@@ -28,7 +28,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.subs
-(def get-meta-item subs/get-meta-item)
+(def get-meta-item     subs/get-meta-item)
+(def get-browser-props subs/get-browser-props)
 
 
 
@@ -40,15 +41,12 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;  {:default-item-id (keyword)(opt)}
   ;
   ; @return (string)
   ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id.
-  [db [_ extension-id item-namespace {:keys [default-item-id]}]]
-  (if-let [derived-item-id (r router/get-current-route-path-param db :item-id)]
-          (return derived-item-id)
-          (return default-item-id)))
+  [db [_ extension-id item-namespace]]
+  (or (r router/get-current-route-path-param db :item-id)
+      (r get-meta-item                       db extension-id item-namespace :default-item-id)))
 
 (defn get-current-item-id
   ; @param (keyword) extension-id

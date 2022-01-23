@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.events
-    (:require [mid-fruits.candy  :refer [param]]
+    (:require [mid-fruits.candy  :refer [param return]]
               [x.server-core.api :as a :refer [r]]
               [mid-plugins.item-lister.events    :as events]
               [server-plugins.item-lister.engine :as engine]))
@@ -90,16 +90,25 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn transfer-lister-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  [_ [_ extension-id item-namespace lister-props]]
+  [:core/reg-transfer! {:data-f (fn [_] (return lister-props))
+                        :target-path [extension-id :item-lister/meta-items]}])
+
 (defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) lister-props
-  [_ [_ extension-id item-namespace lister-props]]
+  [_ [_ extension-id item-namespace]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
                       {:route-template (engine/route-template        extension-id)
-                       :client-event   [:item-lister/load-lister!    extension-id item-namespace lister-props]
+                       :client-event   [:item-lister/load-lister!    extension-id item-namespace]
                        :on-leave-event [:item-lister/->lister-leaved extension-id item-namespace]
                        :restricted?    true}])
 
@@ -129,5 +138,6 @@
   ;  [:item-lister/initialize! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace lister-props]]
       (let [lister-props (lister-props-prototype extension-id item-namespace lister-props)]
-           {:db       (r initialize!  db extension-id item-namespace lister-props)
-            :dispatch (r add-route! cofx extension-id item-namespace lister-props)})))
+           {:db (r initialize! db extension-id item-namespace lister-props)
+            :dispatch-n [(r transfer-lister-props! cofx extension-id item-namespace lister-props)
+                         (r add-route!             cofx extension-id item-namespace)]})))

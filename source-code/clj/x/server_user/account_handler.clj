@@ -184,6 +184,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-init [:core/reg-transfer! :user/user-account
+  {:on-server-init [:core/reg-transfer! :user/transfer-user-account!
                                         {:data-f      transfer-user-account
                                          :target-path [:user/account :data-items]}]})

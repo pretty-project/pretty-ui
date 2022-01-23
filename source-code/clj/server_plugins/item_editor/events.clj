@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.5.3
+; Version: v0.5.6
+; Compatibility: x4.5.6
 
 
 
@@ -79,32 +79,27 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn transfer-editor-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  [_ [_ extension-id item-namespace editor-props]]
+  [:core/reg-transfer! {:data-f (fn [_] (return editor-props))
+                        :target-path [extension-id :item-editor/meta-items]}])
+
 (defn add-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) editor-props
-  [_ [_ extension-id item-namespace editor-props]]
+  [_ [_ extension-id item-namespace]]
   [:router/add-route! (engine/route-id extension-id item-namespace)
                       {:route-template (engine/route-template        extension-id)
                        :route-parent   (engine/parent-uri            extension-id)
-                       :client-event   [:item-editor/load-editor!    extension-id item-namespace editor-props]
+                       :client-event   [:item-editor/load-editor!    extension-id item-namespace]
                        :on-leave-event [:item-editor/->editor-leaved extension-id item-namespace]
-                       :restricted?    true}])
-
-(defn add-extended-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map)(opt) editor-props
-  [_ [_ extension-id item-namespace editor-props]]
-  [:router/add-route! (engine/extended-route-id extension-id item-namespace)
-                      {:route-template (engine/extended-route-template extension-id)
-                       :route-parent   (engine/parent-uri              extension-id)
-                       :client-event   [:item-editor/load-editor!      extension-id item-namespace editor-props]
-                       :on-leave-event [:item-editor/->editor-leaved   extension-id item-namespace]
                        :restricted?    true}])
 
 (a/reg-event-fx
@@ -113,8 +108,6 @@
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
   ;  {:label (metamorphic-content)(opt)
-  ;   :multi-view? (boolean)(opt)
-  ;    Default: false
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;
   ; @usage
@@ -127,9 +120,6 @@
   ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace editor-props]]
       (let [];editor-props (editor-props-prototype extension-id item-namespace editor-props)
-           (if-let [multi-view? (get editor-props :multi-view?)]
-                   {:db          (r initialize!           db extension-id item-namespace editor-props)
-                    :dispatch-n [(r add-route!          cofx extension-id item-namespace editor-props)
-                                 (r add-extended-route! cofx extension-id item-namespace editor-props)]}
-                   {:db          (r initialize!           db extension-id item-namespace editor-props)
-                    :dispatch    (r add-route!          cofx extension-id item-namespace editor-props)}))))
+           {:db (r initialize! db extension-id item-namespace editor-props)
+            :dispatch-n [(r transfer-editor-props! cofx extension-id item-namespace editor-props)
+                         (r add-route!             cofx extension-id item-namespace)]})))

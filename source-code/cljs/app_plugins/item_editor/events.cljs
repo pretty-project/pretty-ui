@@ -27,14 +27,6 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid-plugins.item-editor.events
-(def store-editor-props! events/store-editor-props!)
-
-
-
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -240,19 +232,17 @@
 (a/reg-event-db :item-editor/receive-item! receive-item!)
 
 (defn load-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  ;
-  ; @usage
-  ;  (r item-editor/load-editor! :my-extension :my-type {...})
   ;
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r ui/listen-to-process!  % request-id)
                   (r reset-editor!          % extension-id item-namespace)
-                  (r store-editor-props!    % extension-id item-namespace editor-props)
                   (r store-current-item-id! % extension-id)
                   ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét
                   (assoc-in % [extension-id :item-lister/meta-items :recovery-mode?]
@@ -380,12 +370,9 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;  {:label (metamorphic-content)(opt)
-  ;   :suggestion-keys (keywords in vector)(opt)}
-  (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [editor-label (r subs/get-editor-label db extension-id item-namespace editor-props)]
-           {:db (r load-editor! db extension-id item-namespace editor-props)
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
+           {:db (r load-editor! db extension-id item-namespace)
             :dispatch-n [[:ui/set-header-title! editor-label]
                          [:ui/set-window-title! editor-label]
                          [:item-editor/request-item!  extension-id item-namespace]

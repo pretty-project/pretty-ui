@@ -143,6 +143,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-init [:core/reg-transfer! :user/user-settings
+  {:on-server-init [:core/reg-transfer! :user/transfer-user-settings!
                                         {:data-f      transfer-user-settings
                                          :target-path [:user/settings :data-items]}]})

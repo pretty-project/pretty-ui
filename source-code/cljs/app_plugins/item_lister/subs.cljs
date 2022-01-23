@@ -31,7 +31,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.subs
-(def get-meta-item subs/get-meta-item)
+(def get-meta-item    subs/get-meta-item)
+(def get-lister-props subs/get-lister-props)
 
 
 

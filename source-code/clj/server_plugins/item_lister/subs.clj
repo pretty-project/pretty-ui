@@ -23,11 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.subs
-(def get-meta-item subs/get-meta-item)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-sub :item-lister/get-meta-item get-meta-item)
+(def get-meta-item    subs/get-meta-item)
+(def get-lister-props subs/get-lister-props)

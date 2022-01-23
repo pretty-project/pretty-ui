@@ -23,11 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.subs
-(def get-meta-item subs/get-meta-item)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-sub :item-browser/get-meta-item get-meta-item)
+(def get-meta-item     subs/get-meta-item)
+(def get-browser-props subs/get-browser-props)

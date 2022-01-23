@@ -26,14 +26,6 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid-plugins.item-browser.events
-(def store-browser-props! events/store-browser-props!)
-
-
-
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -71,11 +63,10 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace browser-props]]
-  (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace browser-props)]
+  [db [_ extension-id item-namespace]]
+  (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace)]
        (assoc-in db [extension-id :item-browser/meta-items :item-id] derived-item-id)))
 
 (defn store-downloaded-item!
@@ -111,40 +102,19 @@
   (r store-downloaded-item! db extension-id item-namespace server-response))
 
 (defn load-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;
-  ; @usage
-  ;  (r item-browser/load-browser! :my-extension :my-type {...})
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace browser-props]]
-  (let [; XXX#0551
-        ; Az item-browser plugin számára átadott browser-props térképet két részre osztja, aszerint,
-        ; hogy mely tulajdonságok szükségesek az item-lister plugin és melyek az item-browser
-        ; plugin beállításához.
-        lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
-        browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
-       (as-> db % (r store-browser-props!   % extension-id item-namespace browser-props)
-                  (r store-current-item-id! % extension-id item-namespace browser-props)
-                  (r app-plugins.item-lister.events.load-lister! % extension-id item-namespace lister-props))))
+  [db [_ extension-id item-namespace]]
+  (r store-current-item-id! db extension-id item-namespace))
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; WARNING!
-
-; subbrowser-ként fog menni a file-tallózó
-;
-; Re-Frame DB:
-; {:media {:browser-data [] (ez közös)
-;          :browser-meta {}
-;          :subbrowser-meta {}}}
-
-; WARNING!
 
 (a/reg-event-fx
   :item-browser/browse-item!
@@ -209,33 +179,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;  {:default-item-id (string)(opt)
-  ;   :label (metamorphic-content)}
-  ;
-  ; @usage
-  ;  [:item-browser/load! :my-extension :my-type {:default-item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [label] :as browser-props}]]
-      (let []
-           {:db  (r load-browser! db extension-id item-namespace browser-props)
-                      ;  (-> db (dissoc-in [extension-id :browser-data])
-                      ;         (dissoc-in [extension-id :browser-meta])
-                      ;         (assoc-in  [extension-id :browser-meta :item-id] derived-item-id)
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
 
-                              ; Ha az item-browser tényleg az item-listerre épül, akkor az
-                              ; item-lister infinite-loader komponense által indított request
-                              ; a :lister-data és :lister-meta db elemeket tölti fel, szóval
-                              ; azokat is nullázni kell itt, amikor betölt a browser,
-                              ; mert az item-lister is nullázza őket magának.
-                              ; Pl.: Ha 0 elem van a kollekcioban, akkor az újabb load eseménynél
-                              ; nem próbálná meg újra megnézni a szerón, hogy vannak-e elemek
-                              ; mert emlékezne, hogy utoljára nulla volt, stb ...
-                      ;         (dissoc-in [extension-id :lister-meta])
+           {:db  (r load-browser! db extension-id item-namespace)
 
-
-
-            :dispatch-n [[:ui/set-header-title! label]
-                         [:ui/set-window-title! label]
+            :dispatch-n [[:ui/set-header-title! browser-label]
+                         [:ui/set-window-title! browser-label]
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
 

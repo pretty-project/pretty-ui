@@ -13,7 +13,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-browser.events)
+(ns mid-plugins.item-browser.events
+    (:require [mid-plugins.item-lister.events :as events]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-lister.events
+(def store-lister-props! events/store-lister-props!)
 
 
 

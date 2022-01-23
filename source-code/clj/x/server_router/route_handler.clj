@@ -348,6 +348,6 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-server-init [:core/reg-transfer! :router/client-routes
+  {:on-server-init [:core/reg-transfer! :router/transfer-client-routes!
                                         {:data-f      transfer-client-routes
                                          :target-path [:router/client-routes :data-items]}]})

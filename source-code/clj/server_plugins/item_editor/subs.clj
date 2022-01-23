@@ -23,11 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.subs
-(def get-meta-item subs/get-meta-item)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-sub :item-editor/get-meta-item get-meta-item)
+(def get-meta-item    subs/get-meta-item)
+(def get-editor-props subs/get-editor-props)

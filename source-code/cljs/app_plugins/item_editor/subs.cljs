@@ -32,8 +32,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.subs
-(def get-meta-item subs/get-meta-item)
-
+(def get-meta-item    subs/get-meta-item)
+(def get-editor-props subs/get-editor-props)
 
 
 
@@ -107,13 +107,11 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace editor-props]]
-  (if-let [label (get editor-props :label)]
-          (return label)
+  [db [_ extension-id item-namespace]]
+  (if-let [editor-label (r get-meta-item extension-id item-namespace :label)]
+          (return editor-label)
           (let [derived-item-id (r get-derived-item-id db extension-id)]
                (engine/item-id->editor-label extension-id item-namespace derived-item-id))))
 

@@ -13,7 +13,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-editor.subs)
+(ns mid-plugins.item-editor.subs
+    (:require [x.mid-core.api :as a]))
 
 
 
@@ -30,3 +31,14 @@
   ; @return (*)
   [db [_ extension-id item-namespace item-key]]
   (get-in db [extension-id :item-editor/meta-items item-key]))
+
+(a/reg-sub :item-editor/get-meta-item get-meta-item)
+
+(defn get-editor-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (get-in db [extension-id :item-editor/meta-items]))
