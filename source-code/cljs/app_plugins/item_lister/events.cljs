@@ -545,7 +545,9 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
            {:db (r load-lister! db extension-id item-namespace)
-            :dispatch-n [[:environment/reg-keypress-listener! :item-lister/keypress-listener]
+            :dispatch-n [; XXX#5660
+                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
+                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]
                          [:ui/set-header-title! lister-label]
                          [:ui/set-window-title! lister-label]
                          (engine/load-extension-event extension-id item-namespace)]})))
@@ -590,6 +592,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; XXX#5660
   [:environment/remove-keypress-listener! :item-lister/keypress-listener])
 
 (a/reg-event-fx
@@ -605,6 +608,9 @@
   (fn [{:keys [db]} [_ extension-id item-named {:keys [on-click]} item-dex item]]
       (if (or (r environment/key-pressed? db 16)
               (r environment/key-pressed? db 91))
+          ; XXX#5660
+          ; A SHIFT vagy COMMAND billentyű lenyomása közben az elemre kattintva az elem,
+          ; hozzáadódik a kijelölt elemek listájához.
           [:item-lister/toggle-item-selection! extension-id item-named item-dex]
           (let [on-click (a/metamorphic-event<-params on-click item-dex item)]
                (return on-click)))))

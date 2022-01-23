@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-editor.subs
-    (:require [x.server-core.api :as a :refer [r]]
-              [mid-plugins.item-editor.subs :as subs]))
+    (:require [mid-plugins.item-editor.subs :as subs]))
 
 
 
@@ -23,5 +22,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.subs
-(def get-meta-item    subs/get-meta-item)
 (def get-editor-props subs/get-editor-props)
+(def get-meta-item    subs/get-meta-item)

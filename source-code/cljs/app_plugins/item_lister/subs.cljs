@@ -15,12 +15,12 @@
 
 (ns app-plugins.item-lister.subs
     (:require [mid-fruits.candy      :refer [param return]]
-              [mid-fruits.keyword    :as keyword]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
               [x.app-environment.api :as environment]
+              [x.app-router.api      :as router]
               [x.app-sync.api        :as sync]
               [app-plugins.item-lister.engine :as engine]
               [mid-plugins.item-lister.subs   :as subs]))
@@ -31,8 +31,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-lister.subs
-(def get-meta-item    subs/get-meta-item)
 (def get-lister-props subs/get-lister-props)
+(def get-meta-item    subs/get-meta-item)
 
 
 
@@ -347,6 +347,17 @@
   [db [_ extension-id item-namespace item-ids]]
   (vector/->items item-ids #(let [backup-item (get-in db [extension-id :item-lister/backup-items %])]
                                  (db/document->namespaced-document backup-item item-namespace))))
+
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [route-id (r router/get-current-route-id db)]
+       (= route-id (engine/route-id extension-id item-namespace))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

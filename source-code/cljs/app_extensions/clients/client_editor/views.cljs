@@ -7,7 +7,10 @@
               [x.app-elements.api :as elements]
               [x.app-layouts.api  :as layouts]
               [x.app-locales.api  :as locales]
-              [app-plugins.item-editor.api :as item-editor]))
+              [app-plugins.item-editor.api :as item-editor]
+
+              ; TEMP
+              [app-extensions.storage.api :as storage]))
 
 
 
@@ -171,8 +174,8 @@
        [client-additional-information body-id body-props]
 
        ; TEMP
-       [:div {:style {:width "100%"}}]])
-             ;[app-extensions.storage.api/media-picker {:label "Borítóképek" :multiple? true}]]])
+       [:div {:style {:width "100%"}}
+             [storage/media-picker {:label "Borítóképek" :multiple? true}]]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.subs
-    (:require [x.server-core.api :as a :refer [r]]
-              [mid-plugins.item-browser.subs :as subs]))
+    (:require [mid-plugins.item-browser.subs :as subs]))
 
 
 
@@ -23,5 +22,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.subs
-(def get-meta-item     subs/get-meta-item)
 (def get-browser-props subs/get-browser-props)
+(def get-meta-item     subs/get-meta-item)

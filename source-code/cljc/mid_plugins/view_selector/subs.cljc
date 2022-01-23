@@ -6,14 +6,14 @@
 ; Created: 2022.01.22
 ; Description:
 ; Version: v0.3.6
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-editor.subs
+(ns mid-plugins.view-selector.subs
     (:require [x.mid-core.api :as a]))
 
 
@@ -21,14 +21,14 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-editor-props
+(defn get-selector-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (get-in db [extension-id :item-editor/meta-items]))
+  (get-in db [extension-id :view-selector/meta-items]))
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -39,6 +39,6 @@
   ;
   ; @return (*)
   [db [_ extension-id item-namespace item-key]]
-  (get-in db [extension-id :item-editor/meta-items item-key]))
+  (get-in db [extension-id :view-selector/meta-items item-key]))
 
-(a/reg-sub :item-editor/get-meta-item get-meta-item)
+(a/reg-sub :view-selector/get-meta-item get-meta-item)

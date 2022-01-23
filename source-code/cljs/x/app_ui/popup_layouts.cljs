@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.29
 ; Description:
-; Version: v1.4.8
-; Compatibility: x4.4.8
+; Version: v1.5.8
+; Compatibility: x4.5.6
 
 
 
@@ -14,13 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popup-layouts
-    (:require [mid-fruits.keyword      :as keyword]
-              [mid-fruits.map          :as map]
-              [mid-fruits.vector       :as vector]
-              [x.app-components.api    :as components]
+    (:require [x.app-components.api    :as components]
               [x.app-core.api          :as a :refer [r]]
               [x.app-elements.api      :as elements]
-              [x.app-environment.api   :as environment]
               [x.app-ui.element        :as element]
               [x.app-ui.popup-geometry :as geometry]
               [x.app-ui.renderer       :as renderer]))
@@ -46,16 +42,15 @@
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ;  {:minimized? (boolean)(opt)
-  ;   :stretched? (boolean)(opt)}
+  ;   :stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:data-minimized (boolean)
   ;   :data-stretched (boolean)}
-  [popup-id {:keys [minimized? stretched?] :as popup-props}]
-  (cond-> (element/element-attributes :popups popup-id popup-props
-                                      {:data-nosnippet true})
-          (some? stretched?) (assoc :data-stretched (boolean stretched?))
-          (some? minimized?) (assoc :data-minimized (boolean minimized?))))
+  [popup-id {:keys [minimized? stretch-orientation] :as popup-props}]
+  (cond-> (element/element-attributes :popups popup-id popup-props {:data-nosnippet true})
+          stretch-orientation (assoc :data-stretch-orientation stretch-orientation)
+          minimized?          (assoc :data-minimized           minimized?)))
 
 (defn- popup-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,7 +62,7 @@
   ; @return (map)
   ;  {:data-autopadding (boolean)}
   [_ {:keys [autopadding?]}]
-  (merge {} (if autopadding? {:data-autopadding (boolean autopadding?)})))
+  (merge {} (if autopadding? {:data-autopadding true})))
 
 
 
@@ -220,6 +215,7 @@
   ; @return (component)
   [popup-id {:keys [layout] :as popup-props}]
   (case layout :boxed   [boxed-popup-structure   popup-id popup-props]
+               :flip    [boxed-popup-structure   popup-id popup-props]
                :unboxed [unboxed-popup-structure popup-id popup-props]))
 
 (defn- view

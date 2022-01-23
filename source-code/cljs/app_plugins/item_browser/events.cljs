@@ -181,10 +181,11 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
+           {:db (r load-browser! db extension-id item-namespace)
 
-           {:db  (r load-browser! db extension-id item-namespace)
-
-            :dispatch-n [[:ui/set-header-title! browser-label]
+            :dispatch-n [; XXX#5660
+                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
+                         [:ui/set-header-title! browser-label]
                          [:ui/set-window-title! browser-label]
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)

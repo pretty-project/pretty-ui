@@ -32,15 +32,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keywords in vector)
-; A browser-props térkép mely kulcsai nem az item-lister plugin beállításához szükségesek:
-(def BROWSER-PROPS-KEYS [:default-item-id :label-key :path-key])
-
-
-
 ;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

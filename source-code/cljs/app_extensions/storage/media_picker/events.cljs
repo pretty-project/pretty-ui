@@ -11,7 +11,8 @@
 (defn- load-media-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ picker-id picker-props]]
-  (as-> db % (r item-browser/set-current-item-id! % :storage :media engine/ROOT-DIRECTORY-ID)))
+  ;(as-> db % (r item-browser/set-current-item-id! % :storage :media engine/ROOT-DIRECTORY-ID)))
+  db)
 
 
 
@@ -35,5 +36,6 @@
 (a/reg-event-fx
   :storage/->media-item-picked
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
-      (case mime-type "storage/directory" [:item-browser/set-current-item-id! :storage :media id]
+      (case mime-type "storage/directory" {:dispatch-n [[:item-browser/set-current-item-id! :storage :media id]
+                                                        [:item-browser/load-browser! :storage :media]]}
                                           [:storage/->file-picked item-dex item-props])))

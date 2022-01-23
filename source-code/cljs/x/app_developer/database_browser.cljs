@@ -375,9 +375,11 @@
 (defn- subscribed-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [current-item] :as body-props}]
-  [:div.x-database-browser--subscribed-value
-    {:style {:color "var( --color-highlight )" :margin-top "24px"}}
-    [components/content {:subscriber current-item}]])
+  (let [subscribed-value (a/subscribe current-item)]
+       (fn [] [:div.x-database-browser--subscribed-value
+                {:style {:color "var( --color-highlight )" :margin-top "24px"}}
+                [:pre {:style {:white-space :break-spaces :width "100%"}}
+                      (pretty/mixed->string @subscribed-value)]])))
 
 (defn- subscription-vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

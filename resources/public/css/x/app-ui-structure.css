@@ -17,25 +17,22 @@
 /***** Align profiles *****/
 /*** Horizontal align ***/
 
-.x-app-popups--element[data-horizontal-align="left"]
-.x-app-popups--element--body {
+[data-horizontal-align="left"] .x-app-popups--element--body {
   align-items: flex-start }
 
-.x-app-surface--element[data-horizontal-align="left"] .x-app-surface--element--view {
+[data-horizontal-align="left"] .x-app-surface--element--view {
   align-items: flex-start; }
 
-.x-app-popups--element[data-horizontal-align="center"]
-.x-app-popups--element--body {
+[data-horizontal-align="center"] .x-app-popups--element--body {
   align-items: center }
 
-.x-app-surface--element[data-horizontal-align="center"] .x-app-surface--element--view {
+[data-horizontal-align="center"] .x-app-surface--element--view {
   align-items: center }
 
-.x-app-popups--element[data-horizontal-align="right"]
-.x-app-popups--element--body {
+[data-horizontal-align="right"] .x-app-popups--element--body {
   align-items: flex-end }
 
-.x-app-surface--element[data-horizontal-align="right"] .x-app-surface--element--view {
+[data-horizontal-align="right"] .x-app-surface--element--view {
   align-items: flex-end }
 
 /*** Horizontal align ***/
@@ -68,56 +65,49 @@
 /***** Size profiles *****/
 /*** XXS ***/
 
-.x-app-popups--element[data-min-width="xxs"]
-.x-app-popups--element--body {
+[data-min-width="xxs"] .x-app-popups--element--body {
   min-width: var( --content-width-xxs ) }
 
 /*** XXS ***/
 
 /*** XS ***/
 
-.x-app-popups--element[data-min-width="xs"]
-.x-app-popups--element--body {
+[data-min-width="xs"] .x-app-popups--element--body {
   min-width: var( --content-width-xs ) }
 
 /*** XS ***/
 
 /*** S ***/
 
-.x-app-popups--element[data-min-width="s"]
-.x-app-popups--element--body {
+[data-min-width="s"] .x-app-popups--element--body {
   min-width: var( --content-width-s ) }
 
 /*** S ***/
 
 /*** M ***/
 
-.x-app-popups--element[data-min-width="m"]
-.x-app-popups--element--body {
+[data-min-width="m"] .x-app-popups--element--body {
   min-width: var( --content-width-m ) }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-app-popups--element[data-min-width="l"]
-.x-app-popups--element--body {
+[data-min-width="l"] .x-app-popups--element--body {
   min-width: var( --content-width-l ) }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-app-popups--element[data-min-width="xl"]
-.x-app-popups--element--body {
+[data-min-width="xl"] .x-app-popups--element--body {
   min-width: var( --content-width-xl ) }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-app-popups--element[data-min-width="xxl"]
-.x-app-popups--element--body {
+[data-min-width="xxl"] .x-app-popups--element--body {
   min-width: var( --content-width-xxl ) }
 
 /*** XXL ***/
@@ -264,17 +254,17 @@
   max-width: 50vw;
   overflow: hidden }
 
-body[data-viewport-profile="xxs"] #x-app-header--title,
-body[data-viewport-profile="xs"]  #x-app-header--title,
-body[data-viewport-profile="s"]   #x-app-header--title {
+[data-viewport-profile="xxs"] #x-app-header--title,
+[data-viewport-profile="xs"]  #x-app-header--title,
+[data-viewport-profile="s"]   #x-app-header--title {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs ) }
 
-body[data-viewport-profile="m"]   #x-app-header--title,
-body[data-viewport-profile="l"]   #x-app-header--title,
-body[data-viewport-profile="xl"]  #x-app-header--title,
-body[data-viewport-profile="xxl"] #x-app-header--title {
+[data-viewport-profile="m"]   #x-app-header--title,
+[data-viewport-profile="l"]   #x-app-header--title,
+[data-viewport-profile="xl"]  #x-app-header--title,
+[data-viewport-profile="xxl"] #x-app-header--title {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
@@ -283,9 +273,9 @@ body[data-viewport-profile="xxl"] #x-app-header--title {
   display: flex }
 
 /* XXX#8607 */
-body[data-viewport-profile="xxs"] #x-app-header,
-body[data-viewport-profile="xs"]  #x-app-header,
-body[data-viewport-profile="s"]   #x-app-header {
+[data-viewport-profile="xxs"] #x-app-header,
+[data-viewport-profile="xs"]  #x-app-header,
+[data-viewport-profile="s"]   #x-app-header {
   border-radius: 0;
   left: 0;
   top: 0;
@@ -299,21 +289,20 @@ body[data-viewport-profile="s"]   #x-app-header {
 /***** App popups *****/
 /*** Popup ***/
 
+/* DEBUG */
+.x-app-popups--element[data-minimized="true"] {
+  transform: translateX( -100% ) }
+
 .x-app-popups--element {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   left: 0;
   height: 100vh;
   position: fixed;
   top: 0;
   width: 100% }
-
-.x-app-popups--element[data-stretched="false"] {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center }
-
-.x-app-popups--element[data-minimized="true"] {
-  transform: translateX( -100% ) }
 
 /*** Popup ***/
 
@@ -342,26 +331,31 @@ body[data-viewport-profile="s"]   #x-app-header {
   flex-direction: column;
   max-width: 100% }
 
-.x-app-popups--element[data-stretched="true"]
-.x-app-popups--element--structure {
-  /* Engedi látszani az app-header komponenst */
+[data-layout="flip"] .x-app-popups--element--structure {
   height: calc(100vh - 48px);
   left: 0;
   position: absolute;
   top: 48px;
   width: 100% }
 
-.x-app-popups--element[data-stretched="false"]
-.x-app-popups--element--structure {
-  /* Engedi látszani az app-header komponenst */
-  max-height: calc(100% - 96px) }
+[data-layout="boxed"] .x-app-popups--element--structure {
+  max-height: calc(100% - 96px);
+  max-width:  calc(100% - 96px) }
+
+[data-layout="boxed"][data-stretch-orientation="both"]       .x-app-popups--element--structure,
+[data-layout="boxed"][data-stretch-orientation="horizontal"] .x-app-popups--element--structure {
+  width: calc(100% - 96px) }
+
+[data-layout="boxed"][data-stretch-orientation="both"]     .x-app-popups--element--structure,
+[data-layout="boxed"][data-stretch-orientation="vertical"] .x-app-popups--element--structure {
+  height: calc(100vh - 96px) }
 
 /*** Popup structure ***/
 
 /*** Popup background ***/
 
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--background {
+[data-layout="boxed"] .x-app-popups--element--background,
+[data-layout="flip"]  .x-app-popups--element--background {
   background-color: var( --background-color );
   height: 100%;
   left: 0;
@@ -369,12 +363,10 @@ body[data-viewport-profile="s"]   #x-app-header {
   top: 0;
   width: 100% }
 
-.x-app-popups--element[data-stretched="true"][data-layout="boxed"]
-.x-app-popups--element--background {
+[data-layout="flip"] .x-app-popups--element--background {
   border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0 }
 
-.x-app-popups--element[data-stretched="false"][data-layout="boxed"]
-.x-app-popups--element--background {
+[data-layout="boxed"] .x-app-popups--element--background {
   border-radius: var( --border-radius-m ) }
 
 /*** Popup background ***/
@@ -387,16 +379,15 @@ body[data-viewport-profile="s"]   #x-app-header {
   flex-grow: 1;
   overflow-y: auto }
 
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--body[data-autopadding="true"] {
+[data-layout="boxed"] [data-autopadding="true"],
+[data-layout="flip"]  [data-autopadding="true"] {
   padding: 0 var( --content-edge ) 12px var( --content-edge ) }
 
 /*** Popup body ***/
 
 /*** Popup header ***/
 
-.x-app-popups--element[data-layout="unboxed"]
-.x-app-popups--element--header {
+[data-layout="unboxed"] .x-app-popups--element--header {
   color: var( --white );
   left: 0;
   position: fixed;
@@ -588,8 +579,7 @@ body[data-viewport-profile="s"]   #x-app-header {
 
 /* Website-UI-nál indokolatlanul távol kerülne a footer elem a 100vh-nál
  * kisebb tartalomtól */
-[data-interface="application-ui"]
-.x-app-surface--element {
+[data-interface="application-ui"] .x-app-surface--element {
   min-height: 100vh }
 
 /*** Surface ***/
@@ -615,7 +605,7 @@ body[data-viewport-profile="s"]   #x-app-header {
   max-height: 100%;
   max-width:  100% }
 
-#x-app-ui-structure[data-interface="application-ui"] .x-app-surface--element--view {
+[data-interface="application-ui"] .x-app-surface--element--view {
   padding-top: 48px }
 
 /*** Surface body ***/

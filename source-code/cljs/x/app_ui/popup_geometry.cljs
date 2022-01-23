@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.29
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
+; Version: v0.5.4
+; Compatibility: x4.5.6
 
 
 
@@ -14,35 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popup-geometry
-    (:require [mid-fruits.map        :as map]
-              [x.app-core.api        :as a :refer [r]]
+    (:require [x.app-core.api        :as a :refer [r]]
               [x.app-environment.api :as environment]
               [x.app-ui.renderer     :as renderer]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn popup-props->popup-boxed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;  {:layout (keyword)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [layout]}]
-  (= layout :boxed))
-
-(defn popup-props->popup-stretched?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;  {:stretched? (boolean)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [stretched?]}]
-  (boolean stretched?))
 
 
 
@@ -56,7 +30,7 @@
   ;
   ; @return (boolean)
   [db [_ popup-id]]
-  (let [popup-props (r renderer/get-element-props db :popups popup-id)]
-       (and (popup-props->popup-boxed?     popup-props)
-            (popup-props->popup-stretched? popup-props)
+  (let [layout (r renderer/get-element-prop db :popups popup-id :layout)]
+       (and (= layout :boxed)
+            (r environment/viewport-small?            db)
             (r environment/touch-events-api-detected? db))))

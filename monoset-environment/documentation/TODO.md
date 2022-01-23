@@ -13,6 +13,10 @@
 
 
 # x4.5.0
+ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
+
+
+
 - elements / context-surface DEPRECATED
 
 - prototypes névtér újra a mongo-db névtér része lehet, mert már enm circular-dep w/ x.server-user.api

@@ -21,6 +21,15 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-browser-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (get-in db [extension-id :item-browser/meta-items]))
+
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -33,12 +42,3 @@
   (get-in db [extension-id :item-browser/meta-items item-key]))
 
 (a/reg-sub :item-browser/get-meta-item get-meta-item)
-
-(defn get-browser-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (get-in db [extension-id :item-browser/meta-items]))

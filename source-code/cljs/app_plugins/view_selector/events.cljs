@@ -28,11 +28,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (map) selector-props
   ;
   ; @return (map)
-  [db [_ extension-id selector-props]]
-  (let [derived-view-id (r subs/get-derived-view db extension-id selector-props)]
+  [db [_ extension-id]]
+  (let [derived-view-id (r subs/get-derived-view db extension-id)]
        (-> db (dissoc-in [extension-id :view-selector/meta-items])
               (assoc-in  [extension-id :view-selector/meta-items :view-id] derived-view-id))))
 
@@ -74,9 +73,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (map) selector-props
-  ;  {:allowed-view-ids (keywords in vector)(opt)
-  ;   :default-view-id (keyword)(opt)}
-  (fn [{:keys [db]} [_ extension-id selector-props]]
-      {:db (r load-selector! db extension-id selector-props)
+  (fn [{:keys [db]} [_ extension-id]]
+      {:db       (r load-selector!         db extension-id)
        :dispatch (engine/load-extension-event extension-id)}))

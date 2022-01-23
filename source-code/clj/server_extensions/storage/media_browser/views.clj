@@ -15,4 +15,5 @@
                                               {:default-item-id engine/ROOT-DIRECTORY-ID
                                                :label-key    :alias
                                                :path-key     :path
-                                               :search-keys [:alias]}]})
+                                               :search-keys [:alias]
+                                               :routed? false}]})

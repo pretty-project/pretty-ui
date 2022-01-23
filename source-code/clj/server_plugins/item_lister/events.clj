@@ -60,13 +60,16 @@
   ;  {:download-limit (integer)
   ;   :label (metamorphic-content)
   ;   :order-by (keyword)
-  ;   :order-by-options (keywords in vector)}
+  ;   :order-by-options (keywords in vector)
+  ;   :routed? (boolean)
+  ;   :search-keys (keywords in vector)}
   [extension-id _ lister-props]
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
           :label            extension-id
           :order-by         DEFAULT-ORDER-BY
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
-          :search-keys      DEFAULT-SEARCH-KEYS}
+          :search-keys      DEFAULT-SEARCH-KEYS
+          :routed?          true}
          (param lister-props)))
 
 
@@ -97,7 +100,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
   [_ [_ extension-id item-namespace lister-props]]
-  [:core/reg-transfer! {:data-f (fn [_] (return lister-props))
+  [:core/reg-transfer! {:data-f      (fn [_] (return lister-props))
                         :target-path [extension-id :item-lister/meta-items]}])
 
 (defn add-route!
@@ -105,12 +108,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [_ [_ extension-id item-namespace]]
-  [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:route-template (engine/route-template        extension-id)
-                       :client-event   [:item-lister/load-lister!    extension-id item-namespace]
-                       :on-leave-event [:item-lister/->lister-leaved extension-id item-namespace]
-                       :restricted?    true}])
+  ; @param (map) lister-props
+  ;  {:routed? (boolean)}
+  [_ [_ extension-id item-namespace {:keys [routed?]}]]
+  (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
+                                  {:route-template (engine/route-template        extension-id)
+                                   :client-event   [:item-lister/load-lister!    extension-id item-namespace]
+                                   :on-leave-event [:item-lister/->lister-leaved extension-id item-namespace]
+                                   :restricted?    true}]))
 
 (a/reg-event-fx
   :item-lister/initialize!
@@ -125,6 +130,8 @@
   ;    Default: DEFAULT-ORDER-BY
   ;   :order-by-options (keywords in vector)(opt)
   ;    Default: DEFAULT-ORDER-BY-OPTIONS
+  ;   :routed? (boolean)(opt)
+  ;    Default: true
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: DEFAULT-SEARCH-KEYS}
   ;
@@ -140,4 +147,4 @@
       (let [lister-props (lister-props-prototype extension-id item-namespace lister-props)]
            {:db (r initialize! db extension-id item-namespace lister-props)
             :dispatch-n [(r transfer-lister-props! cofx extension-id item-namespace lister-props)
-                         (r add-route!             cofx extension-id item-namespace)]})))
+                         (r add-route!             cofx extension-id item-namespace lister-props)]})))

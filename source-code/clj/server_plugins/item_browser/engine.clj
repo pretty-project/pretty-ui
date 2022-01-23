@@ -28,7 +28,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.engine
-(def BROWSER-PROPS-KEYS      engine/BROWSER-PROPS-KEYS)
 (def browser-uri             engine/browser-uri)
 (def request-id              engine/request-id)
 (def data-item-path          engine/data-item-path)

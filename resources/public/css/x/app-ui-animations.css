@@ -34,15 +34,9 @@
 /*** Sliding boxed popup structure on XXS, XS, S viewport ***/
 
 /* Boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--structure,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--structure,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--structure {
+[data-viewport-profile="xxs"] [data-layout="boxed"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="boxed"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="boxed"] .x-app-popups--element--structure {
 
   /* BUG#4701
    * Késleltetés nélkül nem minden esetben látszódott a lejátszódó animáció
@@ -54,39 +48,21 @@
   animation-timing-function: ease-in-out }
 
 /* Show boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
-.x-app-popups--element--structure,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
-.x-app-popups--element--structure,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"]
-.x-app-popups--element--structure {
+[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure {
   animation-name: x-slide-in-btt }
 
 /* Hide boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--structure,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--structure,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--structure {
+[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure {
   animation-name: x-slide-out-ttb }
 
 /* Boxed popup cover on XXS, XS, S viewport */
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--cover,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--cover,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-layout="boxed"]
-.x-app-popups--element--cover {
+[data-viewport-profile="xxs"] [data-layout="boxed"] .x-app-popups--element--cover,
+[data-viewport-profile="xs"]  [data-layout="boxed"] .x-app-popups--element--cover,
+[data-viewport-profile="s"]   [data-layout="boxed"] .x-app-popups--element--cover {
 
   /* BUG#4701
   animation-delay: .25s */
@@ -97,27 +73,15 @@
   animation-timing-function: ease-in-out }
 
 /* Show popup cover on XXS, XS, S viewport*/
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-animation="reveal"]
-.x-app-popups--element--cover,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-animation="reveal"]
-.x-app-popups--element--cover,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-animation="reveal"]
-.x-app-popups--element--cover {
+[data-viewport-profile="xxs"] [data-animation="reveal"] .x-app-popups--element--cover,
+[data-viewport-profile="xs"]  [data-animation="reveal"] .x-app-popups--element--cover,
+[data-viewport-profile="s"]   [data-animation="reveal"] .x-app-popups--element--cover {
   animation-name: x-reveal }
 
 /* Hide boxed popup cover on XXS, XS, S viewport */
-[data-viewport-profile="xxs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--cover,
-[data-viewport-profile="xs"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--cover,
-[data-viewport-profile="s"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"]
-.x-app-popups--element--cover {
+[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover,
+[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover,
+[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover {
   animation-name: x-hide }
 
 /*** Sliding boxed popup structure on XXS, XS, S viewport ***/
@@ -125,38 +89,26 @@
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/
 
 /* Boxed popup on M, L, XL, XXL viewport */
-[data-viewport-profile="m"]
-.x-app-popups--element[data-layout="boxed"],
-[data-viewport-profile="l"]
-.x-app-popups--element[data-layout="boxed"],
-[data-viewport-profile="xl"]
-.x-app-popups--element[data-layout="boxed"],
-[data-viewport-profile="xxl"]
-.x-app-popups--element[data-layout="boxed"] {
+[data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"],
+[data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"] {
   animation-duration: .1s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }
 
 /* Show boxed popup on M, L, XL, XXL viewport */
-[data-viewport-profile="m"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
-[data-viewport-profile="l"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
-[data-viewport-profile="xl"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
-[data-viewport-profile="xxl"]
-.x-app-popups--element[data-layout="boxed"][data-animation="reveal"] {
+[data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
+[data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="reveal"] {
   animation-name: x-reveal }
 
 /* Hide boxed popup M, L, XL, XXL viewport */
-[data-viewport-profile="m"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
-[data-viewport-profile="l"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
-[data-viewport-profile="xl"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"],
-[data-viewport-profile="xxl"]
-.x-app-popups--element[data-layout="boxed"][data-animation="hide"] {
+[data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
+[data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="hide"] {
   animation-name: x-hide }
 
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/

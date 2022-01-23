@@ -254,8 +254,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn edit-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
@@ -263,6 +261,8 @@
   (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
        [:router/go-to! editor-uri]))
 
+; @usage
+;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
 (a/reg-event-fx :item-editor/edit-item! edit-item!)
 
 (defn go-up!
@@ -280,10 +280,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace]]
-      ; - Az új elemek hozzáadása (mentése), azért nem külön [:item-editor/add-item! ...] eseménnyel
-      ;   történik, mert az új elem hozzáadása (első mentése) utáni, az aktuális szerkesztés közbeni
-      ;   további mentések, már nem számítának elem-hozzáadásnak, de a címsorból kiolvasott útvonal
-      ;   alapján az item-editor plugin "új elem hozzáadása" módban fut!
+      ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
+      ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
+      ;   az aktuális szerkesztés közbeni további mentések, már nem számítának elem-hozzáadásnak,
+      ;   miközben az item-editor plugin továbbra is "új elem hozzáadása" módban fut!
       ; - Az elem esetleges törlése utáni – kliens-oldali adatból történő – visszaállításhoz
       ;   szükséges az elem feltételezett szerver-oldali állapotáról másolatot tárolni!
       ; - Az elem szerverre küldésének idejében az elemről másolat készítése feltételezi,
@@ -292,13 +292,13 @@
       ;   pontatlan visszaálltást okozhat!
       {:db       (r backup-current-item! db extension-id)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    ; XXX#3701
-                                    ; Az on-success helyett on-stalled időzítés használatával elkerülhető,
-                                    ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
-                                    ; egymást, megnehezítve a felhasználó számára a események megértését
-                                   {:on-stalled (r go-up! cofx extension-id)
-                                    :on-failure [:ui/blow-bubble! {:body {:content :failed-to-save}}]
-                                    :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
+                                    {; XXX#3701
+                                     ; Az on-success helyett on-stalled időzítés használatával elkerülhető,
+                                     ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
+                                     ; egymást, megnehezítve a felhasználó számára a események megértését
+                                     :on-stalled (r go-up! cofx extension-id)
+                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-save}}]
+                                     :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
 
 (a/reg-event-fx
   :item-editor/delete-item!
@@ -308,8 +308,8 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                          ; XXX#3701
-                         {:on-stalled [:item-editor/->item-deleted extension-id item-namespace]
+                         {; XXX#3701
+                          :on-stalled [:item-editor/->item-deleted extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body {:content :failed-to-delete}}]
                           :query      (r queries/get-delete-item-query db extension-id item-namespace)}]))
 

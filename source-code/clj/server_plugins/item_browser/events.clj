@@ -34,6 +34,12 @@
 ; @constant (keyword)
 (def DEFAULT-PATH-KEY :path)
 
+; @constant (keywords in vector)
+(def BROWSER-PROPS-KEYS [:default-item-id :label :label-key :path-key :routed?])
+
+; @constant (keywords in vector)
+(def LISTER-PROPS-KEYS [:download-limit :label :order-by :order-by-options :search-keys])
+
 
 
 ;; -- Redirects ---------------------------------------------------------------
@@ -55,10 +61,12 @@
   ;
   ; @return (map)
   ;  {:label-key (keyword)
-  ;   :path-key (keyword)}
+  ;   :path-key (keyword)
+  ;   :routed? (boolean)}
   [extension-id item-namespace browser-props]
   (merge {:label-key DEFAULT-LABEL-KEY
-          :path-key  DEFAULT-PATH-KEY}
+          :path-key  DEFAULT-PATH-KEY
+          :routed?   true}
          (lister-props-prototype extension-id item-namespace browser-props)))
 
 
@@ -73,8 +81,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (let [lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
-        browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
+  (let [lister-props  (select-keys browser-props LISTER-PROPS-KEYS)
+        browser-props (select-keys browser-props BROWSER-PROPS-KEYS)]
        (as-> db % (r store-lister-props!  % extension-id item-namespace lister-props)
                   (r store-browser-props! % extension-id item-namespace browser-props))))
 
@@ -90,7 +98,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
-  [:core/reg-transfer! {:data-f (fn [_] (select-keys browser-props engine/BROWSER-PROPS-KEYS))
+  [:core/reg-transfer! {:data-f (fn [_] (select-keys browser-props BROWSER-PROPS-KEYS))
                         :target-path [extension-id :item-browser/meta-items]}])
 
 (defn transfer-lister-props!
@@ -100,7 +108,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   [_ [_ extension-id item-namespace browser-props]]
-  [:core/reg-transfer! {:data-f (fn [_] (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS))
+  [:core/reg-transfer! {:data-f      (fn [_] (select-keys browser-props LISTER-PROPS-KEYS))
                         :target-path [extension-id :item-lister/meta-items]}])
 
 (defn add-route!
@@ -108,22 +116,26 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [_ [_ extension-id item-namespace]]
-  [:router/add-route! (engine/route-id extension-id item-namespace)
-                      {:route-template (engine/route-template       extension-id)
-                       :client-event   [:item-browser/load-browser! extension-id item-namespace]
-                       :restricted?    true}])
+  ; @param (map) browser-props
+  ;  {:routed? (boolean)}
+  [_ [_ extension-id item-namespace {:keys [routed?]}]]
+  (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
+                                  {:route-template (engine/route-template       extension-id)
+                                   :client-event   [:item-browser/load-browser! extension-id item-namespace]
+                                   :restricted?    true}]))
 
 (defn add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [_ [_ extension-id item-namespace]]
-  [:router/add-route! (engine/extended-route-id extension-id item-namespace)
-                      {:route-template (engine/extended-route-template extension-id)
-                       :client-event   [:item-browser/load-browser!    extension-id item-namespace]
-                       :restricted?    true}])
+  ; @param (map) browser-props
+  ;  {:routed? (boolean)}
+  [_ [_ extension-id item-namespace {:keys [routed?]}]]
+  (if routed? [:router/add-route! (engine/extended-route-id extension-id item-namespace)
+                                  {:route-template (engine/extended-route-template extension-id)
+                                   :client-event   [:item-browser/load-browser!    extension-id item-namespace]
+                                   :restricted?    true}]))
 
 (a/reg-event-fx
   :item-browser/initialize!
@@ -143,6 +155,8 @@
   ;    Default: item-lister/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)(opt)
   ;    Default: DEFAULT-PATH-KEY
+  ;   :routed? (boolean)(opt)
+  ;    Default: true
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;
@@ -154,5 +168,5 @@
            {:db (r initialize! db extension-id item-namespace browser-props)
             :dispatch-n [(r transfer-browser-props! cofx extension-id item-namespace browser-props)
                          (r transfer-lister-props!  cofx extension-id item-namespace browser-props)
-                         (r add-route!              cofx extension-id item-namespace)
-                         (r add-extended-route!     cofx extension-id item-namespace)]})))
+                         (r add-route!              cofx extension-id item-namespace browser-props)
+                         (r add-extended-route!     cofx extension-id item-namespace browser-props)]})))

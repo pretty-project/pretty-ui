@@ -112,4 +112,5 @@
       {:db       (r gestures/init-view-handler! db ::handler {:default-view-id DEFAULT-VIEW-ID})
        :dispatch [:ui/add-popup! ::view
                                  {:body   #'body
-                                  :header #'header}]}))
+                                  :header #'header
+                                  :stretch-orientation :vertical}]}))

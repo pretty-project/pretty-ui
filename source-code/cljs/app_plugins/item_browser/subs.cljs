@@ -28,8 +28,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-browser.subs
-(def get-meta-item     subs/get-meta-item)
 (def get-browser-props subs/get-browser-props)
+(def get-meta-item     subs/get-meta-item)
 
 
 
@@ -103,6 +103,18 @@
   (let [item-path (r get-item-path db extension-id item-namespace)]
        (if-let [parent-link (last item-path)]
                (get parent-link (keyword/add-namespace item-namespace :id)))))
+
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [route-id (r router/get-current-route-id db)]
+       (or (= route-id (engine/route-id          extension-id item-namespace))
+           (= route-id (engine/extended-route-id extension-id item-namespace)))))
 
 (defn get-header-props
   ; @param (keyword) extension-id

@@ -123,4 +123,5 @@
   (fn [_ [_ picker-id picker-props]]
       [:ui/add-popup! (keyword/add-namespace :storage picker-id)
                       {:body   [body   picker-id picker-props]
-                       :header [header picker-id picker-props]}]))
+                       :header [header picker-id picker-props]
+                       :stretch-orientation :vertical}]))

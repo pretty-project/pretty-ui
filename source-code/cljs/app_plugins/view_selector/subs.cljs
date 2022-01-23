@@ -18,36 +18,56 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-router.api  :as router]
-              [app-plugins.view-selector.engine :as engine]))
+              [app-plugins.view-selector.engine :as engine]
+              [mid-plugins.view-selector.subs   :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.view-selector.subs
+(def get-selector-props subs/get-selector-props)
+(def get-meta-item      subs/get-meta-item)
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (let [route-id (r router/get-current-route-id db)]
+       (or (= route-id (engine/route-id          extension-id))
+           (= route-id (engine/extended-route-id extension-id)))))
+
 (defn get-derived-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (map) selector-props
-  ;  {:allowed-view-ids (keywords in vector)(opt)
-  ;   :default-view-id (keyword)(opt)}
   ;
   ; @return (keyword)
   ;  A view-id forrásából (route-path param) származó adat.
   ;  A forrás hiánya esetén a default-view-id paraméter.
   ;  A default-view-id paraméter hiánya esetén a DEFAULT-VIEW-ID konstans.
-  [db [_ extension-id {:keys [allowed-view-ids default-view-id]}]]
-  (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
-          (let [derived-view-id (keyword derived-view-id)]
-               (if (or (not (vector?          allowed-view-ids))
-                       (vector/contains-item? allowed-view-ids derived-view-id))
-                   ; If allowed-view-ids is NOT in use,
-                   ; or allowed-view-ids is in use & derived-view-id is allowed ...
-                   (return derived-view-id)
-                   ; If allowed-view-ids is in use & derived-view-id is NOT allowed ...
-                   (or default-view-id engine/DEFAULT-VIEW-ID)))
-          (or default-view-id engine/DEFAULT-VIEW-ID)))
+  [db [_ extension-id]]
+  (let [default-view-id (r get-meta-item db extension-id :default-view-id)]
+       (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
+               (let [derived-view-id (keyword derived-view-id)
+                     allowed-view-ids (r get-meta-item db extension-id :allowed-view-ids)]
+                    (if (or (not (vector?          allowed-view-ids))
+                            (vector/contains-item? allowed-view-ids derived-view-id))
+                        ; If allowed-view-ids is NOT in use,
+                        ; or allowed-view-ids is in use & derived-view-id is allowed ...
+                        (return derived-view-id)
+                        ; If allowed-view-ids is in use & derived-view-id is NOT allowed ...
+                        (or default-view-id engine/DEFAULT-VIEW-ID)))
+               (or default-view-id engine/DEFAULT-VIEW-ID))))
 
 (defn get-selected-view
   ; @param (keyword) extension-id
@@ -57,7 +77,7 @@
   ;
   ; @return (keyword)
   [db [_ extension-id]]
-  (get-in db [extension-id :view-selector/meta-items :view-id]))
+  (r get-meta-item db extension-id :view-id))
 
 ; @usage
 ;  [:view-selector/get-selected-view :my-extension]

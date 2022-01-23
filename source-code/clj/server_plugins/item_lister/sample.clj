@@ -112,8 +112,9 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  ; Az [:item-lister/initialize! ...] esemény hozzáadja a "/@app-home/my-extension" útvonalat
-  ; a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
+  ; - Az [:item-lister/initialize! ...] esemény hozzáadja a "/@app-home/my-extension" útvonalat
+  ;   a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
+  ; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
   {:on-server-boot [:item-lister/initialize! :my-extension :my-type]})
 
 (a/reg-lifecycles

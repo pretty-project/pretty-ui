@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.29
 ; Description:
-; Version: v1.7.0
-; Compatibility: x4.4.9
+; Version: v1.7.8
+; Compatibility: x4.5.6
 
 
 
@@ -25,58 +25,28 @@
 ;; -- Names -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @name stretched?
-;  {:stretched? true}
-;  A popup felületén megjelenő tartalmat magában foglaló DIV elem
-;  az app-popups teljes felületére kifeszül
-;
-;  {:stretched? false}
-;  A popup felületén megjelenő tartalmat magában foglaló DIV elem
-;  az app-popups közepére van pozícionálva, mérete a benne található
-;  tartalom méretével megegyezik
-;
-; @name layout
-;  {:layout :boxed}
+; @name {:layout :boxed}
 ;  A popup felületén megjelenő tartalmat magában foglaló DIV elem
 ;  háttere az applikáció témája szerinti háttérszín
 ;
-; {:layout :unboxed}
-; TODO ...
+; @name {:layout :unboxed}
+;  TODO ...
 ;
-; @name render-exclusive?
+; @name {:render-exclusive? true}
 ;  A popup elem renderelése előtt bezárja az összes látható popup elemet és
 ;  látható surface elemet.
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- popup-props->render-popup-exclusive?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;  {:render-exclusive? (boolean)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [render-exclusive?]}]
-  (boolean render-exclusive?))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- stretch-popup-anyway?
+(defn- flip-layout-anyway?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; XXX#3806
-  ;  XXS, XS, S viewport-on a {:stretched? false :layout :boxed} popup felületek
-  ;  {:stretched? true} popup felületként jelennek meg.
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ;  {:layout (keyword)}
+  ;  {:layout (keyword)(opt)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [layout]}]]
@@ -108,29 +78,22 @@
   ;   :layout (keyword)
   ;   :min-width (keyword)
   ;   :reveal-animated? (boolean)
-  ;   :stretched? (boolean)
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
   [db [_ popup-id popup-props]]
-  (merge ; 1. popup-props prototype
-         {:autopadding?     true
+  (merge {:autopadding?     true
           :hide-animated?   true
           :horizontal-align :center
           :layout           :boxed
           :min-width        :m
           :reveal-animated? true
-          :stretched?       false
           :update-animated? false
           :user-close?      true}
-         ; 2. popup-props
          (param popup-props)
-         ; 3. Forced props
-             ; XXX#3806
-         (if (r stretch-popup-anyway? db popup-id popup-props)
-             {:stretched? true})
-
-         ; DEBUG
-         (if (r a/debug-mode-detected? db)
+         (if (r flip-layout-anyway? db popup-id popup-props)
+             {:layout :flip})
+         (if ; DEBUG
+             (r a/debug-mode-detected? db)
              {:minimizable? true})))
 
 
@@ -178,6 +141,9 @@
 (a/reg-event-fx
   :ui/close-popup!
   ; @param (keyword) popup-id
+  ;
+  ; @usage
+  ;  [:ui/close-popup! :my-popup]
   (fn [{:keys [db]} [_ popup-id]]
       {:dispatch-n [[:ui/destroy-element! :popups popup-id]
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást
@@ -185,6 +151,8 @@
 
 (a/reg-event-fx
   :ui/close-upper-popup!
+  ; @usage
+  ;  [:ui/close-upper-popup!]
   (fn [{:keys [db]} _]
       (if-let [upper-popup-id (r get-upper-popup-id db)]
               [:ui/close-popup! upper-popup-id])))
@@ -216,8 +184,8 @@
            {:dispatch-later
             [{:ms                   0 :dispatch [:ui/destroy-all-elements! :popups]}
              {:ms close-surface-delay :dispatch [:ui/destroy-all-elements! :surface]}
-             {:ms close-header-delay  :dispatch [:ui/destroy-all-elements! :header]}
-             {:ms render-popup-delay  :dispatch [:ui/render-popup! popup-id popup-props]}]})))
+             {:ms  close-header-delay :dispatch [:ui/destroy-all-elements! :header]}
+             {:ms  render-popup-delay :dispatch [:ui/render-popup! popup-id popup-props]}]})))
 
 (a/reg-event-fx
   :ui/add-popup!
@@ -244,7 +212,7 @@
   ;    Default: :center
   ;   :initializer (metamorphic-event)(opt)
   ;   :layout (keyword)(opt)
-  ;    :boxed, :unboxed
+  ;    :boxed, :unboxed, :flip
   ;    Default: :boxed
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -253,8 +221,10 @@
   ;    Default: false
   ;   :reveal-animated? (boolean)(opt)
   ;    Default: true
-  ;   :stretched? (boolean)(opt)
-  ;    Default: false
+  ;   :stretch-orientation (keyword)(opt)
+  ;    :horizontal, :vertical, :both, :none
+  ;    Default: :none
+  ;    Only w/ {:layout :boxed}
   ;   :update-animated? (boolean)(opt)
   ;    Default: false
   ;   :user-close? (boolean)(opt)
@@ -276,9 +246,9 @@
       (let [popup-id    (a/event-vector->second-id   event-vector)
             popup-props (a/event-vector->first-props event-vector)
             popup-props (r popup-props-prototype db popup-id popup-props)]
-           (if (popup-props->render-popup-exclusive? popup-props)
-               {:dispatch [:ui/render-popup-exclusive! popup-id popup-props]}
-               {:dispatch [:ui/render-popup! popup-id popup-props]}))))
+           (if-let [render-exclusive? (get popup-props :render-exclusive?)]
+                   [:ui/render-popup-exclusive! popup-id popup-props]
+                   [:ui/render-popup!           popup-id popup-props]))))
 
 
 

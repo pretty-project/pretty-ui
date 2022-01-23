@@ -32,8 +32,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.subs
-(def get-meta-item    subs/get-meta-item)
 (def get-editor-props subs/get-editor-props)
+(def get-meta-item    subs/get-meta-item)
 
 
 
@@ -276,6 +276,17 @@
   [db [_ extension-id item-namespace]]
   (or (r download-suggestions? db extension-id item-namespace)
       (r download-item?        db extension-id item-namespace)))
+
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [route-id (r router/get-current-route-id db)]
+       (= route-id (engine/route-id extension-id item-namespace))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
