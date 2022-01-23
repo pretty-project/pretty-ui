@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.2.6
-; Compatibility: x4.5.2
+; Version: v1.3.0
+; Compatibility: x4.5.5
 
 
 
@@ -43,9 +43,8 @@
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
   ([]             (start-server! {}))
-  ([server-props] (a/dispatch [:boot-loader/start-server! server-props])
-                  ; TEMP
-                  (a/->app-built)))
+  ([server-props] (a/->app-built)
+                  (a/dispatch [:boot-loader/start-server! server-props])))
 
 
 

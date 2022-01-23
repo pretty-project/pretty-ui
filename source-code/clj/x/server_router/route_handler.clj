@@ -328,3 +328,26 @@
 ;                                   :get {:handler my-handler}}
 ;                        :your-route {...}}]
 (a/reg-event-db :router/add-routes! add-routes!)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-client-routes
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [_]
+  (a/subscribed [:router/get-client-routes]))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-server-init [:core/reg-transfer! :router/client-routes
+                                        {:data-f      transfer-client-routes
+                                         :target-path [:router/client-routes :data-items]}]})

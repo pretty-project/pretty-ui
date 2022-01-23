@@ -253,6 +253,12 @@
       :more-options
       {:en "More options"
        :hu "További lehetőségek"}
+      :no-item-selected
+      {:en "No item selected"
+       :hu "Nincs kiválasztott elem"}
+      :no-items-selected
+      {:en "No items selected"
+       :hu "Nincsenek kiválasztott elemek"}
       :no-items-found
       {:en ""
        :hu "Nincs találat"}

@@ -6,7 +6,7 @@
 ; Created: 2021.03.24
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.5.4
+; Compatibility: x4.5.5
 
 
 
@@ -20,6 +20,8 @@
               [ring.util.response         :refer [redirect]]
               [server-fruits.http         :as http]
               [x.mid-user.account-handler :as account-handler]
+              [x.server-core.api          :as a]
+              [x.server-db.api            :as db]
               [x.server-user.engine       :as engine]))
 
 
@@ -162,3 +164,26 @@
   [_]
   (http/text-wrap {:body    (param "Good bye!")
                    :session (param {})}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-user-account
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (-> request request->user-public-account db/document->non-namespaced-document))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-server-init [:core/reg-transfer! :user/user-account
+                                        {:data-f      transfer-user-account
+                                         :target-path [:user/account :data-items]}]})

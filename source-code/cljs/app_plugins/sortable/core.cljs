@@ -135,7 +135,8 @@
   ;
   ; @example
   ;  (sortable-item-dex->sortable-item-id :my-sortable 3)
-  ;  => "my-sortable--3"
+  ;  =>
+  ;  "my-sortable--3"
   ;
   ; @return (string)
   [sortable-id sortable-item-dex]
@@ -150,7 +151,8 @@
   ;
   ; @example
   ;  (sortable-item-id->sortable-item-dex "my-sortable--3")
-  ;  => 3
+  ;  =>
+  ;  3
   ;
   ; @return (integer)
   [sortable-item-id]
@@ -186,7 +188,8 @@
   ;
   ; @example
   ;  (transform-data->transform-css {:x 0 :y 10 :scaleX 1 :scaleY 1})
-  ;  => "translate3d(0px, 10px, 0) scaleX(1) scaleY(1)"
+  ;  =>
+  ;  "translate3d(0px, 10px, 0) scaleX(1) scaleY(1)"
   ;
   ; @return (string)
   [transform-data]
@@ -366,7 +369,8 @@
   ;
   ; @example
   ;  (sortable-items->initial-item-order :my-sortable ["My item" "Your item"])
-  ;  => ["my-sortable--0" "my-sortable--1"]
+  ;  =>
+  ;  ["my-sortable--0" "my-sortable--1"]
   ;
   ; @return (strings in vector)
   [sortable-id sortable-items]

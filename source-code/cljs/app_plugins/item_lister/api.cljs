@@ -15,9 +15,9 @@
 
 (ns app-plugins.item-lister.api
     (:require [app-plugins.item-lister.dialogs]
+              [app-plugins.item-lister.events]
               [app-plugins.item-lister.queries]
               [app-plugins.item-lister.engine :as engine]
-              [app-plugins.item-lister.events :as events]
               [app-plugins.item-lister.subs   :as subs]
               [app-plugins.item-lister.views  :as views]))
 
@@ -28,12 +28,6 @@
 
 ; app-plugins.item-lister.engine
 (def request-id engine/request-id)
-
-; app-plugins.item-lister.events
-(def toggle-search-mode!  events/toggle-search-mode!)
-(def toggle-select-mode!  events/toggle-select-mode!)
-(def toggle-reorder-mode! events/toggle-reorder-mode!)
-(def load-lister!         events/load-lister!)
 
 ; app-plugins.item-lister.subs
 (def get-body-props   subs/get-body-props)

@@ -265,10 +265,8 @@
   ; @return (component)
   [_ _]
   [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:content :an-error-occured :font-size :m :layout :fit}]
-       [elements/horizontal-separator {:size :xs}]
-       [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :layout :fit}]
-       [elements/horizontal-separator {:size :xs}]])
+       [elements/label {:content :an-error-occured :font-size :m :min-height :m}]
+       [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :min-height :m}]])
 
 
 

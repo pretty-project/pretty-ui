@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.0.2
-; Compatibility: x4.5.3
+; Version: v1.1.0
+; Compatibility: x4.5.5
 
 
 
@@ -14,9 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.config-handler
-    (:require [server-fruits.io            :as io]
-              [x.mid-core.config-handler   :as config-handler]
-              [x.server-core.event-handler :as event-handler :refer [r]]))
+    (:require [server-fruits.io                :as io]
+              [x.mid-core.config-handler       :as config-handler]
+              [x.server-core.event-handler     :as event-handler :refer [r]]
+              [x.server-core.lifecycle-handler :as lifecycle-handler]))
 
 
 
@@ -48,25 +49,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-sub :core/get-app-config         get-app-config)
-(event-handler/reg-sub :core/get-app-config-item    get-app-config-item)
-(event-handler/reg-sub :core/get-server-config      get-server-config)
-(event-handler/reg-sub :core/get-server-config-item get-server-config-item)
-(event-handler/reg-sub :core/get-site-config        get-site-config)
-(event-handler/reg-sub :core/get-site-config-item   get-site-config-item)
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-event-db :core/store-configs! store-configs!)
-
-
-
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -81,3 +63,36 @@
                                                       :site-config   site-config}])))
 
 (event-handler/reg-fx :core/config-server! config-server!)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-app-config
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [_]
+  (event-handler/subscribed [:core/get-app-config]))
+
+(defn- transfer-site-config
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [_]
+  (event-handler/subscribed [:core/get-site-config]))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(lifecycle-handler/reg-lifecycles
+  ::lifecycles
+  {:on-server-init {:dispatch-n [[:core/reg-transfer! :core/app-config
+                                                      {:data-f      transfer-app-config
+                                                       :target-path [:core/app-config :data-items]}]
+                                 [:core/reg-transfer! :core/site-config
+                                                      {:data-f      transfer-site-config
+                                                       :target-path [:core/site-config :data-items]}]]}})

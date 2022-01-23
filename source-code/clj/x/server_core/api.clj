@@ -27,7 +27,8 @@
               [x.server-core.engine            :as engine]
               [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]
-              [x.server-core.router-handler    :as router-handler]))
+              [x.server-core.router-handler    :as router-handler]
+              [x.server-core.transfer-handler  :as transfer-handler]))
 
 
 
@@ -35,7 +36,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.server-core.build-handler
-(def ->app-built build-handler/->app-built)
+(def app-build     build-handler/app-build)
+(def ->app-built   build-handler/->app-built)
+(def get-app-build build-handler/get-app-build)
 
 ; x.server-core.cache-handler
 (def request->app-cached? cache-handler/request->app-cached?)
@@ -113,3 +116,7 @@
 (def route-template->route-param router-handler/route-template->route-param)
 (def request->route-match        router-handler/request->route-match)
 (def request->route-param        router-handler/request->route-param)
+
+; x.server-core.transfer-handler
+(def reg-transfer!          transfer-handler/reg-transfer!)
+(def download-transfer-data transfer-handler/download-transfer-data)

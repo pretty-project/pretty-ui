@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.lifecycle-handler
-    (:require [x.mid-core.lifecycle-handler :as lifecycle-handler]
-              [x.server-core.event-handler  :as event-handler]))
+    (:require [x.mid-core.lifecycle-handler :as lifecycle-handler]))
 
 
 
@@ -25,10 +24,3 @@
 (def get-period-events  lifecycle-handler/get-period-events)
 (def reg-lifecycles     lifecycle-handler/reg-lifecycles)
 (def import-lifecycles! lifecycle-handler/import-lifecycles!)
-
-
-
-;; -- Side-effect events ------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)

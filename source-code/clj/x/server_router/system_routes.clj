@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.system-routes
-    (:require [x.boot-synchronizer      :as boot-synchronizer]
-              [x.server-core.api        :as a]
+    (:require [x.server-core.api        :as a]
               [x.server-environment.api :as environment]
               [x.server-media.api       :as media]
               [x.server-user.api        :as user]))
@@ -29,9 +28,9 @@
 ;  {:my-route {:route-template "/my-route"
 ;              :get  {:handler my-get-handler}
 ;              :post {:handler my-post-handler}}}
-(def SYSTEM-ROUTES {:boot-synchronizer/synchronize-app
+(def SYSTEM-ROUTES {:core/transfer-data
                     {:route-template "/synchronize-app"
-                     :get {:handler boot-synchronizer/download-sync-data}}
+                     :get {:handler a/download-transfer-data}}
 
                     :environment/robots.txt
                     {:route-template "/robots.txt"

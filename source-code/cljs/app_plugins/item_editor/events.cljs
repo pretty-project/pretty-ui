@@ -38,6 +38,26 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-current-item-id!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-editor/set-current-item-id! db :my-extension :my-type "my-item")
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  ; XXX#4031
+  ; Az aktuálisan szerkesztett elem azonosítóját lehetséges a set-current-item-id! függvény
+  ; használatával is beállítani, így az :item-id forrása nem kizárólag az aktuális útvonalból
+  ; kiolvasott érték lehet.
+  (assoc-in db [extension-id :item-editor/meta-items :item-id] item-id))
+
+; @usage
+;  [:item-editor/set-current-item-id! :my-extension :my-type "my-item"]
+(a/reg-event-db :item-editor/set-current-item-id! set-current-item-id!)
+
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

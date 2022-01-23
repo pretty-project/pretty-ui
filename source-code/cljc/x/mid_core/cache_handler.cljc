@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.03.27
 ; Description:
-; Version: v0.3.0
-; Compatibility: x3.9.9
+; Version: v0.3.8
+; Compatibility: x4.5.5
 
 
 
@@ -21,9 +21,9 @@
 ;; ---------------------------------------------------------------------------
 
 ; A cache-control-uri függvény a szerveren tárolt fájlok útvonalához csatolja
-; az applikáció aktuális verziószámát.
-; Ha az applikáció verziószáma megváltozik, akkor a cache-control-uri
-; függvénnyel elért fájlok kötelezően frissülnek a kliens eszközén.
+; az app-build aktuális értékét.
+; Ha az app-build értéke megváltozik, akkor a cache-control-uri függvénnyel
+; elért fájlok kötelezően frissülnek a kliens eszközén.
 
 
 
@@ -36,7 +36,8 @@
   ;
   ; @example
   ;  (cache-control-uri "example.com/style.css" "1.2.3")
-  ;  => "example.com/style.css?v=1.2.3"
+  ;  =>
+  ;  "example.com/style.css?v=1.2.3"
   ;
   ; @return (string)
   [uri version]

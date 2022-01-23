@@ -22,7 +22,6 @@
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
               [app-plugins.item-browser.subs    :as subs]
-              [app-plugins.item-lister.api      :as item-lister]
               [mid-plugins.item-browser.events  :as events]))
 
 
@@ -37,6 +36,26 @@
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn set-current-item-id!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-browser/set-current-item-id! db :my-extension :my-type "my-item")
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  ; XXX#4031
+  ; Az aktuálisan böngészett elem azonosítóját lehetséges a set-current-item-id! függvény
+  ; használatával is beállítani, így az :item-id forrása nem kizárólag az aktuális útvonalból
+  ; kiolvasott érték lehet.
+  (assoc-in db [extension-id :item-browser/meta-items :item-id] item-id))
+
+; @usage
+;  [:item-browser/set-current-item-id! :my-extension :my-type "my-item"]
+(a/reg-event-db :item-browser/set-current-item-id! set-current-item-id!)
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,9 +126,9 @@
         ; plugin beállításához.
         lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
         browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
-       (as-> db % (r store-browser-props!     % extension-id item-namespace browser-props)
-                  (r store-current-item-id!   % extension-id item-namespace browser-props)
-                  (r item-lister/load-lister! % extension-id item-namespace lister-props))))
+       (as-> db % (r store-browser-props!   % extension-id item-namespace browser-props)
+                  (r store-current-item-id! % extension-id item-namespace browser-props)
+                  (r app-plugins.item-lister.events.load-lister! % extension-id item-namespace lister-props))))
 
 
 

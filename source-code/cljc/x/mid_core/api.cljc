@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.08
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.3
+; Version: v0.5.2
+; Compatibility: x4.5.5
 
 
 
@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.api
-    (:require [x.mid-core.build-handler]
-              [x.mid-core.debug-handler]
+    (:require [x.mid-core.debug-handler]
+              [x.mid-core.build-handler  :as build-handler]
               [x.mid-core.cache-handler  :as cache-handler]
               [x.mid-core.config-handler :as config-handler]
               [x.mid-core.engine         :as engine]
@@ -25,6 +25,9 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.mid-core.build-handler
+(def app-build build-handler/app-build)
 
 ; x.mid-core.cache-handler
 (def cache-control-uri cache-handler/cache-control-uri)

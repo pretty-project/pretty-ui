@@ -55,8 +55,7 @@
         progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
         label (cond request-failured? :file-upload-failure files-uploaded? :files-uploaded :else progress-label)]
        [:div {:style {:width "100%"}}
-             [elements/line-diagram {:layout :row :font-size :xs :sections sections :indent :both
-                                     :label label}]]))
+             [elements/line-diagram {:layout :row :font-size :xs :sections sections :indent :both :label label}]]))
 
 (defn- upload-progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

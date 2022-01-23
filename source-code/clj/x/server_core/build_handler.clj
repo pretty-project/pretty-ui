@@ -16,8 +16,9 @@
 (ns x.server-core.build-handler
     (:require [mid-fruits.format :as format]
               [server-fruits.io  :as io]
-              [x.mid-core.build-handler    :as build-handler]
-              [x.server-core.event-handler :as event-handler]))
+              [x.mid-core.build-handler        :as build-handler]
+              [x.server-core.event-handler     :as event-handler]
+              [x.server-core.lifecycle-handler :as lifecycle-handler]))
 
 
 
@@ -36,6 +37,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.build-handler
+(def app-build        build-handler/app-build)
 (def get-app-build    build-handler/get-app-build)
 (def store-app-build! build-handler/store-app-build!)
 
@@ -54,20 +56,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-sub :core/get-app-build get-app-build)
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-event-db :core/store-app-build! store-app-build!)
-
-
-
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -78,3 +66,26 @@
        (event-handler/dispatch [:core/store-app-build! app-build])))
 
 (event-handler/reg-fx :core/import-app-build! import-app-build!)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-app-build
+  ; @param (map) request
+  ;
+  ; @return (string)
+  [_]
+  (event-handler/subscribed [:core/get-app-build]))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(lifecycle-handler/reg-lifecycles
+  ::lifecycles
+  {:on-server-init [:core/reg-transfer! :core/app-build
+                                        {:data-f      transfer-app-build
+                                         :target-path [:core/build-handler :meta-items :app-build]}]})

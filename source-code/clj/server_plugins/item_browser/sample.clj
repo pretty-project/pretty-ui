@@ -30,4 +30,4 @@
                                                :path-key  :path}]})
   ; Az item-browser plugin az item-lister plugint alkalmazza az elemek listázához,
   ; a browser-props térképben található beállítások egy része az item-lister plugin beállításához
-  ; szükséges és leírásukat annak dokumentációjában keresd!
+  ; szükséges és leírásukat annak dokumentációjában találod!

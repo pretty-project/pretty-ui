@@ -6,7 +6,7 @@
 ; Created: 2021.03.24
 ; Description:
 ; Version: v0.6.4
-; Compatibility: x4.4.2
+; Compatibility: x4.5.5
 
 
 
@@ -17,6 +17,7 @@
     (:require [local-db.api       :as local-db]
               [mid-fruits.candy   :refer [param return]]
               [server-fruits.http :as http]
+              [x.server-core.api  :as a]
               [x.server-db.api    :as db]))
 
 
@@ -65,3 +66,26 @@
   [request item-id]
   (let [user-profile (db/document->non-namespaced-document (request->user-profile request))]
        (get user-profile item-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-user-profile
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (-> request request->user-profile db/document->pure-document))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-server-init [:core/reg-transfer! :user/user-profile
+                                        {:data-f      transfer-user-profile
+                                         :target-path [:user/profile :data-items]}]})

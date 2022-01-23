@@ -411,7 +411,7 @@
            [:div.item-lister--header--menu-bar
              [:div.item-lister--header--menu-item-group
                (if new-item-options [new-item-select extension-id item-namespace header-props]
-                                    [new-item-button extension-id item-namespace])
+                                    [new-item-button extension-id item-namespace header-props])
                [sort-items-button          extension-id item-namespace header-props]
                [toggle-select-mode-button  extension-id item-namespace header-props]
                [toggle-reorder-mode-button extension-id item-namespace header-props]]
@@ -514,9 +514,10 @@
   ; @param (map) indicator-props
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [all-items-downloaded?] :as indicator-props}]
-  (if-not all-items-downloaded? [elements/row {:content [downloading-items-label extension-id item-namespace indicator-props]
-                                               :horizontal-align :center}]))
+  [extension-id item-namespace {:keys [all-items-downloaded? items-received?] :as indicator-props}]
+  (if-not (and all-items-downloaded? items-received?) ; XXX#0499
+          [elements/row {:content [downloading-items-label extension-id item-namespace indicator-props]
+                         :horizontal-align :center}]))
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

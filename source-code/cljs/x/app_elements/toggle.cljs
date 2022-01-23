@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.8
+; Version: v0.3.6
+; Compatibility: x4.5.5
 
 
 
@@ -50,7 +50,7 @@
   ; @return (hiccup)
   [toggle-id {:keys [content] :as toggle-props}]
   [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
-                          [components/content content]])
+                          [components/content               toggle-id content]])
 
 (defn- toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!

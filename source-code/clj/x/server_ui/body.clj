@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.19
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.5.4
+; Version: v0.8.6
+; Compatibility: x4.5.5
 
 
 
@@ -114,11 +114,10 @@
   (let [core-js-props (request->core-js-props request)
         js-paths      (vector/cons-item plugin-js-paths core-js-props)]
        (reduce (fn [body {:keys [cache-control? uri] :as js-props}]
-                   (if cache-control?
-                       (let [cache-control-uri (cache-control-uri uri app-build)
-                             js-props          (assoc js-props :uri cache-control-uri)]
-                            (conj body (include-js js-props)))
-                       (conj      body (include-js js-props))))
+                   (if cache-control? (let [cache-control-uri (cache-control-uri uri app-build)
+                                            js-props          (assoc js-props :uri cache-control-uri)]
+                                           (conj body (include-js js-props)))
+                                      (conj      body (include-js js-props))))
                (param body)
                (param js-paths))))
 
@@ -134,10 +133,12 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:shield (hiccup)}
+  ;  {:app-build (string)
+  ;   :shield (hiccup)}
   [request body-props]
   (merge (a/subscribed [:core/get-app-config])
-         {:shield (app-shield (graphics/loading-animation))}
+         {:app-build (a/app-build)
+          :shield    (app-shield (graphics/loading-animation))}
          (param body-props)))
 
 
@@ -154,12 +155,11 @@
   ;
   ; @return (hiccup)
   [request {:keys [shield]}]
-  [:body#x-body-container
-    {:data-theme (user/request->user-settings-item request :selected-theme)}
-    (let [csrf-token (force *anti-forgery-token*)]
-         [:div#sente-csrf-token {:data-csrf-token csrf-token}])
-    [:div#x-app-container]
-    (param shield)])
+  [:body#x-body-container {:data-theme (user/request->user-settings-item request :selected-theme)}
+                          (let [csrf-token (force *anti-forgery-token*)]
+                               [:div#sente-csrf-token {:data-csrf-token csrf-token}])
+                          [:div#x-app-container]
+                          (param shield)])
 
 (defn view
   ; @param (map) request

@@ -22,5 +22,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.build-handler
+(def app-build        build-handler/app-build)
 (def get-app-build    build-handler/get-app-build)
 (def store-app-build! build-handler/store-app-build!)

@@ -31,8 +31,8 @@
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
 
-; app-plugins.item-editor.events
-(def load-editor! events/load-editor!)
+; app-plugins.item-editor.engine
+(def set-current-item-id! events/set-current-item-id!)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)

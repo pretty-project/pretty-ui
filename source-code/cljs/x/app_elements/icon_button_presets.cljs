@@ -130,6 +130,8 @@
                            :icon    :arrow_forward_ios
                            :layout  :icon-button
                            :variant :transparent}
+      :placeholder        {:layout  :placeholder                           
+                           :variant :transparent}
       :prev               {:color   :default
                            :icon    :arrow_back_ios
                            :layout  :icon-button

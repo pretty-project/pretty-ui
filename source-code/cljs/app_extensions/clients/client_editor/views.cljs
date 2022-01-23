@@ -26,46 +26,46 @@
 
 (defn- client-vat-no-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::vat-no-field
                        {:label :vat-no :min-width :s
                         :value-path [:clients :item-editor/data-items :vat-no]
-                        :disabled?  disabled?}])
+                        :disabled?  editor-disabled?}])
 
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled? selected-language]}]
+  [_ {:keys [editor-disabled? selected-language]}]
   [elements/select ::country-select
                    {:label :country ;:user-cancel? false
                     :initial-value   (locales/country-native-name selected-language)
                     :initial-options (param locales/EU-COUNTRY-NAMES)
                     :value-path      [:clients :item-editor/data-items :country]
-                    :disabled?       disabled?}])
+                    :disabled?       editor-disabled?}])
 
 (defn- client-zip-code-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::zip-code-field
                        {:label :zip-code
                         :value-path [:clients :item-editor/data-items :zip-code]
-                        :disabled?  disabled?}])
+                        :disabled?  editor-disabled?}])
 
 (defn- client-city-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/combo-box ::city-field
                       {:label :city :emptiable? false :min-width :s
                        :options-path [:clients :item-editor/meta-items :suggestions :client/city]
                        :value-path   [:clients :item-editor/data-items :city]
-                       :disabled?    disabled?}])
+                       :disabled?    editor-disabled?}])
 
 (defn- client-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::address-field
                        {:label :address
                         :value-path [:clients :item-editor/data-items :address]
-                        :disabled?  disabled?}])
+                        :disabled?  editor-disabled?}])
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,7 +85,7 @@
 
 (defn- client-phone-number-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::phone-number-field
                        {:label :phone-number :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :phone-number]
@@ -94,17 +94,17 @@
                         ;:modifier form/valid-phone-number
                         :modifier #(string/starts-with! % "+")
                         :form-id   (item-editor/form-id :clients :client)
-                        :disabled? disabled?}])
+                        :disabled? editor-disabled?}])
 
 (defn- client-email-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::email-address-field
                        {:label :email-address :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :email-address]
                         :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
                         :form-id   (item-editor/form-id :clients :client)
-                        :disabled? disabled?}])
+                        :disabled? editor-disabled?}])
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,21 +117,21 @@
 
 (defn- client-last-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::last-name-field
                        {:label :last-name :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :last-name]
                         :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  disabled?}])
+                        :disabled?  editor-disabled?}])
 
 (defn- client-first-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [disabled?]}]
+  [_ {:keys [editor-disabled?]}]
   [elements/text-field ::first-name-field
                        {:label :first-name :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :first-name]
                         :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  disabled?}])
+                        :disabled?  editor-disabled?}])
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,7 +168,11 @@
        [client-secondary-contacts body-id body-props]
        [elements/horizontal-separator {:size :xxl}]
        ; Description
-       [client-additional-information body-id body-props]])
+       [client-additional-information body-id body-props]
+
+       ; TEMP
+       [:div {:style {:width "100%"}}]])
+             ;[app-extensions.storage.api/media-picker {:label "Borítóképek" :multiple? true}]]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

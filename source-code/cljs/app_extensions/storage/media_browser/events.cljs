@@ -10,6 +10,21 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :storage/add-new-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [destination-id (r item-browser/get-current-item-id db :storage)]
+           (case selected-option :upload-files!
+                                 [:storage/load-file-uploader!     {:destination-id destination-id}]
+                                 :create-directory!
+                                 [:storage/load-directory-creator! {:destination-id destination-id}]))))
+
+
+
+;; -- Status events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :storage/->media-item-clicked
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
@@ -26,17 +41,6 @@
                        :min-width :xs}]))
 
 
-(a/reg-event-fx
-  :storage/add-new-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ selected-option]]
-      (let [destination-id (r item-browser/get-current-item-id db :storage)]
-           (case selected-option :upload-files!
-                                 [:storage/load-file-uploader!     {:destination-id destination-id}]
-                                 :create-directory!
-                                 [:storage/load-directory-creator! {:destination-id destination-id}]))))
-
-
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,5 +48,4 @@
 (a/reg-event-fx
   :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:dispatch-n [[:storage/render-media-browser!]]}))
+  [:storage/render-media-browser!])

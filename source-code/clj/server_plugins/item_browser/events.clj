@@ -74,8 +74,8 @@
   (let [; XXX#0551
         lister-props  (map/dissoc-items browser-props engine/BROWSER-PROPS-KEYS)
         browser-props (select-keys      browser-props engine/BROWSER-PROPS-KEYS)]
-       (as-> db % (r store-browser-props!    % extension-id item-namespace browser-props)
-                  (r item-lister/initialize! % extension-id item-namespace lister-props))))
+       (as-> db % (r store-browser-props! % extension-id item-namespace browser-props)
+                  (r server-plugins.item-lister.events/initialize! % extension-id item-namespace lister-props))))
 
 
 

@@ -117,9 +117,8 @@
   ;  (environment/add-external-css! "/css/filename.css")
   [filepath context-props]
   (let [head-element (dom/get-head-element)
-        app-build    (a/subscribed [:core/get-app-config-item :app-build])
-        filepath     (cache-control-uri (string/starts-with! filepath "/")
-                                        (param app-build))
+        app-build    (a/app-build)
+        filepath     (cache-control-uri (string/starts-with! filepath "/") app-build)
         link-element (create-link-element! filepath)]
        (if-not (source-exists? head-element filepath)
                (insert-link-element! head-element link-element context-props))))

@@ -6,7 +6,7 @@
 ; Created: 2021.04.25
 ; Description:
 ; Version: v0.3.2
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
@@ -22,5 +22,5 @@
 
 (def app-codename          "x4")
 (def app-description       "Are we alone in the universe?")
-(def app-version           "4.5.5")
+(def app-version           "4.5.6")
 (def copyright-information "2021 Monotech.hu")

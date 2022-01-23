@@ -667,7 +667,8 @@
   ;                         :dispatch-n [[:a2] [:a3]}]}
   ;                        {:dispatch [:b1]
   ;                         :dispatch-n [[:b2]]})
-  ;  => {:dispatch [:a1] :dispatch-n [[:a2] [:a3] [:b1] [:b2]]}
+  ;  =>
+  ;  {:dispatch [:a1] :dispatch-n [[:a2] [:a3] [:b1] [:b2]]}
   ;
   ; @return (map)
   [a b]

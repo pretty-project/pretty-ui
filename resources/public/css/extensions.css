@@ -66,6 +66,7 @@
 
 .storage--media-item--header {
   align-items: center;
+  background-color: var( --fill-color );
   border-radius: 12px;
   display: flex;
   flex-direction: column;

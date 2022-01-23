@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v1.8.4
-; Compatibility: x4.5.2
+; Version: v1.9.2
+; Compatibility: x4.5.5
 
 
 
@@ -23,7 +23,6 @@
               [x.app-sync.api]
               [x.app-tools.api]
               [x.app-views.api]
-              [x.boot-synchronizer]
               [app-fruits.dom     :as dom]
               [app-fruits.reagent :as reagent]
               [mid-fruits.candy   :refer [param return]]
@@ -42,8 +41,8 @@
 
 ; @description
 ;  Az applikáció betöltésének folyamata:
-;  - Az [x.boot-synchronizer/synchronize-app! ...] esemény az applikáció indításához
-;    szükséges adatokat letölti a szerverről.
+;  - Az [core/synchronize-app! ...] esemény az applikáció indításához szükséges
+;    adatokat letölti a szerverről.
 ;  - Az applikáció indításához szükséges adatok letöltődése után az :on-app-init
 ;    események megtörténése.
 ;  - Az :on-app-init események megtörténésének kezdete után 100 ms idő elteltével
@@ -176,7 +175,7 @@
       {:core/import-lifecycles! nil
        :core/detect-debug-mode! nil
        :dispatch-n [; 1. Let's start!
-                    [:boot-synchronizer/synchronize-app! app]
+                    [:core/synchronize-app! app]
                     ; 2. A load-handler várjon az XXX#5030 jelre!
                     [:core/synchronize-loading! :boot-loader/build-app!]]}))
 
@@ -260,9 +259,7 @@
   ;  [:boot-loader/->app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
       (let [app-build (r a/get-app-config-item db :app-build)]
-           {:dispatch-if [(-> server-response map/nonempty? not)
-                          [:core/->error-catched {:cofx cofx :error "Failed to synchronize app!"}]]
-            :dispatch-n  ; 1.
-                         [[:environment/set-cookie! :x-app-build {:value app-build}]
-                          ; 2.
-                          [:boot-loader/initialize-app! app]]})))
+           {:dispatch-n [; 1.
+                         [:environment/set-cookie! :x-app-build {:value app-build}]
+                         ; 2.
+                         [:boot-loader/initialize-app! app]]})))

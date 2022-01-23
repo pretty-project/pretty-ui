@@ -18,3 +18,14 @@
 ; Ha nevesített függvényt regisztrálsz mellékhatás eseményként, akkor a függvény a Re-frame
 ; rendszeren kívülről is meghívható lesz.
 (a/reg-fx :import-my-uri! import-my-uri!)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A szerver-oldali :my-transfer azonosítóval regisztrált függvény visszatérési értékének
+; kiolvasása a kliens-oldali Re-Frame adatbázisból az a/get-transfer-data függvénnyel.
+(defn get-my-transfer-data
+  [db _]
+  (r a/get-transfer-data db :my-transfer))

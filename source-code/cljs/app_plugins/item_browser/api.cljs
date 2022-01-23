@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.2.4
-; Compatibility: x4.5.4
+; Compatibility: x4.5.5
 
 
 
@@ -40,8 +40,8 @@
 (def browser-uri engine/browser-uri)
 (def request-id  engine/request-id)
 
-; app-plugins.item-browser.events
-(def load-browser! events/load-browser!)
+; app-plugins.item-editor.engine
+(def set-current-item-id! events/set-current-item-id!)
 
 ; app-plugins.item-browser.subs
 (def get-current-item-id subs/get-current-item-id)

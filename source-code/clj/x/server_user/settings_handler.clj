@@ -6,7 +6,7 @@
 ; Created: 2021.03.24
 ; Description:
 ; Version: v0.7.4
-; Compatibility: x4.4.9
+; Compatibility: x4.5.5
 
 
 
@@ -19,6 +19,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [server-fruits.http :as http]
+              [x.server-core.api  :as a]
               [x.server-db.api    :as db]
               [x.server-user.account-handler :as account-handler]))
 
@@ -122,3 +123,26 @@
            (http/text-wrap {:body "Uploaded"}))
       ; If user is NOT authenticated ...
       (http/error-wrap {:error-message :permission-denied :status 401})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- transfer-user-settings
+  ; @param (map) request
+  ;
+  ; @return (map)
+  [request]
+  (-> request request->user-settings db/document->pure-document))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles
+  ::lifecycles
+  {:on-server-init [:core/reg-transfer! :user/user-settings
+                                        {:data-f      transfer-user-settings
+                                         :target-path [:user/settings :data-items]}]})

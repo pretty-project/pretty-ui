@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.config-handler
-    (:require [x.app-core.event-handler  :as event-handler]
-              [x.mid-core.config-handler :as config-handler]))
+    (:require [x.mid-core.config-handler :as config-handler]))
 
 
 
@@ -25,11 +24,3 @@
 ; x.mid-core.config-handler
 (def get-app-config      config-handler/get-app-config)
 (def get-app-config-item config-handler/get-app-config-item)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-sub :core/get-app-config      get-app-config)
-(event-handler/reg-sub :core/get-app-config-item get-app-config-item)
