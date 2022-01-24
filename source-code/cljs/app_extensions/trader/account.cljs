@@ -147,4 +147,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(trader/upload-api-details! ~(r get-api-details db))]}]))
+                         {:display-progress? true
+                          :query [:debug `(trader/upload-api-details! ~(r get-api-details db))]}]))

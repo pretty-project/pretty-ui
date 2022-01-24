@@ -83,7 +83,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id picker-props]
   [elements/toggle {:content  [no-item-selected-label picker-id picker-props]
-                    :on-click [:storage/load-media-picker! picker-id picker-props]}])
+                    :on-click [:item-browser/load-browser! :storage :media]}])
 
 (defn media-picker
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -120,8 +120,10 @@
 (a/reg-event-fx
   :storage/render-media-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  [a/debug!]
   (fn [_ [_ picker-id picker-props]]
-      [:ui/add-popup! (keyword/add-namespace :storage picker-id)
+      [:ui/add-popup! ;(keyword/add-namespace :storage picker-id)
+                      :xxx
                       {:body   [body   picker-id picker-props]
                        :header [header picker-id picker-props]
                        :stretch-orientation :vertical}]))

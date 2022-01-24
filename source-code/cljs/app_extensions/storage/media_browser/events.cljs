@@ -48,5 +48,5 @@
 (a/reg-event-fx
   :storage/load-media-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:storage/render-media-browser!])
-  ;[:storage/load-media-picker!])
+  ;[:storage/render-media-browser!])
+  [:storage/load-media-picker!])

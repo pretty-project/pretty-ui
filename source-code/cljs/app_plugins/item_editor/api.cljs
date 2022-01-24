@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
@@ -15,9 +15,9 @@
 
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
+              [app-plugins.item-editor.events]
               [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.events :as events]
               [app-plugins.item-editor.subs   :as subs]
               [app-plugins.item-editor.views  :as views]))
 
@@ -30,9 +30,6 @@
 (def editor-uri engine/editor-uri)
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
-
-; app-plugins.item-editor.engine
-(def set-current-item-id! events/set-current-item-id!)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)

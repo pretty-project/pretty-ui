@@ -46,7 +46,6 @@
 (a/reg-event-fx :my-extension/render! [:ui/set-surface! {:view {:content    #'body
                                                                 :subscriber [:view-selector/get-view-props :my-extension]}}])
 
-(a/reg-event-fx :my-extension/load! {:dispatch-n [[:ui/listen-to-process! :my-extension/synchronize!]
-                                                  [:ui/set-header-title!  "My extension"]
-                                                  [:ui/set-window-title!  "My extension"]
+(a/reg-event-fx :my-extension/load! {:dispatch-n [[:ui/set-header-title! "My extension"]
+                                                  [:ui/set-window-title! "My extension"]
                                                   [:my-extension/render!]]})

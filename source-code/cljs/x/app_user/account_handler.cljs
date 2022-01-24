@@ -190,7 +190,6 @@
                        {:method       :post
                         :on-success   [:boot-loader/restart-app!]
                         :on-failure   [:user/reg-last-login-attempt!]
-                        :silent-mode? true
                         :source-path  [:login-box]
                         :uri          "/user/authenticate"
                         :idle-timeout 3000}])

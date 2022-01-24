@@ -76,6 +76,7 @@
 (def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
 (def self-destruct!                   event-handler/self-destruct!)
+(def debug!                           event-handler/debug!)
 (def reg-event-db                     event-handler/reg-event-db)
 (def reg-event-fx                     event-handler/reg-event-fx)
 (def reg-handled-fx                   event-handler/reg-handled-fx)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.4.8
-; Compatibility: x4.4.6
+; Version: v2.6.0
+; Compatibility: x4.5.6
 
 
 
@@ -20,7 +20,9 @@
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
               [x.app-sync.engine :as engine]
+              [x.app-ui.api      :as ui]
               [x.app-sync.response-handler :as response-handler]))
+
 
 
 
@@ -34,9 +36,6 @@
 ; @constant (ms)
 (def DEFAULT-IDLE-TIMEOUT 500)
 
-; @constant (metamorphic-content)
-(def DEFAULT-FAILURE-MESSAGE :synchronization-error)
-
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -45,12 +44,18 @@
 (defn get-request-status
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/get-request-status db :my-request)
+  ;
   ; @return (keyword)
   [db [_ request-id]]
   (r a/get-process-status db request-id))
 
 (defn get-request-activity
   ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r sync/get-request-activity db :my-request)
   ;
   ; @return (keyword)
   [db [_ request-id]]
@@ -59,14 +64,18 @@
 (defn get-request-progress
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/get-request-progress db :my-request)
+  ;
   ; @return (keyword)
   [db [_ request-id]]
   (r a/get-process-progress db request-id))
 
 (defn request-active?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r sync/request-active? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -74,6 +83,9 @@
 
 (defn request-sent?
   ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r sync/request-sent? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -83,6 +95,9 @@
 (defn request-successed?
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/request-successed? db :my-request)
+  ;
   ; @return (boolean)
   [db [_ request-id]]
   (let [request-status (r a/get-process-status db request-id)]
@@ -90,6 +105,9 @@
 
 (defn request-failured?
   ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r sync/request-failured? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -99,6 +117,9 @@
 (defn request-aborted?
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/request-aborted? db :my-request)
+  ;
   ; @return (boolean)
   [db [_ request-id]]
   (get-in db (db/path :sync/requests request-id :aborted?)))
@@ -106,20 +127,14 @@
 (defn listening-to-request?
   ; @param (keyword) request-id
   ;
+  ; @usage
+  ;  (r sync/listening-to-request? db :my-request)
+  ;
   ; @return (boolean)
   [db [_ request-id]]
   (let [request-activity (r a/get-process-activity db request-id)]
        (or (= request-activity :active)
            (= request-activity :idle))))
-
-(defn- silent-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (boolean)
-  [db [_ request-id]]
-  (get-in db (db/path :sync/requests request-id :silent-mode?)))
 
 (defn- get-request-on-failure-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -235,14 +250,12 @@
   ; @return (map)
   ;  {:response-action (keyword)
   ;   :sent-time (object)
-  ;   :silent-mode? (boolean)
   ;   :timeout (integer)}
   [db [_ {:keys [response-action] :as request-props}]]
-  (merge {:error-handler-event    :sync/->request-failure
-          :handler-event          :sync/->request-success
+  (merge {:error-handler-event    :sync/->request-failured
+          :handler-event          :sync/->request-successed
           :progress-handler-event :core/set-process-progress!
           :response-action        :store
-          :silent-mode?           true
           :timeout DEFAULT-REQUEST-TIMEOUT
           :sent-time (time/timestamp-string)}
          (r request-props<-source-data db request-props)))
@@ -276,21 +289,58 @@
   [db [_ request-id]]
   (assoc-in db (db/path :sync/requests request-id :aborted?) true))
 
+(defn- ->request-successed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (*) server-response
+  ;
+  ; @return (map)
+  [db [_ request-id server-response]]
+  (as-> db % (r response-handler/store-request-response! % request-id server-response)
+             (r a/set-process-status!                    % request-id :success)
+             (r a/set-process-activity!                  % request-id :idle)))
+
+(defn- ->request-failured
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ request-id server-response]]
+  (as-> db % (r a/set-process-status!   % request-id :failure)
+             (r a/set-process-activity! % request-id :idle)))
+
+(defn- ->request-stalled
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ;
+  ; @return (map)
+  [db [_ request-id]]
+  (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
+          (as-> db % (r a/set-process-activity!       % request-id :stalled)
+                     (r ui/stop-listening-to-process! % request-id))
+          (r a/set-process-activity! db request-id :stalled)))
+
+(defn- send-request!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:display-progress? (boolean)}
+  ;
+  ; @return (map)
+  [db [_ request-id {:keys [display-progress?] :as request-props}]]
+  (if display-progress? (as-> db % (r ui/listen-to-process! % request-id)
+                                   (r store-request-props!  % request-id request-props))
+                        (r store-request-props! db request-id request-props)))
+
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :sync/show-request-failure-message!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ; @param (keyword or string) status-text
-  (fn [{:keys [db]} [_ request-id status-text]]
-      [:ui/blow-bubble! request-id
-                        {:content (or status-text DEFAULT-FAILURE-MESSAGE)
-                         :color   :warning}]))
 
 (a/reg-event-fx
   :sync/abort-request!
@@ -311,6 +361,8 @@
   ;  {:process-id ...} tulajdonságként hivatkozva.
   ; @param (map) request-props
   ;  {:body (*)(opt)
+  ;   :display-process? (boolean)(opt)
+  ;    Default: false
   ;   :filename (string)(opt)
   ;    Only w/ {:response-action :save}
   ;   :idle-timeout (ms)(opt)
@@ -335,10 +387,6 @@
   ;   :response-action (keyword)(opt)
   ;    :save (save to file), :store (store to db)
   ;    Default: :store
-  ;   :silent-mode? (boolean)(opt)
-  ;    A csendes mód jelentése, hogy hibás teljesítés esetén nem jelenik meg
-  ;    hibaüzenet.
-  ;    Default: true
   ;   :source-path (item-path vector)(opt)
   ;    Milyen Re-Frame adatbázis útvonalon tárolt adatot küldjön el paraméterként
   ;    Only w/ {:method :post}
@@ -369,7 +417,7 @@
             request-props (a/event-vector->first-props event-vector)
             request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
-               {:db                 (r store-request-props! db request-id request-props)
+               {:db                 (r send-request! db request-id request-props)
                 :sync/send-request! [request-id request-props]
                 :dispatch           [:sync/->request-sent request-id]}))))
 
@@ -384,8 +432,8 @@
   ;
   ; @param (keyword) request-id
   (fn [{:keys [db]} [_ request-id]]
-                      ; Set request status
-      {:db (as-> db % (r a/set-process-status!   % request-id :progress)
+      {:db (as-> db % ; Set request status
+                      (r a/set-process-status!   % request-id :progress)
                       ; Set request activity
                       (r a/set-process-activity! % request-id :active)
                       ; Set request progress
@@ -396,7 +444,7 @@
        :dispatch (r get-request-on-sent-event db request-id)}))
 
 (a/reg-event-fx
-  :sync/->request-success
+  :sync/->request-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -406,20 +454,16 @@
       (let [server-response (reader/string->mixed server-response-body)]
             ; TEMP
             ; Fontos, hogy a szerver-válasz minél hamarabb a Re-Frame adatbázisba íródjon!
-           {:db (r response-handler/store-request-response! db request-id server-response)
+           {:db (r ->request-successed db request-id server-response)
             :sync/remove-reference! [request-id]
             :dispatch-n [;[:sync/handle-request-response!      request-id server-response]
-                         [:core/set-process-status!           request-id :success]
-                         [:core/set-process-activity!         request-id :idle]
                          (r get-request-on-success-event   db request-id server-response)
                          (r get-request-on-responsed-event db request-id server-response)]
-            :dispatch-later [{:ms       (r get-request-idle-timeout     db request-id)
-                              :dispatch [:core/set-process-activity!       request-id :stalled]}
-                             {:ms       (r get-request-idle-timeout     db request-id)
-                              :dispatch (r get-request-on-stalled-event db request-id server-response)}]})))
+            :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
+                              :dispatch [:sync/->request-stalled request-id server-response]}]})))
 
 (a/reg-event-fx
-  :sync/->request-failure
+  :sync/->request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -431,16 +475,22 @@
   ;   :response (string)
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
-      {:sync/remove-reference! [request-id]
-       :dispatch-n [[:core/set-process-status!           request-id :failure]
-                    [:core/set-process-activity!         request-id :idle]
-                    (r get-request-on-failure-event   db request-id server-response)
-                    (r get-request-on-responsed-event db request-id server-response)
-                    (if-not (r silent-mode? db request-id)
-                            [:sync/show-request-failure-message! request-id status-text])]
-       :dispatch-later [{:ms       (r get-request-idle-timeout db request-id)
-                         :dispatch [:core/set-process-activity!   request-id :stalled]}]}))
-                         ; A [:sync/->request-failure ...] esemény nem hívja meg az {:on-stalled ...}
-                         ; tulajdonságként átadott eseményt, így az nem történik meg hibás teljesítés
-                         ; esetén, ezért az {:on-stalled ...] esemény használható az {:on-success ...}
-                         ; esemény alternatívájaként!
+      {:db (r ->request-failured db request-id server-response)
+       :sync/remove-reference! [request-id]
+       :dispatch-n [(r get-request-on-failure-event   db request-id server-response)
+                    (r get-request-on-responsed-event db request-id server-response)]
+       :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
+                         :dispatch [:sync/->request-stalled request-id server-response]}]}))
+
+(a/reg-event-fx
+  :sync/->request-stalled
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ request-id server-response]]
+      {:db (r ->request-stalled db request-id)
+       ; Az {:on-stalled ...} esemény használható az {:on-success ...} esemény alternatívájaként,
+       ; mert hibás teljesítés esetén nem történik meg.
+       :dispatch-if [(r request-successed?           db request-id)
+                     (r get-request-on-stalled-event db request-id server-response)]}))

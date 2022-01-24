@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.09
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.4.9
+; Version: v0.5.8
+; Compatibility: x4.5.6
 
 
 
@@ -22,50 +22,11 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
-;; -- XXX#5569 ----------------------------------------------------------------
-
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
 (def DEFAULT-URI "/query")
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn query-props->request-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) query-id
-  ; @param (map) query-props
-  ;  {:body (map)(opt)
-  ;   {:query (string or vector)}
-  ;   :query (string or vector)(opt)}
-  ;
-  ; @example
-  ;  (query-props->request-props {:query [:all-users]})
-  ;  =>
-  ;  {:method :post :query "[:all-users]"}
-  ;
-  ; @example
-  ;  (query-props->request-props {:body {:query [:all-users] :my-body-param "My value"}})
-  ;  =>
-  ;  {:method :post :body {:query "[:all-users]" :my-body-param "My value"}}
-  ;
-  ; @return (map)
-  ;  {:body (map)
-  ;    {:query (string)}
-  ;   :method (keyword)
-  ;   :params (map)
-  ;    {:query (string)}}
-  [query-id {:keys [body query] :as query-props}]
-  (let [request-props (select-keys query-props [:body :idle-timeout :on-failure :on-sent :on-success
-                                                :on-stalled :target-path :target-paths :uri])]
-       (merge request-props {:method :post}
-                            (if query {:params {:query query}}))))
 
 
 
@@ -78,10 +39,15 @@
   ; @param (map) query-props
   ;
   ; @return (map)
-  ;  {:uri (string)}
-  [query-props]
+  ;  {:method (keyword)
+  ;   :params (map)
+  ;   :query (vector)
+  ;   :uri (string)}
+  [{:keys [query] :as query-props}]
   (merge {:uri DEFAULT-URI}
-         (param query-props)))
+         (param query-props)
+         (if query {:params {:query query}})
+         {:method :post}))
 
 
 
@@ -114,21 +80,6 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn store-query-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) query-id
-  ; @param (map) query-props
-  ;
-  ; @return (map)
-  [db [_ query-id query-props]]
-  (assoc-in db (db/path :sync/queries query-id) query-props))
-
-
-
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -139,6 +90,8 @@
   ;  {:body (map)(opt)
   ;    {:query (vector)}
   ;    Only w/o {:query ...}
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: false
   ;   :idle-timeout (ms)(opt)
   ;    Default: x.app-sync/request-handler/DEFAULT-IDLE-TIMEOUT
   ;   :on-failure (metamorphic-event)(opt)
@@ -177,10 +130,9 @@
   ;  [:sync/send-query! {:query [:all-users]}]
   ;                      :target-path [:my :response :path]}
   (fn [{:keys [db]} event-vector]
-      (let [query-id      (a/event-vector->second-id   event-vector)
-            query-props   (a/event-vector->first-props event-vector)
-            query-props   (query-props-prototype       query-props)
-            request-props (query-props->request-props  query-id query-props)
+      (let [query-id    (a/event-vector->second-id   event-vector)
+            query-props (a/event-vector->first-props event-vector)
+            query-props (query-props-prototype       query-props)
 
             ; BUG#5011
             ; A query vektorba feltételesen – if, when, ... függvény használatával –
@@ -189,7 +141,6 @@
             ; Emiatt szükséges eltávolítani a query vektorból a nil értékeket,
             ; miután a {:query [...]} és a {:body {:query [...]}} tulajdonságok
             ; összevonása megtörtént.
-            request-props (update-in request-props [:params :query] vector/remove-item nil)]
+            query-props (update-in query-props [:params :query] vector/remove-item nil)]
 
-           {:db       (r store-query-props! db query-id query-props)
-            :dispatch [:sync/send-request!     query-id request-props]})))
+           [:sync/send-request! query-id query-props])))

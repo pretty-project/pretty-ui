@@ -96,4 +96,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(trader/upload-settings! ~(r get-settings db))]}]))
+                         {:display-progress? true
+                          :query [:debug `(trader/upload-settings! ~(r get-settings db))]}]))

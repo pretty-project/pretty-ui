@@ -13,6 +13,10 @@
 
 
 # x4.5.0
+
+- A sync/send-request! esemény {:target-paths ...} tulajdonságára már nincs szükség a transit-handler
+  bevezetése óta
+
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
 
 

@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.9.8
-; Compatibility: x4.5.4
+; Compatibility: x4.5.6
 
 
 
@@ -29,26 +29,6 @@
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn set-current-item-id!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ;  (r item-editor/set-current-item-id! db :my-extension :my-type "my-item")
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  ; XXX#4031
-  ; Az aktuálisan szerkesztett elem azonosítóját lehetséges a set-current-item-id! függvény
-  ; használatával is beállítani, így az :item-id forrása nem kizárólag az aktuális útvonalból
-  ; kiolvasott érték lehet.
-  (assoc-in db [extension-id :item-editor/meta-items :item-id] item-id))
-
-; @usage
-;  [:item-editor/set-current-item-id! :my-extension :my-type "my-item"]
-(a/reg-event-db :item-editor/set-current-item-id! set-current-item-id!)
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,7 +168,7 @@
            ; If the received document is NOT valid ...
            (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
 
-(defn store-current-item-id!
+(defn derive-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -197,6 +177,17 @@
   [db [_ extension-id]]
   (let [derived-item-id (r subs/get-derived-item-id db extension-id)]
        (assoc-in db [extension-id :item-editor/meta-items :item-id] derived-item-id)))
+
+(defn set-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (assoc-in db [extension-id :item-editor/meta-items :item-id] item-id))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -241,9 +232,8 @@
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
   (let [request-id (engine/request-id extension-id item-namespace)]
-       (as-> db % (r ui/listen-to-process!  % request-id)
-                  (r reset-editor!          % extension-id item-namespace)
-                  (r store-current-item-id! % extension-id)
+       (as-> db % (r reset-editor!           % extension-id item-namespace)
+                  (r derive-current-item-id! % extension-id)
                   ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét
                   (assoc-in % [extension-id :item-lister/meta-items :recovery-mode?]
                               (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)))))
@@ -292,7 +282,8 @@
       ;   pontatlan visszaálltást okozhat!
       {:db       (r backup-current-item! db extension-id)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {; XXX#3701
+                                    {:display-progress? true
+                                     ; XXX#3701
                                      ; Az on-success helyett on-stalled időzítés használatával elkerülhető,
                                      ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
                                      ; egymást, megnehezítve a felhasználó számára a események megértését
@@ -308,7 +299,8 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {; XXX#3701
+                         {:display-progress? true
+                          ; XXX#3701
                           :on-stalled [:item-editor/->item-deleted extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body {:content :failed-to-delete}}]
                           :query      (r queries/get-delete-item-query db extension-id item-namespace)}]))
@@ -322,7 +314,8 @@
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-editor/->delete-undid extension-id item-namespace item-id]
+                         {:display-progress? true
+                          :on-success [:item-editor/->delete-undid extension-id item-namespace item-id]
                           :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
                           :query      (r queries/get-undo-delete-query db extension-id item-namespace item-id)}]))
 
@@ -334,7 +327,8 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-editor/->item-duplicated extension-id item-namespace]
+                         {:display-progress? true
+                          :on-success [:item-editor/->item-duplicated extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body {:content :failed-to-copy}}]
                           :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
 
@@ -358,7 +352,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if (r subs/download-data? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:on-success [:item-editor/receive-item!          extension-id item-namespace]
+                             {:display-progress? true
+                              :on-success [:item-editor/receive-item!          extension-id item-namespace]
                               :query      (r queries/get-request-item-query db extension-id item-namespace)}]
           ; Ha az elem szerkesztéséhez nincs szükség adatok letöltéséhez, akkor is szükséges
           ; a szerkesztőt {:item-received? true} állapotba léptetni!

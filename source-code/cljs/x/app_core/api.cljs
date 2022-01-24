@@ -6,7 +6,7 @@
 ; Created: 2020.03.01
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
@@ -84,6 +84,7 @@
 (def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
 (def self-destruct!                   event-handler/self-destruct!)
+(def debug!                           event-handler/debug!)
 (def reg-event-db                     event-handler/reg-event-db)
 (def reg-event-fx                     event-handler/reg-event-fx)
 (def reg-handled-fx                   event-handler/reg-handled-fx)
@@ -123,11 +124,8 @@
 (def start-process?        process-handler/start-process?)
 (def get-process-progress  process-handler/get-process-progress)
 (def process-done?         process-handler/process-done?)
-; WARNING#4067
 (def set-process-progress! process-handler/set-process-progress!)
-; WARNING#4067
 (def set-process-status!   process-handler/set-process-status!)
-; WARNING#4067
 (def set-process-activity! process-handler/set-process-activity!)
 (def clear-process!        process-handler/clear-process!)
 

@@ -36,6 +36,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-root-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :root-item-id))
+
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -43,10 +53,8 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (string)
-  ;  Az item-id forrásából (route-path param) származó adat. Annak hiánya esetén a default-item-id.
   [db [_ extension-id item-namespace]]
-  (or (r router/get-current-route-path-param db :item-id)
-      (r get-meta-item                       db extension-id item-namespace :default-item-id)))
+  (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
   ; @param (keyword) extension-id
@@ -93,7 +101,7 @@
   (let [item-path (r get-item-path db extension-id item-namespace)]
        (empty? item-path)))
 
-(defn get-parent-id
+(defn get-parent-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.5
+; Version: v0.4.6
+; Compatibility: x4.5.6
 
 
 
@@ -15,7 +15,6 @@
 
 (ns app-plugins.item-browser.events
     (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map]
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
@@ -29,26 +28,6 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-current-item-id!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ;  (r item-browser/set-current-item-id! db :my-extension :my-type "my-item")
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  ; XXX#4031
-  ; Az aktuálisan böngészett elem azonosítóját lehetséges a set-current-item-id! függvény
-  ; használatával is beállítani, így az :item-id forrása nem kizárólag az aktuális útvonalból
-  ; kiolvasott érték lehet.
-  (assoc-in db [extension-id :item-browser/meta-items :item-id] item-id))
-
-; @usage
-;  [:item-browser/set-current-item-id! :my-extension :my-type "my-item"]
-(a/reg-event-db :item-browser/set-current-item-id! set-current-item-id!)
-
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -58,7 +37,7 @@
   [db [_ extension-id]]
   (r app-plugins.item-lister.events/set-error-mode! db extension-id))
 
-(defn store-current-item-id!
+(defn derive-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -66,8 +45,47 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace)]
-       (assoc-in db [extension-id :item-browser/meta-items :item-id] derived-item-id)))
+  (assoc-in db [extension-id :item-browser/meta-items :item-id]
+               (or (r subs/get-derived-item-id db extension-id item-namespace)
+                   (r subs/get-root-item-id    db extension-id item-namespace))))
+
+(defn use-root-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (assoc-in db [extension-id :item-browser/meta-items :item-id]
+               (r subs/get-root-item-id db extension-id item-namespace)))
+
+(defn set-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (assoc-in db [extension-id :item-browser/meta-items :item-id] item-id))
+
+(defn store-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;  {:item-id (string)(opt)}}
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace browser-props]]
+  (if (r subs/route-handled?     db extension-id item-namespace)
+      (r derive-current-item-id! db extension-id item-namespace)
+      (if-let [item-id (get browser-props :item-id)]
+              (r set-current-item-id! db extension-id item-namespace item-id)
+              (r use-root-item-id!    db extension-id item-namespace))))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,10 +124,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;  {:item-id (string)(opt)}
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (r store-current-item-id! db extension-id item-namespace))
+  [db [_ extension-id item-namespace browser-props]]
+  (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
+             ; TEMP
+             (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace)))
 
 
 
@@ -124,32 +146,34 @@
   ;
   ; @usage
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
-  (fn [_ [_ extension-id item-namespace item-id]]
-      (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
-           [:router/go-to! browser-uri])))
+  [a/debug!]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      (if (r subs/route-handled? db extension-id item-namespace)
+          ; If handled by route ...
+          (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
+               [:router/go-to! browser-uri])
+          ; If NOT handled by route ...
+          [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}])))
 
 (a/reg-event-fx
   :item-browser/go-home!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-browser/go-home! :my-extension :my-type]
-  (fn [_ [_ extension-id item-namespace item-id]]
-      (let [browser-uri (engine/browser-uri extension-id item-namespace)]
-           [:router/go-to! browser-uri])))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [root-item-id (r subs/get-root-item-id db extension-id item-namespace)]
+           [:item-browser/browse-item! extension-id item-namespace root-item-id])))
 
 (a/reg-event-fx
   :item-browser/go-up!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-browser/go-up! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [parent-id   (r subs/get-parent-id db extension-id item-namespace)
-            browser-uri (engine/browser-uri      extension-id item-namespace parent-id)]
-           [:router/go-to! browser-uri])))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [parent-item-id (r subs/get-parent-item-id db extension-id item-namespace)]
+           [:item-browser/browse-item! extension-id item-namespace parent-item-id])))
 
 (a/reg-event-fx
   :item-browser/receive-item!
@@ -157,9 +181,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [db (r receive-item! db extension-id item-namespace server-response)]
            (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]
-                   {:dispatch-n [[:ui/set-header-title! item-label]
-                                 [:ui/set-window-title! item-label]]
-                    :db db}
+                   {:db db :dispatch-n [[:ui/set-header-title! item-label]
+                                        [:ui/set-window-title! item-label]]}
                    {:db db}))))
 
 (a/reg-event-fx
@@ -179,19 +202,23 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map)(opt) browser-props
+  ;  {:item-id (string)(opt)}
+  [a/debug!]
+  (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
-           {:db (r load-browser! db extension-id item-namespace)
-
+           {:db (r load-browser! db extension-id item-namespace browser-props)
             :dispatch-n [; XXX#5660
                          [:environment/reg-keypress-listener! :item-browser/keypress-listener]
-                         [:ui/set-header-title! browser-label]
-                         [:ui/set-window-title! browser-label]
+                         (if (r subs/route-handled? db extension-id item-namespace)
+                             [:ui/set-header-title! browser-label])
+                         (if (r subs/route-handled? db extension-id item-namespace)
+                             [:ui/set-window-title! browser-label])
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
-
-                         ; Nem tudom itt-e a helye.
-                         ; Amikor böngészel és a viewport-ban volt az inf-loader, és megnyitsz
-                         ; egy elemet, akkor nem kerül ki és vissza a viewportba a loader, ezért
-                         ; manuál kell ujrainditani
+                         ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
+                         ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
+                         ; komponens a viewport területén volt, akkor szükséges az infinite-loader
+                         ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
+                         ; az adatokat.
                          [:tools/reload-infinite-loader! extension-id]]})))

@@ -395,10 +395,9 @@
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
   (let [request-id (engine/request-id extension-id item-namespace)]
-       (as-> db % (r ui/listen-to-process! % request-id)
-                  (r reset-lister!         % extension-id)
-                  (r reset-downloads!      % extension-id)
-                  (r reset-search!         % extension-id))))
+       (as-> db % (r reset-lister!    % extension-id)
+                  (r reset-downloads! % extension-id)
+                  (r reset-search!    % extension-id))))
 
 
 
@@ -429,7 +428,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [db (r toggle-reload-mode! db extension-id)]
            [:sync/send-query! :item-lister/reload-items! ; Silent-mode / no progress-bar
-                              {:on-success [:item-lister/reload-items!           extension-id item-namespace]
+                              {:display-progress? true
+                               :on-success [:item-lister/reload-items!           extension-id item-namespace]
                                :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
 
 (a/reg-event-fx
@@ -452,12 +452,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
           ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
           (r subs/request-items? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {; A letöltött dokumentumok on-success helyett on-stalled időpontban
+                             {:display-progress? true
+                              ; A letöltött dokumentumok on-success helyett on-stalled időpontban
                               ; kerülnek tárolásra a Re-Frame adatbázisba, így elkerülhető,
                               ; hogy a request idle-timeout ideje alatt az újonnan letöltött
                               ; dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
@@ -474,7 +476,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r disable-selected-items! db extension-id item-namespace)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-lister/->selected-items-deleted extension-id item-namespace]
+                                    {:display-progress? true
+                                     :on-success [:item-lister/->selected-items-deleted extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
                                      :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
 
@@ -487,7 +490,8 @@
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-lister/reload-lister! extension-id item-namespace]
+                         {:display-progress? true
+                          :on-success [:item-lister/reload-lister! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
 
@@ -499,7 +503,8 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-lister/->selected-items-duplicated extension-id item-namespace]
+                         {:display-progress? true
+                          :on-success [:item-lister/->selected-items-duplicated extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
                           :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]))
 
@@ -512,7 +517,8 @@
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-lister/reload-lister! extension-id item-namespace]
+                         {:display-progress? true
+                          :on-success [:item-lister/reload-lister! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
                           :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace item-ids)}]))
 
@@ -592,6 +598,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
   ; XXX#5660
   [:environment/remove-keypress-listener! :item-lister/keypress-listener])
 

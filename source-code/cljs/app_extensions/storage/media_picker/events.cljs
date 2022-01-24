@@ -8,25 +8,17 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- load-media-picker!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id picker-props]]
-  ;(as-> db % (r item-browser/set-current-item-id! % :storage :media engine/ROOT-DIRECTORY-ID)))
-  db)
-
-
-
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :storage/load-media-picker!
+  [a/debug!]
   ; @param (keyword)
-  (fn [{:keys [db]} event-vector]
+  (fn [_ event-vector]
       (let [picker-id    (a/event-vector->second-id   event-vector)
             picker-props (a/event-vector->first-props event-vector)]
-           {:db (r load-media-picker! db picker-id picker-props)
-            :dispatch [:storage/render-media-picker! picker-id picker-props]})))
+           {:dispatch [:storage/render-media-picker! picker-id picker-props]})))
 
 
 
@@ -35,7 +27,7 @@
 
 (a/reg-event-fx
   :storage/->media-item-picked
+  [a/debug!]
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
-      (case mime-type "storage/directory" {:dispatch-n [[:item-browser/set-current-item-id! :storage :media id]
-                                                        [:item-browser/load-browser! :storage :media]]}
+      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           [:storage/->file-picked item-dex item-props])))

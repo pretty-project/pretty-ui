@@ -167,7 +167,8 @@
   :trader/download-app-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:sync/send-query! :trader/synchronize!
-                     {:query [:debug ;`(:trader/download-listener-data ~{})
+                     {:display-progress? true
+                      :query [:debug ;`(:trader/download-listener-data ~{})
                                      `(:trader/download-settings      ~{})
                                      `(:trader/download-api-details   ~{})
                                      `(:trader/download-editor-data   ~{})]

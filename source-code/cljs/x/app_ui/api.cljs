@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.5.4
+; Version: v0.6.0
+; Compatibility: x4.5.6
 
 
 
@@ -35,7 +35,6 @@
 
 
 
-
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -43,6 +42,7 @@
 (def app-logo          graphics/app-logo)
 (def app-title         graphics/app-title)
 (def loading-animation graphics/loading-animation)
+
 ; x.app-ui.header
 (def set-header-title! header/set-header-title!)
 
@@ -66,7 +66,8 @@
 (def go-back-popup-header          popup-header-presets/go-back-popup-header)
 
 ; x.app-ui.progress-bar
-(def listen-to-process! progress-bar/listen-to-process!)
+(def listen-to-process!         progress-bar/listen-to-process!)
+(def stop-listening-to-process! progress-bar/stop-listening-to-process!)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

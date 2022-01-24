@@ -12,8 +12,8 @@
 (a/reg-lifecycles
   ::lifecycles
   {:on-server-boot [:item-browser/initialize! :storage :media
-                                              {:default-item-id engine/ROOT-DIRECTORY-ID
-                                               :label-key    :alias
+                                              {:label-key    :alias
                                                :path-key     :path
-                                               :search-keys [:alias]
-                                               :routed? false}]})
+                                               :root-item-id engine/ROOT-DIRECTORY-ID
+                                               :search-keys [:alias]}]})
+                                               ;:routed? false}]})

@@ -35,7 +35,7 @@
 (def DEFAULT-PATH-KEY :path)
 
 ; @constant (keywords in vector)
-(def BROWSER-PROPS-KEYS [:default-item-id :label :label-key :path-key :routed?])
+(def BROWSER-PROPS-KEYS [:label :label-key :path-key :root-item-id :routed?])
 
 ; @constant (keywords in vector)
 (def LISTER-PROPS-KEYS [:download-limit :label :order-by :order-by-options :search-keys])
@@ -142,8 +142,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:default-item-id (string)(opt)
-  ;   :download-limit (integer)(opt)
+  ;  {:download-limit (integer)(opt)
   ;    Default: item-lister/DEFAULT-DOWNLOAD-LIMIT
   ;   :label (metamorphic-content)(opt)
   ;    Default: extension-id
@@ -155,14 +154,15 @@
   ;    Default: item-lister/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)(opt)
   ;    Default: DEFAULT-PATH-KEY
+  ;   :root-item-id (string)(opt)
   ;   :routed? (boolean)(opt)
   ;    Default: true
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-browser/initialize! :my-extension :my-type {:default-item-id "my-item"
-  ;                                                     :search-keys     [:name :email-address]}]
+  ;  [:item-browser/initialize! :my-extension :my-type {:root-item-id "my-item"
+  ;                                                     :search-keys  [:name :email-address]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
            {:db (r initialize! db extension-id item-namespace browser-props)

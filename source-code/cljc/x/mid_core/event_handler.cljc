@@ -36,6 +36,7 @@
 ; Metamorphic effects functions
 ; Effects-map functions
 ; Event self-destructing
+; Event debugging
 ; Event checking
 ; Event registrating
 ; Dispatch functions
@@ -691,7 +692,7 @@
 ;   (fn [cofx event-vector]
 ;       {:dispatch ...}))
 
-(defn <-self-destruct!
+(defn self-destruct-f
   ; @param (map) context
   ;
   ; @return (map)
@@ -703,7 +704,25 @@
 
 ; @constant (?)
 (def self-destruct! (re-frame/->interceptor :id    :core/self-destruct!
-                                            :after <-self-destruct!))
+                                            :after self-destruct-f))
+
+
+
+;; -- Event debugging ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn debug-f
+  ; @param (map) context
+  ;
+  ; @return (map)
+  [context]
+  (let [event-vector (context->event-vector context)]
+       (println event-vector)
+       (return  context)))
+
+; @constant (?)
+(def debug! (re-frame/->interceptor :id    :core/debug!
+                                    :after debug-f))
 
 
 

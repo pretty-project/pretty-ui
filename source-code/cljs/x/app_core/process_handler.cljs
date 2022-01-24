@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description: 'Failure is success in progress' – Albert Einstein
-; Version: v0.3.8
-; Compatibility: x4.5.2
+; Version: v0.8.8
+; Compatibility: x4.5.6
 
 
 
@@ -14,9 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.process-handler
-    (:require [mid-fruits.map           :refer [dissoc-in]]
-              [mid-fruits.math          :as math]
-              [mid-fruits.vector        :as vector]
+    (:require [mid-fruits.map :refer [dissoc-in]]
               [x.app-core.event-handler :as event-handler :refer [r]]))
 
 
@@ -252,52 +250,10 @@
 
 
 
-;; -- Process events subscriptions --------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-process-progress-events
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) process-id
-  ; @param (percent) process-progress
-  ;
-  ; @return (vector)
-  [db [_ process-id process-progress]]
-  (get-in db [:core/processes :data-items process-id :progress-events process-progress]))
-
-(defn- get-process-status-events
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) process-id
-  ; @param (keyword) process-status
-  ;
-  ; @return (vector)
-  [db [_ process-id process-status]]
-  (get-in db [:core/processes :data-items process-id :status-events process-status]))
-
-(defn- get-process-activity-events
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) process-id
-  ; @param (keyword) process-activity
-  ;
-  ; @return (vector)
-  [db [_ process-id process-activity]]
-  (get-in db [:core/processes :data-items process-id :activity-events process-activity]))
-
-
-
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn set-process-progress!
-  ; WARNING#4067
-  ;  A set-process-*! események adatbázis függvényként való használatakor
-  ;  nem történnek meg a hozzárendelt process-*-event események.
-  ;
-  ;  As DB-event:     (r a/set-process-progress! db :my-process)
-  ;  As effect-event: [:core/set-process-progress!  :my-process]
-  ;
   ; @param (keyword) process-id
   ; @param (percent) process-progress
   ;
@@ -305,9 +261,9 @@
   [db [_ process-id process-progress]]
   (assoc-in db [:core/processes :data-items process-id :progress] process-progress))
 
+(event-handler/reg-event-db :core/set-process-progress! set-process-progress!)
+
 (defn set-process-status!
-  ; WARNING#4067
-  ;
   ; @param (keyword) process-id
   ; @param (keyword) process-status
   ;  :prepare, :progress, :failure, :success
@@ -316,9 +272,9 @@
   [db [_ process-id process-status]]
   (assoc-in db [:core/processes :data-items process-id :status] process-status))
 
+(event-handler/reg-event-db :core/set-process-status! set-process-status!)
+
 (defn set-process-activity!
-  ; WARNING#4067
-  ;
   ; @param (keyword) process-id
   ; @param (keyword) process-activity
   ;  :active, :idle, :stalled, ...
@@ -327,57 +283,7 @@
   [db [_ process-id process-activity]]
   (assoc-in db [:core/processes :data-items process-id :activity] process-activity))
 
-(defn- reg-process-status-event!
-  ; @param (keyword) process-id
-  ; @param (keyword) process-status
-  ; @param (metamorphic-event) event
-  ;
-  ; @usage
-  ;  (r a/reg-process-status-event! db :my-process :success [:do-something!])
-  ;
-  ; @return (map)
-  [db [_ process-id process-status event]]
-  (update-in db [:core/processes :data-items process-id :status-events process-status]
-             vector/conj-item event))
-
-; @usage
-;  [:core/reg-process-status-event! :my-process :success [:do-something!]]
-(event-handler/reg-event-db :core/reg-process-status-event! reg-process-status-event!)
-
-(defn- reg-process-activity-event!
-  ; @param (keyword) process-id
-  ; @param (keyword) process-activity
-  ; @param (metamorphic-event) event
-  ;
-  ; @usage
-  ;  (r a/reg-process-activity-event! db :my-process :stalled [:do-something!])
-  ;
-  ; @return (map)
-  [db [_ process-id process-activity event]]
-  (update-in db [:core/processes :data-items process-id :activity-events process-activity]
-             vector/conj-item event))
-
-; @usage
-;  [:core/reg-process-activity-event! :my-process :stalled [:do-something!]]
-(event-handler/reg-event-db :core/reg-process-activity-event! reg-process-activity-event!)
-
-(defn- reg-process-progress-event!
-  ; @param (keyword) process-id
-  ; @param (percent) process-progress
-  ; @param (metamorphic-event) event
-  ;
-  ; @usage
-  ;  (r a/reg-process-progress-event! db :my-process 100 [:do-something!])
-  ;
-  ;
-  ; @return (map)
-  [db [_ process-id process-progress event]]
-  (update-in db [:core/processes :data-items process-id :progress-events process-progress]
-             vector/conj-item event))
-
-; @usage
-;  [:core/reg-process-progress-event! :my-process 100 [:do-something!]]
-(event-handler/reg-event-db :core/reg-process-progress-event! reg-process-progress-event!)
+(event-handler/reg-event-db :core/set-process-activity! set-process-activity!)
 
 (defn- clear-process!
   ; @param (keyword) process-id
@@ -390,48 +296,3 @@
   (dissoc-in db [:core/processes :data-items process-id]))
 
 (event-handler/reg-event-db :core/clear-process! clear-process!)
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(event-handler/reg-event-fx
-  :core/set-process-progress!
-  ; @param (keyword) process-id
-  ; @param (percent) process-progress
-  ;
-  ; @usage
-  ;  [:core/set-process-progress! :my-process 100]
-  (fn [{:keys [db]} [_ process-id process-progress]]
-      (let [process-progress (math/floor process-progress)]
-           (if-let [process-events (r get-process-progress-events db process-id process-progress)]
-                   {:db (r set-process-progress! db process-id process-progress)
-                    :dispatch-n process-events}
-                   {:db (r set-process-progress! db process-id process-progress)}))))
-
-(event-handler/reg-event-fx
-  :core/set-process-status!
-  ; @param (keyword) process-id
-  ; @param (keyword) process-status
-  ;
-  ; @usage
-  ;  [:core/set-process-status! :my-process :success]
-  (fn [{:keys [db]} [_ process-id process-status]]
-      (if-let [status-events (r get-process-status-events db process-id process-status)]
-              {:db (r set-process-status! db process-id process-status)
-               :dispatch-n status-events}
-              {:db (r set-process-status! db process-id process-status)})))
-
-(event-handler/reg-event-fx
-  :core/set-process-activity!
-  ; @param (keyword) process-id
-  ; @param (keyword) process-activity
-  ;
-  ; @usage
-  ;  [:core/set-process-activity! :my-process :stalled]
-  (fn [{:keys [db]} [_ process-id process-activity]]
-      (if-let [activity-events (r get-process-activity-events db process-id process-activity)]
-              {:db (r set-process-activity! db process-id process-activity)
-               :dispatch-n activity-events}
-              {:db (r set-process-activity! db process-id process-activity)})))

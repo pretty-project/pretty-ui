@@ -89,7 +89,8 @@
   (fn [{:keys [db]} _]
       {:db (update-in db [:trader :listener :listener-active?] not)
        :dispatch [:sync/send-query! :trader/synchronize!
-                                    {:query [:debug `(trader/toggle-listener! ~{})]}]}))
+                                    {:display-progress? true
+                                     :query [:debug `(trader/toggle-listener! ~{})]}]}))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,4 +104,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       [:sync/send-query! :trader/synchronize!
-                         {:query [:debug `(trader/upload-margin-data! ~{})]}]))
+                         {:display-progress? true
+                          :query [:debug `(trader/upload-margin-data! ~{})]}]))

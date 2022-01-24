@@ -472,14 +472,6 @@
 #x-app-progress-bar--process-progress[data-failured="true"] {
   background-color: var( --border-color-warning ) }
 
-#x-app-progress-bar--screen-overlay {
-  background-color: var( --app-overlay-color );
-  height: 100%;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100% }
-
 /***** Progress-bar *****/
 
 
