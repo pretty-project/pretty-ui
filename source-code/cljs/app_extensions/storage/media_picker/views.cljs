@@ -55,7 +55,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id picker-props]
   [item-browser/body :storage :media {:list-element #'app-extensions.storage.media-browser.views/media-item
-                                      :on-click [:storage/->media-item-picked]}])
+                                      :on-click [:storage/->media-item-picked]
+                                      :selectable-f (fn [_] false)}])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

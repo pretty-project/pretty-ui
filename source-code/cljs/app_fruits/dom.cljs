@@ -960,7 +960,7 @@
 
 (defn append-to-form-data!
   ; @param (FormData object)
-  ; @param (keyword or string) prop-id
+  ; @param (keyword or string) prop-key
   ; @param (*) prop-value
   ;
   ; @usage
@@ -968,11 +968,11 @@
   ;  (dom/append-to-form-data! my-form-data :name "John")
   ;
   ; @return (FormData object)
-  [form-data prop-id prop-value]
-  (let [prop-id (if (keyword? prop-id)
-                    (name     prop-id)
-                    (return   prop-id))]
-       (.append form-data prop-id prop-value)
+  [form-data prop-key prop-value]
+  (let [prop-key (if (keyword? prop-key)
+                     (name     prop-key)
+                     (return   prop-key))]
+       (.append form-data prop-key prop-value)
 
        ; Ez szükséges? Az .append függvény nem a form-data objektummal tér vissza?
        (return  form-data)))

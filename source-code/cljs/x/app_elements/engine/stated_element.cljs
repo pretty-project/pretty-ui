@@ -15,6 +15,7 @@
 
 (ns x.app-elements.engine.stated-element
     (:require [x.app-components.api          :as components]
+              [x.app-db.api                  :as db]
               [x.app-elements.engine.element :as element]))
 
 
@@ -87,7 +88,7 @@
                       subscriber updater] :as context-props}]
   (let [disabler           (get                          element-props :disabler)
         initial-props      (element-props->initial-props element-props)
-        element-props-path (element/element-props-path   element-id)]
+        element-props-path (db/path :elements/primary element-id)]
        [components/stated element-id
                           {:base-props         element-props
                            :destructor         destructor

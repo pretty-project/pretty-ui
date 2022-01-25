@@ -29,39 +29,27 @@
 ; @name partition
 ;  A partíciók a kollekciókkal ellentétben, nem vektorban tárolnak {:id "xyz"}
 ;  tulajdonsággal azonosított adatokat, hanem térképben tárolnak :xyz {...}
-;  kulccsal azonosított adatokat,
-;
-;  {:data-items {:my-data {:my-prop "my-value"} ...}}
-;
-;
+;  kulccsal azonosított adatokat.
+;  Pl.: {:data-items {:my-data {:my-prop "my-value"} ...}}
 ;
 ; @name partition-id
 ;  A partíciók azonosítói, névtérrel rendelkező kulcsszavak lehetnek.
-;
-;  (def db {:my-partition/primary    {:data-items {...}}
-;           :user-handler/users      {:data-items {...}}
-;           :shop-handler/cart-items {:data-items {...}}
-;           ...})
-;
-;
+;  Pl.: (def db {:my-partition/primary    {:data-items {...}}
+;                :user-handler/users      {:data-items {...}}
+;                :shop-handler/cart-items {:data-items {...}}
+;                ...})
 ;
 ; @name ordered-partition
 ;  A partíciók a kollekciókkal ellentétben, nem az adatban tárolják annak sorrendjét
 ;  {:id "my-data" :order 7}, hanem a partíció :data-order azonosítójú vektorában.
 ;  A rendezetlen partíciók nem tartalmaznak {:data-order []} vektort.
-;
-;  (def db {:my-partition/primary {:data-items {:my-data    {:my-prop    "my-value"}}
-;                                               :your-data  {:your-prop  "your value"}
-;                                               :their-data {:their-prop "their value"}}
-;                                  :data-order [:my-data :their-data :your-data]})
-;
-;
+;  Pl.: (def db {:my-partition/primary {:data-items {:my-data    {:my-prop    "my-value"}}
+;                                                    :your-data  {:your-prop  "your value"}
+;                                                    :their-data {:their-prop "their value"}}
+;                                       :data-order [:my-data :their-data :your-data]})
 ;
 ; @name data-item
-;  A partíciók elemeinek elnevezése a kollekciók elemeivel ellentétben nem document,
-;  hanem data-item.
-;
-;
+;  A partíciók elemeinek elnevezése data-item.
 ;
 ; @name data-item-path
 ;  Egy szabvány data-item elem adatbázis útvonala a következőképpen nézhet ki:
@@ -87,18 +75,11 @@
 ;  =>
 ;  [:my-partition/primary :data-items :my-data :my-prop :my-subprop]
 ;
-;  ...
-;
-;
-;
 ; @name meta-item
 ;  A partíciók a működésükkel, valamint a névtér működésével kapcsolatos
 ;  meta adatokat is tárolhatnak.
-;
-; (def db {:app-ui.menu-bar/menu-items {:data-items {:menu-item-1 {...} ...}
-;                                       :meta-items {:menu-visible? true}}})
-;
-;
+;  Pl.: (def db {:app-ui.menu-bar/menu-items {:data-items {:menu-item-1 {...} ...}
+;                                             :meta-items {:menu-visible? true}}})
 ;
 ; @name meta-item-path
 ;  Egy szabvány meta adat adatbázis útvonala a következőképpen nézhet ki:
@@ -186,22 +167,6 @@
   [partition-id & xyz]
   (vector/concat-items [:db partition-id :meta-items] xyz))
 
-(defn data-index-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (?) _
-  ;
-  ; @return (data-index-path vector)
-  [partition-id _])
-  ; TODO ...
-
-(defn data-index-cofx-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (?) _
-  ;
-  ; @return (data-index-path vector)
-  [partition-id _])
-  ; TODO ...
-
 (defn data-history-path
   ; @param (namespaced keyword) partition-id
   ; @param (list of keywords) xyz
@@ -228,110 +193,10 @@
   [partition-id & xyz]
   (vector/concat-items [:db partition-id :data-history] xyz))
 
-(defn partition->data-items
-  ; @param (map) partition
-  ;  {:data-items (map)}
-  ;
-  ; @usage
-  ;  (db/partition->data-items {:data-items {...}})
-  ;
-  ; @return (map)
-  [partition]
-  (:data-items partition))
-
-(defn partition->data-item
-  ; @param (map) partition
-  ;  {:data-items (map)}
-  ;
-  ; @usage
-  ;  (db/partition->data-item {:data-items {...}} :my-item-id)
-  ;
-  ; @return (map)
-  [partition data-item-id]
-  (get-in partition [:data-items data-item-id]))
-
-(defn partition->data-order
-  ; @param (map) partition
-  ;  {:data-order (vector)}
-  ;
-  ; @usage
-  ;  (db/partition->data-order {:data-items {...} :data-order [...]})
-  ;
-  ; @return (vector)
-  [{:keys [data-order]}]
-  (if (vector? data-order)
-      (return  data-order)
-      (return  [])))
-
-(defn partition->partition-ordered?
-  ; @param (map) partition
-  ;  {:data-order (vector)}
-  ;
-  ; @usage
-  ;  (db/partition->partition-ordered? {:data-items {...} :data-order [...]})
-  ;
-  ; @return (boolean)
-  [{:keys [data-order]}]
-  (vector? data-order))
-
-(defn partition->meta-items
-  ; @param (map) partition
-  ;  {:meta-items (map)}
-  ;
-  ; @usage
-  ;  (db/partition->meta-items {:meta-items {...})
-  ;
-  ; @return (map)
-  [{:keys [meta-items]}]
-  (return meta-items))
-
-(defn partition->meta-item
-  ; @param (map) partition
-  ;  {:meta-items (map)}
-  ; @param (keyword) meta-item-id
-  ;
-  ; @usage
-  ;  (db/partition->meta-item {:meta-items {:my-meta-item "..."} :my-meta-item)
-  ;
-  ; @return (*)
-  [{:keys [meta-items]} meta-item-id]
-  (get meta-items meta-item-id))
-
-(defn partition->partition-empty?
-  ; @param (map) partition
-  ;
-  ; @usage
-  ;  (db/partition->partition-empty? {:data-items {...})
-  ;
-  ; @return (boolean)
-  [partition]
-  (empty? (partition->data-items partition)))
-
-(defn partition->partition-nonempty?
-  ; @param (map) partition
-  ;
-  ; @usage
-  ;  (db/partition->partition-nonempty? {:data-items {...})
-  ;
-  ; @return (boolean)
-  [partition]
-  (not (partition->partition-empty? partition)))
-
 
 
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn indexed-partition-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) partition-props
-  ;  {:indexed? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ;  {:data-index (map)}
-  [{:keys [indexed?]}]
-  (if indexed? {:data-index {}}))
 
 (defn ordered-partition-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -345,14 +210,12 @@
   ; @return (map)
   ;  {:data-order (vector)}
   [{:keys [data-items data-order ordered? ranged?]}]
-  (cond-> (param {})
-          ; Empty data-order
-          (and (or ordered? ranged?)
-               (not (vector? data-order)))
-          (assoc :data-order (map/get-keys data-items))
-          ; Default data-order
-          (vector? data-order)
-          (assoc :data-order data-order)))
+             ; Default data-order
+  (cond-> {} (vector? data-order)
+             (assoc  :data-order data-order)
+             ; Empty data-order
+             (and (or ordered? ranged?))
+             (assoc :data-order (map/get-keys data-items))))
 
 (defn ranged-partition-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -379,13 +242,11 @@
   ;  {:data-cursor-high (integer)
   ;   :data-cursor-low (integer)
   ;   :data-items (map)
-  ;   :data-index (map)
   ;   :data-order (vector)
   ;   :meta-items (map)}
   [{:keys [data-items meta-items] :as partition-props}]
   (merge {:data-items (or    data-items {})
           :meta-items (param meta-items)}
-         (indexed-partition-prototype partition-props)
          (ordered-partition-prototype partition-props)
          (ranged-partition-prototype  partition-props)))
 
@@ -403,16 +264,6 @@
   ; @return (map)
   [db [_ partition-id]]
   (partition-id db))
-
-(defn partition-exists?
-  ; @param (namespaced keyword) partition-id
-  ;
-  ; @usage
-  ;  (r db/partition-exists? ::my-partition)
-  ;
-  ; @return (boolean)
-  [db [_ partition-id]]
-  (map/nonempty? (r get-partition db partition-id)))
 
 (defn get-data-items
   ; @param (namespaced keyword) partition-id
@@ -453,29 +304,6 @@
   [db [_ partition-id & n]]
   (let [data-item-path (vector/concat-items [partition-id :data-items] n)]
        (some? (get-in db data-item-path))))
-
-(defn get-filtered-data-items
-  ; @param (namespaced keyword) partition-id
-  ; @param (function) filter-f
-  ;
-  ; @example
-  ;  (def db {::my-partition :data-items {:a "Foo" :b "Bar"}})
-  ;  (r db/get-filtered-data-items #(= %2 "Foo"))
-  ;  =>
-  ;  {:a "Foo"}
-  ;
-  ;  (def db {::my-partition :data-items {:a "Foo" :b "Bar"}})
-  ;  (r db/get-filtered-data-items #(= %1 :b))
-  ;  =>
-  ;  {:b "Bar"}
-  ;
-  ; @return (map)
-  [db [_ partition-id filter-f]]
-  (reduce-kv #(if (filter-f %2 %3)
-                  (assoc %1 %2 %3)
-                  (return %1))
-              (param {})
-              (r get-data-items db partition-id)))
 
 (defn get-data-item-count
   ; @param (namespaced keyword) partition-id
@@ -532,26 +360,6 @@
   [db [_ partition-id]]
   (vector? (r get-data-order db partition-id)))
 
-(defn get-data-index
-  ; @param (namespaced keyword) partition-id
-  ;
-  ; @usage
-  ;  (r db/get-data-index ::my-partition)
-  ;
-  ; @return (map)
-  [db [_ partition-id]]
-  (get-in db [partition-id :data-index]))
-
-(defn partition-indexed?
-  ; @param (namespaced keyword) partition-id
-  ;
-  ; @usage
-  ;  (r db/partition-indexed? ::my-partition)
-  ;
-  ; @return (boolean)
-  [db [_ partition-id]]
-  (map? (r get-data-index db partition-id)))
-
 (defn partition-empty?
   ; @param (namespaced keyword) partition-id
   ;
@@ -567,24 +375,6 @@
 ;; -- DB events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn update-data-order!
-  ; @param (namespaced keyword) partition-id
-  ; @param (vector) data-order
-  ;
-  ; @example
-  ;  (def db {:my-partition/primary {:data-items {...}
-  ;                                  :data-order [:a :b :c]}})
-  ;  (r db/update-data-order! db :my-partition/primary [:d :n :c])
-  ;  =>
-  ;  {:my-partition/primary {:data-items {...}
-  ;                          :data-order [:a :b :d :n :c]}})
-  ;
-  ; @return (map)
-  [db [_ partition-id data-order]]
-  (let [expired-data-order (r get-data-order db partition-id)
-        updated-data-order (vector/concat-items-once expired-data-order data-order)]
-       (assoc-in db [partition-id :data-order] updated-data-order)))
-
 (defn reg-partition!
   ; @param (namespaced keyword) partition-id
   ; @param (map)(opt) partition-props
@@ -599,7 +389,6 @@
   ;   :data-order (vector)(opt)
   ;    Initial data order
   ;    Only w/ {:ordered? true}
-  ;   :indexed? (boolean)(opt)
   ;   :meta-items (map)(opt)
   ;   :ordered? (boolean)(opt)
   ;   :ranged? (boolean)(opt)}
@@ -614,50 +403,6 @@
   [db [_ partition-id partition-props]]
   (let [partition-id (keyword/namespaced! partition-id)]
        (assoc db partition-id (partition-prototype partition-props))))
-
-(defn remove-partition!
-  ; @param (namespaced keyword) partition-id
-  ;
-  ; @usage
-  ;  (r db/remove-partition! ::my-partition)
-  ;
-  ; @return (map)
-  [db [_ partition-id]]
-  (dissoc db partition-id))
-
-(defn merge-partitions!
-  ; @param (namespaced keyword) base-partition-id
-  ; @param (namespaced keyword) source-partition-id
-  ; @param (namespaced keyword) target-partition-id
-  ;
-  ; @usage
-  ;  (r db/merge-partitions! db ::base-partition ::source-partition ::target-partition)
-  ;
-  ; @return (map)
-  [db [_ secondary-partition-id primary-partition-id]])
-  ; TODO ...
-  ;  A ::source-partition particiot merge-eli a ::base-partition particiora
-  ;  es elmenti ::target-partition neven, majd a ::base-partition es ::source-partition
-  ;  particiokat torli
-
-(defn add-data-items!
-  ; @param (namespaced keyword) partition-id
-  ; @param (map) data-items
-  ; @param (vector)(opt) data-order
-  ;
-  ; @usage
-  ;  (r db/add-data-items! db ::my-partition {:my-item "my-value"})
-  ;
-  ; @usage
-  ;  (r db/add-data-items! db ::my-partition {:my-item "my-value"} [:my-item])
-  ;
-  ; @return (map)
-  [db [event-id partition-id data-items data-order]]
-  (cond-> (param db)
-          (vector? data-order)
-          (update-data-order! [event-id partition-id data-order])
-          :always
-          (apply! [event-id [partition-id :data-items] merge data-items])))
 
 (defn set-meta-item!
   ; @param (namespaced keyword) partition-id

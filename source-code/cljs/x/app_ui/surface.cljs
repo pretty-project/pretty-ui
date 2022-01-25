@@ -92,10 +92,7 @@
   ;    tulajdonság használatával!
   ;   :update-animated? (boolean)(opt)
   ;    Default: false
-  ;   :view (map)
-  ;    {:content (component)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}}
+  ;   :view (metamorphic-content)
   ;
   ; @usage
   ;  [:ui/set-surface! {...}]

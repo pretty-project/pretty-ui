@@ -86,19 +86,11 @@
 (defn layout
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
-  ;  {:body (map)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}
+  ;  {:body (metamorphic-content)
   ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :header (map)(opt)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :sticky? (boolean)(opt)
-  ;      Default: true
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :header (metamorphic-content)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center

@@ -346,7 +346,7 @@
   ; @return (map)
   [db [_ input-id]]
   (if-let [value-path (r element/get-element-prop db input-id :value-path)]
-          (assoc-in db (element/element-prop-path input-id :backup-value)
+          (assoc-in db (db/path :elements/primary input-id :backup-value)
                        (get-in db value-path))
           (return db)))
 

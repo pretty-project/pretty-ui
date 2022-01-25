@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v3.7.2
-; Compatibility: x4.5.2
+; Version: v4.0.8
+; Compatibility: x4.5.6
 
 
 
@@ -151,44 +151,8 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn renderer-props->db-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) renderer-props
-  ;
-  ; @return (map)
-  [renderer-props]
-  (select-keys renderer-props [:alternate-id :destructor :initializer :required? :partition-id
-                               :rerender-same? :queue-behavior]))
-
-(defn renderer-props->component-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) renderer-props
-  ;
-  ; @return (map)
-  [renderer-props]
-  (select-keys renderer-props [:attributes :element]))
-
-
-
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- partition-initializer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) renderer-id
-  ; @param (map) renderer-props
-  ;  {:max-elements-rendered (integer)(opt)}
-  ;
-  ; @return (metamorphic-event)
-  [renderer-id {:keys [max-elements-rendered] :as renderer-props}]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       [:db/reg-partition! partition-id {:ordered? true :meta-items renderer-props}]))
 
 (defn- element-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -235,7 +199,8 @@
   ; @return (map)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-partition-state db partition-id)))
+       {:elements      (r db/get-data-items db partition-id)
+        :element-order (r db/get-data-order db partition-id)}))
 
 (a/reg-sub :ui/get-renderer-state get-renderer-state)
 
@@ -246,8 +211,8 @@
   ;
   ; @return (vector)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition-state->data-order renderer-state)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-data-order db partition-id)))
 
 (defn get-invisible-element-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -256,8 +221,8 @@
   ;
   ; @return (vector)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition->meta-item renderer-state :invisible-elements)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :invisible-elements)))
 
 (defn get-visible-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -302,13 +267,6 @@
   (let [any-element-visible? (r any-element-visible? db renderer-id)]
        (not any-element-visible?)))
 
-(defn get-upper-visible-element-id
-  ; @param (keyword) renderer-id
-  ;
-  ; @return (keyword)
-  [db [_ renderer-id]]
-  (vector/last-item (r get-visible-element-order db renderer-id)))
-
 (defn get-lower-visible-element-id
   ; @param (keyword) renderer-id
   ;
@@ -323,8 +281,8 @@
   ;
   ; @return (integer)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition->meta-item renderer-state :max-elements-rendered)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :max-elements-rendered)))
 
 (defn max-elements-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -344,8 +302,8 @@
   ;
   ; @return (keyword)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition->meta-item renderer-state :queue-behavior)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :queue-behavior)))
 
 (defn- pushed-rendering-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -375,8 +333,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (boolean (db/partition->meta-item renderer-state :required?))))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (boolean (r db/get-meta-item db partition-id :required?))))
 
 (defn- get-alternate-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -385,8 +343,8 @@
   ;
   ; @return (keyword)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition->meta-item renderer-state :alternate-id)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :alternate-id)))
 
 (defn- renderer-require-error?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -396,9 +354,9 @@
   ; @return (boolean)
   [db [_ renderer-id]]
   (if-let [alternate-id (r get-alternate-id db renderer-id)]
-          (boolean (and (r renderer-required?   db renderer-id)
-                        (r no-visible-elements? db alternate-id)))
-          (boolean (r renderer-required? db renderer-id))))
+          (and (r renderer-required?   db renderer-id)
+               (r no-visible-elements? db alternate-id))
+          (r renderer-required? db renderer-id)))
 
 (defn- renderer-reserved?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -407,8 +365,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (boolean (db/partition->meta-item renderer-state :reserved?))))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (boolean (r db/get-meta-item db partition-id :reserved?))))
 
 (defn- renderer-free?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -417,7 +375,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (not (r renderer-reserved? db renderer-id)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (not (r db/get-meta-item db partition-id :reserved?))))
 
 (defn get-element-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -435,12 +394,12 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ renderer-id element-id prop-id]]
+  [db [_ renderer-id element-id prop-key]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (get-in db (db/path partition-id element-id prop-id))))
+       (get-in db (db/path partition-id element-id prop-key))))
 
 (defn reveal-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -488,8 +447,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id]]
-  (boolean (and (r element-rendered?       db renderer-id element-id)
-                (not (r element-invisible? db renderer-id element-id)))))
+  (and      (r element-rendered?  db renderer-id element-id)
+       (not (r element-invisible? db renderer-id element-id))))
 
 (defn rerender-same?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -498,8 +457,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (boolean (db/partition->meta-item renderer-state :rerender-same?))))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :rerender-same?)))
 
 (defn get-rerender-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -558,9 +517,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id _]]
-  (boolean (and (not (r renderer-reserved?         db renderer-id))
-                (or  (r pushed-rendering-enabled?  db renderer-id)
-                     (not (r max-elements-reached? db renderer-id))))))
+  (and (r renderer-free? db renderer-id)
+       (or      (r pushed-rendering-enabled? db renderer-id)
+           (not (r max-elements-reached?     db renderer-id)))))
 
 (defn- get-rendering-queue
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -572,8 +531,8 @@
   ;    (map) element-props]
   ;   [...]]
   [db [_ renderer-id]]
-  (let [renderer-state (r get-renderer-state db renderer-id)]
-       (db/partition->meta-item renderer-state :rendering-queue)))
+  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+       (r db/get-meta-item db partition-id :rendering-queue)))
 
 (defn- get-next-rendering
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -596,8 +555,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id _]]
-  (boolean (and (r element-rendered? db renderer-id element-id)
-                (r rerender-same?    db renderer-id))))
+  (and (r element-rendered? db renderer-id element-id)
+       (r rerender-same?    db renderer-id)))
 
 (defn- update-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -609,9 +568,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id {:keys [update-animated?]}]]
-  (boolean (and (r element-rendered?   db renderer-id element-id)
-                (not (r rerender-same? db renderer-id))
-                (boolean update-animated?))))
+  (and      (r element-rendered? db renderer-id element-id)
+       (not (r rerender-same?    db renderer-id))
+       (boolean update-animated?)))
 
 (defn- update-element-static?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -623,9 +582,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id {:keys [update-animated?]}]]
-  (boolean (and (r element-rendered?   db renderer-id element-id)
-                (not (r rerender-same? db renderer-id))
-                (not update-animated?))))
+  (and      (r element-rendered? db renderer-id element-id)
+       (not (r rerender-same?    db renderer-id))
+       (not update-animated?)))
 
 (defn- push-element?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -636,9 +595,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id _]]
-  (boolean (and (r max-elements-reached?     db renderer-id)
-                (r pushed-rendering-enabled? db renderer-id)
-                (not (r element-rendered?    db renderer-id element-id)))))
+  (and      (r max-elements-reached?     db renderer-id)
+            (r pushed-rendering-enabled? db renderer-id)
+       (not (r element-rendered?         db renderer-id element-id))))
 
 (defn- render-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -650,9 +609,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id {:keys [reveal-animated?]}]]
-  (boolean (and (not (r max-elements-reached? db renderer-id))
-                (not (r element-rendered?     db renderer-id element-id))
-                (boolean reveal-animated?))))
+  (and (not (r max-elements-reached? db renderer-id))
+       (not (r element-rendered?     db renderer-id element-id))
+       (boolean reveal-animated?)))
 
 (defn- render-element-static?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -664,9 +623,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id {:keys [reveal-animated?]}]]
-  (boolean (and (not (r max-elements-reached? db renderer-id))
-                (not (r element-rendered?     db renderer-id element-id))
-                (not reveal-animated?))))
+  (and (not (r max-elements-reached? db renderer-id))
+       (not (r element-rendered?     db renderer-id element-id))
+       (not reveal-animated?)))
 
 (defn- destroy-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -676,8 +635,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id]]
-  (boolean (and (r element-visible?       db renderer-id element-id)
-                (r hide-element-animated? db renderer-id element-id))))
+  (and (r element-visible?       db renderer-id element-id)
+       (r hide-element-animated? db renderer-id element-id)))
 
 (defn- destroy-element-static?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -687,8 +646,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id element-id]]
-  (boolean (and (r element-visible?            db renderer-id element-id)
-                (not (r hide-element-animated? db renderer-id element-id)))))
+  (and      (r element-visible?       db renderer-id element-id)
+       (not (r hide-element-animated? db renderer-id element-id))))
 
 (defn get-visible-elements-destroying-event-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -831,13 +790,13 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ; @param (*) prop-value
   ;
   ; @return (map)
-  [db [_ renderer-id element-id prop-id prop-value]]
+  [db [_ renderer-id element-id prop-key prop-value]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/path partition-id element-id prop-id) prop-value)))
+       (assoc-in db (db/path partition-id element-id prop-key) prop-value)))
 
 (a/reg-event-db :ui/set-element-prop! set-element-prop!)
 
@@ -936,8 +895,8 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   (fn [{:keys [db]} [_ renderer-id renderer-props]]
-      (let [partition-initializer (partition-initializer renderer-id renderer-props)]
-           {:dispatch partition-initializer})))
+      (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+           {:db (r db/reg-partition! db partition-id {:ordered? true :meta-items renderer-props})})))
 
 (a/reg-event-fx
   :ui/destruct-renderer!
@@ -1182,10 +1141,9 @@
   ;
   ; @return (component)
   [element element-id {:keys [destructor initializer] :as element-props}]
-  [components/stated element-id {:render-f     element
-                                 :destructor   destructor
-                                 :initializer  initializer
-                                 :static-props element-props}])
+  [components/stated element-id {:component   [element element-id element-props]
+                                 :destructor  destructor
+                                 :initializer initializer}])
 
 (defn- wrapper
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1193,10 +1151,9 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   ;  {:attributes (map)(opt)}
-  ; @param (map) renderer-state
   ;
   ; @return (hiccup)
-  [renderer-id {:keys [attributes]} _]
+  [renderer-id {:keys [attributes]}]
   (let [wrapper-attributes (assoc attributes :id (a/dom-value renderer-id))]
        [:div wrapper-attributes]))
 
@@ -1207,16 +1164,15 @@
   ; @param (map) renderer-props
   ;  {:element (component)}
   ; @param (map) renderer-state
+  ;  {:element-order (keywords in vector)
+  ;   :elements (map)}
   ;
   ; @return (hiccup)
-  [renderer-id {:keys [element] :as renderer-props} renderer-state]
-  (let [elements (db/partition->data-items renderer-state)]
-       (reduce (fn [wrapper element-id]
-                   (let [element-props (get elements element-id)]
-                        (conj wrapper ^{:key element-id}
-                                       [stated-element element element-id element-props])))
-               (wrapper renderer-id renderer-props renderer-state)
-               (db/partition-state->data-order renderer-state))))
+  [renderer-id {:keys [element] :as renderer-props} {:keys [element-order elements]}]
+  (letfn [(f [wrapper element-id]
+             (let [element-props (get elements element-id)]
+                  (conj wrapper ^{:key element-id} [stated-element element element-id element-props])))]
+         (reduce f (wrapper renderer-id renderer-props) element-order)))
 
 (defn renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1224,10 +1180,11 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   ; @param (map) renderer-state
+  ;  {:element-order (keywords in vector)}
   ;
   ; @return (hiccup)
-  [renderer-id renderer-props renderer-state]
-  (if (db/partition->partition-nonempty? renderer-state)
+  [renderer-id renderer-props {:keys [element-order] :as renderer-state}]
+  (if (vector/nonempty? element-order)
       [elements renderer-id renderer-props renderer-state]))
 
 (defn component
@@ -1253,8 +1210,7 @@
   (let [dom-id         (engine/renderer-id->dom-id renderer-id)
         renderer-props (renderer-props-prototype   renderer-props)]
        [components/stated dom-id
-                          {:render-f     #'renderer
-                           :static-props renderer-props
+                          {:component    [renderer dom-id renderer-props]
                            :destructor   [:ui/destruct-renderer! renderer-id renderer-props]
                            :initializer  [:ui/init-renderer!     renderer-id renderer-props]
                            :subscriber   [:ui/get-renderer-state renderer-id]}]))

@@ -21,7 +21,7 @@
 
 
 ;; -- Names -------------------------------------------------------------------
-;; -- XXX#8711 ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @name value
 ;  A (metamorphic-value) típust a get-metamorphic-value subscription
@@ -29,12 +29,9 @@
 ;  - Értéke lehet egy Re-Frame subscription függvény, amelynek kimenetét
 ;    kiértékeli metamorphic-value típusként.
 ;  - Értéke lehet az app-dictionary szótár egy kifejezésére utaló kulcsszó
-;    {:value :my-term}
-;  - Értéke lehet egy többnyelvő térkép, amely a felhasználói felületen
-;    kiválasztott nyelv szerinti kulcshoz tartózó értékként adódik át.
-;    {:value {:en [:data :in :english] :hu [:adatok :magyarul]}}
+;    Pl.: {:value :my-term}
 ;  - Értéke lehet egy egyszerű string
-;    {:value "My value"}
+;    Pl.: {:value "My value"}
 ;  - Értéke lehet egy Re-Frame adatbázis útvonal, amelyen talált értéket
 ;    kiértékeli metamorphic-value típusként.
 ;
@@ -46,7 +43,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ab7800
+(defn get-metamorphic-value-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) value-id
@@ -60,9 +57,9 @@
         (keyword? value) (str (r dictionary/look-up   db value) suffix)
         (map?     value) (str (r dictionary/translate db value) suffix)
         (fn?      value) (let [value (r value db value-id)]
-                              (r ab7800 db value-id {:suffix suffix :value value}))
+                              (r get-metamorphic-value-f db value-id {:suffix suffix :value value}))
         (vector?  value) (let [value (get-in db value)]
-                              (r ab7800 db value-id {:suffix suffix :value value}))))
+                              (r get-metamorphic-value-f db value-id {:suffix suffix :value value}))))
 
 (defn get-metamorphic-value
   ; @param (keyword)(opt) value-id
@@ -107,7 +104,7 @@
   [db event-vector]
   (let [value-id    (a/event-vector->second-id   event-vector)
         value-props (a/event-vector->first-props event-vector)]
-       (r ab7800 db value-id value-props)))
+       (r get-metamorphic-value-f db value-id value-props)))
 
 ; @usage
 ;  [:components/get-metamorphic-value ...]

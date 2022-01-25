@@ -36,4 +36,3 @@
 (def copy-item-to-partition!  data-order-handler/copy-item-to-partition!)
 (def move-item-to-partition!  data-order-handler/move-item-to-partition!)
 (def empty-partition!         data-order-handler/empty-partition!)
-(def update-data-order!       data-order-handler/update-data-order!)

@@ -19,6 +19,7 @@
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
+              [x.app-db.api         :as db]
               [x.app-elements.engine.element :as element]))
 
 
@@ -73,7 +74,7 @@
   ;
   ; @return (keyword)
   [db [_ surface-id]]
-  (get-in db (element/element-prop-path surface-id :selected-content-id)))
+  (get-in db (db/path :elements/primary surface-id :selected-content-id)))
 
 (defn content-visible?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -122,7 +123,7 @@
   ;
   ; @return (map)
   [db [_ surface-id content-id]]
-  (assoc-in db (element/element-prop-path surface-id :selected-content-id) content-id))
+  (assoc-in db (db/path :elements/primary surface-id :selected-content-id) content-id))
 
 (a/reg-event-db :elements/set-content! set-content!)
 
@@ -133,7 +134,7 @@
   ;
   ; @return (map)
   [db [_ surface-id]]
-  (dissoc-in db (element/element-prop-path surface-id :selected-content-id)))
+  (dissoc-in db (db/path :elements/primary surface-id :selected-content-id)))
 
 (a/reg-event-db :elements/remove-content! remove-content!)
 (a/reg-event-db :elements/empty-surface!  remove-content!)

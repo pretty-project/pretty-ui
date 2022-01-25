@@ -6,7 +6,7 @@
 ; Created: 2021.03.16
 ; Description:
 ; Version: v0.7.0
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
@@ -24,10 +24,7 @@
 
 ; @name transmitter
 ;  A transmitter komponens valósítja meg az x.app-components modul komponenseinek
-;  paraméterezési logikáját.
-;  Az egyes komponensek számára első paraméterként átadja a komponens azonosítóját,
-;  utolsó paraméterként az ún. dynamic-props térképet, valamint esetlegesen második
-;  paraméterként a {:static-props {...}} tulajdonságként átadott térképet.
+;  paraméterezését.
 ;
 ; @name dynamic-props
 ;  A base-props, initial-props és subscribed-props térképek XXX#0069 logika
@@ -42,8 +39,8 @@
 ;  paraméterként az átadás után is lehetséges módosítani.
 ;
 ; @name initial-props
-;  A komponens csatolásakor annak az {:initial-props-path [...]} tulajdonságaként
-;  átadott Re-Frame adatbázis útvonalra rögzített térkép, ami az XXX#0069 logika
+;  A komponens React-fába történő csatolásakor annak az {:initial-props-path [...]}
+;  tulajdonságaként átadott Re-Frame adatbázis útvonalra írt térkép, ami az XXX#0069 logika
 ;  szerint adódik át a komponens számára, addig a pillanatig, amíg subscribed-props
 ;  értéke nil.
 ;
@@ -53,9 +50,6 @@
 ; @name modifier
 ;  Opcionális függvény, amely az XXX#0069 logika szerint összefésült
 ;  dynamic-props térképet módosítja.
-;
-; @name static-props
-;  A komponens számára paraméterként változatlanul átadott térkép.
 
 
 
@@ -80,28 +74,13 @@
 
   ; XXX#0069
   (let [dynamic-props (merge base-props (or subscribed-props initial-props))]
-       (if modifier (modifier component-id dynamic-props)
-                    (return                dynamic-props))))
+       (if modifier   (modifier component-id dynamic-props)
+                      (return                dynamic-props))))
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- debug
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) static-props
-  ; @param (map) dynamic-props
-  ;
-  ; @return (hiccup)
-  [component-id static-props dynamic-props]
-  [:div {:id    (a/dom-value component-id "debug")
-         :style {:display :none}}
-        (str "component-id: "  component-id)
-        (str "static-props: "  static-props)
-        (str "dynamic-props: " dynamic-props)])
 
 (defn component
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,49 +89,28 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;    {:disabled? (boolean)(opt)}
+  ;   :component (component)(opt)
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
-  ;   :render-f (function)
-  ;   :static-props (map)(opt)
+  ;   :render-f (function)(opt)
   ;   :subscribed-props (map)(opt)}
   ;
   ; @usage
-  ;  (defn my-component [component-id static-props])
-  ;  [components/transmitter {:render-f     my-component
-  ;                           :static-props {...}}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id static-props])
-  ;  [components/transmitter {:render-f     #'my-component
-  ;                           :static-props {...}}]
-  ;
-  ; @usage
   ;  (defn my-component [component-id dynamic-props])
-  ;  [components/transmitter {:render-f         #'my-component
-  ;                           :base-props       {...}
-  ;                           :initial-props    {...}
-  ;                           :subscribed-props {...}}]
-  ;
-  ; @usage
   ;  (defn my-modifier [component-id dynamic-props] (do-something-with dynamic-props))
-  ;  (defn my-component [component-id static-props dynamic-props])
   ;  [components/transmitter {:render-f         #'my-component
   ;                           :base-props       {...}
   ;                           :initial-props    {...}
   ;                           :modifier         my-modifier
-  ;                           :static-props     {...}
   ;                           :subscribed-props {...}}]
   ;
   ; @return (component)
   ([context-props]
    [component (a/id) context-props])
 
-  ([component-id {:keys [render-f static-props] :as context-props}]
-   (let [dynamic-props (context-props->dynamic-props component-id context-props)]
-        [:<> (cond (and static-props dynamic-props) [render-f component-id static-props dynamic-props]
-                   static-props                     [render-f component-id static-props]
-                   dynamic-props                    [render-f component-id dynamic-props]
-                   :else                            [render-f component-id])])))
-
-             ; DEBUG
-             ;[debug component-id static-props dynamic-props]
+  ([component-id {:keys [component render-f] :as context-props}]
+   (if-let [dynamic-props (context-props->dynamic-props component-id context-props)]
+           (cond render-f  [render-f component-id dynamic-props]
+                 component (conj     component    dynamic-props))
+           (cond render-f  [render-f component-id]
+                 component (return   component)))))

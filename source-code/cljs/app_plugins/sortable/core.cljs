@@ -415,14 +415,14 @@
 
 (defn get-sortable-prop
   ; @param (keyword) sortable-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @usage
   ;  (r sortable/get-sortable-prop db :my-sortable :value-path)
   ;
   ; @return (*)
-  [db [_ sortable-id prop-id]]
-  (get-in db (db/path ::sortables sortable-id prop-id)))
+  [db [_ sortable-id prop-key]]
+  (get-in db (db/path ::sortables sortable-id prop-key)))
 
 ; @usage
 ;  [:sortable/get-sortable-prop :my-sortable :value-path]

@@ -39,7 +39,6 @@
 (def copy-item-to-partition!  data-order-handler/copy-item-to-partition!)
 (def move-item-to-partition!  data-order-handler/move-item-to-partition!)
 (def empty-partition!         data-order-handler/empty-partition!)
-(def update-data-order!       data-order-handler/update-data-order!)
 
 
 
@@ -54,7 +53,6 @@
 (a/reg-event-db :db/update-data-item!        update-data-item!)
 (a/reg-event-db :db/apply-data-item!         apply-data-item!)
 (a/reg-event-db :db/empty-partition!         empty-partition!)
-(a/reg-event-db :db/update-data-order!       update-data-order!)
 
 
 

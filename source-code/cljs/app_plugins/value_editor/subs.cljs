@@ -28,11 +28,11 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ extension-id editor-id prop-id]]
-  (get-in db [extension-id :value-editor/meta-items editor-id prop-id]))
+  [db [_ extension-id editor-id prop-key]]
+  (get-in db [extension-id :value-editor/meta-items editor-id prop-key]))
 
 (defn edit-original?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -81,7 +81,7 @@
   ; @param (keyword) editor-id
   ;
   ; @return (metamorphic-event)
-  [db [_ extension-id editor-id prop-id]]
+  [db [_ extension-id editor-id]]
   (if-let [on-save-event (r get-meta-value db extension-id editor-id :on-save)]
           (let [editor-value (r get-editor-value db extension-id editor-id)]
                (a/metamorphic-event<-params on-save-event editor-value))))

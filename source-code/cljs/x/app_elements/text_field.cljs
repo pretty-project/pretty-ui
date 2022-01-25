@@ -326,8 +326,7 @@
   ;
   ; @usage
   ;  (defn my-surface [field-id surface-props])
-  ;  [elements/text-field {:surface {:content #'my-surface
-  ;                                  :content-props {...}}}]
+  ;  [elements/text-field {:surface #'my-surface}]
   ;
   ; @usage
   ; [elements/text-field {:modifier #(string/starts-with! % "/")}]

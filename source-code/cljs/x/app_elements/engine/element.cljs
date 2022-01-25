@@ -80,27 +80,7 @@
   ;
   ; @return (boolean)
   [{:keys [icon label]}]
-  (or (some? icon)
-      (some? label)))
-
-(defn element-props-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (vector)
-  [element-id]
-  (db/path :elements/primary element-id))
-
-(defn element-prop-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (keyword) prop-id
-  ;
-  ; @return (vector)
-  [element-id prop-id]
-  (db/path :elements/primary element-id prop-id))
+  (or icon label))
 
 (defn element-default-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -270,15 +250,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @usage
   ;  (r element/get-element-prop db :my-element :my-prop)
   ;
   ; @return (*)
-  [db [_ element-id prop-id]]
+  [db [_ element-id prop-key]]
   (let [element-props (r get-element-props db element-id)]
-       (get element-props prop-id)))
+       (get element-props prop-key)))
 
 (defn get-element-subprop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -301,15 +281,15 @@
 
 (defn set-element-prop!
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ; @param (*) prop-value
   ;
   ; @usage
   ;  (r element/set-element-prop! db :my-element :my-prop "My value")
   ;
   ; @return (map)
-  [db [_ element-id prop-id prop-value]]
-  (assoc-in db (db/path :elements/primary element-id prop-id) prop-value))
+  [db [_ element-id prop-key prop-value]]
+  (assoc-in db (db/path :elements/primary element-id prop-key) prop-value))
 
 ; @usage
 ;  [:elements/set-element-prop! :my-element :my-prop "My value"]
@@ -317,17 +297,17 @@
 
 (defn update-element-prop!
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ; @param (*) prop-value
   ;
   ; @usage
   ;  (r element/update-element-prop! db :my-element :my-prop vector/conj-item "My value" "Your value")
   ;
   ; @return (map)
-  [db [_ element-id prop-id f & params]]
-  (let [value         (r get-element-prop db element-id prop-id)
+  [db [_ element-id prop-key f & params]]
+  (let [value         (r get-element-prop db element-id prop-key)
         updated-value (apply f value params)]
-       (r set-element-prop! db element-id prop-id updated-value)))
+       (r set-element-prop! db element-id prop-key updated-value)))
 
 (defn set-element-subprop!
   ; @param (keyword) element-id
@@ -349,14 +329,14 @@
 
 (defn remove-element-prop!
   ; @param (keyword) element-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @usage
   ;  (r element/remove-element-prop! db :my-element :my-prop)
   ;
   ; @return (map)
-  [db [_ element-id prop-id]]
-  (dissoc-in db (db/path :elements/primary element-id prop-id)))
+  [db [_ element-id prop-key]]
+  (dissoc-in db (db/path :elements/primary element-id prop-key)))
 
 ; @usage
 ;  [:elements/remove-element-prop! :my-element :my-prop]

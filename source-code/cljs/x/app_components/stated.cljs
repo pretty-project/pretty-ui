@@ -35,7 +35,7 @@
 ;
 ; @name destructor
 ;  - A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
-;    React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor
+;    React-fából történő lecsatolása után történik meg. A komponens újracsatolásakor (remounting)
 ;    megtörténő pillanatnyi lecsatolás esetén nem történik meg a destructor esemény.
 ;  - Mivel a destructor esemény megtörténésekor a Re-Frame adatbázis már nem tartalmazza
 ;    az initial-props-path Re-Frame adatbázis útvonalon tárolt értéket, így azt a destructor
@@ -47,11 +47,12 @@
 ;  (remounting) nem ismétlődik meg az initializer esemény megtörténése.
 ;
 ; @name updater
-;  TODO ...
+;  Az {:updater [...]} tulajdonságként átadott Re-Frame esemény a komponens
+;  paramétereinek megváltozása után történik meg.
 ;
 ; @name initial-props-path
 ;  Az {:initial-props-path [...]} tulajdonságként átadott Re-Frame adatbázis
-;  útvonal megadásával határozható meg, a komponens React-fába csatolásakor az
+;  útvonal megadásával határozható meg a komponens React-fába csatolásakor az
 ;  {:initial-props {...}} tulajdonságként átadott térkép elérési útvonala.
 ;
 ; @name initial-props
@@ -63,9 +64,6 @@
 ; @name modifier
 ;  XXX#0001
 ;
-; @name static-props
-;  XXX#0001
-;
 ; @name disabler
 ;  A {:disabler [...]} tulajdonságként átadott Re-Frame subscription vektor
 ;  használatával a stated komponens feliratkozik a subscription visszatérési
@@ -75,10 +73,6 @@
 ;
 ; @name subscriber
 ;  XXX#7081
-;
-; @name updater
-;  Az {:updater [...]} tulajdonságként átadott Re-Frame esemény a komponens
-;  paramétereinek megváltozása után történik meg.
 
 
 
@@ -92,17 +86,16 @@
 ;  paramétereit a Re-Frame adatbázisban felülírni!
 ;
 ; @description
-;  Az egyes [stated] komponensek React-fába történő újracsatolódása (remounting)
+;  Az egyes stated komponensek React-fába történő újracsatolódása (remounting)
 ;  esetlegesen hibát okozhat, ha a destructor esemény megtörténése vagy a komponens
 ;  tulajdonságainak Re-Frame adatbázisból való eltávolítása nem a megfelelő időben
 ;  történik meg.
 ;
 ; @description
-;  A remounting esemény egy egymás után megtörténő unmount majd egy mount eseményekből
-;  áll.
+;  A remounting esemény egy egymás után megtörténő unmount majd egy mount eseményekből áll.
 ;
 ; @description
-;  A [stated] komponens első verzióiban a remounting felismerése úgy működött, hogy
+;  A stated komponens első verzióiban a remounting felismerése úgy működött, hogy
 ;  az unmount esemény időbeni eltolásával az a (re)mount esemény után történt meg,
 ;  így meg lehetett vizsgálni, hogy ha egy mounted komponensen (re)mount esemény
 ;  történik majd az ahhoz tartozó – eredetileg a (re)mount esemény előtt megtörténő –
@@ -111,7 +104,7 @@
 ;  vagy több remounting, akkor az unmount-(re)mount eseménypárok néha időbeni átfedésbe kerültek
 ;  egymással és ez hibákhoz vezetett.
 ;  Ennek kiküszöbölésére került bevezetésre, hogy minden React-fába történe komponens-
-;  -csatolás saját csatolás-azonosítóval rendelkezik (mount-id) és a destructor esemény megtörténése
+;  -csatolás saját azonosítóval rendelkezik (mount-id) és a destructor esemény megtörténése
 ;  vagy a komponens tulajdonságainak Re-Frame adatbázisból való eltávolítása késleltetve
 ;  történik, így lehetséges megvizsgálni, hogy ha a komponens még mindig azzal az azonosítóval
 ;  van csatolva, amivel a lecsatolásai események megtörténnének, akkor azok végrehajtódhatnak,
@@ -275,7 +268,7 @@
   ; @param (map) context-props
   ;  {:initializer (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
-  (fn [{:keys [db]} [_ component-id {:keys [initializer initial-props initial-props-path] :as context-props} mount-id]]
+  (fn [{:keys [db]} [_ component-id {:keys [initializer] :as context-props} mount-id]]
       (if-not (r component-initialized? db component-id)
               ; If component is NOT initialized ...
               {:db (as-> db % (r engine/set-component-prop!     % component-id :status :mounted)
@@ -392,18 +385,20 @@
   ;  XXX#4882
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
+  ;   :component (component)(opt)
+  ;    Only w/o {:render-f ...}
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
-  ;    útvonalon tárolt értéket
+  ;    útvonalon tárolt értéket.
   ;   :disabler (subscription-vector)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)
   ;   :initial-props-path (item-path vector)(opt)
   ;   :modifier (function)(opt)
-  ;   :render-f (function)
-  ;   :static-props (map)(opt)
+  ;   :render-f (function)(opt)
+  ;    Only w/o {:component ...}
   ;   :subscriber (subscription-vector)(opt)
-  ;    Return value must be a map!
+  ;    A visszatérési értéknek térkép típusnak kell lennie!
   ;   :updater (metamorphic-event)(opt)}
   ;
   ; @usage
@@ -413,24 +408,20 @@
   ;  [components/stated :my-component {...}]
   ;
   ; @usage
-  ;  (defn my-component [component-id static-props])
-  ;  [components/stated {:render-f     #'my-component
-  ;                      :static-props {...}}]
+  ;  (defn my-component [component-id component-props])
+  ;  [components/stated :my-component
+  ;                     {:render-f   #'my-component
+  ;                      :subscriber [:get-my-component-props]}]
   ;
   ; @usage
-  ;  (defn my-component [component-id dynamic-props])
-  ;  [components/stated {:render-f   #'my-component
-  ;                      :subscriber [:get-my-props]}]
+  ;  (defn my-component [component-id component-props])
+  ;  [components/stated {:component  [my-component :my-component]
+  ;                      :subscriber [:get-my-component-props]}]
   ;
   ; @usage
-  ;  (defn my-component [component-id static-props dynamic-props])
-  ;  [components/stated {:render-f     #'my-component
-  ;                      :static-props {...}
-  ;                      :subscriber   [:get-my-props]}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id {:keys [disabled?] :as dynamic-props}])
-  ;  [components/stated {:render-f  #'my-component
+  ;  (defn my-component [component-id {:keys [disabled?] :as component-props}])
+  ;  [components/stated :my-component
+  ;                     {:render-f  #'my-component
   ;                      :disabler  [:my-component-disabled?]}]
   ;
   ; @return (component)

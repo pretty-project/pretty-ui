@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.4.6
+; Version: v0.9.4
+; Compatibility: x4.5.6
 
 
 
@@ -14,9 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.subscriber
-    (:require [mid-fruits.candy :refer [param]]
-              [mid-fruits.map   :as map]
-              [x.app-core.api   :as a]
+    (:require [x.app-core.api :as a]
               [x.app-components.transmitter :rename {component transmitter}]))
 
 
@@ -38,9 +36,6 @@
 ;
 ; @name modifier
 ;  XXX#0001
-;
-; @name static-props
-;  XXX#0001
 
 
 
@@ -51,12 +46,14 @@
   ; @param (keyword)(opt) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
+  ;   :component (component)(opt)
+  ;    Only w/o {:render-f ...}
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
-  ;   :render-f (function)
-  ;   :static-props (map)(opt)
+  ;   :render-f (function)(opt)
+  ;    Only w/o {:component ...}
   ;   :subscriber (subscription-vector)
-  ;    Return value must be a map!}
+  ;    A visszatérési értéknek térkép típusnak kell lennie!}
   ;
   ; @usage
   ;  [components/subscriber {...}]
@@ -65,15 +62,10 @@
   ;  [components/subscriber :my-component {...}]
   ;
   ; @usage
-  ;  (defn my-component [component-id dynamic-props])
-  ;  [components/subscriber {:render-f   #'my-component
-  ;                          :subscriber [:get-my-props]}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id static-props dynamic-props])
-  ;  [components/subscriber {:render-f     #'my-component
-  ;                          :static-props {...}
-  ;                          :subscriber   [:get-my-props]}]
+  ;  (defn my-component [component-id component-props])
+  ;  [components/subscriber :my-component
+  ;                         {:render-f   #'my-component
+  ;                          :subscriber [:get-my-component-props]}]
   ;
   ; @return (*)
   ([context-props]

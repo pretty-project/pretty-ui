@@ -26,16 +26,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- popup-props->cover-on-click-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) popup-props
-  ;  {:user-close? (boolean)(opt)}
-  ;
-  ; @return (function)
-  [{:keys [user-close?]}]
-  (if user-close? #(a/dispatch [:ui/close-upper-popup!])))
-
 (defn- popup-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -173,11 +163,12 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
+  ;  {:user-close? (boolean)}
   ;
   ; @return (hiccup)
-  [_ popup-props]
-  [:div.x-app-popups--element--cover
-    {:on-click (popup-props->cover-on-click-event popup-props)}])
+  [popup-id {:keys [user-close?]}]
+  (if user-close? [:div.x-app-popups--element--cover {:on-click #(a/dispatch [:ui/close-popup! popup-id])}]
+                  [:div.x-app-popups--element--cover]))
 
 (defn- unboxed-popup-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -158,11 +158,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ route-id prop-id]]
-  (get-in db (db/path :router/client-routes route-id prop-id)))
+  [db [_ route-id prop-key]]
+  (get-in db (db/path :router/client-routes route-id prop-key)))
 
 (defn- route-restricted?
   ; WARNING! NON-PUBLIC! DO NOT USE!

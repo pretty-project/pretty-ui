@@ -184,10 +184,7 @@
   ; @param (map) bubble-props
   ;  {:autopop? (boolean)(opt)
   ;    Default: true
-  ;   :body (map)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :body (metamorphic-content)
   ;   :destructor (metamorphic-event)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :user-close? (boolean)(opt)

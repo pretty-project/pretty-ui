@@ -78,7 +78,7 @@
   [menu-id {:keys [animation-name menu-visible?] :as view-props}]
   [:div#x-website-menu--body
     {:data-animation (a/dom-value animation-name)
-     :data-visible   (boolean menu-visible?)}
+     :data-visible   (boolean     menu-visible?)}
     [menu-content menu-id view-props]])
 
 (defn- menu-toggle
@@ -113,8 +113,7 @@
   ;  {:animation-name (keyword)(opt)
   ;    :reveal, :slide-in-rtl
   ;    Default: :slide-in-rtl
-  ;   :content (metamorphic-content)
-  ;   :content-props (map)(opt)}
+  ;   :content (metamorphic-content)}
   ;
   ; @return (component)
   [menu-id menu-props]

@@ -85,11 +85,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ handler-id prop-id]]
-  (get-in db (db/path :gestures/step-handlers handler-id prop-id)))
+  [db [_ handler-id prop-key]]
+  (get-in db (db/path :gestures/step-handlers handler-id prop-key)))
 
 (defn autostep?
   ; @param (keyword) handler-id
@@ -257,12 +257,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ; @param (*) prop-value
   ;
   ; @return (map)
-  [db [_ handler-id prop-id prop-value]]
-  (assoc-in db (db/path :gestures/step-handlers handler-id prop-id) prop-value))
+  [db [_ handler-id prop-key prop-value]]
+  (assoc-in db (db/path :gestures/step-handlers handler-id prop-key) prop-value))
 
 (a/reg-event-db :gestures/set-step-handler-prop! set-step-handler-prop!)
 
@@ -270,11 +270,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (map)
-  [db [_ handler-id prop-id]]
-  (dissoc-in db (db/path :gestures/step-handlers handler-id prop-id)))
+  [db [_ handler-id prop-key]]
+  (dissoc-in db (db/path :gestures/step-handlers handler-id prop-key)))
 
 (a/reg-event-db :gestures/remove-step-handler-prop! remove-step-handler-prop!)
 

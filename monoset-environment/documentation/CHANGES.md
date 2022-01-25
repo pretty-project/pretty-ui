@@ -1,4 +1,10 @@
 
+# x4.5.6
+- A [components/content ...] komponens már nem kezeli a {:content-props ...} és {:subscriber ...}
+  tulajdonságokat!
+
+
+
 # x4.5.5
 - A következő elemeken a {:layout ...} tulajdonságot leváltotta a {:min-height ...} tulajdonság:
   - label

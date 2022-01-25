@@ -31,10 +31,17 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [user-name] :as view-props}]
   [layouts/layout-b surface-id {:cards CARDS}])
+
+(defn- view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [surface-id]
+  [components/subscriber surface-id
+                         {:render-f   #'view-structure
+                          :subscriber [:home/get-view-props]}])
 
 
 
@@ -44,7 +51,7 @@
 (a/reg-event-fx
   :home/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [:home/get-view-props]}}])
+  [:ui/set-surface! ::view {:view #'view}])
 
 (a/reg-event-fx
   :home/load!

@@ -53,13 +53,6 @@
   (and (r environment/viewport-small? db)
        (not= layout :unboxed)))
 
-(defn- get-upper-popup-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (keyword)
-  [db _]
-  (r renderer/get-upper-visible-element-id db :popups))
-
 
 
 ;; -- Prototypes --------------------------------------------------------------
@@ -150,14 +143,6 @@
                     [:environment/remove-scroll-prohibition! popup-id]]}))
 
 (a/reg-event-fx
-  :ui/close-upper-popup!
-  ; @usage
-  ;  [:ui/close-upper-popup!]
-  (fn [{:keys [db]} _]
-      (if-let [upper-popup-id (r get-upper-popup-id db)]
-              [:ui/close-popup! upper-popup-id])))
-
-(a/reg-event-fx
   :ui/render-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -194,17 +179,9 @@
   ;  {:autopadding? (boolean)(opt)
   ;    Default: true
   ;    Only w/ {:layout :boxed}
-  ;   :body (map)
-  ;    {:content (metamorphic-content)
-  ;     :content-props (map)(opt)
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :body (metamorphic-content)
   ;   :destructor (metamorphic-event)(opt)
-  ;   :header (map)(opt)
-  ;    {:content (metamorphic-content)
-  ;      #'ui/go-back-popup-header, #'ui/close-popup-header, ...
-  ;     :content-props (map)(opt)
-  ;      {:label (metamorphic-content)(opt)}
-  ;     :subscriber (subscription-vector)(opt)}
+  ;   :header (metamorphic-content)(opt)
   ;   :hide-animated? (boolean)(opt)
   ;    Default: true
   ;   :horizontal-align (keyword)(opt)

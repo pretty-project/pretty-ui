@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.23
 ; Description:
-; Version: v2.8.6
-; Compatibility: x4.5.2
+; Version: v2.9.8
+; Compatibility: x4.5.6
 
 
 
@@ -25,55 +25,38 @@
 
 
 ;; -- Names -------------------------------------------------------------------
-;; -- XXX#8711 ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
-; @name content
-;  A (metamorphic-content) típust a content komponens {:content ...} tulajdonsága
-;  valósítja meg.
+; @name metamorphic-content
+;  A (metamorphic-content) típust a content komponens valósítja meg.
 ;  - Értéke lehet szimbólumként átadott komponens:
-;    {:content #'my-component}
+;    Pl.: #'my-component
 ;  - Értéke lehet React komponensként átadott komponens:
-;    {:content [:<> [my-component] ...]}
+;    Pl.: [:<> [my-component] ...]
 ;  - Értéke lehet az app-dictionary szótár egy kifejezésére utaló kulcsszó:
-;    {:content :my-term}
-;  - Értéke lehet egy többnyelvő térkép, amely a felhasználói felületen
-;    kiválasztott nyelv szerinti kulcshoz tartózó értékként adódik át:
-;    {:content {:en [:data :in :english] :hu [:adatok :magyarul]}}
+;    Pl.: :my-term
 ;  - Értéke lehet egy egyszerű string:
-;    {:content "My content"}
+;    Pl.: "My content"
 ;  - Értéke lehet egy hiccup vektor:
-;    {:content [:div "My content"]}
+;    Pl.: [:div "My content"]
 ;
 ; @name base-props
-;  Az [x.app-components/content] komponens számára {:content ...} tulajdonságként
-;  átadott komponens második paramétereként átadott térkép alapja
-;  (az XXX#0001 logika szerint)
+;  A content komponensnek {:content ...} tulajdonságként átadott komponens számára utolsó paraméterként
+;  átadott térkép alapja (az XXX#0001 logika szerint).
 ;
-; @name content-props
-;  Ha a content komponensnek {:content ...} tulajdonságként egy komponens kerül
-;  átadásra, akkor ennek az átadott komponensnek második paraméterként adódik
-;  át a {:content-props {...}} térkép.
+; @name prefix, suffix
+;  Ha a content komponensnek {:content ...} tulajdonságként az app-dictionary szótár egy kifejezésre
+;  utaló kulcszó vagy szöveg kerül átadásra, akkor a {:prefix ...} vagy {:suffix ...} tulajdonságként
+;  átadott string típusú tartalmat prefixumként vagy toldalékaként használja.
+;
+; XXX#4509
+; @name replacements
+;  A content komponensnek {:replacements [...]} tulajdonságként vektorban átadott string típusok,
+;  a {:content ...} tulajdonságként átadott tartalom jelőlői ("%", "%1", "%2", ...) helyett
+;  kerülnek behelyettesítésre.
 ;
 ; @name subscriber
-;  Ha a content komponensnek {:content ...} tulajdonságként egy komponens kerül
-;  átadásra, akkor a {:subscriber [...]} tulajdonságként átadott Re-Frame
-;  subscription vektor használatával a content komponens feliratkozik
-;  a subscription visszatérési értékére, és azt ha nincs megadva {:content-props {...}}
-;  tulajdonság, akkor második paraméterként, ha van megadva {:content-props {...}}
-;  tulajdonság, akkor harmadik paraméterként a {:content ...} tulajdonságként
-;  átadott komponens számára átadja.
-;
-;  Ha a content komponensnek {:content ...} tulajdonság nem kerül átadásra,
-;  akkor a {:subscriber [...]} tulajdonságként átadott Re-Frame
-;  subscription vektor használatával a content komponens feliratkozik
-;  a subscription visszatérési értékére, és azt string-ként kiértékelve a content
-;  komponens {:content ...} tulajdonságaként használja.
-;
-; @name suffix
-;  Ha a content komponensnek {:content ...} tulajdonságként az app-dictionary
-;  szótár egy kifejezésre utaló kulcszó vagy egy többnyelvű térkép kerül átadásra,
-;  akkor a {:suffix ...} tulajdonságként átadott szöveges tartalmat toldalékaként
-;  használja.
+;  A feliratkozás visszatérési értékének típusú térkép kell legyen!
 
 
 
@@ -114,14 +97,12 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
-  ;   :content (function)
-  ;   :content-props (map)(opt)}
+  ;   :content (function)}
   ;
   ; @return (component)
-  [component-id {:keys [base-props content content-props]}]
-  [transmitter component-id {:base-props   base-props
-                             :render-f     content
-                             :static-props content-props}])
+  [component-id {:keys [base-props content]}]
+  [transmitter component-id {:base-props base-props
+                             :render-f   content}])
 
 (defn- subscribed-render-fn-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,16 +111,14 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;   :content (function)
-  ;   :content-props (map)(opt)
   ;   :subscriber (subscription-vector)}
   ;
   ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
   (let [subscribed-props (a/subscribe subscriber)]
-       (fn [_ {:keys [base-props content content-props]}]
-           [transmitter component-id {:base-props        base-props
-                                      :render-f          content
-                                      :static-props      content-props
+       (fn [_ {:keys [base-props content]}]
+           [transmitter component-id {:base-props       base-props
+                                      :render-f         content
                                       :subscribed-props @subscribed-props}])))
 
 (defn- render-fn-content
@@ -147,8 +126,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:content (function)
-  ;   :subscriber (subscription-vector)(opt)}
+  ;  {:subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
@@ -182,21 +160,15 @@
 
 (defn component
   ; @param (keyword)(opt) component-id
-  ; @param (map) context-props
-  ;  XXX#8711
+  ; @param (map) component-props
   ;  {:base-props (map)(opt)
   ;    Only w/ {:content (component)}
   ;   :content (component, function, keyword, hiccup or string)(opt)
-  ;   :content-props (map)(opt)
-  ;    Only w/ {:content (component)}
   ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
-  ;    XXX#4509
   ;    Only w/ {:content (keyword or string)}
   ;   :subscriber (subscription-vector)(opt)
-  ;    Return value must be a map!
-  ;    Only w/ {:content (component)
-  ;             :content (nil)}
+  ;    A visszatérési értéknek térkép típusnak kell lennie!
   ;   :suffix (string)(opt)
   ;    Only w/ {:content (keyword or string)}}
   ;
@@ -206,45 +178,40 @@
   ; @usage
   ;  [components/content :my-component {...}]
   ;
-  ; @example (dictionary-term as keyword)
+  ; @example
   ;  [components/content {:content :username}]
   ;  =>
   ;  "Username"
   ;
-  ; @example (string)
+  ; @example
   ;  [components/content {:content "Hakuna Matata"}]
   ;  =>
   ;  "Hakuna Matata"
   ;
-  ; @example (component)
+  ; @example
   ;  (defn my-component [component-id])
-  ;  [components/content {:content #'my-component}]
+  ;  [components/content :my-component {:content #'my-component}]
   ;
-  ; @example (component)
-  ;  (defn my-component [component-id view-props])
-  ;  [components/content {:content    #'my-component
-  ;                       :subscriber [:get-my-props]}]
+  ; @example
+  ;  (defn my-component [component-id])
+  ;  [components/content {:content [my-component :my-component]}]
   ;
-  ; @example (component)
-  ;  (defn my-component [component-id content-props])
-  ;  [components/content {:content       #'my-component
-  ;                       :content-props {...}}]
+  ; @example
+  ;  (defn my-component-a [component-id])
+  ;  (defn my-component-b [component-id])
+  ;  [components/content {:content [:<> [my-component-a :my-component]
+  ;                                     [my-component-b :your-component]]}]
   ;
-  ; @example (component)
-  ;  (defn my-component [component-id content-props view-props])
-  ;  [components/content {:content       #'my-component
-  ;                       :content-props {...}
-  ;                       :subscriber    [:get-my-props]}]
+  ; @example
+  ;  (defn my-component [component-id component-props])
+  ;  [components/content :my-component
+  ;                      {:content    #'my-component
+  ;                       :subscriber [:get-my-component-props]}]
   ;
-  ; @example (component)
-  ;  (defn my-component [])
-  ;  [components/content {:content [my-component]}]
-  ;
-  ; @example (component)
-  ;  (defn my-component-a [])
-  ;  (defn my-component-b [])
-  ;  [components/content {:content [:<> [my-component-a]
-  ;                                     [my-component-b]]}]
+  ; @example
+  ;  (defn my-component [component-id component-props])
+  ;  [components/content {:content    [my-component :my-component]
+  ;                       :subscriber [:get-my-component-props]}]
   ;
   ; @return (component or string)
   ([context-props]
@@ -252,6 +219,5 @@
 
   ([component-id context-props]
    (if-not (map? context-props)
-           ; TODO ...
            (content component-id {:content context-props})
-           (content component-id context-props))))
+           (content component-id           context-props))))

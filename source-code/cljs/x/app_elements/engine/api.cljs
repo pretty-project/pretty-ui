@@ -87,8 +87,6 @@
 ; x.app-elements.engine.element
 (def element-id->extended-id               element/element-id->extended-id)
 (def element-props->render-element-header? element/element-props->render-element-header?)
-(def element-props-path                    element/element-props-path)
-(def element-prop-path                     element/element-prop-path)
 (def element-attributes                    element/element-attributes)
 (def get-element-prop                      element/get-element-prop)
 (def get-element-props                     element/get-element-props)

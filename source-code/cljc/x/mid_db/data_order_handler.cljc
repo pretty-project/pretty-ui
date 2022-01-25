@@ -337,11 +337,3 @@
   (if (r partition-ordered?         db partition-id)
       (r empty-ordered-partition!   db partition-id)
       (r empty-unordered-partition! db partition-id)))
-
-(defn update-data-order!
-  ; @param (namespaced keyword) partition-id
-  ; @param (vector) data-order
-  ;
-  ; @return (map)
-  [db [_ partition-id data-order]]
-  (assoc-in db [partition-id :data-order] data-order))

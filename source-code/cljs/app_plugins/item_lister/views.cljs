@@ -632,11 +632,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
+  ;  {:selectable-f (function)(opt)}
   ; @param (integer) item-dex
   ; @param (map) item
   ;
   ; @return (component)
-  [extension-id item-namespace body-props item-dex item]
+  [extension-id item-namespace {:keys [selectable-f] :as body-props} item-dex item]
   (let [item-disabled? (a/subscribe [:item-lister/item-disabled? extension-id item-namespace item-dex])]
        (fn [_ _ {:keys [select-mode?] :as body-props} item-dex _]
            [:div.item-lister--list-item--structure
@@ -646,8 +647,13 @@
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
              ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
              ;   elem a lista-elem előtt jelenik meg.
-             [list-item-checkbox extension-id item-namespace item-dex]])))
+             (if (and selectable-f (-> item selectable-f not))
+                 [list-item-checkbox extension-id item-namespace item-dex {:disabled? true}]
+                 [list-item-checkbox extension-id item-namespace item-dex])])))
 
+
+; A select-all-item buttonnak is kell a selectable-f tulajdonság szóval
+; kell a re-frame db-be a props térkép de már a stated fogad több paramétéres komponsent is
 
 
 ;; -- Body components ---------------------------------------------------------
@@ -714,21 +720,44 @@
     [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
     [indicators            extension-id item-namespace]])
 
+
+
+(defn body-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/body-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension/my-type-lister-body
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (name extension-id)
+           (str (name item-namespace) "-lister-body")))
+
+
+
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:list-element (metamorphic-content)
   ;   :on-click (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait}
+  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait
+  ;   :selectable-f (function)(opt)}
   ;
   ; @usage
   ;  [item-lister/body :my-extension :my-type {...}]
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  (defn my-item-selectable? [item] true)
   ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
-  ;                                            :on-click     [:->my-item-clicked]}]
+  ;                                            :on-click     [:->my-item-clicked]
+  ;                                            :selectable-f my-item-selectable?}]
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
@@ -761,7 +790,8 @@
   ;   :menu (metamorphic-content)(opt)
   ;   :new-item-options (vector)(opt)
   ;   :on-click (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és az elemet}
+  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és az elemet
+  ;   :selectable-f (function)(opt)}
   ;
   ; @usage
   ;  [item-lister/view :my-extension :my-type {...}]
@@ -769,10 +799,12 @@
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
   ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
+  ;  (defn my-item-selectable? [item] true)
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
   ;                                            :menu         #'my-menu
   ;                                            :new-item-options [:add-my-type! :add-your-type!]
-  ;                                            :on-click         [:->my-item-clicked]}]
+  ;                                            :on-click         [:->my-item-clicked]
+  ;                                            :selectable-f my-item-selectable?}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

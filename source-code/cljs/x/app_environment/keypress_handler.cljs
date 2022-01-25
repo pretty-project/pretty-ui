@@ -144,11 +144,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) event-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ event-id prop-id]]
-  (get-in db (db/path :environment/keypress-events event-id prop-id)))
+  [db [_ event-id prop-key]]
+  (get-in db (db/path :environment/keypress-events event-id prop-key)))
 
 (defn- keypress-prevented-by-event?
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.20
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.6
+; Version: v0.2.8
+; Compatibility: x4.5.6
 
 
 
@@ -27,11 +27,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ component-id prop-id]]
-  (get-in db (db/path :components/primary component-id prop-id)))
+  [db [_ component-id prop-key]]
+  (get-in db (db/path :components/primary component-id prop-key)))
 
 (a/reg-sub :components/get-component-prop get-component-prop)
 
@@ -44,12 +44,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
-  ; @param (keyword) prop-id
+  ; @param (keyword) prop-key
   ; @param (*) prop-value
   ;
   ; @return (map)
-  [db [_ component-id prop-id prop-value]]
-  (assoc-in db (db/path :components/primary component-id prop-id) prop-value))
+  [db [_ component-id prop-key prop-value]]
+  (assoc-in db (db/path :components/primary component-id prop-key) prop-value))
 
 (defn remove-component-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
