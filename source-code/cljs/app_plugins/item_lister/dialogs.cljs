@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.07
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.5.3
+; Version: v0.6.6
+; Compatibility: x4.5.6
 
 
 
@@ -16,7 +16,6 @@
 (ns app-plugins.item-lister.dialogs
     (:require [mid-fruits.candy   :refer [param return]]
               [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
               [x.app-elements.api :as elements]
               [app-plugins.item-lister.engine :as engine]))
 

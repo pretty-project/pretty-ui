@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.9.0
-; Compatibility: x4.5.4
+; Version: v0.9.2
+; Compatibility: x4.5.6
 
 
 
@@ -61,6 +61,6 @@
   ;
   ; @return (string)
   [extension-id item-namespace server-response]
-  (let [item-id-key   (keyword/add-namespace item-namespace :id)
+  (let [item-id-key   (keyword/add-namespace      item-namespace :id)
         mutation-name (mutation-name extension-id item-namespace :duplicate)]
        (get-in server-response [(symbol mutation-name) item-id-key])))

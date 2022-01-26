@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.5.4
-; Compatibility: x4.4.9
+; Compatibility: x4.5.6
 
 
 
@@ -34,3 +34,4 @@
 (def route-template       engine/route-template)
 (def dialog-id            engine/dialog-id)
 (def load-extension-event engine/load-extension-event)
+(def item-clicked-event   engine/item-clicked-event)

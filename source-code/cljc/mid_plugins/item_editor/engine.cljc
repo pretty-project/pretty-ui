@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.4
+; Version: v0.4.0
+; Compatibility: x4.5.6
 
 
 
@@ -25,7 +25,9 @@
 
 ; @description
 ; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;   Pl.: :my-extension/synchronize-item-editor! => :my-extension/synchronize-my-type-editor!
+;   Pl.: :my-extension.item-editor/synchronize-editor!
+;        =>
+;        :my-extension.my-type-editor/synchronize-editor!
 ;   Így biztosítható, hogy egy névtér több különböző item-editor szerkesztőt tudjon megvalósítani.
 ; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
 ;   hogy egy extension több szerkesztőt alkalmazhasson.
@@ -57,12 +59,13 @@
   ; @example
   ;  (item-editor/form-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/my-type-editor-form
+  ;  :my-extension.my-type-editor/form
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-editor-form")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-editor")
+           "form"))
 
 (defn request-id
   ; @param (keyword) extension-id
@@ -71,12 +74,13 @@
   ; @example
   ;  (item-editor/request-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/synchronize-my-type-editor!
+  ;  :my-extension.my-type-editor/synchronize-editor!
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "synchronize-" (name item-namespace) "-editor!")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-editor")
+           "synchronize-editor!"))
 
 
 
@@ -197,13 +201,13 @@
   ; @example
   ;  (engine/mutation-name :my-extension :my-type :add)
   ;  =>
-  ;  "my-extension/add-my-type-item!"
+  ;  "my-extension.my-type-editor/add-item!"
   ;
   ; @return (string)
   [extension-id item-namespace action-id]
-  (str (name extension-id)   "/"
-       (name action-id)      "-"
-       (name item-namespace) "-item!"))
+  (str (name extension-id)   "."
+       (name item-namespace) "-editor!"
+       (name action-id)      "-item!"))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -215,14 +219,13 @@
   ; @example
   ;  (engine/resolver-id :my-extension :my-type :get)
   ;  =>
-  ;  :my-extension/get-my-type-item
+  ;  :my-extension.my-type-editor/get-item
   ;
   ; @return (keyword)
   [extension-id item-namespace action-id]
-  (keyword (name extension-id)
-           (str     (name action-id)
-                "-" (name item-namespace)
-                "-item")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-editor")
+           (str (name action-id)      "-item")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -247,12 +250,13 @@
   ; @example
   ;  (engine/route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/my-type-editor-route
+  ;  :my-extension.my-type-editor/route
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-editor-route")))
+  (keyword (str (name extension-id)  "."
+                (name item-namespace) "-editor")
+           "route"))
 
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -293,17 +297,18 @@
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :color-picker)
   ;  =>
-  ;  :my-extension/color-picker-dialog
+  ;  :my-extension.my-type-editor/color-picker-dialog
   ;
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :item-deleted)
   ;  =>
-  ;  :my-extension/item-deleted-dialog
+  ;  :my-extension.my-type-editor/item-deleted-dialog
   ;
   ; @return (namespaced keyword)
-  [extension-id _ action-id]
-  (keyword (name extension-id)
-           (str (name action-id) "-dialog")))
+  [extension-id item-namespace action-id]
+  (keyword (str (name extension-id)  "."
+                (name item-namespace) "-editor")
+           (str (name action-id)      "-dialog")))
 
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -314,10 +319,11 @@
   ; @example
   ;  (engine/load-extension-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension/load-my-type-editor!]
+  ;  [:my-extension.my-type-editor/load-editor!]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "load-" (name item-namespace) "-editor!"))]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-editor")
+                          "load-editor!")]
        [event-id]))

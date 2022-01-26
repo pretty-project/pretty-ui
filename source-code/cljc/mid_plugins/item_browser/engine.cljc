@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.4
+; Version: v0.4.8
+; Compatibility: x4.5.6
 
 
 
@@ -25,7 +25,9 @@
 
 ; @description
 ; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;   Pl.: :my-extension/synchronize-item-browser! => :my-extension/synchronize-my-type-browser!
+;   Pl.: :my-extension.item-browser/synchronize-browser!
+;        =>
+;        :my-extension.my-type-browser/synchronize-browser!
 ;   Így biztosítható, hogy egy névtér több különböző item-browser böngészőt tudjon megvalósítani.
 ; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
 ;   hogy egy extension több böngészőt alkalmazhasson.
@@ -60,12 +62,13 @@
   ; @example
   ;  (item-browser/request-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/synchronize-my-type-browser!
+  ;  :my-extension.my-type-browser/synchronize-browser!
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "synchronize-" (name item-namespace) "-browser!")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           "synchronize-browser!"))
 
 
 
@@ -102,8 +105,6 @@
   (let [meta-items-key (keyword (str (name item-namespace) "-browser/meta-items"))]
        (vector/concat-items [extension-id meta-items-key] xyz)))
 
-
-
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -113,12 +114,13 @@
   ; @example
   ;  (engine/resolver-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/get-my-type-item
+  ;  :my-extension.my-type-browser/get-item
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "get-" (name item-namespace) "-item")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           "get-item"))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,12 +145,13 @@
   ; @example
   ;  (engine/route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/my-type-browser-route
+  ;  :my-extension.my-type-browser/route
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-browser-route")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           "route"))
 
 (defn extended-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,12 +162,13 @@
   ; @example
   ;  (engine/extended-route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/my-type-browser-extended-route
+  ;  :my-extension.my-type-browser/extended-route
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-browser-extended-route")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           "extended-route"))
 
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -204,10 +208,29 @@
   ; @example
   ;  (engine/load-extension-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension/load-my-type-browser!]
+  ;  [:my-extension.my-type-browser/load-browser!]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "load-" (name item-namespace) "-browser!"))]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-browser")
+                          (str "load-browser!"))]
+       [event-id]))
+
+(defn item-clicked-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/item-clicked-event :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension.my-type-browser/->item-clicked]
+  ;
+  ; @return (event-vector)
+  [extension-id item-namespace]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-browser")
+                          "->item-clicked")]
        [event-id]))

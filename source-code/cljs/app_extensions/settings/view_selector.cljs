@@ -1,37 +1,15 @@
 
-(ns app-extensions.settings.views
+(ns app-extensions.settings.view-selector
     (:require [mid-fruits.candy     :refer [param]]
-              [x.app-activities.api :as activities]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
-              [x.app-user.api       :as user]
-              [app-plugins.view-selector.api             :as view-selector]
+              [app-plugins.view-selector.api                 :as view-selector]
               [app-extensions.settings.appearance-settings   :rename {body appearance-settings}]
               [app-extensions.settings.notification-settings :rename {body notification-settings}]
               [app-extensions.settings.personal-settings     :rename {body personal-settings}]
               [app-extensions.settings.privacy-settings      :rename {body privacy-settings}]))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-description
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [registered-at (r user/get-user-profile-item      db :registered-at)
-        registered-at (r activities/get-actual-timestamp db  registered-at)]
-       (components/content {:content :registered-at-n :replacements [registered-at]})))
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  {:description (r get-description    db)
-   :label       (r user/get-user-name db)})
-
-(a/reg-sub ::get-view-props get-view-props)
 
 
 
@@ -44,7 +22,8 @@
   (case view-id :personal      [personal-settings     body-id body-props]
                 :privacy       [privacy-settings      body-id body-props]
                 :notifications [notification-settings body-id body-props]
-                :appearance    [appearance-settings   body-id body-props]))
+                :appearance    [appearance-settings   body-id body-props]
+                [:div (str body-props)]))
 
 
 
@@ -79,12 +58,10 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [description label]}]
+  [surface-id]
   [layouts/layout-a surface-id {:body   {:content #'body   :subscriber [:view-selector/get-view-props :settings]}
                                 :header {:content #'header :subscriber [:view-selector/get-view-props :settings]}
-                                :min-width :m
-                                :description description
-                                :label       label}])
+                                :min-width :m}])
 
 
 
@@ -92,13 +69,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings/render!
+  :settings.view-selector/render-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view :subscriber [::get-view-props]}}])
+  [:ui/set-surface! :settings.view-selector/view
+                    {:view #'view}])
 
 (a/reg-event-fx
-  :settings/load!
+  :settings.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/set-window-title! :settings]
                 [:ui/set-header-title! :settings]
-                [:settings/render!]]})
+                [:settings.view-selector/render-selector!]]})

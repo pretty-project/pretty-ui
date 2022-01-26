@@ -59,15 +59,15 @@
                   (r sync/request-active? db request-id)))]
          (some f (get-in db [:storage :file-uploader/meta-items]))))
 
-(defn get-file-upload-props
+(defn get-notification-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [meta-items (get-in db [:storage :file-uploader/meta-items])]
        {:uploader-ids (-> meta-items map/get-keys vector/reverse-items)}))
 
-(a/reg-sub :storage/get-file-upload-props get-file-upload-props)
+(a/reg-sub :storage.file-uploader/get-notification-props get-notification-props)
 
-(defn get-file-uploader-props
+(defn get-uploader-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
   (let [request-id     (engine/request-id uploader-id)
@@ -76,55 +76,22 @@
                               :request-sent?    (r sync/request-sent?      db request-id)
                               :request-aborted? (r sync/request-aborted?   db request-id)})))
 
-(a/reg-sub :storage/get-file-uploader-props get-file-uploader-props)
+(a/reg-sub :storage.file-uploader/get-uploader-props get-uploader-props)
 
-(defn get-file-uploader-progress
+(defn get-uploader-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
   (let [request-id (engine/request-id uploader-id)]
        (r sync/get-request-progress db request-id)))
 
-(a/reg-sub :storage/get-file-uploader-progress get-file-uploader-progress)
-
-(defn get-progress-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id]]
-  (println (str "Let's see how many times it happen ... "))
-  (letfn [(files-uploaded-f [{:keys [total-size uploaded-size] :as result}]
-                            (condp = total-size uploaded-size (assoc  result :files-uploaded? true)
-                                                              (assoc result :db [total-size uploaded-size])))
-          (f [result uploader-id {:keys [file-count files-size]}]
-             (let [request-id       (engine/request-id uploader-id)
-                   request-progress (r sync/get-request-progress db request-id)
-                   uploaded-size    (math/percent-result files-size request-progress)]
-                  (if-not (r sync/request-sent? db request-id)
-                          (return result)
-                          (->     result (update :file-count    + file-count)
-                                         (update :total-size    + files-size)
-                                         (update :uploaded-size + uploaded-size)
-                                         (files-uploaded-f)))))]
-         (reduce-kv f {} (get-in db [:storage :file-uploader/meta-items])))
-
-  (letfn [(f [result uploader-id {:keys [] :as uploader-props}]
-             (let [request-id (engine/request-id uploader-id)]
-                  (if-not (r sync/request-sent? db request-id)
-                          (return result))))]))
-;                          (let [request-progress (r sync/get-request-progress db request-id)
-;                                uploaded-size    (math/percent-result files-size request-progress)
-;                                uploader-props   (assoc uploader-props :uploaded-size uploaded-size)
-;                               (conj result uploader-props)))))]
-;         (reduce-kv f [] (get-in db [:storage :file-uploader/meta-items]))))
-
-(a/reg-sub :storage/get-file-uploader-progress-props get-progress-props)
-
-
+(a/reg-sub :storage.file-uploader/get-uploader-progress get-uploader-progress)
 
 (defn get-file-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id file-dex]]
   (get-in db [:storage :file-uploader/data-items uploader-id file-dex]))
 
-(a/reg-sub :storage/get-file-uploader-file-props get-file-props)
+(a/reg-sub :storage.file-uploader/get-file-props get-file-props)
 
 (defn get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -136,7 +103,7 @@
    :max-upload-size                  (r capacity-handler/get-max-upload-size       db)
    :storage-free-capacity            (r capacity-handler/get-storage-free-capacity db)})
 
-(a/reg-sub :storage/get-file-uploader-header-props get-header-props)
+(a/reg-sub :storage.file-uploader/get-header-props get-header-props)
 
 (defn get-body-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -144,4 +111,4 @@
   {:all-files-cancelled? (r all-files-cancelled? db uploader-id)
    :file-count           (r db/get-item-count    db [:storage :file-uploader/data-items uploader-id])})
 
-(a/reg-sub :storage/get-file-uploader-body-props get-body-props)
+(a/reg-sub :storage.file-uploader/get-body-props get-body-props)

@@ -13,6 +13,7 @@
 
 
 # x4.5.0
+- A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 
 - A sync/send-request! esemény {:target-paths ...} tulajdonságára már nincs szükség a transit-handler
   bevezetése óta

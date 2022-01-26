@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.0
-; Compatibility: x4.5.5
+; Version: v0.7.8
+; Compatibility: x4.5.6
 
 
 
@@ -14,12 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.views
-    (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
+    (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.string    :as string]
+              [mid-fruits.vector    :as vector]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a]
+              [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
               [app-plugins.item-editor.engine :as engine]))
 
 
@@ -265,8 +266,8 @@
   ; @return (component)
   [_ _]
   [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:content :an-error-occured :font-size :m :min-height :m}]
-       [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :min-height :m}]])
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 
 
 
@@ -324,43 +325,81 @@
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) header-props
+  ; @param (map) header-props
+  ;  {:menu (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-editor/header :my-extension :my-type {...}]
   ;
+  ; @usage
+  ;  (defn my-menu [extension-id item-namespace header-props] [:div ...])
+  ;  [item-editor/view :my-extension :my-type {:menu #'my-menu}]
+  ;
   ; @return (component)
-  ([extension-id item-namespace]
-   [header extension-id item-namespace {}])
+  [extension-id item-namespace header-props]
+  [components/subscriber {:base-props header-props
+                          :component  [header-structure              extension-id item-namespace]
+                          :subscriber [:item-editor/get-header-props extension-id item-namespace]}])
 
-  ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-editor/get-header-props extension-id item-namespace])]
-        (fn [] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;  {:form-element (metamorphic-content)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [form-element] :as body-props}]
+  [form-element extension-id item-namespace body-props])
+
+(defn body
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;  {:form-element (metamorphic-content)}
+  ;
+  ; @usage
+  ;  [item-editor/body :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  (defn my-form-element [extension-id item-namespace body-props] [:div ...])
+  ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element}]
+  ;
+  ; @return (component)
+  [extension-id item-namespace body-props]
+  [components/subscriber {:base-props body-props
+                          :component  [body-structure              extension-id item-namespace]
+                          :subscriber [:item-editor/get-body-props extension-id item-namespace]}])
 
 
 
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout
+(defn view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props
   ;  {:description (metamorphic-content)(opt)
-  ;   :error-mode? (boolean)(opt)
-  ;   :form-element (metamorphic-content)}
+  ;   :error-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [description error-mode? form-element]}]
+  [extension-id item-namespace {:keys [description error-mode?] :as view-props}]
   (if error-mode? ; If error-mode is enabled ...
                   [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
                                                   :header [header     extension-id item-namespace]}]
                   ; If error-mode is NOT enabled ...
                   [layouts/layout-a extension-id {:description description
-                                                  :body   [form-element extension-id item-namespace]
-                                                  :header [header       extension-id item-namespace]}]))
+                                                  :body   [body   extension-id item-namespace view-props]
+                                                  :header [header extension-id item-namespace]}]))
 
 (defn view
   ; @param (keyword) extension-id
@@ -373,11 +412,13 @@
   ;  [item-editor/view :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [extension-id item-namespace] [:div ...])
+  ;  (defn my-form-element [extension-id item-namespace body-props]   [:div ...])
   ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
-  ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element}]
+  ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element
+  ;                                            :menu         #'my-menu}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  (let [subscribed-props (a/subscribe [:item-editor/get-view-props extension-id item-namespace])]
-       (fn [] [layout extension-id item-namespace (merge view-props @subscribed-props)])))
+  [components/subscriber {:base-props view-props
+                          :component  [view-structure              extension-id item-namespace]
+                          :subscriber [:item-editor/get-view-props extension-id item-namespace]}])

@@ -43,8 +43,8 @@
 (defn- render-cookie-consent?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (and (not (r environment/necessary-cookies-enabled? db))
-       (r ui/application-interface?                   db)))
+  (and      (r ui/application-interface?              db)
+       (not (r environment/necessary-cookies-enabled? db))))
 
 
 
@@ -53,19 +53,19 @@
 
 (defn- got-it-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [popup-id]
   [elements/button ::got-it-button
                    {:label    :got-it!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                    :on-click {:dispatch-n [[:ui/close-popup! popup-id]
                                             [:environment/->cookie-settings-changed]]}}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [popup-id]
   [elements/horizontal-polarity ::header
-                                {:end-content [got-it-button header-id]}])
+                                {:end-content [got-it-button popup-id]}])
 
 
 
@@ -73,22 +73,22 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings/render-cookie-consent!
+  :settings.cookie-consent/render-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! ::view
-                  {:body   {:content #'cookie-settings}
-                   :header {:content #'header}
+  [:ui/add-popup! :settings.cookie-consent/view
+                  {:body   #'cookie-settings
+                   :header #'header
                    :horizontal-align :left
                    :user-close?      false}])
 
 (a/reg-event-fx
-  :settings/initialize-cookie-consent!
+  :settings.cookie-consent/initialize-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:dispatch-if [(r render-cookie-consent? db)
-                     ; BUG#2457
-                     {:dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [:settings/render-cookie-consent!]}]}]}))
+                     {; BUG#2457
+                      :dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [:settings.cookie-consent/render-consent!]}]}]}))
 
 (a/reg-lifecycles
   ::lifecycles
-  {:on-app-launch [:settings/initialize-cookie-consent!]})
+  {:on-app-launch [:settings.cookie-consent/initialize-consent!]})

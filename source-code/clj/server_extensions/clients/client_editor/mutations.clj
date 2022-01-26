@@ -11,7 +11,7 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-client-item!
+(defmutation undo-delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -19,10 +19,10 @@
              ;
              ; @return (namespaced map)
              [_ client-item]
-             {::pathom.co/op-name 'clients/undo-delete-client-item!}
+             {::pathom.co/op-name 'clients.client-editor/undo-delete-item!}
              (mongo-db/insert-document! "clients" client-item))
 
-(defmutation save-client-item!
+(defmutation save-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -30,11 +30,11 @@
              ;
              ; @return (namespaced map)
              [{:keys [request]} client-item]
-             {::pathom.co/op-name 'clients/save-client-item!}
+             {::pathom.co/op-name 'clients.client-editor/save-item!}
              (mongo-db/save-document! "clients" client-item
                                       {:prototype-f #(prototypes/updated-document-prototype request :client %)}))
 
-(defmutation delete-client-item!
+(defmutation delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -43,10 +43,10 @@
              ;
              ; @return (string)
              [_ {:keys [item-id]}]
-             {::pathom.co/op-name 'clients/delete-client-item!}
+             {::pathom.co/op-name 'clients.client-editor/delete-item!}
              (mongo-db/remove-document! "clients" item-id))
 
-(defmutation duplicate-client-item!
+(defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -54,7 +54,7 @@
              ;
              ; @return (namespaced map)
              [{:keys [request]} client-item]
-             {::pathom.co/op-name 'clients/duplicate-client-item!}
+             {::pathom.co/op-name 'clients.client-editor/duplicate-item!}
              (mongo-db/insert-document! "clients" client-item
                                         {:prototype-f #(prototypes/duplicated-document-prototype request :client %)}))
 
@@ -64,6 +64,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-client-item! duplicate-client-item! save-client-item! undo-delete-client-item!])
+(def HANDLERS [delete-item! duplicate-item! save-item! undo-delete-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

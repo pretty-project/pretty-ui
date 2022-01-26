@@ -21,18 +21,18 @@
 
 (defn- cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [popup-id]
   [elements/button ::cancel-button
                    {:preset   :cancel-button
-                    :on-click [:ui/close-popup! header-id]}])
+                    :on-click [:ui/close-popup! popup-id]}])
 
 (defn- save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [popup-id]
   [elements/button ::save-button
                    {:preset  :save-button
                     :variant :transparent
-                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                    :on-click {:dispatch-n [[:ui/close-popup! popup-id]
                                             [:environment/->cookie-settings-changed]]}}])
 
 (defn- header-label
@@ -42,11 +42,11 @@
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [popup-id]
   [elements/horizontal-polarity ::header
-                                {:start-content  [cancel-button header-id]
-                                 :middle-content [header-label  header-id]
-                                 :end-content    [save-button   header-id]}])
+                                {:start-content  [cancel-button popup-id]
+                                 :middle-content [header-label  popup-id]
+                                 :end-content    [save-button   popup-id]}])
 
 
 
@@ -69,16 +69,16 @@
 
 (defn- cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
+  [popup-id]
   [:<> ; This website uses cookies
        [elements/horizontal-separator {:size :s}]
        [elements/text {:content :this-website-uses-cookies
                        :font-size :xs :layout :row :font-weight :bold}]
        ; Legal links
        [elements/horizontal-separator {:size :xxs}]
-       [privacy-policy-button   body-id]
+       [privacy-policy-button   popup-id]
        [elements/horizontal-separator {:size :s}]
-       [terms-of-service-button body-id]
+       [terms-of-service-button popup-id]
        ; Cookie settings
        [elements/horizontal-line {:color :highlight :layout :row}]
        [elements/switch ::necessary-cookies-switch
@@ -104,13 +104,13 @@
        ; Remove stored cookies
        [elements/horizontal-separator {:size :s}]
        [elements/button {:label :remove-stored-cookies! :preset :secondary-button :layout :row
-                         :on-click [:settings/render-remove-stored-cookies-dialog!]}]
+                         :on-click [:settings.remove-stored-cookies/render-dialog!]}]
        [elements/horizontal-separator {:size :s}]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
-  [cookie-settings body-id])
+  [popup-id]
+  [cookie-settings popup-id])
 
 
 
@@ -118,10 +118,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings/render-cookie-settings!
+  :settings.cookie-settings/render-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/add-popup! ::view
-                  {:body   {:content #'body}
-                   :header {:content #'header}
+                  {:body   #'body
+                   :header #'header
                    :horizontal-align :left
                    :user-close?      false}])

@@ -7,4 +7,4 @@
               [app-extensions.settings.personal-settings]
               [app-extensions.settings.privacy-settings]
               [app-extensions.settings.remove-stored-cookies]
-              [app-extensions.settings.views]))
+              [app-extensions.settings.view-selector]))

@@ -22,7 +22,7 @@
    :user-profile-picture-url (r user/get-user-profile-picture-url db)
    :user-phone-number        (r user/get-user-phone-number        db)})
 
-(a/reg-sub ::get-body-props get-body-props)
+(a/reg-sub :settings.personal-settings/get-body-props get-body-props)
 
 
 
@@ -129,16 +129,16 @@
        [elements/horizontal-separator {:size :l}]
        [user-pin             body-id]
        [elements/horizontal-separator {:size :l}]
-       [elements/button      ::delete-user-account-button
-                             {:label :delete-user-account!
-                              :preset :secondary-button}]
-       [elements/button      ::clear-user-data-button
-                             {:label :clear-user-data!
-                              :preset :secondary-button}]]])
+       [elements/button ::delete-user-account-button
+                        {:label :delete-user-account!
+                         :preset :secondary-button}]
+       [elements/button ::clear-user-data-button
+                        {:label :clear-user-data!
+                         :preset :secondary-button}]]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/subscriber body-id
                          {:render-f   #'personal-settings
-                          :subscriber [::get-body-props]}])
+                          :subscriber [:settings.personal-settings/get-body-props]}])

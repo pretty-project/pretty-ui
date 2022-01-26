@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.17
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.4.9
+; Version: v0.9.6
+; Compatibility: x4.5.6
 
 
 
@@ -23,16 +23,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-meta-value
+(defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ; @param (keyword) prop-key
+  ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ extension-id editor-id prop-key]]
-  (get-in db [extension-id :value-editor/meta-items editor-id prop-key]))
+  [db [_ extension-id editor-id item-key]]
+  (get-in db [extension-id :value-editor/meta-items editor-id item-key]))
 
 (defn edit-original?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,8 +47,8 @@
   ; tulajdonságai megegyeznek, ami megfelel az {:edit-original? true} beállítás használatának,
   ; és függetlenül az {:edit-original? ...} beállítás értékétől!
   ; Ezért az edit-original? függvény nem az {:edit-original? ...} beállítás értékét vizsgálja!
-  (= (r get-meta-value db extension-id editor-id :edit-path)
-     (r get-meta-value db extension-id editor-id :value-path)))
+  (= (r get-meta-item db extension-id editor-id :edit-path)
+     (r get-meta-item db extension-id editor-id :value-path)))
 
 (defn get-original-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,16 +58,19 @@
   ;
   ; @return (string)
   [db [_ extension-id editor-id]]
-  (let [value-path (r get-meta-value db extension-id editor-id :value-path)]
+  (let [value-path (r get-meta-item db extension-id editor-id :value-path)]
        (get-in db value-path)))
 
 (defn get-editor-value
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ;
+  ; @usage
+  ;  (r value-editor/get-editor-value db :my-extension :my-editor)
+  ;
   ; @return (string)
   [db [_ extension-id editor-id]]
-  (let [edit-path (r get-meta-value db extension-id editor-id :edit-path)]
+  (let [edit-path (r get-meta-item db extension-id editor-id :edit-path)]
        (get-in db edit-path)))
 
 ; @usage
@@ -82,7 +85,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ extension-id editor-id]]
-  (if-let [on-save-event (r get-meta-value db extension-id editor-id :on-save)]
+  (if-let [on-save-event (r get-meta-item db extension-id editor-id :on-save)]
           (let [editor-value (r get-editor-value db extension-id editor-id)]
                (a/metamorphic-event<-params on-save-event editor-value))))
 
@@ -95,12 +98,11 @@
   ; @return (map)
   [db [_ extension-id editor-id]]
   (let [field-value (r elements/get-input-value db :value-editor/editor-field)
-        validator   (r get-meta-value           db extension-id editor-id :validator)]
-                    ; If validator is in use & field-value is NOT valid ...
-       (boolean (or (and (some? validator)
-                         (not ((:f validator) field-value)))
+        validator   (r get-meta-item            db extension-id editor-id :validator)]
+       (boolean (or ; If validator is in use & field-value is NOT valid ...
+                    (and validator (not ((:f validator) field-value)))
                     ; If field is required & field is empty ...
-                    (and (r get-meta-value        db extension-id editor-id :required?)
+                    (and (r get-meta-item         db extension-id editor-id :required?)
                          (r elements/field-empty? db :value-editor/editor-field))))))
 
 (defn get-header-props
@@ -114,7 +116,7 @@
   ;   :save-button-label (metamorphic-content)}
   [db [_ extension-id editor-id]]
   {:disable-save-button? (r disable-save-button? db extension-id editor-id)
-   :save-button-label    (r get-meta-value       db extension-id editor-id :save-button-label)})
+   :save-button-label    (r get-meta-item        db extension-id editor-id :save-button-label)})
 
 (a/reg-sub :value-editor/get-header-props get-header-props)
 
@@ -131,10 +133,10 @@
   ;   :modifier (function)
   ;   :validator (map)}
   [db [_ extension-id editor-id]]
-  {:edit-path (r get-meta-value db extension-id editor-id :edit-path)
-   :helper    (r get-meta-value db extension-id editor-id :helper)
-   :label     (r get-meta-value db extension-id editor-id :label)
-   :modifier  (r get-meta-value db extension-id editor-id :modifier)
-   :validator (r get-meta-value db extension-id editor-id :validator)})
+  {:edit-path (r get-meta-item db extension-id editor-id :edit-path)
+   :helper    (r get-meta-item db extension-id editor-id :helper)
+   :label     (r get-meta-item db extension-id editor-id :label)
+   :modifier  (r get-meta-item db extension-id editor-id :modifier)
+   :validator (r get-meta-item db extension-id editor-id :validator)})
 
 (a/reg-sub :value-editor/get-body-props get-body-props)

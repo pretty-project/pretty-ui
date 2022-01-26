@@ -272,6 +272,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn dex-range
+  ; @param (vector) n
+  ;
+  ; @example
+  ;  (vector/dex-range [:a :b :c])
+  ;  =>
+  ;  [0 1 2]
+  ;
+  ; @return (vector)
+  [n]
+  (-> n count range vec))
+
 (defn dex-first?
   ; @param (integer) dex
   ;

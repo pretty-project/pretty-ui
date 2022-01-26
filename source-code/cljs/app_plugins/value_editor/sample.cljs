@@ -5,7 +5,7 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-my-props
@@ -14,25 +14,17 @@
 
 (a/reg-sub :get-my-props get-my-props)
 
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+(a/reg-event-fx
+  :my-extension/edit-my-value!
+  ; - Az {:edit-original? true} beállítás használatával a {:value-path ...} tulajdonságként átadott
+  ;   Re-Frame adatbázis útvonalon tárolt érték szerkesztése közben, az aktuális érték az útvonalra íródik.
+  ; - Az {:on-save ...} tulajdonságként átadott esemény a mentés gomb megnyomásakor történik meg,
+  ;   és használatával egyedi mentési eljárás is megvalósítható.
+  [:value-editor/load-editor! :my-extension :my-editor {:edit-original? true
+                                                        :on-save    [:my-extension/->my-value-edited]
+                                                        :value-path [:my :item]}])
 
 (a/reg-event-fx
-  :edit-my-value!
-  [:value-editor/load-editor! :my-extension :my-editor {:value-path [:my :item]}])
-
-(a/reg-event-fx
-  :edit-your-value!
-  [:value-editor/load-editor! :my-extension :your-editor {:on-save [:->your-value-edited]}])
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :->your-value-edited
-  (fn [_ [_ your-value]]
-      [:do-something-with! your-value]))
+  :my-extension/->my-value-edited
+  (fn [_ [_ my-value]]
+      [:do-something-with! my-value]))

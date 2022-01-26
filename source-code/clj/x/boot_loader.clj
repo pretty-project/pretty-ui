@@ -43,8 +43,7 @@
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
   ([]             (start-server! {}))
-  ([server-props] (a/->app-built)
-                  (a/dispatch [:boot-loader/start-server! server-props])))
+  ([server-props] (a/dispatch [:boot-loader/start-server! server-props])))
 
 
 

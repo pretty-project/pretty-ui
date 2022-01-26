@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.5.6
-; Compatibility: x4.4.9
+; Version: v0.6.4
+; Compatibility: x4.5.6
 
 
 
@@ -46,7 +46,17 @@
        (or (= route-id (engine/route-id          extension-id))
            (= route-id (engine/extended-route-id extension-id)))))
 
-(defn get-derived-view
+(defn route-exists?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (or (r router/route-exists? db (engine/route-id          extension-id))
+      (r router/route-exists? db (engine/extended-route-id extension-id))))
+
+(defn get-derived-view-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -69,19 +79,19 @@
                         (or default-view-id engine/DEFAULT-VIEW-ID)))
                (or default-view-id engine/DEFAULT-VIEW-ID))))
 
-(defn get-selected-view
+(defn get-selected-view-id
   ; @param (keyword) extension-id
   ;
   ; @usage
-  ;  (r view-selector/get-selected-view db :my-extension)
+  ;  (r view-selector/get-selected-view-id db :my-extension)
   ;
   ; @return (keyword)
   [db [_ extension-id]]
   (r get-meta-item db extension-id :view-id))
 
 ; @usage
-;  [:view-selector/get-selected-view :my-extension]
-(a/reg-sub :view-selector/get-selected-view get-selected-view)
+;  [:view-selector/get-selected-view-id :my-extension]
+(a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)
 
 (defn get-view-props
   ; @param (keyword) extension-id
@@ -92,7 +102,7 @@
   ; @return (map)
   ;  {:view-id (keyword)}
   [db [_ extension-id]]
-  {:view-id (r get-selected-view db extension-id)})
+  {:view-id (r get-selected-view-id db extension-id)})
 
 ; @usage
 ;  [:view-selector/get-view-props :my-extension]

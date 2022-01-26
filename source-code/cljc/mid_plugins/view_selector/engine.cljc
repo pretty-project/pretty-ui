@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.4.6
+; Version: v0.3.0
+; Compatibility: x4.5.6
 
 
 
@@ -37,11 +37,11 @@
   ; @example
   ;  (engine/route-id :my-extension)
   ;  =>
-  ;  :my-extension/route
+  ;  :my-extension.view-selector/route
   ;
   ; @return (keyword)
   [extension-id]
-  (keyword (name extension-id) "route"))
+  (keyword (str (name extension-id) ".view-selector/route")))
 
 (defn extended-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,11 +51,11 @@
   ; @example
   ;  (engine/extended-route-id :my-extension)
   ;  =>
-  ;  :my-extension/extended-route
+  ;  :my-extension.view-selector/extended-route
   ;
   ; @return (keyword)
   [extension-id]
-  (keyword (name extension-id) "extended-route"))
+  (keyword (str (name extension-id) ".view-selector/extended-route")))
 
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,9 +124,9 @@
   ; @example
   ;  (engine/load-extension-event :my-extension)
   ;  =>
-  ;  [:my-extension/load!]
+  ;  [:my-extension.view-selector/load-selector!]
   ;
   ; @return (event-vector)
   [extension-id]
-  (let [event-id (keyword/add-namespace extension-id :load!)]
+  (let [event-id (keyword (str (name extension-id) ".view-selector/load-selector!"))]
        [event-id]))

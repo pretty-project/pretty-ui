@@ -11,7 +11,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- abort-upload-button
+(defn- abort-progress-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id {:keys [files-uploaded? request-aborted?]}]
   (let [request-id (engine/request-id uploader-id)]
@@ -19,58 +19,58 @@
                [elements/icon-button {:tooltip :abort! :preset :close :height :l
                                       :on-click [:sync/abort-request! request-id]}])))
 
-(defn- upload-progress-diagram
+(defn- progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
   ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre!
-  (let [uploader-progress (a/subscribe [:storage/get-file-uploader-progress uploader-id])]
+  (let [uploader-progress (a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])]
        (fn [] [elements/line-diagram {:indent :both :sections [{:color :primary   :value @uploader-progress}
                                                                {:color :highlight :value (- 100 @uploader-progress)}]}])))
 
-(defn- upload-progress-label
+(defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [file-count files-size files-uploaded? request-aborted? uploaded-size]}]
   (let [progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
         label          (cond files-uploaded? :files-uploaded request-aborted? :aborted :else progress-label)]
        [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left :min-height :l}]))
 
-(defn- upload-progress-structure
+(defn- progress-state-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id {:keys [request-sent?] :as uploader-props}]
   (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
-                         [elements/row {:content [:<> [upload-progress-label   uploader-id uploader-props]
-                                                      [abort-upload-button   uploader-id uploader-props]]
+                         [elements/row {:content [:<> [progress-label        uploader-id uploader-props]
+                                                      [abort-progress-button uploader-id uploader-props]]
                                         :horizontal-align :space-between}]
                          [:div {:style {:width "100%"}}
-                               [upload-progress-diagram uploader-id uploader-props]]
+                               [progress-diagram uploader-id uploader-props]]
                          [elements/horizontal-separator {:size :xs}]]))
 
-(defn- upload-progress
+(defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [components/subscriber uploader-id
-                         {:render-f #'upload-progress-structure
-                          :subscriber [:storage/get-file-uploader-props uploader-id]}])
+                         {:render-f #'progress-state-structure
+                          :subscriber [:storage.file-uploader/get-uploader-props uploader-id]}])
 
-(defn- upload-progress-list
+(defn- progress-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id {:keys [uploader-ids]}]
-  (reduce #(conj %1 ^{:key %2} [upload-progress %2])
+  (reduce #(conj %1 ^{:key %2} [progress-state %2])
            [:<>] uploader-ids))
 
-(defn- upload-progress-notification-structure
+(defn- progress-notification-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [dialog-id upload-props]
-  [:<> [upload-progress-list dialog-id upload-props]
+  [dialog-id notification-props]
+  [:<> [progress-list dialog-id notification-props]
        [elements/horizontal-separator {:size :m}]])
 
-(defn- upload-progress-notification
+(defn- progress-notification
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id]
   [components/subscriber dialog-id
-                         {:render-f   #'upload-progress-notification-structure
-                          :subscriber [:storage/get-file-upload-props]}])
+                         {:render-f   #'progress-notification-structure
+                          :subscriber [:storage.file-uploader/get-notification-props]}])
 
 
 
@@ -78,10 +78,9 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-file-uploader-progress-notification!
+  :storage.file-uploader/render-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      ; Az egy időben történő feltöltési folyamatok értékei összevonva jelennek meg egy folyamatjelzőn
-      [:ui/blow-bubble! :storage/file-uploader-progress-notification
-                        {:body #'upload-progress-notification
-                         :autopop? false :user-close? false}]))
+  ; Az egy időben történő feltöltési folyamatok értékei összevonva jelennek meg egy folyamatjelzőn
+  [:ui/blow-bubble! :storage.file-uploader/progress-notification
+                    {:body #'progress-notification
+                     :autopop? false :user-close? false}])

@@ -13,7 +13,7 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-media-item-f
+(defn get-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -27,18 +27,18 @@
                        (let [media-item (merge media-item capacity-details)]
                             (validator/validate-data media-item))))))
 
-(defresolver get-media-item
+(defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:storage/get-media-item (namespaced map)
+             ;  {:storage.media-browser/get-item (namespaced map)
              [env resolver-props]
-             {:storage/get-media-item (get-media-item-f env resolver-props)})
+             {:storage.media-browser/get-item (get-item-f env resolver-props)})
 
-(defn get-media-items-f
+(defn get-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -53,18 +53,18 @@
        {:documents      (mongo-db/get-documents-by-pipeline   "storage" get-pipeline)
         :document-count (mongo-db/count-documents-by-pipeline "storage" count-pipeline)}))
 
-(defresolver get-media-items
+(defresolver get-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:storage/get-media-items (map)
+             ;  {:storage.media-lister/get-items (map)
              ;    {:document-count (integer)
              ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
-             {:storage/get-media-items (get-media-items-f env resolver-props)})
+             {:storage.media-lister/get-items (get-items-f env resolver-props)})
 
 
 
@@ -72,6 +72,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-media-item get-media-items])
+(def HANDLERS [get-item get-items])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

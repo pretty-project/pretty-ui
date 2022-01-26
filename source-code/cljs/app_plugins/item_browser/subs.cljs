@@ -124,6 +124,17 @@
        (or (= route-id (engine/route-id          extension-id item-namespace))
            (= route-id (engine/extended-route-id extension-id item-namespace)))))
 
+(defn route-exists?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (or (r router/route-exists? db (engine/route-id          extension-id))
+      (r router/route-exists? db (engine/extended-route-id extension-id item-namespace))))
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace

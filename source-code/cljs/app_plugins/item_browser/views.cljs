@@ -21,6 +21,7 @@
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
               [x.app-tools.api      :as tools]
+              [app-fruits.react-transition     :as react-transition]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-lister.api     :as item-lister]))
 
@@ -77,15 +78,15 @@
   ; @return (component)
   [extension-id item-namespace]
   [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:content :an-error-occured :font-size :m :min-height :m}]
-       [elements/label {:content :the-item-you-opened-may-be-broken :color :muted :min-height :m}]])
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 
 
 
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-mode-header
+(defn menu-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -102,17 +103,34 @@
       [go-home-button                  extension-id item-namespace header-props]
       (if new-item-options [item-lister/new-item-select extension-id item-namespace header-props]
                            [item-lister/new-item-button extension-id item-namespace])
-      [item-lister/sort-items-button         extension-id item-namespace header-props]
-      [item-lister/toggle-select-mode-button extension-id item-namespace header-props]]
-     ;[item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]
+      [item-lister/sort-items-button          extension-id item-namespace header-props]
+      [item-lister/toggle-select-mode-button  extension-id item-namespace header-props]
+      [item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]]
     [:div.item-lister--header--menu-item-group
       [item-lister/search-block extension-id item-namespace header-props]]])
+
+(defn menu-mode-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;  {:menu-mode? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [menu-mode?] :as header-props}]
+  [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
+                                    [menu-mode-header-structure extension-id item-namespace header-props]])
 
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) header-props
-  ;  {:new-item-options (vector)(opt)}
+  ; @param (map) header-props
+  ;  {:new-item-options (vector)(opt)
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false
+  ;   :sortable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  [item-browser/header :my-extension :my-type]
@@ -121,15 +139,12 @@
   ;  [item-browser/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
-  ([extension-id item-namespace]
-   [header extension-id item-namespace {}])
+  [extension-id item-namespace header-props]
+  [components/subscriber {:base-props (assoc header-props :menu #'menu-mode-header)
+                          :component  [item-lister/header             extension-id item-namespace]
+                          :subscriber [:item-browser/get-header-props extension-id item-namespace]}])
 
-  ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
-        (fn [_ _ header-props] (let [header-props (merge header-props {:menu #'menu-mode-header} @subscribed-props)]
-                                    [item-lister/header extension-id item-namespace header-props])))))
-
-
+    
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -138,7 +153,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) body-props
-  ;  {:list-element (metamorphic-content)}
+  ;  {:list-element (metamorphic-content)
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]
@@ -156,7 +173,7 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- layout
+(defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [extension-id item-namespace {:keys [description error-mode?] :as view-props}]
   (if error-mode? ; If error-mode is enabled ...
@@ -172,7 +189,11 @@
   ; @param (keyword) item-namespace
   ; @param (map) view-props
   ;  {:new-item-options (vector)(opt)
-  ;   :list-element (component)}
+  ;   :list-element (component)
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false
+  ;   :sortable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  [item-browser/view :my-extension :my-type {...}]
@@ -184,5 +205,6 @@
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  (let [subscribed-props (a/subscribe [:item-browser/get-view-props extension-id item-namespace])]
-       (fn [] [layout extension-id item-namespace (merge view-props @subscribed-props)])))
+  [components/subscriber {:base-props view-props
+                          :component  [view-structure               extension-id item-namespace]
+                          :subscriber [:item-browser/get-view-props extension-id item-namespace]}])

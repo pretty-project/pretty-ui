@@ -131,7 +131,6 @@
   [popup-id body-props]
   [:<> [language-selector-button popup-id body-props]
        [settings-button          popup-id body-props]
-       [about-app-button         popup-id body-props]
        [more-options-button      popup-id body-props]
        [logout-button            popup-id body-props]])
 
@@ -161,7 +160,7 @@
        [elements/button ::back-button
                         {:indent   :left
                          :label    :back!
-                         :on-click [:gestures/change-view! ::handler :main]
+                         :on-click [:gestures/change-view! ::handler :more-options]
                          :preset   :back-button}]])
 
 
@@ -171,7 +170,7 @@
 
 (defn- more-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  [popup-id body-props]
   [:<> [elements/button ::terms-of-service-button
                         {:icon     :subject
                          :indent   :left
@@ -184,6 +183,7 @@
                          :label    :privacy-policy
                          :on-click [:router/go-to! "/@app-home/privacy-policy"]
                          :preset   :default-button}]
+       [about-app-button         popup-id body-props]
        [elements/button ::back-button
                         {:label    :back!
                          :indent   :left
@@ -208,8 +208,8 @@
   [_ {:keys [user-email-address user-name user-profile-picture-url]}]
   [elements/column {:content [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
                                   [elements/horizontal-separator {:size :s}]
-                                  [elements/label {:content user-name          :layout :fit :font-size :s  :font-weight :extra-bold}]
-                                  [elements/label {:content user-email-address :layout :fit :font-size :xs :color :highlight}]]
+                                  [elements/label {:content user-name          :min-height :s  :font-size :s  :font-weight :extra-bold}]
+                                  [elements/label {:content user-email-address :min-height :xs :font-size :xs :color :highlight}]]
                     :stretch-orientation :horizontal}])
 
 (defn- body-structure

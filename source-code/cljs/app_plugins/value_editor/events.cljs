@@ -6,7 +6,7 @@
 ; Created: 2021.11.17
 ; Description:
 ; Version: v0.8.8
-; Compatibility: x4.5.4
+; Compatibility: x4.5.6
 
 
 
@@ -72,8 +72,8 @@
   ;
   ; @return (map)
   [db [_ extension-id editor-id]]
-  (if-let [initial-value (r subs/get-meta-value db extension-id editor-id :initial-value)]
-          (let [edit-path (r subs/get-meta-value db extension-id editor-id :edit-path)]
+  (if-let [initial-value (r subs/get-meta-item db extension-id editor-id :initial-value)]
+          (let [edit-path (r subs/get-meta-item db extension-id editor-id :edit-path)]
                (assoc-in db edit-path initial-value))
           (return db)))
 
@@ -88,10 +88,10 @@
   ; Ha nem az eredeti érték elérési útvonalán történik a szerkesztés, tehát az edit-path
   ; értéke nem egyenlő a value-path értékével és nincs alkalmazva initial-value érték,
   ; akkor a value-path útvonalon található érték lesz a szerkesztő mező kezdeti értéke.
-  (if-not (or (r subs/get-meta-value db extension-id editor-id :initial-value)
+  (if-not (or (r subs/get-meta-item  db extension-id editor-id :initial-value)
               (r subs/edit-original? db extension-id editor-id))
           (if-let [original-value (r subs/get-original-value db extension-id editor-id)]
-                  (let [edit-path (r subs/get-meta-value db extension-id editor-id :edit-path)]
+                  (let [edit-path (r subs/get-meta-item      db extension-id editor-id :edit-path)]
                        (assoc-in db edit-path original-value))
                   (return db))
           (return db)))
@@ -132,8 +132,8 @@
   ; @return (map)
   [db [_ extension-id editor-id]]
   (if-not (r subs/edit-original? db extension-id editor-id)
-          (let [edit-path  (r subs/get-meta-value db extension-id editor-id :edit-path)
-                value-path (r subs/get-meta-value db extension-id editor-id :value-path)]
+          (let [edit-path  (r subs/get-meta-item db extension-id editor-id :edit-path)
+                value-path (r subs/get-meta-item db extension-id editor-id :value-path)]
                (r db/copy-item! db edit-path value-path))
           (return db)))
 

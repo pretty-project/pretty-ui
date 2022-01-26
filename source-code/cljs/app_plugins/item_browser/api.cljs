@@ -27,7 +27,7 @@
 
 ; @description
 ;  Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét
-;  plugin módosításait úgy kell elvégezni, hogy azok működése egymással összehangol
+;  plugin módosításait úgy kell elvégezni, hogy azok működése egymással összehangolt
 ;  maradjon! Az item-browser plugin dokumentációjából hiányzó részeket az item-lister
 ;  plugin dokumentációjában keresd!
 

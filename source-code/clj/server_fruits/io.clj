@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.29
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.5.4
+; Version: v0.8.2
+; Compatibility: x4.5.6
 
 
 
@@ -27,9 +27,14 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-;  Hibaüzenet kiírásakor a fájl neve idézőjelekben legyen kiírva, hogy a nil
+; XXX#5069
+;  Hibaüzenet kiírásakor a fájl neve idézőjelek között legyen kiírva, hogy a nil
 ;  értékű fájlnevek is egyértelműek legyenek.
 (def FILE-DOES-NOT-EXIST-ERROR "File does not exist:")
+
+; @constant (string)
+; XXX#5069
+(def DIRECTORY-DOES-NOT-EXIST-ERROR "Directory does not exist:")
 
 
 
@@ -346,7 +351,10 @@
   ;
   ; @return (?)
   [directory-path]
-  (delete-file! directory-path))
+  (try (if (directory-exists? directory-path)
+           (clojure.java.io/delete-file directory-path)
+           (throw (Exception. DIRECTORY-DOES-NOT-EXIST-ERROR)))
+      (catch Exception e (println (str e " \"" directory-path "\"")))))
 
 (defn empty-directory!
   ; @param (string) directory-path

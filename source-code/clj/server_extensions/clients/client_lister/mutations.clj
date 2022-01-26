@@ -11,7 +11,7 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-client-items!
+(defmutation undo-delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) mutation-props
@@ -19,10 +19,10 @@
              ;
              ; @return (namespaced maps in vector)
              [_ {:keys [items]}]
-             {::pathom.co/op-name 'clients/undo-delete-client-items!}
+             {::pathom.co/op-name 'clients.client-lister/undo-delete-items!}
              (mongo-db/insert-documents! "clients" items))
 
-(defmutation delete-client-items!
+(defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) mutation-props
@@ -30,10 +30,10 @@
              ;
              ; @return (strings in vector)
              [_ {:keys [item-ids]}]
-             {::pathom.co/op-name 'clients/delete-client-items!}
+             {::pathom.co/op-name 'clients.client-lister/delete-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
-(defmutation undo-duplicate-client-items!
+(defmutation undo-duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) mutation-props
@@ -41,10 +41,10 @@
              ;
              ; @return (strings in vector)
              [_ {:keys [item-ids]}]
-             {::pathom.co/op-name 'clients/undo-duplicate-client-items!}
+             {::pathom.co/op-name 'clients.client-lister/undo-duplicate-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
-(defmutation duplicate-client-items!
+(defmutation duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) mutation-props
@@ -52,7 +52,7 @@
              ;
              ; @return (namespaced maps in vector)
              [{:keys [request]} {:keys [item-ids]}]
-             {::pathom.co/op-name 'clients/duplicate-client-items!}
+             {::pathom.co/op-name 'clients.client-lister/duplicate-items!}
              (mongo-db/duplicate-documents! "clients" item-ids
                                             {:prototype-f #(prototypes/duplicated-document-prototype request :client %)}))
 
@@ -62,6 +62,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-client-items! undo-delete-client-items! duplicate-client-items! undo-duplicate-client-items!])
+(def HANDLERS [delete-items! undo-delete-items! duplicate-items! undo-duplicate-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

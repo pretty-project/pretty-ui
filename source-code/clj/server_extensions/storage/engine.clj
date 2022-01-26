@@ -20,7 +20,7 @@
 ;; -- Attach/detach item functions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn attach-media-item!
+(defn attach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -34,7 +34,7 @@
           (attach-f    [document] (update document :media/items vector/conj-item {:media/id item-id}))]
          (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f})))
 
-(defn detach-media-item!
+(defn detach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -80,7 +80,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-media-item
+(defn get-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -90,7 +90,7 @@
   [_ item-id]
   (mongo-db/get-document-by-id "storage" item-id))
 
-(defn insert-media-item!
+(defn insert-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -100,7 +100,7 @@
   [{:keys [request]} item]
   (mongo-db/insert-document! "storage" item {:prototype-f #(prototypes/added-document-prototype request :media %)}))
 
-(defn remove-media-item!
+(defn remove-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env

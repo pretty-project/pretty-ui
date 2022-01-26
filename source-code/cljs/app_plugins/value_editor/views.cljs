@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description:
-; Version: v1.0.6
-; Compatibility: x4.4.9
+; Version: v1.1.0
+; Compatibility: x4.5.6
 
 
 
@@ -17,8 +17,7 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
-              [app-plugins.value-editor.engine :as engine]
-              [app-plugins.value-editor.subs   :as subs]))
+              [app-plugins.value-editor.engine :as engine]))
 
 
 
@@ -28,8 +27,6 @@
 (defn editor-props->field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {:edit-path (item-path vector)}
   ;
@@ -37,7 +34,7 @@
   ;  {:auto-focus? (boolean)
   ;   :min-width (keyword)
   ;   :value-path (item-path vector)}
-  [_ _ {:keys [edit-path] :as editor-props}]
+  [{:keys [edit-path] :as editor-props}]
   (merge (select-keys editor-props [:label :modifier :validator])
          {:auto-focus? true
           :min-width   :l
@@ -130,7 +127,7 @@
   ;
   ; @return (component)
   [extension-id editor-id body-props]
-  (let [field-props (editor-props->field-props extension-id editor-id body-props)]
+  (let [field-props (editor-props->field-props body-props)]
        [:<> [elements/horizontal-separator {:size :l}]
             [elements/text-field :value-editor/editor-field field-props]
             [editor-helper extension-id editor-id body-props]

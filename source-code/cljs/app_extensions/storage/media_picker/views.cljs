@@ -40,29 +40,41 @@
                                  :middle-content [header-label         picker-id picker-props]
                                  :end-content    [header-select-button picker-id picker-props]}])
 
-(defn- header
+(defn header-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id picker-props]
-  [:<> [header-label-bar picker-id picker-props]
-       [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]])
+  [:div#item-lister--header--structure
+    [app-plugins.item-browser.views/menu-mode-header :storage :media
+                                                     {:new-item-options [:create-directory! :upload-files!]
+                                                      :menu-mode? true}]
+    [app-plugins.item-lister.views/search-mode-header :storage :media
+                                                      {:search-mode? false}]])
+
+(defn- header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [picker-id header-props]
+  [:<> [header-label-bar picker-id header-props]
+       [header-menu      picker-id header-props]])
+
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [picker-id]
+  [header-structure picker-id {}])
+
+  ;(let [header-props (a/subscribe [:storage.media-picker/get-header-props picker-id])]
+  ;     (fn [] [header-structure picker-id @header-props])])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body-structure
+(defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id picker-props]
+  [picker-id body-props]
   [item-browser/body :storage :media {:list-element #'app-extensions.storage.media-browser.views/media-item
-                                      :on-click [:storage/->media-item-picked]
-                                      :selectable-f (fn [_] false)}])
-
-(defn body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id picker-props]
-  (let [subscribed-props (a/subscribe [:storage/get-media-picker-props picker-id])]
-       (fn [] [body-structure picker-id (merge picker-props @subscribed-props)])))
+                                      :selectable-f (fn [{:keys [mime-type]}] (not= mime-type "storage/directory"))
+                                      :select-mode? true}])
 
 
 
@@ -119,12 +131,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-media-picker!
+  :storage.media-picker/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [a/debug!]
   (fn [_ [_ picker-id picker-props]]
-      [:ui/add-popup! ;(keyword/add-namespace :storage picker-id)
-                      :xxx
-                      {:body   [body   picker-id picker-props]
-                       :header [header picker-id picker-props]
+      [:ui/add-popup! :storage.media-picker/view
+                      {:body   [body   picker-id]
+                       :header [header picker-id]
                        :stretch-orientation :vertical}]))

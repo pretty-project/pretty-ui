@@ -288,6 +288,12 @@
   ;  {:updater (metamorphic-event)(opt)}
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id {:keys [updater] :as context-props} _]]
+      ; WARNING! DEPRECATED! DO NOT USE!
+      ; - A komponens tulajdonságait :component-did-update eseménykor nem lehetséges aktualizálni
+      ;   a Re-Frame adatbázisban, kevés értelme van a [:components/->component-updated ...]
+      ;   eseményt alkalmazni.
+      ; - A reagent komponensek paramétereinek megváltozásakor a Re-Frame adatbázisba írás
+      ;   rontja az applikáció teljesítményét!
       {:db (r engine/set-component-prop! db component-id :status :updated)
        :dispatch updater}))
 
@@ -376,7 +382,8 @@
   [component-id context-props]
   (let [mount-id (a/id)]
        (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/->component-mounted   component-id context-props mount-id])
-                            :component-did-update   #(a/dispatch [:components/->component-updated   component-id context-props mount-id])
+                           ; WARNING! DEPRECATED! DO NOT USE!
+                           ;:component-did-update   #(a/dispatch [:components/->component-updated   component-id context-props mount-id])
                             :component-will-unmount #(a/dispatch [:components/->component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [disable-controller component-id context-props])})))
 

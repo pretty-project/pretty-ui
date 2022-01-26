@@ -123,7 +123,6 @@
                                              {:download-limit         10
                                               :order-by         ORDER-BY
                                               :order-by-options ORDER-BY-OPTIONS
-                                              ; XXX#8092
                                               ; A dokumentumoknak tartalmazniuk kell legalább egyet
                                               ; az itt felsorolt kulcsok közül!
                                               :search-keys [:my-key]}]})

@@ -20,8 +20,7 @@
               [x.app-db.api         :as db]
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
-              [app-plugins.item-browser.subs    :as subs]
-              [mid-plugins.item-browser.events  :as events]))
+              [app-plugins.item-browser.subs    :as subs]))
 
 
 
@@ -148,6 +147,14 @@
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
   [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      ; - Az [:item-browser/browse-item! ...] esemény nem vizsglja, hogy az item-browser plugin
+      ;   útvonala létezik-e.
+      ; - Ha az aktuális útvonal az item-browser plugin útvonala, akkor átirányít a böngészendő
+      ;   elem útvonalára.
+      ; - Ha az aktuális útvonal NEM az item-browser plugin útvonala, akkor útvonal használata
+      ;   nélkül indítja el az item-browser plugint, ezért lehetséges a plugint útvonalak
+      ;   használata nélkül is elindítani, akkor is ha az item-browser plugin útvonalai léteznek.
+      ;   Pl.: A plugin popup elemen való megjelenítése, útvonalak használata nélkül ...
       (if (r subs/route-handled? db extension-id item-namespace)
           ; If handled by route ...
           (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
@@ -198,13 +205,19 @@
 
 (a/reg-event-fx
   :item-browser/load-browser!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) browser-props
   ;  {:item-id (string)(opt)}
-  [a/debug!]
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type]
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
            {:db (r load-browser! db extension-id item-namespace browser-props)

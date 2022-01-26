@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.2
+; Compatibility: x4.5.6
 
 
 
@@ -27,5 +27,5 @@
 (def change-view! events/change-view!)
 
 ; app-plugins.view-selector.subs
-(def get-selected-view subs/get-selected-view)
-(def get-view-props    subs/get-view-props)
+(def get-selected-view-id subs/get-selected-view-id)
+(def get-view-props       subs/get-view-props)

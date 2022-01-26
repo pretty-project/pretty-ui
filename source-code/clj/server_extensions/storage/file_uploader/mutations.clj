@@ -67,8 +67,8 @@
         filepath           (media/filename->media-storage-filepath generated-filename)
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
                    :media/path file-path :description ""}]
-       (if (engine/attach-media-item! env destination-id file-id)
-           (when-let [file-item (engine/insert-media-item! env file-item)]
+       (if (engine/attach-item! env destination-id file-id)
+           (when-let [file-item (engine/insert-item! env file-item)]
                      ; Copy the temporary file to storage, and delete the temporary file
                      (io/copy-file!   tempfile filepath)
                      (io/delete-file! tempfile)

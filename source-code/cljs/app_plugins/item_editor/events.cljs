@@ -19,11 +19,9 @@
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
-              [x.app-ui.api         :as ui]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.queries :as queries]
-              [app-plugins.item-editor.subs    :as subs]
-              [mid-plugins.item-editor.events  :as events]))
+              [app-plugins.item-editor.subs    :as subs]))
 
 
 
@@ -168,7 +166,7 @@
            ; If the received document is NOT valid ...
            (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
 
-(defn derive-current-item-id!
+(defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -188,6 +186,20 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
   (assoc-in db [extension-id :item-editor/meta-items :item-id] item-id))
+
+(defn store-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  ;  {:item-id (string)(opt)}
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace {:keys [item-id]}]]
+  (if (r subs/route-handled? db extension-id item-namespace)
+      (r store-derived-item-id! db extension-id)
+      (r   set-current-item-id! db extension-id item-namespace item-id)))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -228,12 +240,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
+  ;  {:item-id (string)(opt)}
   ;
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
   (let [request-id (engine/request-id extension-id item-namespace)]
        (as-> db % (r reset-editor!           % extension-id item-namespace)
-                  (r derive-current-item-id! % extension-id)
+                  (r store-current-item-id!  % extension-id item-namespace editor-props)
                   ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét
                   (assoc-in % [extension-id :item-lister/meta-items :recovery-mode?]
                               (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)))))
@@ -247,9 +260,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
-  [_ [_ extension-id item-namespace item-id]]
-  (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
-       [:router/go-to! editor-uri]))
+  ;
+  ; @usage
+  ;  (r item-editor/edit-item! cofx :my-extension :my-type "my-item")
+  [{:keys [db]} [_ extension-id item-namespace item-id]]
+  ; Ha az item-editor plugin útvonala létezik, akkor az [:edit-item! ...] esemény
+  ; az útvonalra irányít, abban az esetben is, ha az NEM az aktuális útvonal, mert
+  ; az [:item-editor/edit-item! ...] esemény meghívása a legtöbb esetben NEM az item-editor
+  ; plugin használata közben történik!
+  (if (r subs/route-exists? db extension-id item-namespace)
+      (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
+           [:router/go-to! editor-uri])
+      [:item-editor/load-editor! extension-id item-namespace {:item-id item-id}]))
 
 ; @usage
 ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
@@ -361,13 +383,22 @@
 
 (a/reg-event-fx
   :item-editor/load-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map)(opt) editor-props
+  ;  {:item-id (string)(opt)}
+  ;
+  ; @usage
+  ;  [:item-editor/load-editor! :my-extension :my-type]
+  ;
+  ; @usage
+  ;  [:item-editor/load-editor! :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
+  (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
-           {:db (r load-editor! db extension-id item-namespace)
+           {:db (r load-editor! db extension-id item-namespace editor-props)
             :dispatch-n [[:ui/set-header-title! editor-label]
                          [:ui/set-window-title! editor-label]
                          [:item-editor/request-item!  extension-id item-namespace]

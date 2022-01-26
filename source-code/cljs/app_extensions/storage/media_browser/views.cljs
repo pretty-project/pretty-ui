@@ -93,8 +93,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-browser/view :storage :media {:list-element     #'media-item
-                                      :new-item-options [:create-directory! :upload-files!]
-                                      :on-click         [:storage/->media-item-clicked]}])
+                                      :new-item-options [:create-directory! :upload-files!]}])
 
 
 
@@ -103,5 +102,6 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :storage/render-media-browser!
-  [:ui/set-surface! ::view {:view #'view}])
+  :storage.media-browser/render-browser!
+  [:ui/set-surface! :storage.media-browser/view
+                    {:view #'view}])

@@ -1,4 +1,24 @@
 
+# How to compile
+
+```
+clj -X:dev
+```
+
+```
+clj -X:prod
+java -jar mono-app.jar
+```
+
+
+
+# How to deploy
+
+```
+```
+
+
+
 # app-, mid- és server- prefixumok
 
 Nem lehetséges ugyanazzal az elnevezéssel létrehozni egy névteret a clj/cljc vagy cljs/cljc oldalon

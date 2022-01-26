@@ -26,8 +26,8 @@
                 directory-item {:media/alias alias :media/content-size 0 :media/description ""
                                 :media/items []    :media/path directory-path
                                 :media/mime-type "storage/directory"}]
-               (when-let [{:media/keys [id]} (engine/insert-media-item! env directory-item)]
-                         (engine/attach-media-item!       env destination-id id)
+               (when-let [{:media/keys [id]} (engine/insert-item! env directory-item)]
+                         (engine/attach-item!             env destination-id id)
                          (engine/update-path-directories! env directory-item +)))))
 
 (defmutation create-directory!
@@ -38,10 +38,10 @@
              ;
              ; @return (namespaced map)
              [env mutation-props]
-             {::pathom.co/op-name 'storage/create-directory!}
+             {::pathom.co/op-name 'storage.media-browser/create-directory!}
              (create-directory-f env mutation-props))
 
-(defn delete-file-item-f
+(defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -50,14 +50,14 @@
   ;
   ; @return (string)
   [env {:keys [item-id] :as mutation-props}]
-  (if-let [file-item (engine/get-media-item env item-id)]
+  (if-let [file-item (engine/get-item env item-id)]
           (when-let [parent-id (item-browser/item->parent-id :storage :media file-item)]
-                    (engine/detach-media-item!       env parent-id item-id)
-                    (engine/remove-media-item!       env   item-id)
+                    (engine/detach-item!             env parent-id item-id)
+                    (engine/remove-item!             env   item-id)
                     (engine/update-path-directories! env file-item -)
                     (return item-id))))
 
-(defn delete-directory-item-f
+(defn delete-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -66,19 +66,19 @@
   ;
   ; @return (string)
   [env {:keys [item-id] :as mutation-props}]
-  (if-let [directory-item (engine/get-media-item env item-id)]
+  (if-let [directory-item (engine/get-item env item-id)]
           (when-let [parent-id (item-browser/item->parent-id :storage :media directory-item)]
-                    (engine/detach-media-item!       env parent-id item-id)
-                    (engine/remove-media-item!       env   item-id)
+                    (engine/detach-item!             env parent-id item-id)
+                    (engine/remove-item!             env   item-id)
                     (engine/update-path-directories! env directory-item -)
                     (let [items (get directory-item :media/items)]
                          (doseq [{:media/keys [id]} items]
-                                (when-let [{:media/keys [mime-type]} (engine/get-media-item env id)]
-                                          (case mime-type "storage/directory" (delete-directory-item-f env {:item-id id})
-                                                                              (delete-file-item-f      env {:item-id id}))
+                                (when-let [{:media/keys [mime-type]} (engine/get-item env id)]
+                                          (case mime-type "storage/directory" (delete-directory-f env {:item-id id})
+                                                                              (delete-file-f      env {:item-id id}))
                                           (return item-id)))))))
 
-(defn delete-media-item-f
+(defn delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -87,11 +87,11 @@
   ;
   ; @return (?)
   [env {:keys [item-id] :as mutation-props}]
-  (if-let [{:media/keys [mime-type]} (engine/get-media-item env item-id)]
-          (case mime-type "storage/directory" (delete-directory-item-f env mutation-props)
-                                              (delete-file-item-f      env mutation-props))))
+  (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
+          (case mime-type "storage/directory" (delete-directory-f env mutation-props)
+                                              (delete-file-f      env mutation-props))))
 
-(defn delete-media-items-f
+(defn delete-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -100,9 +100,9 @@
   ;
   ; @return (strings in vector)
   [env {:keys [item-ids]}]
-  (reduce #(conj %1 (delete-media-item-f env {:item-id %2})) [] item-ids))
+  (reduce #(conj %1 (delete-item-f env {:item-id %2})) [] item-ids))
 
-(defmutation delete-media-items!
+(defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
@@ -110,8 +110,8 @@
              ;
              ; @return (?)
              [env mutation-props]
-             {::pathom.co/op-name 'storage/delete-media-items!}
-             (delete-media-items-f env mutation-props))
+             {::pathom.co/op-name 'storage.media-lister/delete-items!}
+             (delete-items-f env mutation-props))
 
 
 
@@ -119,6 +119,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [create-directory! delete-media-items!])
+(def HANDLERS [create-directory! delete-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -10,5 +10,4 @@
   :permissions {"2345011e-t112-wa50-o357-1rh344440a0w" "rw" "super" "ro"} 
   :selected-language :hu} 
  {:id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973" 
-  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw" "super" "ro"} 
-  :selected-language :hu}]
+  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw" "super" "ro"}}]

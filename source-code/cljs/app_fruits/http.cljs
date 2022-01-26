@@ -71,16 +71,10 @@
   ;   :handler (function)
   ;   :progress-handler (function)}
   [request-id {:keys [error-handler handler progress-handler]}]
-  (cond-> {} (some? error-handler)
-             (assoc :error-handler    (fn [server-response]
-                                          (error-handler request-id server-response)))
-             (some? handler)
-             (assoc :handler          (fn [server-response]
-                                          (handler request-id server-response)))
-             (some? progress-handler)
-             (assoc :progress-handler (fn [progress-event]
-                                          (let [request-progress (progress-event->request-progress progress-event)]
-                                               (progress-handler request-id request-progress))))))
+  (cond-> {} error-handler    (assoc :error-handler    (fn [server-response] (error-handler request-id server-response)))
+             handler          (assoc :handler          (fn [server-response] (handler       request-id server-response)))
+             progress-handler (assoc :progress-handler (fn [progress-event]  (let [request-progress (progress-event->request-progress progress-event)]
+                                                                                  (progress-handler request-id request-progress))))))
 
 
 

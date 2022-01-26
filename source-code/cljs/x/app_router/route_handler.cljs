@@ -154,6 +154,17 @@
 ;; -- Route subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn route-exists?
+  ; @param (keyword) route-id
+  ;
+  ; @usage
+  ;  (r router/route-exists? db :my-route)
+  ;
+  ; @return boolean)
+  [db [_ route-id]]
+  (let [route-props (get-in db (db/path :router/client-routes route-id))]
+       (some? route-props)))
+
 (defn- get-route-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

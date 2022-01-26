@@ -23,6 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-router.route-handler
+(def route-exists?                  route-handler/route-exists?)
 (def get-app-home                   route-handler/get-app-home)
 (def get-client-routes              route-handler/get-client-routes)
 (def get-current-route-string       route-handler/get-current-route-string)

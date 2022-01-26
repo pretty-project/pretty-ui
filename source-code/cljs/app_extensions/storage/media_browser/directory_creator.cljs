@@ -37,7 +37,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/create-directory!
+  :storage.media-browser/create-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id directory-name]]
       [:sync/send-query! (keyword/add-namespace :storage creator-id)
@@ -50,10 +50,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-new-directory-name-dialog!
+  :storage.media-browser/render-directory-name-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id]]
-      [:value-editor/load-editor! :storage :new-directory-name
+      [:value-editor/load-editor! :storage :directory-name
                                   {:label :directory-name :save-button-label :create!
                                    :initial-value (r dictionary/look-up db :new-directory)
                                    :on-save       [:storage/create-directory! creator-id]
@@ -62,7 +62,7 @@
                                                :pre-validate?   true}}]))
 
 (a/reg-event-fx
-  :storage/load-directory-creator!
+  :storage.media-browser/load-directory-creator!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) creator-id
@@ -70,15 +70,15 @@
   ;  {:destination-id (string)}
   ;
   ; @usage
-  ;  [:storage/load-directory-creator! {...}]
+  ;  [:storage.media-browser/load-directory-creator! {...}]
   ;
   ; @usage
-  ;  [:storage/load-directory-creator! :my-uploader {...}]
+  ;  [:storage.media-browser/load-directory-creator! :my-uploader {...}]
   ;
   ; @usage
-  ;  [:storage/load-directory-creator! {:destination-id "..."}]
+  ;  [:storage.media-browser/load-directory-creator! {:destination-id "..."}]
   (fn [{:keys [db]} event-vector]
       (let [creator-id    (a/event-vector->second-id   event-vector)
             creator-props (a/event-vector->first-props event-vector)]
            {:db (r store-creator-props! db creator-id creator-props)
-            :dispatch [:storage/render-new-directory-name-dialog! creator-id]})))
+            :dispatch [:storage.media-browser/render-directory-name-dialog! creator-id]})))

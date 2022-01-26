@@ -69,8 +69,8 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings/render-remove-stored-cookies-dialog!
+  :settings.remove-stored-cookies/render-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! ::view
-                  {:body   {:content #'body}
-                   :header {:content #'header}}])
+  [:ui/add-popup! :settings.remove-stored-cookies/view
+                  {:body   #'body
+                   :header #'header}])

@@ -2,8 +2,7 @@
 (ns app-extensions.home.views
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-layouts.api    :as layouts]
-              [x.app-user.api       :as user]))
+              [x.app-layouts.api    :as layouts]))
 
 
 
@@ -51,7 +50,7 @@
 (a/reg-event-fx
   :home/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view #'view}])
+  [:ui/set-surface! :home/view {:view #'view}])
 
 (a/reg-event-fx
   :home/load!

@@ -15,4 +15,4 @@
   {:modified-at       (r activities/get-actual-timestamp db modified-at)
    :selected-language (r locales/get-selected-language   db)})
 
-(a/reg-sub :clients/get-client-item-props get-item-props)
+(a/reg-sub :clients.client-lister/get-client-item-props get-item-props)

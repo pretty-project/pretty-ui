@@ -1,12 +1,13 @@
 
 (ns app-extensions.clients.client-editor.views
-    (:require [mid-fruits.candy   :refer [param]]
-              [mid-fruits.form    :as form]
-              [mid-fruits.string  :as string]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
-              [x.app-locales.api  :as locales]
+    (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.form      :as form]
+              [mid-fruits.string    :as string]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
+              [x.app-locales.api    :as locales]
               [app-plugins.item-editor.api :as item-editor]
 
               ; TEMP
@@ -163,8 +164,8 @@
        [elements/horizontal-separator {:size :xxl}]
        ; Basic info
        [layouts/input-group-header {:label :basic-info}]
-       [client-name               body-id body-props]
-       [client-primary-contacts   body-id body-props]
+       [client-name             body-id body-props]
+       [client-primary-contacts body-id body-props]
        [elements/horizontal-separator {:size :xxl}]
        ; More info
        [layouts/input-group-header {:label :more-info}]
@@ -179,9 +180,10 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace]
-  (let [body-props (a/subscribe [:client-editor/get-body-props])]
-       (fn [] [body-structure extension-id @body-props])))
+  [extension-id item-namespace body-props]
+  [components/subscriber {:base-props body-props
+                          :render-f   #'body-structure
+                          :subscriber [:clients.client-editor/get-body-props]}])
 
 
 
@@ -199,6 +201,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :clients/load-client-editor!
+  :clients.client-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view}}])
+  [:ui/set-surface! :clients.client-editor/view
+                    {:view #'view}])

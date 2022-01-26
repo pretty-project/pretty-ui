@@ -11,11 +11,3 @@
 
 # XXX#3907
 - ...
-
-
-
-# XXX#3905
-- Az item-editor plugint is lehetséges popup elemen megjelenítve használni.
-  A szerver-oldali {:routed? false} beállítás használatával, az item-editor plugin
-  útvonala nem adódik hozzá (a popup elemen való megjelenítéshez szükségtelen az útvonalat beállítani).
-  Az ilyen típusú használatnak a kliens-oldali kezelése nincs kidolgozva.

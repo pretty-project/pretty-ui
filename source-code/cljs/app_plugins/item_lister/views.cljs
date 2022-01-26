@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.5.6
-; Compatibility: x4.5.5
+; Version: v0.6.0
+; Compatibility: x4.5.6
 
 
 
@@ -159,10 +159,10 @@
   ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id _ {:keys [lister-disabled?]}]
+  [extension-id item-namespace {:keys [lister-disabled?]}]
   [elements/button ::select-all-items-button
                    {:disabled? lister-disabled?
-                    :on-click  [:item-lister/select-all-items! extension-id]
+                    :on-click  [:item-lister/select-all-items! extension-id item-namespace]
                     :preset    :default-icon-button
                     :icon      :check_box_outline_blank}])
 
@@ -288,13 +288,13 @@
   ;  [item-lister/new-item-select :my-extension :my-type {:options [...]}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [lister-disabled? new-item-options]}]
+  [extension-id item-namespace {:keys [lister-disabled? new-item-options]}]
   [elements/select ::new-item-select
                    {:as-button?      true
                     :autoclear?      true
                     :disabled?       lister-disabled?
                     :initial-options (param new-item-options)
-                    :on-select       (engine/add-new-item-event extension-id)
+                    :on-select       (engine/add-new-item-event extension-id item-namespace)
                     :preset          :primary-icon-button
                     :tooltip         :add-new!
                     :icon            :add_circle}])
@@ -304,36 +304,38 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:lister-disabled? (boolean)(opt)
-  ;   :no-items-to-show? (boolean)(opt)}
+  ;   :no-items-to-show? (boolean)(opt)
+  ;   :selectable? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/toggle-select-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [lister-disabled? no-items-to-show?]}]
-  [elements/button ::toggle-select-mode-button
-                   {:disabled? (or no-items-to-show? lister-disabled?)
-                    :on-click  [:item-lister/toggle-select-mode! extension-id]
-                    :preset    :select-mode-icon-button
-                    :tooltip   :select}])
+  [extension-id _ {:keys [lister-disabled? no-items-to-show? selectable?]}]
+  (if selectable? [elements/button ::toggle-select-mode-button
+                                   {:disabled? (or no-items-to-show? lister-disabled?)
+                                    :on-click  [:item-lister/toggle-select-mode! extension-id]
+                                    :preset    :select-mode-icon-button
+                                    :tooltip   :select}]))
 
 (defn toggle-reorder-mode-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:lister-disabled? (boolean)(opt)
-  ;   :no-items-to-show? (boolean)(opt)}
+  ;   :no-items-to-show? (boolean)(opt)
+  ;   :sortable? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-lister/toggle-reorder-mode-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id _ {:keys [lister-disabled? no-items-to-show?]}]
-  [elements/button ::toggle-reorder-mode-button
-                   {:disabled? (or no-items-to-show? lister-disabled?)
-                    :on-click  [:item-lister/toggle-reorder-mode! extension-id]
-                    :preset    :reorder-mode-icon-button
-                    :tooltip   :reorder}])
+  [extension-id _ {:keys [lister-disabled? no-items-to-show? sortable?]}]
+  (if sortable? [elements/button ::toggle-reorder-mode-button
+                                 {:disabled? (or no-items-to-show? lister-disabled?)
+                                  :on-click  [:item-lister/toggle-reorder-mode! extension-id]
+                                  :preset    :reorder-mode-icon-button
+                                  :tooltip   :reorder}]))
 
 (defn sort-items-button
   ; @param (keyword) extension-id
@@ -362,7 +364,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn search-mode-header
+(defn search-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -375,7 +377,20 @@
     [search-items-field      extension-id item-namespace element-props]
     [quit-search-mode-button extension-id item-namespace element-props]])
 
-(defn select-mode-header
+(defn search-mode-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;  {:search-mode? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [search-mode?] :as header-props}]
+  [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
+                                    [search-mode-header-structure extension-id item-namespace header-props]])
+
+(defn select-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -384,10 +399,6 @@
   ;
   ; @return (component)
   [extension-id item-namespace header-props]
-  ; {:select-mode? true} beállítással, amikor egyszerre több elemet lehetséges kijelölni, nem
-  ; szükséges duplikálás gombot elhelyezni. Nem életszerű a több elem egyidejű duplikálása, illetve
-  ; nagyon nehezen megoldható a létrejövő elemek (amelyek a szerveren kapnak azonosítót) elhelyezése
-  ; a listában úgy, hogy a pozíciójuk megfeleljen beállított rendezési és keresési elveknek.
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
       [toggle-all-items-selection-button extension-id item-namespace header-props]
@@ -395,30 +406,54 @@
       [duplicate-selected-items-button   extension-id item-namespace header-props]]
     [quit-select-mode-button extension-id item-namespace header-props]])
 
+(defn select-mode-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;  {:select-mode? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [select-mode?] :as header-props}]
+  [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
+                                    [select-mode-header-structure extension-id item-namespace header-props]])
+
+(defn menu-mode-header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;  {:new-item-options (vector)(opt)
+  ;   :no-items-to-show? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
+  [:div.item-lister--header--menu-bar
+    [:div.item-lister--header--menu-item-group
+      (if new-item-options [new-item-select extension-id item-namespace header-props]
+                           [new-item-button extension-id item-namespace header-props])
+      [sort-items-button          extension-id item-namespace header-props]
+      [toggle-select-mode-button  extension-id item-namespace header-props]
+      [toggle-reorder-mode-button extension-id item-namespace header-props]]
+    [:div.item-lister--header--menu-item-group
+      [search-block extension-id item-namespace header-props]]])
+
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:menu (metamorphic-content)(opt)
-  ;   :new-item-options (vector)(opt)
-  ;   :no-items-to-show? (boolean)(opt)}
+  ;  {:menu-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [menu new-item-options no-items-to-show?] :as header-props}]
-  (if menu [menu extension-id item-namespace header-props]
-           [:div.item-lister--header--menu-bar
-             [:div.item-lister--header--menu-item-group
-               (if new-item-options [new-item-select extension-id item-namespace header-props]
-                                    [new-item-button extension-id item-namespace header-props])
-               [sort-items-button          extension-id item-namespace header-props]
-               [toggle-select-mode-button  extension-id item-namespace header-props]
-               [toggle-reorder-mode-button extension-id item-namespace header-props]]
-             [:div.item-lister--header--menu-item-group
-               [search-block extension-id item-namespace header-props]]]))
+  [extension-id item-namespace {:keys [menu-mode?] :as header-props}]
+  [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
+                                    [menu-mode-header-structure extension-id item-namespace header-props]])
 
-(defn reorder-mode-header
+(defn reorder-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -434,35 +469,46 @@
       [save-order-button extension-id item-namespace header-props]]
     [quit-reorder-mode-button extension-id item-namespace header-props]])
 
+(defn reorder-mode-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;  {:reorder-mode? (boolean)(opt)}
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [reorder-mode?] :as header-props}]
+  [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
+                                    [reorder-mode-header-structure extension-id item-namespace header-props]])
+
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:menu-mode? (boolean)(opt)
-  ;   :reorder-mode? (boolean)(opt)
-  ;   :search-mode? (boolean)(opt)
-  ;   :select-mode? (boolean)(opt)}
+  ;  {:menu (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [menu-mode? reorder-mode? search-mode? select-mode?] :as header-props}]
+  [extension-id item-namespace {:keys [menu] :as header-props}]
   [:div#item-lister--header--structure
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
-                                      [menu-mode-header    extension-id item-namespace header-props]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
-                                      [search-mode-header  extension-id item-namespace]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                      [select-mode-header  extension-id item-namespace header-props]]
-    [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                      [reorder-mode-header extension-id item-namespace header-props]]])
+    (if menu [menu             extension-id item-namespace header-props]
+             [menu-mode-header extension-id item-namespace header-props])
+    [reorder-mode-header extension-id item-namespace header-props]
+    [select-mode-header  extension-id item-namespace header-props]
+    [search-mode-header  extension-id item-namespace header-props]])
 
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) header-props
+  ; @param (map) header-props
   ;  {:menu (metamorphic-content)(opt)
-  ;   :new-item-options (vector)(opt)}
+  ;   :new-item-options (vector)(opt)
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false
+  ;   :sortable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  [item-lister/header :my-extension :my-type]
@@ -473,12 +519,10 @@
   ;                                              :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
-  ([extension-id item-namespace]
-   [header extension-id item-namespace {}])
-
-  ([extension-id item-namespace header-props]
-   (let [subscribed-props (a/subscribe [:item-lister/get-header-props extension-id item-namespace])]
-        (fn [_ _ header-props] [header-structure extension-id item-namespace (merge header-props @subscribed-props)]))))
+  [extension-id item-namespace header-props]
+  [components/subscriber {:base-props header-props
+                          :component  [header-structure              extension-id item-namespace]
+                          :subscriber [:item-lister/get-header-props extension-id item-namespace]}])
 
 
 
@@ -587,13 +631,13 @@
   ; @param (keyword) item-namespace
   ; @param (integer) item-dex
   ; @param (map) checkbox-props
-  ;  {:item-selected? (boolean)
-  ;   :lister-disabled? (boolean)
+  ;  {:checkbox-disabled? (boolean)
+  ;   :item-selected? (boolean)
   ;   :select-mode? (boolean)}
   ;
   ; @return (component)
-  [extension-id item-namespace item-dex {:keys [item-selected? lister-disabled? select-mode?] :as checkbox-props}]
-  (if select-mode? [elements/button {:disabled? lister-disabled?
+  [extension-id item-namespace item-dex {:keys [checkbox-disabled? item-selected? select-mode?] :as checkbox-props}]
+  (if select-mode? [elements/button {:disabled? checkbox-disabled?
                                      :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
                                      :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}]))
 
@@ -620,8 +664,8 @@
   ; @param (map) item
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [list-element] :as body-props} item-dex item]
-  (let [on-click [:item-lister/->item-clicked extension-id item-namespace body-props item-dex item]]
+  [extension-id item-namespace {:keys [list-element]} item-dex item]
+  (let [on-click [:item-lister/->item-clicked extension-id item-namespace item-dex item]]
        [elements/toggle {:on-click on-click
                          :content [list-element item-dex item]
                          :hover-color :highlight}]))
@@ -632,28 +676,22 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:selectable-f (function)(opt)}
   ; @param (integer) item-dex
   ; @param (map) item
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [selectable-f] :as body-props} item-dex item]
+  [extension-id item-namespace body-props item-dex item]
   (let [item-disabled? (a/subscribe [:item-lister/item-disabled? extension-id item-namespace item-dex])]
        (fn [_ _ {:keys [select-mode?] :as body-props} item-dex _]
            [:div.item-lister--list-item--structure
-             [:div.item-lister--list-item {:data-disabled @item-disabled?}
-                                          [list-item-toggle extension-id item-namespace body-props item-dex item]]
              ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
              ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
              ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
              ;   elem a lista-elem előtt jelenik meg.
-             (if (and selectable-f (-> item selectable-f not))
-                 [list-item-checkbox extension-id item-namespace item-dex {:disabled? true}]
-                 [list-item-checkbox extension-id item-namespace item-dex])])))
+             [:div.item-lister--list-item {:data-disabled @item-disabled?}
+                                          [list-item-toggle extension-id item-namespace body-props item-dex item]]
+             [list-item-checkbox extension-id item-namespace item-dex]])))
 
-
-; A select-all-item buttonnak is kell a selectable-f tulajdonság szóval
-; kell a re-frame db-be a props térkép de már a stated fogad több paramétéres komponsent is
 
 
 ;; -- Body components ---------------------------------------------------------
@@ -706,7 +744,7 @@
   (if reorder-mode? [sortable-item-list   extension-id item-namespace body-props]
                     [selectable-item-list extension-id item-namespace body-props]))
 
-(defn item-lister-structure
+(defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -720,34 +758,15 @@
     [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
     [indicators            extension-id item-namespace]])
 
-
-
-(defn body-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/body-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension/my-type-lister-body
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-lister-body")))
-
-
-
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:list-element (metamorphic-content)
-  ;   :on-click (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és annak tulajdonságait
-  ;   :selectable-f (function)(opt)}
+  ;   :selectable-f (function)(opt)
+  ;    Only w/ {:selectable? true}
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  [item-lister/body :my-extension :my-type {...}]
@@ -756,20 +775,24 @@
   ;  (defn my-list-element [item-dex item] [:div ...])
   ;  (defn my-item-selectable? [item] true)
   ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
-  ;                                            :on-click     [:->my-item-clicked]
   ;                                            :selectable-f my-item-selectable?}]
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
-  (let [subscribed-props (a/subscribe [:item-lister/get-body-props extension-id item-namespace])]
-       (fn [_ _ body-props] [item-lister-structure extension-id item-namespace (merge body-props @subscribed-props)])))
+  [components/stated {:base-props  body-props
+                      :component   [body-structure extension-id item-namespace body-props]
+                      ; Az [:item-lister/select-all-items! ...] esemény működéséhez szükséges
+                      ; a Re-Frame adatbázisba írni a {:selectable-f ...} tulajdonság értékét!
+                      :initializer [:db/set-item! [extension-id :item-lister/meta-items :selectable-f]
+                                                  (:selectable-f body-props)]
+                      :subscriber  [:item-lister/get-body-props extension-id item-namespace]}])
 
 
 
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout
+(defn view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -789,9 +812,12 @@
   ;  {:list-element (metamorphic-content)
   ;   :menu (metamorphic-content)(opt)
   ;   :new-item-options (vector)(opt)
-  ;   :on-click (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó két paraméterként megkapja az elem sorszámát és az elemet
-  ;   :selectable-f (function)(opt)}
+  ;   :selectable-f (function)(opt)
+  ;    Only w/ {:selectable? true}
+  ;   :selectable? (boolean)(opt)
+  ;    Default: false
+  ;   :sortable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  [item-lister/view :my-extension :my-type {...}]
@@ -803,10 +829,10 @@
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
   ;                                            :menu         #'my-menu
   ;                                            :new-item-options [:add-my-type! :add-your-type!]
-  ;                                            :on-click         [:->my-item-clicked]
   ;                                            :selectable-f my-item-selectable?}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  (let [subscribed-props (a/subscribe [:item-lister/get-view-props extension-id item-namespace])]
-       (fn [_ _ view-props] [layout extension-id item-namespace (merge view-props @subscribed-props)])))
+  [components/subscriber {:base-props view-props
+                          :component  [view-structure              extension-id item-namespace]
+                          :subscriber [:item-lister/get-view-props extension-id item-namespace]}])

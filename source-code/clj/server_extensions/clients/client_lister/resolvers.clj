@@ -43,7 +43,7 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-client-items-f
+(defn get-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -58,18 +58,18 @@
        {:documents      (mongo-db/get-documents-by-pipeline   "clients" get-pipeline)
         :document-count (mongo-db/count-documents-by-pipeline "clients" count-pipeline)}))
 
-(defresolver get-client-items
+(defresolver get-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:clients/get-client-items (map)
+             ;  {:clients.client-lister/get-items (map)
              ;    {:document-count (integer)
              ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
-             {:clients/get-client-items (get-client-items-f env resolver-props)})
+             {:clients.client-lister/get-items (get-items-f env resolver-props)})
 
 
 
@@ -77,6 +77,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-client-items])
+(def HANDLERS [get-items])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

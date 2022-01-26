@@ -38,7 +38,7 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [id] :as client-props}]
-  (let [item-props (a/subscribe [:clients/get-client-item-props item-dex client-props])]
+  (let [item-props (a/subscribe [:clients.client-lister/get-client-item-props item-dex client-props])]
        (fn [] [client-item-structure item-dex client-props @item-props])))
 
 
@@ -50,7 +50,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-lister/view :clients :client {:list-element #'client-item
-                                      :on-click [:clients/->client-item-clicked]}])
+                                      :selectable?  true}])
 
 
 
@@ -58,6 +58,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :clients/load-client-lister!
+  :clients.client-lister/render-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view}}])
+  [:ui/set-surface! :clients.client-lister/view {:view #'view}])

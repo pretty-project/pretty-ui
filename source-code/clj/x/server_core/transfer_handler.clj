@@ -20,15 +20,7 @@
 
 
 
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-(def HANDLERS (atom {}))
-
-
-
-;; ----------------------------------------------------------------------------
+;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn reg-transfer!
@@ -50,7 +42,7 @@
    (reg-transfer! (engine/id) transfer-props))
 
   ([transfer-id transfer-props]
-   (swap! HANDLERS assoc transfer-id transfer-props)))
+   (event-handler/dispatch [:db/set-item! [:core/transfer-handler :data-items transfer-id] transfer-props])))
 
 ; @usage
 ;  [:core/reg-transfer! :my-transfer {...}]
@@ -69,10 +61,11 @@
   ; @return (map)
   [request]
   ; A [:core/reg-transfer! ...] esemény által regisztrált függvények visszatérési adatait összegyűjti ...
-  (letfn [(f [transfer-data transfer-id {:keys [data-f target-path]}]
-             (assoc transfer-data transfer-id {:data (data-f request)
-                                               :target-path target-path}))]
-         (reduce-kv f {} @HANDLERS)))
+  (let [handlers (event-handler/subscribed [:db/get-item [:core/transfer-handler :data-items]])]
+       (letfn [(f [transfer-data transfer-id {:keys [data-f target-path]}]
+                  (assoc transfer-data transfer-id {:data (data-f request)
+                                                    :target-path target-path}))]
+              (reduce-kv f {} handlers))))
 
 (defn download-transfer-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

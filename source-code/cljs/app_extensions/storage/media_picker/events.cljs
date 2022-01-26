@@ -1,8 +1,10 @@
 
 (ns app-extensions.storage.media-picker.events
     (:require [x.app-core.api :as a :refer [r]]
+              [x.app-ui.api   :as ui]
               [app-extensions.storage.engine :as engine]
               [app-plugins.item-browser.api  :as item-browser]))
+
 
 
 ;; -- DB events ---------------------------------------------------------------
@@ -12,13 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/load-media-picker!
+  :storage.media-picker/load!
   [a/debug!]
-  ; @param (keyword)
-  (fn [_ event-vector]
+  ; @param (keyword) picker-id
+  ; @param (map) (picker-props)
+  (fn [{:keys [db]} event-vector]
       (let [picker-id    (a/event-vector->second-id   event-vector)
             picker-props (a/event-vector->first-props event-vector)]
-           {:dispatch [:storage/render-media-picker! picker-id picker-props]})))
+           (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
+                   [:storage.media-picker/render! picker-id picker-props]))))
 
 
 
@@ -26,8 +30,8 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/->media-item-picked
+  :storage.media-picker/->item-picked
   [a/debug!]
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          [:storage/->file-picked item-dex item-props])))
+                                          [:storage.media-picker/->file-picked item-dex item-props])))

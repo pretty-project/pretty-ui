@@ -1,8 +1,7 @@
 
 (ns app-extensions.settings.appearance-settings
     (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-user.api     :as user]))
+              [x.app-elements.api :as elements]))
 
 
 
@@ -10,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings/set-theme!
+  :settings.appearance-settings/set-theme!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) theme-props

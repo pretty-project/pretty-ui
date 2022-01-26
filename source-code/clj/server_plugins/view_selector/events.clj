@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.8
+; Version: v0.4.2
 ; Compatibility: x4.5.6
 
 
@@ -74,7 +74,7 @@
                                    :restricted?    true}]))
 
 (a/reg-event-fx
-  :view-selector/initialize!
+  :view-selector/initialize-selector!
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   ;  {:allowed-view-ids (keywords in vector)(opt)
@@ -84,14 +84,14 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  [:view-selector/initialize! :my-extension]
+  ;  [:view-selector/initialize-selector! :my-extension]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :my-extension {:default-view-id :my-view}]
+  ;  [:view-selector/initialize-selector! :my-extension {:default-view-id :my-view}]
   ;
   ; @usage
-  ;  [:view-selector/initialize! :my-extension {:default-view-id  :my-view
-  ;                                             :allowed-view-ids [:my-view :your-view :our-view]}]
+  ;  [:view-selector/initialize-selector! :my-extension {:default-view-id  :my-view
+  ;                                                      :allowed-view-ids [:my-view :your-view :our-view]}]
   (fn [cofx [_ extension-id selector-props]]
       (let [selector-props (selector-props-prototype extension-id selector-props)]
            {:dispatch-n [(r transfer-selector-props! cofx extension-id selector-props)

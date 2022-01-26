@@ -6,7 +6,7 @@
 ; Created: 2021.12.18
 ; Description:
 ; Version: v0.9.2
-; Compatibility: x4.5.5
+; Compatibility: x4.5.6
 
 
 
@@ -287,6 +287,16 @@
   [db [_ extension-id item-namespace]]
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
+       
+(defn route-exists?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r router/route-exists? db (engine/route-id extension-id item-namespace)))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

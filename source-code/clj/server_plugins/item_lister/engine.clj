@@ -40,6 +40,7 @@
 (def route-template       engine/route-template)
 (def dialog-id            engine/dialog-id)
 (def load-extension-event engine/load-extension-event)
+(def item-clicked-event   engine/item-clicked-event)
 
 
 

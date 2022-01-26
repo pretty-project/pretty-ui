@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.9.4
-; Compatibility: x4.5.4
+; Version: v0.9.8
+; Compatibility: x4.5.6
 
 
 
@@ -19,7 +19,6 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
-              [x.app-ui.api      :as ui]
               [x.app-environment.api           :as environment]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.queries :as queries]
@@ -139,12 +138,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
-  (let [downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
-        item-selections       (vec (range 0 downloaded-item-count))]
-       (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-items (r subs/get-downloaded-items db extension-id)]
+       (if-let [selectable-f (r subs/get-meta-item db extension-id item-namespace :selectable-f)]
+               (letfn [(f [item-selections item-dex]
+                          (if (selectable-f (get-in db [extension-id :item-lister/data-items item-dex]))
+                              (conj   item-selections item-dex)
+                              (return item-selections)))]
+                      (let [item-selections (reduce f [] (vector/dex-range downloaded-items))]
+                           (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
+               (let [item-selections (vector/dex-range downloaded-items)]
+                    (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))))
 
 (a/reg-event-db :item-lister/select-all-items! select-all-items!)
 
@@ -171,11 +178,12 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
-  (if (r subs/item-selected? db extension-id item-namespace item-dex)
-      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-             (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
-      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-             (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex))))
+  (if (r subs/item-selectable? db extension-id item-namespace item-dex)
+      (if (r subs/item-selected? db extension-id item-namespace item-dex)
+          (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+                 (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
+          (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+                 (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex)))))
 
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
@@ -250,12 +258,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (reduce (fn [db item-dex]
-              (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
-                    item    (get-in db [extension-id :item-lister/data-items item-dex])]
-                   (assoc-in db [extension-id :item-lister/backup-items item-id] item)))
-          (param db)
-          (r subs/get-selected-item-dexes db extension-id item-namespace)))
+  (letfn [(f [db item-dex]
+             (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
+                   item    (get-in db [extension-id :item-lister/data-items item-dex])]
+                  (assoc-in db [extension-id :item-lister/backup-items item-id] item)))]
+         (reduce f db (r subs/get-selected-item-dexes db extension-id item-namespace))))
 
 (defn clean-backup-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -363,7 +370,7 @@
         documents (db/collection->non-namespaced-collection documents)]
        (assoc-in db [extension-id :item-lister/data-items] documents)))
 
-(defn reload-items!
+(defn receive-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -377,11 +384,11 @@
              ; A listaelemeken végzett műveletek közben esetlegesen egyes listaelemek
              ; {:disabled? true} állapotba lépnek (pl. törlés), amíg a művelet befejeződik.
              ; A művelet akkor tekinthető befejezettnek, amikor a lista állapota frissült
-             ; a kliens-oldalon, ezért a reload-items! függvény szünteti meg a listaelemek
+             ; a kliens-oldalon, ezért a receive-reloaded-items! függvény szünteti meg a listaelemek
              ; {:disabled? true} állapotát!
              (r enable-all-items! % extension-id item-namespace)))
 
-(a/reg-event-db :item-lister/reload-items! reload-items!)
+(a/reg-event-db :item-lister/receive-reloaded-items! receive-reloaded-items!)
 
 (defn load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -394,10 +401,9 @@
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (let [request-id (engine/request-id extension-id item-namespace)]
-       (as-> db % (r reset-lister!    % extension-id)
-                  (r reset-downloads! % extension-id)
-                  (r reset-search!    % extension-id))))
+  (as-> db % (r reset-lister!    % extension-id)
+             (r reset-downloads! % extension-id)
+             (r reset-search!    % extension-id)))
 
 
 
@@ -419,7 +425,7 @@
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
-  :item-lister/reload-lister!
+  :item-lister/reload-items!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
@@ -427,9 +433,9 @@
   ;  [:item-lister/reload-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [db (r toggle-reload-mode! db extension-id)]
-           [:sync/send-query! :item-lister/reload-items! ; Silent-mode / no progress-bar
+           [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true
-                               :on-success [:item-lister/reload-items!           extension-id item-namespace]
+                               :on-success [:item-lister/receive-reloaded-items! extension-id item-namespace]
                                :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
 
 (a/reg-event-fx
@@ -544,10 +550,11 @@
 
 (a/reg-event-fx
   :item-lister/load-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/load-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
            {:db (r load-lister! db extension-id item-namespace)
@@ -608,16 +615,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) event-props
-  ;  {:on-click (metamorphic-event)}
   ; @param (integer) item-dex
   ; @param (map) item
-  (fn [{:keys [db]} [_ extension-id item-named {:keys [on-click]} item-dex item]]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
       (if (or (r environment/key-pressed? db 16)
               (r environment/key-pressed? db 91))
           ; XXX#5660
           ; A SHIFT vagy COMMAND billentyű lenyomása közben az elemre kattintva az elem,
           ; hozzáadódik a kijelölt elemek listájához.
-          [:item-lister/toggle-item-selection! extension-id item-named item-dex]
-          (let [on-click (a/metamorphic-event<-params on-click item-dex item)]
-               (return on-click)))))
+          [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+          (let [on-click (engine/item-clicked-event extension-id item-namespace)]
+               (a/metamorphic-event<-params on-click item-dex item)))))

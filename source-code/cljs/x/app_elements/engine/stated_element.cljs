@@ -80,12 +80,11 @@
   ;   :initializer (metamorphic-event)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)
-  ;   :subscriber (subscription-vector)(opt)
-  ;   :updater (metamorphic-event)(opt)}
+  ;   :subscriber (subscription-vector)(opt)}
   ;
   ; @return (component)
-  [element-id {:keys [destructor element-props initial-props initializer modifier render-f
-                      subscriber updater] :as context-props}]
+  [element-id {:keys [destructor element-props initial-props initializer modifier render-f subscriber]
+               :as context-props}]
   (let [disabler           (get                          element-props :disabler)
         initial-props      (element-props->initial-props element-props)
         element-props-path (db/path :elements/primary element-id)]
@@ -98,5 +97,4 @@
                            :initializer        initializer
                            :modifier           modifier
                            :render-f           render-f
-                           :subscriber         subscriber
-                           :updater            updater}]))
+                           :subscriber         subscriber}]))

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.5.4
+; Version: v0.3.8
+; Compatibility: x4.5.6
 
 
 
@@ -24,7 +24,9 @@
 
 ; @description
 ; - Az elnevézesekben az item-namespace értéke helyettesíti az "item" szót.
-;   Pl.: :my-extension/synchronize-item-lister! => :my-extension/synchronize-my-type-lister!
+;   Pl.: :my-extension.item-lister/synchronize-lister!
+;        =>
+;        :my-extension.my-type-lister/synchronize-lister!
 ;   Így biztosítható, hogy egy névtér több különböző item-lister listázót tudjon megvalósítani.
 ; - Ha szükséges, akkor a Re-Frame adatbázis útvonalakban is be kell vezetni a megkülönbözetést,
 ;   hogy egy extension több listázót alkalmazhasson.
@@ -41,12 +43,13 @@
   ; @example
   ;  (item-lister/request-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/synchronize-my-type-lister!
+  ;  :my-extension.my-type-lister/synchronize-lister!
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str "synchronize-" (name item-namespace) "-lister!")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-lister")
+           "synchronize-lister!"))
 
 
 
@@ -93,13 +96,13 @@
   ; @example
   ;  (engine/mutation-name :my-extension :my-type :delete)
   ;  =>
-  ;  "my-extension/delete-my-type-items!"
+  ;  "my-extension.my-type-lister/delete-items!"
   ;
   ; @return (string)
   [extension-id item-namespace action-id]
-  (str (name extension-id)   "/"
-       (name action-id)      "-"
-       (name item-namespace) "-items!"))
+  (str (name extension-id)   "."
+       (name item-namespace) "-lister/"
+       (name action-id)      "-items!"))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,14 +114,13 @@
   ; @example
   ;  (engine/resolver-id :my-extension :my-type :get)
   ;  =>
-  ;  :my-extension/get-my-type-items!
+  ;  :my-extension.my-type-lister/get-items!
   ;
   ; @return (keyword)
   [extension-id item-namespace action-id]
-  (keyword (name extension-id)
-           (str     (name action-id)
-                "-" (name item-namespace)
-                "-items")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-lister")
+           (str (name action-id)      "-items")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,12 +161,13 @@
   ; @example
   ;  (engine/route-id :my-extension :my-type)
   ;  =>
-  ;  :my-extension/my-type-lister-route
+  ;  :my-extension.my-type-lister/route
   ;
   ; @return (keyword)
   [extension-id item-namespace]
-  (keyword (name extension-id)
-           (str (name item-namespace) "-lister-route")))
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-lister")
+           "route"))
 
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -184,15 +187,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/add-new-item-event :my-extension)
+  ;  (engine/add-new-item-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension/add-new-item!]
+  ;  [:my-extension.my-type-browser/add-new-item!]
   ;
   ; @return (event-vector)
-  [extension-id]
-  (let [event-id (keyword (name extension-id) "add-new-item!")]
+  [extension-id item-namespace]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-browser")
+                          "add-new-item!")]
        [event-id]))
 
 (defn dialog-id
@@ -205,12 +211,13 @@
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :delete-items)
   ;  =>
-  ;  :my-extension/delete-items-dialog
+  ;  :my-extension.my-type-lister/delete-items-dialog
   ;
   ; @return (namespaced keyword)
-  [extension-id _ action-id]
-  (keyword (name extension-id)
-           (str (name action-id) "-dialog")))
+  [extension-id item-namespace action-id]
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-lister")
+           (str (name action-id)      "-dialog")))
 
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -221,10 +228,29 @@
   ; @example
   ;  (engine/load-extension-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension/load-my-type-lister!]
+  ;  [:my-extension.my-type-lister/load-lister!]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
-  (let [event-id (keyword (name extension-id)
-                          (str "load-" (name item-namespace) "-lister!"))]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-lister")
+                          "load-lister!")]
+       [event-id]))
+
+(defn item-clicked-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/item-clicked-event :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension.my-type-lister/->item-clicked]
+  ;
+  ; @return (event-vector)
+  [extension-id item-namespace]
+  (let [event-id (keyword (str (name extension-id)   "."
+                               (name item-namespace) "-lister")
+                          "->item-clicked")]
        [event-id]))

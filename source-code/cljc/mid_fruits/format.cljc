@@ -40,15 +40,16 @@
   ;  "4 200.5"
   ;
   ; @return (string)
-  [n]  ;base:        az n string első (kizárólag) számjegyekből álló blokkja
-       ;group-count: a base string hány darab három karakteres blokkra osztható
-       ;offset:      a base string három karakteres blokkokra osztása után hány karakter marad ki (a base string elején)
-  (let [base        (re-find #"\d+" n)
+  [n]  
+  (let [; base:        az n string első (kizárólag) számjegyekből álló blokkja
+        ; group-count: a base string hány darab három karakteres blokkra osztható
+        ; offset:      a base string három karakteres blokkokra osztása után hány karakter marad ki (a base string elején)
+        base        (re-find #"\d+" n)
         group-count (quot (count base) 3)
         offset      (-    (count base) (* 3 group-count))]
-            ; Abban az esetben, ha az offset értéke 0, mert a base karaktereinek száma hárommal osztható,
+       (str ; Abban az esetben, ha az offset értéke 0, mert a base karaktereinek száma hárommal osztható,
             ; szükséges a ciklus kimeneti értékének elejéről a felesleges elválasztó karaktert eltávolítani!
-       (str (string/trim (reduce (fn [result dex]
+            (string/trim (reduce (fn [result dex]
                                      (let [x (+ offset (* 3 dex))]
                                           (str result " " (subs base x (+ x 3)))))
                                  (subs base 0 offset)

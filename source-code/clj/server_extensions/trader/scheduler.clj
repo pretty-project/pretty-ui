@@ -57,7 +57,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
-  ::lifecycles
-  {:on-server-launch {:trader/initialize-scheduler! {:boot-delay DEFAULT-BOOT-DELAY
-                                                     :interval   DEFAULT-INTERVAL}}})
+;(a/reg-lifecycles
+;  ::lifecycles
+;  {:on-server-launch {:trader/initialize-scheduler! {:boot-delay DEFAULT-BOOT-DELAY
+;                                                     :interval   DEFAULT-INTERVAL)

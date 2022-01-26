@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.5.5
+; Version: v0.7.0
+; Compatibility: x4.5.6
 
 
 
@@ -208,6 +208,19 @@
   (let [selected-items (r get-selected-item-dexes db extension-id item-namespace)]
        (count selected-items)))
 
+(defn item-selectable?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace item-dex]]
+  (if-let [selectable-f (r get-meta-item db extension-id item-namespace :selectable-f)]
+          (selectable-f (get-in db [extension-id :item-lister/data-items item-dex]))
+          (return true)))
+
 (defn item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -359,6 +372,16 @@
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
 
+(defn route-exists?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r router/route-exists? db (engine/route-id extension-id item-namespace)))
+
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -373,6 +396,21 @@
        (if items-received? (components/content {:content      :npn-items-downloaded
                                                 :replacements [downloaded-item-count all-item-count]}))))
 
+(defn checkbox-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-dex]]
+  (if-let [selectable-f (r get-meta-item db extension-id item-namespace :selectable-f)]
+          (or (r lister-disabled? db extension-id item-namespace)
+              (let [item (get-in db [extension-id :item-lister/data-items item-dex])]
+                   (-> item selectable-f not)))
+          (r lister-disabled? db extension-id item-namespace)))
+
 (defn get-checkbox-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -385,9 +423,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
-  {:item-selected?   (r item-selected?   db extension-id item-namespace item-dex)
-   :lister-disabled? (r lister-disabled? db extension-id item-namespace)
-   :select-mode?     (r get-meta-item    db extension-id item-namespace :select-mode?)})
+  {:checkbox-disabled? (r checkbox-disabled? db extension-id item-namespace item-dex)
+   :item-selected?     (r item-selected?     db extension-id item-namespace item-dex)
+   :select-mode?       (r get-meta-item      db extension-id item-namespace :select-mode?)})
 
 (a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
 

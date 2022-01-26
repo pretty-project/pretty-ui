@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.13
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.4.9
+; Version: v0.4.8
+; Compatibility: x4.5.6
 
 
 
@@ -16,7 +16,6 @@
 (ns app-plugins.item-editor.dialogs
     (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
-              [x.app-ui.api       :as ui]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]))
 
@@ -124,7 +123,7 @@
   (fn [_ [_ extension-id item-namespace]]
       [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
                       {:body   [color-picker-dialog-body extension-id]
-                      ;:header #'ui/close-popup-header}
+                      ;:header #'ui/close-popup-header
                        :min-width :none}]))
 
 (a/reg-event-fx

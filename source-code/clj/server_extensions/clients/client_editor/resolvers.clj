@@ -11,7 +11,7 @@
 ;; -- Resolvers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-client-item-f
+(defn get-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
@@ -23,16 +23,16 @@
        (if-let [document (mongo-db/get-document-by-id "clients" item-id)]
                (validator/validate-data document))))
 
-(defresolver get-client-item
+(defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:clients/get-client-item (namespaced map)}
+             ;  {:clients.client-editor/get-item (namespaced map)}
              [env resolver-props]
-             {:clients/get-client-item (get-client-item-f env resolver-props)})
+             {:clients.client-editor/get-item (get-item-f env resolver-props)})
 
 
 
@@ -40,6 +40,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-client-item])
+(def HANDLERS [get-item])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

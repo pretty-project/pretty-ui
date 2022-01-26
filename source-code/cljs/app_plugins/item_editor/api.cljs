@@ -15,9 +15,9 @@
 
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
-              [app-plugins.item-editor.events]
               [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.events :as events]
               [app-plugins.item-editor.subs   :as subs]
               [app-plugins.item-editor.views  :as views]))
 
@@ -30,6 +30,9 @@
 (def editor-uri engine/editor-uri)
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
+
+; app-plugins.item-editor.engine
+(def edit-item! events/edit-item!)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
@@ -47,4 +50,5 @@
 (def description-field  views/description-field)
 (def error-body         views/error-body)
 (def header             views/header)
+(def body               views/body)
 (def view               views/view)

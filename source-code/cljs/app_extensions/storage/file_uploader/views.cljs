@@ -35,56 +35,7 @@
   [uploader-id uploader-props]
   [:input#storage--file-selector {:multiple 1 :type "file"
                                   :accept     (uploader-props->allowed-extensions-list uploader-props)
-                                  :on-change #(a/dispatch [:storage/->files-selected-to-upload uploader-id])}])
-
-
-
-;; -- Dialog components -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- abort-upload-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id {:keys [files-uploaded?]}]
-  (if-not files-uploaded? [elements/button {:label :abort! :preset :warning-button :indent :both
-                                            :on-click [:storage/abort-file-uploading! uploader-id]}]))
-
-(defn- upload-progress-diagram
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [file-count request-progress files-uploaded? request-failured?]}]
-  (let [sections      [{:color :primary :value request-progress} {:color :highlight :value (- 100 request-progress)}]
-        progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
-        label (cond request-failured? :file-upload-failure files-uploaded? :files-uploaded :else progress-label)]
-       [:div {:style {:width "100%"}}
-             [elements/line-diagram {:layout :row :font-size :xs :sections sections :indent :both :label label}]]))
-
-(defn- upload-progress-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [total-size uploaded-size]}]
-  (let [total-size    (io/B->MB            total-size)
-        ;uploaded-size (math/percent-result total-size request-progress)
-        uploaded-size (io/B->MB uploaded-size)
-        total-size    (format/decimals     total-size)
-        uploaded-size (format/decimals     uploaded-size)]
-       [elements/label {:content (str  uploaded-size " MB / " total-size " MB")
-                        :font-size :xs :color :muted :indent :both}]))
-
-    ; Akkor is hozzászámolja a cuccokat, ha még nincs elidnitva
-
-(defn- upload-progress-notification
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id progress-props]
-  [:<> [elements/horizontal-separator {:size :s}]
-       [upload-progress-diagram uploader-id progress-props]
-       [elements/row {:horizontal-align :space-between
-                      :content [:<> [upload-progress-label uploader-id progress-props]
-                                    [abort-upload-button   uploader-id progress-props]]}]])
-  ;[:div (str progress-props)])
-
-(defn- upload-progress-notification-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id]
-  [components/subscriber {:render-f   #'upload-progress-notification
-                          :subscriber [:storage/get-progress-props uploader-id]}])
+                                  :on-change #(a/dispatch [:storage.file-uploader/->files-selected-to-upload uploader-id])}])
 
 
 
@@ -95,7 +46,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _]
   [elements/button ::cancel-upload-button
-                   {:on-click [:storage/cancel-file-uploader! uploader-id]
+                   {:on-click [:storage.file-uploader/cancel-uploader! uploader-id]
                     :preset :cancel-button :indent :both :keypress {:key-code 27}}])
 
 (defn- upload-files-button
@@ -103,7 +54,7 @@
   [uploader-id {:keys [all-files-cancelled? max-upload-size-reached? storage-capacity-limit-exceeded?]}]
   [elements/button ::upload-files-button
                    {:disabled? (or all-files-cancelled? max-upload-size-reached? storage-capacity-limit-exceeded?)
-                    :on-click [:storage/start-file-uploader-progress! uploader-id]
+                    :on-click [:storage.file-uploader/start-progress! uploader-id]
                     :preset :upload-button :indent :both :keypress {:key-code 13}}])
 
 (defn- available-capacity-label
@@ -149,7 +100,7 @@
   [uploader-id]
   [components/subscriber uploader-id
                          {:render-f   #'header-structure
-                          :subscriber [:storage/get-file-uploader-header-props uploader-id]}])
+                          :subscriber [:storage.file-uploader/get-header-props uploader-id]}])
 
 
 
@@ -187,7 +138,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id _ file-dex _]
   [elements/button {:preset :default-icon-button :icon :highlight_off
-                    :on-click [:storage/cancel-file-upload! uploader-id file-dex]}])
+                    :on-click [:storage.file-uploader/cancel-file-upload! uploader-id file-dex]}])
 
 (defn- file-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -203,7 +154,7 @@
   ;   adatbázisban, így az egyes komponensek nem paraméterként kapják a file-list listából az adatot.
   ; - Ha egy fájl felöltése visszavonsára kerül és megváltoznak a lista adatai, akkor a változásban
   ;   nem értintett fájlok nem renderelődnek újra
-  (let [file-props (a/subscribe [:storage/get-file-uploader-file-props uploader-id file-dex])]
+  (let [file-props (a/subscribe [:storage.file-uploader/get-file-props uploader-id file-dex])]
        (fn [] [file-item-structure uploader-id body-props file-dex @file-props])))
 
 (defn- file-list
@@ -215,7 +166,7 @@
   (letfn [(f [file-list file-dex]
              (conj file-list ^{:key (str uploader-id file-dex)}
                               [file-item uploader-id body-props file-dex]))]
-         (reduce f [:<>] (range 0 file-count))))
+         (reduce f [:<>] (range file-count))))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -228,7 +179,7 @@
   [uploader-id]
   [components/subscriber uploader-id
                          {:render-f   #'body-structure
-                          :subscriber [:storage/get-file-uploader-body-props uploader-id]}])
+                          :subscriber [:storage.file-uploader/get-body-props uploader-id]}])
 
 
 
@@ -241,7 +192,7 @@
   (tools/append-temporary-component! [file-selector uploader-id uploader-props]
                                     #(-> "storage--file-selector" dom/get-element-by-id .click)))
 
-(a/reg-fx :storage/open-file-selector! open-file-selector!)
+(a/reg-fx :storage.file-uploader/open-file-selector! open-file-selector!)
 
 
 
@@ -249,18 +200,9 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage/render-file-uploader!
+  :storage.file-uploader/render-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
-      [:ui/add-popup! (keyword/add-namespace :storage uploader-id)
+      [:ui/add-popup! :storage.file-uploader/view
                       {:body   [body   uploader-id]
                        :header [header uploader-id]}]))
-
-(a/reg-event-fx
-  :storage/render-file-uploading-progress-notification!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ uploader-id]]
-      [:ui/blow-bubble! (keyword/add-namespace :storage uploader-id)
-                        {:body        [upload-progress-notification-body uploader-id]
-                         :autopop?    false
-                         :user-close? false}]))

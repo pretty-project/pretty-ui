@@ -34,11 +34,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ extension-id item-namespace item-key]]
+  [db [_ extension-id item-key]]
   (get-in db [extension-id :view-selector/meta-items item-key]))
 
 (a/reg-sub :view-selector/get-meta-item get-meta-item)

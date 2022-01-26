@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.4.9
+; Version: v0.6.8
+; Compatibility: x4.5.6
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.events
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api :as a :refer [r]]
               [app-plugins.view-selector.engine :as engine]
               [app-plugins.view-selector.subs   :as subs]))
 
@@ -24,16 +23,49 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn load-selector!
+(defn set-current-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) view-id
+  ;
+  ; @return (map)
+  [db [_ extension-id view-id]]
+  (assoc-in db [extension-id :view-selector/meta-items :view-id] view-id))
+
+(defn store-derived-view-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (let [derived-view-id (r subs/get-derived-view db extension-id)]
-       (-> db (dissoc-in [extension-id :view-selector/meta-items])
-              (assoc-in  [extension-id :view-selector/meta-items :view-id] derived-view-id))))
+  (let [derived-view-id (r subs/get-derived-view-id db extension-id)]
+       (r set-current-view-id! db extension-id derived-view-id)))
+
+(defn store-current-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (map) selector-props
+  ;  {:view-id (keyword)(opt)}
+  ;
+  ; @return (map)
+  [db [_ extension-id {:keys [view-id]}]]
+  (if (r subs/route-handled? db extension-id)
+      (r store-derived-view-id! db extension-id)
+      (r   set-current-view-id! db extension-id view-id)))
+
+(defn load-selector!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (map) selector-props
+  ;  {:view-id (keyword)(opt)}
+  ;
+  ; @return (map)
+  [db [_ extension-id selector-props]]
+  (r store-current-view-id! db extension-id selector-props))
 
 (defn change-view!
   ; @param (keyword) extension-id
@@ -44,7 +76,7 @@
   ;
   ; @return (map)
   [db [_ extension-id view-id]]
-  (assoc-in db [extension-id :view-selector/meta-items :view-id] view-id))
+  (r set-current-view-id! db extension-id view-id))
 
 ; @usage
 ;  [:view-selector/change-view! :my-extension :my-view]
@@ -64,15 +96,26 @@
   ;
   ; @usage
   ;  [:view-selector/go-to! :my-extension :my-view]
-  (fn [_ [_ extension-id view-id]]
-      (let [target-route-string (engine/extended-route-string extension-id view-id)]
-           [:router/go-to! target-route-string])))
+  (fn [{:keys [db]} [_ extension-id view-id]]
+      (if (r subs/route-handled? db extension-id)
+          (let [target-route-string (engine/extended-route-string extension-id view-id)]
+               [:router/go-to! target-route-string])
+          [:view-selector/load-selector! extension-id {:viewid view-id}])))
 
 (a/reg-event-fx
   :view-selector/load-selector!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      {:db       (r load-selector!         db extension-id)
+  ; @param (map)(opt) selector-props
+  ;  {:view-id (keyword)(opt)}
+  ;
+  ; @usage
+  ;  [:view-selector/load-selector! :my-extension]
+  ;
+  ; @usage
+  ;  [:view-selector/load-selector! :my-extension {...}]
+  ;
+  ; @usage
+  ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
+  (fn [{:keys [db]} [_ extension-id selector-props]]
+      {:db       (r load-selector!         db extension-id selector-props)
        :dispatch (engine/load-extension-event extension-id)}))
