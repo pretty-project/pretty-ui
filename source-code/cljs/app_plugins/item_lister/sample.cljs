@@ -13,8 +13,8 @@
 (a/reg-event-fx
   :my-extension.my-type-lister/how-to-start?
   ; Az item-lister plugin elindítható ...
-  ; ... az [:item-lister/load-lister! ...] esemény meghívásával.
-  [:item-lister/load-lister! :my-extension :my-type]
+  ; ... az [:my-extension.my-type-lister/load-lister! ...] esemény meghívásával.
+  [:my-extension.my-type-lister/load-lister! :my-extension :my-type]
   ; ... az "/@app-home/my-extension" útvonal használatával.
   [:router/go-to! "/@app-home/my-extension"])
 

@@ -779,10 +779,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
+  ; Az [:item-lister/select-all-items! ...] esemény működéséhez szükséges a Re-Frame adatbázisba
+  ; írni a {:selectable-f ...} tulajdonság értékét!
   [components/stated {:base-props  body-props
                       :component   [body-structure extension-id item-namespace body-props]
-                      ; Az [:item-lister/select-all-items! ...] esemény működéséhez szükséges
-                      ; a Re-Frame adatbázisba írni a {:selectable-f ...} tulajdonság értékét!
+                      :destructor  [:item-lister/unload-lister! extension-id item-namespace]
                       :initializer [:db/set-item! [extension-id :item-lister/meta-items :selectable-f]
                                                   (:selectable-f body-props)]
                       :subscriber  [:item-lister/get-body-props extension-id item-namespace]}])

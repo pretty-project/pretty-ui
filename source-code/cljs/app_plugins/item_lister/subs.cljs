@@ -474,7 +474,8 @@
         {:select-mode? true
          :all-items-selected? (r all-items-selected? db extension-id item-namespace)
          :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-         :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)}
+         :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)
+         :x (println "{:select-mode? true}" (.now js/performance))}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode? true

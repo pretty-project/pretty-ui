@@ -404,6 +404,26 @@
                          [:item-editor/request-item!  extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)]})))
 
+(a/reg-event-fx
+  :item-editor/unload-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
+      ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
+      ; annak törlésének visszavonása esemény esetleges megtörténtekor.
+      (if-let [delete-mode? (r subs/get-meta-item db extension-id item-namespace :delete-mode?)]
+              {:db (r store-local-changes! db extension-id item-namespace)}
+              ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
+              ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
+              ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
+              ; esemény visszavonásának esetleges megtörténtekor.
+              (if (r subs/item-changed? db extension-id item-namespace)
+                  {:db       (r store-local-changes! db extension-id item-namespace)
+                   :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]}))))
+
 
 
 ;; -- Status events -----------------------------------------------------------
@@ -444,23 +464,3 @@
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace item-id]]
       {:db       (r set-recovery-mode! db   extension-id)
        :dispatch (r edit-item!         cofx extension-id item-namespace item-id)}))
-
-(a/reg-event-fx
-  :item-editor/->editor-leaved
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
-      ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
-      ; annak törlésének visszavonása esemény esetleges megtörténtekor.
-      (if-let [delete-mode? (r subs/get-meta-item db extension-id item-namespace :delete-mode?)]
-              {:db (r store-local-changes! db extension-id item-namespace)}
-              ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
-              ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
-              ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
-              ; esemény visszavonásának esetleges megtörténtekor.
-              (if (r subs/item-changed? db extension-id item-namespace)
-                  {:db       (r store-local-changes! db extension-id item-namespace)
-                   :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]}))))

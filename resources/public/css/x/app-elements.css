@@ -2464,7 +2464,8 @@ body[data-viewport-profile="s"]
   width: 24px }
 
 .x-label--icon-placeholder {
-  width: 32px }
+  /* XXX#4509 */
+  -width: 36px }
 
 /*** Label icon ***/
 /***** Label *****/

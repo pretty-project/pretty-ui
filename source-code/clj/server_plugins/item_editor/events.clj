@@ -6,7 +6,7 @@
 ; Created: 2021.12.18
 ; Description:
 ; Version: v0.5.6
-; Compatibility: x4.5.6
+; Compatibility: x4.5.7
 
 
 
@@ -28,7 +28,7 @@
 ;  TODO ...
 ;
 ; @name suggestion-keys
-;  Az :item-editor/initialize! esemény számára {:suggestion-keys [...]} tulajdonságként
+;  Az :item-editor/initialize-editor! esemény számára {:suggestion-keys [...]} tulajdonságként
 ;  átadott kulcsokhoz tartozó értékeket az item-editor a kliens-oldali betöltődésekor
 ;  letölti a szerveren tárolt dokumentumokból, így azok a kliens-oldalon elérhetővé válnak
 ;  a dokumentum szerkesztéséhez használt mezők számára.
@@ -64,7 +64,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn initialize!
+(defn initialize-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -102,11 +102,10 @@
                                   {:route-template (engine/route-template        extension-id)
                                    :route-parent   (engine/parent-uri            extension-id)
                                    :client-event   [:item-editor/load-editor!    extension-id item-namespace]
-                                   :on-leave-event [:item-editor/->editor-leaved extension-id item-namespace]
                                    :restricted?    true}]))
 
 (a/reg-event-fx
-  :item-editor/initialize!
+  :item-editor/initialize-editor!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
@@ -116,15 +115,15 @@
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;
   ; @usage
-  ;  [:item-editor/initialize! :my-extension :my-type]
+  ;  [:item-editor/initialize-editor! :my-extension :my-type]
   ;
   ; @usage
-  ;  [:item-editor/initialize! :my-extension :my-type {...}]
+  ;  [:item-editor/initialize-editor! :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  [:item-editor/initialize! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
+  ;  [:item-editor/initialize-editor! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace editor-props]]
       (let [editor-props (editor-props-prototype extension-id item-namespace editor-props)]
-           {:db (r initialize! db extension-id item-namespace editor-props)
+           {:db (r initialize-editor! db extension-id item-namespace editor-props)
             :dispatch-n [(r transfer-editor-props! cofx extension-id item-namespace editor-props)
                          (r add-route!             cofx extension-id item-namespace editor-props)]})))

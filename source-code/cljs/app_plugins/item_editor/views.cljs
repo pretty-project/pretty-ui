@@ -373,9 +373,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
-  [components/subscriber {:base-props body-props
-                          :component  [body-structure              extension-id item-namespace]
-                          :subscriber [:item-editor/get-body-props extension-id item-namespace]}])
+  [components/stated {:base-props body-props
+                      :component  [body-structure              extension-id item-namespace]
+                      :destructor [:item-editor/unload-editor! extension-id item-namespace]
+                      :subscriber [:item-editor/get-body-props extension-id item-namespace]}])
 
 
 

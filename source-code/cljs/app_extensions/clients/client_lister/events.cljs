@@ -23,6 +23,4 @@
 (a/reg-event-fx
   :clients.client-lister/load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      (println "Loading client-lister ...")))
-  ;[:clients.client-lister/render-lister!])
+  [:clients.client-lister/render-lister!])

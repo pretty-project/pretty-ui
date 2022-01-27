@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.4.2
-; Compatibility: x4.5.6
+; Compatibility: x4.5.7
 
 
 
@@ -57,7 +57,7 @@
   ;  {:routed? (boolean)}
   [_ [_ extension-id {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/route-id extension-id)
-                                  {:route-template (engine/route-template extension-id)
+                                  {:route-template (engine/route-template       extension-id)
                                    :client-event   [:view-selector/load-selector! extension-id]
                                    :restricted?    true}]))
 

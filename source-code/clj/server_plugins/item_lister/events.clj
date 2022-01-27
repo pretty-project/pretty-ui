@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.4.4
-; Compatibility: x4.5.5
+; Compatibility: x4.5.7
 
 
 
@@ -77,7 +77,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn initialize!
+(defn initialize-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -112,13 +112,12 @@
   ;  {:routed? (boolean)}
   [_ [_ extension-id item-namespace {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
-                                  {:route-template (engine/route-template        extension-id)
-                                   :client-event   [:item-lister/load-lister!    extension-id item-namespace]
-                                   :on-leave-event [:item-lister/->lister-leaved extension-id item-namespace]
+                                  {:route-template (engine/route-template     extension-id)
+                                   :client-event   [:item-lister/load-lister! extension-id item-namespace]
                                    :restricted?    true}]))
 
 (a/reg-event-fx
-  :item-lister/initialize!
+  :item-lister/initialize-lister!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) lister-props
@@ -136,15 +135,15 @@
   ;    Default: DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-lister/initialize! :my-extension :my-type]
+  ;  [:item-lister/initialize-lister! :my-extension :my-type]
   ;
   ; @usage
-  ;  [:item-lister/initialize! :my-extension :my-type {...}]
+  ;  [:item-lister/initialize-lister! :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  [:item-lister/initialize! :my-extension :my-type {:search-keys [:name :email-address]}]
+  ;  [:item-lister/initialize-lister! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace lister-props]]
       (let [lister-props (lister-props-prototype extension-id item-namespace lister-props)]
-           {:db (r initialize! db extension-id item-namespace lister-props)
+           {:db (r initialize-lister! db extension-id item-namespace lister-props)
             :dispatch-n [(r transfer-lister-props! cofx extension-id item-namespace lister-props)
                          (r add-route!             cofx extension-id item-namespace lister-props)]})))

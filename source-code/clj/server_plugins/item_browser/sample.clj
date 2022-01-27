@@ -21,14 +21,14 @@
 
 (a/reg-lifecycles
   ::lifecycles
-  ; - Az [:item-browser/initialize! ...] esemény hozzáadja a "/@app-home/my-extension"
+  ; - Az [:item-browser/initialize-browser! ...] esemény hozzáadja a "/@app-home/my-extension"
   ;   és "/@app-home/my-extension/:my-type-id" útvonalakat a rendszerhez, amely útvonalak
   ;   használatával betöltődik a kliens-oldalon az item-browser plugin.
   ; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalakat.
-  {:on-server-boot [:item-browser/initialize! :my-extension :my-type
-                                              {:label-key :name
-                                               :path-key  :path
-                                               :root-item-id "my-item"}]})
+  {:on-server-boot [:item-browser/initialize-browser! :my-extension :my-type
+                                                      {:label-key :name
+                                                       :path-key  :path
+                                                       :root-item-id "my-item"}]})
   ; Az item-browser plugin az item-lister plugint alkalmazza az elemek listázához,
   ; a browser-props térképben található beállítások egy része az item-lister plugin beállításához
   ; szükséges és leírásukat annak dokumentációjában találod!

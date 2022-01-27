@@ -52,6 +52,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
+  (println "toggle-select-mode!" (.now js/performance))
   (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
              (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
 
@@ -550,11 +551,10 @@
 
 (a/reg-event-fx
   :item-lister/load-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/load-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
            {:db (r load-lister! db extension-id item-namespace)
@@ -564,6 +564,16 @@
                          [:ui/set-header-title! lister-label]
                          [:ui/set-window-title! lister-label]
                          (engine/load-extension-event extension-id item-namespace)]})))
+
+(a/reg-event-fx
+  :item-lister/unload-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; XXX#5660
+  [:environment/remove-keypress-listener! :item-lister/keypress-listener])
 
 
 
@@ -598,16 +608,6 @@
            {:db (r reset-selections! db extension-id item-namespace)
             :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace item-ids]
                          [:item-lister/reload-lister!                  extension-id item-namespace]]})))
-
-(a/reg-event-fx
-  :item-lister/->lister-leaved
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; XXX#5660
-  [:environment/remove-keypress-listener! :item-lister/keypress-listener])
 
 (a/reg-event-fx
   :item-lister/->item-clicked

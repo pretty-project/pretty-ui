@@ -117,5 +117,4 @@
   ; @usage
   ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
   (fn [{:keys [db]} [_ extension-id selector-props]]
-      {:db       (r load-selector!         db extension-id selector-props)
-       :dispatch (engine/load-extension-event extension-id)}))
+      {:db (r load-selector! db extension-id selector-props)}))

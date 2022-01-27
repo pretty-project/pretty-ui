@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.3.8
-; Compatibility: x4.5.5
+; Compatibility: x4.5.7
 
 
 
@@ -14,12 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.events
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [x.server-core.api :as a :refer [r]]
+    (:require [x.server-core.api :as a :refer [r]]
               [mid-plugins.item-browser.events    :as events]
               [server-plugins.item-browser.engine :as engine]
-              [server-plugins.item-browser.subs   :as subs]
               [server-plugins.item-lister.api     :as item-lister]
               [server-plugins.item-lister.events  :refer [lister-props-prototype]]))
 
@@ -74,7 +71,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn initialize!
+(defn initialize-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) browser-props
@@ -138,7 +135,7 @@
                                    :restricted?    true}]))
 
 (a/reg-event-fx
-  :item-browser/initialize!
+  :item-browser/initialize-browser!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
@@ -161,11 +158,11 @@
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-browser/initialize! :my-extension :my-type {:root-item-id "my-item"
-  ;                                                     :search-keys  [:name :email-address]}]
+  ;  [:item-browser/initialize-browser! :my-extension :my-type {:root-item-id "my-item"
+  ;                                                            :search-keys  [:name :email-address]}]
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
-           {:db (r initialize! db extension-id item-namespace browser-props)
+           {:db (r initialize-browser! db extension-id item-namespace browser-props)
             :dispatch-n [(r transfer-browser-props! cofx extension-id item-namespace browser-props)
                          (r transfer-lister-props!  cofx extension-id item-namespace browser-props)
                          (r add-route!              cofx extension-id item-namespace browser-props)
