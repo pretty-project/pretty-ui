@@ -184,7 +184,7 @@
       {:en "Add file"
        :hu "Fájl hozzáadása"}
       :available-capacity-in-storage-is
-      {:en ""
+      {:en "Available capacity in storage is: % MB"
        :hu "A rendelkezésre álló kapacitás a tárhelyen: % MB"}
       :cant-attach-more-files
       {:en "You can not select more files!"
@@ -199,7 +199,7 @@
       {:en "File storage"
        :hu "Tárhely"}
       :max-uploading-size-is
-      {:en ""
+      {:en "Uploading size is: Max. % MB"
        :hu "Az egyszerre feltölthető fájlok mérete: max. % MB"}
       :media
       {:en "Storage"
@@ -217,7 +217,7 @@
       {:en "Unnamed file"
        :hu "Névtelen fájl"}
       :uploading-size-is
-      {:en ""
+      {:en "Uploading size is: %1 MB / %2 MB"
        :hu "A feltölteni kívánt fájlok mérete: %1 MB / %2 MB"}
       :my-storage
       {:en "My storage"

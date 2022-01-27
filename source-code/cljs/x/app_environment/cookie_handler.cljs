@@ -211,7 +211,7 @@
   ;
   ; @return (item-path vector)
   [setting-id]
-  (db/path :environment/cookies :cookie-settings setting-id))
+  (db/path :environment/cookie-handler :cookie-settings setting-id))
 
 (defn- cookie-name-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -267,7 +267,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path :environment/cookies)))
+  (get-in db (db/path :environment/cookie-handler)))
 
 (defn any-cookies-stored?
   ; @usage
@@ -290,14 +290,14 @@
   ;
   ; @return (*)
   [db [_ cookie-id]]
-  (get-in db (db/path :environment/cookies cookie-id)))
+  (get-in db (db/path :environment/cookie-handler cookie-id)))
 
 (defn cookies-enabled-by-browser?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path :environment/cookies :enabled-by-browser?))))
+  (boolean (get-in db (db/meta-item-path :environment/cookie-handler :enabled-by-browser?))))
 
 (defn analytics-cookies-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -358,7 +358,7 @@
   ;
   ; return (map)
   [db [_ cookie-id {:keys [value]}]]
-  (assoc-in db (db/path :environment/cookies cookie-id)
+  (assoc-in db (db/path :environment/cookie-handler cookie-id)
                (param value)))
 
 (defn- remove-cookie-value!
@@ -368,7 +368,7 @@
   ;
   ; return (map)
   [db [_ cookie-id]]
-  (dissoc-in db (db/path :environment/cookies cookie-id)))
+  (dissoc-in db (db/path :environment/cookie-handler cookie-id)))
 
 
 
@@ -381,7 +381,7 @@
   ; return (map)
   [cofx _]
   (let [enabled-by-browser? (.isEnabled goog.net.cookies)]
-       (assoc-in cofx (db/meta-item-cofx-path :environment/cookies :enabled-by-browser?)
+       (assoc-in cofx (db/meta-item-cofx-path :environment/cookie-handler :enabled-by-browser?)
                       (param enabled-by-browser?))))
 
 (a/reg-cofx :environment/inject-cookie-browser-settings! inject-cookie-browser-settings!)
@@ -396,7 +396,7 @@
   ;
   ; @return (map)
   [cofx [_ cookie-name {:keys [cookie-id value]}]]
-  (assoc-in cofx (db/cofx-path :environment/cookies cookie-id)
+  (assoc-in cofx (db/cofx-path :environment/cookie-handler cookie-id)
                  (param value)))
 
 (defn- inject-system-cookie!
@@ -415,13 +415,12 @@
   ;
   ; @return (map)
   [cofx _]
-  (let [cookie-names (vec (.getKeys goog.net.cookies))]
-       (reduce (fn [cofx cookie-name]
-                   (if (cookie-name->system-cookie? cookie-name)
-                       (r inject-system-cookie! cofx cookie-name)
-                       (return cofx)))
-               (param cofx)
-               (param cookie-names))))
+  (let [cookie-names (-> goog.net.cookies .getKeys vec)]
+       (letfn [(f [cofx cookie-name]
+                  (if (cookie-name->system-cookie? cookie-name)
+                      (r inject-system-cookie! cofx cookie-name)
+                      (return                  cofx)))]
+              (reduce f cofx cookie-names))))
 
 (a/reg-cofx :environment/inject-system-cookies! inject-system-cookies!)
 
@@ -573,7 +572,7 @@
 (defn- ->cookies-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r db/empty-partition! db :environment/cookies))
+  (r db/empty-partition! db :environment/cookie-handler))
 
 (a/reg-event-db :environment/->cookies-removed ->cookies-removed)
 

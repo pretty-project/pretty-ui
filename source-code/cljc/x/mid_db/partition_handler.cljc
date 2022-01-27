@@ -18,8 +18,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]
-              [x.mid-core.api     :refer [r]]
-              [x.mid-db.engine    :as engine]))
+              [x.mid-core.api     :refer [r]]))
 
 
 
@@ -97,14 +96,6 @@
 ;  [:my-partition/primary :meta-items :my-meta]
 ;
 ;  ...
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-db.engine
-(def apply! engine/apply!)
 
 
 
@@ -403,15 +394,3 @@
   [db [_ partition-id partition-props]]
   (let [partition-id (keyword/namespaced! partition-id)]
        (assoc db partition-id (partition-prototype partition-props))))
-
-(defn set-meta-item!
-  ; @param (namespaced keyword) partition-id
-  ; @param (keyword) meta-item-id
-  ; @param (*) meta-item
-  ;
-  ; @usage
-  ;  (r db/set-meta-item! ::my-partition :my-meta-item "my-value")
-  ;
-  ; @return (map)
-  [db [_ partition-id meta-item-id meta-item]]
-  (assoc-in db [partition-id :meta-items meta-item-id] meta-item))

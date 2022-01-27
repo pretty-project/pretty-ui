@@ -957,7 +957,7 @@
       {:en "Directory created"
        :hu "Mappa létrehozva"}
       :directory-does-not-exists
-      {:en "This is not the directory you are looking for."
+      {:en "This is not the directory you are looking for"
        :hu "A mappa nem található!"}
       :directory-name
       {:en "Directory name"
@@ -1020,8 +1020,8 @@
       {:en "New directory"
        :hu "Új mappa"}
       :no-files-selected
-      {:en "No files selected."
-       :hu "Nincsenek kiválaszott fájlok."}
+      {:en "No files selected"
+       :hu "Nincsenek kiválaszott fájlok"}
       :remove-file!
       {:en "Remove file"
        :hu "Fájl eltávolítása"}
@@ -1041,8 +1041,8 @@
       {:en "Share image"
        :hu "Kép megosztása"}
       :there-is-not-enough-space
-      {:en "There is not enough space available to complete this operation."
-       :hu "Nincs elegendő hely a művelet befejezéséhez."}
+      {:en "There is not enough space available to complete this operation"
+       :hu "Nincs elegendő hely a művelet befejezéséhez"}
       :untitled-directory
       {:en "Untitled directory"
        :hu "Névtelen mappa"}
@@ -1074,7 +1074,7 @@
       {:en "Uploading % files ..."
        :hu "% fájl feltöltése ..."}
       :uploading-n-files-in-progress...
-      {:en "Uploading % files in progress ..."
+      {:en "Uploading % file(s) in progress ..."
        :hu "% fájl feltöltése folyamatban ..."}})
 
 

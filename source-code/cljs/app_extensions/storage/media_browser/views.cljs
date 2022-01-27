@@ -20,9 +20,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [items]}]
   (let [icon-family (if (vector/nonempty? items) :material-icons-filled :material-icons-outlined)]
-       [:div.storage--media-item--header [elements/icon {:icon :folder
-                                                         :icon-family icon-family
-                                                         :size :xxl}]]))
+       [:div.storage--media-item--header [elements/icon {:icon-family icon-family :icon :folder :size :xxl}]]))
 
 (defn- directory-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!

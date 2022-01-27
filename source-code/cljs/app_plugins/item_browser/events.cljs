@@ -20,7 +20,9 @@
               [x.app-db.api         :as db]
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
-              [app-plugins.item-browser.subs    :as subs]))
+              [app-plugins.item-browser.subs    :as subs]
+              
+              [app-plugins.item-lister.events]))
 
 
 

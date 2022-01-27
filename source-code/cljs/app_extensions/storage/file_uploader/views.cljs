@@ -5,7 +5,6 @@
               [mid-fruits.css       :as css]
               [mid-fruits.io        :as io]
               [mid-fruits.format    :as format]
-              [mid-fruits.keyword   :as keyword]
               [mid-fruits.math      :as math]
               [mid-fruits.string    :as string]
               [x.app-components.api :as components]
@@ -129,10 +128,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _ _ {:keys [filename filesize]}]
   [:div.storage--media-item--details
-    [elements/label {:content (str filename)
-                     :layout :fit :selectable? true  :color :default}]
-    [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
-                     :layout :fit :selectable? false :color :muted}]])
+    [elements/label {:min-height :s :selectable? true  :color :default :content filename}]
+    [elements/label {:min-height :s :selectable? false :color :muted
+                     :content (-> filesize io/B->MB format/decimals (str " MB"))}]])
 
 (defn- file-item-actions
   ; WARNING! NON-PUBLIC! DO NOT USE!

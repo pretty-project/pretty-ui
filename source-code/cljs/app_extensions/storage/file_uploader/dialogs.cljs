@@ -80,7 +80,6 @@
 (a/reg-event-fx
   :storage.file-uploader/render-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ; Az egy időben történő feltöltési folyamatok értékei összevonva jelennek meg egy folyamatjelzőn
   [:ui/blow-bubble! :storage.file-uploader/progress-notification
                     {:body #'progress-notification
                      :autopop? false :user-close? false}])

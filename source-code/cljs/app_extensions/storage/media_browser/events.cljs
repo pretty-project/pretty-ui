@@ -7,6 +7,21 @@
 
 
 
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn store-creator-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) creator-id
+  ; @param (map) creator-props
+  ;
+  ; @return (map)
+  [db [_ _ creator-props]]
+  (assoc-in db [:storage :directory-creator/meta-items] creator-props))
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -14,10 +29,9 @@
   :storage.media-browser/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ selected-option]]
-      ; Amugy ezt át kell adni paraméterként? Az uj media-browserben szerintem nem fontos
       (let [destination-id (r item-browser/get-current-item-id db :storage)]
-           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!          {:destination-id destination-id}]
-                                 :create-directory! [:storage.media-browser/load-directory-creator! {:destination-id destination-id}]))))
+           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    {:destination-id destination-id}]
+                                 :create-directory! [:storage.directory-creator/load-creator! {:destination-id destination-id}]))))
 
 
 
@@ -25,7 +39,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-browser/->item-clicked
+  :storage.media-lister/->item-clicked
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           [:storage.media-browser/->file-clicked item-dex item-props])))

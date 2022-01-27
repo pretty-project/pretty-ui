@@ -12,35 +12,6 @@
 ;; -- Mutations ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn create-directory-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;
-  ; @return (namespaced map)
-  [env {:keys [alias destination-id]}]
-  (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
-          (let [destination-path (get  destination-item :media/path)
-                directory-path   (conj destination-path {:media/id destination-id})
-                directory-item {:media/alias alias :media/content-size 0 :media/description ""
-                                :media/items []    :media/path directory-path
-                                :media/mime-type "storage/directory"}]
-               (when-let [{:media/keys [id]} (engine/insert-item! env directory-item)]
-                         (engine/attach-item!             env destination-id id)
-                         (engine/update-path-directories! env directory-item +)))))
-
-(defmutation create-directory!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (namespaced map)
-             [env mutation-props]
-             {::pathom.co/op-name 'storage.media-browser/create-directory!}
-             (create-directory-f env mutation-props))
-
 (defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,7 +71,9 @@
   ;
   ; @return (strings in vector)
   [env {:keys [item-ids]}]
-  (reduce #(conj %1 (delete-item-f env {:item-id %2})) [] item-ids))
+  (letfn [(f [result item-id]
+             (conj result (delete-item-f env {:item-id item-id})))]
+         (reduce f [] item-ids)))
 
 (defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,6 +92,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [create-directory! delete-items!])
+(def HANDLERS [delete-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

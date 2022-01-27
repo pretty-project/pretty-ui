@@ -62,8 +62,8 @@
            {:dispatch-n [[:storage.file-uploader/->progress-started uploader-id]
                          [:sync/send-query! (engine/request-id uploader-id)
                                             {:body       (dom/merge-to-form-data! form-data {:query query})
-                                             :on-success [:storage.file-uploader/->progress-ended uploader-id]
-                                             :on-failure [:storage.file-uploader/->progress-ended uploader-id]}]]})))
+                                             :on-success [:storage.file-uploader/->progress-successed uploader-id]
+                                             :on-failure [:storage.file-uploader/->progress-failured  uploader-id]}]]})))
 
 
 
@@ -87,12 +87,20 @@
                     [:storage.file-uploader/render-progress-notification! uploader-id]]}))
 
 (a/reg-event-fx
-  :storage.file-uploader/->progress-ended
+  :storage.file-uploader/->progress-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
-      ; Az egy feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt
-      {:dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
-       :dispatch [:item-lister/reload-lister! :storage :media]}))
+      {; XXX#5087
+       ; Az egy feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt
+       :dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
+       :dispatch [:item-lister/reload-items! :storage :media]}))
+
+(a/reg-event-fx
+  :storage.file-uploader/->progress-failured
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ uploader-id]]
+      {; XXX#5087
+       :dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]}))
 
 (a/reg-event-fx
   :storage.file-uploader/end-uploader!
@@ -100,13 +108,13 @@
   (fn [{:keys [db]} [_ uploader-id]]
       {:dispatch-later [; A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
                         ; látszódó folyamatjelző számára elérhetők maradjanak az adatok.
-                        {:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]}))
-       ;:dispatch-n [(if-not ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
-                            ; a folyamatjelzőt.
-                            ; Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
-                            ; közötti időben is indítható új feltöltési folyamat!
-        ;                    (r subs/file-upload-in-progress? db)
-        ;                    [:ui/pop-bubble! :storage.file-uploader/progress-notification]}]}))
+                        {:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]
+       :dispatch-if [(not (r subs/file-upload-in-progress? db))
+                     ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
+                     ; a folyamatjelzőt.
+                     ; Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
+                     ; közötti időben is indítható új feltöltési folyamat!
+                     [:ui/pop-bubble! :storage.file-uploader/progress-notification]]}))
 
 
 
@@ -137,7 +145,7 @@
   ;
   ; @usage
   ;  [:storage.file-uploader/load-uploader! {:allowed-extensions ["htm" "html" "xml"]
-  ;                                          :destination-id "..."}]
+  ;                                          :destination-id "my-directory"}]
   (fn [{:keys [db]} event-vector]
       ; - Az egyes fájlfeltöltési folyamatok a fájlfeltöltő ablak bezáródása után még a fájl(ok)
       ;   méretétől függően nem azonnal fejeződnek be.

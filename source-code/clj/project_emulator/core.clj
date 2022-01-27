@@ -25,13 +25,13 @@
   ; @param (map)
   ;  {:port (integer)}
   [{:keys [port] :as server-props}]
-  (x.boot-loader/start-server! server-props)
-  (println "project-emulator - Server started on port:" port))
+  (println "project-emulator - Starting server on port:" port "...")
+  (x.boot-loader/start-server! server-props))
 
 (defn start-server!
   []
-  (x.boot-loader/start-server!)
-  (println "project-emulator - Server started"))
+  (println "project-emulator - Starting server ...")
+  (x.boot-loader/start-server!))
 
 
 

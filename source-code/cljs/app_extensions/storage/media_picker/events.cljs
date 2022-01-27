@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-picker/load!
+  :storage.media-picker/load-picker!
   [a/debug!]
   ; @param (keyword) picker-id
   ; @param (map) (picker-props)

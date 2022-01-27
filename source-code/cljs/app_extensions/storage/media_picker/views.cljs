@@ -131,7 +131,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-picker/render!
+  :storage.media-picker/render-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [a/debug!]
   (fn [_ [_ picker-id picker-props]]

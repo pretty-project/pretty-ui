@@ -41,4 +41,3 @@
 (def partition-ordered?             partition-handler/partition-ordered?)
 (def partition-empty?               partition-handler/partition-empty?)
 (def reg-partition!                 partition-handler/reg-partition!)
-(def set-meta-item!                 partition-handler/set-meta-item!)

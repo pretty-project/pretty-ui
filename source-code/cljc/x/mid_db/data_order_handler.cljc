@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.28
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.1.5
+; Version: v0.9.4
+; Compatibility: x4.5.6
 
 
 
@@ -14,10 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.data-order-handler
-    (:require [mid-fruits.candy           :refer [param]]
-              [mid-fruits.map             :as map :refer [dissoc-in]]
-              [mid-fruits.vector          :as vector]
-              [x.mid-core.api             :refer [r]]
+    (:require [mid-fruits.map    :refer [dissoc-in]]
+              [mid-fruits.vector :as vector]
+              [x.mid-core.api    :refer [r]]
               [x.mid-db.partition-handler :as partition-handler]))
 
 
@@ -145,7 +144,7 @@
   ;
   ; @return (map)
   [db [_ partition-id data-item-id]]
-  (if (r partition-ordered? db partition-id)
+  (if (r partition-ordered?          db partition-id)
       (r remove-ordered-data-item!   db partition-id data-item-id)
       (r remove-unordered-data-item! db partition-id data-item-id)))
 
@@ -157,9 +156,9 @@
   ; @param (*) data-item
   ;
   ; @return (map)
-  [db [event-id partition-id data-item-id data-item]]
-  (-> db (assoc-in [partition-id :data-items data-item-id] data-item)
-         (move-data-item-to-last! [event-id partition-id data-item-id])))
+  [db [_ partition-id data-item-id data-item]]
+  (as-> db % (assoc-in % [partition-id :data-items data-item-id] data-item)
+             (r move-data-item-to-last! % partition-id data-item-id)))
 
 (defn- add-unordered-data-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -197,7 +196,7 @@
   ; @param (*) data-item
   ;
   ; @return (map)
-  [db [event-id partition-id data-item-id data-item]]
+  [db [_ partition-id data-item-id data-item]]
   (if (r data-item-exists? db partition-id data-item-id)
       (assoc-in db [partition-id :data-items data-item-id] data-item)
       (r add-data-item! db partition-id data-item-id data-item)))
@@ -261,14 +260,11 @@
   ;
   ; @return (map)
   [db [_ partition-id f & params]]
-  (let [data-items (get-in db [partition-id :data-items])]
-       (reduce-kv (fn [db data-item-id data-item]
-                      (let [params            (cons data-item params)
-                            updated-data-item (apply f params)]
-                           (assoc-in db [partition-id :data-items data-item-id]
-                                     updated-data-item)))
-                  (param db)
-                  (param data-items))))
+  (letfn [(f [db data-item-id data-item]
+             (let [params            (cons data-item params)
+                   updated-data-item (apply f params)]
+                  (assoc-in db [partition-id :data-items data-item-id] updated-data-item)))]
+         (reduce-kv f db (get-in db [partition-id :data-items]))))
 
 (defn copy-item-to-partition!
   ; A partition-id azonosítójú partícióba data-item-id azonosítóval másolja
@@ -298,9 +294,9 @@
   ;  (r db/move-item-to-partition! db ::my-partition :my-item-id [:my :item :path])
   ;
   ; @return (map)
-  [db [event-id partition-id data-item-id item-path]]
-  (-> db (copy-item-to-partition! [event-id partition-id data-item-id item-path])
-         (dissoc-in item-path)))
+  [db [_ partition-id data-item-id item-path]]
+  (as-> db % (r copy-item-to-partition! % partition-id data-item-id item-path)
+             (dissoc-in % item-path)))
 
 
 
@@ -314,8 +310,8 @@
   ;
   ; @return (map)
   [db [_ partition-id]]
-  (-> db (assoc-in [partition-id :data-items] (param {}))
-         (assoc-in [partition-id :data-order] (param []))))
+  (-> db (assoc-in [partition-id :data-items] {})
+         (assoc-in [partition-id :data-order] [])))
 
 (defn empty-unordered-partition!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -324,7 +320,7 @@
   ;
   ; @return (map)
   [db [_ partition-id]]
-  (-> db (assoc-in [partition-id :data-items] (param {}))))
+  (assoc-in db [partition-id :data-items] {}))
 
 (defn empty-partition!
   ; @param (namespaced keyword) partition-id
