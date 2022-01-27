@@ -710,7 +710,7 @@
   ; @param (map) view-props
   ; @param (keyword) subdirectory-id
   ; @param (map) subdirectory-props
-  ;  {:directory/alias (metamorphic-value)
+  ;  {:directory/alias (metamorphic-content)
   ;   :directory/content-size (B)
   ;   :directory/item-count (integer)}
   ;
@@ -777,7 +777,7 @@
   ; @param (map) view-props
   ; @param (keyword) file-id
   ; @param (map) file-props
-  ;  {:file/alias (metamorphic-value)
+  ;  {:file/alias (metamorphic-content)
   ;   :file/filesize (string)}
   ;
   ; @return (component)

@@ -804,6 +804,25 @@
    (let [handler-function (metamorphic-event->handler-function event-handler)]
         (re-frame/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-function %1 %2))))))
 
+(defn apply-fx-params
+  ; @param (function) handler-function
+  ; @param (* or vector) params
+  ;
+  ; @usage
+  ;  (apply-fx-params (fn [a] ...) "a")
+  ;
+  ; @usage
+  ;  (apply-fx-params (fn [a] ...) ["a"])
+  ;
+  ; @usage
+  ;  (apply-fx-params (fn [a b] ...) ["a" "b"])
+  ;
+  ; @return (*)
+  [handler-function params]
+  (if (vector?          params)
+      (apply            handler-function params)
+      (handler-function params)))
+
 (defn reg-handled-fx
   ; Kezelt mellékhatás-események (Handled side-effect events)
   ;
@@ -821,16 +840,17 @@
   ;
   ; @example
   ;  (a/reg-handled-fx
-  ;   :you-are-awesome!
+  ;   :my-event
   ;   (fn [a b]))
   ;
   ;  (a/reg-event-fx
-  ;   :happy-events
+  ;   :your-event
   ;   (fn [_ _]
-  ;       {:you-are-awesome! [a b]
-  ;        :dispatch [:you-are-awesome! a b]))
+  ;       {:my-event ["a" "b"]
+  ;        :my-event "a"
+  ;        :dispatch [:my-event "a" "b"]))
   [event-id handler-function]
-  (re-frame/reg-fx       event-id (fn [param-vector]   (apply handler-function param-vector)))
+  (re-frame/reg-fx       event-id (fn [params]         (apply-fx-params handler-function params)))
   (re-frame/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
 
 

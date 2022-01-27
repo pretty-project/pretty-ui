@@ -117,5 +117,9 @@
   ; @usage
   ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
   (fn [{:keys [db]} [_ extension-id selector-props]]
-      {:db (r load-selector! db extension-id selector-props)
-       :dispatch (engine/load-extension-event extension-id)}))
+      (let [selector-label (r subs/get-meta-item db extension-id :label)]
+           {:db (r load-selector! db extension-id selector-props)
+            :dispatch-n [; XXX#3237
+                         (if (r subs/route-handled? db extension-id)
+                             [:ui/set-title! selector-label])
+                         (engine/load-extension-event extension-id)]})))

@@ -561,8 +561,12 @@
             :dispatch-n [; XXX#5660
                          ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
                          [:environment/reg-keypress-listener! :item-lister/keypress-listener]
-                         [:ui/set-header-title! lister-label]
-                         [:ui/set-window-title! lister-label]
+                         ; XXX#3237
+                         ; Ha az item-lister plugin az "/@app-home/my-extension" útvonalon van elindítva,
+                         ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
+                         ; beállítja a header-title és window-title feliratokat.
+                         (if (r subs/route-handled? db extension-id item-namespace)
+                             [:ui/set-title! lister-label])
                          (engine/load-extension-event extension-id item-namespace)]})))
 
 (a/reg-event-fx

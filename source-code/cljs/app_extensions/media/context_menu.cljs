@@ -66,7 +66,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) subdirectory-props
-  ;  {:directory/alias (metamorphic-value)}
+  ;  {:directory/alias (metamorphic-content)}
   ;
   ; @return (component)
   [element-id {:directory/keys [alias]}]
@@ -111,7 +111,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) file-props
-  ;  {:file/alias (metamorphic-value)
+  ;  {:file/alias (metamorphic-content)
   ;   :file/filename (string)}
   ;
   ; @return (component)
@@ -192,7 +192,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) subdirectory-props
-  ;  {:directory/alias (metamorphic-value)}
+  ;  {:directory/alias (metamorphic-content)}
   ;
   ; @return (component)
   [element-id {:directory/keys [alias]}]
@@ -212,7 +212,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) file-props
-  ;  {:file/alias (metamorphic-value)
+  ;  {:file/alias (metamorphic-content)
   ;   :file/filename (string)}
   ;
   ; @return (component)
@@ -244,7 +244,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) subdirectory-props
-  ;  {:directory/alias (metamorphic-value)}
+  ;  {:directory/alias (metamorphic-content)}
   ;
   ; @return (component)
   [element-id {:directory/keys [alias]}]
@@ -264,7 +264,7 @@
   ;
   ; @param (keyword) element-id
   ; @param (map) file-props
-  ;  {:file/alias (metamorphic-value)
+  ;  {:file/alias (metamorphic-content)
   ;   :file/filename (string)}
   ;
   ; @return (component)

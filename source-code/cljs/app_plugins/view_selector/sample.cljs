@@ -1,7 +1,10 @@
 
 (ns app-plugins.view-selector.sample
     (:require [x.app-core.api :as a]
+              [x.app-ui.api   :as ui]
               [app-plugins.view-selector.api :as view-selector]))
+
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,47 +35,41 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Example A ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A view-selector plugint header és body komponensre felbontva is lehetséges használni
+
+
+
+;; -- Example B ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn my-header
+  [extension-id {:keys [view-id]}]
+  [:div "My header"])
+
 (defn my-body
-  [surface-id {:keys [view-id]}]
-  [:div "View-id: " view-id])
+  [extension-id {:keys [view-id]}]
+  (case view-id :my-view   [:div "My view"]
+                :your-view [:div "Your view"]
+                [:div "Ha nem adtad meg a {:default-view-id ...} tulajdonságot ..."]))
+
+(defn my-view
+  [surface-id]
+  [view-selector/view {:body   #'my-body
+                       :header #'my-header}])
 
 (a/reg-event-fx
   :my-extension.view-selector/render-selector!
-  [:ui/set-surface! {:view {:content    #'my-body
-                            :subscriber [:view-selector/get-view-props :my-extension]}}])
+  [:ui/set-surface! {:view #'my-view}])
 
 (a/reg-event-fx
   :my-extension.view-selector/load-selector!
-  {:dispatch-n [[:ui/set-header-title! "My extension"]
-                [:ui/set-window-title! "My extension"]
-                [:my-extension.view-selector/render-selector!]]})
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-your-view-props
-  [db _]
-  {:your-key "Your value"
-   :view-id  (r view-selector/get-selected-view-id db :your-extension)})
-
-(a/reg-sub :your-extension/get-your-view-props get-your-view-props)
-
-(defn your-body
-  [surface-id {:keys [view-id]}]
-  [:div "View-id: " view-id])
-
-(a/reg-event-fx
-  :your-extension.view-selector/render-selector!
-  [:ui/set-surface! {:view {:content    #'your-body
-                            :subscriber [:your-extension/get-your-view-props]}}])
-
-(a/reg-event-fx
-  :your-extension.view-selector/load-selector!
-  {:dispatch-n [[:ui/set-header-title! "My extension"]
-                [:ui/set-window-title! "My extension"]
-                [:your-extension.view-selector/render-selector!]]})
+  (fn [{:keys [db]} _]
+      ; A view-selector plugin az egyes útvonalak használatakor minden alkalommal újra betöltődik,
+      ; és betöltődéskor meghívja a [:my-extension.view-selector/load-selector! ...] eseményt.
+      ; A felesleges renderelések elkerülése érdekében ellenőrizd le, hogy már megtörtént-e
+      ; a renderelés!
+      (if-not (r ui/element-rendered? db :surface :my-extension.view-selector/view)
+              [:my-extension.view-selector/render-selector!])))

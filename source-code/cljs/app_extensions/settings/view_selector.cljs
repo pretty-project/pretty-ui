@@ -78,6 +78,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r ui/element-rendered? db :surface :settings.view-selector/view)
-              {:dispatch-n [[:ui/set-window-title! :settings]
-                            [:ui/set-header-title! :settings]
-                            [:settings.view-selector/render-selector!]]})))
+              [:settings.view-selector/render-selector!])))

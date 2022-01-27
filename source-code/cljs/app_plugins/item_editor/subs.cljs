@@ -287,7 +287,7 @@
   [db [_ extension-id item-namespace]]
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
-       
+
 (defn route-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

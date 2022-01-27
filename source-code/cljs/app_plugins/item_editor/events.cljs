@@ -399,8 +399,9 @@
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
-            :dispatch-n [[:ui/set-header-title! editor-label]
-                         [:ui/set-window-title! editor-label]
+            :dispatch-n [; XXX#3237
+                         (if (r subs/route-handled? db extension-id item-namespace)
+                             [:ui/set-title! editor-label])
                          [:item-editor/request-item!  extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)]})))
 

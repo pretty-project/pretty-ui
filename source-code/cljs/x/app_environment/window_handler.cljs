@@ -97,6 +97,9 @@
 
 ; @usage
 ;  [:environment/set-window-title! "My title"]
+;
+; @usage
+;  {:environment/set-window-title! "My title"}
 (a/reg-handled-fx :environment/set-window-title! set-window-title!)
 
 (defn reload-window!

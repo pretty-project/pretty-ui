@@ -30,9 +30,11 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ;  {:routed? (boolean)}
-  [_ selector-props]
-  (merge {:routed? true}
+  ;  {:label (metamorphic-content)
+  ;   :routed? (boolean)}
+  [extension-id selector-props]
+  (merge {:label   extension-id
+          :routed? true}
          (param selector-props)))
 
 
@@ -80,6 +82,7 @@
   ;  {:allowed-view-ids (keywords in vector)(opt)
   ;   :default-view-id (keyword)(opt)
   ;    Default: DEFAULT-VIEW-ID
+  ;   :label (metamorphic-content)(opt)
   ;   :routed? (boolean)(opt)
   ;    Default: true}
   ;

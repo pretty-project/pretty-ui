@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name value
-;  A (metamorphic-value) típust a get-metamorphic-value subscription
+;  A (metamorphic-content) típust a get-metamorphic-value subscription
 ;  {:value ...} tulajdonsága valósítja meg.
 ;  - Értéke lehet egy Re-Frame subscription függvény, amelynek kimenetét
 ;    kiértékeli metamorphic-value típusként.
@@ -119,7 +119,7 @@
   ; @param (keyword)(opt) value-id
   ; @param (map) value-props
   ;  {:suffix (string)(opt)
-  ;   :value (metamorphic-value)}
+  ;   :value (metamorphic-content)}
   ;
   ; @usage
   ;  (components/value {...})

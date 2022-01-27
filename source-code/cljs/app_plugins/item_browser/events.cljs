@@ -21,7 +21,7 @@
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
               [app-plugins.item-browser.subs    :as subs]
-              
+
               [app-plugins.item-lister.events]))
 
 
@@ -225,10 +225,9 @@
            {:db (r load-browser! db extension-id item-namespace browser-props)
             :dispatch-n [; XXX#5660
                          [:environment/reg-keypress-listener! :item-browser/keypress-listener]
+                         ; XXX#3237
                          (if (r subs/route-handled? db extension-id item-namespace)
-                             [:ui/set-header-title! browser-label])
-                         (if (r subs/route-handled? db extension-id item-namespace)
-                             [:ui/set-window-title! browser-label])
+                             [:ui/set-title! browser-label])
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)
                          ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is

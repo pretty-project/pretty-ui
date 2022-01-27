@@ -58,7 +58,7 @@
   ;
   ; @param (keyword) directory-id
   ; @param (map) directory-props
-  ;  {:directory/alias (metamorphic-value)
+  ;  {:directory/alias (metamorphic-content)
   ;   :directory/created-at (string)(opt)
   ;   :directory/description (string)(opt)
   ;   :directory/item-count (integer)(opt)
@@ -132,7 +132,7 @@
   ;
   ; @param (keyword) file-id
   ; @param (map) file-props
-  ;  {:file/alias (metamorphic-value)
+  ;  {:file/alias (metamorphic-content)
   ;   :file/description (string)(opt)
   ;   :file/filesize (B)(opt)
   ;   :file/modified-at (string)(opt)

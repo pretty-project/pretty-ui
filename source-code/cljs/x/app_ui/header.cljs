@@ -61,7 +61,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-header-title!
-  ; @param (metamorphic-value) header-title
+  ; @param (metamorphic-content) header-title
   ;
   ; @usage
   ;  (r ui/set-header-title! "My title")

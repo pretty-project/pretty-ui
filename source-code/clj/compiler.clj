@@ -1,6 +1,6 @@
 
 (ns compiler
-    (:require [hf.depstar                  :as hf]
+    (:require ;[hf.depstar                 :as hf]
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
               [server-fruits.io            :as io]
@@ -39,5 +39,5 @@
          (println "Compiling:" js-build)
          (shadow/release js-build))
 
-  (hf/jar java-config)
+  ;(hf/jar java-config)
   (a/->app-built))

@@ -13,6 +13,7 @@
 
 
 # x4.5.0
+- reg-handled-fx usage-ekhoz az fx formulát is odaírni {:my-side-effect-event "..."}
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 
 - A sync/send-request! esemény {:target-paths ...} tulajdonságára már nincs szükség a transit-handler
