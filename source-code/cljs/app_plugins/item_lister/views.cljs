@@ -782,7 +782,7 @@
   ; Az [:item-lister/select-all-items! ...] esemény működéséhez szükséges a Re-Frame adatbázisba
   ; írni a {:selectable-f ...} tulajdonság értékét!
   [components/stated {:base-props  body-props
-                      :component   [body-structure extension-id item-namespace body-props]
+                      :component   [body-structure extension-id item-namespace]
                       :destructor  [:item-lister/unload-lister! extension-id item-namespace]
                       :initializer [:db/set-item! [extension-id :item-lister/meta-items :selectable-f]
                                                   (:selectable-f body-props)]
@@ -795,6 +795,7 @@
 
 (defn view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) view-props

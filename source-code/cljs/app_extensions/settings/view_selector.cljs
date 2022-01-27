@@ -4,7 +4,7 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
+              [x.app-ui.api         :as ui]
               [app-plugins.view-selector.api                 :as view-selector]
               [app-extensions.settings.appearance-settings   :rename {body appearance-settings}]
               [app-extensions.settings.notification-settings :rename {body notification-settings}]
@@ -59,9 +59,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id {:body   {:content #'body   :subscriber [:view-selector/get-view-props :settings]}
-                                :header {:content #'header :subscriber [:view-selector/get-view-props :settings]}
-                                :min-width :m}])
+  [view-selector/view :settings {:body   #'body
+                                 :header #'header}])
 
 
 
@@ -77,6 +76,8 @@
 (a/reg-event-fx
   :settings.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-window-title! :settings]
-                [:ui/set-header-title! :settings]
-                [:settings.view-selector/render-selector!]]})
+  (fn [{:keys [db]} _]
+      (if-not (r ui/element-rendered? db :surface :settings.view-selector/view)
+              {:dispatch-n [[:ui/set-window-title! :settings]
+                            [:ui/set-header-title! :settings]
+                            [:settings.view-selector/render-selector!]]})))

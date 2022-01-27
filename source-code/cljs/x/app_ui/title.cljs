@@ -6,7 +6,7 @@
 ; Created: 2021.06.09
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.4.6
+; Compatibility: x4.5.7
 
 
 
@@ -47,6 +47,9 @@
 (a/reg-event-fx
   :ui/set-window-title!
   ; @param (metamorphic-value) window-title
+  ;
+  ; @usage
+  ;  [:ui/set-window-title! "My title"]
   (fn [{:keys [db]} [_ window-title]]
       (if-let [window-title (r get-window-title-value db window-title)]
               [:environment/set-window-title! window-title]

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.2.6
+; Version: v0.8.6
+; Compatibility: x4.5.7
 
 
 
@@ -61,14 +61,17 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-header-title!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @param (metamorphic-value) header-title
   ;
-  ; @param (metamorphic-content) title
+  ; @usage
+  ;  (r ui/set-header-title! "My title")
   ;
   ; @return (map)
   [db [_ header-title]]
   (assoc-in db (db/path :ui/header :header-title) header-title))
 
+; @usage
+;  [:ui/set-header-title! "My title"]
 (a/reg-event-db :ui/set-header-title! set-header-title!)
 
 
@@ -87,7 +90,7 @@
   [_ {:keys [at-home?]}]
   [elements/button ::apps-icon-button
                    {:badge-color (if-not at-home? :secondary)
-                    :disabled?   (param at-home?)
+                    :disabled?   (param  at-home?)
                     :on-click    [:router/go-home!]
                     :preset      :apps-icon-button}])
                    ;:icon        :dashboard

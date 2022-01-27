@@ -100,7 +100,7 @@
       (if (r subs/route-handled? db extension-id)
           (let [target-route-string (engine/extended-route-string extension-id view-id)]
                [:router/go-to! target-route-string])
-          [:view-selector/load-selector! extension-id {:viewid view-id}])))
+          [:view-selector/load-selector! extension-id {:view-id view-id}])))
 
 (a/reg-event-fx
   :view-selector/load-selector!
@@ -117,4 +117,5 @@
   ; @usage
   ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
   (fn [{:keys [db]} [_ extension-id selector-props]]
-      {:db (r load-selector! db extension-id selector-props)}))
+      {:db (r load-selector! db extension-id selector-props)
+       :dispatch (engine/load-extension-event extension-id)}))

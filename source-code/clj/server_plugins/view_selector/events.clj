@@ -57,7 +57,7 @@
   ;  {:routed? (boolean)}
   [_ [_ extension-id {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/route-id extension-id)
-                                  {:route-template (engine/route-template       extension-id)
+                                  {:route-template (engine/route-template         extension-id)
                                    :client-event   [:view-selector/load-selector! extension-id]
                                    :restricted?    true}]))
 
@@ -70,7 +70,7 @@
   [_ [_ extension-id {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/extended-route-id extension-id)
                                   {:route-template (engine/extended-route-template extension-id)
-                                   :client-event   [:view-selector/load-selector! extension-id]
+                                   :client-event   [:view-selector/load-selector!  extension-id]
                                    :restricted?    true}]))
 
 (a/reg-event-fx
