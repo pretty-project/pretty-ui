@@ -297,6 +297,16 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (r router/route-exists? db (engine/route-id extension-id item-namespace)))
+  
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r route-handled? db extension-id item-namespace))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1043,6 +1043,8 @@
   [subscriber]
   (-> subscriber re-frame/subscribe deref))
 
+(def state subscribed)
+
 
 
 ;; -- Eyecandy functions ------------------------------------------------------

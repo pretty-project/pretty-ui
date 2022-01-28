@@ -120,6 +120,6 @@
       (let [selector-label (r subs/get-meta-item db extension-id :label)]
            {:db (r load-selector! db extension-id selector-props)
             :dispatch-n [; XXX#3237
-                         (if (r subs/route-handled? db extension-id)
+                         (if (r subs/set-title? db extension-id)
                              [:ui/set-title! selector-label])
                          (engine/load-extension-event extension-id)]})))

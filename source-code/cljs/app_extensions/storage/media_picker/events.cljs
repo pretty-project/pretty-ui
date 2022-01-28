@@ -15,14 +15,14 @@
 
 (a/reg-event-fx
   :storage.media-picker/load-picker!
-  [a/debug!]
   ; @param (keyword) picker-id
   ; @param (map) (picker-props)
   (fn [{:keys [db]} event-vector]
       (let [picker-id    (a/event-vector->second-id   event-vector)
             picker-props (a/event-vector->first-props event-vector)]
-           (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
-                   [:storage.media-picker/render! picker-id picker-props]))))
+           {:db (assoc-in db [:storage :item-lister/meta-items :select-mode?] true)
+            :dispatch-if [(not (r ui/element-rendered? db :popups :storage.media-picker/view))
+                          [:storage.media-picker/render-picker! picker-id picker-props]]})))
 
 
 

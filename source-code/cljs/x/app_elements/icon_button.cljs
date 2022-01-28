@@ -175,4 +175,4 @@
    (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
-                     [button         button-id button-props]))))
+                     [icon-button    button-id button-props]))))

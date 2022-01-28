@@ -382,6 +382,16 @@
   [db [_ extension-id item-namespace]]
   (r router/route-exists? db (engine/route-id extension-id item-namespace)))
 
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r route-handled? db extension-id item-namespace))
+
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -429,6 +439,20 @@
 
 (a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
 
+(defn get-selection-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  {:all-items-selected? (r all-items-selected? db extension-id item-namespace)
+   :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
+   :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)})
+
+(a/reg-sub :item-lister/get-selection-props get-selection-props)
+
 (defn get-indicator-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -443,6 +467,20 @@
    :no-items-to-show?     (r no-items-to-show?     db extension-id)})
 
 (a/reg-sub :item-lister/get-indicator-props get-indicator-props)
+
+(defn get-menu-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  {:lister-disabled?  (r lister-disabled?            db extension-id item-namespace)
+   :no-items-to-show? (r no-items-to-show?           db extension-id)
+   :viewport-small?   (r environment/viewport-small? db)})
+
+(a/reg-sub :item-lister/get-menu-props get-menu-props)
 
 (defn get-header-props
   ; @param (keyword) extension-id
@@ -471,11 +509,7 @@
          :menu-mode?       true}
         ; If select-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :select-mode?)
-        {:select-mode? true
-         :all-items-selected? (r all-items-selected? db extension-id item-namespace)
-         :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-         :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)
-         :x (println "{:select-mode? true}" (.now js/performance))}
+        {:select-mode? true}
         ; If search-mode is enabled ...
         (r get-meta-item db extension-id item-namespace :search-mode?)
         {:search-mode? true

@@ -400,7 +400,7 @@
       (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
            {:db (r load-editor! db extension-id item-namespace editor-props)
             :dispatch-n [; XXX#3237
-                         (if (r subs/route-handled? db extension-id item-namespace)
+                         (if (r subs/set-title? db extension-id item-namespace)
                              [:ui/set-title! editor-label])
                          [:item-editor/request-item!  extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)]})))

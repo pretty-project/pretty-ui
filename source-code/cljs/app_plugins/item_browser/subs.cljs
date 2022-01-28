@@ -135,6 +135,16 @@
   (or (r router/route-exists? db (engine/route-id          extension-id))
       (r router/route-exists? db (engine/extended-route-id extension-id item-namespace))))
 
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r route-handled? db extension-id item-namespace))
+
 (defn get-header-props
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -144,10 +154,12 @@
   ;
   ; @return (map)
   ;  {:at-home? (boolean)
+  ;   :error-mode? (boolean)
   ;   :item-path (maps in vector)}
   [db [_ extension-id item-namespace]]
-  {:at-home?  (r at-home?      db extension-id item-namespace)
-   :item-path (r get-item-path db extension-id item-namespace)})
+  {:at-home?    (r at-home?      db extension-id item-namespace)
+   :item-path   (r get-item-path db extension-id item-namespace)
+   :error-mode? (r app-plugins.item-lister.subs/get-meta-item db extension-id item-namespace :error-mode?)})
 
 ; @usage
 ;  [:item-browser/get-header-props :my-extension :my-type]

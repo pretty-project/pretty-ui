@@ -147,7 +147,6 @@
   ;
   ; @usage
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
-  [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
       ; - Az [:item-browser/browse-item! ...] esemény nem vizsglja, hogy az item-browser plugin
       ;   útvonala létezik-e.
@@ -190,8 +189,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [db (r receive-item! db extension-id item-namespace server-response)]
            (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]
-                   {:db db :dispatch-n [[:ui/set-header-title! item-label]
-                                        [:ui/set-window-title! item-label]]}
+                   {:db db :dispatch-if [(r subs/set-title? db extension-id item-namespace)
+                                         [:ui/set-title! item-label]]}
                    {:db db}))))
 
 (a/reg-event-fx
@@ -226,7 +225,7 @@
             :dispatch-n [; XXX#5660
                          [:environment/reg-keypress-listener! :item-browser/keypress-listener]
                          ; XXX#3237
-                         (if (r subs/route-handled? db extension-id item-namespace)
+                         (if (r subs/set-title? db extension-id item-namespace)
                              [:ui/set-title! browser-label])
                          [:item-browser/request-item! extension-id item-namespace]
                          (engine/load-extension-event extension-id item-namespace)

@@ -3,22 +3,8 @@
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
               [x.app-ui.api     :as ui]
-              [app-plugins.item-browser.api :as item-browser]))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn store-creator-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) creator-id
-  ; @param (map) creator-props
-  ;
-  ; @return (map)
-  [db [_ _ creator-props]]
-  (assoc-in db [:storage :directory-creator/meta-items] creator-props))
+              [app-extensions.storage.media-browser.subs :as subs]
+              [app-plugins.item-browser.api              :as item-browser]))
 
 
 
@@ -42,7 +28,9 @@
   :storage.media-lister/->item-clicked
   (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          [:storage.media-browser/->file-clicked item-dex item-props])))
+                                          (if (r subs/media-browser-mode? db)
+                                              [:storage.media-browser/->file-clicked item-dex item-props]
+                                              [:item-lister/toggle-item-selection! :storage :media item-dex]))))
 
 (a/reg-event-fx
   :storage.media-browser/->file-clicked
@@ -63,6 +51,7 @@
   :storage.media-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
-              [:storage.media-browser/render-browser!])))
-      ;[:storage.media-picker/load-browser!]))
+      (if (r subs/media-browser-mode? db)
+          (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
+                  [:storage.media-browser/render-browser!])
+          [:storage.media-picker/load-picker!])))

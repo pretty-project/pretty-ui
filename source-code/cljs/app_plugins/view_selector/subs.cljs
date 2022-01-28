@@ -56,6 +56,15 @@
   (or (r router/route-exists? db (engine/route-id          extension-id))
       (r router/route-exists? db (engine/extended-route-id extension-id))))
 
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (boolean)
+  [db [_ extension-id]]
+  (r route-handled? db extension-id))
+
 (defn get-derived-view-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

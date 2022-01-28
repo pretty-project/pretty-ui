@@ -106,6 +106,7 @@
 (def dispatch-tick                    event-handler/dispatch-tick)
 (def subscribe                        event-handler/subscribe)
 (def subscribed                       event-handler/subscribed)
+(def state                            event-handler/state)
 (def r                                event-handler/r)
 
 ; x.server-core.lifecycle-handler

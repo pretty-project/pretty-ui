@@ -52,7 +52,6 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (println "toggle-select-mode!" (.now js/performance))
   (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
              (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
 
@@ -168,8 +167,6 @@
 (a/reg-event-db :item-lister/unselect-all-items! unselect-all-items!)
 
 (defn toggle-item-selection!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (integer) item-dex
@@ -459,7 +456,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
           ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
@@ -565,7 +561,7 @@
                          ; Ha az item-lister plugin az "/@app-home/my-extension" útvonalon van elindítva,
                          ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
                          ; beállítja a header-title és window-title feliratokat.
-                         (if (r subs/route-handled? db extension-id item-namespace)
+                         (if (r subs/set-title? db extension-id item-namespace)
                              [:ui/set-title! lister-label])
                          (engine/load-extension-event extension-id item-namespace)]})))
 

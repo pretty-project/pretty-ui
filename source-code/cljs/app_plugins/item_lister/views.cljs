@@ -415,9 +415,10 @@
   ;  {:select-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [select-mode?] :as header-props}]
-  [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                    [select-mode-header-structure extension-id item-namespace header-props]])
+  [extension-id item-namespace {:keys [select-mode?]}])
+  ;(let [selection-props (s [:item-lister/get-selection-props extension-id item-namespace])]
+  ;     [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
+  ;                                       [select-mode-header-structure extension-id item-namespace selection-props]]}])
 
 (defn menu-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

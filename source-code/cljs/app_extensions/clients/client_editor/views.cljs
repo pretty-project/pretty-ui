@@ -176,7 +176,7 @@
 
        ; TEMP
        [:div {:style {:width "100%"}}
-             [storage/media-picker {:label "Borítóképek" :multiple? true}]]])
+             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left}]]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

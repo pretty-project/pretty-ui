@@ -51,18 +51,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;  {:at-home? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)}
+  ;  {:at-home? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-browser/go-up-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [at-home? disabled?]}]
-  [elements/button ::go-up-button
-                   {:disabled? (or at-home? disabled?)
-                    :on-click  [:item-browser/go-up! extension-id item-namespace]
-                    :preset    :back-icon-button}])
+  [extension-id item-namespace]
+  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
+       [elements/button ::go-up-button
+                        {:disabled? (:at-home? s)
+                         :on-click  [:item-browser/go-up! extension-id item-namespace]
+                         :preset    :back-icon-button}]))
 
 
 
@@ -144,7 +144,7 @@
                           :component  [item-lister/header             extension-id item-namespace]
                           :subscriber [:item-browser/get-header-props extension-id item-namespace]}])
 
-    
+
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
