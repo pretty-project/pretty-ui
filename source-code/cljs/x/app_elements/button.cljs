@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.16
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.4.8
+; Version: v0.9.0
+; Compatibility: x4.5.7
 
 
 
@@ -122,6 +122,20 @@
                  [button-body                 button-id button-props]
                  [engine/element-info-tooltip button-id button-props]])
 
+(defn- stated-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;
+  ; @return (component)
+  [button-id button-props]
+  [engine/stated-element button-id
+                         {:render-f      #'button
+                          :element-props button-props
+                          :destructor    [:elements/destruct-clickable! button-id]
+                          :initializer   [:elements/init-clickable!     button-id]}])
+
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
@@ -139,7 +153,6 @@
   ;    Only w/ {:variant :transparent}
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
@@ -184,17 +197,14 @@
   ;  [elements/button :my-button {...}]
   ;
   ; @usage
-  ;  [elements/button {:auto-focus? true :keypress {:key-code 13} :on-click [:do-something!]}]
+  ;  [elements/button {:keypress {:key-code 13} :on-click [:do-something!]}]
   ;
   ; @return (hiccup)
   ([button-props]
    [element (a/id) button-props])
 
-  ([button-id button-props]
+  ([button-id {:keys [keypress] :as button-props}]
    (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
-        [engine/stated-element button-id
-                               {:render-f      #'button
-                                :element-props button-props
-                                :destructor    [:elements/destruct-clickable! button-id]
-                                :initializer   [:elements/init-clickable!     button-id]}])))
+        (if keypress [stated-element button-id button-props]
+                     [button         button-id button-props]))))

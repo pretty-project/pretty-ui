@@ -146,7 +146,6 @@
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none

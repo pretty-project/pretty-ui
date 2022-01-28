@@ -87,7 +87,6 @@
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none

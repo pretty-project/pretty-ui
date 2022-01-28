@@ -224,7 +224,6 @@
   ;    Default: true
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :end-adornments (maps in vector)(opt)
   ;    [{:icon (keyword)
   ;      :icon-family (keyword)(opt)

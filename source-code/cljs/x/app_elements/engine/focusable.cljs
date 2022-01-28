@@ -47,7 +47,7 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (let [target-id (targetable/element-id->target-id element-id)]
-           [:environment/focus-element! target-id])))
+           {:environment/focus-element! target-id})))
 
 (a/reg-event-fx
   :elements/blur-element!
@@ -56,4 +56,4 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (let [target-id (targetable/element-id->target-id element-id)]
-           [:environment/blur-element! target-id])))
+           {:environment/blur-element! target-id})))

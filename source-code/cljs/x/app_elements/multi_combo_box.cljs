@@ -232,7 +232,6 @@
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :emptiable? (boolean)(opt)
   ;    Default: true
   ;   :extendable? (boolean)(opt)

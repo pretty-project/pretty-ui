@@ -1,4 +1,7 @@
 
+# x4.5.7
+- A stated elemek {:disabler [...]} tulajdonsága ezentúl nem elérhető
+
 # x4.5.6
 - A [components/content ...] komponens már nem kezeli a {:content-props ...} és {:subscriber ...}
   tulajdonságokat!

@@ -107,29 +107,20 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :elements/->element-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ element-id]]
-      (if-let [on-click-event (r element/get-element-prop db element-id :on-click)]
-              {:dispatch on-click-event})))
-
-(a/reg-event-fx
   :elements/->key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   (fn [_ [_ element-id]]
-      {:dispatch-if [(targetable/element-id->target-enabled? element-id)
-                     [:elements/focus-element!               element-id]]}))
+      (if (targetable/element-id->target-enabled? element-id)
+          [:elements/focus-element! element-id])))
 
 (a/reg-event-fx
   :elements/->key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
-  (fn [_ [_ element-id]]
-      {:dispatch    [:elements/blur-element!                 element-id]
+  (fn [{:keys [db]} [_ element-id]]
+      {:dispatch [:elements/blur-element! element-id]
        :dispatch-if [(targetable/element-id->target-enabled? element-id)
-                     [:elements/->element-clicked            element-id]]}))
+                     (r element/get-element-prop db element-id :on-click)]}))

@@ -109,7 +109,6 @@
   ;   :default-value (boolean)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :disabler (subscription-vector)(opt)
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s

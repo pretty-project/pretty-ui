@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.10
 ; Description:
-; Version: v2.5.4
-; Compatibility: x4.5.5
+; Version: v2.6.0
+; Compatibility: x4.5.7
 
 
 
@@ -16,10 +16,8 @@
 (ns x.app-components.stated
     (:require [app-fruits.reagent  :as reagent]
               [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.map      :as map :refer [dissoc-in]]
-              [mid-fruits.vector   :as vector]
+              [mid-fruits.map      :refer [dissoc-in]]
               [x.app-core.api      :as a :refer [r]]
-              [x.app-db.api        :as db]
               [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
               [x.app-components.transmitter :rename {component transmitter}]))
@@ -63,13 +61,6 @@
 ;
 ; @name modifier
 ;  XXX#0001
-;
-; @name disabler
-;  A {:disabler [...]} tulajdonságként átadott Re-Frame subscription vektor
-;  használatával a stated komponens feliratkozik a subscription visszatérési
-;  értékére, és azt boolean típusként kiértékelve asszociálja a komponens
-;  {:base-props {...}} tulajdonságként átadott térképébe. Így a {:disabled? ...}
-;  tulajdonság az XXX#0069 logika szerint átadódik a komponensnek.
 ;
 ; @name subscriber
 ;  XXX#7081
@@ -336,42 +327,6 @@
   (if (:subscriber context-props) [subscriber     component-id context-props]
                                   [non-subscriber component-id context-props]))
 
-(defn- non-disabler
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;
-  ; @return (component)
-  [component-id context-props]
-  [subscribe-controller component-id context-props])
-
-(defn- disabler
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:disabler (subscription-vector)}
-  ;
-  ; @return (component)
-  [component-id {:keys [disabler] :as context-props}]
-  (let [disabled? (a/subscribe disabler)]
-       (fn [_ context-props]
-           (let [context-props (assoc-in context-props [:base-props :disabled?] (boolean @disabled?))]
-                [subscribe-controller component-id context-props]))))
-
-(defn- disable-controller
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:disabler (subscription-vector)}
-  ;
-  ; @return (component)
-  [component-id context-props]
-  (if (:disabler context-props) [disabler     component-id context-props]
-                                [non-disabler component-id context-props]))
-
 (defn- lifecycle-controller
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -385,7 +340,7 @@
                            ; WARNING! DEPRECATED! DO NOT USE!
                            ;:component-did-update   #(a/dispatch [:components/->component-updated   component-id context-props mount-id])
                             :component-will-unmount #(a/dispatch [:components/->component-unmounted component-id context-props mount-id])
-                            :reagent-render          (fn [_ context-props] [disable-controller component-id context-props])})))
+                            :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 
 (defn component
   ; @param (keyword)(opt) component-id
@@ -397,7 +352,6 @@
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
   ;    útvonalon tárolt értéket.
-  ;   :disabler (subscription-vector)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)
   ;   :initial-props-path (item-path vector)(opt)
@@ -424,12 +378,6 @@
   ;  (defn my-component [component-id component-props])
   ;  [components/stated {:component  [my-component :my-component]
   ;                      :subscriber [:get-my-component-props]}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id {:keys [disabled?] :as component-props}])
-  ;  [components/stated :my-component
-  ;                     {:render-f  #'my-component
-  ;                      :disabler  [:my-component-disabled?]}]
   ;
   ; @return (component)
   ([context-props]

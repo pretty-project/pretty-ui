@@ -76,7 +76,6 @@
   ; @param (map) context-props
   ;  {:element-props (map)
   ;    {:disabler (subscription-vector)(opt)}
-  ;   :destructor (metamorphic-event)(opt)
   ;   :initializer (metamorphic-event)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)
@@ -85,13 +84,11 @@
   ; @return (component)
   [element-id {:keys [destructor element-props initial-props initializer modifier render-f subscriber]
                :as context-props}]
-  (let [disabler           (get                          element-props :disabler)
-        initial-props      (element-props->initial-props element-props)
+  (let [initial-props      (element-props->initial-props element-props)
         element-props-path (db/path :elements/primary element-id)]
        [components/stated element-id
                           {:base-props         element-props
                            :destructor         destructor
-                           :disabler           disabler
                            :initial-props      initial-props
                            :initial-props-path element-props-path
                            :initializer        initializer
