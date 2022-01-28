@@ -69,9 +69,9 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id body-props]
-  [item-browser/body :storage :media {:list-element #'app-extensions.storage.media-browser.views/media-item
-                                      :selectable-f (fn [{:keys [mime-type]}] (not= mime-type "storage/directory"))}])
+  [picker-id body-props])
+  ;[item-browser/body :storage :media {:list-element #'app-extensions.storage.media-browser.views/media-item
+  ;                                    :selectable-f (fn [{:keys [mime-type]}] (not= mime-type "storage/directory"))])
 
 
 

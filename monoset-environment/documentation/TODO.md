@@ -13,6 +13,8 @@
 
 
 # x4.5.0
+- db/appy!-t átnevezni db/apply-item!-re
+
 - reg-handled-fx usage-ekhoz az fx formulát is odaírni {:my-side-effect-event "..."}
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 

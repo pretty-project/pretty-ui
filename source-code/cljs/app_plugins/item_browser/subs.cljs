@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.subs
-    (:require [mid-fruits.candy   :refer [param return]]
+    (:require [app-plugins.item-lister.subs]
+              [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a :refer [r]]
               [x.app-router.api   :as router]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-lister.api     :as item-lister]
               [mid-plugins.item-browser.subs   :as subs]))
 
 
@@ -146,11 +146,10 @@
   (r route-handled? db extension-id item-namespace))
 
 (defn get-header-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-browser/get-header-props :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:at-home? (boolean)
@@ -161,38 +160,32 @@
    :item-path   (r get-item-path db extension-id item-namespace)
    :error-mode? (r app-plugins.item-lister.subs/get-meta-item db extension-id item-namespace :error-mode?)})
 
-; @usage
-;  [:item-browser/get-header-props :my-extension :my-type]
 (a/reg-sub :item-browser/get-header-props get-header-props)
 
 (defn get-body-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-browser/get-body-props :my-extension :my-type)
   ;
   ; @return (map)
   ;  {:at-home? (boolean)
   ;   :item-path (maps in vector)}
-  [db [_ extension-id item-namespace]]
-  (r item-lister/get-body-props extension-id item-namespace))
+  [db [_ extension-id item-namespace]])
+  ;(r item-lister/get-body-props extension-id item-namespace))
 
-; @usage
-;  [:item-browser/get-body-props :my-extension :my-type]
 (a/reg-sub :item-browser/get-body-props get-header-props)
 
 (defn get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @usage
-  ;  (r item-browser/get-view-props :my-extension :my-type)
-  ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (r item-lister/get-view-props db extension-id item-namespace))
+  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
+          {:error-mode? true}
+          {:description (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace)}))
 
-; @usage
-;  [:item-browser/get-view-props :my-extension :my-type]
 (a/reg-sub :item-browser/get-view-props get-view-props)

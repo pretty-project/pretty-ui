@@ -1,7 +1,7 @@
 
 (ns app-extensions.storage.media-picker.subs
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-plugins.item-browser.api :as item-browser]))
+    (:require [app-plugins.item-browser.subs]
+              [x.app-core.api :as a :refer [r]]))
 
 
 
@@ -18,7 +18,7 @@
 (defn get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ picker-id]]
-  (r item-browser/get-header-props db :storage :media))
+  (r app-plugins.item-browser.subs/get-header-props db :storage :media))
 
 (a/reg-sub :storage.media-picker/get-header-props get-header-props)
 

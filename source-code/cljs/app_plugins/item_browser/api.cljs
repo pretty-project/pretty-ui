@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.2.4
-; Compatibility: x4.5.6
+; Compatibility: x4.5.7
 
 
 
@@ -42,9 +42,6 @@
 
 ; app-plugins.item-browser.subs
 (def get-current-item-id subs/get-current-item-id)
-(def get-body-props      subs/get-body-props)
-(def get-header-props    subs/get-header-props)
-(def get-view-props      subs/get-view-props)
 
 ; app-plugins.item-browser.views
 (def go-home-button views/go-home-button)

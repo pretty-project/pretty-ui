@@ -717,7 +717,8 @@
   ; @return (map)
   [context]
   (let [event-vector (context->event-vector context)]
-       (println event-vector)
+       #?(:cljs (let [timestamp (-> js/performance .now mid-fruits.time/ms->s mid-fruits.format/decimals)]
+                     (println timestamp "\n" event-vector)))
        (return  context)))
 
 ; @constant (?)

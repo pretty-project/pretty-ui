@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.5.5
+; Compatibility: x4.5.7
 
 
 
@@ -35,7 +35,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [item-browser/go-home-button :my-extension :my-type {...}]
+  ;  [item-browser/go-home-button :my-extension :my-type]
   ;
   ; @return (component)
   [extension-id item-namespace]
@@ -43,7 +43,7 @@
        [elements/button ::go-home-button
                         ; A go-home-button gomb az item-lister plugin {:error-mode? true}
                         ; állapotában is használható!
-                        {:disabled? (and (:at-home? s) (not (:error-mode? s)))
+                        {:disabled? (and (:at-home? s) (-> :error-mode? s not))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
 
@@ -52,7 +52,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [item-browser/go-up-button :my-extension :my-type {...}]
+  ;  [item-browser/go-up-button :my-extension :my-type]
   ;
   ; @return (component)
   [extension-id item-namespace]
@@ -74,7 +74,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id item-namespace]
+  [_ _]
   [:<> [elements/horizontal-separator {:size :xxl}]
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
@@ -89,46 +89,37 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;  {:new-item-options (vector)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [new-item-options] :as header-props}]
-  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
-       [:div.item-lister--header--menu-bar
-         [:div.item-lister--header--menu-item-group
-           [go-up-button                    extension-id item-namespace]
-           [go-home-button                  extension-id item-namespace]
-           (if new-item-options [item-lister/new-item-select extension-id item-namespace header-props]
-                                [item-lister/new-item-button extension-id item-namespace])
-           [item-lister/sort-items-button          extension-id item-namespace header-props]
-           [item-lister/toggle-select-mode-button  extension-id item-namespace header-props]
-           [item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]]
-         [:div.item-lister--header--menu-item-group
-           [item-lister/search-block extension-id item-namespace header-props]]]))
+  [extension-id item-namespace]
+  [:div.item-lister--header--menu-bar
+    [:div.item-lister--header--menu-item-group
+      [go-up-button                    extension-id item-namespace]
+      [go-home-button                  extension-id item-namespace]
+      [item-lister/new-item-block             extension-id item-namespace]
+      [item-lister/sort-items-button          extension-id item-namespace]
+      [item-lister/toggle-select-mode-button  extension-id item-namespace]
+      [item-lister/toggle-reorder-mode-button extension-id item-namespace]]
+    [:div.item-lister--header--menu-item-group
+      [item-lister/search-block extension-id item-namespace]]])
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;  {:menu-mode? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [menu-mode?] :as header-props}]
-  [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
-                                    [menu-mode-header-structure extension-id item-namespace header-props]])
+  [extension-id item-namespace]
+  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? s)}
+                                         [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item-options (vector)(opt)
-  ;   :selectable? (boolean)(opt)
-  ;    Default: false
-  ;   :sortable? (boolean)(opt)
-  ;    Default: false}
+  ;  {:new-item-options (vector)(opt)}
   ;
   ; @example
   ;  [item-browser/header :my-extension :my-type]
@@ -138,9 +129,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace header-props]
-  [components/subscriber {:base-props (assoc header-props :menu #'menu-mode-header)
-                          :component  [item-lister/header             extension-id item-namespace]
-                          :subscriber [:item-browser/get-header-props extension-id item-namespace]}])
+  (let [header-props (assoc header-props :menu #'menu-mode-header)]
+       [item-lister/header extension-id item-namespace]))
 
 
 

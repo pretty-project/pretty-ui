@@ -407,17 +407,17 @@
 (a/reg-event-db :playground/initialize! initialize!)
 
 (a/reg-event-fx
-  :playground/render!
+  :playground.view-selector/render-selector!_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! ::view {:view        {:content #'view :subscriber [::get-view-props]}
                             :initializer [:playground/initialize!]}])
 
 (a/reg-event-fx
-  :playground/load!
+  :playground.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/set-header-title! :playground]
                 [:ui/set-window-title! :playground]
-                [:playground/render!]]})
+                [:playground.view-selector/render-selector!]]})
 
 (a/reg-lifecycles
   ::lifecycles

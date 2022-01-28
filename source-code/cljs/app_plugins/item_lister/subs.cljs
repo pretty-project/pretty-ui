@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.0
-; Compatibility: x4.5.6
+; Version: v0.8.0
+; Compatibility: x4.5.7
 
 
 
@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-lister.subs
     (:require [mid-fruits.candy      :refer [param return]]
+              [mid-fruits.logical    :refer [nor]]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
@@ -75,21 +76,6 @@
   ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
   (let [items-received? (r get-meta-item db extension-id item-namespace :items-received?)]
        (boolean items-received?)))
-
-(defn lister-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (or ; Azért szükséges vizsgálni az {:items-received? ...} tulajdonság értékét, hogy
-      ; a listázó {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-      ; a szinkronizálás!
-           (r get-meta-item   db extension-id item-namespace :error-mode?)
-           (r synchronizing?  db extension-id item-namespace)
-      (not (r items-received? db extension-id item-namespace))))
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -260,6 +246,17 @@
   (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
        (vector/nonempty? selected-item-dexes)))
 
+(defn no-item-selected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
+       (-> selected-item-dexes vector/nonempty? not)))
+
 (defn all-items-downloaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -416,10 +413,8 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
   (if-let [selectable-f (r get-meta-item db extension-id item-namespace :selectable-f)]
-          (or (r lister-disabled? db extension-id item-namespace)
-              (let [item (get-in db [extension-id :item-lister/data-items item-dex])]
-                   (-> item selectable-f not)))
-          (r lister-disabled? db extension-id item-namespace)))
+          (let [item (get-in db [extension-id :item-lister/data-items item-dex])]
+               (-> item selectable-f not))))
 
 (defn get-checkbox-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -439,7 +434,7 @@
 
 (a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
 
-(defn get-selection-props
+(defn get-select-mode-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -449,9 +444,54 @@
   [db [_ extension-id item-namespace]]
   {:all-items-selected? (r all-items-selected? db extension-id item-namespace)
    :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-   :lister-disabled?    (r lister-disabled?    db extension-id item-namespace)})
+   :no-item-selected?   (r no-item-selected?   db extension-id item-namespace)
+   :select-mode?        (r get-meta-item db extension-id item-namespace :select-mode?)})
 
-(a/reg-sub :item-lister/get-selection-props get-selection-props)
+(a/reg-sub :item-lister/get-select-mode-props get-select-mode-props)
+
+(defn get-reorder-mode-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  {:reorder-mode?  (r get-meta-item db extension-id item-namespace :reorder-mode?)
+   :order-changed? false})
+
+(a/reg-sub :item-lister/get-reorder-mode-props get-reorder-mode-props)
+
+(defn get-search-mode-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  {:search-mode? (r get-meta-item db extension-id item-namespace :search-mode?)})
+
+(a/reg-sub :item-lister/get-search-mode-props get-search-mode-props)
+
+(defn get-menu-mode-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [reorder-mode? (r get-meta-item db extension-id item-namespace :reorder-mode?)
+        search-mode?  (r get-meta-item db extension-id item-namespace :search-mode?)]
+       {:menu-mode?        (nor reorder-mode? search-mode?)
+        :new-item-options  (r get-meta-item               db extension-id item-namespace :new-item-options)
+        :no-items-to-show? (r no-items-to-show?           db extension-id)
+        :selectable?       (r get-meta-item               db extension-id item-namespace :selectable?)
+        :sortable?         (r get-meta-item               db extension-id item-namespace :sortable?)
+        :viewport-small?   (r environment/viewport-small? db)}))
+
+(a/reg-sub :item-lister/get-menu-mode-props get-menu-mode-props)
 
 (defn get-indicator-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -468,7 +508,7 @@
 
 (a/reg-sub :item-lister/get-indicator-props get-indicator-props)
 
-(defn get-menu-props
+(defn get-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -476,93 +516,33 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  {:lister-disabled?  (r lister-disabled?            db extension-id item-namespace)
-   :no-items-to-show? (r no-items-to-show?           db extension-id)
-   :viewport-small?   (r environment/viewport-small? db)})
+  {:menu (r get-meta-item db extension-id item-namespace :menu)})
 
-(a/reg-sub :item-lister/get-menu-props get-menu-props)
-
-(defn get-header-props
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-lister/get-header-props :my-extension :my-type)
-  ;
-  ; @return (map)
-  ;  {:all-items-selected? (boolean)
-  ;   :any-item-selected? (boolean)
-  ;   :lister-disabled? (boolean)
-  ;   :error-mode? (boolean)
-  ;   :menu-mode? (boolean)
-  ;   :no-items-to-show? (boolean)
-  ;   :order-changed? (boolean)
-  ;   :reorder-mode? (boolean)
-  ;   :search-mode? (boolean)
-  ;   :select-mode? (boolean)
-  ;   :viewport-small? (boolean)}
-  [db [_ extension-id item-namespace]]
-  (cond ; If error-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :error-mode?)
-        {:lister-disabled? true
-         :error-mode?      true
-         :menu-mode?       true}
-        ; If select-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :select-mode?)
-        {:select-mode? true}
-        ; If search-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :search-mode?)
-        {:search-mode? true
-         :lister-disabled? (r lister-disabled? db extension-id item-namespace)}
-        ; If reorder-mode is enabled ...
-        (r get-meta-item db extension-id item-namespace :reorder-mode?)
-        {:reorder-mode?  true
-         :order-changed? false
-         :lister-disabled? (r lister-disabled? db extension-id item-namespace)}
-        ; Use menu-mode as default ...
-        :default
-        {:menu-mode? true
-         :lister-disabled?  (r lister-disabled?            db extension-id item-namespace)
-         :no-items-to-show? (r no-items-to-show?           db extension-id)
-         :viewport-small?   (r environment/viewport-small? db)}))
-
-; @usage
-;  [:item-lister/get-header-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-header-props get-header-props)
 
 (defn get-body-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @usage
-  ;  (r item-lister/get-body-props :my-extension :my-type)
-  ;
   ; @return (map)
-  ;  {:error-mode? (boolean)
-  ;   :reorder-mode? (boolean)}
   [db [_ extension-id item-namespace]]
-  (cond (r get-meta-item db extension-id item-namespace :error-mode?)   {:error-mode?   true}
-        (r get-meta-item db extension-id item-namespace :reorder-mode?) {:reorder-mode? true}))
+  {:error-mode?  (r get-meta-item db extension-id item-namespace :error-mode?)
+   :list-element (r get-meta-item db extension-id item-namespace :list-element)})
 
-; @usage
-;  [:item-lister/get-body-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
 (defn get-view-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @usage
-  ;  (r item-lister/get-view-props :my-extension :my-type)
-  ;
   ; @return (map)
-  ;  {:description (metamorphic-content)
-  ;   :error-mode? (boolean)}
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
           {:description (r get-description db extension-id item-namespace)}))
 
-; @usage
-;  [:item-lister/get-view-props :my-extension :my-type]
 (a/reg-sub :item-lister/get-view-props get-view-props)

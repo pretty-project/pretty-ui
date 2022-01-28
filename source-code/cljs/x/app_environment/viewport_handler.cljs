@@ -38,17 +38,26 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-viewport-height
+  ; @usage
+  ;  (r environment/get-viewport-height db)
+  ;
   ; @return (integer)
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-height)))
 
 (defn get-viewport-width
+  ; @usage
+  ;  (r environment/get-viewport-width db)
+  ;
   ; @return (integer)
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-width)))
 
 (defn get-viewport-profile
   ; XXX#6408
+  ;
+  ; @usage
+  ;  (r environment/get-viewport-profile db)
   ;
   ; @return (keyword)
   ;  :xs, :s, :m, :l, :xl
@@ -76,21 +85,33 @@
   (vector/contains-item? n (r get-viewport-profile db)))
 
 (defn viewport-small?
+  ; @usage
+  ;  (r environment/viewport-small? db)
+  ;
   ; @return (boolean)
   [db _]
   (r viewport-profiles-match? db [:xxs :xs :s]))
 
 (defn viewport-medium?
+  ; @usage
+  ;  (r environment/viewport-medium? db)
+  ;
   ; @return (boolean)
   [db _]
   (r viewport-profile-match? db :m))
 
 (defn viewport-large?
+  ; @usage
+  ;  (r environment/viewport-large? db)
+  ;
   ; @return (boolean)
   [db _]
   (r viewport-profiles-match? db [:l :xl :xxl]))
 
 (defn get-viewport-orientation
+  ; @usage
+  ;  (r environment/get-viewport-orientation db)
+  ;
   ; @return (keyword)
   ;  :landscape, :portrait
   [db _]
