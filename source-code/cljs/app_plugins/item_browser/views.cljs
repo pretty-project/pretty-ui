@@ -33,25 +33,23 @@
 (defn go-home-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:at-home? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-browser/go-home-button :my-extension :my-type {...}]
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [at-home? error-mode?]}]
-  [elements/button ::go-home-button
-                   ; A go-home-button gomb a böngésző {:error-mode? true} állapotában használható!
-                   {:disabled? (and at-home? (not error-mode?))
-                    :on-click  [:item-browser/go-home! extension-id item-namespace]
-                    :preset    :home-icon-button}])
+  [extension-id item-namespace]
+  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
+       [elements/button ::go-home-button
+                        ; A go-home-button gomb az item-lister plugin {:error-mode? true}
+                        ; állapotában is használható!
+                        {:disabled? (and (:at-home? s) (not (:error-mode? s)))
+                         :on-click  [:item-browser/go-home! extension-id item-namespace]
+                         :preset    :home-icon-button}]))
 
 (defn go-up-button
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:at-home? (boolean)(opt)}
   ;
   ; @usage
   ;  [item-browser/go-up-button :my-extension :my-type {...}]
@@ -92,22 +90,22 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item-options (vector)(opt)
-  ;   :no-items-to-show? (boolean)(opt)}
+  ;  {:new-item-options (vector)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [new-item-options no-items-to-show?] :as header-props}]
-  [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group
-      [go-up-button                    extension-id item-namespace header-props]
-      [go-home-button                  extension-id item-namespace header-props]
-      (if new-item-options [item-lister/new-item-select extension-id item-namespace header-props]
-                           [item-lister/new-item-button extension-id item-namespace])
-      [item-lister/sort-items-button          extension-id item-namespace header-props]
-      [item-lister/toggle-select-mode-button  extension-id item-namespace header-props]
-      [item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]]
-    [:div.item-lister--header--menu-item-group
-      [item-lister/search-block extension-id item-namespace header-props]]])
+  [extension-id item-namespace {:keys [new-item-options] :as header-props}]
+  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
+       [:div.item-lister--header--menu-bar
+         [:div.item-lister--header--menu-item-group
+           [go-up-button                    extension-id item-namespace]
+           [go-home-button                  extension-id item-namespace]
+           (if new-item-options [item-lister/new-item-select extension-id item-namespace header-props]
+                                [item-lister/new-item-button extension-id item-namespace])
+           [item-lister/sort-items-button          extension-id item-namespace header-props]
+           [item-lister/toggle-select-mode-button  extension-id item-namespace header-props]
+           [item-lister/toggle-reorder-mode-button extension-id item-namespace header-props]]
+         [:div.item-lister--header--menu-item-group
+           [item-lister/search-block extension-id item-namespace header-props]]]))
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

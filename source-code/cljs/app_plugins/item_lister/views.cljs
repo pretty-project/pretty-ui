@@ -36,16 +36,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:lister-disabled? (boolean)(opt)}
   ;
   ; @return (component)
-  [extension-id item-namespace {:keys [lister-disabled?]}]
-  [elements/button ::quit-search-mode-button
-                   {:disabled? lister-disabled?
-                    :on-click  [:item-lister/toggle-search-mode! extension-id]
-                    :preset    :close-icon-button
-                    :keypress  {:key-code 27}}])
+  [extension-id item-namespace]
+  [elements/button :item-lister/quit-search-mode-button
+                   {:on-click [:item-lister/toggle-search-mode! extension-id]
+                    :preset   :close-icon-button
+                    :keypress {:key-code 27}}])
 
 (defn search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -15,6 +15,9 @@ monoset-environment/media/thumbnails/*
 monoset-environment/x.app-build.edn
 monoset-environment/x.site-config.edn
 
+# mono-app
+mono-app.jar
+
 # system files
 .DS_Store
 node_modules
