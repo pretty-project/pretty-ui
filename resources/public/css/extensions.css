@@ -64,6 +64,11 @@
   align-items: center;
   display: flex }
 
+.storage--media-item--marker {
+  position: absolute;
+  right: 24px;
+  top: 26px }
+
 .storage--media-item--header {
   align-items: center;
   background-color: var( --fill-color );

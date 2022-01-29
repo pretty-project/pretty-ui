@@ -178,10 +178,10 @@
   ; @return (strings in vector)
   [db [_ extension-id item-namespace]]
   (let [selected-items (r get-meta-item db extension-id item-namespace :selected-items)]
-       (reduce (fn [result item-dex]
-                   (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
-                        (conj result item-id)))
-               [] selected-items)))
+       (letfn [(f [result item-dex]
+                  (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
+                       (conj result item-id)))]
+              (reduce f [] selected-items))))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -193,19 +193,6 @@
   [db [_ extension-id item-namespace]]
   (let [selected-items (r get-selected-item-dexes db extension-id item-namespace)]
        (count selected-items)))
-
-(defn item-selectable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace item-dex]]
-  (if-let [selectable-f (r get-meta-item db extension-id item-namespace :selectable-f)]
-          (selectable-f (get-in db [extension-id :item-lister/data-items item-dex]))
-          (return true)))
 
 (defn item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -246,7 +233,7 @@
   (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
        (vector/nonempty? selected-item-dexes)))
 
-(defn no-item-selected?
+(defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -369,7 +356,7 @@
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
 
-(defn route-exists?
+(defn items-selectable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -377,7 +364,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (r router/route-exists? db (engine/route-id extension-id item-namespace)))
+  (let [item-actions (r get-meta-item db extension-id item-namespace :item-actions)]
+       (vector/nonempty? item-actions)))
 
 (defn set-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -403,19 +391,6 @@
        (if items-received? (components/content {:content      :npn-items-downloaded
                                                 :replacements [downloaded-item-count all-item-count]}))))
 
-(defn checkbox-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-dex]]
-  (if-let [selectable-f (r get-meta-item db extension-id item-namespace :selectable-f)]
-          (let [item (get-in db [extension-id :item-lister/data-items item-dex])]
-               (-> item selectable-f not))))
-
 (defn get-checkbox-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -428,9 +403,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
-  {:checkbox-disabled? (r checkbox-disabled? db extension-id item-namespace item-dex)
-   :item-selected?     (r item-selected?     db extension-id item-namespace item-dex)
-   :select-mode?       (r get-meta-item      db extension-id item-namespace :select-mode?)})
+  {:item-selected? (r item-selected? db extension-id item-namespace item-dex)
+   :select-mode?   (r get-meta-item  db extension-id item-namespace :select-mode?)})
 
 (a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
 
@@ -444,7 +418,7 @@
   [db [_ extension-id item-namespace]]
   {:all-items-selected? (r all-items-selected? db extension-id item-namespace)
    :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-   :no-item-selected?   (r no-item-selected?   db extension-id item-namespace)
+   :no-items-selected?  (r no-items-selected?  db extension-id item-namespace)
    :select-mode?        (r get-meta-item db extension-id item-namespace :select-mode?)})
 
 (a/reg-sub :item-lister/get-select-mode-props get-select-mode-props)
@@ -487,7 +461,7 @@
        {:menu-mode?        (nor reorder-mode? search-mode?)
         :new-item-options  (r get-meta-item               db extension-id item-namespace :new-item-options)
         :no-items-to-show? (r no-items-to-show?           db extension-id)
-        :selectable?       (r get-meta-item               db extension-id item-namespace :selectable?)
+        :items-selectable? (r items-selectable?           db extension-id item-namespace)
         :sortable?         (r get-meta-item               db extension-id item-namespace :sortable?)
         :viewport-small?   (r environment/viewport-small? db)}))
 

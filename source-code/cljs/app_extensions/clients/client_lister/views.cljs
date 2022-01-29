@@ -50,7 +50,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-lister/view :clients :client {:list-element #'client-item
-                                      :selectable?  true}])
+                                      :item-actions [:delete :duplicate]}])
 
 
 

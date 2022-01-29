@@ -274,6 +274,12 @@
       :n-items
       {:en "% items"
        :hu "% elem"}
+      :n-items-downloaded
+      {:en "% item(s) downloaded"
+       :hu "% elem letöltve"}
+      :n-items-selected
+      {:en "% item(s) selected"
+       :hu "% elem kiválasztva"}
       :no-options
       {:en "No options"
        :hu "Nincs választható lehetőség"}
@@ -295,9 +301,6 @@
       :no-internet-connection
       {:en "No internet connection"
        :hu "Nincs internet kapcsolat"}
-      :n-items-downloaded
-      {:en "% item(s) downloaded"
-       :hu "% elem letöltve"}
       :npn-items-downloaded
       {:en "%1 / %2 item(s) downloaded"
        :hu "%1 / %2 elem letöltve"}

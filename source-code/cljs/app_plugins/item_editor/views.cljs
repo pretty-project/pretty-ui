@@ -407,6 +407,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) view-props
   ;  {:form-element (metamorphic-content)
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
   ;   :menu (metamorphic-content)(opt)}
   ;
   ; @usage

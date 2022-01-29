@@ -167,7 +167,7 @@
   [extension-id item-namespace]
   (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
        [elements/button :item-lister/delete-selected-items-button
-                        {:disabled? (:no-item-selected? s)
+                        {:disabled? (:no-items-selected? s)
                          :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
                          :preset    :delete-icon-button
                          :tooltip   :delete!}]))
@@ -182,7 +182,7 @@
   [extension-id item-namespace]
   (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
        [elements/button :item-lister/duplicate-selected-items-button
-                        {:disabled? (:no-item-selected? s)
+                        {:disabled? (:no-items-selected? s)
                          :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
                          :preset    :duplicate-icon-button
                          :tooltip   :duplicate!}]))
@@ -283,11 +283,11 @@
   ; @return (component)
   [extension-id item-namespace]
   (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       (if (:selectable? s) [elements/button :item-lister/toggle-select-mode-button
-                                             {:disabled? (:no-items-to-show? s)
-                                              :on-click  [:item-lister/toggle-select-mode! extension-id]
-                                              :preset    :select-mode-icon-button
-                                              :tooltip   :select}])))
+       (if (:items-selectable? s) [elements/button :item-lister/toggle-select-mode-button
+                                                   {:disabled? (:no-items-to-show? s)
+                                                    :on-click  [:item-lister/toggle-select-mode! extension-id]
+                                                    :preset    :select-mode-icon-button
+                                                    :tooltip   :select}])))
 
 (defn toggle-reorder-mode-button
   ; @param (keyword) extension-id
@@ -556,9 +556,8 @@
   ; @return (component)
   [extension-id item-namespace item-dex]
   (let [s (a/state [:item-lister/get-checkbox-props extension-id item-namespace item-dex])]
-       (if (:select-mode? s) [elements/button {:disabled? (:checkbox-disabled? s)
-                                               :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
-                                               :preset    (if (:item-selected? s) :checked-icon-button :unchecked-icon-button)}])))
+       (if (:select-mode? s) [elements/button {:on-click [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+                                               :preset   (if (:item-selected? s) :checked-icon-button :unchecked-icon-button)}])))
 
 (defn list-item-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -662,10 +661,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:list-element (metamorphic-content)
-  ;   :selectable-f (function)(opt)
-  ;    Only w/ {:selectable? true}
-  ;   :selectable? (boolean)(opt)
-  ;    Default: false
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
   ;   :sortable? (boolean)(opt)}
   ;
   ; @usage
@@ -673,9 +670,7 @@
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  (defn my-item-selectable? [item] true)
-  ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
-  ;                                            :selectable-f my-item-selectable?}]
+  ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element}]
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
@@ -709,10 +704,8 @@
   ;  {:list-element (metamorphic-content)
   ;   :menu (metamorphic-content)(opt)
   ;   :new-item-options (vector)(opt)
-  ;   :selectable-f (function)(opt)
-  ;    Only w/ {:selectable? true}
-  ;   :selectable? (boolean)(opt)
-  ;    Default: false
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;
@@ -722,11 +715,9 @@
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
   ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
-  ;  (defn my-item-selectable? [item] true)
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
   ;                                            :menu         #'my-menu
-  ;                                            :new-item-options [:add-my-type! :add-your-type!]
-  ;                                            :selectable-f my-item-selectable?}]
+  ;                                            :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)
   [extension-id item-namespace view-props]

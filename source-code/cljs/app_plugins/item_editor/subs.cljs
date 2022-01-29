@@ -288,16 +288,6 @@
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
 
-(defn route-exists?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r router/route-exists? db (engine/route-id extension-id item-namespace)))
-  
 (defn set-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

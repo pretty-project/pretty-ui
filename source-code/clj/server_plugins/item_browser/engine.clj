@@ -108,10 +108,11 @@
   ;
   ; @return (map)
   [env extension-id item-namespace]
-  ; Az item-lister plugin env->pipeline-props függvényénét kiegészíti, az kollekció elemeinek
+  ; Az item-lister plugin env->pipeline-props függvényénét kiegészíti, a kollekció elemeinek
   ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
   ; aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
   (let [item-links     (env->item-links   env extension-id item-namespace)
+        ; Itt lehet a kliens-oldalon megadott filter-pattern értékét alkalmazni ...
         filter-pattern (pathom/env->param env :filter-pattern)
         env            (pathom/env<-param env :filter-pattern {:$or item-links})]
        (item-lister/env->pipeline-props env extension-id item-namespace)))

@@ -142,16 +142,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [downloaded-items (r subs/get-downloaded-items db extension-id)]
-       (if-let [selectable-f (r subs/get-meta-item db extension-id item-namespace :selectable-f)]
-               (letfn [(f [item-selections item-dex]
-                          (if (selectable-f (get-in db [extension-id :item-lister/data-items item-dex]))
-                              (conj   item-selections item-dex)
-                              (return item-selections)))]
-                      (let [item-selections (reduce f [] (vector/dex-range downloaded-items))]
-                           (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
-               (let [item-selections (vector/dex-range downloaded-items)]
-                    (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))))
+  (let [downloaded-items (r subs/get-downloaded-items db extension-id)
+        item-selections  (vector/dex-range downloaded-items)]
+       (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
 
 (a/reg-event-db :item-lister/select-all-items! select-all-items!)
 
@@ -176,12 +169,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
-  (if (r subs/item-selectable? db extension-id item-namespace item-dex)
-      (if (r subs/item-selected? db extension-id item-namespace item-dex)
-          (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-                 (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
-          (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-                 (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex)))))
+  (if (r subs/item-selected? db extension-id item-namespace item-dex)
+      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+             (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
+      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
+             (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex))))
 
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
@@ -428,7 +420,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [:item-lister/reload-lister! :my-extension :my-type]
+  ;  [:item-lister/reload-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [db (r toggle-reload-mode! db extension-id)]
            [:sync/send-query! (engine/request-id extension-id item-namespace)
@@ -494,7 +486,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
                          {:display-progress? true
-                          :on-success [:item-lister/reload-lister! extension-id item-namespace]
+                          :on-success [:item-lister/reload-items! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
 
@@ -521,7 +513,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
                          {:display-progress? true
-                          :on-success [:item-lister/reload-lister! extension-id item-namespace]
+                          :on-success [:item-lister/reload-items! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
                           :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace item-ids)}]))
 
@@ -594,7 +586,7 @@
            {:db (as-> db % (r backup-selected-items! % extension-id item-namespace)
                            (r reset-selections!      % extension-id item-namespace))
             :dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
-                         [:item-lister/reload-lister!               extension-id item-namespace]]})))
+                         [:item-lister/reload-items!                extension-id item-namespace]]})))
 
 (a/reg-event-fx
   :item-lister/->selected-items-duplicated
@@ -607,7 +599,7 @@
             item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
            {:db (r reset-selections! db extension-id item-namespace)
             :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace item-ids]
-                         [:item-lister/reload-lister!                  extension-id item-namespace]]})))
+                         [:item-lister/reload-items!                   extension-id item-namespace]]})))
 
 (a/reg-event-fx
   :item-lister/->item-clicked
@@ -618,11 +610,9 @@
   ; @param (integer) item-dex
   ; @param (map) item
   (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
-      (if (or (r environment/key-pressed? db 16)
-              (r environment/key-pressed? db 91))
-          ; XXX#5660
-          ; A SHIFT vagy COMMAND billentyű lenyomása közben az elemre kattintva az elem,
-          ; hozzáadódik a kijelölt elemek listájához.
-          [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+      ; XXX#5660
+      ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
+      (if (r environment/key-pressed? db 16)
+          {:db (r toggle-item-selection! db extension-id item-namespace item-dex)}
           (let [on-click (engine/item-clicked-event extension-id item-namespace)]
                (a/metamorphic-event<-params on-click item-dex item)))))

@@ -1,29 +1,51 @@
 
 (ns app-extensions.storage.media-picker.subs
     (:require [app-plugins.item-browser.subs]
-              [x.app-core.api :as a :refer [r]]))
+              [mid-fruits.vector    :as vector]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-header-mode
+(defn get-selected-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id]]
-  {:search-mode? (get-in db [:storage :item-lister/meta-items :search-mode?])})
+  [db _]
+  (get-in db [:storage :media-picker/data-items]))
 
-(a/reg-sub :storage.media-picker/get-header-mode get-header-mode)
-
-(defn get-header-props
+(defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id]]
-  (r app-plugins.item-browser.subs/get-header-props db :storage :media))
+  [db _]
+  (let [selected-items (get-in db [:storage :media-picker/data-items])]
+       (-> selected-items vector/nonempty? not)))
 
-(a/reg-sub :storage.media-picker/get-header-props get-header-props)
+(a/reg-sub :storage.media-picker/no-items-selected? no-items-selected?)
 
-(defn get-body-props
+(defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id]])
+  [db _]
+  (let [selected-items (get-in db [:storage :media-picker/data-items])]
+       (count selected-items)))
 
-(a/reg-sub :storage.media-picker/get-body-props get-body-props)
+(defn file-selected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ item-dex {:keys [filename] :as item}]]
+  (let [selected-items (r get-selected-items db)]
+       (vector/contains-item? selected-items filename)))
+
+(defn get-media-item-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ item-dex item]]
+  {:selected? (r file-selected? db item-dex item)})
+
+(a/reg-sub :storage.media-picker/get-media-item-props get-media-item-props)
+
+(defn get-selection-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  {:no-items-selected?  (r no-items-selected?      db)
+   :selected-item-count (r get-selected-item-count db)})
+
+(a/reg-sub :storage.media-picker/get-selection-props get-selection-props)

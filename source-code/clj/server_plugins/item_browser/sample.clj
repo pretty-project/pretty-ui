@@ -12,7 +12,9 @@
                       ; A dokumentoknak tartalmazniuk kell a {:label-key ...} tulajdonságként átadott kulcsot!
                       :my-type/name "My document"
                       ; A dokumentoknak tartalmazniuk kell a {:path-key ...} tulajdonságként átadott kulcsot!
-                      :my-type/path [{:my-type/id "..."} {:my-type/id "..."}]})
+                      :my-type/path [{:my-type/id "..."} {:my-type/id "..."}]
+                      ; A böngészhető dokumentoknak tartalmazniuk kell a :namespace/items kulcsot!
+                      :my-type/items [{:my-type/id "..."}]})
 
 
 

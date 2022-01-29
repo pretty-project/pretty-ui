@@ -176,7 +176,8 @@
 
        ; TEMP
        [:div {:style {:width "100%"}}
-             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left}]]])
+             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left
+                                    :value-path [:test]}]]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -193,7 +194,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-editor/view :clients :client {:form-element #'body}])
+  [item-editor/view :clients :client {:form-element #'body
+                                      :item-actions [:delete :duplicate]}])
 
 
 

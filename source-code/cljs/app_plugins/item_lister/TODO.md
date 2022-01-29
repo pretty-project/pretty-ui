@@ -11,3 +11,5 @@
   nincs szükség a dokumentumokból a névteret eltávolítani.
   A névtér eltávolítása a {:handle-favorites? ...} és {:handle-archived? ...} tulajdonságok
   kivezetése előtt volt szükséges.
+
+- Az {:item-actions ...} tulajdonság nincs befejezve

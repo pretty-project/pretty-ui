@@ -60,12 +60,9 @@
   ;
   ; @return (component)
   [bubble-id {:keys [label button-event button-label]}]
-  [:<> [elements/horizontal-separator {:size :s}]
-       [elements/label                {:content label :layout :fit}]
-       [elements/horizontal-separator {:size :s}]
-       [elements/button               {:label button-label :preset :primary-button :layout :fit
-                                       :on-click {:dispatch-n [button-event [:ui/pop-bubble! bubble-id]]}}]
-       [elements/horizontal-separator {:size :s}]])
+  [:<> [elements/label  {:content label}]
+       [elements/button {:label button-label :preset :primary-button
+                         :on-click {:dispatch-n [button-event [:ui/pop-bubble! bubble-id]]}}]])
 
 (defn undo-delete-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

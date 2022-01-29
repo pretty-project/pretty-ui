@@ -24,23 +24,22 @@
 ;; -- Status events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :storage.media-lister/->item-clicked
-  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as item-props}]]
-      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          (if (r subs/media-browser-mode? db)
-                                              [:storage.media-browser/->file-clicked item-dex item-props]
-                                              [:item-lister/toggle-item-selection! :storage :media item-dex]))))
+(defn ->file-clicked
+  [_ _]
+  [:ui/add-popup! :xxxx
+                  {:body [:div [:div "Fájl letöltése"]
+                               ; Ha több van kijelölve akkor:
+                               ; És mivel nincs tömörítönk ezért most még disabled lesz
+                               [:div "Kijelölt fájlok letöltése"]]
+                   :min-width :xs}])
 
 (a/reg-event-fx
-  :storage.media-browser/->file-clicked
-  (fn [_ _]
-      [:ui/add-popup! :xxxx
-                      {:body [:div [:div "Fájl letöltése"]
-                                   ; Ha több van kijelölve akkor:
-                                   ; És mivel nincs tömörítönk ezért most még disabled lesz
-                                   [:div "Kijelölt fájlok letöltése"]]
-                       :min-width :xs}]))
+  :storage.media-lister/->item-clicked
+  (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as item}]]
+      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
+                                          (if (r subs/media-browser-mode? db)
+                                              (r ->file-clicked                 cofx item-dex item)
+                                              [:storage.media-picker/->file-clicked  item-dex item]))))
 
 
 
@@ -54,4 +53,5 @@
       (if (r subs/media-browser-mode? db)
           (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
                   [:storage.media-browser/render-browser!])
-          [:storage.media-picker/load-picker!])))
+          (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
+                  [:storage.media-picker/render-picker!]))))

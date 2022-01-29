@@ -37,7 +37,6 @@
   [body-id body-props route-id route-props]
   [:div {:style {:padding "12px 12px" :width "100%"}}
         [:div {:style {:font-size "14px" :font-weight "500"}}
-
               (str route-id)]
         [:div {:style {:font-size "14px"}}
               (str route-props)]])
@@ -45,9 +44,10 @@
 (defn- route-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id {:keys [client-routes] :as body-props}]
-  (reduce-kv (fn [route-list route-id route-props]
-                 (conj route-list [route-list-item body-id body-props route-id route-props]))
-             [:<>] client-routes))
+  (letfn [(f [route-list route-id]
+             (let [route-props (get client-routes route-id)]
+                  (conj route-list [route-list-item body-id body-props route-id route-props])))]
+         (reduce f [:<>] (-> client-routes keys mid-fruits.vector/abc-items))))
 
 (defn- route-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!

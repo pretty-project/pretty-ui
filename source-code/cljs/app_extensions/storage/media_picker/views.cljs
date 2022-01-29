@@ -1,6 +1,7 @@
 
 (ns app-extensions.storage.media-picker.views
-    (:require [mid-fruits.css     :as css]
+    (:require [app-extensions.storage.media-browser.views]
+              [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
@@ -14,75 +15,82 @@
 
 (defn header-cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id _]
+  [picker-id]
   [elements/button :header-cancel-button
                    {:preset :cancel-button :indent :both :keypress {:key-code 27}
                     :on-click [:ui/close-popup! :storage.media-picker/view]}])
 
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [label]}]
-  [elements/label ::header-label
-                  {:content label}])
+  [_]
+  (let [s (a/state [:item-browser/get-item-label :storage :media])]
+       [elements/label ::header-label
+                       {:content s}]))
 
 (defn header-select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
-  [elements/button :header-select-button
-                   {:preset :select-button :indent :both :keypress {:key-code 13}
-                    :on-click []}])
+  [picker-id]
+  (let [no-items-selected? (a/state [:storage.media-picker/no-items-selected?])]
+       [elements/button :header-select-button
+                        {:disabled? no-items-selected?
+                         :preset :select-button :indent :both :keypress {:key-code 13}
+                         :on-click [:storage.media-picker/select-items! picker-id]}]))
 
 (defn header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id header-props]
+  [picker-id]
   [elements/horizontal-polarity ::header-label-bar
-                                {:start-content  [header-cancel-button picker-id header-props]
-                                 :middle-content [header-label         picker-id header-props]
-                                 :end-content    [header-select-button picker-id header-props]}])
+                                {:start-content  [header-cancel-button picker-id]
+                                 :middle-content [header-label         picker-id]
+                                 :end-content    [header-select-button picker-id]}])
 
 (defn header-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id header-props {:keys [search-mode?]}]
+  [picker-id]
   [:div#item-lister--header--structure
     [app-plugins.item-browser.views/menu-mode-header :storage :media
-                                                     {:new-item-options [:create-directory! :upload-files!]
-                                                      :menu-mode? (not search-mode?)}]
-    [app-plugins.item-lister.views/search-mode-header :storage :media
-                                                      {:search-mode? search-mode?}]])
-
-(defn- header-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id header-props]
-  [:<> [header-label-bar picker-id header-props]
-       [header-menu      picker-id header-props]])
+                                                     {:new-item-options [:create-directory! :upload-files!]}]
+    [app-plugins.item-lister.views/search-mode-header :storage :media]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  (let [header-props (a/subscribe [:storage.media-picker/get-header-props picker-id])]
-       (fn [] [header-structure picker-id @header-props])))
+  [:<> [header-label-bar picker-id]
+       [header-menu      picker-id]])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn media-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex item]
+  (let [s (a/state [:storage.media-picker/get-media-item-props item-dex item])]
+       [:div [app-extensions.storage.media-browser.views/media-item item-dex item]
+             (if (:selected? s)
+                 [:div.storage--media-item--marker [elements/icon {:icon :check_circle_outline}]])]))
+
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id body-props])
-  ;[item-browser/body :storage :media {:list-element #'app-extensions.storage.media-browser.views/media-item
-  ;                                    :selectable-f (fn [{:keys [mime-type]}] (not= mime-type "storage/directory"))])
+  [picker-id]
+  [item-browser/body :storage :media {:list-element #'media-item}])
 
 
 
 ;; -- Element components ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- no-item-selected-label
+(defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [label (if multiple? :no-items-selected :no-item-selected)]
-       [elements/label {:color :muted :min-height :s :content label}]))
+  (let [s (a/state [:storage.media-picker/get-selection-props])]
+       [elements/label {:color :muted :min-height :s
+                        :content (cond (and multiple? (:no-items-selected? s))
+                                       :no-items-selected
+                                       (:no-items-selected? s)
+                                       :no-item-selected
+                                       :default {:content :n-items-selected :replacements [(:selected-item-count s)]})}]))
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,9 +100,9 @@
 (defn media-picker-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id {:keys [indent] :as picker-props}]
-  [elements/toggle {:content  [no-item-selected-label picker-id picker-props]
-                    :on-click [:item-browser/load-browser! :storage :media]
-                    :indent indent}])
+  [elements/toggle {:content  [n-items-selected-label picker-id]
+                    :on-click [:storage.media-picker/load-picker! picker-props]
+                    :indent   indent}])
 
 (defn media-picker
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,9 +117,10 @@
   ;    :left, :right, :both, :none
   ;    Default: :none
   ;   :mime-types (strings in vector)(opt)
-  ;    Default:
+  ;    Default: TODO
   ;   :multiple? (boolean)(opt)
-  ;    Default: false}
+  ;    Default: false
+  ;   :value-path (item-path vector)}
   ;
   ; @usage
   ;  [storage/media-picker {...}]
@@ -134,7 +143,7 @@
 (a/reg-event-fx
   :storage.media-picker/render-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ picker-id picker-props]]
+  (fn [_ [_ picker-id]]
       [:ui/add-popup! :storage.media-picker/view
                       {:body   [body   picker-id]
                        :header [header picker-id]

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.6
+; Version: v0.4.2
+; Compatibility: x4.5.7
 
 
 
@@ -206,7 +206,7 @@
   ; @return (string)
   [extension-id item-namespace action-id]
   (str (name extension-id)   "."
-       (name item-namespace) "-editor!"
+       (name item-namespace) "-editor/"
        (name action-id)      "-item!"))
 
 (defn resolver-id

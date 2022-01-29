@@ -48,7 +48,8 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (-> db (dissoc-in [extension-id :item-editor/data-items])
-         (dissoc-in [extension-id :item-editor/meta-items])))
+         (dissoc-in [extension-id :item-editor/meta-items :item-id])
+         (dissoc-in [extension-id :item-editor/meta-items :item-received?])))
 
 (defn backup-current-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -244,12 +245,13 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
-  (let [request-id (engine/request-id extension-id item-namespace)]
-       (as-> db % (r reset-editor!           % extension-id item-namespace)
-                  (r store-current-item-id!  % extension-id item-namespace editor-props)
-                  ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét
-                  (assoc-in % [extension-id :item-lister/meta-items :recovery-mode?]
-                              (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)))))
+  (as-> db % (r reset-editor!           % extension-id item-namespace)
+             (r store-current-item-id!  % extension-id item-namespace editor-props)
+             ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét,
+             ; hogy az item-editor plugin folytathassa a {:recovery-mode? true} beállítással
+             ; való elindulást ...
+             (assoc-in % [extension-id :item-editor/meta-items :recovery-mode?]
+                         (r subs/get-meta-item db extension-id item-namespace :recovery-mode?))))
 
 
 
@@ -264,11 +266,11 @@
   ; @usage
   ;  (r item-editor/edit-item! cofx :my-extension :my-type "my-item")
   [{:keys [db]} [_ extension-id item-namespace item-id]]
-  ; Ha az item-editor plugin útvonala létezik, akkor az [:edit-item! ...] esemény
+  ; Ha az item-editor plugin útvonala létezik, akkor az [:item-editor/edit-item! ...] esemény
   ; az útvonalra irányít, abban az esetben is, ha az NEM az aktuális útvonal, mert
   ; az [:item-editor/edit-item! ...] esemény meghívása a legtöbb esetben NEM az item-editor
   ; plugin használata közben történik!
-  (if (r subs/route-exists? db extension-id item-namespace)
+  (if (r subs/get-meta-item db extension-id item-namespace :routed?)
       (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
            [:router/go-to! editor-uri])
       [:item-editor/load-editor! extension-id item-namespace {:item-id item-id}]))

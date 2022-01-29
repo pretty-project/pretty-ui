@@ -130,7 +130,7 @@
   ; @return (component)
   [extension-id item-namespace header-props]
   (let [header-props (assoc header-props :menu #'menu-mode-header)]
-       [item-lister/header extension-id item-namespace]))
+       [item-lister/header extension-id item-namespace header-props]))
 
 
 
@@ -142,8 +142,8 @@
   ; @param (keyword) item-namespace
   ; @param (map)(opt) body-props
   ;  {:list-element (metamorphic-content)
-  ;   :selectable? (boolean)(opt)
-  ;    Default: false}
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]
@@ -178,8 +178,8 @@
   ; @param (map) view-props
   ;  {:new-item-options (vector)(opt)
   ;   :list-element (component)
-  ;   :selectable? (boolean)(opt)
-  ;    Default: false
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;

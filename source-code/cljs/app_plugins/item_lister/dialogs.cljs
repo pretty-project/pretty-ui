@@ -51,7 +51,7 @@
   (let [dialog-id  (engine/dialog-id extension-id item-namespace :items-duplicated)
         undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace item-ids]]
        [:<> [elements/label {:content {:content :n-items-duplicated :replacements [(count item-ids)]}}]
-            [elements/button {:label :recover! :preset :primary-button
+            [elements/button {:label :undo! :preset :primary-button
                               :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]]))
 
 
