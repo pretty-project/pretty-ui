@@ -14,8 +14,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.8
+; Version: v0.4.4
+; Compatibility: x4.5.8
 
 
 
@@ -31,22 +31,32 @@
 ;; Side-effect events ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- prevent-selecting!
+(defn prevent-selecting!
   ; Letiltja a mousedown eventet, a nem kivant szovegkijelolesek
   ; megakadalyozasa vegett
   ;
   ; @usage
   ;  (environment/prevent-selecting!)
   []
+ ;(dom/add-event-listener! "touchstart" #(.preventDefault %)
   (dom/add-event-listener! "mousedown" dom/select-preventer))
-  ; + (add-event-listener! "touchstart" #(.preventDefault %)) ?
 
+; @usage
+;  {:environment/prevent-selecting! nil}
+;
+; @usage
+;  [:environment/prevent-selecting!]
 (a/reg-handled-fx :environment/prevent-selecting! prevent-selecting!)
 
-(defn- enable-selecting!
+(defn enable-selecting!
   ; @usage
   ;  (environment/enable-selecting!)
   []
   (dom/remove-event-listener! "mousedown" dom/select-preventer))
 
+; @usage
+;  {:environment/enable-selecting! nil}
+;
+; @usage
+;  [:environment/enable-selecting!]
 (a/reg-handled-fx :environment/enable-selecting! enable-selecting!)

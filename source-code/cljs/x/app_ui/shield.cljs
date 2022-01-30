@@ -97,11 +97,10 @@
 (a/reg-event-fx
   :ui/remove-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-later
-   [{:ms                               0 :dispatch [:ui/hide-shield!]}
-    {:ms renderer/HIDE-ANIMATION-TIMEOUT :dispatch [:ui/empty-shield!]}]})
+  {:dispatch-later [{:ms                               0 :dispatch [:ui/hide-shield!]}
+                    {:ms renderer/HIDE-ANIMATION-TIMEOUT :dispatch [:ui/empty-shield!]}]})
 
 (a/reg-event-fx
   :ui/empty-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:environment/empty-element! "x-app-shield--content"])
+  {:environment/empty-element! "x-app-shield--content"})

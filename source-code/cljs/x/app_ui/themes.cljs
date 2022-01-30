@@ -67,7 +67,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [theme-id (r get-selected-theme db)]
-           [:environment/set-element-attribute! "x-body-container" "data-theme" (name theme-id)])))
+           {:environment/set-element-attribute! ["x-body-container" "data-theme" (name theme-id)]})))
 
 
 

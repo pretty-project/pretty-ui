@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.6
+; Version: v0.3.6
+; Compatibility: x4.5.8
 
 
 
@@ -15,7 +15,7 @@
 
 (ns x.app-environment.event-handler
     (:require [app-fruits.dom   :as dom]
-              [mid-fruits.candy :refer [return]]
+              [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a]))
 
 
@@ -53,6 +53,10 @@
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
+;  {:environment/add-event-listener! ["mousemove" handler-f]}
+
+; @usage
+;  (defn handler-f [e] (do-something!))
 ;  [:environment/add-event-listener! "mousemove" handler-f]
 (a/reg-handled-fx :environment/add-event-listener! add-event-listener!)
 
@@ -71,6 +75,10 @@
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
+;  {:environment/remove-event-listener! ["mousemove" handler-f]}
+;
+; @usage
+;  (defn handler-f [e] (do-something!))
 ;  [:environment/remove-event-listener! "mousemove" handler-f]
 (a/reg-handled-fx :environment/remove-event-listener! remove-event-listener!)
 
@@ -87,6 +95,9 @@
         target    (element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
 
+; @usage
+;  {:environment/add-event! ["mousemove" [:do-something!]]}
+;
 ; @usage
 ;  [:environment/add-event! "mousemove" [:do-something!]]
 (a/reg-handled-fx :environment/add-event! add-event!)

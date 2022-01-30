@@ -1,5 +1,5 @@
 
-(ns server-extensions.settings.views
+(ns server-extensions.settings.view-selector
     (:require [server-plugins.view-selector.api]
               [x.server-core.api :as a]))
 

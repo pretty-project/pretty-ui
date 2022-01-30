@@ -15,16 +15,16 @@
 
 (ns x.app-environment.api
     (:require [x.app-environment.scroll-prohibitor]
-              [x.app-environment.cookie-handler   :as cookie-handler]
-              [x.app-environment.css-handler      :as css-handler]
-              [x.app-environment.element-handler  :as element-handler]
-              [x.app-environment.event-handler    :as event-handler]
-              [x.app-environment.keypress-handler :as keypress-handler]
-              [x.app-environment.mouse-handler    :as mouse-handler]
-              [x.app-environment.scroll-handler   :as scroll-handler]
-              [x.app-environment.touch-handler    :as touch-handler]
-              [x.app-environment.viewport-handler :as viewport-handler]
-              [x.app-environment.window-handler   :as window-handler]))
+              [x.app-environment.cookie-handler    :as cookie-handler]
+              [x.app-environment.css-handler       :as css-handler]
+              [x.app-environment.element-handler   :as element-handler]
+              [x.app-environment.event-handler     :as event-handler]
+              [x.app-environment.keypress-handler  :as keypress-handler]
+              [x.app-environment.mouse-handler     :as mouse-handler]
+              [x.app-environment.scroll-handler    :as scroll-handler]
+              [x.app-environment.touch-handler     :as touch-handler]
+              [x.app-environment.viewport-handler  :as viewport-handler]
+              [x.app-environment.window-handler    :as window-handler]))
 
 
 
@@ -61,6 +61,10 @@
 (def remove-element-attribute!   element-handler/remove-element-attribute!)
 (def empty-element!              element-handler/empty-element!)
 (def remove-element!             element-handler/remove-element!)
+(def reveal-element!             element-handler/reveal-element!)
+(def hide-element!               element-handler/hide-element!)
+(def mark-element-masspoint-orientation!   element-handler/mark-element-masspoint-orientation!)
+(def unmark-element-masspoint-orientation! element-handler/unmark-element-masspoint-orientation!)
 
 ; x.app-environment.event-handler
 (def add-event-listener!    event-handler/add-event-listener!)
@@ -98,6 +102,8 @@
 (def get-viewport-orientation viewport-handler/get-viewport-orientation)
 
 ; x.app-environment.window-handler
+(def interval-exists?      window-handler/interval-exists?)
+(def timeout-exists?       window-handler/timeout-exists?)
 (def browser-online?       window-handler/browser-online?)
 (def browser-offline?      window-handler/browser-offline?)
 (def open-new-browser-tab! window-handler/open-new-browser-tab!)

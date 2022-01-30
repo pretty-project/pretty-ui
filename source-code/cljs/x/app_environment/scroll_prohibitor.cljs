@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v1.9.6
-; Compatibility: x4.4.6
+; Version: v2.0.8
+; Compatibility: x4.5.8
 
 
 
@@ -86,19 +86,13 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-scroll-prohibitions
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db (db/path :environment/sroll-prohibitions)))
-
-(defn scroll-disabled?
+(defn- scroll-prohibiton-added?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
-  (map/nonempty? (r get-scroll-prohibitions db)))
+  (let [scroll-prohibitions (get-in db (db/path :environment/sroll-prohibitions))]
+       (map/nonempty? scroll-prohibitions)))
 
 
 
@@ -118,6 +112,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- enable-dom-scroll!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [body-top (dom/get-body-style-value "top")
         scroll-y (math/positive (string/to-integer body-top))]
@@ -137,6 +132,7 @@
 (a/reg-handled-fx :environment/enable-dom-scroll! enable-dom-scroll!)
 
 (defn- disable-dom-scroll!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [scroll-y (dom/get-scroll-y)
          body-top (math/negative scroll-y)
@@ -161,38 +157,41 @@
 
 
 
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :environment/->scroll-prohibitions-changed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (if (r scroll-disabled? db)
-          [:environment/disable-dom-scroll!]
-          [:environment/enable-dom-scroll!])))
-
-
-
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :environment/remove-scroll-prohibition!
   ; @param (keyword) prohibition-id
+  ;
+  ; @usage
+  ;  [:environment/remove-scroll-prohibition! :my-prohibition]
   (fn [{:keys [db]} [_ prohibition-id]]
-      {:db       (r db/remove-item! db (db/path :environment/sroll-prohibitions prohibition-id))
-       :dispatch [:environment/->scroll-prohibitions-changed]}))
+      (let [db (r db/remove-item! db (db/path :environment/sroll-prohibitions prohibition-id))]
+           (if (r scroll-prohibiton-added? db)
+               ; Ha a tiltás eltávolítása után van hozzáadva másik tiltás ...
+               {:db db}
+               ; Ha a tiltás eltávolítása után nincs hozzáadva másik tiltás ...
+               {:db db :environment/enable-dom-scroll nil}))))
 
 (a/reg-event-fx
   :environment/add-scroll-prohibition!
   ; @param (keyword) prohibition-id
+  ;
+  ; @usage
+  ;  [:environment/add-scroll-prohibition! :my-prohibition]
   (fn [{:keys [db]} [_ prohibition-id]]
-      {:db       (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})
-       :dispatch [:environment/->scroll-prohibitions-changed]}))
+      (if (r scroll-prohibiton-added? db)
+          ; Ha a tiltás hozzáadása előtt volt hozzáadva másik tiltás ...
+          {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})}
+          ; Ha a tiltás hozzáadása előtt NEM volt hozzáadva másik tiltás ...
+          {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})
+           :environment/disable-dom-scroll nil})))
 
 (a/reg-event-fx
   :environment/enable-scroll!
+  ; @usage
+  ;  [:environment/enable-scroll!]
   (fn [{:keys [db]} _]
       {:db       (r remove-scroll-prohibitions! db)
-       :dispatch [:environment/->scroll-prohibitions-changed]}))
+       :environment/enable-dom-scroll nil}))

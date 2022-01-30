@@ -184,5 +184,5 @@
   :tools/->schedule-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:dispatch-if [(not (r any-schedule-registered? db))
-                     [:environment/clear-interval! :scheduler/interval]]}))
+      (if-not (r any-schedule-registered? db)
+              {:environment/clear-interval! :scheduler/interval})))

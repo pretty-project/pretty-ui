@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.09
 ; Description:
-; Version: v1.0.8
-; Compatibility: x4.4.6
+; Version: v1.2.0
+; Compatibility: x4.5.8
 
 
 
@@ -81,7 +81,7 @@
   ; @param (DOM-element) head-element
   ; @param (DOM-element) link-element
   [head-element link-element]
-  (dom/insert-as-last-of-query-selected!  head-element link-element "[type=\"text/css\"]"))
+  (dom/insert-as-last-of-query-selected! head-element link-element "[type=\"text/css\"]"))
 
 (defn- insert-link-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,6 +124,9 @@
                (insert-link-element! head-element link-element context-props))))
 
 ; @usage
+;  {:environment/add-external-css! "/css/filename.css"}
+;
+; @usage
 ;  [:environment/add-external-css! "/css/filename.css"]
 (a/reg-handled-fx :environment/add-external-css! add-external-css!)
 
@@ -139,6 +142,9 @@
        (add-external-css! filepath context-props)))
 
 ; @usage
+;  {:environment/add-css! "filename.css"}
+;
+; @usage
 ;  [:environment/add-css! "filename.css"]
 (a/reg-handled-fx :environment/add-css! add-css!)
 
@@ -150,6 +156,9 @@
   [filename])
   ; TODO ...
 
+; @usage
+;  {:environment/remove-css! "/filename.css"}
+;
 ; @usage
 ;  [:environment/remove-css! "/filename.css"]
 (a/reg-handled-fx :environment/remove-css! remove-css!)

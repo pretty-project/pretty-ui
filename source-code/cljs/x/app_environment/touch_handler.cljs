@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.4.6
+; Version: v0.4.4
+; Compatibility: x4.5.8
 
 
 
@@ -25,6 +25,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn touch-events-api-detected?
+  ; @usage
+  ;  (r environment/touch-events-api-detected? db)
+  ;
   ; @return (boolean)
   [db _]
   (get-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?)))
@@ -37,28 +40,12 @@
 (a/reg-event-fx
   :environment/detect-touch-events-api!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (if (dom/touch-events-api-detected?)
-      [:environment/->touch-events-api-detected]
-      [:environment/->touch-events-api-not-detected]))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :environment/->touch-events-api-detected
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) true)
-       :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" true]}))
-
-(a/reg-event-fx
-  :environment/->touch-events-api-not-detected
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:db       (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) false)
-       :dispatch [:environment/set-element-attribute! "x-body-container" "data-touch-detected" false]}))
+      (if (dom/touch-events-api-detected?)
+          {:db (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) true)
+           :environment/set-element-attribute! ["x-body-container" "data-touch-detected" true]}
+          {:db (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) false)
+           :environment/set-element-attribute! ["x-body-container" "data-touch-detected" false]})))
 
 
 

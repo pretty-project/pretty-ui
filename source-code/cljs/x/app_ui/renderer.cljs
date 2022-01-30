@@ -952,8 +952,8 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db (r update-element-props! db renderer-id element-id element-props)
-       :dispatch-n [[:ui/->rendering-ended renderer-id]
-                    [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "update"]]
+       :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "update"]
+       :dispatch-n [[:ui/->rendering-ended renderer-id]]
        :dispatch-later
        [{:ms UPDATE-ANIMATION-TIMEOUT
          :dispatch [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
@@ -1035,15 +1035,6 @@
                [{:ms RENDER-DELAY-OFFSET :dispatch [:ui/request-rendering-element! renderer-id element-id element-props]}]})))
 
 (a/reg-event-fx
-  :ui/hide-element!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) renderer-id
-  ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ _ element-id]]
-      [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "hide"]))
-
-(a/reg-event-fx
   :ui/destroy-element-animated!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -1052,7 +1043,8 @@
   (fn [{:keys [db]} [_ renderer-id element-id]]
       {:db       (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
-       :dispatch [:ui/hide-element! renderer-id element-id]
+       ; Hide element ...
+       :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "hide"]
        ; 2.
        :dispatch-later
        [{:ms HIDE-ANIMATION-TIMEOUT

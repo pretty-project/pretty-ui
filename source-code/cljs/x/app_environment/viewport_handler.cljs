@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
+; Version: v0.5.2
+; Compatibility: x4.5.8
 
 
 
@@ -157,8 +157,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       (let [viewport-profile (dom/get-viewport-profile)]
-           [:environment/set-element-attribute! "x-body-container" "data-viewport-profile"
-                                                (keyword/to-string viewport-profile)])))
+           {:environment/set-element-attribute! ["x-body-container" "data-viewport-profile"
+                                                 (keyword/to-string viewport-profile)]})))
 
 
 

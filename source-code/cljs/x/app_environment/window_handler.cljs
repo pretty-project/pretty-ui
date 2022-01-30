@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.30
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.2
+; Version: v0.7.6
+; Compatibility: x4.5.8
 
 
 
@@ -38,20 +38,22 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- interval-exists?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn interval-exists?
   ; @param (keyword) interval-id
+  ;
+  ; @usage
+  ;  (r environment/interval-exists? db :my-interval)
   ;
   ; @return (boolean)
   [db [_ interval-id]]
   (let [interval-props (get-in db (db/path :environment/intervals interval-id))]
        (some? interval-props)))
 
-(defn- timeout-exists?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn timeout-exists?
   ; @param (keyword) timeout-id
+  ;
+  ; @usage
+  ;  (r environment/timeout-exists? db :my-timeout)
   ;
   ; @return (boolean)
   [db [_ timeout-id]]
@@ -59,12 +61,18 @@
        (some? timeout-props)))
 
 (defn browser-online?
+  ; @usage
+  ;  (r environment/browser-online? db)
+  ;
   ; @return (boolean)
   [db _]
   (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
        (boolean browser-online?)))
 
 (defn browser-offline?
+  ; @usage
+  ;  (r environment/browser-offline? db)
+  ;
   ; @return (boolean)
   [db _]
   (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
@@ -84,6 +92,9 @@
   (.open js/window uri "_blank"))
 
 ; @usage
+;  {:environment/open-new-browser-tab! "www.my-site.com/my-link"}
+;
+; @usage
 ;  [:environment/open-new-browser-tab! "www.my-site.com/my-link"]
 (a/reg-handled-fx :environment/open-new-browser-tab! open-new-browser-tab!)
 
@@ -96,10 +107,10 @@
   (set! (-> js/document .-title) title))
 
 ; @usage
-;  [:environment/set-window-title! "My title"]
+;  {:environment/set-window-title! "My title"}
 ;
 ; @usage
-;  {:environment/set-window-title! "My title"}
+;  [:environment/set-window-title! "My title"]
 (a/reg-handled-fx :environment/set-window-title! set-window-title!)
 
 (defn reload-window!
@@ -108,6 +119,9 @@
   []
   (.reload js/window.location true))
 
+; @usage
+;  {:environment/reload-window!}
+;
 ; @usage
 ;  [:environment/reload-window!]
 (a/reg-handled-fx :environment/reload-window! reload-window!)
@@ -118,6 +132,9 @@
   []
   (set! (-> js/window .-location .-href) "/"))
 
+; @usage
+;  {:environment/go-to-root!}
+;
 ; @usage
 ;  [:environment/go-to-root!]
 (a/reg-handled-fx :environment/go-to-root!)
@@ -130,6 +147,9 @@
   [uri]
   (set! (-> js/window .-location .-href) uri))
 
+; @usage
+;  {:environment/go-to! "www.my-site.com/my-link"}
+;
 ; @usage
 ;  [:environment/go-to! "www.my-site.com/my-link"]
 (a/reg-handled-fx :environment/go-to! go-to!)
@@ -152,8 +172,10 @@
            (a/dispatch [:environment/store-interval-props! interval-id interval-props]))))
 
 ; @usage
-;  [:environment/set-interval! :my-interval {:event [:do-something!]
-;                                            :interval 420}]
+;  {:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}}
+;
+; @usage
+;  [:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}]
 (a/reg-handled-fx :environment/set-interval! set-interval!)
 
 (defn clear-interval!
@@ -164,6 +186,9 @@
   [js-id]
   (time/clear-interval! js-id))
 
+; @usage
+;  {:environment/clear-interval! :my-interval}
+;
 ; @usage
 ;  [:environment/clear-interval! :my-interval]
 (a/reg-handled-fx :environment/clear-interval! clear-interval!)
@@ -185,8 +210,10 @@
        (a/dispatch [:environment/store-timeout-props! timeout-id timeout-props])))
 
 ; @usage
-;  [:environment/set-timeout! :my-timeout {:event [:do-something!]
-;                                          :timeout 420}]
+;  {:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}}
+;
+; @usage
+;  [:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}]
 (a/reg-handled-fx :environment/set-timeout! set-timeout!)
 
 (defn clear-timeout!
@@ -197,6 +224,9 @@
   [js-id])
   ; TODO ...
 
+; @usage
+;  {:environment/clear-timeout! :my-timeout}
+;
 ; @usage
 ;  [:environment/clear-timeout! :my-timeout]
 (a/reg-handled-fx :environment/clear-timeout! clear-timeout!)
@@ -254,12 +284,11 @@
   ;   :interval (ms)}
   ;
   ; @usage
-  ;  [:environment/reg-interval! :my-interval {:event [:do-something!]
-  ;                                            :interval 420}]
+  ;  [:environment/reg-interval! :my-interval {:event [:do-something!] :interval 420}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ interval-id interval-props]]
-      {:dispatch-if [(not (r interval-exists? db interval-id))
-                     [:environment/set-interval! interval-id interval-props]]}))
+      (if-not (r interval-exists? db interval-id)
+              {:environment/set-interval! [interval-id interval-props]})))
 
 (a/reg-event-fx
   :environment/remove-interval!
@@ -268,8 +297,8 @@
   ; @usage
   ;  [:environment/remove-interval! :my-interval]
   (fn [{:keys [db]} [_ interval-id]]
-      (let [{:keys [js-id]} (get-in db (db/path :environment/intervals interval-id))]
-           [:environment/clear-interval! js-id])))
+      (if-let [{:keys [js-id]} (get-in db (db/path :environment/intervals interval-id))]
+              {:environment/clear-interval! js-id})))
 
 (a/reg-event-fx
   :environment/reg-timeout!
@@ -279,12 +308,11 @@
   ;   :timeout (ms)}
   ;
   ; @usage
-  ;  [:environment/reg-timeout! :my-timeout {:event [:do-something!]
-  ;                                          :timeout 420}]
+  ;  [:environment/reg-timeout! :my-timeout {:event [:do-something!] :timeout 420}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ timeout-id timeout-props]]
-      {:dispatch-if [(not (r timeout-exists? db timeout-id))
-                     [:environment/set-timeout! timeout-id timeout-props]]}))
+      (if-not (r timeout-exists? db timeout-id)
+              {:environment/set-timeout! [timeout-id timeout-props]})))
 
 (a/reg-event-fx
   :environment/remove-timeout!
@@ -293,8 +321,8 @@
   ; @usage
   ;  [:environment/remove-timeout! :my-timeout]
   (fn [{:keys [db]} [_ timeout-id]]
-      (let [{:keys [js-id]} (get-in db (db/path :environment/timeouts timeout-id))]
-           [:environment/clear-timeout! js-id])))
+      (if-let [{:keys [js-id]} (get-in db (db/path :environment/timeouts timeout-id))]
+              {:environment/clear-timeout! js-id})))
 
 
 
@@ -304,7 +332,7 @@
 (defn- listen-to-connection-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (do (dom/add-event-listener! "online"  connection-change-listener)
+  (do (dom/add-event-listener!  "online" connection-change-listener)
       (dom/add-event-listener! "offline" connection-change-listener)))
 
 (a/reg-handled-fx :environment/listen-to-connection-change! listen-to-connection-change!)

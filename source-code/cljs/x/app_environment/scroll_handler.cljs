@@ -90,7 +90,10 @@
   (dom/set-scroll-y! n))
 
 ; @usage
-; [:environment/set-scroll-y! 100]
+;  {:environment/set-scroll-y! 100}
+;
+; @usage
+;  [:environment/set-scroll-y! 100]
 (a/reg-handled-fx :environment/set-scroll-y! set-scroll-y!)
 
 (defn scroll-to-top!
@@ -100,7 +103,10 @@
   (dom/set-scroll-y! 0))
 
 ; @usage
-; [:environment/scroll-to-top!]
+;  {:environment/scroll-to-top!}
+;
+; @usage
+;  [:environment/scroll-to-top!]
 (a/reg-handled-fx :environment/scroll-to-top! scroll-to-top!)
 
 (defn- scroll-to-element-top!
@@ -110,11 +116,13 @@
   ; @usage
   ;  (environment/scroll-to-element-top! "my-element" 50)
   [element-id offset]
-  (dom/scroll-to-element-top! (dom/get-element-by-id element-id)
-                              (param offset)))
+  (dom/scroll-to-element-top! (dom/get-element-by-id element-id) offset))
 
 ; @usage
-; [:environment/scroll-to-element-top! "my-element" 50]
+;  {:environment/scroll-to-element-top! "my-element" 50}
+;
+; @usage
+;  [:environment/scroll-to-element-top! "my-element" 50]
 (a/reg-handled-fx :environment/scroll-to-element-top! scroll-to-element-top!)
 
 (defn- listen-to-scroll!
