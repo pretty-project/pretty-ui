@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v1.4.0
-; Compatibility: x4.5.2
+; Version: v1.4.4
+; Compatibility: x4.5.7
 
 
 
@@ -14,9 +14,11 @@
 
 (ns x.mid-core.event-handler
     (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.format  :as format]
               [mid-fruits.map     :as map :refer [update-some]]
               [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]
+              [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [re-frame.core      :as re-frame]
               [re-frame.db        :refer [app-db]]
@@ -518,7 +520,7 @@
   ; @return (map)
   [context]
   (let [event-vector (context->event-vector context)]
-       #?(:cljs (let [timestamp (-> js/performance .now mid-fruits.time/ms->s mid-fruits.format/decimals)]
+       #?(:cljs (let [timestamp (-> js/performance .now time/ms->s format/decimals)]
                      (println timestamp "\n" event-vector)))
        (return context)))
 

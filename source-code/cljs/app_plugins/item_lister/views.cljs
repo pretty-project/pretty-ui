@@ -17,6 +17,7 @@
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.logical   :refer [nor]]
               [mid-fruits.loop      :refer [reduce-indexed]]
+              [mid-fruits.vector    :as vector]
               [x.app-core.api       :as a :refer [r]]
               [x.app-components.api :as components]
               [x.app-elements.api   :as elements]
@@ -166,11 +167,12 @@
   ; @return (component)
   [extension-id item-namespace]
   (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       [elements/button :item-lister/delete-selected-items-button
-                        {:disabled? (:no-items-selected? s)
-                         :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
-                         :preset    :delete-icon-button
-                         :tooltip   :delete!}]))
+       (if (vector/contains-item? (:item-actions s) :delete)
+           [elements/button :item-lister/delete-selected-items-button
+                            {:disabled? (:no-items-selected? s)
+                             :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
+                             :preset    :delete-icon-button
+                             :tooltip   :delete!}])))
 
 (defn duplicate-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -181,11 +183,12 @@
   ; @return (component)
   [extension-id item-namespace]
   (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       [elements/button :item-lister/duplicate-selected-items-button
-                        {:disabled? (:no-items-selected? s)
-                         :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
-                         :preset    :duplicate-icon-button
-                         :tooltip   :duplicate!}]))
+       (if (vector/contains-item? (:item-actions s) :duplicate)
+           [elements/button :item-lister/duplicate-selected-items-button
+                            {:disabled? (:no-items-selected? s)
+                             :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
+                             :preset    :duplicate-icon-button
+                             :tooltip   :duplicate!}])))
 
 
 

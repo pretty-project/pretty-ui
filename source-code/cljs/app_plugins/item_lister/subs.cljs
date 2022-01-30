@@ -419,6 +419,7 @@
   {:all-items-selected? (r all-items-selected? db extension-id item-namespace)
    :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
    :no-items-selected?  (r no-items-selected?  db extension-id item-namespace)
+   :item-actions        (r get-meta-item db extension-id item-namespace :item-actions)
    :select-mode?        (r get-meta-item db extension-id item-namespace :select-mode?)})
 
 (a/reg-sub :item-lister/get-select-mode-props get-select-mode-props)

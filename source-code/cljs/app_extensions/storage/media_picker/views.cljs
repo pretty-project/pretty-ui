@@ -1,12 +1,25 @@
 
 (ns app-extensions.storage.media-picker.views
     (:require [app-extensions.storage.media-browser.views]
+              [app-plugins.item-browser.views]
               [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [x.app-media.api    :as media]
               [app-plugins.item-browser.api :as item-browser]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; app-extensions.storage.media-browser.views
+(def media-item app-extensions.storage.media-browser.views/media-item)
+
+; app-plugins.item-browser.views
+(def menu-mode-header   app-plugins.item-browser.views/menu-mode-header)
+(def search-mode-header app-plugins.item-lister.views/search-mode-header)
 
 
 
@@ -48,8 +61,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
   [:div#item-lister--header--structure
-    [app-plugins.item-browser.views/menu-mode-header  :storage :media]
-    [app-plugins.item-lister.views/search-mode-header :storage :media]])
+    [menu-mode-header   :storage :media]
+    [search-mode-header :storage :media]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,18 +75,16 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-item
+(defn media-item_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex item]
   (let [s (a/state [:storage.media-picker/get-media-item-props item-dex item])]
-       [:div [app-extensions.storage.media-browser.views/media-item item-dex item]
-             (if (:selected? s)
-                 [:div.storage--media-item--marker [elements/icon {:icon :check_circle_outline}]])]))
+       [media-item item-dex item (if (:selected? s) {:icon :check_circle_outline})]))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [item-browser/body :storage :media {:list-element #'media-item}])
+  [item-browser/body :storage :media {:list-element #'media-item_}])
 
 
 
