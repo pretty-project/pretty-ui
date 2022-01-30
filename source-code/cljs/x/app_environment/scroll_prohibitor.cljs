@@ -115,7 +115,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [body-top (dom/get-body-style-value "top")
-        scroll-y (math/positive (string/to-integer body-top))]
+        scroll-y (-> body-top string/to-integer math/positive)]
        ; Engedélyezi a html elemen való görgetést
        (dom/remove-element-style-value! (dom/get-document-element)
                                         (param "overflow-y"))
@@ -172,7 +172,7 @@
                ; Ha a tiltás eltávolítása után van hozzáadva másik tiltás ...
                {:db db}
                ; Ha a tiltás eltávolítása után nincs hozzáadva másik tiltás ...
-               {:db db :environment/enable-dom-scroll nil}))))
+               {:db db :environment/enable-dom-scroll! nil}))))
 
 (a/reg-event-fx
   :environment/add-scroll-prohibition!
@@ -186,12 +186,13 @@
           {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})}
           ; Ha a tiltás hozzáadása előtt NEM volt hozzáadva másik tiltás ...
           {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})
-           :environment/disable-dom-scroll nil})))
+           :environment/disable-dom-scroll! nil})))
 
 (a/reg-event-fx
   :environment/enable-scroll!
   ; @usage
   ;  [:environment/enable-scroll!]
   (fn [{:keys [db]} _]
+      (println "hey yo!")
       {:db (r remove-scroll-prohibitions! db)
-       :environment/enable-dom-scroll nil}))
+       :environment/enable-dom-scroll! nil}))

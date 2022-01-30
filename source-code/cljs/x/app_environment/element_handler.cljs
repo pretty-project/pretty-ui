@@ -381,4 +381,4 @@
 ;
 ; @usage
 ;  [:environment/unmark-element-masspoint-orientation! "my-element"]
-(a/reg-handled-fx :environment/mark-element-masspoint-orientation! mark-element-masspoint-orientation!)
+(a/reg-handled-fx :environment/unmark-element-masspoint-orientation! unmark-element-masspoint-orientation!)
