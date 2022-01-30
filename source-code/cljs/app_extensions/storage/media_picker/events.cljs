@@ -13,22 +13,22 @@
 
 (defn unselect-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ item-dex {:keys [filename] :as item}]]
+  [db [_ {:keys [filename] }]]
   (update-in db [:storage :media-picker/data-items] vector/remove-item filename))
 
 (defn select-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ item-dex {:keys [filename] :as item}]]
+  [db [_ {:keys [filename]}]]
   (if-let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
           (update-in db [:storage :media-picker/data-items] vector/conj-item-once filename)
           (assoc-in  db [:storage :media-picker/data-items] [filename])))
 
 (defn toggle-file-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ item-dex item]]
-  (if (r subs/file-selected? db item-dex item)
-      (r unselect-file!      db item-dex item)
-      (r select-file!        db item-dex item)))
+  [db [_ file-item]]
+  (if (r subs/file-selected? db file-item)
+      (r unselect-file!      db file-item)
+      (r select-file!        db file-item)))
 
 (defn save-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!

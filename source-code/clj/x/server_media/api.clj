@@ -34,10 +34,9 @@
 (def filename->media-storage-filepath   engine/filename->media-storage-filepath)
 (def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
-(def file-props->filepath               engine/file-props->filepath)
 (def delete-storage-file!               engine/delete-storage-file!)
 (def delete-storage-thumbnail!          engine/delete-storage-thumbnail!)
-  
+
 ; x.server-media.temporary-handler
 (def download-temporary-file temporary-handler/download-temporary-file)
 

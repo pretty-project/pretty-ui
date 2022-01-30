@@ -319,6 +319,9 @@
       :preparing-to-download...
       {:en "Preparing to download ..."
        :hu "Letöltés előkészítése ..."}
+      :preview
+      {:en "Preview"
+       :hu "Előnézet"}
       :previous!
       {:en "Previous"
        :hu "Előző"}

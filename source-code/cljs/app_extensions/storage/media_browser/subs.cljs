@@ -1,8 +1,15 @@
 
 (ns app-extensions.storage.media-browser.subs
-    (:require [x.app-core.api   :as a :refer [r]]
-              ; TEMP
-              [app-plugins.item-browser.subs]))
+    (:require [app-plugins.item-browser.subs]
+              [x.app-core.api :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; app-plugins.item-browser.subs
+(def route-handled? app-plugins.item-browser.subs/route-handled?)
 
 
 
@@ -16,4 +23,4 @@
   ;
   ; @return (boolean)
   [db _]
-  (r app-plugins.item-browser.subs/route-handled? db :storage :media))
+  (r route-handled? db :storage :media))

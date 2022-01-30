@@ -29,4 +29,3 @@
 (def filename->media-storage-filepath   engine/filename->media-storage-filepath)
 (def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
-(def file-props->filepath               engine/file-props->filepath)

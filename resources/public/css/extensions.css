@@ -60,13 +60,31 @@
 
 /***** Storage *****/
 
+.storage--media-browser--file-preview--icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 200px;
+  width: 200px }
+
+.storage--media-browser--file-preview--body {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: var( --border-radius-s );
+  height: 200px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 200px }
+
 .storage--media-item {
   align-items: center;
   display: flex }
 
 .storage--media-item--icon {
   position: absolute;
-  right: 24px;
+  right: 12px;
   top: 26px }
 
 .storage--media-item--header {

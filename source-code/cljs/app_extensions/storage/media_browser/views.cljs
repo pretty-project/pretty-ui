@@ -97,7 +97,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [item-browser/view :storage :media {:list-element     #'media-item
-                                      :item-actions     [:delete]
+                                      :item-actions     [:delete :duplicate]
                                       :new-item-options [:create-directory! :upload-files!]}])
 
 

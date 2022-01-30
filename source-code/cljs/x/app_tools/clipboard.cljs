@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.31
 ; Description: Szöveg másolása a vágólapra
-; Version: v0.4.2
-; Compatibility: x4.4.6
+; Version: v0.4.8
+; Compatibility: x4.5.8
 
 
 
@@ -14,11 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.clipboard
-    (:require [app-fruits.dom   :as dom]
-              [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a]
-              [x.app-tools.temporary-component
-               :refer [append-temporary-component! remove-temporary-component!]]))
+    (:require [app-fruits.dom :as dom]
+              [x.app-core.api :as a]
+              [x.app-tools.temporary-component :refer [append-temporary-component! remove-temporary-component!]]))
 
 
 
@@ -47,22 +45,6 @@
        (js/navigator.clipboard.writeText (.-value clipboard))))
 
 
-
-;; -- Events ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :tools/copy-to-clipboard!
-  ; @param (string) text
-  ;
-  ; @usage
-  ;  [:tools/copy-to-clipboard! "My text"]
-  (fn [_ [_ text]]
-      {:dispatch [:ui/blow-bubble! {:content :copied-to-clipboard}]
-       :tools/copy-to-clipboard! (param text)}))
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -74,6 +56,21 @@
   ; @return (hiccup)
   [text]
   [:input#x-app-clipboard {:defaultValue text}])
+
+
+
+;; -- Events ------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :tools/copy-to-clipboard!
+  ; @param (string) text
+  ;
+  ; @usage
+  ;  [:tools/copy-to-clipboard! "My text"]
+  (fn [_ [_ text]]
+      {:dispatch [:ui/blow-bubble! {:body :copied-to-clipboard}]
+       :tools/copy-to-clipboard! text}))
 
 
 

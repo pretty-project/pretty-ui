@@ -195,6 +195,9 @@
       :edit-file
       {:en "Edit file"
        :hu "Fájl szerkesztése"}
+      :file-preview
+      {:en "Preview"
+       :hu "Megtekintés"}
       :file-storage
       {:en "File storage"
        :hu "Tárhely"}

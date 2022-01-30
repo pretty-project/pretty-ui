@@ -56,7 +56,7 @@
   (let [file-saver (dom/get-element-by-id "x-file-saver")]
        (.click file-saver)))
 
-
+       
 
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -71,40 +71,6 @@
   [saver-props]
   (merge {:filename DEFAULT-FILENAME}
          (param saver-props)))
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :tools/save-file!
-  ; @param (keyword)(opt) saver-id
-  ; @param (map) saver-props
-  ;  {:data-url (string)(opt)
-  ;    Only w/o {:uri ...}
-  ;   :filename (string)(opt)
-  ;    Default: DEFAULT-FILENAME
-  ;   :uri (string)(opt)
-  ;    Only w/o {:data-url ...}}
-  ;
-  ; @usage
-  ;  [:tools/save-file! {...}]
-  ;
-  ; @usage
-  ;  [:tools/save-file! :my-file-saver {...}]
-  ;
-  ; @usage
-  ;  [:tools/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
-  ;                      :filename "my-file.edn"}]
-  ;
-  ; @usage
-  ;  [:tools/save-file! {:uri      "/images/my-image.jpg"}
-  ;                      :filename "my-image.jpg"}]
-  [a/event-vector<-id]
-  (fn [_ [_ saver-id saver-props]]
-      (let [saver-props (saver-props-prototype saver-props)]
-           [:tools/render-save-file-dialog! saver-id saver-props])))
 
 
 
@@ -185,6 +151,40 @@
        [elements/row  {:content [:<> [elements/icon {:icon :text_snippet}]
                                      [elements/vertical-separator {:size :s}]
                                      [elements/text {:content filename :font-weight :bold}]]}]])
+
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :tools/save-file!
+  ; @param (keyword)(opt) saver-id
+  ; @param (map) saver-props
+  ;  {:data-url (string)(opt)
+  ;    Only w/o {:uri ...}
+  ;   :filename (string)(opt)
+  ;    Default: DEFAULT-FILENAME
+  ;   :uri (string)(opt)
+  ;    Only w/o {:data-url ...}}
+  ;
+  ; @usage
+  ;  [:tools/save-file! {...}]
+  ;
+  ; @usage
+  ;  [:tools/save-file! :my-file-saver {...}]
+  ;
+  ; @usage
+  ;  [:tools/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
+  ;                      :filename "my-file.edn"}]
+  ;
+  ; @usage
+  ;  [:tools/save-file! {:uri      "/images/my-image.jpg"}
+  ;                      :filename "my-image.jpg"}]
+  [a/event-vector<-id]
+  (fn [_ [_ saver-id saver-props]]
+      (let [saver-props (saver-props-prototype saver-props)]
+           [:tools/render-save-file-dialog! saver-id saver-props])))
 
 
 

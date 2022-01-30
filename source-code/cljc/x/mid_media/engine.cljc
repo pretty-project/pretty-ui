@@ -134,29 +134,3 @@
   ; @return (string)
   [filename]
   (str TEMPORARY-FILEPATH-BASE filename))
-
-(defn file-props->filepath
-  ; @param (file-props)
-  ;  {:directory-path (string)(opt)
-  ;   :filename (string)
-  ;   :extension (string)(opt)}
-  ;
-  ; @example
-  ;  (media/file-props->filepath {:directory-path "foo/bar"
-  ;                               :filename       "baz"
-  ;                               :extension      "boo"})
-  ;  =>
-  ;  "foo/bar/baz.boo"
-  ;
-  ; @example
-  ;  (media/file-props->filepath {:directory-path "foo/bar/"
-  ;                               :filename       "baz"
-  ;                               :extension      ".boo"})
-  ;  =>
-  ;  "foo/bar/baz.boo"
-  ;
-  ; @return (string)
-  [{:keys [directory-path filename extension]}]
-  (str (string/ends-with!       directory-path "/")
-       (string/not-starts-with! filename       "/")
-       (string/starts-with!     extension      ".")))

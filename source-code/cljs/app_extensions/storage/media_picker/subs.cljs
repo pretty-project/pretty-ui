@@ -37,7 +37,7 @@
 
 (defn file-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ item-dex {:keys [filename] :as item}]]
+  [db [_ {:keys [filename]}]]
   (let [selected-items (r get-selected-items db)]
        (vector/contains-item? selected-items filename)))
 
