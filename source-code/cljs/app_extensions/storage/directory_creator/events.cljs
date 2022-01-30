@@ -53,8 +53,7 @@
   ;
   ; @usage
   ;  [:storage.directory-creator/load-creator! {:destination-id "..."}]
-  (fn [{:keys [db]} event-vector]
-      (let [creator-id    (a/event-vector->second-id   event-vector)
-            creator-props (a/event-vector->first-props event-vector)]
-           {:db (r store-creator-props! db creator-id creator-props)
-            :dispatch [:storage.directory-creator/render-dialog! creator-id]})))
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ creator-id creator-props]]
+      {:db (r store-creator-props! db creator-id creator-props)
+       :dispatch [:storage.directory-creator/render-dialog! creator-id]}))

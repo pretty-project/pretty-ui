@@ -50,7 +50,7 @@
   :storage.media-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if (r subs/media-browser-mode? db)
+      (if (r subs/media-browser-mode? db) ; XXX#7157
           (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
                   [:storage.media-browser/render-browser!])
           (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)

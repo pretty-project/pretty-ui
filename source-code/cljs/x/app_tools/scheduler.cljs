@@ -163,11 +163,10 @@
 
   ; @usage
   ;  [:tools/reg-schedule! {:hour 3 :minute 10 :event [:do-something!]}]
-  (fn [{:keys [db]} event-vector]
-      (let [schedule-id    (a/event-vector->second-id   event-vector)
-            schedule-props (a/event-vector->first-props event-vector)]
-           {:db       (r store-schedule-props! db schedule-id schedule-props)
-            :dispatch [:tools/init-scheduler!]})))
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ schedule-id schedule-props]]
+      {:db (r store-schedule-props! db schedule-id schedule-props)
+       :dispatch [:tools/init-scheduler!]}))
 
 (a/reg-event-fx
   :tools/remove-schedule!

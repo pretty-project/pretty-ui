@@ -48,8 +48,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
   [:div#item-lister--header--structure
-    [app-plugins.item-browser.views/menu-mode-header :storage :media
-                                                     {:new-item-options [:create-directory! :upload-files!]}]
+    [app-plugins.item-browser.views/menu-mode-header  :storage :media]
     [app-plugins.item-lister.views/search-mode-header :storage :media]])
 
 (defn- header

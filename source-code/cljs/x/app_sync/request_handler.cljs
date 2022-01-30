@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.6.0
-; Compatibility: x4.5.6
+; Version: v2.7.2
+; Compatibility: x4.5.7
 
 
 
@@ -274,11 +274,9 @@
   ; @return (map)
   [db [_ request-id request-props]]
   (as-> db % (r db/set-item! % (db/path :sync/requests request-id) request-props)
-             ; DEBUG
-             (r db/set-item! % (db/path :sync/requests request-id :debug)
+             (r db/set-item! % (db/path :sync/requests request-id :debug) ; DEBUG
                                [:sync/get-request-state request-id])
-             ; DEBUG
-             (r db/update-data-history! % :sync/requests request-id)))
+             (r db/update-data-history! % :sync/requests request-id)))    ; DEBUG
 
 (defn ->request-aborted
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -297,9 +295,11 @@
   ;
   ; @return (map)
   [db [_ request-id server-response]]
-  (as-> db % (r response-handler/store-request-response! % request-id server-response)
-             (r a/set-process-status!                    % request-id :success)
-             (r a/set-process-activity!                  % request-id :idle)))
+  (as-> db % (r a/set-process-status!   % request-id :success)
+             (r a/set-process-activity! % request-id :idle)
+             (if (r response-handler/store-request-response? % request-id)
+                 (r response-handler/store-request-response! % request-id server-response)
+                 (return %))))
 
 (defn- ->request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -392,10 +392,7 @@
   ;    Only w/ {:method :post}
   ;   :target-path (item-path vector)(opt)
   ;    Milyen Re-Frame adatbázis útvonalra mentse el a szerver válaszát
-  ;    Only w/ {:response-action :store :target-paths nil}
-  ;   :target-paths (map)(opt)
-  ;    Milyen Re-Frame adatbázis útvonalakra mentse el a szerver válaszának elemeit
-  ;    Only w/ {:response-action :store :target-path nil}
+  ;    Only w/ {:response-action :store}
   ;   :uri (string)
   ;    "/sample-uri"}
   ;
@@ -404,18 +401,9 @@
   ;
   ; @usage
   ;  [:sync/send-request! :my-request {...}]
-  ;
-  ; @usage
-  ;  (defn download-our-data [request] (http/map-wrap {:my-data-item "..." :your-data-item "..."}))
-  ;  [:sync/send-request! {:method :get
-  ;                        :target-paths {:my-data-item   [:db :my   :data :item :path]
-  ;                                       :your-data-item [:db :your :data :item :path]
-  ;                                       :my-item {:my-nested-item [:db :my :nested :item]}}
-  ;                        :uri "/get-our-data"}]
-  (fn [{:keys [db]} event-vector]
-      (let [request-id    (a/event-vector->second-id   event-vector)
-            request-props (a/event-vector->first-props event-vector)
-            request-props (r request-props-prototype db request-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ request-id request-props]]
+      (let [request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
                {:db                 (r send-request! db request-id request-props)
                 :sync/send-request! [request-id request-props]
@@ -452,13 +440,12 @@
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [server-response (reader/string->mixed server-response-body)]
-            ; TEMP
-            ; Fontos, hogy a szerver-válasz minél hamarabb a Re-Frame adatbázisba íródjon!
            {:db (r ->request-successed db request-id server-response)
             :sync/remove-reference! [request-id]
-            :dispatch-n [;[:sync/handle-request-response!      request-id server-response]
-                         (r get-request-on-success-event   db request-id server-response)
-                         (r get-request-on-responsed-event db request-id server-response)]
+            :dispatch-n     [(r get-request-on-success-event   db request-id server-response)
+                             (r get-request-on-responsed-event db request-id server-response)]
+            :dispatch-if    [(r response-handler/save-request-response? db request-id)
+                             [:sync/save-request-response! request-id server-response-body]]
             :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
                               :dispatch [:sync/->request-stalled request-id server-response]}]})))
 
@@ -477,8 +464,8 @@
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
       {:db (r ->request-failured db request-id server-response)
        :sync/remove-reference! [request-id]
-       :dispatch-n [(r get-request-on-failure-event   db request-id server-response)
-                    (r get-request-on-responsed-event db request-id server-response)]
+       :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
+                        (r get-request-on-responsed-event db request-id server-response)]
        :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
                          :dispatch [:sync/->request-stalled request-id server-response]}]}))
 

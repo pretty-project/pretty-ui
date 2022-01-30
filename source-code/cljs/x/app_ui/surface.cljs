@@ -103,10 +103,9 @@
   ; @usage
   ;  (defn my-view [surface-id] [:div "My surface"])
   ;  [:ui/set-surface! {:view {:content #'my-view}}]
-  (fn [{:keys [db]} event-vector]
-      (let [surface-id    (a/event-vector->second-id   event-vector)
-            surface-props (a/event-vector->first-props event-vector)
-            surface-props (surface-props-prototype     surface-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ surface-id surface-props]]
+      (let [surface-props (surface-props-prototype surface-props)]
            [:ui/render-surface! surface-id surface-props])))
 
 

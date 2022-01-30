@@ -15,7 +15,6 @@
 
 (ns x.server-user.installer
     (:require [mongo-db.api         :as mongo-db]
-              [prototypes.api       :as prototypes]
               [x.server-core.api    :as a :refer [r]]
               [x.server-user.engine :as engine]
               [x.server-user.account-handler :as account-handler]))
@@ -77,7 +76,7 @@
   ;
   ; @return (function)
   [namespace]
-  #(prototypes/added-document-prototype {:session account-handler/SYSTEM-ACCOUNT} namespace %))
+  #(mongo-db/added-document-prototype {:session account-handler/SYSTEM-ACCOUNT} namespace %))
 
 
 

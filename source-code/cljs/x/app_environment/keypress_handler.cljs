@@ -388,10 +388,9 @@
   ;
   ; @usage
   ;  [:environment/reg-keypress-event {:key-code 65 :on-keydown [:do-something!]}
-  (fn [{:keys [db]} event-vector]
-      (let [event-id    (a/event-vector->second-id   event-vector)
-            event-props (a/event-vector->first-props event-vector)
-            db          (r reg-keypress-event! db event-id event-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ event-id event-props]]
+      (let [db (r reg-keypress-event! db event-id event-props)]
            {:db db :dispatch-cond [; Activate handler if ...
                                    (r activate-handler? db)
                                    [:environment/activate-keypress-handler!]

@@ -283,11 +283,8 @@
   ;                                     :get (fn [request] ...)})
   ;
   ; @return (map)
-  [db event-vector]
-  (let [event-id    (a/event-vector->first-id    event-vector)
-        route-id    (a/event-vector->second-id   event-vector)
-        route-props (a/event-vector->first-props event-vector)
-        route-props (route-props-prototype       route-props)]
+  [db [_ route-id route-props]]
+  (let [route-props (route-props-prototype route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
                (if (engine/variable-route-string? route-template)
@@ -306,7 +303,7 @@
 ;
 ; @usage
 ;  [:router/add-route! :my-route {...}]
-(a/reg-event-db :router/add-route! add-route!)
+(a/reg-event-db :router/add-route! [a/event-vector<-id] add-route!)
 
 (defn add-routes!
   ; @param (map) routes

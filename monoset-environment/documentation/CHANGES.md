@@ -1,6 +1,13 @@
 
 # x4.5.7
+- A prototypes.api névtér újra a mongo-db része lett (circular-dependecy feloldva). Sry.
+
 - A stated elemek {:disabler [...]} tulajdonsága ezentúl nem elérhető
+
+- A [:syny/send-query! ...] és [:sync/send-request! ...] események {:target-paths ...} tulajdonsága
+  ezenntúl nem elérhető (használj helyette core/transit-handler-t!)
+
+
 
 # x4.5.6
 - A [components/content ...] komponens már nem kezeli a {:content-props ...} és {:subscriber ...}

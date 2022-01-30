@@ -2,7 +2,6 @@
 (ns server-extensions.storage.engine
     (:require [mid-fruits.vector :as vector]
               [mongo-db.api      :as mongo-db]
-              [prototypes.api    :as prototypes]
               [mid-extensions.storage.engine :as engine]))
 
 
@@ -30,7 +29,7 @@
   ;
   ; @return (namespaced map)
   [{:keys [request]} directory-id item-id]
-  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+  (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
           (attach-f    [document] (update document :media/items vector/conj-item {:media/id item-id}))]
          (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f})))
 
@@ -44,7 +43,7 @@
   ;
   ; @return (namespaced map)
   [{:keys [request]} directory-id item-id]
-  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+  (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
           (detach-f    [document] (update document :media/items vector/remove-item {:media/id item-id}))]
          (mongo-db/apply-document! "storage" directory-id detach-f {:prototype-f prototype-f})))
 
@@ -68,7 +67,7 @@
   ; Mappa létrehozásakor és fájlok feltöltésekor szükséges a tartalmazó (felmenő) mappák adatait frissíteni:
   ; - Utolsó módosítás dátuma, és a felhasználó azonosítója {:media/modified-at ... :media/modified-by ...}
   ; - Tartalom mérete {:media/content-size ...}
-  (letfn [(prototype-f [document] (prototypes/updated-document-prototype request :media document))
+  (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
           (update-f    [document] (update document :media/content-size operation filesize))
           (f [path] (when-let [{:media/keys [id]} (last path)]
                               (mongo-db/apply-document! "storage" id update-f {:prototype-f prototype-f})
@@ -98,7 +97,7 @@
   ;
   ; @return (namespaced map)
   [{:keys [request]} item]
-  (mongo-db/insert-document! "storage" item {:prototype-f #(prototypes/added-document-prototype request :media %)}))
+  (mongo-db/insert-document! "storage" item {:prototype-f #(mongo-db/added-document-prototype request :media %)}))
 
 (defn remove-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

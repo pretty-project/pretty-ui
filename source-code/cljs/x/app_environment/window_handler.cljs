@@ -256,11 +256,10 @@
   ; @usage
   ;  [:environment/reg-interval! :my-interval {:event [:do-something!]
   ;                                            :interval 420}]
-  (fn [{:keys [db]} event-vector]
-      (let [interval-id    (a/event-vector->second-id   event-vector)
-            interval-props (a/event-vector->first-props event-vector)]
-           {:dispatch-if [(not (r interval-exists? db interval-id))
-                          [:environment/set-interval! interval-id interval-props]]})))
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ interval-id interval-props]]
+      {:dispatch-if [(not (r interval-exists? db interval-id))
+                     [:environment/set-interval! interval-id interval-props]]}))
 
 (a/reg-event-fx
   :environment/remove-interval!
@@ -282,11 +281,10 @@
   ; @usage
   ;  [:environment/reg-timeout! :my-timeout {:event [:do-something!]
   ;                                          :timeout 420}]
-  (fn [{:keys [db]} event-vector]
-      (let [timeout-id    (a/event-vector->second-id   event-vector)
-            timeout-props (a/event-vector->first-props event-vector)]
-           {:dispatch-if [(not (r timeout-exists? db timeout-id))
-                          [:environment/set-timeout! timeout-id timeout-props]]})))
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ timeout-id timeout-props]]
+      {:dispatch-if [(not (r timeout-exists? db timeout-id))
+                     [:environment/set-timeout! timeout-id timeout-props]]}))
 
 (a/reg-event-fx
   :environment/remove-timeout!

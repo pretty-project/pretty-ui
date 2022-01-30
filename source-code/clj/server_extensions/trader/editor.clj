@@ -3,7 +3,6 @@
     (:require [mid-fruits.candy  :refer [param return]]
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
-              [prototypes.api    :as prototypes]
               [x.server-core.api :as a]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [server-extensions.trader.listener     :as listener]))
@@ -91,7 +90,7 @@
         document    {:trader/source-code (param source-code)
                      :trader/id          LISTENER-DOCUMENT-ID}]
        (mongo-db/save-document! "trader" document
-                                 {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
+                                 {:prototype-f #(mongo-db/updated-document-prototype request :trader %)})))
 
 (defmutation upload-source-code!
              ; WARNING! NON-PUBLIC! DO NOT USE!

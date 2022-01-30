@@ -942,39 +942,3 @@
                       {:body   {:content #'listener}  ; #'body és #'header
                        :header {:content #'header :subscriber [:file-browser/get-header-props]}
                        :horizontal-align :center}]))
-
-(a/reg-event-fx
-  :file-browser/load!
-  ; @param (keyword)(opt) browser-id
-  ; @param (map) browser-props
-  ;  {:allowed-extensions (strings in vector)(opt)
-  ;   :directory-id (keyword)(opt)
-  ;    Default: engine/ROOT-DIRECTORY-ID
-  ;   :browser-mode (keyword)(opt)
-  ;    :copy-to-directory, :move-to-directory, :select-file, :select-files, :add-files
-  ;    Default: select-file
-  ;    A {:browser-mode :add-files} módban használva a kiválasztás nem felülírja,
-  ;    hanem hozzáadja az eddig kiválasztott fájlokhoz az újonnan kiválasztott fájlokat.
-  ;   :disabled-directories (keywords in vector)(opt)
-  ;   :on-done (metamorphic-event)(opt)
-  ;   :value-path (item-path vector)(opt)}
-  ;
-  ; @usage
-  ;  [:file-browser/load! {...}]
-  ;
-  ; @usage
-  ;  [:file-browser/load! :my-browser {...}]
-  ;
-  ; @usage
-  ;  [:file-browser/load! {:allowed-extension ["htm" "html" "xml"]
-  ;                        :browser-mode :select-files}]
-  ;
-  ; @usage
-  ;  [:file-browser/load! {:browser-mode :move-to-directory
-  ;                        :disabled-directories [:my-directory :your-directory]}]
-  (fn [_ event-vector]
-      (let [browser-id    (a/event-vector->second-id   event-vector)
-            browser-props (a/event-vector->first-props event-vector)
-            browser-props (browser-props-prototype     browser-props)]
-           {:dispatch-n [[:file-browser/initialize! browser-id browser-props]
-                         [:file-browser/render!     browser-id browser-props]]})))

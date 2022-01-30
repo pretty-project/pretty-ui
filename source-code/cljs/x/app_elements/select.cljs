@@ -469,10 +469,9 @@
   ;
   ; @param (keyword)(opt) select-id
   ; @param (map) options-props
-  (fn [_ event-vector]
-      (let [select-id     (a/event-vector->second-id   event-vector)
-            options-props (a/event-vector->first-props event-vector)
-            options-id    (engine/element-id->extended-id select-id :popup)
+  [a/event-vector<-id]
+  (fn [_ [_ select-id options-props]]
+      (let [options-id    (engine/element-id->extended-id select-id :popup)
             options-props (options-props-prototype        select-id options-props)]
            [:ui/add-popup! options-id
                            {:body   [select-options-body options-id options-props]

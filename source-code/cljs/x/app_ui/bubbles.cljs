@@ -195,10 +195,9 @@
   ;
   ; @usage
   ;  [:ui/blow-bubble! :my-bubble {...}]
-  (fn [{:keys [db]} event-vector]
-      (let [bubble-id    (a/event-vector->second-id   event-vector)
-            bubble-props (a/event-vector->first-props event-vector)
-            bubble-props (bubble-props-prototype      bubble-id bubble-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ bubble-id bubble-props]]
+      (let [bubble-props (bubble-props-prototype bubble-id bubble-props)]
            {:dispatch-if [(r bubbles-enabled-by-user? db)
                           [:ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))
 

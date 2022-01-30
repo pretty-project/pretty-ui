@@ -541,30 +541,3 @@
   (fn [[uploader-id uploader-props]]))
       ;(append-temporary-component! [file-selector uploader-id uploader-props]
       ;                             (param open-file-selector!)]]))
-
-(a/reg-event-fx
-  :file-uploader/load!
-  ; A fájlfeltöltő a {:namespace ...} tulajdonságként átadott névtér szerint
-  ; elnevezett request-et indít a fájlok feltöltésekor.
-  ;
-  ; @param (keyword)(opt) uploader-id
-  ; @param (map) uploader-props
-  ;  {:allowed-extensions (strings in vector)(opt)
-  ;   :destination-directory-id (keyword)
-  ;   :namespace (keyword)}
-  ;
-  ; @usage
-  ;  [:file-uploader/load! {...}]
-  ;
-  ; @usage
-  ;  [:file-uploader/load! :my-uploader {...}]
-  ;
-  ; @usage
-  ;  [:file-uploader/load! {:allowed-extensions ["htm" "html" "xml"]
-  ;                         :destination-directory-id :home
-  ;                         :namespace :my-namespace}]
-  (fn [{:keys [db]} event-vector]
-      (let [uploader-id    (a/event-vector->second-id   event-vector)
-            uploader-props (a/event-vector->first-props event-vector)]
-           {:db (r store-uploader-props! db uploader-id uploader-props)
-            :file-uploader/open-file-selector! [uploader-id uploader-props]})))

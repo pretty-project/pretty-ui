@@ -44,7 +44,8 @@
 (defn load-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ picker-id picker-props]]
-  (assoc-in db [:storage :media-picker/meta-items] picker-props))
+  (-> db (assoc-in [:storage :media-picker/meta-items] picker-props)
+         (assoc-in [:storage :item-lister/meta-items :new-item-options] [:create-directory! :upload-files!])))
 
 
 
@@ -62,14 +63,20 @@
   :storage.media-picker/load-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  ; @param (map) (picker-props)
+  ; @param (keyword)(opt) picker-id
+  ; @param (map) picker-props
   ;  {:value-path (item-path vector)}
-  (fn [{:keys [db]} event-vector]
-      (let [picker-id    (a/event-vector->second-id   event-vector)
-            picker-props (a/event-vector->first-props event-vector)]
-           {:db (r load-picker! db picker-id picker-props)
-            :dispatch [:item-browser/load-browser! :storage :media]})))
+  [a/event-vector<-id]
+  ; - A picker-id azonosító nincs felhasználva sehol, kizárólag az *-id & *-props formula
+  ;   egyésges használata miatt adható meg.
+  ; - XXX#7157
+  ;   A media-picker egy popup elemen megjelenített átalakított media-browser, aminek az indítása
+  ;   az [:item-browser/load-browser! ...] eseménnyel történik, ami elindítja a media-browser eszközt,
+  ;   ami felismeri, hogy nem egy útvonal alapján lett elindítva és ezért a media-picker eszközt
+  ;   rendereli ki.
+  (fn [{:keys [db]} [_ picker-id picker-props]]
+      {:db (r load-picker! db picker-id picker-props)
+       :dispatch [:item-browser/load-browser! :storage :media]}))
 
 
 
@@ -79,6 +86,5 @@
 (a/reg-event-fx
   :storage.media-picker/->file-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [a/debug!]
   (fn [{:keys [db]} [_ item-dex item]]
       {:db (r ->file-clicked db item-dex item)}))

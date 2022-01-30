@@ -446,10 +446,9 @@
   ;
   ; @usage
   ;  [:environment/set-cookie! :my-cookie {...}]
-  (fn [{:keys [db]} event-vector]
-      (let [cookie-id    (a/event-vector->second-id   event-vector)
-            cookie-props (a/event-vector->first-props event-vector)
-            cookie-props (cookie-props-prototype cookie-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ cookie-id cookie-props]]
+      (let [cookie-props (cookie-props-prototype cookie-props)]
            {:dispatch-if [(r set-cookie? db cookie-id cookie-props)
                           [:environment/store-browser-cookie! cookie-id cookie-props]]})))
 

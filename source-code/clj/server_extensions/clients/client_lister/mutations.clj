@@ -3,7 +3,6 @@
     (:require [mid-fruits.candy :refer [param return]]
               [mongo-db.api     :as mongo-db]
               [pathom.api       :as pathom]
-              [prototypes.api   :as prototypes]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]))
 
 
@@ -54,7 +53,7 @@
              [{:keys [request]} {:keys [item-ids]}]
              {::pathom.co/op-name 'clients.client-lister/duplicate-items!}
              (mongo-db/duplicate-documents! "clients" item-ids
-                                            {:prototype-f #(prototypes/duplicated-document-prototype request :client %)}))
+                                            {:prototype-f #(mongo-db/duplicated-document-prototype request :client %)}))
 
 
 

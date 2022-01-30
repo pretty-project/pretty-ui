@@ -104,7 +104,6 @@
   ;   :query (string or vector)(opt)
   ;    Only w/o {:body {...}}
   ;   :target-path (item-path vector)(opt)
-  ;   :target-paths (map)(opt)
   ;   :uri (string)
   ;    Default: DEFAULT-URI}
   ;
@@ -119,20 +118,9 @@
   ;
   ; @usage
   ;  [:sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
-  ;
-  ; @usage
-  ;  [:sync/send-query! {:query [:all-users]}]
-  ;                      :target-paths {:my-data-item   [:db :my   :data :item :path]
-  ;                                     :your-data-item [:db :your :data :item :path]
-  ;                                     :my-item {:my-nested-item [:db :my :nested :item]}}
-  ;
-  ; @usage
-  ;  [:sync/send-query! {:query [:all-users]}]
-  ;                      :target-path [:my :response :path]}
-  (fn [{:keys [db]} event-vector]
-      (let [query-id    (a/event-vector->second-id   event-vector)
-            query-props (a/event-vector->first-props event-vector)
-            query-props (query-props-prototype       query-props)
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ query-id query-props]]
+      (let [query-props (query-props-prototype query-props)
 
             ; BUG#5011
             ; A query vektorba feltételesen – if, when, ... függvény használatával –

@@ -18,14 +18,7 @@
 - reg-handled-fx usage-ekhoz az fx formulát is odaírni {:my-side-effect-event "..."}
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 
-- A sync/send-request! esemény {:target-paths ...} tulajdonságára már nincs szükség a transit-handler
-  bevezetése óta
-
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
-
-
-
-- elements / context-surface DEPRECATED
 
 - prototypes névtér újra a mongo-db névtér része lehet, mert már enm circular-dep w/ x.server-user.api
 

@@ -2,7 +2,6 @@
 (ns server-extensions.storage.installer
     (:require [mid-fruits.candy   :refer [param return]]
               [mongo-db.api       :as mongo-db]
-              [prototypes.api     :as prototypes]
               [server-fruits.io   :as io]
               [x.server-core.api  :as a :refer [r]]
               [x.server-media.api :as media]
@@ -41,7 +40,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [request {:session user/SYSTEM-ACCOUNT}
-        options {:prototype-f #(prototypes/added-document-prototype request :media %)}
+        options {:prototype-f #(mongo-db/added-document-prototype request :media %)}
         ; Get sample file filesize
         sample-file-filepath (media/filename->media-storage-filepath engine/SAMPLE-FILE-FILENAME)
         sample-file-filesize (io/get-filesize sample-file-filepath)]

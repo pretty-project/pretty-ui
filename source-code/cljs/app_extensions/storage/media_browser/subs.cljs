@@ -12,6 +12,8 @@
 (defn media-browser-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; XXX#7157
+  ;
   ; @return (boolean)
   [db _]
   (r app-plugins.item-browser.subs/route-handled? db :storage :media))

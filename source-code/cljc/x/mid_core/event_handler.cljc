@@ -29,12 +29,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; Helpers
-; Converters
-; Event-vector converters
-; DB functions
+; Event-param functions
 ; Metamorphic handler functions
 ; Metamorphic effects functions
 ; Effects-map functions
+; Event-vector<-id
 ; Event self-destructing
 ; Event debugging
 ; Event checking
@@ -314,237 +313,6 @@
 
 
 
-;; -- Param-vector converters -------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn param-vector->first-id
-  ; @param (vector) param-vector
-  ;
-  ; @example
-  ;  (a/param-vector->first-id [:first-id {...}])
-  ;  =>
-  ;  :first-id
-  ;
-  ; @example
-  ;  (a/param-vector->first-id [{...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @return (keyword)
-  ;  Ha a param-vector legalább egy kulcsszót tartalmaz, akkor a visszatérési érték az első a kulcsszó.
-  ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték egy random-uuid.
-  [param-vector]
-  (-> param-vector (vector/first-filtered keyword?) engine/id))
-
-(defn param-vector->second-id
-  ; @param (vector) param-vector
-  ;
-  ; @example
-  ;  (a/param-vector->second-id [:first-id :second-id {...}])
-  ;  =>
-  ;  :second-id
-  ;
-  ; @example
-  ;  (a/param-vector->second-id [:first-id {...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @example
-  ;  (a/param-vector->second-id [{...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @return (keyword)
-  ;  Ha a param-vector legalább kettő kulcsszót tartalmaz, akkor a visszatérési
-  ;   érték a második kulcsszó.
-  ;  Ha a param-vector egy kulcsszót tartalmaz, akkor a visszatérési érték
-  ;   egy random-uuid.
-  ;  Ha a param-vector egy kulcsszót sem tartalmaz, akkor a visszatérési érték
-  ;   egy random-uuid.
-  [param-vector]
-  (-> param-vector (vector/nth-filtered keyword? 1) engine/id))
-
-(defn param-vector->first-props
-  ; @param (vector) param-vector
-  ;
-  ; @example
-  ;  (a/param-vector->first-props [:first-id {...}])
-  ;  =>
-  ;  {...}
-  ;
-  ; @example
-  ;  (a/param-vector->first-props [:first-id {... 1} {... 2}])
-  ;  =>
-  ;  {... 1}
-  ;
-  ; @example
-  ;  (a/param-vector->first-props [:first-id])
-  ;  =>
-  ;  {}
-  ;
-  ; @return (map)
-  ;  Ha a param-vector egy térképet tartalmaz, akkor a visszatérési érték
-  ;   az a térkép.
-  ;  Ha a param-vector legalább kettő térképet tartalmaz, akkor a visszatérési
-  ;   érték az első térkép.
-  ;  Ha a param-vector egy térképet sem tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  [param-vector]
-  (-> param-vector (vector/first-filtered map?)
-                   (or {})))
-
-(defn param-vector->second-props
-  ; @param (vector) param-vector
-  ;
-  ; @example
-  ;  (a/param-vector->second-props [:first-id {...}]
-  ;  =>
-  ;  {}
-  ;
-  ; @example
-  ;  (a/param-vector->second-props [:first-id {... 1} {... 2}]
-  ;  =>
-  ;  {... 2}
-  ;
-  ; @example
-  ;  (a/param-vector->second-props [:first-id]
-  ;  =>
-  ;  {}
-  ;
-  ; @return (map)
-  ;  Ha a param-vector egy térképet tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  ;  Ha a param-vector legalább kettő térképet tartalmaz, akkor a visszatérési
-  ;   érték a második térkép.
-  ;  Ha a param-vector egy térképet sem tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  [param-vector]
-  (if-let [second-props (vector/nth-filtered param-vector map? 1)]
-          (return second-props)
-          (return {})))
-
-
-
-;; -- Event-vector converters -------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn event-vector->first-id
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->first-id [:my-event :my-id {...}])
-  ;  =>
-  ;  :my-event
-  ;
-  ; @return (keyword)
-  [event-vector]
-  (first event-vector))
-
-(defn event-vector->second-id
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->second-id [:my-event :my-id {...}])
-  ;  =>
-  ;  :my-id
-  ;
-  ; @example
-  ;  (a/event-vector->second-id [:my-event {...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @return (keyword)
-  ;  Ha az event-vector legalább kettő kulcsszót tartalmaz (az event-id kulcsszót
-  ;   is számítva), akkor a visszatérési érték az második a kulcsszó.
-  ;  Ha az event-vector kevesebb, mint kettő kulcsszót tartalmaz (az event-id
-  ;   kulcsszót is számítva), akkor a visszatérési érték egy random-uuid.
-  [event-vector]
-  (-> event-vector event-vector->param-vector param-vector->first-id))
-
-(defn event-vector->third-id
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->third-id [:my-event :my-id :your-id {...}])
-  ;  =>
-  ;  :your-id
-  ;
-  ; @example
-  ;  (a/event-vector->third-id [:my-event :my-id {...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @example
-  ;  (a/event-vector->third-id [:my-event {...}])
-  ;  =>
-  ;  :0ce14671-e916-43ab-b057-0939329d4c1b
-  ;
-  ; @return (keyword)
-  ;  Ha az event-vector legalább három kulcsszót tartalmaz (az event-id kulcsszót
-  ;   is számítva), akkor a visszatérési érték a harmadik kulcsszó.
-  ;  Ha az event-vector kevesebb, mint három kulcsszót tartalmaz (az event-id
-  ;   kulcsszót is számítva), akkor a visszatérési érték egy random-uuid.
-  [event-vector]
-  (-> event-vector event-vector->param-vector param-vector->second-id))
-
-(defn event-vector->first-props
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->first-props [:my-event :my-id {...}])
-  ;  =>
-  ;  {...}
-  ;
-  ; @example
-  ;  (a/event-vector->first-props [:my-event :my-id {... 1} {... 2}])
-  ;  =>
-  ;  {... 1}
-  ;
-  ; @example
-  ;  (a/event-vector->first-props [:my-event :my-id])
-  ;  =>
-  ;  {}
-  ;
-  ; @return (map)
-  ;  Ha az event-vector egy térképet tartalmaz, akkor a visszatérési érték
-  ;   az a térkép.
-  ;  Ha az event-vector legalább kettő térképet tartalmaz, akkor a visszatérési
-  ;   érték az első térkép.
-  ;  Ha az event-vector egy térképet sem tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  [event-vector]
-  (-> event-vector event-vector->param-vector param-vector->first-props))
-
-(defn event-vector->second-props
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->second-props [:my-event :my-id {...}]
-  ;  =>
-  ;  {}
-  ;
-  ; @example
-  ;  (a/event-vector->second-props [:my-event :my-id {... 1} {... 2}]
-  ;  =>
-  ;  {... 2}
-  ;
-  ; @example
-  ;  (a/event-vector->second-props [:my-event :my-id]
-  ;  =>
-  ;  {}
-  ;
-  ; @return (map)
-  ;  Ha az event-vector egy térképet tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  ;  Ha az event-vector legalább kettő térképet tartalmaz, akkor a visszatérési
-  ;   érték a második térkép.
-  ;  Ha az event-vector egy térképet sem tartalmaz, akkor a visszatérési érték
-  ;   egy üres térkép.
-  [event-vector]
-  (-> event-vector event-vector->param-vector param-vector->second-props))
-
-
-
 ;; -- Event param functions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -572,10 +340,9 @@
   ;
   ; @return (metamorphic-event)
   [n & xyz]
-        ; Szükséges megkülönböztetni az esemény vektort a dispatch-later és dispatch-tick
-        ; esemény csoport vektortól!
-        ; [:do-something! ...]
-        ; [{:ms 500 :dispatch [:do-something! ...]}]
+  ; Szükséges megkülönböztetni az esemény vektort a dispatch-later és dispatch-tick esemény csoport vektortól!
+  ; [:do-something! ...]
+  ; [{:ms 500 :dispatch [:do-something! ...]}]
   (cond (event-vector?       n {:strict-mode? false}) (vector/concat-items n xyz)
         (map?                n) (map/->values n #(apply metamorphic-event<-params % xyz))
         (event-group-vector? n) (return n) ; TODO ...
@@ -679,6 +446,40 @@
 
 
 
+;; -- Event-vector<-id --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn event-vector<-id-f
+  ; @param (map) context
+  ;
+  ; @return (map)
+  [context]
+  (get-in context [:coeffects :event])
+  (letfn [(f ; @param (vector) event-vector
+             ;
+             ; @example
+             ;  (f [:my-event :my-id {...}])
+             ;  =>
+             ;  [:my-event :my-id {...}]
+             ;
+             ; @example
+             ;  (f [:my-event {...}])
+             ;  =>
+             ;  [:my-event :0ce14671-e916-43ab-b057-0939329d4c1b {...}]
+             ;
+             ; @return (vector)
+             [event-vector]
+             (if (->     event-vector second keyword?)
+                 (return event-vector)
+                 (concat [(first event-vector) (random/generate-keyword)] (rest event-vector))))]
+         (update-in context [:coeffects :event] f)))
+
+; @constant (?)
+(def event-vector<-id (re-frame/->interceptor :id :core/event-vector<-id
+                                              :before event-vector<-id-f))
+
+
+
 ;; -- Event self-destructing --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -703,7 +504,7 @@
        (return context)))
 
 ; @constant (?)
-(def self-destruct! (re-frame/->interceptor :id    :core/self-destruct!
+(def self-destruct! (re-frame/->interceptor :id :core/self-destruct!
                                             :after self-destruct-f))
 
 
@@ -719,10 +520,10 @@
   (let [event-vector (context->event-vector context)]
        #?(:cljs (let [timestamp (-> js/performance .now mid-fruits.time/ms->s mid-fruits.format/decimals)]
                      (println timestamp "\n" event-vector)))
-       (return  context)))
+       (return context)))
 
 ; @constant (?)
-(def debug! (re-frame/->interceptor :id    :core/debug!
+(def debug! (re-frame/->interceptor :id :core/debug!
                                     :after debug-f))
 
 

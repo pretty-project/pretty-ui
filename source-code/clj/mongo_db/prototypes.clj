@@ -1,5 +1,5 @@
 
-(ns prototypes.engine
+(ns mongo-db.prototypes
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.time    :as time]
               [server-fruits.http :as http]))
@@ -29,7 +29,7 @@
   ; @param (namespaced map) updated-item
   ;
   ; @usage
-  ;  (prototypes/added-document-prototype {} :my-namespace {...})
+  ;  (mongo-db/added-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (object)
@@ -52,7 +52,7 @@
   ; @param (namespaced map) updated-item
   ;
   ; @usage
-  ;  (prototypes/updated-document-prototype {} :my-namespace {...})
+  ;  (mongo-db/updated-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (object)
@@ -76,7 +76,7 @@
   ;  {:namespace/id (string)}
   ;
   ; @usage
-  ;  (prototypes/updated-document-prototype {} :my-namespace {...})
+  ;  (mongo-db/updated-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (object)

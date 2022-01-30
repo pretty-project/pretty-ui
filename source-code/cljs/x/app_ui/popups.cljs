@@ -219,10 +219,9 @@
   ;  (defn my-header [popup-id header-props] [:div "My header"])
   ;  [:ui/add-popup! {:body   {:content #'my-body}
   ;                   :header {:content #'my-header :subscriber [:get-my-header-props]}}]
-  (fn [{:keys [db]} event-vector]
-      (let [popup-id    (a/event-vector->second-id   event-vector)
-            popup-props (a/event-vector->first-props event-vector)
-            popup-props (r popup-props-prototype db popup-id popup-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ popup-id popup-props]]
+      (let [popup-props (r popup-props-prototype db popup-id popup-props)]
            (if-let [render-exclusive? (get popup-props :render-exclusive?)]
                    [:ui/render-popup-exclusive! popup-id popup-props]
                    [:ui/render-popup!           popup-id popup-props]))))

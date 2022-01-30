@@ -146,14 +146,13 @@
   ; @usage
   ;  [:storage.file-uploader/load-uploader! {:allowed-extensions ["htm" "html" "xml"]
   ;                                          :destination-id "my-directory"}]
-  (fn [{:keys [db]} event-vector]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ uploader-id uploader-props]]
       ; - Az egyes fájlfeltöltési folyamatok a fájlfeltöltő ablak bezáródása után még a fájl(ok)
-      ;   méretétől függően nem azonnal fejeződnek be.
+      ;   méretétől függően NEM azonnal fejeződnek be.
       ; - Az uploader-id egyedi azonosító alkalmazása lehetővé teszi, hogy az egy időben történő
       ;   különböző fájlfeltöltések kezelhetők legyenek.
       ; - A request-id azonosító feltöltési folyamatonként eltérő kell legyen, ehhez szükséges,
       ;   hogy az uploader-id azonosító is ... eltérő legyen!
-      (let [uploader-id    (a/event-vector->second-id   event-vector)
-            uploader-props (a/event-vector->first-props event-vector)]
-           {:db (r store-uploader-props! db uploader-id uploader-props)
-            :storage.file-uploader/open-file-selector! [uploader-id uploader-props]})))
+      {:db (r store-uploader-props! db uploader-id uploader-props)
+       :storage.file-uploader/open-file-selector! [uploader-id uploader-props]}))

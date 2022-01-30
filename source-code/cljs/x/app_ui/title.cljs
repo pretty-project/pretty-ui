@@ -30,7 +30,7 @@
   ;
   ; @return (string)
   [db [_ window-title]]
-  (if-let [window-title (r components/get-metamorphic-value db {:value window-title})]
+  (if-let [window-title (r components/get-metamorphic-value db window-title)]
           (let [app-title (r a/get-app-config-item db :app-title)]
                (str window-title " - " app-title))
           (r a/get-app-config-item db :app-title)))

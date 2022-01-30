@@ -6,7 +6,6 @@
               [mid-fruits.map     :as map]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [prototypes.api     :as prototypes]
               [x.server-core.api  :as a]
               [x.server-db.api    :as db]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
@@ -195,7 +194,7 @@
                   :trader/use-mainnet? (get mutation-props :use-mainnet?)
                   :trader/id           API-DOCUMENT-ID}]
        (dissoc (mongo-db/save-document! "trader" document
-                                        {:prototype-f #(prototypes/updated-document-prototype request :trader %)})
+                                        {:prototype-f #(mongo-db/updated-document-prototype request :trader %)})
                ; Removing api-secret from the response ...
                :trader/api-secret)))
 

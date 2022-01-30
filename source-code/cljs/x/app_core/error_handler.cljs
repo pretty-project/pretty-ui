@@ -82,10 +82,9 @@
   ; @usage
   ;  [:core/->error-catched {:error "An error occured ..."
   ;                          :cofx  {...}}]
-  (fn [{:keys [db]} event-vector]
-      (let [error-id      (event-handler/event-vector->second-id   event-vector)
-            error-props   (event-handler/event-vector->first-props event-vector)
-            error-message (r get-error-message db error-id error-props)
+  [event-handler/event-vector<-id]
+  (fn [{:keys [db]} [_ error-id error-props]]
+      (let [error-message (r get-error-message db error-id error-props)
             catched-event (-> error-props :cofx event-handler/cofx->event-vector)]
            (.error js/console (str error-message "\n" catched-event))
            {:db (r load-handler/stop-synchronizing! db)

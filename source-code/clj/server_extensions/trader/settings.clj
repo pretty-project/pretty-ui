@@ -4,7 +4,6 @@
               [mid-fruits.keyword :as keyword]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [prototypes.api     :as prototypes]
               [x.server-core.api  :as a]
               [x.server-db.api    :as db]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
@@ -95,7 +94,7 @@
   (let [document {:trader/symbol (get mutation-props :symbol)
                   :trader/id     SETTINGS-DOCUMENT-ID}]
        (mongo-db/save-document! "trader" document
-                                {:prototype-f #(prototypes/updated-document-prototype request :trader %)})))
+                                {:prototype-f #(mongo-db/updated-document-prototype request :trader %)})))
 
 (defmutation upload-settings!
              ; WARNING! NON-PUBLIC! DO NOT USE!

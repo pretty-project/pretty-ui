@@ -382,10 +382,9 @@
   ;   :step-interval (ms)(opt)
   ;    Default: DEFAULT-STEP-INTERVAL
   ;    Only w/ {:autostep? true}}
-  (fn [{:keys [db]} event-vector]
-      (let [handler-id    (a/event-vector->second-id   event-vector)
-            handler-props (a/event-vector->first-props event-vector)
-            handler-props (handler-props-prototype handler-props)]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ handler-id handler-props]]
+      (let [handler-props (handler-props-prototype handler-props)]
            (if-not (r step-handler-inited? db handler-id)
                    {:dispatch-n [[:gestures/store-step-handler-props! handler-id handler-props]
                                  [:gestures/run-autostep?!            handler-id]]}))))

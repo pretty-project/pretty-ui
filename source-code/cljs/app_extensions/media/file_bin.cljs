@@ -105,15 +105,3 @@
 
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :file-bin/render!
-  ; @param (keyword)(opt) bin-id
-  ; @param (map) bin-props
-  ;  {}
-  (fn [{:keys [db]} event-vector]
-      (let [bin-id    (a/event-vector->second-id   event-vector)
-            bin-props (a/event-vector->first-props event-vector)
-            bin-props (bin-props-prototype bin-props)]
-           [:ui/set-surface! :media/view
-                             {:view {:content #'view}}])))

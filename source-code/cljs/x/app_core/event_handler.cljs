@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v1.5.2
-; Compatibility: x4.5.2
+; Version: v1.6.6
+; Compatibility: x4.5.7
 
 
 
@@ -42,15 +42,6 @@
 (def context->event-id                event-handler/context->event-id)
 (def context->db-before-effect        event-handler/context->db-before-effect)
 (def context->db-after-effect         event-handler/context->db-after-effect)
-(def param-vector->first-id           event-handler/param-vector->first-id)
-(def param-vector->second-id          event-handler/param-vector->second-id)
-(def param-vector->first-props        event-handler/param-vector->first-props)
-(def param-vector->second-props       event-handler/param-vector->second-props)
-(def event-vector->first-id           event-handler/event-vector->first-id)
-(def event-vector->second-id          event-handler/event-vector->second-id)
-(def event-vector->third-id           event-handler/event-vector->third-id)
-(def event-vector->first-props        event-handler/event-vector->first-props)
-(def event-vector->second-props       event-handler/event-vector->second-props)
 (def event-vector<-params             event-handler/event-vector<-params)
 (def metamorphic-event<-params        event-handler/metamorphic-event<-params)
 (def metamorphic-effects->effects-map event-handler/metamorphic-effects->effects-map)
@@ -60,6 +51,7 @@
 (def reg-cofx                         event-handler/reg-cofx)
 (def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
+(def event-vector<-id                 event-handler/event-vector<-id)
 (def self-destruct!                   event-handler/self-destruct!)
 (def debug!                           event-handler/debug!)
 (def get-event-handlers               event-handler/get-event-handlers)

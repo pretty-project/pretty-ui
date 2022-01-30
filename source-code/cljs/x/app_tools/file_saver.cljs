@@ -101,10 +101,9 @@
   ; @usage
   ;  [:tools/save-file! {:uri      "/images/my-image.jpg"}
   ;                      :filename "my-image.jpg"}]
-  (fn [_ event-vector]
-      (let [saver-id    (a/event-vector->second-id   event-vector)
-            saver-props (a/event-vector->first-props event-vector)
-            saver-props (saver-props-prototype       saver-props)]
+  [a/event-vector<-id]
+  (fn [_ [_ saver-id saver-props]]
+      (let [saver-props (saver-props-prototype saver-props)]
            [:tools/render-save-file-dialog! saver-id saver-props])))
 
 

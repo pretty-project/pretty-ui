@@ -13,3 +13,7 @@
   kivezetése előtt volt szükséges.
 
 - Az {:item-actions ...} tulajdonság nincs befejezve
+
+
+
+# XXX#3286

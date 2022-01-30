@@ -134,8 +134,7 @@
   ;
   ; @param (keyword) subscription-id
   ; @param (map) subscription-props
-  ;  {:query (vector)
-  ;   :target-paths (item-path vectors in map)}
+  ;  {:query (vector)}
   (fn [{:keys [db]} [_ subscription-id subscription-props]]
       (if (r sync-active? db)
           {:db (r add-subscription! db subscription-id subscription-props)}

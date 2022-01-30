@@ -88,12 +88,11 @@
   ;
   ; @usage
   ;  [:ui/set-shield! :my-shield {...}]
-  (fn [_ event-vector]
-      (let [shield-id    (a/event-vector->second-id   event-vector)
-            shield-props (a/event-vector->first-props event-vector)]
-           {:dispatch-later [{:ms   0 :dispatch [:ui/empty-shield!]}
-                             {:ms  50 :dispatch [:ui/render-shield-content! shield-props]}
-                             {:ms 100 :dispatch [:ui/show-shield!]}]})))
+  [a/event-vector<-id]
+  (fn [_ [_ shield-id shield-props]]
+      {:dispatch-later [{:ms   0 :dispatch [:ui/empty-shield!]}
+                        {:ms  50 :dispatch [:ui/render-shield-content! shield-props]}
+                        {:ms 100 :dispatch [:ui/show-shield!]}]}))
 
 (a/reg-event-fx
   :ui/remove-shield!
