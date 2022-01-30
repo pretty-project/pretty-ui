@@ -48,7 +48,7 @@
        [elements/button :header-select-button
                         {:disabled? no-items-selected?
                          :preset :select-button :indent :both :keypress {:key-code 13}
-                         :on-click [:storage.media-picker/select-items! picker-id]}]))
+                         :on-click [:storage.media-picker/save-selected-items! picker-id]}]))
 
 (defn header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,10 +58,20 @@
                                  :middle-content [header-label         picker-id]
                                  :end-content    [header-select-button picker-id]}])
 
+(defn header-selection-bar-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [picker-id]
+  (let [s (a/state [:storage.media-picker/get-selection-props])]
+       [:<> [elements/label {:content {:content :n-items-selected :replacements [(:selected-item-count s)]}
+                             :color :muted :min-height :s :font-size :xs}]
+            [elements/icon-button {:color :default :preset :close :height :s :disabled? (:no-items-selected? s)
+                                   :on-click [:storage.media-picker/discard-selection! picker-id]}]]))
+
 (defn header-selection-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [:div])
+  [elements/row {:content [header-selection-bar-structure picker-id]
+                 :horizontal-align :right}])
 
 (defn header-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,8 +84,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
   [:<> [header-label-bar     picker-id]
-       [header-selection-bar picker-id]
-       [header-menu          picker-id]])
+       [header-menu          picker-id]
+       [header-selection-bar picker-id]])
 
 
 
@@ -102,7 +112,7 @@
 (defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [s (a/state [:storage.media-picker/get-selection-props])]
+  (let [s (a/state [:storage.media-picker/get-element-props])]
        [elements/label {:color :muted :min-height :s
                         :content (cond (and multiple? (:no-items-selected? s))
                                        :no-items-selected

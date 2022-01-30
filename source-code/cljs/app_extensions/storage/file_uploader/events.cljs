@@ -1,10 +1,11 @@
 
 (ns app-extensions.storage.file-uploader.events
-    (:require [app-fruits.dom     :as dom]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :refer [dissoc-in]]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
+    (:require [app-fruits.dom   :as dom]
+              [mid-fruits.candy :refer [param return]]
+              [mid-fruits.map   :refer [dissoc-in]]
+              [x.app-core.api   :as a :refer [r]]
+              [x.app-db.api     :as db]
+              [app-extensions.storage.file-uploader.dialogs :as dialogs]
               [app-extensions.storage.file-uploader.engine  :as engine]
               [app-extensions.storage.file-uploader.queries :as queries]
               [app-extensions.storage.file-uploader.subs    :as subs]))
@@ -82,9 +83,9 @@
 (a/reg-event-fx
   :storage.file-uploader/->progress-started
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ uploader-id]]
-      {:dispatch-n [[:ui/close-popup! :storage.file-uploader/view]
-                    [:storage.file-uploader/render-progress-notification! uploader-id]]}))
+  (fn [cofx [_ uploader-id]]
+      {:dispatch-n [(r dialogs/render-progress-notification! cofx uploader-id)
+                    [:ui/close-popup! :storage.file-uploader/view]]}))
 
 (a/reg-event-fx
   :storage.file-uploader/->progress-successed

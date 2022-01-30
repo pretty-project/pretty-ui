@@ -77,9 +77,9 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :storage.file-uploader/render-progress-notification!
+(defn render-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _]
   [:ui/blow-bubble! :storage.file-uploader/progress-notification
                     {:body #'progress-notification
                      :autopop? false :user-close? false}])

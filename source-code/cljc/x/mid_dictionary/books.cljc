@@ -605,6 +605,9 @@
       :item-removed
       {:en "Item removed"
        :hu "Elem törölve"}
+      :make-a-copy!
+      {:en "Make a copy"
+       :hu "Másolat készítése"}
       :move!
       {:en "Move"
        :hu "Áthelyezés"}
@@ -971,6 +974,9 @@
       :download-image!
       {:en "Download image"
        :hu "Kép letöltése"}
+      :download-selected-items!
+      {:en "Download selected items"
+       :hu "Kijelölt elemek letöltése"}
       :drop-files-here-to-upload
       {:en "Drop files here to upload!"
        :hu "Húzd ide a fájlokat, amiket fel szeretnél tölteni!"}

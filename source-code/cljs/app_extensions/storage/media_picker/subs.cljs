@@ -10,6 +10,12 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-saved-selection
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [value-path (get-in db [:storage :media-picker/meta-items :value-path])]
+       (get-in db value-path)))
+
 (defn get-selected-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
@@ -49,3 +55,12 @@
    :selected-item-count (r get-selected-item-count db)})
 
 (a/reg-sub :storage.media-picker/get-selection-props get-selection-props)
+
+(defn get-element-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [saved-selection (r get-saved-selection db)]
+       {:no-items-selected?  (-> saved-selection vector/nonempty? not)
+        :selected-item-count (-> saved-selection count)}))
+
+(a/reg-sub :storage.media-picker/get-element-props get-element-props)

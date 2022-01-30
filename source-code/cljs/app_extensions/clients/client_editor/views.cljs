@@ -172,12 +172,12 @@
        [client-secondary-contacts body-id body-props]
        [elements/horizontal-separator {:size :xxl}]
        ; Description
-       [client-additional-information body-id body-props]
+       [client-additional-information body-id body-props]])
 
        ; TEMP
-       [:div {:style {:width "100%"}}
-             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left
-                                    :value-path [:test]}]]])
+;       [:div {:style {:width "100%"}}
+;             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left
+;                                    :value-path [:test]]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

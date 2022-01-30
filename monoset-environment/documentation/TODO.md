@@ -13,6 +13,8 @@
 
 
 # x4.5.0
+- Media picker SHIFT billentyűvel átrakja magát az item-lsiter select-mode-ba!
+
 - A send-query! {:debug? true} beállítással tegye be a :debug resolver-t a query-vektorba
 - db/appy!-t átnevezni db/apply-item!-re
 
