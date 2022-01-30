@@ -2,6 +2,6 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.server-router.api
-    (:require [project-emulator.server-router.default-routes]
-              [project-emulator.server-router.routes]))
+(ns project-emulator.backend.router.api
+    (:require [project-emulator.backend.router.default-routes]
+              [project-emulator.backend.router.routes]))

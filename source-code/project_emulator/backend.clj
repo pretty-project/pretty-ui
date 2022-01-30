@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.core
+(ns project-emulator.backend
     (:require [sente.api]
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
@@ -13,7 +13,7 @@
               [server-extensions.storage.api]
               [server-extensions.trader.api]
               [x.boot-loader]
-              [project-emulator.server-router.api])
+              [project-emulator.backend.router.api])
     (:gen-class))
 
 

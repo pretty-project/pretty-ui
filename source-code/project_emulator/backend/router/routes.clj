@@ -2,12 +2,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.server-router.routes
+(ns project-emulator.backend.router.routes
     (:require [pathom.api         :as pathom]
               [sente.api          :as sente]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]
-              [project-emulator.server-ui.api :as ui]))
+              [project-emulator.backend.ui.api :as ui]))
 
 
 

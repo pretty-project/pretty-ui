@@ -20,8 +20,6 @@
 
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
 
-- prototypes névtér újra a mongo-db névtér része lehet, mert már enm circular-dep w/ x.server-user.api
-
 - Legyen a monoset-environment mappában vagy inkább a project-emulator mappában egy
   project-dictionary.cljc vagy valami fájl, hogy a projekben ne eventekkel kelljen hozzáadogatni
   a dictionary-termeket

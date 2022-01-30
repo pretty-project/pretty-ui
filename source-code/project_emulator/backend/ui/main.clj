@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.server-ui.main
+(ns project-emulator.backend.ui.main
     (:require [playground.api  :as playground]
               [x.server-ui.api :as ui]
-              [project-emulator.server-ui.head :as head]))
+              [project-emulator.backend.ui.head :as head]))
 
 
 

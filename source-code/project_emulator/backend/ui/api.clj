@@ -2,8 +2,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.server-ui.api
-    (:require [project-emulator.server-ui.main :as main]))
+(ns project-emulator.backend.ui.api
+    (:require [project-emulator.backend.ui.main :as main]))
 
 
 

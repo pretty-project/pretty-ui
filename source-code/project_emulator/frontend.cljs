@@ -1,5 +1,5 @@
 
-(ns project-emulator.core
+(ns project-emulator.frontend
     (:require ;[sente.api]
               [x.boot-loader]
               [app-extensions.clients.api]
