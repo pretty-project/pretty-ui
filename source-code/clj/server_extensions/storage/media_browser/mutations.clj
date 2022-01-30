@@ -47,7 +47,7 @@
           (when-let [parent-id (item-browser/item->parent-id :storage :media directory-item)]
                     (engine/detach-item!             env parent-id item-id)
                     (engine/remove-item!             env   item-id)
-                    (engine/update-path-directories! env directory-item -)
+                    (engine/update-path-directories! env directory-item)
                     (let [items (get directory-item :media/items)]
                          (doseq [{:media/keys [id]} items]
                                 (when-let [{:media/keys [mime-type]} (engine/get-item env id)]
