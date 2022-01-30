@@ -193,5 +193,5 @@
   ; @usage
   ;  [:environment/enable-scroll!]
   (fn [{:keys [db]} _]
-      {:db       (r remove-scroll-prohibitions! db)
+      {:db (r remove-scroll-prohibitions! db)
        :environment/enable-dom-scroll nil}))
