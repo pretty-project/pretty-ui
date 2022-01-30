@@ -21,7 +21,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:router/add-route! :login-box/route
                                        {:client-event   [:views/render-login-box!]

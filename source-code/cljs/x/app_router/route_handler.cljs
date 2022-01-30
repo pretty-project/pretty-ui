@@ -634,6 +634,6 @@
        ; Configure navigation
        :router/configure-navigation! nil}))
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:router/initialize!]})

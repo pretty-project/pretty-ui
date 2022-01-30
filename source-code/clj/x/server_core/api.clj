@@ -103,7 +103,7 @@
 
 ; x.server-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
-(def reg-lifecycles    lifecycle-handler/reg-lifecycles)
+(def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
 
 ; x.server-core.router-handler
 (def route-template->route-match router-handler/route-template->route-match)

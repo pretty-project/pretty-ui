@@ -64,7 +64,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:add-my-type {:en "Add my type"
                                                        :hu "Típusom hozzáadása"}

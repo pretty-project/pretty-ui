@@ -88,7 +88,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler/reg-lifecycles
+(lifecycle-handler/reg-lifecycles!
   ::lifecycles
   {:on-server-init {:dispatch-n [[:core/reg-transfer! :core/transfer-app-config!
                                                       {:data-f      transfer-app-config

@@ -37,6 +37,6 @@
       {:dispatch-n [(r add-route!          cofx)
                     (r add-extended-route! cofx)]}))
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:trader/initialize!]})

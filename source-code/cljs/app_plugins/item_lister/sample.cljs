@@ -124,6 +124,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:my-extension {:en "My extension" :hu "Kiegészítőm"}}]})

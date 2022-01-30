@@ -89,6 +89,6 @@
                      {; BUG#2457
                       :dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [:settings.cookie-consent/render-consent!]}]}]}))
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-launch [:settings.cookie-consent/initialize-consent!]})

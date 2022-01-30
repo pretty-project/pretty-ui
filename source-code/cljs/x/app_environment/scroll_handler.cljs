@@ -146,7 +146,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot {:environment/listen-to-scroll!          nil
                  :environment/initialize-scroll-handler! nil}})

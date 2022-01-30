@@ -21,7 +21,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:router/add-route! :terms-of-service/route
                                        {:client-event   [:views/render-terms-of-service!]

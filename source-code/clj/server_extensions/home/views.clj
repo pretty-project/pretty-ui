@@ -7,7 +7,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:router/add-route! :home/route
                                        {:route-template "/@app-home"

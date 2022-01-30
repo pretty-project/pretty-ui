@@ -75,7 +75,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:ui/set-interface! :website-ui]
    :on-login    [:ui/set-interface! :application-ui]})

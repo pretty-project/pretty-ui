@@ -43,7 +43,7 @@
        (if (= selected-view :requests)
            {:requests         (get-in db [:sync/requests :data-items])
             :selected-view    (param selected-view)}
-           {:history-dex      (r get-history-dex           db)
+           {:history-dex      (r get-history-dex     db)
             :request-history  (r db/get-data-history db :sync/requests  selected-view)
             :response-history (r db/get-data-history db :sync/responses selected-view)
             :selected-view    (param selected-view)})))
@@ -130,7 +130,7 @@
 
 (defn- request-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [selected-view] :as body-props}]
+  [body-id body-props]
   [:div {:style {:width "100%"}}
         [request-data-label-bar   body-id body-props]
         [request-data-control-bar body-id body-props]

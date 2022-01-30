@@ -40,6 +40,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:view-selector/initialize-selector! :playground {:default-view-id :anchors}]})

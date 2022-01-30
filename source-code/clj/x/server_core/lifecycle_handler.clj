@@ -22,5 +22,5 @@
 ;; ----------------------------------------------------------------------------
 
 (def get-period-events  lifecycle-handler/get-period-events)
-(def reg-lifecycles     lifecycle-handler/reg-lifecycles)
+(def reg-lifecycles!    lifecycle-handler/reg-lifecycles!)
 (def import-lifecycles! lifecycle-handler/import-lifecycles!)

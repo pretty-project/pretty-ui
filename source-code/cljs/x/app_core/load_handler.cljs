@@ -213,6 +213,6 @@
                       (r reg-load-started! %))
        :dispatch-later [{:ms LOAD-TIMEOUT :dispatch [:core/self-test!]}]}))
 
-(lifecycle-handler/reg-lifecycles
+(lifecycle-handler/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:core/initialize-load-handler!]})

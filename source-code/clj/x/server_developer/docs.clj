@@ -113,7 +113,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! :docs/download-route
                                                      {:route-template "/docs/download-docs"

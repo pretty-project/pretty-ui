@@ -27,7 +27,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; A szerver inicializálásakor szükséges beállítani a :method-not-allowed, :not-acceptable
   ; és :not-found alapértelmezett kezelőket!
@@ -35,7 +35,7 @@
                                  [:router/set-default-route! :not-acceptable     {}]
                                  [:router/set-default-route! :not-found          {}]]}})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; - A [:router/add-route! ...] eseményeket {:on-server-boot ...} időzítéssel hívd meg!
   ; - A [:router/add-route! ...] eseményeket meghívhatod route-id azonosító megadásával
@@ -43,14 +43,14 @@
   {:on-server-boot {:dispatch-n [[:router/add-route! {}]
                                  [:router/add-route! :my-route {}]]}})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; Az általad megadott route-id azonosítóval rendelkező útvonalakat könnyebb átlátni
   ; hibakereséskor, illetve lehetséges felülírni a rendszer által hozzáadott útvonalakat,
   ; ha megegyező azonosítóval adsz hozzá útvonalat (pl.: :page-not-found, ...)
   {:on-server-boot [:router/add-route! :page-not-found {}]})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; Ha az x.project-config.edn fájlban az {:app-home "/..."} tulajdonság értékét beállítod
   ; egy tetszőleges útvonalra, akkor az útvonalak {:route-template "/..."} tulajdonságainak
@@ -59,7 +59,7 @@
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
                                  [:router/add-route! {:route-template "/@app-home/your-route"}]]}})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; - A {:route-parent "/..."} tulajdonságként átadott útvonalat tekinti a kliens-oldali útvonal-kezelő
   ;   a hozzáadott útvonal szűlőjének
@@ -75,7 +75,7 @@
                                         :route-template "/my-route/:my-item-id"
                                         :route-parent   "/my-route"}]})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; A {:get ...} vagy {:post ...} tulajdonságok haszálatával a szerver-oldali útvonalakat lehetséges
   ; beállítani, amelyeket a rendszer nem küld el az egyes kliensek számára.
@@ -85,7 +85,7 @@
                                                       :post {:handler #(your-handler %)}
                                                       :js "your-app.js"}]]}})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; A {:restricted? true} tulajdonság beállításával a kliens- és szerver-oldali útvonalak kiszolgálása
   ; és az útvonalak eseményeinek lefutásához a felhasználó azonosítása szükséges.

@@ -96,7 +96,7 @@
 
 ; x.app-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
-(def reg-lifecycles    lifecycle-handler/reg-lifecycles)
+(def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
 
 ; x.app-core.print-handler
 (def console print-handler/console)

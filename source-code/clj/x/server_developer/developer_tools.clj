@@ -54,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot {:dispatch-if [(= (System/getenv "DEVELOPER") "true")
                                   [:router/add-route! :developer/developer-tools-route

@@ -90,7 +90,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! :trader/download-listener-data
                                                      {:route-template "/@app-home/trader/listener-data"

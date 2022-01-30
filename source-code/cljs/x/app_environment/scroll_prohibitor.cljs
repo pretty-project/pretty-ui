@@ -113,7 +113,7 @@
 
 (defn- enable-dom-scroll!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (let [body-top (dom/get-body-style-value "top")
         scroll-y (-> body-top string/to-integer math/positive)]
        ; Engedélyezi a html elemen való görgetést
@@ -125,15 +125,15 @@
        ; szükséges a scroll-y értékét újra beállítani
        (dom/set-scroll-y!               (param scroll-y))))
 
-; Az [:environment/enable-dom-scroll!] mellékhatás esemény működését nem lehetséges
+; Az {:environment/enable-dom-scroll! ...} mellékhatás esemény működését nem lehetséges
 ; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
 ; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
 ; tulajdonságának átállítása után történjen!
-(a/reg-handled-fx :environment/enable-dom-scroll! enable-dom-scroll!)
+(a/reg-fx :environment/enable-dom-scroll! enable-dom-scroll!)
 
 (defn- disable-dom-scroll!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (let [scroll-y (dom/get-scroll-y)
          body-top (math/negative scroll-y)
          ; A body elemen való görgetés letiltása, annak {:position "fixed"}
@@ -153,7 +153,7 @@
        (dom/set-element-style! (dom/get-body-element)
                                (param body-style))))
 
-(a/reg-handled-fx :environment/disable-dom-scroll! disable-dom-scroll!)
+(a/reg-fx :environment/disable-dom-scroll! disable-dom-scroll!)
 
 
 

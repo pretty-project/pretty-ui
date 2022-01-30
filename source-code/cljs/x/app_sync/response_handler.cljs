@@ -76,8 +76,8 @@
   ;
   ; @return (map)
   [db [_ request-id server-response]]
-  (as-> db % (r db/update-data-history!  %          :sync/responses request-id) ; DEBUG
-             (r db/set-item!             % (db/path :sync/responses request-id) server-response)
+  (as-> db % (r db/set-item!             % (db/path :sync/responses request-id) server-response)
+             (r db/update-data-history!  %          :sync/responses request-id) ; DEBUG
              (r target-request-response! % request-id server-response)))
 
 

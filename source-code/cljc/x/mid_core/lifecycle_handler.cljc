@@ -120,7 +120,7 @@
 (defn import-lifecycles!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  ; - A reg-lifecycles függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
+  ; - A reg-lifecycles! függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
   ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
   ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
   (event-handler/dispatch [:db/set-item! [:core/lifes :data-items] @LIFES]))
@@ -132,7 +132,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reg-lifecycles
+(defn reg-lifecycles!
   ; @param (namespaced keyword)(opt) life-id
   ; @param (map) lifecycles
   ;  {:on-app-init        (metamorphic-event)(opt)
@@ -146,11 +146,11 @@
   ;   :on-server-launch   (metamorphic-event)(opt)}
   ;
   ; @usage
-  ;  (reg-lifecycles
+  ;  (reg-lifecycles!
   ;   :namespace/lifecycles
   ;   {...}
   ([lifecycles]
-   (reg-lifecycles (generate-life-id) lifecycles))
+   (reg-lifecycles! (generate-life-id) lifecycles))
 
   ([life-id lifecycles]
    ;#?(:clj (println details/app-codename "registrating lifecycles ..." life-id))
@@ -160,7 +160,7 @@
    (if DEBUG? (println (str (count (keys @LIFES)))
                        (str life-id)))
 
-   ; - Az x4.5.1 verzióig a reg-lifecycles függvény az életciklusok adatait közvetlenül
+   ; - Az x4.5.1 verzióig a reg-lifecycles! függvény az életciklusok adatait közvetlenül
    ;   (reset! függvény használatával) írta a Re-Frame adatbázisba.
    ; - Ha a forráskódban fordításidőben meghívott adatbázis események is írtak a Re-Frame
    ;   adatbázisba, akkor a reset! függvénnyel írt adatbázis-változások nem minden esetben

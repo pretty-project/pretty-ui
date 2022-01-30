@@ -177,7 +177,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-init {:dispatch-n [[:environment/update-viewport-data!]
                               [:environment/detect-viewport-profile!]

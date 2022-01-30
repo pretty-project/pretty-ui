@@ -343,7 +343,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-init [:core/reg-transfer! :router/transfer-client-routes!
                                         {:data-f      transfer-client-routes

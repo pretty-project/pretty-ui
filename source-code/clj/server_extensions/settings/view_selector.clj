@@ -19,7 +19,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:view-selector/initialize-selector! :settings
                                                         {:allowed-view-ids ALLOWED-VIEW-IDS

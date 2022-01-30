@@ -29,7 +29,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-init {:dispatch-n [[:router/set-default-route! :method-not-allowed METHOD-NOT-ALLOWED]
                                  [:router/set-default-route! :not-acceptable     NOT-ACCEPTABLE]

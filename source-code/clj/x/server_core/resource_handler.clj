@@ -63,6 +63,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler/reg-lifecycles
+(lifecycle-handler/reg-lifecycles!
   ::lifecycles
   {:on-server-init [:core/store-resource-handler-options! DEFAULT-OPTIONS]})

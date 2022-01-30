@@ -9,7 +9,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-browser/initialize-browser! :storage :media
                                                       {:root-item-id engine/ROOT-DIRECTORY-ID

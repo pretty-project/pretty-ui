@@ -14,7 +14,7 @@
   ; Re-Frame adatbázisból.
   {:my-data "..."})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:core/reg-transfer! :my-transfer {:data-f my-data-f}]})
 
@@ -24,6 +24,6 @@
   ; letöltődik és a [:your :data] útvonalon eltárolódik a kliens-oldali Re-Frame adatbázisban.
   {:your-data "..."})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:core/reg-transfer! {:data-f your-data-f :target-path [:your :data]}]})

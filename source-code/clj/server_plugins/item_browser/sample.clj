@@ -21,7 +21,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; - Az [:item-browser/initialize-browser! ...] esemény hozzáadja a "/@app-home/my-extension"
   ;   és "/@app-home/my-extension/:my-type-id" útvonalakat a rendszerhez, amely útvonalak

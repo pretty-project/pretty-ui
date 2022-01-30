@@ -182,7 +182,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-init [:core/reg-transfer! :user/transfer-user-account!
                                         {:data-f      transfer-user-account

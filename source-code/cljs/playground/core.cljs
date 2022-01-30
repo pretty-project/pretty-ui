@@ -419,6 +419,6 @@
                 [:ui/set-window-title! :playground]
                 [:playground.view-selector/render-selector!]]})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot [:environment/add-external-css! "/css/playground.css"]})

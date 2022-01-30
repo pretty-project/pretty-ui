@@ -53,7 +53,7 @@
                              :autopop?    false
                              :user-close? false}])))
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-browser-offline [:views/blow-no-internet-bubble?!]
    :on-app-launch      [:views/blow-no-internet-bubble?!]

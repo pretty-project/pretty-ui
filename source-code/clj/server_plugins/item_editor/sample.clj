@@ -96,7 +96,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   ; - Az [:item-editor/initialize-editor! ...] esemény hozzáadja a "/@app-home/my-extension/:my-type-id"
   ;   útvonalat a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon
@@ -104,7 +104,7 @@
   ; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
   {:on-server-boot [:item-editor/initialize-editor! :my-extension :my-type]})
 
-(a/reg-lifecycles
+(a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-editor/initialize-editor! :my-extension :my-type
                                                     {:suggestion-keys [:city :address]}]})
