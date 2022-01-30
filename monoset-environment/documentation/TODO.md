@@ -13,6 +13,7 @@
 
 
 # x4.5.0
+- A send-query! {:debug? true} beállítással tegye be a :debug resolver-t a query-vektorba
 - db/appy!-t átnevezni db/apply-item!-re
 
 - reg-handled-fx usage-ekhoz az fx formulát is odaírni {:my-side-effect-event "..."}

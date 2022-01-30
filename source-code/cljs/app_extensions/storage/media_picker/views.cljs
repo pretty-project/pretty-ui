@@ -15,7 +15,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-extensions.storage.media-browser.views
-(def media-item app-extensions.storage.media-browser.views/media-item)
+(def directory-item app-extensions.storage.media-browser.views/directory-item)
+(def file-item      app-extensions.storage.media-browser.views/file-item)
 
 ; app-plugins.item-browser.views
 (def menu-mode-header   app-plugins.item-browser.views/menu-mode-header)
@@ -57,6 +58,11 @@
                                  :middle-content [header-label         picker-id]
                                  :end-content    [header-select-button picker-id]}])
 
+(defn header-selection-bar
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [picker-id]
+  [:div])
+
 (defn header-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
@@ -67,24 +73,26 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [:<> [header-label-bar picker-id]
-       [header-menu      picker-id]])
+  [:<> [header-label-bar     picker-id]
+       [header-selection-bar picker-id]
+       [header-menu          picker-id]])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-item_
+(defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex item]
+  [item-dex {:keys [mime-type] :as item}]
   (let [s (a/state [:storage.media-picker/get-media-item-props item-dex item])]
-       [media-item item-dex item (if (:selected? s) {:icon :check_circle_outline})]))
+       (case mime-type "storage/directory" [directory-item item-dex item {:icon :navigate_next}]
+                                           [file-item      item-dex item {:icon (if (:selected? s) :check_circle_outline :radio_button_unchecked)}])))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [item-browser/body :storage :media {:list-element #'media-item_}])
+  [item-browser/body :storage :media {:list-element #'media-item}])
 
 
 

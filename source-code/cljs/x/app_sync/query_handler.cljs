@@ -90,6 +90,8 @@
   ;  {:body (map)(opt)
   ;    {:query (vector)}
   ;    Only w/o {:query ...}
+  ;   :debug? (boolean)(opt)
+  ;    Default: false
   ;   :display-progress? (boolean)(opt)
   ;    Default: false
   ;   :idle-timeout (ms)(opt)

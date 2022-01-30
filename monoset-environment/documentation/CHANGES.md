@@ -1,4 +1,9 @@
 
+# x4.5.8
+- Az x.app/mid/server-core.api/reg-lifecycles függvény új neve: reg-lifecycles! (felkiáltójellel)
+
+
+
 # x4.5.7
 - A prototypes.api névtér újra a mongo-db része lett (circular-dependecy feloldva). Sry.
 
