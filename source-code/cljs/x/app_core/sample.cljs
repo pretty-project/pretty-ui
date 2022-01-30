@@ -29,3 +29,27 @@
 (defn get-my-transfer-data
   [db _]
   (r a/get-transfer-data db :my-transfer))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn my-switch-enabled?
+  [db _]
+  (get-in db [:my-switch]))
+
+(defn toggle-my-switch!
+  [db [_ data]]
+  (update-in db [:my-switch] not))
+
+(a/reg-event-fx
+  :speed-up-events!
+  (fn [{:keys [db]} _]
+      ; A.
+      (if (r my-switch-enabled? db)
+          {:db (r toggle-my-switch! db)})
+      ; B.
+      (let [db (r toggle-my-switch! db)]
+           (if (r my-switch-enabled? db)
+               {:db db}))))
