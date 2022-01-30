@@ -14,15 +14,23 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.events
-    (:require [mid-fruits.candy     :refer [param return]]
+    (:require [app-plugins.item-lister.events]
+              [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.map       :refer [dissoc-in]]
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.queries :as queries]
-              [app-plugins.item-browser.subs    :as subs]
+              [app-plugins.item-browser.subs    :as subs]))
 
-              [app-plugins.item-lister.events]))
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; app-plugins.item-lister.events
+(def load-lister! app-plugins.item-lister.events/load-lister!)
 
 
 
@@ -36,7 +44,16 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (r app-plugins.item-lister.events/set-error-mode! db extension-id))
+  (assoc-in db [extension-id :item-browser/meta-items :error-mode?] true))
+
+(defn reset-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (dissoc-in db [extension-id :item-browser/meta-items :error-mode?]))
 
 (defn derive-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,6 +116,8 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
+       (println (str (validator/data-valid? document)))
+       (println (str document))
        (if (validator/data-valid? document)
            ; XXX#3907
            ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja
@@ -126,13 +145,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:item-id (string)(opt)}
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (as-> db % (r store-current-item-id! % extension-id item-namespace browser-props)
-             ; TEMP
-             (r app-plugins.item-lister.events/load-lister! % extension-id item-namespace)))
+  (as-> db % (r reset-browser!         % extension-id)
+             (r store-current-item-id! % extension-id item-namespace browser-props)
+             (r load-lister!           % extension-id item-namespace)))
 
 
 
@@ -184,8 +202,22 @@
            [:item-browser/browse-item! extension-id item-namespace parent-item-id])))
 
 (a/reg-event-fx
+  :item-browser/reload-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:dispatch-n [[:item-lister/reload-items!  extension-id item-namespace]
+                    [:item-browser/request-item! extension-id item-namespace]]}))
+
+(a/reg-event-fx
   :item-browser/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [db (r receive-item! db extension-id item-namespace server-response)]
            (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]

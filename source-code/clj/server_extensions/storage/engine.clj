@@ -57,18 +57,19 @@
   ;
   ; @param (map) env
   ; @param (namespaced map) media-item
-  ;  {:media/filesize (B)
+  ;  {:media/content-size (B)
+  ;   :media/filesize (B)
   ;   :media/path (namespaced maps in vector)}
   ; @param (function) operation
   ;  -, +
   ;
   ; @return (namespaced map)
-  [{:keys [request]} {:media/keys [filesize path]} operation]
+  [{:keys [request]} {:media/keys [content-size filesize path]} operation]
   ; Mappa létrehozásakor és fájlok feltöltésekor szükséges a tartalmazó (felmenő) mappák adatait frissíteni:
   ; - Utolsó módosítás dátuma, és a felhasználó azonosítója {:media/modified-at ... :media/modified-by ...}
   ; - Tartalom mérete {:media/content-size ...}
   (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
-          (update-f    [document] (update document :media/content-size operation filesize))
+          (update-f    [document] (update document :media/content-size operation (or filesize content-size)))
           (f [path] (when-let [{:media/keys [id]} (last path)]
                               (mongo-db/apply-document! "storage" id update-f {:prototype-f prototype-f})
                               (-> path vector/pop-last-item f)))]

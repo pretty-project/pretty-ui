@@ -1,8 +1,10 @@
 
 (ns server-extensions.storage.media-browser.mutations
-    (:require [mid-fruits.candy :refer [param return]]
-              [mongo-db.api     :as mongo-db]
-              [pathom.api       :as pathom]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mongo-db.api       :as mongo-db]
+              [pathom.api         :as pathom]
+              [server-fruits.io   :as io]
+              [x.server-media.api :as media]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
               [server-extensions.storage.engine      :as engine]
               [server-plugins.item-browser.api       :as item-browser]))
@@ -26,6 +28,10 @@
                     (engine/detach-item!             env parent-id item-id)
                     (engine/remove-item!             env   item-id)
                     (engine/update-path-directories! env file-item -)
+                    (let [filename (get file-item :media/filename)]
+                         (if-not (= filename engine/SAMPLE-FILE-FILENAME)
+                                 (media/delete-storage-file! filename))
+                         (media/delete-storage-thumbnail! filename))
                     (return item-id))))
 
 (defn delete-directory-f

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.30
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.5
+; Version: v0.4.8
+; Compatibility: x4.5.8
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.thumbnail-handler
-    (:require [local-db.api          :as local-db]
-              [server-fruits.http    :as http]
+    (:require [server-fruits.http    :as http]
               [server-fruits.image   :as image]
               [server-fruits.io      :as io]
               [x.server-media.engine :as engine]))

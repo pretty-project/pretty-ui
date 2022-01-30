@@ -94,7 +94,7 @@
       {; XXX#5087
        ; Az egy feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt
        :dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
-       :dispatch [:item-lister/reload-items! :storage :media]}))
+       :dispatch [:item-browser/reload-items! :storage :media]}))
 
 (a/reg-event-fx
   :storage.file-uploader/->progress-failured

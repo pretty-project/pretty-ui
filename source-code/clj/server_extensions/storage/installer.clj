@@ -46,6 +46,7 @@
         sample-file-filesize (io/get-filesize sample-file-filepath)]
        (if-not (mongo-db/get-document-by-id "storage" engine/SAMPLE-FILE-ID)
                (let [sample-file-document (assoc SAMPLE-FILE-DOCUMENT :media/filesize sample-file-filesize)]
+                    (media/generate-thumbnail! engine/SAMPLE-FILE-FILENAME)
                     (mongo-db/insert-document! "storage" sample-file-document options)))
        (if-not (mongo-db/get-document-by-id "storage" engine/ROOT-DIRECTORY-ID)
                (let [root-directory-document (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize)]

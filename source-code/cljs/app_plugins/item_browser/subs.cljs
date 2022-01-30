@@ -27,6 +27,9 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; app-plugins.item-lister.subs
+(def get-description app-plugins.item-lister.subs/get-description)
+
 ; mid-plugins.item-browser.subs
 (def get-browser-props subs/get-browser-props)
 (def get-meta-item     subs/get-meta-item)
@@ -149,7 +152,7 @@
   [db [_ extension-id item-namespace]]
   {:at-home?    (r at-home?      db extension-id item-namespace)
    :item-path   (r get-item-path db extension-id item-namespace)
-   :error-mode? (r app-plugins.item-lister.subs/get-meta-item db extension-id item-namespace :error-mode?)})
+   :error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)})
 
 (a/reg-sub :item-browser/get-header-props get-header-props)
 
@@ -177,6 +180,6 @@
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
           {:error-mode? true}
-          {:description (r app-plugins.item-lister.subs/get-view-props db extension-id item-namespace)}))
+          {:description (r get-description db extension-id item-namespace)}))
 
 (a/reg-sub :item-browser/get-view-props get-view-props)

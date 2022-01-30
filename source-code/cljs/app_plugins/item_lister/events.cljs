@@ -80,8 +80,6 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  ; Az item-lister plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor
-  ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
   (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
 
 (defn reset-lister!

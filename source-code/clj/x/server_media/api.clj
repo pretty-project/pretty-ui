@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.5
+; Version: v0.4.8
+; Compatibility: x4.5.8
 
 
 
@@ -16,10 +16,8 @@
 (ns x.server-media.api
     (:require [x.server-media.download-handler  :as download-handler]
               [x.server-media.engine            :as engine]
-              [x.server-media.item-handler      :as item-handler]
               [x.server-media.temporary-handler :as temporary-handler]
-              [x.server-media.thumbnail-handler :as thumbnail-handler]
-              [x.server-media.upload-handler    :as upload-handler]))
+              [x.server-media.thumbnail-handler :as thumbnail-handler]))
 
 
 
@@ -37,7 +35,9 @@
 (def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
 (def file-props->filepath               engine/file-props->filepath)
-
+(def delete-storage-file!               engine/delete-storage-file!)
+(def delete-storage-thumbnail!          engine/delete-storage-thumbnail!)
+  
 ; x.server-media.temporary-handler
 (def download-temporary-file temporary-handler/download-temporary-file)
 
