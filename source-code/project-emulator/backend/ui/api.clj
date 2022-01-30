@@ -2,13 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.backend.ui.api
-    (:require [project-emulator.backend.ui.main :as main]))
+(ns backend.ui.api
+    (:require [backend.ui.main :as main]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; project-emulator.server-ui.main
+; backend.ui.main
 (def main main/view)

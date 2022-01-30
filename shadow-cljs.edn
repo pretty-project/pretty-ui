@@ -4,13 +4,13 @@
   {:target :browser
    :asset-path "/js/core"
    :output-dir "resources/public/js/core"
-   :modules {:app {:init-fn project-emulator.frontend/start-app!}}
+   :modules {:app {:init-fn frontend/start-app!}}
    :compiler-options {:infer-externs true
                       ; re-frame-10x
                       :output-feature-set :es2018} ; Cannot convert ECMASCRIPT_2018 feature "RegExp unicode property escape" to targeted output language.
 ;                      :closure-defines {re-frame.trace.trace-enabled?        true
 ;                                        day8.re-frame.tracing.trace-enabled? true}
-   :devtools {:after-load project-emulator.frontend/render-app!
+   :devtools {:after-load frontend/render-app!
               :watch-dir  "resources/public"}}
               ; re-frame-10x
 ;              :preloads [day8.re-frame-10x.preload]}}
@@ -20,5 +20,5 @@
    :target        :browser
    :asset-path    "/js/core"
    :output-dir    "resources/public/js/core"
-   :modules          {:app {:init-fn project-emulator.frontend/start-app!}}
+   :modules          {:app {:init-fn frontend/start-app!}}
    :compiler-options {:infer-externs true}}}}

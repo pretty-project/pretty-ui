@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.backend.ui.head
+(ns backend.ui.head
     (:require [server-fruits.http :as http]))
 
 

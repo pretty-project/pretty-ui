@@ -1,6 +1,6 @@
 
 {; Paths
- :paths ["source-code/clj" "source-code/cljc" "source-code/cljs" "resources"]
+ :paths ["source-code/clj" "source-code/cljc" "source-code/cljs" "source-code/project-emulator" "resources"]
 
  ; Dependecies
  :deps  {buddy/buddy-auth                                {:mvn/version "2.1.0"}
@@ -44,7 +44,7 @@
                                                           :sha     "13e6dec387bd5b5c73e64ca82409a7440b4b1199"}}
 
  ; Aliases
- :aliases {:dev {:exec-fn    project-emulator.backend/dev
+ :aliases {:dev {:exec-fn    backend/dev
                  :exec-args  {:port         3000
                               :shadow-build :app}
                  :extra-deps {;binaryage/devtools              {:mvn/version "1.0.0"}
@@ -58,5 +58,5 @@
                   :exec-args {:java-config {:aot true
                                             :jar "mono-app.jar"
                                             :jar-type :uber
-                                            :main-class project-emulator.backend}
+                                            :main-class backend}
                               :js-builds [:app-ready]}}}}

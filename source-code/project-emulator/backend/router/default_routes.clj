@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns project-emulator.backend.router.default-routes
-    (:require [server-fruits.http :as http]
-              [x.server-core.api  :as a]
-              [project-emulator.backend.ui.api :as ui]))
+(ns backend.router.default-routes
+    (:require [backend.ui.api     :as ui]
+              [server-fruits.http :as http]
+              [x.server-core.api  :as a]))
 
 
 

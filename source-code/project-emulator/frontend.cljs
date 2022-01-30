@@ -1,7 +1,6 @@
 
-(ns project-emulator.frontend
+(ns frontend
     (:require ;[sente.api]
-              [x.boot-loader]
               [app-extensions.clients.api]
               [app-extensions.home.api]
               [app-extensions.media.api]
@@ -9,6 +8,7 @@
               [app-extensions.settings.api]
               [app-extensions.storage.api]
               [app-extensions.trader.api]
+              [x.boot-loader]
               ; TEMP
               [playground.api]))
 
