@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.3.7
+; Version: v0.5.0
+; Compatibility: x4.5.8
 
 
 
@@ -38,8 +38,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (= (r get-interface db)
-     (param :application-ui)))
+  (= :application-ui (r get-interface db)))
 
 (defn website-interface?
   ; @usage
@@ -47,28 +46,37 @@
   ;
   ; @return (boolean)
   [db _]
-  (= (r get-interface db)
-     (param :website-ui)))
+  (= :website-ui (r get-interface db)))
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-interface!
-  ; @param (keyword) interface
-  ;  :application-ui, :website-ui
+(defn- set-interface!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r ui/set-interface! db :application-ui)
+  ; @param (keyword) interface
   ;
   ; @return (map)
   [db [_ interface]]
   (assoc-in db (db/path :ui/interface :interface) interface))
 
-; @usage
-;  [:ui/set-interface! :application-ui]
-(a/reg-event-db :ui/set-interface! set-interface!)
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :ui/set-interface!
+  ; @param (keyword) interface
+  ;  :application-ui, :website-ui
+  ;
+  ; @usage
+  ;  [:ui/set-interface! :application-ui]
+  (fn [{:keys [db]} [_ interface]]
+      {:db (r set-interface! db interface)
+       :environment/set-element-attribute! ["x-body-container" "data-interface" (name interface)]}))
 
 
 

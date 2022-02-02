@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.09.11
 ; Description:
-; Version: v1.0.8
-; Compatibility: x4.4.7
+; Version: v1.2.0
+; Compatibility: x4.5.8
 
 
 
@@ -21,7 +21,6 @@
               [x.app-ui.background   :rename {view app-background}]
               [x.app-ui.bubbles      :rename {view app-bubbles}]
               [x.app-ui.header       :rename {view app-header}]
-              [x.app-ui.interface    :as interface]
               [x.app-ui.locker       :rename {view app-locker}]
               [x.app-ui.popups       :rename {view app-popups}]
               [x.app-ui.progress-bar :rename {view progress-bar}]
@@ -37,15 +36,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) structure-props
-  ;  {:interface (keyword)(opt)
-  ;   :scrolled-to-top? (boolean)(opt)}
+  ;  {:scrolled-to-top? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-interface (string)
-  ;   :data-scrolled-to-top (boolean)}
-  [{:keys [interface scrolled-to-top?]}]
-  (cond-> {} (some? interface)        (assoc :data-interface       interface)
-             (some? scrolled-to-top?) (assoc :data-scrolled-to-top scrolled-to-top?)))
+  ;  {:data-scrolled-to-top (boolean)}
+  [{:keys [scrolled-to-top?]}]
+  (cond-> {}
+          (some? scrolled-to-top?) (assoc :data-scrolled-to-top scrolled-to-top?)))
 
 
 
@@ -57,10 +54,9 @@
   ;
   ; @return (map)
   ;  {:client-locked? (boolean)
-  ;   :interface (keyword)}
+  ;   :scrolled-to-top? (boolean)}
   [db _]
   {:client-locked?   (r user/client-locked?          db)
-   :interface        (r interface/get-interface      db)
    :scrolled-to-top? (r environment/scrolled-to-top? db)})
 
 (a/reg-sub :ui/get-structure-props get-structure-props)
