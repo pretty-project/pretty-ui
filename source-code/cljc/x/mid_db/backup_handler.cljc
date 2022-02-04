@@ -55,13 +55,13 @@
   ; @param (item-path vector) item-path
   ;
   ; @example
-  ;  (db/item-path->backup-item-path [:my :item :path])
+  ;  (db/item-path->backup-item-path [:my-item])
   ;  =>
-  ;  [::backups :data-items :my :item :path]
+  ;  [:db/backups :data-items :my-item]
   ;
   ; @return (data-item-path vector)
   [item-path]
-  (vector/concat-items (data-item-path ::backups)
+  (vector/concat-items (data-item-path :db/backups)
                        (param item-path)))
 
 

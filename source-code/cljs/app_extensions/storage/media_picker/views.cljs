@@ -129,7 +129,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id {:keys [indent] :as picker-props}]
   [elements/toggle {:content  [n-items-selected-label picker-id]
-                    :on-click [:storage.media-picker/load-picker! picker-props]
+                    :on-click [:storage.media-picker/load-picker! picker-id picker-props]
                     :indent   indent}])
 
 (defn media-picker

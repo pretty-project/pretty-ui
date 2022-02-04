@@ -13,7 +13,7 @@
 
 (defn unselect-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ {:keys [filename] }]]
+  [db [_ {:keys [filename]}]]
   (update-in db [:storage :media-picker/data-items] vector/remove-item filename))
 
 (defn select-file!
@@ -66,14 +66,18 @@
 
 (a/reg-event-fx
   :storage.media-picker/load-picker!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
   ;  {:value-path (item-path vector)}
+  ;
+  ; @usage
+  ;  [:storage.media-picker/load-picker! {...}]
+  ;
+  ; @usage
+  ;  [:storage.media-picker/load-picker! :my-picker {...}]
   [a/event-vector<-id]
   ; - A picker-id azonosító nincs felhasználva sehol, kizárólag az *-id & *-props formula
-  ;   egyésges használata miatt adható meg.
+  ;   egységes használata miatt adható meg.
   ; - XXX#7157
   ;   A media-picker egy popup elemen megjelenített átalakított media-browser, aminek az indítása
   ;   az [:item-browser/load-browser! ...] eseménnyel történik, ami elindítja a media-browser eszközt,

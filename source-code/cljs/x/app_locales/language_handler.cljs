@@ -55,7 +55,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r locales/get-multilingual-item db [:my :item])
+  ;  (r locales/get-multilingual-item db [:my-item])
   ;
   ; @return (*)
   [db [_ item-path]]

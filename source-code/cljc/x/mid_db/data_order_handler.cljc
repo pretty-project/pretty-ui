@@ -275,7 +275,7 @@
   ; @param (item-path vector) item-path
   ;
   ; @usage
-  ;  (r db/copy-item-to-partition! db ::my-partition :my-item-id [:my :item :path])
+  ;  (r db/copy-item-to-partition! db ::my-partition :my-item-id [:my-item])
   ;
   ; @return (map)
   [db [_ partition-id data-item-id item-path]]
@@ -291,7 +291,7 @@
   ; @param (item-path vector) item-path
   ;
   ; @usage
-  ;  (r db/move-item-to-partition! db ::my-partition :my-item-id [:my :item :path])
+  ;  (r db/move-item-to-partition! db ::my-partition :my-item-id [:my-item])
   ;
   ; @return (map)
   [db [_ partition-id data-item-id item-path]]

@@ -431,8 +431,8 @@
   ;                    :icon       :sort
   ;                    :label      :order-by
   ;                    :layout     :icon-button
-  ;                    :options-path [:my :options]
-  ;                    :value-path   [:my :selected :option]}]
+  ;                    :options-path [:my-options]
+  ;                    :value-path   [:my-selected-option]}]
   ;
   ; @return (hiccup)
   ([select-props]

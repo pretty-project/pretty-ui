@@ -22,7 +22,7 @@
   ;   és használatával egyedi mentési eljárás is megvalósítható.
   [:value-editor/load-editor! :my-extension :my-editor {:edit-original? true
                                                         :on-save    [:my-extension/->my-value-edited]
-                                                        :value-path [:my :item]}])
+                                                        :value-path [:my-item]}])
 
 (a/reg-event-fx
   :my-extension/->my-value-edited

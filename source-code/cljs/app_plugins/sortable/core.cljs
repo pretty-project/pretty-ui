@@ -826,13 +826,13 @@
   ; @usage
   ;  (defn my-element [sortable-id item-dex item] [:div ...])
   ;  [sortable :my-sortable {:element    #'my-element
-  ;                          :value-path [:my :items]}]
+  ;                          :value-path [:my-items]}]
   ;
   ; @usage
   ;  (defn my-element [sortable-id item-dex item common-props] [:div ...])
   ;  [sortable :my-sortable {:common-props {...}
   ;                          :element      #'my-element
-  ;                          :value-path   [:my :items]}]
+  ;                          :value-path   [:my-items]}]
   ;
   ; @return (component)
   ([sortable-props]

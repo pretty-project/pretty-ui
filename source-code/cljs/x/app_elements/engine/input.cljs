@@ -60,12 +60,12 @@
   ; @param (item-path vector) value-path
   ;
   ; @example
-  ;  (input/value-path->vector-item? [:my :value])
+  ;  (input/value-path->vector-item? [:my-value])
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (input/value-path->vector-item? [:my :value 2])
+  ;  (input/value-path->vector-item? [:my-value 2])
   ;  =>
   ;  true
   ;

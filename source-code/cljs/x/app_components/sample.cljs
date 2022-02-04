@@ -82,9 +82,9 @@
   []
   [components/stated :your-component
                      {; Az initial-props térkép tartalma a komponens React-fába történő csatolása
-                      ; után elérhető lesz a Re-Frame adatbázisban a [:your :path] útvonalon.
+                      ; után elérhető lesz a Re-Frame adatbázisban a [:your-path] útvonalon.
                       :initial-props      {}
-                      :initial-props-path [:your :path]
+                      :initial-props-path [:your-path]
                       :render-f           #'your-component
                       :subscriber         [:get-your-component-props]}])
 

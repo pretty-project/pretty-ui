@@ -131,8 +131,6 @@
 
 (a/reg-event-fx
   :storage.file-uploader/load-uploader!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) uploader-id
   ; @param (map) uploader-props
   ;  {:allowed-extensions (strings in vector)(opt)

@@ -55,11 +55,11 @@
 (a/reg-sub :db/get-db get-db)
 
 ; @usage
-;  [:db/get-item [:my :item :path]]
+;  [:db/get-item [:my-item]]
 (a/reg-sub :db/get-item get-item)
 
 ; @usage
-;  [:db/item-exists? [:my :item :path]]
+;  [:db/item-exists? [:my-item]]
 (a/reg-sub :db/item-exists? item-exists?)
 
 
@@ -76,35 +76,35 @@
 (a/reg-event-db :db/move-item! move-item!)
 
 ; @usage
-;  [:db/set-item! [:my :item :path] "My value"]
+;  [:db/set-item! [:my-item] "My value"]
 (a/reg-event-db :db/set-item! set-item!)
 
 ; @usage
-;  [:db/set-vector-item! [:my :item :path :0] "My value"]
+;  [:db/set-vector-item! [:my-item :0] "My value"]
 (a/reg-event-db :db/set-vector-item! set-vector-item!)
 
 ; @usage
-;  [:db/remove-item! [:my :item :path]]
+;  [:db/remove-item! [:my-item]]
 (a/reg-event-db :db/remove-item! remove-item!)
 
 ; @usage
-;  [:db/remove-vector-item! [:my :item :path 0]]
+;  [:db/remove-vector-item! [:my-item 0]]
 (a/reg-event-db :db/remove-vector-item! remove-vector-item!)
 
 ; @usage
-;  [:db/remove-item-n! [[:my :item :path] [...]]]
+;  [:db/remove-item-n! [[:my-item ] [...]]]
 (a/reg-event-db :db/remove-item-n! remove-item-n!)
 
 ; @usage
-;  [:db/inc-item-n! [[:my :item :path] [...]]]
+;  [:db/inc-item-n! [[:my-item] [...]]]
 (a/reg-event-db :db/inc-item-n! inc-item-n!)
 
 ; @usage
-;  [:db/dec-item-n! [[:my :item :path] [...]]]
+;  [:db/dec-item-n! [[:my-item] [...]]]
 (a/reg-event-db :db/dec-item-n! dec-item-n!)
 
 ; @usage
-;  [:db/apply! [:my :item :path] merge {}]
+;  [:db/apply! [:my-item] merge {}]
 (a/reg-event-db :db/apply! apply!)
 
 ; @usage

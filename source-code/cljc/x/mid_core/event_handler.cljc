@@ -737,7 +737,7 @@
   ;                     {:ms 600 :dispatch-n [[:do-something!]
   ;                                           [:do-something-else!]]}])
   [event-list]
-  ; - Az eredeti dispatch-later függvény clojure környezetben nem késlelteti a dispatch-later eseményeket!
+  ; - Az eredeti dispatch-later függvény clojure környezetben nem időzíti a dispatch-later eseményeket!
   ; - A dispatch-f és dispatch-n-f függvénynevek használata a névütközések elkerülése miatt szükséges
   (let [dispatch-f   dispatch
         dispatch-n-f dispatch-n]
