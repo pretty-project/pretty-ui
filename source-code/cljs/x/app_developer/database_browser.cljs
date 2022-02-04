@@ -418,9 +418,9 @@
 (defn database-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id body-props]
-  [:div#x-database-browser
-    {:style {:width "100%"}}
-    [database-item body-id body-props]])
+  [:div#x-database-browser {:style {:color "var( --color-muted )" :overflow-x "auto"
+                                    :padding "12px 6px" :width "100%"}}
+                           [database-item body-id body-props]])
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

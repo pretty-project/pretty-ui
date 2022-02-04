@@ -1,19 +1,4 @@
 
-
-
-
-/***** Database browser *****/
-
-#x-database-browser {
-  background-color: var( --background-color );
-  color: var( --color-muted );
-  overflow-x: auto;
-  padding: 12px 6px }
-
-/***** Database browser *****/
-
-
-
 /***** User info *****/
 
 .x-user-profile-picture {

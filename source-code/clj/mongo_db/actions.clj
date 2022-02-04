@@ -214,7 +214,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/insert-document! "my-collection" {:namespace/id "MyObjectId" ...})
+  ;  (mongo-db/insert-document! "my_collection" {:namespace/id "MyObjectId" ...})
   ;  =>
   ;  {:namespace/id "MyObjectId" ...}
   ;
@@ -230,7 +230,7 @@
                            (adaptation/insert-output result))))))
 
 ; @usage
-;  [:mongo-db/insert-document! "my-collection" {:namespace/id "MyObjectId" ...}]
+;  [:mongo-db/insert-document! "my_collection" {:namespace/id "MyObjectId" ...}]
 (a/reg-handled-fx :mongo-db/insert-document! insert-document!)
 
 
@@ -248,7 +248,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/insert-documents! "my-collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}])
+  ;  (mongo-db/insert-documents! "my_collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}])
   ;  =>
   ;  [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}]
   ;
@@ -261,7 +261,7 @@
    (vector/->items documents #(insert-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/insert-documents! "my-collection" [{:namespace/id "MyObjectId" ...}]]
+;  [:mongo-db/insert-documents! "my_collection" [{:namespace/id "MyObjectId" ...}]]
 (a/reg-handled-fx :mongo-db/insert-documents! insert-documents!)
 
 
@@ -279,7 +279,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/save-document! "my-collection" {:namespace/id "MyObjectId" ...})
+  ;  (mongo-db/save-document! "my_collection" {:namespace/id "MyObjectId" ...})
   ;  =>
   ;  {:namespace/id "MyObjectId" ...}
   ;
@@ -295,7 +295,7 @@
                            (adaptation/save-output result))))))
 
 ; @usage
-;  [:mongo-db/save-document! "my-collection" {:namespace/id "MyObjectId" ...}]
+;  [:mongo-db/save-document! "my_collection" {:namespace/id "MyObjectId" ...}]
 (a/reg-handled-fx :mongo-db/save-document! save-document!)
 
 
@@ -313,7 +313,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/save-documents! "my-collection" [{:namespace/id "MyObjectId" ...}])
+  ;  (mongo-db/save-documents! "my_collection" [{:namespace/id "MyObjectId" ...}])
   ;  =>
   ;  [{:namespace/id "MyObjectId" ...}]
   ;
@@ -326,7 +326,7 @@
    (vector/->items documents #(save-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/save-documents! "my-collection" [{:namespace/id "MyObjectId" ...}]]
+;  [:mongo-db/save-documents! "my_collection" [{:namespace/id "MyObjectId" ...}]]
 (a/reg-handled-fx :mongo-db/save-documents! save-documents!)
 
 
@@ -343,7 +343,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/update-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -357,7 +357,7 @@
                                          (mrt/updated-existing? result))))))))
 
 ; @usage
-;  [:mongo-db/update-document! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+;  [:mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0}]
 (a/reg-handled-fx :mongo-db/update-document! update-document!)
 
 
@@ -374,7 +374,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/update-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -390,7 +390,7 @@
                                          (mrt/updated-existing? result))))))))
 
 ; @usage
-;  [:mongo-db/update-documents! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+;  [:mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0}]
 (a/reg-handled-fx :mongo-db/update-documents! update-documents!)
 
 
@@ -406,7 +406,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -420,7 +420,7 @@
                                          (mrt/acknowledged? result))))))))
 
 ; @usage
-;  [:mongo-db/upsert-document! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+;  [:mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0}]
 (a/reg-handled-fx :mongo-db/upsert-document! upsert-document!)
 
 
@@ -436,7 +436,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -452,7 +452,7 @@
                                          (mrt/acknowledged? result))))))))
 
 ; @usage
-;  [:mongo-db/upsert-documents! "my-collection" {:namespace/score 100} {:namespace/score 0}]
+;  [:mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0}]
 (a/reg-handled-fx :mongo-db/upsert-documents! upsert-documents!)
 
 
@@ -468,7 +468,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue"))
+  ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :color "Blue"))
   ;
   ; @return (namespaced map)
   ([collection-name document-id f]
@@ -482,7 +482,7 @@
                                 (adaptation/save-output result)))))))
 
 ; @usage
-;  [:mongo-db/apply-document! "my-collection" "MyObjectId" #(assoc % :color "Blue")]
+;  [:mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :color "Blue")]
 (a/reg-handled-fx :mongo-db/apply-document! apply-document!)
 
 
@@ -527,7 +527,7 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-document "my-collection" "MyObjectId")
+  ;  (mongo-db/remove-document "my_collection" "MyObjectId")
   ;  =>
   ;  "MyObjectId"
   ;
@@ -540,7 +540,7 @@
                 (remove-unordered-document! collection-name document-id options))))
 
 ; @usage
-;  [:mongo-db/remove-document! "my-collection" "MyObjectId"]
+;  [:mongo-db/remove-document! "my_collection" "MyObjectId"]
 (a/reg-handled-fx :mongo-db/remove-document! remove-document!)
 
 
@@ -556,7 +556,7 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-documents! "my-collection" ["MyObjectId" "YourObjectId"])
+  ;  (mongo-db/remove-documents! "my_collection" ["MyObjectId" "YourObjectId"])
   ;  =>
   ;  ["MyObjectId" "YourObjectId"]
   ;
@@ -568,7 +568,7 @@
    (vector/->items document-ids #(remove-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/remove-documents! "my-collection" ["MyObjectId" "YourObjectId"]]
+;  [:mongo-db/remove-documents! "my_collection" ["MyObjectId" "YourObjectId"]]
 (a/reg-handled-fx :mongo-db/remove-documents! remove-documents!)
 
 
@@ -580,14 +580,14 @@
   ; @param (string) collection-name
   ;
   ; @usage
-  ;  (mongo-db/remove-all-documents! "my-collection")
+  ;  (mongo-db/remove-all-documents! "my_collection")
   ;
   ; @return (?)
   [collection-name]
   (drop! collection-name))
 
 ; @usage
-;  [:mongo-db/remove-all-documents! "my-collection"]
+;  [:mongo-db/remove-all-documents! "my_collection"]
 (a/reg-handled-fx :mongo-db/remove-all-documents! remove-all-documents!)
 
 
@@ -661,12 +661,12 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/duplicate-document! "my-collection" "MyObjectId")
+  ;  (mongo-db/duplicate-document! "my_collection" "MyObjectId")
   ;  =>
   ;  {:namespace/id "MyObjectId" :namespace/label "My document"}
   ;
   ; @example
-  ;  (mongo-db/duplicate-document! "my-collection" "MyObjectId" {:label-key   :namespace/label
+  ;  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {:label-key   :namespace/label
   ;                                                              :language-id :en})
   ;  =>
   ;  {:namespace/id "MyObjectId" :namespace/label "My document copy"}
@@ -681,7 +681,7 @@
                 (duplicate-unordered-document! collection-name document-id options))))
 
 ; @usage
-;  [:mongo-db/duplicate-document! "my-collection" "MyObjectId"]
+;  [:mongo-db/duplicate-document! "my_collection" "MyObjectId"]
 (a/reg-handled-fx :mongo-db/duplicate-document! duplicate-document!)
 
 
@@ -704,7 +704,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/duplicate-documents! "my-collection" ["MyObjectId" "YourObjectId"])
+  ;  (mongo-db/duplicate-documents! "my_collection" ["MyObjectId" "YourObjectId"])
   ;  =>
   ;  [{...} {...}]
   ;
@@ -716,7 +716,7 @@
    (vector/->items document-ids #(duplicate-document! collection-name % options))))
 
 ; @usage
-;  [:mongo-db/duplicate-documents! "my-collection" ["MyObjectId" "YourObjectId"]]
+;  [:mongo-db/duplicate-documents! "my_collection" ["MyObjectId" "YourObjectId"]]
 (a/reg-handled-fx :mongo-db/duplicate-documents! duplicate-documents!)
 
 
@@ -731,7 +731,7 @@
   ;    (integer) document-dex]]
   ;
   ; @usage
-  ;  (mongo-db/reorder-documents "my-collection" [["MyObjectId" 1] ["YourObjectId" 2]])
+  ;  (mongo-db/reorder-documents "my_collection" [["MyObjectId" 1] ["YourObjectId" 2]])
   ;
   ; @return (vectors in vector)
   [collection-name document-order]

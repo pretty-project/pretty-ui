@@ -14,15 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head
-    (:require [mid-fruits.candy        :refer [param return]]
-              [mid-fruits.string       :as string]
-              [mid-fruits.vector       :as vector]
-              [server-fruits.http      :as http]
-              [x.app-details           :as details]
-              [x.server-core.api       :as a :refer [cache-control-uri]]
-              [x.server-user.api       :as user]
-              [x.server-ui.engine      :refer [include-css include-favicon include-font]]
-              [x.server-utils.crawlers :refer [crawler-rules]]))
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.string  :as string]
+              [mid-fruits.vector  :as vector]
+              [server-fruits.http :as http]
+              [x.app-details      :as details]
+              [x.server-core.api  :as a :refer [cache-control-uri]]
+              [x.server-user.api  :as user]
+              [x.server-ui.engine :refer [include-css include-favicon include-font]]
+              [x.server-environment.api :as environment]))
 
 
 
@@ -212,7 +212,7 @@
   [request head-props]
   (merge (a/subscribed [:core/get-app-config])
          {:app-build         (a/app-build)
-          :crawler-rules     (crawler-rules request)
+          :crawler-rules     (environment/crawler-rules request)
           :selected-language (user/request->user-settings-item request :selected-language)}
          (param head-props)))
 

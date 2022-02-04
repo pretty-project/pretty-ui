@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.7.4
-; Compatibility: x4.5.2
+; Version: v0.7.8
+; Compatibility: x4.5.8
 
 
 
@@ -14,22 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler
-    (:require [mid-fruits.candy           :refer [param]]
-              [mid-fruits.map             :refer [dissoc-in]]
-              [mid-fruits.time            :as time]
-              [mid-fruits.vector          :as vector]
-              [x.app-core.api             :as a :refer [r]]
-              [x.app-db.api               :as db]
-              [x.app-user.engine          :as engine]
-              [x.mid-user.account-handler :as account-handler]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-user.account-handler
-(def user-account-valid? account-handler/user-account-valid?)
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.map    :refer [dissoc-in]]
+              [mid-fruits.time   :as time]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]
+              [x.app-user.engine :as engine]))
 
 
 

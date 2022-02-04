@@ -13,7 +13,6 @@
 /***** Element adornments *****/
 /***** Element badge *****/
 /***** Element info *****/
-/***** Element context-surface *****/
 /***** Element stickers *****/
 /***** Element indent *****/
 /***** Elements ... *****/
@@ -1438,28 +1437,6 @@ button.x-card:focus,
 
 /*** Info tooltip ***/
 /***** Element info *****/
-
-
-
-/***** Element context surface *****/
-
-.x-element--context-surface {
-  animation-name: x-grow;
-  animation-duration: .05s;
-  animation-timing-function: ease-out;
-  background: var( --fill-color );
-  border-radius: var( --border-radius-m );
-  box-shadow: var( --box-shadow-black-xx-light );
-  left: 0;
-  min-height: 100%;
-  overflow-x: hidden;
-  padding: 8px;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 9999 }
-
-/***** Element context surface *****/
 
 
 

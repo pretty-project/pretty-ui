@@ -64,6 +64,7 @@
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)
+(def dispatch-later                   event-handler/dispatch-later)
 (def dispatch-if                      event-handler/dispatch-if)
 (def dispatch-cond                    event-handler/dispatch-cond)
 (def dispatch-tick                    event-handler/dispatch-tick)

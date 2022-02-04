@@ -103,7 +103,7 @@
   ; @param (string) collection-name
   ;
   ; @usage
-  ;  (mongo-db/get-collection-namespace "my-collection")
+  ;  (mongo-db/get-collection-namespace "my_collection")
   ;
   ; @return (keyword)
   [collection-name]
@@ -115,18 +115,28 @@
   ; @param (string) collection-name
   ;
   ; @usage
-  ;  (mongo-db/get-all-document-count "my-collection")
+  ;  (mongo-db/get-all-document-count "my_collection")
   ;
   ; @return (integer)
   [collection-name]
   (count-documents collection-name))
+
+(defn collection-empty?
+  ; @param (string) collection-name
+  ;
+  ; @usage
+  ;  (mongo-db/collection-empty? "my_collection")
+  ;
+  ; @return (boolean)
+  [collection-name]
+  (= 0 (count-documents collection-name)))
 
 (defn get-document-count-by-query
   ; @param (string) collection-name
   ; @param (namespaced map) query
   ;
   ; @usage
-  ;  (mongo-db/get-document-count-by-query "my-collection" {:namespace/my-keyword  :my-value}
+  ;  (mongo-db/get-document-count-by-query "my_collection" {:namespace/my-keyword  :my-value}
   ;                                                         :namespace/your-string "your-value"})
   ;
   ; @return (integer)
@@ -139,7 +149,7 @@
   ; @param (namespaced map)(opt) projection
   ;
   ; @example
-  ;  (mongo-db/get-all-documents "my-collection" {:namespace/my-keyword  0
+  ;  (mongo-db/get-all-documents "my_collection" {:namespace/my-keyword  0
   ;                                               :namespace/your-string 1})
   ;  =>
   ;  [{:namespace/my-keyword  :my-value
@@ -163,7 +173,7 @@
   ; @param (namespaced map)(opt) projection
   ;
   ; @example
-  ;  (mongo-db/get-documents-by-query "my-collection" {:namespace/my-keyword :my-value}
+  ;  (mongo-db/get-documents-by-query "my_collection" {:namespace/my-keyword :my-value}
   ;                                                   {:namespace/my-keyword  0
   ;                                                    :namespace/your-string 1})
   ;  =>
@@ -194,7 +204,7 @@
   ; @param (namespaced map) query
   ;
   ; @usage
-  ;  (mongo-db/get-document-by-query "my-collection" {:namespace/my-keyword :my-value})
+  ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})
   ;  =>
   ;  {:namespace/my-keyword  :my-value
   ;   :namespace/your-string "your-value"
@@ -212,7 +222,7 @@
   ; @param (string) document-id
   ;
   ; @example
-  ;  (mongo-db/get-document-by-id "my-collection" "MyObjectId")
+  ;  (mongo-db/get-document-by-id "my_collection" "MyObjectId")
   ;  =>
   ;  {:namespace/my-keyword  :my-value
   ;   :namespace/your-string "your-value"
@@ -230,7 +240,7 @@
   ; @param (string) document-id
   ;
   ; @usage
-  ;  (mongo-db/document-exists? "my-collection" "MyObjectId")
+  ;  (mongo-db/document-exists? "my_collection" "MyObjectId")
   ;
   ; @return (boolean)
   [collection-name document-id]
@@ -247,7 +257,7 @@
   ; @param (maps in vector) pipeline
   ;
   ; @usage
-  ;  (mongo-db/get-documents-by-pipeline "my-collection" [...])
+  ;  (mongo-db/get-documents-by-pipeline "my_collection" [...])
   ;
   ; @return (maps in vector)
   [collection-name pipeline]
@@ -259,7 +269,7 @@
   ; @param (maps in vector) pipeline
   ;
   ; @usage
-  ;  (mongo-db/count-documents-by-pipeline "my-collection" [...])
+  ;  (mongo-db/count-documents-by-pipeline "my_collection" [...])
   ;
   ; @return (integer)
   [collection-name pipeline]

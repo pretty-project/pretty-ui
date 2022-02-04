@@ -22,6 +22,7 @@
               [mid-fruits.vector  :as vector]
               [re-frame.core      :as re-frame]
               [re-frame.db        :refer [app-db]]
+              [re-frame.loggers   :as loggers]
               [re-frame.registrar :as registrar]
               [x.mid-core.engine  :as engine]))
 
@@ -704,14 +705,13 @@
         :else                   (dispatch-function event-handler)))
 
 (registrar/clear-handlers :fx :dispatch)
-(re-frame/reg-fx :dispatch dispatch)
+(re-frame/reg-fx              :dispatch dispatch)
 
 (defn dispatch-sync
   ; @param (event-vector) event-handler
   ;
   ; A dispatch-sync függvény a meghívási sebesség fontossága miatt nem kezeli
-  ; a metamorphic-event kezelőket és a névtér átirányításokat.
-  ; A dispatch-sync igény esetén bővíthető az említett képességekkel.
+  ; a metamorphic-event kezelőket!
   [event-handler]
   (re-frame/dispatch-sync event-handler))
 
@@ -727,7 +727,32 @@
          (dispatch event)))
 
 (registrar/clear-handlers :fx :dispatch-n)
-(re-frame/reg-fx :dispatch-n dispatch-n)
+(re-frame/reg-fx              :dispatch-n dispatch-n)
+
+(defn dispatch-later
+  ; @param (maps in vector) event-list
+  ;
+  ; @usage
+  ;  (a/dispatch-later [{:ms 500 :dispatch [:do-something!]}
+  ;                     {:ms 600 :dispatch-n [[:do-something!]
+  ;                                           [:do-something-else!]]}])
+  [event-list]
+  ; - Az eredeti dispatch-later függvény clojure környezetben nem késlelteti a dispatch-later eseményeket!
+  ; - A dispatch-f és dispatch-n-f függvénynevek használata a névütközések elkerülése miatt szükséges
+  (let [dispatch-f   dispatch
+        dispatch-n-f dispatch-n]
+       (doseq [{:keys [ms dispatch dispatch-n]} (remove nil? event-list)]
+              (cond ; Dispatch single events ...
+                    (and (some?   dispatch)
+                         (number? ms))
+                    (do (time/set-timeout! ms #(dispatch-f dispatch)))
+                    ; Dispatch multiple events ...
+                    (and (some?   dispatch-n)
+                         (number? ms))
+                    (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
+
+(registrar/clear-handlers :fx :dispatch-later)
+(re-frame/reg-fx              :dispatch-later dispatch-later)
 
 (defn dispatch-if
   ; @param (*) condition

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.18
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.5.2
+; Version: v0.4.0
+; Compatibility: x4.5.8
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.engine
-    (:require [x.mid-user.engine :as engine]))
+    (:require [mid-fruits.random :as random]
+              [x.mid-user.engine :as engine]))
 
 
 
@@ -31,8 +32,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-(def DEMO-USER-ID "61de1ee3ffc7a6839cde8719")
-
-; @constant (string)
-(def DEVELOPER-USER-ID "61de1f39ffc7a6839cde872a")
+(defn generate-pin
+  ; @return (string)
+  []
+  (-> 4 random/generate-number str))

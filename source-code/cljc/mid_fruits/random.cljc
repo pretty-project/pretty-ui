@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v0.4.6
+; Version: v0.5.4
 
 
 
@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.random
-    (:require [mid-fruits.candy :refer [param]]))
+    (:require [mid-fruits.candy :refer [param]]
+              [mid-fruits.math  :as math]))
 
 
 
@@ -26,8 +27,7 @@
   ;
   ; @param (boolean)
   []
-  (= (rand-int 2)
-     (param    0)))
+  (-> 2 rand-int zero?))
 
 
 
@@ -76,6 +76,21 @@
   ; @return (string)
   []
   (generate-uuid))
+
+(defn generate-number
+  ; @param (integer) digits
+  ;
+  ; @example
+  ;  (random/generate-number 3)
+  ;  =>
+  ;  420
+  ;
+  ; @return (integer)
+  [digits]
+  ; - A (rand) függvény kimenete egy lebegőpontos érték 0 és 1 között
+  ; - Ha pl. a digits értéke 3, ... akkor a generate-number fügvény visszatérési értéke
+  ;   egy 1 és 9.99 között érték szorozva 10 második hatványával, integer típusra alakítva.
+  (int (* (math/power 10 (dec digits)) (min 9.99 (inc (rand 9))))))
 
 
 

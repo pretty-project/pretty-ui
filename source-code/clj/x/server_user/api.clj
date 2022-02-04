@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v0.5.6
-; Compatibility: x4.5.4
+; Version: v0.6.0
+; Compatibility: x4.5.8
 
 
 
@@ -52,3 +52,6 @@
 (def request->user-settings      settings-handler/request->user-settings)
 (def request->user-settings-item settings-handler/request->user-settings-item)
 (def upload-user-settings-item!  settings-handler/upload-user-settings-item!)
+
+; x.server-user.user-handler
+(def add-user! user-handler/add-user!)

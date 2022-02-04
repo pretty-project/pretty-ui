@@ -61,6 +61,7 @@
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)
+(def dispatch-later                   event-handler/dispatch-later)
 (def dispatch-if                      event-handler/dispatch-if)
 (def dispatch-cond                    event-handler/dispatch-cond)
 (def dispatch-tick                    event-handler/dispatch-tick)
@@ -124,36 +125,6 @@
   ([event-id interceptors event-handler]
    (let [interceptors (interceptors<-system-interceptors interceptors)]
         (event-handler/reg-event-fx event-id interceptors event-handler))))
-
-
-
-;; -- Dispatch functions ------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn dispatch-later
-  ; @param (maps in vector) event-list
-  ;
-  ; @usage
-  ;  (dispatch-later [{:ms 500 :dispatch [:do-something!]}
-  ;                   {:ms 600 :dispatch-n [[:do-something!]
-  ;                                         [:do-something-else!]]}])
-  [event-list]
-  ; A dispatch-f és dispatch-n-f függvénynevek használata a névütközések
-  ; elkerülése miatt szükséges
-  (let [dispatch-f   dispatch
-        dispatch-n-f dispatch-n]
-       (doseq [{:keys [ms dispatch dispatch-n]} (remove nil? event-list)]
-              (cond ; Dispatch single events ...
-                    (and (some?   dispatch)
-                         (number? ms))
-                    (time/set-timeout! ms #(dispatch-f dispatch))
-                    ; Dispatch multiple events ...
-                    (and (some?   dispatch-n)
-                         (number? ms))
-                    (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
-
-(registrar/clear-handlers :fx :dispatch-later)
-(re-frame/reg-fx :dispatch-later dispatch-later)
 
 
 

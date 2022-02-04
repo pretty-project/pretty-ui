@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.01.01
+; Created: 2022.02.03
 ; Description:
-; Version: v0.2.4
+; Version: v0.2.8
 ; Compatibility: x4.5.8
 
 
@@ -13,14 +13,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-environment.api
-    (:require [x.server-environment.crawler-handler :as crawler-handler]))
+(ns x.mid-user.profile-handler)
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-environment.crawler-handler
-(def download-robots-txt crawler-handler/download-robots-txt)
-(def crawler-rules       crawler-handler/crawler-rules)
+; @constant (integer)
+(def MAX-FIRST-NAME-LENGTH 32)
+
+; @constant (integer)
+(def MAX-LAST-NAME-LENGTH 32)

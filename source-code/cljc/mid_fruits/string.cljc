@@ -181,7 +181,8 @@
 
 (defn length?
   ; @param (string) n
-  ; @param (integer) x
+  ; @param (integer) x / min
+  ; @param (integer)(opt) max
   ;
   ; @example
   ;  (string/length? "abc" 3)
@@ -193,10 +194,20 @@
   ;  =>
   ;  false
   ;
+  ; @example
+  ;  (string/length? "abc" 2 4)
+  ;  =>
+  ;  true
+  ;
   ; @return (boolean)
-  [n x]
-  (and      (string? n)
-       (= x (count   n))))
+  ([n x]
+   (and      (string? n)
+        (= x (count   n))))
+
+  ([n min max]
+   (and         (string? n)
+        (<= min (count   n))
+        (>= max (count   n)))))
 
 (defn split
   ; @param (string) n

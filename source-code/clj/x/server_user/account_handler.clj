@@ -14,23 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.account-handler
-    (:require [local-db.api               :as local-db]
-              [mid-fruits.candy           :refer [param return]]
-              [mid-fruits.map             :as map]
-              [ring.util.response         :refer [redirect]]
-              [server-fruits.http         :as http]
-              [x.mid-user.account-handler :as account-handler]
-              [x.server-core.api          :as a]
-              [x.server-db.api            :as db]
-              [x.server-user.engine       :as engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-user.account-handler
-(def user-account-valid? account-handler/user-account-valid?)
+    (:require [local-db.api         :as local-db]
+              [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.map       :as map]
+              [ring.util.response   :refer [redirect]]
+              [server-fruits.http   :as http]
+              [x.server-core.api    :as a]
+              [x.server-db.api      :as db]
+              [x.server-user.engine :as engine]))
 
 
 

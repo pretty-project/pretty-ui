@@ -50,6 +50,7 @@
 (def get-collection-names        reader/get-collection-names)
 (def get-collection-namespace    reader/get-collection-namespace)
 (def get-all-document-count      reader/get-all-document-count)
+(def collection-empty?           reader/collection-empty?)
 (def get-document-count-by-query reader/get-document-count-by-query)
 (def get-all-documents           reader/get-all-documents)
 (def get-documents-by-query      reader/get-documents-by-query)

@@ -23,6 +23,20 @@
 ; @constant (float)
 (def pi Math/PI)
 
+(defn power
+  ; @param (number) x
+  ; @param (integer) n
+  ;
+  ; @example
+  ;  (math/power 2 3)
+  ;  =>
+  ;  8
+  ;
+  ; @return (number)
+  [x n]
+  (if (zero? n) 1
+      (* x (power x (dec n)))))
+
 (defn percent->angle
   ; @param (float or integer) n
   ;

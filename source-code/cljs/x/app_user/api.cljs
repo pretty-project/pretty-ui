@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.5.4
-; Compatibility: x3.9.9
+; Version: v0.5.6
+; Compatibility: x4.5.8
 
 
 
@@ -25,7 +25,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-user.account-handler
-(def user-account-valid?    account-handler/user-account-valid?)
 (def get-user-id            account-handler/get-user-id)
 (def get-user-email-address account-handler/get-user-email-address)
 (def get-user-roles         account-handler/get-user-roles)

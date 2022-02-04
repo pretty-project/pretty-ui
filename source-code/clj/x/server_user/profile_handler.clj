@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.24
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.5.5
+; Version: v0.6.8
+; Compatibility: x4.5.8
 
 
 
@@ -18,7 +18,17 @@
               [mid-fruits.candy   :refer [param return]]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]
-              [x.server-db.api    :as db]))
+              [x.server-db.api    :as db]
+              [x.mid-user.profile-handler :as profile-handler]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.mid-user.profile-handler
+(def MAX-FIRST-NAME-LENGTH profile-handler/MAX-FIRST-NAME-LENGTH)
+(def MAX-LAST-NAME-LENGTH  profile-handler/MAX-LAST-NAME-LENGTH)
 
 
 

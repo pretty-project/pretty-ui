@@ -36,7 +36,7 @@
   ; - Az {:ordered? true} tulajdonság beállításával az újonnan hozzáadott dokumentum
   ;   {:namespace/order ...} tulajdonsága a dokumentum kollekción belül sorszámát (utolsó)
   ;   kapja meg értékként.
-  (mongo-db/insert-document! "my-collection" {:namespace/my-keyword  :my-value
+  (mongo-db/insert-document! "my_collection" {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"
                                               :namespace/id          "MyObjectId"}
                                              {:prototype-f #(insert-prototype %)}))
@@ -53,7 +53,7 @@
   ; - Az {:ordered? true} tulajdonság beállításával az újonnan hozzáadott dokumentum
   ;   {:namespace/order ...} tulajdonsága a dokumentum kollekción belül sorszámát (utolsó)
   ;   kapja meg értékként.
-  (mongo-db/save-document! "my-collection" {:namespace/my-keyword  :my-value
+  (mongo-db/save-document! "my_collection" {:namespace/my-keyword  :my-value
                                             :namespace/your-string "your-value"
                                             :namespace/id          "MyObjectId"}
                                            {:prototype-f #(update-prototype %)}))
@@ -66,7 +66,7 @@
   ; - A függvény visszatérési értéke sikeres írás esetén true, minden más esetben false.
   ; - A feltételek tartalmazhat :namespace/id tulajdonságot!
   ; - A dokumentum NEM tartalmazhat :namespace/id tulajdonságot!
-  (mongo-db/update-document! "my-collection" {:namespace/id          "MyObjectId"}
+  (mongo-db/update-document! "my_collection" {:namespace/id          "MyObjectId"}
                                              {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"}
                                              {:prototype-f #(update-prototype %)}))
@@ -79,7 +79,7 @@
   ; - A függvény visszatérési értéke sikeres írás esetén true, minden más esetben false.
   ; - A feltételek tartalmazhat :namespace/id tulajdonságot!
   ; - A dokumentum NEM tartalmazhat :namespace/id tulajdonságot!
-  (mongo-db/upsert-document! "my-collection" {:namespace/id          "MyObjectId"}
+  (mongo-db/upsert-document! "my_collection" {:namespace/id          "MyObjectId"}
                                              {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"}
                                              {:prototype-f #(update-prototype %)}))
@@ -90,17 +90,17 @@
   ; - Ha NEM létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor NEM hozza létre!
   ; - Ha létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor végrehajtja rajta a függvényt.
   ; - A függvény visszatérési értéke sikeres írás esetén a módosított dokumentum.
-  (mongo-db/apply-document! "my-collection" "MyObjectId"  #(merge % {:namespace/my-keyword :my-value})
+  (mongo-db/apply-document! "my_collection" "MyObjectId"  #(merge % {:namespace/my-keyword :my-value})
                                             {:prototype-f #(update-prototype %)}))
 
 (defn remove-my-document!
   []
   ; @description (mongo-db/remove-document! ...)
   ; - A függvény visszatérési értéke sikeres törlés esetén a dokumentum azonosítója.
-  (mongo-db/remove-document! "my-collection" "MyObjectId"))
+  (mongo-db/remove-document! "my_collection" "MyObjectId"))
 
 (defn duplicate-my-document!
   []
   ; @description (mongo-db/duplicate-document! ...)
   ; - A függvény visszatérési értéke sikeres duplikálás esetén a másolat dokumentum.
-  (mongo-db/duplicate-document! "my-collection" "MyObjectId" {:prototype-f #(insert-prototype %)}))
+  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {:prototype-f #(insert-prototype %)}))

@@ -74,7 +74,8 @@
   ;
   ; @return (boolean)
   [n]
-  (re-match? n PASSWORD-PATTERN))
+ ;(re-match? n PASSWORD-PATTERN)
+  (string/nonempty? n))
 
 (defn email-address-valid?
   ; @param (string) n
