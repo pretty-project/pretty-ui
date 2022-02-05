@@ -17,4 +17,6 @@
 (defn request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
+  ; A file-uploader által indított kéréseket egyedi azonosítóval szükséges ellátni,
+  ; hogy egyszerre párhuzamosan több fájlfeltöltési folyamat is futtatható legyen!
   (keyword/add-namespace :storage uploader-id))

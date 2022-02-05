@@ -2,7 +2,10 @@
 (ns app-extensions.home.views
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-layouts.api    :as layouts]))
+              [x.app-layouts.api    :as layouts]
+
+              ; TEMP
+              [app-extensions.storage.api :as storage]))
 
 
 
@@ -33,7 +36,10 @@
 (defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id {:keys [user-name] :as view-props}]
-  [layouts/layout-b surface-id {:cards CARDS}])
+ [:div
+  [layouts/layout-b surface-id {:cards CARDS}]
+  [storage/media-picker {:label "Borítóképek"
+                         :value-path [:xxx]}]])
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!

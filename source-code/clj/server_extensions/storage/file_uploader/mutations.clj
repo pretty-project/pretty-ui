@@ -65,8 +65,12 @@
   (let [file-id            (mongo-db/generate-id)
         generated-filename (file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
+        mime-type          (io/filename->mime-type filename)
+        ; - A fájlokkal ellentétben a mappák {:media/mime-type "..."} tulajdonsága nem állapítható meg a nevükből
+        ; - A fájlok {:media/mime-type "..."} tulajdonsága is eltárolásra kerül, hogy minden elem egységesen
+        ;   rendelkezzen {:media/mime-type "..."} tulajdonsággal
         file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
-                   :media/path file-path :description ""}]
+                   :media/path file-path :description "" :media/mime-type mime-type}]
        (if (engine/attach-item! env destination-id file-id)
            (when-let [file-item (engine/insert-item! env file-item)]
                      ; Copy the temporary file to storage, and delete the temporary file

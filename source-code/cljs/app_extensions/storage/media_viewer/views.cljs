@@ -1,6 +1,9 @@
 
 (ns app-extensions.storage.media-viewer.views
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.io      :as io]
+              [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]
+              [x.app-media.api    :as media]))
 
 
 
@@ -9,24 +12,38 @@
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (component)
-  [])
+  [viewer-id])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- pdf-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [viewer-id]
+  [:div.storage--media-viewer--pdf-item])
+
+(defn- image-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [viewer-id]
+  (let [s (a/state [:storage.media-viewer/get-current-item-props viewer-id])]
+       [:div.storage--media-viewer--image-item
+         [:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
+         [:img.storage--media-viewer--image {:src (-> s :item-filename media/filename->media-storage-uri)}]]))
+
+(defn- media-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [viewer-id]
+  (let [s (a/state [:storage.media-viewer/get-current-item-props viewer-id])]
+       (case (-> s :item-filename io/filename->mime-type)
+             "application/pdf" [pdf-item   viewer-id]
+                               [image-item viewer-id])))
+
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (component)
-  [extension-id])
+  [viewer-id]
+  [:<> [media-item viewer-id]])
 
 
 
@@ -36,12 +53,16 @@
 (defn element
   ; @param (keyword)(opt) viewer-id
   ; @param (map) viewer-props
+  ;  {:directory-id (string)}
   ;
   ; @usage
   ;  [storage/media-viewer {...}]
   ;
   ; @usage
   ;  [storage/media-viewer :my-viewer {...}]
+  ;
+  ; @usage
+  ;  [storage/media-viewer :my-viewer {:directory-id "my-directory"}]
   ;
   ; @return (component)
   ([viewer-props]
@@ -57,9 +78,7 @@
 (a/reg-event-fx
   :storage.media-viewer/render-viewer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  (fn [_ [_ extension-id]]
+  (fn [_ [_ viewer-id]]
       [:ui/add-popup! :storage.media-viewer/view
-                      {:body   [body extension-id]
+                      {:body   [body viewer-id]
                        :layout :unboxed}]))

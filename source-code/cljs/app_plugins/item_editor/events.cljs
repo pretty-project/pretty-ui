@@ -312,7 +312,7 @@
                                      ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
                                      ; egymást, megnehezítve a felhasználó számára a események megértését
                                      :on-stalled (r go-up! cofx extension-id)
-                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-save}}]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
                                      :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
 
 (a/reg-event-fx
@@ -326,7 +326,7 @@
                          {:display-progress? true
                           ; XXX#3701
                           :on-stalled [:item-editor/->item-deleted extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-delete}}]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
                           :query      (r queries/get-delete-item-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx
@@ -353,7 +353,7 @@
       [:sync/send-query! (engine/request-id extension-id item-namespace)
                          {:display-progress? true
                           :on-success [:item-editor/->item-duplicated extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-copy}}]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
                           :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx

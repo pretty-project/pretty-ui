@@ -6,7 +6,7 @@
 ; Created: 2020.10.17
 ; Description:
 ; Version: v0.2.8
-; Compatibility: x4.4.8
+; Compatibility: x4.5.8
 
 
 
@@ -60,7 +60,7 @@
   ; @param (map) icon-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
-  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)

@@ -41,8 +41,10 @@
 (a/reg-event-fx
   :storage.media-browser/preview-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [cofx [_ file-item]]
-      (r dialogs/render-file-preview! cofx file-item)))
+  (fn [{:keys [db]} [_ {:keys [filename]}]]
+      (let [directory-id (r item-browser/get-current-item-id db :storage)]
+           [:storage.media-viewer/load-viewer! {:directory-id directory-id
+                                                :current-item filename}])))
 
 
 
@@ -51,11 +53,12 @@
 
 (a/reg-event-fx
   :storage.media-lister/->item-clicked
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           (if (r subs/media-browser-mode? db)
                                               (r dialogs/render-file-menu!     cofx item)
-                                              [:storage.media-picker/->file-clicked item]))))
+                                              [:storage.media-picker/->file-clicked item-dex item]))))
 
 
 

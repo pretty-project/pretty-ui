@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.15
 ; Description:
-; Version: v0.8.6
-; Compatibility: x4.5.0
+; Version: v0.9.0
+; Compatibility: x4.5.8
 
 
 
@@ -14,11 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.engine
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :as map :refer [dissoc-in]]
-              [mid-fruits.map     :as map]
-              [mid-fruits.vector  :as vector]
-              [x.mid-core.api     :refer [r]]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.map    :as map :refer [dissoc-in]]
+              [mid-fruits.vector :as vector]
+              [x.mid-core.api    :refer [r]]))
 
 
 
@@ -291,9 +290,9 @@
   ;
   ; @usage
   ;  (r db/distribute-items! {:apple "red" :banana "yellow" :item {:nested-item "Nested value"}}
-  ;                          {:apple  [:where :to :store :apple :color]
-  ;                           :banana [:where :to :store :banana :color]
-  ;                           :item {:nested-item [:where :to :store :nested :value]}})
+  ;                          {:apple  [:apple-color]
+  ;                           :banana [:banana-color]
+  ;                           :item   {:nested-item [:nested-value]}})
   ;
   ; @return (map)
   [db [_ items item-paths]]

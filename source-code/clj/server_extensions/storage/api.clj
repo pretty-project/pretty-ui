@@ -5,4 +5,5 @@
               [server-extensions.storage.engine]
               [server-extensions.storage.file-uploader.api]
               [server-extensions.storage.installer]
-              [server-extensions.storage.media-browser.api]))
+              [server-extensions.storage.media-browser.api]
+              [server-extensions.storage.media-viewer.api]))

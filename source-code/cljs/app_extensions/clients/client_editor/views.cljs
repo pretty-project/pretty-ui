@@ -8,10 +8,7 @@
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
               [x.app-locales.api    :as locales]
-              [app-plugins.item-editor.api :as item-editor]
-
-              ; TEMP
-              [app-extensions.storage.api :as storage]))
+              [app-plugins.item-editor.api :as item-editor]))
 
 
 

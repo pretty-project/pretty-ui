@@ -60,24 +60,6 @@
 
 /***** Storage *****/
 
-.storage--media-browser--file-preview--icon {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 200px;
-  width: 200px }
-
-.storage--media-browser--file-preview--body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: var( --border-radius-s );
-  height: 200px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 200px }
-
 .storage--media-item {
   align-items: center;
   display: flex }
@@ -108,5 +90,24 @@
   position: absolute;
   top: 0;
   width: 100% }
+
+.storage--media-viewer--image-item {
+  height: 100%;
+  width: 100% }
+
+.storage--media-viewer--icon {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+.storage--media-viewer--image {
+  border-radius: var( --border-radius-m );
+  max-height: calc(100vh - 96px);
+  max-width:  calc(100%  - 96px) }
 
 /***** Storage *****/

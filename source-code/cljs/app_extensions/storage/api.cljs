@@ -17,4 +17,4 @@
 (def media-picker media-picker/element)
 
 ; app-extensions.storage.media-viewer.api
-(def media-picker media-viewer/element)
+(def media-viewer media-viewer/element)

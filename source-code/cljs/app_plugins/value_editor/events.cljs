@@ -149,7 +149,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ extension-id editor-id]]
-      [:ui/close-popup! (engine/popup-id extension-id editor-id)]))
+      [:ui/close-popup! (engine/view-id extension-id editor-id)]))
 
 (a/reg-event-fx
   :value-editor/save-value!
@@ -160,7 +160,7 @@
   (fn [{:keys [db]} [_ extension-id editor-id]]
       {:db (r save-value! db extension-id editor-id)
        :dispatch-n [(r subs/get-on-save-event db extension-id editor-id)
-                    [:ui/close-popup! (engine/popup-id extension-id editor-id)]]}))
+                    [:ui/close-popup! (engine/view-id extension-id editor-id)]]}))
 
 (a/reg-event-fx
   :value-editor/load-editor!

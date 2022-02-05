@@ -28,7 +28,7 @@
   :storage.directory-creator/create-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id directory-name]]
-      [:sync/send-query! (keyword/add-namespace :storage creator-id)
+      [:sync/send-query! :storage.directory-creator/create-directory!
                          {:query (r queries/get-create-directory-query db creator-id directory-name)
                           :on-success [:item-lister/reload-items! :storage :media]}]))
 

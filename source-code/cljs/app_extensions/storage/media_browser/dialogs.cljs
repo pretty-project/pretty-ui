@@ -19,7 +19,8 @@
   [:<> [elements/label ::file-alias-label
                        {:content alias :horizontal-align :center :color :muted :indent :left}]
        ;[elements/horizontal-line {:color :muted}]
-       (if (io/mime-type->image? mime-type)
+       (if (or (io/mime-type->image? mime-type)
+               (= mime-type "application/pdf"))
            [elements/button ::preview-file-button
                             {:preset :default-button :icon :preview :indent :left :label :file-preview
                              :on-click [:storage.media-browser/preview-file! file-item]}])
@@ -35,12 +36,6 @@
        [elements/button ::delete-file-button
                         {:preset :warning-button :icon :delete_outline :indent :left :label :delete!}]])
 
-(defn file-preview
-  [{:keys [filename]}]
-  (let [file-uri (media/filename->media-storage-uri filename)]
-       [:div [:div.storage--media-browser--file-preview--icon [elements/icon {:icon :preview :color :muted}]]
-             [:div.storage--media-browser--file-preview--body {:style {:background-image (css/url file-uri)}}]]))
-
 
 
 ;; -- Lifecycle events --------------------------------------------------------
@@ -51,12 +46,5 @@
   [{:keys [db]} [_ file-item]]
   [:ui/add-popup! :storage.media-browser/file-menu
                   {:body [file-menu file-item]
-                   :min-width :xs
-                   :horizontal-align :left}])
-
-(defn render-file-preview!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [db]} [_ file-item]]
-  [:ui/add-popup! :storage.media-browser/file-preview
-                  {:body [file-preview file-item]
-                   :min-width :none}])
+                   :horizontal-align :left
+                   :min-width        :xs}])

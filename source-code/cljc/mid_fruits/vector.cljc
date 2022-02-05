@@ -959,6 +959,26 @@
         (nil? n) (return [x])
         :else    (return n)))
 
+(defn toggle-item
+  ; @param (vector) n
+  ; @param (*) x
+  ;
+  ; @example
+  ;  (vector/toggle-item [:a :b] :c)
+  ;  =>
+  ;  [:a :b :c]
+  ;
+  ; @example
+  ;  (vector/toggle-item [:a :b :c] :c)
+  ;  =>
+  ;  [:a :b]
+  ;
+  ; @return (vector)
+  [n x]
+  (if (contains-item? n x)
+      (remove-item    n x)
+      (conj-item      n x)))
+
 
 
 ;; ----------------------------------------------------------------------------

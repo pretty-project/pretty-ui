@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v1.0.8
-; Compatibility: x4.1.5
+; Version: v1.1.2
+; Compatibility: x4.5.8
 
 
 
@@ -107,7 +107,8 @@
 (a/reg-event-db :db/apply! apply!)
 
 ; @usage
-;  [:db/distribute-items! {:apple "red" :banana "yellow"}]
-;                         {:apple  [:where :to :store :apples :color]
-;                          :banana [:where :to :store :bananas :color]}]
+;  [:db/distribute-items! {:apple "red" :banana "yellow" :item {:nested-item "Nested value"}}
+;                         {:apple  [:apple-color]
+;                          :banana [:banana-color]
+;                          :item   {:nested-item [:nested-value]}}]
 (a/reg-event-db :db/distribute-items! distribute-items!)

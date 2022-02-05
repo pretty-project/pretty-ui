@@ -37,9 +37,16 @@
 
 (defn file-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ {:keys [filename]}]]
+  [db [_ _ {:keys [filename]}]]
   (let [selected-items (r get-selected-items db)]
        (vector/contains-item? selected-items filename)))
+
+(defn save-selected-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ item-dex item]]
+  (let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
+       (and (not multiple?)
+            (r file-selected? db item-dex item))))
 
 (defn get-media-item-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

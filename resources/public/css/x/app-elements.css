@@ -515,6 +515,7 @@ button.x-card:focus,
 /*** Invert ***/
 
 .x-button[data-variant="transparent"][data-color="invert"] .x-button--body,
+.x-icon[data-color="invert"],
 .x-icon-button[data-variant="transparent"][data-color="invert"] .x-icon-button--body {
   color: var( --color-invert ) }
 
