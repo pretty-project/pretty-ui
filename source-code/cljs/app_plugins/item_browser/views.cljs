@@ -17,7 +17,7 @@
     (:require [mid-fruits.candy     :refer [param return]]
               [x.app-db.api         :as db]
               [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
+              [x.app-core.api       :as a]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
               [x.app-tools.api      :as tools]
@@ -39,11 +39,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
+  (let [% (a/state [:item-browser/get-header-props extension-id item-namespace])]
        [elements/button ::go-home-button
                         ; A go-home-button gomb az item-lister plugin {:error-mode? true}
                         ; állapotában is használható!
-                        {:disabled? (and (:at-home? s) (-> :error-mode? s not))
+                        {:disabled? (and (:at-home? %) (-> :error-mode? % not))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
 
@@ -56,9 +56,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-browser/get-header-props extension-id item-namespace])]
+  (let [% (a/state [:item-browser/get-header-props extension-id item-namespace])]
        [elements/button ::go-up-button
-                        {:disabled? (:at-home? s)
+                        {:disabled? (:at-home? %)
                          :on-click  [:item-browser/go-up! extension-id item-namespace]
                          :preset    :back-icon-button}]))
 
@@ -111,8 +111,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? s)}
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? %)}
                                          [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn header

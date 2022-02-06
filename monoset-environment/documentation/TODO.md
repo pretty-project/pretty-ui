@@ -12,7 +12,16 @@
 
 
 
-# x4.5.0
+# x4.6.0
+- ha egy button keypress tulajdonságának megadsz egy billentyűt pl 13 / enter és rátenyerelsz az
+  adott billentyűre, akkor sokszor egymás utánban megtörténik az button on-click eventje,
+  ami full cink, pl fájl letöltésnél hatszor tölti le a fájlt és hasonlok
+
+- x.app-ui modulban az environment/reveal-element-animated és environment/hide-element-animated
+  eljárásokat react-transition vezérlésre cserélni, ezután az environment/element-handler
+  névtérben nem lesz szükség reg-handled-fx-el regisztrálni a mellékhatás eseményeket, elég lesz
+  a reg-fx
+
 - Media picker SHIFT billentyűvel átrakja magát az item-lsiter select-mode-ba!
 
 - A send-query! {:debug? true} beállítással tegye be a :debug resolver-t a query-vektorba

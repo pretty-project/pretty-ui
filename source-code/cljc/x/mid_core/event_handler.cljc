@@ -863,16 +863,24 @@
 ;; ----------------------------------------------------------------------------
 
 (defn subscribed
-  ; @param (vector) subscriber
+  ; @param (subscription-vector) subscriber
   ;
   ; @usage
-  ;  (subscribed [:my-subscription])
+  ;  (a/subscribed [:my-subscription])
   ;
   ; @return (*)
   [subscriber]
   (-> subscriber re-frame/subscribe deref))
 
-(def state subscribed)
+(defn state
+  ; @param (subscription-vector) subscriber
+  ;
+  ; @usage
+  ;  (a/state [:my-subscription])
+  ;
+  ; @return (*)
+  [subscriber]
+  (-> subscriber re-frame/subscribe deref))
 
 
 

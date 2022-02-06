@@ -6,7 +6,7 @@
 ; Created: 2021.02.27
 ; Description:
 ; Version: v0.6.2
-; Compatibility: x4.4.9
+; Compatibility: x4.5.8
 
 
 
@@ -35,6 +35,7 @@
   ;  {:disabled? (boolean)(opt)
   ;   :href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)
+  ;   :on-right-click (metamorphic-event)(opt)
   ;   :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (map)
@@ -43,8 +44,9 @@
   ;   :href (string)
   ;   :id (string)
   ;   :on-click (function)
+  ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
-  [element-id {:keys [disabled? href on-click tooltip]}]
+  [element-id {:keys [disabled? href on-click on-right-click tooltip]}]
   (cond-> {:id (targetable/element-id->target-id element-id)}
           (boolean disabled?) (merge {:disabled     true
                                       :data-tooltip (components/content {:content tooltip})})
@@ -57,7 +59,9 @@
                                       ; A static & clickable elemek on-click esemény kizárólag függvényként
                                       ; hívható meg.
                                       :on-click   #(a/dispatch on-click)
-                                      :on-mouse-up (focusable/blur-element-function element-id)})))
+                                      :on-mouse-up (focusable/blur-element-function element-id)}
+                                     (if on-right-click {:on-context-menu #(do (.preventDefault %)
+                                                                               (a/dispatch on-right-click))}))))
 
 
 

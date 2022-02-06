@@ -18,7 +18,7 @@
               [mid-fruits.logical   :refer [nor]]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.vector    :as vector]
-              [x.app-core.api       :as a :refer [r]]
+              [x.app-core.api       :as a]
               [x.app-components.api :as components]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
@@ -84,8 +84,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       (if (:viewport-small? s) [toggle-search-mode-button extension-id item-namespace]
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       (if (:viewport-small? %) [toggle-search-mode-button extension-id item-namespace]
                                 [search-items-field        extension-id item-namespace])))
 
 
@@ -153,9 +153,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       (cond (:all-items-selected? s) [unselect-all-items-button  extension-id item-namespace]
-             (:any-item-selected?  s) [unselect-some-items-button extension-id item-namespace]
+  (let [% (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
+       (cond (:all-items-selected? %) [unselect-all-items-button  extension-id item-namespace]
+             (:any-item-selected?  %) [unselect-some-items-button extension-id item-namespace]
               :no-items-selected      [select-all-items-button    extension-id item-namespace])))
 
 (defn delete-selected-items-button
@@ -166,10 +166,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       (if (vector/contains-item? (:item-actions s) :delete)
+  (let [% (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
+       (if (vector/contains-item? (:item-actions %) :delete)
            [elements/button :item-lister/delete-selected-items-button
-                            {:disabled? (:no-items-selected? s)
+                            {:disabled? (:no-items-selected? %)
                              :on-click  [:item-lister/delete-selected-items! extension-id item-namespace]
                              :preset    :delete-icon-button
                              :tooltip   :delete!}])))
@@ -182,10 +182,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       (if (vector/contains-item? (:item-actions s) :duplicate)
+  (let [% (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
+       (if (vector/contains-item? (:item-actions %) :duplicate)
            [elements/button :item-lister/duplicate-selected-items-button
-                            {:disabled? (:no-items-selected? s)
+                            {:disabled? (:no-items-selected? %)
                              :on-click  [:item-lister/duplicate-selected-items! extension-id item-namespace]
                              :preset    :duplicate-icon-button
                              :tooltip   :duplicate!}])))
@@ -203,9 +203,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-reorder-mode-props extension-id item-namespace])]
+  (let [% (a/state [:item-lister/get-reorder-mode-props extension-id item-namespace])]
        [elements/button :item-lister/save-order-button
-                        {:disabled? (-> :order-changed? s not)
+                        {:disabled? (-> :order-changed? % not)
                          :on-click  [:item-lister/save-order! extension-id]
                          :label     :save-order!
                          :preset    :primary-button}]))
@@ -251,12 +251,12 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
        [elements/select :item-lister/new-item-select
                         {:as-button?      true
                          :autoclear?      true
                          :icon            :add_circle
-                         :initial-options (:new-item-options s)
+                         :initial-options (:new-item-options %)
                          :on-select       (engine/add-new-item-event extension-id item-namespace)
                          :preset          :primary-icon-button
                          :tooltip         :add-new!}]))
@@ -272,8 +272,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       (if (:new-item-options s) [new-item-select extension-id item-namespace]
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       (if (:new-item-options %) [new-item-select extension-id item-namespace]
                                  [new-item-button extension-id item-namespace])))
 
 (defn toggle-select-mode-button
@@ -285,9 +285,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       (if (:items-selectable? s) [elements/button :item-lister/toggle-select-mode-button
-                                                   {:disabled? (:no-items-to-show? s)
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       (if (:items-selectable? %) [elements/button :item-lister/toggle-select-mode-button
+                                                   {:disabled? (:no-items-to-show? %)
                                                     :on-click  [:item-lister/toggle-select-mode! extension-id]
                                                     :preset    :select-mode-icon-button
                                                     :tooltip   :select}])))
@@ -301,9 +301,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       (if (:sortable? s) [elements/button :item-lister/toggle-reorder-mode-button
-                                           {:disabled? (:no-items-to-show? s)
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       (if (:sortable? %) [elements/button :item-lister/toggle-reorder-mode-button
+                                           {:disabled? (:no-items-to-show? %)
                                             :on-click  [:item-lister/toggle-reorder-mode! extension-id]
                                             :preset    :reorder-mode-icon-button
                                             :tooltip   :reorder}])))
@@ -317,10 +317,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
        [elements/select :item-lister/sort-items-button
                         {:as-button?    true
-                         :disabled?     (:no-items-to-show? s)
+                         :disabled?     (:no-items-to-show? %)
                          :on-select     [:item-lister/order-items! extension-id item-namespace]
                          :options-label :order-by
                          :preset        :order-by-icon-button
@@ -353,8 +353,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-search-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:search-mode? s)}
+  (let [% (a/state [:item-lister/get-search-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:search-mode? %)}
                                          [search-mode-header-structure extension-id item-namespace]]))
 
 (defn select-mode-header-structure
@@ -380,8 +380,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:select-mode? s)}
+  (let [% (a/state [:item-lister/get-select-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:select-mode? %)}
                                          [select-mode-header-structure extension-id item-namespace]]))
 
 (defn menu-mode-header-structure
@@ -409,8 +409,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? s)}
+  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? %)}
                                          [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn reorder-mode-header-structure
@@ -436,8 +436,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-reorder-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:reorder-mode? s)}
+  (let [% (a/state [:item-lister/get-reorder-mode-props extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:reorder-mode? %)}
                                          [reorder-mode-header-structure extension-id item-namespace]]))
 
 (defn header-structure
@@ -486,9 +486,9 @@
   ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
-  (let [s (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
+  (let [% (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
        [elements/label {:font-size :xs :color :highlight :font-weight :bold
-                        :content (if (or (:downloading-items? s) (nor (:downloading-items? s) (:items-received? s)))
+                        :content (if (or (:downloading-items? %) (nor (:downloading-items? %) (:items-received? %)))
                                      :downloading-items...)}]))
 
 (defn downloading-items
@@ -499,8 +499,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
-       (if-not (and (:all-items-downloaded? s) (:items-received? s)) ; XXX#0499
+  (let [% (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
+       (if-not (and (:all-items-downloaded? %) (:items-received? %)) ; XXX#0499
                [elements/row {:content [downloading-items-label extension-id item-namespace]
                               :horizontal-align :center}])))
 
@@ -522,14 +522,14 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [s (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
-       (if (and (:no-items-to-show? s)
+  (let [% (a/state [:item-lister/get-indicator-props extension-id item-namespace])]
+       (if (and (:no-items-to-show? %)
                 ; Szükséges a items-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
                 ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
-                (:items-received? s)
+                (:items-received? %)
                 ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
                 ; ne jelenjen meg a no-items-to-show-label felirat!
-                (-> :downloading-items? s not))
+                (-> :downloading-items? % not))
            [elements/row {:content [no-items-to-show-label extension-id item-namespace]
                           :horizontal-align :center}])))
 
@@ -558,9 +558,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-dex]
-  (let [s (a/state [:item-lister/get-checkbox-props extension-id item-namespace item-dex])]
-       (if (:select-mode? s) [elements/button {:on-click [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
-                                               :preset   (if (:item-selected? s) :checked-icon-button :unchecked-icon-button)}])))
+  (let [% (a/state [:item-lister/get-checkbox-props extension-id item-namespace item-dex])]
+       (if (:select-mode? %) [elements/button {:on-click [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
+                                               :preset   (if (:item-selected? %) :checked-icon-button :unchecked-icon-button)}])))
 
 (defn list-item-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -573,8 +573,10 @@
   ; @return (component)
   [extension-id item-namespace item-dex item]
   (let [{:keys [list-element]} (a/state [:item-lister/get-body-props extension-id item-namespace])
-        on-click                        [:item-lister/->item-clicked extension-id item-namespace item-dex item]]
-       [elements/toggle {:on-click on-click
+        on-click               (engine/item-clicked-event       extension-id item-namespace item-dex item)
+        on-right-click         (engine/item-right-clicked-event extension-id item-namespace item-dex item)]
+       [elements/toggle {:on-click       on-click
+                         :on-right-click on-right-click
                          :content [list-element item-dex item]
                          :hover-color :highlight}]))
 
@@ -663,9 +665,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:list-element (metamorphic-content)
-  ;   :item-actions (keywords in vector)(opt)
+  ;  {:item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
+  ;   :list-element (metamorphic-content)
+  ;   :on-click (metamorphic-event)(opt)
+  ;   :on-load (metamorphic-event)(opt)
+  ;   :on-right-click (metamorphic-event)(opt)
   ;   :sortable? (boolean)(opt)}
   ;
   ; @usage
@@ -695,10 +700,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  (let [s (a/state [:item-lister/get-view-props extension-id item-namespace])]
+  (let [% (a/state [:item-lister/get-view-props extension-id item-namespace])]
        [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
                                        :header [header extension-id item-namespace view-props]
-                                       :description (:description s)}]))
+                                       :description (:description %)}]))
 
 (defn view
   ; @param (keyword) extension-id

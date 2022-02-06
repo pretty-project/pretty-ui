@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.5.6
+; Version: v0.6.2
+; Compatibility: x4.5.8
 
 
 
@@ -52,12 +52,12 @@
 (def website-interface?     interface/website-interface?)
 
 ; x.app-ui.popup-header-presets
-(def popup-icon-button-placeholder popup-header-presets/popup-icon-button-placeholder)
 (def popup-accept-button           popup-header-presets/popup-accept-button)
 (def popup-cancel-button           popup-header-presets/popup-cancel-button)
-(def popup-up-icon-button          popup-header-presets/popup-up-icon-button)
-(def popup-back-icon-button        popup-header-presets/popup-back-icon-button)
+(def popup-go-up-icon-button       popup-header-presets/popup-go-up-icon-button)
+(def popup-go-back-icon-button     popup-header-presets/popup-go-back-icon-button)
 (def popup-close-icon-button       popup-header-presets/popup-close-icon-button)
+(def popup-placeholder-icon-button popup-header-presets/popup-label)
 (def popup-label                   popup-header-presets/popup-label)
 (def accept-popup-header           popup-header-presets/accept-popup-header)
 (def cancel-popup-header           popup-header-presets/cancel-popup-header)

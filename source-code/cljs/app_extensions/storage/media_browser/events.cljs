@@ -32,7 +32,7 @@
 (a/reg-event-fx
   :storage.media-browser/copy-file-link!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [filename]}]]
+  (fn [_ [_ _ {:keys [filename]}]]
       (let [file-uri (media/filename->media-storage-uri filename)
             uri-base (window/get-uri-base)]
            {:dispatch-n [[:ui/close-popup! :storage.media-browser/file-menu]
@@ -41,10 +41,18 @@
 (a/reg-event-fx
   :storage.media-browser/preview-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ {:keys [filename]}]]
+  (fn [{:keys [db]} [_ _ {:keys [filename]}]]
       (let [directory-id (r item-browser/get-current-item-id db :storage)]
-           [:storage.media-viewer/load-viewer! {:directory-id directory-id
-                                                :current-item filename}])))
+           {:dispatch-n [[:ui/close-popup! :storage.media-browser/file-menu]
+                         [:storage.media-viewer/load-viewer! {:directory-id directory-id
+                                                              :current-item filename}]]})))
+
+(a/reg-event-fx
+  :storage.media-browser/download-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ _ {:keys [alias filename]}]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/file-menu]
+                    [:tools/save-file! {:filename alias :uri (media/filename->media-storage-uri filename)}]]}))
 
 
 
@@ -57,8 +65,17 @@
   (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           (if (r subs/media-browser-mode? db)
-                                              (r dialogs/render-file-menu!     cofx item)
+                                              (r dialogs/render-file-menu!     cofx item-dex item)
                                               [:storage.media-picker/->file-clicked item-dex item]))))
+
+(a/reg-event-fx
+  :storage.media-lister/->item-right-clicked
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as item}]]
+      (case mime-type "storage/directory" (if (r subs/media-browser-mode? db)
+                                              (r dialogs/render-directory-menu! cofx item-dex item))
+                                          (if (r subs/media-browser-mode? db)
+                                              (r dialogs/render-file-menu!      cofx item-dex item)))))
 
 
 

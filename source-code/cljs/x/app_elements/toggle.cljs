@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.19
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.5
+; Version: v0.3.8
+; Compatibility: x4.5.8
 
 
 
@@ -78,7 +78,8 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :fit
-  ;   :on-click (metamorphic-event)(constant)
+  ;   :on-click (metamorphic-event)
+  ;   :on-right-click (metamorphic-event)(opt)
   ;   :style (map)(opt)}
   ;
   ; @usage

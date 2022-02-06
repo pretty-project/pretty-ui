@@ -14,6 +14,11 @@ a {
   outline-style: none }
 
 
+/* */
+iframe {
+  border: none }
+
+
 /* 1. Remove the border on images inside links in IE 10.
  * 2. ...
  * 3. ... */

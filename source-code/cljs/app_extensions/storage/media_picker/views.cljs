@@ -37,9 +37,9 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [s (a/state [:item-browser/get-item-label :storage :media])]
+  (let [% (a/state [:item-browser/get-item-label :storage :media])]
        [elements/label ::header-label
-                       {:content s}]))
+                       {:content %}]))
 
 (defn header-select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,10 +61,10 @@
 (defn header-selection-bar-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  (let [s (a/state [:storage.media-picker/get-selection-props])]
-       [:<> [elements/label {:content {:content :n-items-selected :replacements [(:selected-item-count s)]}
+  (let [% (a/state [:storage.media-picker/get-selection-props])]
+       [:<> [elements/label {:content {:content :n-items-selected :replacements [(:selected-item-count %)]}
                              :color :muted :min-height :s :font-size :xs}]
-            [elements/icon-button {:color :default :preset :close :height :s :disabled? (:no-items-selected? s)
+            [elements/icon-button {:color :default :preset :close :height :s :disabled? (:no-items-selected? %)
                                    :on-click [:storage.media-picker/discard-selection! picker-id]}]]))
 
 (defn header-selection-bar
@@ -95,9 +95,9 @@
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [mime-type] :as item}]
-  (let [s (a/state [:storage.media-picker/get-media-item-props item-dex item])]
+  (let [% (a/state [:storage.media-picker/get-media-item-props item-dex item])]
        (case mime-type "storage/directory" [directory-item item-dex item {:icon :navigate_next}]
-                                           [file-item      item-dex item {:icon (if (:selected? s) :check_circle_outline :radio_button_unchecked)}])))
+                                           [file-item      item-dex item {:icon (if (:selected? %) :check_circle_outline :radio_button_unchecked)}])))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,13 +112,13 @@
 (defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [s (a/state [:storage.media-picker/get-element-props])]
+  (let [% (a/state [:storage.media-picker/get-element-props])]
        [elements/label {:color :muted :min-height :s
-                        :content (cond (and multiple? (:no-items-selected? s))
+                        :content (cond (and multiple? (:no-items-selected? %))
                                        :no-items-selected
-                                       (:no-items-selected? s)
+                                       (:no-items-selected? %)
                                        :no-item-selected
-                                       :default {:content :n-items-selected :replacements [(:selected-item-count s)]})}]))
+                                       :default {:content :n-items-selected :replacements [(:selected-item-count %)]})}]))
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

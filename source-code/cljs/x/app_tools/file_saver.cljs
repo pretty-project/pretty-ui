@@ -4,9 +4,9 @@
 
 ; Author: bithandshake
 ; Created: 2020.07.26
-; Description: Fájl mentése a kliens eszközére
-; Version: v1.5.0
-; Compatibility: x4.5.2
+; Description: Fájl mentése a kliens eszközre
+; Version: v1.5.6
+; Compatibility: x4.5.8
 
 
 
@@ -16,11 +16,9 @@
 (ns x.app-tools.file-saver
     (:require [app-fruits.dom     :as dom]
               [mid-fruits.candy   :refer [param]]
-              [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
-              [x.app-tools.temporary-component
-               :refer [append-temporary-component! remove-temporary-component!]]))
+              [x.app-tools.temporary-component :refer [append-temporary-component! remove-temporary-component!]]))
 
 
 
@@ -53,10 +51,9 @@
 (defn- save-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [file-saver (dom/get-element-by-id "x-file-saver")]
-       (.click file-saver)))
+  (-> "x-file-saver" dom/get-element-by-id .click))
 
-       
+
 
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -106,6 +103,7 @@
   [popup-id _]
   [elements/button ::cancel-button
                    {:on-click [:ui/close-popup! popup-id]
+                    :keypress {:key-code 27}
                     :preset   :cancel-button}])
 
 (defn- save-button
@@ -119,6 +117,7 @@
   [elements/button ::save-button
                    {:on-click {:dispatch-n [[:tools/->save-file-accepted popup-id saver-props]
                                             [:ui/close-popup!            popup-id]]}
+                    :keypress {:key-code 13}
                     :preset   :save-button}])
 
 (defn- header
@@ -147,10 +146,9 @@
   ;
   ; @return (hiccup)
   [_ {:keys [filename]}]
-  [:<> [elements/text {:content :save-file? :font-weight :bold}]
-       [elements/row  {:content [:<> [elements/icon {:icon :text_snippet}]
-                                     [elements/vertical-separator {:size :s}]
-                                     [elements/text {:content filename :font-weight :bold}]]}]])
+  [:<> [elements/text  {:content :save-file? :font-weight :bold}]
+       [elements/label {:content filename    :font-weight :bold :color :muted :icon :insert_drive_file
+                        :selectable? true}]])
 
 
 
