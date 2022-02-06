@@ -729,8 +729,4 @@
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  ;[view-structure extension-id item-namespace view-props])
-  [elements/column {:content [:<> [:div {:style {:width "20px" :color "white"}}
-                                        "a"]
-                                  [:div {:style {:width "20px" :color "white"}}
-                                        "b"]]}])
+  [view-structure extension-id item-namespace view-props])
