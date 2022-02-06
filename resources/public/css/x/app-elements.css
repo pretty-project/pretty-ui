@@ -2754,6 +2754,14 @@ body[data-viewport-profile="s"]
 .x-row--body {
   display: flex;
   flex-direction: row;
+  /* - Az x-row--body elem ugyanolyan magas kell legyen, mint az x-row elem, hogy minden esetben
+   *   megfelelően működjön a vertikális igazítás!
+   * - Ha az x-row komponens {:style {...}} tulajdonságával beállítod az x-row elem magasságát,
+   *   és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
+   *   a tartalom magassága kevesebb, mint az x-row elem beállított magassága, akkor a {height: 100%}
+   *   tulajdonság nélkül az .x-row--body elem magassága a tartalom magasságával lenne egyenlő
+   *   és nem működne a tartalom középre igazítása! */
+  height: 100%;
   width: 100% }
 
 .x-row[data-wrap-items="true"] .x-row--body {

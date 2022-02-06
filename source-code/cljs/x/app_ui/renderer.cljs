@@ -966,8 +966,8 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      {:db       (r update-element-props! db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended      renderer-id]}))
+      {:db (r update-element-props! db renderer-id element-id element-props)
+       :dispatch [:ui/->rendering-ended renderer-id]}))
 
 (a/reg-event-fx
   :ui/push-element!
@@ -1018,8 +1018,8 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       (if (r render-element-now? db renderer-id element-id)
-          {:db       (as-> db % (r reserve-renderer!  % renderer-id)
-                                (r update-render-log! % renderer-id element-id :render-requested-at))
+          {:db (as-> db % (r reserve-renderer!  % renderer-id)
+                          (r update-render-log! % renderer-id element-id :render-requested-at))
            :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}
           {:dispatch [:ui/render-element-later!  renderer-id element-id element-props]})))
 
@@ -1041,7 +1041,7 @@
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ renderer-id element-id]]
-      {:db       (r mark-element-as-invisible! db renderer-id element-id)
+      {:db (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
        ; Hide element ...
        :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "hide"]

@@ -62,21 +62,22 @@
 (defn- language-selector-languages
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [app-languages selected-language]}]
-  (letfn [(f [o x] (let [language-selected? (= x selected-language)]
-                        (conj o [elements/button {:icon :placeholder :label x :indent :left
-                                                  :on-click (set-language-event x)
-                                                  :preset (if language-selected? :primary-button :default-button)}])))]
-         (reduce f [:div#x-app-menu--languages] app-languages)))
+  (letfn [(f [x] (let [language-selected? (= x selected-language)]
+                      [elements/button {:icon :placeholder :label x :indent :left
+                                        :on-click (set-language-event x)
+                                        :preset   (if language-selected? :primary-button :default-button)}]))]
+         [:div#x-app-menu--languages (map f app-languages)]))
 
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [popup-id body-props]
-  (conj (language-selector-languages popup-id body-props)
-        [elements/button ::back-button
-                         {:indent   :left
-                          :label    :back!
-                          :on-click [:gestures/change-view! ::handler :main]
-                          :preset   :back-button}]))
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [language-selector-languages popup-id body-props]
+       [elements/button ::back-button
+                        {:indent   :left
+                         :label    :back!
+                         :on-click [:gestures/change-view! ::handler :main]
+                         :preset   :back-button}]])
 
 (defn- language-selector-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
