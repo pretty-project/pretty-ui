@@ -37,14 +37,14 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [% (a/state [:item-browser/get-item-label :storage :media])]
+  (let [% @(a/subscribe [:item-browser/get-item-label :storage :media])]
        [elements/label ::header-label
                        {:content %}]))
 
 (defn header-select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  (let [no-items-selected? (a/state [:storage.media-picker/no-items-selected?])]
+  (let [no-items-selected? @(a/subscribe [:storage.media-picker/no-items-selected?])]
        [elements/button :header-select-button
                         {:disabled? no-items-selected?
                          :preset :select-button :indent :both :keypress {:key-code 13}
@@ -61,7 +61,7 @@
 (defn header-selection-bar-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  (let [% (a/state [:storage.media-picker/get-selection-props])]
+  (let [% @(a/subscribe [:storage.media-picker/get-selection-props])]
        [:<> [elements/label {:content {:content :n-items-selected :replacements [(:selected-item-count %)]}
                              :color :muted :min-height :s :font-size :xs}]
             [elements/icon-button {:color :default :preset :close :height :s :disabled? (:no-items-selected? %)
@@ -95,7 +95,7 @@
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [mime-type] :as item}]
-  (let [% (a/state [:storage.media-picker/get-media-item-props item-dex item])]
+  (let [% @(a/subscribe [:storage.media-picker/get-media-item-props item-dex item])]
        (case mime-type "storage/directory" [directory-item item-dex item {:icon :navigate_next}]
                                            [file-item      item-dex item {:icon (if (:selected? %) :check_circle_outline :radio_button_unchecked)}])))
 
@@ -112,7 +112,7 @@
 (defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [% (a/state [:storage.media-picker/get-element-props])]
+  (let [% @(a/subscribe [:storage.media-picker/get-element-props])]
        [elements/label {:color :muted :min-height :s
                         :content (cond (and multiple? (:no-items-selected? %))
                                        :no-items-selected

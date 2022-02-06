@@ -872,16 +872,6 @@
   [subscriber]
   (-> subscriber re-frame/subscribe deref))
 
-(defn state
-  ; @param (subscription-vector) subscriber
-  ;
-  ; @usage
-  ;  (a/state [:my-subscription])
-  ;
-  ; @return (*)
-  [subscriber]
-  (-> subscriber re-frame/subscribe deref))
-
 
 
 ;; -- Eyecandy functions ------------------------------------------------------

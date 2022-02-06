@@ -23,40 +23,38 @@
 
 (defn get-my-state
   [db _]
-  (get-in db [:my-state]))
+  {:ref (random-uuid)})
 
 (a/reg-sub :get-my-state get-my-state)
 
 (defn a
-  [props]
-  (let [state (a/subscribe [:get-my-state])
-        ref (random-uuid)]
-       (fn [] [:div (str ref)])))
-
-(defn b
   []
-  [:div [:div [:button {:on-click #(a/dispatch [:db/apply! [:my-state] not])}]]
-        [a {}]])
+  (let [state @(a/subscribe [:get-my-state])]
+       [:div {:style {:color "white"}}
+             [:div [:button {:on-click #(a/dispatch [:db/apply! [:my-state] not])}
+                            "toggle"]
+                   (str state)]]))
 
 (defn- pdf-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
-  (let [% (a/state [:storage.media-viewer/get-current-item-props viewer-id])]
+  (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
        [:div.storage--media-viewer--pdf-item
          [:iframe.storage--media-viewer--pdf {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
 
 (defn- image-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
-  (let [% (a/state [:storage.media-viewer/get-current-item-props viewer-id])]
+  (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
        [:div.storage--media-viewer--image-item
-         [:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
-         [:img.storage--media-viewer--image {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
+         ;[:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
+         ;[:img.storage--media-viewer--image {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
+         [a]]))
 
 (defn- media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
-  (let [% (a/state [:storage.media-viewer/get-current-item-props viewer-id])]
+  (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
        (case (-> % :item-filename io/filename->mime-type)
              "application/pdf" [pdf-item   viewer-id]
                                [image-item viewer-id])))

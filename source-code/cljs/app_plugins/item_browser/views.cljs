@@ -39,7 +39,7 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% (a/state [:item-browser/get-header-props extension-id item-namespace])]
+  (let [% @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
        [elements/button ::go-home-button
                         ; A go-home-button gomb az item-lister plugin {:error-mode? true}
                         ; állapotában is használható!
@@ -56,7 +56,7 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% (a/state [:item-browser/get-header-props extension-id item-namespace])]
+  (let [% @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
        [elements/button ::go-up-button
                         {:disabled? (:at-home? %)
                          :on-click  [:item-browser/go-up! extension-id item-namespace]
@@ -111,7 +111,7 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% (a/state [:item-lister/get-menu-mode-props extension-id item-namespace])]
+  (let [% @(a/subscribe [:item-lister/get-menu-mode-props extension-id item-namespace])]
        [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? %)}
                                          [menu-mode-header-structure extension-id item-namespace]]))
 
