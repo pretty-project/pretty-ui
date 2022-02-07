@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.9.8
-; Compatibility: x4.5.6
+; Version: v1.0.6
+; Compatibility: x4.5.9
 
 
 
@@ -469,7 +469,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r disable-selected-items! db extension-id item-namespace)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:display-progress? true
+                                    {;:display-progress? true
                                      :on-success [:item-lister/->selected-items-deleted extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
                                      :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
@@ -483,7 +483,7 @@
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
+                         {;:display-progress? true
                           :on-success [:item-lister/reload-items! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
@@ -496,7 +496,7 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
+                         {;:display-progress? true
                           :on-success [:item-lister/->selected-items-duplicated extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
                           :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]))
@@ -507,13 +507,13 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
-  (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
+  ; @param (strings in vector) copy-ids
+  (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
+                         {;:display-progress? true
                           :on-success [:item-lister/reload-items! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
-                          :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace item-ids)}]))
+                          :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace copy-ids)}]))
 
 (a/reg-event-fx
   :item-lister/search-items!
@@ -576,9 +576,9 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [; XXX#7891
-            ; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      (let [; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
             ; listája nem tud megváltozni a szerver válaszának megérkezéséig.
             item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
            {:db (as-> db % (r backup-selected-items! % extension-id item-namespace)
@@ -592,11 +592,11 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [; XXX#7891
-            item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [copy-ids (engine/server-response->copy-ids extension-id item-namespace server-response)]
            {:db (r reset-selections! db extension-id item-namespace)
-            :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace item-ids]
+            :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace copy-ids]
                          [:item-lister/reload-items!                   extension-id item-namespace]]})))
 
 (a/reg-event-fx
@@ -612,5 +612,15 @@
       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
       (if (r environment/key-pressed? db 16)
           {:db (r toggle-item-selection! db extension-id item-namespace item-dex)}
-          (let [on-click (engine/item-clicked-event extension-id item-namespace)]
-               (a/metamorphic-event<-params on-click item-dex item)))))
+          (engine/item-clicked-event extension-id item-namespace item-dex item))))
+
+(a/reg-event-fx
+  :item-lister/->item-right-clicked
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ; @param (map) item
+  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
+      (engine/item-right-clicked-event extension-id item-namespace item-dex item)))

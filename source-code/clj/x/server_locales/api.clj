@@ -35,5 +35,6 @@
 (def country-native-name  country-list/country-native-name)
 
 ; x.mid-locales.name-handler
-(def NAME-ORDERS        name-handler/NAME-ORDERS)
-(def name->ordered-name name-handler/name->ordered-name)
+(def NAME-ORDERS         name-handler/NAME-ORDERS)
+(def name->ordered-name  name-handler/name->ordered-name)
+(def request->name-order name-handler/request->name-order)

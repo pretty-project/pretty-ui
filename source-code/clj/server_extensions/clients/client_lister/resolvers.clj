@@ -4,7 +4,6 @@
               [mongo-db.api         :as mongo-db]
               [pathom.api           :as pathom]
               [x.server-locales.api :as locales]
-              [x.server-user.api    :as user]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]
               [server-plugins.item-lister.api        :as item-lister]))
 
@@ -15,10 +14,8 @@
 
 (defn env->name-field-pattern
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env]
-  (let [request           (pathom/env->request env)
-        selected-language (user/request->user-settings-item request :selected-language)
-        name-order        (get locales/NAME-ORDERS selected-language)]
+  [{:keys [request]}]
+  (let [name-order (locales/request->name-order request)]
        ; A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által
        ; kiválaszott nyelv szerinti sorrendet alkalmazza.
        (case name-order :reversed {:client/name {:$concat [:$client/last-name  " " :$client/first-name]}}

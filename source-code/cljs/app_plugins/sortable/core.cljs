@@ -760,25 +760,25 @@
   ;
   ; @return (hiccup)
   [sortable-id {:keys [sortable-item-order] :as view-props}]
-  (reduce-indexed (fn [sortable-elements render-dex sortable-item-id]
-                      ; BUG#9084
-                      ; Mozilla Firefox 89.0.2
-                      ; macOS Catalina 10.15.7
-                      ; Abban az esetben, ha a sortable-element-component komponensek
-                      ; egyedi react-kulcs átadással kerülnek kirenderelésre, akkor
-                      ; az onDragEnd esemény megtörténésekor a target-element komponensen
-                      ; történik egy szükségtelen CSS transform.
-                      ; Ha például a felsorolt elemek magassága 100px, akkor a target-element
-                      ; komponens -100px távolságról (Y tengelyen) transzformálódik a végleges
-                      ; helyére.
-                      ; A target-element komponens onDragEnd esemény előtti {:transform ...}
-                      ; tulajdonságának értéke: {:transform "translate3d(0px -100px, 0) ...", ...}
-                      ; A target-element komponens onDragEnd esemény utáni {:transform ...}
-                      ; tulajdonságának értéke: {:transform nil, ...}
-                      (conj sortable-elements ;^{:key sortable-item-id}
-                            [sortable-element-component sortable-id view-props sortable-item-id render-dex]))
-                  [:div.x-sortable--elements (sortable-elements-attributes sortable-id view-props)]
-                  (param sortable-item-order)))
+  (letfn [(f [sortable-elements render-dex sortable-item-id]
+             ; BUG#9084
+             ; Mozilla Firefox 89.0.2
+             ; macOS Catalina 10.15.7
+             ; Abban az esetben, ha a sortable-element-component komponensek
+             ; egyedi react-kulcs átadással kerülnek kirenderelésre, akkor
+             ; az onDragEnd esemény megtörténésekor a target-element komponensen
+             ; történik egy szükségtelen CSS transform.
+             ; Ha például a felsorolt elemek magassága 100px, akkor a target-element
+             ; komponens -100px távolságról (Y tengelyen) transzformálódik a végleges
+             ; helyére.
+             ; A target-element komponens onDragEnd esemény előtti {:transform ...}
+             ; tulajdonságának értéke: {:transform "translate3d(0px -100px, 0) ...", ...}
+             ; A target-element komponens onDragEnd esemény utáni {:transform ...}
+             ; tulajdonságának értéke: {:transform nil, ...}
+             (conj sortable-elements ;^{:key sortable-item-id}
+                   [sortable-element-component sortable-id view-props sortable-item-id render-dex]))]
+         (reduce-indexed f [:div.x-sortable--elements (sortable-elements-attributes sortable-id view-props)]
+                           (param sortable-item-order))))
 
 (defn- sortable-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -789,11 +789,11 @@
   ; @return (component)
   [sortable-id view-props]
   [dnd-context (view-props->dnd-context-props sortable-id view-props)
-    [sortable-context (view-props->sortable-context-props sortable-id view-props)
-      [sortable-elements sortable-id view-props]
-      [drag-overlay [drag-overlay-element]]]])
+               [sortable-context (view-props->sortable-context-props sortable-id view-props)
+                                 [sortable-elements sortable-id view-props]
+                                 [drag-overlay [drag-overlay-element]]]])
 
-(defn- af0120
+(defn- sortable-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) sortable-id
@@ -836,13 +836,12 @@
   ;
   ; @return (component)
   ([sortable-props]
-   [sortable nil sortable-props])
+   [sortable (a/id) sortable-props])
 
   ([sortable-id sortable-props]
-   (let [sortable-id (a/id sortable-id)]
-        [components/stated sortable-id
-                           {:render-f    #'af0120
-                            :base-props  sortable-props
-                            :destructor  [:sortable/destruct-sortable! sortable-id]
-                            :initializer [:sortable/init-sortable!     sortable-id sortable-props]
-                            :subscriber  [:sortable/get-view-props     sortable-id]}])))
+   [components/stated sortable-id
+                      {:render-f    #'sortable-f
+                       :base-props  sortable-props
+                       :destructor  [:sortable/destruct-sortable! sortable-id]
+                       :initializer [:sortable/init-sortable!     sortable-id sortable-props]
+                       :subscriber  [:sortable/get-view-props     sortable-id]}]))

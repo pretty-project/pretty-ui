@@ -90,9 +90,9 @@
   [elements/text-field ::phone-number-field
                        {:label :phone-number :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :phone-number]
-                        :validator {:f form/phone-number-valid? :invalid-message :invalid-phone-number}
+                        :validator {:f form/phone-number? :invalid-message :invalid-phone-number}
                         ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
-                        ;:modifier form/valid-phone-number
+                        ;:modifier form/phone-number
                         :modifier #(string/starts-with! % "+")
                         :form-id   (item-editor/form-id :clients :client)
                         :disabled? editor-disabled?}])
@@ -103,7 +103,7 @@
   [elements/text-field ::email-address-field
                        {:label :email-address :required? true :min-width :s
                         :value-path [:clients :item-editor/data-items :email-address]
-                        :validator {:f form/email-address-valid? :invalid-message :invalid-email-address}
+                        :validator {:f form/email-address? :invalid-message :invalid-email-address}
                         :form-id   (item-editor/form-id :clients :client)
                         :disabled? editor-disabled?}])
 

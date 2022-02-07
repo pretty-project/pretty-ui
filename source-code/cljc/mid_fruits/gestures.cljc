@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.03
 ; Description:
-; Version: v0.5.2
+; Version: v0.9.8
 
 
 
@@ -14,6 +14,7 @@
 
 (ns mid-fruits.gestures
     (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.form   :as form]
               [mid-fruits.loop   :refer [do-while]]
               [mid-fruits.mixed  :as mixed]
               [mid-fruits.string :as string]
@@ -24,196 +25,38 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- label->label-base
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) n
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/label->label-base "My item" "copy")
-  ;  =>
-  ;  "My item"
-  ;
-  ; @example
-  ;  (gestures/label->label-base "My item copy" "copy")
-  ;  =>
-  ;  "My item"
-  ;
-  ; @example
-  ;  (gestures/label->label-base "My item copy 2" "copy")
-  ;  =>
-  ;  "My item"
-  ;
-  ; WARNING!
-  ;  A függvény nem vizsgálja, hogy a trail-base után következő szöveg
-  ;  valóban csak számot tartalmaz!
-  ;
-  ; @example
-  ;  (gestures/label->label-base "My item copy 2 xyz" "copy")
-  ;  =>
-  ;  "My item"
-  ;
-  ; @return (string)
-  [n suffix]
-  (let [trail-base (str " " suffix)]
-       (if (string/contains-part?        n trail-base)
-           (string/before-last-occurence n trail-base)
-           (return n))))
-
-(defn- label->nth-copy-dex
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) n
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/label->nth-copy-dex "My item copy" "copy")
-  ;  =>
-  ;  ""
-  ;
-  ; @example
-  ;  (gestures/label->nth-copy-dex "My item copy 2" "copy")
-  ;  =>
-  ;  "2"
-  ;
-  ; WARNING!
-  ;  A függvény nem vizsgálja, hogy a trail-base után következő szöveg
-  ;  valóban csak számot tartalmaz!
-  ; @example
-  ;  (gestures/label->nth-copy-dex "My item copy 2 xyz" "copy")
-  ;  =>
-  ;  "2 xyz"
-  ;
-  ; @return (string)
-  [n suffix]
-  (let [trail-base (str " " suffix " ")]
-       (string/after-last-occurence n trail-base)))
-
-(defn- label->first-copy-label?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) n
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/label->first-copy-label? "My item" "copy")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (gestures/label->first-copy-label? "My item copy" "copy")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (gestures/label->first-copy-label? "My item copy 2" "copy")
-  ;  =>
-  ;  false
-  ;
-  ; @return (boolean)
-  [n suffix]
-  (let [trail-base (str " " suffix)]
-       (string/ends-with? n trail-base)))
-
-(defn- label->nth-copy-label?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) n
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/label->nth-copy-label? "My item" "copy")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (gestures/label->nth-copy-label? "My item copy" "copy")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (gestures/label->nth-copy-label? "My item copy 2" "copy")
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [n suffix]
-  (let [trail-base (str " " suffix " ")]
-       (boolean (if-let [trail-end (string/after-last-occurence n trail-base)]
-                        (mixed/str-number? trail-end)))))
-
-(defn- label->next-copy-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) n
-  ; @param (string) suffix
-  ;
-  ; @example
-  ;  (gestures/label->next-copy-label "My item" "copy")
-  ;  =>
-  ;  "My item copy"
-  ;
-  ; @example
-  ;  (gestures/label->next-copy-label "My item copy" "copy")
-  ;  =>
-  ;  "My item copy 2"
-  ;
-  ; @example
-  ;  (gestures/label->next-copy-label "My item copy 2" "copy")
-  ;  =>
-  ;  "My item copy 3"
-  ;
-  ; @return (string)
-  [n suffix]
-        ; "My item copy" => "My item copy 2"
-  (cond (label->first-copy-label? n suffix)
-        (str n " 2")
-
-        ; "My item copy 2" => "My item copy 3"
-        (label->nth-copy-label?   n suffix)
-        (let [copy-dex      (label->nth-copy-dex n suffix)
-              label-base    (label->label-base   n suffix)
-              next-copy-dex (mixed/update-str-number copy-dex inc)]
-             (str label-base " " suffix " " next-copy-dex))
-
-        ; "My item" => "My item copy"
-        :else (str n " " suffix)))
-
-(defn item-label->duplicated-item-label
+(defn item-label->copy-label
   ; Az original-label paraméterként átadott címkét ellátja a suffix paraméterként
   ; átadott toldalékkal. Névütközés esetén sorszámmal látja el a címkét.
   ;
-  ; @param (string) original-label
+  ; @param (string) item-label
   ; @param (strings in vector)(opt) concurent-labels
-  ; @param (string) suffix
   ;
   ; @example
-  ;  (gestures/item-label->duplicated-item-label "My item"
-  ;                                              ["Your item" "Their item"]
-  ;                                              "copy")
+  ;  (gestures/item-label->copy-label "My item" ["Your item" "Their item"])
   ;  =>
-  ;  "My item copy"
+  ;  "My item #2"
   ;
   ; @example
-  ;  (gestures/item-label->duplicated-item-label "My item"
-  ;                                              ["My item copy"]
-  ;                                              "copy")
+  ;  (gestures/item-label->copy-label "My item" ["My item" "My item #2"])
   ;  =>
-  ;  "My item copy 2"
+  ;  "My item #3"
   ;
   ; @example
-  ;  (gestures/item-label->duplicated-item-label "My item copy"
-  ;                                              ["Your item"]
-  ;                                              "copy")
+  ;  (gestures/item-label->copy-label "My item #2" ["Your item"])
   ;  =>
-  ;  "My item copy 2"
+  ;  "My item #3"
   ;
   ; @return (string)
-  ([original-label suffix]
-   (item-label->duplicated-item-label original-label [] suffix))
+  ([item-label]
+   (item-label->copy-label item-label []))
 
-  ([original-label concurent-labels suffix]
-   (do-while (fn [%] (label->next-copy-label % suffix))
-             (param original-label)
-             (fn [%] (not (vector/contains-item? concurent-labels %))))))
+  ([item-label concurent-labels]
+   (letfn [(test-f [n] (not (vector/contains-item? concurent-labels n)))
+           (f      [n] (if (form/ordered-label? n)
+                           (let [copy-dex      (string/after-last-occurence  n "#")
+                                 label-base    (string/before-last-occurence n "#")
+                                 next-copy-dex (mixed/update-str-number copy-dex inc)]
+                                (str label-base "#" next-copy-dex))
+                           (str n " #2")))]
+          (do-while f item-label test-f))))

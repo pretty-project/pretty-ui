@@ -44,7 +44,7 @@
 (defn save-my-document!
   []
   ; @description (mongo-db/save-document! ...)
-  ; - Saving: upserting by ID
+  ; - Saving AKA upserting by ID
   ; - Ha NEM létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor létrehozza.
   ; - Ha létezik a megadott azonosítóval rendelkező dokumentum a kollekcióban, akkor felülírja.
   ; - A függvény visszatérési értéke sikeres mentés esetén a dokumentum.

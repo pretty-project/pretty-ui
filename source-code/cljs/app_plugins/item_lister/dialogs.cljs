@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.07
 ; Description:
-; Version: v0.6.6
-; Compatibility: x4.5.6
+; Version: v0.7.4
+; Compatibility: x4.5.9
 
 
 
@@ -14,9 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.dialogs
-    (:require [mid-fruits.candy   :refer [param return]]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
+    (:require [mid-fruits.candy :refer [param return]]
+              [x.app-core.api   :as a :refer [r]]
+              [x.app-ui.api     :as ui]
               [app-plugins.item-lister.engine :as engine]))
 
 
@@ -33,26 +33,24 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-ids]
-  (let [dialog-id  (engine/dialog-id extension-id item-namespace :items-deleted)
-        undo-event [:item-lister/undo-delete-items! extension-id item-namespace item-ids]]
-       [:<> [elements/label {:content {:content :n-items-deleted :replacements [(count item-ids)]}}]
-            [elements/button {:label :recover! :preset :primary-button
-                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]]))
+  (let [undo-event [:item-lister/undo-delete-items! extension-id item-namespace item-ids]]
+       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-deleted)
+                                     {:label {:content :n-items-deleted :replacements [(count item-ids)]}
+                                      :primary-button {:on-click undo-event :label :recover!}}]))
 
 (defn items-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
+  ; @param (strings in vector) copy-ids
   ;
   ; @return (component)
-  [extension-id item-namespace item-ids]
-  (let [dialog-id  (engine/dialog-id extension-id item-namespace :items-duplicated)
-        undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace item-ids]]
-       [:<> [elements/label {:content {:content :n-items-duplicated :replacements [(count item-ids)]}}]
-            [elements/button {:label :undo! :preset :primary-button
-                              :on-click {:dispatch-n [undo-event [:ui/pop-bubble! dialog-id]]}}]]))
+  [extension-id item-namespace copy-ids]
+  (let [undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace copy-ids]]
+       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-duplicated)
+                                     {:label {:content :n-items-duplicated :replacements [(count copy-ids)]}
+                                      :primary-button {:on-click undo-event :label :undo!}}]))
 
 
 
@@ -77,7 +75,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
-  (fn [_ [_ extension-id item-namespace item-ids]]
+  ; @param (strings in vector) copy-ids
+  (fn [_ [_ extension-id item-namespace copy-ids]]
       [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
-                        {:body [items-duplicated-dialog-body extension-id item-namespace item-ids]}]))
+                        {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}]))

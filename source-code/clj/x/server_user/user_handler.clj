@@ -27,7 +27,6 @@
 
 
 
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -64,10 +63,10 @@
   ;
   ; @return (boolean)
   [{:keys [email-address first-name last-name password]}]
-  (and (form/password-valid?      password)
-       (form/email-address-valid? email-address)
-       (string/length?            first-name 1 profile-handler/MAX-FIRST-NAME-LENGTH)
-       (string/length?            last-name  1 profile-handler/MAX-FIRST-NAME-LENGTH)))
+  (and (form/password?      password)
+       (form/email-address? email-address)
+       (string/length?      first-name 1 profile-handler/MAX-FIRST-NAME-LENGTH)
+       (string/length?      last-name  1 profile-handler/MAX-FIRST-NAME-LENGTH)))
 
 (defn- user-props->user-account
   ; WARNING! NON-PUBLIC! DO NOT USE!

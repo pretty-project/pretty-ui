@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.5.7
+; Version: v0.6.8
+; Compatibility: x4.5.9
 
 
 
@@ -25,7 +25,7 @@
               [x.app-tools.api      :as tools]
               [app-fruits.react-transition    :as react-transition]
               [app-plugins.item-lister.engine :as engine]))
-             ;[app-plugins.sortable.core      :refer [sortable]]
+              ;[app-plugins.sortable.core      :refer [sortable]]))
 
 
 
@@ -393,13 +393,11 @@
   ; @return (component)
   [extension-id item-namespace]
   [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group
-      [new-item-block             extension-id item-namespace]
-      [sort-items-button          extension-id item-namespace]
-      [toggle-select-mode-button  extension-id item-namespace]
-      [toggle-reorder-mode-button extension-id item-namespace]]
-    [:div.item-lister--header--menu-item-group
-      [search-block extension-id item-namespace]]])
+    [:div.item-lister--header--menu-item-group [new-item-block             extension-id item-namespace]
+                                               [sort-items-button          extension-id item-namespace]
+                                               [toggle-select-mode-button  extension-id item-namespace]
+                                               [toggle-reorder-mode-button extension-id item-namespace]]
+    [:div.item-lister--header--menu-item-group [search-block extension-id item-namespace]]])
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -572,11 +570,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-dex item]
-  (let [{:keys [list-element]} @(a/subscribe [:item-lister/get-body-props extension-id item-namespace])
-        on-click               (engine/item-clicked-event       extension-id item-namespace item-dex item)
-        on-right-click         (engine/item-right-clicked-event extension-id item-namespace item-dex item)]
-       [elements/toggle {:on-click       on-click
-                         :on-right-click on-right-click
+  (let [{:keys [list-element]} @(a/subscribe [:item-lister/get-body-props extension-id item-namespace])]
+       [elements/toggle {:on-click       [:item-lister/->item-clicked       extension-id item-namespace item-dex item]
+                         :on-right-click [:item-lister/->item-right-clicked extension-id item-namespace item-dex item]
                          :content [list-element item-dex item]
                          :hover-color :highlight}]))
 
@@ -671,7 +667,8 @@
   ;   :on-click (metamorphic-event)(opt)
   ;   :on-load (metamorphic-event)(opt)
   ;   :on-right-click (metamorphic-event)(opt)
-  ;   :sortable? (boolean)(opt)}
+  ;   :sortable? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  [item-lister/body :my-extension :my-type {...}]

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.13
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.6
+; Version: v0.5.2
+; Compatibility: x4.5.9
 
 
 
@@ -16,6 +16,7 @@
 (ns app-plugins.item-editor.dialogs
     (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
+              [x.app-ui.api       :as ui]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]))
 
@@ -51,19 +52,6 @@
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn notification-bubble-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (component)
-  [bubble-id {:keys [label button-event button-label]}]
-  [:<> [elements/label  {:content label}]
-       [elements/button {:label button-label :preset :primary-button
-                         :on-click {:dispatch-n [button-event [:ui/pop-bubble! bubble-id]]}}]])
-
 (defn undo-delete-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -73,10 +61,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-id]
-  (let [dialog-id  (engine/dialog-id extension-id item-namespace :item-deleted)
-        undo-event [:item-editor/undo-delete! extension-id item-namespace item-id]]
-       [notification-bubble-body dialog-id
-                                 {:label :item-deleted :button-event undo-event :button-label :recover!}]))
+  (let [undo-event [:item-editor/undo-delete! extension-id item-namespace item-id]]
+       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-deleted)
+                                     {:label :item-deleted
+                                      :primary-button {:on-click undo-event :label :recover!}}]))
 
 (defn changes-discarded-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,10 +75,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace item-id]
-  (let [dialog-id  (engine/dialog-id extension-id item-namespace :changes-discarded)
-        undo-event [:item-editor/undo-discard! extension-id item-namespace item-id]]
-       [notification-bubble-body dialog-id
-                                 {:label :unsaved-changes-discarded :button-event undo-event :button-label :restore!}]))
+  (let [undo-event [:item-editor/undo-discard! extension-id item-namespace item-id]]
+       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :changes-discarded)
+                                     {:label :unsaved-changes-discarded
+                                      :primary-button {:on-click undo-event :label :restore!}}]))
 
 (defn item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,10 +89,10 @@
   ;
   ; @return (component)
   [extension-id item-namespace copy-id]
-  (let [dialog-id  (engine/dialog-id extension-id item-namespace :item-duplicated)
-        edit-event [:item-editor/edit-item! extension-id item-namespace copy-id]]
-       [notification-bubble-body dialog-id
-                                 {:label :item-duplicated :button-event edit-event :button-label :edit-copy!}]))
+  (let [edit-event [:item-editor/edit-item! extension-id item-namespace copy-id]]
+       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-duplicated)
+                                     {:label :item-duplicated
+                                      :primary-button {:on-click edit-event :label :edit-copy!}}]))
 
 
 

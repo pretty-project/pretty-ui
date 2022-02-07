@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.6.2
+; Version: v0.6.4
 ; Compatibility: x4.5.8
 
 
@@ -31,12 +31,16 @@
               [x.app-ui.structure    :as structure]
               [x.app-ui.themes       :as themes]
               [x.app-ui.title        :as title]
+              [x.app-ui.bubble-body-presets  :as bubble-body-presets]
               [x.app-ui.popup-header-presets :as popup-header-presets]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.app-ui.bubble-body-presets
+(def state-changed-bubble-body bubble-body-presets/state-changed-bubble-body)
 
 ; x.app-ui.graphics
 (def app-logo          graphics/app-logo)

@@ -32,6 +32,9 @@
 ; @constant (string)
 (def PHONE-NUMBER-PATTERN #"\+\d{10,20}")
 
+; @constant (string)
+(def ORDERED-LABEL-PATTERN #".*\#\d$")
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -60,39 +63,49 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/pin-valid? "0000")
+  ;  (form/pin? "0000")
   ;
   ; @return (boolean)
   [n]
   (string/length? n 4))
 
-(defn password-valid?
+(defn password?
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/password-valid? "Abcde1")
+  ;  (form/password? "Abcde1")
   ;
   ; @return (boolean)
   [n]
  ;(re-match? n PASSWORD-PATTERN)
   (string/nonempty? n))
 
-(defn email-address-valid?
+(defn email-address?
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/email-address-valid? "foo@bar.baz")
+  ;  (form/email-address? "foo@bar.baz")
   ;
   ; @return (boolean)
   [n]
   (re-match? n EMAIL-PATTERN))
 
-(defn phone-number-valid?
+(defn phone-number?
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/phone-number-valid? "+36301234567")
+  ;  (form/phone-number? "+36301234567")
   ;
   ; @return (boolean)
   [n]
   (re-match? n PHONE-NUMBER-PATTERN))
+
+(defn ordered-label?
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (form/ordered-label? "My item #3")
+  ;
+  ; @return (boolean)
+  [n]
+  (re-match? n ORDERED-LABEL-PATTERN))

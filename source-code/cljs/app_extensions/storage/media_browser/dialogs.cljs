@@ -38,7 +38,8 @@
                         {:preset :default-button :icon :content_paste :indent :left :label :copy-link!
                          :on-click [:storage.media-browser/copy-file-link! item-dex file-item]}]
        [elements/button ::duplicate-file-button
-                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!}]
+                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
+                         :on-click [:storage.media-browser/duplicate-file! item-dex file-item]}]
        [elements/button ::rename-file-button
                         {:preset :default-button :icon :edit :indent :left :label :rename!}]
        [elements/button ::more-info-button

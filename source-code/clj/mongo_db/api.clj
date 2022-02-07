@@ -2,6 +2,7 @@
 (ns mongo-db.api
     (:require [mongo-db.adaptation]
               [mongo-db.connection]
+              [mongo-db.preparing]
               [mongo-db.actions    :as actions]
               [mongo-db.engine     :as engine]
               [mongo-db.pipelines  :as pipelines]

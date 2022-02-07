@@ -6,6 +6,7 @@
               [x.app-media.api   :as media]
               [x.app-ui.api      :as ui]
               [app-extensions.storage.media-browser.dialogs :as dialogs]
+              [app-extensions.storage.media-browser.queries :as queries]
               [app-extensions.storage.media-browser.subs    :as subs]
               [app-plugins.item-browser.api                 :as item-browser]))
 
@@ -53,6 +54,17 @@
   (fn [{:keys [db]} [_ _ {:keys [alias filename]}]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/file-menu]
                     [:tools/save-file! {:filename alias :uri (media/filename->media-storage-uri filename)}]]}))
+
+(a/reg-event-fx
+  :storage.media-browser/duplicate-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ _ file-item]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/file-menu]
+                    [:sync/send-query! :storage.media-browser/duplicate-media-item!
+                                       {:display-progress? true
+                                        ;:on-success [:item-editor/->item-duplicated :storage :media]
+                                        ;:on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
+                                        :query (r queries/get-duplicate-media-item-query db file-item)}]]}))
 
 
 

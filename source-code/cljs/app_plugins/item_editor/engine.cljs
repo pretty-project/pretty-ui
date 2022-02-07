@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.9.2
-; Compatibility: x4.5.6
+; Compatibility: x4.5.9
 
 
 
@@ -55,7 +55,7 @@
   ;
   ; @example
   ;  (engine/server-response->copy-id :my-extension :my-type
-  ;                                   {my-extension/duplicate-my-type-item! {:my-type/id "my-item"}})
+  ;                                   {my-extension.my-type-editor/duplicate-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;

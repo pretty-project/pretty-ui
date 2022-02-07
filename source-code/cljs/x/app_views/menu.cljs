@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v1.9.8
-; Compatibility: x4.5.2
+; Version: v2.0.8
+; Compatibility: x4.5.9
 
 
 
@@ -14,17 +14,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.menu
-    (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.css        :as css]
-              [x.app-components.api  :as components]
-              [x.app-core.api        :as a :refer [r]]
-              [x.app-details         :as details]
-              [x.app-elements.api    :as elements]
-              [x.app-environment.api :as environment]
-              [x.app-gestures.api    :as gestures]
-              [x.app-locales.api     :as locales]
-              [x.app-ui.api          :as ui]
-              [x.app-user.api        :as user]))
+    (:require [mid-fruits.candy     :refer [param]]
+              [mid-fruits.css       :as css]
+              [x.app-components.api :as components]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-details        :as details]
+              [x.app-elements.api   :as elements]
+              [x.app-gestures.api   :as gestures]
+              [x.app-locales.api    :as locales]
+              [x.app-ui.api         :as ui]
+              [x.app-user.api       :as user]))
 
 
 
@@ -63,6 +62,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [app-languages selected-language]}]
   (letfn [(f [x] (let [language-selected? (= x selected-language)]
+                     ^{:key (str "x-app-menu--languages--" x)}
                       [elements/button {:icon :placeholder :label x :indent :left
                                         :on-click (set-language-event x)
                                         :preset   (if language-selected? :primary-button :default-button)}]))]

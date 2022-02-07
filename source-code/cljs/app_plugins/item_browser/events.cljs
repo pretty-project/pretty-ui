@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.4.6
-; Compatibility: x4.5.6
+; Compatibility: x4.5.9
 
 
 
@@ -116,8 +116,6 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
-       (println (str (validator/data-valid? document)))
-       (println (str document))
        (if (validator/data-valid? document)
            ; XXX#3907
            ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja

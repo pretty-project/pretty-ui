@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.7.6
-; Compatibility: x4.5.6
+; Compatibility: x4.5.9
 
 
 
@@ -118,9 +118,9 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
+  ; @param (strings in vector) copy-ids
   ;
   ; @return (vector)
-  [db [_ extension-id item-namespace item-ids]]
+  [db [_ extension-id item-namespace copy-ids]]
   (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
-       [:debug `(~(symbol mutation-name) ~{:item-ids item-ids})]))
+       [:debug `(~(symbol mutation-name) ~{:item-ids copy-ids})]))

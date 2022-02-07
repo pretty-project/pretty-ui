@@ -45,7 +45,7 @@
           :value-path (engine/default-value-path field-id)}
          (param field-props)
          (if validate? {:tooltip   :valid-password-rules
-                        :validator {:f form/password-valid?
+                        :validator {:f form/password?
                                     :invalid-message :password-is-too-weak}})))
 
 
