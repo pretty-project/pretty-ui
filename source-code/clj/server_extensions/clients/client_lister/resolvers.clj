@@ -25,7 +25,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [name-field-pattern (env->name-field-pattern env)
-        env (pathom/env<-param env :field-pattern name-field-pattern)]
+        ; - A :client/name virtuális mezőt szükséges hozzáadni a dokumentumokhoz a keresés és rendezés előtt!
+        ; - A keresés és rendezés után szükséges eltávolítani a dokumentumokból a :client/name virtuális mezőt,
+        ;   mert az item-lister plugin a törölt dokumentumok visszaállításakor a kliens-oldali változatot
+        ;   küldi el a szerver részére, és ha az tartalmazná a virtuális mezőt, akkor a visszaállított
+        ;   dokumentumok is tartalmaznák azt!
+        env (-> env (pathom/env<-param :field-pattern name-field-pattern)
+                    (pathom/env<-param :unset-pattern [:client/name]))]
        (item-lister/env->get-pipeline env :clients :client)))
 
 (defn env->count-pipeline

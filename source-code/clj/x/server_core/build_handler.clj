@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.21
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.5
+; Version: v0.5.2
+; Compatibility: x4.5.9
 
 
 
@@ -26,7 +26,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def APP-BUILD-FILEPATH "monoset-environment/x.app-build.edn")
+;  A "resources" mappában elhelyezett "x.app-build.edn" fájl minden esetben
+;  a lefordított JAR fájl része!
+(def APP-BUILD-FILEPATH "resources/x.app-build.edn")
 
 ; @constant (string)
 (def INITIAL-APP-BUILD "0.0.1")
@@ -62,8 +64,11 @@
 (defn import-app-build!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [{:keys [app-build]} (io/read-edn-file APP-BUILD-FILEPATH)]
-       (event-handler/dispatch [:core/store-app-build! app-build])))
+  (if-let [{:keys [app-build]} (io/read-edn-file APP-BUILD-FILEPATH)]
+          (event-handler/dispatch [:core/store-app-build! app-build])
+          ; Development környezetben nem szükséges az (a/->app-built) függvényt meghívni,
+          ; ezért nem minden esetben biztosított az app-build értékének létezése!
+          (event-handler/dispatch [:core/store-app-build! INITIAL-APP-BUILD])))
 
 (event-handler/reg-fx :core/import-app-build! import-app-build!)
 

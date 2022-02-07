@@ -1,9 +1,8 @@
 
 (ns server-extensions.clients.client-lister.mutations
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
-              [x.server-locales.api :as locales]
+    (:require [mid-fruits.candy :refer [param return]]
+              [mongo-db.api     :as mongo-db]
+              [pathom.api       :as pathom]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]))
 
 
@@ -53,10 +52,8 @@
              ; @return (namespaced maps in vector)
              [{:keys [request]} {:keys [item-ids]}]
              {::pathom.co/op-name 'clients.client-lister/duplicate-items!}
-             (let [name-order (locales/request->name-order request)]
-                  (mongo-db/duplicate-documents! "clients" item-ids
-                                                 {:prototype-f #(mongo-db/duplicated-document-prototype request :client %)
-                                                  :label-key    (case name-order :reversed :client/first-name :client/last-name)})))
+             (mongo-db/duplicate-documents! "clients" item-ids
+                                            {:prototype-f #(mongo-db/duplicated-document-prototype request :client %)}))
 
 
 

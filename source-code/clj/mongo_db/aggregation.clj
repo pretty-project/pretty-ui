@@ -34,7 +34,7 @@
   ; @param (maps in vector) pipeline
   ; @param (map)(opt) options
   ;  {:locale (string)(opt)
-  ;    Default: mongo-db.engine/DEFAULT-LOCALE}
+  ;    Default: engine/DEFAULT-LOCALE}
   ;
   ; @return (maps in vector)
   ([collection-name pipeline]

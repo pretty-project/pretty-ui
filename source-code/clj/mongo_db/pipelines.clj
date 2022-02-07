@@ -92,10 +92,23 @@
   [sort-pattern]
   (map/->keys sort-pattern json/unkeywordize-key))
 
+(defn unset-query
+  ; @param (namespaced keywords in vector) unset-pattern
+  ;
+  ; @example
+  ;  (mongo-db/unset-query [:namespace/my-key :namespace/your-key])
+  ;  =>
+  ;  ["namespace/my-key" "namespace/your-key"]
+  ;
+  ; @return (strings in vector)
+  [unset-pattern]
+  (vector/->items unset-pattern json/unkeywordize-key))
+
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
 
 (defn get-pipeline
   ; @param (map) pipeline-props
@@ -104,7 +117,8 @@
   ;   :max-count (integer)(opt)
   ;   :search-pattern (map)(opt)
   ;   :skip (integer)(opt)
-  ;   :sort-pattern (vectors in vector)(opt)}
+  ;   :sort-pattern (map)(opt)
+  ;   :unset-pattern (namespaced keywords in vector)(opt)}
   ;
   ; @usage
   ;  (mongo-db/get-pipeline {:field-pattern  {:namespace/name {:$concat [:$namespace/first-name " " :$namespace/last-name]}
@@ -113,17 +127,23 @@
   ;                          :search-pattern {:$or [{:namespace/my-key   "Xyz"}
   ;                                                 {:namespace/your-key "Xyz"}]}
   ;                          :sort-pattern   {:namespace/my-key -1}
+  ;                          :unset-pattern  [:namespace/my-key :namespace/your-key]
   ;                          :max-count 20
   ;                          :skip      40})
   ;
   ; @return (maps in vector)
-  [{:keys [field-pattern filter-pattern max-count search-pattern skip sort-pattern]}]
-  (cond-> [] field-pattern  (conj {"$addFields"      (add-fields-query field-pattern)})
-             :match         (conj {"$match" {"$and" [(filter-query     filter-pattern)
-                                                     (search-query     search-pattern)]}})
-             sort-pattern   (conj {"$sort"           (sort-query       sort-pattern)})
-             skip           (conj {"$skip"           (param            skip)})
-             max-count      (conj {"$limit"          (param            max-count)})))
+  [{:keys [field-pattern filter-pattern max-count search-pattern skip sort-pattern unset-pattern]}]
+             ; Az $addFields operátor a $match és $sort operátorok végrehajtása előtt adja hozzá a virtuális mező(ke)t ...
+  (cond-> [] field-pattern (conj {"$addFields"      (add-fields-query field-pattern)})
+
+             :match        (conj {"$match" {"$and" [(filter-query     filter-pattern)
+                                                    (search-query     search-pattern)]}})
+             sort-pattern  (conj {"$sort"           (sort-query       sort-pattern)})
+             ; Az $unset operátor a $match és $sort operátorok végrehajtása után távolítja el az eltávolítandó mező(ke)t ...
+             unset-pattern (conj {"$unset"          (unset-query      unset-pattern)})
+             skip          (conj {"$skip"           (param            skip)})
+             max-count     (conj {"$limit"          (param            max-count)})))
+
 
 (defn count-pipeline
   ; @param (map) pipeline-props
@@ -131,7 +151,10 @@
   ;   :search-pattern (map)}
   ;
   ; @usage
-  ;  (mongo-db/count-pipeline {...})
+  ;  (mongo-db/count-pipeline {:filter-pattern {:$or [{:namespace/my-key   false}
+  ;                                                   {:namespace/my-key   nil}]}
+  ;                            :search-pattern {:$or [{:namespace/my-key   "Xyz"}]
+  ;                                                   {:namespace/your-key "Xyz"}]}})
   ;
   ; @return (maps in vector)
   [{:keys [filter-pattern search-pattern]}]

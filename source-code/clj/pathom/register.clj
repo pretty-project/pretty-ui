@@ -1,10 +1,6 @@
 
 (ns pathom.register
-    (:require [mid-fruits.vector :as vector]
-              [logger.api        :as logger]
-              [x.server-core.api :as a :refer [r]]
-              [x.server-db.api   :as db]
-              [com.wsscode.pathom3.connect.indexes :as pathom.ci]))
+    (:require [com.wsscode.pathom3.connect.indexes :as pathom.ci]))
 
 
 
@@ -20,14 +16,6 @@
 ; kerulnek regisztralasra. Igy biztosithato, hogy a modositott forrasfajlok
 ; wrap-reload eszkoz altali ujratoltesekor ne regisztraljak tobbszor ugyanazt
 ; a handler fuggvenyt vagy fuggvenycsoportot a Pathom kornyezetbe.
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def REG-LOG-FILENAME "pathom.handler-regs.log")
 
 
 
@@ -48,7 +36,7 @@
 (defn- reset-environment!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [handlers    (vals (deref HANDLERS))
+  (let [handlers    (-> HANDLERS deref vals)
         registry    [handlers]
         environment (pathom.ci/register registry)]
        (reset! ENVIRONMENT environment)))
@@ -66,7 +54,6 @@
   ;  (pco/defmutation do-something! [env] ...)
   ;  (pathom/reg-handler! ::handler do-something!)
   [handler-id handler-f]
-  (logger/write! REG-LOG-FILENAME (str "Registrating handler: " handler-id))
   (swap! HANDLERS assoc handler-id handler-f)
   ; Minden handler-függvény regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor
@@ -84,7 +71,6 @@
   ;  (def HANDLERS [do-something! do-anything!])
   ;  (pathom/reg-handlers! ::handlers HANDLERS)
   [handlers-id handler-fs]
-  (logger/write! REG-LOG-FILENAME (str "Registrating handlers: " handlers-id))
   (swap! HANDLERS assoc handlers-id handler-fs)
   ; Minden handler-függvénycsoport regisztrálás után újraépíti a Pathom környezetet,
   ; így biztositva, hogy az egyes forrásfájlok wrap-reload eszköz általi újratöltésekor

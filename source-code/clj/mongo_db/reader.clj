@@ -27,7 +27,7 @@
   ; @param (map) query
   ; @param (map)(opt) projection
   ;
-  ; @return (vector)
+  ; @return (namespaced maps in vector)
   ([collection-name query]
    (let [database (a/subscribed [:mongo-db/get-connection])]
         (try (vec (mcl/find-maps database collection-name query))
@@ -108,7 +108,7 @@
   ; @return (keyword)
   [collection-name]
   (let [all-documents  (find-maps collection-name {})
-        first-document (first all-documents)]
+        first-document (first     all-documents)]
        (db/document->namespace first-document)))
 
 (defn get-all-document-count
@@ -259,7 +259,10 @@
   ; @usage
   ;  (mongo-db/get-documents-by-pipeline "my_collection" [...])
   ;
-  ; @return (maps in vector)
+  ; @usage
+  ;  (mongo-db/get-documents-by-pipeline "my_collection" (mongo-db/get-pipeline {...}))
+  ;
+  ; @return (namespaced maps in vector)
   [collection-name pipeline]
   (if-let [documents (aggregation/process collection-name pipeline)]
           (vector/->items documents #(adaptation/find-output %))))
@@ -270,6 +273,9 @@
   ;
   ; @usage
   ;  (mongo-db/count-documents-by-pipeline "my_collection" [...])
+  ;
+  ; @usage
+  ;  (mongo-db/count-documents-by-pipeline "my_collection" (mongo-db/count-pipeline {...}))
   ;
   ; @return (integer)
   [collection-name pipeline]

@@ -143,9 +143,8 @@
   ;
   ; @return (namespaced map)
   [db [_ extension-id item-namespace]]
-  (let [current-item (r get-current-item db extension-id)
-        copy-item    (dissoc current-item :added-at :added-by :id :modified-at :modified-by)]
-       (db/document->namespaced-document copy-item item-namespace)))
+  (let [current-item (r get-current-item db extension-id)]
+       (db/document->namespaced-document current-item item-namespace)))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

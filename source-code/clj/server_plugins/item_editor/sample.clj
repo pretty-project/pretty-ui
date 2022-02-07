@@ -71,13 +71,13 @@
 
 (defmutation duplicate-my-type-item!
              ; @param (map) env
-             ; @param (namespaced map) my-type-item
+             ; @param (namespaced map) copy-item
              ;
              ; @return (namespaced map)
-             [env my-type-item]
+             [env copy-item]
              {::pathom.co/op-name 'my-extension/duplicate-my-type-item!}
              ; Az item-editor plugin az elem aktuális (nem feltétlenül az elmentett) változatát
-             ; küldi el a szerver számára, hogy az új elemként hozza létre az elküldött másolatot.
+             ; küldi el a szerver számára.
              (return {}))
 
 

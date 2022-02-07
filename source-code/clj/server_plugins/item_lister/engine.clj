@@ -130,7 +130,8 @@
   ;   :skip       0
   ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
   ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
-  ;   :sort-pattern   {:my-type/name 1}}
+  ;   :sort-pattern   {:my-type/name 1}
+  ;   :unset-pattern  [:my-type/my-key]}
   ;
   ; @return (map)
   ;  {:field-pattern (map)
@@ -138,12 +139,14 @@
   ;   :max-count (integer)
   ;   :search-pattern (map)
   ;   :skip (integer)
-  ;   :sort-pattern (map)}
+  ;   :sort-pattern (map)
+  ;   :unset-pattern (namespaced keywords in vector)}
   [env extension-id item-namespace]
   {:max-count      (env->max-count      env)
    :skip           (env->skip           env)
    :field-pattern  (pathom/env->param   env :field-pattern)
    :filter-pattern (pathom/env->param   env :filter-pattern)
+   :unset-pattern  (pathom/env->param   env :unset-pattern)
    :search-pattern (env->search-pattern env extension-id item-namespace)
    :sort-pattern   (env->sort-pattern   env extension-id item-namespace)})
 

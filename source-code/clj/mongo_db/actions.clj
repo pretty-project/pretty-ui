@@ -530,7 +530,8 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) options
-  ;  {:label-key (namespaced keyword)(opt)
+  ;  {:changes (namespaced map)(opt)
+  ;   :label-key (namespaced keyword)(opt)
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "#..." kifejezést
   ;   :ordered? (boolean)(opt)
   ;    Default: false

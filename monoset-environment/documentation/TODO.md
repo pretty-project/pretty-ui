@@ -13,10 +13,9 @@
 
 
 # x4.6.0
-- az app-built függvény a resources-ba irjon, mert akkor az app-built értéke belekerül a jar-ba!
-
 - A ui-renderer az elemek megjelenítésekor több különálló alkalommal ír a re-frame db-be, ami nem jo
-  mert sokszor ujrakalkulalodnak a subscription-ök
+  mert sokszor ujrakalkulalodnak a subscription-ök, ha react-transition-el lenne megoldva az animálás,
+  akkor nem kellene ennyire felbontani a render-eseményeket
 
 - ha egy button keypress tulajdonságának megadsz egy billentyűt pl 13 / enter és rátenyerelsz az
   adott billentyűre, akkor sokszor egymás utánban megtörténik az button on-click eventje,

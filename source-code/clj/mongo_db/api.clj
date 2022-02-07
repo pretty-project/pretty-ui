@@ -39,6 +39,7 @@
 (def filter-query     pipelines/filter-query)
 (def search-query     pipelines/search-query)
 (def sort-query       pipelines/sort-query)
+(def unset-query      pipelines/unset-query)
 (def get-pipeline     pipelines/get-pipeline)
 (def count-pipeline   pipelines/count-pipeline)
 
