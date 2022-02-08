@@ -18,6 +18,7 @@
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
               [x.server-core.api    :as a :refer [cache-control-uri]]
+              [x.server-router.api  :as router]
               [x.server-ui.engine   :refer [include-js]]
               [x.server-ui.graphics :as graphics]
               [x.server-ui.shield   :refer [view] :rename {view app-shield}]
@@ -41,9 +42,9 @@
   ;
   ; @return (string)
   [request]
-  (if-let [core-js-filename (a/request->route-param request :js)]
+  (if-let [core-js-filename (router/request->route-prop request :js)]
           (string/not-starts-with! core-js-filename  "/")))
-
+  
 (defn- request->core-js-uri-base
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

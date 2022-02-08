@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.16
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.4.9
+; Version: v0.3.6
+; Compatibility: x4.5.9
 
 
 
@@ -29,8 +29,9 @@
 (def set-default-route! default-handler/set-default-route!)
 
 ; x.server-router.route-handler
-(def get-client-routes  route-handler/get-client-routes)
-(def get-server-routes  route-handler/get-server-routes)
-(def get-ordered-routes route-handler/get-ordered-routes)
-(def add-routes!        route-handler/add-routes!)
-(def add-route!         route-handler/add-route!)
+(def request->route-prop route-handler/request->route-prop)
+(def get-client-routes   route-handler/get-client-routes)
+(def get-server-routes   route-handler/get-server-routes)
+(def get-ordered-routes  route-handler/get-ordered-routes)
+(def add-routes!         route-handler/add-routes!)
+(def add-route!          route-handler/add-route!)

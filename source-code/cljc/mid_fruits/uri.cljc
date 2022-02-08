@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.6.2
+; Version: v0.7.0
 
 
 
@@ -206,13 +206,13 @@
   (let [path           (uri->path       uri)
         path-parts     (uri->path-parts path)
         template-parts (uri->path-parts template)]
-       (letfn [(uri->path-params-f [o dex x]
-                                   (let [x (reader/string->mixed x)]
-                                        (if (keyword? x)
-                                            (let [path-part (nth path-parts dex)]
-                                                 (assoc o x path-part))
-                                            (return o))))]
-              (reduce-kv uri->path-params-f {} template-parts))))
+       (letfn [(f [o dex x]
+                  (let [x (reader/string->mixed x)]
+                       (if (keyword? x)
+                           (let [path-part (nth path-parts dex)]
+                                (assoc o x path-part))
+                           (return o))))]
+              (reduce-kv f {} template-parts))))
 
 (defn uri->fragment
   ; @param (string) uri
@@ -285,12 +285,12 @@
   ; @return (map)
   [uri]
   (let [query-string (uri->query-string uri)]
-       (letfn [(uri->query-params-f [o x]
-                                    (let [k-v (string/split x #"=")
-                                          k   (keyword (first  k-v))
-                                          v            (second k-v)]
-                                         (assoc o k v)))]
-              (reduce uri->query-params-f {} (string/split query-string #"&")))))
+       (letfn [(f [o x]
+                  (let [k-v (string/split x #"=")
+                        k   (keyword (first  k-v))
+                        v            (second k-v)]
+                       (assoc o k v)))]
+              (reduce f {} (string/split query-string #"&")))))
 
 (defn string->uri
   ; @param (string) n
@@ -365,3 +365,38 @@
              (and (nil? fragment)
                   (nil? query-string))
              (str uri "?" query-param))))
+
+(defn path->match-template?
+  ; @param (string) path
+  ; @param (string) template
+  ;
+  ; @example
+  ;  (uri/path->match-template? "/scooby-doo/where-are-you"
+  ;                             "/scooby-doo/:my-param")
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [path template]
+  (let [path-parts           (string/split path     #"/")
+        template-parts       (string/split template #"/")
+        path-parts-count     (count path-parts)
+        template-parts-count (count template-parts)]
+       (letfn [(f [dex] (cond ; Ha a dex nagyobb, mint a template-parts vektor elemeinek száma, ...
+                              (= dex template-parts-count)
+                              ; ... akkor a path-parts és template-parts vektorok elemeinek
+                              ; összeillesztése sikeres volt.
+                              (return true)
+                              ; Ha a vizsgált template-part első karaktere ":", ...
+                              (= ":" (str (get-in template-parts [dex 0])))
+                              ; ... akkor a vizsgált path-part értéke egy path-param, aminek
+                              ; nem szükséges egyeznie, ezért átlép a következő iterációba.
+                              (f (inc dex))
+                              ; Ha a vizsgált path-part és template-part értéke megegyezik, ...
+                              (= (get path-parts     dex)
+                                 (get template-parts dex))
+                              ; ... akkor átlép a következő iterációba.
+                              (f (inc dex))))]
+              (boolean (if ; Ha a path-parts és template-parts vektorok elemeinek száma megegyezik ...
+                           (= path-parts-count template-parts-count)
+                           (f 0))))))

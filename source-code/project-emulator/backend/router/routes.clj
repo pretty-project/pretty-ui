@@ -17,8 +17,7 @@
 ; @constant (map)
 (def ROUTES {:main
              {:route-template "/"
-              :get #(http/html-wrap {:body (ui/main %)})
-              :js "app.js"}
+              :get #(http/html-wrap {:body (ui/main %)})}
 
 ;            :site
 ;            {:route-template "/"

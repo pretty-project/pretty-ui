@@ -16,6 +16,7 @@
 (ns x.server-router.route-handler
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map]
+              [mid-fruits.uri     :as uri]
               [server-fruits.http :as http]
               [x.server-core.api  :as a :refer [r]]
               [x.server-db.api    :as db]
@@ -28,10 +29,10 @@
 ;; -- WARNING -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az x4.4.6 verzió óta a szerver nem küldi el a kliens számára a server-routes
-; útvonalak adatait.
+; Az x4.4.6 verzió óta a szerver nem küldi el a kliens számára az útvonalak
+; szerver-oldali beállításait.
 ;
-; Bizonyos esetekben szükséges lehet a kliens számára megállapítani, hogy egy
+; Bizonyos esetekben szükséges lehet a kliens-oldalon megállapítani, hogy egy
 ; új útvonalat konfliktus nélkül képes-e hozzáadni a rendszerhez.
 ; Pl.: új aloldal létrehozásakor.
 ; Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
@@ -72,13 +73,13 @@
 ;
 ; @name destructed-routes
 ;  Az applikáció indításakor a Reitit router számára egy vektorba struktúrálva
-;  adódnak át az server-route útvonalak és azok adatai:
+;  adódnak át a :get és/vagy :post tulajdonsággal rendelkező útvonalak és azok adatai:
 ;  Pl.:
 ; [["/my-route"   {:get #(my-handler %)}]
 ;  ["/your-route" {:post {...}}]]
 ;
 ; @name ordered-routes
-;  A vektorba struktúrált server-route útvonalak a route-template értékük szerint abc sorrendbe
+;  A vektorba struktúrált útvonalak a route-template értékük szerint abc sorrendbe
 ;  rendezve kerülnek átadásra a Reitit router számára úgy, hogy a path-param
 ;  változók nevei magasabb értékűnek számítanak – így azok a vektor későbbi elemei,
 ;  hogy a Reitit router ne kezelje őket konfliktusként:
@@ -90,18 +91,15 @@
 ;   ["/our-route/:your-param" ...]
 ;   ["/your-route" ...]]
 ;
-; @name server-routes
-;  A {:get ...} vagy {:post ...} tulajdonságokat tartalmazó útvonalak, amelyek adatait
-;  a szerver átadja a Reitit router számára.
-;
-; @name client-routes
-;  A szerver által az egyes kliensekre elküldött útvonalak.
-;  A szerver a {:get ...} vagy {:post ...} tulajdonságokat nem tartalmazó útvonalakat
-;  küldi el a klienseknek.
-;
 ; @name {:restricted? true}
 ;  Az egyes {:restricted? true} tulajdonságú útvonalak kiszolgálása, a {:client-event ...}
 ;  és a {:server-event ...} események megtörténése a felhasználó azonosításhoz kötött.
+;
+; @name client-routes
+;  Az egyes útvonalak kliens-oldali tulajdonságai
+;
+; @name server-routes
+;  Az egyes útvonalak szerver-oldali tulajdonságai
 
 
 
@@ -113,8 +111,37 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keywords in vector)
+(def CLIENT-ROUTE-KEYS [:client-event :js :on-leave-event :restricted? :route-parent :route-template])
+
+; @constant (keywords in vector)
+(def SERVER-ROUTE-KEYS [:get :js :post :restricted? :route-template :server-event])
+
+
+
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn request->route-prop
+  ; @param (map) request
+  ; @param (keyword) prop-key
+  ;
+  ; @usage
+  ;  (router/request->route-prop {...} :my-param)
+  ;
+  ; @return (*)
+  ;  Először a szerver-oldali, majd a kliens-oldali útvonal tulajdonságokon végigiterálva keres
+  ;  a route-path értékével összeilleszthető {:route-template ...} tulajdonságú útvonalat,
+  ;  ami rendelkezik a prop-key tulajdonságként átadott tulajdonsággal.
+  [request prop-key]
+  (let [route-path (http/request->route-path request)]
+       (letfn [(f [[_ {:keys [route-template] :as route-props}]]
+                  (if (uri/path->match-template? route-path route-template) (get route-props prop-key)))]
+              (or (some f @(a/subscribe [:router/get-server-routes]))
+                  (some f @(a/subscribe [:router/get-client-routes]))))))
 
 (defn- route-authenticator
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -173,11 +200,8 @@
 (defn get-server-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @example
+  ; @usage
   ;  (r router/get-server-routes db)
-  ;  =>
-  ;  {:my-route   {:get  {...} :route-template "/my-route"}
-  ;   :your-route {:post {...} :route-template "/your-route"}}
   ;
   ; @return (map)
   [db _]
@@ -190,7 +214,7 @@
 (defn get-client-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @example
+  ; @usage
   ;  (r router/get-client-routes db)
   ;
   ; @return (map)
@@ -244,6 +268,36 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- store-server-route-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (map) route-props
+  ;  {:get (function or map)(opt)
+  ;   :post (function or map)(opt)}
+  ;
+  ; @return (map)
+  [db [_ route-id {:keys [get post] :as route-props}]]
+  (if (or get post)
+      (assoc-in db (db/path :router/server-routes route-id)
+                   (select-keys route-props SERVER-ROUTE-KEYS))
+      (return db)))
+
+(defn- store-client-route-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (map) route-props
+  ;  {:client-event (metamorphic-event)(opt)
+  ;   :on-leave-event (metamorphic-event)(opt)}
+  ;
+  ; @return (map)
+  [db [_ route-id {:keys [client-event on-leave-event] :as route-props}]]
+  (if (or client-event on-leave-event)
+      (assoc-in db (db/path :router/client-routes route-id)
+                   (select-keys route-props CLIENT-ROUTE-KEYS))
+      (return db)))
+
 (defn- store-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -252,9 +306,8 @@
   ;
   ; @return (map)
   [db [_ route-id route-props]]
-  (if (engine/route-props->server-route? route-props)
-      (assoc-in db (db/path :router/server-routes route-id) route-props)
-      (assoc-in db (db/path :router/client-routes route-id) route-props)))
+  (as-> db % (r store-server-route-props! % route-id route-props)
+             (r store-client-route-props! % route-id route-props)))
 
 (defn add-route!
   ; @param (keyword)(opt) route-id

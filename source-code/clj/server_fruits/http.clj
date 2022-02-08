@@ -162,7 +162,7 @@
   [request param-key]
   (get-in request [:session param-key]))
 
-(defn request->route-template
+(defn request->route-path
   ; @param (map) request
   ;  {:uri (string)}
   ;

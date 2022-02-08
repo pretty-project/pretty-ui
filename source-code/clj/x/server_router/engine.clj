@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.6
+; Version: v0.2.8
+; Compatibility: x4.5.9
 
 
 
@@ -28,8 +28,6 @@
 ; x.mid-router.engine
 (def variable-route-string?        engine/variable-route-string?)
 (def resolve-variable-route-string engine/resolve-variable-route-string)
-(def route-props->server-route?    engine/route-props->server-route?)
-(def route-props->client-route?    engine/route-props->client-route?)
 
 
 
@@ -173,7 +171,7 @@
   [routes]
   (letfn [(f [destructed-routes route-id {:keys [route-template] :as route-props}]
              (if (route-conflict? destructed-routes route-template)
-                 (return destructed-routes)
+                 (return          destructed-routes)
                  (let [route-data (route-props->route-data route-props)]
                       (conj destructed-routes route-data))))]
          (reduce-kv f [] routes)))

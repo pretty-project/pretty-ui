@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v1.2.8
-; Compatibility: x4.5.7
+; Version: v1.3.2
+; Compatibility: x4.5.9
 
 
 
@@ -19,6 +19,7 @@
               [x.server-core.error-handler]
               [x.server-core.middleware-handler]
               [x.server-core.resource-handler]
+              [x.server-core.router-handler]
               [x.server-core.server-handler]
               [x.server-core.build-handler     :as build-handler]
               [x.server-core.cache-handler     :as cache-handler]
@@ -27,7 +28,6 @@
               [x.server-core.engine            :as engine]
               [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]
-              [x.server-core.router-handler    :as router-handler]
               [x.server-core.transfer-handler  :as transfer-handler]))
 
 
@@ -104,12 +104,6 @@
 ; x.server-core.lifecycle-handler
 (def get-period-events lifecycle-handler/get-period-events)
 (def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
-
-; x.server-core.router-handler
-(def route-template->route-match router-handler/route-template->route-match)
-(def route-template->route-param router-handler/route-template->route-param)
-(def request->route-match        router-handler/request->route-match)
-(def request->route-param        router-handler/request->route-param)
 
 ; x.server-core.transfer-handler
 (def reg-transfer!          transfer-handler/reg-transfer!)

@@ -52,7 +52,7 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  ; Ha az x.project-config.edn fájlban az {:app-home "/..."} tulajdonság értékét beállítod
+  ; Ha az x.app-config.edn fájlban az {:app-home "/..."} tulajdonság értékét beállítod
   ; egy tetszőleges útvonalra, akkor az útvonalak {:route-template "/..."} tulajdonságainak
   ; értékében az "/@app-home/..." formula használatával hivatkozhatsz az {:app-home "/..."}
   ; értékére.
@@ -77,8 +77,6 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  ; A {:get ...} vagy {:post ...} tulajdonságok haszálatával a szerver-oldali útvonalakat lehetséges
-  ; beállítani, amelyeket a rendszer nem küld el az egyes kliensek számára.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get  {:handler #(my-handler %)}}]
                                  [:router/add-route! {:route-template "/your-route"
@@ -87,7 +85,7 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  ; A {:restricted? true} tulajdonság beállításával a kliens- és szerver-oldali útvonalak kiszolgálása
+  ; A {:restricted? true} tulajdonság beállításával az útvonalak kiszolgálása
   ; és az útvonalak eseményeinek lefutásához a felhasználó azonosítása szükséges.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get  {:handler #(my-handler %)}
