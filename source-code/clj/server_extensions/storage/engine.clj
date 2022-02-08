@@ -1,7 +1,10 @@
 
 (ns server-extensions.storage.engine
-    (:require [mid-fruits.vector :as vector]
-              [mongo-db.api      :as mongo-db]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.vector  :as vector]
+              [mongo-db.api       :as mongo-db]
+              [server-fruits.io   :as io]
+              [x.server-media.api :as media]
               [mid-extensions.storage.engine :as engine]))
 
 
@@ -16,6 +19,28 @@
 
 
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn file-id->filename
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) file-id
+  ; @param (string) filename
+  ;
+  ; @example
+  ;  (engine/file-id->filename "my-item" "my-image.png")
+  ;  =>
+  ;  "my-item.png"
+  ;
+  ; @return (string)
+  [file-id filename]
+  (if-let [extension (io/filename->extension filename)]
+          (str    file-id "." extension)
+          (return file-id)))
+
+
+
 ;; -- Attach/detach item functions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -25,12 +50,13 @@
   ; @param (map) env
   ;  {:request (map)}
   ; @param (string) directory-id
-  ; @param (string) item-id
+  ; @param (namespaced map) media-item
+  ;  {:media/id (string)}
   ;
   ; @return (namespaced map)
-  [{:keys [request]} directory-id item-id]
+  [{:keys [request]} directory-id {:media/keys [id]}]
   (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
-          (attach-f    [document] (update document :media/items vector/conj-item {:media/id item-id}))]
+          (attach-f    [document] (update document :media/items vector/conj-item {:media/id id}))]
          (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f})))
 
 (defn detach-item!
@@ -39,12 +65,13 @@
   ; @param (map) env
   ;  {:request (map)}
   ; @param (string) directory-id
-  ; @param (string) item-id
+  ; @param (namespaced map) media-item
+  ;  {:media/id (string)}
   ;
   ; @return (namespaced map)
-  [{:keys [request]} directory-id item-id]
+  [{:keys [request]} directory-id {:media/keys [id]}]
   (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
-          (detach-f    [document] (update document :media/items vector/remove-item {:media/id item-id}))]
+          (detach-f    [document] (update document :media/items vector/remove-item {:media/id id}))]
          (mongo-db/apply-document! "storage" directory-id detach-f {:prototype-f prototype-f})))
 
 
@@ -72,7 +99,8 @@
    ; - Utolsó módosítás dátuma, és a felhasználó azonosítója {:media/modified-at ... :media/modified-by ...}
    ; - Tartalom mérete {:media/content-size ...}
    (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
-           (update-f    [document] (if operation (update document :media/content-size operation filesize)))
+           (update-f    [document] (if operation (update document :media/content-size operation filesize)
+                                                 (return document)))
            (f [path] (when-let [{:media/keys [id]} (last path)]
                                (mongo-db/apply-document! "storage" id update-f {:prototype-f prototype-f})
                                (-> path vector/pop-last-item f)))]
@@ -97,7 +125,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ; @param (namespaced map) item
+  ; @param (namespaced map) media-item
   ;
   ; @return (namespaced map)
   [{:keys [request]} item]
@@ -107,8 +135,32 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) env
-  ; @param (string) item-id
+  ; @param (namespaced map) media-item
+  ;  {:media/id (string)}
   ;
   ; @return (string)
-  [_ item-id]
-  (mongo-db/remove-document! "storage" item-id))
+  [_ {:media/keys [id]}]
+  (mongo-db/remove-document! "storage" id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn delete-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) filename
+  [filename]
+  (if-not (= filename SAMPLE-FILE-FILENAME)
+          (media/delete-storage-file! filename))
+  (media/delete-storage-thumbnail! filename))
+
+(defn duplicate-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) source-filename
+  ; @param (string) copy-filename
+  [source-filename copy-filename]
+  (media/duplicate-storage-file!      source-filename copy-filename)
+  (media/duplicate-storage-thumbnail! source-filename copy-filename))

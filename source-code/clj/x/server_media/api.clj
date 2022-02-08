@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.08.08
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.8
+; Version: v0.5.2
+; Compatibility: x4.5.9
 
 
 
@@ -36,6 +36,8 @@
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
 (def delete-storage-file!               engine/delete-storage-file!)
 (def delete-storage-thumbnail!          engine/delete-storage-thumbnail!)
+(def duplicate-storage-file!            engine/duplicate-storage-file!)
+(def duplicate-storage-thumbnail!       engine/duplicate-storage-thumbnail!)
 
 ; x.server-media.temporary-handler
 (def download-temporary-file temporary-handler/download-temporary-file)

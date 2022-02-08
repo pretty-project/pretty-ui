@@ -697,7 +697,7 @@
 
 (defn ->keys
   ; @param (map) n
-  ; @param (function) f
+  ; @param (function) update-f
   ;
   ; @example
   ;  (map/->keys {:a "A" :b "B"} name)
@@ -705,12 +705,12 @@
   ;  {"a" "1" "b" "2"}
   ;
   ; @return (map)
-  [n f]
-  (reduce-kv #(assoc %1 (f %2) %3) {} n))
+  [n update-f]
+  (reduce-kv #(assoc %1 (update-f %2) %3) {} n))
 
 (defn ->>keys
   ; @param (map) n
-  ; @param (function) f
+  ; @param (function) update-f
   ;
   ; @example
   ;  (map/->>keys {:a "A" :b "B" :c [{:d "D"}]} name)
@@ -718,16 +718,16 @@
   ;  {"a" "1" "b" "2" "c" [{"d" "D"}]}
   ;
   ; @return (map)
-  [n f]
+  [n update-f]
   ; A rekurzió a vektorok elemein NEM hajtja végre az f függvényt, mivel azok a térképek értékeinek megfelelői!
-  (letfn [(deep-f [n] (cond (vector? n) (reduce    #(conj  %1        (deep-f %2)) [] n)
-                            (map?    n) (reduce-kv #(assoc %1 (f %2) (deep-f %3)) {} n)
-                            :else    n))]
-         (deep-f n)))
+  (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1               (f %2)) [] n)
+                       (map?    n) (reduce-kv #(assoc %1 (update-f %2) (f %3)) {} n)
+                       :else    n))]
+         (f n)))
 
 (defn ->values
   ; @param (map) n
-  ; @param (function) f
+  ; @param (function) update-f
   ;
   ; @example
   ;  (map/->values {:a "A" :b "B"} keyword)
@@ -735,12 +735,12 @@
   ;  {:a :A :b :B}
   ;
   ; @return (map)
-  [n f]
-  (reduce-kv #(assoc %1 %2 (f %3)) {} n))
+  [n update-f]
+  (reduce-kv #(assoc %1 %2 (update-f %3)) {} n))
 
 (defn ->>values
   ; @param (map) n
-  ; @param (function) f
+  ; @param (function) update-f
   ;
   ; @example
   ;  (map/->>values {:a "A" :b "B" :c [:x "y" {:d "D"}]} keyword)
@@ -748,12 +748,12 @@
   ;  {:a :A :b :B :c [:x :y {:d :D}]}
   ;
   ; @return (map)
-  [n f]
+  [n update-f]
   ; A rekurzió a vektorok elemein is végrehajtja az f függvényt, mivel azok a térképek értékeinek megfelelői!
-  (letfn [(deep-f [n] (cond (vector? n) (reduce    #(conj  %1    (deep-f %2)) [] n)
-                            (map?    n) (reduce-kv #(assoc %1 %2 (deep-f %3)) {} n)
-                            :else (f n)))]
-         (deep-f n)))
+  (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1    (f %2)) [] n)
+                       (map?    n) (reduce-kv #(assoc %1 %2 (f %3)) {} n)
+                       :else       (update-f n)))]
+         (f n)))
 
 (defn ->kv
   ; @param (map) n
@@ -782,7 +782,7 @@
   ; @return (map)
   [n k-f v-f]
   ; A rekurzió a vektorok elemein is végrehajtja az v-f függvényt, mivel azok a térképek értékeinek megfelelői!
-  (letfn [(deep-f [n] (cond (map?    n) (reduce-kv #(assoc %1 (k-f %2) (deep-f %3)) {} n)
-                            (vector? n) (reduce    #(conj  %1          (deep-f %2)) [] n)
-                            :else       (v-f n)))]
-         (deep-f n)))
+  (letfn [(f [n] (cond (map?    n) (reduce-kv #(assoc %1 (k-f %2) (f %3)) {} n)
+                       (vector? n) (reduce    #(conj  %1          (f %2)) [] n)
+                       :else       (v-f n)))]
+         (f n)))

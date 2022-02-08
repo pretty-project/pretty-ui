@@ -40,18 +40,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- file-id->filename
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) file-id
-  ; @param (string) filename
-  ;
-  ; @return (string)
-  [file-id filename]
-  (if-let [extension (io/filename->extension filename)]
-          (str    file-id "." extension)
-          (return file-id)))
-
 (defn- upload-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -63,15 +51,15 @@
   ; @return (namespaced map)
   [env {:keys [destination-id]} {:keys [file-path filename size tempfile]}]
   (let [file-id            (mongo-db/generate-id)
-        generated-filename (file-id->filename file-id filename)
+        generated-filename (engine/file-id->filename file-id filename)
         filepath           (media/filename->media-storage-filepath generated-filename)
         mime-type          (io/filename->mime-type filename)
         ; - A fájlokkal ellentétben a mappák {:media/mime-type "..."} tulajdonsága nem állapítható meg a nevükből
-        ; - A fájlok {:media/mime-type "..."} tulajdonsága is eltárolásra kerül, hogy minden elem egységesen
-        ;   rendelkezzen {:media/mime-type "..."} tulajdonsággal
-        file-item {:media/alias filename :media/filename generated-filename :media/filesize size :media/id file-id
-                   :media/path file-path :description "" :media/mime-type mime-type}]
-       (if (engine/attach-item! env destination-id file-id)
+        ; - A fájlok {:media/mime-type "..."} tulajdonsága is eltárolásra kerül, hogy a mappákhoz hasonlóan
+        ;   a fájlok is rendelkezzenek {:media/mime-type "..."} tulajdonsággal
+        file-item {:media/alias filename  :media/filename    generated-filename :media/filesize  size :media/id file-id
+                   :media/path  file-path :media/description ""                 :media/mime-type mime-type}]
+       (if (engine/attach-item! env destination-id file-item)
            (when-let [file-item (engine/insert-item! env file-item)]
                      ; Copy the temporary file to storage, and delete the temporary file
                      (io/copy-file!   tempfile filepath)

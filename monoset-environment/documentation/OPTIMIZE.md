@@ -38,7 +38,9 @@ Helyett hasznald ezt, mert igy csak egyszer generalodik le az anonymous function
 
 # CSS optimalizáció
 
-1. Az áttetszőség kiszámítása nagy számításigényű feladat (pl.: opacity, box-shadow, ...)
+1. Az áttetszőség kiszámítása nagy számításigényű feladat (pl.: opacity, box-shadow, text-shadow, ...)
+   Áttetsző tartalom ne mozogjon (pl. görgetés) rögzített tartalom felett, mert a mozgás közben
+   a böngészőnek folyamatosan újra kell számítania az áttetszőséget!
 
 2. Az elemek mozgatására használj transform tulajdonságot! Soha ne a pozíciót változtasd!
 

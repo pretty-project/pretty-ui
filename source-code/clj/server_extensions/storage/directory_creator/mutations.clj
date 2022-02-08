@@ -24,8 +24,8 @@
                 directory-item {:media/alias alias :media/content-size 0 :media/description ""
                                 :media/items []    :media/path directory-path
                                 :media/mime-type "storage/directory"}]
-               (when-let [{:media/keys [id]} (engine/insert-item! env directory-item)]
-                         (engine/attach-item!             env destination-id id)
+               (when-let [directory-item (engine/insert-item! env directory-item)]
+                         (engine/attach-item!             env destination-id directory-item)
                          (engine/update-path-directories! env directory-item +)))))
 
 (defmutation create-directory!
