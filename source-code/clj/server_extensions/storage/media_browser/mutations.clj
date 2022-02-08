@@ -21,16 +21,16 @@
   ; @param (map) env
   ; @param (map) mutation-props
   ;  {:item-id (string)
-  ;   :source-id (string)}
+  ;   :parent-id (string)}
   ;
   ; @return (string)
-  [env {:keys [item-id source-id] :as mutation-props}]
+  [env {:keys [item-id parent-id] :as mutation-props}]
   (letfn [; A delete-f függvény a file-item eltávolítása után 60 másodperccel kitörli a fájlt,
           ; ha az eltelt idő alatt a file-item nem lett visszaállítva ...
-          (delete-f [{:keys [filename id]}]) (if-not (mongo-db/document-exists? "storage" id)
-                                                     (engine/delete-file! filename))]
+          (delete-f [{:keys [filename id]}] (if-not (mongo-db/document-exists? "storage" id)
+                                                    (engine/delete-file! filename)))]
          (when-let [file-item (engine/get-item env item-id)]
-                   (engine/detach-item!             env source-id file-item)
+                   (engine/detach-item!             env parent-id file-item)
                    (engine/remove-item!             env           file-item)
                    (engine/update-path-directories! env           file-item -)
                    (time/set-timeout! 60000 #(delete-f file-item))
@@ -42,18 +42,18 @@
   ; @param (map) env
   ; @param (map) mutation-props
   ;  {:item-id (string)
-  ;   :source-id (string)}
+  ;   :parent-id (string)}
   ;
   ; @return (string)
-  [env {:keys [item-id source-id] :as mutation-props}]
+  [env {:keys [item-id parent-id] :as mutation-props}]
   (when-let [directory-item (engine/get-item env item-id)]
-            (engine/detach-item!             env source-id directory-item)
+            (engine/detach-item!             env parent-id directory-item)
             (engine/remove-item!             env           directory-item)
             (engine/update-path-directories! env           directory-item)
             (let [items (get directory-item :media/items)]
                  (doseq [{:media/keys [id]} items]
                         (if-let [{:media/keys [mime-type]} (engine/get-item env id)]
-                                (let [mutation-props {:item-id id :source-id item-id}]
+                                (let [mutation-props {:item-id id :parent-id item-id}]
                                      (case mime-type "storage/directory" (delete-directory-f env mutation-props)
                                                                          (delete-file-f      env mutation-props))
                                      (return item-id)))))))
@@ -82,7 +82,7 @@
   [env {:keys [item-ids]}]
   (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
        (letfn [(f [result item-id]
-                  (conj result (delete-item-f env {:item-id item-id :source-id parent-id})))]
+                  (conj result (delete-item-f env {:item-id item-id :parent-id parent-id})))]
               (reduce f [] item-ids))))
 
 (defmutation delete-items!
@@ -108,20 +108,20 @@
 
 (defn duplicated-directory-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request] :as env} {:keys [destination-id item-id source-id] :as mutation-props} document]
-  (letfn [(f2 [{:media/keys [id] :as %}] (if (= id source-id) {:media/id destination-id} %))
+  [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props} document]
+  (letfn [(f2 [{:media/keys [id] :as %}] (if (= id parent-id) {:media/id destination-id} %))
           (f1 [%]                        (vector/->items % f2))]
          (as-> document % (mongo-db/duplicated-document-prototype request :media %)
-                          (if (= destination-id source-id) % (update % :media/path f1)))))
+                          (if (= destination-id parent-id) % (update % :media/path f1)))))
 
 (defn duplicated-file-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request] :as env} {:keys [destination-id item-id source-id] :as mutation-props} document]
+  [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props} document]
   (letfn [(f3 [{:media/keys [id filename] :as %}] (assoc % :media/filename (engine/file-id->filename id filename)))
-          (f2 [{:media/keys [id]          :as %}] (if (= id source-id) {:media/id destination-id} %))
+          (f2 [{:media/keys [id]          :as %}] (if (= id parent-id) {:media/id destination-id} %))
           (f1 [%]                                 (vector/->items % f2))]
          (as-> document % (mongo-db/duplicated-document-prototype request :media %)
-                          (if (= destination-id source-id) % (update % :media/path f1))
+                          (if (= destination-id parent-id) % (update % :media/path f1))
                           (f3 %))))
 
 (defn duplicate-file-f
@@ -132,13 +132,13 @@
   ; @param (map) mutation-props
   ;  {:destination-id (string)
   ;   :item-id (string)
-  ;   :source-id (string)}
+  ;   :parent-id (string)}
   ;
   ; @return (namespaced map)
-  [{:keys [request] :as env} {:keys [destination-id item-id source-id] :as mutation-props}]
+  [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
                                                      {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
-            (if (= destination-id source-id)
+            (if (= destination-id parent-id)
                 (engine/attach-item! env destination-id copy-item))
             (engine/update-path-directories! env copy-item +)
             (if-let [source-item (mongo-db/get-document-by-id "storage" item-id)]
@@ -155,20 +155,20 @@
   ; @param (map) mutation-props
   ;  {:destination-id (string)
   ;   :item-id (string)
-  ;   :source-id (string)}
+  ;   :parent-id (string)}
   ;
   ; @return (namespaced map)
-  [{:keys [request] :as env} {:keys [destination-id item-id source-id] :as mutation-props}]
+  [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
                                                      {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
-            (when (= destination-id source-id)
+            (when (= destination-id parent-id)
                   (engine/attach-item!             env destination-id copy-item)
                   (engine/update-path-directories! env                copy-item))
             (let [items (get copy-item :media/items)]
                  (doseq [{:media/keys [id]} items]
                         (if-let [{:media/keys [mime-type]} (engine/get-item env id)]
                                 (let [destination-id (:id copy-item)
-                                      mutation-props {:destination-id destination-id :item-id id :source-id item-id}]
+                                      mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
                                      (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
                                                                          (duplicate-file-f      env mutation-props))
                                      (return copy-item)))))))
@@ -180,7 +180,7 @@
   ; @param (map) mutation-props
   ;  {:destination-id (string)
   ;   :item-id (string)
-  ;   :source-id (string)}
+  ;   :parent-id (string)}
   ;
   ; @return (namespaced map)
   [env {:keys [item-id] :as mutation-props}]
@@ -199,7 +199,7 @@
   [env {:keys [item-ids]}]
   (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
        (letfn [(f [result item-id]
-                  (conj result (duplicate-item-f env {:item-id item-id :destination-id parent-id :source-id parent-id})))]
+                  (conj result (duplicate-item-f env {:item-id item-id :destination-id parent-id :parent-id parent-id})))]
               (reduce f [] item-ids))))
 
 (defmutation duplicate-items!

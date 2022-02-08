@@ -30,21 +30,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.events
-(def load-lister! app-plugins.item-lister.events/load-lister!)
+(def load-lister!    app-plugins.item-lister.events/load-lister!)
+(def set-error-mode! app-plugins.item-lister.events/set-error-mode!)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (assoc-in db [extension-id :item-browser/meta-items :error-mode?] true))
 
 (defn reset-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -53,7 +45,7 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (dissoc-in db [extension-id :item-browser/meta-items :error-mode?]))
+  (dissoc-in db [extension-id :item-lister/meta-items :error-mode?]))
 
 (defn derive-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!

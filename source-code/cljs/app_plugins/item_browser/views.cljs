@@ -39,11 +39,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
+  (let [error-mode? @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+        %           @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
        [elements/button ::go-home-button
-                        ; A go-home-button gomb az item-lister plugin {:error-mode? true}
-                        ; állapotában is használható!
-                        {:disabled? (and (:at-home? %) (-> :error-mode? % not))
+                        ; A go-home-button gomb az item-lister plugin {:error-mode? true} állapotában is használható!
+                        {:disabled? (and (:at-home? %) (not error-mode?))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
 
@@ -163,14 +163,15 @@
 
 (defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace {:keys [description error-mode?] :as view-props}]
-  (if error-mode? ; If error-mode is enabled ...
-                  [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
-                                                  :header [header     extension-id item-namespace view-props]}]
-                  ; If error-mode is NOT enabled ...
-                  [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
-                                                  :header [header extension-id item-namespace view-props]
-                                                  :description description}]))
+  [extension-id item-namespace {:keys [description] :as view-props}]
+  (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+          ; If error-mode is enabled ...
+          [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
+                                          :header [header     extension-id item-namespace view-props]}]
+          ; If error-mode is NOT enabled ...
+          [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
+                                          :header [header extension-id item-namespace view-props]
+                                          :description description}]))
 
 (defn view
   ; @param (keyword) extension-id

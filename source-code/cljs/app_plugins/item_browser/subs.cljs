@@ -147,12 +147,10 @@
   ;
   ; @return (map)
   ;  {:at-home? (boolean)
-  ;   :error-mode? (boolean)
   ;   :item-path (maps in vector)}
   [db [_ extension-id item-namespace]]
   {:at-home?    (r at-home?      db extension-id item-namespace)
-   :item-path   (r get-item-path db extension-id item-namespace)
-   :error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)})
+   :item-path   (r get-item-path db extension-id item-namespace)})
 
 (a/reg-sub :item-browser/get-header-props get-header-props)
 
@@ -178,8 +176,6 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:error-mode? true}
-          {:description (r get-description db extension-id item-namespace)}))
+  {:description (r get-description db extension-id item-namespace)})
 
 (a/reg-sub :item-browser/get-view-props get-view-props)

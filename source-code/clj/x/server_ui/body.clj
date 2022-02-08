@@ -42,9 +42,7 @@
   ; @return (string)
   [request]
   (if-let [core-js-filename (a/request->route-param request :js)]
-          (string/not-starts-with! core-js-filename  "/")
-          (let [default-core-js-filename (a/subscribed [:core/get-app-config-item :default-core-js])]
-               (string/not-starts-with! default-core-js-filename  "/"))))
+          (string/not-starts-with! core-js-filename  "/")))
 
 (defn- request->core-js-uri-base
   ; WARNING! NON-PUBLIC! DO NOT USE!

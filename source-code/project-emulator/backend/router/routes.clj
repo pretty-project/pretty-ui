@@ -15,31 +15,25 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def ROUTES
-     {:main
-      {:route-template "/"
-       :get #(http/html-wrap {:body (ui/main %)})
-       :js "app.js"}
+(def ROUTES {:main
+             {:route-template "/"
+              :get #(http/html-wrap {:body (ui/main %)})
+              :js "app.js"}
 
-;     :site
-;     {:route-template "/"
-;      :get #(http/html-wrap {:body (ui/main %)})
-;      :js "site.js"}
-;
-;     :admin
-;     {:route-template "/admin"
-;      :get #(http/html-wrap {:body (ui/main %)})
-;      :js "admin.js"}
+;            :site
+;            {:route-template "/"
+;             :get #(http/html-wrap {:body (ui/main %)})
+;             :js "site.js"}
 
-      :db/query
-      {:route-template "/query"
-       :post #(http/map-wrap {:body (pathom/process-request! %)})}
+             :db/query
+             {:route-template "/query"
+              :post #(http/map-wrap {:body (pathom/process-request! %)})}
 
-      ; WebSocket
-      :wss/channel
-      {:route-template "/chsk"
-       :get  #(sente/ring-ajax-get-or-ws-handshake %)
-       :post #(sente/ring-ajax-post                %)}})
+             ; WebSocket
+             :wss/channel
+             {:route-template "/chsk"
+              :get  #(sente/ring-ajax-get-or-ws-handshake %)
+              :post #(sente/ring-ajax-post                %)}})
 
 
 

@@ -53,14 +53,16 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  [elements/search-field :item-lister/search-items-field
-                         {:auto-focus?   true
-                          :layout        :row
-                          :min-width     :xs
-                          :on-empty      [:item-lister/search-items! extension-id item-namespace]
-                          :on-type-ended [:item-lister/search-items! extension-id item-namespace]
-                          :placeholder   :search
-                          :value-path    [extension-id :item-lister/meta-items :search-term]}])
+  (let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+       [elements/search-field :item-lister/search-items-field
+                              {:disabled?     error-mode?
+                               :auto-focus?   true
+                               :layout        :row
+                               :min-width     :xs
+                               :on-empty      [:item-lister/search-items! extension-id item-namespace]
+                               :on-type-ended [:item-lister/search-items! extension-id item-namespace]
+                               :placeholder   :search
+                               :value-path    [extension-id :item-lister/meta-items :search-term]}]))
 
 (defn toggle-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -236,12 +238,14 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [new-item-uri (engine/new-item-uri extension-id item-namespace)]
+  (let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])
+        new-item-uri (engine/new-item-uri extension-id item-namespace)]
        [elements/button :item-lister/new-item-button
-                        {:on-click [:router/go-to! new-item-uri]
-                         :preset   :primary-icon-button
-                         :tooltip  :add-new!
-                         :icon     :add_circle}]))
+                        {:disabled? error-mode?
+                         :on-click  [:router/go-to! new-item-uri]
+                         :preset    :primary-icon-button
+                         :tooltip   :add-new!
+                         :icon      :add_circle}]))
 
 (defn new-item-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -251,9 +255,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% @(a/subscribe [:item-lister/get-menu-mode-props extension-id item-namespace])]
+  (let [error-mode? @(a/subscribe [:item-lister/error-mode?         extension-id item-namespace])
+        %           @(a/subscribe [:item-lister/get-menu-mode-props extension-id item-namespace])]
        [elements/select :item-lister/new-item-select
-                        {:as-button?      true
+                        {:disabled?       error-mode?
+                         :as-button?      true
                          :autoclear?      true
                          :icon            :add_circle
                          :initial-options (:new-item-options %)

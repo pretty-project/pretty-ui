@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.07
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.3
+; Version: v0.4.0
+; Compatibility: x4.5.9
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-developer.re-frame-browser
-    (:require [mid-fruits.reader  :as reader]
+    (:require [mid-fruits.map     :as map]
+              [mid-fruits.reader  :as reader]
               [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]))
@@ -41,8 +42,9 @@
 (defn- map-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [current-item] :as browser-props}]
-  (reduce-kv #(str %1 (map-item browser-props %2 %3))
-             "" current-item))
+  (letfn [(f [o k] (str o (map-item browser-props k (k current-item))))]
+         (let [keys (-> current-item map/get-keys vector/abc-items)]
+              (reduce f "" keys))))
 
 (defn- re-frame-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!

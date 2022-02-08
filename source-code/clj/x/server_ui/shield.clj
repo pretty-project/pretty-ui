@@ -6,7 +6,7 @@
 ; Created: 2021.02.09
 ; Description:
 ; Version: v0.3.6
-; Compatibility: x3.9.9
+; Compatibility: x4.5.9
 
 
 
@@ -30,8 +30,7 @@
   ; @return (vector)
   [content]
   (let [title (a/subscribed [:core/get-app-config-item :app-title])]
-       [:div#x-app-shield
-         {:data-nosnippet "true"}
-         [:div#x-app-shield--header (ui/app-logo)
-                                    (ui/app-title title)]
-         [:div#x-app-shield--content content]]))
+       [:div#x-app-shield {:data-nosnippet "true"}
+                          [:div#x-app-shield--header (ui/app-logo)
+                                                     (ui/app-title title)]
+                          [:div#x-app-shield--content content]]))

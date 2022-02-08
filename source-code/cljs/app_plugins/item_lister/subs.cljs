@@ -391,6 +391,18 @@
        (if items-received? (components/content {:content      :npn-items-downloaded
                                                 :replacements [downloaded-item-count all-item-count]}))))
 
+(defn error-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :error-mode?))
+
+(a/reg-sub :item-lister/error-mode? error-mode?)
+
 (defn get-checkbox-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -503,8 +515,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  {:error-mode?  (r get-meta-item db extension-id item-namespace :error-mode?)
-   :list-element (r get-meta-item db extension-id item-namespace :list-element)})
+  {:list-element (r get-meta-item db extension-id item-namespace :list-element)})
 
 (a/reg-sub :item-lister/get-body-props get-body-props)
 
@@ -517,7 +528,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:error-mode? true}
+          {}
           {:description (r get-description db extension-id item-namespace)}))
 
 (a/reg-sub :item-lister/get-view-props get-view-props)

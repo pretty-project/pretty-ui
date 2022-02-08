@@ -70,7 +70,6 @@
  ; JavaScript details
  :core-js-dir     "/js/core"
  :plugins-js-dir  "/js/plugins"
- :default-core-js "app.js"
 
  ; JavaScript paths
  :plugin-js-paths

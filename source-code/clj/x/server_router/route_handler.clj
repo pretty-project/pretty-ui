@@ -142,7 +142,7 @@
   ; @return (map)
   ;  {:handler (function)}
   [handler {:keys [restricted?]}]
-  (if restricted? (cond (fn?  handler) (return {:handler (route-authenticator handler)})
+  (if restricted? (cond (fn?  handler) (return {:handler (route-authenticator           handler)})
                         (map? handler) (assoc   :handler (route-authenticator (:handler handler))))
                   (cond (fn?  handler) (return {:handler handler})
                         (map? handler) (return handler))))
@@ -157,11 +157,11 @@
   ;
   ; @return (map)
   ;  {:get (map)
+  ;   :js (string)
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
-  (merge route-props
-         (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
-         (if post {:post (handler-prototype post {:restricted? restricted?})})))
+  (merge route-props (if get  {:js "app.js" :get  (handler-prototype get  {:restricted? restricted?})})
+                     (if post {:js "app.js" :post (handler-prototype post {:restricted? restricted?})})))
 
 
 
