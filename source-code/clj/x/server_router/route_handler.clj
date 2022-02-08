@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.10
 ; Description:
-; Version: v1.6.4
-; Compatibility: x4.5.2
+; Version: v1.6.8
+; Compatibility: x4.5.9
 
 
 
@@ -160,8 +160,10 @@
   ;   :js (string)
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
-  (merge route-props (if get  {:js "app.js" :get  (handler-prototype get  {:restricted? restricted?})})
-                     (if post {:js "app.js" :post (handler-prototype post {:restricted? restricted?})})))
+  (merge {:js "app.js"}
+         (param route-props)
+         (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
+         (if post {:post (handler-prototype post {:restricted? restricted?})})))
 
 
 
