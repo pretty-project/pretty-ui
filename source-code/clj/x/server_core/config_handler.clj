@@ -74,14 +74,14 @@
   ;
   ; @return (map)
   [_]
-  (event-handler/subscribed [:core/get-app-config]))
+ @(event-handler/subscribe [:core/get-app-config]))
 
 (defn- transfer-site-config
   ; @param (map) request
   ;
   ; @return (map)
   [_]
-  (event-handler/subscribed [:core/get-site-config]))
+ @(event-handler/subscribe [:core/get-site-config]))
 
 
 

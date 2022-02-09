@@ -158,7 +158,7 @@
   ;
   ; @return (maps in vector)
   [extension-id item-namespace item]
-  (let [path-key (a/subscribed [:item-browser/get-meta-item extension-id item-namespace :path-key])]
+  (let [path-key @(a/subscribe [:item-browser/get-meta-item extension-id item-namespace :path-key])]
        (get item (keyword/add-namespace item-namespace path-key))))
 
 (defn item->parent-link
@@ -203,7 +203,7 @@
   ; @return (maps in vector)
   [extension-id item-namespace item-id]
   (let [collection-name (engine/collection-name extension-id)
-        path-key        (a/subscribed [:item-browser/get-meta-item extension-id item-namespace :path-key])]
+        path-key       @(a/subscribe [:item-browser/get-meta-item extension-id item-namespace :path-key])]
        (if-let [item (mongo-db/get-document-by-id collection-name item-id)]
                (get item (keyword/add-namespace item-namespace path-key)))))
 

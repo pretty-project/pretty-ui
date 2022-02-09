@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.7.0
+; Version: v0.7.8
 
 
 
@@ -100,7 +100,7 @@
   ; @return (string)
   [uri]
   (let [protocol (uri->protocol uri)
-        tail     (uri->tail uri)]
+        tail     (uri->tail     uri)]
        (-> uri (string/not-starts-with! (str protocol "://"))
                (string/not-ends-with!   (str "?" tail)))))
 
@@ -206,12 +206,11 @@
   (let [path           (uri->path       uri)
         path-parts     (uri->path-parts path)
         template-parts (uri->path-parts template)]
-       (letfn [(f [o dex x]
-                  (let [x (reader/string->mixed x)]
-                       (if (keyword? x)
-                           (let [path-part (nth path-parts dex)]
-                                (assoc o x path-part))
-                           (return o))))]
+       (letfn [(f [o dex x] (let [x (reader/string->mixed x)]
+                                 (if (keyword? x)
+                                     (let [path-part (nth path-parts dex)]
+                                          (assoc o x path-part))
+                                     (return o))))]
               (reduce-kv f {} template-parts))))
 
 (defn uri->fragment
@@ -285,11 +284,10 @@
   ; @return (map)
   [uri]
   (let [query-string (uri->query-string uri)]
-       (letfn [(f [o x]
-                  (let [k-v (string/split x #"=")
-                        k   (keyword (first  k-v))
-                        v            (second k-v)]
-                       (assoc o k v)))]
+       (letfn [(f [o x] (let [k-v (string/split x #"=")
+                              k   (keyword (first  k-v))
+                              v            (second k-v)]
+                             (assoc o k v)))]
               (reduce f {} (string/split query-string #"&")))))
 
 (defn string->uri

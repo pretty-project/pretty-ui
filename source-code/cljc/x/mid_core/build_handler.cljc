@@ -29,7 +29,7 @@
   ;
   ; @return (string)
   []
-  (event-handler/subscribed [:core/get-app-build]))
+ @(event-handler/subscribe [:core/get-app-build]))
 
 
 

@@ -77,8 +77,10 @@
 
 (a/reg-lifecycles!
   ::lifecycles
+  ; A {:js "..."} tulajdonság átadásával az alapbeállítástól eltérő .js fájl is használható.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
-                                                      :get  {:handler #(my-handler %)}}]
+                                                      :get  {:handler #(my-handler %)}
+                                                      :js "my-app.js"}]
                                  [:router/add-route! {:route-template "/your-route"
                                                       :post {:handler #(your-handler %)}
                                                       :js "your-app.js"}]]}})

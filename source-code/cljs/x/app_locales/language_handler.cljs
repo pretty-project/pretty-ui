@@ -106,4 +106,4 @@
   ; @usage
   ;  (translated {:en "Foo" :hu "Fú"})
   [n]
-  (a/subscribed [:locales/translate n]))
+ @(a/subscribe [:locales/translate n]))

@@ -85,7 +85,7 @@
   ;
   ; @return (string)
   [term-id options]
-  (a/subscribed [:dictionary/look-up term-id options]))
+ @(a/subscribe [:dictionary/look-up term-id options]))
 
 
 

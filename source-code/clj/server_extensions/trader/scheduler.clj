@@ -41,7 +41,7 @@
   ;  {:boot-delay (s)
   ;   :interval (s)}
   [options]
-  (if-let [scheduler-initialized? (a/subscribed [:db/get-item [:trader :scheduler :initialized?]])]
+  (if-let [scheduler-initialized? @(a/subscribe [:db/get-item [:trader :scheduler :initialized?]])]
           ; wrap-reload ...
           (return false)
           (do (println "[:trader] initializing scheduler ...")

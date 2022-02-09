@@ -1,7 +1,4 @@
 
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns backend.router.default-routes
     (:require [backend.ui.api     :as ui]
               [server-fruits.http :as http]

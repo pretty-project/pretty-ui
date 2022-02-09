@@ -26,15 +26,15 @@
 (defn options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [default-routes           (event-handler/subscribed [:router/get-default-routes])
-        resource-handler-options (event-handler/subscribed [:core/get-resource-handler-options])]
+  (let [default-routes           @(event-handler/subscribe [:router/get-default-routes])
+        resource-handler-options @(event-handler/subscribe [:core/get-resource-handler-options])]
        (reitit-ring/routes (reitit-ring/create-resource-handler resource-handler-options)
                            (reitit-ring/create-default-handler  default-routes))))
 
 (defn router
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [ordered-routes (event-handler/subscribed [:router/get-ordered-routes])]
+  (let [ordered-routes @(event-handler/subscribe [:router/get-ordered-routes])]
       ; Disable route conflicts handling:
       ;(reitit-ring/router ordered-routes)
 

@@ -94,4 +94,4 @@
    (component (a/id) value-props))
 
   ([_ value-props]
-   (a/subscribed [:components/get-metamorphic-value value-props])))
+   @(a/subscribe [:components/get-metamorphic-value value-props])))

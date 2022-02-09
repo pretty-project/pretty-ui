@@ -18,7 +18,7 @@
 (defn- download-listener-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (let [listener-data (a/subscribed [:db/get-item [:trader :listener]])]
+  (let [listener-data @(a/subscribe [:db/get-item [:trader :listener]])]
        (http/text-wrap {:body (print-listener-data listener-data)})))
 
 
@@ -41,7 +41,7 @@
 (defn- download-log-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (let [log-data (a/subscribed [:db/get-item [:trader :log]])]
+  (let [log-data @(a/subscribe [:db/get-item [:trader :log]])]
        (http/text-wrap {:body (print-log-data log-data)})))
 
 
@@ -66,7 +66,7 @@
 (defn- download-market-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (let [market-data (a/subscribed [:db/get-item [:trader :market]])]
+  (let [market-data @(a/subscribe [:db/get-item [:trader :market]])]
        (http/text-wrap {:body (print-market-data market-data)})))
 
 
@@ -82,7 +82,7 @@
 (defn- download-scheduler-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (let [scheduler-data (a/subscribed [:db/get-item [:trader :scheduler]])]
+  (let [scheduler-data @(a/subscribe [:db/get-item [:trader :scheduler]])]
        (http/text-wrap {:body (print-scheduler-data scheduler-data)})))
 
 

@@ -130,10 +130,10 @@
   ; @param (keyword) prop-key
   ;
   ; @usage
-  ;  (router/request->route-prop {...} :my-param)
+  ;  (router/request->route-prop {...} :my-prop)
   ;
   ; @return (*)
-  ;  Először a szerver-oldali, majd a kliens-oldali útvonal tulajdonságokon végigiterálva keres
+  ;  Először az útvonalak szerver-oldali, majd a kliens-oldali tulajdonságain végigiterálva keres
   ;  a route-path értékével összeilleszthető {:route-template ...} tulajdonságú útvonalat,
   ;  ami rendelkezik a prop-key tulajdonságként átadott tulajdonsággal.
   [request prop-key]
@@ -281,7 +281,7 @@
   (if (or get post)
       (assoc-in db (db/path :router/server-routes route-id)
                    (select-keys route-props SERVER-ROUTE-KEYS))
-      (return db)))
+      (return   db)))
 
 (defn- store-client-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -296,7 +296,7 @@
   (if (or client-event on-leave-event)
       (assoc-in db (db/path :router/client-routes route-id)
                    (select-keys route-props CLIENT-ROUTE-KEYS))
-      (return db)))
+      (return   db)))
 
 (defn- store-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -391,7 +391,7 @@
   ;
   ; @return (map)
   [_]
-  (a/subscribed [:router/get-client-routes]))
+ @(a/subscribe [:router/get-client-routes]))
 
 
 

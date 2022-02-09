@@ -48,7 +48,7 @@
   ; @return (map)
   ;  {:body (string)}
   [_]
-  (let [app-home   (a/subscribed [:core/get-app-config-item :app-home])
+  (let [app-home  @(a/subscribe [:core/get-app-config-item :app-home])
         robots-txt (robots-txt app-home)]
        (http/text-wrap {:body robots-txt})))
 

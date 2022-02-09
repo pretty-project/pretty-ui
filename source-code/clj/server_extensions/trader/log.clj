@@ -46,7 +46,7 @@
   ; @return (map)
   ;  {:log-items (maps in vector)}
   [env response-props]
-  (let [log-items (a/subscribed [:db/get-item [:trader :log]])]
+  (let [log-items @(a/subscribe [:db/get-item [:trader :log]])]
        {:log-items log-items}))
 
 (defresolver download-log-data

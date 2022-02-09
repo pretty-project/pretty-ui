@@ -44,7 +44,7 @@
   [request]
   (if-let [core-js-filename (router/request->route-prop request :js)]
           (string/not-starts-with! core-js-filename  "/")))
-  
+
 (defn- request->core-js-uri-base
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,7 +57,7 @@
   ;
   ; @return (string)
   [request]
-  (let [core-js-dir (a/subscribed [:core/get-app-config-item :core-js-dir])]
+  (let [core-js-dir @(a/subscribe [:core/get-app-config-item :core-js-dir])]
        (-> core-js-dir (string/starts-with! "/")
                        (string/ends-with!   "/"))))
 
@@ -135,10 +135,10 @@
   ;  {:app-build (string)
   ;   :shield (hiccup)}
   [request body-props]
-  (merge (a/subscribed [:core/get-app-config])
-         {:app-build (a/app-build)
-          :shield    (app-shield (graphics/loading-animation))}
-         (param body-props)))
+  (merge @(a/subscribe [:core/get-app-config])
+          {:app-build (a/app-build)
+           :shield    (app-shield (graphics/loading-animation))}
+          (param body-props)))
 
 
 

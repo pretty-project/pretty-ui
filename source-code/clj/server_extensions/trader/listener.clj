@@ -42,7 +42,7 @@
   ;
   ; @return (string)
   [source-code]
-  (let [market-data (a/subscribed [:db/get-item [:trader :market]])]
+  (let [market-data @(a/subscribe [:db/get-item [:trader :market]])]
        ; - A (load-str "...") függvény a clojure.core névtérben hozza létre a konstansokat
        ; - A (load-str "...") függvény által lefuttatott forráskódban létrehozott konstansok és
        ;   átirányított függvények elérhetők lesznek a clojure.core névtérben.
@@ -61,8 +61,8 @@
             "(def ^{:private true} rising-highness   server-extensions.trader.patterns/rising-highness) "
             "(def ^{:private true} falling-deepness  server-extensions.trader.patterns/falling-deepness) "
             ; Re-Frame functions
-            "(def ^{:private true} subscribed x.server-core.api/subscribed) "
-            "(def ^{:private true} dispatch   x.server-core.api/dispatch) "
+            "(def ^{:private true} subscribe x.server-core.api/subscribe) "
+            "(def ^{:private true} dispatch  x.server-core.api/dispatch) "
             (param source-code))))
 
 (defn run-source-code!
@@ -97,15 +97,15 @@
   ; @return (map)
   ;  {:listener-active? (boolean)}
   [env _]
-  (if (a/subscribed [:db/get-item [:trader :listener :listener-active?]])
-      (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] false])
-          (a/dispatch      [:trader/log! "Deactivating listener ..."])
-          {:listener-active? false
-           :check (a/subscribed [:db/get-item [:trader :listener :listener-active?]])})
-      (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] true])
-          (a/dispatch      [:trader/log! "Activating listener ..."])
-          {:listener-active? true
-           :check (a/subscribed [:db/get-item [:trader :listener :listener-active?]])})))
+  (if @(a/subscribe [:db/get-item [:trader :listener :listener-active?]])
+       (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] false])
+           (a/dispatch      [:trader/log! "Deactivating listener ..."])
+           {:listener-active? false
+            :check @(a/subscribe [:db/get-item [:trader :listener :listener-active?]])})
+       (do (a/dispatch-sync [:db/set-item! [:trader :listener :listener-active?] true])
+           (a/dispatch      [:trader/log! "Activating listener ..."])
+           {:listener-active? true
+            :check @(a/subscribe [:db/get-item [:trader :listener :listener-active?]])})))
 
 (defmutation toggle-listener!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,7 +134,7 @@
   ;  {:listener-active? (boolean)
   ;   :source-code (string)}
   [env _]
-  {:listener-active? (boolean (a/subscribed [:db/get-item [:trader :listener :listener-active?]]))
+  {:listener-active? (boolean @(a/subscribe [:db/get-item [:trader :listener :listener-active?]]))
    :source-code      (get-source-code)})
 
 (defresolver download-listener-data

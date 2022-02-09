@@ -29,7 +29,7 @@
   ;
   ; @return (vector)
   [content]
-  (let [title (a/subscribed [:core/get-app-config-item :app-title])]
+  (let [title @(a/subscribe [:core/get-app-config-item :app-title])]
        [:div#x-app-shield {:data-nosnippet "true"}
                           [:div#x-app-shield--header (ui/app-logo)
                                                      (ui/app-title title)]

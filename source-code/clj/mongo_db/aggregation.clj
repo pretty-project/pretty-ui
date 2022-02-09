@@ -18,7 +18,7 @@
   ;
   ; @return (DBObject)
   [options]
-  (let [database (a/subscribed [:mongo-db/get-connection])]
+  (let [database @(a/subscribe [:mongo-db/get-connection])]
        (try (mcr/command database options)
             (catch Exception e (println (str e "\n" {:options options}))))))
 

@@ -228,8 +228,7 @@
   ; WARNING!
   ; A :body és :mime-type tulajdonságok megadása szükséges a response-wrap függvény használatához!
   (let [headers (merge {"Content-Type" (or mime-type "text/plain")} headers)]
-       (merge {:headers headers
-               :status  200}
+       (merge {:headers headers :status 200}
               (select-keys response-props [:body :session :status]))))
 
 

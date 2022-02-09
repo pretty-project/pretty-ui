@@ -210,11 +210,11 @@
   ;   :crawler-rules (?)
   ;   :selected-language (keyword)}
   [request head-props]
-  (merge (a/subscribed [:core/get-app-config])
-         {:app-build         (a/app-build)
-          :crawler-rules     (environment/crawler-rules request)
-          :selected-language (user/request->user-settings-item request :selected-language)}
-         (param head-props)))
+  (merge @(a/subscribe [:core/get-app-config])
+          {:app-build         (a/app-build)
+           :crawler-rules     (environment/crawler-rules request)
+           :selected-language (user/request->user-settings-item request :selected-language)}
+          (param head-props)))
 
 
 
