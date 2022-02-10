@@ -264,6 +264,20 @@
        ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
        (>= downloaded-item-count all-item-count)))
 
+(defn get-filter-pattern
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  ;  {:$and (maps in vector)}
+  [db [_ extension-id item-namespace]]
+  (let [active-filter (r subs/get-meta-item db extension-id item-namespace :active-filter)
+        prefilter     (r subs/get-meta-item db extension-id item-namespace :prefilter)]
+       (cond-> {} active-filter (update :$and vector/conj-item active-filter)
+                      prefilter (update :$and vector/conj-item     prefilter))))
+
 (defn get-search-term
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -272,7 +286,7 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
-  (let [search-term  (r get-meta-item db extension-id item-namespace :search-term)]
+  (let [search-term (r get-meta-item db extension-id item-namespace :search-term)]
        (str search-term)))
 
 (defn no-items-received?

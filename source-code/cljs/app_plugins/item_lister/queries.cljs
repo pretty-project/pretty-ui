@@ -33,7 +33,7 @@
   ; @return (map)
   ;  {:downloaded-item-count (integer)
   ;   :download-limit (integer)
-  ;   :filter-pattern (map)
+  ;   :filter-pattern (maps in vector)
   ;   :order-by (keyword)
   ;   :reload-items? (boolean)
   ;   :search-keys (keywords in vector)
@@ -41,10 +41,10 @@
   [db [_ extension-id item-namespace]]
   {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
    :download-limit        (r subs/get-meta-item             db extension-id item-namespace :download-limit)
-   :filter-pattern        (r subs/get-meta-item             db extension-id item-namespace :filter-pattern)
    :order-by              (r subs/get-meta-item             db extension-id item-namespace :order-by)
    :reload-items?         (r subs/get-meta-item             db extension-id item-namespace :reload-mode?)
    :search-keys           (r subs/get-meta-item             db extension-id item-namespace :search-keys)
+   :filter-pattern        (r subs/get-filter-pattern        db extension-id item-namespace)
    :search-term           (r subs/get-search-term           db extension-id item-namespace)
 
    ; TEMP

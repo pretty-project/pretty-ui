@@ -287,7 +287,7 @@
   [db [_ extension-id item-namespace filter-pattern]]
   (as-> db % (r reset-downloads!  % extension-id)
              (r reset-selections! % extension-id)
-             (assoc-in % [extension-id :item-lister/meta-items :filter-pattern] filter-pattern)))
+             (assoc-in % [extension-id :item-lister/meta-items :active-filter] filter-pattern)))
 
 (defn ->items-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -431,6 +431,11 @@
   ; @usage
   ;  [:item-lister/reload-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; - Az [:item-lister/reload-items! ...] esemény újra letölti a listában található elemeket.
+      ; - Ha a szerver-oldalon az elemeket tartalmazó kollekció megváltozott, akkor nem feltétlenül
+      ;   ugyanazok az elemek töltődnek le!
+      ; - Ha pl. a kliens-oldalon az újratöltés előtt 42 elem van letöltve és a {:download-limit ...}
+      ;   értéke 20, akkor az esemény az 1. - 60. elemeket kéri le a szerverről.
       (let [db (r toggle-reload-mode! db extension-id)]
            [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true

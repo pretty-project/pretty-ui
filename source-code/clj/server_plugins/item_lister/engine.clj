@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.5.8
+; Version: v0.8.4
+; Compatibility: x4.6.0
 
 
 
@@ -54,16 +54,35 @@
   ;
   ; @param (map) env
   ;
+  ; @example
+  ;  (engine/env->max-count {... .../params {:downloaded-item-count 24
+  ;                                          :download-limit        20
+  ;                                          :reload-items?         false}})
+  ;  =>
+  ;  20
+  ;
+  ; @example
+  ;  (engine/env->max-count {... .../params {:downloaded-item-count 24
+  ;                                          :download-limit        20
+  ;                                          :reload-items?         true}})
+  ;  =>
+  ;  40
+  ;
   ; @return (integer)
   [env]
   (let [download-limit (pathom/env->param env :download-limit)]
        (if-let [reload-items? (pathom/env->param env :reload-items?)]
+               ; Ha az item-lister {:reload-items? true} állapotban van, akkor a mongo-db aggregation pipeline
+               ; számára átadott max-count tulajdonság értéke a download-limit értékének legkisebb olyan többszöröse,
+               ; ami nagyobb, mint a downloaded-item-count értéke ...
                (let [downloaded-item-count (pathom/env->param env :downloaded-item-count)
-                     ; A downloaded-item-count értéke nem lehet 0, mert akkor matematikai
-                     ; szempontból nem tartozna az első tartományba (1-20 elem) és a math/domain-ceil
-                     ; függvény visszatérési értéke is 0 lenne!
+                     ; Ha a downloaded-item-count értéke 0, akkor matematikai szempontból nem tartozik
+                     ; az első tartományba (pl. 1-20 elem) és a math/domain-ceil függvény visszatérési
+                     ; értéke 0 lenne!
                      downloaded-item-count (max downloaded-item-count 1)]
                     (math/domain-ceil downloaded-item-count download-limit))
+               ; Ha az item-lister NINCS {:reload-items? true} állapotban, akkor a mongo-db aggregation pipeline
+               ; számára átadott max-count tulajdonság értéke megegyezik az item-lister plugin download-limit értékével ...
                (return download-limit))))
 
 (defn- env->skip

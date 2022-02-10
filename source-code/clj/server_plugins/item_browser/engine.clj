@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.5.4
-; Compatibility: x4.5.9
+; Version: v0.5.8
+; Compatibility: x4.6.0
 
 
 
@@ -130,8 +130,6 @@
   ; @return (maps in vector)
   [env extension-id item-namespace]
   (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
-       (println (str                        pipeline-props))
-       (println (str (mongo-db/get-pipeline pipeline-props)))
        (mongo-db/get-pipeline pipeline-props)))
 
 (defn env->count-pipeline
