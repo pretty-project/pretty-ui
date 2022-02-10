@@ -34,6 +34,7 @@
 (def meta-item-path          engine/meta-item-path)
 (def resolver-id             engine/resolver-id)
 (def collection-name         engine/collection-name)
+(def transfer-id             engine/transfer-id)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)
@@ -56,15 +57,15 @@
   ;
   ; @return (maps in vector)
   [env extension-id item-namespace]
-  (let [collection-name (collection-name extension-id)
+  (let [collection-name (collection-name       extension-id)
         items-key       (keyword/add-namespace item-namespace :items)
-        item-id         (pathom/env->param env :item-id)]
+        item-id         (pathom/env->param     env            :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
                (get document items-key)
                ; WARNING!
-               ; Az env->item-links függvény visszatérési értéke egy vektor kell legyen!
-               ; Ha az item-links értéke nil, akkor az így létrehozott filter-pattern alkalmazásával
-               ; az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
+               ; - Az env->item-links függvény visszatérési értéke egy vektor kell legyen!
+               ; - Ha az item-links értéke nil, akkor az adatbázis a kollekció összes dokumentumát
+               ;   kiszolgálná eredményként!
                (return []))))
 
 (defn env->sort-pattern
@@ -108,9 +109,9 @@
   ;
   ; @return (map)
   [env extension-id item-namespace]
-  ; Az item-lister plugin env->pipeline-props függvényénét kiegészíti, a kollekció elemeinek
+  ; Az item-lister plugin env->pipeline-props függvényét kiegészíti a kollekció elemeinek
   ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
-  ; aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
+  ; az aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
   (let [item-links     (env->item-links   env extension-id item-namespace)
         ; Itt lehet a kliens-oldalon megadott filter-pattern értékét alkalmazni ...
         filter-pattern (pathom/env->param env :filter-pattern)
@@ -128,8 +129,10 @@
   ; @return (maps in vector)
   [env extension-id item-namespace]
   (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
+       (println (str                        pipeline-props))
+       (println (str (mongo-db/get-pipeline pipeline-props)))
        (mongo-db/get-pipeline pipeline-props)))
-
+ 
 (defn env->count-pipeline
   ; @param (map) env
   ; @param (keyword) extension-id

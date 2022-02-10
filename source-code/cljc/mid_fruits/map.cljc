@@ -719,7 +719,7 @@
   ;
   ; @return (map)
   [n update-f]
-  ; A rekurzió a vektorok elemein NEM hajtja végre az f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein NEM hajtja végre az update-f függvényt, mivel azok a térképek értékeinek megfelelői!
   (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1               (f %2)) [] n)
                        (map?    n) (reduce-kv #(assoc %1 (update-f %2) (f %3)) {} n)
                        :else    n))]
@@ -749,7 +749,7 @@
   ;
   ; @return (map)
   [n update-f]
-  ; A rekurzió a vektorok elemein is végrehajtja az f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein is végrehajtja az update-f függvényt, mivel azok a térképek értékeinek megfelelői!
   (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1    (f %2)) [] n)
                        (map?    n) (reduce-kv #(assoc %1 %2 (f %3)) {} n)
                        :else       (update-f n)))]

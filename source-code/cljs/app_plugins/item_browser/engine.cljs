@@ -28,6 +28,7 @@
 (def meta-item-path          engine/meta-item-path)
 (def resolver-id             engine/resolver-id)
 (def collection-name         engine/collection-name)
+(def transfer-id             engine/transfer-id)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)
 (def route-template          engine/route-template)

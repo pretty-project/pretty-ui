@@ -100,7 +100,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
   [_ [_ extension-id item-namespace lister-props]]
-  [:core/reg-transfer! {:data-f      (fn [_] (return lister-props))
+  [:core/reg-transfer! (engine/transfer-id extension-id item-namespace)
+                       {:data-f      (fn [_] (return lister-props))
                         :target-path [extension-id :item-lister/meta-items]}])
 
 (defn add-route!

@@ -87,7 +87,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
   [_ [_ extension-id item-namespace editor-props]]
-  [:core/reg-transfer! {:data-f      (fn [_] (return editor-props))
+  [:core/reg-transfer! (engine/transfer-id extension-id item-namespace)
+                       {:data-f      (fn [_] (return editor-props))
                         :target-path [extension-id :item-editor/meta-items]}])
 
 (defn add-route!

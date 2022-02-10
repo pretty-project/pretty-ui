@@ -136,6 +136,25 @@
   [extension-id]
   (name extension-id))
 
+(defn transfer-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) plugin-key
+  ;
+  ; @example
+  ;  (engine/transfer-id :my-extension :my-type :browser)
+  ;  =>
+  ;  :my-extension.my-type-browser/transfer-browser-props
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace plugin-key]
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           (str                       "transfer-"
+                (name plugin-key)     "-props")))
+
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

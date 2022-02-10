@@ -149,24 +149,10 @@
   ;  {:at-home? (boolean)
   ;   :item-path (maps in vector)}
   [db [_ extension-id item-namespace]]
-  {:at-home?    (r at-home?      db extension-id item-namespace)
-   :item-path   (r get-item-path db extension-id item-namespace)})
+  {:at-home?  (r at-home?      db extension-id item-namespace)
+   :item-path (r get-item-path db extension-id item-namespace)})
 
 (a/reg-sub :item-browser/get-header-props get-header-props)
-
-(defn get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  ;  {:at-home? (boolean)
-  ;   :item-path (maps in vector)}
-  [db [_ extension-id item-namespace]])
-  ;(r item-lister/get-body-props extension-id item-namespace))
-
-(a/reg-sub :item-browser/get-body-props get-header-props)
 
 (defn get-view-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

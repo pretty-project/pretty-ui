@@ -48,7 +48,8 @@
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   [_ [_ extension-id selector-props]]
-  [:core/reg-transfer! {:data-f      (fn [_] (return selector-props))
+  [:core/reg-transfer! (engine/transfer-id extension-id)
+                       {:data-f      (fn [_] (return selector-props))
                         :target-path [extension-id :view-selector/meta-items]}])
 
 (defn add-route!

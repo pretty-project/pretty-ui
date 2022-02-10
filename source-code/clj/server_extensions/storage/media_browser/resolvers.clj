@@ -50,7 +50,7 @@
   [env _]
   (let [get-pipeline   (item-browser/env->get-pipeline   env :storage :media)
         count-pipeline (item-browser/env->count-pipeline env :storage :media)]
-       {:documents      (mongo-db/get-documents-by-pipeline   "storage" get-pipeline)
+       {:documents      (mongo-db/get-documents-by-pipeline   "storage"   get-pipeline)
         :document-count (mongo-db/count-documents-by-pipeline "storage" count-pipeline)}))
 
 (defresolver get-items

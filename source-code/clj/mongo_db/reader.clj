@@ -136,8 +136,14 @@
   ; @param (namespaced map) query
   ;
   ; @usage
+  ;  (mongo-db/get-document-count-by-query "my_collection" {:namespace/my-keyword :my-value})
+  ;
+  ; @usage
+  ;  (mongo-db/get-document-count-by-query "my_collection" {:$or [{...} {...}]})
+  ;
+  ; @usage
   ;  (mongo-db/get-document-count-by-query "my_collection" {:namespace/my-keyword  :my-value}
-  ;                                                         :namespace/your-string "your-value"})
+  ;                                                         :namespace/your-string "Your value"})
   ;
   ; @return (integer)
   [collection-name query]
@@ -153,7 +159,7 @@
   ;                                               :namespace/your-string 1})
   ;  =>
   ;  [{:namespace/my-keyword  :my-value
-  ;    :namespace/your-string "your-value"
+  ;    :namespace/your-string "Your value"
   ;    :namespace/id          "MyObjectId"}]
   ;
   ; @return (maps in vector)
@@ -172,13 +178,18 @@
   ; @param (namespaced map) query
   ; @param (namespaced map)(opt) projection
   ;
+  ; @usage
+  ;  (mongo-db/get-documents-by-query "my_collection" {:namespace/my-keyword :my-value})
+  ;
+  ; @usage
+  ;  (mongo-db/get-documents-by-query "my_collection" {:$or [{...} {...}]})
+  ;
   ; @example
   ;  (mongo-db/get-documents-by-query "my_collection" {:namespace/my-keyword :my-value}
   ;                                                   {:namespace/my-keyword  0
   ;                                                    :namespace/your-string 1})
   ;  =>
-  ;  [{:namespace/my-keyword  :my-value
-  ;    :namespace/your-string "your-value"
+  ;  [{:namespace/your-string "Your value"
   ;    :namespace/id          "MyObjectId"}]
   ;
   ; @return (namespaced maps in vector)
@@ -205,9 +216,15 @@
   ;
   ; @usage
   ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})
+  ;
+  ; @usage
+  ;  (mongo-db/get-document-by-query "my_collection" {:$or [{...} {...}]})
+  ;
+  ; @example
+  ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})
   ;  =>
   ;  {:namespace/my-keyword  :my-value
-  ;   :namespace/your-string "your-value"
+  ;   :namespace/your-string "Your value"
   ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)
@@ -225,7 +242,7 @@
   ;  (mongo-db/get-document-by-id "my_collection" "MyObjectId")
   ;  =>
   ;  {:namespace/my-keyword  :my-value
-  ;   :namespace/your-string "your-value"
+  ;   :namespace/your-string "Your value"
   ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)

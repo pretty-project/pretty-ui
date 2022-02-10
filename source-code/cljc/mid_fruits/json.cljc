@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.08
 ; Description:
-; Version: v0.7.0
+; Version: v0.7.4
 
 
 
@@ -55,6 +55,18 @@
   ; @return (*)
   [n]
   (keyword/to-string n))
+
+(defn keywordize-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/keywordize-key "my-namespace/key")
+  ;  =>
+  ;  :my-namespace/key
+  ;
+  ; @return (*)
+  [n]
+  (keyword n))
 
 (defn underscore-key
   ; @param (*) n
@@ -165,7 +177,7 @@
   [n]
   (cond (map?    n) (map/->>keys    n keywordize-keys)
         (vector? n) (vector/->items n keywordize-keys)
-        :else       (keyword        n)))
+        :else       (keywordize-key n)))
 
 (defn underscore-keys
   ; @param (*) n

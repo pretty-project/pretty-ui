@@ -7,6 +7,7 @@
   akkor talán célszerűbb a "My document copy 1" kifejezés helyett a "My document #1" jelölést alkalmazni!
 
 
+
 # mongo-db.adaptation
 - A mongo-db.adaptation névtér függvényei az egyes térképeken többszörösen iterálnak végig,
   hogy elvégezzék az adaptálást. Ezen az eljáráson ha szükséges, lehetséges gyorsítani.

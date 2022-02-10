@@ -48,18 +48,19 @@
   ;   :$and (maps in vector)(opt)
   ;
   ; @example
-  ;  (mongo-db/filter-query {:$or  [{:namespace/my-key   false}
-  ;                                 {:namespace/my-key   nil}]
-  ;                          :$and [{:namespace/your-key true}]})
+  ;  (mongo-db/filter-query {:namespace/my-keyword :my-value
+  ;                          :$or  [{:namespace/my-boolean   false}
+  ;                                 {:namespace/my-boolean   nil}]
+  ;                          :$and [{:namespace/your-boolean true}]})
   ;  =>
-  ;  {"$or"  [{"namespace/my-key"   false}
-  ;           {"namespace/my-key"   nil}]
-  ;   "$and" [{"namespace/your-key" true}]}
+  ;  {"namespace/my-keyword" "*:my-value"
+  ;   "$or"  [{"namespace/my-boolean"   false}
+  ;           {"namespace/my-boolean"   nil}]
+  ;   "$and" [{"namespace/your-boolean" true}]}
   ;
   ; @return (maps in vector)
-  [{:keys [$and $or]}]
-  (cond-> {} $and (assoc "$and" (vector/->items $and adaptation/filter-query))
-             $or  (assoc "$or"  (vector/->items $or  adaptation/filter-query))))
+  [filter-pattern]
+  (adaptation/find-query filter-pattern))
 
 (defn search-query
   ; @param (map) search-pattern
@@ -67,11 +68,11 @@
   ;   :$or (maps in vector)(opt)}
   ;
   ; @example
-  ;  (mongo-db/search-query {:$or [{:namespace/my-key   "Xyz"}
-  ;                                {:namespace/your-key "Xyz"}]})
+  ;  (mongo-db/search-query {:$or [{:namespace/my-string   "My value"}
+  ;                                {:namespace/your-string "Your value"}]})
   ;  =>
-  ;  {"$or" [{"namespace/my-key"   {"$regex" "Xyz" "$options" "i"}}
-  ;          {"namespace/your-key" {"$regex" "Xyz" "$options" "i"}}]}
+  ;  {"$or" [{"namespace/my-string"   {"$regex" "My value" "$options" "i"}}
+  ;          {"namespace/your-string" {"$regex" "Your value" "$options" "i"}}]}
   ;
   ; @return (map)
   ;  {"$and" (maps in vector)
@@ -84,9 +85,9 @@
   ; @param (map) sort-pattern
   ;
   ; @example
-  ;  (mongo-db/sort-query {:namespace/my-key -1 ...})
+  ;  (mongo-db/sort-query {:namespace/my-string -1 ...})
   ;  =>
-  ;  {"namespace/my-key" -1 ...}
+  ;  {"namespace/my-string" -1 ...}
   ;
   ; @return (map)
   [sort-pattern]
@@ -96,9 +97,9 @@
   ; @param (namespaced keywords in vector) unset-pattern
   ;
   ; @example
-  ;  (mongo-db/unset-query [:namespace/my-key :namespace/your-key])
+  ;  (mongo-db/unset-query [:namespace/my-string :namespace/your-string])
   ;  =>
-  ;  ["namespace/my-key" "namespace/your-key"]
+  ;  ["namespace/my-string" "namespace/your-string"]
   ;
   ; @return (strings in vector)
   [unset-pattern]
@@ -108,7 +109,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
 
 (defn get-pipeline
   ; @param (map) pipeline-props
@@ -122,12 +122,13 @@
   ;
   ; @usage
   ;  (mongo-db/get-pipeline {:field-pattern  {:namespace/name {:$concat [:$namespace/first-name " " :$namespace/last-name]}
-  ;                          :filter-pattern {:$or [{:namespace/my-key   false}
-  ;                                                 {:namespace/my-key   nil}]}
-  ;                          :search-pattern {:$or [{:namespace/my-key   "Xyz"}
-  ;                                                 {:namespace/your-key "Xyz"}]}
-  ;                          :sort-pattern   {:namespace/my-key -1}
-  ;                          :unset-pattern  [:namespace/my-key :namespace/your-key]
+  ;                          :filter-pattern {:namespace/my-keyword :my-value
+  ;                                           :$or [{:namespace/my-boolean   false}
+  ;                                                 {:namespace/my-boolean   nil}]}
+  ;                          :search-pattern {:$or [{:namespace/my-string   "My value"}
+  ;                                                 {:namespace/your-string "Your value"}]}
+  ;                          :sort-pattern   {:namespace/my-string -1}
+  ;                          :unset-pattern  [:namespace/my-string :namespace/your-string]
   ;                          :max-count 20
   ;                          :skip      40})
   ;
@@ -135,7 +136,6 @@
   [{:keys [field-pattern filter-pattern max-count search-pattern skip sort-pattern unset-pattern]}]
              ; Az $addFields operátor a $match és $sort operátorok végrehajtása előtt adja hozzá a virtuális mező(ke)t ...
   (cond-> [] field-pattern (conj {"$addFields"      (add-fields-query field-pattern)})
-
              :match        (conj {"$match" {"$and" [(filter-query     filter-pattern)
                                                     (search-query     search-pattern)]}})
              sort-pattern  (conj {"$sort"           (sort-query       sort-pattern)})
@@ -144,17 +144,17 @@
              skip          (conj {"$skip"           (param            skip)})
              max-count     (conj {"$limit"          (param            max-count)})))
 
-
 (defn count-pipeline
   ; @param (map) pipeline-props
   ;  {:filter-pattern (map)
   ;   :search-pattern (map)}
   ;
   ; @usage
-  ;  (mongo-db/count-pipeline {:filter-pattern {:$or [{:namespace/my-key   false}
-  ;                                                   {:namespace/my-key   nil}]}
-  ;                            :search-pattern {:$or [{:namespace/my-key   "Xyz"}]
-  ;                                                   {:namespace/your-key "Xyz"}]}})
+  ;  (mongo-db/count-pipeline {:filter-pattern {:namespace/my-keyword :my-value
+  ;                                             :$or [{:namespace/my-boolean   false}
+  ;                                                   {:namespace/my-boolean   nil}]}
+  ;                            :search-pattern {:$or [{:namespace/my-string   "My value"}]
+  ;                                                   {:namespace/your-string "Your value"}]}})
   ;
   ; @return (maps in vector)
   [{:keys [filter-pattern search-pattern]}]

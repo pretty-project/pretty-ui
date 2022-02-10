@@ -277,13 +277,16 @@
   ; @usage
   ;  (mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
+  ; @usage
+  ;  (mongo-db/update-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;
   ; @return (boolean)
   ([collection-name query document]
    (update-document! collection-name query document {}))
 
   ([collection-name query document options]
    (boolean (if-let [document (preparing/update-input collection-name document options)]
-                    (if-let [query (adaptation/update-query query)]
+                    (if-let [query (adaptation/find-query query)]
                             (if-let [document (adaptation/update-input document)]
                                     (let [result (update! collection-name query document {:multi false :upsert false})]
                                          (mrt/updated-existing? result))))))))
@@ -304,13 +307,16 @@
   ; @usage
   ;  (mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
+  ; @usage
+  ;  (mongo-db/update-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;
   ; @return (boolean)
   ([collection-name query document]
    (update-documents! collection-name query document {}))
 
   ([collection-name query document options]
    (boolean (if-let [document (preparing/update-input collection-name document options)]
-                    (if-let [query (adaptation/update-query query)]
+                    (if-let [query (adaptation/find-query query)]
                             (if-let [document (adaptation/update-input document)]
                                     ; WARNING! DO NOT USE!
                                     ; java.lang.IllegalArgumentException: Replacements can not be multi
@@ -332,13 +338,16 @@
   ; @usage
   ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
+  ; @usage
+  ;  (mongo-db/upsert-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;
   ; @return (boolean)
   ([collection-name query document]
    (upsert-document! collection-name query document {}))
 
   ([collection-name query document options]
    (boolean (if-let [document (preparing/upsert-input collection-name document options)]
-                    (if-let [query (adaptation/upsert-query query)]
+                    (if-let [query (adaptation/find-query query)]
                             (if-let [document (adaptation/upsert-input document)]
                                     (let [result (upsert! collection-name query document {:multi false})]
                                          (mrt/acknowledged? result))))))))
@@ -358,13 +367,16 @@
   ; @usage
   ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
   ;
+  ; @usage
+  ;  (mongo-db/upsert-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;
   ; @return (boolean)
   ([collection-name query document]
    (upsert-documents! collection-name query document {}))
 
   ([collection-name query document options]
    (boolean (if-let [document (preparing/upsert-input collection-name document options)]
-                    (if-let [query (adaptation/upsert-query query)]
+                    (if-let [query (adaptation/find-query query)]
                             (if-let [document (adaptation/upsert-input document)]
                                     ; WARNING! DO NOT USE!
                                     ; java.lang.IllegalArgumentException: Replacements can not be multi

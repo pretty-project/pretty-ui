@@ -83,12 +83,32 @@
 (defn find-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;
-  ; @return (namespaced map)
+  ; @example
+  ;  (adaptation/find-query {:namespace/id            "MyObjectId"
+  ;                          :namespace/my-keyword    :my-value
+  ;                          :namespace/your-string   "your-value"
+  ;                          :namespace/our-timestamp "2020-04-20T16:20:00.000Z"
+  ;                          :$or [{:namespace/id "YourObjectId"}]})
+  ;  =>
+  ;  {"_id"                     #<ObjectId MyObjectId>
+  ;   "namespace/my-keyword"    "*:my-value"
+  ;   "namespace/your-string"   "your-value"
+  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>
+  ;   "$or" [{"namespace/id" #<ObjectId YourObjectId>}]}
+  ;
+  ; @return (map)
   [query]
-  (try (-> query json/unkeywordize-keys json/unkeywordize-values)
-       (catch Exception e (println (str e "\n" {:query query})))))
+  (if (map/nonempty? query)
+      ; 1. A query térképben található :namespace/id tulajdonságok átnevezése :_id tulajdonságra
+      ;    A query térképben található string típusú azonosítók átalakítása objektum típusra
+      ; 2. A query térképben használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
+      ; 3. A query térképben string típusként tárolt dátumok és idők átalakítása objektum típusra
+      (try (-> query engine/id->>_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+           (catch Exception e (println (str e "\n" {:query query}))))
+      ; A query térképként lehetséges üres térképet is átadni.
+      (return {})))
 
 (defn find-projection
   ; @param (namespaced map) projection
@@ -234,34 +254,6 @@
   (try (-> document json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
        (catch Exception e (println (str e "\n" {:document document})))))
 
-(defn update-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced map) document
-  ;
-  ; @example
-  ;  (adaptation/update-query {:namespace/id            "MyObjectId"
-  ;                            :namespace/my-keyword    :my-value
-  ;                            :namespace/your-string   "your-value"
-  ;                            :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
-  ;  =>
-  ;  {"_id"                     #<ObjectId MyObjectId>
-  ;   "namespace/my-keyword"    "*:my-value"
-  ;   "namespace/your-string"   "your-value"
-  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
-  ;
-  ; @return (namespaced map)
-  [query]
-  (if (map/nonempty? query)
-      ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
-      ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
-      ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
-      ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:query query}))))
-      ; A query paraméterként lehetséges üres térképet is átadni.
-      (return query)))
-
 
 
 ;; -- Upserting document ------------------------------------------------------
@@ -287,34 +279,6 @@
   ; 2. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
   (try (-> document json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
        (catch Exception e (println (str e "\n" {:document document})))))
-
-(defn upsert-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced map) document
-  ;
-  ; @example
-  ;  (adaptation/upsert-query {:namespace/id            "MyObjectId"
-  ;                            :namespace/my-keyword    :my-value
-  ;                            :namespace/your-string   "your-value"
-  ;                            :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
-  ;  =>
-  ;  {"_id"                     #<ObjectId MyObjectId>
-  ;   "namespace/my-keyword"    "*:my-value"
-  ;   "namespace/your-string"   "your-value"
-  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
-  ;
-  ; @return (namespaced map)
-  [query]
-  (if (map/nonempty? query)
-      ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
-      ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
-      ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
-      ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:query query}))))
-      ; A query paraméterként lehetséges üres térképet is átadni.
-      (return query)))
 
 
 
@@ -373,34 +337,6 @@
 
 ;; -- Aggregation -------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn filter-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (namespaced map) query
-  ;
-  ; @example
-  ;  (adaptation/filter-query {:namespace/id            "MyObjectId"
-  ;                            :namespace/my-keyword    :my-value
-  ;                            :namespace/your-string   "your-value"
-  ;                            :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
-  ;  =>
-  ;  {"_id"                     #<ObjectId MyObjectId>
-  ;   "namespace/my-keyword"    "*:my-value"
-  ;   "namespace/your-string"   "your-value"
-  ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
-  ;
-  ; @return (namespaced map)
-  [query]
-  (if (map/nonempty? query)
-      ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
-      ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
-      ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
-      ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-      (try (-> query engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-           (catch Exception e (println (str e "\n" {:query query}))))
-      ; A query paraméterként lehetséges üres térképet is átadni.
-      (return query)))
 
 (defn search-query
   ; @param (namespaced map) query
