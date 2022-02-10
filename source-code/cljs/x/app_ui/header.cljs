@@ -88,12 +88,11 @@
   ;
   ; @return (component)
   [_ {:keys [at-home?]}]
-  [elements/button ::apps-icon-button
-                   {:badge-color (if-not at-home? :secondary)
-                    :disabled?   (param  at-home?)
-                    :on-click    [:router/go-home!]
-                    :preset      :apps-icon-button}])
-                   ;:icon        :dashboard
+  [elements/icon-button ::apps-icon-button
+                        {:badge-color (if-not at-home? :secondary)
+                         :disabled?   (param  at-home?)
+                         :on-click    [:router/go-home!]
+                         :preset      :apps}])
 
 (defn- header-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,9 +102,9 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::up-icon-button
-                   {:preset   :back-icon-button
-                    :on-click [:router/go-up!]}])
+  [elements/icon-button ::up-icon-button
+                        {:preset   :back
+                         :on-click [:router/go-up!]}])
 
 (defn- header-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,9 +114,9 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::back-icon-button
-                   {:preset   :back-icon-button
-                    :on-click [:router/go-back!]}])
+  [elements/icon-button ::back-icon-button
+                        {:preset   :back
+                         :on-click [:router/go-back!]}])
 
 (defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -127,10 +126,12 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::dev-tools-icon-button
-                   {:icon     :auto_fix_high
-                    :on-click [:developer/render-developer-tools!]
-                    :preset   :default-icon-button}])
+  (let [db-write-count @(a/subscribe [:developer/get-db-write-count])]
+       [elements/icon-button ::dev-tools-icon-button
+                             {:icon     :auto_fix_high
+                              :label    db-write-count
+                              :on-click [:developer/render-developer-tools!]
+                              :preset   :default}]))
 
 (defn- header-menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -140,9 +141,9 @@
   ;
   ; @return (component)
   [_ _]
-  [elements/button ::menu-icon-button
-                   {:preset   :user-menu-icon-button
-                    :on-click [:views/render-menu!]}])
+  [elements/icon-button ::menu-icon-button
+                        {:preset   :user-menu
+                         :on-click [:views/render-menu!]}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -166,12 +167,12 @@
   ;
   ; @return (component)
   [header-id {:keys [debug-mode? header-title parent-path] :as header-props}]
-  [:<> [:div.x-app-header--block (if parent-path  [header-up-icon-button        header-id header-props]
-                                                  [header-apps-icon-button      header-id header-props])]
-       [:div.x-app-header--block (if header-title [header-label                 header-id header-props])]
-       [:div.x-app-header--block (if debug-mode?  [:<> [header-dev-tools-icon-button header-id header-props]
-                                                       [header-menu-icon-button      header-id header-props]]
-                                                  [:<> [header-menu-icon-button      header-id header-props]])]])
+  [:<> [:div.x-app-header--block (if parent-path      [header-up-icon-button        header-id header-props]
+                                                      [header-apps-icon-button      header-id header-props])]
+       [:div.x-app-header--block (if header-title     [header-label                 header-id header-props])]
+       [:div.x-app-header--block (if debug-mode? [:<> [header-dev-tools-icon-button header-id header-props]
+                                                      [header-menu-icon-button      header-id header-props]]
+                                                 [:<> [header-menu-icon-button      header-id header-props]])]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

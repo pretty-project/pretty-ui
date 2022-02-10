@@ -206,6 +206,7 @@
   ;       Default: false
   ;      :badge-color (keyword)(opt)
   ;       :primary, :secondary, :success, :warning
+  ;      :badge-content (metamorphic-content)(opt)
   ;      :disabled? (boolean)(opt)
   ;       Default: false
   ;      :href (string)(opt)

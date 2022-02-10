@@ -61,7 +61,7 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- toggle-print-events-button
@@ -85,6 +85,11 @@
   [components/subscriber ::header
                          {:render-f   #'header-structure
                           :subscriber [:developer-tools/get-header-props]}])
+
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

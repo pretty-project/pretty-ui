@@ -252,7 +252,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [all-item-count        (r get-all-item-count        db extension-id item-namespace)
+  (let [       all-item-count (r        get-all-item-count db extension-id item-namespace)
         downloaded-item-count (r get-downloaded-item-count db extension-id)]
        ; XXX#0791
        ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
@@ -274,7 +274,7 @@
   ;  {:$and (maps in vector)}
   [db [_ extension-id item-namespace]]
   (let [active-filter (r subs/get-meta-item db extension-id item-namespace :active-filter)
-        prefilter     (r subs/get-meta-item db extension-id item-namespace :prefilter)]
+            prefilter (r subs/get-meta-item db extension-id item-namespace     :prefilter)]
        (cond-> {} active-filter (update :$and vector/conj-item active-filter)
                       prefilter (update :$and vector/conj-item     prefilter))))
 

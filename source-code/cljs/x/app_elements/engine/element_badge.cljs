@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.19
 ; Description:
-; Version: v0.2.6
-; Compatibility: x4.4.8
+; Version: v0.3.4
+; Compatibility: x4.6.0
 
 
 
@@ -32,5 +32,11 @@
   ;
   ; @return (hiccup)
   [_ {:keys [badge-color badge-content]}]
-  (if badge-color [:div.x-element-badge {:data-color badge-color}
-                                        (if badge-content [:div.x-element-badge--content (components/content badge-content)])]))
+  ; A {:badge-content ...} tulajdonság használható, a {:badge-color ...} tulajdonság meghatározása
+  ; nélkül is!
+  (cond (and badge-color badge-content)
+        [:div.x-element-badge {:data-color badge-color}
+                              [:div.x-element-badge--content (components/content badge-content)]]
+        badge-color   [:div.x-element-badge {:data-color badge-color}]
+        badge-content [:div.x-element-badge {:data-color :primary}
+                                            [:div.x-element-badge--content (components/content badge-content)]]))

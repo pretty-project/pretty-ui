@@ -142,6 +142,7 @@
   ;  XXX#0714
   ;  {:badge-color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning
+  ;   :badge-content (metamorphic-content)(opt)
   ;   :background-color (keyword)(opt)
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary

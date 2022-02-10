@@ -354,7 +354,8 @@
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
   (as-> db % (r store-received-items!          % extension-id item-namespace server-response)
-             (r store-received-document-count! % extension-id item-namespace server-response)))
+             (r store-received-document-count! % extension-id item-namespace server-response)
+             (r ->items-received               % extension-id item-namespace)))
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -450,8 +451,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      {:db (as-> db % (r receive-items!   % extension-id item-namespace server-response)
-                      (r ->items-received % extension-id item-namespace))
+      {:db (r receive-items! db extension-id item-namespace server-response)
        ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
        ; hogy az a viewport területén van-e még és szükséges-e további elemeket letölteni.
        :dispatch [:tools/reload-infinite-loader! extension-id]}))

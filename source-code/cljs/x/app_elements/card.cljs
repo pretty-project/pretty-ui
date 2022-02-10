@@ -99,6 +99,7 @@
   ;  XXX#3240
   ;  {:badge-color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning
+  ;   :badge-content (metamorphic-content)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)

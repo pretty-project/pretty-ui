@@ -424,7 +424,7 @@ button.x-card:focus,
 
 .x-toggle[data-hover-color="muted"]:hover {
   background-color: var( --background-color-muted ) }
-  
+
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
