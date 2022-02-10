@@ -112,10 +112,11 @@
   ; Az item-lister plugin env->pipeline-props függvényét kiegészíti a kollekció elemeinek
   ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
   ; az aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
-  (let [item-links     (env->item-links   env extension-id item-namespace)
-        ; Itt lehet a kliens-oldalon megadott filter-pattern értékét alkalmazni ...
-        filter-pattern (pathom/env->param env :filter-pattern)
-        env            (pathom/env<-param env :filter-pattern {:$or item-links})]
+  (let [item-links     (env->item-links env extension-id item-namespace)
+        filter-pattern (if-let [filter-pattern (pathom/env->param env :filter-pattern)]
+                               {:$and [filter-pattern {:$or item-links}]}
+                               {:$or item-links})
+        env            (pathom/env<-param env :filter-pattern filter-pattern)]
        (item-lister/env->pipeline-props env extension-id item-namespace)))
 
 (defn env->get-pipeline
@@ -132,7 +133,7 @@
        (println (str                        pipeline-props))
        (println (str (mongo-db/get-pipeline pipeline-props)))
        (mongo-db/get-pipeline pipeline-props)))
- 
+
 (defn env->count-pipeline
   ; @param (map) env
   ; @param (keyword) extension-id

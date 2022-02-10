@@ -98,7 +98,8 @@
   [surface-id]
   [item-browser/view :storage :media {:list-element     #'media-item
                                       :item-actions     [:delete :duplicate]
-                                      :new-item-options [:create-directory! :upload-files!]}])
+                                      :new-item-options [:create-directory! :upload-files!]
+                                      :item-filter {:media/mime-type "storage/directory"}}])
 
 
 

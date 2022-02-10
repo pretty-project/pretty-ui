@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.5.9
+; Version: v0.5.0
+; Compatibility: x4.6.0
 
 
 
@@ -30,8 +30,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.events
-(def load-lister!    app-plugins.item-lister.events/load-lister!)
 (def set-error-mode! app-plugins.item-lister.events/set-error-mode!)
+(def use-filter!     app-plugins.item-lister.events/use-filter!)
+(def load-lister!    app-plugins.item-lister.events/load-lister!)
 
 
 
@@ -146,6 +147,18 @@
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-browser/use-filter!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) filter-pattern
+  ;
+  ; @usage
+  ;  [:item-browser/use-filter! :my-extension :my-type {...}]
+  (fn [{:keys [db]} [_ extension-id item-namespace filter-pattern]]
+      {:db (r use-filter! db extension-id item-namespace filter-pattern)
+       :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
   :item-browser/browse-item!

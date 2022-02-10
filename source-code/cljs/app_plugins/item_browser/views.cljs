@@ -143,14 +143,16 @@
   ; @param (map)(opt) body-props
   ;  {:list-element (metamorphic-content)
   ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]}
+  ;    [:delete, :duplicate]
+  ;   :item-filter (map)(opt)}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]
   ;
   ; @example
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element}]
+  ;  [item-browser/body :my-extension :my-type {:item-filter  {:my-type/color "red"}
+  ;                                             :list-element #'my-list-element}]
   ;
   ; @return (component)
   [extension-id item-namespace body-props]
@@ -181,6 +183,7 @@
   ;   :list-element (component)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
+  ;   :item-filter (map)(opt)
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;
@@ -189,7 +192,8 @@
   ;
   ; @usage
   ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  [item-browser/view :my-extension :my-type {:element #'my-list-element
+  ;  [item-browser/view :my-extension :my-type {:item-filter      {:my-type/color "red"}
+  ;                                             :list-element     #'my-list-element
   ;                                             :new-item-options [:add-my-type! :add-your-type!]}]
   ;
   ; @return (component)

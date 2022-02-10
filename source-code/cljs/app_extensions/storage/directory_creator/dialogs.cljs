@@ -1,6 +1,7 @@
 
 (ns app-extensions.storage.directory-creator.dialogs
-    (:require [mid-fruits.io        :as io]
+    (:require [app-plugins.value-editor.api]
+              [mid-fruits.io        :as io]
               [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]))
 

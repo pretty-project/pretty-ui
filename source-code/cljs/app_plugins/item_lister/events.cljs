@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.0.6
-; Compatibility: x4.5.9
+; Version: v1.1.0
+; Compatibility: x4.6.0
 
 
 
@@ -265,6 +265,17 @@
 
 (a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
 
+(defn- ->selected-items-deleted
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (as-> db % (r backup-selected-items! % extension-id item-namespace)
+             (r reset-selections!      % extension-id item-namespace)))
+
 (defn use-filter!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -274,7 +285,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace filter-pattern]]
-  (assoc-in db [extension-id :item-lister/meta-items :filter-pattern] filter-pattern))
+  (as-> db % (r reset-downloads!  % extension-id)
+             (r reset-selections! % extension-id)
+             (assoc-in % [extension-id :item-lister/meta-items :filter-pattern] filter-pattern)))
 
 (defn ->items-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -407,9 +420,7 @@
   ; @usage
   ;  [:item-lister/use-filter! :my-extension :my-type {...}]
   (fn [{:keys [db]} [_ extension-id item-namespace filter-pattern]]
-      {:db (as-> db % (r reset-downloads!  % extension-id)
-                      (r reset-selections! % extension-id)
-                      (r use-filter!       % extension-id item-namespace filter-pattern))
+      {:db (r use-filter! db extension-id item-namespace filter-pattern)
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
@@ -581,8 +592,7 @@
       (let [; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
             ; listája nem tud megváltozni a szerver válaszának megérkezéséig.
             item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
-           {:db (as-> db % (r backup-selected-items! % extension-id item-namespace)
-                           (r reset-selections!      % extension-id item-namespace))
+           {:db (r ->selected-items-deleted db extension-id item-namespace)
             :dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
                          [:item-lister/reload-items!                extension-id item-namespace]]})))
 
