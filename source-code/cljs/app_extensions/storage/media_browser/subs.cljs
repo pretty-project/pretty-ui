@@ -18,9 +18,6 @@
 
 (defn media-browser-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; XXX#7157
-  ;
-  ; @return (boolean)
   [db _]
+  ; XXX#7157
   (r route-handled? db :storage :media))

@@ -15,11 +15,6 @@
 
 (defn get-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) resolver-props
-  ;
-  ; @return (namespaced map)
   [env response-props]
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [media-item (mongo-db/get-document-by-id "storage" item-id)]
@@ -29,24 +24,11 @@
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (map)
-             ;  {:storage.media-browser/get-item (namespaced map)
              [env resolver-props]
              {:storage.media-browser/get-item (get-item-f env resolver-props)})
 
 (defn get-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) resolver-props
-  ;
-  ; @return (map)
-  ;  {:document-count (integer)
-  ;   :documents (namespaced maps in vector)}}
   [env _]
   (let [get-pipeline   (item-browser/env->get-pipeline   env :storage :media)
         count-pipeline (item-browser/env->count-pipeline env :storage :media)]
@@ -55,14 +37,6 @@
 
 (defresolver get-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (namespaced map)
-             ;  {:storage.media-lister/get-items (map)
-             ;    {:document-count (integer)
-             ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
              {:storage.media-lister/get-items (get-items-f env resolver-props)})
 

@@ -15,7 +15,7 @@
 (a/reg-sub :get-my-props get-my-props)
 
 (a/reg-event-fx
-  :my-extension/edit-my-value!
+  :load-my-value-editor!
   ; - Az {:edit-original? true} beállítás használatával a {:value-path ...} tulajdonságként átadott
   ;   Re-Frame adatbázis útvonalon tárolt érték szerkesztése közben, az aktuális érték az útvonalra íródik.
   ; - Az {:on-save ...} tulajdonságként átadott esemény a mentés gomb megnyomásakor történik meg,

@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension.view-selector/how-to-start?
+  :load-my-view-selector!
   (fn [_ _]
       ; A view-selector plugin elindítható ...
       ; ... a [:view-selector/load-selector! ...] esemény meghívásával.

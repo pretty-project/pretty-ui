@@ -46,30 +46,14 @@
 
 (defn attach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (string) directory-id
-  ; @param (namespaced map) media-item
-  ;  {:media/id (string)}
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} directory-id {:media/keys [id]}]
+  [{:keys [request]} directory-id {:media/keys [id] :as media-item}]
   (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
           (attach-f    [document] (update document :media/items vector/conj-item {:media/id id}))]
          (mongo-db/apply-document! "storage" directory-id attach-f {:prototype-f prototype-f})))
 
 (defn detach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (string) directory-id
-  ; @param (namespaced map) media-item
-  ;  {:media/id (string)}
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} directory-id {:media/keys [id]}]
+  [{:keys [request]} directory-id {:media/keys [id] :as media-item}]
   (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
           (detach-f    [document] (update document :media/items vector/remove-item {:media/id id}))]
          (mongo-db/apply-document! "storage" directory-id detach-f {:prototype-f prototype-f})))
@@ -113,33 +97,17 @@
 
 (defn get-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [_ item-id]
+  [env item-id]
   (mongo-db/get-document-by-id "storage" item-id))
 
 (defn insert-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (namespaced map) media-item
-  ;
-  ; @return (namespaced map)
-  [{:keys [request]} item]
+  [{:keys [request] :as env} item]
   (mongo-db/insert-document! "storage" item {:prototype-f #(mongo-db/added-document-prototype request :media %)}))
 
 (defn remove-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (namespaced map) media-item
-  ;  {:media/id (string)}
-  ;
-  ; @return (string)
-  [_ {:media/keys [id]}]
+  [env {:media/keys [id] :as media-item}]
   (mongo-db/remove-document! "storage" id))
 
 
@@ -149,8 +117,6 @@
 
 (defn delete-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) filename
   [filename]
   (if-not (= filename SAMPLE-FILE-FILENAME)
           (media/delete-storage-file! filename))
@@ -158,9 +124,6 @@
 
 (defn duplicate-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) source-filename
-  ; @param (string) copy-filename
   [source-filename copy-filename]
   (media/duplicate-storage-file!      source-filename copy-filename)
   (media/duplicate-storage-thumbnail! source-filename copy-filename))

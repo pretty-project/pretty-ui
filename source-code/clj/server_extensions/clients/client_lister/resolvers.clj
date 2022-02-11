@@ -48,13 +48,6 @@
 
 (defn get-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) resolver-props
-  ;
-  ; @return (map)
-  ;  {:document-count (integer)
-  ;   :documents (namespaced maps in vector)}}
   [env _]
   (let [get-pipeline   (env->get-pipeline   env)
         count-pipeline (env->count-pipeline env)]
@@ -63,14 +56,6 @@
 
 (defresolver get-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) resolver-props
-             ;
-             ; @return (namespaced map)
-             ;  {:clients.client-lister/get-items (map)
-             ;    {:document-count (integer)
-             ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
              {:clients.client-lister/get-items (get-items-f env resolver-props)})
 

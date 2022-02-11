@@ -19,6 +19,7 @@
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
+              [app-plugins.item-editor.dialogs :as dialogs]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.queries :as queries]
               [app-plugins.item-editor.subs    :as subs]))
@@ -413,7 +414,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace]]
       ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
       ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
       ; annak törlésének visszavonása esemény esetleges megtörténtekor.
@@ -424,8 +425,8 @@
               ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
               ; esemény visszavonásának esetleges megtörténtekor.
               (if (r subs/item-changed? db extension-id item-namespace)
-                  {:db       (r store-local-changes! db extension-id item-namespace)
-                   :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]}))))
+                  {:db       (r store-local-changes!                       db extension-id item-namespace)
+                   :dispatch (r dialogs/render-changes-discarded-dialog! cofx extension-id item-namespace)}))))
 
 
 
@@ -442,9 +443,9 @@
   ;
   ; @usage
   ;  [:item-editor/->item-duplicated :my-extension :my-type {...}]
-  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
       (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
-           [:item-editor/render-edit-copy-dialog! extension-id item-namespace copy-id])))
+           (r dialogs/render-edit-copy-dialog!  cofx extension-id item-namespace copy-id))))
 
 (a/reg-event-fx
   :item-editor/->item-deleted
@@ -454,8 +455,8 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace]]
       {:db (r set-delete-mode! db extension-id)
-       :dispatch-n [(r go-up! cofx extension-id item-namespace)
-                    [:item-editor/render-undo-delete-dialog! extension-id item-namespace]]}))
+       :dispatch-n [(r go-up!                             cofx extension-id item-namespace)
+                    (r dialogs/render-undo-delete-dialog! cofx extension-id item-namespace)]}))
 
 (a/reg-event-fx
   :item-editor/->delete-undid

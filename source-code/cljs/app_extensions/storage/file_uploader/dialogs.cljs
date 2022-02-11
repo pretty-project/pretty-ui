@@ -1,7 +1,6 @@
 
 (ns app-extensions.storage.file-uploader.dialogs
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-components.api :as components]
+    (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
               [app-extensions.storage.file-uploader.engine :as engine]))
@@ -24,9 +23,9 @@
   [uploader-id _]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
   ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre!
-  (let [uploader-progress (a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])]
-       (fn [] [elements/line-diagram {:indent :both :sections [{:color :primary   :value @uploader-progress}
-                                                               {:color :highlight :value (- 100 @uploader-progress)}]}])))
+  (let [uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])]
+       [elements/line-diagram {:indent :both :sections [{:color :primary   :value        uploader-progress}
+                                                        {:color :highlight :value (- 100 uploader-progress)}]}]))
 
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,23 +53,17 @@
                           :subscriber [:storage.file-uploader/get-uploader-props uploader-id]}])
 
 (defn- progress-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [dialog-id {:keys [uploader-ids]}]
-  (reduce #(conj %1 ^{:key %2} [progress-state %2])
-           [:<>] uploader-ids))
+  ; WARNING!
+  [dialog-id]
+  (let [% @(a/subscribe [:storage.file-uploader/get-notification-props])]
+       (reduce #(conj %1 ^{:key %2} [progress-state %2])
+                [:<>] (:uploader-ids %))))
 
-(defn- progress-notification-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [dialog-id notification-props]
-  [:<> [progress-list dialog-id notification-props]
-       [elements/horizontal-separator {:size :m}]])
-
-(defn- progress-notification
+(defn- progress-notification-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id]
-  [components/subscriber dialog-id
-                         {:render-f   #'progress-notification-structure
-                          :subscriber [:storage.file-uploader/get-notification-props]}])
+  [:<> [progress-list dialog-id]
+       [elements/horizontal-separator {:size :m}]])
 
 
 
@@ -81,5 +74,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:ui/blow-bubble! :storage.file-uploader/progress-notification
-                    {:body #'progress-notification
+                    {:body #'progress-notification-body
                      :autopop? false :user-close? false}])

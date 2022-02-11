@@ -20,6 +20,7 @@
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
               [x.app-environment.api           :as environment]
+              [app-plugins.item-lister.dialogs :as dialogs]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.queries :as queries]
               [app-plugins.item-lister.subs    :as subs]
@@ -593,13 +594,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace _]]
       (let [; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
             ; listája nem tud megváltozni a szerver válaszának megérkezéséig.
             item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
            {:db (r ->selected-items-deleted db extension-id item-namespace)
-            :dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
-                         [:item-lister/reload-items!                extension-id item-namespace]]})))
+            :dispatch-n [(r dialogs/render-items-deleted-dialog! cofx extension-id item-namespace item-ids)
+                         [:item-lister/reload-items!                  extension-id item-namespace]]})))
 
 (a/reg-event-fx
   :item-lister/->selected-items-duplicated
@@ -608,11 +609,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
       (let [copy-ids (engine/server-response->copy-ids extension-id item-namespace server-response)]
            {:db (r reset-selections! db extension-id item-namespace)
-            :dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace copy-ids]
-                         [:item-lister/reload-items!                   extension-id item-namespace]]})))
+            :dispatch-n [(r dialogs/render-items-duplicated-dialog! cofx extension-id item-namespace copy-ids)
+                         [:item-lister/reload-items!                     extension-id item-namespace]]})))
 
 (a/reg-event-fx
   :item-lister/->item-clicked

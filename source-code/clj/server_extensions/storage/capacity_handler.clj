@@ -12,11 +12,6 @@
 
 (defn get-capacity-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  ;  {:media/max-upload-size (B)
-  ;   :media/total-capacity (B)
-  ;   :media/used-capacity (B)}
   []
   (if-let [root-directory-document (mongo-db/get-document-by-id "storage" engine/ROOT-DIRECTORY-ID)]
           (if-let [server-config @(a/subscribe [:core/get-server-config])]

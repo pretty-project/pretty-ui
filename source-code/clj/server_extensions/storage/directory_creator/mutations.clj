@@ -12,11 +12,6 @@
 
 (defn create-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;
-  ; @return (namespaced map)
   [env {:keys [alias destination-id]}]
   (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
           (let [destination-path (get  destination-item :media/path)
@@ -30,11 +25,6 @@
 
 (defmutation create-directory!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (namespaced map)
              [env mutation-props]
              {::pathom.co/op-name 'storage.directory-creator/create-directory!}
              (create-directory-f env mutation-props))

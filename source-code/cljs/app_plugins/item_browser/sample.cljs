@@ -10,16 +10,17 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension.my-type-browser/how-to-start?
-  ; Az item-browser plugin elindítható ...
-  ; ... az [:item-browser/load-browser! ...] esemény meghívásával.
-  [:item-browser/load-browser! :my-extension :my-type]
-  ; ...
-  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
-  ; ... az "/@app-home/my-extension" útvonal használatával.
-  [:router/go-to! "/@app-home/my-extension"]
-  ; ... az "/@app-home/my-extension/my-item" útvonal használatával.
-  [:router/go-to! "/@app-home/my-extension/my-item"])
+  :load-my-item-browser!
+  (fn [_ _]
+      ; Az item-browser plugin elindítható ...
+      ; ... az [:item-browser/load-browser! ...] esemény meghívásával.
+      [:item-browser/load-browser! :my-extension :my-type]
+      ; ...
+      [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
+      ; ... az "/@app-home/my-extension" útvonal használatával.
+      [:router/go-to! "/@app-home/my-extension"]
+      ; ... az "/@app-home/my-extension/my-item" útvonal használatával.
+      [:router/go-to! "/@app-home/my-extension/my-item"]))
 
 
 

@@ -129,9 +129,9 @@
   (let [db-write-count @(a/subscribe [:developer/get-db-write-count])]
        [elements/icon-button ::dev-tools-icon-button
                              {:icon     :auto_fix_high
-                              :label    db-write-count
                               :on-click [:developer/render-developer-tools!]
                               :preset   :default}]))
+                             ;:label    db-write-count
 
 (defn- header-menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,22 +13,22 @@
 
 (defn unselect-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ _ {:keys [filename]}]]
+  [db [_ {:keys [filename]}]]
   (update-in db [:storage :media-picker/data-items] vector/remove-item filename))
 
 (defn select-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ _ {:keys [filename]}]]
+  [db [_ {:keys [filename]}]]
   (if-let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
           (update-in db [:storage :media-picker/data-items] vector/conj-item-once filename)
           (assoc-in  db [:storage :media-picker/data-items] [filename])))
 
 (defn toggle-file-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ item-dex file-item]]
-  (if (r subs/file-selected? db item-dex file-item)
-      (r unselect-file!      db item-dex file-item)
-      (r select-file!        db item-dex file-item)))
+  [db [_ file-item]]
+  (if (r subs/file-selected? db file-item)
+      (r unselect-file!      db file-item)
+      (r select-file!        db file-item)))
 
 (defn save-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,7 +95,7 @@
 (a/reg-event-fx
   :storage.media-picker/->file-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ item-dex item]]
-      (let [db (r toggle-file-selection! db item-dex item)]
-           {:db db :dispatch-if [(r subs/save-selected-items? db item-dex item)
+  (fn [{:keys [db]} [_ file-item]]
+      (let [db (r toggle-file-selection! db file-item)]
+           {:db db :dispatch-if [(r subs/save-selected-items? db file-item)
                                  [:storage.media-picker/save-selected-items!]]})))

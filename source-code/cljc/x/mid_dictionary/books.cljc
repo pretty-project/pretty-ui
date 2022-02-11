@@ -768,6 +768,9 @@
       :failed-to-delete
       {:en "Failed to delete"
        :hu "Sikertelen törlés"}
+      :failed-to-rename
+      {:en "Failed to rename"
+       :hu "Sikertelen átnevezés"}
       :failed-to-undo-delete
       {:en "Failed to undo delete"
        :hu "A törlés visszavonása sikertelen"}
@@ -1052,6 +1055,9 @@
       :share-image
       {:en "Share image"
        :hu "Kép megosztása"}
+      :size-n
+      {:en "Size: %"
+       :hu "Méret: %"}
       :there-is-not-enough-space
       {:en "There is not enough space available to complete this operation"
        :hu "Nincs elegendő hely a művelet befejezéséhez"}

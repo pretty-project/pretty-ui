@@ -12,18 +12,11 @@
 
 
 
-;; -- Mutations ---------------------------------------------------------------
+;; -- Delete item(s) mutations ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:item-id (string)
-  ;   :parent-id (string)}
-  ;
-  ; @return (string)
   [env {:keys [item-id parent-id] :as mutation-props}]
   (letfn [; A delete-f függvény a file-item eltávolítása után 60 másodperccel kitörli a fájlt,
           ; ha az eltelt idő alatt a file-item nem lett visszaállítva ...
@@ -38,13 +31,6 @@
 
 (defn delete-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:item-id (string)
-  ;   :parent-id (string)}
-  ;
-  ; @return (string)
   [env {:keys [item-id parent-id] :as mutation-props}]
   (when-let [directory-item (engine/get-item env item-id)]
             (engine/detach-item!             env parent-id directory-item)
@@ -60,12 +46,6 @@
 
 (defn delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:item-id (string)}
-  ;
-  ; @return (string)
   [env {:keys [item-id] :as mutation-props}]
   (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
           (case mime-type "storage/directory" (delete-directory-f env mutation-props)
@@ -73,12 +53,6 @@
 
 (defn delete-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:item-ids (string in vector)}
-  ;
-  ; @return (strings in vector)
   [env {:keys [item-ids]}]
   (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
        (letfn [(f [result item-id]
@@ -87,24 +61,14 @@
 
 (defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (strings in vector)
              [env mutation-props]
              {::pathom.co/op-name 'storage.media-lister/delete-items!}
              (delete-items-f env mutation-props))
 
 
 
-
-
-
-
-
-
-
+;; -- Duplicate item(s) mutations ---------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn duplicated-directory-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,15 +90,6 @@
 
 (defn duplicate-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (map) mutation-props
-  ;  {:destination-id (string)
-  ;   :item-id (string)
-  ;   :parent-id (string)}
-  ;
-  ; @return (namespaced map)
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
                                                      {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
@@ -149,15 +104,6 @@
 
 (defn duplicate-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ;  {:request (map)}
-  ; @param (map) mutation-props
-  ;  {:destination-id (string)
-  ;   :item-id (string)
-  ;   :parent-id (string)}
-  ;
-  ; @return (namespaced map)
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
                                                      {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
@@ -175,14 +121,6 @@
 
 (defn duplicate-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:destination-id (string)
-  ;   :item-id (string)
-  ;   :parent-id (string)}
-  ;
-  ; @return (namespaced map)
   [env {:keys [item-id] :as mutation-props}]
   (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
           (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
@@ -190,12 +128,6 @@
 
 (defn duplicate-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;  {:item-ids (string in vector)}
-  ;
-  ; @return (namespaced maps in vector)
   [env {:keys [item-ids]}]
   (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
        (letfn [(f [result item-id]
@@ -204,14 +136,26 @@
 
 (defmutation duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (namespaced maps in vector)
              [env mutation-props]
              {::pathom.co/op-name 'storage.media-lister/duplicate-items!}
              (duplicate-items-f env mutation-props))
+
+
+
+;; -- Update item(s) mutations ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn update-item-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [request]} media-item]
+  (mongo-db/save-document! "storage" media-item
+                           {:prototype-f #(mongo-db/updated-document-prototype request :media %)}))
+
+(defmutation update-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env media-item]
+             {::pathom.co/op-name 'storage.media-browser/update-item!}
+             (update-item-f env media-item))
 
 
 
@@ -219,6 +163,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-items! duplicate-items!])
+(def HANDLERS [delete-items! duplicate-items! update-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -2,6 +2,7 @@
 (ns app-extensions.storage.directory-creator.events
     (:require [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a :refer [r]]
+              [app-extensions.storage.directory-creator.dialogs :as dialogs]
               [app-extensions.storage.directory-creator.queries :as queries]))
 
 
@@ -54,6 +55,6 @@
   ; @usage
   ;  [:storage.directory-creator/load-creator! {:destination-id "..."}]
   [a/event-vector<-id]
-  (fn [{:keys [db]} [_ creator-id creator-props]]
-      {:db (r store-creator-props! db creator-id creator-props)
-       :dispatch [:storage.directory-creator/render-dialog! creator-id]}))
+  (fn [{:keys [db] :as cofx} [_ creator-id creator-props]]
+      {:db       (r store-creator-props!     db creator-id creator-props)
+       :dispatch (r dialogs/render-dialog! cofx creator-id)}))

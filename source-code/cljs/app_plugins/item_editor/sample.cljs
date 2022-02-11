@@ -11,14 +11,15 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension.my-type-editor/how-to-start?
-  ; Az item-editor plugin elindítható ...
-  ; ... az [:item-editor/edit-item! ...] esemény meghívásával.
-  [:item-editor/edit-item! :my-extension :my-type "my-item"]
-  ; ... az [:item-editor/load-editor! ...] esemény meghívásával.
-  [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
-  ; ... az "/@app-home/my-extension/my-item" útvonal használatával.
-  [:router/go-to! "/@app-home/my-extension/my-item"])
+  :load-my-item-editor!
+  (fn [_ _]
+      ; Az item-editor plugin elindítható ...
+      ; ... az [:item-editor/edit-item! ...] esemény meghívásával.
+      [:item-editor/edit-item! :my-extension :my-type "my-item"]
+      ; ... az [:item-editor/load-editor! ...] esemény meghívásával.
+      [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
+      ; ... az "/@app-home/my-extension/my-item" útvonal használatával.
+      [:router/go-to! "/@app-home/my-extension/my-item"]))
 
 
 

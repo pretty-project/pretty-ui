@@ -12,44 +12,24 @@
 
 (defmutation undo-delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) mutation-props
-             ;  {:items (namespaced maps in vector)}
-             ;
-             ; @return (namespaced maps in vector)
              [_ {:keys [items]}]
              {::pathom.co/op-name 'clients.client-lister/undo-delete-items!}
              (mongo-db/insert-documents! "clients" items))
 
 (defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
-             ;
-             ; @return (strings in vector)
              [_ {:keys [item-ids]}]
              {::pathom.co/op-name 'clients.client-lister/delete-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
 (defmutation undo-duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
-             ;
-             ; @return (strings in vector)
              [_ {:keys [item-ids]}]
              {::pathom.co/op-name 'clients.client-lister/undo-duplicate-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
 (defmutation duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
-             ;
-             ; @return (namespaced maps in vector)
              [{:keys [request]} {:keys [item-ids]}]
              {::pathom.co/op-name 'clients.client-lister/duplicate-items!}
              (mongo-db/duplicate-documents! "clients" item-ids

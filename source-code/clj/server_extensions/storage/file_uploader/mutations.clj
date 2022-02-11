@@ -74,11 +74,6 @@
 
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) env
-  ; @param (map) mutation-props
-  ;
-  ; @return (namespaced map)
   [{:keys [request] :as env} {:keys [destination-id] :as mutation-props}]
   (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
           (let [destination-path (get  destination-item :media/path)
@@ -91,11 +86,6 @@
 
 (defmutation upload-files!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;
-             ; @return (?)
              [env mutation-props]
              {::pathom.co/op-name 'storage/upload-files!}
              (upload-files-f env mutation-props))

@@ -12,22 +12,12 @@
 
 (defmutation undo-delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) client-item
-             ;
-             ; @return (namespaced map)
              [_ client-item]
              {::pathom.co/op-name 'clients.client-editor/undo-delete-item!}
              (mongo-db/insert-document! "clients" client-item))
 
 (defmutation save-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) client-item
-             ;
-             ; @return (namespaced map)
              [{:keys [request]} client-item]
              {::pathom.co/op-name 'clients.client-editor/save-item!}
              (mongo-db/save-document! "clients" client-item
@@ -35,23 +25,12 @@
 
 (defmutation delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:item-id (string)}
-             ;
-             ; @return (string)
              [_ {:keys [item-id]}]
              {::pathom.co/op-name 'clients.client-editor/delete-item!}
              (mongo-db/remove-document! "clients" item-id))
 
 (defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             ;
-             ; @param (map) env
-             ; @param (namespaced map) copy-item
-             ;
-             ; @return (namespaced map)
              [{:keys [request] :as env} {:client/keys [id] :as copy-item}]
              {::pathom.co/op-name 'clients.client-editor/duplicate-item!}
              (mongo-db/duplicate-document! "clients" id

@@ -57,25 +57,23 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :item-lister/render-items-deleted-dialog!
+(defn render-items-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
-  (fn [_ [_ extension-id item-namespace item-ids]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-deleted)
-                        {:body       [items-deleted-dialog-body        extension-id item-namespace item-ids]
-                         :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}]))
+  [_ [_ extension-id item-namespace item-ids]]
+  [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-deleted)
+                    {:body       [items-deleted-dialog-body        extension-id item-namespace item-ids]
+                     :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}])
 
-(a/reg-event-fx
-  :item-lister/render-items-duplicated-dialog!
+(defn render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
-  (fn [_ [_ extension-id item-namespace copy-ids]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
-                        {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}]))
+  [_ [_ extension-id item-namespace copy-ids]]
+  [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
+                    {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}])

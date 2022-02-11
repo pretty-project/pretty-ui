@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.17
 ; Description:
-; Version: v0.1.6
-; Compatibility: x4.4.9
+; Version: v0.1.7.0
+; Compatibility: x4.6.0
 
 
 
@@ -23,4 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-router.route-handler
-(def get-app-home route-handler/get-app-home)
+(def get-app-home     route-handler/get-app-home)
+(def get-resolved-uri route-handler/get-resolved-uri)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.16
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.9
+; Version: v0.3.8
+; Compatibility: x4.6.0
 
 
 
@@ -30,6 +30,8 @@
 
 ; x.server-router.route-handler
 (def request->route-prop route-handler/request->route-prop)
+(def get-app-home        route-handler/get-app-home)
+(def get-resolved-uri    route-handler/get-resolved-uri)
 (def get-client-routes   route-handler/get-client-routes)
 (def get-server-routes   route-handler/get-server-routes)
 (def get-ordered-routes  route-handler/get-ordered-routes)
