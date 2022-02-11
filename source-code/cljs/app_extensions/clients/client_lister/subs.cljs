@@ -9,10 +9,9 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-item-props
+(defn- get-item-modified-at
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ _ {:keys [modified-at]}]]
-  {:modified-at       (r activities/get-actual-timestamp db modified-at)
-   :selected-language (r locales/get-selected-language   db)})
+  [db [_ {:keys [modified-at]}]]
+  (r activities/get-actual-timestamp db modified-at))
 
-(a/reg-sub :clients.client-lister/get-client-item-props get-item-props)
+(a/reg-sub :clients.client-lister/get-item-modified-at get-item-modified-at)

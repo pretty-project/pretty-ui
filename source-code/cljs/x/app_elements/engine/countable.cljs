@@ -49,7 +49,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:elements/->input-decreased input-id]))
+  #(a/dispatch [:elements/input-decreased input-id]))
 
 (defn on-increase-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +58,7 @@
   ;
   ; @return (function)
   [input-id]
-  #(a/dispatch [:elements/->input-increased input-id]))
+  #(a/dispatch [:elements/input-increased input-id]))
 
 (defn countable-decrease-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -164,11 +164,11 @@
 
 
 
-;; -- Status events -----------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :elements/->input-decreased
+  :elements/input-decreased
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -178,7 +178,7 @@
              {:db (r db/apply! db value-path dec)}))))
 
 (a/reg-event-fx
-  :elements/->input-increased
+  :elements/input-increased
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

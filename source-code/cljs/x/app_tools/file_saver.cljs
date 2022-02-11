@@ -115,8 +115,8 @@
   ; @return (component)
   [popup-id saver-props]
   [elements/button ::save-button
-                   {:on-click {:dispatch-n [[:tools/->save-file-accepted popup-id saver-props]
-                                            [:ui/close-popup!            popup-id]]}
+                   {:on-click {:dispatch-n [[:tools/save-file-accepted popup-id saver-props]
+                                            [:ui/close-popup!          popup-id]]}
                     :keypress {:key-code 13}
                     :preset   :save-button}])
 
@@ -189,7 +189,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- ->save-file-accepted
+(defn- save-file-accepted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) saver-id
@@ -199,7 +199,7 @@
                                (param save-file-f))
   (remove-temporary-component!))
 
-(a/reg-handled-fx :tools/->save-file-accepted ->save-file-accepted)
+(a/reg-handled-fx :tools/save-file-accepted save-file-accepted)
 
 (a/reg-event-fx
   :tools/render-save-file-dialog!

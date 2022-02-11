@@ -445,12 +445,7 @@
 
 (a/reg-event-db :elements/escape-combo-box! escape-combo-box!)
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn ->combo-box-changed
+(defn combo-box-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -459,7 +454,7 @@
   [db [_ field-id]]
   (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option]))
 
-(a/reg-event-db :elements/->combo-box-changed ->combo-box-changed)
+(a/reg-event-db :elements/combo-box-changed combo-box-changed)
 
 
 

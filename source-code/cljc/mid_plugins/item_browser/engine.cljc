@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.6
+; Version: v0.5.0
+; Compatibility: x4.6.0
 
 
 
@@ -104,6 +104,24 @@
   [extension-id item-namespace & xyz]
   (let [meta-items-key (keyword (str (name item-namespace) "-browser/meta-items"))]
        (vector/concat-items [extension-id meta-items-key] xyz)))
+
+(defn mutation-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ;
+  ; @example
+  ;  (engine/mutation-name :my-extension :my-type :delete)
+  ;  =>
+  ;  "my-extension.my-type-browser/delete-item!"
+  ;
+  ; @return (string)
+  [extension-id item-namespace action-id]
+  (str (name extension-id)   "."
+       (name item-namespace) "-browser/"
+       (name action-id)      "-item!"))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

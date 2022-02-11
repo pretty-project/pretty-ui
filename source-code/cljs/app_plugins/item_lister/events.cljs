@@ -226,32 +226,20 @@
   (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)]
        (r disable-items! db extension-id item-namespace selected-item-dexes)))
 
-(defn remove-selected-items!
+(defn backup-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)
-        selected-item-count (r subs/get-selected-item-count db extension-id item-namespace)]
-       (-> db (update-in [extension-id :item-lister/data-items] vector/remove-nth-items selected-item-dexes)
-              (update-in [extension-id :item-lister/meta-items :document-count] - selected-item-count))))
-
-(defn backup-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (letfn [(f [db item-dex]
-             (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
-                   item    (get-in db [extension-id :item-lister/data-items item-dex])]
-                  (assoc-in db [extension-id :item-lister/backup-items item-id] item)))]
-         (reduce f db (r subs/get-selected-item-dexes db extension-id item-namespace))))
+  [db [_ extension-id item-namespace item-ids]]
+  (letfn [(f [db item-id])]
+             ;(let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
+              ;     item    (get-in db [extension-id :item-lister/data-items item-dex])
+              ;    (assoc-in db [extension-id :item-lister/backup-items item-id] item)])]
+         (reduce f db item-ids)))
 
 (defn clean-backup-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -266,16 +254,16 @@
 
 (a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
 
-(defn- ->selected-items-deleted
+(defn- ->items-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (as-> db % (r backup-selected-items! % extension-id item-namespace)
-             (r reset-selections!      % extension-id item-namespace)))
+  [db [_ extension-id item-namespace item-ids]]
+  (r backup-items! db extension-id item-namespace item-ids))
 
 (defn use-filter!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -414,6 +402,27 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :item-lister/load-lister!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/load-lister! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
+           {:db (r load-lister! db extension-id item-namespace)
+            :dispatch-n [; XXX#5660
+                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
+                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]
+                         ; XXX#3237
+                         ; Ha az item-lister plugin az "/@app-home/my-extension" útvonalon van elindítva,
+                         ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
+                         ; beállítja a header-title és window-title feliratokat.
+                         (if (r subs/set-title? db extension-id item-namespace)
+                             [:ui/set-title! lister-label])
+                         (engine/load-extension-event extension-id item-namespace)]})))
+
+(a/reg-event-fx
   :item-lister/use-filter!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -443,6 +452,35 @@
                               {:display-progress? true
                                :on-success [:item-lister/receive-reloaded-items! extension-id item-namespace]
                                :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
+
+(a/reg-event-fx
+  :item-lister/delete-selected-items!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/delete-selected-items! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r disable-selected-items! db extension-id item-namespace)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {;:display-progress? true
+                                     :on-success [:item-lister/items-deleted extension-id item-namespace]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                     :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
+
+(a/reg-event-fx
+  :item-lister/duplicate-selected-items!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-lister/duplicate-selected-items! :my-extension :my-type]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {;:display-progress? true
+                          :on-success [:item-lister/items-duplicated extension-id item-namespace]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
+                          :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx
   :item-lister/receive-items!
@@ -478,20 +516,6 @@
                               :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
 
 (a/reg-event-fx
-  :item-lister/delete-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r disable-selected-items! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {;:display-progress? true
-                                     :on-success [:item-lister/->selected-items-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                                     :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
-
-(a/reg-event-fx
   :item-lister/undo-delete-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -504,19 +528,6 @@
                           :on-success [:item-lister/reload-items! extension-id item-namespace]
                           :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
                           :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
-
-(a/reg-event-fx
-  :item-lister/duplicate-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {;:display-progress? true
-                          :on-success [:item-lister/->selected-items-duplicated extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
-                          :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx
   :item-lister/undo-duplicate-items!
@@ -553,26 +564,6 @@
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
-  :item-lister/load-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
-           {:db (r load-lister! db extension-id item-namespace)
-            :dispatch-n [; XXX#5660
-                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
-                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]
-                         ; XXX#3237
-                         ; Ha az item-lister plugin az "/@app-home/my-extension" útvonalon van elindítva,
-                         ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
-                         ; beállítja a header-title és window-title feliratokat.
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! lister-label])
-                         (engine/load-extension-event extension-id item-namespace)]})))
-
-(a/reg-event-fx
   :item-lister/unload-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -582,41 +573,34 @@
   ; XXX#5660
   [:environment/remove-keypress-listener! :item-lister/keypress-listener])
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :item-lister/->selected-items-deleted
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) server-response
-  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace _]]
-      (let [; Törlés közben az item-lister {:disabled? true} állapotban van, így a kijelölt elemek
-            ; listája nem tud megváltozni a szerver válaszának megérkezéséig.
-            item-ids (r subs/get-selected-item-ids db extension-id item-namespace)]
-           {:db (r ->selected-items-deleted db extension-id item-namespace)
-            :dispatch-n [(r dialogs/render-items-deleted-dialog! cofx extension-id item-namespace item-ids)
-                         [:item-lister/reload-items!                  extension-id item-namespace]]})))
-
-(a/reg-event-fx
-  :item-lister/->selected-items-duplicated
+  :item-lister/items-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
-      (let [copy-ids (engine/server-response->copy-ids extension-id item-namespace server-response)]
+      (let [item-ids (engine/server-response->deleted-item-ids extension-id item-namespace server-response)]
+           {:db (r ->items-deleted db extension-id item-namespace item-ids)
+            :dispatch-n [(r dialogs/render-items-deleted-dialog! cofx extension-id item-namespace item-ids)
+                         [:item-lister/reload-items!                  extension-id item-namespace]]})))
+
+(a/reg-event-fx
+  :item-lister/items-duplicated
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
+      (let [copy-ids (engine/server-response->duplicated-item-ids extension-id item-namespace server-response)]
            {:db (r reset-selections! db extension-id item-namespace)
             :dispatch-n [(r dialogs/render-items-duplicated-dialog! cofx extension-id item-namespace copy-ids)
                          [:item-lister/reload-items!                     extension-id item-namespace]]})))
 
 (a/reg-event-fx
-  :item-lister/->item-clicked
+  :item-lister/item-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -631,7 +615,7 @@
           (engine/item-clicked-event extension-id item-namespace item-dex item))))
 
 (a/reg-event-fx
-  :item-lister/->item-right-clicked
+  :item-lister/item-right-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

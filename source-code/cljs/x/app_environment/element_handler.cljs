@@ -366,7 +366,6 @@
 ;  [:environment/mark-element-masspoint-orientation! "my-element"]
 (a/reg-handled-fx :environment/mark-element-masspoint-orientation! mark-element-masspoint-orientation!)
 
-
 (defn unmark-element-masspoint-orientation!
   ; @param (string) element-id
   ;

@@ -103,21 +103,21 @@
 
 
 
-;; -- Status events -----------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ->image-loader-loaded
+(defn image-loader-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) loader-id
   [db [_ loader-id]]
   (assoc-in db (db/path :tools/image-loaders loader-id :image-loaded?) true))
 
-(a/reg-event-db :tools/->image-loader-loaded ->image-loader-loaded)
+(a/reg-event-db :tools/image-loader-loaded image-loader-loaded)
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :tools/->image-loader-updated
+  :tools/image-loader-updated
   (fn [_ [_ loader-id]]))
   ; uri megváltozott?
 
@@ -148,7 +148,7 @@
   ;
   ; @return (hiccup)
   [loader-id {:keys [uri]}]
-  [:img {:on-load #(a/dispatch [:tools/->image-loader-loaded loader-id])
+  [:img {:on-load #(a/dispatch [:tools/image-loader-loaded loader-id])
          :src      (param uri)
          :style    {:display "none"}}])
 
@@ -182,7 +182,7 @@
 
   ([loader-id loader-props]
    (reagent/lifecycles {:component-did-mount    #(a/dispatch [:tools/init-image-loader!     loader-id loader-props])
-                        :component-did-update   #(a/dispatch [:tools/->image-loader-updated loader-id loader-props])
+                        :component-did-update   #(a/dispatch [:tools/image-loader-updated   loader-id loader-props])
                         :component-will-unmount #(a/dispatch [:tools/destruct-image-loader! loader-id])
                         :reagent-render (fn [] (let [loader-props (a/subscribe [:tools/get-image-loader-props loader-id])]
                                                     [image-loader loader-id @loader-props]))})))

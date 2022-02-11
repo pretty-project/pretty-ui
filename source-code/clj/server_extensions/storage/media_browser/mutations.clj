@@ -65,6 +65,12 @@
              {::pathom.co/op-name 'storage.media-lister/delete-items!}
              (delete-items-f env mutation-props))
 
+(defmutation delete-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'storage.media-browser/delete-item!}
+             (delete-items-f env {:item-ids [item-id]}))
+
 
 
 ;; -- Duplicate item(s) mutations ---------------------------------------------
@@ -140,6 +146,12 @@
              {::pathom.co/op-name 'storage.media-lister/duplicate-items!}
              (duplicate-items-f env mutation-props))
 
+(defmutation duplicate-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'storage.media-browser/duplicate-item!}
+             (duplicate-items-f env {:item-ids [item-id]}))
+
 
 
 ;; -- Update item(s) mutations ------------------------------------------------
@@ -163,6 +175,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-items! duplicate-items! update-item!])
+(def HANDLERS [delete-item! delete-items! duplicate-item! duplicate-items! update-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

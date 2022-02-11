@@ -1150,6 +1150,16 @@
   (set-selection-start! element start)
   (set-selection-end!   element end))
 
+(defn set-caret-position!
+  ; @param (DOM-element) element
+  ; @param (integer) position
+  ;
+  ; @usage
+  ;  (dom/set-caret-position! "my-element" 20)
+  [element position]
+  (set-selection-start! element position)
+  (set-selection-end!   element position))
+
 
 
 ;; -- Unit functions ----------------------------------------------------------

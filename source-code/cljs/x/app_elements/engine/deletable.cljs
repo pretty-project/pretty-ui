@@ -53,7 +53,7 @@
   ; státusz-esemény használatával kezelni, mivel semmilyen adatbázis-változást
   ; és más esemény-meghívást nem hajt végre!
   ;
-  ; :on-click [:elements/->element-deleted element-id]
+  ; :on-click [:elements/element-deleted element-id]
   ; =>
   ; :on-click #(a/dispatch on-delete)
   (if disabled? {:disabled     (param true)}

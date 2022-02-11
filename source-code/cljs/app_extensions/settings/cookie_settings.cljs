@@ -33,7 +33,7 @@
                    {:preset  :save-button
                     :variant :transparent
                     :on-click {:dispatch-n [[:ui/close-popup! popup-id]
-                                            [:environment/->cookie-settings-changed]]}}])
+                                            [:environment/cookie-settings-changed]]}}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,15 +92,15 @@
                          :initial-value true
                          :label         :user-experience-cookies
                          :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
-                         :on-check   [:environment/->cookie-settings-changed]
-                         :on-uncheck [:environment/->cookie-settings-changed]}]
+                         :on-check   [:environment/cookie-settings-changed]
+                         :on-uncheck [:environment/cookie-settings-changed]}]
        [elements/switch ::analytics-cookies-switch
                         {:indent        :none
                          :initial-value true
                          :label         :analytics-cookies
                          :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
-                         :on-check   [:environment/->cookie-settings-changed]
-                         :on-uncheck [:environment/->cookie-settings-changed]}]
+                         :on-check   [:environment/cookie-settings-changed]
+                         :on-uncheck [:environment/cookie-settings-changed]}]
        ; Remove stored cookies
        [elements/horizontal-separator {:size :s}]
        [elements/button {:label :remove-stored-cookies! :preset :secondary-button :layout :row

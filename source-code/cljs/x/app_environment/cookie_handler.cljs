@@ -369,6 +369,32 @@
   [db [_ cookie-id]]
   (dissoc-in db (db/path :environment/cookie-handler cookie-id)))
 
+(defn- cookie-set
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) cookie-id
+  ; @param (map) cookie-props
+  [db [_ cookie-id cookie-props]]
+  (r store-cookie-value! db cookie-id cookie-props))
+
+(a/reg-event-db :environment/cookie-set cookie-set)
+
+(defn- cookie-removed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) cookie-id
+  [db [_ cookie-id]]
+  (r remove-cookie-value! db cookie-id))
+
+(a/reg-event-db :environment/cookie-removed cookie-removed)
+
+(defn- cookies-removed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (r db/empty-partition! db :environment/cookie-handler))
+
+(a/reg-event-db :environment/cookies-removed cookies-removed)
+
 
 
 ;; -- Coeffect events ---------------------------------------------------------
@@ -499,6 +525,9 @@
 
 (a/reg-event-fx :environment/store-cookie-settings! store-cookie-settings!)
 
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-fx :environment/cookie-settings-changed store-cookie-settings!)
+
 
 
 ;; -- Side-effect events ------------------------------------------------------
@@ -522,7 +551,7 @@
                                                                :path     COOKIE-PATH
                                                                :sameSite same-site
                                                                :secure   secure})
-            (a/dispatch [:environment/->cookie-set cookie-id cookie-props]))))
+            (a/dispatch [:environment/cookie-set cookie-id cookie-props]))))
 
 (a/reg-fx :environment/store-browser-cookie! store-browser-cookie!)
 
@@ -534,7 +563,7 @@
   [[cookie-id cookie-props]]
   (let [cookie-name (cookie-id->cookie-name cookie-id cookie-props)]
        (try (.remove goog.net.cookies cookie-name COOKIE-PATH COOKIE-DOMAIN)
-            (a/dispatch [:environment/->cookie-removed cookie-id]))))
+            (a/dispatch [:environment/cookie-removed cookie-id]))))
 
 (a/reg-fx :environment/remove-browser-cookie! remove-browser-cookie!)
 
@@ -542,43 +571,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (try (.clear goog.net.cookies)
-       (a/dispatch [:environment/->cookies-removed])))
+       (a/dispatch [:environment/cookies-removed])))
 
 (a/reg-fx :environment/remove-browser-cookies! remove-browser-cookies!)
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-fx :environment/->cookie-settings-changed store-cookie-settings!)
-
-(defn- ->cookie-set
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) cookie-id
-  ; @param (map) cookie-props
-  [db [_ cookie-id cookie-props]]
-  (r store-cookie-value! db cookie-id cookie-props))
-
-(a/reg-event-db :environment/->cookie-set ->cookie-set)
-
-(defn- ->cookie-removed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) cookie-id
-  [db [_ cookie-id]]
-  (r remove-cookie-value! db cookie-id))
-
-(a/reg-event-db :environment/->cookie-removed ->cookie-removed)
-
-(defn- ->cookies-removed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (r db/empty-partition! db :environment/cookie-handler))
-
-(a/reg-event-db :environment/->cookies-removed ->cookies-removed)
 
 
 

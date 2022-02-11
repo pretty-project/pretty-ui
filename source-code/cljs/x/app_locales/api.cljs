@@ -47,10 +47,6 @@
 (def name-order         name-handler/name-order)
 
 ; x.app-locales.language-handler
-(def get-app-languages      language-handler/get-app-languages)
-(def app-multilingual?      language-handler/app-multilingual?)
-(def get-selected-language  language-handler/get-selected-language)
-(def get-multilingual-item  language-handler/get-multilingual-item)
-(def translate              language-handler/translate)
-(def set-multilingual-item! language-handler/set-multilingual-item!)
-(def translated             language-handler/translated)
+(def get-app-languages     language-handler/get-app-languages)
+(def app-multilingual?     language-handler/app-multilingual?)
+(def get-selected-language language-handler/get-selected-language)

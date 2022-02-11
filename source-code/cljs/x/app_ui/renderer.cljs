@@ -906,7 +906,7 @@
   ; @param (map) renderer-props
   (fn [{:keys [db]} [_ renderer-id _]]
       {:dispatch-if [(r renderer-require-error?   db renderer-id)
-                     [:ui/->renderer-unmounted-illegal renderer-id]]}))
+                     [:ui/renderer-unmounted-illegal renderer-id]]}))
 
 (a/reg-event-fx
   :ui/render-element-animated!
@@ -917,7 +917,7 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db             (r store-element! db renderer-id element-id element-props)
-       :dispatch-later [{:ms REVEAL-ANIMATION-TIMEOUT :dispatch [:ui/->rendering-ended renderer-id]}]}))
+       :dispatch-later [{:ms REVEAL-ANIMATION-TIMEOUT :dispatch [:ui/rendering-ended renderer-id]}]}))
 
 (a/reg-event-fx
   :ui/render-element-static!
@@ -928,7 +928,7 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db       (r store-element!   db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended renderer-id]}))
+       :dispatch [:ui/rendering-ended renderer-id]}))
 
 (a/reg-event-fx
   :ui/rerender-element!
@@ -953,7 +953,7 @@
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db (r update-element-props! db renderer-id element-id element-props)
        :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "update"]
-       :dispatch-n [[:ui/->rendering-ended renderer-id]]
+       :dispatch [:ui/rendering-ended renderer-id]
        :dispatch-later
        [{:ms UPDATE-ANIMATION-TIMEOUT
          :dispatch [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
@@ -967,7 +967,7 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db (r update-element-props! db renderer-id element-id element-props)
-       :dispatch [:ui/->rendering-ended renderer-id]}))
+       :dispatch [:ui/rendering-ended renderer-id]}))
 
 (a/reg-event-fx
   :ui/push-element!
@@ -1007,7 +1007,7 @@
             ; Ha a renderer {:queue-behavior :wait :rerender-same? false} beállítással
             ; renderelne egy már kirenderelt element, akkor egyik render esemény sem
             ; történik meg, ezért szükséges a renderert felszabadítani.
-            :else [:ui/->rendering-ended renderer-id])))
+            :else [:ui/rendering-ended renderer-id])))
 
 (a/reg-event-fx
   :ui/request-rendering-element!
@@ -1095,13 +1095,8 @@
   (fn [{:keys [db]} [_ renderer-id]]
       [:ui/destroy-all-elements! renderer-id]))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :ui/->rendering-ended
+  :ui/rendering-ended
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1110,12 +1105,12 @@
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
 (a/reg-event-fx
-  :ui/->renderer-unmounted-illegal
+  :ui/renderer-unmounted-illegal
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
   (fn [cofx [_ renderer-id]]
-      [:core/->error-catched {:error ILLEGAL-UNMOUNTING-ERROR :cofx cofx}]))
+      [:core/error-catched {:error ILLEGAL-UNMOUNTING-ERROR :cofx cofx}]))
 
 
 

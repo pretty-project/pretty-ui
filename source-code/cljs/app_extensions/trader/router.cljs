@@ -29,5 +29,5 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/->route-leaved
+  :trader/route-leaved
   (fn [_ _]))

@@ -59,7 +59,7 @@
                     :preset   :close-button
                     :variant  :transparent
                     :on-click {:dispatch-n [[:ui/close-popup! popup-id]
-                                            [:environment/->cookie-settings-changed]]}}])
+                                            [:environment/cookie-settings-changed]]}}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

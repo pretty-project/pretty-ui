@@ -225,7 +225,7 @@
   (fn [_ _]))
   ; Az x4.4.8 verzióig a komponensek inicializálása a [:components/initialize-component! ...]
   ; eseményben történt, amely esemény a komponensek gyorsabb felépülése érdekében összevonásra
-  ; került a [:components/->component-mounted ...] eseménnyel.
+  ; került a [:components/component-mounted ...] eseménnyel.
 
 (a/reg-event-fx
   :components/destruct-component!
@@ -246,13 +246,8 @@
                              ; If current-props is nil ...
                              (param destructor))})))
 
-
-
-;; -- Status events------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :components/->component-mounted
+  :components/component-mounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -271,7 +266,7 @@
               {:db (r engine/set-component-prop! db component-id :mount-id mount-id)})))
 
 (a/reg-event-fx
-  :components/->component-updated
+  :components/component-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -281,7 +276,7 @@
   (fn [{:keys [db]} [_ component-id {:keys [updater] :as context-props} _]]
       ; WARNING! DEPRECATED! DO NOT USE!
       ; - A komponens tulajdonságait :component-did-update eseménykor nem lehetséges aktualizálni
-      ;   a Re-Frame adatbázisban, kevés értelme van a [:components/->component-updated ...]
+      ;   a Re-Frame adatbázisban, kevés értelme van a [:components/component-updated ...]
       ;   eseményt alkalmazni.
       ; - A reagent komponensek paramétereinek megváltozásakor a Re-Frame adatbázisba írás
       ;   rontja az applikáció teljesítményét!
@@ -289,7 +284,7 @@
        :dispatch updater}))
 
 (a/reg-event-fx
-  :components/->component-unmounted
+  :components/component-unmounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -336,10 +331,10 @@
   ; @return (component)
   [component-id context-props]
   (let [mount-id (a/id)]
-       (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/->component-mounted   component-id context-props mount-id])
+       (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
-                           ;:component-did-update   #(a/dispatch [:components/->component-updated   component-id context-props mount-id])
-                            :component-will-unmount #(a/dispatch [:components/->component-unmounted component-id context-props mount-id])
+                           ;:component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
+                            :component-will-unmount #(a/dispatch [:components/component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 
 (defn component

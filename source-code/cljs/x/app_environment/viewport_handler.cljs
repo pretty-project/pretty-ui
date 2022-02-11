@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.5.8
+; Version: v0.6.0
+; Compatibility: x4.6.0
 
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (function)
   []
-  (a/dispatch-once 250 [:environment/->viewport-resized]))
+  (a/dispatch-once 250 [:environment/viewport-resized]))
 
 
 
@@ -45,6 +45,10 @@
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-height)))
 
+; @usage
+;  [:environment/get-viewport-height]
+;(a/reg-sub :environment/get-viewport-height get-viewport-height)
+
 (defn get-viewport-width
   ; @usage
   ;  (r environment/get-viewport-width db)
@@ -52,6 +56,10 @@
   ; @return (integer)
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-width)))
+
+; @usage
+;  [:environment/get-viewport-width]
+;(a/reg-sub :environment/get-viewport-width get-viewport-width)
 
 (defn get-viewport-profile
   ; XXX#6408
@@ -64,6 +72,10 @@
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-profile)))
 
+; @usage
+;  [:environment/get-viewport-profile]
+;(a/reg-sub :environment/get-viewport-profile get-viewport-profile)
+
 (defn viewport-profile-match?
   ; @param (keyword) n
   ;
@@ -73,6 +85,10 @@
   ; @return (boolean)
   [db [_ n]]
   (= n (r get-viewport-profile db)))
+
+; @usage
+;  [:environment/viewport-profile-match?]
+;(a/reg-sub :environment/viewport-profile-match? viewport-profile-match?)
 
 (defn viewport-profiles-match?
   ; @param (vector) n
@@ -84,6 +100,10 @@
   [db [_ n]]
   (vector/contains-item? n (r get-viewport-profile db)))
 
+; @usage
+;  [:environment/viewport-profiles-match?]
+;(a/reg-sub :environment/viewport-profiles-match? viewport-profiles-match?)
+
 (defn viewport-small?
   ; @usage
   ;  (r environment/viewport-small? db)
@@ -91,6 +111,10 @@
   ; @return (boolean)
   [db _]
   (r viewport-profiles-match? db [:xxs :xs :s]))
+
+; @usage
+;  [:environment/viewport-small?]
+(a/reg-sub :environment/viewport-small? viewport-small?)
 
 (defn viewport-medium?
   ; @usage
@@ -100,6 +124,10 @@
   [db _]
   (r viewport-profile-match? db :m))
 
+; @usage
+;  [:environment/viewport-medium?]
+(a/reg-sub :environment/viewport-medium? viewport-medium?)
+
 (defn viewport-large?
   ; @usage
   ;  (r environment/viewport-large? db)
@@ -107,6 +135,10 @@
   ; @return (boolean)
   [db _]
   (r viewport-profiles-match? db [:l :xl :xxl]))
+
+; @usage
+;  [:environment/viewport-large?]
+(a/reg-sub :environment/viewport-large? viewport-large?)
 
 (defn get-viewport-orientation
   ; @usage
@@ -116,6 +148,10 @@
   ;  :landscape, :portrait
   [db _]
   (get-in db (db/meta-item-path :environment/viewport-data :viewport-orientation)))
+
+; @usage
+;  [:environment/get-viewport-orientation]
+;(a/reg-sub :environment/get-viewport-orientation get-viewport-orientation)
 
 
 
@@ -142,7 +178,7 @@
 
 (defn- listen-to-viewport-resize!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (dom/add-event-listener! "resize" resize-listener))
 
 (a/reg-handled-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
@@ -160,13 +196,8 @@
            {:environment/set-element-attribute! ["x-body-container" "data-viewport-profile"
                                                  (keyword/to-string viewport-profile)]})))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :environment/->viewport-resized
+  :environment/viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r update-viewport-data! db)

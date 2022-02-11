@@ -88,15 +88,6 @@
   [db [_ element-id]]
   (some? (r element/get-element-prop db element-id :value-path)))
 
-(defn input-multilingual?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (boolean)
-  [db [_ input-id]]
-  (boolean (r element/get-element-prop db input-id :multilingual?)))
-
 (defn input-required?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -136,9 +127,7 @@
   ; függvény deklarálná a value-path értékét, akkor abban a pillanatban
   ; a get-input-value függvény visszatérési értéke az egész adatbázis lenne.
   (if-let [value-path (r element/get-element-prop db input-id :value-path)]
-          (if (r input-multilingual?           db input-id)
-              (r locales/get-multilingual-item db value-path)
-              (get-in                          db value-path))))
+          (get-in db value-path)))
 
 (defn get-input-default-value
   ; WARNING! NON-PUBLIC! DO NOT USE!

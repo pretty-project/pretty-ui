@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v1.2.6
-; Compatibility: x4.5.5
+; Version: v1.3.0
+; Compatibility: x4.6.0
 
 
 
@@ -246,7 +246,7 @@
   ;
   ; @return (function)
   [field-id]
-  #(a/dispatch [:elements/->field-blurred field-id]))
+  #(a/dispatch [:elements/field-blurred field-id]))
 
 (defn on-focus-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -255,7 +255,7 @@
   ;
   ; @return (function)
   [field-id]
-  #(a/dispatch [:elements/->field-focused field-id]))
+  #(a/dispatch [:elements/field-focused field-id]))
 
 (defn field-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -500,9 +500,11 @@
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
       (if-let [auto-focus? (r element/get-element-prop db field-id :auto-focus?)]
-              {:db       (r input/init-input!    db field-id)
-               :dispatch [:elements/->field-focused field-id]}
-              {:db       (r input/init-input!    db field-id)})))
+              {:dispatch-n (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
+                                [on-focus-event [:elements/reg-field-keypress-events! field-id]])
+               :db (as-> db % (r input/init-input! % field-id)
+                              (r ->field-focused   % field-id))}
+              {:db (r input/init-input! db field-id)})))
 
 (a/reg-event-fx
   :elements/reg-field-keypress-events!
@@ -549,13 +551,8 @@
                            {:db         (r empty-field-value!       db field-id)
                             :dispatch (a/metamorphic-event<-params on-empty field-value)})))))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :elements/->field-blurred
+  :elements/field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -563,7 +560,6 @@
       (let [on-blur-event (r element/get-element-prop db field-id :on-blur)]
            {:db (r ->field-blurred db field-id)
             :dispatch-n [on-blur-event [:elements/remove-field-keypress-events! field-id]]})))
-
                          ; WARNING#9055
                          ; x4.3.9
                          ; Az :elements/resolve-change-listener?! eseményt nem sikerült
@@ -572,7 +568,7 @@
                          ; [:elements/resolve-change-listener?! field-id]
 
 (a/reg-event-fx
-  :elements/->field-focused
+  :elements/field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -580,6 +576,5 @@
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
            {:db (r ->field-focused db field-id)
             :dispatch-n [on-focus-event [:elements/reg-field-keypress-events! field-id]]})))
-
                          ; WARNING#9055
                          ; [:elements/reg-change-listener?! field-id]

@@ -252,8 +252,8 @@
   ;   :sent-time (object)
   ;   :timeout (integer)}
   [db [_ {:keys [response-action] :as request-props}]]
-  (merge {:error-handler-event    :sync/->request-failured
-          :handler-event          :sync/->request-successed
+  (merge {:error-handler-event    :sync/request-failured
+          :handler-event          :sync/request-successed
           :progress-handler-event :core/set-process-progress!
           :response-action        :store
           :timeout DEFAULT-REQUEST-TIMEOUT
@@ -407,15 +407,10 @@
            (if (r a/start-process? db request-id)
                {:db                 (r send-request! db request-id request-props)
                 :sync/send-request! [request-id request-props]
-                :dispatch           [:sync/->request-sent request-id]}))))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+                :dispatch           [:sync/request-sent request-id]}))))
 
 (a/reg-event-fx
-  :sync/->request-sent
+  :sync/request-sent
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -432,7 +427,7 @@
        :dispatch (r get-request-on-sent-event db request-id)}))
 
 (a/reg-event-fx
-  :sync/->request-successed
+  :sync/request-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -447,10 +442,10 @@
             :dispatch-if    [(r response-handler/save-request-response? db request-id)
                              [:sync/save-request-response! request-id server-response-body]]
             :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
-                              :dispatch [:sync/->request-stalled request-id server-response]}]})))
+                              :dispatch [:sync/request-stalled request-id server-response]}]})))
 
 (a/reg-event-fx
-  :sync/->request-failured
+  :sync/request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -467,10 +462,10 @@
        :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
                         (r get-request-on-responsed-event db request-id server-response)]
        :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
-                         :dispatch [:sync/->request-stalled request-id server-response]}]}))
+                         :dispatch [:sync/request-stalled request-id server-response]}]}))
 
 (a/reg-event-fx
-  :sync/->request-stalled
+  :sync/request-stalled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id

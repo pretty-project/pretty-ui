@@ -59,19 +59,14 @@
   (fn [{:keys [db]} [_ uploader-id]]
       (let [query     (r queries/get-upload-files-query db uploader-id)
             form-data (r subs/get-form-data             db uploader-id)]
-           {:dispatch-n [[:storage.file-uploader/->progress-started uploader-id]
+           {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
                          [:sync/send-query! (engine/request-id uploader-id)
                                             {:body       (dom/merge-to-form-data! form-data {:query query})
-                                             :on-success [:storage.file-uploader/->progress-successed uploader-id]
-                                             :on-failure [:storage.file-uploader/->progress-failured  uploader-id]}]]})))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+                                             :on-success [:storage.file-uploader/progress-successed uploader-id]
+                                             :on-failure [:storage.file-uploader/progress-failured  uploader-id]}]]})))
 
 (a/reg-event-fx
-  :storage.file-uploader/->files-selected-to-upload
+  :storage.file-uploader/files-selected-to-upload
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
       ; A storage--file-selector input on-change eseménye indítja el a feltöltés inicializálását.
@@ -80,14 +75,14 @@
                :dispatch [:storage.file-uploader/render-uploader! uploader-id]})))
 
 (a/reg-event-fx
-  :storage.file-uploader/->progress-started
+  :storage.file-uploader/progress-started
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [cofx [_ uploader-id]]
       {:dispatch-n [(r dialogs/render-progress-notification! cofx uploader-id)
                     [:ui/close-popup! :storage.file-uploader/view]]}))
 
 (a/reg-event-fx
-  :storage.file-uploader/->progress-successed
+  :storage.file-uploader/progress-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       {; XXX#5087
@@ -96,7 +91,7 @@
        :dispatch [:item-browser/reload-items! :storage :media]}))
 
 (a/reg-event-fx
-  :storage.file-uploader/->progress-failured
+  :storage.file-uploader/progress-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       {; XXX#5087

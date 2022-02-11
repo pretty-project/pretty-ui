@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.6
+; Version: v0.4.2
+; Compatibility: x4.6.0
 
 
 
@@ -15,9 +15,9 @@
 
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
+              [app-plugins.item-editor.events]
               [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.events :as events]
               [app-plugins.item-editor.subs   :as subs]
               [app-plugins.item-editor.views  :as views]))
 
@@ -31,14 +31,8 @@
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
 
-; app-plugins.item-editor.engine
-(def edit-item! events/edit-item!)
-
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
-(def get-body-props      subs/get-body-props)
-(def get-header-props    subs/get-header-props)
-(def get-view-props      subs/get-view-props)
 
 ; app-plugins.item-editor.views
 (def delete-item-button views/delete-item-button)

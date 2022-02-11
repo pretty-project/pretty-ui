@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.5.6
+; Version: v1.0.8
+; Compatibility: x4.6.0
 
 
 
@@ -156,6 +156,16 @@
   [db [_ extension-id item-namespace]]
   (let [request-id (engine/request-id extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
+
+(defn error-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :error-mode?))
 
 (defn editor-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -310,85 +320,46 @@
                 actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
 
-(defn get-color-props
+(defn form-completed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
-  ;  {:colors (strings in vector)
-  ;   :editor-disabled? (boolean)}
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  {:colors           (r get-data-value   db extension-id item-namespace :colors)
-   :editor-disabled? (r editor-disabled? db extension-id item-namespace)})
+  (let [form-id (engine/form-id extension-id item-namespace)]
+       (r elements/form-completed? db form-id)))
 
-(a/reg-sub :item-editor/get-color-props get-color-props)
 
-(defn get-body-props
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-body-props db :my-extension :my-type)
-  ;
-  ; @return (map)
-  ;  {:editor-disabled? (boolean)
-  ;   :error-mode? (boolean)
-  ;   :new-item? (boolean)}
-  [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:editor-disabled? true
-           :error-mode?      true}
-          {:editor-disabled? (r editor-disabled? db extension-id item-namespace)
-           :new-item?        (r new-item?        db extension-id item-namespace)}))
+
+;; -- Public subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:item-editor/get-body-props :my-namespace :my-type]
-(a/reg-sub :item-editor/get-body-props get-body-props)
-
-(defn get-header-props
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-header-props db :my-extension :my-type)
-  ;
-  ; @return (map)
-  ;  {:editor-disabled? (boolean)
-  ;   :error-mode? (boolean)
-  ;   :form-completed? (boolean)
-  ;   :new-item? (boolean)}
-  [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:editor-disabled? true
-           :error-mode?      true}
-          (let [form-id (engine/form-id extension-id item-namespace)]
-               {:editor-disabled? (r editor-disabled? db extension-id item-namespace)
-                :new-item?        (r new-item?        db extension-id item-namespace)
-                :form-completed?  (r elements/form-completed? db form-id)})))
+;  [:item-editor/get-data-item :my-extension :my-type]
+(a/reg-sub :item-editor/get-data-item get-data-item)
 
 ; @usage
-;  [:item-editor/get-header-props :my-namespace :my-type]
-(a/reg-sub :item-editor/get-header-props get-header-props)
-
-(defn get-view-props
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-view-props db :my-extension :my-type)
-  ;
-  ; @return (map)
-  ;  {:description (metamorphic-content)
-  ;   :error-mode? (boolean)
-  ;   :new-item? (boolean)}
-  [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {:error-mode? true}
-          {:description (r get-description db extension-id item-namespace)
-           :new-item?   (r new-item?       db extension-id item-namespace)}))
+;  [:item-editor/get-data-value :my-extension :my-type]
+(a/reg-sub :item-editor/get-data-value get-data-value)
 
 ; @usage
-;  [:item-editor/get-view-props :my-namespace :my-type]
-(a/reg-sub :item-editor/get-view-props get-view-props)
+;  [:item-editor/error-mode? :my-extension :my-type]
+(a/reg-sub :item-editor/error-mode? error-mode?)
+
+; @usage
+;  [:item-editor/editor-disabled? :my-extension :my-type]
+(a/reg-sub :item-editor/editor-disabled? editor-disabled?)
+
+; @usage
+;  [:item-editor/new-item? :my-extension :my-type]
+(a/reg-sub :item-editor/new-item? new-item?)
+
+; @usage
+;  [:item-editor/get-description :my-extension :my-type]
+(a/reg-sub :item-editor/get-description get-description)
+
+; @usage
+;  [:item-editor/form-completed? :my-extension :my-type]
+(a/reg-sub :item-editor/form-completed? form-completed?)

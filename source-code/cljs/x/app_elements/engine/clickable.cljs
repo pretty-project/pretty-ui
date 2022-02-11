@@ -94,8 +94,8 @@
       (if-let [keypress (r element/get-element-prop db element-id :keypress)]
               [:environment/reg-keypress-event! element-id
                                                 {:key-code   (:key-code keypress)
-                                                 :on-keydown [:elements/->key-pressed  element-id]
-                                                 :on-keyup   [:elements/->key-released element-id]
+                                                 :on-keydown [:elements/key-pressed  element-id]
+                                                 :on-keyup   [:elements/key-released element-id]
                                                  :required?  (:required? keypress)}])))
 
 (a/reg-event-fx
@@ -107,13 +107,8 @@
   (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
       (if keypress [:environment/remove-keypress-event! element-id])))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :elements/->key-pressed
+  :elements/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -122,7 +117,7 @@
           {:elements/focus-element! element-id})))
 
 (a/reg-event-fx
-  :elements/->key-released
+  :elements/key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

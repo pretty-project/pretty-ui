@@ -43,18 +43,26 @@
   (let [selected-language (r language-handler/get-selected-language db)]
        (get NAME-ORDERS selected-language :normal)))
 
+; @usage
+;  [:locales/get-name-order]
+(a/reg-sub :locales/get-name-order get-name-order)
+
 (defn get-ordered-name
   ; @param (string) first-name
   ; @param (string) last-name
   ;
   ; @usage
-  ;  (r locales/get-ordered-name db "My" "Name")
+  ;  (r locales/get-ordered-name db "First" "Last")
   ;
   ; @return (string)
   [db [_ first-name last-name]]
   (let [name-order (r get-name-order db)]
        (string/trim (case name-order :reversed (str last-name  " " first-name)
                                                (str first-name " " last-name)))))
+
+; @usage
+;  [:locales/get-ordered-name "First" "Last"]
+(a/reg-sub :locales/get-ordered-name get-ordered-name)
 
 
 
@@ -67,8 +75,10 @@
   ; @param (keyword) name-order
   ;  :normal, :reversed
   ;
+  ; @usage
+  ;  [locales/name-order "First" "Last" :reversed]
+  ;
   ; @return (component)
   [first-name last-name name-order]
-  (if (= name-order :reversed)
-      [:<> last-name  first-name]
-      [:<> first-name last-name]))
+  (case name-order :reversed [:<> last-name  first-name]
+                             [:<> first-name last-name]))

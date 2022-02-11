@@ -21,10 +21,10 @@
   ; - Az {:on-save ...} tulajdonságként átadott esemény a mentés gomb megnyomásakor történik meg,
   ;   és használatával egyedi mentési eljárás is megvalósítható.
   [:value-editor/load-editor! :my-extension :my-editor {:edit-original? true
-                                                        :on-save    [:my-extension/->my-value-edited]
+                                                        :on-save    [:my-extension/my-value-edited]
                                                         :value-path [:my-item]}])
 
 (a/reg-event-fx
-  :my-extension/->my-value-edited
+  :my-extension/my-value-edited
   (fn [_ [_ my-value]]
       [:do-something-with! my-value]))

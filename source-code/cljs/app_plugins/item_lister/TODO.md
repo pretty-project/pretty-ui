@@ -23,5 +23,5 @@
 # x
 - Az item-lister nem fogadja az elemek on-click és on-right-click eventjét az item-lister plugint
   megvalósító eszköztől, ezért nem tudja eldönteni, hogy az on-right-click eseményt szükséges-e
-  meghívni, ezért minden esetben megtörténik a [:my-extension.my-type-lister/->item-right-clicked ...]
+  meghívni, ezért minden esetben megtörténik a [:my-extension.my-type-lister/item-right-clicked ...]
   esemény, ami esetlegesen a konzolra írja ha ez az esemény nem létezik, mert nincs használatban

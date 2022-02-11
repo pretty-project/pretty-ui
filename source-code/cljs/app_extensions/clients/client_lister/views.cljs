@@ -13,33 +13,29 @@
 
 (defn- client-item-secondary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [modified-at]}]
-  [:div.clients--client-item--secondary-details [:div.clients--client-item--modified-at modified-at]])
+  [item-dex client-item]
+  (let [modified-at @(a/subscribe [:clients.client-lister/get-item-modified-at client-item])]
+       [:div.clients--client-item--secondary-details [:div.clients--client-item--modified-at modified-at]]))
 
 (defn- client-item-primary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [email-address first-name last-name]} {:keys [selected-language]}]
-  (let [client-name (locales/name->ordered-name first-name last-name selected-language)]
+  [item-dex {:keys [email-address first-name last-name] :as client-item}]
+  (let [selected-language @(a/subscribe [:locales/get-selected-language])
+        client-name        (locales/name->ordered-name first-name last-name selected-language)]
        [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     client-name]
                                                    [:div.clients--client-item--email-address email-address]]))
 
 (defn- client-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-props item-props]
-  [:div.clients--client-item--details [client-item-primary-details   item-dex client-props item-props]
-                                      [client-item-secondary-details item-dex client-props item-props]])
+  [item-dex client-item]
+  [:div.clients--client-item--details [client-item-primary-details   item-dex client-item]
+                                      [client-item-secondary-details item-dex client-item]])
 
-(defn- client-item-structure
+(defn- client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-props item-props]
-  [:div.clients--client-item [item-editor/color-stamp :clients :client client-props]
-                             [client-item-details item-dex client-props item-props]])
-
-(defn client-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [id] :as client-props}]
-  (let [item-props (a/subscribe [:clients.client-lister/get-client-item-props item-dex client-props])]
-       (fn [] [client-item-structure item-dex client-props @item-props])))
+  [item-dex client-item]
+  [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
+                             [client-item-details item-dex client-item]])
 
 
 

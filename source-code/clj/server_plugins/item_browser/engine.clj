@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.5.8
+; Version: v0.6.0
 ; Compatibility: x4.6.0
 
 
@@ -32,6 +32,7 @@
 (def request-id              engine/request-id)
 (def data-item-path          engine/data-item-path)
 (def meta-item-path          engine/meta-item-path)
+(def mutation-name           engine/mutation-name)
 (def resolver-id             engine/resolver-id)
 (def collection-name         engine/collection-name)
 (def transfer-id             engine/transfer-id)

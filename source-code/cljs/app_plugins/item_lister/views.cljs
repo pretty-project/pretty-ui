@@ -577,8 +577,8 @@
   ; @return (component)
   [extension-id item-namespace item-dex item]
   (let [{:keys [list-element]} @(a/subscribe [:item-lister/get-body-props extension-id item-namespace])]
-       [elements/toggle {:on-click       [:item-lister/->item-clicked       extension-id item-namespace item-dex item]
-                         :on-right-click [:item-lister/->item-right-clicked extension-id item-namespace item-dex item]
+       [elements/toggle {:on-click       [:item-lister/item-clicked       extension-id item-namespace item-dex item]
+                         :on-right-click [:item-lister/item-right-clicked extension-id item-namespace item-dex item]
                          :content [list-element item-dex item]
                          :hover-color :highlight}]))
 

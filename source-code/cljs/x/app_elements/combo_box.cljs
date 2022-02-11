@@ -100,7 +100,7 @@
           :on-blur  [:elements/remove-combo-box-controllers! field-id]
           :on-focus [:elements/reg-combo-box-controllers!    field-id]}
          (param field-props)
-         {:on-change  [:elements/->combo-box-changed         field-id]}))
+         {:on-change [:elements/combo-box-changed            field-id]}))
 
 
 

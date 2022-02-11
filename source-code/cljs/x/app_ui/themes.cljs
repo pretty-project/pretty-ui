@@ -55,15 +55,10 @@
   ;  [:ui/change-theme! :light]
   (fn [{:keys [db]} [_ theme-id]]
       {:db       (r store-selected-theme! db theme-id)
-       :dispatch [:ui/->theme-changed]}))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+       :dispatch [:ui/theme-changed]}))
 
 (a/reg-event-fx
-  :ui/->theme-changed
+  :ui/theme-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [theme-id (r get-selected-theme db)]
@@ -76,4 +71,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-login [:ui/->theme-changed]})
+  {:on-login [:ui/theme-changed]})

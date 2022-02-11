@@ -42,7 +42,8 @@
                         {:preset :default-button :icon :edit :indent :left :label :rename!
                          :on-click [:storage.media-browser/rename-directory! directory-item]}]
        [elements/button ::delete-directory-button
-                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!}]])
+                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!
+                         :on-click [:storage.media-browser/delete-directory! directory-item]}]])
 
 
 

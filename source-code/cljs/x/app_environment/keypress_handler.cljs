@@ -69,13 +69,13 @@
 (def KEYDOWN-LISTENER #(let [key-code (.-keyCode %)]
                             (if (keypress-prevented? key-code)
                                 (.preventDefault %))
-                            (a/dispatch [:environment/->key-pressed key-code])))
+                            (a/dispatch [:environment/key-pressed key-code])))
 
 ; @constant (function)
 (def KEYUP-LISTENER #(let [key-code (.-keyCode %)]
                           (if (keypress-prevented? key-code)
                               (.preventDefault %))
-                          (a/dispatch [:environment/->key-released key-code])))
+                          (a/dispatch [:environment/key-released key-code])))
 
 
 
@@ -445,13 +445,8 @@
   (fn [_ [_ listener-id]]
       [:environment/remove-keypress-event! listener-id]))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :environment/->key-pressed
+  :environment/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
@@ -463,7 +458,7 @@
        :dispatch-n (r get-on-keydown-events db key-code)}))
 
 (a/reg-event-fx
-  :environment/->key-released
+  :environment/key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code

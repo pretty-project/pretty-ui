@@ -24,15 +24,6 @@
            (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    {:destination-id destination-id}]
                                  :create-directory! [:storage.directory-creator/load-creator! {:destination-id destination-id}]))))
 
-(a/reg-event-fx
-  :storage.media-browser/update-item-alias!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ media-item item-alias]]
-      [:sync/send-query! :storage.media-browser/update-item!
-                         {:on-success [:item-lister/reload-items! :storage :media]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
-                          :query (r queries/get-update-item-alias-query db media-item item-alias)}]))
-
 
 
 ;; -- Directory-item effect events --------------------------------------------
@@ -61,6 +52,13 @@
   (fn [cofx [_ directory-item]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     (r dialogs/render-rename-directory-dialog! cofx directory-item)]}))
+
+(a/reg-event-fx
+  :storage.media-browser/delete-directory!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [cofx [_ {:keys [id]}]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:item-browser/delete-item! :storage :media id]]}))
 
 
 
@@ -106,25 +104,20 @@
                     [:sync/send-query! :storage.media-browser/duplicate-media-item!
                                        {;:display-progress? true
                                         :on-success [:item-browser/reload-items! :storage :media]
-                                        :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
-                                        :query (r queries/get-duplicate-item-query db file-item)}]]}))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+                                        :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]}]]}))
+                                        ;:query (r queries/get-duplicate-item-query db file-item)}]]}))
 
 (a/reg-event-fx
-  :storage.media-lister/->item-clicked
+  :storage.media-lister/item-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as media-item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           (if (r subs/media-browser-mode? db)
-                                              (r dialogs/render-file-menu!      cofx media-item)
-                                              [:storage.media-picker/->file-clicked  media-item]))))
+                                              (r dialogs/render-file-menu!    cofx media-item)
+                                              [:storage.media-picker/file-clicked  media-item]))))
 
 (a/reg-event-fx
-  :storage.media-lister/->item-right-clicked
+  :storage.media-lister/item-right-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db] :as cofx} [_ item-dex {:keys [mime-type] :as media-item}]]
       (if (r subs/media-browser-mode? db)

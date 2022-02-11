@@ -173,15 +173,10 @@
   ; @param (keyword) schedule-id
   (fn [{:keys [db]} [_ schedule-id]]
       {:db       (r remove-schedule-props! db schedule-id)
-       :dispatch [:tools/->schedule-removed]}))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+       :dispatch [:tools/schedule-removed]}))
 
 (a/reg-event-fx
-  :tools/->schedule-removed
+  :tools/schedule-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r any-schedule-registered? db)

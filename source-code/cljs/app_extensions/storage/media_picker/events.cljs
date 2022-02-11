@@ -87,13 +87,8 @@
       {:db (r load-picker! db picker-id picker-props)
        :dispatch [:item-browser/load-browser! :storage :media]}))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :storage.media-picker/->file-clicked
+  :storage.media-picker/file-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
       (let [db (r toggle-file-selection! db file-item)]

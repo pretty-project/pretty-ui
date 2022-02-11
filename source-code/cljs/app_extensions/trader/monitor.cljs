@@ -364,7 +364,7 @@
                     :get-label-f :label
                     :label "Interval"
                     :min-width :xxs
-                    :on-select  [:trader/->monitor-settings-changed]
+                    :on-select  [:trader/monitor-settings-changed]
                     :value-path [:trader :monitor :settings :interval]}])
 
 (defn- period-limit-select
@@ -373,7 +373,7 @@
   [elements/select {:label "Period count"
                     :min-width :xxs
                     :initial-options [20 40 60 80 100 120 140 160 180 200]
-                    :on-select  [:trader/->monitor-settings-changed]
+                    :on-select  [:trader/monitor-settings-changed]
                     :value-path [:trader :monitor :settings :limit]}])
 
 (defn- monitor-settings-form
@@ -440,7 +440,7 @@
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  :trader/->monitor-settings-changed
+  :trader/monitor-settings-changed
   (fn [{:keys [db]} _]
       (if (r sync/subscribed? db :trader/monitor)
           [:trader/unsubscribe-from-query! :trader/monitor])))

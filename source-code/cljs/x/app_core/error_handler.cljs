@@ -58,11 +58,11 @@
 
 
 
-;; -- Status events -----------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (event-handler/reg-event-fx
-  :core/->error-catched
+  :core/error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) error-id
@@ -71,17 +71,17 @@
   ;   :error (string)(opt)}
   ;
   ; @usage
-  ;  [:core/->error-catched]
+  ;  [:core/error-catched]
   ;
   ; @usage
-  ;  [:core/->error-catched {...}]
+  ;  [:core/error-catched {...}]
   ;
   ; @usage
-  ;  [:core/->error-catched :my-error {...}]
+  ;  [:core/error-catched :my-error {...}]
   ;
   ; @usage
-  ;  [:core/->error-catched {:error "An error occured ..."
-  ;                          :cofx  {...}}]
+  ;  [:core/error-catched {:error "An error occured ..."
+  ;                        :cofx  {...}}]
   [event-handler/event-vector<-id]
   (fn [{:keys [db]} [_ error-id error-props]]
       (let [error-message (r get-error-message db error-id error-props)

@@ -31,7 +31,7 @@
   ;
   ; @return (function)
   []
-  (a/dispatch [:environment/->connection-changed]))
+  (a/dispatch [:environment/connection-changed]))
 
 
 
@@ -324,6 +324,15 @@
       (if-let [{:keys [js-id]} (get-in db (db/path :environment/timeouts timeout-id))]
               {:environment/clear-timeout! js-id})))
 
+(a/reg-event-fx
+  :environment/connection-changed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      (let [browser-online? (window/browser-online?)]
+           {:db (assoc-in db (db/meta-item-path :environment/window-data :browser-online?) browser-online?)
+            :dispatch-if [browser-online? [:core/connect-app!]
+                                          [:core/disconnect-app!]]})))
+
 
 
 ;; -- Side-effect events ------------------------------------------------------
@@ -336,20 +345,6 @@
       (dom/add-event-listener! "offline" connection-change-listener)))
 
 (a/reg-handled-fx :environment/listen-to-connection-change! listen-to-connection-change!)
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :environment/->connection-changed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (let [browser-online? (window/browser-online?)]
-           {:db (assoc-in db (db/meta-item-path :environment/window-data :browser-online?) browser-online?)
-            :dispatch-if [browser-online? [:core/connect-app!]
-                                          [:core/disconnect-app!]]})))
 
 
 

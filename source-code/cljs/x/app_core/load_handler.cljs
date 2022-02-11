@@ -33,7 +33,7 @@
 ;  Az elem inicializálásának kezdetekor az [:core/synchronize-loading!]
 ;  eseménnyel lehet jelezni az app-loader számára, hogy addig ne tekintse
 ;  befejezettnek az applikáció betöltését, amíg ugyanez az elem nem indítja
-;  el a [:core/->synchron-signal] eseményt.
+;  el a [:core/synchron-signal] eseményt.
 
 
 
@@ -97,7 +97,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Az applikáció betöltése akkor számít befejezettnek, ha az összes várt
-  ; [:core/->synchron-signal] esemény megtörtént és a várokozások száma 0-ra csökkent.
+  ; [:core/synchron-signal] esemény megtörtént és a várokozások száma 0-ra csökkent.
   ;
   ; @return (boolean)
   [db _]
@@ -169,17 +169,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
             ; 1.
-      (cond (r synchronized?  db) {:dispatch [:core/->app-loaded]}
+      (cond (r synchronized?  db) {:dispatch [:core/app-loaded]}
             ; 2.
-            (r timeout-error? db) {:dispatch [:core/->timeout-reached]})))
-
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
+            (r timeout-error? db) {:dispatch [:core/load-timeout-reached]})))
 
 (event-handler/reg-event-fx
-  :core/->synchron-signal
+  :core/synchron-signal
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r synchronizing? db)
@@ -187,14 +182,14 @@
            :dispatch [:core/self-test!]})))
 
 (event-handler/reg-event-fx
-  :core/->app-loaded
+  :core/app-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)
        :dispatch [:ui/hide-shield!]}))
 
 (event-handler/reg-event-fx
-  :core/->timeout-reached
+  :core/load-timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r set-app-status! db :loaded)

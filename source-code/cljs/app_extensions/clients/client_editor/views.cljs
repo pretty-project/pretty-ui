@@ -12,176 +12,176 @@
 
 
 
-;; -- Header components -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props]
-  [item-editor/header :clients :client header-props])
-
-
-
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- client-vat-no-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::vat-no-field
-                       {:label :vat-no :min-width :s
-                        :value-path [:clients :item-editor/data-items :vat-no]
-                        :disabled?  editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::vat-no-field
+                            {:label :vat-no :min-width :s
+                             :value-path [:clients :item-editor/data-items :vat-no]
+                             :disabled?  editor-disabled?}]))
 
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled? selected-language]}]
-  [elements/select ::country-select
-                   {:label :country ;:user-cancel? false
-                    :initial-value   (locales/country-native-name selected-language)
-                    :initial-options (param locales/EU-COUNTRY-NAMES)
-                    :value-path      [:clients :item-editor/data-items :country]
-                    :disabled?       editor-disabled?}])
+  []
+  (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients :client])
+        selected-language @(a/subscribe [:locales/get-selected-language])]
+       [elements/select ::country-select
+                        {:label :country ;:user-cancel? false
+                         :initial-value   (locales/country-native-name selected-language)
+                         :initial-options (param locales/EU-COUNTRY-NAMES)
+                         :value-path      [:clients :item-editor/data-items :country]
+                         :disabled?       editor-disabled?}]))
 
 (defn- client-zip-code-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::zip-code-field
-                       {:label :zip-code
-                        :value-path [:clients :item-editor/data-items :zip-code]
-                        :disabled?  editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::zip-code-field
+                            {:label :zip-code
+                             :value-path [:clients :item-editor/data-items :zip-code]
+                             :disabled?  editor-disabled?}]))
 
 (defn- client-city-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/combo-box ::city-field
-                      {:label :city :emptiable? false :min-width :s
-                       :options-path [:clients :item-editor/meta-items :suggestions :client/city]
-                       :value-path   [:clients :item-editor/data-items :city]
-                       :disabled?    editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/combo-box ::city-field
+                           {:label :city :emptiable? false :min-width :s
+                            :options-path [:clients :item-editor/meta-items :suggestions :client/city]
+                            :value-path   [:clients :item-editor/data-items :city]
+                            :disabled?    editor-disabled?}]))
 
 (defn- client-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::address-field
-                       {:label :address
-                        :value-path [:clients :item-editor/data-items :address]
-                        :disabled?  editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::address-field
+                            {:label :address
+                             :value-path [:clients :item-editor/data-items :address]
+                             :disabled?  editor-disabled?}]))
 
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id body-props]
+  []
   [:<> [:div (layouts/input-row-attributes)
              [:div (layouts/input-block-attributes {:ratio 30})
-                   [client-country-select body-id body-props]]
+                   [client-country-select]]
              [:div (layouts/input-block-attributes {:ratio 30})
-                   [client-zip-code-field body-id body-props]]
+                   [client-zip-code-field]]
              [:div (layouts/input-block-attributes {:ratio 40})
-                   [client-city-field     body-id body-props]]]
+                   [client-city-field]]]
        [:div (layouts/input-row-attributes)
              [:div (layouts/input-block-attributes {:ratio 60})
-                   [client-address-field body-id body-props]]
+                   [client-address-field]]
              [:div (layouts/input-block-attributes {:ratio 40})
-                   [client-vat-no-field body-id body-props]]]])
+                   [client-vat-no-field]]]])
 
 (defn- client-phone-number-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::phone-number-field
-                       {:label :phone-number :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-items :phone-number]
-                        :validator {:f form/phone-number? :invalid-message :invalid-phone-number}
-                        ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
-                        ;:modifier form/phone-number
-                        :modifier #(string/starts-with! % "+")
-                        :form-id   (item-editor/form-id :clients :client)
-                        :disabled? editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::phone-number-field
+                            {:label :phone-number :required? true :min-width :s
+                             :value-path [:clients :item-editor/data-items :phone-number]
+                             :validator {:f form/phone-number? :invalid-message :invalid-phone-number}
+                             ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
+                             ;:modifier form/phone-number
+                             :modifier #(string/starts-with! % "+")
+                             :form-id   (item-editor/form-id :clients :client)
+                             :disabled? editor-disabled?}]))
 
 (defn- client-email-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::email-address-field
-                       {:label :email-address :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-items :email-address]
-                        :validator {:f form/email-address? :invalid-message :invalid-email-address}
-                        :form-id   (item-editor/form-id :clients :client)
-                        :disabled? editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::email-address-field
+                            {:label :email-address :required? true :min-width :s
+                             :value-path [:clients :item-editor/data-items :email-address]
+                             :validator {:f form/email-address? :invalid-message :invalid-email-address}
+                             :form-id   (item-editor/form-id :clients :client)
+                             :disabled? editor-disabled?}]))
 
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id body-props]
+  []
   [:div (layouts/input-row-attributes)
         [:div (layouts/input-block-attributes)
-              [client-email-address-field body-id body-props]]
+              [client-email-address-field]]
         [:div (layouts/input-block-attributes)
-              [client-phone-number-field  body-id body-props]]])
+              [client-phone-number-field]]])
 
 (defn- client-last-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::last-name-field
-                       {:label :last-name :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-items :last-name]
-                        :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::last-name-field
+                            {:label :last-name :required? true :min-width :s
+                             :value-path [:clients :item-editor/data-items :last-name]
+                             :form-id    (item-editor/form-id :clients :client)
+                             :disabled?  editor-disabled?}]))
 
 (defn- client-first-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [editor-disabled?]}]
-  [elements/text-field ::first-name-field
-                       {:label :first-name :required? true :min-width :s
-                        :value-path [:clients :item-editor/data-items :first-name]
-                        :form-id    (item-editor/form-id :clients :client)
-                        :disabled?  editor-disabled?}])
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+       [elements/text-field ::first-name-field
+                            {:label :first-name :required? true :min-width :s
+                             :value-path [:clients :item-editor/data-items :first-name]
+                             :form-id    (item-editor/form-id :clients :client)
+                             :disabled?  editor-disabled?}]))
 
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [name-order] :as body-props}]
+  []
   [:div (layouts/input-row-attributes)
         [locales/name-order [:div (layouts/input-block-attributes)
-                                  [client-first-name-field body-id body-props]]
+                                  [client-first-name-field]]
                             [:div (layouts/input-block-attributes)
-                                  [client-last-name-field  body-id body-props]]
-                            (param name-order)]])
+                                  [client-last-name-field]]
+                           @(a/subscribe [:locales/get-name-order])]])
 
 (defn- client-additional-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ body-props]
+  [_]
   [:div (layouts/input-column-attributes)
         [layouts/input-group-header {:label :description}]
         [:div (layouts/input-block-attributes {:ratio 100})
-              [item-editor/description-field :clients :client body-props]]])
+              [item-editor/description-field :clients :client]]])
 
-(defn- body-structure
+(defn- client-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id body-props]
+  []
+  (let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
+       [item-editor/item-label :clients :client {:name client-name}]))
+
+(defn- client-colors
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [client-colors @(a/subscribe [:item-editor/get-data-value :clients :client :colors])]
+       [item-editor/color-selector :clients :client {:colors client-colors}]))
+
+(defn- client-form
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
   [:<> ; Color and name
-       [item-editor/item-label     :clients :client body-props]
-       [item-editor/color-selector :clients :client body-props]
+       [client-label]
+       [client-colors]
        [elements/horizontal-separator {:size :xxl}]
        ; Basic info
        [layouts/input-group-header {:label :basic-info}]
-       [client-name             body-id body-props]
-       [client-primary-contacts body-id body-props]
+       [client-name]
+       [client-primary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; More info
        [layouts/input-group-header {:label :more-info}]
-       [client-secondary-contacts body-id body-props]
+       [client-secondary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; Description
-       [client-additional-information body-id body-props]])
-
-       ; TEMP
-;       [:div {:style {:width "100%"}}
-;             [storage/media-picker {:label "Borítóképek" :multiple? true :indent :left
-;                                    :value-path [:test]]])
-
-(defn- body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace body-props]
-  [components/subscriber {:base-props body-props
-                          :render-f   #'body-structure
-                          :subscriber [:clients.client-editor/get-body-props]}])
+       [client-additional-information]])
 
 
 
@@ -191,7 +191,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-editor/view :clients :client {:form-element #'body
+  [item-editor/view :clients :client {:form-element #'client-form
                                       :item-actions [:delete :duplicate]}])
 
 

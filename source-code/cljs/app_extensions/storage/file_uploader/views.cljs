@@ -34,7 +34,7 @@
   [uploader-id uploader-props]
   [:input#storage--file-selector {:multiple 1 :type "file"
                                   :accept     (uploader-props->allowed-extensions-list uploader-props)
-                                  :on-change #(a/dispatch [:storage.file-uploader/->files-selected-to-upload uploader-id])}])
+                                  :on-change #(a/dispatch [:storage.file-uploader/files-selected-to-upload uploader-id])}])
 
 
 

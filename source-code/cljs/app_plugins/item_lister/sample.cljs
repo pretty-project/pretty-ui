@@ -45,7 +45,7 @@
   [:item-lister/reload-items! :my-extension :my-type])
 
 (a/reg-event-fx
-  :my-extension.my-type-lister/->item-clicked
+  :my-extension.my-type-lister/item-clicked
   (fn [cofx [_ item-dex item]]
       [:do-something!]))
 

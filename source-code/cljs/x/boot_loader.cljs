@@ -230,7 +230,7 @@
         {:ms 100 :dispatch [:boot-loader/launch-app!]}
         ; 4. Curtains up!
         ; XXX#5030
-        {:ms 500 :dispatch [:core/->synchron-signal :boot-loader/build-app!]}]}))
+        {:ms 500 :dispatch [:core/synchron-signal :boot-loader/build-app!]}]}))
 
 (a/reg-event-fx
   :boot-loader/launch-app!
@@ -243,20 +243,15 @@
        ; (Dispatch on-app-launch events)
        :dispatch-n (r a/get-period-events db :on-app-launch)}))
 
-
-
-;; -- Status events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
-  :boot-loader/->app-synchronized
+  :boot-loader/app-synchronized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
   ; @param (map) server-response
   ;
   ; @usage
-  ;  [:boot-loader/->app-synchronized #'app {...}]
+  ;  [:boot-loader/app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
       (let [app-build (r a/get-app-config-item db :app-build)]
            {:dispatch-n [; 1.

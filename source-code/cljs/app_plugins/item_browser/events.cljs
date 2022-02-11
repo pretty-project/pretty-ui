@@ -149,6 +149,38 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :item-browser/load-browser!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map)(opt) browser-props
+  ;  {:item-id (string)(opt)}
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type]
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
+  (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
+      (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
+           {:db (r load-browser! db extension-id item-namespace browser-props)
+            :dispatch-n [; XXX#5660
+                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
+                         ; XXX#3237
+                         (if (r subs/set-title? db extension-id item-namespace)
+                             [:ui/set-title! browser-label])
+                         [:item-browser/request-item! extension-id item-namespace]
+                         (engine/load-extension-event extension-id item-namespace)
+                         ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
+                         ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
+                         ; komponens a viewport területén volt, akkor szükséges az infinite-loader
+                         ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
+                         ; az adatokat.
+                         [:tools/reload-infinite-loader! extension-id]]})))
+
+(a/reg-event-fx
   :item-browser/use-filter!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -183,6 +215,51 @@
                [:router/go-to! browser-uri])
           ; If NOT handled by route ...
           [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}])))
+
+(a/reg-event-fx
+  :item-browser/update-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ extension-id item-namespace]]))
+      ;[:sync/send-query! :storage.media-browser/update-item!
+      ;                   {:on-success [:item-lister/reload-items! :storage :media]
+      ;                    :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
+      ;                    :query (r queries/get-update-item-alias-query db media-item item-alias)]]))
+
+(a/reg-event-fx
+  :item-browser/delete-item!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {;:display-progress? true
+                          :on-success [:item-browser/item-deleted extension-id item-namespace item-id]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                          :query      (r queries/get-delete-item-query db extension-id item-namespace item-id)}]))
+
+(a/reg-event-fx
+  :item-browser/duplicate-item!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  [:item-browser/duplicate-item! :my-extension :my-type "my-item"]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]))
+
+(a/reg-event-fx
+  :item-browser/move-item!
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ; @param (string) destination-id
+  ;
+  ; @usage
+  ;  [:item-browser/move-item! :my-extension :my-type "my-item" "your-item"]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id destination-id]]))
 
 (a/reg-event-fx
   :item-browser/go-home!
@@ -240,33 +317,10 @@
                           :query      (r queries/get-request-item-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx
-  :item-browser/load-browser!
+  :item-browser/item-deleted
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) browser-props
-  ;  {:item-id (string)(opt)}
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type]
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
-      (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
-           {:db (r load-browser! db extension-id item-namespace browser-props)
-            :dispatch-n [; XXX#5660
-                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
-                         ; XXX#3237
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! browser-label])
-                         [:item-browser/request-item! extension-id item-namespace]
-                         (engine/load-extension-event extension-id item-namespace)
-                         ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
-                         ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
-                         ; komponens a viewport területén volt, akkor szükséges az infinite-loader
-                         ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
-                         ; az adatokat.
-                         [:tools/reload-infinite-loader! extension-id]]})))
+  ; @param (string) item-id
+  (fn [{:keys []} [_ extension-id item-namespace item-id]]))

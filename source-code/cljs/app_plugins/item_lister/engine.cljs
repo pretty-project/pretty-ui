@@ -45,7 +45,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn server-response->copy-ids
+(defn server-response->deleted-item-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -53,8 +53,26 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (engine/server-response->copy-id :my-extension :my-type
-  ;                                   {my-extension.my-type-lister/duplicate-items! [{:my-type/id "my-item"}]})
+  ;  (engine/server-response->deleted-item-ids :my-extension :my-type
+  ;    {my-extension.my-type-lister/delete-items! ["my-item"]})
+  ;  =>
+  ;  ["my-item"]
+  ;
+  ; @return (strings in vector)
+  [extension-id item-namespace server-response]
+  (let [mutation-name (mutation-name extension-id item-namespace :delete)]
+       (get server-response (symbol mutation-name))))
+
+(defn server-response->duplicated-item-ids
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (engine/server-response->duplicated-item-ids :my-extension :my-type
+  ;    {my-extension.my-type-lister/duplicate-items! [{:my-type/id "my-item"}]})
   ;  =>
   ;  ["my-item"]
   ;

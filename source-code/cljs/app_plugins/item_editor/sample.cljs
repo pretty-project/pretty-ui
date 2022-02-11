@@ -33,27 +33,15 @@
 ;; -- Example B ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-form-props
-  [db _]
-  {:my-key "My value"})
-
-(a/reg-sub :my-extension.my-type-editor/get-form-props get-form-props)
-
-(defn my-form-element-structure
-  [body-id form-props]
-  [:<> [elements/text-field ::my-sample-field
-                            {:form-id    (item-editor/form-id :my-extension :my-type)
-                             :value-path [:my-extension :item-editor/data-items :my-key]}]])
-
-(defn my-form-element
-  [extension-id item-namespace body-props]
-  [components/subscriber {:base-props body-props
-                          :render-f   #'my-form-element-structure
-                          :subscriber [:my-extension.my-type-editor/get-form-props]}])
+(defn my-type-form
+  []
+  [elements/text-field ::my-sample-field
+                       {:form-id    (item-editor/form-id :my-extension :my-type)
+                        :value-path [:my-extension :item-editor/data-items :my-key]}])
 
 (defn my-view
   [surface-id]
-  [item-editor/view :my-extension :my-type {:form-element #'my-form-element}])
+  [item-editor/view :my-extension :my-type {:form-element #'my-type-form}])
 
 (a/reg-event-fx
   :my-extension.my-type-editor/load-editor!
