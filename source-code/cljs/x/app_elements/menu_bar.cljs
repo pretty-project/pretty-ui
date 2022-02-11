@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.08
 ; Description:
-; Version: v1.0.4
-; Compatibility: x4.4.9
+; Version: v1.0.8
+; Compatibility: x4.6.0
 
 
 
@@ -18,7 +18,8 @@
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.engine.api :as engine]
+              [x.app-environment.api     :as environment]))
 
 
 
@@ -55,10 +56,10 @@
   [bar-id _ {:keys [active? disabled? href on-click]}]
   (if disabled? ; If menu-item is disabled ...
                 (cond-> {:data-disabled true
-                         :on-mouse-up   (engine/blur-element-function bar-id)}
+                         :on-mouse-up  #(environment/blur-element!)}
                         (some? active?) (assoc :data-active (boolean active?)))
                 ; If menu-item is NOT disabled ...
-                (cond-> {:on-mouse-up (engine/blur-element-function bar-id)}
+                (cond-> {:on-mouse-up   #(environment/blur-element!)}
                         (some? href)     (assoc :href        (str        href))
                         (some? on-click) (assoc :on-click   #(a/dispatch on-click))
                         (some? active?)  (assoc :data-active (boolean    active?)))))

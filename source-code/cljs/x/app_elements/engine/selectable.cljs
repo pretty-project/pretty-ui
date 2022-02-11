@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.4.8
+; Version: v0.8.2
+; Compatibility: x4.6.0
 
 
 
@@ -20,9 +20,9 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
-              [x.app-elements.engine.element   :as element]
-              [x.app-elements.engine.input     :as input]
-              [x.app-elements.engine.focusable :as focusable]))
+              [x.app-elements.engine.element :as element]
+              [x.app-elements.engine.input   :as input]
+              [x.app-environment.api         :as environment]))
 
 
 
@@ -79,8 +79,8 @@
        (if disabled? {:data-selected (param selected?)
                       :disabled      (param true)}
                      {:data-selected (param selected?)
-                      :on-click      (on-select-function              input-id option)
-                      :on-mouse-up   (focusable/blur-element-function input-id)})))
+                      :on-click      (on-select-function input-id option)
+                      :on-mouse-up  #(environment/blur-element!)})))
 
 (defn selectable-unselect-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,8 +95,8 @@
   ;   :on-click (function)
   ;   :title (string)}
   [input-id {:keys [selected?]}]
-  (if selected? {:on-click      (on-unselect-function            input-id)
-                 :on-mouse-up   (focusable/blur-element-function input-id)
+  (if selected? {:on-click      (on-unselect-function input-id)
+                 :on-mouse-up  #(environment/blur-element!)
                  :title         (components/content {:content :uncheck-selected!})}
                 {:data-disabled (param true)
                  :disabled      (param true)}))

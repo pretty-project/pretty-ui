@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.8
+; Version: v0.2.4
+; Compatibility: x4.6.0
 
 
 
@@ -14,11 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.element-adornments
-    (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.engine.focusable :as focusable]))
+    (:require [mid-fruits.candy      :refer [param]]
+              [mid-fruits.vector     :as vector]
+              [x.app-components.api  :as components]
+              [x.app-core.api        :as a]
+              [x.app-environment.api :as environment]))
 
 
 
@@ -66,7 +66,7 @@
      ;  felület React-fából történő lecsatolását okozná.
     (merge {:on-mouse-down #(do (.preventDefault %))
             :on-mouse-up   #(do (a/dispatch on-click)
-                                (focusable/blur-element-function element-id))
+                                (environment/blur-element!))
             :title            (components/content {:content tooltip})
             :data-icon-family (param icon-family)}
            (if (false? tab-indexed?) {:tab-index "-1"}))

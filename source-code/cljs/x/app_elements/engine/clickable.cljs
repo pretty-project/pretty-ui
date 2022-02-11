@@ -20,7 +20,8 @@
               [x.app-core.api                   :as a :refer [r]]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.targetable :as targetable]))
+              [x.app-elements.engine.targetable :as targetable]
+              [x.app-environment.api            :as environment]))
 
 
 
@@ -58,10 +59,11 @@
                                       ; elemeket.
                                       ; A static & clickable elemek on-click esemény kizárólag függvényként
                                       ; hívható meg.
-                                      :on-click   #(a/dispatch on-click)
-                                      :on-mouse-up (focusable/blur-element-function element-id)}
+                                      :on-click    #(a/dispatch on-click)
+                                      :on-mouse-up #(environment/blur-element!)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
-                                                                               (a/dispatch on-right-click))}))))
+                                                                               (a/dispatch on-right-click)
+                                                                               (environment/blur-element!))}))))
 
 
 

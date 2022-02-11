@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.9
+; Version: v0.7.4
+; Compatibility: x4.6.0
 
 
 
@@ -20,8 +20,8 @@
               [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.input      :as input]
-              [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.targetable :as targetable]))
+              [x.app-elements.engine.targetable :as targetable]
+              [x.app-environment.api            :as environment]))
 
 
 
@@ -81,10 +81,10 @@
   [input-id {:keys [checked? disabled?]}]
   (cond-> {:id (targetable/element-id->target-id input-id)}
           (boolean disabled?) (merge {:disabled true})
-          (boolean checked?)  (merge {:on-click    (on-uncheck-function             input-id)
-                                      :on-mouse-up (focusable/blur-element-function input-id)})
-          (not     checked?)  (merge {:on-click    (on-check-function               input-id)
-                                      :on-mouse-up (focusable/blur-element-function input-id)})))
+          (boolean checked?)  (merge {:on-click     (on-uncheck-function input-id)
+                                      :on-mouse-up #(environment/blur-element!)})
+          (not     checked?)  (merge {:on-click     (on-check-function   input-id)
+                                      :on-mouse-up #(environment/blur-element!)})))
 
 (defn checkable-primary-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,8 +99,8 @@
   ;   :on-mouse-up (function)}
   [input-id {:keys [disabled?]}]
   (if disabled? {:disabled true}
-                {:on-click    (on-check-function               input-id)
-                 :on-mouse-up (focusable/blur-element-function input-id)}))
+                {:on-click     (on-check-function input-id)
+                 :on-mouse-up #(environment/blur-element!)}))
 
 (defn checkable-secondary-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,8 +115,8 @@
   ;   :on-mouse-up (function)}
   [input-id {:keys [disabled?]}]
   (if disabled? {:disabled true}
-                {:on-click    (on-uncheck-function             input-id)
-                 :on-mouse-up (focusable/blur-element-function input-id)}))
+                {:on-click     (on-uncheck-function input-id)
+                 :on-mouse-up #(environment/blur-element!)}))
 
 (defn checkable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

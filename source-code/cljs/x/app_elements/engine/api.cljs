@@ -124,9 +124,6 @@
 ; x.app-elements.engine.flexible
 (def flexible-attributes flexible/flexible-attributes)
 
-; x.app-elements.engine.focusable
-(def blur-element-function focusable/blur-element-function)
-
 ; x.app-elements.engine.form
 (def inputs-passed?  form/inputs-passed?)
 (def form-completed? form/form-completed?)

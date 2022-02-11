@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
+; Version: v0.5.0
+; Compatibility: x4.6.0
 
 
 
@@ -14,13 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.countable
-    (:require [mid-fruits.candy                :refer [param]]
-              [x.app-components.api            :as components]
-              [x.app-core.api                  :as a :refer [r]]
-              [x.app-db.api                    :as db]
-              [x.app-elements.engine.element   :as element]
-              [x.app-elements.engine.input     :as input]
-              [x.app-elements.engine.focusable :as focusable]))
+    (:require [mid-fruits.candy              :refer [param]]
+              [x.app-components.api          :as components]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-db.api                  :as db]
+              [x.app-elements.engine.element :as element]
+              [x.app-elements.engine.input   :as input]
+              [x.app-environment.api         :as environment]))
 
 
 
@@ -76,8 +76,8 @@
   (if (or disabled? (= min-value value))
       {:disabled      true
        :data-disabled true}
-      {:on-click    (on-decrease-function            input-id)
-       :on-mouse-up (focusable/blur-element-function input-id)}))
+      {:on-click     (on-decrease-function input-id)
+       :on-mouse-up #(environment/blur-element!)}))
 
 (defn countable-increase-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,8 +95,8 @@
   (if (or disabled? (= max-value value))
       {:disabled      true
        :data-disabled true}
-      {:on-click    (on-increase-function            input-id)
-       :on-mouse-up (focusable/blur-element-function input-id)}))
+      {:on-click     (on-increase-function input-id)
+       :on-mouse-up #(environment/blur-element!)}))
 
 (defn countable-reset-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,8 +111,8 @@
   ;   :on-click (function)
   ;   :title (string)}
   [input-id {:keys [changed?]}]
-  (if changed? {:on-click      (input/on-reset-function         input-id)
-                :on-mouse-up   (focusable/blur-element-function input-id)
+  (if changed? {:on-click      (input/on-reset-function input-id)
+                :on-mouse-up  #(environment/blur-element!)
                 :title         (components/content {:content :reset!})}
                {:data-disabled (param true)
                 :disabled      (param true)}))

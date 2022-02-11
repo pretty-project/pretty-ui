@@ -20,6 +20,7 @@
               [mid-fruits.css            :as css]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
+              [x.app-environment.api     :as environment]
               [x.app-gestures.api        :as gestures]))
 
 
@@ -153,11 +154,11 @@
   ; @return (hiccup)
   [slideshow-id slideshow-props]
   [:div.x-slideshow--controls [:button.x-slideshow--controls--go-bwd
-                                {:on-click   #(a/dispatch [:gestures/step-backward! slideshow-id])
-                                 :on-mouse-up (engine/blur-element-function slideshow-id)}]
+                                {:on-click    #(a/dispatch [:gestures/step-backward! slideshow-id])
+                                 :on-mouse-up #(environment/blur-element!)}]
                               [:button.x-slideshow--controls--go-fwd
-                                {:on-click   #(a/dispatch [:gestures/step-forward! slideshow-id])
-                                 :on-mouse-up (engine/blur-element-function slideshow-id)}]])
+                                {:on-click    #(a/dispatch [:gestures/step-forward! slideshow-id])
+                                 :on-mouse-up #(environment/blur-element!)}]])
 
 (defn- slideshow
   ; WARNING! NON-PUBLIC! DO NOT USE!

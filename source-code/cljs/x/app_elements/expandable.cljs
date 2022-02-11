@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.08.19
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.4.8
+; Version: v0.5.0
+; Compatibility: x4.6.0
 
 
 
@@ -18,7 +18,8 @@
               [mid-fruits.logical        :refer [nonfalse?]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.engine.api :as engine]
+              [x.app-environment.api     :as environment]))
 
 
 
@@ -105,8 +106,8 @@
   ;
   ; @return (hiccup)
   [expandable-id expandable-props]
-  [:button.x-expandable--header {:on-click   #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
-                                 :on-mouse-up (engine/blur-element-function expandable-id)}
+  [:button.x-expandable--header {:on-click    #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
+                                 :on-mouse-up #(environment/blur-element!)}
                                 [expandable-icon          expandable-id expandable-props]
                                 [expandable-label         expandable-id expandable-props]
                                 [expandable-expand-button expandable-id expandable-props]])

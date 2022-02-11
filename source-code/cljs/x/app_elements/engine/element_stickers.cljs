@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.28
 ; Description:
-; Version: v0.2.2
-; Compatibility: x4.4.8
+; Version: v0.2.6
+; Compatibility: x4.6.0
 
 
 
@@ -14,11 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.element-stickers
-    (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.engine.focusable :as focusable]))
+    (:require [mid-fruits.candy      :refer [param]]
+              [mid-fruits.vector     :as vector]
+              [x.app-components.api  :as components]
+              [x.app-core.api        :as a]
+              [x.app-environment.api :as environment]))
 
 
 
@@ -57,7 +57,7 @@
   ; @return (hiccup)
   [element-id _ {:keys [icon icon-family on-click tooltip]}]
   [:button.x-element--sticker-button {:on-click        #(a/dispatch on-click)
-                                      :on-mouse-up      (focusable/blur-element-function element-id)
+                                      :on-mouse-up     #(environment/blur-element!)
                                       :title            (components/content {:content tooltip})
                                       :data-icon-family (param icon-family)}
                                      (param icon)])

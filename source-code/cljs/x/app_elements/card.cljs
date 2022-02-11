@@ -17,7 +17,8 @@
     (:require [mid-fruits.candy          :refer [param]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.engine.api :as engine]
+              [x.app-environment.api     :as environment]))
 
 
 
@@ -63,8 +64,8 @@
   ; @return (hiccup)
   [card-id {:keys [on-click] :as card-props}]
   [:button.x-card (engine/element-attributes card-id card-props
-                                             {:on-click   #(a/dispatch on-click)
-                                              :on-mouse-up (engine/blur-element-function card-id)})
+                                             {:on-click    #(a/dispatch on-click)
+                                              :on-mouse-up #(environment/blur-element!)})
                   [card-content         card-id card-props]
                   [engine/element-badge card-id card-props]])
 

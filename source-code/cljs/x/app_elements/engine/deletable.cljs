@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.4.8
+; Version: v0.6.2
+; Compatibility: x4.6.0
 
 
 
@@ -19,8 +19,8 @@
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a :refer [r]]
               [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.targetable :as targetable]))
+              [x.app-elements.engine.targetable :as targetable]
+              [x.app-environment.api            :as environment]))
 
 
 
@@ -56,7 +56,7 @@
   ; :on-click [:elements/->element-deleted element-id]
   ; =>
   ; :on-click #(a/dispatch on-delete)
-  (if disabled? {:disabled    (param true)}
-                {:on-click   #(a/dispatch on-delete)
-                 :on-mouse-up (focusable/blur-element-function element-id)
-                 :title       (components/content {:content :remove!})}))
+  (if disabled? {:disabled     (param true)}
+                {:on-click    #(a/dispatch on-delete)
+                 :on-mouse-up #(environment/blur-element!)
+                 :title        (components/content {:content :remove!})}))

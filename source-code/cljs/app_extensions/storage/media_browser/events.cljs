@@ -13,7 +13,7 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; -- Media-item effect events ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -25,10 +25,25 @@
                                  :create-directory! [:storage.directory-creator/load-creator! {:destination-id destination-id}]))))
 
 (a/reg-event-fx
+  :storage.media-browser/update-item-alias!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ media-item item-alias]]
+      [:sync/send-query! :storage.media-browser/update-item!
+                         {:on-success [:item-lister/reload-items! :storage :media]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
+                          :query (r queries/get-update-item-alias-query db media-item item-alias)}]))
+
+
+
+;; -- Directory-item effect events --------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :storage.media-browser/open-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]]}))
+  (fn [_ [_ {:keys [id]}]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:item-browser/browse-item! :storage :media id]]}))
 
 (a/reg-event-fx
   :storage.media-browser/copy-directory-link!
@@ -47,29 +62,10 @@
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     (r dialogs/render-rename-directory-dialog! cofx directory-item)]}))
 
-(a/reg-event-fx
-  :storage.media-browser/update-item-alias!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ media-item item-alias]]
-      [:sync/send-query! :storage.media-browser/update-item!
-                         {:on-success [:item-lister/reload-items! :storage :media]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
-                          :query (r queries/get-update-item-alias-query db media-item item-alias)}]))
 
-(a/reg-event-fx
-  :storage.media-browser/copy-file-link!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [filename]}]]
-      (let [file-uri (media/filename->media-storage-uri filename)
-            uri-base (window/get-uri-base)]
-           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                         [:tools/copy-to-clipboard! (str uri-base file-uri)]]})))
 
-(a/reg-event-fx
-  :storage.media-browser/rename-file!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [cofx [_ file-item]]
-      (r dialogs/render-rename-file-dialog! cofx file-item)))
+;; -- File-item effect events -------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :storage.media-browser/preview-file!
@@ -87,14 +83,30 @@
                     [:tools/save-file! {:filename alias :uri (media/filename->media-storage-uri filename)}]]}))
 
 (a/reg-event-fx
+  :storage.media-browser/copy-file-link!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ {:keys [filename]}]]
+      (let [file-uri (media/filename->media-storage-uri filename)
+            uri-base (window/get-uri-base)]
+           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                         [:tools/copy-to-clipboard! (str uri-base file-uri)]]})))
+
+(a/reg-event-fx
+  :storage.media-browser/rename-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [cofx [_ file-item]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    (r dialogs/render-rename-file-dialog! cofx file-item)]}))
+
+(a/reg-event-fx
   :storage.media-browser/duplicate-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     [:sync/send-query! :storage.media-browser/duplicate-media-item!
                                        {;:display-progress? true
-                                        ;:on-success [:item-editor/->item-duplicated :storage :media]
-                                        ;:on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
+                                        :on-success [:item-browser/reload-items! :storage :media]
+                                        :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
                                         :query (r queries/get-duplicate-item-query db file-item)}]]}))
 
 

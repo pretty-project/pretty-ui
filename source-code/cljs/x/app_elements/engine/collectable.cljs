@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.01
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
+; Version: v0.5.2
+; Compatibility: x4.6.0
 
 
 
@@ -20,8 +20,8 @@
               [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
               [x.app-elements.engine.input      :as input]
-              [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.selectable :as selectable]))
+              [x.app-elements.engine.selectable :as selectable]
+              [x.app-environment.api            :as environment]))
 
 
 
@@ -112,9 +112,9 @@
   ;   :on-mouse-up (function)}
   [input-id {:keys [disabled?] :as input-props} option]
   (if disabled? {:disabled true}
-                {:data-collected (input-props->option-collected?  input-props option)
-                 :on-click       (on-toggle-function              input-id option)
-                 :on-mouse-up    (focusable/blur-element-function input-id)}))
+                {:data-collected (input-props->option-collected? input-props option)
+                 :on-click       (on-toggle-function             input-id option)
+                 :on-mouse-up   #(environment/blur-element!)}))
 
 
 
