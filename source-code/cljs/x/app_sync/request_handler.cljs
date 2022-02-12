@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.7.2
-; Compatibility: x4.5.7
+; Version: v2.8.4
+; Compatibility: x4.6.0
 
 
 
@@ -278,7 +278,7 @@
                                [:sync/get-request-state request-id])
              (r db/update-data-history! % :sync/requests request-id)))    ; DEBUG
 
-(defn ->request-aborted
+(defn request-aborted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -287,7 +287,7 @@
   [db [_ request-id]]
   (assoc-in db (db/path :sync/requests request-id :aborted?) true))
 
-(defn- ->request-successed
+(defn- request-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -301,7 +301,7 @@
                  (r response-handler/store-request-response! % request-id server-response)
                  (return %))))
 
-(defn- ->request-failured
+(defn- request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -312,17 +312,40 @@
   (as-> db % (r a/set-process-status!   % request-id :failure)
              (r a/set-process-activity! % request-id :idle)))
 
-(defn- ->request-stalled
+(defn- request-stalled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ;
   ; @return (map)
   [db [_ request-id]]
-  (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
-          (as-> db % (r a/set-process-activity!       % request-id :stalled)
-                     (r ui/stop-listening-to-process! % request-id))
-          (r a/set-process-activity! db request-id :stalled)))
+  (if-not (r request-active? db request-id)
+          ; Ha a [:sync/request-stalled ...] esemény megtörténése előtt a request NEM lett újra elküldve, ...
+          (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
+                  (as-> db % (r a/set-process-activity!       % request-id :stalled)
+                             (r ui/stop-listening-to-process! % request-id))
+                  (r a/set-process-activity! db request-id :stalled))
+
+          ; Ha a [:sync/request-stalled ...] esemény megtörténése előtt a request újra el lett küldve, ...
+          (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
+                  (return                          db)
+                  (r ui/stop-listening-to-process! db request-id))))
+
+(defn- reset-request-process!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ;
+  ; @return (map)
+  [db [_ request-id]]
+  (as-> db % ; Set request status
+             (r a/set-process-status!   % request-id :progress)
+             ; Set request activity
+             (r a/set-process-activity! % request-id :active)
+             ; Set request progress
+             ; Szükséges a process-progress értékét nullázni!
+             ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
+             (r a/set-process-progress! % request-id 0)))
 
 (defn- send-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -333,9 +356,11 @@
   ;
   ; @return (map)
   [db [_ request-id {:keys [display-progress?] :as request-props}]]
-  (if display-progress? (as-> db % (r ui/listen-to-process! % request-id)
-                                   (r store-request-props!  % request-id request-props))
-                        (r store-request-props! db request-id request-props)))
+  (if display-progress? (as-> db % (r reset-request-process! % request-id)
+                                   (r store-request-props!   % request-id request-props)
+                                   (r ui/listen-to-process!  % request-id))
+                        (as-> db % (r reset-request-process! % request-id)
+                                   (r store-request-props!   % request-id request-props))))
 
 
 
@@ -349,7 +374,7 @@
   ; @usage
   ;  [:sync/abort-request! :my-request]
   (fn [{:keys [db]} [_ request-id]]
-      {:db (r ->request-aborted db request-id)
+      {:db (r request-aborted db request-id)
        :sync/abort-request! [request-id]}))
 
 (a/reg-event-fx
@@ -415,16 +440,8 @@
   ;
   ; @param (keyword) request-id
   (fn [{:keys [db]} [_ request-id]]
-      {:db (as-> db % ; Set request status
-                      (r a/set-process-status!   % request-id :progress)
-                      ; Set request activity
-                      (r a/set-process-activity! % request-id :active)
-                      ; Set request progress
-                      ; Szükséges a process-progress értékét nullázni!
-                      ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
-                      (r a/set-process-progress! % request-id 0))
-       ; Dispatch request on-sent event
-       :dispatch (r get-request-on-sent-event db request-id)}))
+      ; Dispatch request on-sent event
+      (r get-request-on-sent-event db request-id)))
 
 (a/reg-event-fx
   :sync/request-successed
@@ -435,7 +452,7 @@
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
       (let [server-response (reader/string->mixed server-response-body)]
-           {:db (r ->request-successed db request-id server-response)
+           {:db (r request-successed db request-id server-response)
             :sync/remove-reference! [request-id]
             :dispatch-n     [(r get-request-on-success-event   db request-id server-response)
                              (r get-request-on-responsed-event db request-id server-response)]
@@ -457,7 +474,7 @@
   ;   :response (string)
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
-      {:db (r ->request-failured db request-id server-response)
+      {:db (r request-failured db request-id server-response)
        :sync/remove-reference! [request-id]
        :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
                         (r get-request-on-responsed-event db request-id server-response)]
@@ -471,7 +488,7 @@
   ; @param (keyword) request-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ request-id server-response]]
-      {:db (r ->request-stalled db request-id)
+      {:db (r request-stalled db request-id)
        ; Az {:on-stalled ...} esemény használható az {:on-success ...} esemény alternatívájaként,
        ; mert hibás teljesítés esetén nem történik meg.
        :dispatch-if [(r request-successed?           db request-id)

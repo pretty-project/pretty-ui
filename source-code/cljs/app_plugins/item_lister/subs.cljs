@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.8.0
-; Compatibility: x4.5.7
+; Compatibility: x4.6.0
 
 
 
@@ -20,7 +20,6 @@
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
-              [x.app-environment.api :as environment]
               [x.app-router.api      :as router]
               [x.app-sync.api        :as sync]
               [app-plugins.item-lister.engine :as engine]
@@ -44,23 +43,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ;
-  ; @return (maps in vector)
-  [db [_ extension-id]]
-  (get-in db [extension-id :item-lister/data-items]))
-
-(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
-
-(defn synchronizing?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [request-id (engine/request-id extension-id item-namespace)]
-       (r sync/listening-to-request? db request-id)))
+  ; @return (maps in vector)
+  [db [_ extension-id _]]
+  (get-in db [extension-id :item-lister/data-items]))
 
 (defn items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,34 +64,48 @@
   (let [items-received? (r get-meta-item db extension-id item-namespace :items-received?)]
        (boolean items-received?)))
 
+(defn synchronizing?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [request-id (engine/request-id extension-id item-namespace)]
+       (r sync/listening-to-request? db request-id)))
+
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (boolean)
-  [db [_ extension-id]]
-  (let [downloaded-items (r get-downloaded-items db extension-id)]
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
        (empty? downloaded-items)))
 
 (defn any-item-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (boolean)
-  [db [_ extension-id]]
-  (let [downloaded-items (r get-downloaded-items db extension-id)]
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
        (vector/nonempty? downloaded-items)))
 
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (integer)
-  [db [_ extension-id]]
-  (let [downloaded-items (r get-downloaded-items db extension-id)]
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
        (count downloaded-items)))
 
 (defn get-all-item-count
@@ -130,6 +131,19 @@
            (return   all-item-count)
            (return   0))))
 
+(defn lister-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [items-received? (r items-received? db extension-id item-namespace)
+        synchronizing?  (r synchronizing?  db extension-id item-namespace)]
+       ; XXX#3219
+       (or synchronizing? (not items-received?))))
+
 (defn get-disabled-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -154,10 +168,6 @@
   [db [_ extension-id item-namespace item-dex]]
   (let [disabled-items (r get-disabled-items db extension-id item-namespace)]
        (vector/contains-item? disabled-items item-dex)))
-
-; @usage
-;  [:item-lister/item-disabled? :my-extension :my-type 0]
-(a/reg-sub :item-lister/item-disabled? item-disabled?)
 
 (defn get-selected-item-dexes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -218,7 +228,7 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [selected-items-count  (r get-selected-item-count   db extension-id item-namespace)
-        downloaded-item-count (r get-downloaded-item-count db extension-id)]
+        downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)]
        (and (not= downloaded-item-count 0)
             (= selected-items-count downloaded-item-count))))
 
@@ -253,7 +263,7 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [       all-item-count (r        get-all-item-count db extension-id item-namespace)
-        downloaded-item-count (r get-downloaded-item-count db extension-id)]
+        downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)]
        ; XXX#0791
        ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
        ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
@@ -381,6 +391,16 @@
   (let [item-actions (r get-meta-item db extension-id item-namespace :item-actions)]
        (vector/nonempty? item-actions)))
 
+(defn items-sortable?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :sortable?))
+
 (defn set-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -399,11 +419,31 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
-  (let [downloaded-item-count (r get-downloaded-item-count db extension-id)
+  (let [downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)
         all-item-count        (r get-all-item-count        db extension-id item-namespace)
         items-received?       (r items-received?           db extension-id item-namespace)]
        (if items-received? (components/content {:content      :npn-items-downloaded
                                                 :replacements [downloaded-item-count all-item-count]}))))
+
+(defn get-item-actions
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (keywords in vector)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :item-actions))
+
+(defn get-new-item-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (vector)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :new-item-options))
 
 (defn error-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -415,134 +455,215 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :error-mode?))
 
-(a/reg-sub :item-lister/error-mode? error-mode?)
-
-(defn get-checkbox-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ;
-  ; @usage
-  ;  (r engine/get-checkbox-props db :my-extension :my-type 0)
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-dex]]
-  {:item-selected? (r item-selected? db extension-id item-namespace item-dex)
-   :select-mode?   (r get-meta-item  db extension-id item-namespace :select-mode?)})
-
-(a/reg-sub :item-lister/get-checkbox-props get-checkbox-props)
-
-(defn get-select-mode-props
+(defn menu-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  {:all-items-selected? (r all-items-selected? db extension-id item-namespace)
-   :any-item-selected?  (r any-item-selected?  db extension-id item-namespace)
-   :no-items-selected?  (r no-items-selected?  db extension-id item-namespace)
-   :item-actions        (r get-meta-item db extension-id item-namespace :item-actions)
-   :select-mode?        (r get-meta-item db extension-id item-namespace :select-mode?)})
-
-(a/reg-sub :item-lister/get-select-mode-props get-select-mode-props)
-
-(defn get-reorder-mode-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  {:reorder-mode?  (r get-meta-item db extension-id item-namespace :reorder-mode?)
-   :order-changed? false})
-
-(a/reg-sub :item-lister/get-reorder-mode-props get-reorder-mode-props)
-
-(defn get-search-mode-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  {:search-mode? (r get-meta-item db extension-id item-namespace :search-mode?)})
-
-(a/reg-sub :item-lister/get-search-mode-props get-search-mode-props)
-
-(defn get-menu-mode-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (let [reorder-mode? (r get-meta-item db extension-id item-namespace :reorder-mode?)
         search-mode?  (r get-meta-item db extension-id item-namespace :search-mode?)]
-       {:menu-mode?        (nor reorder-mode? search-mode?)
-        :new-item-options  (r get-meta-item               db extension-id item-namespace :new-item-options)
-        :no-items-to-show? (r no-items-to-show?           db extension-id)
-        :items-selectable? (r items-selectable?           db extension-id item-namespace)
-        :sortable?         (r get-meta-item               db extension-id item-namespace :sortable?)
-        :viewport-small?   (r environment/viewport-small? db)}))
+       (nor reorder-mode? search-mode?)))
 
-(a/reg-sub :item-lister/get-menu-mode-props get-menu-mode-props)
-
-(defn get-indicator-props
+(defn reorder-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  {:all-items-downloaded? (r all-items-downloaded? db extension-id item-namespace)
-   :downloading-items?    (r downloading-items?    db extension-id item-namespace)
-   :items-received?       (r items-received?       db extension-id item-namespace)
-   :no-items-to-show?     (r no-items-to-show?     db extension-id)})
+  (r get-meta-item db extension-id item-namespace :reorder-mode?))
 
-(a/reg-sub :item-lister/get-indicator-props get-indicator-props)
-
-(defn get-header-props
+(defn search-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  {:menu (r get-meta-item db extension-id item-namespace :menu)})
+  (r get-meta-item db extension-id item-namespace :search-mode?))
 
-(a/reg-sub :item-lister/get-header-props get-header-props)
-
-(defn get-body-props
+(defn select-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  {:list-element (r get-meta-item db extension-id item-namespace :list-element)})
+  (r get-meta-item db extension-id item-namespace :select-mode?))
 
-(a/reg-sub :item-lister/get-body-props get-body-props)
-
-(defn get-view-props
+(defn order-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (if-let [error-mode? (r get-meta-item db extension-id item-namespace :error-mode?)]
-          {}
-          {:description (r get-description db extension-id item-namespace)}))
+  (return false))
 
-(a/reg-sub :item-lister/get-view-props get-view-props)
+
+
+;; -- Public subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/all-items-downloaded? :my-extension :my-type]
+(a/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/downloading-items? :my-extension :my-type]
+(a/reg-sub :item-lister/downloading-items? downloading-items?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-downloaded-items :my-extension :my-type]
+(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/items-received? :my-extension :my-type]
+(a/reg-sub :item-lister/items-received? items-received?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/no-items-to-show? :my-extension :my-type]
+(a/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/all-items-selected? :my-extension :my-type]
+(a/reg-sub :item-lister/all-items-selected? all-items-selected?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/any-item-selected? :my-extension :my-type]
+(a/reg-sub :item-lister/any-item-selected? any-item-selected?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/no-items-selected? :my-extension :my-type]
+(a/reg-sub :item-lister/no-items-selected? no-items-selected?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/order-changed? :my-extension :my-type]
+(a/reg-sub :item-lister/order-changed? order-changed?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-description :my-extension :my-type]
+(a/reg-sub :item-lister/get-description get-description)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-item-actions :my-extension :my-type]
+(a/reg-sub :item-lister/get-item-actions get-item-actions)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-new-item-options :my-extension :my-type]
+(a/reg-sub :item-lister/get-new-item-options get-new-item-options)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/lister-disabled? :my-extension :my-type]
+(a/reg-sub :item-lister/lister-disabled? lister-disabled?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+; @param (integer) item-dex
+;
+; @usage
+;  [:item-lister/item-disabled? :my-extension :my-type 0]
+(a/reg-sub :item-lister/item-disabled? item-disabled?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+; @param (integer) item-dex
+;
+; @usage
+;  [:item-lister/item-selected? :my-extension :my-type 0]
+(a/reg-sub :item-lister/item-selected? item-selected?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/items-selectable? :my-extension :my-type]
+(a/reg-sub :item-lister/items-selectable? items-selectable?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/items-sortable? :my-extension :my-type]
+(a/reg-sub :item-lister/items-sortable? items-sortable?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/error-mode? :my-extension :my-type]
+(a/reg-sub :item-lister/error-mode? error-mode?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/menu-mode? :my-extension :my-type]
+(a/reg-sub :item-lister/menu-mode? menu-mode?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/reorder-mode? :my-extension :my-type]
+(a/reg-sub :item-lister/reorder-mode? reorder-mode?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/search-mode? :my-extension :my-type]
+(a/reg-sub :item-lister/search-mode? search-mode?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/select-mode? :my-extension :my-type]
+(a/reg-sub :item-lister/select-mode? select-mode?)

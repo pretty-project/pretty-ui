@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.5.7
+; Version: v0.3.0
+; Compatibility: x4.6.0
 
 
 
@@ -40,7 +40,7 @@
 (def browser-uri engine/browser-uri)
 (def request-id  engine/request-id)
 
-; app-plugins.item-browser.subs
+; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
 
 ; app-plugins.item-browser.views

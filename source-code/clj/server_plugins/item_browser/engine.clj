@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.6.0
+; Version: v0.6.6
 ; Compatibility: x4.6.0
 
 
@@ -58,7 +58,7 @@
   ;
   ; @return (maps in vector)
   [env extension-id item-namespace]
-  (let [collection-name (collection-name       extension-id)
+  (let [collection-name (collection-name       extension-id item-namespace)
         items-key       (keyword/add-namespace item-namespace :items)
         item-id         (pathom/env->param     env            :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
@@ -205,7 +205,7 @@
   ;
   ; @return (maps in vector)
   [extension-id item-namespace item-id]
-  (let [collection-name (engine/collection-name extension-id)
+  (let [collection-name (engine/collection-name extension-id item-namespace)
         path-key       @(a/subscribe [:item-browser/get-meta-item extension-id item-namespace :path-key])]
        (if-let [item (mongo-db/get-document-by-id collection-name item-id)]
                (get item (keyword/add-namespace item-namespace path-key)))))

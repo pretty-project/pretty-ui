@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.5.8
+; Version: v0.6.8
+; Compatibility: x4.6.0
 
 
 
@@ -72,6 +72,8 @@
 ; x.app-ui.progress-bar
 (def listen-to-process!         progress-bar/listen-to-process!)
 (def stop-listening-to-process! progress-bar/stop-listening-to-process!)
+(def fake-process!              progress-bar/fake-process!)
+(def stop-faking-process!       progress-bar/stop-faking-process!)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

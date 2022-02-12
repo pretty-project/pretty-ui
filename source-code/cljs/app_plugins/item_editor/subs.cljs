@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v1.0.8
+; Version: v1.2.0
 ; Compatibility: x4.6.0
 
 
@@ -40,16 +40,28 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-current-item-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-current-item-id db :my-extension :my-type)
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :item-id))
+
 (defn get-data-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  (r subs/get-data-item :my-extension)
+  ;  (r subs/get-data-item :my-extension :my-type)
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (get-in db [extension-id :item-editor/data-items]))
 
 (defn get-data-value
@@ -70,20 +82,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (string)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (r router/get-current-route-path-param db :item-id))
-
-(defn get-current-item-id
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r item-editor/get-current-item-id db :my-extension)
-  ;
-  ; @return (string)
-  [db [_ extension-id]]
-  (get-in db [extension-id :item-editor/meta-items :item-id]))
 
 (defn editing-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +102,7 @@
   ; - A get-current-item-id függvény visszatérési értéke, csak abban az esetben felhasználható,
   ;   amikor az item-editor plugin van betöltve, annak kilépése után az adatbázisban maradt item-id
   ;   érték nem felhasználható!
-  (let [derived-item-id (r get-derived-item-id db extension-id)]
+  (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
        (= item-id derived-item-id)))
 
 (defn get-editor-label
@@ -112,16 +115,17 @@
   [db [_ extension-id item-namespace]]
   (if-let [editor-label (r get-meta-item extension-id item-namespace :label)]
           (return editor-label)
-          (let [derived-item-id (r get-derived-item-id db extension-id)]
+          (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
                (engine/item-id->editor-label extension-id item-namespace derived-item-id))))
 
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (get-in db [extension-id :item-editor/data-items]))
 
 (defn export-current-item
@@ -132,7 +136,7 @@
   ;
   ; @return (namespaced map)
   [db [_ extension-id item-namespace]]
-  (let [current-item (r get-current-item db extension-id)]
+  (let [current-item (r get-current-item db extension-id item-namespace)]
        (db/document->namespaced-document current-item item-namespace)))
 
 (defn export-copy-item
@@ -143,7 +147,7 @@
   ;
   ; @return (namespaced map)
   [db [_ extension-id item-namespace]]
-  (let [current-item (r get-current-item db extension-id)]
+  (let [current-item (r get-current-item db extension-id item-namespace)]
        (db/document->namespaced-document current-item item-namespace)))
 
 (defn synchronizing?
@@ -167,21 +171,6 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :error-mode?))
 
-(defn editor-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [item-received? (r get-meta-item  db extension-id item-namespace :item-received?)
-        synchronizing? (r synchronizing? db extension-id item-namespace)]
-       ; Azért szükséges vizsgálni az {:item-received? ...} tulajdonság értékét, hogy
-       ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-       ; a szinkronizálás!
-       (or (not item-received?) synchronizing?)))
-
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -190,67 +179,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)]
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)]
        (engine/item-id->new-item? extension-id item-namespace current-item-id)))
-
-(defn get-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (get-in db [extension-id :item-editor/backup-items item-id]))
-
-(defn export-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [db [_ extension-id item-namespace item-id]]
-  (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
-       (db/document->namespaced-document backup-item item-namespace)))
-
-(defn get-local-changes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (let [current-item-id (r get-current-item-id db extension-id)]
-       (get-in db [extension-id :item-editor/local-changes current-item-id])))
-
-(defn get-recovered-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)
-        backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)
-        local-changes   (r get-local-changes   db extension-id)]
-       (merge backup-item local-changes)))
-
-(defn item-changed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)
-        current-item    (r get-current-item    db extension-id)
-        backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
-       (not= current-item backup-item)))
 
 (defn download-suggestions?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -285,6 +215,83 @@
   [db [_ extension-id item-namespace]]
   (or (r download-suggestions? db extension-id item-namespace)
       (r download-item?        db extension-id item-namespace)))
+
+(defn editor-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (boolean (if-let [download-data? (r download-data? db extension-id item-namespace)]
+                   (let [data-received? (r get-meta-item  db extension-id item-namespace :data-received?)
+                         synchronizing? (r synchronizing? db extension-id item-namespace)]
+                        ; XXX#3219
+                        ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
+                        ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
+                        ; a szinkronizálás!
+                        (or synchronizing? (not data-received?))))))
+
+(defn get-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (get-in db [extension-id :item-editor/backup-items item-id]))
+
+(defn export-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace item-id]]
+  (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
+       (db/document->namespaced-document backup-item item-namespace)))
+
+(defn get-local-changes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)]
+       (get-in db [extension-id :item-editor/local-changes current-item-id])))
+
+(defn get-recovered-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
+        backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)
+        local-changes   (r get-local-changes   db extension-id item-namespace)]
+       (merge backup-item local-changes)))
+
+(defn item-changed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
+        current-item    (r get-current-item    db extension-id item-namespace)
+        backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
+       (not= current-item backup-item)))
 
 (defn route-handled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -336,30 +343,51 @@
 ;; -- Public subscriptions ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
 ;  [:item-editor/get-data-item :my-extension :my-type]
 (a/reg-sub :item-editor/get-data-item get-data-item)
 
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
 ;  [:item-editor/get-data-value :my-extension :my-type]
 (a/reg-sub :item-editor/get-data-value get-data-value)
 
-; @usage
-;  [:item-editor/error-mode? :my-extension :my-type]
-(a/reg-sub :item-editor/error-mode? error-mode?)
-
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
 ;  [:item-editor/editor-disabled? :my-extension :my-type]
 (a/reg-sub :item-editor/editor-disabled? editor-disabled?)
 
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
-;  [:item-editor/new-item? :my-extension :my-type]
-(a/reg-sub :item-editor/new-item? new-item?)
+;  [:item-editor/error-mode? :my-extension :my-type]
+(a/reg-sub :item-editor/error-mode? error-mode?)
 
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/form-completed? :my-extension :my-type]
+(a/reg-sub :item-editor/form-completed? form-completed?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
 ;  [:item-editor/get-description :my-extension :my-type]
 (a/reg-sub :item-editor/get-description get-description)
 
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
 ; @usage
-;  [:item-editor/form-completed? :my-extension :my-type]
-(a/reg-sub :item-editor/form-completed? form-completed?)
+;  [:item-editor/new-item? :my-extension :my-type]
+(a/reg-sub :item-editor/new-item? new-item?)

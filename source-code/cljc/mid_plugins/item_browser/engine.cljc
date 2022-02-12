@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.5.0
+; Version: v0.5.4
 ; Compatibility: x4.6.0
 
 
@@ -144,14 +144,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/collection-name :my-extension)
+  ;  (engine/collection-name :my-extension :my-type)
   ;  =>
   ;  "my-extension"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (name extension-id))
 
 (defn transfer-id
@@ -211,28 +212,30 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/route-template :my-extension)
+  ;  (engine/route-template :my-extension :my-type)
   ;  =>
   ;  "/@app-home/my-extension"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (str "/@app-home/" (name extension-id)))
 
 (defn extended-route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/extended-route-template :my-extension)
+  ;  (engine/extended-route-template :my-extension :my-type)
   ;  =>
   ;  "/@app-home/my-extension/:item-id"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (str "/@app-home/" (name extension-id)
        "/:item-id"))
 
@@ -263,11 +266,11 @@
   ; @example
   ;  (engine/item-clicked-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension.my-type-browser/->item-clicked]
+  ;  [:my-extension.my-type-browser/item-clicked]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
   (let [event-id (keyword (str (name extension-id)   "."
                                (name item-namespace) "-browser")
-                          "->item-clicked")]
+                          "item-clicked")]
        [event-id]))

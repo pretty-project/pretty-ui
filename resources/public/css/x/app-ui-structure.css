@@ -466,7 +466,6 @@
 /***** Progress-bar *****/
 
 #x-app-progress-bar {
-  height: 6px;
   left: 0;
   position: fixed;
   top: 0;
@@ -474,7 +473,6 @@
 
 #x-app-progress-bar--process-progress {
   background-color: var( --border-color-primary );
-  height: 100%;
   transition: width .2s ease-in-out;
   width: 0% }
 

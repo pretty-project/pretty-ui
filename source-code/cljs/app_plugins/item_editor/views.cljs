@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.7.8
-; Compatibility: x4.5.6
+; Version: v0.9.0
+; Compatibility: x4.6.0
 
 
 
@@ -37,10 +37,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
+        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
        [elements/button ::delete-item-button
                         {:tooltip :delete! :preset :delete-icon-button
-                         :disabled? editor-disabled?
+                         :disabled? (or editor-disabled? error-mode?)
                          :on-click  [:item-editor/delete-item! extension-id item-namespace]}]))
 
 (defn copy-item-button
@@ -52,10 +53,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
+        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
        [elements/button ::copy-item-button
                         {:tooltip :duplicate! :preset :duplicate-icon-button
-                         :disabled? editor-disabled?
+                         :disabled? (or editor-disabled? error-mode?)
                          :on-click  [:item-editor/duplicate-item! extension-id item-namespace]}]))
 
 (defn save-item-button
@@ -68,10 +70,11 @@
   ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
+        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])
         form-completed?  @(a/subscribe [:item-editor/form-completed?  extension-id item-namespace])]
        [elements/button ::save-item-button
                         {:tooltip :save! :preset :save-icon-button
-                         :disabled? (or (not form-completed?) editor-disabled?)
+                         :disabled? (or (not form-completed?) editor-disabled? error-mode?)
                          :on-click [:item-editor/save-item! extension-id item-namespace]}]))
 
 
@@ -100,9 +103,11 @@
   ;  {:name (metamorphic-content)}
   ;
   ; @return (component)
-  [_ _ {:keys [name]}]
-  [elements/label ::named-item-label
-                  {:content name :font-weight :extra-bold :font-size :l}])
+  [extension-id item-namespace {:keys [name]}]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+       [elements/label ::named-item-label
+                       {:content name :font-weight :extra-bold :font-size :l
+                        :color (if editor-disabled? :highlight :default)}]))
 
 (defn unnamed-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -223,12 +228,24 @@
 ;; -- Input components --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn input-group-header
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [item-editor/input-group-header :my-extension :my-type {...}]
+  ;
+  ; @return (component)
+  [extension-id item-namespace {:keys [label]}]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+       [layouts/input-group-header {:label label :color (if editor-disabled? :highlight :default)}]))
+
 (defn description-field
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @usage
-  ;  [item-editor/color-stamp :my-extension :my-type]
+  ;  [item-editor/description-field :my-extension :my-type]
   ;
   ; @return (component)
   [extension-id item-namespace]
@@ -363,7 +380,7 @@
   ; @return (component)
   [extension-id item-namespace view-props]
   (let [description @(a/subscribe [:item-editor/get-description extension-id item-namespace])]
-       (if-let [error-mode? @(a/subscribe [:item-editor/error-mode?     extension-id item-namespace])]
+       (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
                [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
                                                :header [header     extension-id item-namespace view-props]}]
                [layouts/layout-a extension-id {:description description

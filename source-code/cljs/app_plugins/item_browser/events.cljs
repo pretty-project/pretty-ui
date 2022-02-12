@@ -43,9 +43,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :error-mode?]))
 
 (defn derive-current-item-id!
@@ -117,7 +118,7 @@
                  document-id (get document :id)]
                 (assoc-in db [extension-id :item-browser/data-items document-id] document))
            ; If the received document is NOT valid ...
-           (r set-error-mode! db extension-id))))
+           (r set-error-mode! db extension-id item-namespace))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -139,7 +140,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
-  (as-> db % (r reset-browser!         % extension-id)
+  (as-> db % (r reset-browser!         % extension-id item-namespace)
              (r store-current-item-id! % extension-id item-namespace browser-props)
              (r load-lister!           % extension-id item-namespace)))
 

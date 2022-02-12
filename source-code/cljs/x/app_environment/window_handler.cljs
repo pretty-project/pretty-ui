@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.30
 ; Description:
-; Version: v0.7.6
-; Compatibility: x4.5.8
+; Version: v0.8.0
+; Compatibility: x4.6.0
 
 
 
@@ -69,6 +69,10 @@
   (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
        (boolean browser-online?)))
 
+; @usage
+;  [:environment/browser-online?]
+(a/reg-sub :environment/browser-online? browser-online?)
+
 (defn browser-offline?
   ; @usage
   ;  (r environment/browser-offline? db)
@@ -77,6 +81,10 @@
   [db _]
   (let [browser-online? (get-in db (db/meta-item-path :environment/window-data :browser-online?))]
        (not browser-online?)))
+
+; @usage
+;  [:environment/browser-offline?]
+(a/reg-sub :environment/browser-offline? browser-offline?)
 
 
 

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.22
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.5
+; Version: v0.4.0
+; Compatibility: x4.6.0
 
 
 
@@ -25,9 +25,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (get-in db [extension-id :item-browser/meta-items]))
 
 (defn get-meta-item

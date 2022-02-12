@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.7.6
-; Compatibility: x4.5.9
+; Compatibility: x4.6.0
 
 
 
@@ -39,7 +39,7 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
-  {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id)
+  {:downloaded-item-count (r subs/get-downloaded-item-count db extension-id item-namespace)
    :download-limit        (r subs/get-meta-item             db extension-id item-namespace :download-limit)
    :order-by              (r subs/get-meta-item             db extension-id item-namespace :order-by)
    :reload-items?         (r subs/get-meta-item             db extension-id item-namespace :reload-mode?)

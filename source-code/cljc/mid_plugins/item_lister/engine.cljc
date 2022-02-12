@@ -6,7 +6,7 @@
 ; Created: 2021.11.23
 ; Description:
 ; Version: v0.5.6
-; Compatibility: x4.5.8
+; Compatibility: x4.6.0
 
 
 
@@ -126,14 +126,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/collection-name :my-extension)
+  ;  (engine/collection-name :my-extension :my-type)
   ;  =>
   ;  "my-extension"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (name extension-id))
 
 (defn new-item-uri
@@ -190,14 +191,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/route-template :my-extension)
+  ;  (engine/route-template :my-extension :my-type)
   ;  =>
   ;  "/@app-home/my-extension"
   ;
   ; @return (keyword)
-  [extension-id]
+  [extension-id _]
   (str "/@app-home/" (name extension-id)))
 
 (defn add-new-item-event
@@ -265,13 +267,13 @@
   ; @example
   ;  (engine/item-clicked-event :my-namespace :my-type 0 {...})
   ;  =>
-  ;  [:my-namespace.my-type-lister/->item-clicked 0 {...}]
+  ;  [:my-namespace.my-type-lister/item-clicked 0 {...}]
   ;
   ; @return (event-vector)
   [extension-id item-namespace item-dex item]
   (let [event-id (keyword (str (name extension-id)   "."
                                (name item-namespace) "-lister")
-                          "->item-clicked")]
+                          "item-clicked")]
        [event-id item-dex item]))
 
 (defn item-right-clicked-event
@@ -285,11 +287,11 @@
   ; @example
   ;  (engine/item-right-clicked-event :my-namespace :my-type 0 {...})
   ;  =>
-  ;  [:my-namespace.my-type-lister/->item-right-clicked 0 {...}]
+  ;  [:my-namespace.my-type-lister/item-right-clicked 0 {...}]
   ;
   ; @return (event-vector)
   [extension-id item-namespace item-dex item]
   (let [event-id (keyword (str (name extension-id)   "."
                                (name item-namespace) "-lister")
-                          "->item-right-clicked")]
+                          "item-right-clicked")]
        [event-id item-dex item]))

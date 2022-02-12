@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.5.6
+; Compatibility: x4.6.0
 
 
 
@@ -35,7 +35,7 @@
   [:debug (if (r subs/download-item? db extension-id item-namespace)
               ; If download item ...
               (let [resolver-id     (engine/resolver-id extension-id item-namespace :get)
-                    current-item-id (r subs/get-current-item-id db extension-id)]
+                    current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
                   `(~resolver-id ~{:item-id current-item-id})))
           (if (r subs/download-suggestions? db extension-id item-namespace)
               ; If download suggestions ...
@@ -65,7 +65,7 @@
   ; @return (vector)
   [db [_ extension-id item-namespace]]
   (let [mutation-name   (engine/mutation-name          extension-id item-namespace :delete)
-        current-item-id (r subs/get-current-item-id db extension-id)]
+        current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item-id current-item-id})]))
 
 (defn get-undo-delete-query

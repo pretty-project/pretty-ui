@@ -142,7 +142,7 @@
                :get-value-f  return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
-              ; A button elemnél is alkalmazott tulajdonságok csak akkor részei a select elem
+              ; A button elemre is ható tulajdonságok csak akkor részei a select elem
               ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
               (if-not as-button? {:layout :row})
               (param select-props)

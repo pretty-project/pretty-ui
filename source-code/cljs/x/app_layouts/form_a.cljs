@@ -58,25 +58,28 @@
 (defn input-group-label
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ;  {:label (metamorphic-content)}
+  ;  {:color (keyword)(opt)
+  ;   :content (metamorphic-content)}
   ;
   ; @return (component)
   ([label-props]
    [input-group-label (a/id) label-props])
 
-  ([label-id {:keys [content]}]
+  ([label-id {:keys [content color]}]
    [elements/label label-id
-                   {:font-size :m :font-weight :extra-bold :indent :both :layout :fit :content content}]))
+                   {:font-size :m :font-weight :extra-bold :indent :both :layout :fit
+                    :color color :content content}]))
 
 (defn input-group-header
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
-  ;  {:label (metamorphic-content)}
+  ;  {:color (keyword)(opt)
+  ;   :label (metamorphic-content)}
   ;
   ; @return (component)
   ([header-props]
    [input-group-header (a/id) header-props])
 
-  ([header-id {:keys [label]}]
+  ([header-id {:keys [color label]}]
    [elements/row header-id
-                 {:horizontal-align :left :content [input-group-label {:content label}]}]))
+                 {:horizontal-align :left :content [input-group-label {:color color :content label}]}]))

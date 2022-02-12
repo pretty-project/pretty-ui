@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.5.7
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -113,7 +113,7 @@
   ;  {:routed? (boolean)}
   [_ [_ extension-id item-namespace {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
-                                  {:route-template (engine/route-template     extension-id)
+                                  {:route-template (engine/route-template     extension-id item-namespace)
                                    :client-event   [:item-lister/load-lister! extension-id item-namespace]
                                    :restricted?    true}]))
 

@@ -148,7 +148,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [:div (layouts/input-column-attributes)
-        [layouts/input-group-header {:label :description}]
+        [item-editor/input-group-header :clients :client {:label :description}]
         [:div (layouts/input-block-attributes {:ratio 100})
               [item-editor/description-field :clients :client]]])
 
@@ -172,12 +172,12 @@
        [client-colors]
        [elements/horizontal-separator {:size :xxl}]
        ; Basic info
-       [layouts/input-group-header {:label :basic-info}]
+       [item-editor/input-group-header :clients :client {:label :basic-info}]
        [client-name]
        [client-primary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; More info
-       [layouts/input-group-header {:label :more-info}]
+       [item-editor/input-group-header :clients :client {:label :more-info}]
        [client-secondary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; Description

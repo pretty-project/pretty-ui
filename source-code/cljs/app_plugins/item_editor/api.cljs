@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.2
+; Version: v0.4.8
 ; Compatibility: x4.6.0
 
 
@@ -41,6 +41,7 @@
 (def item-label         views/item-label)
 (def color-selector     views/color-selector)
 (def color-stamp        views/color-stamp)
+(def input-group-header views/input-group-header)
 (def description-field  views/description-field)
 (def error-body         views/error-body)
 (def header             views/header)

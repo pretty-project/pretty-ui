@@ -6,7 +6,7 @@
 ; Created: 2022.01.15
 ; Description:
 ; Version: v0.7.6
-; Compatibility: x4.5.6
+; Compatibility: x4.6.0
 
 
 
@@ -32,7 +32,7 @@
   ; @return (vector)
   [db [_ extension-id item-namespace]]
   (let [resolver-id     (engine/resolver-id extension-id item-namespace :get)
-        current-item-id (r subs/get-current-item-id db extension-id)]
+        current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:debug `(~resolver-id ~{:item-id current-item-id})]))
 
 (defn get-delete-item-query

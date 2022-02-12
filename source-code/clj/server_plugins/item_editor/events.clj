@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.5.6
-; Compatibility: x4.5.7
+; Version: v0.6.0
+; Compatibility: x4.6.0
 
 
 
@@ -100,8 +100,8 @@
   ;  {:routed? (boolean)}
   [_ [_ extension-id item-namespace {:keys [routed?]}]]
   (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
-                                  {:route-template (engine/route-template        extension-id)
-                                   :route-parent   (engine/parent-uri            extension-id)
+                                  {:route-template (engine/route-template        extension-id item-namespace)
+                                   :route-parent   (engine/parent-uri            extension-id item-namespace)
                                    :client-event   [:item-editor/load-editor!    extension-id item-namespace]
                                    :restricted?    true}]))
 

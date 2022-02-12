@@ -19,6 +19,7 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
+              [x.app-ui.api      :as ui]
               [x.app-environment.api           :as environment]
               [app-plugins.item-lister.dialogs :as dialogs]
               [app-plugins.item-lister.engine  :as engine]
@@ -32,64 +33,60 @@
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-search-mode!
-  ; @param (keyword) extension-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r item-lister/toggle-search-mode! db :my-extension)
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
 
-; @usage
-;  [:item-lister/toggle-search-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-search-mode! toggle-search-mode!)
 
 (defn toggle-select-mode!
-  ; @param (keyword) extension-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r item-lister/toggle-select-mode! db :my-extension)
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
              (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
 
-; @usage
-;  [:item-lister/toggle-select-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
 (defn toggle-reorder-mode!
-  ; @param (keyword) extension-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r item-lister/toggle-reorder-mode! db :my-extension)
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
 
-; @usage
-;  [:item-lister/toggle-reorder-mode! :my-extension]
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
 
 (defn reset-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (-> db (dissoc-in [extension-id :item-lister/meta-items :error-mode?])
          (dissoc-in [extension-id :item-lister/meta-items :select-mode?])
          (dissoc-in [extension-id :item-lister/meta-items :selected-items])))
@@ -98,9 +95,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (-> db (dissoc-in [extension-id :item-lister/data-items])
          (dissoc-in [extension-id :item-lister/meta-items :document-count])
          (dissoc-in [extension-id :item-lister/meta-items :received-count])
@@ -110,27 +108,30 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :search-term]))
 
 (defn reset-selections!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
 (defn toggle-reload-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (update-in db [extension-id :item-lister/meta-items :reload-mode?] not))
 
 (defn select-all-items!
@@ -141,7 +142,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [downloaded-items (r subs/get-downloaded-items db extension-id)
+  (let [downloaded-items (r subs/get-downloaded-items db extension-id item-namespace)
         item-selections  (vector/dex-range downloaded-items)]
        (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
 
@@ -151,9 +152,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
 (a/reg-event-db :item-lister/unselect-all-items! unselect-all-items!)
@@ -210,9 +212,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :disabled-items]))
 
 (defn disable-selected-items!
@@ -254,7 +257,7 @@
 
 (a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
 
-(defn- ->items-deleted
+(defn- items-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -274,11 +277,11 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace filter-pattern]]
-  (as-> db % (r reset-downloads!  % extension-id)
-             (r reset-selections! % extension-id)
+  (as-> db % (r reset-downloads!  % extension-id item-namespace)
+             (r reset-selections! % extension-id item-namespace)
              (assoc-in % [extension-id :item-lister/meta-items :active-filter] filter-pattern)))
 
-(defn ->items-received
+(defn items-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -344,7 +347,7 @@
   [db [_ extension-id item-namespace server-response]]
   (as-> db % (r store-received-items!          % extension-id item-namespace server-response)
              (r store-received-document-count! % extension-id item-namespace server-response)
-             (r ->items-received               % extension-id item-namespace)))
+             (r items-received                 % extension-id item-namespace)))
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -377,7 +380,9 @@
              ; A művelet akkor tekinthető befejezettnek, amikor a lista állapota frissült
              ; a kliens-oldalon, ezért a receive-reloaded-items! függvény szünteti meg a listaelemek
              ; {:disabled? true} állapotát!
-             (r enable-all-items! % extension-id item-namespace)))
+             (r enable-all-items! % extension-id item-namespace)
+             (r reset-selections! % extension-id item-namespace)
+             (r ui/stop-faking-process! %)))
 
 (a/reg-event-db :item-lister/receive-reloaded-items! receive-reloaded-items!)
 
@@ -392,9 +397,9 @@
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (as-> db % (r reset-lister!    % extension-id)
-             (r reset-downloads! % extension-id)
-             (r reset-search!    % extension-id)))
+  (as-> db % (r reset-lister!    % extension-id item-namespace)
+             (r reset-downloads! % extension-id item-namespace)
+             (r reset-search!    % extension-id item-namespace)))
 
 
 
@@ -447,7 +452,7 @@
       ;   ugyanazok az elemek töltődnek le!
       ; - Ha pl. a kliens-oldalon az újratöltés előtt 42 elem van letöltve és a {:download-limit ...}
       ;   értéke 20, akkor az esemény az 1. - 60. elemeket kéri le a szerverről.
-      (let [db (r toggle-reload-mode! db extension-id)]
+      (let [db (r toggle-reload-mode! db extension-id item-namespace)]
            [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true
                                :on-success [:item-lister/receive-reloaded-items! extension-id item-namespace]
@@ -461,11 +466,12 @@
   ; @usage
   ;  [:item-lister/delete-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r disable-selected-items! db extension-id item-namespace)
+      {:db (as-> db % (r disable-selected-items! % extension-id item-namespace)
+                      (r ui/fake-process! % 5))
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                     {;:display-progress? true
-                                     :on-success [:item-lister/items-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                     :on-success [:item-lister/items-deleted           extension-id item-namespace]
+                                     :on-failure [:item-lister/items-deleting-failured extension-id item-namespace]
                                      :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
 
 (a/reg-event-fx
@@ -550,7 +556,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (r reset-downloads!          db extension-id)
+      {:db       (r reset-downloads!          db extension-id item-namespace)
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
@@ -560,7 +566,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db       (r reset-downloads!          db extension-id)
+      {:db       (r reset-downloads!          db extension-id item-namespace)
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
 (a/reg-event-fx
@@ -582,9 +588,19 @@
   ; @param (map) server-response
   (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
       (let [item-ids (engine/server-response->deleted-item-ids extension-id item-namespace server-response)]
-           {:db (r ->items-deleted db extension-id item-namespace item-ids)
+           {:db (r items-deleted db extension-id item-namespace item-ids)
             :dispatch-n [(r dialogs/render-items-deleted-dialog! cofx extension-id item-namespace item-ids)
                          [:item-lister/reload-items!                  extension-id item-namespace]]})))
+
+(a/reg-event-fx
+  :item-lister/items-deleting-failured
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r ui/stop-faking-process! db)
+       :dispatch [:ui/blow-bubble! {:body :failed-to-delete}]}))
 
 (a/reg-event-fx
   :item-lister/items-duplicated
@@ -611,7 +627,8 @@
       ; XXX#5660
       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
       (if (r environment/key-pressed? db 16)
-          {:db (r toggle-item-selection! db extension-id item-namespace item-dex)}
+          (if-not (r subs/lister-disabled? db extension-id item-namespace)
+                  {:db (r toggle-item-selection! db extension-id item-namespace item-dex)})
           (engine/item-clicked-event extension-id item-namespace item-dex item))))
 
 (a/reg-event-fx

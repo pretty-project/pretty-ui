@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.7
+; Version: v0.7.2
+; Compatibility: x4.6.0
 
 
 
@@ -14,9 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.views
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-db.api         :as db]
-              [x.app-components.api :as components]
+    (:require [x.app-components.api :as components]
               [x.app-core.api       :as a]
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
@@ -39,11 +37,11 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [error-mode? @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
-        %           @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
+  (let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])
+        at-home?    @(a/subscribe [:item-browser/at-home?   extension-id item-namespace])]
        [elements/button ::go-home-button
                         ; A go-home-button gomb az item-lister plugin {:error-mode? true} állapotában is használható!
-                        {:disabled? (and (:at-home? %) (not error-mode?))
+                        {:disabled? (and at-home? (not error-mode?))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
 
@@ -56,9 +54,9 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% @(a/subscribe [:item-browser/get-header-props extension-id item-namespace])]
+  (let [at-home? @(a/subscribe [:item-browser/at-home? extension-id item-namespace])]
        [elements/button ::go-up-button
-                        {:disabled? (:at-home? %)
+                        {:disabled? at-home?
                          :on-click  [:item-browser/go-up! extension-id item-namespace]
                          :preset    :back-icon-button}]))
 
@@ -111,8 +109,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [% @(a/subscribe [:item-lister/get-menu-mode-props extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (:menu-mode? %)}
+  (let [menu-mode? @(a/subscribe [:item-lister/menu-mode? extension-id item-namespace])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
                                          [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn header
@@ -163,18 +161,6 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id item-namespace {:keys [description] :as view-props}]
-  (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
-          ; If error-mode is enabled ...
-          [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
-                                          :header [header     extension-id item-namespace view-props]}]
-          ; If error-mode is NOT enabled ...
-          [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
-                                          :header [header extension-id item-namespace view-props]
-                                          :description description}]))
-
 (defn view
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -198,6 +184,12 @@
   ;
   ; @return (component)
   [extension-id item-namespace view-props]
-  [components/subscriber {:base-props view-props
-                          :component  [view-structure               extension-id item-namespace]
-                          :subscriber [:item-browser/get-view-props extension-id item-namespace]}])
+  (let [description @(a/subscribe [:item-browser/get-description extension-id item-namespace])]
+       (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+               ; If error-mode is enabled ...
+               [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
+                                               :header [header     extension-id item-namespace view-props]}]
+               ; If error-mode is NOT enabled ...
+               [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
+                                               :header [header extension-id item-namespace view-props]
+                                               :description description}])))

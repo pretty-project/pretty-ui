@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.0
-; Compatibility: x4.5.5
+; Version: v0.6.8
+; Compatibility: x4.6.0
 
 
 
@@ -39,15 +39,16 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-root-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn get-current-item-id
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @usage
+  ;  (r item-browser/get-current-item-id db :my-extension :my-type)
+  ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :root-item-id))
+  (r get-meta-item db extension-id item-namespace :item-id))
 
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -59,15 +60,15 @@
   [db [_ extension-id item-namespace]]
   (r router/get-current-route-path-param db :item-id))
 
-(defn get-current-item-id
-  ; @param (keyword) extension-id
+(defn get-root-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r item-browser/get-current-item-id db :my-extension)
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (string)
-  [db [_ extension-id]]
-  (get-in db [extension-id :item-browser/meta-items :item-id]))
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :root-item-id))
 
 (defn get-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,11 +78,9 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
         label-key       (r get-meta-item       db extension-id item-namespace :label-key)]
        (get-in db [extension-id :item-browser/data-items current-item-id label-key])))
-
-(a/reg-sub :item-browser/get-item-label get-item-label)
 
 (defn get-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,7 +90,7 @@
   ;
   ; @return (maps in vector)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id)
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
         path-key        (r get-meta-item       db extension-id item-namespace :path-key)
         item-path       (get-in db [extension-id :item-browser/data-items current-item-id path-key])]
        (vec item-path)))
@@ -100,6 +99,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
@@ -110,6 +110,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
@@ -139,29 +140,28 @@
   [db [_ extension-id item-namespace]]
   (r route-handled? db extension-id item-namespace))
 
-(defn get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  ;  {:at-home? (boolean)
-  ;   :item-path (maps in vector)}
-  [db [_ extension-id item-namespace]]
-  {:at-home?  (r at-home?      db extension-id item-namespace)
-   :item-path (r get-item-path db extension-id item-namespace)})
 
-(a/reg-sub :item-browser/get-header-props get-header-props)
 
-(defn get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  {:description (r get-description db extension-id item-namespace)})
+;; -- Public subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
 
-(a/reg-sub :item-browser/get-view-props get-view-props)
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-browser/at-home? :my-extension :my-type]
+(a/reg-sub :item-browser/at-home? at-home?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-browser/get-description :my-extension :my-type]
+(a/reg-sub :item-browser/get-description get-description)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-browser/get-item-label :my-extension :my-type]
+(a/reg-sub :item-browser/get-item-label get-item-label)

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.7
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -231,14 +231,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/collection-name :my-extension)
+  ;  (engine/collection-name :my-extension :my-type)
   ;  =>
   ;  "my-extension"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (name extension-id))
 
 (defn transfer-id
@@ -279,14 +280,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/route-template :my-extension)
+  ;  (engine/route-template :my-extension :my-type)
   ;  =>
   ;  "/@app-home/my-extension/:item-id"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (str "/@app-home/" (name extension-id)
        "/:item-id"))
 
@@ -294,14 +296,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (engine/parent-uri :my-extension)
+  ;  (engine/parent-uri :my-extension :my-type)
   ;  =>
   ;  "/@app-home/my-extension"
   ;
   ; @return (string)
-  [extension-id]
+  [extension-id _]
   (str "/@app-home/" (name extension-id)))
 
 (defn dialog-id

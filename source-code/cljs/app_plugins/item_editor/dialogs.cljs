@@ -40,9 +40,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (component)
-  [extension-id]
+  [extension-id _]
   [elements/color-picker ::color-picker
                          {:initial-options COLORS
                           :value-path [extension-id :item-editor/data-items :colors]}])
@@ -106,7 +107,7 @@
   ; @param (keyword) item-namespace
   [_ [_ extension-id item-namespace]]
   [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                  {:body   [color-picker-dialog-body extension-id]
+                  {:body   [color-picker-dialog-body extension-id item-namespace]
                   ;:header #'ui/close-popup-header
                    :min-width :none}])
 
@@ -118,7 +119,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [{:keys [db]} [_ extension-id item-namespace]]
-  (let [current-item-id (r subs/get-current-item-id db extension-id)]
+  (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
                          {:body       [undo-delete-dialog-body           extension-id item-namespace current-item-id]
                           :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}]))
@@ -129,7 +130,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [{:keys [db]} [_ extension-id item-namespace]]
-  (let [current-item-id (r subs/get-current-item-id db extension-id)]
+  (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
                          {:body       [changes-discarded-dialog-body     extension-id item-namespace current-item-id]
                           :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}]))
