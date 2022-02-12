@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.8.4
+; Version: v2.8.6
 ; Compatibility: x4.6.0
 
 
@@ -25,7 +25,6 @@
 
 
 
-
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -34,7 +33,7 @@
 (def DEFAULT-REQUEST-TIMEOUT 15000)
 
 ; @constant (ms)
-(def DEFAULT-IDLE-TIMEOUT 500)
+(def DEFAULT-IDLE-TIMEOUT 250)
 
 
 

@@ -19,6 +19,7 @@
               [mid-fruits.validator :as validator]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
+              [x.app-ui.api         :as ui]
               [app-plugins.item-editor.dialogs :as dialogs]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.queries :as queries]
@@ -85,6 +86,27 @@
         backup-item     (r subs/get-backup-item     db extension-id item-namespace current-item-id)
         local-changes   (map/difference current-item backup-item)]
        (assoc-in db [extension-id :item-editor/local-changes current-item-id] local-changes)))
+
+(defn save-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (as-> db % (r backup-current-item! % extension-id item-namespace)
+             (r ui/fake-process!     % 25)))
+
+(defn delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ _ _]]
+  (r ui/fake-process! db 25))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -334,14 +356,9 @@
       ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
       ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
       ;   pontatlan visszaálltást okozhat!
-      {:db (r backup-current-item! db extension-id item-namespace)
+      {:db (r save-item! db extension-id item-namespace)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:display-progress? true
-                                     ; XXX#3701
-                                     ; Az on-success helyett on-stalled időzítés használatával elkerülhető,
-                                     ; hogy a felhasználói felület változásai túlságosan gyorsan kövessék
-                                     ; egymást, megnehezítve a felhasználó számára a események megértését
-                                     :on-stalled [:item-editor/go-up! extension-id item-namespace]
+                                    {:on-success [:item-editor/go-up! extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
                                      :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
 
@@ -353,12 +370,11 @@
   ; @usage
   ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
-                          ; XXX#3701
-                          :on-stalled [:item-editor/item-deleted extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                          :query      (r queries/get-delete-item-query db extension-id item-namespace)}]))
+      {:db (r delete-item! db extension-id item-namespace)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-editor/item-deleted extension-id item-namespace]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                     :query      (r queries/get-delete-item-query db extension-id item-namespace)}]}))
 
 (a/reg-event-fx
   :item-editor/duplicate-item!
@@ -368,11 +384,11 @@
   ; @usage
   ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-    [:sync/send-query! (engine/request-id extension-id item-namespace)
-                       {:display-progress? true
-                        :on-success [:item-editor/item-duplicated extension-id item-namespace]
-                        :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
-                        :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
+      [:sync/send-query! (engine/request-id extension-id item-namespace)
+                         {:display-progress? true
+                          :on-success [:item-editor/item-duplicated extension-id item-namespace]
+                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
+                          :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
 
 (a/reg-event-fx
   :item-editor/go-up!
@@ -419,7 +435,10 @@
       (if (r subs/download-data? db extension-id item-namespace)
           [:sync/send-query! (engine/request-id extension-id item-namespace)
                              {:display-progress? true
-                              :on-success [:item-editor/receive-item!          extension-id item-namespace]
+                              ; XXX#4057
+                              ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
+                              ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
+                              :on-stalled [:item-editor/receive-item!          extension-id item-namespace]
                               :query      (r queries/get-request-item-query db extension-id item-namespace)}])))
 
 (a/reg-event-fx

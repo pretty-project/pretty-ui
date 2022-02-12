@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-browser.api
     (:require [app-plugins.item-browser.events]
+              [app-plugins.item-browser.interacts]
               [app-plugins.item-browser.queries]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-browser.subs   :as subs]

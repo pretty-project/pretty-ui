@@ -13,9 +13,6 @@
 - ...
 
 
-# x4.5.7
-- Az item-lister és item-browser plugin mintájára ...
-  - A view komponensek önálló feliratkozással rendelkezzenek
-  - A subscription függvényeket nem kell átirányítani az api-n keresztül
 
+# x4.5.7
 - Az {:item-actions ...} tulajdonság nincs befejezve

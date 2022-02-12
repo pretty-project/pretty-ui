@@ -16,6 +16,7 @@
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
               [app-plugins.item-editor.events]
+              [app-plugins.item-editor.interacts]
               [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]

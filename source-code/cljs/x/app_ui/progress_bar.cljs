@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.10.26
 ; Description:
-; Version: v0.8.8
+; Version: v0.9.2
 ; Compatibility: x4.6.0
 
 
@@ -69,9 +69,12 @@
   ;
   ; @return (map)
   [db [_ process-id]]
-  (if (= process-id (get-in db (db/meta-item-path :ui/progress-bar :process-id)))
-      (dissoc-in db (db/meta-item-path :ui/progress-bar :process-id))
-      (return    db)))
+  ; Ha a progress-bar, még a process-id azonosítójú folyamatra figyelt, akkor befejezi a folyamat
+  ; figyelését és az esetlegesen beállított fake-progress értéket is törli.
+  (if-not (= process-id (get-in db (db/meta-item-path :ui/progress-bar :process-id)))
+          (return db)
+          (->     db (dissoc-in (db/meta-item-path :ui/progress-bar :process-id))
+                     (dissoc-in (db/meta-item-path :ui/progress-bar :fake-progress)))))
 
 ; @usage
 ;  [:ui/stop-listening-to-process! :my-request]
