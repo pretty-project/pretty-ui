@@ -1,5 +1,5 @@
 
-(ns app-extensions.clients.client-editor.events
+(ns app-extensions.clients.client-editor.effects
     (:require [x.app-core.api :as a :refer [r]]))
 
 

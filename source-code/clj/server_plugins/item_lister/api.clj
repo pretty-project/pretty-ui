@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.4
+; Version: v0.3.8
+; Compatibility: x4.6.0
 
 
 
@@ -15,6 +15,7 @@
 
 (ns server-plugins.item-lister.api
     (:require [server-plugins.item-lister.events]
+              [server-plugins.item-lister.effects]
               [server-plugins.item-lister.subs]
               [server-plugins.item-lister.engine :as engine]))
 

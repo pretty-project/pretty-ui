@@ -1,5 +1,5 @@
 
 (ns app-extensions.clients.client-lister.api
-    (:require [app-extensions.clients.client-lister.events]
+    (:require [app-extensions.clients.client-lister.effects]
               [app-extensions.clients.client-lister.subs]
               [app-extensions.clients.client-lister.views]))

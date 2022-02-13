@@ -13,6 +13,10 @@
 
 
 # x4.6.0
+- Az x modulok névterei is legyenek mappákra bontva amiben van subs events ...
+- Az x modulok is tárolják ugy az adatot, mint az extension [:core :load-handler/meta-items ...]
+
+
 - A ui-renderer az elemek megjelenítésekor több különálló alkalommal ír a re-frame db-be, ami nem jo
   mert sokszor ujrakalkulalodnak a subscription-ök, ha react-transition-el lenne megoldva az animálás,
   akkor nem kellene ennyire felbontani a render-eseményeket

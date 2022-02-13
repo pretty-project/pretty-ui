@@ -13,8 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-lister.events
-    (:require [mid-fruits.map :as map]))
+(ns mid-plugins.item-lister.events)
 
 
 

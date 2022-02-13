@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.8
-; Compatibility: x4.5.7
+; Version: v0.5.0
+; Compatibility: x4.6.0
 
 
 
@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-lister.api
     (:require [app-plugins.item-lister.dialogs]
+              [app-plugins.item-lister.effects]
               [app-plugins.item-lister.events]
               [app-plugins.item-lister.queries]
               [app-plugins.item-lister.subs]

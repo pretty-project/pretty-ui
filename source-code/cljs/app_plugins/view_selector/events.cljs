@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.6
+; Version: v0.7.6
+; Compatibility: x4.6.0
 
 
 
@@ -78,48 +78,11 @@
   [db [_ extension-id view-id]]
   (r set-current-view-id! db extension-id view-id))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @usage
 ;  [:view-selector/change-view! :my-extension :my-view]
 (a/reg-event-db :view-selector/change-view! change-view!)
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :view-selector/go-to!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) view-id
-  ;
-  ; @usage
-  ;  [:view-selector/go-to! :my-extension :my-view]
-  (fn [{:keys [db]} [_ extension-id view-id]]
-      (if (r subs/route-handled? db extension-id)
-          (let [target-route-string (engine/extended-route-string extension-id view-id)]
-               [:router/go-to! target-route-string])
-          [:view-selector/load-selector! extension-id {:view-id view-id}])))
-
-(a/reg-event-fx
-  :view-selector/load-selector!
-  ; @param (keyword) extension-id
-  ; @param (map)(opt) selector-props
-  ;  {:view-id (keyword)(opt)}
-  ;
-  ; @usage
-  ;  [:view-selector/load-selector! :my-extension]
-  ;
-  ; @usage
-  ;  [:view-selector/load-selector! :my-extension {...}]
-  ;
-  ; @usage
-  ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
-  (fn [{:keys [db]} [_ extension-id selector-props]]
-      (let [selector-label (r subs/get-meta-item db extension-id :label)]
-           {:db (r load-selector! db extension-id selector-props)
-            :dispatch-n [; XXX#3237
-                         (if (r subs/set-title? db extension-id)
-                             [:ui/set-title! selector-label])
-                         (engine/load-extension-event extension-id)]})))

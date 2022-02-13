@@ -1,15 +1,29 @@
 
-(ns app-extensions.storage.media-browser.events
+(ns app-extensions.storage.media-browser.effects
     (:require [app-fruits.window :as window]
               [mid-fruits.candy  :refer [param return]]
               [x.app-core.api    :as a :refer [r]]
               [x.app-media.api   :as media]
               [x.app-router.api  :as router]
               [x.app-ui.api      :as ui]
-              [app-extensions.storage.media-browser.dialogs :as dialogs]
               [app-extensions.storage.media-browser.queries :as queries]
               [app-extensions.storage.media-browser.subs    :as subs]
               [app-plugins.item-browser.api                 :as item-browser]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage.media-browser/load-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      (if (r subs/media-browser-mode? db) ; XXX#7157
+          (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
+                  [:storage.media-browser/render-browser!])
+          (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
+                  [:storage.media-picker/render-picker!]))))
 
 
 
@@ -49,9 +63,9 @@
 (a/reg-event-fx
   :storage.media-browser/rename-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [cofx [_ directory-item]]
+  (fn [_ [_ directory-item]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    (r dialogs/render-rename-directory-dialog! cofx directory-item)]}))
+                    [:storage.media-browser/render-rename-directory-dialog! directory-item]]}))
 
 (a/reg-event-fx
   :storage.media-browser/delete-directory!
@@ -92,9 +106,9 @@
 (a/reg-event-fx
   :storage.media-browser/rename-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [cofx [_ file-item]]
+  (fn [_ [_ file-item]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    (r dialogs/render-rename-file-dialog! cofx file-item)]}))
+                    [:storage.media-browser/render-rename-file-dialog! file-item]]}))
 
 (a/reg-event-fx
   :storage.media-browser/duplicate-file!
@@ -110,31 +124,16 @@
 (a/reg-event-fx
   :storage.media-lister/item-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db] :as cofx} [_ item-dex {:keys [id mime-type] :as media-item}]]
+  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as media-item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           (if (r subs/media-browser-mode? db)
-                                              (r dialogs/render-file-menu!    cofx media-item)
-                                              [:storage.media-picker/file-clicked  media-item]))))
+                                              [:storage.media-browser/render-file-menu! media-item]
+                                              [:storage.media-picker/file-clicked       media-item]))))
 
 (a/reg-event-fx
   :storage.media-lister/item-right-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db] :as cofx} [_ item-dex {:keys [mime-type] :as media-item}]]
+  (fn [{:keys [db]} [_ item-dex {:keys [mime-type] :as media-item}]]
       (if (r subs/media-browser-mode? db)
-          (case mime-type "storage/directory" (r dialogs/render-directory-menu! cofx media-item)
-                                              (r dialogs/render-file-menu!      cofx media-item)))))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage.media-browser/load-browser!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (if (r subs/media-browser-mode? db) ; XXX#7157
-          (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
-                  [:storage.media-browser/render-browser!])
-          (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
-                  [:storage.media-picker/render-picker!]))))
+          (case mime-type "storage/directory" [:storage.media-browser/render-directory-menu! media-item]
+                                              [:storage.media-browser/render-file-menu!      media-item]))))

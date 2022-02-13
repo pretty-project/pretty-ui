@@ -100,47 +100,49 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn render-color-picker-dialog!
+(a/reg-event-fx
+  :item-editor/render-color-picker-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [_ [_ extension-id item-namespace]]
-  [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                  {:body   [color-picker-dialog-body extension-id item-namespace]
-                  ;:header #'ui/close-popup-header
-                   :min-width :none}])
+  (fn [_ [_ extension-id item-namespace]]
+      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
+                      {:body   [color-picker-dialog-body extension-id item-namespace]
+                      ;:header #'ui/close-popup-header
+                       :min-width :none}]))
 
-(a/reg-event-fx :item-editor/render-color-picker-dialog! render-color-picker-dialog!)
-
-(defn render-undo-delete-dialog!
+(a/reg-event-fx
+  :item-editor/render-undo-delete-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [{:keys [db]} [_ extension-id item-namespace]]
-  (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
-       [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
-                         {:body       [undo-delete-dialog-body           extension-id item-namespace current-item-id]
-                          :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}]))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
+           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
+                             {:body       [undo-delete-dialog-body           extension-id item-namespace current-item-id]
+                              :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
-(defn render-changes-discarded-dialog!
+(a/reg-event-fx
+  :item-editor/render-changes-discarded-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [{:keys [db]} [_ extension-id item-namespace]]
-  (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
-       [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
-                         {:body       [changes-discarded-dialog-body     extension-id item-namespace current-item-id]
-                          :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}]))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
+           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
+                             {:body       [changes-discarded-dialog-body     extension-id item-namespace current-item-id]
+                              :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
-(defn render-edit-copy-dialog!
+(a/reg-event-fx
+  :item-editor/render-edit-copy-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) copy-id
-  [_ [_ extension-id item-namespace copy-id]]
-  [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-duplicated)
-                    {:body [item-duplicated-dialog-body extension-id item-namespace copy-id]}])
+  (fn [_ [_ extension-id item-namespace copy-id]]
+      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-duplicated)
+                        {:body [item-duplicated-dialog-body extension-id item-namespace copy-id]}]))

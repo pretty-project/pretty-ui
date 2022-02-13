@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.10.26
 ; Description:
-; Version: v0.9.2
+; Version: v1.0.4
 ; Compatibility: x4.6.0
 
 
@@ -105,6 +105,19 @@
 ; @usage
 ;  [:ui/stop-faking-process!]
 (a/reg-event-db :ui/stop-faking-process! stop-faking-process!)
+
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :ui/simulate-process!
+  ; @usage
+  ;  [:ui/simulate-process!]
+  (fn [{:keys [db]} [_ timeout]]
+      {:db (r fake-process! db 100)
+       :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}]}))
 
 
 

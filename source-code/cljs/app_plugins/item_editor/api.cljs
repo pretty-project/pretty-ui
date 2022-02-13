@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.0
 ; Compatibility: x4.6.0
 
 
@@ -15,8 +15,8 @@
 
 (ns app-plugins.item-editor.api
     (:require [app-plugins.item-editor.dialogs]
+              [app-plugins.item-editor.effects]
               [app-plugins.item-editor.events]
-              [app-plugins.item-editor.interacts]
               [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]

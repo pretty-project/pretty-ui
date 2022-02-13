@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.5.5
+; Version: v0.3.8
+; Compatibility: x4.6.0
 
 
 
@@ -15,6 +15,7 @@
 
 (ns server-plugins.item-editor.api
     (:require [server-plugins.item-editor.events]
+              [server-plugins.item-editor.effects]
               [server-plugins.item-editor.subs]
               [server-plugins.item-editor.engine    :as engine]
               [server-plugins.item-editor.resolvers :as resolvers]))

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.8.6
+; Version: v2.9.4
 ; Compatibility: x4.6.0
 
 
@@ -123,6 +123,17 @@
   [db [_ request-id]]
   (get-in db (db/path :sync/requests request-id :aborted?)))
 
+(defn- request-resent?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:sent-time (string)}
+  ;
+  ; @return (boolean)
+  [db [_ request-id {:keys [sent-time]}]]
+  (not= sent-time (get-in db (db/path :sync/requests request-id :sent-time))))
+
 (defn listening-to-request?
   ; @param (keyword) request-id
   ;
@@ -181,12 +192,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:on-stalled (metamorphic-event)(opt)
+  ;   :request-successed? (boolean)(opt)}
   ; @param (*) server-response
   ;
   ; @return (metamorphic-event)
-  [db [_ request-id server-response]]
-  (if-let [on-stalled-event (get-in db (db/path :sync/requests request-id :on-stalled))]
-          (a/metamorphic-event<-params on-stalled-event server-response)))
+  [db [_ request-id {:keys [on-stalled request-successed?]} server-response]]
+  ; Az {:on-stalled ...} esemény használható az {:on-success ...} esemény alternatívájaként,
+  ; mert hibás teljesítés esetén nem történik meg.
+  (if (and on-stalled request-successed?)
+      (a/metamorphic-event<-params on-stalled server-response)))
 
 (defn- get-request-idle-timeout
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -315,20 +331,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:display-progress? (boolean)(opt)}
   ;
   ; @return (map)
-  [db [_ request-id]]
-  (if-not (r request-active? db request-id)
-          ; Ha a [:sync/request-stalled ...] esemény megtörténése előtt a request NEM lett újra elküldve, ...
-          (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
-                  (as-> db % (r a/set-process-activity!       % request-id :stalled)
-                             (r ui/stop-listening-to-process! % request-id))
-                  (r a/set-process-activity! db request-id :stalled))
-
-          ; Ha a [:sync/request-stalled ...] esemény megtörténése előtt a request újra el lett küldve, ...
-          (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
-                  (return                          db)
-                  (r ui/stop-listening-to-process! db request-id))))
+  [db [_ request-id {:keys [display-progress?] :as request-props}]]
+  (if (r request-resent? db request-id request-props)
+      ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request újra el lett küldve ...
+      (if-let [display-progress? (get-in db (db/path :sync/requests request-id :display-progress?))]
+              (return                          db)
+              (r ui/stop-listening-to-process! db request-id))
+      ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request NEM lett újra elküldve ...
+      (if display-progress? (as-> db % (r a/set-process-activity!       % request-id :stalled)
+                                       (r ui/stop-listening-to-process! % request-id))
+                            (r a/set-process-activity! db request-id :stalled))))
 
 (defn- reset-request-process!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -450,7 +466,8 @@
   ; @param (string) server-response-body
   ;  "{...}"
   (fn [{:keys [db]} [_ request-id server-response-body]]
-      (let [server-response (reader/string->mixed server-response-body)]
+      (let [server-response (reader/string->mixed server-response-body)
+            request-props (assoc (get-in db (db/path :sync/requests request-id)) :request-successed? true)]
            {:db (r request-successed db request-id server-response)
             :sync/remove-reference! [request-id]
             :dispatch-n     [(r get-request-on-success-event   db request-id server-response)
@@ -458,7 +475,7 @@
             :dispatch-if    [(r response-handler/save-request-response? db request-id)
                              [:sync/save-request-response! request-id server-response-body]]
             :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
-                              :dispatch [:sync/request-stalled request-id server-response]}]})))
+                              :dispatch [:sync/request-stalled request-id request-props server-response]}]})))
 
 (a/reg-event-fx
   :sync/request-failured
@@ -473,22 +490,28 @@
   ;   :response (string)
   ;    server-response-body}
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
-      {:db (r request-failured db request-id server-response)
-       :sync/remove-reference! [request-id]
-       :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
-                        (r get-request-on-responsed-event db request-id server-response)]
-       :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
-                         :dispatch [:sync/request-stalled request-id server-response]}]}))
+      (let [request-props (assoc (get-in db (db/path :sync/requests request-id)) :request-failured? true)]
+           {:db (r request-failured db request-id server-response)
+            :sync/remove-reference! [request-id]
+            :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
+                             (r get-request-on-responsed-event db request-id server-response)]
+            :dispatch-later [{:ms (r get-request-idle-timeout db request-id)
+                              :dispatch [:sync/request-stalled request-id request-props server-response]}]})))
 
 (a/reg-event-fx
   :sync/request-stalled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ request-id server-response]]
-      {:db (r request-stalled db request-id)
-       ; Az {:on-stalled ...} esemény használható az {:on-success ...} esemény alternatívájaként,
-       ; mert hibás teljesítés esetén nem történik meg.
-       :dispatch-if [(r request-successed?           db request-id)
-                     (r get-request-on-stalled-event db request-id server-response)]}))
+  (fn [{:keys [db]} [_ request-id request-props server-response]]
+      ; - A [:sync/request-stalled ...] esemény paraméterként kapja meg a request-props térképet
+      ;   mert előfordulhat, hogy az {:on-stalled [...]} esemény megtörténése előtt a request újra
+      ;   el lett küldve eltérő tulajdonságokkal!
+      ; - A request-props térkép esetlegesen tartalmazza a {:request-successed? ...} tulajdonságot,
+      ;   ami alapján megállapítható, hogy szükséges-e az {:on-stalled [...]} esemény meghívása.
+      ; - A request-props térkép tartalmazza az {:sent-time "..."} tulajdonságot, ami alapján
+      ;   megállapítható, hogy a request újra el lett-e küldve.
+      {:db       (r request-stalled              db request-id request-props)
+       :dispatch (r get-request-on-stalled-event db request-id request-props server-response)}))

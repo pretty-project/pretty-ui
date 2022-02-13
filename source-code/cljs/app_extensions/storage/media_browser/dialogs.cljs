@@ -1,6 +1,7 @@
 
 (ns app-extensions.storage.media-browser.dialogs
     (:require [mid-fruits.io      :as io]
+              [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [x.app-ui.api       :as ui]))
 
@@ -78,40 +79,44 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn render-rename-directory-dialog!
+(a/reg-event-fx
+  :storage.media-browser/render-rename-directory-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ [_ {:keys [alias] :as directory-item}]]
-  [:value-editor/load-editor! :storage :file-name
-                              {:label :directory-name :save-button-label :rename! :initial-value alias
-                               :on-save   [:storage.media-browser/update-item-alias! directory-item]
-                               :validator {:f io/directory-name-valid?
-                                           :invalid-message :invalid-directory-name
-                                           :pre-validate?   true}}])
+  (fn [_ [_ {:keys [alias] :as directory-item}]]
+      [:value-editor/load-editor! :storage :file-name
+                                  {:label :directory-name :save-button-label :rename! :initial-value alias
+                                   :on-save   [:storage.media-browser/update-item-alias! directory-item]
+                                   :validator {:f io/directory-name-valid?
+                                               :invalid-message :invalid-directory-name
+                                               :pre-validate?   true}}]))
 
-(defn render-rename-file-dialog!
+(a/reg-event-fx
+  :storage.media-browser/render-rename-file-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ [_ {:keys [alias] :as file-item}]]
-  [:value-editor/load-editor! :storage :file-name
-                              {:label :file-name :save-button-label :rename! :initial-value alias
-                               :on-save   [:storage.media-browser/update-item-alias! file-item]
-                               :validator {:f io/filename-valid?
-                                           :invalid-message :invalid-file-name
-                                           :pre-validate?   true}}])
+  (fn [_ [_ {:keys [alias] :as file-item}]]
+      [:value-editor/load-editor! :storage :file-name
+                                  {:label :file-name :save-button-label :rename! :initial-value alias
+                                   :on-save   [:storage.media-browser/update-item-alias! file-item]
+                                   :validator {:f io/filename-valid?
+                                               :invalid-message :invalid-file-name
+                                               :pre-validate?   true}}]))
 
-(defn render-directory-menu!
+(a/reg-event-fx
+  :storage.media-browser/render-directory-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [db]} [_ directory-item]]
-  [:ui/add-popup! :storage.media-browser/media-menu
-                  {:body   [directory-menu-body directory-item]
-                   :header [media-menu-header   directory-item]
-                   :horizontal-align :left
-                   :min-width        :xs}])
+  (fn [{:keys [db]} [_ directory-item]]
+      [:ui/add-popup! :storage.media-browser/media-menu
+                      {:body   [directory-menu-body directory-item]
+                       :header [media-menu-header   directory-item]
+                       :horizontal-align :left
+                       :min-width        :xs}]))
 
-(defn render-file-menu!
+(a/reg-event-fx
+  :storage.media-browser/render-file-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [db]} [_ file-item]]
-  [:ui/add-popup! :storage.media-browser/media-menu
-                  {:body   [file-menu-body    file-item]
-                   :header [media-menu-header file-item]
-                   :horizontal-align :left
-                   :min-width        :xs}])
+  (fn [{:keys [db]} [_ file-item]]
+      [:ui/add-popup! :storage.media-browser/media-menu
+                      {:body   [file-menu-body    file-item]
+                       :header [media-menu-header file-item]
+                       :horizontal-align :left
+                       :min-width        :xs}]))

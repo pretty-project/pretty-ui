@@ -11,4 +11,4 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-editor/initialize-editor! :clients :client
-                                                    {:suggestion-keys [:city]}]})
+                                                    {}]});:suggestion-keys [:city]}]})

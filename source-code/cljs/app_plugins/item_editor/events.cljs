@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.2.0
+; Version: v1.3.4
 ; Compatibility: x4.6.0
 
 
@@ -20,10 +20,8 @@
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]
               [x.app-ui.api         :as ui]
-              [app-plugins.item-editor.dialogs :as dialogs]
-              [app-plugins.item-editor.engine  :as engine]
-              [app-plugins.item-editor.queries :as queries]
-              [app-plugins.item-editor.subs    :as subs]))
+              [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.subs   :as subs]))
 
 
 
@@ -50,9 +48,18 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (-> db (dissoc-in [extension-id :item-editor/data-items])
-         (dissoc-in [extension-id :item-editor/meta-items :item-id])
-         (dissoc-in [extension-id :item-editor/meta-items :data-received?])))
+  (as-> db % (dissoc-in % [extension-id :item-editor/data-items])
+             (dissoc-in % [extension-id :item-editor/meta-items :item-id])
+             (dissoc-in % [extension-id :item-editor/meta-items :data-received?])
+             (dissoc-in % [extension-id :item-editor/meta-items :error-mode?])
+             ; Ha az item-editor plugin {:recovery-mode? true} állapotban indul, de az elem
+             ; visszaállítása már megtörtént, akkor kilép a {:recovery-mode? true} állapotból,
+             ; mert az már nem érvényes!
+             (if (and (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)
+                      (r subs/get-meta-item db extension-id item-namespace :item-recovered?))
+                 (-> % (dissoc-in [extension-id :item-editor/meta-items :recovery-mode?])
+                       (dissoc-in [extension-id :item-editor/meta-items :item-recovered?]))
+                 (return %))))
 
 (defn backup-current-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -108,6 +115,16 @@
   [db [_ _ _]]
   (r ui/fake-process! db 25))
 
+(defn undo-delete!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ _ _]]
+  (r ui/fake-process! db 25))
+
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -126,8 +143,6 @@
                  (dissoc-in [extension-id :item-editor/local-changes item-id]))
           (return db)))
 
-(a/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
-
 (defn set-recovery-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -140,7 +155,7 @@
   ; eltárolt változtatásait
   (assoc-in db [extension-id :item-editor/meta-items :recovery-mode?] true))
 
-(defn set-delete-mode!
+(defn item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -151,10 +166,10 @@
   ; XXX#5610
   ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
   ;   kirenderelni changes-discarded-dialog párbeszédablakot.
-  ; - A {:delete-mode? true} beállítás használatával az [:item-editor/editor-leaved ...]
+  ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
   ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
   ;   párbeszédablakot.
-  (assoc-in db [extension-id :item-editor/meta-items :delete-mode?] true))
+  (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true))
 
 (defn store-downloaded-suggestions!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -241,7 +256,7 @@
   (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)
         recovered-item  (r subs/get-recovered-item  db extension-id item-namespace)]
        (-> db (assoc-in  [extension-id :item-editor/data-items] recovered-item)
-              (dissoc-in [extension-id :item-editor/meta-items :recovery-mode?])
+              (assoc-in  [extension-id :item-editor/meta-items :item-recovered?] true)
               (dissoc-in [extension-id :item-editor/local-changes current-item-id]))))
 
 (defn data-received
@@ -271,8 +286,6 @@
              (recover-item!                  [event-id extension-id item-namespace])
              :data-received   (data-received [event-id extension-id item-namespace])))
 
-(a/reg-event-db :item-editor/receive-item! receive-item!)
-
 (defn load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -284,212 +297,15 @@
   ; @return (map)
   [db [_ extension-id item-namespace editor-props]]
   (as-> db % (r reset-editor!           % extension-id item-namespace)
-             (r store-current-item-id!  % extension-id item-namespace editor-props)
-             ; Visszaállítja a {:recovery-mode? ...} tulajdonság változtatások előtti értékét,
-             ; hogy az item-editor plugin folytathassa a {:recovery-mode? true} beállítással
-             ; való elindulást ...
-             (assoc-in % [extension-id :item-editor/meta-items :recovery-mode?]
-                         (r subs/get-meta-item db extension-id item-namespace :recovery-mode?))))
+             (r store-current-item-id!  % extension-id item-namespace editor-props)))
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :item-editor/load-editor!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map)(opt) editor-props
-  ;  {:item-id (string)(opt)}
-  ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type]
-  ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
-           {:db (r load-editor! db extension-id item-namespace editor-props)
-            :dispatch-n [; XXX#3237
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! editor-label])
-                         [:item-editor/request-item!  extension-id item-namespace]
-                         (engine/load-extension-event extension-id item-namespace)]})))
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
 
-(a/reg-event-fx
-  :item-editor/edit-item!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      ; Ha az item-editor plugin útvonala létezik, akkor az [:item-editor/edit-item! ...] esemény
-      ; az útvonalra irányít, abban az esetben is, ha az NEM az aktuális útvonal, mert
-      ; az [:item-editor/edit-item! ...] esemény meghívása a legtöbb esetben NEM az item-editor
-      ; plugin használata közben történik!
-      (if (r subs/get-meta-item db extension-id item-namespace :routed?)
-          (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
-               [:router/go-to! editor-uri])
-          [:item-editor/load-editor! extension-id item-namespace {:item-id item-id}])))
-
-(a/reg-event-fx
-  :item-editor/save-item!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/save-item! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
-      ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
-      ;   az aktuális szerkesztés közbeni további mentések, már nem számítának elem-hozzáadásnak,
-      ;   miközben az item-editor plugin továbbra is "új elem hozzáadása" módban fut!
-      ; - Az elem esetleges törlése utáni – kliens-oldali adatból történő – visszaállításhoz
-      ;   szükséges az elem feltételezett szerver-oldali állapotáról másolatot tárolni!
-      ; - Az elem szerverre küldésének idejében az elemről másolat készítése feltételezi,
-      ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
-      ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
-      ;   pontatlan visszaálltást okozhat!
-      {:db (r save-item! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/go-up! extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
-                                     :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
-
-(a/reg-event-fx
-  :item-editor/delete-item!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/delete-item! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r delete-item! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/item-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                                     :query      (r queries/get-delete-item-query db extension-id item-namespace)}]}))
-
-(a/reg-event-fx
-  :item-editor/duplicate-item!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/duplicate-item! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
-                          :on-success [:item-editor/item-duplicated extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
-                          :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
-
-(a/reg-event-fx
-  :item-editor/go-up!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [_ [_ extension-id item-namespace]]
-      (let [parent-uri (engine/parent-uri extension-id item-namespace)]
-           [:router/go-to! parent-uri])))
-
-(a/reg-event-fx
-  :item-editor/undo-delete!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
-                          :on-success [:item-editor/delete-undid extension-id item-namespace item-id]
-                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
-                          :query      (r queries/get-undo-delete-query db extension-id item-namespace item-id)}]))
-
-(a/reg-event-fx
-  :item-editor/undo-discard!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db       (r set-recovery-mode! db extension-id item-namespace)
-       :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
-
-(a/reg-event-fx
-  :item-editor/request-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (if (r subs/download-data? db extension-id item-namespace)
-          [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:display-progress? true
-                              ; XXX#4057
-                              ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
-                              ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
-                              :on-stalled [:item-editor/receive-item!          extension-id item-namespace]
-                              :query      (r queries/get-request-item-query db extension-id item-namespace)}])))
-
-(a/reg-event-fx
-  :item-editor/unload-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace]]
-      ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
-      ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
-      ; annak törlésének visszavonása esemény esetleges megtörténtekor.
-      (if-let [delete-mode? (r subs/get-meta-item db extension-id item-namespace :delete-mode?)]
-              {:db (r store-local-changes! db extension-id item-namespace)}
-              ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
-              ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
-              ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
-              ; esemény visszavonásának esetleges megtörténtekor.
-              (if (r subs/item-changed? db extension-id item-namespace)
-                  {:db       (r store-local-changes!                       db extension-id item-namespace)
-                   :dispatch (r dialogs/render-changes-discarded-dialog! cofx extension-id item-namespace)}))))
-
-(a/reg-event-fx
-  :item-editor/item-duplicated
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) server-response
-  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace server-response]]
-      (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
-           (r dialogs/render-edit-copy-dialog!  cofx extension-id item-namespace copy-id))))
-
-(a/reg-event-fx
-  :item-editor/item-deleted
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db] :as cofx} [_ extension-id item-namespace]]
-      {:db (r set-delete-mode! db extension-id item-namespace)
-       :dispatch-n [[:item-editor/go-up!                       extension-id item-namespace]
-                    (r dialogs/render-undo-delete-dialog! cofx extension-id item-namespace)]}))
-
-(a/reg-event-fx
-  :item-editor/delete-undid
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db       (r set-recovery-mode! db extension-id item-namespace)
-       :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-editor/receive-item! receive-item!)

@@ -45,6 +45,17 @@
 
 
 
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (keywords in vector)
+(def BROWSER-PROPS-KEYS [:label :label-key :path-key :root-item-id :routed?])
+
+; @constant (keywords in vector)
+(def LISTER-PROPS-KEYS [:download-limit :label :order-by :order-by-options :search-keys])
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

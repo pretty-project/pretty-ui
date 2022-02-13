@@ -1,5 +1,5 @@
 
-(ns app-extensions.clients.client-lister.events
+(ns app-extensions.clients.client-lister.effects
     (:require [x.app-core.api :as a :refer [r]]
               [app-plugins.item-editor.api :as item-editor]))
 

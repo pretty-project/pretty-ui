@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.7
+; Version: v0.4.4
+; Compatibility: x4.6.0
 
 
 
@@ -15,6 +15,7 @@
 
 (ns app-plugins.view-selector.api
     (:require [app-plugins.view-selector.engine]
+              [app-plugins.view-selector.effects]
               [app-plugins.view-selector.events :as events]
               [app-plugins.view-selector.subs   :as subs]
               [app-plugins.view-selector.views  :as views]))

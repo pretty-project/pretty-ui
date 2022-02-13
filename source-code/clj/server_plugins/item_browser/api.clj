@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.9
+; Version: v0.4.4
+; Compatibility: x4.6.0
 
 
 
@@ -15,6 +15,7 @@
 
 (ns server-plugins.item-browser.api
     (:require [server-plugins.item-browser.events]
+              [server-plugins.item-browser.effects]
               [server-plugins.item-browser.subs]
               [server-plugins.item-browser.engine :as engine]))
 

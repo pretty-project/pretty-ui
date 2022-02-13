@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.07
 ; Description:
-; Version: v0.7.4
-; Compatibility: x4.5.9
+; Version: v0.7.8
+; Compatibility: x4.6.0
 
 
 
@@ -57,23 +57,25 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn render-items-deleted-dialog!
+(a/reg-event-fx
+  :item-lister/render-items-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
-  [_ [_ extension-id item-namespace item-ids]]
-  [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-deleted)
-                    {:body       [items-deleted-dialog-body        extension-id item-namespace item-ids]
-                     :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}])
+  (fn [_ [_ extension-id item-namespace item-ids]]
+      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-deleted)
+                        {:body       [items-deleted-dialog-body        extension-id item-namespace item-ids]
+                         :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}]))
 
-(defn render-items-duplicated-dialog!
+(a/reg-event-fx
+  :item-editor/render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
-  [_ [_ extension-id item-namespace copy-ids]]
-  [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
-                    {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}])
+  (fn [_ [_ extension-id item-namespace copy-ids]]
+      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
+                        {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}]))
