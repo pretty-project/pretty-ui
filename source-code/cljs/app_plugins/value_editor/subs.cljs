@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.17
 ; Description:
-; Version: v0.9.6
-; Compatibility: x4.5.6
+; Version: v1.0.0
+; Compatibility: x4.6.0
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.subs
-    (:require [mid-fruits.candy   :refer [param return]]
-              [x.app-core.api     :as a :refer [r]]
+    (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]))
 
 
@@ -73,10 +72,6 @@
   (let [edit-path (r get-meta-item db extension-id editor-id :edit-path)]
        (get-in db edit-path)))
 
-; @usage
-;  [:value-editor/get-editor-value :my-extension :my-editor]
-(a/reg-sub :value-editor/get-editor-value get-editor-value)
-
 (defn get-on-save-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -95,7 +90,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id editor-id]]
   (let [field-value (r elements/get-input-value db :value-editor/editor-field)
         validator   (r get-meta-item            db extension-id editor-id :validator)]
@@ -105,38 +100,30 @@
                     (and (r get-meta-item         db extension-id editor-id :required?)
                          (r elements/field-empty? db :value-editor/editor-field))))))
 
-(defn get-header-props
+(defn get-editor-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:disable-save-button? (boolean)
-  ;   :save-button-label (metamorphic-content)}
   [db [_ extension-id editor-id]]
-  {:disable-save-button? (r disable-save-button? db extension-id editor-id)
-   :save-button-label    (r get-meta-item        db extension-id editor-id :save-button-label)})
+  (get-in db [extension-id :value-editor/meta-items]))
 
-(a/reg-sub :value-editor/get-header-props get-header-props)
 
-(defn get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  ;  {:edit-path (item-path vector)
-  ;   :helper (metamorphic-content)
-  ;   :label (metamorphic-content)
-  ;   :modifier (function)
-  ;   :validator (map)}
-  [db [_ extension-id editor-id]]
-  {:edit-path (r get-meta-item db extension-id editor-id :edit-path)
-   :helper    (r get-meta-item db extension-id editor-id :helper)
-   :label     (r get-meta-item db extension-id editor-id :label)
-   :modifier  (r get-meta-item db extension-id editor-id :modifier)
-   :validator (r get-meta-item db extension-id editor-id :validator)})
 
-(a/reg-sub :value-editor/get-body-props get-body-props)
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:value-editor/get-editor-value :my-extension :my-editor]
+(a/reg-sub :value-editor/get-editor-value get-editor-value)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :value-editor/get-editor-props get-editor-props)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :value-editor/get-meta-item get-meta-item)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :value-editor/disable-save-button? disable-save-button?)

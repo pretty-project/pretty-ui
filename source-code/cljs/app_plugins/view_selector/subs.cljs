@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.6.4
-; Compatibility: x4.5.6
+; Version: v0.7.0
+; Compatibility: x4.6.0
 
 
 
@@ -98,21 +98,11 @@
   [db [_ extension-id]]
   (r get-meta-item db extension-id :view-id))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @usage
 ;  [:view-selector/get-selected-view-id :my-extension]
 (a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)
-
-(defn get-view-props
-  ; @param (keyword) extension-id
-  ;
-  ; @usage
-  ;  (r view-selector/get-view-props db :my-extension)
-  ;
-  ; @return (map)
-  ;  {:view-id (keyword)}
-  [db [_ extension-id]]
-  {:view-id (r get-selected-view-id db extension-id)})
-
-; @usage
-;  [:view-selector/get-view-props :my-extension]
-(a/reg-sub :view-selector/get-view-props get-view-props)

@@ -239,6 +239,25 @@
   (str "/@app-home/" (name extension-id)
        "/:item-id"))
 
+(defn component-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) component-key
+  ;
+  ; @example
+  ;  (engine/component-id :my-extension :my-type :view)
+  ;  =>
+  ;  :my-extension.my-type-browser/view
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace component-key]
+  ; XXX#5467
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-browser")
+           (name component-key)))
+
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

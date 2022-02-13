@@ -409,8 +409,11 @@
 (a/reg-event-fx
   :playground.view-selector/render-selector!_
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view        {:content #'view :subscriber [::get-view-props]}
-                            :initializer [:playground/initialize!]}])
+  [])
+  ; A view-selector használata megváltozott!
+
+  ;[:ui/set-surface! ::view {:view        {:content #'view :subscriber [::get-view-props]}
+  ;                          :initializer [:playground/initialize!])
 
 (a/reg-event-fx
   :playground.view-selector/load-selector!

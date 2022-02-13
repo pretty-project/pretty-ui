@@ -230,7 +230,7 @@
                         ; XXX#3219
                         ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
                         ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-                        ; a szinkronizálás!
+                        ; az adatok letöltése!
                         (or synchronizing? (not data-received?))))))
 
 (defn get-backup-item
@@ -340,7 +340,7 @@
 
 
 
-;; -- Public subscriptions ----------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @param (keyword) extension-id

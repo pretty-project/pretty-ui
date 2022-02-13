@@ -55,7 +55,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-list-element
-  [item-dex item]
+  [extension-id item-namespace item-dex item]
   [:div "My item"])
 
 ; - A header komponens számára átadott {:menu #'...} tulajdonság beállításával lehetséges
@@ -102,7 +102,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn your-list-element
-  [item-dex item]
+  [extension-id item-namespace item-dex item]
   [:div "Your item"])
 
 ; Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.

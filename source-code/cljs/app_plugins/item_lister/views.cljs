@@ -461,11 +461,19 @@
   ;  {:menu (metamorphic-content)(opt)
   ;   :new-item-options (vector)(opt)}
   ;
+  ; @usage
+  ;  [item-lister/header :my-extension :my-type {...}]
+  ;
+  ; @usage
+  ;  (defn my-menu [extension-id item-namespace] [:div ...])
+  ;  [item-lister/header :my-extension :my-type {:menu #'my-menu}}]
+  ;
   ; @return (component)
   [extension-id item-namespace header-props]
   (let [state-props  (dissoc      header-props  :menu)
         header-props (select-keys header-props [:menu])]
-       [components/stated {:component   [header-structure extension-id item-namespace header-props]
+       [components/stated (engine/component-id extension-id item-namespace :header)
+                          {:component   [header-structure extension-id item-namespace header-props]
                            :initializer [:db/apply! [extension-id :item-lister/meta-items] merge state-props]}]))
 
 
@@ -583,7 +591,7 @@
   [extension-id item-namespace {:keys [list-element]} item-dex item]
   [elements/toggle {:on-click       [:item-lister/item-clicked       extension-id item-namespace item-dex item]
                     :on-right-click [:item-lister/item-right-clicked extension-id item-namespace item-dex item]
-                    :content [list-element item-dex item]
+                    :content [list-element extension-id item-namespace item-dex item]
                     :hover-color :highlight}])
 
 (defn list-item-structure
@@ -689,7 +697,7 @@
   ;  [item-lister/body :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
   ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
   ;                                            :prefilter    {:my-type/color "red"}}]
   ;
@@ -697,7 +705,8 @@
   [extension-id item-namespace body-props]
   (let [state-props (dissoc      body-props  :list-element)
         body-props  (select-keys body-props [:list-element])]
-       [components/stated {:component   [body-structure              extension-id item-namespace body-props]
+       [components/stated (engine/component-id extension-id item-namespace :body)
+                          {:component   [body-structure              extension-id item-namespace body-props]
                            :destructor  [:item-lister/unload-lister! extension-id item-namespace]
                            :initializer [:db/apply! [extension-id :item-lister/meta-items] merge state-props]}]))
 
@@ -737,8 +746,8 @@
   ;  [item-lister/view :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [item-dex item] [:div ...])
-  ;  (defn my-menu         [extension-id item-namespace header-props] [:div ...])
+  ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
+  ;  (defn my-menu         [extension-id item-namespace]               [:div ...])
   ;  [item-lister/view :my-extension :my-type {:list-element #'my-list-element
   ;                                            :menu         #'my-menu
   ;                                            :new-item-options [:add-my-type! :add-your-type!]

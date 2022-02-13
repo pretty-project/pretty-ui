@@ -18,12 +18,13 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [view-id] :as body-props}]
-  (case view-id :personal      [personal-settings     body-id body-props]
-                :privacy       [privacy-settings      body-id body-props]
-                :notifications [notification-settings body-id body-props]
-                :appearance    [appearance-settings   body-id body-props]
-                [:div (str body-props)]))
+  [extension-id]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]))
+; Itt folytatni kell az extension-id átadását, és az átalakítás local subscription-ökre
+;       (case view-id :personal      [personal-settings     extension-id]
+;                     :privacy       [privacy-settings      extension-id]
+;                     :notifications [notification-settings extension-id]
+;                     :appearance    [appearance-settings   extension-id])]))
 
 
 
@@ -32,24 +33,25 @@
 
 (defn- menu-bar-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [view-id]}]
-  [{:icon :person        :active? (= view-id :personal)      :on-click [:view-selector/go-to! :settings :personal]}
-   {:icon :security      :active? (= view-id :privacy)       :on-click [:view-selector/go-to! :settings :privacy]}
-   {:icon :notifications :active? (= view-id :notifications) :on-click [:view-selector/go-to! :settings :notifications]}
-   {:icon :auto_awesome  :active? (= view-id :appearance)    :on-click [:view-selector/go-to! :settings :appearance]}])
+  [extension-id]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]
+       [{:icon :person        :active? (= view-id :personal)      :on-click [:view-selector/go-to! :settings :personal]}
+        {:icon :security      :active? (= view-id :privacy)       :on-click [:view-selector/go-to! :settings :privacy]}
+        {:icon :notifications :active? (= view-id :notifications) :on-click [:view-selector/go-to! :settings :notifications]}
+        {:icon :auto_awesome  :active? (= view-id :appearance)    :on-click [:view-selector/go-to! :settings :appearance]}]))
 
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props]
+  [extension-id]
   [elements/menu-bar ::menu-bar
-                     {:menu-items (menu-bar-items header-id header-props)
+                     {:menu-items (menu-bar-items extension-id)
                       :horizontal-align :center}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id header-props]
+  [extension-id]
   [elements/horizontal-polarity ::header
-                                {:middle-content [menu-bar header-id header-props]}])
+                                {:middle-content [menu-bar extension-id]}])
 
 
 

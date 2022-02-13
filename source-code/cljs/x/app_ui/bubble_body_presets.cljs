@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.02.06
 ; Description:
-; Version: v0.3.4
-; Compatibility: x4.5.9
+; Version: v0.3.6
+; Compatibility: x4.6.0
 
 
 
@@ -55,6 +55,5 @@
   ;
   ; @return (component)
   [bubble-id {:keys [label primary-button]}]
-  (println (str bubble-id))
   [:<> (if label          [elements/label  {:content label}])
        (if primary-button [elements/button (primary-button-props-prototype bubble-id primary-button)])])

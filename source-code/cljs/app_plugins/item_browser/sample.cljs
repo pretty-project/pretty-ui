@@ -34,9 +34,13 @@
 ;; -- Example B ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn my-list-element
+  [extension-id item-namespace item-dex item]
+  "My item")
+
 (defn my-view
   [surface-id]
-  [item-browser/view :my-extension :my-type])
+  [item-browser/view :my-extension :my-type {:list-element #'my-list-element}])
 
 (a/reg-event-fx
   :my-extension.my-type-browser/render-browser!

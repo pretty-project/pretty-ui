@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.22
 ; Description:
-; Version: v1.1.0
-; Compatibility: x4.5.6
+; Version: v1.1.8
+; Compatibility: x4.6.0
 
 
 
@@ -14,8 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.views
-    (:require [mid-fruits.candy   :refer [param return]]
-              [x.app-core.api     :as a :refer [r]]
+    (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]
               [app-plugins.value-editor.engine :as engine]))
 
@@ -27,18 +26,19 @@
 (defn editor-props->field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) editor-props
-  ;  {:edit-path (item-path vector)}
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
   ;
   ; @param (map)
   ;  {:auto-focus? (boolean)
   ;   :min-width (keyword)
   ;   :value-path (item-path vector)}
-  [{:keys [edit-path] :as editor-props}]
-  (merge (select-keys editor-props [:label :modifier :validator])
-         {:auto-focus? true
-          :min-width   :l
-          :value-path  edit-path}))
+  [extension-id editor-id]
+  (let [editor-props @(a/subscribe [:value-editor/get-editor-props extension-id editor-id])]
+       (merge (select-keys editor-props [:label :modifier :validator])
+              {:auto-focus? true
+               :min-width   :l
+               :value-path  (:edit-path editor-props)})))
 
 
 
@@ -50,18 +50,16 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ; @param (map) element-props
-  ;  {:disable-save-button? (boolean)
-  ;   :save-button-label (metamorphic-content)}
   ;
   ; @return (component)
-  [extension-id editor-id {:keys [disable-save-button? save-button-label]}]
-  [elements/button ::save-button
-                   {:disabled? disable-save-button?
-                    :keypress  {:key-code 13 :required? true}
-                    :on-click  [:value-editor/save-value! extension-id editor-id]
-                    :label     save-button-label
-                    :preset    :close-button}])
+  [extension-id editor-id]
+  (let [disable-save-button? @(a/subscribe [:value-editor/disable-save-button? extension-id editor-id])
+        save-button-label    @(a/subscribe [:value-editor/get-meta-item        extension-id editor-id :save-button-label])]
+       [elements/button ::save-button
+                        {:disabled? disable-save-button? :label save-button-label
+                         :keypress  {:key-code 13 :required? true} :preset :close-button
+                         :on-click  [:value-editor/save-value! extension-id editor-id]}]))
+
 
 (defn cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,22 +70,8 @@
   ; @return (component)
   [extension-id editor-id]
   [elements/button ::cancel-button
-                   {:keypress {:key-code 27 :required? true}
-                    :preset   :cancel-button
+                   {:keypress {:key-code 27 :required? true} :preset :cancel-button
                     :on-click [:value-editor/cancel-editing! extension-id editor-id]}])
-
-(defn header-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ; @param (map) header-props
-  ;
-  ; @return (component)
-  [extension-id editor-id header-props]
-  [elements/horizontal-polarity ::header
-                                {:start-content [cancel-button extension-id editor-id header-props]
-                                 :end-content   [save-button   extension-id editor-id header-props]}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,8 +81,9 @@
   ;
   ; @return (component)
   [extension-id editor-id]
-  (let [header-props (a/subscribe [:value-editor/get-header-props extension-id editor-id])]
-       (fn [] [header-structure extension-id editor-id @header-props])))
+  [elements/horizontal-polarity ::header
+                                {:start-content [cancel-button extension-id editor-id]
+                                 :end-content   [save-button   extension-id editor-id]}])
 
 
 
@@ -110,28 +95,12 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ; @param (map) element-props
-  ;  {:helper (metamorphic-content)(opt)}
   ;
   ; @return (component)
-  [_ _ {:keys [helper]}]
-  (if helper [:<> [elements/horizontal-separator {:size :l}]
-                  [elements/text                 {:content helper}]]))
-
-(defn body-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ; @param (map) body-props
-  ;
-  ; @return (component)
-  [extension-id editor-id body-props]
-  (let [field-props (editor-props->field-props body-props)]
-       [:<> [elements/horizontal-separator {:size :l}]
-            [elements/text-field :value-editor/editor-field field-props]
-            [editor-helper extension-id editor-id body-props]
-            [elements/horizontal-separator {:size :l}]]))
+  [extension-id editor-id]
+  (if-let [helper @(a/subscribe [:value-editor/get-meta-item extension-id editor-id :helper])]
+          [:<> [elements/horizontal-separator {:size :l}]
+               [elements/text                 {:content helper}]]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -141,8 +110,11 @@
   ;
   ; @return (component)
   [extension-id editor-id]
-  (let [body-props (a/subscribe [:value-editor/get-body-props extension-id editor-id])]
-       (fn [] [body-structure extension-id editor-id @body-props])))
+  (let [field-props (editor-props->field-props extension-id editor-id)]
+       [:<> [elements/horizontal-separator {:size :l}]
+            [elements/text-field :value-editor/editor-field field-props]
+            [editor-helper extension-id editor-id]
+            [elements/horizontal-separator {:size :l}]]))
 
 
 

@@ -41,15 +41,19 @@
   ; @usage
   ;  [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [editor-label (r subs/get-editor-label db extension-id item-namespace)]
-           {:db (r events/load-editor! db extension-id item-namespace editor-props)
-            :dispatch-n [; XXX#3237
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! editor-label])
-                         (if (r subs/download-data? db extension-id item-namespace)
-                             [:item-editor/request-item! extension-id item-namespace]
-                             [:item-editor/load-item!    extension-id item-namespace])
-                         (engine/load-extension-event extension-id item-namespace)]})))
+      (let [; Az events/load-editor! függvény által meghívott events/reset-editor! függvény
+            ; lépteti ki az item-editor plugint a {:recovery-mode? true} állapotból,
+            ; ami miatt szükséges az events/load-editor! függvényt a subs/download-data? függvény
+            ; lefutása előtt meghívni!
+            db           (r events/load-editor!   db extension-id item-namespace editor-props)
+            editor-label (r subs/get-editor-label db extension-id item-namespace)]
+           {:db db :dispatch-n [; XXX#3237
+                                (if (r subs/set-title? db extension-id item-namespace)
+                                    [:ui/set-title! editor-label])
+                                (if (r subs/download-data? db extension-id item-namespace)
+                                    [:item-editor/request-item! extension-id item-namespace]
+                                    [:item-editor/load-item!    extension-id item-namespace])
+                                (engine/load-extension-event extension-id item-namespace)]})))
 
 (a/reg-event-fx
   :item-editor/edit-item!

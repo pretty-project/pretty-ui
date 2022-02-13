@@ -33,12 +33,12 @@
 
 (defn- client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-item]
+  [_ _ item-dex client-item]
   [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
                              [client-item-details item-dex client-item]])
 
 
-
+ 
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

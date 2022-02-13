@@ -46,14 +46,16 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-header
-  [extension-id {:keys [view-id]}]
-  [:div "My header"])
+  [extension-id]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]
+       [:div "My header"]))
 
 (defn my-body
-  [extension-id {:keys [view-id]}]
-  (case view-id :my-view   [:div "My view"]
-                :your-view [:div "Your view"]
-                [:div "Ha nem adtad meg a {:default-view-id ...} tulajdonságot ..."]))
+  [extension-id]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]
+       (case view-id :my-view   [:div "My view"]
+                     :your-view [:div "Your view"]
+                     [:div "Ha nem adtad meg a {:default-view-id ...} tulajdonságot ..."])))
 
 (defn my-view
   [surface-id]

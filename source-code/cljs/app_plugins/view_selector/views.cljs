@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.27
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.7
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -14,9 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.views
-    (:require [x.app-core.api       :as a :refer [r]]
-              [x.app-components.api :as components]
-              [x.app-layouts.api    :as layouts]))
+    (:require [x.app-core.api    :as a :refer [r]]
+              [x.app-layouts.api :as layouts]))
 
 
 
@@ -32,15 +31,12 @@
   ;  [view-selector/body :my-extension {...}]
   ;
   ; @usage
-  ;  (defn my-body [extension-id {:keys [view-id] :as body-props}] [:div ...])
+  ;  (defn my-body [extension-id] [:div ...])
   ;  [view-selector/body :my-extension {:body #'my-body}]
   ;
   ; @return (component)
-  [extension-id {:keys [body] :as body-props}]
-  [components/subscriber extension-id
-                         {:base-props body-props
-                          :render-f    body
-                          :subscriber  [:view-selector/get-view-props extension-id]}])
+  [extension-id {:keys [body]}]
+  [body extension-id])
 
 
 
@@ -56,34 +52,17 @@
   ;  [view-selector/header :my-extension {...}]
   ;
   ; @usage
-  ;  (defn my-header [extension-id {:keys [view-id] :as header-props}] [:div ...])
+  ;  (defn my-header [extension-id] [:div ...])
   ;  [view-selector/header :my-extension {:header #'my-header}]
   ;
   ; @return (component)
-  [extension-id {:keys [header] :as body-props}]
-  [components/subscriber extension-id
-                         {:base-props body-props
-                          :render-f   header
-                          :subscriber [:view-selector/get-view-props extension-id]}])
+  [extension-id {:keys [header]}]
+  [header extension-id])
 
 
 
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn view-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (map) view-props
-  ;  {:body (metamorphic-content)
-  ;   :header (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
-  [extension-id {:keys [body header] :as view-props}]
-  (if header [layouts/layout-a extension-id {:body   [body   extension-id view-props]
-                                             :header [header extension-id view-props]}]
-             [layouts/layout-a extension-id {:body   [body   extension-id view-props]}]))
 
 (defn view
   ; @param (keyword) extension-id
@@ -95,14 +74,13 @@
   ;  [view-selector/view :my-extension {...}]
   ;
   ; @usage
-  ;  (defn my-header [extension-id {:keys [view-id] :as header-props}] [:div ...])
-  ;  (defn my-body   [extension-id {:keys [view-id] :as body-props}]   [:div ...])
+  ;  (defn my-header [extension-id] [:div ...])
+  ;  (defn my-body   [extension-id] [:div ...])
   ;  [view-selector/view :my-extension {:body   #'my-body
   ;                                     :header #'my-header}]
   ;
   ; @return (component)
   [extension-id view-props]
-  [components/subscriber extension-id
-                         {:base-props view-props
-                          :render-f   view-structure
-                          :subscriber [:view-selector/get-view-props extension-id]}])
+  (if (:header view-props) [layouts/layout-a extension-id {:body   [body   extension-id view-props]
+                                                           :header [header extension-id view-props]}]
+                           [layouts/layout-a extension-id {:body   [body   extension-id view-props]}]))

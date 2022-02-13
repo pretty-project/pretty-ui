@@ -30,7 +30,6 @@
 
 ; app-plugins.view-selector.subs
 (def get-selected-view-id subs/get-selected-view-id)
-(def get-view-props       subs/get-view-props)
 
 ; app-plugins.view-selector.views
 (def body   views/body)

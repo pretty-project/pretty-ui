@@ -84,7 +84,7 @@
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [mime-type] :as item}]
+  [_ _ item-dex {:keys [mime-type] :as item}]
   (case mime-type "storage/directory" [directory-item item-dex item {:icon :navigate_next}]
                                       [file-item      item-dex item {:icon :more_vert}]))
 

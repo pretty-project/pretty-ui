@@ -30,4 +30,5 @@
 (def extended-route-template engine/extended-route-template)
 (def route-string            engine/route-string)
 (def extended-route-string   engine/extended-route-string)
+(def component-id            engine/component-id)
 (def load-extension-event    engine/load-extension-event)

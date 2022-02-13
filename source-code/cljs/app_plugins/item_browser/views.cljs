@@ -92,8 +92,8 @@
   [extension-id item-namespace]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
-      [go-up-button                    extension-id item-namespace]
-      [go-home-button                  extension-id item-namespace]
+      [go-up-button                           extension-id item-namespace]
+      [go-home-button                         extension-id item-namespace]
       [item-lister/new-item-block             extension-id item-namespace]
       [item-lister/sort-items-button          extension-id item-namespace]
       [item-lister/toggle-select-mode-button  extension-id item-namespace]
@@ -148,7 +148,7 @@
   ;  [item-browser/body :my-extension :my-type {...}]
   ;
   ; @example
-  ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
   ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element
   ;                                             :prefilter    {:my-type/color "red"}}]
   ;
@@ -177,7 +177,7 @@
   ;  [item-browser/view :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [item-dex item] [:div ...])
+  ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
   ;  [item-browser/view :my-extension :my-type {:list-element     #'my-list-element
   ;                                             :new-item-options [:add-my-type! :add-your-type!]
   ;                                             :prefilter        {:my-type/color "red"}}]

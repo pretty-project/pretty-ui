@@ -52,6 +52,7 @@
              (dissoc-in % [extension-id :item-editor/meta-items :item-id])
              (dissoc-in % [extension-id :item-editor/meta-items :data-received?])
              (dissoc-in % [extension-id :item-editor/meta-items :error-mode?])
+             (dissoc-in % [extension-id :item-editor/meta-items :item-deleted?])
              ; Ha az item-editor plugin {:recovery-mode? true} állapotban indul, de az elem
              ; visszaállítása már megtörtént, akkor kilép a {:recovery-mode? true} állapotból,
              ; mert az már nem érvényes!

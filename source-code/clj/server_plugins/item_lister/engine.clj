@@ -39,6 +39,7 @@
 (def transfer-id              engine/transfer-id)
 (def route-id                 engine/route-id)
 (def route-template           engine/route-template)
+(def component-id             engine/component-id)
 (def dialog-id                engine/dialog-id)
 (def load-extension-event     engine/load-extension-event)
 (def item-clicked-event       engine/item-clicked-event)

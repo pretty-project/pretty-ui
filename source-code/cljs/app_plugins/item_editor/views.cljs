@@ -350,7 +350,8 @@
   ;
   ; @return (component)
   [extension-id item-namespace {:keys [form-element]}]
-  [components/stated {:render-f   form-element
+  [components/stated (engine/component-id extension-id item-namespace :body)
+                     {:render-f   form-element
                       :destructor [:item-editor/unload-editor! extension-id item-namespace]}])
 
 
