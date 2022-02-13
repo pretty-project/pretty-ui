@@ -152,9 +152,14 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  ; A {:recovery-mode? true} beállítással elindítitott item-editor plugin, visszaállítja az elem
-  ; eltárolt változtatásait
-  (assoc-in db [extension-id :item-editor/meta-items :recovery-mode?] true))
+  ; - A {:recovery-mode? true} beállítással elindítitott item-editor plugin visszaállítja az elem
+  ;   eltárolt változtatásait
+  ; - A {:recovery-mode? true} állapot beállításakor szükséges az item-editor utolsó használatakor
+  ;   esetlegesen beállított {:item-recovered? true} beállítást törölni, hogy a reset-editor! függvény
+  ;   ne léptesse ki a plugint a {:recovery-mode? true} állapotból, ha az utolsó betöltés is
+  ;   {:recovery-mode? true} állapotban történt ...
+  (-> db (assoc-in  [extension-id :item-editor/meta-items :recovery-mode?] true)
+         (dissoc-in [extension-id :item-editor/meta-items :item-recovered?])))
 
 (defn item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -242,7 +247,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace {:keys [item-id]}]]
-  (if (r subs/route-handled? db extension-id item-namespace)
+  (if (r subs/route-handled?    db extension-id item-namespace)
       (r store-derived-item-id! db extension-id item-namespace)
       (r   set-current-item-id! db extension-id item-namespace item-id)))
 

@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v1.2.0
+; Version: v1.2.6
 ; Compatibility: x4.6.0
 
 
@@ -279,6 +279,7 @@
         backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)
         local-changes   (r get-local-changes   db extension-id item-namespace)]
        (merge backup-item local-changes)))
+
 
 (defn item-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
