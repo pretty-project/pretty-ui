@@ -132,6 +132,10 @@
   (let [client-locked? (get-in db (db/path :user/account :client-locked?))]
        (boolean client-locked?)))
 
+; @usage
+;  [:user/client-locked?]
+(a/reg-sub :user/client-locked? client-locked?)
+
 
 
 ;; -- DB events ---------------------------------------------------------------

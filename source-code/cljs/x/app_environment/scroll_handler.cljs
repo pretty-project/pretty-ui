@@ -14,8 +14,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.7.0
-; Compatibility: x4.5.2
+; Version: v0.7.6
+; Compatibility: x4.6.0
 
 
 
@@ -23,10 +23,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-handler
-    (:require [app-fruits.dom   :as dom]
-              [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+    (:require [app-fruits.dom :as dom]
+              [x.app-core.api :as a :refer [r]]
+              [x.app-db.api   :as db]
+              [x.app-environment.element-handler :as element-handler]))
 
 
 
@@ -42,6 +42,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (boolean)
+;  A scrolled-to-top? változásának megállapításához ...
 (def SCROLLED-TO-TOP? (atom nil))
 
 
@@ -55,12 +56,11 @@
   ; @param (DOM-event) event
   [_]
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
-       ; If scrolled-to-top? changed ...
        (if (not= @SCROLLED-TO-TOP? scrolled-to-top?)
-               ; Store the change locally ...
-           (do (reset! SCROLLED-TO-TOP? scrolled-to-top?)
-               ; Store the change in the Re-Frame DB ...
-               (a/dispatch-sync [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])))))
+           ; If scrolled-to-top? changed ...
+           (do (element-handler/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)
+               (reset! SCROLLED-TO-TOP? scrolled-to-top?)))))
+              ;(a/dispatch-sync [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])
 
 
 
@@ -136,8 +136,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
-       (reset!     SCROLLED-TO-TOP? scrolled-to-top?)
-       (a/dispatch [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])))
+       (reset! SCROLLED-TO-TOP? scrolled-to-top?)
+       (element-handler/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)))
+      ;(a/dispatch [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])
 
 (a/reg-fx :environment/initialize-scroll-handler! initialize-scroll-handler!)
 

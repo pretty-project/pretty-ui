@@ -20,10 +20,9 @@
               [mid-fruits.string  :as string]
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
-              [re-frame.core      :as re-frame]
+              [re-frame.core      :as re-frame.core]
               [re-frame.db        :refer [app-db]]
-              [re-frame.loggers   :as loggers]
-              [re-frame.registrar :as registrar]
+              [re-frame.registrar :as re-frame.registrar]
               [x.mid-core.engine  :as engine]))
 
 
@@ -135,12 +134,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; re-frame.core
-(def ->interceptor re-frame/->interceptor)
-(def reg-cofx      re-frame/reg-cofx)
-(def reg-fx        re-frame/reg-fx)
-(def reg-sub       re-frame/reg-sub)
-(def subscribe     re-frame/subscribe)
-(def inject-cofx   re-frame/inject-cofx)
+(def ->interceptor re-frame.core/->interceptor)
+(def reg-cofx      re-frame.core/reg-cofx)
+(def reg-sub       re-frame.core/reg-sub)
+(def subscribe     re-frame.core/subscribe)
+(def inject-cofx   re-frame.core/inject-cofx)
 
 
 
@@ -478,8 +476,8 @@
          (update-in context [:coeffects :event] f)))
 
 ; @constant (?)
-(def event-vector<-id (re-frame/->interceptor :id :core/event-vector<-id
-                                              :before event-vector<-id-f))
+(def event-vector<-id (re-frame.core/->interceptor :id :core/event-vector<-id
+                                                   :before event-vector<-id-f))
 
 
 
@@ -503,12 +501,12 @@
   [context]
   (let [event-vector (context->event-vector  context)
         event-id     (event-vector->event-id event-vector)]
-       (registrar/clear-handlers :event event-id)
+       (re-frame.registrar/clear-handlers :event event-id)
        (return context)))
 
 ; @constant (?)
-(def self-destruct! (re-frame/->interceptor :id :core/self-destruct!
-                                            :after self-destruct-f))
+(def self-destruct! (re-frame.core/->interceptor :id :core/self-destruct!
+                                                 :after self-destruct-f))
 
 
 
@@ -526,8 +524,8 @@
        (return context)))
 
 ; @constant (?)
-(def debug! (re-frame/->interceptor :id :core/debug!
-                                    :after debug-f))
+(def debug! (re-frame.core/->interceptor :id :core/debug!
+                                         :after debug-f))
 
 
 
@@ -541,7 +539,7 @@
   ;   :fx (map)
   ;   :sub (map)}
   []
-  (deref registrar/kind->id->handler))
+  (deref re-frame.registrar/kind->id->handler))
 
 (defn get-event-handler
   ; @param (keyword) event-kind
@@ -582,7 +580,7 @@
    (reg-event-db event-id nil event-handler))
 
   ([event-id interceptors event-handler]
-   (re-frame/reg-event-db event-id interceptors event-handler)))
+   (re-frame.core/reg-event-db event-id interceptors event-handler)))
 
 (defn reg-event-fx
   ; You can registrate metamorphic-events, not only handler-functions
@@ -607,7 +605,7 @@
 
   ([event-id interceptors event-handler]
    (let [handler-function (metamorphic-event->handler-function event-handler)]
-        (re-frame/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-function %1 %2))))))
+        (re-frame.core/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-function %1 %2))))))
 
 (defn apply-fx-params
   ; @param (function) handler-function
@@ -628,6 +626,25 @@
       (apply            handler-function params)
       (handler-function params)))
 
+(defn reg-fx
+  ; @param (keyword) event-id
+  ; @param (function) handler-function
+  ;
+  ; @usage
+  ;  (defn my-side-effect [a])
+  ;  (a/reg-fx       :my-side-effect my-side-effect)
+  ;  (a/reg-event-fx :my-effect {:my-my-side-effect "A"})
+  ;
+  ; @usage
+  ;  (defn your-side-effect [a b])
+  ;  (a/reg-fx       :your-side-effect your-side-effect)
+  ;  (a/reg-event-fx :your-effect {:your-my-side-effect ["a" "b"]})
+  [event-id handler-function]
+  (re-frame.core/reg-fx #(apply-fx-params % handler-function)))
+
+
+
+; WARNING! DEPRECATED! DO NOT USE!
 (defn reg-handled-fx
   ; Kezelt mellékhatás-események (Handled side-effect events)
   ;
@@ -655,8 +672,9 @@
   ;        :my-event "a"
   ;        :dispatch [:my-event "a" "b"]))
   [event-id handler-function]
-  (re-frame/reg-fx       event-id (fn [params]         (apply-fx-params handler-function params)))
-  (re-frame/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
+  (re-frame.core/reg-fx       event-id (fn [params]                   (apply-fx-params handler-function params)))
+  (re-frame.core/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
+  ; WARNING! DEPRECATED! DO NOT USE!
 
 
 
@@ -675,10 +693,10 @@
   ;  (dispatch-function (fn [_ _] {:dispatch [:do-something!]}))
   [handler-function]
   (let [handler-id (random/generate-keyword)]
-       (re-frame/reg-event-fx handler-id [self-destruct!] handler-function)
-       (re-frame/dispatch [handler-id])))
+       (re-frame.core/reg-event-fx handler-id [self-destruct!] handler-function)
+       (re-frame.core/dispatch [handler-id])))
 
-(re-frame/reg-fx :dispatch-function dispatch-function)
+(re-frame.core/reg-fx :dispatch-function dispatch-function)
 
 (defn dispatch
   ; @param (metamorphic-event) event-handler
@@ -693,7 +711,7 @@
 
   (cond ; @usage
         ;  (dispatch [:foo])
-        (vector? event-handler) (re-frame/dispatch event-handler)
+        (vector? event-handler) (re-frame.core/dispatch event-handler)
         ; @usage
         ;  (dispatch {:dispatch [:foo]})
         (map? event-handler)    (-> event-handler effects-map->handler-function dispatch-function)
@@ -704,8 +722,8 @@
         ;  (dispatch (fn [_ _] {:dispatch [:foo]}))
         :else                   (dispatch-function event-handler)))
 
-(registrar/clear-handlers :fx :dispatch)
-(re-frame/reg-fx              :dispatch dispatch)
+(re-frame.registrar/clear-handlers :fx :dispatch)
+(re-frame.core/reg-fx :dispatch dispatch)
 
 (defn dispatch-sync
   ; @param (event-vector) event-handler
@@ -713,7 +731,7 @@
   ; A dispatch-sync függvény a meghívási sebesség fontossága miatt nem kezeli
   ; a metamorphic-event kezelőket!
   [event-handler]
-  (re-frame/dispatch-sync event-handler))
+  (re-frame.core/dispatch-sync event-handler))
 
 (defn dispatch-n
   ; @param (metamorphic-events in vector) event-list
@@ -726,8 +744,8 @@
   (doseq [event (remove nil? event-list)]
          (dispatch event)))
 
-(registrar/clear-handlers :fx :dispatch-n)
-(re-frame/reg-fx              :dispatch-n dispatch-n)
+(re-frame.registrar/clear-handlers :fx :dispatch-n)
+(re-frame.core/reg-fx :dispatch-n dispatch-n)
 
 (defn dispatch-later
   ; @param (maps in vector) event-list
@@ -751,8 +769,8 @@
                          (number? ms))
                     (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
 
-(registrar/clear-handlers :fx :dispatch-later)
-(re-frame/reg-fx              :dispatch-later dispatch-later)
+(re-frame.registrar/clear-handlers :fx :dispatch-later)
+(re-frame.core/reg-fx :dispatch-later dispatch-later)
 
 (defn dispatch-if
   ; @param (*) condition
@@ -771,7 +789,7 @@
   (if condition (dispatch if-event-handler)
                 (if else-event-handler (dispatch else-event-handler))))
 
-(re-frame/reg-fx :dispatch-if dispatch-if)
+(re-frame.core/reg-fx :dispatch-if dispatch-if)
 
 (defn dispatch-cond
   ; @param (vector) conditional-events
@@ -797,7 +815,7 @@
                                     (dispatch event))))]
          (reduce-kv dispatch-cond-f nil conditional-events)))
 
-(re-frame/reg-fx :dispatch-cond dispatch-cond)
+(re-frame.core/reg-fx :dispatch-cond dispatch-cond)
 
 
 
@@ -826,7 +844,7 @@
   ;    :dispatch-later [ ... ]}
   ;   { ... }]
   [effects-maps-vector]
-  (re-frame/dispatch [:dispatch-tick effects-maps-vector]))
+  (re-frame.core/dispatch [:dispatch-tick effects-maps-vector]))
 
 ; @usage
 ;  (reg-event-fx
@@ -835,9 +853,9 @@
 ;       {:dispatch-tick
 ;        [{:tick 10
 ;          :dispatch [:my-event]}]}))
-(re-frame/reg-fx :dispatch-tick dispatch-tick)
+(re-frame.core/reg-fx :dispatch-tick dispatch-tick)
 
-(re-frame/reg-event-fx
+(re-frame.core/reg-event-fx
   :dispatch-tick
   ; @param (maps in vector) effects-maps-vector
   ;  [{ ... }
@@ -870,7 +888,7 @@
   ;
   ; @return (*)
   [subscriber]
-  (-> subscriber re-frame/subscribe deref))
+  (-> subscriber re-frame.core/subscribe deref))
 
 
 
