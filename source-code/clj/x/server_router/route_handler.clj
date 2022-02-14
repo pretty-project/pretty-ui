@@ -384,21 +384,9 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-client-routes
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [_]
- @(a/subscribe [:router/get-client-routes]))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-transfer! :router/transfer-client-routes!
-                 {:data-f      transfer-client-routes
+                 {:data-f     #(a/subscribed [:router/get-client-routes])
                   :target-path [:router/client-routes :data-items]})

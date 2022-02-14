@@ -114,9 +114,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
   (fn [_ [_ extension-id item-namespace lister-props]]
-      {:fx [:core/reg-transfer! (engine/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return lister-props))
-                                 :target-path [extension-id :item-lister/meta-items]}]}))
+      {:fx [[:core/reg-transfer! [(engine/transfer-id extension-id item-namespace)
+                                  {:data-f      (fn [_] (return lister-props))
+                                   :target-path [extension-id :item-lister/meta-items]}]]]}))
 
 (a/reg-event-fx
   :item-lister/add-route!

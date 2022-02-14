@@ -79,21 +79,9 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-user-profile
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (-> request request->user-profile db/document->pure-document))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-transfer! :user/transfer-user-profile!
-                 {:data-f      transfer-user-profile
+                 {:data-f     #(-> % request->user-profile db/document->pure-document)
                   :target-path [:user/profile :data-items]})

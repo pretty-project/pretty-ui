@@ -85,10 +85,10 @@
   (fn [{:keys [db]} [_ server-props]]
       (println details/app-codename "starting server ...")
       {:db (r store-server-props! db server-props)
-       :core/import-lifecycles! nil
-       :core/import-app-build!  nil
-       :core/config-server!     nil
-       :dispatch-tick [{:tick 500 :dispatch [:boot-loader/initialize-server!]}]}))
+       :dispatch-tick [{:tick 500 :dispatch [:boot-loader/initialize-server!]}]
+       :fx            [[:core/import-lifecycles!]
+                       [:core/import-app-build!]
+                       [:core/config-server!]]}))
 
 (a/reg-event-fx
   :boot-loader/initialize-server!
@@ -118,7 +118,7 @@
       (if DEBUG? (println ":on-server-boot-events:"))
       (if DEBUG? (println (str (r a/get-period-events db :on-server-boot))))
 
-      {:dispatch-n (r a/get-period-events db :on-server-boot)
+      {:dispatch-n    (r a/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
                        {:tick  50 :dispatch [:boot-loader/run-server!]}
                        ; 4. Az indítási események lefutása után a szerver betöltésének folytatása

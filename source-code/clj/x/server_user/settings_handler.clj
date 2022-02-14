@@ -126,21 +126,9 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-user-settings
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (-> request request->user-settings db/document->pure-document))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-transfer! :user/transfer-user-settings!
-                 {:data-f      transfer-user-settings
+                 {:data-f     #(-> % request->user-settings db/document->pure-document)
                   :target-path [:user/settings :data-items]})

@@ -66,32 +66,13 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-app-config
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [_]
- @(event-handler/subscribe [:core/get-app-config]))
-
-(defn- transfer-site-config
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [_]
- @(event-handler/subscribe [:core/get-site-config]))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (transfer-handler/reg-transfer! :core/transfer-app-config!
-                                {:data-f      transfer-app-config
+                                {:data-f      #(event-handler/subscribed [:core/get-app-config])
                                  :target-path [:core/app-config :data-items]})
 
 (transfer-handler/reg-transfer! :core/transfer-site-config!
-                                {:data-f      transfer-site-config
+                                {:data-f     #(event-handler/subscribed [:core/get-site-config])
                                  :target-path [:core/site-config :data-items]})

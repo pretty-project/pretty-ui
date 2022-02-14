@@ -61,4 +61,4 @@
            (println details/app-codename "connecting to:" database-name
                                            "database at:" database-host
                                                "on port:" database-port)
-           {:mongo-db/build-connection! [database-name database-host database-port]})))
+           {:fx [[:mongo-db/build-connection! [database-name database-host database-port]]]})))

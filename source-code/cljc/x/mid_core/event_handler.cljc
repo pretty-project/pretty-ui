@@ -22,6 +22,7 @@
               [mid-fruits.vector  :as vector]
               [re-frame.core      :as re-frame.core]
               [re-frame.db        :refer [app-db]]
+              [re-frame.loggers   :refer [console]]
               [re-frame.registrar :as re-frame.registrar]
               [x.mid-core.engine  :as engine]))
 
@@ -878,6 +879,46 @@
                      ; Tick later!
                      (update merged-effects-map :dispatch-tick vector/conj-item (update effects-map :tick dec))))]
              (reduce f {} effects-maps-vector))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn fx
+  ; @param (vector) effect-vector
+  ;
+  ; @usage
+  ;  (a/reg-fx :my-side-effect (fn [a b c]))
+  ;  (a/fx [:my-side-effect "a" "b" "c"])
+  [[effect-id & params :as effect-vector]]
+  (when (= :db effect-id)
+        (console :warn "re-frame: \":fx\" effect should not contain a :db effect"))
+  (if-let [effect-f (registrar/get-handler kind effect-id false)]
+          (apply effect-f params)
+          (console :warn "re-frame: in \":fx\" effect found " effect-id " which has no associated handler. Ignoring.")))
+
+;(re-frame.registrar/clear-handlers :fx :fx_)
+;(re-frame.core/reg-fx :fx fx)
+
+(defn fx-n
+  ; @param (vectors in vector) effect-vector-group
+  ;
+  ; @usage
+  ;  (a/reg-fx :my-side-effect (fn [a b c]))
+  ;  (a/fx-n [[:my-side-effect "a" "b" "c"]
+  ;           [...]])
+  [effect-vector-group]
+  (if-not (sequential? effect-vector-group)
+          (console :warn "re-frame: \":fx\" effect expects a seq, but was given " (type seq-of-effects))
+          (doseq [[effect-id & params] (remove nil? effect-vector-group)]
+                 (when (= :db effect-id)
+                       (console :warn "re-frame: \":fx\" effect should not contain a :db effect"))
+                 (if-let [effect-f (registrar/get-handler kind effect-id false)]
+                         (apply effect-f params)
+                         (console :warn "re-frame: in \":fx\" effect found " effect-id " which has no associated handler. Ignoring.")))))
+
+(re-frame.core/reg-fx :fx-n fx-n)
 
 
 

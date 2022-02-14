@@ -158,21 +158,9 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-user-account
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (-> request request->user-public-account db/document->non-namespaced-document))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-transfer! :user/transfer-user-account!
-                 {:data-f      transfer-user-account
+                 {:data-f     #(-> % request->user-public-account db/document->non-namespaced-document)
                   :target-path [:user/account :data-items]})

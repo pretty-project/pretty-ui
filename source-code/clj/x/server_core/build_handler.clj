@@ -74,21 +74,9 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- transfer-app-build
-  ; @param (map) request
-  ;
-  ; @return (string)
-  [_]
- @(event-handler/subscribe [:core/get-app-build]))
-
-
-
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (transfer-handler/reg-transfer! :core/transfer-app-build!
-                                {:data-f      transfer-app-build
+                                {:data-f     #(event-handler/subscribed [:core/get-app-build])
                                  :target-path [:core/build-handler :meta-items :app-build]})
