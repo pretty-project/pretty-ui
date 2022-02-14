@@ -627,7 +627,7 @@
       (apply handler-f params)
       (handler-f       params)))
 
-(defn reg-fx_
+(defn reg-fx
   ; @param (keyword) event-id
   ; @param (function) handler-f
   ;
@@ -643,7 +643,10 @@
   [event-id handler-f]
   (re-frame.core/reg-fx event-id #(apply-fx-params handler-f %)))
 
-(def reg-fx re-frame.core/reg-fx)
+
+
+
+;(def reg-fx re-frame.core/reg-fx)
 
 
 

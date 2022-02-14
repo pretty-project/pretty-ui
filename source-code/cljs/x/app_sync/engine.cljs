@@ -78,7 +78,7 @@
         reference     (http/send-request!      request-id request-props)]
        (swap! REFERENCES assoc request-id reference)))
 
-(a/reg-fx_ :sync/send-request! send-request!)
+(a/reg-fx :sync/send-request! send-request!)
 
 (defn- abort-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,7 +88,7 @@
   (let [reference (get @REFERENCES request-id)]
        (http/abort-request! reference)))
 
-(a/reg-fx_ :sync/abort-request! abort-request!)
+(a/reg-fx :sync/abort-request! abort-request!)
 
 (defn- remove-reference!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,4 +97,4 @@
   [request-id]
   (swap! REFERENCES dissoc request-id))
 
-(a/reg-fx_ :sync/remove-reference! remove-reference!)
+(a/reg-fx :sync/remove-reference! remove-reference!)

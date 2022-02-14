@@ -101,7 +101,7 @@
 
 ; @usage
 ;  {:environment/open-new-browser-tab! "www.my-site.com/my-link"}
-(a/reg-fx_ :environment/open-new-browser-tab! open-new-browser-tab!)
+(a/reg-fx :environment/open-new-browser-tab! open-new-browser-tab!)
 
 (defn set-window-title!
   ; @param (string) title
@@ -113,7 +113,7 @@
 
 ; @usage
 ;  {:environment/set-window-title! "My title"}
-(a/reg-fx_ :environment/set-window-title! set-window-title!)
+(a/reg-fx :environment/set-window-title! set-window-title!)
 
 (defn reload-window!
   ; @usage
@@ -123,7 +123,7 @@
 
 ; @usage
 ;  {:environment/reload-window!}
-(a/reg-fx_ :environment/reload-window! reload-window!)
+(a/reg-fx :environment/reload-window! reload-window!)
 
 (defn go-to-root!
   ; @usage
@@ -133,7 +133,7 @@
 
 ; @usage
 ;  {:environment/go-to-root! nil}
-(a/reg-fx_ :environment/go-to-root!)
+(a/reg-fx :environment/go-to-root!)
 
 (defn go-to!
   ; @param (string) uri
@@ -145,7 +145,7 @@
 
 ; @usage
 ;  {:environment/go-to! "www.my-site.com/my-link"}
-(a/reg-fx_ :environment/go-to! go-to!)
+(a/reg-fx :environment/go-to! go-to!)
 
 (defn set-interval!
   ; @param (keyword) interval-id
@@ -166,7 +166,7 @@
 
 ; @usage
 ;  {:environment/set-interval! [:my-interval {:event [:do-something!] :interval 420}]}
-(a/reg-fx_ :environment/set-interval! set-interval!)
+(a/reg-fx :environment/set-interval! set-interval!)
 
 (defn clear-interval!
   ; @param (keyword) js-id
@@ -178,7 +178,7 @@
 
 ; @usage
 ;  {:environment/clear-interval! :my-interval}
-(a/reg-fx_ :environment/clear-interval! clear-interval!)
+(a/reg-fx :environment/clear-interval! clear-interval!)
 
 (defn set-timeout!
   ; @param (keyword) timeout-id
@@ -198,7 +198,7 @@
 
 ; @usage
 ;  {:environment/set-timeout! [:my-timeout {:event [:do-something!] :timeout 420}]}
-(a/reg-fx_ :environment/set-timeout! set-timeout!)
+(a/reg-fx :environment/set-timeout! set-timeout!)
 
 (defn clear-timeout!
   ; @param (keyword) js-id
@@ -210,7 +210,7 @@
 
 ; @usage
 ;  {:environment/clear-timeout! :my-timeout}
-(a/reg-fx_ :environment/clear-timeout! clear-timeout!)
+(a/reg-fx :environment/clear-timeout! clear-timeout!)
 
 
 
@@ -316,7 +316,7 @@
                               :language        (window/get-language)
                               :user-agent      (window/get-user-agent)}]))
 
-(a/reg-fx_ :environment/update-window-data! update-window-data!)
+(a/reg-fx :environment/update-window-data! update-window-data!)
 
 (defn- listen-to-connection-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -324,7 +324,7 @@
   (do (dom/add-event-listener!  "online" connection-change-listener)
       (dom/add-event-listener! "offline" connection-change-listener)))
 
-(a/reg-fx_ :environment/listen-to-connection-change! listen-to-connection-change!)
+(a/reg-fx :environment/listen-to-connection-change! listen-to-connection-change!)
 
 
 

@@ -62,7 +62,7 @@
                                                       :server-config server-config
                                                       :site-config   site-config}])))
 
-(event-handler/reg-fx_ :core/config-server! config-server!)
+(event-handler/reg-fx :core/config-server! config-server!)
 
 
 

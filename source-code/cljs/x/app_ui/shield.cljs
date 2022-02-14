@@ -54,7 +54,7 @@
   (let [shield-content-element (dom/get-element-by-id "x-app-shield--content")]
        (dom/set-element-content! shield-content-element content)))
 
-(a/reg-fx_ :ui/render-shield-content! render-shield-content!)
+(a/reg-fx :ui/render-shield-content! render-shield-content!)
 
 
 

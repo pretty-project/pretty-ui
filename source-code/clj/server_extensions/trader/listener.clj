@@ -84,7 +84,7 @@
            (run-source-code! source-code)
            (a/dispatch [:trader/log! "No source-code found error" {:warning? true}]))))
 
-(a/reg-fx_ :trader/run-listener! run-listener!)
+(a/reg-fx :trader/run-listener! run-listener!)
 
 
 

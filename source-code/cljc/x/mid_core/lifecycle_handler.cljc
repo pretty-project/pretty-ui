@@ -125,7 +125,7 @@
   ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
   (event-handler/dispatch [:db/set-item! [:core/lifes :data-items] @LIFES]))
 
-(event-handler/reg-fx_ :core/import-lifecycles! import-lifecycles!)
+(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)
 
 
 

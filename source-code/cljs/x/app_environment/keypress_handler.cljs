@@ -352,7 +352,7 @@
   [key-code]
   (swap! PREVENTED-KEYS vector/conj-item-once key-code))
 
-(a/reg-fx_ :environment/prevent-keypress-default! prevent-keypress-default!)
+(a/reg-fx :environment/prevent-keypress-default! prevent-keypress-default!)
 
 (defn- enable-keypress-default!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -361,7 +361,7 @@
   [key-code]
   (swap! PREVENTED-KEYS vector/remove-item key-code))
 
-(a/reg-fx_ :environment/enable-keypress-default! enable-keypress-default!)
+(a/reg-fx :environment/enable-keypress-default! enable-keypress-default!)
 
 (defn- add-keypress-listeners!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -369,7 +369,7 @@
   (event-handler/add-event-listener! "keydown" KEYDOWN-LISTENER)
   (event-handler/add-event-listener! "keyup"     KEYUP-LISTENER))
 
-(a/reg-fx_ :environment/add-keypress-listeners! add-keypress-listeners!)
+(a/reg-fx :environment/add-keypress-listeners! add-keypress-listeners!)
 
 (defn- remove-keypress-listeners!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -377,7 +377,7 @@
   (event-handler/remove-event-listener! "keydown" KEYDOWN-LISTENER)
   (event-handler/remove-event-listener! "keyup"     KEYUP-LISTENER))
 
-(a/reg-fx_ :environment/remove-keypress-listeners! remove-keypress-listeners!)
+(a/reg-fx :environment/remove-keypress-listeners! remove-keypress-listeners!)
 
 
 

@@ -45,7 +45,7 @@
        (element-handler/set-element-attribute! "x-body-container" "data-touch-detected"                   %)
        (a/dispatch [:db/set-item! (db/meta-item-path :environment/touch-data :touch-events-api.detected?) %])))
 
-(a/reg-fx_ :environment/detect-touch-events-api! detect-touch-events-api!)
+(a/reg-fx :environment/detect-touch-events-api! detect-touch-events-api!)
 
 
 

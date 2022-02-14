@@ -163,7 +163,7 @@
   [_]
   (dom/add-event-listener! "resize" resize-listener))
 
-(a/reg-fx_ :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
+(a/reg-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
 
 (defn- update-viewport-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,7 +174,7 @@
                               :viewport-profile     (dom/get-viewport-profile)
                               :viewport-width       (dom/get-viewport-width)}]))
 
-(a/reg-fx_ :environment/update-viewport-data! update-viewport-data!)
+(a/reg-fx :environment/update-viewport-data! update-viewport-data!)
 
 (defn- detect-viewport-profile!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,7 +182,7 @@
   (let [viewport-profile (dom/get-viewport-profile)]
        (element-handler/set-element-attribute! "x-body-container" "data-viewport-profile" (name viewport-profile))))
 
-(a/reg-fx_ :environment/detect-viewport-profile! detect-viewport-profile!)
+(a/reg-fx :environment/detect-viewport-profile! detect-viewport-profile!)
 
 
 

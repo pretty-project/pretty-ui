@@ -43,7 +43,7 @@
 
 ; @usage
 ;  {:environment/prevent-selecting! nil}
-(a/reg-fx_ :environment/prevent-selecting! prevent-selecting!)
+(a/reg-fx :environment/prevent-selecting! prevent-selecting!)
 
 (defn enable-selecting!
   ; @usage
@@ -53,4 +53,4 @@
 
 ; @usage
 ;  {:environment/enable-selecting! nil}
-(a/reg-fx_ :environment/enable-selecting! enable-selecting!)
+(a/reg-fx :environment/enable-selecting! enable-selecting!)

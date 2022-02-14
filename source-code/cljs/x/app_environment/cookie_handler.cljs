@@ -547,7 +547,7 @@
                                                                :secure   secure})
             (a/dispatch [:environment/cookie-set cookie-id cookie-props]))))
 
-(a/reg-fx_ :environment/store-browser-cookie! store-browser-cookie!)
+(a/reg-fx :environment/store-browser-cookie! store-browser-cookie!)
 
 (defn- remove-browser-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -559,7 +559,7 @@
        (try (.remove goog.net.cookies cookie-name COOKIE-PATH COOKIE-DOMAIN)
             (a/dispatch [:environment/cookie-removed cookie-id]))))
 
-(a/reg-fx_ :environment/remove-browser-cookie! remove-browser-cookie!)
+(a/reg-fx :environment/remove-browser-cookie! remove-browser-cookie!)
 
 (defn- remove-browser-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -567,7 +567,7 @@
   (try (.clear goog.net.cookies)
        (a/dispatch [:environment/cookies-removed])))
 
-(a/reg-fx_ :environment/remove-browser-cookies! remove-browser-cookies!)
+(a/reg-fx :environment/remove-browser-cookies! remove-browser-cookies!)
 
 
 

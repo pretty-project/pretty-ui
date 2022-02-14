@@ -190,7 +190,7 @@
   (tools/append-temporary-component! [file-selector uploader-id uploader-props]
                                     #(-> "storage--file-selector" dom/get-element-by-id .click)))
 
-(a/reg-fx_ :storage.file-uploader/open-file-selector! open-file-selector!)
+(a/reg-fx :storage.file-uploader/open-file-selector! open-file-selector!)
 
 
 

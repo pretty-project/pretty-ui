@@ -125,7 +125,7 @@
 
 ; @usage
 ;  {:environment/add-external-css! "/css/filename.css"}
-(a/reg-fx_ :environment/add-external-css! add-external-css!)
+(a/reg-fx :environment/add-external-css! add-external-css!)
 
 (defn add-css!
   ; @param (string) filename
@@ -143,7 +143,7 @@
 ;
 ; @usage
 ;  {:environment/add-css! ["filename.css" {...}]}
-(a/reg-fx_ :environment/add-css! add-css!)
+(a/reg-fx :environment/add-css! add-css!)
 
 (defn remove-css!
   ; @param (string) filename
@@ -155,4 +155,4 @@
 
 ; @usage
 ;  {:environment/remove-css! "/filename.css"}
-(a/reg-fx_ :environment/remove-css! remove-css!)
+(a/reg-fx :environment/remove-css! remove-css!)

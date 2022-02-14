@@ -66,7 +66,7 @@
 
 ; @usage
 ;  {:core/reg-transfer! [:my-transfer {...}]}
-(event-handler/reg-fx_ :core/reg-transfer! reg-transfer!)
+(event-handler/reg-fx :core/reg-transfer! reg-transfer!)
 
 
 

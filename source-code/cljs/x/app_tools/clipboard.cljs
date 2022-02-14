@@ -88,4 +88,4 @@
 
 ; @usage
 ;  {:tools/copy-to-clipboard! "My text"}
-(a/reg-fx_ :tools/copy-to-clipboard! copy-to-clipboard!)
+(a/reg-fx :tools/copy-to-clipboard! copy-to-clipboard!)

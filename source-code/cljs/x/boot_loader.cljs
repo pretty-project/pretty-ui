@@ -80,7 +80,7 @@
 
 ; @usage
 ;  {:boot-loader/render-app! #'app}
-(a/reg-fx_ :boot-loader/render-app! render-app!)
+(a/reg-fx :boot-loader/render-app! render-app!)
 
 
 

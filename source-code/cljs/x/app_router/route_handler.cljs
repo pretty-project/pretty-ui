@@ -592,7 +592,7 @@
   [_]
   (accountant/configure-navigation! ACCOUNTANT-CONFIG))
 
-(a/reg-fx_ :router/configure-navigation! configure-navigation!)
+(a/reg-fx :router/configure-navigation! configure-navigation!)
 
 (defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -601,7 +601,7 @@
   [route-string]
   (accountant/navigate! route-string))
 
-(a/reg-fx_ :router/navigate! navigate!)
+(a/reg-fx :router/navigate! navigate!)
 
 (defn- navigate-back!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -609,14 +609,14 @@
   (let [history (.-history js/window)]
        (.back history)))
 
-(a/reg-fx_ :router/navigate-back! navigate-back!)
+(a/reg-fx :router/navigate-back! navigate-back!)
 
 (defn- dispatch-current-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (accountant/dispatch-current!))
 
-(a/reg-fx_ :router/dispatch-current-route! dispatch-current-route!)
+(a/reg-fx :router/dispatch-current-route! dispatch-current-route!)
 
 
 

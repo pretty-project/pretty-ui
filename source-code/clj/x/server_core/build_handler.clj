@@ -70,7 +70,7 @@
           ; ezért nem minden esetben biztosított az app-build értékének létezése!
           (event-handler/dispatch [:core/store-app-build! INITIAL-APP-BUILD])))
 
-(event-handler/reg-fx_ :core/import-app-build! import-app-build!)
+(event-handler/reg-fx :core/import-app-build! import-app-build!)
 
 
 

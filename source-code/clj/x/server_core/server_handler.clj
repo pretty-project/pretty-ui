@@ -103,4 +103,4 @@
 
 ; @usage
 ;  {:core/run-server! {...}}
-(event-handler/reg-fx_ :core/run-server! run-server!)
+(event-handler/reg-fx :core/run-server! run-server!)

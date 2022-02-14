@@ -37,4 +37,4 @@
   [error-prop]
   (println details/app-codename DEFAULT-SERVER-ERROR))
 
-(event-handler/reg-fx_ :core/error-catched error-catched)
+(event-handler/reg-fx :core/error-catched error-catched)

@@ -198,7 +198,7 @@
   (append-temporary-component! [file-saver saver-id saver-props] save-file-f)
   (remove-temporary-component!))
 
-(a/reg-fx_ :tools/save-file-accepted save-file-accepted)
+(a/reg-fx :tools/save-file-accepted save-file-accepted)
 
 (a/reg-event-fx
   :tools/render-save-file-dialog!

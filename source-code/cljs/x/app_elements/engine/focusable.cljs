@@ -30,7 +30,7 @@
   [element-id]
   (-> element-id targetable/element-id->target-id environment/focus-element!))
 
-(a/reg-fx_ :elements/focus-element! focus-element!)
+(a/reg-fx :elements/focus-element! focus-element!)
 
 (defn blur-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -39,4 +39,4 @@
   [element-id]
   (-> element-id targetable/element-id->target-id environment/blur-element!))
 
-(a/reg-fx_ :elements/blur-element! blur-element!)
+(a/reg-fx :elements/blur-element! blur-element!)

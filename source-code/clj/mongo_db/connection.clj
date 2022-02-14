@@ -62,4 +62,4 @@
                        database       (mcr/get-db         connection     database-name)]
        (a/dispatch [:mongo-db/store-connection! database])))
 
-(a/reg-fx_ :mongo-db/build-connection! build-connection!)
+(a/reg-fx :mongo-db/build-connection! build-connection!)
