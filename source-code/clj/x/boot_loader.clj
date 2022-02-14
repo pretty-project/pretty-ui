@@ -86,7 +86,7 @@
       (println details/app-codename "starting server ...")
       {:db (r store-server-props! db server-props)
        :dispatch-tick [{:tick 500 :dispatch [:boot-loader/initialize-server!]}]
-       :fx            [[:core/import-lifecycles!]
+       :fx-n          [[:core/import-lifecycles!]
                        [:core/import-app-build!]
                        [:core/config-server!]]}))
 

@@ -102,9 +102,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
   (fn [_ [_ extension-id item-namespace browser-props]]
-      {:fx [[:core/reg-transfer! (engine/transfer-id extension-id item-namespace :browser)
-                                 {:data-f (fn [_] (select-keys browser-props engine/BROWSER-PROPS-KEYS))
-                                  :target-path [extension-id :item-browser/meta-items]}]]}))
+      {:fx [[:core/reg-transfer! [(engine/transfer-id extension-id item-namespace :browser)
+                                  {:data-f (fn [_] (select-keys browser-props engine/BROWSER-PROPS-KEYS))
+                                   :target-path [extension-id :item-browser/meta-items]}]]]}))
 
 (a/reg-event-fx
   :item-browser/reg-transfer-lister-props!

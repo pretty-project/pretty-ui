@@ -78,5 +78,5 @@
 ;; ----------------------------------------------------------------------------
 
 (transfer-handler/reg-transfer! :core/transfer-app-build!
-                                {:data-f     #(event-handler/subscribed [:core/get-app-build])
+                                {:data-f      (fn [_] (event-handler/subscribed [:core/get-app-build]))
                                  :target-path [:core/build-handler :meta-items :app-build]})

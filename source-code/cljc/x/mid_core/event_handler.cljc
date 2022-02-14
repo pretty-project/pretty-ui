@@ -489,9 +489,9 @@
 ; az első meghívását követően, így azt többször már nem lehet meghívni.
 ;
 ; @usage
-;  (reg-event-fx
+;  (a/reg-event-fx
 ;   :my-event
-;   [self-destruct!]
+;   [a/self-destruct!]
 ;   (fn [cofx event-vector]
 ;       {:dispatch ...}))
 
@@ -548,7 +548,7 @@
   ; @param (keyword) event-id
   ;
   ; @usage
-  ;  (get-event-handler :sub :my-subscription)
+  ;  (a/get-event-handler :sub :my-subscription)
   ;
   ; @return (maps in list)
   [event-kind event-id]
@@ -561,7 +561,7 @@
   ; @param (keyword) event-id
   ;
   ; @usage
-  ;  (event-handler-registrated? :sub :my-subscription)
+  ;  (a/event-handler-registrated? :sub :my-subscription)
   ;
   ; @return (function)
   [event-kind event-id]
@@ -591,16 +591,16 @@
   ; @param (metamorphic-event) event-handler
   ;
   ; @usage
-  ;  (reg-event-fx :my-event [:do-something!])
+  ;  (a/reg-event-fx :my-event [:do-something!])
   ;
   ; @usage
-  ;  (reg-event-fx :my-event {:dispatch [:do-something!]})
+  ;  (a/reg-event-fx :my-event {:dispatch [:do-something!]})
   ;
   ; @usage
-  ;  (reg-event-fx :my-event (fn [cofx event-vector] [:do-something!]})
+  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] [:do-something!]})
   ;
   ; @usage
-  ;  (reg-event-fx :my-event (fn [cofx event-vector] {:dispatch [:do-something!]})
+  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] {:dispatch [:do-something!]})
   ([event-id event-handler]
    (reg-event-fx event-id nil event-handler))
 
@@ -701,10 +701,24 @@
        (re-frame.core/reg-event-fx handler-id [self-destruct!] handler-f)
        (re-frame.core/dispatch [handler-id])))
 
+; @usage
+;  {:dispatch-function (fn [_ _] ...)}
 (re-frame.core/reg-fx :dispatch-function dispatch-function)
 
 (defn dispatch
   ; @param (metamorphic-event) event-handler
+  ;
+  ; @usage
+  ;  (a/dispatch [:foo])
+  ;
+  ; @usage
+  ;  (a/dispatch {:dispatch [:foo]})
+  ;
+  ; @usage
+  ;  (a/dispatch (fn [_ _] {:dispatch [:foo]}))
+  ;
+  ; @usage
+  ;  (a/dispatch nil)
   [event-handler]
 
   ; Szerver-oldalon a Re-Frame nem jelez hibát, nem regisztrált esemény meghívásakor.
@@ -714,24 +728,21 @@
                 event-exists? (event-handler-registrated? :event event-id)]
                (if-not event-exists? (println (str "re-frame: no :event handler registrated for: " event-id)))))
 
-  (cond ; @usage
-        ;  (dispatch [:foo])
-        (vector? event-handler) (re-frame.core/dispatch event-handler)
-        ; @usage
-        ;  (dispatch {:dispatch [:foo]})
+  (cond (vector? event-handler) (re-frame.core/dispatch event-handler)
         (map? event-handler)    (-> event-handler effects-map->handler-f dispatch-function)
-        ; @usage
-        ;  (dispatch nil)
         (nil? event-handler)    (return :nil-handler-exception)
-        ; @usage
-        ;  (dispatch (fn [_ _] {:dispatch [:foo]}))
         :else                   (dispatch-function event-handler)))
 
+; @usage
+;  {:dispatch ...}
 (re-frame.registrar/clear-handlers :fx :dispatch)
 (re-frame.core/reg-fx :dispatch dispatch)
 
 (defn dispatch-sync
   ; @param (event-vector) event-handler
+  ;
+  ; @usage
+  ;  (a/dispatch-sync [...])
   ;
   ; A dispatch-sync függvény a meghívási sebesség fontossága miatt nem kezeli
   ; a metamorphic-event kezelőket!
@@ -749,6 +760,8 @@
   (doseq [event (remove nil? event-list)]
          (dispatch event)))
 
+; @usage
+;  {:dispatch-later [[...] [...]}
 (re-frame.registrar/clear-handlers :fx :dispatch-n)
 (re-frame.core/reg-fx :dispatch-n dispatch-n)
 
@@ -774,6 +787,8 @@
                          (number? ms))
                     (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
 
+; @usage
+;  {:dispatch-later [{...} {...}]}
 (re-frame.registrar/clear-handlers :fx :dispatch-later)
 (re-frame.core/reg-fx :dispatch-later dispatch-later)
 
@@ -794,6 +809,8 @@
   (if condition (dispatch if-event-handler)
                 (if else-event-handler (dispatch else-event-handler))))
 
+; @usage
+;  {:dispatch-if [...]}
 (re-frame.core/reg-fx :dispatch-if dispatch-if)
 
 (defn dispatch-cond
@@ -820,6 +837,8 @@
                                     (dispatch event))))]
          (reduce-kv dispatch-cond-f nil conditional-events)))
 
+; @usage
+;  {:dispatch-cond [...]}
 (re-frame.core/reg-fx :dispatch-cond dispatch-cond)
 
 
@@ -894,10 +913,13 @@
   [[effect-id & params :as effect-vector]]
   (when (= :db effect-id)
         (console :warn "re-frame: \":fx\" effect should not contain a :db effect"))
-  (if-let [effect-f (registrar/get-handler kind effect-id false)]
-          (apply effect-f params)
+  (if-let [effect-f (re-frame.registrar/get-handler :fx effect-id false)]
+          (if params (apply effect-f params)
+                     (effect-f nil))
           (console :warn "re-frame: in \":fx\" effect found " effect-id " which has no associated handler. Ignoring.")))
 
+; @usage
+;  {:fx [...]}
 ;(re-frame.registrar/clear-handlers :fx :fx_)
 ;(re-frame.core/reg-fx :fx fx)
 
@@ -910,14 +932,12 @@
   ;           [...]])
   [effect-vector-group]
   (if-not (sequential? effect-vector-group)
-          (console :warn "re-frame: \":fx\" effect expects a seq, but was given " (type seq-of-effects))
-          (doseq [[effect-id & params] (remove nil? effect-vector-group)]
-                 (when (= :db effect-id)
-                       (console :warn "re-frame: \":fx\" effect should not contain a :db effect"))
-                 (if-let [effect-f (registrar/get-handler kind effect-id false)]
-                         (apply effect-f params)
-                         (console :warn "re-frame: in \":fx\" effect found " effect-id " which has no associated handler. Ignoring.")))))
+          (console :warn "re-frame: \":fx\" effect expects a seq, but was given " (type effect-vector-group))
+          (doseq [effect-vector (remove nil? effect-vector-group)]
+                 (fx effect-vector))))
 
+; @usage
+;  {:fx-n [[...] [...]]}
 (re-frame.core/reg-fx :fx-n fx-n)
 
 

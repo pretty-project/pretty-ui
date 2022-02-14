@@ -70,9 +70,9 @@
 ;; ----------------------------------------------------------------------------
 
 (transfer-handler/reg-transfer! :core/transfer-app-config!
-                                {:data-f      #(event-handler/subscribed [:core/get-app-config])
+                                {:data-f      (fn [_] (event-handler/subscribed [:core/get-app-config]))
                                  :target-path [:core/app-config :data-items]})
 
 (transfer-handler/reg-transfer! :core/transfer-site-config!
-                                {:data-f     #(event-handler/subscribed [:core/get-site-config])
+                                {:data-f      (fn [_] (event-handler/subscribed [:core/get-site-config]))
                                  :target-path [:core/site-config :data-items]})
