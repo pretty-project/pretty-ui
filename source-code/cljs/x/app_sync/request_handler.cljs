@@ -390,7 +390,7 @@
   ;  [:sync/abort-request! :my-request]
   (fn [{:keys [db]} [_ request-id]]
       {:db (r request-aborted db request-id)
-       :sync/abort-request! [request-id]}))
+       :fx [:sync/abort-request! request-id]}))
 
 (a/reg-event-fx
   :sync/send-request!
@@ -445,9 +445,9 @@
   (fn [{:keys [db]} [_ request-id request-props]]
       (let [request-props (r request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
-               {:db                 (r send-request! db request-id request-props)
-                :sync/send-request! [request-id request-props]
-                :dispatch           [:sync/request-sent request-id]}))))
+               {:db (r send-request! db request-id request-props)
+                :fx       [:sync/send-request! request-id request-props]
+                :dispatch [:sync/request-sent  request-id]}))))
 
 (a/reg-event-fx
   :sync/request-sent
@@ -469,7 +469,7 @@
       (let [server-response (reader/string->mixed server-response-body)
             request-props (assoc (get-in db (db/path :sync/requests request-id)) :request-successed? true)]
            {:db (r request-successed db request-id server-response)
-            :sync/remove-reference! [request-id]
+            :fx [:sync/remove-reference! request-id]
             :dispatch-n     [(r get-request-on-success-event   db request-id server-response)
                              (r get-request-on-responsed-event db request-id server-response)]
             :dispatch-if    [(r response-handler/save-request-response? db request-id)
@@ -492,7 +492,7 @@
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
       (let [request-props (assoc (get-in db (db/path :sync/requests request-id)) :request-failured? true)]
            {:db (r request-failured db request-id server-response)
-            :sync/remove-reference! [request-id]
+            :fx [:sync/remove-reference! request-id]
             :dispatch-n     [(r get-request-on-failure-event   db request-id server-response)
                              (r get-request-on-responsed-event db request-id server-response)]
             :dispatch-later [{:ms (r get-request-idle-timeout db request-id)

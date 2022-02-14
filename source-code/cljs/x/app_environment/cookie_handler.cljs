@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.02.07
 ; Description:
-; Version: 1.8.4
+; Version: 1.9.2
 ; Compatibility: x4.6.0
 
 
@@ -475,7 +475,7 @@
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
       (let [cookie-props (cookie-props-prototype cookie-props)]
            (if (r set-cookie? db cookie-id cookie-props)
-               {:environment/store-browser-cookie! [cookie-id cookie-props]}))))
+               {:fx [:environment/store-browser-cookie! cookie-id cookie-props]}))))
 
 (a/reg-event-fx
   :environment/remove-cookie!
@@ -492,13 +492,13 @@
   ;  [:environment/remove-cookie! :my-cookie {:cookie-type :necessary}]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
       (let [cookie-props (cookie-props-prototype cookie-props)]
-           {:environment/remove-browser-cookie! [cookie-id cookie-props]})))
+           {:fx [:environment/remove-browser-cookie! cookie-id cookie-props]})))
 
 (a/reg-event-fx
   :environment/remove-cookies!
   ; @usage
   ;  [:environment/remove-cookies!]
-  {:environment/remove-browser-cookies! nil})
+  {:fx [:environment/remove-browser-cookies!]})
 
 (a/reg-event-fx
   :environment/read-system-cookies!
@@ -514,8 +514,8 @@
   (fn [{:keys [db]} _]
       (if (r necessary-cookies-enabled? db)
           (let [cookie-settings (r get-cookie-settings db)]
-               {:environment/set-browser-cookie! [:cookie-settings {:cookie-type :necessary
-                                                                    :value       cookie-settings}]}))))
+               {:fx [:environment/set-browser-cookie! :cookie-settings
+                                                      {:cookie-type :necessary :value cookie-settings}]}))))
 
 (a/reg-event-fx
   :environment/cookie-settings-changed

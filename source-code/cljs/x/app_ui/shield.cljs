@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.8.2
+; Version: v0.9.4
 ; Compatibility: x3.9.9
 
 
@@ -103,4 +103,4 @@
 (a/reg-event-fx
   :ui/empty-shield!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:environment/empty-element! "x-app-shield--content"})
+  {:fx [:environment/empty-element! "x-app-shield--content"]})

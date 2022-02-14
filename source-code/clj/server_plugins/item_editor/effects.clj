@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.12.18
 ; Description:
-; Version: v0.6.8
+; Version: v0.7.0
 ; Compatibility: x4.6.0
 
 
@@ -79,9 +79,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
   (fn [_ [_ extension-id item-namespace editor-props]]
-      {:fx [[:core/reg-transfer! [(engine/transfer-id extension-id item-namespace)
-                                  {:data-f      (fn [_] (return editor-props))
-                                   :target-path [extension-id :item-editor/meta-items]}]]]}))
+      {:fx [:core/reg-transfer! (engine/transfer-id extension-id item-namespace)
+                                {:data-f      (fn [_] (return editor-props))
+                                 :target-path [extension-id :item-editor/meta-items]}]}))
 
 (a/reg-event-fx
   :item-editor/add-route!

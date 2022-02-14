@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.02.09
 ; Description:
-; Version: v1.2.6
+; Version: v1.3.0
 ; Compatibility: x4.6.0
 
 
@@ -124,7 +124,7 @@
                (insert-link-element! head-element link-element context-props))))
 
 ; @usage
-;  {:environment/add-external-css! "/css/filename.css"}
+;  [:environment/add-external-css! "/css/filename.css"]
 (a/reg-fx :environment/add-external-css! add-external-css!)
 
 (defn add-css!
@@ -139,10 +139,10 @@
        (add-external-css! filepath context-props)))
 
 ; @usage
-;  {:environment/add-css! "filename.css"}
+;  [:environment/add-css! "filename.css"]
 ;
 ; @usage
-;  {:environment/add-css! ["filename.css" {...}]}
+;  [:environment/add-css! "filename.css" {...}]
 (a/reg-fx :environment/add-css! add-css!)
 
 (defn remove-css!
@@ -154,5 +154,5 @@
   ; TODO ...
 
 ; @usage
-;  {:environment/remove-css! "/filename.css"}
+;  [:environment/remove-css! "/filename.css"]
 (a/reg-fx :environment/remove-css! remove-css!)

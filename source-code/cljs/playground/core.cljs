@@ -424,4 +424,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot {:environment/add-external-css! "/css/playground.css"}})
+  {:on-app-boot {:fx [:environment/add-external-css! "/css/playground.css"]}})

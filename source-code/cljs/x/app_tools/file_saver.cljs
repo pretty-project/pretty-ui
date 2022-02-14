@@ -6,7 +6,7 @@
 ; Created: 2020.07.26
 ; Description: Fájl mentése a kliens eszközre
 ; Version: v1.5.6
-; Compatibility: x4.5.8
+; Compatibility: x4.6.0
 
 
 
@@ -115,8 +115,8 @@
   ; @return (component)
   [popup-id saver-props]
   [elements/button ::save-button
-                   {:on-click {:dispatch-n [[:tools/save-file-accepted popup-id saver-props]
-                                            [:ui/close-popup!          popup-id]]}
+                   {:on-click {:fx       [:tools/save-file-accepted popup-id saver-props]
+                               :dispatch [:ui/close-popup!          popup-id]}
                     :keypress {:key-code 13}
                     :preset   :save-button}])
 
@@ -186,7 +186,7 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- save-file-accepted
@@ -199,6 +199,11 @@
   (remove-temporary-component!))
 
 (a/reg-fx :tools/save-file-accepted save-file-accepted)
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :tools/render-save-file-dialog!

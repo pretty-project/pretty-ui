@@ -192,8 +192,8 @@
 (a/reg-event-fx
   :environment/viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:environment/detect-viewport-profile! nil
-   :environment/update-viewport-data!    nil})
+  {:fx-n [[:environment/detect-viewport-profile!]
+          [:environment/update-viewport-data!]]})
 
 
 
@@ -202,6 +202,6 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init {:environment/detect-viewport-profile!   nil
-                 :environment/listen-to-viewport-resize! nil
-                 :environment/update-viewport-data!      nil}})
+  {:on-app-init {:fx-n [[:environment/detect-viewport-profile!]
+                        [:environment/listen-to-viewport-resize!]
+                        [:environment/update-viewport-data!]]}})

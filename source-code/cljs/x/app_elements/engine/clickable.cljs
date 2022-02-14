@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.5.8
+; Version: v0.6.6
+; Compatibility: x4.6.0
 
 
 
@@ -114,7 +114,7 @@
   ; @param (keyword) element-id
   (fn [_ [_ element-id]]
       (if (targetable/element-id->target-enabled? element-id)
-          {:elements/focus-element! element-id})))
+          {:fx [:elements/focus-element! element-id]})))
 
 (a/reg-event-fx
   :elements/key-released
@@ -122,6 +122,6 @@
   ;
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
-      {:elements/blur-element! element-id
+      {:fx [:elements/blur-element! element-id]
        :dispatch-if [(targetable/element-id->target-enabled? element-id)
                      (r element/get-element-prop db element-id :on-click)]}))

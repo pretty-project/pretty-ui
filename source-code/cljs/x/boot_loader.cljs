@@ -79,7 +79,7 @@
                   (dom/get-element-by-id "x-app-container")))
 
 ; @usage
-;  {:boot-loader/render-app! #'app}
+;  [:boot-loader/render-app! #'app]
 (a/reg-fx :boot-loader/render-app! render-app!)
 
 
@@ -138,7 +138,7 @@
   ; @usage
   ;  [:boot-loader/restart-app! {:restart-target "/my-route?var=value"}]
   (fn [{:keys [db]} [_ {:keys [restart-target]}]]
-      {:environment/go-to! (or restart-target (r get-restart-target db))}))
+      {:fx [:environment/go-to! (or restart-target (r get-restart-target db))]}))
 
 (a/reg-event-fx
   :boot-loader/start-app!
@@ -149,8 +149,8 @@
   ; @usage
   ;  [:boot-loader/initialize-app! #'app]
   (fn [_ [_ app]]
-      {:core/import-lifecycles! nil
-       :core/detect-debug-mode! nil
+      {:fx-n [[:core/import-lifecycles!]
+              [:core/detect-debug-mode!]]
        :dispatch-n [; 1. Let's start!
                     [:core/synchronize-app! app]
                     ; 2. A load-handler várjon az XXX#5030 jelre!
@@ -196,7 +196,7 @@
   ;  [:boot-loader/build-app! #'app]
   (fn [{:keys [db]} [_ app]]
       {; 1. Az applikáció renderelése
-       :boot-loader/render-app! app
+       :fx [:boot-loader/render-app! app]
        ; 2. Ha a felhasználó nem vendégként lett azonosítva, akkor
        ;    a bejelentkezési események meghívása (Dispatch on-login events)
        :dispatch-if [(r user/user-identified? db) [:core/login-app!]]
@@ -212,11 +212,9 @@
   :boot-loader/launch-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {; Az útvonalhoz tartozó esemény meghívása
-       ; (Dispatch the current route-event)
-       :router/dispatch-current-route! nil
-       ; Az applikáció renderelése utáni események meghívása
-       ; (Dispatch on-app-launch events)
+      {; Az útvonalhoz tartozó esemény meghívása (Dispatch the current route-event)
+       :fx [:router/dispatch-current-route!]
+       ; Az applikáció renderelése utáni események meghívása (Dispatch on-app-launch events)
        :dispatch-n (r a/get-period-events db :on-app-launch)}))
 
 (a/reg-event-fx

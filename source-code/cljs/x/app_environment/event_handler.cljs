@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.0
+; Version: v0.4.6
 ; Compatibility: x4.6.0
 
 
@@ -53,7 +53,7 @@
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
-;  {:environment/add-event-listener! ["mousemove" handler-f]}
+;  [:environment/add-event-listener! "mousemove" handler-f]
 (a/reg-fx :environment/add-event-listener! add-event-listener!)
 
 (defn remove-event-listener!
@@ -71,7 +71,7 @@
 
 ; @usage
 ;  (defn handler-f [e] (do-something!))
-;  {:environment/remove-event-listener! ["mousemove" handler-f]}
+;  [:environment/remove-event-listener! "mousemove" handler-f]
 (a/reg-fx :environment/remove-event-listener! remove-event-listener!)
 
 (defn add-event!
@@ -88,5 +88,5 @@
        (dom/add-event-listener! type listener target)))
 
 ; @usage
-;  {:environment/add-event! ["mousemove" [:do-something!]]}
+;  [:environment/add-event! "mousemove" [:do-something!]]
 (a/reg-fx :environment/add-event! add-event!)

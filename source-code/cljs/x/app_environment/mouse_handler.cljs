@@ -14,7 +14,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.2
 ; Compatibility: x4.6.0
 
 
@@ -42,7 +42,7 @@
   (dom/add-event-listener! "mousedown" dom/select-preventer))
 
 ; @usage
-;  {:environment/prevent-selecting! nil}
+;  [:environment/prevent-selecting!]
 (a/reg-fx :environment/prevent-selecting! prevent-selecting!)
 
 (defn enable-selecting!
@@ -52,5 +52,5 @@
   (dom/remove-event-listener! "mousedown" dom/select-preventer))
 
 ; @usage
-;  {:environment/enable-selecting! nil}
+;  [:environment/enable-selecting!]
 (a/reg-fx :environment/enable-selecting! enable-selecting!)

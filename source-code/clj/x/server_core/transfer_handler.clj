@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.5.5
+; Version: v0.7.2
+; Compatibility: x4.6.0
 
 
 
@@ -50,14 +50,14 @@
   ;   :target-path (item-path vector)(opt)}
   ;
   ; @usage
-  ;  (core/reg-transfer {...})
+  ;  (a/reg-transfer {...})
   ;
   ; @usage
-  ;  (core/reg-transfer :my-transfer {...})
+  ;  (a/reg-transfer :my-transfer {...})
   ;
   ; @usage
   ;  (defn my-data-f [request] {:my-data ...})
-  ;  (core/reg-transfer {:data-f my-data-f})
+  ;  (a/reg-transfer {:data-f my-data-f})
   ([transfer-props]
    (reg-transfer! (engine/id) transfer-props))
 
@@ -65,7 +65,7 @@
    (event-handler/dispatch [:core/store-transfer-props! transfer-id transfer-props])))
 
 ; @usage
-;  {:core/reg-transfer! [:my-transfer {...}]}
+;  [:core/reg-transfer! :my-transfer {...}]
 (event-handler/reg-fx :core/reg-transfer! reg-transfer!)
 
 

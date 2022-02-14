@@ -37,7 +37,7 @@
       ; - A request-id azonosító feltöltési folyamatonként eltérő kell legyen, ehhez szükséges,
       ;   hogy az uploader-id azonosító is ... eltérő legyen!
       {:db (r events/store-uploader-props! db uploader-id uploader-props)
-       :storage.file-uploader/open-file-selector! [uploader-id uploader-props]}))
+       :fx [:storage.file-uploader/open-file-selector! uploader-id uploader-props]}))
 
 (a/reg-event-fx
   :storage.file-uploader/cancel-uploader!

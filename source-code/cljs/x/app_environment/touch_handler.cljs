@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.4
 ; Compatibility: x4.6.0
 
 
@@ -54,4 +54,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init {:environment/detect-touch-events-api! nil}})
+  {:on-app-init {:fx [:environment/detect-touch-events-api!]}})

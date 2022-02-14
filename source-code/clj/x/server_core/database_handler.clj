@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.4.6
+; Version: v0.2.8
+; Compatibility: x4.6.0
 
 
 
@@ -61,4 +61,4 @@
            (println details/app-codename "connecting to:" database-name
                                            "database at:" database-host
                                                "on port:" database-port)
-           {:fx [[:mongo-db/build-connection! [database-name database-host database-port]]]})))
+           {:fx [:mongo-db/build-connection! database-name database-host database-port]})))

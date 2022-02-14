@@ -14,7 +14,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.7.6
+; Version: v0.8.0
 ; Compatibility: x4.6.0
 
 
@@ -90,7 +90,7 @@
   (dom/set-scroll-y! n))
 
 ; @usage
-;  {:environment/set-scroll-y! 100}
+;  [:environment/set-scroll-y! 100]
 (a/reg-fx :environment/set-scroll-y! set-scroll-y!)
 
 (defn scroll-to-top!
@@ -100,7 +100,7 @@
   (dom/set-scroll-y! 0))
 
 ; @usage
-;  {:environment/scroll-to-top! nil}
+;  [:environment/scroll-to-top!]
 (a/reg-fx :environment/scroll-to-top! scroll-to-top!)
 
 (defn- scroll-to-element-top!
@@ -113,7 +113,7 @@
   (dom/scroll-to-element-top! (dom/get-element-by-id element-id) offset))
 
 ; @usage
-;  {:environment/scroll-to-element-top! "my-element" 50}
+;  [:environment/scroll-to-element-top! "my-element" 50]
 (a/reg-fx :environment/scroll-to-element-top! scroll-to-element-top!)
 
 (defn- listen-to-scroll!
@@ -140,5 +140,5 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot {:environment/listen-to-scroll!          nil
-                 :environment/initialize-scroll-handler! nil}})
+  {:on-app-boot {:fx-n [[:environment/listen-to-scroll!]
+                        [:environment/initialize-scroll-handler!]]}})

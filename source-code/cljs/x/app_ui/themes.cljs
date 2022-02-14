@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.03.23
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.4.6
+; Version: v0.7.0
+; Compatibility: x4.6.0
 
 
 
@@ -62,7 +62,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [theme-id (r get-selected-theme db)]
-           {:environment/set-element-attribute! ["x-body-container" "data-theme" (name theme-id)]})))
+           {:fx [:environment/set-element-attribute! "x-body-container" "data-theme" (name theme-id)]})))
 
 
 

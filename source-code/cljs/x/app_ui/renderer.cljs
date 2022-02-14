@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.14
 ; Description:
-; Version: v4.0.8
-; Compatibility: x4.5.6
+; Version: v4.1.4
+; Compatibility: x4.6.0
 
 
 
@@ -952,11 +952,11 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db (r update-element-props! db renderer-id element-id element-props)
-       :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "update"]
+       :fx [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "update"]
        :dispatch [:ui/rendering-ended renderer-id]
        :dispatch-later
        [{:ms UPDATE-ANIMATION-TIMEOUT
-         :dispatch [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
+         :fx [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
 
 (a/reg-event-fx
   :ui/update-element-static!
@@ -1044,7 +1044,7 @@
       {:db (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
        ; Hide element ...
-       :environment/set-element-attribute! [(a/dom-value element-id) "data-animation" "hide"]
+       :fx [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "hide"]
        ; 2.
        :dispatch-later
        [{:ms HIDE-ANIMATION-TIMEOUT

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.05.20
 ; Description:
-; Version: v0.5.0
-; Compatibility: x4.5.8
+; Version: v0.5.4
+; Compatibility: x4.6.0
 
 
 
@@ -14,9 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.interface
-    (:require [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+    (:require [x.app-core.api :as a :refer [r]]
+              [x.app-db.api   :as db]))
 
 
 
@@ -76,7 +75,7 @@
   ;  [:ui/set-interface! :application-ui]
   (fn [{:keys [db]} [_ interface]]
       {:db (r set-interface! db interface)
-       :environment/set-element-attribute! ["x-body-container" "data-interface" (name interface)]}))
+       :fx [:environment/set-element-attribute! "x-body-container" "data-interface" (name interface)]}))
 
 
 

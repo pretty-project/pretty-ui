@@ -1,4 +1,19 @@
 
+#x4.6.0
+- A Re-Frame mellékhatás események paraméterezése és meghívása megváltozott!
+  Dokumentáció: x.mid-core.event-handler/reg-fx
+                x.mid-core.event-handler/fx
+                x.mid-core.event-handler/fx-n
+
+- Az a/reg-handled-fx mellékhatás esemény regisztráló függvény ezentúl nem elérhető
+
+
+
+# x4.5.9
+- ...
+
+
+
 # x4.5.8
 - Az x.app/mid/server-core.api/reg-lifecycles függvény új neve: reg-lifecycles! (felkiáltójellel)
 

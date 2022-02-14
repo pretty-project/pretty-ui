@@ -100,7 +100,7 @@
   (.open js/window uri "_blank"))
 
 ; @usage
-;  {:environment/open-new-browser-tab! "www.my-site.com/my-link"}
+;  [:environment/open-new-browser-tab! "www.my-site.com/my-link"]
 (a/reg-fx :environment/open-new-browser-tab! open-new-browser-tab!)
 
 (defn set-window-title!
@@ -112,7 +112,7 @@
   (set! (-> js/document .-title) title))
 
 ; @usage
-;  {:environment/set-window-title! "My title"}
+;  [:environment/set-window-title! "My title"]
 (a/reg-fx :environment/set-window-title! set-window-title!)
 
 (defn reload-window!
@@ -122,7 +122,7 @@
   (.reload js/window.location true))
 
 ; @usage
-;  {:environment/reload-window!}
+;  [:environment/reload-window!]
 (a/reg-fx :environment/reload-window! reload-window!)
 
 (defn go-to-root!
@@ -132,7 +132,7 @@
   (set! (-> js/window .-location .-href) "/"))
 
 ; @usage
-;  {:environment/go-to-root! nil}
+;  [:environment/go-to-root!]
 (a/reg-fx :environment/go-to-root!)
 
 (defn go-to!
@@ -144,7 +144,7 @@
   (set! (-> js/window .-location .-href) uri))
 
 ; @usage
-;  {:environment/go-to! "www.my-site.com/my-link"}
+;  [:environment/go-to! "www.my-site.com/my-link"]
 (a/reg-fx :environment/go-to! go-to!)
 
 (defn set-interval!
@@ -165,7 +165,7 @@
            (a/dispatch [:environment/store-interval-props! interval-id interval-props]))))
 
 ; @usage
-;  {:environment/set-interval! [:my-interval {:event [:do-something!] :interval 420}]}
+;  [:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}]
 (a/reg-fx :environment/set-interval! set-interval!)
 
 (defn clear-interval!
@@ -177,7 +177,7 @@
   (time/clear-interval! js-id))
 
 ; @usage
-;  {:environment/clear-interval! :my-interval}
+;  [:environment/clear-interval! :my-interval]
 (a/reg-fx :environment/clear-interval! clear-interval!)
 
 (defn set-timeout!
@@ -197,7 +197,7 @@
        (a/dispatch [:environment/store-timeout-props! timeout-id timeout-props])))
 
 ; @usage
-;  {:environment/set-timeout! [:my-timeout {:event [:do-something!] :timeout 420}]}
+;  [:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}]
 (a/reg-fx :environment/set-timeout! set-timeout!)
 
 (defn clear-timeout!
@@ -209,7 +209,7 @@
   ; TODO ...
 
 ; @usage
-;  {:environment/clear-timeout! :my-timeout}
+;  [:environment/clear-timeout! :my-timeout]
 (a/reg-fx :environment/clear-timeout! clear-timeout!)
 
 
@@ -258,7 +258,7 @@
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ interval-id interval-props]]
       (if-not (r interval-exists? db interval-id)
-              {:environment/set-interval! [interval-id interval-props]})))
+              {:fx [:environment/set-interval! interval-id interval-props]})))
 
 (a/reg-event-fx
   :environment/remove-interval!
@@ -268,7 +268,7 @@
   ;  [:environment/remove-interval! :my-interval]
   (fn [{:keys [db]} [_ interval-id]]
       (if-let [{:keys [js-id]} (get-in db (db/path :environment/intervals interval-id))]
-              {:environment/clear-interval! js-id})))
+              {:fx [:environment/clear-interval! js-id]})))
 
 (a/reg-event-fx
   :environment/reg-timeout!
@@ -282,7 +282,7 @@
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ timeout-id timeout-props]]
       (if-not (r timeout-exists? db timeout-id)
-              {:environment/set-timeout! [timeout-id timeout-props]})))
+              {:fx [:environment/set-timeout! timeout-id timeout-props]})))
 
 (a/reg-event-fx
   :environment/remove-timeout!
@@ -292,7 +292,7 @@
   ;  [:environment/remove-timeout! :my-timeout]
   (fn [{:keys [db]} [_ timeout-id]]
       (if-let [{:keys [js-id]} (get-in db (db/path :environment/timeouts timeout-id))]
-              {:environment/clear-timeout! js-id})))
+              {:fx [:environment/clear-timeout! js-id]})))
 
 (a/reg-event-fx
   :environment/connection-changed
@@ -333,5 +333,5 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init {:environment/listen-to-connection-change! nil
-                 :environment/update-window-data!          nil}})
+  {:on-app-init {:fx-n [[:environment/listen-to-connection-change!]
+                        [:environment/update-window-data!]]}})

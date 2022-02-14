@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v2.0.8
-; Compatibility: x4.5.8
+; Version: v2.1.4
+; Compatibility: x4.6.0
 
 
 
@@ -135,16 +135,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [scroll-y (dom/get-scroll-y)
-         body-top (math/negative scroll-y)
-         ; A body elemen való görgetés letiltása, annak {:position "fixed"}
-         ; tulajdonságának beállításával történik.
-         ; A {:position "fixed"} tulajdonság beállítása miatt szükséges
-         ; a {:width "100%"} tulajdonság beállítása is.
-         ; A {:position "fixed"} tulajdonság beállítása miatt szükséges
-         ; a body elemet BTT irányban eltolni (a tiltás előtti scroll-y értékkel)
-         body-style {:position (param  "fixed")
-                     :top      (css/px body-top)
-                     :width    (param  "100%")}]
+        body-top (math/negative scroll-y)
+        ; A body elemen való görgetés letiltása, annak {:position "fixed"}
+        ; tulajdonságának beállításával történik.
+        ; A {:position "fixed"} tulajdonság beállítása miatt szükséges
+        ; a {:width "100%"} tulajdonság beállítása is.
+        ; A {:position "fixed"} tulajdonság beállítása miatt szükséges
+        ; a body elemet BTT irányban eltolni (a tiltás előtti scroll-y értékkel)
+        body-style {:position (param  "fixed")
+                    :top      (css/px body-top)
+                    :width    (param  "100%")}]
        ; Letiltja a html elemen való görgetést
        (dom/set-element-style-value! (dom/get-document-element)
                                      (param "overflow-y")
@@ -172,7 +172,7 @@
                ; Ha a tiltás eltávolítása után van hozzáadva másik tiltás ...
                {:db db}
                ; Ha a tiltás eltávolítása után nincs hozzáadva másik tiltás ...
-               {:db db :environment/enable-dom-scroll! nil}))))
+               {:db db :fx [:environment/enable-dom-scroll!]}))))
 
 (a/reg-event-fx
   :environment/add-scroll-prohibition!
@@ -186,7 +186,7 @@
           {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})}
           ; Ha a tiltás hozzáadása előtt NEM volt hozzáadva másik tiltás ...
           {:db (r db/set-item! db (db/path :environment/sroll-prohibitions prohibition-id) {})
-           :environment/disable-dom-scroll! nil})))
+           :fx [:environment/disable-dom-scroll!]})))
 
 (a/reg-event-fx
   :environment/enable-scroll!
@@ -194,4 +194,4 @@
   ;  [:environment/enable-scroll!]
   (fn [{:keys [db]} _]
       {:db (r remove-scroll-prohibitions! db)
-       :environment/enable-dom-scroll! nil}))
+       :fx [:environment/enable-dom-scroll!]}))

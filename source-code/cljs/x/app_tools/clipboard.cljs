@@ -70,7 +70,7 @@
   ;  [:tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
       {:dispatch [:ui/blow-bubble! {:body :copied-to-clipboard}]
-       :tools/copy-to-clipboard! text}))
+       :fx       [:tools/copy-to-clipboard! text]}))
 
 
 
@@ -87,5 +87,5 @@
   (remove-temporary-component!))
 
 ; @usage
-;  {:tools/copy-to-clipboard! "My text"}
+;  [:tools/copy-to-clipboard! "My text"]
 (a/reg-fx :tools/copy-to-clipboard! copy-to-clipboard!)

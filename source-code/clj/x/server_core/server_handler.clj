@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.9.2
-; Compatibility: x4.4.6
+; Version: v1.0.4
+; Compatibility: x4.6.0
 
 
 
@@ -18,7 +18,6 @@
               [mid-fruits.string            :as string]
               [org.httpkit.server           :refer [run-server]]
               [x.app-details                :as details]
-              [x.server-core.engine         :as engine]
               [x.server-core.event-handler  :as event-handler]
               [x.server-core.router-handler :refer [ring-handler]]))
 
@@ -101,6 +100,4 @@
        (let [server-port (get server-props :port)]
             (println details/app-codename "started on port:" server-port))))
 
-; @usage
-;  {:core/run-server! {...}}
 (event-handler/reg-fx :core/run-server! run-server!)

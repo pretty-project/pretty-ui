@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.20
 ; Description:
-; Version: v1.6.6
-; Compatibility: x4.5.7
+; Version: v1.7.0
+; Compatibility: x4.6.0
 
 
 
@@ -31,43 +31,39 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.event-handler
-(def event-vector?                    event-handler/event-vector?)
-(def subscription-vector?             event-handler/subscription-vector?)
-(def event-group-vector?              event-handler/event-group-vector?)
-(def event-vector->param-vector       event-handler/event-vector->param-vector)
-(def event-vector->event-id           event-handler/event-vector->event-id)
-(def cofx->event-vector               event-handler/cofx->event-vector)
-(def cofx->event-id                   event-handler/cofx->event-id)
-(def context->event-vector            event-handler/context->event-vector)
-(def context->event-id                event-handler/context->event-id)
-(def context->db-before-effect        event-handler/context->db-before-effect)
-(def context->db-after-effect         event-handler/context->db-after-effect)
-(def event-vector<-params             event-handler/event-vector<-params)
-(def metamorphic-event<-params        event-handler/metamorphic-event<-params)
-(def metamorphic-effects->effects-map event-handler/metamorphic-effects->effects-map)
-(def merge-effects-maps               event-handler/merge-effects-maps)
-(def ->interceptor                    event-handler/->interceptor)
-(def inject-cofx                      event-handler/inject-cofx)
-(def reg-cofx                         event-handler/reg-cofx)
-(def reg-sub                          event-handler/reg-sub)
-(def event-vector<-id                 event-handler/event-vector<-id)
-(def self-destruct!                   event-handler/self-destruct!)
-(def debug!                           event-handler/debug!)
-(def get-event-handlers               event-handler/get-event-handlers)
-(def get-event-handler                event-handler/get-event-handler)
-(def event-handler-registrated?       event-handler/event-handler-registrated?)
-(def reg-fx                           event-handler/reg-fx)
-(def reg-handled-fx                   event-handler/reg-handled-fx)
-(def dispatch                         event-handler/dispatch)
-(def dispatch-sync                    event-handler/dispatch-sync)
-(def dispatch-n                       event-handler/dispatch-n)
-(def dispatch-later                   event-handler/dispatch-later)
-(def dispatch-if                      event-handler/dispatch-if)
-(def dispatch-cond                    event-handler/dispatch-cond)
-(def dispatch-tick                    event-handler/dispatch-tick)
-(def subscribe                        event-handler/subscribe)
-(def subscribed                       event-handler/subscribed)
-(def r                                event-handler/r)
+(def event-vector?              event-handler/event-vector?)
+(def subscription-vector?       event-handler/subscription-vector?)
+(def event-vector->param-vector event-handler/event-vector->param-vector)
+(def event-vector->event-id     event-handler/event-vector->event-id)
+(def cofx->event-vector         event-handler/cofx->event-vector)
+(def cofx->event-id             event-handler/cofx->event-id)
+(def context->event-vector      event-handler/context->event-vector)
+(def context->event-id          event-handler/context->event-id)
+(def context->db-before-effect  event-handler/context->db-before-effect)
+(def context->db-after-effect   event-handler/context->db-after-effect)
+(def event-vector<-params       event-handler/event-vector<-params)
+(def metamorphic-event<-params  event-handler/metamorphic-event<-params)
+(def merge-effects-maps         event-handler/merge-effects-maps)
+(def ->interceptor              event-handler/->interceptor)
+(def inject-cofx                event-handler/inject-cofx)
+(def reg-cofx                   event-handler/reg-cofx)
+(def reg-sub                    event-handler/reg-sub)
+(def event-vector<-id           event-handler/event-vector<-id)
+(def debug!                     event-handler/debug!)
+(def get-event-handlers         event-handler/get-event-handlers)
+(def get-event-handler          event-handler/get-event-handler)
+(def event-handler-registrated  event-handler/event-handler-registrated?)
+(def reg-fx                     event-handler/reg-fx)
+(def dispatch                   event-handler/dispatch)
+(def dispatch-sync              event-handler/dispatch-sync)
+(def dispatch-n                 event-handler/dispatch-n)
+(def dispatch-later             event-handler/dispatch-later)
+(def dispatch-if                event-handler/dispatch-if)
+(def dispatch-cond              event-handler/dispatch-cond)
+(def dispatch-tick              event-handler/dispatch-tick)
+(def subscribe                  event-handler/subscribe)
+(def subscribed                 event-handler/subscribed)
+(def r                          event-handler/r)
 
 
 

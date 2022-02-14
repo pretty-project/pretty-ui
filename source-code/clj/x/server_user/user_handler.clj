@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.18
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.8
+; Version: v0.4.6
+; Compatibility: x4.6.0
 
 
 
@@ -143,5 +143,5 @@
                                  (mongo-db/insert-document! "user_settings" user-settings {:prototype-f (prototype-f :user-settings)})))))))
 
 ; @usage
-;  {:user/add-user! {...}}
+;  [:user/add-user! {...}]
 (a/reg-fx :user/add-user! add-user!)

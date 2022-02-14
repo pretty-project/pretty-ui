@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.4.8
+; Version: v0.6.2
 ; Compatibility: x4.6.0
 
 
@@ -63,7 +63,7 @@
        (.play catalog-element)))
 
 ; @usage
-;  {:ui/play-sound! :my-sound}
+;  [:ui/play-sound! :my-sound]
 (a/reg-fx :ui/play-sound! play-sound!)
 
 

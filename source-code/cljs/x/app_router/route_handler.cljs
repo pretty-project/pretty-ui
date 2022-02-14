@@ -541,7 +541,7 @@
   :router/go-back!
   ; @usage
   ;  [:router/go-back!]
-  {:router/navigate-back! nil})
+  {:fx [:router/navigate-back!]})
 
 (a/reg-event-fx
   :router/go-up!
@@ -572,15 +572,15 @@
                 ; Az applikáció az útvonalváltás után is debug módban marad
                 route-string (r get-debug-route-string db route-string)]
                (if (r reload-same-path? db route-string)
-                   [:router/handle-route! route-string]
-                   {:router/navigate!     route-string}))
+                   {:dispatch [:router/handle-route! route-string]}
+                   {:fx       [:router/navigate!     route-string]}))
 
           ; If route-string is static ...
           (let [; Az applikáció az útvonalváltás után is debug módban marad
                 route-string (r get-debug-route-string db route-string)]
                (if (r reload-same-path? db route-string)
-                   [:router/handle-route! route-string]
-                   {:router/navigate!     route-string})))))
+                   {:dispatch [:router/handle-route! route-string]}
+                   {:fx       [:router/navigate!     route-string]})))))
 
 
 
@@ -631,7 +631,7 @@
                       ; Store debug subscriber
                       (r db/set-item! % (db/meta-item-path :router/client-routes :debug) [:router/get-router-data]))
        ; Configure navigation
-       :router/configure-navigation! nil}))
+       :fx [:router/configure-navigation!]}))
 
 (a/reg-lifecycles!
   ::lifecycles

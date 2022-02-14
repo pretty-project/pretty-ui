@@ -61,4 +61,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-launch {:storage/check-install! nil}})
+  {:on-server-launch {:fx [:storage/check-install!]}})

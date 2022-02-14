@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v2.5.4
+; Version: v2.6.0
 ; Compatibility: x4.6.0
 
 
@@ -408,7 +408,7 @@
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ event-id {:keys [key-code prevent-default?] :as event-props}]]
       (let [db (r reg-keypress-event! db event-id event-props)]
-           (if prevent-default? {:environment/prevent-keypress-default! key-code
+           (if prevent-default? {:fx [:environment/prevent-keypress-default! key-code]
                                  :db db :dispatch-if [(r activate-handler? db) [:environment/activate-keypress-handler!]]}
                                 {:db db :dispatch-if [(r activate-handler? db) [:environment/activate-keypress-handler!]]}))))
 
@@ -422,7 +422,7 @@
       (if (r enable-default? db event-id)
           (let [key-code (r get-event-prop         db event-id :key-code)
                 db       (r remove-keypress-event! db event-id)]
-               {:environment/enable-keypress-default! key-code
+               {:fx [:environment/enable-keypress-default! key-code]
                 :db db :dispatch-if [(r deactivate-handler? db) [:environment/deactivate-keypress-handler!]]})
           (let [db (r remove-keypress-event! db event-id)]
                {:db db :dispatch-if [(r deactivate-handler? db) [:environment/deactivate-keypress-handler!]]}))))
@@ -432,14 +432,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r db/set-item! db (db/meta-item-path :environment/keypress-events :active?) true)
-       :environment/add-keypress-listeners! nil}))
+       :fx [:environment/add-keypress-listeners! ]}))
 
 (a/reg-event-fx
   :environment/deactivate-keypress-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r db/set-item! db (db/meta-item-path :environment/keypress-events :active?) false)
-       :environment/remove-keypress-listeners! nil}))
+       :fx [:environment/remove-keypress-listeners!]}))
 
 (a/reg-event-fx
   :environment/reg-keypress-listener!

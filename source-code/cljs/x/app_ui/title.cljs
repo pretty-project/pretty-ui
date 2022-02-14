@@ -46,7 +46,7 @@
   ;  [:ui/restore-default-window-title!]
   (fn [{:keys [db]} _]
       (let [window-title (r a/get-app-config-item db :app-title)]
-           {:environment/set-window-title! window-title})))
+           {:fx [:environment/set-window-title! window-title]})))
 
 (a/reg-event-fx
   :ui/set-window-title!
@@ -56,7 +56,7 @@
   ;  [:ui/set-window-title! "My title"]
   (fn [{:keys [db]} [_ window-title]]
       (let [window-title (r get-window-title-value db window-title)]
-           {:environment/set-window-title! window-title})))
+           {:fx [:environment/set-window-title! window-title]})))
 
 (a/reg-event-fx
   :ui/set-title!
@@ -67,4 +67,4 @@
   (fn [{:keys [db]} [_ title]]
       (let [window-title (r get-window-title-value db title)]
            {:db (r header/set-header-title! db title)
-            :environment/set-window-title! window-title})))
+            :fx [:environment/set-window-title! window-title]})))

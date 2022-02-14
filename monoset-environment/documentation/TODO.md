@@ -13,7 +13,10 @@
 
 
 # x4.6.0
-- Az x modulok névterei is legyenek mappákra bontva amiben van subs events ...
+- Ha a szerver-oldalon müködik a dispatch-later, akkor leválthatja a dispatch-tick-et
+  a boot-loader.clj-ben és aztán a dispatch-tick törölhető
+
+- Az x modulok névterei is legyenek mappákra bontva amiben van subs events ?? really ?? ...
 - Az x modulok is tárolják ugy az adatot, mint az extension [:core :load-handler/meta-items ...]
 
 
@@ -26,16 +29,14 @@
   ami full cink, pl fájl letöltésnél hatszor tölti le a fájlt és hasonlok
 
 - x.app-ui modulban az environment/reveal-element-animated és environment/hide-element-animated
-  eljárásokat react-transition vezérlésre cserélni, ezután az environment/element-handler
-  névtérben nem lesz szükség reg-handled-fx-el regisztrálni a mellékhatás eseményeket, elég lesz
-  a reg-fx
+  eljárásokat react-transition vezérlésre cserélni
 
 - Media picker SHIFT billentyűvel átrakja magát az item-lsiter select-mode-ba!
 
 - A send-query! {:debug? true} beállítással tegye be a :debug resolver-t a query-vektorba
-- db/appy!-t átnevezni db/apply-item!-re
 
-- reg-handled-fx usage-ekhoz az fx formulát is odaírni {:my-side-effect-event "..."}
+- db/apply!-t átnevezni db/apply-item!-re
+
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
@@ -76,18 +77,11 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - (ns xyz (:require [x.app-user.api :as user]))
   (println (str ::user/primary)) => :x.app-user.api/primary
 
-- nem mukodik a goog.net.cookies törlés!
-
-- x.server-media modul kerüljön ki media extension-be???
-  (ha igen, akkor a route-jai se system-route-ok legyenek!)
-
-- Ha kész a media, lehet hogy a listener komponensre sem lesz szükség
+- nem mukodik a goog.net.cookies törlés! ez nem meg lett javitva?
 
 - Multi-combobox elembe igy nézzen ki egy placeholder: "green, red, purple"
   Szóval vesszővel lehet elválasztani a tag-eket és a vessző billentyű leütése is viselkedjen
   ugyanugy mint az enter (kiüriti a mezőt és hozzáad egy chip-et)
-
-- params helyett transit-paramsbol szedi ki a query-t a pathom, le kell tesztelni fájlefeltöltésre is!
 
 - A text-field mérete megnő ha elég hosszu a helper alatta
 
@@ -105,12 +99,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)
 
 - Text-field szélessége megváltozik az emptiable? true adornment (és más adornment) ki-bekapcsolásakor
-
-- A server-media modul pathom handler-ei media/xyz elnevezésről media-storage/xyz elnevezésre
-  lettek cserélve, hogy az extensions.media-storage.engine névtérben ne legyen névültközés
-  a most már nem stringként átadott mutation nevekben mert a media/xyz ütközött a behívott
-  x.app-media.api :as media behívással. Emiatt és amugy is a server-media modul kiköltözhet az
-  x-ből az extensions/media-storage modulba
 
 - Input validálás egy input több validátort is fogadjon több hibaüzenettel és néha több input egymástól
   függ pl. password összehasonlító
@@ -135,17 +123,11 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
   van ami a legcinkesebb performance szempontbol, lehet hogy még sok helyen van opacity használva,
   ami performance szempontbol cinkes, és
 
-- file-browser nem irja ki hogy nincs ien mappa amikor hianyzik a root mappa
-
 - A normalize.css -ből kikerül a html { scroll-behavior: smooth} mert azt hittem, hogy az
   csak arra való, hogy a scrollto és scrollby fgv-ek viselkedését meghatározza, ezért
   átkerült az app-fruits.dom névtérbe. De Paul szerint ez befolyásolja azt is, hogy ha
   gyorsan szkrollolok, akkor késve / villanva jelenik meg a kontent ami beér a viewport-ba
   SZÉT KELL TESZTELNI
-
-- Fájlkezelőbe ne cover hanem contain legyen a preview
-
-- Jobb tárolni a dokumentumokban a névteret is?
 
 - Az on-scroll és on-touch-move események stopPropagation függvénye nem gátolja meg,
   hogy a modalon szkrollolás szkrollolja a modal mögött kontentet?
@@ -167,10 +149,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - Combo box field nem olyan széles mint a text-field-ek @Paul
 
-- Nyelvi beállítást és más beállításokat jegyezze meg a szerveren.
-
-- Home könyvtárat betenni a project-name storage-ba
-
 - Date-field elem gyári "reset!" end-adornment-jét x-esre cserélni
   + Calendar icon end-adornment ami megnyitja a Calendar-t
 
@@ -180,19 +158,10 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - Fájlkezelő
   - Szerver óra nem helyi időt mutat
-  - x.server-media.item-handler használná a project-name.auth.api -t, ami felette áll!
-    Ezt fel kell oldani!
-  - thumbnail-ek készítése
-  - file uploading megszakítás
-  - a directory-action-select id ja ismétlődik ha a file-browser-en és a file-storage-ban
-    is ki van rednerelve
 
 - Multi field keypress vezérlés
 
 - Pre-render-t fogadni és betenni a DOM-ba.
-
-- Ha a route-ok regisztrálása kizárolag szerver oldalon történik, attól látni
-  fogják a különbözö js-ek egymás route-jait?
 
 - Az elementek {:color ...} tulajdonsága legyen felbontva:
   {:color ...}, {:background-color ...}, {:border-color ...}
@@ -212,19 +181,12 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - Ha egy popup label bar label nem fér, ki -> akkor text-overflow: ellipsis
 
-- Peti: elementekre aria-label
-
 - DRAG-OVERLAY-t berakni!
 
 - Sortable mozgatás picit laggos iOS Chrome-on
 
 - A template resources/public/logo mappábol ki lehet venni az mt-logo- logókat
   elég ha a monosetben van benne. Ugyis ott van használva
-
-- EQL
-  Kliens db / server db szinkronizáció
-  Ha valamit modositasz, a kliens db-ben, akkor legyen olyan funkcio, hogy
-  remote -> ami a szeron is modositja
 
 - Adatkezelés és ÁSZF
   https://policies.google.com/terms?hl=hu (ez is kell!, ?ezt fogadod el a cookie-val?)

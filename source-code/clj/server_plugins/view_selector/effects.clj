@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.0
 ; Compatibility: x4.6.0
 
 
@@ -80,9 +80,9 @@
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   (fn [_ [_ extension-id selector-props]]
-      {:fx [[:core/reg-transfer! [(engine/transfer-id extension-id)
-                                  {:data-f      (fn [_] (return selector-props))
-                                   :target-path [extension-id :view-selector/meta-items]}]]]}))
+      {:fx [:core/reg-transfer! (engine/transfer-id extension-id)
+                                {:data-f      (fn [_] (return selector-props))
+                                 :target-path [extension-id :view-selector/meta-items]}]}))
 
 (a/reg-event-fx
   :view-selector/add-route!

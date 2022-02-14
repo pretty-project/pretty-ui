@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v0.8.0
-; Compatibility: x4.5.2
+; Version: v0.8.4
+; Compatibility: x4.6.0
 
 
 
@@ -127,9 +127,9 @@
   :tools/reg-scheduler-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
-      {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute)}
-                        :dispatch [:environment/set-interval! :scheduler/interval
-                                   {:event [:tools/watch-scheduler-time!] :interval 60000}]]}))
+      {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute)
+                         :fx [:environment/set-interval! :scheduler/interval
+                                                         {:event [:tools/watch-scheduler-time!] :interval 60000}]}]}))
 
 (a/reg-event-fx
   :tools/init-scheduler!
@@ -172,7 +172,7 @@
   :tools/remove-schedule!
   ; @param (keyword) schedule-id
   (fn [{:keys [db]} [_ schedule-id]]
-      {:db       (r remove-schedule-props! db schedule-id)
+      {:db (r remove-schedule-props! db schedule-id)
        :dispatch [:tools/schedule-removed]}))
 
 (a/reg-event-fx
@@ -180,4 +180,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r any-schedule-registered? db)
-              {:environment/clear-interval! :scheduler/interval})))
+              {:fx [:environment/clear-interval! :scheduler/interval]})))

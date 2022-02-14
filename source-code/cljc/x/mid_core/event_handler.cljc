@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.11
 ; Description:
-; Version: v1.4.4
-; Compatibility: x4.5.7
+; Version: v1.6.0
+; Compatibility: x4.6.0
 
 
 
@@ -14,17 +14,14 @@
 
 (ns x.mid-core.event-handler
     (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.format  :as format]
               [mid-fruits.map     :as map :refer [update-some]]
               [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [re-frame.core      :as re-frame.core]
-              [re-frame.db        :refer [app-db]]
               [re-frame.loggers   :refer [console]]
-              [re-frame.registrar :as re-frame.registrar]
-              [x.mid-core.engine  :as engine]))
+              [re-frame.registrar :as re-frame.registrar]))
 
 
 
@@ -34,10 +31,8 @@
 ; Helpers
 ; Event-param functions
 ; Metamorphic handler functions
-; Metamorphic effects functions
 ; Effects-map functions
 ; Event-vector<-id
-; Event self-destructing
 ; Event debugging
 ; Event checking
 ; Event registrating
@@ -53,8 +48,9 @@
 
 ; @name metamorphic-event
 ;  A metamorphic-event olyan formula amely lehetőve teszi, hogy egy eseményt
-;  vagy esemény-csoportot event-vector, effects-map vagy handler-f függvény
-;  formában meghatározhass.
+;  vagy esemény-csoportot event-vector vagy effects-map formában is meghatározhass.
+;  (a/dispatch [...])
+;  (a/dispatch {:dispatch [...]})
 ;
 ; @name event-vector
 ;  [:do-something!]
@@ -62,15 +58,14 @@
 ; @name effects-map
 ;  {:dispatch-later [{:ms 500 :dispatch [:do-something-later!]}]}
 ;
-; @name handler-f
-;  (fn [cofx event-vector] {:dispatch-n [[:do-something!] [:do-something-else!]]})
-;
-; @name metamorphic-effects
-;  A metamorphic-effects olyan formula amely lehetőve teszi, hogy
-;  egy handler-f függvény visszatérési értéke effects-map vagy event-vector
-;  is lehessen.
-;  (fn [_ _] {:dispatch [:do-something!]})
-;  (fn [_ _] [:do-something!])
+; @name metamorphic-handler
+;  A metamorphic-handler olyan formula amely lehetőve teszi, hogy egy handler-f függvény
+;  helyett regisztrálhass event-vector vektort vagy effects-map térképet, illetve
+;  a handler-f függvény visszatérési értéke lehet event-vector vagy effects-map egyaránt.
+;  (a/reg-event-fx :my-effects            [...])
+;  (a/reg-event-fx :my-effects {:dispatch [...]})
+;  (a/reg-event-fx :my-effects (fn [_ _]            [...]))
+;  (a/reg-event-fx :my-effects (fn [_ _] {:dispatch [...]}))
 ;
 ; @name param-vector
 ;  [:foo :bar :baz]
@@ -182,8 +177,7 @@
        (let [event-id (first n)]
             (if strict-mode? ; If strict-mode is enabled ...
                              (and (keyword? event-id)
-                                  (or (-> event-id name (string/starts-with? "->"))
-                                      (-> event-id name (string/ends-with?   "!"))))
+                                  (-> event-id name (string/ends-with?   "!")))
                              ; If strict-mode is NOT enabled ...
                              (keyword? event-id)))))
 
@@ -212,21 +206,6 @@
             (and (keyword? event-id)
                  (or (-> event-id name (string/starts-with? "get-"))
                      (-> event-id name (string/ends-with?   "?")))))))
-
-(defn event-group-vector?
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (a/event-group-vector? [{:ms 500 :dispatch [:my-namespace/do-something! ...]}])
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [n]
-  (and (vector? n)
-       (let [event-map (first n)]
-            (and (map? event-map)
-                 (map/contains-key? event-map :dispatch)))))
 
 (defn event-vector->param-vector
   ; @param (vector) event-vector
@@ -345,10 +324,9 @@
   ; Szükséges megkülönböztetni az esemény vektort a dispatch-later és dispatch-tick esemény csoport vektortól!
   ; [:do-something! ...]
   ; [{:ms 500 :dispatch [:do-something! ...]}]
-  (cond (event-vector?       n {:strict-mode? false}) (vector/concat-items n xyz)
-        (map?                n) (map/->values n #(apply metamorphic-event<-params % xyz))
-        (event-group-vector? n) (return n) ; TODO ...
-        :else                   (return n)))
+  (cond (event-vector? n {:strict-mode? false}) (vector/concat-items n xyz)
+        (map?          n) (map/->values n #(apply metamorphic-event<-params % xyz))
+        :else             (return n)))
 
 
 
@@ -358,12 +336,22 @@
 (defn event-vector->effects-map
   ; @param (vector) event-vector
   ;
+  ; @usage
+  ;  (a/event-vector->effects-map [...])
+  ;  =>
+  ;  {:dispatch [...]}
+  ;
   ; @return (map)
   [event-vector]
   {:dispatch event-vector})
 
 (defn event-vector->handler-f
   ; @param (vector) event-vector
+  ;
+  ; @usage
+  ;  (a/event-vector->handler-f [...])
+  ;  =>
+  ;  (fn [_ _] {:dispatch [...]})
   ;
   ; @return (function)
   [event-vector]
@@ -372,12 +360,32 @@
 (defn effects-map->handler-f
   ; @param (map) effects-map
   ;
+  ; @usage
+  ;  (a/effects-map->handler-f {:dispatch [...]})
+  ;  =>
+  ;  (fn [_ _] {:dispatch [...]})
+  ;
   ; @return (function)
   [effects-map]
   (fn [_ _] effects-map))
 
-(defn metamorphic-event->handler-f
+(defn metamorphic-handler->handler-f
   ; @param (metamorphic-event) n
+  ;
+  ; @usage
+  ;  (a/metamorphic-handler->handler-f [...])
+  ;  =>
+  ;  (fn [_ _] {:dispatch [...]})
+  ;
+  ; @usage
+  ;  (a/metamorphic-handler->handler-f {:dispatch [...]})
+  ;  =>
+  ;  (fn [_ _] {:dispatch [...]})
+  ;
+  ; @usage
+  ;  (a/metamorphic-handler->handler-f (fn [_ _] ...))
+  ;  =>
+  ;  (fn [_ _] ...})
   ;
   ; @return (function)
   [n]
@@ -385,29 +393,23 @@
         (vector? n) (event-vector->handler-f n)
         :else       (return n)))
 
-
-
-;; -- Metamorphic effects functions -------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn metamorphic-effects->effects-map
+(defn metamorphic-event->effects-map
   ; @param (metamorphic-effects) n
   ;
   ; @example
-  ;  (a/metamorphic-effects->effects-map [:do-something!])
+  ;  (a/metamorphic-event->effects-map [:do-something!])
   ;  =>
   ;  {:dispatch [:do-something!]}
   ;
   ; @example
-  ;  (a/metamorphic-effects->effects-map {:dispatch [:do-something!])
+  ;  (a/metamorphic-event->effects-map {:dispatch [:do-something!])
   ;  =>
   ;  {:dispatch [:do-something!]}
   ;
   ; @return (map)
   [n]
-  (if (vector?                   n)
-      (event-vector->effects-map n)
-      (return                    n)))
+  (cond (vector? n) (event-vector->effects-map n)
+        (map?    n) (return                    n)))
 
 
 
@@ -479,35 +481,6 @@
 ; @constant (?)
 (def event-vector<-id (re-frame.core/->interceptor :id :core/event-vector<-id
                                                    :before event-vector<-id-f))
-
-
-
-;; -- Event self-destructing --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A self-destruct! interceptor használatával az esemény megsemmisíti önmagát
-; az első meghívását követően, így azt többször már nem lehet meghívni.
-;
-; @usage
-;  (a/reg-event-fx
-;   :my-event
-;   [a/self-destruct!]
-;   (fn [cofx event-vector]
-;       {:dispatch ...}))
-
-(defn self-destruct-f
-  ; @param (map) context
-  ;
-  ; @return (map)
-  [context]
-  (let [event-vector (context->event-vector  context)
-        event-id     (event-vector->event-id event-vector)]
-       (re-frame.registrar/clear-handlers :event event-id)
-       (return context)))
-
-; @constant (?)
-(def self-destruct! (re-frame.core/->interceptor :id :core/self-destruct!
-                                                 :after self-destruct-f))
 
 
 
@@ -605,8 +578,8 @@
    (reg-event-fx event-id nil event-handler))
 
   ([event-id interceptors event-handler]
-   (let [handler-f (metamorphic-event->handler-f event-handler)]
-        (re-frame.core/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-f %1 %2))))))
+   (let [handler-f (metamorphic-handler->handler-f event-handler)]
+        (re-frame.core/reg-event-fx event-id interceptors #(metamorphic-event->effects-map (handler-f %1 %2))))))
 
 (defn apply-fx-params
   ; @param (function) handler-f
@@ -623,7 +596,7 @@
   ;
   ; @return (*)
   [handler-f params]
-  (if (vector?         params)
+  (if (sequential?     params)
       (apply handler-f params)
       (handler-f       params)))
 
@@ -645,68 +618,19 @@
 
 
 
-
-;(def reg-fx re-frame.core/reg-fx)
-
-
-
-
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn reg-handled-fx
-  ; Kezelt mellékhatás-események (Handled side-effect events)
-  ;
-  ; Egy időben regisztrál egy side-effect eseményt és az azt meghívó effect-event
-  ; eseményt.
-  ;
-  ; @param (keyword) event-id
-  ; @param (function) handler-f
-  ;
-  ; @usage
-  ;  (a/reg-handled-fx :my-event (fn []))
-  ;
-  ; @usage
-  ;  (a/reg-handled-fx :my-event (fn [a b]))
-  ;
-  ; @example
-  ;  (a/reg-handled-fx
-  ;   :my-event
-  ;   (fn [a b]))
-  ;
-  ;  (a/reg-event-fx
-  ;   :your-event
-  ;   (fn [_ _]
-  ;       {:my-event ["a" "b"]
-  ;        :my-event "a"
-  ;        :dispatch [:my-event "a" "b"]))
-  [event-id handler-f]
-  (re-frame.core/reg-fx       event-id (fn [params]                   (apply-fx-params handler-f params)))
-  (re-frame.core/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
-  ; WARNING! DEPRECATED! DO NOT USE!
-
-
-
 ;; -- Dispatch functions ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn dispatch-function
-  ; Dispatch a non-pure function
-  ; 1. Registrate a new anonymous event-handler
-  ; 2. Dispatch it
-  ; 3. Remove the registrated anonymous event-handler
-  ;
-  ; @param (function) handler-f
+(re-frame.core/reg-event-fx
+  ; @param (metamorphic-event) n
   ;
   ; @usage
-  ;  (a/dispatch-function (fn [_ _] {:dispatch [:do-something!]}))
-  [handler-f]
-  (let [handler-id (random/generate-keyword)]
-       (re-frame.core/reg-event-fx handler-id [self-destruct!] handler-f)
-       (re-frame.core/dispatch [handler-id])))
-
-; @usage
-;  {:dispatch-function (fn [_ _] ...)}
-(re-frame.core/reg-fx :dispatch-function dispatch-function)
+  ;  [:dispatch-metamorphic-event [...]]
+  ;
+  ; @usage
+  ;  [:dispatch-metamorphic-event {:dispatch [...]}]
+  :dispatch-metamorphic-event
+  (fn [_ [_ n]] (metamorphic-event->effects-map n)))
 
 (defn dispatch
   ; @param (metamorphic-event) event-handler
@@ -716,9 +640,6 @@
   ;
   ; @usage
   ;  (a/dispatch {:dispatch [:foo]})
-  ;
-  ; @usage
-  ;  (a/dispatch (fn [_ _] {:dispatch [:foo]}))
   ;
   ; @usage
   ;  (a/dispatch nil)
@@ -731,10 +652,8 @@
                 event-exists? (event-handler-registrated? :event event-id)]
                (if-not event-exists? (println (str "re-frame: no :event handler registrated for: " event-id)))))
 
-  (cond (vector? event-handler) (re-frame.core/dispatch event-handler)
-        (map? event-handler)    (-> event-handler effects-map->handler-f dispatch-function)
-        (nil? event-handler)    (return :nil-handler-exception)
-        :else                   (dispatch-function event-handler)))
+  (if (vector? event-handler) (re-frame.core/dispatch event-handler)
+                              (re-frame.core/dispatch [:dispatch-metamorphic-event event-handler])))
 
 ; @usage
 ;  {:dispatch ...}
@@ -764,31 +683,22 @@
          (dispatch event)))
 
 ; @usage
-;  {:dispatch-later [[...] [...]}
+;  {:dispatch-n [[...] [...]}
 (re-frame.registrar/clear-handlers :fx :dispatch-n)
 (re-frame.core/reg-fx :dispatch-n dispatch-n)
 
 (defn dispatch-later
-  ; @param (maps in vector) event-list
+  ; @param (maps in vector) effects-map-list
   ;
   ; @usage
-  ;  (a/dispatch-later [{:ms 500 :dispatch [:do-something!]}
-  ;                     {:ms 600 :dispatch-n [[:do-something!]
-  ;                                           [:do-something-else!]]}])
-  [event-list]
-  ; - Az eredeti dispatch-later függvény clojure környezetben nem időzíti a dispatch-later eseményeket!
-  ; - A dispatch-f és dispatch-n-f függvénynevek használata a névütközések elkerülése miatt szükséges
-  (let [dispatch-f   dispatch
-        dispatch-n-f dispatch-n]
-       (doseq [{:keys [ms dispatch dispatch-n]} (remove nil? event-list)]
-              (cond ; Dispatch single events ...
-                    (and (some?   dispatch)
-                         (number? ms))
-                    (do (time/set-timeout! ms #(dispatch-f dispatch)))
-                    ; Dispatch multiple events ...
-                    (and (some?   dispatch-n)
-                         (number? ms))
-                    (time/set-timeout! ms #(dispatch-n-f dispatch-n))))))
+  ;  (a/dispatch-later [{:ms 500 :dispatch [...]}
+  ;                     {:ms 600 :fx [...]
+  ;                              :fx-n       [[...] [...]]
+  ;                              :dispatch-n [[...] [...]]}])
+  [effects-map-list]
+  ; Az eredeti dispatch-later függvény clojure környezetben nem időzíti a dispatch-later eseményeket!
+  (doseq [{:keys [ms] :as effects-map} (remove nil? effects-map-list)]
+         (if ms (time/set-timeout! ms #(dispatch (dissoc effects-map :ms))))))
 
 ; @usage
 ;  {:dispatch-later [{...} {...}]}
@@ -917,26 +827,25 @@
   (when (= :db effect-id)
         (console :warn "re-frame: \":fx\" effect should not contain a :db effect"))
   (if-let [effect-f (re-frame.registrar/get-handler :fx effect-id false)]
-          (if params (apply effect-f params)
-                     (effect-f nil))
+          (effect-f params)
           (console :warn "re-frame: in \":fx\" effect found " effect-id " which has no associated handler. Ignoring.")))
 
 ; @usage
 ;  {:fx [...]}
-;(re-frame.registrar/clear-handlers :fx :fx_)
-;(re-frame.core/reg-fx :fx fx)
+(re-frame.registrar/clear-handlers :fx :fx)
+(re-frame.core/reg-fx :fx fx)
 
 (defn fx-n
-  ; @param (vectors in vector) effect-vector-group
+  ; @param (vectors in vector) effect-vector-list
   ;
   ; @usage
   ;  (a/reg-fx :my-side-effect (fn [a b c]))
   ;  (a/fx-n [[:my-side-effect "a" "b" "c"]
   ;           [...]])
-  [effect-vector-group]
-  (if-not (sequential? effect-vector-group)
-          (console :warn "re-frame: \":fx\" effect expects a seq, but was given " (type effect-vector-group))
-          (doseq [effect-vector (remove nil? effect-vector-group)]
+  [effect-vector-list]
+  (if-not (sequential? effect-vector-list)
+          (console :warn "re-frame: \":fx\" effect expects a seq, but was given " (type effect-vector-list))
+          (doseq [effect-vector (remove nil? effect-vector-list)]
                  (fx effect-vector))))
 
 ; @usage

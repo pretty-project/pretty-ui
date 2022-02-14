@@ -1,7 +1,6 @@
 
 (ns mongo-db.connection
-    (:import [com.mongodb MongoOptions ServerAddress])
-             ;org.bson.types.BSONTimestamp
+    (:import  [com.mongodb MongoOptions ServerAddress])
     (:require [monger.core       :as mcr]
               [x.server-core.api :as a :refer [r]]))
 
