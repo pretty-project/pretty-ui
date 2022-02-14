@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2022.01.21
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.5.9
+; Version: v0.6.0
+; Compatibility: x4.6.0
 
 
 
@@ -16,9 +16,9 @@
 (ns x.server-core.build-handler
     (:require [mid-fruits.format :as format]
               [server-fruits.io  :as io]
-              [x.mid-core.build-handler        :as build-handler]
-              [x.server-core.event-handler     :as event-handler]
-              [x.server-core.lifecycle-handler :as lifecycle-handler]))
+              [x.mid-core.build-handler       :as build-handler]
+              [x.server-core.event-handler    :as event-handler]
+              [x.server-core.transfer-handler :as transfer-handler]))
 
 
 
@@ -70,7 +70,7 @@
           ; ezért nem minden esetben biztosított az app-build értékének létezése!
           (event-handler/dispatch [:core/store-app-build! INITIAL-APP-BUILD])))
 
-(event-handler/reg-fx :core/import-app-build! import-app-build!)
+(event-handler/reg-fx_ :core/import-app-build! import-app-build!)
 
 
 
@@ -89,8 +89,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler/reg-lifecycles!
-  ::lifecycles
-  {:on-server-init [:core/reg-transfer! :core/transfer-app-build!
-                                        {:data-f      transfer-app-build
-                                         :target-path [:core/build-handler :meta-items :app-build]}]})
+(transfer-handler/reg-transfer! :core/transfer-app-build!
+                                {:data-f      transfer-app-build
+                                 :target-path [:core/build-handler :meta-items :app-build]})

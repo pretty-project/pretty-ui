@@ -100,9 +100,6 @@
 
 ; @usage
 ;  {:environment/focus-element! "my-element"}
-;
-; @usage
-;  [:environment/focus-element! "my-element"]
 (a/reg-handled-fx :environment/focus-element! focus-element!)
 
 (defn blur-element!
@@ -110,22 +107,12 @@
   ;
   ; @usage
   ;  (environment/blur-element! "my-element")
-  ([]
-   (if-let [element (dom/get-active-element)]
-           (dom/blur-element! element)))
-
-  ([element-id]
-   (if-let [element (dom/get-element-by-id element-id)]
-           (dom/blur-element! element))))
+  []
+  (if-let [element (dom/get-active-element)]
+          (dom/blur-element! element)))
 
 ; @usage
-;  {:environment/blur-element!}
-;
-; @usage
-;  [:environment/blur-element!]
-;
-; @usage
-;  [:environment/blur-element! "my-element"]
+;  {:environment/blur-element! nil}
 (a/reg-handled-fx :environment/blur-element! blur-element!)
 
 

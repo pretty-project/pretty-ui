@@ -94,8 +94,6 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-init [:core/reg-transfer! :user/transfer-user-profile!
-                                        {:data-f      transfer-user-profile
-                                         :target-path [:user/profile :data-items]}]})
+(a/reg-transfer! :user/transfer-user-profile!
+                 {:data-f      transfer-user-profile
+                  :target-path [:user/profile :data-items]})

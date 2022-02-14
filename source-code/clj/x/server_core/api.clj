@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v1.3.2
-; Compatibility: x4.5.9
+; Version: v1.3.8
+; Compatibility: x4.6.0
 
 
 
@@ -82,14 +82,13 @@
 (def ->interceptor                    event-handler/->interceptor)
 (def inject-cofx                      event-handler/inject-cofx)
 (def reg-cofx                         event-handler/reg-cofx)
-(def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
 (def event-vector<-id                 event-handler/event-vector<-id)
 (def self-destruct!                   event-handler/self-destruct!)
 (def debug!                           event-handler/debug!)
 (def reg-event-db                     event-handler/reg-event-db)
 (def reg-event-fx                     event-handler/reg-event-fx)
-(def reg-handled-fx                   event-handler/reg-handled-fx)
+(def reg-fx_                          event-handler/reg-fx_)
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)

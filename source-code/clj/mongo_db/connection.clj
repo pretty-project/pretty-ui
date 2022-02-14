@@ -55,11 +55,11 @@
   ; @param (string) database-name
   ; @param (string) database-host
   ; @param (integer) database-port
-  [[database-name database-host database-port]]
+  [database-name database-host database-port]
   (let [^MongoOptions  mongo-options  (mcr/mongo-options {:threads-allowed-to-block-for-connection-multiplier 300})
         ^ServerAddress server-address (mcr/server-address database-host  database-port)
                        connection     (mcr/connect        server-address mongo-options)
                        database       (mcr/get-db         connection     database-name)]
        (a/dispatch [:mongo-db/store-connection! database])))
 
-(a/reg-fx :mongo-db/build-connection! build-connection!)
+(a/reg-fx_ :mongo-db/build-connection! build-connection!)

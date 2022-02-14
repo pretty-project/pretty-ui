@@ -14,8 +14,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.5.8
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -37,26 +37,20 @@
   ;
   ; @usage
   ;  (environment/prevent-selecting!)
-  []
+  [_]
  ;(dom/add-event-listener! "touchstart" #(.preventDefault %)
   (dom/add-event-listener! "mousedown" dom/select-preventer))
 
 ; @usage
 ;  {:environment/prevent-selecting! nil}
-;
-; @usage
-;  [:environment/prevent-selecting!]
-(a/reg-handled-fx :environment/prevent-selecting! prevent-selecting!)
+(a/reg-fx_ :environment/prevent-selecting! prevent-selecting!)
 
 (defn enable-selecting!
   ; @usage
   ;  (environment/enable-selecting!)
-  []
+  [_]
   (dom/remove-event-listener! "mousedown" dom/select-preventer))
 
 ; @usage
 ;  {:environment/enable-selecting! nil}
-;
-; @usage
-;  [:environment/enable-selecting!]
-(a/reg-handled-fx :environment/enable-selecting! enable-selecting!)
+(a/reg-fx_ :environment/enable-selecting! enable-selecting!)

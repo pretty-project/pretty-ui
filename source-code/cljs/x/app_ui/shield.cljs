@@ -54,7 +54,7 @@
   (let [shield-content-element (dom/get-element-by-id "x-app-shield--content")]
        (dom/set-element-content! shield-content-element content)))
 
-(a/reg-handled-fx :ui/render-shield-content! render-shield-content!)
+(a/reg-fx_ :ui/render-shield-content! render-shield-content!)
 
 
 
@@ -91,7 +91,7 @@
   [a/event-vector<-id]
   (fn [_ [_ shield-id shield-props]]
       {:dispatch-later [{:ms   0 :dispatch [:ui/empty-shield!]}
-                        {:ms  50 :dispatch [:ui/render-shield-content! shield-props]}
+                        {:ms  50 :dispatch {:ui/render-shield-content! shield-props}}
                         {:ms 100 :dispatch [:ui/show-shield!]}]}))
 
 (a/reg-event-fx

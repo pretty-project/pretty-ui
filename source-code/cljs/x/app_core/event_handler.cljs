@@ -57,6 +57,7 @@
 (def get-event-handlers               event-handler/get-event-handlers)
 (def get-event-handler                event-handler/get-event-handler)
 (def event-handler-registrated?       event-handler/event-handler-registrated?)
+(def reg-fx_                          event-handler/reg-fx_)
 (def reg-handled-fx                   event-handler/reg-handled-fx)
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)

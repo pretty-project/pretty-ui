@@ -52,7 +52,7 @@
 
 ; @name metamorphic-event
 ;  A metamorphic-event olyan formula amely lehetőve teszi, hogy egy eseményt
-;  vagy esemény-csoportot event-vector, effects-map vagy handler-function
+;  vagy esemény-csoportot event-vector, effects-map vagy handler-f függvény
 ;  formában meghatározhass.
 ;
 ; @name event-vector
@@ -61,12 +61,12 @@
 ; @name effects-map
 ;  {:dispatch-later [{:ms 500 :dispatch [:do-something-later!]}]}
 ;
-; @name handler-function
+; @name handler-f
 ;  (fn [cofx event-vector] {:dispatch-n [[:do-something!] [:do-something-else!]]})
 ;
 ; @name metamorphic-effects
 ;  A metamorphic-effects olyan formula amely lehetőve teszi, hogy
-;  egy handler-function visszatérési értéke effects-map vagy event-vector
+;  egy handler-f függvény visszatérési értéke effects-map vagy event-vector
 ;  is lehessen.
 ;  (fn [_ _] {:dispatch [:do-something!]})
 ;  (fn [_ _] [:do-something!])
@@ -361,27 +361,27 @@
   [event-vector]
   {:dispatch event-vector})
 
-(defn event-vector->handler-function
+(defn event-vector->handler-f
   ; @param (vector) event-vector
   ;
   ; @return (function)
   [event-vector]
   (fn [_ _] {:dispatch event-vector}))
 
-(defn effects-map->handler-function
+(defn effects-map->handler-f
   ; @param (map) effects-map
   ;
   ; @return (function)
   [effects-map]
   (fn [_ _] effects-map))
 
-(defn metamorphic-event->handler-function
+(defn metamorphic-event->handler-f
   ; @param (metamorphic-event) n
   ;
   ; @return (function)
   [n]
-  (cond (map?    n) (effects-map->handler-function  n)
-        (vector? n) (event-vector->handler-function n)
+  (cond (map?    n) (effects-map->handler-f  n)
+        (vector? n) (event-vector->handler-f n)
         :else       (return n)))
 
 
@@ -604,11 +604,11 @@
    (reg-event-fx event-id nil event-handler))
 
   ([event-id interceptors event-handler]
-   (let [handler-function (metamorphic-event->handler-function event-handler)]
-        (re-frame.core/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-function %1 %2))))))
+   (let [handler-f (metamorphic-event->handler-f event-handler)]
+        (re-frame.core/reg-event-fx event-id interceptors #(metamorphic-effects->effects-map (handler-f %1 %2))))))
 
 (defn apply-fx-params
-  ; @param (function) handler-function
+  ; @param (function) handler-f
   ; @param (* or vector) params
   ;
   ; @usage
@@ -621,14 +621,14 @@
   ;  (apply-fx-params (fn [a b] ...) ["a" "b"])
   ;
   ; @return (*)
-  [handler-function params]
-  (if (vector?          params)
-      (apply            handler-function params)
-      (handler-function params)))
+  [handler-f params]
+  (if (vector?         params)
+      (apply handler-f params)
+      (handler-f       params)))
 
-(defn reg-fx
+(defn reg-fx_
   ; @param (keyword) event-id
-  ; @param (function) handler-function
+  ; @param (function) handler-f
   ;
   ; @usage
   ;  (defn my-side-effect [a])
@@ -639,8 +639,12 @@
   ;  (defn your-side-effect [a b])
   ;  (a/reg-fx       :your-side-effect your-side-effect)
   ;  (a/reg-event-fx :your-effect {:your-my-side-effect ["a" "b"]})
-  [event-id handler-function]
-  (re-frame.core/reg-fx #(apply-fx-params % handler-function)))
+  [event-id handler-f]
+  (re-frame.core/reg-fx event-id #(apply-fx-params handler-f %)))
+
+(def reg-fx re-frame.core/reg-fx)
+
+
 
 
 
@@ -652,7 +656,7 @@
   ; eseményt.
   ;
   ; @param (keyword) event-id
-  ; @param (function) handler-function
+  ; @param (function) handler-f
   ;
   ; @usage
   ;  (a/reg-handled-fx :my-event (fn []))
@@ -671,8 +675,8 @@
   ;       {:my-event ["a" "b"]
   ;        :my-event "a"
   ;        :dispatch [:my-event "a" "b"]))
-  [event-id handler-function]
-  (re-frame.core/reg-fx       event-id (fn [params]                   (apply-fx-params handler-function params)))
+  [event-id handler-f]
+  (re-frame.core/reg-fx       event-id (fn [params]                   (apply-fx-params handler-f params)))
   (re-frame.core/reg-event-fx event-id (fn [_ event-vector] {event-id (event-vector->param-vector event-vector)})))
   ; WARNING! DEPRECATED! DO NOT USE!
 
@@ -687,13 +691,13 @@
   ; 2. Dispatch it
   ; 3. Remove the registrated anonymous event-handler
   ;
-  ; @param (function) handler-function
+  ; @param (function) handler-f
   ;
   ; @usage
-  ;  (dispatch-function (fn [_ _] {:dispatch [:do-something!]}))
-  [handler-function]
+  ;  (a/dispatch-function (fn [_ _] {:dispatch [:do-something!]}))
+  [handler-f]
   (let [handler-id (random/generate-keyword)]
-       (re-frame.core/reg-event-fx handler-id [self-destruct!] handler-function)
+       (re-frame.core/reg-event-fx handler-id [self-destruct!] handler-f)
        (re-frame.core/dispatch [handler-id])))
 
 (re-frame.core/reg-fx :dispatch-function dispatch-function)
@@ -714,7 +718,7 @@
         (vector? event-handler) (re-frame.core/dispatch event-handler)
         ; @usage
         ;  (dispatch {:dispatch [:foo]})
-        (map? event-handler)    (-> event-handler effects-map->handler-function dispatch-function)
+        (map? event-handler)    (-> event-handler effects-map->handler-f dispatch-function)
         ; @usage
         ;  (dispatch nil)
         (nil? event-handler)    (return :nil-handler-exception)
@@ -737,9 +741,9 @@
   ; @param (metamorphic-events in vector) event-list
   ;
   ; @usage
-  ;  (dispatch-n [[:event-a]
-  ;               {:dispatch [:event-b]}
-  ;               (fn [_ _] {:dispatch [:event-c]})])
+  ;  (a/dispatch-n [[:event-a]
+  ;                 {:dispatch [:event-b]}
+  ;                 (fn [_ _] {:dispatch [:event-c]})])
   [event-list]
   (doseq [event (remove nil? event-list)]
          (dispatch event)))
@@ -778,13 +782,13 @@
   ; @param (metamorphic-event)(opt) else-event-handler
   ;
   ; @usage
-  ;  (dispatch-if [true [:my-event] ...])
+  ;  (a/dispatch-if [true [:my-event] ...])
   ;
   ; @usage
-  ;  (dispatch-if [true {:dispatch [:my-event]} ...])
+  ;  (a/dispatch-if [true {:dispatch [:my-event]} ...])
   ;
   ; @usage
-  ;  (dispatch-if [true (fn [_ _] {:dispatch [:my-event]}) ...])
+  ;  (a/dispatch-if [true (fn [_ _] {:dispatch [:my-event]}) ...])
   [[condition if-event-handler else-event-handler]]
   (if condition (dispatch if-event-handler)
                 (if else-event-handler (dispatch else-event-handler))))
@@ -798,16 +802,16 @@
   ;  ...]
   ;
   ; @usage
-  ;  (dispatch-cond [(some? "a") [:my-event]
-  ;                  (nil?  "b") [:my-event]])
+  ;  (a/dispatch-cond [(some? "a") [:my-event]
+  ;                    (nil?  "b") [:my-event]])
   ;
   ; @usage
-  ;  (dispatch-cond [(some? "a") {:dispatch [:my-event]}
-  ;                  (nil?  "b") {:dispatch [:my-event]}])
+  ;  (a/dispatch-cond [(some? "a") {:dispatch [:my-event]}
+  ;                    (nil?  "b") {:dispatch [:my-event]}])
   ;
   ; @usage
-  ;  (dispatch-cond [(some? "a") (fn [_ _] {:dispatch [:my-event]})
-  ;                  (nil?  "b") (fn [_ _] {:dispatch [:my-event]})])
+  ;  (a/dispatch-cond [(some? "a") (fn [_ _] {:dispatch [:my-event]})
+  ;                    (nil?  "b") (fn [_ _] {:dispatch [:my-event]})])
   [conditional-events]
   (letfn [(dispatch-cond-f [_ dex x]
                            (if (and (even? dex) x)

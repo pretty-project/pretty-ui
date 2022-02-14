@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.5.2
+; Version: v0.3.8
+; Compatibility: x4.6.0
 
 
 
@@ -30,10 +30,11 @@
 ;; -- Status events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-handled-fx
-  :core/->error-catched
+(defn- error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) error-props
-  (fn [error-props]
-      (println details/app-codename DEFAULT-SERVER-ERROR)))
+  [error-prop]
+  (println details/app-codename DEFAULT-SERVER-ERROR))
+
+(event-handler/reg-fx_ :core/error-catched error-catched)

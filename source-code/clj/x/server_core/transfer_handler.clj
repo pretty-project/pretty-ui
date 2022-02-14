@@ -20,6 +20,26 @@
 
 
 
+;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- store-transfer-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) transfer-id
+  ; @param (map) transfer-props
+  ;
+  ; @return (map)
+  [db [_ transfer-id transfer-props]]
+  (assoc-in db [:core/transfer-handler :data-items transfer-id] transfer-props))
+
+; A reg-transfer! függvény fordítás-idejű használatakor még nem biztosított
+; a [:db/set-item! ...] esemény létezése, ezért a [:core/store-transfer-props! ...]
+; esemény tárolja el a transfer-props térképeket.
+(event-handler/reg-event-db :core/store-transfer-props! store-transfer-props!)
+
+
+
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -42,11 +62,11 @@
    (reg-transfer! (engine/id) transfer-props))
 
   ([transfer-id transfer-props]
-   (event-handler/dispatch [:db/set-item! [:core/transfer-handler :data-items transfer-id] transfer-props])))
+   (event-handler/dispatch [:core/store-transfer-props! transfer-id transfer-props])))
 
 ; @usage
-;  [:core/reg-transfer! :my-transfer {...}]
-(event-handler/reg-handled-fx :core/reg-transfer! reg-transfer!)
+;  {:core/reg-transfer! [:my-transfer {...}]}
+(event-handler/reg-fx_ :core/reg-transfer! reg-transfer!)
 
 
 
@@ -60,7 +80,7 @@
   ;
   ; @return (map)
   [request]
-  ; A [:core/reg-transfer! ...] esemény által regisztrált függvények visszatérési adatait összegyűjti ...
+  ; A {:core/reg-transfer! ...} mellékhatás esemény által regisztrált függvények visszatérési adatait összegyűjti ...
   (let [handlers @(event-handler/subscribe [:db/get-item [:core/transfer-handler :data-items]])]
        (letfn [(f [transfer-data transfer-id {:keys [data-f target-path]}]
                   (assoc transfer-data transfer-id {:data (data-f request)

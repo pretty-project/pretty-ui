@@ -79,6 +79,7 @@
 (def debug!                           event-handler/debug!)
 (def reg-event-db                     event-handler/reg-event-db)
 (def reg-event-fx                     event-handler/reg-event-fx)
+(def reg-fx_                          event-handler/reg-fx_)
 (def reg-handled-fx                   event-handler/reg-handled-fx)
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)

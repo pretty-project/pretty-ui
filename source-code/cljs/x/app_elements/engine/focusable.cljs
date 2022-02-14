@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.05.01
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.4
 ; Compatibility: x4.6.0
 
 
@@ -28,17 +28,15 @@
   ;
   ; @param (keyword) element-id
   [element-id]
-  (let [target-id (targetable/element-id->target-id element-id)]
-       (environment/focus-element! target-id)))
+  (-> element-id targetable/element-id->target-id environment/focus-element!))
 
-(a/reg-fx :elements/focus-element! focus-element!)
+(a/reg-fx_ :elements/focus-element! focus-element!)
 
 (defn blur-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   [element-id]
-  (let [target-id (targetable/element-id->target-id element-id)]
-       (environment/blur-element! target-id)))
+  (-> element-id targetable/element-id->target-id environment/blur-element!))
 
-(a/reg-fx :elements/blur-element! blur-element!)
+(a/reg-fx_ :elements/blur-element! blur-element!)

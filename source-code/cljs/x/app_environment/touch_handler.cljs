@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.4.4
-; Compatibility: x4.5.8
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -17,7 +17,8 @@
     (:require [app-fruits.dom   :as dom]
               [mid-fruits.candy :refer [param]]
               [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+              [x.app-db.api     :as db]
+              [x.app-environment.element-handler :as element-handler]))
 
 
 
@@ -34,18 +35,17 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/detect-touch-events-api!
+(defn- detect-touch-events-api!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (if (dom/touch-events-api-detected?)
-          {:db (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) true)
-           :environment/set-element-attribute! ["x-body-container" "data-touch-detected" true]}
-          {:db (assoc-in db (db/meta-item-path :environment/touch-data :touch-events-api.detected?) false)
-           :environment/set-element-attribute! ["x-body-container" "data-touch-detected" false]})))
+  [_]
+  (let [% (dom/touch-events-api-detected?)]
+       (element-handler/set-element-attribute! "x-body-container" "data-touch-detected"                   %)
+       (a/dispatch [:db/set-item! (db/meta-item-path :environment/touch-data :touch-events-api.detected?) %])))
+
+(a/reg-fx_ :environment/detect-touch-events-api! detect-touch-events-api!)
 
 
 
@@ -54,4 +54,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init [:environment/detect-touch-events-api!]})
+  {:on-app-init {:environment/detect-touch-events-api! nil}})

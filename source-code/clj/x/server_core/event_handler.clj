@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.5.4
-; Compatibility: x4.5.7
+; Version: v1.5.8
+; Compatibility: x4.6.0
 
 
 
@@ -52,7 +52,6 @@
 (def ->interceptor                    event-handler/->interceptor)
 (def inject-cofx                      event-handler/inject-cofx)
 (def reg-cofx                         event-handler/reg-cofx)
-(def reg-fx                           event-handler/reg-fx)
 (def reg-sub                          event-handler/reg-sub)
 (def event-vector<-id                 event-handler/event-vector<-id)
 (def self-destruct!                   event-handler/self-destruct!)
@@ -60,7 +59,7 @@
 (def get-event-handlers               event-handler/get-event-handlers)
 (def get-event-handler                event-handler/get-event-handler)
 (def event-handler-registrated?       event-handler/event-handler-registrated?)
-(def reg-handled-fx                   event-handler/reg-handled-fx)
+(def reg-fx_                          event-handler/reg-fx_)
 (def dispatch                         event-handler/dispatch)
 (def dispatch-sync                    event-handler/dispatch-sync)
 (def dispatch-n                       event-handler/dispatch-n)

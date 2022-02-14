@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.4.6
+; Version: v0.4.8
+; Compatibility: x4.6.0
 
 
 
@@ -14,10 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.sounds
-    (:require [app-fruits.dom     :as dom]
-              [mid-fruits.keyword :as keyword]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-user.api     :as user]))
+    (:require [app-fruits.dom :as dom]
+              [x.app-core.api :as a :refer [r]]
+              [x.app-user.api :as user]))
 
 
 
@@ -36,7 +35,7 @@
   ;
   ; @return (string)
   [sound-id]
-  (str "x-app-sound--" (keyword/to-string sound-id)))
+  (str "x-app-sound--" (name sound-id)))
 
 
 
@@ -64,8 +63,8 @@
        (.play catalog-element)))
 
 ; @usage
-;  [:ui/play-sound! :my-sound]
-(a/reg-handled-fx :ui/play-sound! play-sound!)
+;  {:ui/play-sound! :my-sound}
+(a/reg-fx :ui/play-sound! play-sound!)
 
 
 
@@ -77,7 +76,5 @@
   ;
   ; @return (hiccup)
   []
-  [:div#x-app-sounds
-    [:audio#x-app-sound--click-1
-      [:source {:src "/sounds/click-1.ogg" :type "audio/ogg"}]
-      [:source {:src "/sounds/click-1.mp3" :type "audio/mp3"}]]])
+  [:div#x-app-sounds [:audio#x-app-sound--click-1 [:source {:src "/sounds/click-1.ogg" :type "audio/ogg"}]
+                                                  [:source {:src "/sounds/click-1.mp3" :type "audio/mp3"}]]])

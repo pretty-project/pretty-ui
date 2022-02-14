@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.10.13
 ; Description:
-; Version: v1.2.4
-; Compatibility: x4.2.4
+; Version: v1.2.8
+; Compatibility: x4.6.0
 
 
 
@@ -73,28 +73,28 @@
   ;    Only w/ {:method :post}
   ;   :timeout (ms)(opt)
   ;   :uri (string)}
-  [[request-id request-props]]
+  [request-id request-props]
   (let [request-props (request-props-prototype request-id request-props)
         reference     (http/send-request!      request-id request-props)]
        (swap! REFERENCES assoc request-id reference)))
 
-(a/reg-fx :sync/send-request! send-request!)
+(a/reg-fx_ :sync/send-request! send-request!)
 
 (defn- abort-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
-  [[request-id]]
+  [request-id]
   (let [reference (get @REFERENCES request-id)]
        (http/abort-request! reference)))
 
-(a/reg-fx :sync/abort-request! abort-request!)
+(a/reg-fx_ :sync/abort-request! abort-request!)
 
 (defn- remove-reference!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
-  [[request-id]]
+  [request-id]
   (swap! REFERENCES dissoc request-id))
 
-(a/reg-fx :sync/remove-reference! remove-reference!)
+(a/reg-fx_ :sync/remove-reference! remove-reference!)

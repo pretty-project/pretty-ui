@@ -52,7 +52,7 @@
                (let [root-directory-document (assoc ROOT-DIRECTORY-DOCUMENT :media/content-size sample-file-filesize)]
                     (mongo-db/insert-document! "storage" root-directory-document options)))))
 
-(a/reg-fx :storage/check-install! check-install!)
+(a/reg-fx_ :storage/check-install! check-install!)
 
 
 

@@ -144,4 +144,4 @@
 
 ; @usage
 ;  {:user/add-user! {...}}
-(a/reg-fx :user/add-user! add-user!)
+(a/reg-fx_ :user/add-user! add-user!)

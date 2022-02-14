@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.14
 ; Description:
-; Version: v1.9.2
-; Compatibility: x4.5.5
+; Version: v2.0.4
+; Compatibility: x4.6.0
 
 
 
@@ -56,17 +56,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def DEFAULT-RESTART-TARGET "/")
-
-; @constant (ms)
-(def RESTART-TIMEOUT 1000)
-
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -90,8 +79,8 @@
                   (dom/get-element-by-id "x-app-container")))
 
 ; @usage
-;  [:boot-loader/render-app! #'app]
-(a/reg-handled-fx :boot-loader/render-app! render-app!)
+;  {:boot-loader/render-app! #'app}
+(a/reg-fx_ :boot-loader/render-app! render-app!)
 
 
 
@@ -133,16 +122,13 @@
 (a/reg-event-fx
   :boot-loader/refresh-app!
   ; Az aktuális route-ot újraindítás utáni útvonalként használva, elindítja
-  ; az [:boot-loader/restart-app!] eseményt.
+  ; az [:boot-loader/restart-app! ...] eseményt.
   (fn [{:keys [db]} _]
       (let [current-route-string (r router/get-current-route-string db)]
            [:boot-loader/restart-app! {:restart-target current-route-string}])))
 
 (a/reg-event-fx
   :boot-loader/restart-app!
-  ; A {:restart-target ...} tulajdonságként átadott újraindítás utáni útvonalat
-  ; eltárolja majd átirányít a "/reboot" útvonalra.
-  ;
   ; @param (map)(opt) context-props
   ;  {:restart-target (string)(opt)}
   ;
@@ -152,16 +138,7 @@
   ; @usage
   ;  [:boot-loader/restart-app! {:restart-target "/my-route?var=value"}]
   (fn [{:keys [db]} [_ {:keys [restart-target]}]]
-      (if (string/nonempty? restart-target)
-          {:db (r set-restart-target! db restart-target)
-           :dispatch [:router/go-to! "/reboot"]}
-          {:dispatch [:router/go-to! "/reboot"]})))
-
-(a/reg-event-fx
-  :boot-loader/reboot-app!
-  (fn [{:keys [db]} _]
-      (let [restart-target (r get-restart-target db)]
-           {:dispatch-later [{:ms RESTART-TIMEOUT :dispatch [:environment/go-to! restart-target]}]})))
+      {:environment/go-to! (or restart-target (r get-restart-target db))}))
 
 (a/reg-event-fx
   :boot-loader/start-app!
@@ -218,15 +195,14 @@
   ; @usage
   ;  [:boot-loader/build-app! #'app]
   (fn [{:keys [db]} [_ app]]
-      {:dispatch-if
-       ; 1. Ha a felhasználó nem vendégként lett azonosítva, akkor
+      {; 1. Az applikáció renderelése
+       :boot-loader/render-app! app
+       ; 2. Ha a felhasználó nem vendégként lett azonosítva, akkor
        ;    a bejelentkezési események meghívása (Dispatch on-login events)
-       [(r user/user-identified? db) [:core/login-app!]]
-       ;
+       :dispatch-if [(r user/user-identified? db) [:core/login-app!]]
+       ; ...
        :dispatch-later
-       [; 2. Az applikáció renderelése
-        {:ms   0 :dispatch [:boot-loader/render-app! app]}
-        ; 3. Az applikáció renderelése utáni események meghívása
+       [; 3. Az applikáció renderelése utáni események meghívása
         {:ms 100 :dispatch [:boot-loader/launch-app!]}
         ; 4. Curtains up!
         ; XXX#5030
@@ -238,7 +214,7 @@
   (fn [{:keys [db]} _]
       {; Az útvonalhoz tartozó esemény meghívása
        ; (Dispatch the current route-event)
-       :dispatch [:router/dispatch-current-route!]
+       :router/dispatch-current-route! nil
        ; Az applikáció renderelése utáni események meghívása
        ; (Dispatch on-app-launch events)
        :dispatch-n (r a/get-period-events db :on-app-launch)}))

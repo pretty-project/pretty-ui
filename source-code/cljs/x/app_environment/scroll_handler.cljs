@@ -91,23 +91,17 @@
 
 ; @usage
 ;  {:environment/set-scroll-y! 100}
-;
-; @usage
-;  [:environment/set-scroll-y! 100]
-(a/reg-handled-fx :environment/set-scroll-y! set-scroll-y!)
+(a/reg-fx_ :environment/set-scroll-y! set-scroll-y!)
 
 (defn scroll-to-top!
   ; @usage
   ;  (environment/scroll-to-top!)
-  []
+  [_]
   (dom/set-scroll-y! 0))
 
 ; @usage
-;  {:environment/scroll-to-top!}
-;
-; @usage
-;  [:environment/scroll-to-top!]
-(a/reg-handled-fx :environment/scroll-to-top! scroll-to-top!)
+;  {:environment/scroll-to-top! nil}
+(a/reg-fx_ :environment/scroll-to-top! scroll-to-top!)
 
 (defn- scroll-to-element-top!
   ; @param (string) element-id
@@ -120,27 +114,24 @@
 
 ; @usage
 ;  {:environment/scroll-to-element-top! "my-element" 50}
-;
-; @usage
-;  [:environment/scroll-to-element-top! "my-element" 50]
-(a/reg-handled-fx :environment/scroll-to-element-top! scroll-to-element-top!)
+(a/reg-fx_ :environment/scroll-to-element-top! scroll-to-element-top!)
 
 (defn- listen-to-scroll!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (dom/add-event-listener! "scroll" scroll-listener))
 
-(a/reg-fx :environment/listen-to-scroll! listen-to-scroll!)
+(a/reg-fx_ :environment/listen-to-scroll! listen-to-scroll!)
 
 (defn- initialize-scroll-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
        (reset! SCROLLED-TO-TOP? scrolled-to-top?)
        (element-handler/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)))
       ;(a/dispatch [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])
 
-(a/reg-fx :environment/initialize-scroll-handler! initialize-scroll-handler!)
+(a/reg-fx_ :environment/initialize-scroll-handler! initialize-scroll-handler!)
 
 
 

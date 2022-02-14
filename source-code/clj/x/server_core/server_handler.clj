@@ -102,5 +102,5 @@
             (println details/app-codename "started on port:" server-port))))
 
 ; @usage
-;  [:core/run-server! {...}]
-(event-handler/reg-handled-fx :core/run-server! run-server!)
+;  {:core/run-server! {...}}
+(event-handler/reg-fx_ :core/run-server! run-server!)

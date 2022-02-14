@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.6.0
+; Version: v0.6.8
 ; Compatibility: x4.6.0
 
 
@@ -14,11 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler
-    (:require [app-fruits.dom     :as dom]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]))
+    (:require [app-fruits.dom    :as dom]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]
+              [x.app-environment.element-handler :as element-handler]))
 
 
 
@@ -155,24 +155,6 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- update-viewport-data!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (assoc-in db (db/meta-item-path :environment/viewport-data)
-               {:viewport-height      (dom/get-viewport-height)
-                :viewport-orientation (dom/get-viewport-orientation)
-                :viewport-profile     (dom/get-viewport-profile)
-                :viewport-width       (dom/get-viewport-width)}))
-
-(a/reg-event-db :environment/update-viewport-data! update-viewport-data!)
-
-
-
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -181,7 +163,26 @@
   [_]
   (dom/add-event-listener! "resize" resize-listener))
 
-(a/reg-handled-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
+(a/reg-fx_ :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
+
+(defn- update-viewport-data!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (a/dispatch [:db/set-item! (db/meta-item-path :environment/viewport-data)
+                             {:viewport-height      (dom/get-viewport-height)
+                              :viewport-orientation (dom/get-viewport-orientation)
+                              :viewport-profile     (dom/get-viewport-profile)
+                              :viewport-width       (dom/get-viewport-width)}]))
+
+(a/reg-fx_ :environment/update-viewport-data! update-viewport-data!)
+
+(defn- detect-viewport-profile!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (let [viewport-profile (dom/get-viewport-profile)]
+       (element-handler/set-element-attribute! "x-body-container" "data-viewport-profile" (name viewport-profile))))
+
+(a/reg-fx_ :environment/detect-viewport-profile! detect-viewport-profile!)
 
 
 
@@ -189,19 +190,10 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :environment/detect-viewport-profile!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      (let [viewport-profile (dom/get-viewport-profile)]
-           {:environment/set-element-attribute! ["x-body-container" "data-viewport-profile"
-                                                 (keyword/to-string viewport-profile)]})))
-
-(a/reg-event-fx
   :environment/viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:db       (r update-viewport-data! db)
-       :dispatch [:environment/detect-viewport-profile!]}))
+  {:environment/detect-viewport-profile! nil
+   :environment/update-viewport-data!    nil})
 
 
 
@@ -210,6 +202,6 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init {:dispatch-n [[:environment/update-viewport-data!]
-                              [:environment/detect-viewport-profile!]
-                              [:environment/listen-to-viewport-resize!]]}})
+  {:on-app-init {:environment/detect-viewport-profile!   nil
+                 :environment/listen-to-viewport-resize! nil
+                 :environment/update-viewport-data!      nil}})

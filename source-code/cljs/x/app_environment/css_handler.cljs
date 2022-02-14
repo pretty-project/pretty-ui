@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.02.09
 ; Description:
-; Version: v1.2.0
-; Compatibility: x4.5.8
+; Version: v1.2.6
+; Compatibility: x4.6.0
 
 
 
@@ -62,9 +62,9 @@
   ; @param (string) filepath
   [filepath]
   (let [link-element (dom/create-element! "LINK")]
-       (set! (.-href link-element) filepath)
-       (set! (.-type link-element) "text/css")
-       (set! (.-rel  link-element) "stylesheet")
+       (as->   link-element % (set! (.-href %) filepath)
+                              (set! (.-type %) "text/css")
+                              (set! (.-rel  %) "stylesheet"))
        (return link-element)))
 
 (defn- insert-link-element-as-first!
@@ -125,10 +125,7 @@
 
 ; @usage
 ;  {:environment/add-external-css! "/css/filename.css"}
-;
-; @usage
-;  [:environment/add-external-css! "/css/filename.css"]
-(a/reg-handled-fx :environment/add-external-css! add-external-css!)
+(a/reg-fx_ :environment/add-external-css! add-external-css!)
 
 (defn add-css!
   ; @param (string) filename
@@ -145,8 +142,8 @@
 ;  {:environment/add-css! "filename.css"}
 ;
 ; @usage
-;  [:environment/add-css! "filename.css"]
-(a/reg-handled-fx :environment/add-css! add-css!)
+;  {:environment/add-css! ["filename.css" {...}]}
+(a/reg-fx_ :environment/add-css! add-css!)
 
 (defn remove-css!
   ; @param (string) filename
@@ -158,7 +155,4 @@
 
 ; @usage
 ;  {:environment/remove-css! "/filename.css"}
-;
-; @usage
-;  [:environment/remove-css! "/filename.css"]
-(a/reg-handled-fx :environment/remove-css! remove-css!)
+(a/reg-fx_ :environment/remove-css! remove-css!)

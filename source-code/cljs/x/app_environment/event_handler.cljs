@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.12.22
 ; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.8
+; Version: v0.4.0
+; Compatibility: x4.6.0
 
 
 
@@ -54,11 +54,7 @@
 ; @usage
 ;  (defn handler-f [e] (do-something!))
 ;  {:environment/add-event-listener! ["mousemove" handler-f]}
-
-; @usage
-;  (defn handler-f [e] (do-something!))
-;  [:environment/add-event-listener! "mousemove" handler-f]
-(a/reg-handled-fx :environment/add-event-listener! add-event-listener!)
+(a/reg-fx_ :environment/add-event-listener! add-event-listener!)
 
 (defn remove-event-listener!
   ; @param (string) type
@@ -76,11 +72,7 @@
 ; @usage
 ;  (defn handler-f [e] (do-something!))
 ;  {:environment/remove-event-listener! ["mousemove" handler-f]}
-;
-; @usage
-;  (defn handler-f [e] (do-something!))
-;  [:environment/remove-event-listener! "mousemove" handler-f]
-(a/reg-handled-fx :environment/remove-event-listener! remove-event-listener!)
+(a/reg-fx_ :environment/remove-event-listener! remove-event-listener!)
 
 (defn add-event!
   ; @param (string) type
@@ -97,7 +89,4 @@
 
 ; @usage
 ;  {:environment/add-event! ["mousemove" [:do-something!]]}
-;
-; @usage
-;  [:environment/add-event! "mousemove" [:do-something!]]
-(a/reg-handled-fx :environment/add-event! add-event!)
+(a/reg-fx_ :environment/add-event! add-event!)

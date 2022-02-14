@@ -129,7 +129,7 @@
 ; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
 ; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
 ; tulajdonságának átállítása után történjen!
-(a/reg-fx :environment/enable-dom-scroll! enable-dom-scroll!)
+(a/reg-fx_ :environment/enable-dom-scroll! enable-dom-scroll!)
 
 (defn- disable-dom-scroll!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,7 +153,7 @@
        (dom/set-element-style! (dom/get-body-element)
                                (param body-style))))
 
-(a/reg-fx :environment/disable-dom-scroll! disable-dom-scroll!)
+(a/reg-fx_ :environment/disable-dom-scroll! disable-dom-scroll!)
 
 
 

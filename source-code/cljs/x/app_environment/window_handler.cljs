@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.12.30
 ; Description:
-; Version: v0.8.0
+; Version: v0.9.0
 ; Compatibility: x4.6.0
 
 
@@ -101,10 +101,7 @@
 
 ; @usage
 ;  {:environment/open-new-browser-tab! "www.my-site.com/my-link"}
-;
-; @usage
-;  [:environment/open-new-browser-tab! "www.my-site.com/my-link"]
-(a/reg-handled-fx :environment/open-new-browser-tab! open-new-browser-tab!)
+(a/reg-fx_ :environment/open-new-browser-tab! open-new-browser-tab!)
 
 (defn set-window-title!
   ; @param (string) title
@@ -116,36 +113,27 @@
 
 ; @usage
 ;  {:environment/set-window-title! "My title"}
-;
-; @usage
-;  [:environment/set-window-title! "My title"]
-(a/reg-handled-fx :environment/set-window-title! set-window-title!)
+(a/reg-fx_ :environment/set-window-title! set-window-title!)
 
 (defn reload-window!
   ; @usage
   ;  (environment/reload-window!)
-  []
+  [_]
   (.reload js/window.location true))
 
 ; @usage
 ;  {:environment/reload-window!}
-;
-; @usage
-;  [:environment/reload-window!]
-(a/reg-handled-fx :environment/reload-window! reload-window!)
+(a/reg-fx_ :environment/reload-window! reload-window!)
 
 (defn go-to-root!
   ; @usage
   ;  (environment/go-to-root!)
-  []
+  [_]
   (set! (-> js/window .-location .-href) "/"))
 
 ; @usage
-;  {:environment/go-to-root!}
-;
-; @usage
-;  [:environment/go-to-root!]
-(a/reg-handled-fx :environment/go-to-root!)
+;  {:environment/go-to-root! nil}
+(a/reg-fx_ :environment/go-to-root!)
 
 (defn go-to!
   ; @param (string) uri
@@ -157,10 +145,7 @@
 
 ; @usage
 ;  {:environment/go-to! "www.my-site.com/my-link"}
-;
-; @usage
-;  [:environment/go-to! "www.my-site.com/my-link"]
-(a/reg-handled-fx :environment/go-to! go-to!)
+(a/reg-fx_ :environment/go-to! go-to!)
 
 (defn set-interval!
   ; @param (keyword) interval-id
@@ -180,11 +165,8 @@
            (a/dispatch [:environment/store-interval-props! interval-id interval-props]))))
 
 ; @usage
-;  {:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}}
-;
-; @usage
-;  [:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}]
-(a/reg-handled-fx :environment/set-interval! set-interval!)
+;  {:environment/set-interval! [:my-interval {:event [:do-something!] :interval 420}]}
+(a/reg-fx_ :environment/set-interval! set-interval!)
 
 (defn clear-interval!
   ; @param (keyword) js-id
@@ -196,10 +178,7 @@
 
 ; @usage
 ;  {:environment/clear-interval! :my-interval}
-;
-; @usage
-;  [:environment/clear-interval! :my-interval]
-(a/reg-handled-fx :environment/clear-interval! clear-interval!)
+(a/reg-fx_ :environment/clear-interval! clear-interval!)
 
 (defn set-timeout!
   ; @param (keyword) timeout-id
@@ -218,11 +197,8 @@
        (a/dispatch [:environment/store-timeout-props! timeout-id timeout-props])))
 
 ; @usage
-;  {:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}}
-;
-; @usage
-;  [:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}]
-(a/reg-handled-fx :environment/set-timeout! set-timeout!)
+;  {:environment/set-timeout! [:my-timeout {:event [:do-something!] :timeout 420}]}
+(a/reg-fx_ :environment/set-timeout! set-timeout!)
 
 (defn clear-timeout!
   ; @param (keyword) js-id
@@ -234,10 +210,7 @@
 
 ; @usage
 ;  {:environment/clear-timeout! :my-timeout}
-;
-; @usage
-;  [:environment/clear-timeout! :my-timeout]
-(a/reg-handled-fx :environment/clear-timeout! clear-timeout!)
+(a/reg-fx_ :environment/clear-timeout! clear-timeout!)
 
 
 
@@ -267,17 +240,6 @@
   (assoc-in db (db/path :environment/timeouts timeout-id) timeout-props))
 
 (a/reg-event-db :environment/store-timeout-props! store-timeout-props!)
-
-(defn- update-window-data!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (-> db (assoc-in (db/meta-item-path :environment/window-data :browser-online?) (window/browser-online?))
-         (assoc-in (db/meta-item-path :environment/window-data :language)        (window/get-language))
-         (assoc-in (db/meta-item-path :environment/window-data :user-agent)      (window/get-user-agent))))
-
-(a/reg-event-db :environment/update-window-data! update-window-data!)
 
 
 
@@ -346,13 +308,23 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- update-window-data!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (a/dispatch [:db/set-item! (db/meta-item-path :environment/window-data)
+                             {:browser-online? (window/browser-online?)
+                              :language        (window/get-language)
+                              :user-agent      (window/get-user-agent)}]))
+
+(a/reg-fx_ :environment/update-window-data! update-window-data!)
+
 (defn- listen-to-connection-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (do (dom/add-event-listener!  "online" connection-change-listener)
       (dom/add-event-listener! "offline" connection-change-listener)))
 
-(a/reg-handled-fx :environment/listen-to-connection-change! listen-to-connection-change!)
+(a/reg-fx_ :environment/listen-to-connection-change! listen-to-connection-change!)
 
 
 
@@ -361,5 +333,5 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-init {:dispatch-n [[:environment/update-window-data!]
-                              [:environment/listen-to-connection-change!]]}})
+  {:on-app-init {:environment/listen-to-connection-change! nil
+                 :environment/update-window-data!          nil}})

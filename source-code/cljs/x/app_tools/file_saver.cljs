@@ -195,11 +195,10 @@
   ; @param (keyword) saver-id
   ; @param (map) saver-props
   [saver-id saver-props]
-  (append-temporary-component! [file-saver saver-id saver-props]
-                               (param save-file-f))
+  (append-temporary-component! [file-saver saver-id saver-props] save-file-f)
   (remove-temporary-component!))
 
-(a/reg-handled-fx :tools/save-file-accepted save-file-accepted)
+(a/reg-fx_ :tools/save-file-accepted save-file-accepted)
 
 (a/reg-event-fx
   :tools/render-save-file-dialog!

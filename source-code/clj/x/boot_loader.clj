@@ -120,9 +120,15 @@
 
       {:dispatch-n (r a/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
-                       {:tick  50 :dispatch [:core/run-server! (r get-server-props db)]}
+                       {:tick  50 :dispatch [:boot-loader/run-server!]}
                        ; 4. Az indítási események lefutása után a szerver betöltésének folytatása
                        {:tick 100 :dispatch [:boot-loader/launch-server!]}]}))
+
+(a/reg-event-fx
+  :boot-loader/run-server!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      {:core/run-server! (r get-server-props db)}))
 
 (a/reg-event-fx
   :boot-loader/launch-server!

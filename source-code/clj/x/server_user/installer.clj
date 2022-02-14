@@ -32,7 +32,7 @@
                                  :first-name    "Tech"
                                  :last-name     "Mono"})))
 
-(a/reg-fx :user/check-install! check-install!)
+(a/reg-fx_ :user/check-install! check-install!)
 
 
 

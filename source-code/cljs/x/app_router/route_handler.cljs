@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v3.5.0
+; Version: v3.5.6
 ; Compatibility: x4.6.0
 
 
@@ -67,9 +67,7 @@
 
 ; @constant (map)
 (def DEFAULT-ROUTES {:page-not-found {:client-event   [:views/render-error-page! :page-not-found]
-                                      :route-template "/page-not-found"}
-                     :reboot         {:client-event   [:boot-loader/reboot-app!]
-                                      :route-template "/reboot"}})
+                                      :route-template "/page-not-found"}})
 
 ; @constant (map)
 (def ACCOUNTANT-CONFIG {:nav-handler  #(a/dispatch   [:router/handle-route!          %])
@@ -543,7 +541,7 @@
   :router/go-back!
   ; @usage
   ;  [:router/go-back!]
-  [:router/navigate-back!])
+  {:router/navigate-back! nil})
 
 (a/reg-event-fx
   :router/go-up!
@@ -575,14 +573,14 @@
                 route-string (r get-debug-route-string db route-string)]
                (if (r reload-same-path? db route-string)
                    [:router/handle-route! route-string]
-                   [:router/navigate!     route-string]))
+                   {:router/navigate!     route-string}))
 
           ; If route-string is static ...
           (let [; Az applikáció az útvonalváltás után is debug módban marad
                 route-string (r get-debug-route-string db route-string)]
                (if (r reload-same-path? db route-string)
                    [:router/handle-route! route-string]
-                   [:router/navigate!     route-string])))))
+                   {:router/navigate!     route-string})))))
 
 
 
@@ -591,34 +589,34 @@
 
 (defn- configure-navigation!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (accountant/configure-navigation! ACCOUNTANT-CONFIG))
 
-(a/reg-fx :router/configure-navigation! configure-navigation!)
+(a/reg-fx_ :router/configure-navigation! configure-navigation!)
 
 (defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) abs-route-string
-  [abs-route-string]
-  (accountant/navigate! abs-route-string))
+  ; @param (string) route-string
+  [route-string]
+  (accountant/navigate! route-string))
 
-(a/reg-handled-fx :router/navigate! navigate!)
+(a/reg-fx_ :router/navigate! navigate!)
 
 (defn- navigate-back!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (let [history (.-history js/window)]
        (.back history)))
 
-(a/reg-handled-fx :router/navigate-back! navigate-back!)
+(a/reg-fx_ :router/navigate-back! navigate-back!)
 
 (defn- dispatch-current-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_]
   (accountant/dispatch-current!))
 
-(a/reg-handled-fx :router/dispatch-current-route! dispatch-current-route!)
+(a/reg-fx_ :router/dispatch-current-route! dispatch-current-route!)
 
 
 

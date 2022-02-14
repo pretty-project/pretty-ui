@@ -14,9 +14,7 @@
   ; Re-Frame adatbázisból.
   {:my-data "..."})
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-init [:core/reg-transfer! :my-transfer {:data-f my-data-f}]})
+(a/reg-transfer! :my-transfer {:data-f my-data-f})
 
 (defn your-data-f
   [request]
@@ -24,6 +22,13 @@
   ; letöltődik és a [:your :data] útvonalon eltárolódik a kliens-oldali Re-Frame adatbázisban.
   {:your-data "..."})
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-init [:core/reg-transfer! {:data-f your-data-f :target-path [:your :data]}]})
+(a/reg-transfer! :your-transfer {:data-f your-data-f :target-path [:your :data]})
+
+(defn our-data-f
+  [request]
+  ; A reg-transfer! függvényt lehetséges Re-Frame mellékhatás eseményként is meghívni.
+  {:our-data "..."})
+
+(a/reg-event-fx
+  :reg-our-transfer!
+  {:core/reg-transfer! [:our-transfer {:data-f our-data-f}]})

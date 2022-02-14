@@ -55,7 +55,7 @@
                                   :use-mainnet? (-> :use-mainnet? account/get-api-details-item)}
                                  (klines/request-kline-data!))]))
 
-(a/reg-fx :trader/request-market-data! request-market-data!)
+(a/reg-fx_ :trader/request-market-data! request-market-data!)
 
 
 
