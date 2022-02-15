@@ -46,10 +46,10 @@
             ; ami miatt szükséges az events/load-editor! függvényt a subs/download-data? függvény
             ; lefutása előtt meghívni!
             db           (r events/load-editor!   db extension-id item-namespace editor-props)
-            editor-label (r subs/get-editor-label db extension-id item-namespace)]
+            editor-title (r subs/get-editor-title db extension-id item-namespace)]
            {:db db :dispatch-n [; XXX#3237
                                 (if (r subs/set-title? db extension-id item-namespace)
-                                    [:ui/set-title! editor-label])
+                                    [:ui/set-title! editor-title])
                                 (if (r subs/download-data? db extension-id item-namespace)
                                     [:item-editor/request-item! extension-id item-namespace]
                                     [:item-editor/load-item!    extension-id item-namespace])

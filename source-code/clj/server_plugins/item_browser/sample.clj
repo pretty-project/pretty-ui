@@ -13,7 +13,7 @@
                       :my-type/name "My document"
                       ; A dokumentoknak tartalmazniuk kell a {:path-key ...} tulajdonságként átadott kulcsot!
                       :my-type/path [{:my-type/id "..."} {:my-type/id "..."}]
-                      ; A böngészhető dokumentoknak tartalmazniuk kell a :namespace/items kulcsot!
+                      ; A böngészhető dokumentoknak tartalmazniuk kell az {:items-key ...} tulajdonságként átadott kulcsot!
                       :my-type/items [{:my-type/id "..."}]})
 
 
@@ -23,12 +23,12 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  ; - Az [:item-browser/initialize-browser! ...] esemény hozzáadja a "/@app-home/my-extension"
-  ;   és "/@app-home/my-extension/:my-type-id" útvonalakat a rendszerhez, amely útvonalak
-  ;   használatával betöltődik a kliens-oldalon az item-browser plugin.
-  ; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalakat.
+  ; - Az [:item-browser/initialize-browser! ...] esemény {:routed? true} beállítással használva,
+  ;   hozzáadja a "/@app-home/my-extension" és "/@app-home/my-extension/:my-type-id" útvonalakat
+  ;   a rendszerhez, amely útvonalak használatával betöltődik a kliens-oldalon az item-browser plugin.
   {:on-server-boot [:item-browser/initialize-browser! :my-extension :my-type
-                                                      {:label-key :name
+                                                      {:items-key :items
+                                                       :label-key :name
                                                        :path-key  :path
                                                        :root-item-id "my-item"}]})
   ; Az item-browser plugin az item-lister plugint alkalmazza az elemek listázához,

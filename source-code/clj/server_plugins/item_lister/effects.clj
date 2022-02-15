@@ -47,15 +47,15 @@
   ;
   ; @return (map)
   ;  {:download-limit (integer)
-  ;   :label (metamorphic-content)
   ;   :order-by-options (namespaced keywords in vector)
+  ;   :route-title (metamorphic-content)
   ;   :routed? (boolean)
   ;   :search-keys (keywords in vector)}
   [extension-id _ lister-props]
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
-          :label            extension-id
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
           :search-keys      DEFAULT-SEARCH-KEYS
+          :route-title      extension-id
           :routed?          true}
          (param lister-props)))
 
@@ -71,7 +71,7 @@
   ; @param (map)(opt) lister-props
   ;  {:download-limit (integer)(opt)
   ;    Default: DEFAULT-DOWNLOAD-LIMIT
-  ;   :label (metamorphic-content)(opt)
+  ;   :route-title (metamorphic-content)(opt)
   ;    Default: extension-id
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: DEFAULT-ORDER-BY-OPTIONS

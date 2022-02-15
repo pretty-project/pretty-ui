@@ -29,7 +29,7 @@
 (def data-item-path        engine/data-item-path)
 (def meta-item-path        engine/meta-item-path)
 (def item-id->new-item?    engine/item-id->new-item?)
-(def item-id->editor-label engine/item-id->editor-label)
+(def item-id->editor-title engine/item-id->editor-title)
 (def new-item-label        engine/new-item-label)
 (def unnamed-item-label    engine/unnamed-item-label)
 (def mutation-name         engine/mutation-name)

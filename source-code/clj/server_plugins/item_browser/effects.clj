@@ -25,6 +25,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
+(def DEFAULT-ITEMS-KEY :items)
+
+; @constant (keyword)
 (def DEFAULT-LABEL-KEY :name)
 
 ; @constant (keyword)
@@ -41,11 +44,13 @@
   ; @param (map) browser-props
   ;
   ; @return (map)
-  ;  {:label-key (keyword)
+  ;  {:items-key (keyword)
+  ;   :label-key (keyword)
   ;   :path-key (keyword)
   ;   :routed? (boolean)}
   [extension-id item-namespace browser-props]
-  (merge {:label-key DEFAULT-LABEL-KEY
+  (merge {:items-key DEFAULT-ITEMS-KEY
+          :label-key DEFAULT-LABEL-KEY
           :path-key  DEFAULT-PATH-KEY
           :routed?   true}
          (lister-props-prototype extension-id item-namespace browser-props)))
@@ -62,8 +67,8 @@
   ; @param (map) browser-props
   ;  {:download-limit (integer)(opt)
   ;    Default: item-lister/DEFAULT-DOWNLOAD-LIMIT
-  ;   :label (metamorphic-content)(opt)
-  ;    Default: extension-id
+  ;   :items-key (keyword)(opt)
+  ;    Default: DEFAULT-ITEMS-KEY
   ;   :label-key (keyword)(opt)
   ;    Default: DEFAULT-LABEL-KEY
   ;   :order-by-options (namespaced keywords in vector)(opt)

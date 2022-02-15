@@ -78,7 +78,11 @@
 
 (defn my-body
   [surface-id]
-  [item-lister/body :my-extension :my-type {:list-element #'my-list-element}])
+  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
+                                            ; A {:prefilter {...}} tulajdonság használatával beállíthatod,
+                                            ; hogy a listázóban a szerver-oldali kollekció elemeiből
+                                            ; az előszűrésnek megfelelő elemek jelenjenek meg.
+                                            :prefilter {:my-type/color "red"}}])
 
 ; Az item-lister plugint header és body komponensre felbontva is lehetséges használni
 (defn my-view

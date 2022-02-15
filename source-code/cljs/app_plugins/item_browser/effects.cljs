@@ -41,21 +41,17 @@
   ; @usage
   ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
-      (let [browser-label (r subs/get-meta-item db extension-id item-namespace :label)]
-           {:db (r events/load-browser! db extension-id item-namespace browser-props)
-            :dispatch-n [; XXX#5660
-                         [:environment/reg-keypress-listener! :item-browser/keypress-listener]
-                         ; XXX#3237
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! browser-label])
-                         [:item-browser/request-item! extension-id item-namespace]
-                         (engine/load-extension-event extension-id item-namespace)
-                         ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
-                         ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
-                         ; komponens a viewport területén volt, akkor szükséges az infinite-loader
-                         ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
-                         ; az adatokat.
-                         [:tools/reload-infinite-loader! extension-id]]})))
+      {:db (r events/load-browser! db extension-id item-namespace browser-props)
+       :dispatch-n [; XXX#5660
+                    [:environment/reg-keypress-listener! :item-browser/keypress-listener]
+                    [:item-browser/request-item! extension-id item-namespace]
+                    (engine/load-extension-event extension-id item-namespace)
+                    ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
+                    ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
+                    ; komponens a viewport területén volt, akkor szükséges az infinite-loader
+                    ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
+                    ; az adatokat.
+                    [:tools/reload-infinite-loader! extension-id]]}))
 
 (a/reg-event-fx
   :item-browser/browse-item!

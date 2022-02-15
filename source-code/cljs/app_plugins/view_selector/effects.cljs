@@ -39,11 +39,11 @@
   ; @usage
   ;  [:view-selector/load-selector! :my-extension {:view-id "my-view"}]
   (fn [{:keys [db]} [_ extension-id selector-props]]
-      (let [selector-label (r subs/get-meta-item db extension-id :label)]
+      (let [route-title (r subs/get-meta-item db extension-id :route-title)]
            {:db (r events/load-selector! db extension-id selector-props)
             :dispatch-n [; XXX#3237
                          (if (r subs/set-title? db extension-id)
-                             [:ui/set-title! selector-label])
+                             [:ui/set-title! route-title])
                          (engine/load-extension-event extension-id)]})))
 
 (a/reg-event-fx

@@ -35,7 +35,7 @@
   ; @usage
   ;  [:item-lister/load-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [lister-label (r subs/get-meta-item db extension-id item-namespace :label)]
+      (let [route-title (r subs/get-meta-item db extension-id item-namespace :route-title)]
            {:db (r events/load-lister! db extension-id item-namespace)
             :dispatch-n [; XXX#5660
                          ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
@@ -45,7 +45,7 @@
                          ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
                          ; beállítja a header-title és window-title feliratokat.
                          (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! lister-label])
+                             [:ui/set-title! route-title])
                          (engine/load-extension-event extension-id item-namespace)]})))
 
 (a/reg-event-fx

@@ -47,8 +47,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
-  ;  {:label (metamorphic-content)(opt)
-  ;   :routed? (boolean)(opt)
+  ;  {:routed? (boolean)(opt)
   ;    Default: true
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;
