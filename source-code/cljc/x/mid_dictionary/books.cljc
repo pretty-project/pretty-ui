@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.08.01
 ; Description:
-; Version: v1.8.6
+; Version: v1.8.8
 ; Compatibility: x4.4.9
 
 
@@ -1140,6 +1140,15 @@
      {:en "By date (ascending)"
       :hu "Dátum szerint (növekvő)"}
      :by-date-descending
+     {:en "By date (descending)"
+      :hu "Dátum szerint (csökkenő)"}
+     :by-modified-at
+     {:en "By date"
+      :hu "Dátum szerint"}
+     :by-modified-at-ascending
+     {:en "By date (ascending)"
+      :hu "Dátum szerint (növekvő)"}
+     :by-modified-at-descending
      {:en "By date (descending)"
       :hu "Dátum szerint (csökkenő)"}
      :by-name

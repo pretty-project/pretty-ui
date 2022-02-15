@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.8.4
-; Compatibility: x4.6.0
+; Version: v0.9.0
+; Compatibility: x4.6.1
 
 
 
@@ -47,7 +47,31 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- sort-pattern
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (namespaced keyword) order-by
+  ;
+  ; @example
+  ;  (engine/sort-pattern :my-extension :my-type :name/ascending)
+  ;  =>
+  ;  {:my-type/name 1}
+  ;
+  ; @return (map)
+  [_ item-namespace order-by]
+  (let [order-key (namespace order-by)
+        direction (name      order-by)]
+       {(keyword/add-namespace item-namespace order-key)
+        (case direction "ascending" 1 "descending" -1)}))
+
+
+
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- env->max-count
@@ -113,14 +137,9 @@
   ;  {:my-type/name 1}
   ;
   ; @return (map)
-  [env _ item-namespace]
+  [env extension-id item-namespace]
   (let [order-by (pathom/env->param env :order-by)]
-       (case order-by :by-name-ascending  {(keyword/add-namespace item-namespace :name)         1}
-                      :by-name-descending {(keyword/add-namespace item-namespace :name)        -1}
-                      :by-date-ascending  {(keyword/add-namespace item-namespace :modified-at)  1}
-                      :by-date-descending {(keyword/add-namespace item-namespace :modified-at) -1}
-                      ; Default
-                      {(keyword/add-namespace item-namespace :name) 1})))
+       (sort-pattern extension-id item-namespace order-by)))
 
 (defn env->search-pattern
   ; @param (map) env

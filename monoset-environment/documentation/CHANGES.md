@@ -1,5 +1,14 @@
 
+#x4.6.1
+
+- Az item-lister plugin {:order-by ...} tulajdonsága ezentúl nem elérhető
+
+- Az item-lister plugin {:order-by-options [...]} tulajdonsága megváltozott
+
+
+
 #x4.6.0
+
 - A Re-Frame mellékhatás események paraméterezése és meghívása megváltozott!
   Dokumentáció: x.mid-core.event-handler/reg-fx
                 x.mid-core.event-handler/fx
@@ -10,16 +19,19 @@
 
 
 # x4.5.9
+
 - ...
 
 
 
 # x4.5.8
+
 - Az x.app/mid/server-core.api/reg-lifecycles függvény új neve: reg-lifecycles! (felkiáltójellel)
 
 
 
 # x4.5.7
+
 - A prototypes.api névtér újra a mongo-db része lett (circular-dependecy feloldva). Sry.
 
 - A stated elemek {:disabler [...]} tulajdonsága ezentúl nem elérhető
@@ -30,12 +42,14 @@
 
 
 # x4.5.6
+
 - A [components/content ...] komponens már nem kezeli a {:content-props ...} és {:subscriber ...}
   tulajdonságokat!
 
 
 
 # x4.5.5
+
 - A következő elemeken a {:layout ...} tulajdonságot leváltotta a {:min-height ...} tulajdonság:
   - label
   - line-diagram
@@ -52,6 +66,7 @@
 
 
 # x4.5.4
+
 - Az item-editor plugin [:item-editor/get-header-props ...] és [:item-editor/get-body-props ...]
   feliratkozásában a {:synchronizing? ...} tulajdonság helyett a {:disabled? ...} tulajdonság
   segítségével lehet az inputok {:disabled? ...} állapotát beállítani
@@ -63,6 +78,7 @@
 
 
 # x4.5.3
+
 - Az item-editor plugin példányaiban a pathom handler függvények a megváltozott mongo-db névtér
   függvényeit használják!
 
@@ -73,6 +89,7 @@
 
 
 # x4.5.2
+
 - A mongo-db adatbázisban tárolt dokumentumok azonsítói ezentúl BSON ObjectId objektumként tárolódnak
   az adatbázisban. Az átálláshoz szükséges az összes kollekciót kiüríteni és a dokumentokat újból
   hozzáadni!
@@ -92,6 +109,7 @@
 
 
 # x4.5.0
+
 - A route-template útvonalakban használt "/:app-home/..." változó szintaxisa megváltozott!
   "/:app-home/my-route" -> "/@app-home/my-route"
 
@@ -102,21 +120,25 @@
 
 
 # x4.4.9
+
 - Sry ...
 
 
 
 # x4.4.8
+
 - Sry ...
 
 
 
 # x4.4.7
+
 - Sry ...
 
 
 
 # x4.4.6
+
 - BREAKING CHANGE
   X Modulok Re-Frame esemény elnevezései megváltoznak:
   Pl.:
@@ -132,6 +154,7 @@
 
 
 # x4.4.5
+
 - BREAKING CHANGE
   Full refactor, sry!
 

@@ -354,7 +354,7 @@
   ;  =>
   ;  nil
   ;
-  ; @return (nil string)
+  ; @return (string)
   [n x]
   (when (and (nonempty? n)
              (nonempty? x)
@@ -393,14 +393,12 @@
   ; @param (string) x
   ;
   ; @example
-  ;  (string/remove-first-occurence
-  ;   "ABC-DEF-GHI" "-")
+  ;  (string/remove-first-occurence "ABC-DEF-GHI" "-")
   ;  =>
   ;  "ABCDEF-GHI"
   ;
   ; @example
-  ;  (string/remove-first-occurence
-  ;   "ABC-DEF-GHI" "%")
+  ;  (string/remove-first-occurence "ABC-DEF-GHI" "%")
   ;  =>
   ;  "ABC-DEF-GHI"
   ;

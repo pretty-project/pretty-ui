@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.6.0
+; Version: v0.5.6
+; Compatibility: x4.6.1
 
 
 
@@ -66,9 +66,7 @@
   ;    Default: extension-id
   ;   :label-key (keyword)(opt)
   ;    Default: DEFAULT-LABEL-KEY
-  ;   :order-by (keyword)(opt)
-  ;    Default: item-lister/DEFAULT-ORDER-BY
-  ;   :order-by-options (keywords in vector)(opt)
+  ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: item-lister/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)(opt)
   ;    Default: DEFAULT-PATH-KEY
@@ -80,7 +78,7 @@
   ;
   ; @usage
   ;  [:item-browser/initialize-browser! :my-extension :my-type {:root-item-id "my-item"
-  ;                                                            :search-keys  [:name :email-address]}]
+  ;                                                             :search-keys  [:name :email-address]}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
            {:db (r events/initialize-browser! db extension-id item-namespace browser-props)

@@ -12,11 +12,8 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def ORDER-BY :by-date-ascending)
-
-; @constant (keywords in vector)
-(def ORDER-BY-OPTIONS [:by-name-ascending :by-name-descending :by-date-ascending :by-date-descending])
+; @constant (namespaced keywords in vector)
+(def ORDER-BY-OPTIONS [:modified-at/ascending :modified-at/descending :name/ascending :name/descending])
 
 
 
@@ -120,8 +117,7 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-lister/initialize-lister! :my-extension :my-type
-                                                    {:download-limit         10
-                                                     :order-by         ORDER-BY
+                                                    {:download-limit 10
                                                      :order-by-options ORDER-BY-OPTIONS
                                                      ; A dokumentumoknak tartalmazniuk kell legalább egyet
                                                      ; az itt felsorolt kulcsok közül!

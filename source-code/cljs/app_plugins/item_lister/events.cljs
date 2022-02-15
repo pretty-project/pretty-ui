@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.3.4
+; Version: v1.3.8
 ; Compatibility: x4.6.1
 
 
@@ -112,6 +112,22 @@
   ; @return (map)
   [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
+
+(defn set-default-order-by!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  ; Az item-lister plugin betöltésekor beállítja az order-by-options vektor első elemét
+  ; order-by beállításként, mert ha még nem volt a felhasználó által kiválasztva order-by
+  ; érték, akkor ...
+  ; ... a sort-items-select kirenderelésekor nem lenne a select-options felsorolásban aktív listaelem!
+  ; ... az elemek letöltésekor a szerver nem kapná meg az order-by értékét!
+  (let [order-by-options (r subs/get-meta-item db extension-id item-namespace :order-by-options)]
+       (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options))))
 
 (defn toggle-reload-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -378,9 +394,10 @@
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (as-> db % (r reset-lister!    % extension-id item-namespace)
-             (r reset-downloads! % extension-id item-namespace)
-             (r reset-search!    % extension-id item-namespace)))
+  (as-> db % (r reset-lister!         % extension-id item-namespace)
+             (r reset-downloads!      % extension-id item-namespace)
+             (r reset-search!         % extension-id item-namespace)
+             (r set-default-order-by! % extension-id item-namespace)))
 
 
 

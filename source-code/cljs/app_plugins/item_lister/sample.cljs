@@ -127,4 +127,8 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:my-extension {:en "My extension" :hu "Kiegészítőm"}}]})
+  {:on-app-boot [:dictionary/add-terms! {:my-extension {:en "My extension" :hu "Kiegészítőm"}
+                                         ; Ha az order-by-options beállításban használtál egyedi értékeket,
+                                         ; akkor ne felejtsd el hozzáadni a megfelelő szótári szavakat!
+                                         ; Pl. a :my-order/ascending értékhez tartozó kifejezés:
+                                         :by-my-order-ascending {:en "..." :hu "..."}}]})

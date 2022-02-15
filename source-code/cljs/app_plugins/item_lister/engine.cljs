@@ -83,3 +83,16 @@
         mutation-name (mutation-name extension-id item-namespace :duplicate)
         copy-items    (get server-response (symbol mutation-name))]
        (vector/->items copy-items item-id-key)))
+
+(defn order-by-label-f
+  ; @param (namespaced keyword) order-by
+  ;
+  ; @example
+  ;  (engine/order-by-label-f :name/ascending)
+  ;  =>
+  ;  :by-name-ascending
+  ;
+  ; @return (keyword)
+  [order-by]
+  (keyword (str "by-" (namespace order-by)
+                "-"   (name      order-by))))

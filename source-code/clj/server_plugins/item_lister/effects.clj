@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.6.0
+; Version: v0.6.6
+; Compatibility: x4.6.1
 
 
 
@@ -24,11 +24,8 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keywords in vector)
-(def DEFAULT-ORDER-BY-OPTIONS [:by-date-descending :by-date-ascending :by-name-descending :by-name-ascending])
-
-; @constant (keyword)
-(def DEFAULT-ORDER-BY :by-date-descending)
+; @constant (namespaced keywords in vector)
+(def DEFAULT-ORDER-BY-OPTIONS [:modified-at/ascending :modified-at/descending :name/ascending :name/descending])
 
 ; @constant (integer)
 (def DEFAULT-DOWNLOAD-LIMIT 20)
@@ -51,14 +48,12 @@
   ; @return (map)
   ;  {:download-limit (integer)
   ;   :label (metamorphic-content)
-  ;   :order-by (keyword)
-  ;   :order-by-options (keywords in vector)
+  ;   :order-by-options (namespaced keywords in vector)
   ;   :routed? (boolean)
   ;   :search-keys (keywords in vector)}
   [extension-id _ lister-props]
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
           :label            extension-id
-          :order-by         DEFAULT-ORDER-BY
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
           :search-keys      DEFAULT-SEARCH-KEYS
           :routed?          true}
@@ -78,9 +73,7 @@
   ;    Default: DEFAULT-DOWNLOAD-LIMIT
   ;   :label (metamorphic-content)(opt)
   ;    Default: extension-id
-  ;   :order-by (keyword)(opt)
-  ;    Default: DEFAULT-ORDER-BY
-  ;   :order-by-options (keywords in vector)(opt)
+  ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: DEFAULT-ORDER-BY-OPTIONS
   ;   :routed? (boolean)(opt)
   ;    Default: true

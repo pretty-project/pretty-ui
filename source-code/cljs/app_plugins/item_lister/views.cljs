@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.8.8
-; Compatibility: x4.6.0
+; Version: v0.9.2
+; Compatibility: x4.6.1
 
 
 
@@ -325,10 +325,11 @@
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        [elements/select :item-lister/sort-items-button
                         {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
-                         :disabled?     (or lister-disabled? no-items-to-show?)
-                         :on-select     [:item-lister/order-items! extension-id item-namespace]
-                         :options-path  [extension-id :item-lister/meta-items :order-by-options]
-                         :value-path    [extension-id :item-lister/meta-items :order-by]}]))
+                         :disabled?    (or lister-disabled? no-items-to-show?)
+                         :on-select    [:item-lister/order-items! extension-id item-namespace]
+                         :options-path [extension-id :item-lister/meta-items :order-by-options]
+                         :get-label-f  engine/order-by-label-f
+                         :value-path   [extension-id :item-lister/meta-items :order-by]}]))
 
 
 
