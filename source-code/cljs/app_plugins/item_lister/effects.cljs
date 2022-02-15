@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.2.8
-; Compatibility: x4.6.0
+; Version: v1.3.6
+; Compatibility: x4.6.1
 
 
 
@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.effects
-    (:require [x.app-core.api    :as a :refer [r]]
-              [x.app-ui.api      :as ui]
+    (:require [x.app-core.api :as a :refer [r]]
+              [x.app-ui.api   :as ui]
               [x.app-environment.api           :as environment]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.events  :as events]
@@ -169,8 +169,7 @@
   ; @usage
   ;  [:item-lister/delete-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (as-> db % (r events/disable-selected-items! % extension-id item-namespace)
-                      (r ui/fake-process!               % 25))
+      {:db (r events/delete-selected-items! db extension-id item-namespace)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                     {:on-success [:item-lister/items-deleted extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
@@ -185,8 +184,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [item-ids (engine/server-response->deleted-item-ids extension-id item-namespace server-response)]
-           {:db (r events/items-deleted db extension-id item-namespace item-ids)
-            :dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
+           {:dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
                          [:item-lister/reload-items!                extension-id item-namespace]]})))
 
 (a/reg-event-fx
@@ -197,11 +195,11 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                        {;:display-progress? true
-                         :on-success [:item-lister/reload-items! extension-id item-namespace]
-                         :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
-                         :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]))
+      {:db (r ui/fake-random-process! db)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-lister/reload-items! extension-id item-namespace]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
+                                     :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]}))
 
 
 
@@ -216,7 +214,7 @@
   ; @usage
   ;  [:item-lister/duplicate-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r ui/fake-process! db 25)
+      {:db (r ui/fake-random-process! db)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                     {:on-success [:item-lister/items-duplicated extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
@@ -242,11 +240,11 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
   (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {;:display-progress? true
-                          :on-success [:item-lister/reload-items! extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
-                          :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace copy-ids)}]))
+      {:db (r ui/fake-random-process! db)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-lister/reload-items! extension-id item-namespace]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
+                                     :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace copy-ids)}]}))
 
 
 

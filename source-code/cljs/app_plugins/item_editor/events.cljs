@@ -103,8 +103,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (as-> db % (r backup-current-item! % extension-id item-namespace)
-             (r ui/fake-process!     % 25)))
+  (as-> db % (r backup-current-item!    % extension-id item-namespace)
+             (r ui/fake-random-process! %)))
 
 (defn delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -114,7 +114,7 @@
   ;
   ; @return (map)
   [db [_ _ _]]
-  (r ui/fake-process! db 25))
+  (r ui/fake-random-process! db))
 
 (defn undo-delete!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,7 +124,7 @@
   ;
   ; @return (map)
   [db [_ _ _]]
-  (r ui/fake-process! db 25))
+  (r ui/fake-random-process! db))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!

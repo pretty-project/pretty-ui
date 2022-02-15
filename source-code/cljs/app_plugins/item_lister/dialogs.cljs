@@ -70,7 +70,7 @@
                          :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}]))
 
 (a/reg-event-fx
-  :item-editor/render-items-duplicated-dialog!
+  :item-lister/render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

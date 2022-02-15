@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.26
 ; Description:
-; Version: v1.0.4
-; Compatibility: x4.6.0
+; Version: v1.0.8
+; Compatibility: x4.6.1
 
 
 
@@ -14,11 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-bar
-    (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.css   :as css]
-              [mid-fruits.map   :refer [dissoc-in]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.css    :as css]
+              [mid-fruits.map    :refer [dissoc-in]]
+              [mid-fruits.random :as random]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]))
 
 
 
@@ -93,6 +94,19 @@
 ; @usage
 ;  [:ui/fake-process! 40]
 (a/reg-event-db :ui/fake-process! fake-process!)
+
+(defn fake-random-process!
+  ; @usage
+  ;  (r ui/fake-random-process! db)
+  ;
+  ; @return (map)
+  [db _]
+  (let [fake-progress (min 75 (random/generate-number 2))]
+       (assoc-in db (db/meta-item-path :ui/progress-bar :fake-progress) fake-progress)))
+
+; @usage
+;  [:ui/fake-random-process!]
+(a/reg-event-db :ui/fake-random-process! fake-random-process!)
 
 (defn stop-faking-process!
   ; @usage

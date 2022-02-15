@@ -1,8 +1,5 @@
 
 (ns mongo-db.reader
-   ; WARNING! DEPRECATED! DO NOT USE!
-   ;(:import  org.bson.types.BSONTimestamp)
-   ; WARNING! DEPRECATED! DO NOT USE!
     (:require monger.joda-time
               [mid-fruits.candy     :refer [param return]]
               [mid-fruits.vector    :as vector]
@@ -11,6 +8,7 @@
               [monger.db            :as mdb]
               [mongo-db.adaptation  :as adaptation]
               [mongo-db.aggregation :as aggregation]
+              [mongo-db.checking    :as checking]
               [mongo-db.engine      :as engine]
               [x.server-core.api    :as a]
               [x.server-db.api      :as db]))
@@ -97,7 +95,7 @@
   ; @return (strings in vector)
   []
   (let [database @(a/subscribe [:mongo-db/get-connection])]
-       (vec (mdb/get-collection-names database))))
+       (-> database mdb/get-collection-names vec)))
 
 (defn get-collection-namespace
   ; @param (string) collection-name
@@ -147,7 +145,7 @@
   ;
   ; @return (integer)
   [collection-name query]
-  (if-let [query (adaptation/find-query query)]
+  (if-let [query (-> query checking/find-query adaptation/find-query)]
           (count-documents-by-query collection-name query)))
 
 (defn get-all-documents
@@ -195,12 +193,12 @@
   ; @return (namespaced maps in vector)
   ;  [{:namespace/id (string)}]
   ([collection-name query]
-   (if-let [query (adaptation/find-query query)]
+   (if-let [query (-> query checking/find-query adaptation/find-query)]
            (if-let [documents (find-maps collection-name query)]
                    (vector/->items documents #(adaptation/find-output %)))))
 
   ([collection-name query projection]
-   (if-let [query (adaptation/find-query query)]
+   (if-let [query (-> query checking/find-query adaptation/find-query)]
            (if-let [projection (adaptation/find-projection projection)]
                    (if-let [documents (find-maps collection-name query projection)]
                            (vector/->items documents #(adaptation/find-output %)))))))
@@ -230,7 +228,7 @@
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
   [collection-name query]
-  (if-let [query (adaptation/find-query query)]
+  (if-let [query (-> query checking/find-query adaptation/find-query)]
           (if-let [document (find-one-as-map collection-name query)]
                   (adaptation/find-output document))))
 

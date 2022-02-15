@@ -8,6 +8,7 @@
               [monger.operators    :refer :all]
               [monger.result       :as mrt]
               [mongo-db.adaptation :as adaptation]
+              [mongo-db.checking   :as checking]
               [mongo-db.engine     :as engine]
               [mongo-db.errors     :as errors]
               [mongo-db.preparing  :as preparing]
@@ -172,10 +173,11 @@
    (insert-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (preparing/insert-input collection-name document options)]
-           (if-let [document (adaptation/insert-input document)]
-                   (if-let [result (insert-and-return! collection-name document)]
-                           (adaptation/insert-output result))))))
+   (if-let [document (as-> document % (checking/insert-input %)
+                                      (preparing/insert-input collection-name % options)
+                                      (adaptation/insert-input %))]
+           (if-let [result (insert-and-return! collection-name document)]
+                   (adaptation/insert-output result)))))
 
 
 
@@ -229,10 +231,11 @@
    (save-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (preparing/save-input collection-name document options)]
-           (if-let [document (adaptation/save-input document)]
-                   (if-let [result (save-and-return! collection-name document)]
-                           (adaptation/save-output result))))))
+   (if-let [document (as-> document % (checking/save-input %)
+                                      (preparing/save-input collection-name % options)
+                                      (adaptation/save-input %))]
+           (if-let [result (save-and-return! collection-name document)]
+                   (adaptation/save-output result)))))
 
 
 
@@ -285,11 +288,12 @@
    (update-document! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (preparing/update-input collection-name document options)]
-                    (if-let [query (adaptation/find-query query)]
-                            (if-let [document (adaptation/update-input document)]
-                                    (let [result (update! collection-name query document {:multi false :upsert false})]
-                                         (mrt/updated-existing? result))))))))
+   (boolean (if-let [document (as-> document % (checking/update-input %)
+                                               (preparing/update-input collection-name % options)
+                                               (adaptation/update-input %))]
+                    (if-let [query (-> query checking/find-query adaptation/find-query)]
+                            (let [result (update! collection-name query document {:multi false :upsert false})]
+                                 (mrt/updated-existing? result)))))))
 
 
 
@@ -315,13 +319,14 @@
    (update-documents! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (preparing/update-input collection-name document options)]
-                    (if-let [query (adaptation/find-query query)]
-                            (if-let [document (adaptation/update-input document)]
-                                    ; WARNING! DO NOT USE!
-                                    ; java.lang.IllegalArgumentException: Replacements can not be multi
-                                    (let [result (update! collection-name query document {:multi true :upsert false})]
-                                         (mrt/updated-existing? result))))))))
+   (boolean (if-let [document (as-> document % (checking/update-input %)
+                                               (preparing/update-input collection-name % options)
+                                               (adaptation/update-input %))]
+                    (if-let [query (-> query checking/find-query adaptation/find-query)]
+                            ; WARNING! DO NOT USE!
+                            ; java.lang.IllegalArgumentException: Replacements can not be multi
+                            (let [result (update! collection-name query document {:multi true :upsert false})]
+                                 (mrt/updated-existing? result)))))))
 
 
 
@@ -346,11 +351,12 @@
    (upsert-document! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (preparing/upsert-input collection-name document options)]
-                    (if-let [query (adaptation/find-query query)]
-                            (if-let [document (adaptation/upsert-input document)]
-                                    (let [result (upsert! collection-name query document {:multi false})]
-                                         (mrt/acknowledged? result))))))))
+   (boolean (if-let [document (as-> document % (checking/upsert-input %)
+                                               (preparing/upsert-input collection-name % options)
+                                               (adaptation/upsert-input %))]
+                    (if-let [query (-> query checking/find-query adaptation/find-query)]
+                            (let [result (upsert! collection-name query document {:multi false})]
+                                 (mrt/acknowledged? result)))))))
 
 
 
@@ -375,13 +381,14 @@
    (upsert-documents! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (preparing/upsert-input collection-name document options)]
-                    (if-let [query (adaptation/find-query query)]
-                            (if-let [document (adaptation/upsert-input document)]
-                                    ; WARNING! DO NOT USE!
-                                    ; java.lang.IllegalArgumentException: Replacements can not be multi
-                                    (let [result (upsert! collection-name query document {:multi true})]
-                                         (mrt/acknowledged? result))))))))
+   (boolean (if-let [document (as-> document % (checking/upsert-input %)
+                                               (preparing/upsert-input collection-name % options)
+                                               (adaptation/upsert-input %))]
+                    (if-let [query (-> query checking/find-query adaptation/find-query)]
+                            ; WARNING! DO NOT USE!
+                            ; java.lang.IllegalArgumentException: Replacements can not be multi
+                            (let [result (upsert! collection-name query document {:multi true})]
+                                 (mrt/acknowledged? result)))))))
 
 
 
@@ -390,7 +397,7 @@
 
 (defn apply-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) document-id
+  ; @param (string) document-id
   ; @param (function) f
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
@@ -426,7 +433,7 @@
   (if-let [document-id (adaptation/document-id-input document-id)]
           (let [result (remove-by-id! collection-name document-id)]
                (if (mrt/acknowledged? result)
-                   (return document-id)))))
+                   (adaptation/document-id-output document-id)))))
 
 (defn- remove-ordered-document!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -441,7 +448,7 @@
           (do (reorder-following-documents! collection-name document-id {:operation :decrease})
               (let [result (remove-by-id! collection-name document-id)]
                    (if (mrt/acknowledged? result)
-                       (return document-id))))))
+                       (adaptation/document-id-output document-id))))))
 
 (defn remove-document!
   ; @param (string) collection-name

@@ -248,7 +248,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
-           [:item-editor/render-edit-copy-dialog!    extension-id item-namespace copy-id])))
+           [:item-editor/render-edit-copy-dialog! extension-id item-namespace copy-id])))
 
 
 

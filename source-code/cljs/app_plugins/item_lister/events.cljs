@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.2.8
-; Compatibility: x4.6.0
+; Version: v1.3.4
+; Compatibility: x4.6.1
 
 
 
@@ -18,6 +18,7 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
+              [x.app-ui.api      :as ui]
               [app-plugins.item-lister.engine :as engine]
               [app-plugins.item-lister.subs   :as subs]))
 
@@ -35,7 +36,6 @@
   ; @return (map)
   [db [_ extension-id _]]
   (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
-
 
 (defn toggle-select-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,20 +214,20 @@
   (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)]
        (r disable-items! db extension-id item-namespace selected-item-dexes)))
 
-(defn backup-items!
+(defn backup-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-ids]]
-  (letfn [(f [db item-id])]
-             ;(let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
-              ;     item    (get-in db [extension-id :item-lister/data-items item-dex])
-              ;    (assoc-in db [extension-id :item-lister/backup-items item-id] item)])]
-         (reduce f db item-ids)))
+  [db [_ extension-id item-namespace]]
+  (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)]
+       (letfn [(f [db item-dex]
+                  (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
+                        item    (get-in db [extension-id :item-lister/data-items item-dex])]
+                       (assoc-in db [extension-id :item-lister/backup-items item-id] item)))]
+              (reduce f db selected-item-dexes))))
 
 (defn clean-backup-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -240,16 +240,17 @@
   [db [_ extension-id item-namespace item-ids]]
   (update-in db [extension-id :item-lister/backup-items] map/remove-items item-ids))
 
-(defn- items-deleted
+(defn delete-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-ids]]
-  (r backup-items! db extension-id item-namespace item-ids))
+  [db [_ extension-id item-namespace]]
+  (as-> db % (r backup-selected-items!  % extension-id item-namespace)
+             (r disable-selected-items! % extension-id item-namespace)
+             (r ui/fake-random-process! %)))
 
 (defn use-filter!
   ; WARNING! NON-PUBLIC! DO NOT USE!

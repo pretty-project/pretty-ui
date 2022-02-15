@@ -18,8 +18,8 @@
   animation-name: x-slide-out-ltr }
 
 .x-app-bubbles--element[data-animation="update"] {
-  animation-duration: .25s;
-  animation-name: x-flash }
+  animation-duration: .15s;
+  animation-name: x-bump }
 
 /***** App bubbles *****/
 

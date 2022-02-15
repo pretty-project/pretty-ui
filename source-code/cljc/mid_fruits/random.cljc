@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v0.5.4
+; Version: v0.5.6
 
 
 
@@ -87,10 +87,10 @@
   ;
   ; @return (integer)
   [digits]
-  ; - A (rand) függvény kimenete egy lebegőpontos érték 0 és 1 között
-  ; - Ha pl. a digits értéke 3, ... akkor a generate-number fügvény visszatérési értéke
-  ;   egy 1 és 9.99 között érték szorozva 10 második hatványával, integer típusra alakítva.
-  (int (* (math/power 10 (dec digits)) (min 9.999 (inc (rand 9))))))
+  ; - A (-> 9 rand inc) függvény kimenete egy lebegőpontos érték 1 és 10 között
+  ; - A (generate-number n) fügvény visszatérési értéke egy 1 és 9.99 között érték szorozva
+  ;   10 (n - 1) hatványával, integer típusra alakítva.
+  (int (* (math/power 10 (dec digits)) (min 9.999 (-> 9 rand inc)))))
 
 
 
