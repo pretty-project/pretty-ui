@@ -77,6 +77,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(transfer-handler/reg-transfer! :core/transfer-app-build!
-                                {:data-f      (fn [_] (event-handler/subscribed [:core/get-app-build]))
-                                 :target-path [:core/build-handler :meta-items :app-build]})
+(transfer-handler/reg-transfer!
+  :core/transfer-app-build!
+  {:data-f      (fn [_] (event-handler/subscribed [:core/get-app-build]))
+   :target-path [:core/build-handler :meta-items :app-build]})

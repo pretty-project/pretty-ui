@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.10.17
 ; Description:
-; Version: v0.7.0
-; Compatibility: x4.5.2
+; Version: v0.7.8
+; Compatibility: x4.6.1
 
 
 
@@ -26,24 +26,37 @@
 
 (defn get-term
   ; @param (keyword) term-id
+  ; @param (keyword)(opt) language-id
   ;
-  ; @usage
-  ;  (r dictionary/get-term db :save!)
+  ; @example
+  ;  (r dictionary/get-term db :my-term)
+  ;  =>
+  ;  {:en "My term"}
   ;
-  ; @return (map)
-  [db [_ term-id]]
-  (get-in db (db/path :dictionary/terms term-id)))
+  ; @example
+  ;  (r dictionary/get-term db :my-term :en)
+  ;  =>
+  ;  "My term"
+  ;
+  ; @return (map or string)
+  [db [_ term-id language-id]]
+  (if language-id (get-in db (db/path :dictionary/terms term-id language-id))
+                  (get-in db (db/path :dictionary/terms term-id))))
 
 (defn term-exists?
   ; @param (keyword) term-id
+  ; @param (keyword)(opt) language-id
   ;
   ; @usage
-  ;  (r dictionary/term-exists? db :save!)
+  ;  (r dictionary/term-exists? db :my-term)
+  ;
+  ; @usage
+  ;  (r dictionary/term-exists? db :my-term :en)
   ;
   ; @return (boolean)
-  [db [_ term-id]]
-  (map/contains-key? (db/path :dictionary/terms)
-                     (param term-id)))
+  [db [_ term-id language-id]]
+  (if language-id (map/contains-key? (db/path :dictionary/terms term-id) language-id)
+                  (map/contains-key? (db/path :dictionary/terms)             term-id)))
 
 
 

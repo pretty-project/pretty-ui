@@ -107,8 +107,7 @@
   ;
   ; @return (map)
   [db [_ restart-target]]
-  (assoc-in db (db/path ::primary :restart-target)
-               (param restart-target)))
+  (assoc-in db (db/path ::primary :restart-target) restart-target))
 
 ; @usage
 ;  [:boot-loader/set-restart-target! "/my-route?var=value"]

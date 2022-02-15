@@ -5,7 +5,7 @@
 ; Created: 2021.04.11
 ; Description:
 ; Version: v1.6.0
-; Compatibility: x4.6.0
+; Compatibility: x4.6.1
 
 
 
@@ -14,6 +14,7 @@
 
 (ns x.mid-core.event-handler
     (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.format  :as format]
               [mid-fruits.map     :as map :refer [update-some]]
               [mid-fruits.random  :as random]
               [mid-fruits.string  :as string]

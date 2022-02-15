@@ -1,3 +1,4 @@
 
-{:test {:en "Test"
-        :hu "Teszt"}}
+{:my-project
+  {:en "My project"
+   :hu "Projektem"}}

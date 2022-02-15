@@ -26,7 +26,5 @@
 (def term-exists? engine/term-exists?)
 (def look-up      engine/look-up)
 (def looked-up    engine/looked-up)
-(def translate    engine/translate)
-(def translated   engine/translated)
 (def add-term!    engine/add-term!)
 (def add-terms!   engine/add-terms!)

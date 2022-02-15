@@ -15,6 +15,7 @@
 
 (ns x.boot-loader
     (:require [x.server-developer.api]
+              [x.server-dictionary.api]
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-views.api]
