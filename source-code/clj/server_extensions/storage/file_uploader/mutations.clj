@@ -66,11 +66,10 @@
                      (io/delete-file! tempfile)
                      (media/generate-thumbnail! generated-filename)
                      (engine/update-path-directories! env file-item +)
-                     (return file-item)))))
+                     (return                              file-item)))))
 
        ; Itt is ellenőrizni, kell a kapacitást, hogy ha egyszerre két feltöltés futna  párhuzamosan,
        ; akkor ne lehessen átlépni a max-ot
-
 
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,13 +78,10 @@
           (let [destination-path (get  destination-item :media/path)
                 file-path        (conj destination-path {:media/id destination-id})
                 files-data (request->files-data request)]
-               (println (str files-data))
-              (try
                (letfn [(f [o _ file-data]
                           (let [file-data (assoc file-data :file-path file-path)]
                                (conj o (upload-file-f env mutation-props file-data))))]
-                      (reduce-kv f [] files-data))
-               (catch Exception e (println (str e)))))))
+                      (reduce-kv f [] files-data)))))
 
 (defmutation upload-files!
              ; WARNING! NON-PUBLIC! DO NOT USE!
