@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.6.0
+; Version: v0.6.2
+; Compatibility: x4.6.1
 
 
 
@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-browser.effects
     (:require [x.app-core.api :as a :refer [r]]
+              [x.app-ui.api   :as ui]
               [app-plugins.item-browser.engine  :as engine]
               [app-plugins.item-browser.events  :as events]
               [app-plugins.item-browser.queries :as queries]
@@ -179,11 +180,11 @@
   ; @usage
   ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {;:display-progress? true
-                          :on-success [:item-browser/item-deleted extension-id item-namespace item-id]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                          :query      (r queries/get-delete-item-query db extension-id item-namespace item-id)}]))
+      {:db (r ui/fake-random-process! db)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-browser/item-deleted extension-id item-namespace item-id]
+                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                     :query      (r queries/get-delete-item-query db extension-id item-namespace item-id)}]}))
 
 (a/reg-event-fx
   :item-browser/item-deleted
@@ -192,7 +193,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
-  (fn [{:keys []} [_ extension-id item-namespace item-id]]))
+  ; @param (map) server-response
+  (fn [{:keys []} [_ extension-id item-namespace item-id _]]
+      {:dispatch-n [[:item-browser/render-item-deleted-dialog! extension-id item-namespace item-id]
+                    [:item-browser/reload-items!               extension-id item-namespace]]}))
 
 
 

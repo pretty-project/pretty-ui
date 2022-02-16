@@ -108,7 +108,7 @@
   ;
   ; @return (map)
   [db [_ extension-id editor-id]]
-  (get-in db [extension-id :value-editor/meta-items]))
+  (get-in db [extension-id :value-editor/meta-items editor-id]))
 
 
 

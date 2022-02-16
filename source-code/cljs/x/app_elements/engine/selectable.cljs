@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.27
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.6.0
+; Version: v0.8.6
+; Compatibility: x4.6.1
 
 
 
@@ -266,3 +266,20 @@
             value           (get-value-f option)]
            {:db       (r select-option! db input-id option)
             :dispatch (a/metamorphic-event<-params on-select-event value)})))
+
+(a/reg-event-fx
+  :elements/reg-select-keypress-events!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  (fn [{:keys [db]} [_ input-id]]
+      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:ui/close-popup! input-id]}]
+           {:dispatch-n [[:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]]})))
+
+(a/reg-event-fx
+  :elements/remove-select-keypress-events!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  (fn [{:keys [db]} [_ input-id]]
+      {:dispatch-n [[:environment/remove-keypress-event! ::on-escape-pressed]]}))

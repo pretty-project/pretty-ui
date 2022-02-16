@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (namespaced keywords in vector)
-(def ORDER-BY-OPTIONS [:modified-at/ascending :modified-at/descending :name/ascending :name/descending])
+(def ORDER-BY-OPTIONS [:modified-at/descending :modified-at/ascending :name/ascending :name/descending])
 
 
 

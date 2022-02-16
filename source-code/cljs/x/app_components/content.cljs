@@ -83,9 +83,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:content (keyword)
-  ;   :replacements (vector)(opt)
-  ;   :suffix (string)(opt)}
+  ;  {:content (keyword)}
   ;
   ; @return (string)
   [_ {:keys [content] :as context-props}]

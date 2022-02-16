@@ -29,7 +29,7 @@
 
 (defn header-cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id]
+  [_]
   [elements/button :header-cancel-button
                    {:preset :cancel-button :indent :both :keypress {:key-code 27}
                     :on-click [:ui/close-popup! :storage.media-picker/view]}])
@@ -37,18 +37,18 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [% @(a/subscribe [:item-browser/get-item-label :storage :media])]
+  (let [header-label @(a/subscribe [:item-browser/get-item-label :storage :media])]
        [elements/label ::header-label
-                       {:content %}]))
+                       {:content header-label}]))
 
 (defn header-select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id]
+  [_]
   (let [no-items-selected? @(a/subscribe [:storage.media-picker/no-items-selected?])]
        [elements/button :header-select-button
                         {:disabled? no-items-selected?
                          :preset :select-button :indent :both :keypress {:key-code 13}
-                         :on-click [:storage.media-picker/save-selected-items! picker-id]}]))
+                         :on-click [:storage.media-picker/save-selected-items!]}]))
 
 (defn header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,12 +60,13 @@
 
 (defn header-selection-bar-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id]
-  (let [% @(a/subscribe [:storage.media-picker/get-selection-props])]
-       [:<> [elements/label {:content {:content :n-items-selected :replacements [(:selected-item-count %)]}
+  [_]
+  (let [no-items-selected?  @(a/subscribe [:storage.media-picker/no-items-selected?])
+        selected-item-count @(a/subscribe [:storage.media-picker/get-selected-item-count])]
+       [:<> [elements/label {:content {:content :n-items-selected :replacements [selected-item-count]}
                              :color :muted :min-height :s :font-size :xs}]
-            [elements/icon-button {:color :default :preset :close :height :s :disabled? (:no-items-selected? %)
-                                   :on-click [:storage.media-picker/discard-selection! picker-id]}]]))
+            [elements/icon-button {:color :default :preset :close :height :s :disabled? no-items-selected?
+                                   :on-click [:storage.media-picker/discard-selection!]}]]))
 
 (defn header-selection-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,7 +76,7 @@
 
 (defn header-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id]
+  [_]
   [:div#item-lister--header--structure
     [menu-mode-header   :storage :media]
     [search-mode-header :storage :media]])
@@ -94,10 +95,10 @@
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [mime-type] :as item}]
-  (let [% @(a/subscribe [:storage.media-picker/get-media-item-props item-dex item])]
-       (case mime-type "storage/directory" [directory-item item-dex item {:icon :navigate_next}]
-                                           [file-item      item-dex item {:icon (if (:selected? %) :check_circle_outline :radio_button_unchecked)}])))
+  [_ _ _ {:keys [mime-type] :as media-item}]
+  (let [file-selected? @(a/subscribe [:storage.media-picker/file-selected? media-item])]
+       (case mime-type "storage/directory" [directory-item media-item {:icon :navigate_next}]
+                                           [file-item      media-item {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}])))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,13 +113,12 @@
 (defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [% @(a/subscribe [:storage.media-picker/get-element-props])]
+  (let [no-items-selected?  @(a/subscribe [:storage.media-picker/no-items-selected?])
+        selected-item-count @(a/subscribe [:storage.media-picker/get-selected-item-count])]
        [elements/label {:color :muted :min-height :s
-                        :content (cond (and multiple? (:no-items-selected? %))
-                                       :no-items-selected
-                                       (:no-items-selected? %)
-                                       :no-item-selected
-                                       :default {:content :n-items-selected :replacements [(:selected-item-count %)]})}]))
+                        :content (cond (and multiple? no-items-selected?) :no-items-selected
+                                       no-items-selected?                 :no-item-selected
+                                       :default {:content :n-items-selected :replacements [selected-item-count]})}]))
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

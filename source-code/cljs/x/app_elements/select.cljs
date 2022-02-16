@@ -477,4 +477,6 @@
                            {:body   [select-options-body options-id options-props]
                             :header (if (options-props->render-popup-header? options-props)
                                         [select-options-header options-id options-props])
+                            :initializer [:elements/reg-select-keypress-events!    options-id]
+                            :desctructor [:elements/remove-select-keypress-events! options-id]
                             :min-width :xs}])))

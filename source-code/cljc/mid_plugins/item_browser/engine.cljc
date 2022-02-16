@@ -258,6 +258,24 @@
                 (name item-namespace) "-browser")
            (name component-key)))
 
+(defn dialog-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-id
+  ;
+  ; @example
+  ;  (engine/dialog-id :my-extension :my-type :item-deleted)
+  ;  =>
+  ;  :my-extension.my-type-browser/item-deleted-dialog
+  ;
+  ; @return (namespaced keyword)
+  [extension-id item-namespace action-id]
+  (keyword (str (name extension-id)  "."
+                (name item-namespace) "-browser")
+           (str (name action-id)      "-dialog")))
+           
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

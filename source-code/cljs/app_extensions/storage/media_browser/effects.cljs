@@ -111,6 +111,13 @@
                     [:storage.media-browser/render-rename-file-dialog! file-item]]}))
 
 (a/reg-event-fx
+  :storage.media-browser/move-file!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ file-item]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:storage.media-browser/render-target-selector!]]}))
+
+(a/reg-event-fx
   :storage.media-browser/duplicate-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
@@ -124,7 +131,7 @@
 (a/reg-event-fx
   :storage.media-lister/item-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as media-item}]]
+  (fn [{:keys [db]} [_ _ {:keys [id mime-type] :as media-item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                           (if (r subs/media-browser-mode? db)
                                               [:storage.media-browser/render-file-menu! media-item]
@@ -133,7 +140,7 @@
 (a/reg-event-fx
   :storage.media-lister/item-right-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ item-dex {:keys [mime-type] :as media-item}]]
+  (fn [{:keys [db]} [_ _ {:keys [mime-type] :as media-item}]]
       (if (r subs/media-browser-mode? db)
           (case mime-type "storage/directory" [:storage.media-browser/render-directory-menu! media-item]
                                               [:storage.media-browser/render-file-menu!      media-item]))))

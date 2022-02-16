@@ -13,13 +13,13 @@
 
 (defn- client-item-secondary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-item]
-  (let [modified-at @(a/subscribe [:clients.client-lister/get-item-modified-at client-item])]
+  [{:keys [modified-at]}]
+  (let [modified-at @(a/subscribe [:activities/get-actual-timestamp modified-at])]
        [:div.clients--client-item--secondary-details [:div.clients--client-item--modified-at modified-at]]))
 
 (defn- client-item-primary-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [email-address first-name last-name] :as client-item}]
+  [{:keys [email-address first-name last-name] :as client-item}]
   (let [selected-language @(a/subscribe [:locales/get-selected-language])
         client-name        (locales/name->ordered-name first-name last-name selected-language)]
        [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     client-name]
@@ -27,18 +27,18 @@
 
 (defn- client-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex client-item]
-  [:div.clients--client-item--details [client-item-primary-details   item-dex client-item]
-                                      [client-item-secondary-details item-dex client-item]])
+  [client-item]
+  [:div.clients--client-item--details [client-item-primary-details   client-item]
+                                      [client-item-secondary-details client-item]])
 
 (defn- client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ item-dex client-item]
+  [_ _ _ client-item]
   [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
-                             [client-item-details item-dex client-item]])
+                             [client-item-details client-item]])
 
 
- 
+
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

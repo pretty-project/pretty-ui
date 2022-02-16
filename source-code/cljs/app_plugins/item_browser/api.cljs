@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.3.2
-; Compatibility: x4.6.0
+; Version: v0.3.6
+; Compatibility: x4.6.1
 
 
 
@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.api
-    (:require [app-plugins.item-browser.effects]
+    (:require [app-plugins.item-browser.dialogs]
+              [app-plugins.item-browser.effects]
               [app-plugins.item-browser.events]
               [app-plugins.item-browser.queries]
               [app-plugins.item-browser.engine :as engine]

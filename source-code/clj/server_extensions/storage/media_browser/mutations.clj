@@ -69,7 +69,8 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-id]}]
              {::pathom.co/op-name 'storage.media-browser/delete-item!}
-             (delete-items-f env {:item-ids [item-id]}))
+             (if (= [item-id] (delete-items-f env {:item-ids [item-id]}))
+                 (return item-id)))
 
 
 

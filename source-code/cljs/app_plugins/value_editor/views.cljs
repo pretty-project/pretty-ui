@@ -35,7 +35,7 @@
   ;   :value-path (item-path vector)}
   [extension-id editor-id]
   (let [editor-props @(a/subscribe [:value-editor/get-editor-props extension-id editor-id])]
-       (merge (select-keys editor-props [:label :modifier :validator])
+       (merge (select-keys editor-props [:initial-value :label :modifier :validator])
               {:auto-focus? true
                :min-width   :l
                :value-path  (:edit-path editor-props)})))
@@ -59,7 +59,6 @@
                         {:disabled? disable-save-button? :label save-button-label
                          :keypress  {:key-code 13 :required? true} :preset :close-button
                          :on-click  [:value-editor/save-value! extension-id editor-id]}]))
-
 
 (defn cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,7 +101,7 @@
           [:<> [elements/horizontal-separator {:size :l}]
                [elements/text                 {:content helper}]]))
 
-(defn body
+(defn editor-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -111,10 +110,20 @@
   ; @return (component)
   [extension-id editor-id]
   (let [field-props (editor-props->field-props extension-id editor-id)]
-       [:<> [elements/horizontal-separator {:size :l}]
-            [elements/text-field :value-editor/editor-field field-props]
-            [editor-helper extension-id editor-id]
-            [elements/horizontal-separator {:size :l}]]))
+       [elements/text-field :value-editor/editor-field field-props]))
+
+(defn body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (component)
+  [extension-id editor-id]
+  [:<> [elements/horizontal-separator {:size :l}]
+       [editor-field  extension-id editor-id]
+       [editor-helper extension-id editor-id]
+       [elements/horizontal-separator {:size :l}]])
 
 
 

@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (namespaced keywords in vector)
-(def DEFAULT-ORDER-BY-OPTIONS [:modified-at/ascending :modified-at/descending :name/ascending :name/descending])
+(def DEFAULT-ORDER-BY-OPTIONS [:modified-at/descending :modified-at/ascending :name/ascending :name/descending])
 
 ; @constant (integer)
 (def DEFAULT-DOWNLOAD-LIMIT 20)

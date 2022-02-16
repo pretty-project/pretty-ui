@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.31
 ; Description: Szöveg másolása a vágólapra
-; Version: v0.5.0
-; Compatibility: x4.6.0
+; Version: v0.5.2
+; Compatibility: x4.6.1
 
 
 
@@ -69,7 +69,7 @@
   ; @usage
   ;  [:tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
-      {:dispatch [:ui/blow-bubble! {:body :copied-to-clipboard}]
+      {:dispatch [:ui/blow-bubble! ::notification {:body :copied-to-clipboard}]
        :fx       [:tools/copy-to-clipboard! text]}))
 
 

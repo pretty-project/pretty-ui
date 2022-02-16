@@ -32,19 +32,19 @@
 
 (defn save-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id]]
+  [db _]
   (let [selected-items (get-in db [:storage :media-picker/data-items])
         value-path     (get-in db [:storage :media-picker/meta-items :value-path])]
        (assoc-in db value-path selected-items)))
 
 (defn discard-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id]]
+  [db _]
   (assoc-in db [:storage :media-picker/data-items] []))
 
 (defn load-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ picker-id {:keys [value-path] :as picker-props}]]
+  [db [_ _ {:keys [value-path] :as picker-props}]]
   (let [saved-selection (get-in db value-path)]
        (-> db (assoc-in [:storage :media-picker/data-items] saved-selection)
               (assoc-in [:storage :media-picker/meta-items] picker-props)
