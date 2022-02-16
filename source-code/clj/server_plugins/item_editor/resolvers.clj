@@ -14,12 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-editor.resolvers
-    (:require [mid-fruits.string    :as string]
-              [mid-fruits.keyword   :as keyword]
-              [mid-fruits.validator :as validator]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
-              [x.server-db.api      :as db]
+    (:require [mid-fruits.string  :as string]
+              [mid-fruits.keyword :as keyword]
+              [mongo-db.api       :as mongo-db]
+              [pathom.api         :as pathom]
+              [x.server-db.api    :as db]
               [com.wsscode.pathom3.connect.operation :refer [defresolver]]
               [server-plugins.item-editor.engine     :as engine]))
 
@@ -40,7 +39,7 @@
         all-documents     (mongo-db/get-all-documents  collection-name)
         suggestion-keys   (keyword/add-items-namespace item-namespace suggestion-keys)
         suggestion-values (db/get-specified-values     all-documents  suggestion-keys string/nonempty?)]
-       (validator/validate-data suggestion-values)))
+       (pathom/validate-data suggestion-values)))
 
 
 

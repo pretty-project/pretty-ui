@@ -1,8 +1,9 @@
 
 (ns pathom.api
-    (:require [pathom.env      :as env]
-              [pathom.query    :as query]
-              [pathom.register :as register]))
+    (:require [pathom.env       :as env]
+              [pathom.query     :as query]
+              [pathom.register  :as register]
+              [pathom.validator :as validator]))
 
 
 
@@ -22,3 +23,9 @@
 ; pathom.register
 (def reg-handler!  register/reg-handler!)
 (def reg-handlers! register/reg-handlers!)
+
+; pathom.validator
+(def validate-data        validator/validate-data)
+(def clean-validated-data validator/clean-validated-data)
+(def data-valid?          validator/data-valid?)
+(def data-invalid?        validator/data-invalid?)

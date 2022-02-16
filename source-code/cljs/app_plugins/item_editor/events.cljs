@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.events
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map :refer [dissoc-in]]
-              [mid-fruits.validator :as validator]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
-              [x.app-ui.api         :as ui]
+    (:require [mid-fruits.candy :refer [param return]]
+              [mid-fruits.map   :as map :refer [dissoc-in]]
+              [pathom.api       :as pathom]
+              [x.app-core.api   :as a :refer [r]]
+              [x.app-db.api     :as db]
+              [x.app-ui.api     :as ui]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]))
 
@@ -187,9 +187,9 @@
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
   (let [suggestions (get server-response :item-editor/get-item-suggestions)]
-       (if (validator/data-valid? suggestions)
+       (if (pathom/data-valid? suggestions)
            ; If the received suggestions is valid ...
-           (let [suggestions (validator/clean-validated-data suggestions)]
+           (let [suggestions (pathom/clean-validated-data suggestions)]
                 (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions))
            ; If the received suggestions is NOT valid ...
            (r set-error-mode! db extension-id item-namespace))))
@@ -205,11 +205,11 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
-       (if (validator/data-valid? document)
+       (if (pathom/data-valid? document)
            ; XXX#3907
            ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
            ; a letöltött dokumentumot
-           (let [document (-> document validator/clean-validated-data db/document->non-namespaced-document)]
+           (let [document (-> document pathom/clean-validated-data db/document->non-namespaced-document)]
                 (as-> db % (assoc-in % [extension-id :item-editor/data-items] document)
                            (r backup-current-item! % extension-id item-namespace)))
            ; If the received document is NOT valid ...

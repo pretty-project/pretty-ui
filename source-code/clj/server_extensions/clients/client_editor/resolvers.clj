@@ -1,9 +1,8 @@
 
 (ns server-extensions.clients.client-editor.resolvers
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.validator :as validator]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
+    (:require [mid-fruits.candy :refer [param return]]
+              [mongo-db.api     :as mongo-db]
+              [pathom.api       :as pathom]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
 
 
@@ -16,7 +15,7 @@
   [env _]
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id "clients" item-id)]
-               (validator/validate-data document))))
+               (pathom/validate-data document))))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

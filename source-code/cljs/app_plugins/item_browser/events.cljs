@@ -15,10 +15,10 @@
 
 (ns app-plugins.item-browser.events
     (:require [app-plugins.item-lister.events]
-              [mid-fruits.map       :refer [dissoc-in]]
-              [mid-fruits.validator :as validator]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
+              [mid-fruits.map :refer [dissoc-in]]
+              [pathom.api     :as pathom]
+              [x.app-core.api :as a :refer [r]]
+              [x.app-db.api   :as db]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-browser.subs   :as subs]))
 
@@ -108,11 +108,11 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
-       (if (validator/data-valid? document)
+       (if (pathom/data-valid? document)
            ; XXX#3907
            ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja
            ; a letöltött dokumentumot
-           (let [document    (->  document validator/clean-validated-data db/document->non-namespaced-document)
+           (let [document    (->  document pathom/clean-validated-data db/document->non-namespaced-document)
                  document-id (get document :id)]
                 (assoc-in db [extension-id :item-browser/data-items document-id] document))
            ; If the received document is NOT valid ...

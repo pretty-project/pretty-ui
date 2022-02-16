@@ -38,6 +38,13 @@
            (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    {:destination-id destination-id}]
                                  :create-directory! [:storage.directory-creator/load-creator! {:destination-id destination-id}]))))
 
+(a/reg-event-fx
+  :storage.media-browser/delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ {:keys [id]}]]
+      {:dispatch-n [;[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:item-browser/delete-item! :storage :media id]]}))
+
 
 
 ;; -- Directory-item effect events --------------------------------------------
@@ -66,13 +73,6 @@
   (fn [_ [_ directory-item]]
       {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     [:storage.media-browser/render-rename-directory-dialog! directory-item]]}))
-
-(a/reg-event-fx
-  :storage.media-browser/delete-directory!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [cofx [_ {:keys [id]}]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:item-browser/delete-item! :storage :media id]]}))
 
 
 
@@ -127,6 +127,11 @@
                                         :on-success [:item-browser/reload-items! :storage :media]
                                         :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]}]]}))
                                         ;:query (r queries/get-duplicate-item-query db file-item)}]]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :storage.media-lister/item-clicked

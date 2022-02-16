@@ -1,6 +1,8 @@
 
 #x4.6.1
 
+- A mid-fruits.validator névtér függvényei ezentúl a pathom.api névtér alól érhetők el
+
 - Az item-lister plugin {:order-by ...} tulajdonsága ezentúl nem elérhető
 
 - Az item-lister plugin {:order-by-options [...]} tulajdonsága megváltozott

@@ -12,69 +12,116 @@
 
 
 
-;; -- Delete item(s) mutations ------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @constant (ms)
+(def PERMANENT-DELETE-AFTER 60000)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; 1. Törli az elemek hivatkozásait, levonja az elemek méretét a felmenő mappák
+;    {:content-size ...} tulajdonságából, és frissíti a felmenő mappákat.
+; 2. x mp elteltével, ha NEM történt meg az elemek visszaállítása, akkor véglegesen
+;    törli az elemeket és azok leszármazott elemeit, illetve törli a fájlokat és bélyegképeket.
 
 (defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (letfn [; A delete-f függvény a file-item eltávolítása után 60 másodperccel kitörli a fájlt,
-          ; ha az eltelt idő alatt a file-item nem lett visszaállítva ...
-          (delete-f [{:keys [filename id]}] (if-not (mongo-db/document-exists? "storage" id)
-                                                    (engine/delete-file! filename)))]
-         (when-let [file-item (engine/get-item env item-id)]
-                   (engine/detach-item!             env parent-id file-item)
-                   (engine/remove-item!             env           file-item)
-                   (engine/update-path-directories! env           file-item -)
-                   (time/set-timeout! 60000 #(delete-f file-item))
-                   (return item-id))))
+  (when-let [{:keys [filename] :as file-item} (engine/get-item env item-id)]
+            (engine/remove-item! env file-item)
+            (engine/delete-file! filename)))
 
 (defn delete-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
   (when-let [directory-item (engine/get-item env item-id)]
-            (engine/detach-item!             env parent-id directory-item)
-            (engine/remove-item!             env           directory-item)
-            (engine/update-path-directories! env           directory-item)
+            (engine/remove-item! env directory-item)
             (let [items (get directory-item :media/items)]
                  (doseq [{:media/keys [id]} items]
                         (if-let [{:media/keys [mime-type]} (engine/get-item env id)]
                                 (let [mutation-props {:item-id id :parent-id item-id}]
                                      (case mime-type "storage/directory" (delete-directory-f env mutation-props)
-                                                                         (delete-file-f      env mutation-props))
-                                     (return item-id)))))))
+                                                                         (delete-file-f      env mutation-props))))))))
 
 (defn delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-id] :as mutation-props}]
-  (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
-          (case mime-type "storage/directory" (delete-directory-f env mutation-props)
-                                              (delete-file-f      env mutation-props))))
+  [env {:keys [item-id parent-id] :as mutation-props}]
+  (if-not (engine/item-attached? env parent-id {:media/id item-id})
+          (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
+                  (case mime-type "storage/directory" (delete-directory-f env mutation-props)
+                                                      (delete-file-f      env mutation-props)))))
 
-(defn delete-items-f
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn delete-item-temporary-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-ids]}]
-  (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
-       (letfn [(f [result item-id]
-                  (conj result (delete-item-f env {:item-id item-id :parent-id parent-id})))]
-              (reduce f [] item-ids))))
+  [env {:keys [item-id parent-id] :as mutation-props}]
+  (when-let [media-item (engine/get-item env item-id)]
+            (time/set-timeout! PERMANENT-DELETE-AFTER #(delete-item-f env mutation-props))
+            (engine/update-path-directories! env           media-item)
+            (engine/detach-item!             env parent-id media-item)
+            (return item-id)))
 
-(defmutation delete-items!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env mutation-props]
-             {::pathom.co/op-name 'storage.media-lister/delete-items!}
-             (delete-items-f env mutation-props))
+(defn delete-items-temporary-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env {:keys [item-ids parent-id]}]
+  (letfn [(f [result item-id]
+             (conj result (delete-item-temporary-f env {:item-id item-id :parent-id parent-id})))]
+         (reduce f [] item-ids)))
 
 (defmutation delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-id]}]
              {::pathom.co/op-name 'storage.media-browser/delete-item!}
-             (if (= [item-id] (delete-items-f env {:item-ids [item-id]}))
-                 (return item-id)))
+             (let [parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+                  (delete-item-temporary-f env {:item-id item-id :parent-id parent-id})))
+
+(defmutation delete-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'storage.media-lister/delete-items!}
+             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+                  (delete-items-temporary-f env {:item-ids item-ids :parent-id parent-id})))
 
 
 
-;; -- Duplicate item(s) mutations ---------------------------------------------
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn undo-delete-item-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env {:keys [item-id parent-id] :as mutation-props}])
+
+(defn undo-delete-items-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env {:keys [item-ids parent-id]}]
+  (letfn [(f [result item-id])]
+         (reduce f [] item-ids)))
+
+(defmutation undo-delete-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'storage.media-lister/undo-delete-item!}
+             (let [parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+                  (undo-delete-item-f env {:item-id item-id :parent-id parent-id})))
+
+(defmutation undo-delete-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'storage.media-lister/undo-delete-items!}
+             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+                  (undo-delete-items-f env {:item-ids item-ids :parent-id parent-id})))
+
+
+
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn duplicated-directory-prototype
@@ -176,6 +223,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-item! delete-items! duplicate-item! duplicate-items! update-item!])
+(def HANDLERS [delete-item! delete-items! duplicate-item! duplicate-items! undo-delete-item!
+               undo-delete-items! update-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -61,9 +61,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - {:content :content-props :subscriber} formula kivezetése ...
 
-- Hogyha a mid-fruits.validator kizárólag a pathom miatt lesz használva, akkor
-  beépülhet a pathom-ba!
-
 - mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
 
 - pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne

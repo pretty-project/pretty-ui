@@ -1,9 +1,8 @@
 
 (ns server-extensions.storage.media-browser.resolvers
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.validator :as validator]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
+    (:require [mid-fruits.candy :refer [param return]]
+              [mongo-db.api     :as mongo-db]
+              [pathom.api       :as pathom]
               [com.wsscode.pathom3.connect.operation      :refer [defresolver]]
               [server-extensions.storage.capacity-handler :as capacity-handler]
               [server-plugins.item-browser.api            :as item-browser]))
@@ -20,7 +19,7 @@
        (if-let [media-item (mongo-db/get-document-by-id "storage" item-id)]
                (if-let [capacity-details (capacity-handler/get-capacity-details)]
                        (let [media-item (merge media-item capacity-details)]
-                            (validator/validate-data media-item))))))
+                            (pathom/validate-data media-item))))))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

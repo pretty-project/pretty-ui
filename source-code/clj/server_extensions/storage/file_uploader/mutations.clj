@@ -79,10 +79,13 @@
           (let [destination-path (get  destination-item :media/path)
                 file-path        (conj destination-path {:media/id destination-id})
                 files-data (request->files-data request)]
+               (println (str files-data))
+              (try
                (letfn [(f [o _ file-data]
                           (let [file-data (assoc file-data :file-path file-path)]
                                (conj o (upload-file-f env mutation-props file-data))))]
-                      (reduce-kv f [] files-data)))))
+                      (reduce-kv f [] files-data))
+               (catch Exception e (println (str e)))))))
 
 (defmutation upload-files!
              ; WARNING! NON-PUBLIC! DO NOT USE!

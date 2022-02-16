@@ -26,12 +26,12 @@
   ;
   ; @return (org.bson.types.ObjectId object)
   [document-id]
-  (try (ObjectId. document-id)))
-       ; A document-id azonosító forrása egyes esetekben a böngésző címsorába írt url lehet,
-       ; ami lehetővé teszi, hogy ObjectId objektummá nem alakítható érték is átadódhat
-       ; a document-id-input függvénynek, ami feleslegesen jelenítene meg hibaüzeneteket,
-       ; ha a catch függvény is alkalmazva lenne!
-       ; (catch Exception e (println (str e "\n" {:document-id document-id}))
+  (try (ObjectId. document-id)
+      ; - A document-id azonosító forrása egyes esetekben a böngésző címsorába írt url lehet,
+      ;   ami lehetővé teszi, hogy ObjectId objektummá nem alakítható érték is átadódhat
+      ;   a document-id-input függvénynek, ami feleslegesen jelenítene meg hibaüzeneteket.
+      ;(catch Exception e (println (str e "\n" {:document-id document-id})))
+       (catch Exception e (return nil))))
 
 (defn document-id-output
   ; WARNING! NON-PUBLIC! DO NOT USE!
