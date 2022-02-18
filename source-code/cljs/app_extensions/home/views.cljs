@@ -63,6 +63,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-config-item db :app-title)]
-           {:dispatch-n [[:ui/restore-default-window-title!]
+           {:dispatch-n [[:ui/simulate-process!]
+                         [:ui/restore-default-window-title!]
                          [:ui/set-header-title! app-title]
                          [:home/render!]]})))

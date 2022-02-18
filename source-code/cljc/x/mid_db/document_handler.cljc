@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.28
 ; Description:
-; Version: v0.5.2
-; Compatibility: x4.1.5
+; Version: v0.5.6
+; Compatibility: x4.6.1
 
 
 
@@ -23,41 +23,6 @@
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn item-key->non-namespaced-item-key
-  ; @param (keyword) item-key
-  ;
-  ; @example
-  ;  (db/item-key->non-namespaced-item-key :bar)
-  ;  =>
-  ;  :bar
-  ;
-  ; @example
-  ;  (db/item-key->non-namespaced-item-key :foo/bar)
-  ;  =>
-  ;  :bar
-  ;
-  ; @return (keyword)
-  [item-key]
-  (keyword/get-name item-key))
-
-(defn item-key->namespaced-item-key
-  ; @param (keyword) item-key
-  ; @param (keyword) namespace
-  ;
-  ; @example
-  ;  (db/item-key->namespaced-item-key :foo :bar)
-  ;  =>
-  ;  :bar/foo
-  ;
-  ; @example
-  ;  (db/item-key->namespaced-item-key :bar/foo :bar)
-  ;  =>
-  ;  :bar/foo
-  ;
-  ; @return (keyword)
-  [item-key namespace]
-  (keyword/add-namespace namespace item-key))
 
 (defn document->namespace
   ; @param (map) document
@@ -89,25 +54,6 @@
   (some #(keyword/get-namespace %)
          (map/get-keys document)))
 
-(defn document->namespace?
-  ; @param (map) document
-  ; @param (keyword) namespace
-  ;
-  ; @example
-  ;  (db/document->namespace? {:bar "baz"} :foo)
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (db/document->namespace {:foo/bar "baz"} :foo)
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [document namespace]
-  (= (param namespace)
-     (document->namespace document)))
-
 (defn document->document-namespaced?
   ; @param (map) document
   ;
@@ -123,26 +69,7 @@
   ;
   ; @return (boolean)
   [document]
-  (let [document-namespace (document->namespace document)]
-       (some? document-namespace)))
-
-(defn document->document-non-namespaced?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->document-non-namespaced? {:foo "bar"})
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document->document-non-namespaced? {:foo/bar "baz"})
-  ;  =>
-  ;  false
-  ;
-  ; @return (boolean)
-  [document]
-  (let [document-namespaced? (document->document-namespaced? document)]
-       (not document-namespaced?)))
+  (-> document document->namespace some?))
 
 (defn document->namespaced-document
   ; @param (map) document
@@ -156,8 +83,7 @@
   ; @return (map)
   [document namespace]
   (letfn [(f [document item-key item-value]
-             (assoc document (item-key->namespaced-item-key item-key namespace)
-                             (param item-value)))]
+             (assoc document (keyword/add-namespace namespace item-key) item-value))]
          (reduce-kv f {} document)))
 
 (defn document->non-namespaced-document
@@ -171,33 +97,8 @@
   ; @return (map)
   [document]
   (letfn [(f [document item-key item-value]
-             (assoc document (item-key->non-namespaced-item-key item-key)
-                             (param item-value)))]
+             (assoc document (keyword/get-name item-key) item-value))]
          (reduce-kv f {} document)))
-
-(defn document-contains-key?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document-contains-key? {:bar "baz"} :bar)
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document-contains-key? {:foo/bar "baz"} :bar)
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (db/document-contains-key {:bar "baz"} :foo)
-  ;  =>
-  ;  false
-  ;
-  ; @return (map)
-  [document key]
-  (if-let [namespace (document->namespace document)]
-          (map/contains-key? document (keyword/add-namespace namespace :key))
-          (map/contains-key? document (param :key))))
 
 (defn assoc-document-value
   ; @param (map) document
@@ -217,8 +118,7 @@
   ; @return (map)
   [document k v]
   (if-let [namespace (document->namespace document)]
-          (assoc document (keyword/add-namespace namespace k)
-                          (param v))
+          (assoc document (keyword/add-namespace namespace k) v)
           (assoc document k v)))
 
 (defn dissoc-document-value
@@ -346,50 +246,3 @@
       (if (get    document :id)
           (return document)
           (assoc  document :id (random/generate-string)))))
-
-(defn document->item-value
-  ; @param (map) document
-  ; @param (keyword) item-key
-  ;
-  ; @usage
-  ;  (db/document->item-value {:foo/bar "baz"} :bar)
-  ;  =>
-  ;  "baz"
-  ;
-  ; @usage
-  ;  (db/document->item-value {:foo/bar "baz"} :foo/bar)
-  ;  =>
-  ;  "baz"
-  ;
-  ; @return (*)
-  [document item-key]
-  (if-let [namespace (document->namespace document)]
-          (get document (item-key->namespaced-item-key     item-key namespace))
-          (get document (item-key->non-namespaced-item-key item-key))))
-
-(defn document->item-key
-  ; @param (map) document
-  ; @param (keyword) item-key
-  ;
-  ; @example
-  ;  (db/document->item-key {:id 1} :id)
-  ;  =>
-  ;  :id
-  ;
-  ; @example
-  ;  (db/document->item-key {:id 1} :foo/id)
-  ;  =>
-  ;  :id
-  ;
-  ; @example
-  ;  (db/document->item-key {:foo/id 1} :id)
-  ;  =>
-  ;  :foo/id
-  ;
-  ; @return (keyword)
-  ;  A dokumentum névterével látja el a megadott item-key paraméter értékét
-  [document item-key]
-  (if (document->document-namespaced? document)
-      (let [namespace (document->namespace document)]
-           (keyword/add-namespace namespace item-key))
-      (keyword/get-name item-key)))

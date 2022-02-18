@@ -15,6 +15,27 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-file-prop
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id file-dex prop-key]]
+  (get-in db [:storage :file-uploader/data-items uploader-id file-dex prop-key]))
+
+(defn get-file-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id]]
+  (r db/get-item-count db [:storage :file-uploader/data-items uploader-id]))
+
+(defn get-files-size
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id]]
+  (get-in db [:storage :file-uploader/meta-items uploader-id :files-size]))
+
+(defn all-files-cancelled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id]]
+  (letfn [(f [{:keys [cancelled?]}] (not cancelled?))]
+         (not (some f (get-in db [:storage :file-uploader/data-items uploader-id])))))
+
 (defn get-non-cancelled-files
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
@@ -30,16 +51,10 @@
         file-selector       (dom/get-element-by-id "storage--file-selector")]
        (dom/file-selector->form-data file-selector non-cancelled-files)))
 
-(defn all-files-cancelled?
+(defn capacity-limit-exceeded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (letfn [(f [{:keys [cancelled?]}] (not cancelled?))]
-         (not (some f (get-in db [:storage :file-uploader/data-items uploader-id])))))
-
-(defn storage-capacity-limit-exceeded?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id]]
-  (let [storage-free-capacity (r capacity-handler/get-storage-free-capacity db)
+  (let [storage-free-capacity (r capacity-handler/get-free-capacity db)
         upload-size           (get-in db [:storage :file-uploader/meta-items uploader-id :files-size])]
        (>= upload-size storage-free-capacity)))
 
@@ -58,24 +73,11 @@
                   (r sync/request-active? db request-id)))]
          (some f (get-in db [:storage :file-uploader/meta-items]))))
 
-(defn get-notification-props
+(defn get-uploader-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [meta-items (get-in db [:storage :file-uploader/meta-items])]
-       {:uploader-ids (-> meta-items map/get-keys vector/reverse-items)}))
-
-(a/reg-sub :storage.file-uploader/get-notification-props get-notification-props)
-
-(defn get-uploader-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id]]
-  (let [request-id     (engine/request-id uploader-id)
-        uploader-props (get-in db [:storage :file-uploader/meta-items uploader-id])]
-       (merge uploader-props {:files-uploaded?  (r sync/request-successed? db request-id)
-                              :request-sent?    (r sync/request-sent?      db request-id)
-                              :request-aborted? (r sync/request-aborted?   db request-id)})))
-
-(a/reg-sub :storage.file-uploader/get-uploader-props get-uploader-props)
+       (-> meta-items map/get-keys vector/reverse-items)))
 
 (defn get-uploader-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,31 +85,31 @@
   (let [request-id (engine/request-id uploader-id)]
        (r sync/get-request-progress db request-id)))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/get-file-prop get-file-prop)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/get-file-count get-file-count)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/get-files-size get-files-size)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/all-files-cancelled? all-files-cancelled?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/capacity-limit-exceeded? capacity-limit-exceeded?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/max-upload-size-reached? max-upload-size-reached?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/get-uploader-ids get-uploader-ids)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.file-uploader/get-uploader-progress get-uploader-progress)
-
-(defn get-file-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id file-dex]]
-  (get-in db [:storage :file-uploader/data-items uploader-id file-dex]))
-
-(a/reg-sub :storage.file-uploader/get-file-props get-file-props)
-
-(defn get-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id]]
-  {:files-size                       (get-in db [:storage :file-uploader/meta-items uploader-id :files-size])
-   :all-files-cancelled?             (r all-files-cancelled?             db uploader-id)
-   :max-upload-size-reached?         (r max-upload-size-reached?         db uploader-id)
-   :storage-capacity-limit-exceeded? (r storage-capacity-limit-exceeded? db uploader-id)
-   :max-upload-size                  (r capacity-handler/get-max-upload-size       db)
-   :storage-free-capacity            (r capacity-handler/get-storage-free-capacity db)})
-
-(a/reg-sub :storage.file-uploader/get-header-props get-header-props)
-
-(defn get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db [_ uploader-id]]
-  {:all-files-cancelled? (r all-files-cancelled? db uploader-id)
-   :file-count           (r db/get-item-count    db [:storage :file-uploader/data-items uploader-id])})
-
-(a/reg-sub :storage.file-uploader/get-body-props get-body-props)

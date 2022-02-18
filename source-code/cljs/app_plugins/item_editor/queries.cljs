@@ -6,7 +6,7 @@
 ; Created: 2021.11.21
 ; Description:
 ; Version: v0.6.8
-; Compatibility: x4.6.0
+; Compatibility: x4.6.1
 
 
 
@@ -16,6 +16,7 @@
 (ns app-plugins.item-editor.queries
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
+              [x.app-db.api     :as db]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]))
 
@@ -95,3 +96,19 @@
   (let [mutation-name (engine/mutation-name       extension-id item-namespace :duplicate)
         exported-item (r subs/export-copy-item db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~exported-item)]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request-item-response-valid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        document    (get server-response resolver-id)
+        suggestions (get server-response :item-editor/get-item-suggestions)]
+       (and (or (map? suggestions)
+                (not (r subs/download-suggestions? db extension-id item-namespace)))
+            (or (db/document->document-namespaced? document)
+                (not (r subs/download-item?        db extension-id item-namespace))))))

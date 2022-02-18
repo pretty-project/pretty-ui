@@ -79,8 +79,10 @@
            [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true
                                ; XXX#4057
-                               :on-stalled [:item-lister/receive-reloaded-items! extension-id item-namespace]
-                               :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
+                               :on-stalled   [:item-lister/receive-reloaded-items! extension-id item-namespace]
+                               :on-failure   [:item-lister/set-error-mode!         extension-id item-namespace]
+                               :query        (r queries/get-request-items-query       db extension-id item-namespace)
+                               :validator-f #(r queries/request-items-response-valid? db extension-id item-namespace %)}])))
 
 
 
@@ -140,8 +142,10 @@
                               ; hogy a request idle-timeout ideje alatt az újonnan letöltött
                               ; dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
                               ; felirat még megjelenik a lista végén.
-                              :on-stalled [:item-lister/receive-items!          extension-id item-namespace]
-                              :query      (r queries/get-request-items-query db extension-id item-namespace)}])))
+                              :on-stalled   [:item-lister/receive-items!  extension-id item-namespace]
+                              :on-failure   [:item-lister/set-error-mode! extension-id item-namespace]
+                              :query        (r queries/get-request-items-query       db extension-id item-namespace)
+                              :validator-f #(r queries/request-items-response-valid? db extension-id item-namespace %)}])))
 
 (a/reg-event-fx
   :item-lister/receive-items!

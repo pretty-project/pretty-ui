@@ -417,6 +417,9 @@
 (a/reg-event-db :item-lister/unselect-all-items! unselect-all-items!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -121,8 +121,11 @@
                           ; XXX#4057
                           ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
                           ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
-                          :on-stalled [:item-editor/receive-item! extension-id item-namespace]
-                          :query      (r queries/get-request-item-query db extension-id item-namespace)}]))
+                          :on-stalled   [:item-editor/receive-item!   extension-id item-namespace]
+                          :on-failure   [:item-editor/set-error-mode! extension-id item-namespace]
+                          :query        (r queries/get-request-item-query       db extension-id item-namespace)
+                          :validator-f #(r queries/request-item-response-valid? db extension-id item-namespace %)}]))
+
 (a/reg-event-fx
   :item-editor/load-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

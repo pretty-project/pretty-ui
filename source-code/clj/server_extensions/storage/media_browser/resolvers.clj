@@ -18,8 +18,7 @@
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [media-item (mongo-db/get-document-by-id "storage" item-id)]
                (if-let [capacity-details (capacity-handler/get-capacity-details)]
-                       (let [media-item (merge media-item capacity-details)]
-                            (pathom/validate-data media-item))))))
+                       (merge media-item capacity-details)))))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

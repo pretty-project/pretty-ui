@@ -1,6 +1,10 @@
 
 #x4.6.1
 
+- A sync/send-request esemény ezentól fogadja a {:validator-f ...} függvényt
+
+- A pathom.validator névtér függvényei ezentúl nem elérhetők és nem szükséges őket alkalmazni
+
 - A mid-fruits.validator névtér függvényei ezentúl a pathom.api névtér alól érhetők el
 
 - Az item-lister plugin {:order-by ...} tulajdonsága ezentúl nem elérhető

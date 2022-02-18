@@ -43,7 +43,6 @@
 (def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
 (def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
 (def trim-collection                        collection-handler/trim-collection)
-(def sort-collection                        collection-handler/sort-collection)
 (def filter-documents                       collection-handler/filter-documents)
 (def filter-document                        collection-handler/filter-document)
 (def match-documents                        collection-handler/match-documents)
@@ -113,15 +112,10 @@
 (def trim-partition!                   data-range-handler/trim-partition!)
 
 ; x.server-db.document-handler
-(def item-key->non-namespaced-item-key  document-handler/item-key->non-namespaced-item-key)
-(def item-key->namespaced-item-key      document-handler/item-key->namespaced-item-key)
 (def document->namespace                document-handler/document->namespace)
-(def document->namespace?               document-handler/document->namespace?)
 (def document->document-namespaced?     document-handler/document->document-namespaced?)
-(def document->document-non-namespaced? document-handler/document->document-non-namespaced?)
 (def document->namespaced-document      document-handler/document->namespaced-document)
 (def document->non-namespaced-document  document-handler/document->non-namespaced-document)
-(def document-contains-key?             document-handler/document-contains-key?)
 (def assoc-document-value               document-handler/assoc-document-value)
 (def dissoc-document-value              document-handler/dissoc-document-value)
 (def get-document-value                 document-handler/get-document-value)
@@ -129,8 +123,6 @@
 (def document->unidentified-document    document-handler/document->unidentified-document)
 (def document->pure-document            document-handler/document->pure-document)
 (def document->identified-document      document-handler/document->identified-document)
-(def document->item-value               document-handler/document->item-value)
-(def document->item-key                 document-handler/document->item-key)
 
 ; x.server-db.engine
 (def item-path->cofx-path engine/item-path->cofx-path)

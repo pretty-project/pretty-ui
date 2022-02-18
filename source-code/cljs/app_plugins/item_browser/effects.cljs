@@ -136,8 +136,10 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-success [:item-browser/receive-item!         extension-id item-namespace]
-                          :query      (r queries/get-request-item-query db extension-id item-namespace)}]))
+                         {:on-failure   [:item-browser/set-error-mode! extension-id item-namespace]
+                          :on-success   [:item-browser/receive-item!   extension-id item-namespace]
+                          :query        (r queries/get-request-item-query       db extension-id item-namespace)
+                          :validator-f #(r queries/request-item-response-valid? db extension-id item-namespace %)}]))
 
 (a/reg-event-fx
   :item-browser/receive-item!

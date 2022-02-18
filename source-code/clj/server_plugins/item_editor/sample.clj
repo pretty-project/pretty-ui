@@ -21,9 +21,7 @@
   ; @return (namespaced map)
   [env _]
   (let [item-id (pathom/env->param env :item-id)]
-       (if-let [document (mongo-db/get-document-by-id "my-collection" item-id)]
-               ; XXX#6074
-               (pathom/validate-data document))))
+       (mongo-db/get-document-by-id "my-collection" item-id)))
 
 (defresolver get-my-type-item
              ; @param (map) env

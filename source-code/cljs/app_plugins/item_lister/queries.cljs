@@ -124,3 +124,17 @@
   [db [_ extension-id item-namespace copy-ids]]
   (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-ids copy-ids})]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request-items-response-valid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ [_ extension-id item-namespace server-response]]
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        document-count (get-in server-response [resolver-id :document-count])
+        documents      (get-in server-response [resolver-id :documents])]
+       (and (integer? document-count)
+            (vector?  documents))))

@@ -280,7 +280,8 @@
   ; @return (namespaced maps in vector)
   [collection-name pipeline]
   (if-let [documents (aggregation/process collection-name pipeline)]
-          (vector/->items documents #(adaptation/find-output %))))
+          (vector/->items documents #(adaptation/find-output %))
+          (return [])))
 
 (defn count-documents-by-pipeline
   ; @param (string) collection-name
@@ -295,4 +296,5 @@
   ; @return (integer)
   [collection-name pipeline]
   (if-let [documents (aggregation/process collection-name pipeline)]
-          (count documents)))
+          (count  documents)
+          (return 0)))

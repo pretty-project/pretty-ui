@@ -165,7 +165,8 @@
   ;
   ; @return (string)
   [n]
-  (str "$FUNCTION"))
+ ;(str "$FUNCTION")
+  (str n))
 
 (defn float->string
   ; @param (float) n
@@ -205,8 +206,9 @@
   ; @param (symbol) n
   ;
   ; @return (string)
-  [_]
-  (str "$SYMBOL"))
+  [n]
+ ;(str "$SYMBOL")
+  (str n))
 
 (defn mixed->string
   ; <pre> HTML-tag segít human-readable formátumként megjeleníteni a mixed->string

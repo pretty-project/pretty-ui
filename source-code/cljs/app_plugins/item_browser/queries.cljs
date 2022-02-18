@@ -15,6 +15,7 @@
 
 (ns app-plugins.item-browser.queries
     (:require [x.app-core.api :as a :refer [r]]
+              [x.app-db.api   :as db]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-browser.subs   :as subs]))
 
@@ -46,3 +47,15 @@
   [db [_ extension-id item-namespace item-id]]
   (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)]
        [:debug `(~(symbol mutation-name) ~{:item-id item-id})]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request-item-response-valid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ [_ extension-id item-namespace server-response]]
+  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+        document    (get server-response resolver-id)]
+       (db/document->document-namespaced? document)))

@@ -59,9 +59,10 @@
             form-data (r subs/get-form-data             db uploader-id)]
            {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
                          [:sync/send-query! (engine/request-id uploader-id)
-                                            {:body       (dom/merge-to-form-data! form-data {:query query})
-                                             :on-success [:storage.file-uploader/progress-successed uploader-id]
-                                             :on-failure [:storage.file-uploader/progress-failured  uploader-id]}]]})))
+                                            {:body         (dom/merge-to-form-data! form-data {:query query})
+                                             :on-success   [:storage.file-uploader/progress-successed uploader-id]
+                                             :on-failure   [:storage.file-uploader/progress-failured  uploader-id]
+                                             :validator-f #(r queries/upload-files-response-valid? db uploader-id %)}]]})))
 
 (a/reg-event-fx
   :storage.file-uploader/files-selected-to-upload
@@ -84,8 +85,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       {; XXX#5087
-       ; Az egy feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt
-       :dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
+       ; Az egyes feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt,
+       ; így a felhasználónak van ideje észlelni a visszajelzést.
+       :dispatch-later [{:ms 8000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
        :dispatch [:item-browser/reload-items! :storage :media]}))
 
 (a/reg-event-fx
@@ -93,7 +95,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       {; XXX#5087
-       :dispatch-later [{:ms 3000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]}))
+       :dispatch-later [{:ms 8000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]}))
 
 (a/reg-event-fx
   :storage.file-uploader/end-uploader!

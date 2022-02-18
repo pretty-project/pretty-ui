@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.01.21
 ; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.5
+; Version: v0.4.6
+; Compatibility: x4.6.1
 
 
 
@@ -35,6 +35,7 @@
 (def request-successed?    request-handler/request-successed?)
 (def request-failured?     request-handler/request-failured?)
 (def request-aborted?      request-handler/request-aborted?)
+(def request-resent?       request-handler/request-resent?)
 (def listening-to-request? request-handler/listening-to-request?)
 (def get-request-state     request-handler/get-request-state)
 

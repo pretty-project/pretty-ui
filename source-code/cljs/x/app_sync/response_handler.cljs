@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v1.1.4
-; Compatibility: x4.5.7
+; Version: v1.1.8
+; Compatibility: x4.6.1
 
 
 
@@ -14,10 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.response-handler
-    (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.mixed :as mixed]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.mixed  :as mixed]
+              [mid-fruits.reader :as reader]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]))
 
 
 
@@ -50,6 +51,37 @@
   [db [_ request-id]]
   (let [response-action (get-in db (db/path :sync/requests request-id :response-action))]
        (= response-action :save)))
+
+(defn request-response-invalid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (string) server-response-body
+  ;  "{...}"
+  ;
+  ; @return (boolean)
+  [db [_ request-id server-response-body]]
+  ; A sikeres HTTP státusz-kódtól függetlenül ha a szerver válasza a validator-f függvény szerint
+  ; nem megfelelő, akkor az on-success esemény helyett az on-failure esemény fog megtörténni ...
+  (boolean (if-let [validator-f (get-in db (db/path :sync/requests request-id :validator-f))]
+                   (-> server-response-body reader/string->mixed validator-f not))))
+
+(defn get-invalid-server-response
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) request-id
+  ; @param (string) server-response-body
+  ;  "{...}"
+  ;
+  ; @return (map)
+  ;  {:failure (keyword)
+  ;   :response (string)
+  ;   :validator-f (function)}
+  [db [_ request-id server-response-body]]
+  (let [validator-f (get-in db (db/path :sync/requests request-id :validator-f))]
+       {:failure     :invalid
+        :response    server-response-body
+        :validator-f validator-f}))
 
 
 

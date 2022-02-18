@@ -12,52 +12,59 @@
 
 (defn- abort-progress-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id {:keys [files-uploaded? request-aborted?]}]
-  (let [request-id (engine/request-id uploader-id)]
-       (if-not (or files-uploaded? request-aborted?)
+  [uploader-id]
+  (let [request-id         (engine/request-id uploader-id)
+        files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
+        request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
+        request-failured? @(a/subscribe [:sync/request-failured?  request-id])]
+       (if-not (or files-uploaded? request-aborted? request-failured?)
                [elements/icon-button {:tooltip :abort! :preset :close :height :l
                                       :on-click [:sync/abort-request! request-id]}])))
 
 (defn- progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id _]
+  [uploader-id]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
-  ; változása ne kényszerítse a többi komponenst sokszoros újra renderelődésre!
-  (let [uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])]
-       [elements/line-diagram {:indent :both :sections [{:color :primary   :value        uploader-progress}
+  ; sokszoros változása ne kényszerítse a többi komponenst újra renderelődésre!
+  (let [request-id         (engine/request-id uploader-id)
+        uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])
+        request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
+        request-failured? @(a/subscribe [:sync/request-failured?  request-id])
+        line-color (cond request-aborted? :muted request-failured? :warning :default :primary)]
+       [elements/line-diagram {:indent :both :sections [{:color line-color :value        uploader-progress}
                                                         {:color :highlight :value (- 100 uploader-progress)}]}]))
 
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [file-count files-size files-uploaded? request-aborted? uploaded-size]}]
-  (let [progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
-        label          (cond files-uploaded? :files-uploaded request-aborted? :aborted :else progress-label)]
+  [uploader-id]
+  (let [request-id         (engine/request-id uploader-id)
+        files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
+        request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
+        request-failured? @(a/subscribe [:sync/request-failured?  request-id])
+        file-count        @(a/subscribe [:storage.file-uploader/get-file-count uploader-id])
+        progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
+        label (cond files-uploaded? :files-uploaded request-aborted? :aborted request-failured? :file-upload-failure :default progress-label)]
        [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left :min-height :l}]))
-
-(defn- progress-state-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id {:keys [request-sent?] :as uploader-props}]
-  (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
-                         [elements/row {:content [:<> [progress-label        uploader-id uploader-props]
-                                                      [abort-progress-button uploader-id uploader-props]]
-                                        :horizontal-align :space-between}]
-                         [:div {:style {:width "100%"}}
-                               [progress-diagram uploader-id uploader-props]]
-                         [elements/horizontal-separator {:size :xs}]]))
 
 (defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  [components/subscriber uploader-id
-                         {:render-f #'progress-state-structure
-                          :subscriber [:storage.file-uploader/get-uploader-props uploader-id]}])
+  (let [request-id     (engine/request-id uploader-id)
+        request-sent? @(a/subscribe [:sync/request-sent? request-id])]
+       (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
+                              [elements/row {:content [:<> [progress-label        uploader-id]
+                                                           [abort-progress-button uploader-id]]
+                                             :horizontal-align :space-between}]
+                              [:div {:style {:width "100%"}}
+                                    [progress-diagram uploader-id]]
+                              [elements/horizontal-separator {:size :xs}]])))
 
 (defn- progress-list
   ; WARNING!
   [dialog-id]
-  (let [% @(a/subscribe [:storage.file-uploader/get-notification-props])]
+  (let [uploader-ids @(a/subscribe [:storage.file-uploader/get-uploader-ids])]
        (reduce #(conj %1 ^{:key %2} [progress-state %2])
-                [:<>] (:uploader-ids %))))
+                [:<>] uploader-ids)))
 
 (defn- progress-notification-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,7 +80,6 @@
 (a/reg-event-fx
   :storage.file-uploader/render-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ _]
-      [:ui/blow-bubble! :storage.file-uploader/progress-notification
-                        {:body #'progress-notification-body
-                         :autopop? false :user-close? false}]))
+  [:ui/blow-bubble! :storage.file-uploader/progress-notification
+                    {:body #'progress-notification-body
+                     :autopop? false :user-close? false}])

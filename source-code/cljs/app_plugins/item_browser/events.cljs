@@ -16,7 +16,6 @@
 (ns app-plugins.item-browser.events
     (:require [app-plugins.item-lister.events]
               [mid-fruits.map :refer [dissoc-in]]
-              [pathom.api     :as pathom]
               [x.app-core.api :as a :refer [r]]
               [x.app-db.api   :as db]
               [app-plugins.item-browser.engine :as engine]
@@ -108,15 +107,12 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
-       (if (pathom/data-valid? document)
-           ; XXX#3907
-           ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja
-           ; a letöltött dokumentumot
-           (let [document    (->  document pathom/clean-validated-data db/document->non-namespaced-document)
-                 document-id (get document :id)]
-                (assoc-in db [extension-id :item-browser/data-items document-id] document))
-           ; If the received document is NOT valid ...
-           (r set-error-mode! db extension-id item-namespace))))
+       ; XXX#3907
+       ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja
+       ; a letöltött dokumentumot
+       (let [document    (db/document->non-namespaced-document document)
+             document-id (get document :id)]
+            (assoc-in db [extension-id :item-browser/data-items document-id] document))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -141,3 +137,11 @@
   (as-> db % (r reset-browser!         % extension-id item-namespace)
              (r store-current-item-id! % extension-id item-namespace browser-props)
              (r load-lister!           % extension-id item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-browser/set-error-mode! set-error-mode!)

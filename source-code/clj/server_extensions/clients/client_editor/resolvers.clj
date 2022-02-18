@@ -14,8 +14,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
   (let [item-id (pathom/env->param env :item-id)]
-       (if-let [document (mongo-db/get-document-by-id "clients" item-id)]
-               (pathom/validate-data document))))
+       (mongo-db/get-document-by-id "clients" item-id)))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.06.09
 ; Description:
-; Version: v0.5.8
-; Compatibility: x4.5.6
+; Version: v0.6.2
+; Compatibility: x4.6.1
 
 
 
@@ -107,7 +107,8 @@
   ;    Only w/o {:body {...}}
   ;   :target-path (item-path vector)(opt)
   ;   :uri (string)
-  ;    Default: DEFAULT-URI}
+  ;    Default: DEFAULT-URI
+  ;   :validator-f (function)(opt)}
   ;
   ; @usage
   ;  [:sync/send-query! {...}]

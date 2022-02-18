@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- x.app-config.edn :css-paths legyen külön vezérelve az app.js site.js stb
+
 - Ha a szerver-oldalon müködik a dispatch-later, akkor leválthatja a dispatch-tick-et
   a boot-loader.clj-ben és aztán a dispatch-tick törölhető
 

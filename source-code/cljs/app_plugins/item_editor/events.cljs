@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v1.3.4
-; Compatibility: x4.6.0
+; Version: v1.4.0
+; Compatibility: x4.6.1
 
 
 
@@ -16,7 +16,6 @@
 (ns app-plugins.item-editor.events
     (:require [mid-fruits.candy :refer [param return]]
               [mid-fruits.map   :as map :refer [dissoc-in]]
-              [pathom.api       :as pathom]
               [x.app-core.api   :as a :refer [r]]
               [x.app-db.api     :as db]
               [x.app-ui.api     :as ui]
@@ -187,12 +186,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
   (let [suggestions (get server-response :item-editor/get-item-suggestions)]
-       (if (pathom/data-valid? suggestions)
-           ; If the received suggestions is valid ...
-           (let [suggestions (pathom/clean-validated-data suggestions)]
-                (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions))
-           ; If the received suggestions is NOT valid ...
-           (r set-error-mode! db extension-id item-namespace))))
+       (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions)))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -205,15 +199,12 @@
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
         document    (get server-response resolver-id)]
-       (if (pathom/data-valid? document)
-           ; XXX#3907
-           ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
-           ; a letöltött dokumentumot
-           (let [document (-> document pathom/clean-validated-data db/document->non-namespaced-document)]
-                (as-> db % (assoc-in % [extension-id :item-editor/data-items] document)
-                           (r backup-current-item! % extension-id item-namespace)))
-           ; If the received document is NOT valid ...
-           (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))))
+       ; XXX#3907
+       ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
+       ; a letöltött dokumentumot
+       (let [document (db/document->non-namespaced-document document)]
+            (as-> db % (assoc-in % [extension-id :item-editor/data-items] document)
+                       (r backup-current-item! % extension-id item-namespace)))))
 
 (defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -315,3 +306,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-editor/receive-item! receive-item!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-editor/set-error-mode! set-error-mode!)

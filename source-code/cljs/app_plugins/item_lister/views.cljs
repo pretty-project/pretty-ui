@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.21
 ; Description:
-; Version: v0.9.2
+; Version: v0.9.6
 ; Compatibility: x4.6.1
 
 
@@ -287,12 +287,13 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [items-selectable? @(a/subscribe [:item-lister/items-selectable? extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+        items-selectable? @(a/subscribe [:item-lister/items-selectable? extension-id item-namespace])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        (if items-selectable? [elements/icon-button :item-lister/toggle-select-mode-button
                                                    {:preset :select-mode :tooltip :select
-                                                    :disabled? (or lister-disabled? no-items-to-show?)
+                                                    :disabled? (or error-mode? lister-disabled? no-items-to-show?)
                                                     :on-click  [:item-lister/toggle-select-mode! extension-id item-namespace]}])))
 
 (defn toggle-reorder-mode-button
@@ -304,12 +305,13 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [items-sortable?   @(a/subscribe [:item-lister/items-sortable?   extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+        items-sortable?   @(a/subscribe [:item-lister/items-sortable?   extension-id item-namespace])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        (if items-sortable? [elements/icon-button :item-lister/toggle-reorder-mode-button
                                                  {:preset :reorder-mode :tooltip :reorder
-                                                  :disabled? (or lister-disabled? no-items-to-show?)
+                                                  :disabled? (or error-mode? lister-disabled? no-items-to-show?)
                                                   :on-click  [:item-lister/toggle-reorder-mode! extension-id item-namespace]}])))
 
 (defn sort-items-button
@@ -321,11 +323,12 @@
   ;
   ; @return (component)
   [extension-id item-namespace]
-  (let [lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+        lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        [elements/select :item-lister/sort-items-button
                         {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
-                         :disabled?    (or lister-disabled? no-items-to-show?)
+                         :disabled?    (or error-mode? lister-disabled? no-items-to-show?)
                          :on-select    [:item-lister/order-items! extension-id item-namespace]
                          :options-path [extension-id :item-lister/meta-items :order-by-options]
                          :get-label-f  engine/order-by-label-f

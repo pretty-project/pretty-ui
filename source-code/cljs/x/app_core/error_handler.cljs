@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.06
 ; Description:
-; Version: v0.5.6
-; Compatibility: x4.5.2
+; Version: v0.6.2
+; Compatibility: x4.6.1
 
 
 
@@ -58,6 +58,29 @@
 
 
 
+;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn print-warning!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (list of strings) warning-message
+  [& warning-message]
+  (.warn js/console (reduce #(str %1 "\n" %2) nil warning-message)))
+
+(event-handler/reg-fx :core/print-warning! print-warning!)
+
+(defn print-error!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (list of strings) error-message
+  [& error-message]
+  (.error js/console (reduce #(str %1 "\n" %2) nil error-message)))
+
+(event-handler/reg-fx :core/print-error! print-error!)
+
+
+
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -86,6 +109,6 @@
   (fn [{:keys [db]} [_ error-id error-props]]
       (let [error-message (r get-error-message db error-id error-props)
             catched-event (-> error-props :cofx event-handler/cofx->event-vector)]
-           (.error js/console (str error-message "\n" catched-event))
            {:db (r load-handler/stop-synchronizing! db)
+            :fx [:core/print-error! error-message catched-event]
             :dispatch [:ui/set-shield! {:content error-message}]})))

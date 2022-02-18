@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.11.23
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.6.0
+; Version: v0.4.4
+; Compatibility: x4.6.1
 
 
 
@@ -32,14 +32,13 @@
   ;
   ; @return (map)
   [env]
-  (let [extension-id      (pathom/env->param env :extension-id)
-        item-namespace    (pathom/env->param env :item-namespace)
-        suggestion-keys   (pathom/env->param env :suggestion-keys)
-        collection-name   (engine/collection-name extension-id item-namespace)
-        all-documents     (mongo-db/get-all-documents  collection-name)
-        suggestion-keys   (keyword/add-items-namespace item-namespace suggestion-keys)
-        suggestion-values (db/get-specified-values     all-documents  suggestion-keys string/nonempty?)]
-       (pathom/validate-data suggestion-values)))
+  (let [extension-id    (pathom/env->param env :extension-id)
+        item-namespace  (pathom/env->param env :item-namespace)
+        suggestion-keys (pathom/env->param env :suggestion-keys)
+        collection-name (engine/collection-name      extension-id item-namespace)
+        all-documents   (mongo-db/get-all-documents  collection-name)
+        suggestion-keys (keyword/add-items-namespace item-namespace suggestion-keys)]
+       (db/get-specified-values all-documents suggestion-keys string/nonempty?)))
 
 
 
