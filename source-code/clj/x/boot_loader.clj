@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.14
 ; Description:
-; Version: v1.3.0
-; Compatibility: x4.5.5
+; Version: v1.3.4
+; Compatibility: x4.6.1
 
 
 
@@ -19,7 +19,6 @@
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-views.api]
-              [mid-fruits.candy  :refer [param return]]
               [x.app-details     :as details]
               [x.server-core.api :as a :refer [r]]
               [x.server-db.api   :as db]))
@@ -129,7 +128,7 @@
   :boot-loader/run-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:core/run-server! (r get-server-props db)}))
+      {:fx [:core/run-server! (r get-server-props db)]}))
 
 (a/reg-event-fx
   :boot-loader/launch-server!

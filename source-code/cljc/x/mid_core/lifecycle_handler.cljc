@@ -155,7 +155,6 @@
   ([life-id lifecycles]
    ;#?(:clj (println details/app-codename "registrating lifecycles ..." life-id))
 
-
    ; DEBUG
    (if DEBUG? (println (str (count (keys @LIFES)))
                        (str life-id)))
@@ -174,7 +173,7 @@
    ;   változások elveszhetnek!
    (let [namespace (life-id->namespace life-id)]
         (letfn [(f [lifecycles period-id event]
-                  (let [event-id (keyword namespace (name period-id))]
-                       (event-handler/reg-event-fx event-id event)
-                       (assoc lifecycles period-id [event-id])))]
+                   (let [event-id (keyword namespace (name period-id))]
+                        (event-handler/reg-event-fx event-id event)
+                        (assoc lifecycles period-id [event-id])))]
                (swap! LIFES assoc life-id (reduce-kv f {} lifecycles))))))
