@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.16
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.6.0
+; Version: v0.4.2
+; Compatibility: x4.6.1
 
 
 
@@ -32,6 +32,7 @@
 (def request->route-prop route-handler/request->route-prop)
 (def get-app-home        route-handler/get-app-home)
 (def get-resolved-uri    route-handler/get-resolved-uri)
+(def get-sitemap-routes  route-handler/get-sitemap-routes)
 (def get-client-routes   route-handler/get-client-routes)
 (def get-server-routes   route-handler/get-server-routes)
 (def get-ordered-routes  route-handler/get-ordered-routes)

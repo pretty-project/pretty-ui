@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.12.17
 ; Description:
-; Version: v0.4.0
-; Compatibility: x4.6.0
+; Version: v0.4.4
+; Compatibility: x4.6.1
 
 
 
@@ -35,6 +35,10 @@
   [db _]
   (let [app-home (r a/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))
+
+; @usage
+;  [:router/get-app-home]
+(a/reg-sub :router/get-app-home get-app-home)
 
 (defn get-resolved-uri
   ; @param (route-string) uri

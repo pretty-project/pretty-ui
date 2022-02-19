@@ -36,6 +36,10 @@
                     {:route-template "/robots.txt"
                      :get {:handler environment/download-robots-txt}}
 
+                    :environment/sitemap.xml
+                    {:route-template "/sitemap.xml"
+                     :get {:handler environment/download-sitemap-xml}}
+
                     :media/download-file
                     {:route-template "/media/storage/:filename"
                      :get {:handler media/download-file}}

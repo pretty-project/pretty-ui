@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v0.2.4
-; Compatibility: x4.5.8
+; Version: v0.2.6
+; Compatibility: x4.6.1
 
 
 
@@ -22,5 +22,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.server-environment.crawler-handler
-(def download-robots-txt crawler-handler/download-robots-txt)
-(def crawler-rules       crawler-handler/crawler-rules)
+(def download-robots-txt  crawler-handler/download-robots-txt)
+(def download-sitemap-xml crawler-handler/download-sitemap-xml)
+(def crawler-rules        crawler-handler/crawler-rules)

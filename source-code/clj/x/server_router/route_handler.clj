@@ -6,7 +6,7 @@
 ; Created: 2020.01.10
 ; Description:
 ; Version: v1.7.0
-; Compatibility: x4.6.0
+; Compatibility: x4.6.1
 
 
 
@@ -17,6 +17,7 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.map     :as map]
               [mid-fruits.uri     :as uri]
+              [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
               [x.server-core.api  :as a :refer [r]]
               [x.server-db.api    :as db]
@@ -198,6 +199,20 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-sitemap-routes
+ ; WARNING! NON-PUBLIC! DO NOT USE!
+ ;
+ ; @usage
+ ;  (r router/get-sitemap-routes db)
+ ;
+ ; @return (strings in vector)
+ [db _]
+ (get-in db (db/path :router/sitemap-routes)))
+
+; @usage
+;  [:router/get-sitemap-routes]
+(a/reg-sub :router/get-sitemap-routes get-sitemap-routes)
+
 (defn get-server-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -299,6 +314,17 @@
                    (select-keys route-props CLIENT-ROUTE-KEYS))
       (return   db)))
 
+(defn- add-route-to-sitemap!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (map) route-props
+  ;  {:route-template (string)}
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [route-template]}]]
+  (update-in db (db/path :router/sitemap-routes) vector/conj-item route-template))
+
 (defn- store-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -306,14 +332,17 @@
   ; @param (map) route-props
   ;
   ; @return (map)
-  [db [_ route-id route-props]]
+  [db [_ route-id {:keys [add-to-sitemap?] :as route-props}]]
   (as-> db % (r store-server-route-props! % route-id route-props)
-             (r store-client-route-props! % route-id route-props)))
+             (r store-client-route-props! % route-id route-props)
+             (if-not add-to-sitemap? % (r add-route-to-sitemap! % route-id route-props))))
 
 (defn add-route!
   ; @param (keyword)(opt) route-id
   ; @param (map) route-props
-  ;  {:get (function or map)(opt)
+  ;  {:add-to-sitemap? (boolean)(opt)
+  ;    Default: false
+  ;   :get (function or map)(opt)
   ;   :post (function or map)(opt)
   ;   :js (string)(opt)
   ;    Default: "app.js"
@@ -322,11 +351,11 @@
   ;   :route-parent (string)(opt)
   ;   :route-template (string)
   ;   :client-event (metamorphic-event)(opt)
-  ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény.
+  ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény
   ;   :on-leave-event (metamorphic-event)(opt)
-  ;    Az útvonal elhagyásakor a kliens-oldalon megtörténő esemény.
+  ;    Az útvonal elhagyásakor a kliens-oldalon megtörténő esemény
   ;   :server-event (metamorphic-event)(opt)}
-  ;    Az útvonal meghívásakor a szerver-oldalon megtörténő esemény.
+  ;    Az útvonal meghívásakor a szerver-oldalon megtörténő esemény}
   ;
   ; @usage
   ;  (r router/add-route! db {...})

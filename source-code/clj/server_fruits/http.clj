@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2020.01.11
 ; Description:
-; Version: v1.0.4
+; Version: v1.1.0
 
 
 
@@ -243,7 +243,7 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/error-wrap {:error-message :file-not-found
+  ;  (http/error-wrap {:error-message "File not found"
   ;                    :status        404}
   ;  =>
   ;  {:body    ":file-not-found"
@@ -348,6 +348,25 @@
                          :headers (if filename {"Content-Disposition" "inline; filename=\""filename"\""})}
                         (select-keys response-props [:mime-type :session :status]))))
 
+(defn xml-wrap
+  ; @param (map) response-props
+  ;  {:body (string)
+  ;   :session (map)(opt)
+  ;   :status (integer)(opt)}
+  ;
+  ; @example
+  ;  (http/xml-wrap {:body "foo"})
+  ;  =>
+  ;  {:body    "foo"
+  ;   :headers {"Content-Type" "application/xml"}
+  ;   :status  200}
+  ;
+  ; @return (map)
+  [{:keys [body] :as response-props}]
+  (response-wrap (merge {:body      (str body)
+                         :mime-type "application/xml"}
+                        (select-keys response-props [:session :status]))))
+
 (defn text-wrap
   ; @param (map) response-props
   ;  {:body (string)
@@ -363,5 +382,6 @@
   ;
   ; @return (map)
   [{:keys [body] :as response-props}]
-  (response-wrap (merge {:body (str body)}
+  (response-wrap (merge {:body      (str body)
+                         :mime-type "text/plain"}
                         (select-keys response-props [:session :status]))))
