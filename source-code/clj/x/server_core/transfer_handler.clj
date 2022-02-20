@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.7.2
-; Compatibility: x4.6.0
+; Version: v0.8.2
+; Compatibility: x4.6.1
 
 
 
@@ -13,10 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.transfer-handler
-    (:require [mid-fruits.candy            :refer [param]]
-              [server-fruits.http          :as http]
+    (:require [server-fruits.http          :as http]
               [x.server-core.engine        :as engine]
               [x.server-core.event-handler :as event-handler]))
+
+
+
+;; -- State -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (map)
+(defonce HANDLERS (atom {}))
 
 
 
@@ -28,15 +35,8 @@
   ;
   ; @param (keyword) transfer-id
   ; @param (map) transfer-props
-  ;
-  ; @return (map)
-  [db [_ transfer-id transfer-props]]
-  (assoc-in db [:core/transfer-handler :data-items transfer-id] transfer-props))
-
-; A reg-transfer! függvény fordítás-idejű használatakor még nem biztosított
-; a [:db/set-item! ...] esemény létezése, ezért a [:core/store-transfer-props! ...]
-; esemény tárolja el a transfer-props térképeket.
-(event-handler/reg-event-db :core/store-transfer-props! store-transfer-props!)
+  [transfer-id transfer-props]
+  (swap! HANDLERS assoc transfer-id transfer-props))
 
 
 
@@ -50,19 +50,19 @@
   ;   :target-path (item-path vector)(opt)}
   ;
   ; @usage
-  ;  (a/reg-transfer {...})
+  ;  (a/reg-transfer! {...})
   ;
   ; @usage
-  ;  (a/reg-transfer :my-transfer {...})
+  ;  (a/reg-transfer! :my-transfer {...})
   ;
   ; @usage
   ;  (defn my-data-f [request] {:my-data ...})
-  ;  (a/reg-transfer {:data-f my-data-f})
+  ;  (a/reg-transfer! {:data-f my-data-f})
   ([transfer-props]
    (reg-transfer! (engine/id) transfer-props))
 
   ([transfer-id transfer-props]
-   (event-handler/dispatch [:core/store-transfer-props! transfer-id transfer-props])))
+   (store-transfer-props! transfer-id transfer-props)))
 
 ; @usage
 ;  [:core/reg-transfer! :my-transfer {...}]
@@ -80,12 +80,11 @@
   ;
   ; @return (map)
   [request]
-  ; A {:core/reg-transfer! ...} mellékhatás esemény által regisztrált függvények visszatérési adatait összegyűjti ...
-  (let [handlers @(event-handler/subscribe [:db/get-item [:core/transfer-handler :data-items]])]
-       (letfn [(f [transfer-data transfer-id {:keys [data-f target-path]}]
-                  (assoc transfer-data transfer-id {:data (data-f request)
-                                                    :target-path target-path}))]
-              (reduce-kv f {} handlers))))
+  ; A reg-transfer! függvény által regisztrált függvények visszatérési adatait összegyűjti ...
+  (letfn [(f [transfer-data transfer-id {:keys [data-f target-path]}]
+             (assoc transfer-data transfer-id {:data (data-f request)
+                                               :target-path target-path}))]
+         (reduce-kv f {} @HANDLERS)))
 
 (defn download-transfer-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

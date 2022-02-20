@@ -23,10 +23,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (vector)
-(def HANDLERS    (atom {}))
+(defonce HANDLERS    (atom {}))
 
 ; @atom (map)
-(def ENVIRONMENT (atom {}))
+(defonce ENVIRONMENT (atom {}))
 
 
 
