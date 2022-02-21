@@ -4,8 +4,8 @@
 ; Author: bithandshake
 ; Created: 2021.04.23
 ; Description:
-; Version: v0.8.2
-; Compatibility: x4.6.1
+; Version: v0.8.8
+; Compatibility: x4.6.2
 
 
 
@@ -24,19 +24,6 @@
 
 ; @atom (map)
 (defonce HANDLERS (atom {}))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- store-transfer-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) transfer-id
-  ; @param (map) transfer-props
-  [transfer-id transfer-props]
-  (swap! HANDLERS assoc transfer-id transfer-props))
 
 
 
@@ -62,7 +49,7 @@
    (reg-transfer! (engine/id) transfer-props))
 
   ([transfer-id transfer-props]
-   (store-transfer-props! transfer-id transfer-props)))
+   (swap! HANDLERS assoc transfer-id transfer-props)))
 
 ; @usage
 ;  [:core/reg-transfer! :my-transfer {...}]

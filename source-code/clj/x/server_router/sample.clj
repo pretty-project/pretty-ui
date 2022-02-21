@@ -24,7 +24,7 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Alapértelmezett kezelők (kötelező) --------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!
@@ -35,6 +35,11 @@
                                  [:router/set-default-route! :not-acceptable     {}]
                                  [:router/set-default-route! :not-found          {}]]}})
 
+
+
+;; -- Útvonal(ak) hozzáadása --------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-lifecycles!
   ::lifecycles
   ; - A [:router/add-route! ...] eseményeket {:on-server-boot ...} időzítéssel hívd meg!
@@ -43,12 +48,22 @@
   {:on-server-boot {:dispatch-n [[:router/add-route! {}]
                                  [:router/add-route! :my-route {}]]}})
 
+
+
+;; -- Létező útvonalbeállítások felülírása ------------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-lifecycles!
   ::lifecycles
   ; Az általad megadott route-id azonosítóval rendelkező útvonalakat könnyebb átlátni
   ; hibakereséskor, illetve lehetséges felülírni a rendszer által hozzáadott útvonalakat,
   ; ha megegyező azonosítóval adsz hozzá útvonalat (pl.: :page-not-found, ...)
   {:on-server-boot [:router/add-route! :page-not-found {}]})
+
+
+
+;; -- "@app-home" hivatkozás használata útvonalakban --------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!
   ::lifecycles
@@ -58,6 +73,11 @@
   ; értékére.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
                                  [:router/add-route! {:route-template "/@app-home/your-route"}]]}})
+
+
+
+;; -- {:route-parent "..."} beállítás használata ------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!
   ::lifecycles
@@ -75,15 +95,25 @@
                                         :route-template "/my-route/:my-item-id"
                                         :route-parent   "/my-route"}]})
 
+
+
+;; -- {:core-js "..."} beállítás használata -----------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-lifecycles!
   ::lifecycles
-  ; A {:js "..."} tulajdonság átadásával az alapbeállítástól eltérő .js fájl is használható.
+  ; A {:core-js "..."} tulajdonság átadásával az alapbeállítástól eltérő .js fájl is használható.
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
-                                                      :get  {:handler #(my-handler %)}
-                                                      :js "my-app.js"}]
+                                                      :get {:handler #(my-handler %)}
+                                                      :core-js "my-app.js"}]
                                  [:router/add-route! {:route-template "/your-route"
                                                       :post {:handler #(your-handler %)}
-                                                      :js "your-app.js"}]]}})
+                                                      :core-js "your-app.js"}]]}})
+
+
+
+;; -- Védett útvonalak --------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!
   ::lifecycles
@@ -98,3 +128,15 @@
                                  [:router/add-route! {:route-template "/our-route"
                                                       :client-event [:render-our-view!]
                                                       :restricted? true}]]}})
+
+
+
+;; -- Webhelytérkép használata ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles!
+  ::lifecycles
+  ; Az {:add-to-sitemap? true} beállítás használatával az útvonal hozzáadódik
+  ; a /sitemap.xml fájlban kiszolgált webhelytérképhez.
+  {:on-server-boot [:router/add-route! {:route-template "/my-route"}
+                                       :add-to-sitemap? true]})

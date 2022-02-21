@@ -57,7 +57,7 @@
 ;  Pl.:
 ;  {:get            #(my-handler %)
 ;   :post           {...}
-;   :js             "app.js"
+;   :core-js        "app.js"
 ;   :client-event   [:do-something-on-client!]
 ;   :server-event   [:do-something-on-server!]
 ;   :restricted?    true
@@ -117,10 +117,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def CLIENT-ROUTE-KEYS [:client-event :js :on-leave-event :restricted? :route-parent :route-template])
+(def CLIENT-ROUTE-KEYS [:client-event :core-js :on-leave-event :restricted? :route-parent :route-template])
 
 ; @constant (keywords in vector)
-(def SERVER-ROUTE-KEYS [:get :js :post :restricted? :route-template :server-event])
+(def SERVER-ROUTE-KEYS [:get :core-js :post :restricted? :route-template :server-event])
 
 
 
@@ -186,10 +186,10 @@
   ;
   ; @return (map)
   ;  {:get (map)
-  ;   :js (string)
+  ;   :core-js (string)
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
-  (merge {:js "app.js"}
+  (merge {:core-js "app.js"}
          (param route-props)
          (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
          (if post {:post (handler-prototype post {:restricted? restricted?})})))
@@ -344,7 +344,7 @@
   ;    Default: false
   ;   :get (function or map)(opt)
   ;   :post (function or map)(opt)
-  ;   :js (string)(opt)
+  ;   :core-js (string)(opt)
   ;    Default: "app.js"
   ;   :restricted? (boolean)(opt)
   ;    Default: false

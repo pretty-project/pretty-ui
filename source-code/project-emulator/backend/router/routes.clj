@@ -19,7 +19,7 @@
 ;            :site
 ;            {:route-template "/"
 ;             :get #(http/html-wrap {:body (ui/main %)})
-;             :js "site.js"}
+;             :core-js "site.js"}
 
              :db/query
              {:route-template "/query"

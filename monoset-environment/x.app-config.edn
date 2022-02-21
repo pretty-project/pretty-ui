@@ -7,24 +7,21 @@
 ;    [{:name (metamorphic-content)
 ;      :id (keyword)}]
 ;   :app-title (string)
-;   :core-js-dir (string)
 ;   :css-paths (maps in vector)
-;    [{:cache-control? (boolean)(opt)
-;       Default: false
+;    [{:core-js (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
 ;      :uri (string)}]
-;   :default-js-dir (string)
 ;   :favicon-paths (maps in vector)
-;    [{:cache-control? (boolean)(opt)
-;       Default: false
+;    [{:core-js (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
 ;      :uri (string)}]
 ;   :meta-description (string)
 ;   :meta-keywords (strings in vector or string)
 ;   :og-preview-path (string)
 ;    Recommended preview-size: 1200x630px
-;   :plugins-js-dir (string)
 ;   :plugin-js-paths (maps in vector)
-;    [{:cache-control? (boolean)(opt)
-;       Default: false
+;    [{:core-js (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
 ;      :uri (string)}]
 ;   :theme-color (string)
 ;    Theme color must be hex!
@@ -37,7 +34,7 @@
 ;                   {:id :light    :name :light-theme}]
 ;   :meta-keywords ["a" "b" "c"]
 ;   :meta-keywords "a, b, c"
-;   :plugin-js-paths [{:uri "/js/plugins/external-plugin.js" :cache-control? true}
+;   :plugin-js-paths [{:uri "/js/plugins/external-plugin.js"}
 ;                     {:uri "https://external-plugin.com/plugin.js"}]}
 
 {; App details
@@ -58,18 +55,14 @@
 
  ; CSS paths
  :css-paths
- [{:uri "/css/site.css" :cache-control? true}]
+ [{:uri "/css/site.css" :core-js "site.js"}]
 
  ; Favicon paths
  :favicon-paths
- [{:uri "/favicon/blue/favicon-16.png"  :cache-control? true :size "16x16"}
-  {:uri "/favicon/blue/favicon-32.png"  :cache-control? true :size "32x32"}
-  {:uri "/favicon/blue/favicon-96.png"  :cache-control? true :size "96x96"}
-  {:uri "/favicon/blue/favicon-144.png" :cache-control? true :size "144x144"}]
-
- ; JavaScript details
- :core-js-dir     "/js/core"
- :plugins-js-dir  "/js/plugins"
+ [{:uri "/favicon/blue/favicon-16.png"  :size "16x16"}
+  {:uri "/favicon/blue/favicon-32.png"  :size "32x32"}
+  {:uri "/favicon/blue/favicon-96.png"  :size "96x96"}
+  {:uri "/favicon/blue/favicon-144.png" :size "144x144"}]
 
  ; JavaScript paths
  :plugin-js-paths

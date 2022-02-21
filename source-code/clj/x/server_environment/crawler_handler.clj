@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.01.01
 ; Description:
-; Version: v0.6.2
-; Compatibility: x4.6.1
+; Version: v0.6.4
+; Compatibility: x4.6.2
 
 
 
@@ -16,7 +16,6 @@
 (ns x.server-environment.crawler-handler
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.time    :as time]
-              [mid-fruits.uri     :as uri]
               [server-fruits.http :as http]
               [x.app-details      :as details]
               [x.server-core.api  :as a]

@@ -1,5 +1,14 @@
 
-#x4.6.1
+# x4.6.2
+
+- Az útvonalak {:js "..."} beállítása ezentúl {:core-js "..."} névén elérhető
+
+- A {:cache-control? true} beállítást sehol nem kell ezentúl alkalmazni (automatikus lett)
+  Töröld ki az x.app-config.edn fájlból is!
+
+
+
+# x4.6.1
 
 - A sync/send-request esemény ezentól fogadja a {:validator-f ...} függvényt
 
@@ -13,7 +22,7 @@
 
 
 
-#x4.6.0
+# x4.6.0
 
 - A Re-Frame mellékhatás események paraméterezése és meghívása megváltozott!
   Dokumentáció: x.mid-core.event-handler/reg-fx

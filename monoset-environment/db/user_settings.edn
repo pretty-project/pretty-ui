@@ -1,14 +1,14 @@
 
-[{:id "0939329d-b057-ki88-e916-0ce146714c1b" 
-  :permissions {"0939329d-b057-ki88-e916-0ce146714c1b" "rw" "super" "ro"} 
-  :selected-language :hu} 
- {:id "1259400a-x012-lw84-o987-1fg654713a3a" 
-  :notification-sounds-enabled? true 
-  :permissions {"1259400a-x012-lw84-o987-1fg654713a3a" "rw" "super" "ro"} 
-  :selected-language :hu} 
- {:id "2345011e-t112-wa50-o357-1rh344440a0w" 
-  :permissions {"2345011e-t112-wa50-o357-1rh344440a0w" "rw" "super" "ro"} 
-  :selected-language :hu} 
- {:id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973" 
-  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw" "super" "ro"} 
+[{:id "0939329d-b057-ki88-e916-0ce146714c1b"
+  :permissions {"0939329d-b057-ki88-e916-0ce146714c1b" "rw" "super" "ro"}
+  :selected-language :hu}
+ {:id "1259400a-x012-lw84-o987-1fg654713a3a"
+  :notification-sounds-enabled? true
+  :permissions {"1259400a-x012-lw84-o987-1fg654713a3a" "rw" "super" "ro"}
+  :selected-language :hu}
+ {:id "2345011e-t112-wa50-o357-1rh344440a0w"
+  :permissions {"2345011e-t112-wa50-o357-1rh344440a0w" "rw" "super" "ro"}
+  :selected-language :hu}
+ {:id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"
+  :permissions {"506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw" "super" "ro"}
   :selected-language :hu}]

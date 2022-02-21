@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.02.09
 ; Description:
-; Version: v1.2.0
-; Compatibility: x4.5.5
+; Version: v1.2.8
+; Compatibility: x4.6.2
 
 
 
@@ -14,14 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [server-fruits.http :as http]
-              [x.app-details      :as details]
-              [x.server-core.api  :as a :refer [cache-control-uri]]
-              [x.server-user.api  :as user]
-              [x.server-ui.engine :refer [include-css include-favicon include-font]]
+    (:require [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.string   :as string]
+              [mid-fruits.vector   :as vector]
+              [server-fruits.http  :as http]
+              [x.app-details       :as details]
+              [x.server-core.api   :as a :refer [cache-control-uri]]
+              [x.server-router.api :as router]
+              [x.server-user.api   :as user]
+              [x.server-ui.engine  :refer [include-css include-favicon include-font]]
               [x.server-environment.api :as environment]))
 
 
@@ -29,20 +30,22 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (vector)
-(def SYSTEM-CSS-PATHS [{:uri "/css/x/app-fonts.css"         :cache-control? true}
-                       {:uri "/css/normalize.css"           :cache-control? true}
-                       {:uri "/css/x/animations.css"        :cache-control? true}
-                       {:uri "/css/x/app-ui-profiles.css"   :cache-control? true}
-                       {:uri "/css/x/app-ui-themes.css"     :cache-control? true}
-                       {:uri "/css/x/app-ui-structure.css"  :cache-control? true}
-                       {:uri "/css/x/app-ui-animations.css" :cache-control? true}
-                       {:uri "/css/x/app-ui-graphics.css"   :cache-control? true}
-                       {:uri "/css/x/app-layouts.css"       :cache-control? true}
-                       {:uri "/css/x/app-elements.css"      :cache-control? true}
-                       {:uri "/css/x/app-views.css"         :cache-control? true}
-                       {:uri "/css/extensions.css"          :cache-control? true}
-                       {:uri "/css/plugins.css"             :cache-control? true}
+; @constant (maps in vector)
+;  [{:core-js (string)(opt)
+;    :uri (string)}]
+(def SYSTEM-CSS-PATHS [{:uri "/css/x/app-fonts.css"}
+                       {:uri "/css/normalize.css"}
+                       {:uri "/css/x/animations.css"}
+                       {:uri "/css/x/app-ui-profiles.css"}
+                       {:uri "/css/x/app-ui-themes.css"}
+                       {:uri "/css/x/app-ui-structure.css"}
+                       {:uri "/css/x/app-ui-animations.css"}
+                       {:uri "/css/x/app-ui-graphics.css"}
+                       {:uri "/css/x/app-layouts.css"}
+                       {:uri "/css/x/app-elements.css"}
+                       {:uri "/css/x/app-views.css"}
+                       {:uri "/css/extensions.css"}
+                       {:uri "/css/plugins.css"}
                        ; Using self hosted Font Awesome icons
                        {:uri "/icons/fontawesome-free-5.15.1-web/css/all.min.css"}
                        ; XXX#8857
@@ -89,9 +92,9 @@
   ; @return (hiccup)
   [head request {:keys [crawler-rules meta-description meta-keywords]}]
   (let [meta-keywords (meta-keywords->formatted-meta-keywords meta-keywords)]
-       (vector/concat-items head [[:meta {:content (str crawler-rules)    :name "robots"}]
-                                  [:meta {:content (str meta-description) :name "description"}]
-                                  [:meta {:content (str meta-keywords)    :name "keywords"}]])))
+       (vector/concat-items head [[:meta {:content crawler-rules    :name "robots"}]
+                                  [:meta {:content meta-description :name "description"}]
+                                  [:meta {:content meta-keywords    :name "keywords"}]])))
 
 (defn- head<-browser-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,7 +108,7 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-title selected-language theme-color]}]
-  (vector/concat-items head [[:title (str app-title)]
+  (vector/concat-items head [[:title app-title]
                              [:meta {:charset "utf-8"}]
                              ; maximum-scale=1
                              ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
@@ -124,9 +127,9 @@
   ;
   ; @return (hiccup)
   [head request {:keys [author]}]
-  (vector/concat-items head [[:meta {:content (str author)                        :name "author"}]
-                             [:meta {:content (str details/copyright-information) :name "copyright"}]
-                             [:meta {:content (str details/app-version)           :name "version"}]]))
+  (vector/concat-items head [[:meta {:content author                        :name "author"}]
+                             [:meta {:content details/copyright-information :name "copyright"}]
+                             [:meta {:content details/app-version           :name "version"}]]))
 
 (defn- head<-og-properties
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,11 +146,12 @@
   ;
   ; @return (hiccup)
   [head request {:keys [app-title meta-description og-preview-path]}]
-  (vector/concat-items head [[:meta {:content "website"                   :property "og:type"}]
-                             [:meta {:content (str meta-description)      :property "og:description"}]
-                             [:meta {:content (str app-title)             :property "og:title"}]
-                             [:meta {:content (str og-preview-path)       :property "og:image"}]
-                             [:meta {:content (http/request->uri request) :property "og:url"}]]))
+  (let [og-url (http/request->uri request)]
+       (vector/concat-items head [[:meta {:content "website"        :property "og:type"}]
+                                  [:meta {:content meta-description :property "og:description"}]
+                                  [:meta {:content app-title        :property "og:title"}]
+                                  [:meta {:content og-preview-path  :property "og:image"}]
+                                  [:meta {:content og-url           :property "og:url"}]])))
 
 (defn- head<-css-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,20 +160,23 @@
   ; @param (map) request
   ; @param (map) head-props
   ;  {:app-build (string)(opt)
+  ;   :core-js (string)
   ;   :css-paths (maps in vector)
-  ;    [{:cache-control? (boolean)(opt)
-  ;       Default: false
+  ;    [{:core-js (string)(opt)
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build css-paths]}]
-  (reduce (fn [head {:keys [cache-control? uri] :as css-props}]
-              (if cache-control? (let [cache-control-uri (cache-control-uri uri app-build)
-                                       css-props         (assoc css-props :uri cache-control-uri)]
-                                      (conj head (include-css css-props)))
-                                 (conj      head (include-css css-props))))
-          (param head)
-          (vector/concat-items css-paths SYSTEM-CSS-PATHS)))
+  [head request {:keys [app-build core-js css-paths]}]
+  (letfn [(include-css? [css-props] (or (-> css-props :core-js nil?)
+                                        (-> css-props :core-js (= core-js))))
+          (f [head {:keys [uri] :as css-props}]
+             (let [cache-control-uri (cache-control-uri uri app-build)
+                   css-props         (assoc css-props :uri cache-control-uri)]
+                  (if (include-css? css-props)
+                      (conj   head (include-css css-props))
+                      (return head))))]
+         (let [css-paths (vector/concat-items css-paths SYSTEM-CSS-PATHS)]
+              (reduce f head css-paths))))
 
 (defn- head<-favicon-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -178,21 +185,23 @@
   ; @param (map) request
   ; @param (map) head-props
   ;  {:app-build (string)(opt)
+  ;   :core-js (string)
   ;   :favicon-paths (maps in vector)
-  ;    [{:cache-control? (boolean)(opt)
-  ;       Default: false
+  ;    [{:core-js (string)(opt)
   ;      :size (string)
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build favicon-paths]}]
-  (reduce (fn [head {:keys [cache-control? uri] :as favicon-props}]
-              (if cache-control? (let [cache-control-uri (cache-control-uri uri app-build)
-                                       favicon-props     (assoc favicon-props :uri cache-control-uri)]
-                                      (conj head (include-favicon favicon-props)))
-                                 (conj      head (include-favicon favicon-props))))
-          (param head)
-          (param favicon-paths)))
+  [head request {:keys [app-build core-js favicon-paths]}]
+  (letfn [(include-favicon? [favicon-props] (or (-> favicon-props :core-js nil?)
+                                                (-> favicon-props :core-js (= core-js))))
+          (f [head {:keys [uri] :as favicon-props}]
+             (let [cache-control-uri (cache-control-uri uri app-build)
+                   favicon-props     (assoc favicon-props :uri cache-control-uri)]
+                  (if (include-favicon? favicon-props)
+                      (conj   head (include-favicon favicon-props))
+                      (return head))))]
+         (reduce f head favicon-paths)))
 
 
 
@@ -207,12 +216,14 @@
   ;
   ; @return (map)
   ;  {:app-build (string)
-  ;   :crawler-rules (?)
+  ;   :core-js (string)
+  ;   :crawler-rules (string)
   ;   :selected-language (keyword)}
   [request head-props]
   (merge @(a/subscribe [:core/get-app-config])
           {:app-build         (a/app-build)
-           :crawler-rules     (environment/crawler-rules request)
+           :core-js           (router/request->route-prop       request :core-js)
+           :crawler-rules     (environment/crawler-rules        request)
            :selected-language (user/request->user-settings-item request :selected-language)}
           (param head-props)))
 
@@ -229,12 +240,10 @@
   ;   :author (string)(opt)
   ;   :crawler-rules (string)(opt)
   ;   :css-paths (maps in vector)(opt)
-  ;    [{:cache-control? (boolean)(opt)
-  ;       Default: false
+  ;    [{:core-js (string)(opt)
   ;      :uri (string)}]
   ;   :favicon-paths (maps in vector)(opt)
-  ;    [{:cache-control? (boolean)(opt)
-  ;       Default: false
+  ;    [{:core-js (string)(opt)
   ;      :size (string)
   ;      :uri (string)}]
   ;   :meta-description (string)(opt)

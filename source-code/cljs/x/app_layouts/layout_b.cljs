@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.11.16
 ; Description:
-; Version: v0.4.8
+; Version: v0.5.2
 ; Compatibility: x4.5.5
 
 
@@ -52,7 +52,8 @@
   ;
   ; @return (component)
   [_ _ {:keys [icon label]}]
-  [elements/label {:content label :icon icon}])
+  ; Ha a label értéke hosszú, és a kártya jobb széléig ér, akkor szükséges az {:indent :right} beállítás
+  [elements/label {:content label :icon icon :indent :right}])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

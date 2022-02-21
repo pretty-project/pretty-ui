@@ -1,8 +1,7 @@
 
-(ns app-extensions.home.views
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-layouts.api    :as layouts]
+(ns app-extensions.home-screen.views
+    (:require [x.app-core.api    :as a :refer [r]]
+              [x.app-layouts.api :as layouts]
 
               ; TEMP
               [app-extensions.storage.api :as storage]))
@@ -19,34 +18,31 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-view-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _])
-
-(a/reg-sub :home/get-view-props get-view-props)
-
-
-
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view-structure
+(defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id {:keys [user-name] :as view-props}]
+  [surface-id]
  [:div
   [layouts/layout-b surface-id {:cards CARDS}]
   [storage/media-picker {:label "Borítóképek"
                          :value-path [:xxx]}]])
 
-(defn- view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id]
-  [components/subscriber surface-id
-                         {:render-f   #'view-structure
-                          :subscriber [:home/get-view-props]}])
+
+
+;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :home-screen/add-item!
+  ; @param (keyword)(opt) item-id
+  ; @param (map) item-props
+  ;  {}
+  ;
+  ; @usage
+  ;  [:home-screen/add-item!]
+  (fn [_ [_ item-id item-props]]))
 
 
 
@@ -54,16 +50,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :home/render!
+  :home-screen/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :home/view {:view #'view}])
+  [:ui/set-surface! :home-screen/view {:view #'view}])
 
 (a/reg-event-fx
-  :home/load!
+  :home-screen/load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-config-item db :app-title)]
            {:dispatch-n [[:ui/simulate-process!]
                          [:ui/restore-default-window-title!]
                          [:ui/set-header-title! app-title]
-                         [:home/render!]]})))
+                         [:home-screen/render!]]})))
