@@ -61,6 +61,18 @@
 ;  [:user/get-user-profile-item :email-address]
 (a/reg-sub :user/get-user-profile-item get-user-profile-item)
 
+(defn get-user-email-address
+  ; @usage
+  ;  (r user/get-user-email-address db)
+  ;
+  ; @return (string)
+  [db _]
+  (r get-user-profile-item db :email-address))
+
+; @usage
+;  [:user/get-user-email-address]
+(a/reg-sub :user/get-user-email-address get-user-email-address)
+
 (defn get-user-first-name
   ; @usage
   ;  (r user/get-user-first-name db)
@@ -110,17 +122,17 @@
 ;  [:user/get-user-phone-number]
 (a/reg-sub :user/get-user-phone-number get-user-phone-number)
 
-(defn get-user-profile-picture-url
+(defn get-user-profile-picture
   ; @usage
-  ;  (r user/get-user-profile-picture-url db)
+  ;  (r user/get-user-profile-picture db)
   ;
   ; @return (string)
   [db _]
   (or nil engine/DEFAULT-PROFILE-PICTURE-URL))
 
 ; @usage
-;  [:user/get-user-profile-picture-url]
-(a/reg-sub :user/get-user-profile-picture-url get-user-profile-picture-url)
+;  [:user/get-user-profile-picture]
+(a/reg-sub :user/get-user-profile-picture get-user-profile-picture)
 
 
 

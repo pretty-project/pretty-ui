@@ -21,7 +21,6 @@
               [mid-fruits.vector        :as vector]
               [re-frame.core            :as re-frame]
               [re-frame.registrar       :as registrar]
-              [x.app-core.debug-handler :as debug-handler]
               [x.app-core.print-handler :as print-handler]
               [x.mid-core.event-handler :as event-handler]))
 
@@ -79,9 +78,17 @@
 ;; -- System interceptors -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn log-events?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; Az x.app-core.debug-handler és az x.app-core.event-handler körkörös függvőségben volna, ha ...
+  [db]
+  (boolean (if-let [debug-mode (get-in db [:core/debug-handler :meta-items :debug-mode])]
+                   (= "pineapple-juice" debug-mode))))
+
 ; @constant (?)
 (def LOG-EVENT! (->interceptor :id :core/log-event!
-                               :before #(do (when (-> %1 context->db-before-effect debug-handler/log-events?)
+                               :before #(do (when (-> %1 context->db-before-effect log-events?)
                                                   (-> %1 context->event-vector     print-handler/console))
                                             (-> %1 return))))
 

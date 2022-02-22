@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.error-handler
-    (:require [mid-fruits.candy         :refer [param return]]
-              [x.app-core.debug-handler :as debug-handler]
-              [x.app-core.engine        :as engine]
-              [x.app-core.event-handler :as event-handler :refer [r]]
-              [x.app-core.load-handler  :as load-handler]))
+    (:require [mid-fruits.candy             :refer [param return]]
+              [x.app-core.debug-handler.api :as debug-handler]
+              [x.app-core.engine            :as engine]
+              [x.app-core.event-handler     :as event-handler :refer [r]]
+              [x.app-core.load-handler      :as load-handler]))
 
 
 

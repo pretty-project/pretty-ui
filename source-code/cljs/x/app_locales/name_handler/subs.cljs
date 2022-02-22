@@ -3,30 +3,21 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.10.20
+; Created: 2022.02.22
 ; Description:
 ; Version: v0.4.4
-; Compatibility: x4.4.9
+; Compatibility: x4.6.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.name-handler
+(ns x.app-locales.name-handler.subs
     (:require [mid-fruits.string :as string]
               [x.app-core.api    :as a :refer [r]]
-              [x.app-locales.language-handler :as language-handler]
-              [x.mid-locales.name-handler     :as name-handler]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-locales.name-handler
-(def NAME-ORDERS        name-handler/NAME-ORDERS)
-(def name->ordered-name name-handler/name->ordered-name)
+              [x.app-locales.language-handler.api :as language-handler]
+              [x.app-locales.name-handler.engine  :as engine]))
 
 
 
@@ -41,11 +32,7 @@
   ;  :normal, :reversed
   [db _]
   (let [selected-language (r language-handler/get-selected-language db)]
-       (get NAME-ORDERS selected-language :normal)))
-
-; @usage
-;  [:locales/get-name-order]
-(a/reg-sub :locales/get-name-order get-name-order)
+       (get engine/NAME-ORDERS selected-language :normal)))
 
 (defn get-ordered-name
   ; @param (string) first-name
@@ -60,25 +47,15 @@
        (string/trim (case name-order :reversed (str last-name  " " first-name)
                                                (str first-name " " last-name)))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:locales/get-name-order]
+(a/reg-sub :locales/get-name-order get-name-order)
+
 ; @usage
 ;  [:locales/get-ordered-name "First" "Last"]
 (a/reg-sub :locales/get-ordered-name get-ordered-name)
-
-
-
-;; -- Components --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn name-order
-  ; @param (component, hiccup or string) first-name
-  ; @param (component, hiccup or string) last-name
-  ; @param (keyword) name-order
-  ;  :normal, :reversed
-  ;
-  ; @usage
-  ;  [locales/name-order "First" "Last" :reversed]
-  ;
-  ; @return (component)
-  [first-name last-name name-order]
-  (case name-order :reversed [:<> last-name  first-name]
-                             [:<> first-name last-name]))

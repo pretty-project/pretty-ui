@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.language-handler
+(ns x.app-locales.language-handler.subs
     (:require [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-user.api    :as user]))
@@ -48,6 +48,19 @@
   ; @return (keyword)
   [db _]
   (r user/get-user-settings-item db :selected-language))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:locales/get-app-languages]
+(a/reg-sub :locales/get-app-languages get-app-languages)
+
+; @usage
+;  [:locales/app-multilingual?]
+(a/reg-sub :locales/app-multilingual? app-multilingual?)
 
 ; @usage
 ;  [:locales/get-selected-language]

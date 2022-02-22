@@ -3,37 +3,40 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.10.16
+; Created: 2021.12.17
 ; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.2
+; Version: v0.2.0
+; Compatibility: x4.4.9
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.debug-handler
-    (:require [server-fruits.http       :as http]
-              [x.mid-core.debug-handler :as debug-handler]))
+(ns x.mid-locales.name-handler.engine)
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def query-string->debug-mode debug-handler/query-string->debug-mode)
+; @constant (map)
+(def NAME-ORDERS {:en :normal
+                  :hu :reversed})
 
 
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request->debug-mode
-  ; @param (map) request
-  ;  {:query-string (string)}
+(defn name->ordered-name
+  ; @param (string) first-name
+  ; @param (string) last-name
+  ; @param (keyword) locale-id
   ;
   ; @return (string)
-  [request]
-  (let [query-string (http/request->query-string request)]
-       (query-string->debug-mode query-string)))
+  [first-name last-name locale-id]
+  (let [name-order (get NAME-ORDERS locale-id)]
+       (if (= name-order :reversed)
+           (str last-name  " " first-name)
+           (str first-name " " last-name))))

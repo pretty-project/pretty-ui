@@ -3,28 +3,28 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.10.20
+; Created: 2022.02.22
 ; Description:
-; Version: v0.2.8
-; Compatibility: x4.5.9
+; Version: v0.3.0
+; Compatibility: x4.6.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-locales.name-handler
-    (:require [x.mid-locales.name-handler :as name-handler]
-              [x.server-user.api          :as user]))
+(ns x.server-locales.name-handler.engine
+    (:require [x.server-user.api :as user]
+              [x.mid-locales.name-handler.engine :as engine]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-locales.name-handler
-(def NAME-ORDERS        name-handler/NAME-ORDERS)
-(def name->ordered-name name-handler/name->ordered-name)
+; x.mid-locales.name-handler.engine
+(def NAME-ORDERS        engine/NAME-ORDERS)
+(def name->ordered-name engine/name->ordered-name)
 
 
 

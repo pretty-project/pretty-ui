@@ -43,14 +43,14 @@
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 
 ; x.app-user.profile-handler
-(def get-user-profile             profile-handler/get-user-profile)
-(def get-user-profile-item        profile-handler/get-user-profile-item)
-(def get-user-first-name          profile-handler/get-user-first-name)
-(def get-user-last-name           profile-handler/get-user-last-name)
-(def get-user-name                profile-handler/get-user-name)
-(def get-user-phone-number        profile-handler/get-user-phone-number)
-(def get-user-profile-picture-url profile-handler/get-user-profile-picture-url)
-(def set-user-profile-item!       profile-handler/set-user-profile-item!)
+(def get-user-profile         profile-handler/get-user-profile)
+(def get-user-profile-item    profile-handler/get-user-profile-item)
+(def get-user-first-name      profile-handler/get-user-first-name)
+(def get-user-last-name       profile-handler/get-user-last-name)
+(def get-user-name            profile-handler/get-user-name)
+(def get-user-phone-number    profile-handler/get-user-phone-number)
+(def get-user-profile-picture profile-handler/get-user-profile-picture)
+(def set-user-profile-item!   profile-handler/set-user-profile-item!)
 
 ; x.app-user.settings-handler
 (def get-user-settings       settings-handler/get-user-settings)

@@ -23,7 +23,7 @@
               [x.server-core.build-handler     :as build-handler]
               [x.server-core.cache-handler     :as cache-handler]
               [x.server-core.config-handler    :as config-handler]
-              [x.server-core.debug-handler     :as debug-handler]
+              [x.server-core.debug-handler.api :as debug-handler]
               [x.server-core.engine            :as engine]
               [x.server-core.event-handler     :as event-handler]
               [x.server-core.lifecycle-handler :as lifecycle-handler]
@@ -54,7 +54,7 @@
 (def get-site-config        config-handler/get-site-config)
 (def get-site-config-item   config-handler/get-site-config-item)
 
-; x.server-core.debug-handler
+; x.server-core.debug-handler.api
 (def request->debug-mode debug-handler/request->debug-mode)
 
 ; x.server-core.engine

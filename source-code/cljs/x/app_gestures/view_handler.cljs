@@ -34,6 +34,10 @@
   [db [_ handler-id]]
   (get-in db (db/path :gestures/view-handlers handler-id :view-id)))
 
+; @usage
+;  [:gestures/get-selected-view-id]
+(a/reg-sub :gestures/get-selected-view-id get-selected-view-id)
+
 
 
 ;; -- DB events ---------------------------------------------------------------

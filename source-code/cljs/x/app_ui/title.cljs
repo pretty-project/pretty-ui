@@ -16,7 +16,7 @@
 (ns x.app-ui.title
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
-              [x.app-ui.header      :as header]))
+              [x.app-ui.header.api  :as header]))
 
 
 

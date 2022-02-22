@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2020.03.01
 ; Description:
-; Version: v0.4.6
-; Compatibility: x4.6.0
+; Version: v0.4.8
+; Compatibility: x4.6.2
 
 
 
@@ -19,7 +19,7 @@
               [x.app-core.cache-handler      :as cache-handler]
               [x.app-core.config-handler     :as config-handler]
               [x.app-core.connection-handler :as connection-handler]
-              [x.app-core.debug-handler      :as debug-handler]
+              [x.app-core.debug-handler.api  :as debug-handler]
               [x.app-core.engine             :as engine]
               [x.app-core.event-handler      :as event-handler]
               [x.app-core.lifecycle-handler  :as lifecycle-handler]

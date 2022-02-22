@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.api
-    (:require [x.mid-core.debug-handler]
+    (:require [x.mid-core.debug-handler.api]
               [x.mid-core.build-handler  :as build-handler]
               [x.mid-core.cache-handler  :as cache-handler]
               [x.mid-core.config-handler :as config-handler]

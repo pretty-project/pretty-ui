@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- A ; @return (component) és (hiccup) nem szükséges a view komponensek leírásába!
+
 - cookie-consent indenteket betenni
 
 - x.app-config.edn :css-paths legyen külön vezérelve az app.js site.js stb

@@ -17,7 +17,7 @@
     (:require [x.app-core.api        :as a :refer [r]]
               [x.app-ui.background   :rename {view app-background}]
               [x.app-ui.bubbles      :rename {view app-bubbles}]
-              [x.app-ui.header       :rename {view app-header}]
+              [x.app-ui.header.api   :rename {view app-header}]
               [x.app-ui.locker       :rename {view app-locker}]
               [x.app-ui.popups       :rename {view app-popups}]
               [x.app-ui.progress-bar :rename {view progress-bar}]

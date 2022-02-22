@@ -3,40 +3,36 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.12.17
+; Created: 2022.02.22
 ; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.9
+; Version: v0.4.0
+; Compatibility: x4.5.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.name-handler)
+(ns x.mid-core.debug-handler.engine
+    (:require [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def NAME-ORDERS {:en :normal
-                  :hu :reversed})
+; @constant (strings in vector)
+(def SAFEWORDS ["pineapple-juice" "avocado-juice"])
 
 
 
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn name->ordered-name
-  ; @param (string) first-name
-  ; @param (string) last-name
-  ; @param (keyword) locale-id
+(defn query-string->debug-mode
+  ; @param (string) query-string
   ;
   ; @return (string)
-  [first-name last-name locale-id]
-  (let [name-order (get NAME-ORDERS locale-id)]
-       (if (= name-order :reversed)
-           (str last-name  " " first-name)
-           (str first-name " " last-name))))
+  [query-string]
+  (vector/first-filtered SAFEWORDS #(string/contains-part? query-string %)))

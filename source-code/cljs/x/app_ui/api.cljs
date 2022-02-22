@@ -23,7 +23,7 @@
               [x.app-ui.shield]
               [x.app-ui.surface]
               [x.app-ui.graphics     :as graphics]
-              [x.app-ui.header       :as header]
+              [x.app-ui.header.api   :as header]
               [x.app-ui.interface    :as interface]
               [x.app-ui.progress-bar :as progress-bar]
               [x.app-ui.renderer     :as renderer]

@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.api
-    (:require [x.app-locales.country-list     :as country-list]
-              [x.app-locales.currency-handler :as currency-handler]
-              [x.app-locales.name-handler     :as name-handler]
-              [x.app-locales.language-handler :as language-handler]))
+    (:require [x.app-locales.country-list         :as country-list]
+              [x.app-locales.currency-handler     :as currency-handler]
+              [x.app-locales.name-handler.api     :as name-handler]
+              [x.app-locales.language-handler.api :as language-handler]))
 
 
 
@@ -39,7 +39,7 @@
 ; x.app-locales.currency-handler
 ; ...
 
-; x.app-locales.name-handler
+; x.app-locales.name-handler.api
 (def NAME-ORDERS        name-handler/NAME-ORDERS)
 (def name->ordered-name name-handler/name->ordered-name)
 (def get-name-order     name-handler/get-name-order)

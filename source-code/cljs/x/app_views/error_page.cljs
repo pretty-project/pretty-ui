@@ -49,8 +49,6 @@
   ; @param (keyword) surface-id
   ; @param (map) content-props
   ;  {:title (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ {:keys [title]}]
   [elements/text ::error-title
                  {:content title :font-size :xxl :horizontal-align :center :layout :fit :selectable? false
@@ -62,8 +60,6 @@
   ; @param (keyword) surface-id
   ; @param (map) content-props
   ;  {:helper (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ {:keys [helper]}]
   [elements/text ::error-helper
                  {:content helper :font-size :s :horizontal-align :center :layout :fit :selectable? false
@@ -75,8 +71,6 @@
   ; @param (keyword) surface-id
   ; @param (map) content-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (component)
   [_ {:keys [icon]}]
   (if icon [elements/icon ::error-icon
                           {:icon icon :size :xxl}]))
@@ -86,8 +80,6 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) content-props
-  ;
-  ; @return (component)
   [_ _]
   [elements/button ::go-back-button
                    {:label    :back!
@@ -99,8 +91,6 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) content-props
-  ;
-  ; @return (component)
   [surface-id content-props]
   [:<> [elements/horizontal-separator {:size :xl}]
        [error-icon     surface-id content-props]
