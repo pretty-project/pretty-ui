@@ -5,8 +5,8 @@
 ; Author: bithandshake
 ; Created: 2021.03.23
 ; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.8
+; Version: v0.7.2
+; Compatibility: x4.6.2
 
 
 
@@ -43,6 +43,8 @@
   [db _]
   (get-in db (db/path :user/profile)))
 
+; @usage
+;  [:user/get-user-profile]
 (a/reg-sub :user/get-user-profile get-user-profile)
 
 (defn get-user-profile-item
@@ -55,6 +57,10 @@
   [db [_ item-key]]
   (get-in db (db/path :user/profile item-key)))
 
+; @usage
+;  [:user/get-user-profile-item :email-address]
+(a/reg-sub :user/get-user-profile-item get-user-profile-item)
+
 (defn get-user-first-name
   ; @usage
   ;  (r user/get-user-first-name db)
@@ -63,6 +69,10 @@
   [db _]
   (r get-user-profile-item db :first-name))
 
+; @usage
+;  [:user/get-user-first-name]
+(a/reg-sub :user/get-user-first-name get-user-first-name)
+
 (defn get-user-last-name
   ; @usage
   ;  (r user/get-user-last-name db)
@@ -70,6 +80,10 @@
   ; @return (string)
   [db _]
   (r get-user-profile-item db :last-name))
+
+; @usage
+;  [:user/get-user-last-name]
+(a/reg-sub :user/get-user-last-name get-user-last-name)
 
 (defn get-user-name
   ; @usage
@@ -80,6 +94,10 @@
   (string/trim (str (r get-user-first-name db) " "
                     (r get-user-last-name  db))))
 
+; @usage
+;  [:user/get-user-name]
+(a/reg-sub :user/get-user-name get-user-name)
+
 (defn get-user-phone-number
   ; @usage
   ;  (r user/get-user-phone-number db)
@@ -88,14 +106,21 @@
   [db _]
   (r get-user-profile-item db :phone-number))
 
+; @usage
+;  [:user/get-user-phone-number]
+(a/reg-sub :user/get-user-phone-number get-user-phone-number)
+
 (defn get-user-profile-picture-url
   ; @usage
   ;  (r user/get-user-profile-picture-url db)
   ;
   ; @return (string)
   [db _]
-  (or (return nil)
-      (return engine/DEFAULT-PROFILE-PICTURE-URL)))
+  (or nil engine/DEFAULT-PROFILE-PICTURE-URL))
+
+; @usage
+;  [:user/get-user-profile-picture-url]
+(a/reg-sub :user/get-user-profile-picture-url get-user-profile-picture-url)
 
 
 

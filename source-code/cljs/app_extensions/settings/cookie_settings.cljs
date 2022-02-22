@@ -2,7 +2,6 @@
 (ns app-extensions.settings.cookie-settings
     (:require [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
-              [x.app-dictionary.api  :as dictionary]
               [x.app-elements.api    :as elements]
               [x.app-environment.api :as environment]))
 
@@ -12,7 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  WARNING! XXX#0459
+; WARNING#0459
 
 
 
@@ -21,32 +20,32 @@
 
 (defn- cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  []
   [elements/button ::cancel-button
                    {:preset   :cancel-button
-                    :on-click [:ui/close-popup! popup-id]}])
+                    :on-click [:ui/close-popup! :settings.cookie-settings/view]}])
 
 (defn- save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  []
   [elements/button ::save-button
                    {:preset  :save-button
                     :variant :transparent
-                    :on-click {:dispatch-n [[:ui/close-popup! popup-id]
+                    :on-click {:dispatch-n [[:ui/close-popup! :settings.cookie-settings/view]
                                             [:environment/cookie-settings-changed]]}}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   [elements/label {:content :privacy-settings :indent :both}])
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  [_]
   [elements/horizontal-polarity ::header
-                                {:start-content  [cancel-button popup-id]
-                                 :middle-content [header-label  popup-id]
-                                 :end-content    [save-button   popup-id]}])
+                                {:start-content  [cancel-button]
+                                 :middle-content [header-label]
+                                 :end-content    [save-button]}])
 
 
 
@@ -55,48 +54,55 @@
 
 (defn- privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   [elements/button ::policy-button
                    {:label :privacy-policy :preset :primary-button :layout :fit
                     :on-click [:router/go-to! "/@app-home/privacy-policy"]}])
 
 (defn- terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   [elements/button ::terms-of-service-button
                    {:label :terms-of-service :preset :primary-button :layout :fit
                     :on-click [:router/go-to! "/@app-home/terms-of-service"]}])
 
-(defn- cookie-settings
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  [_]
   [:<> ; This website uses cookies
        [elements/horizontal-separator {:size :s}]
-       [elements/text {:content :this-website-uses-cookies
-                       :font-size :xs :layout :row :font-weight :bold}]
+       [elements/text {:content :this-website-uses-cookies :font-size :xs :layout :row :font-weight :bold}]
        ; Legal links
        [elements/horizontal-separator {:size :xxs}]
-       [privacy-policy-button   popup-id]
+       [privacy-policy-button]
        [elements/horizontal-separator {:size :s}]
-       [terms-of-service-button popup-id]
+       [terms-of-service-button]
        ; Cookie settings
        [elements/horizontal-line {:color :highlight :layout :row}]
-       [elements/switch ::necessary-cookies-switch
+       ; BUG#1294
+       ; Ha egyszerre jelenik meg a cookie-settings komponens a :settings.privacy-settings surface
+       ; felületen és a :settings.cookie-consent popup felületen, akkor a popup bezárásakor az input-ok
+       ; destructor függvényei törlik az inputok adatait a Re-Frame adatbázisból, ami miatt a ... surface
+       ; felületen megjelenített inputok elveszítik az adataikat
+       ; (kivéve ha különböző azonosítót kapnak a két felületen)
+       [elements/switch ;::necessary-cookies-switch
                         {:disabled?     true
-                         :indent        :none
                          :initial-value true
+                         :indent        :none
                          :label         :necessary-cookies
                          :value-path (environment/cookie-setting-path :necessary-cookies-enabled?)}]
-       [elements/switch ::user-experience-cookies-switch
-                        {:indent        :none
-                         :initial-value true
+       ; BUG#1294
+       [elements/switch ;::user-experience-cookies-switch
+                        {:initial-value true
+                         :indent        :none
                          :label         :user-experience-cookies
                          :value-path (environment/cookie-setting-path :user-experience-cookies-enabled?)
                          :on-check   [:environment/cookie-settings-changed]
                          :on-uncheck [:environment/cookie-settings-changed]}]
-       [elements/switch ::analytics-cookies-switch
-                        {:indent        :none
-                         :initial-value true
+       ; BUG#1294
+       [elements/switch ;::analytics-cookies-switch
+                        {:initial-value true
+                         :indent        :none
                          :label         :analytics-cookies
                          :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
                          :on-check   [:environment/cookie-settings-changed]
@@ -107,11 +113,6 @@
                          :on-click [:settings.remove-stored-cookies/render-dialog!]}]
        [elements/horizontal-separator {:size :s}]])
 
-(defn body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
-  [cookie-settings popup-id])
-
 
 
 ;; -- Lifecycle events --------------------------------------------------------
@@ -120,7 +121,7 @@
 (a/reg-event-fx
   :settings.cookie-settings/render-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! ::view
+  [:ui/add-popup! :settings.cookie-settings/view
                   {:body   #'body
                    :header #'header
                    :horizontal-align :left

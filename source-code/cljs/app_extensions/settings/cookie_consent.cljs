@@ -53,19 +53,19 @@
 
 (defn- got-it-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  []
   [elements/button ::got-it-button
                    {:label    :got-it!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click {:dispatch-n [[:ui/close-popup! popup-id]
+                    :on-click {:dispatch-n [[:ui/close-popup! :settings.cookie-consent/view]
                                             [:environment/cookie-settings-changed]]}}])
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [popup-id]
+  [_]
   [elements/horizontal-polarity ::header
-                                {:end-content [got-it-button popup-id]}])
+                                {:end-content [got-it-button]}])
 
 
 
@@ -89,6 +89,6 @@
                      {; BUG#2457
                       :dispatch-later [{:ms BOOT-RENDERING-DELAY :dispatch [:settings.cookie-consent/render-consent!]}]}]}))
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-launch [:settings.cookie-consent/initialize-consent!]})
+;(a/reg-lifecycles!
+;  ::lifecycles
+;  {:on-app-launch [:settings.cookie-consent/initialize-consent!]})

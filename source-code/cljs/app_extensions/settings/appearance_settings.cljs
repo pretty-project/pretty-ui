@@ -27,7 +27,7 @@
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
+  [_]
   [:<> [elements/radio-button ::selected-theme-radio-button
                               {:helper       "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                                :label        :selected-theme

@@ -3,22 +3,21 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2020.02.09
+; Created: 2022.02.22
 ; Description:
-; Version: v1.3.0
-; Compatibility: x4.6.0
+; Version: v1.3.8
+; Compatibility: x4.6.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-environment.css-handler
+(ns x.app-environment.css-handler.engine
     (:require [app-fruits.dom    :as dom]
               [mid-fruits.candy  :refer [param return]]
               [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r cache-control-uri]]))
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -102,57 +101,3 @@
   ; @return (string)
   [filename]
   (str EXTERNAL-CSS-URI-BASE filename))
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn add-external-css!
-  ; @param (string) filepath
-  ; @param (map)(opt) context-props
-  ;  {:as-first? (boolean)}
-  ;
-  ; @usage
-  ;  (environment/add-external-css! "/css/filename.css")
-  [filepath context-props]
-  (let [head-element (dom/get-head-element)
-        app-build    (a/app-build)
-        filepath     (cache-control-uri (string/starts-with! filepath "/") app-build)
-        link-element (create-link-element! filepath)]
-       (if-not (source-exists? head-element filepath)
-               (insert-link-element! head-element link-element context-props))))
-
-; @usage
-;  [:environment/add-external-css! "/css/filename.css"]
-(a/reg-fx :environment/add-external-css! add-external-css!)
-
-(defn add-css!
-  ; @param (string) filename
-  ; @param (map)(opt) context-props
-  ;  {:as-first? (boolean)}
-  ;
-  ; @usage
-  ;  (environment/add-css! "/filename.css")
-  [filename context-props]
-  (let [filepath (filename->external-css-uri filename)]
-       (add-external-css! filepath context-props)))
-
-; @usage
-;  [:environment/add-css! "filename.css"]
-;
-; @usage
-;  [:environment/add-css! "filename.css" {...}]
-(a/reg-fx :environment/add-css! add-css!)
-
-(defn remove-css!
-  ; @param (string) filename
-  ;
-  ; @usage
-  ;  (environment/remove-css! "/filename.css")
-  [filename])
-  ; TODO ...
-
-; @usage
-;  [:environment/remove-css! "/filename.css"]
-(a/reg-fx :environment/remove-css! remove-css!)

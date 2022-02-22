@@ -15,23 +15,23 @@
 
 (ns x.app-environment.api
     (:require [x.app-environment.scroll-prohibitor]
-              [x.app-environment.cookie-handler    :as cookie-handler]
-              [x.app-environment.css-handler       :as css-handler]
-              [x.app-environment.element-handler   :as element-handler]
-              [x.app-environment.event-handler     :as event-handler]
-              [x.app-environment.keypress-handler  :as keypress-handler]
-              [x.app-environment.mouse-handler     :as mouse-handler]
-              [x.app-environment.scroll-handler    :as scroll-handler]
-              [x.app-environment.touch-handler     :as touch-handler]
-              [x.app-environment.viewport-handler  :as viewport-handler]
-              [x.app-environment.window-handler    :as window-handler]))
+              [x.app-environment.cookie-handler.api :as cookie-handler]
+              [x.app-environment.css-handler.api    :as css-handler]
+              [x.app-environment.element-handler    :as element-handler]
+              [x.app-environment.event-handler      :as event-handler]
+              [x.app-environment.keypress-handler   :as keypress-handler]
+              [x.app-environment.mouse-handler      :as mouse-handler]
+              [x.app-environment.scroll-handler     :as scroll-handler]
+              [x.app-environment.touch-handler      :as touch-handler]
+              [x.app-environment.viewport-handler   :as viewport-handler]
+              [x.app-environment.window-handler     :as window-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-environment.cookie-handler
+; x.app-environment.cookie-handler.api
 (def cookie-setting-path              cookie-handler/cookie-setting-path)
 (def get-stored-cookies               cookie-handler/get-stored-cookies)
 (def any-cookies-stored?              cookie-handler/any-cookies-stored?)
@@ -41,7 +41,7 @@
 (def necessary-cookies-enabled?       cookie-handler/necessary-cookies-enabled?)
 (def user-experience-cookies-enabled? cookie-handler/user-experience-cookies-enabled?)
 
-; x.app-environment.css-handler
+; x.app-environment.css-handler.api
 (def add-external-css! css-handler/add-external-css!)
 (def add-css!          css-handler/add-css!)
 (def remove-css!       css-handler/remove-css!)

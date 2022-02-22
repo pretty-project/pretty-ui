@@ -9,7 +9,7 @@
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
+  [_]
   [:<> [elements/horizontal-separator {:size :l}]
        [elements/switch ::warning-bubbles-switch
                         {:helper     "Lorem Ipsum is simply dummy text of the printing and typesetting industry."

@@ -19,12 +19,11 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [extension-id]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]))
-; Itt folytatni kell az extension-id átadását, és az átalakítás local subscription-ökre
-;       (case view-id :personal      [personal-settings     extension-id]
-;                     :privacy       [privacy-settings      extension-id]
-;                     :notifications [notification-settings extension-id]
-;                     :appearance    [appearance-settings   extension-id])]))
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings])]
+       (case view-id :personal      [personal-settings     extension-id]
+                     :privacy       [privacy-settings      extension-id]
+                     :notifications [notification-settings extension-id]
+                     :appearance    [appearance-settings   extension-id])))
 
 
 
@@ -33,8 +32,8 @@
 
 (defn- menu-bar-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]
+  []
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings])]
        [{:icon :person        :active? (= view-id :personal)      :on-click [:view-selector/go-to! :settings :personal]}
         {:icon :security      :active? (= view-id :privacy)       :on-click [:view-selector/go-to! :settings :privacy]}
         {:icon :notifications :active? (= view-id :notifications) :on-click [:view-selector/go-to! :settings :notifications]}
@@ -42,16 +41,16 @@
 
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id]
+  []
   [elements/menu-bar ::menu-bar
-                     {:menu-items (menu-bar-items extension-id)
+                     {:menu-items (menu-bar-items)
                       :horizontal-align :center}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id]
+  [_]
   [elements/horizontal-polarity ::header
-                                {:middle-content [menu-bar extension-id]}])
+                                {:middle-content [menu-bar]}])
 
 
 
@@ -60,7 +59,7 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id]
+  [_]
   [view-selector/view :settings {:body   #'body
                                  :header #'header}])
 

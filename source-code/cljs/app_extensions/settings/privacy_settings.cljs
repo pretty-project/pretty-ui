@@ -10,5 +10,5 @@
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
-  [cookie-settings body-id])
+  [_]
+  [cookie-settings])

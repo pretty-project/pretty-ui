@@ -4,50 +4,37 @@
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
-              [x.app-user.api       :as user]
-              [app-extensions.settings.cookie-settings :rename {view cookie-settings}]))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-body-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  {:user-email-address       (r user/get-user-email-address       db)
-   :user-first-name          (r user/get-user-first-name          db)
-   :user-last-name           (r user/get-user-last-name           db)
-   :user-name                (r user/get-user-name                db)
-   :user-profile-picture-url (r user/get-user-profile-picture-url db)
-   :user-phone-number        (r user/get-user-phone-number        db)})
-
-(a/reg-sub :settings.personal-settings/get-body-props get-body-props)
+              [x.app-user.api       :as user]))
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- change-profile-picture-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::change-profile-picture-button
+                   {:label     :change-profile-picture
+                    :preset    :default-button
+                    :font-size :xs}])
+
 (defn- user-profile-picture
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) body-id
-  ; @param (map) body-props
-  ;  {:user-profile-picture-url (string)}
-  ;
-  ; @return (hiccup)
-  [_ {:keys [user-profile-picture-url]}]
- [elements/column ::user-profile-picture
-                  {:content [:<> [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]
-                                 [elements/button ::change-profile-picture-button
-                                                  {:label     :change-profile-picture
-                                                   :preset    :default-button
-                                                   :font-size :xs}]]}])
+  []
+  (let [user-profile-picture-url @(a/subscribe [:user/get-user-profile-picture-url])]
+       [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]))
+
+(defn- user-profile-picture-block
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/column ::user-profile-picture-block
+                   {:content [:<> [user-profile-picture]
+                                  [change-profile-picture-button]]}])
 
 (defn- user-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  []
   [:<> [elements/label ::user-name-label
                        {:content   :name
                         :color     :muted
@@ -60,7 +47,7 @@
 
 (defn- user-email-address
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  []
   [:<> [elements/label ::user-email-address-label
                        {:content   :email-address
                         :color     :muted
@@ -73,7 +60,7 @@
 
 (defn- user-phone-number
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  []
   [:<> [elements/label ::user-phone-number-label
                        {:content   :phone-number
                         :color     :muted
@@ -86,7 +73,7 @@
 
 (defn- user-password
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  []
   [:<> [elements/label ::user-password-label
                        {:content   :password
                         :color     :muted
@@ -99,7 +86,7 @@
 
 (defn- user-pin
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _]
+  []
   [:<> [elements/label ::user-pin-label
                        {:content   :pin
                         :color     :muted
@@ -110,24 +97,24 @@
                          :preset :default-button
                          :layout :fit}]])
 
-(defn- personal-settings
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id body-props]
+  [_]
   [:<> [elements/horizontal-separator {:size :s}]
-       [user-profile-picture body-id body-props]
+       [user-profile-picture-block]
        [elements/horizontal-separator {:size :s}]
        [elements/horizontal-line      {:color :highlight}]
        [elements/horizontal-separator {:size :l}]
       [:div {:style {:width "100%"}}
-       [user-name            body-id]
+       [user-name]
        [elements/horizontal-separator {:size :l}]
-       [user-email-address   body-id]
+       [user-email-address]
        [elements/horizontal-separator {:size :l}]
-       [user-phone-number    body-id]
+       [user-phone-number]
        [elements/horizontal-separator {:size :l}]
-       [user-password        body-id]
+       [user-password]
        [elements/horizontal-separator {:size :l}]
-       [user-pin             body-id]
+       [user-pin]
        [elements/horizontal-separator {:size :l}]
        [elements/button ::delete-user-account-button
                         {:label :delete-user-account!
@@ -135,10 +122,3 @@
        [elements/button ::clear-user-data-button
                         {:label :clear-user-data!
                          :preset :secondary-button}]]])
-
-(defn body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id]
-  [components/subscriber body-id
-                         {:render-f   #'personal-settings
-                          :subscriber [:settings.personal-settings/get-body-props]}])

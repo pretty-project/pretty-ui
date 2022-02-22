@@ -11,31 +11,31 @@
 
 (defn- cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  []
   [elements/button ::cancel-button
                    {:color    :default
                     :label    :cancel!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click [:ui/close-popup! header-id]}])
+                    :on-click [:ui/close-popup! :settings.remove-stored-cookies/view]}])
 
 (defn- remove-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  []
   [elements/button ::remove-button
                    {:color    :warning
                     :label    :remove!
                     :preset   :close-button
                     :variant  :transparent
-                    :on-click {:dispatch-n [[:ui/close-popup! header-id]
+                    :on-click {:dispatch-n [[:ui/close-popup! :settings.remove-stored-cookies/view]
                                             [:settings/remove-stored-cookies!]]}}])
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [header-id]
+  [_]
   [elements/horizontal-polarity ::header
-                                {:start-content [cancel-button header-id]
-                                 :end-content   [remove-button header-id]}])
+                                {:start-content [cancel-button]
+                                 :end-content   [remove-button]}])
 
 
 
@@ -59,8 +59,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [message (r dictionary/look-up db :just-a-moment)]
-           {:dispatch-later [{:ms   0 :dispatch [:environment/remove-cookies!]}
-                             {:ms   0 :dispatch [:ui/set-shield! {:content message}]}
+           {:dispatch-later [{:ms   0 :dispatch [:ui/set-shield! {:content message}]}
+                             {:ms  50 :dispatch [:environment/remove-cookies!]}
                              {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
 
 
