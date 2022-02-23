@@ -5,7 +5,7 @@
 ; Author: bithandshake
 ; Created: 2021.07.07
 ; Description:
-; Version: v0.9.8
+; Version: v1.0.2
 ; Compatibility: x4.4.8
 
 
@@ -119,7 +119,8 @@
           :get-value-f               return
           :no-options-selected-label DEFAULT-NO-OPTIONS-SELECTED-LABEL
           :options-path              (engine/default-options-path group-id)
-          :value-path                (engine/default-value-path   group-id)}
+          :value-path                (engine/default-value-path   group-id)
+          :layout :row}
          (param group-props)))
 
 (defn field-props-prototype
@@ -135,8 +136,8 @@
   [group-id group-props]
   (let [field-id (group-id->field-id group-id)]
        (merge (select-keys group-props INHERITED-FIELD-PROPS)
-              {:on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
-               :group-id            group-id
+              {:group-id group-id
+               :on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
                :select-option-event [:elements/stack-to-group-value! group-id]})))
 
 
@@ -216,7 +217,8 @@
   ;
   ; @return (component)
   [group-id group-props]
-  [:div.x-multi-combo-box [multi-combo-box-chip-group  group-id group-props]
+  [:div.x-multi-combo-box (engine/element-attributes   group-id group-props)
+                          [multi-combo-box-chip-group  group-id group-props]
                           [multi-combo-box-field       group-id group-props]
                           [engine/element-helper       group-id group-props]
                           [engine/element-info-tooltip group-id group-props]])
@@ -286,7 +288,7 @@
   ([group-id group-props]
    (let [group-props (group-props-prototype group-id group-props)]
         [engine/stated-element group-id
-                               {:render-f      #'multi-combo-box
-                                :element-props group-props
+                               {:element-props group-props
+                                :render-f      #'multi-combo-box
                                 :initializer   [:elements/init-selectable!          group-id]
                                 :subscriber    [:elements/get-multi-combo-box-props group-id]}])))

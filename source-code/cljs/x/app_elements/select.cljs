@@ -59,6 +59,9 @@
 ; @constant (keyword)
 (def SELECT-BUTTON-ICON :unfold_more)
 
+; @constant (metamorphic-content)
+(def DEFAULT-NO-OPTIONS-LABEL :no-options)
+
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -107,8 +110,7 @@
   ;
   ; @return (boolean)
   [{:keys [options-label user-close?]}]
-  (or (some?   options-label)
-      (boolean user-close?)))
+  (or options-label user-close?))
 
 
 
@@ -132,14 +134,14 @@
   ;   :layout (keyword)
   ;   :value-path (item-path vector)}
   [select-id {:keys [as-button?] :as select-props}]
-       ; BUG#1507
+  (let ; BUG#1507
        ; Ha a select-button elem {:disabled? true} állapotban csatolódik a React-fába,
        ; akkor a {:disabled? true} tulajdonságát az options-props térképben továbbörökítené
        ; az {:on-click [:elements/render-select-options! ...]} konstans tulajdonságon keresztül
        ; select-options elemnek.
-  (let [options-props (dissoc select-props :disabled?)]
-       (merge {:get-label-f  return
-               :get-value-f  return
+       [options-props (dissoc select-props :disabled?)]
+       (merge {:get-label-f return
+               :get-value-f return
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
               ; A button elemre is ható tulajdonságok csak akkor részei a select elem
@@ -157,14 +159,16 @@
   ;
   ; @return (map)
   ;  {:get-label-f (function)
+  ;   :no-options-label (metamorphic-content)
   ;   :on-select (metamorphic-event)
   ;   :options-id (keyword)
   ;   :options-path (item-path vector)
   ;   :value-path (item-path vector)}
   [select-id {:keys [options-label] :as options-props}]
   (let [on-select (on-select-events select-id options-props)]
-       (merge {:get-label-f  return
-               :get-value-f  return
+       (merge {:get-label-f      return
+               :get-value-f      return
+               :no-options-label DEFAULT-NO-OPTIONS-LABEL
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
               (param options-props)
@@ -252,29 +256,52 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) select-props
+  ; @param (map) options-props
   ;  {:get-label-f (function)
   ;   :options-id (keyword)}
   ; @param (*) option
   ;
   ; @return (hiccup)
-  [popup-id {:keys [get-label-f options-id] :as select-props} option]
+  [popup-id {:keys [get-label-f options-id] :as options-props} option]
   (let [option-label (get-label-f option)]
-       [:button.x-select--option (engine/selectable-option-attributes options-id select-props option)
+       [:button.x-select--option (engine/selectable-option-attributes options-id options-props option)
                                  [components/content option-label]]))
 
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) select-props
-  ;  {:options (maps in vector)}
+  ; @param (map) options-props
+  ;  {:options (vector)}
   ;
   ; @return (hiccup)
-  [popup-id {:keys [options] :as select-props}]
-  (reduce #(conj %1 [select-option popup-id select-props %2])
-           [:div.x-select--options]
-           (param options)))
+  [popup-id {:keys [options] :as options-props}]
+  (letfn [(f [options option] (conj options [select-option popup-id options-props option]))]
+         (reduce f [:div.x-select--options] options)))
+
+(defn- no-options-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) options-props
+  ;  {:options (vector)}
+  ;
+  ; @return (component)
+  [_ {:keys [no-options-label]}]
+  [:div.x-select--no-options-label [components/content no-options-label]])
+
+(defn- select-options-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) options-props
+  ;  {:options (vector)}
+  ;
+  ; @return (component)
+  [popup-id {:keys [options] :as options-props}]
+  (if (vector/nonempty? options)
+      [select-options   popup-id options-props]
+      [no-options-label popup-id options-props]))
 
 (defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -286,8 +313,8 @@
   ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
-                         {:render-f      #'select-options
-                          :element-props options-props
+                         {:element-props options-props
+                          :render-f      #'select-options-structure
                           :subscriber    [:elements/get-select-props options-id]}])
 
 
@@ -408,6 +435,8 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
+  ;   :no-options-label (metamorphic-content)(opt)
+  ;     Default: DEFAULT-NO-OPTIONS-LABEL
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(constant)(opt)
   ;   :options-label (metamorphic-content)(constant)(opt)

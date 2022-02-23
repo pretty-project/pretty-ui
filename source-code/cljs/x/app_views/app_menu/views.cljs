@@ -72,7 +72,8 @@
                         {:indent :left
                          :preset :language-button
                          :on-click  [:gestures/change-view! :app-views.app-menu/handler :language-selector]
-                         :disabled? (not app-multilingual?)}]))
+                         ;:disabled? (not app-multilingual?)}]))
+                         :disabled? true}]))
 
 
 
@@ -175,7 +176,8 @@
                     :indent :left
                     :label  :terms-of-service
                     :preset :default-button
-                    :on-click [:router/go-to! "/@app-home/terms-of-service"]}])
+                    :on-click [:router/go-to! "/@app-home/terms-of-service"]
+                    :disabled? true}])
 
 (defn- privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -185,7 +187,8 @@
                     :indent :left
                     :label  :privacy-policy
                     :preset :default-button
-                    :on-click [:router/go-to! "/@app-home/privacy-policy"]}])
+                    :on-click [:router/go-to! "/@app-home/privacy-policy"]
+                    :disabled? true}])
 
 (defn- more-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

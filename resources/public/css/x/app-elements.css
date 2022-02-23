@@ -223,6 +223,7 @@ button.x-card:focus,
 .x-select--label,
 .x-select--button-label,
 .x-select--button-icon,
+.x-select--no-options-label,
 .x-select--option,
 .x-switch--label,
 .x-switch--primary-label,
@@ -2122,6 +2123,14 @@ body[data-viewport-profile="s"]
 
 /*** Combo-box option ***/
 
+/*** Multi combo-box wrapper ***/
+
+.x-multi-combo-box[data-layout="row"] {
+  /* XXX#0376 */
+  padding: 8px 0 }
+
+/*** Multi combo-box wrapper ***/
+
 /*** Multi combo-box field ***/
 
 .x-multi-combo-box--field {
@@ -2873,6 +2882,13 @@ body[data-viewport-profile="s"]
   min-width: var( --element-min-width-s );
   padding: 12px 0 }
 
+.x-select--no-options-label {
+  color: var( --color-highlight );
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s )  }
+
 /*** Select options ***/
 
 /*** Select option ***/
@@ -3234,6 +3250,7 @@ body[data-viewport-profile="s"]
 
 .x-date-field[data-layout="row"],
 .x-text-field[data-layout="row"] {
+  /* XXX#0376 */
   padding: 8px 0 }
 
 /*** Text field wrapper ***/

@@ -203,9 +203,9 @@
   ;  {:no-options-label (metamorphic-content)}
   ;
   ; @return (hiccup)
-  [field-id {:keys [no-options-label] :as field-props}]
-                                      ; BUG#2105
-  [:div.x-combo-box--no-options-label {:on-mouse-down #(.preventDefault %)
+  [field-id {:keys [no-options-label]}]
+  [:div.x-combo-box--no-options-label ; BUG#2105
+                                      {:on-mouse-down #(.preventDefault %)
                                        :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
                                       [components/content no-options-label]])
 

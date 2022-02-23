@@ -163,6 +163,9 @@
   ([picker-id picker-props]
    [media-picker picker-id picker-props]))
 
+   ; Legyen disabled? állapota is!
+   ; Mutassa a thumbnail-eket, ha van meg a fájlneveket!
+
 
 
 ;; -- Lifecycle events --------------------------------------------------------

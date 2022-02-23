@@ -1,6 +1,12 @@
 
 # x4.6.2
 
+- Az [:environment/add-external-css! "..."] eseményt ne használd! Helyett az x.app-config.edn
+  fájlban hívd be az egyes css fájlokat!
+
+- A [:ui/listen-to-request! ...] eseményt ne hívd meg! Helyette az egyes request-eknek és query-knek
+  add át a {:display-progress? true} tulajdonságot!
+
 - Az útvonalak {:js "..."} beállítása ezentúl {:core-js "..."} névén elérhető
 
 - A {:cache-control? true} beállítást sehol nem kell ezentúl alkalmazni (automatikus lett)

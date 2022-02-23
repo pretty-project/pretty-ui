@@ -133,6 +133,12 @@
       :cancel!
       {:en "Cancel"
        :hu "Mégsem"}
+      :category
+      {:en "Category"
+       :hu "Kategória"}
+      :categories
+      {:en "Categories"
+       :hu "Kategóriák"}
       :close!
       {:en "Close"
        :hu "Bezárás"}
@@ -282,7 +288,7 @@
        :hu "% elem kiválasztva"}
       :no-options
       {:en "No options"
-       :hu "Nincs választható lehetőség"}
+       :hu "Nincs választható elem"}
       :no-option-selected
       {:en "No option selected"
        :hu "Nincs kiválasztott elem"}
@@ -343,6 +349,9 @@
       :search
       {:en "Search"
        :hu "Keresés"}
+      :seo
+      {:en "Search Engine Optimization"
+       :hu "Keresőoptimalizálás"}
       :settings
       {:en "Settings"
        :hu "Beállítások"}
@@ -358,6 +367,12 @@
       :status
       {:en "Status"
        :hu "Állapot"}
+      :subcategory
+      {:en "Subcategory"
+       :hu "Alkategória"}
+      :subcategories
+      {:en "Subcategories"
+       :hu "Alkategóriák"}
       :submit!
       {:en "Submit"
        :hu "Tovább"}
@@ -649,7 +664,7 @@
        :hu "Kérlek töltsd ki ezt a mezőt!"}
       :please-select-an-option
       {:en "Please select an option!"
-       :hu "Kérlek válassz a lehetőségek közül!"}
+       :hu "Kérlek válassz az elemek közül!"}
       :recover!
       {:en "Recover"
        :hu "Visszaállítás"}
@@ -1061,6 +1076,12 @@
       :there-is-not-enough-space
       {:en "There is not enough space available to complete this operation"
        :hu "Nincs elegendő hely a művelet befejezéséhez"}
+      :thumbnail
+      {:en "Thumbnail"
+       :hu "Bélyegkép"}
+      :thumbnails
+      {:en "Thumbnails"
+       :hu "Bélyegképek"}
       :untitled-directory
       {:en "Untitled directory"
        :hu "Névtelen mappa"}
