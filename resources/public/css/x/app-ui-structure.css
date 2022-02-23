@@ -224,27 +224,29 @@
 /*** Header ***/
 
 #x-app-header {
-  background-color: var( --background-color );
-  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  left: 0;
-  padding: 0 var( --content-edge );
+  justify-content: center;
+  left: var( --app-edge );
   position: fixed;
   top: 0;
-  width: 100%;
+  width: var( --app-width );
 
   /* Floating header, while scrolled-to-top? = true */
   -border-radius: var( --border-radius-m );
   -top: 12px;
 
-  left: var( --app-edge );
-  width: var( --app-width );
-
   /* Content-sized header */
   -left: calc((100% - var( --content-width-l )) / 2);
   -width: var( --content-width-l ) }
+
+#x-app-header--body {
+  background-color: var( --background-color );
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  display: flex;
+  justify-content: space-between;
+  max-width: var( --content-width-l );
+  padding: 0 var( --content-edge );
+  width: 100% }
 
 #x-app-header--title {
   align-items: center;

@@ -3,6 +3,7 @@
     (:require [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-ui.api      :as ui]
+              [x.app-media.api   :as media]
               [app-extensions.storage.engine            :as engine]
               [app-extensions.storage.media-picker.subs :as subs]))
 
@@ -14,14 +15,16 @@
 (defn unselect-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ {:keys [filename]}]]
-  (update-in db [:storage :media-picker/data-items] vector/remove-item filename))
+  (let [file-uri (media/filename->media-storage-uri filename)]
+       (update-in db [:storage :media-picker/data-items] vector/remove-item file-uri)))
 
 (defn select-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ {:keys [filename]}]]
-  (if-let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
-          (update-in db [:storage :media-picker/data-items] vector/conj-item-once filename)
-          (assoc-in  db [:storage :media-picker/data-items] [filename])))
+  (let [file-uri (media/filename->media-storage-uri filename)]
+       (if-let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
+               (update-in db [:storage :media-picker/data-items] vector/conj-item-once file-uri)
+               (assoc-in  db [:storage :media-picker/data-items] [file-uri]))))
 
 (defn toggle-file-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!

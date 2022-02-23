@@ -104,4 +104,4 @@
   []
   (if-let [render-header? @(a/subscribe [:ui/render-header?])]
           [:div#x-app-header {:data-nosnippet true}
-                             [header-label-bar]]))
+                             [:div#x-app-header--body [header-label-bar]]]))

@@ -3,7 +3,8 @@
     (:require [app-plugins.item-browser.subs]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]))
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-media.api      :as media]))
 
 
 
@@ -36,8 +37,9 @@
 (defn file-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ {:keys [filename]}]]
-  (let [selected-items (r get-selected-items db)]
-       (vector/contains-item? selected-items filename)))
+  (let [file-uri       (media/filename->media-storage-uri filename)
+        selected-items (r get-selected-items db)]
+       (vector/contains-item? selected-items file-uri)))
 
 (defn save-selected-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -15,16 +15,11 @@
 # x4.6.0
 - A ; @return (component) és (hiccup) nem szükséges a view komponensek leírásába!
 
-- cookie-consent indenteket betenni
-
-- x.app-config.edn :css-paths legyen külön vezérelve az app.js site.js stb
-
 - Ha a szerver-oldalon müködik a dispatch-later, akkor leválthatja a dispatch-tick-et
   a boot-loader.clj-ben és aztán a dispatch-tick törölhető
 
 - Az x modulok névterei is legyenek mappákra bontva amiben van subs events ?? really ?? ...
 - Az x modulok is tárolják ugy az adatot, mint az extension [:core :load-handler/meta-items ...]
-
 
 - A ui-renderer az elemek megjelenítésekor több különálló alkalommal ír a re-frame db-be, ami nem jo
   mert sokszor ujrakalkulalodnak a subscription-ök, ha react-transition-el lenne megoldva az animálás,
