@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.16
-; Description:
-; Version: v0.4.6
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -29,7 +18,7 @@
   [_]
   (let [uri          (window/get-uri)
         query-string (uri/uri->query-string uri)]
-       (event-handler/dispatch [:db/set-item! [:core/debug-handler :meta-items :debug-mode]
+       (event-handler/dispatch [:db/set-item! [:core :debug-handler/meta-items :debug-mode]
                                               (engine/query-string->debug-mode query-string)])))
 
 

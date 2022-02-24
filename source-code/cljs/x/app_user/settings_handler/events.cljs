@@ -2,27 +2,30 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.debug-handler.events
-    (:require [x.app-core.event-handler :as event-handler]))
+(ns x.app-user.settings-handler.events
+    (:require [x.app-core.api :as a]))
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-debug-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn set-user-settings-item!
+  ; @param (keyword) item-key
+  ; @param (*) item-value
   ;
-  ; @param (string) debug-mode
+  ; @usage
+  ;  (r user/set-user-settings-item! db :my-settings-item "My value")
   ;
   ; @return (map)
-  [db [_ debug-mode]]
-  (assoc-in db [:core :debug-handler/meta-items :debug-mode] debug-mode))
+  [db [_ item-key item-value]]
+  (assoc-in db [:user :settings-handler/data-items item-key] item-value))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/set-debug-mode! set-debug-mode!)
+; @usage
+;  [:user/set-user-settings-item! :my-settings-item "My value"]
+(a/reg-event-db :user/set-user-settings-item! set-user-settings-item!)

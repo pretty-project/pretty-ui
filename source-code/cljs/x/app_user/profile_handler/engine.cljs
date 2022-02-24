@@ -2,15 +2,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.engine
-    (:require [x.mid-user.engine :as engine]))
+(ns x.app-user.profile-handler.engine
+    (:require [x.mid-user.profile-handler.engine :as profile-handler.engine]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.engine
-(def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
-(def user-roles->user-identified?   engine/user-roles->user-identified?)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
+; x.mid-user.profile-handler.engine
+(def MAX-FIRST-NAME-LENGTH profile-handler.engine/MAX-FIRST-NAME-LENGTH)
+(def MAX-LAST-NAME-LENGTH  profile-handler.engine/MAX-LAST-NAME-LENGTH)

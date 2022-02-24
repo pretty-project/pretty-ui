@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.16
-; Description:
-; Version: v0.3.8
-; Compatibility: x4.5.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -39,5 +28,4 @@
   ;
   ; @return (string)
   [request]
-  (let [query-string (http/request->query-string request)]
-       (query-string->debug-mode query-string)))
+  (-> request http/request->query-string query-string->debug-mode))

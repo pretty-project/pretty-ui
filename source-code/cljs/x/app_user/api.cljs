@@ -1,58 +1,56 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.01.21
-; Description:
-; Version: v0.5.6
-; Compatibility: x4.5.8
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.api
-    (:require [x.app-user.account-handler  :as account-handler]
-              [x.app-user.engine           :as engine]
-              [x.app-user.profile-handler  :as profile-handler]
-              [x.app-user.settings-handler :as settings-handler]))
+    (:require [x.app-user.account-handler.effects]
+              [x.app-user.account-handler.events]
+              [x.app-user.profile-handler.engine]
+              [x.app-user.account-handler.subs    :as account-handler.subs]
+              [x.app-user.engine                  :as engine]
+              [x.app-user.profile-handler.events  :as profile-handler.events]
+              [x.app-user.profile-handler.subs    :as profile-handler.subs]
+              [x.app-user.settings-handler.events :as settings-handler.events]
+              [x.app-user.settings-handler.subs   :as settings-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-user.account-handler
-(def get-user-id            account-handler/get-user-id)
-(def get-user-email-address account-handler/get-user-email-address)
-(def get-user-roles         account-handler/get-user-roles)
-(def user-has-role?         account-handler/user-has-role?)
-(def logged-in?             account-handler/logged-in?)
-(def logged-out?            account-handler/logged-out?)
-(def user-identified?       account-handler/user-identified?)
-(def user-unidentified?     account-handler/user-unidentified?)
-(def get-last-login-attempt account-handler/get-last-login-attempt)
-(def login-attempted?       account-handler/login-attempted?)
-(def client-locked?         account-handler/client-locked?)
+; x.app-user.account-handler.subs
+(def get-user-id            account-handler.subs/get-user-id)
+(def get-user-email-address account-handler.subs/get-user-email-address)
+(def get-user-roles         account-handler.subs/get-user-roles)
+(def user-has-role?         account-handler.subs/user-has-role?)
+(def logged-in?             account-handler.subs/logged-in?)
+(def logged-out?            account-handler.subs/logged-out?)
+(def user-identified?       account-handler.subs/user-identified?)
+(def user-unidentified?     account-handler.subs/user-unidentified?)
+(def get-login-attempted-at account-handler.subs/get-login-attempted-at)
+(def login-attempted?       account-handler.subs/login-attempted?)
+(def client-locked?         account-handler.subs/client-locked?)
 
 ; x.app-user.engine
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 
-; x.app-user.profile-handler
-(def get-user-profile         profile-handler/get-user-profile)
-(def get-user-profile-item    profile-handler/get-user-profile-item)
-(def get-user-first-name      profile-handler/get-user-first-name)
-(def get-user-last-name       profile-handler/get-user-last-name)
-(def get-user-name            profile-handler/get-user-name)
-(def get-user-phone-number    profile-handler/get-user-phone-number)
-(def get-user-profile-picture profile-handler/get-user-profile-picture)
-(def set-user-profile-item!   profile-handler/set-user-profile-item!)
+; x.app-user.profile-handler.events
+(def set-user-profile-item! profile-handler.events/set-user-profile-item!)
 
-; x.app-user.settings-handler
-(def get-user-settings       settings-handler/get-user-settings)
-(def get-user-settings-item  settings-handler/get-user-settings-item)
-(def set-user-settings-item! settings-handler/set-user-settings-item!)
+; x.app-user.profile-handler.subs
+(def get-user-profile         profile-handler.subs/get-user-profile)
+(def get-user-profile-item    profile-handler.subs/get-user-profile-item)
+(def get-user-first-name      profile-handler.subs/get-user-first-name)
+(def get-user-last-name       profile-handler.subs/get-user-last-name)
+(def get-user-name            profile-handler.subs/get-user-name)
+(def get-user-phone-number    profile-handler.subs/get-user-phone-number)
+(def get-user-profile-picture profile-handler.subs/get-user-profile-picture)
+
+; x.app-user.settings-handler.events
+(def set-user-settings-item! settings-handler.events/set-user-settings-item!)
+
+; x.app-user.settings-handler.subs
+(def get-user-settings       settings-handler.subs/get-user-settings)
+(def get-user-settings-item  settings-handler.subs/get-user-settings-item)

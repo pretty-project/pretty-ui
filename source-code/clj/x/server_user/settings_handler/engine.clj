@@ -1,34 +1,20 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.03.24
-; Description:
-; Version: v0.7.4
-; Compatibility: x4.5.5
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.settings-handler
+(ns x.server-user.settings-handler.engine
     (:require [local-db.api       :as local-db]
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
-              [server-fruits.http :as http]
-              [x.server-core.api  :as a]
-              [x.server-db.api    :as db]
-              [x.server-user.account-handler :as account-handler]))
+              [server-fruits.http :as http]))
 
 
 
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
+; @constant (namespaced map)
 ;  {:user-settings/notification-bubbles-enabled? (boolean)
 ;   :user-settings/notification-sounds-enabled (boolean)
 ;   :user-settings/sending-error-reports? (boolean)
@@ -50,20 +36,22 @@
 (defn user-account-id->user-settings
   ; @param (string) user-account-id
   ;
-  ; @example
+  ; @usage
   ;  (user/user-account-id->user-settings "my-account")
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [user-account-id]
   ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
-  (merge (param ANONYMOUS-USER-SETTINGS)
-         (local-db/get-document "user_settings" user-account-id
-                                {:additional-namespace :user-settings})))
+  (merge ANONYMOUS-USER-SETTINGS (local-db/get-document "user_settings" user-account-id
+                                                        {:additional-namespace :user-settings})))
 
 (defn request->user-settings
   ; @param (map) request
   ;
-  ; @return (map)
+  ; @usage
+  ;  (user/request->user-settings {...})
+  ;
+  ; @return (namespaced map)
   [request]
   (if-let [account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-settings account-id)
@@ -71,15 +59,22 @@
 
 (defn request->user-settings-item
   ; @param (map) request
-  ; @param (keyword) item-id
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (user/request->user-settings-item {...} :selected-language)
   ;
   ; @return (map)
-  [request item-id]
-  (let [user-settings (request->user-settings request)]
-       (db/get-document-value user-settings item-id)))
+  [request item-key]
+  (let [user-settings       (request->user-settings request)
+        namespaced-item-key (keyword/add-namespace :user-settings item-key)]
+       (get user-settings namespaced-item-key)))
 
 (defn request->extracted-user-settings
   ; @param (map) request
+  ;
+  ; @usage
+  ;  (user/request->extracted-user-settings {...})
   ;
   ; @return (map)
   [request]
@@ -97,38 +92,3 @@
        ; hogy azok az elemek, amelyek megegyeznek a saját alapbeállításukkal,
        ; ne legyenek feleslegesen tárolva
        (map/difference updated-user-settings default-user-settings)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn upload-user-settings-item!
-  ; @param (map) request
-  ;  {:params {:item-id (keyword)
-  ;            :item (*)}}
-  ;
-  ; @return (map)
-  [request]
-  (if (account-handler/request->authenticated? request)
-      ; If user authenticated ...
-      (let [user-id    (http/request->session-param request :user-account/id)
-            item-key   (http/request->param         request :item-key)
-            item-value (http/request->param         request :item-value)
-            namespaced-item-key (keyword/add-namespace "user-settings" item-key)
-            default-value       (get ANONYMOUS-USER-SETTINGS namespaced-item-key)]
-           (if (= item-value default-value)
-               (local-db/update-document! "user_settings" user-id dissoc item-key)
-               (local-db/update-document! "user_settings" user-id assoc  item-key item-value))
-           (http/text-wrap {:body "Uploaded"}))
-      ; If user is NOT authenticated ...
-      (http/error-wrap {:error-message :permission-denied :status 401})))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-transfer! :user/transfer-user-settings!
-                 {:data-f     #(-> % request->user-settings db/document->pure-document)
-                  :target-path [:user/settings :data-items]})

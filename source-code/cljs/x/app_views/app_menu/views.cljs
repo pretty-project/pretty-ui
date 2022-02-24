@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.22
-; Description:
-; Version: v2.1.6
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -239,8 +228,10 @@
                                   [user-email-address-label]]
                     :stretch-orientation :horizontal}])
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
   [_]
   [:<> [user-card]
        [elements/horizontal-separator {:size :l}]

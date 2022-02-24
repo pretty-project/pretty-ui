@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.01.01
-; Description:
-; Version: v1.4.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -20,14 +9,14 @@
               [x.server-core.resource-handler]
               [x.server-core.router-handler]
               [x.server-core.server-handler]
-              [x.server-core.build-handler     :as build-handler]
-              [x.server-core.cache-handler     :as cache-handler]
-              [x.server-core.config-handler    :as config-handler]
-              [x.server-core.debug-handler.api :as debug-handler]
-              [x.server-core.engine            :as engine]
-              [x.server-core.event-handler     :as event-handler]
-              [x.server-core.lifecycle-handler :as lifecycle-handler]
-              [x.server-core.transfer-handler  :as transfer-handler]))
+              [x.server-core.build-handler        :as build-handler]
+              [x.server-core.cache-handler        :as cache-handler]
+              [x.server-core.config-handler       :as config-handler]
+              [x.server-core.debug-handler.engine :as debug-handler.engine]
+              [x.server-core.engine               :as engine]
+              [x.server-core.event-handler        :as event-handler]
+              [x.server-core.lifecycle-handler    :as lifecycle-handler]
+              [x.server-core.transfer-handler     :as transfer-handler]))
 
 
 
@@ -54,8 +43,8 @@
 (def get-site-config        config-handler/get-site-config)
 (def get-site-config-item   config-handler/get-site-config-item)
 
-; x.server-core.debug-handler.api
-(def request->debug-mode debug-handler/request->debug-mode)
+; x.server-core.debug-handler.engine
+(def request->debug-mode debug-handler.engine/request->debug-mode)
 
 ; x.server-core.engine
 (def dom-value     engine/dom-value)

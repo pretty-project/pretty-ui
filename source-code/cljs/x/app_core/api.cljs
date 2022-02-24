@@ -1,32 +1,24 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.03.01
-; Description:
-; Version: v0.4.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.api
-    (:require [x.app-core.error-handler]
-              [x.app-core.build-handler      :as build-handler]
-              [x.app-core.cache-handler      :as cache-handler]
-              [x.app-core.config-handler     :as config-handler]
-              [x.app-core.connection-handler :as connection-handler]
-              [x.app-core.debug-handler.api  :as debug-handler]
-              [x.app-core.engine             :as engine]
-              [x.app-core.event-handler      :as event-handler]
-              [x.app-core.lifecycle-handler  :as lifecycle-handler]
-              [x.app-core.login-handler      :as login-handler]
-              [x.app-core.print-handler      :as print-handler]
-              [x.app-core.process-handler    :as process-handler]
-              [x.app-core.transfer-handler   :as transfer-handler]))
+    (:require [x.app-core.debug-handler.engine]
+              [x.app-core.debug-handler.side-effects]
+              [x.app-core.error-handler]
+              [x.app-core.build-handler        :as build-handler]
+              [x.app-core.cache-handler        :as cache-handler]
+              [x.app-core.config-handler       :as config-handler]
+              [x.app-core.connection-handler   :as connection-handler]
+              [x.app-core.debug-handler.events :as debug-handler.events]
+              [x.app-core.debug-handler.subs   :as debug-handler.subs]
+              [x.app-core.engine               :as engine]
+              [x.app-core.event-handler        :as event-handler]
+              [x.app-core.lifecycle-handler    :as lifecycle-handler]
+              [x.app-core.login-handler        :as login-handler]
+              [x.app-core.print-handler        :as print-handler]
+              [x.app-core.process-handler      :as process-handler]
+              [x.app-core.transfer-handler     :as transfer-handler]))
 
 
 
@@ -43,10 +35,12 @@
 (def get-app-config      config-handler/get-app-config)
 (def get-app-config-item config-handler/get-app-config-item)
 
-; x.app-core.debug-handler
-(def get-debug-mode       debug-handler/get-debug-mode)
-(def debug-mode-detected? debug-handler/debug-mode-detected?)
-(def set-debug-mode!      debug-handler/set-debug-mode!)
+; x.app-core.debug-handler.events
+(def set-debug-mode! debug-handler.events/set-debug-mode!)
+
+; x.app-core.debug-handler.subs
+(def get-debug-mode       debug-handler.subs/get-debug-mode)
+(def debug-mode-detected? debug-handler.subs/debug-mode-detected?)
 
 ; x.app-core.engine
 (def dom-value     engine/dom-value)

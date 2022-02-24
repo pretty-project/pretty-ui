@@ -1,23 +1,12 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.22
-; Description:
-; Version: v0.4.4
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.name-handler.subs
     (:require [mid-fruits.string :as string]
               [x.app-core.api    :as a :refer [r]]
-              [x.app-locales.language-handler.api :as language-handler]
-              [x.app-locales.name-handler.engine  :as engine]))
+              [x.app-locales.language-handler.subs :as language-handler.subs]
+              [x.app-locales.name-handler.engine   :as engine]))
 
 
 
@@ -31,7 +20,7 @@
   ; @return (keyword)
   ;  :normal, :reversed
   [db _]
-  (let [selected-language (r language-handler/get-selected-language db)]
+  (let [selected-language (r language-handler.subs/get-selected-language db)]
        (get engine/NAME-ORDERS selected-language :normal)))
 
 (defn get-ordered-name

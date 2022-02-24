@@ -1,26 +1,11 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.03.24
-; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.5
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.account-handler
+(ns x.server-user.account-handler.engine
     (:require [local-db.api         :as local-db]
               [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map]
-              [ring.util.response   :refer [redirect]]
               [server-fruits.http   :as http]
-              [x.server-core.api    :as a]
-              [x.server-db.api      :as db]
               [x.server-user.engine :as engine]))
 
 
@@ -33,7 +18,7 @@
 ;  a HTTP Session térképbe.
 (def USER-PUBLIC-ACCOUNT-PROPS [:user-account/email-address :user-account/id :user-account/roles])
 
-; @constant (map)
+; @constant (namespaced map)
 ;  {:user-account/email-address (nil)
 ;   :user-account/id (nil)
 ;   :user-account/roles (strings in vector)}
@@ -41,7 +26,7 @@
                              :user-account/id            nil
                              :user-account/roles         []})
 
-; @constant (map)
+; @constant (namespaced map)
 ;  {:user-account/email-address (nil)
 ;   :user-account/id (string)
 ;   :user-account/roles (strings in vector)}
@@ -54,7 +39,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- request->authenticator-pattern
+(defn request->authenticator-pattern
   ; WARNING! NON PUBLIC! DO NOT USE!
   ;
   ; @param (map) request
@@ -82,7 +67,7 @@
   ;   :user-account/password "my-password"
   ;   ...}
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [user-account-id]
   (local-db/get-document "user_accounts" user-account-id
                          {:additional-namespace :user-account}))
@@ -90,14 +75,14 @@
 (defn user-account->user-public-account
   ; @param (map) user-account
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [user-account]
   (select-keys user-account USER-PUBLIC-ACCOUNT-PROPS))
 
 (defn request->user-account
   ; @param (map) request
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-account user-account-id)
@@ -106,7 +91,7 @@
 (defn request->user-public-account
   ; @param (map) request
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [request]
   (let [user-account (request->user-account request)]
        (user-account->user-public-account user-account)))
@@ -120,47 +105,3 @@
         user-roles (http/request->session-param request :user-account/roles)]
        (and (engine/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn authenticate
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;  {:transit-params (map)
-  ;   {:source (map)
-  ;    {:email-address (string)
-  ;     :password (string)}}}
-  ;
-  ; @return (map)
-  [request]
-  (let [pattern      (request->authenticator-pattern request)
-        user-account (local-db/match-document "user_accounts" pattern
-                                              {:additional-namespace :user-account})
-        user-public-account (user-account->user-public-account user-account)]
-       (if (map/nonempty? user-public-account)
-           (http/text-wrap  {:body    (param "Speak, friend, and enter")
-                             :session (param user-public-account)})
-           (http/error-wrap {:error-message :permission-denied :status 401}))))
-
-(defn logout
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [_]
-  (http/text-wrap {:body    (param "Good bye!")
-                   :session (param {})}))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-transfer! :user/transfer-user-account!
-                 {:data-f     #(-> % request->user-public-account db/document->non-namespaced-document)
-                  :target-path [:user/account :data-items]})

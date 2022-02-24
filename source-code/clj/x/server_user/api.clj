@@ -1,57 +1,57 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.08.08
-; Description:
-; Version: v0.6.0
-; Compatibility: x4.5.8
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.api
-    (:require [x.server-user.installer]
-              [x.server-user.account-handler  :as account-handler]
-              [x.server-user.engine           :as engine]
-              [x.server-user.profile-handler  :as profile-handler]
-              [x.server-user.session-handler  :as session-handler]
-              [x.server-user.settings-handler :as settings-handler]
-              [x.server-user.user-handler     :as user-handler]))
+    (:require [x.server-user.installer.lifecycles]
+              [x.server-user.installer.side-effects]
+              [x.server-user.account-handler.transfer]
+              [x.server-user.profile-handler.transfer]
+              [x.server-user.settings-handler.transfer]
+              [x.server-user.user-handler.engine]
+              [x.server-user.account-handler.engine    :as account-handler.engine]
+              [x.server-user.account-handler.routes    :as account-handler.routes]
+              [x.server-user.engine                    :as engine]
+              [x.server-user.profile-handler.engine    :as profile-handler.engine]
+              [x.server-user.session-handler.engine    :as session-handler.engine]
+              [x.server-user.settings-handler.engine   :as settings-handler.engine]
+              [x.server-user.settings-handler.routes   :as settings-handler.routes]
+              [x.server-user.user-handler.side-effects :as user-handler.side-effects]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-user.account-handler
-(def ANONYMOUS-USER-ACCOUNT       account-handler/ANONYMOUS-USER-ACCOUNT)
-(def SYSTEM-ACCOUNT               account-handler/SYSTEM-ACCOUNT)
-(def authenticate                 account-handler/authenticate)
-(def logout                       account-handler/logout)
-(def request->user-account        account-handler/request->user-account)
-(def request->user-public-account account-handler/request->user-public-account)
-(def request->authenticated?      account-handler/request->authenticated?)
+; x.server-user.account-handler.engine
+(def ANONYMOUS-USER-ACCOUNT       account-handler.engine/ANONYMOUS-USER-ACCOUNT)
+(def SYSTEM-ACCOUNT               account-handler.engine/SYSTEM-ACCOUNT)
+(def request->user-account        account-handler.engine/request->user-account)
+(def request->user-public-account account-handler.engine/request->user-public-account)
+(def request->authenticated?      account-handler.engine/request->authenticated?)
+
+; x.server-user.account-handler.routes
+(def authenticate account-handler.routes/authenticate)
+(def logout       account-handler.routes/logout)
 
 ; x.server-user.engine
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
 
-; x.server-user.profile-handler
-(def request->user-profile      profile-handler/request->user-profile)
-(def request->user-profile-item profile-handler/request->user-profile-item)
+; x.server-user.profile-handler.engine
+(def request->user-profile      profile-handler.engine/request->user-profile)
+(def request->user-profile-item profile-handler.engine/request->user-profile-item)
 
-; x.server-user.session-handler
-(def session->session-valid? session-handler/session->session-valid?)
+; x.server-user.session-handler.engine
+(def session->session-valid? session-handler.engine/session->session-valid?)
 
-; x.server-user.settings-handler
-(def request->user-settings      settings-handler/request->user-settings)
-(def request->user-settings-item settings-handler/request->user-settings-item)
-(def upload-user-settings-item!  settings-handler/upload-user-settings-item!)
+; x.server-user.settings-handler.engine
+(def request->user-settings      settings-handler.engine/request->user-settings)
+(def request->user-settings-item settings-handler.engine/request->user-settings-item)
 
-; x.server-user.user-handler
-(def add-user! user-handler/add-user!)
+; x.server-user.settings-handler.routes
+(def upload-user-settings-item! settings-handler.routes/upload-user-settings-item!)
+
+; x.server-user.user-handler.side-effects
+(def add-user! user-handler.side-effects/add-user!)

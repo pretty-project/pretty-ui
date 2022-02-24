@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-locales.api
-    (:require [x.mid-locales.country-list     :as country-list]
-              [x.mid-locales.name-handler.api :as name-handler]))
+    (:require [x.mid-locales.country-list        :as country-list]
+              [x.mid-locales.name-handler.engine :as name-handler.engine]))
 
 
 
@@ -34,6 +34,6 @@
 (def country-name         country-list/country-name)
 (def country-native-name  country-list/country-native-name)
 
-; x.mid-locales.name-handler.api
-(def NAME-ORDERS        name-handler/NAME-ORDERS)
-(def name->ordered-name name-handler/name->ordered-name)
+; x.mid-locales.name-handler.engine
+(def NAME-ORDERS        name-handler.engine/NAME-ORDERS)
+(def name->ordered-name name-handler.engine/name->ordered-name)

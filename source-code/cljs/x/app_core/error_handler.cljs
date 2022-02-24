@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.error-handler
-    (:require [mid-fruits.candy             :refer [param return]]
-              [x.app-core.debug-handler.api :as debug-handler]
-              [x.app-core.engine            :as engine]
-              [x.app-core.event-handler     :as event-handler :refer [r]]
-              [x.app-core.load-handler      :as load-handler]))
+    (:require [mid-fruits.candy              :refer [param return]]
+              [x.app-core.debug-handler.subs :as debug-handler.subs]
+              [x.app-core.engine             :as engine]
+              [x.app-core.event-handler      :as event-handler :refer [r]]
+              [x.app-core.load-handler       :as load-handler]))
 
 
 
@@ -52,7 +52,7 @@
   ;
   ; @return (string)
   [db [_ error-id error-props]]
-  (if (r debug-handler/debug-mode-detected? db)
+  (if (r debug-handler.subs/debug-mode-detected? db)
       (r get-developer-error-message        db error-id error-props)
       (return DEFAULT-APPLICATION-ERROR)))
 

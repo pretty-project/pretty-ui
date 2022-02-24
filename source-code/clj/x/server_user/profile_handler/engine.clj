@@ -1,41 +1,30 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.03.24
-; Description:
-; Version: v0.6.8
-; Compatibility: x4.5.8
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.profile-handler
+(ns x.server-user.profile-handler.engine
     (:require [local-db.api       :as local-db]
               [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]
-              [x.server-db.api    :as db]
-              [x.mid-user.profile-handler :as profile-handler]))
+              [x.mid-user.profile-handler.engine :as profile-handler.engine]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.profile-handler
-(def MAX-FIRST-NAME-LENGTH profile-handler/MAX-FIRST-NAME-LENGTH)
-(def MAX-LAST-NAME-LENGTH  profile-handler/MAX-LAST-NAME-LENGTH)
+; x.mid-user.profile-handler.engine
+(def MAX-FIRST-NAME-LENGTH profile-handler.engine/MAX-FIRST-NAME-LENGTH)
+(def MAX-LAST-NAME-LENGTH  profile-handler.engine/MAX-LAST-NAME-LENGTH)
 
 
 
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
+; @constant (namespaced map)
 ;  {:user-profile/birthday (string)
 ;   :user-profile/first-name (string)
 ;   :user-profile/last-name (string)}
@@ -62,6 +51,9 @@
 (defn request->user-profile
   ; @param (map) request
   ;
+  ; @usage
+  ;  (r user/request->user-profile-item {...})
+  ;
   ; @return (map)
   [request]
   (if-let [account-id (http/request->session-param request :user-account/id)]
@@ -70,18 +62,13 @@
 
 (defn request->user-profile-item
   ; @param (map) request
-  ; @param (keyword) item-id
+  ; @param (keyword) item-key
   ;
-  ; @return (map)
-  [request item-id]
-  (let [user-profile (db/document->non-namespaced-document (request->user-profile request))]
-       (get user-profile item-id)))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-transfer! :user/transfer-user-profile!
-                 {:data-f     #(-> % request->user-profile db/document->pure-document)
-                  :target-path [:user/profile :data-items]})
+  ; @usage
+  ;  (r user/request->user-profile-item {...} :email-address)
+  ;
+  ; @return (*)
+  [request item-key]
+  (let [user-profile        (request->user-profile request)
+        namespaced-item-key (keyword/add-namespace :user-account item-key)]
+       (get user-profile namespaced-item-key)))

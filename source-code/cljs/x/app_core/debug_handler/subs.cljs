@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.22
-; Description:
-; Version: v0.5.0
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -27,7 +16,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:core/debug-handler :meta-items :debug-mode]))
+  (get-in db [:core :debug-handler/meta-items :debug-mode]))
 
 (defn debug-mode-detected?
   ; @usage
