@@ -1,7 +1,9 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-picker.views
-    (:require [app-extensions.storage.media-browser.views]
-              [app-plugins.item-browser.views]
+    (:require [app-plugins.item-browser.views]
               [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a]

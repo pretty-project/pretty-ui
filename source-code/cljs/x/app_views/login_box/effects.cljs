@@ -12,9 +12,9 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :app-views.login-box/render-box!
+  :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! :app-views.login-box/view
+  [:ui/add-popup! :views.login-box/view
                   {:body              #'login-box.views/body
                    :min-width         :xs
                    :render-exclusive? true

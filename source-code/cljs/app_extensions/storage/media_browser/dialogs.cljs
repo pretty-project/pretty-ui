@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-browser.dialogs
     (:require [mid-fruits.io      :as io]
               [x.app-core.api     :as a]

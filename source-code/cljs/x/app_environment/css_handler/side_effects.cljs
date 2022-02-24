@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.22
-; Description:
-; Version: v1.3.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -17,7 +6,7 @@
     (:require [app-fruits.dom    :as dom]
               [mid-fruits.string :as string]
               [x.app-core.api    :as a :refer [cache-control-uri]]
-              [x.app-environment.css-handler.engine :as engine]))
+              [x.app-environment.css-handler.engine :as css-handler.engine]))
 
 
 
@@ -35,9 +24,9 @@
   (let [head-element (dom/get-head-element)
         app-build    (a/app-build)
         filepath     (cache-control-uri (string/starts-with! filepath "/") app-build)
-        link-element (engine/create-link-element! filepath)]
-       (if-not (engine/source-exists?       head-element filepath)
-               (engine/insert-link-element! head-element link-element context-props))))
+        link-element (css-handler.engine/create-link-element! filepath)]
+       (if-not (css-handler.engine/source-exists?       head-element filepath)
+               (css-handler.engine/insert-link-element! head-element link-element context-props))))
 
 (defn add-css!
   ; @param (string) filename
@@ -47,7 +36,7 @@
   ; @usage
   ;  (environment/add-css! "/filename.css")
   [filename context-props]
-  (let [filepath (engine/filename->external-css-uri filename)]
+  (let [filepath (css-handler.engine/filename->external-css-uri filename)]
        (add-external-css! filepath context-props)))
 
 (defn remove-css!

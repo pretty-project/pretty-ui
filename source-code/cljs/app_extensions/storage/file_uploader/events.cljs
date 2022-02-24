@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.events
     (:require [app-fruits.dom :as dom]
               [mid-fruits.map :refer [dissoc-in]]

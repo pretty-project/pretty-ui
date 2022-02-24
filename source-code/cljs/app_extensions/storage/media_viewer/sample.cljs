@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-viewer.sample
     (:require [x.app-core.api :as a]
               [app-extensions.storage.api :as storage]))

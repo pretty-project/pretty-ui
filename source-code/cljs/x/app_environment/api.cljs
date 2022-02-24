@@ -1,50 +1,43 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.02.07
-; Description:
-; Version: v0.2.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.api
     (:require [x.app-environment.scroll-prohibitor]
-              [x.app-environment.cookie-handler.api :as cookie-handler]
-              [x.app-environment.css-handler.api    :as css-handler]
-              [x.app-environment.element-handler    :as element-handler]
-              [x.app-environment.event-handler      :as event-handler]
-              [x.app-environment.keypress-handler   :as keypress-handler]
-              [x.app-environment.mouse-handler      :as mouse-handler]
-              [x.app-environment.scroll-handler     :as scroll-handler]
-              [x.app-environment.touch-handler      :as touch-handler]
-              [x.app-environment.viewport-handler   :as viewport-handler]
-              [x.app-environment.window-handler     :as window-handler]))
+              [x.app-environment.cookie-handler.effects]
+              [x.app-environment.cookie-handler.engine]
+              [x.app-environment.cookie-handler.events]
+              [x.app-environment.cookie-handler.side-effects]
+              [x.app-environment.css-handler.engine]
+              [x.app-environment.cookie-handler.subs      :as cookie-handler.subs]
+              [x.app-environment.css-handler.side-effects :as css-handler].side-effects
+              [x.app-environment.element-handler          :as element-handler]
+              [x.app-environment.event-handler            :as event-handler]
+              [x.app-environment.keypress-handler         :as keypress-handler]
+              [x.app-environment.mouse-handler            :as mouse-handler]
+              [x.app-environment.scroll-handler           :as scroll-handler]
+              [x.app-environment.touch-handler            :as touch-handler]
+              [x.app-environment.viewport-handler         :as viewport-handler]
+              [x.app-environment.window-handler           :as window-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-environment.cookie-handler.api
-(def cookie-setting-path              cookie-handler/cookie-setting-path)
-(def get-stored-cookies               cookie-handler/get-stored-cookies)
-(def any-cookies-stored?              cookie-handler/any-cookies-stored?)
-(def get-cookie-value                 cookie-handler/get-cookie-value)
-(def cookies-enabled-by-browser?      cookie-handler/cookies-enabled-by-browser?)
-(def analytics-cookies-enabled?       cookie-handler/analytics-cookies-enabled?)
-(def necessary-cookies-enabled?       cookie-handler/necessary-cookies-enabled?)
-(def user-experience-cookies-enabled? cookie-handler/user-experience-cookies-enabled?)
+; x.app-environment.cookie-handler.subs
+(def get-stored-cookies               cookie-handler.subs/get-stored-cookies)
+(def any-cookies-stored?              cookie-handler.subs/any-cookies-stored?)
+(def get-cookie-value                 cookie-handler.subs/get-cookie-value)
+(def cookies-enabled-by-browser?      cookie-handler.subs/cookies-enabled-by-browser?)
+(def analytics-cookies-enabled?       cookie-handler.subs/analytics-cookies-enabled?)
+(def necessary-cookies-enabled?       cookie-handler.subs/necessary-cookies-enabled?)
+(def user-experience-cookies-enabled? cookie-handler.subs/user-experience-cookies-enabled?)
 
-; x.app-environment.css-handler.api
-(def add-external-css! css-handler/add-external-css!)
-(def add-css!          css-handler/add-css!)
-(def remove-css!       css-handler/remove-css!)
+; x.app-environment.css-handler.side-effects
+(def add-external-css! css-handler.side-effects/add-external-css!)
+(def add-css!          css-handler.side-effects/add-css!)
+(def remove-css!       css-handler.side-effects/remove-css!)
 
 ; x.app-environment.element-handler
 (def element-disabled?           element-handler/element-disabled?)

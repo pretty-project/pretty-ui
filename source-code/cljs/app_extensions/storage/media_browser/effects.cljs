@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-browser.effects
     (:require [app-fruits.window :as window]
               [mid-fruits.candy  :refer [param return]]
@@ -6,8 +9,9 @@
               [x.app-media.api   :as media]
               [x.app-router.api  :as router]
               [x.app-ui.api      :as ui]
-              [app-extensions.storage.media-browser.queries :as queries]
-              [app-extensions.storage.media-browser.subs    :as subs]
+              [app-extensions.storage.media-browser.queries :as media-browser.queries]
+              [app-extensions.storage.media-browser.subs    :as media-browser.subs]
+              [app-extensions.storage.media-browser.views   :as media-browser.views]
               [app-plugins.item-browser.api                 :as item-browser]))
 
 
@@ -19,7 +23,7 @@
   :storage.media-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if (r subs/media-browser-mode? db) ; XXX#7157
+      (if (r media-browser.subs/media-browser-mode? db) ; XXX#7157
           (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
                   [:storage.media-browser/render-browser!])
           (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
@@ -126,7 +130,7 @@
                                        {;:display-progress? true
                                         :on-success [:item-browser/reload-items! :storage :media]
                                         :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]}]]}))
-                                        ;:query (r queries/get-duplicate-item-query db file-item)}]]}))
+                                        ;:query (r media-browser.queries/get-duplicate-item-query db file-item)}]]}))
 
 
 
@@ -138,7 +142,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ _ {:keys [id mime-type] :as media-item}]]
       (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          (if (r subs/media-browser-mode? db)
+                                          (if (r media-browser.subs/media-browser-mode? db)
                                               [:storage.media-browser/render-file-menu! media-item]
                                               [:storage.media-picker/file-clicked       media-item]))))
 
@@ -146,6 +150,12 @@
   :storage.media-lister/item-right-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ _ {:keys [mime-type] :as media-item}]]
-      (if (r subs/media-browser-mode? db)
+      (if (r media-browser.subs/media-browser-mode? db)
           (case mime-type "storage/directory" [:storage.media-browser/render-directory-menu! media-item]
                                               [:storage.media-browser/render-file-menu!      media-item]))))
+
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  :storage.media-browser/render-browser!
+  [:ui/set-surface! :storage.media-browser/view
+                    {:view #'media-browser.views/view}])

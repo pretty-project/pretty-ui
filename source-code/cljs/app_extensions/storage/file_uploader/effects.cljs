@@ -1,11 +1,15 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.effects
     (:require [app-fruits.dom :as dom]
               [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.file-uploader.engine  :as engine]
-              [app-extensions.storage.file-uploader.events  :as events]
-              [app-extensions.storage.file-uploader.queries :as queries]
-              [app-extensions.storage.file-uploader.subs    :as subs]))
+              [app-extensions.storage.file-uploader.engine  :as file-uploader.engine]
+              [app-extensions.storage.file-uploader.events  :as file-uploader.events]
+              [app-extensions.storage.file-uploader.queries :as file-uploader.queries]
+              [app-extensions.storage.file-uploader.subs    :as file-uploader.subs]
+              [app-extensions.storage.file-uploader.views   :as file-uploader.views]))
 
 
 
@@ -36,14 +40,14 @@
       ;   különböző fájlfeltöltések kezelhetők legyenek.
       ; - A request-id azonosító feltöltési folyamatonként eltérő kell legyen, ehhez szükséges,
       ;   hogy az uploader-id azonosító is ... eltérő legyen!
-      {:db (r events/store-uploader-props! db uploader-id uploader-props)
+      {:db (r file-uploader.events/store-uploader-props! db uploader-id uploader-props)
        :fx [:storage.file-uploader/open-file-selector! uploader-id uploader-props]}))
 
 (a/reg-event-fx
   :storage.file-uploader/cancel-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      {:db (r events/clean-uploader! db uploader-id)
+      {:db (r file-uploader.events/clean-uploader! db uploader-id)
        :dispatch [:ui/close-popup! :storage.file-uploader/view]}))
 
 
@@ -55,22 +59,23 @@
   :storage.file-uploader/start-progress!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      (let [query     (r queries/get-upload-files-query db uploader-id)
-            form-data (r subs/get-form-data             db uploader-id)]
+      (let [query        (r file-uploader.queries/get-upload-files-query       db uploader-id)
+            form-data    (r file-uploader.subs/get-form-data                   db uploader-id)
+            validator-f #(r file-uploader.queries/upload-files-response-valid? db uploader-id %)]
            {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
                          [:sync/send-query! (engine/request-id uploader-id)
-                                            {:body         (dom/merge-to-form-data! form-data {:query query})
-                                             :on-success   [:storage.file-uploader/progress-successed uploader-id]
-                                             :on-failure   [:storage.file-uploader/progress-failured  uploader-id]
-                                             :validator-f #(r queries/upload-files-response-valid? db uploader-id %)}]]})))
+                                            {:body       (dom/merge-to-form-data! form-data {:query query})
+                                             :on-success [:storage.file-uploader/progress-successed uploader-id]
+                                             :on-failure [:storage.file-uploader/progress-failured  uploader-id]
+                                             :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :storage.file-uploader/files-selected-to-upload
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
       ; A storage--file-selector input on-change eseménye indítja el a feltöltés inicializálását.
-      (if-let [any-file-selected? (engine/any-file-selected?)]
-              {:db (r events/init-uploader! db uploader-id)
+      (if-let [any-file-selected? (file-uploader.engine/any-file-selected?)]
+              {:db (r file-uploader.events/init-uploader! db uploader-id)
                :dispatch [:storage.file-uploader/render-uploader! uploader-id]})))
 
 (a/reg-event-fx
@@ -104,9 +109,17 @@
       {:dispatch-later [; A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
                         ; látszódó folyamatjelző számára elérhetők maradjanak az adatok.
                         {:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]
-       :dispatch-if [(not (r subs/file-upload-in-progress? db))
+       :dispatch-if [(not (r file-uploader.subs/file-upload-in-progress? db))
                      ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
                      ; a folyamatjelzőt.
                      ; Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
                      ; közötti időben is indítható új feltöltési folyamat!
                      [:ui/pop-bubble! :storage.file-uploader/progress-notification]]}))
+
+(a/reg-event-fx
+  :storage.file-uploader/render-uploader!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ uploader-id]]
+      [:ui/add-popup! :storage.file-uploader/view
+                      {:body   [file-uploader.views/body   uploader-id]
+                       :header [file-uploader.views/header uploader-id]}]))

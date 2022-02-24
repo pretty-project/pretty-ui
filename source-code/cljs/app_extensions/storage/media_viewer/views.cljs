@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-viewer.views
     (:require [mid-fruits.io      :as io]
               [x.app-core.api     :as a]
@@ -88,17 +91,3 @@
    [element (a/id) viewer-props])
 
   ([viewer-id viewer-props]))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage.media-viewer/render-viewer!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ viewer-id]]
-      [:ui/add-popup! :storage.media-viewer/view
-                      {:body   [body   viewer-id]
-                       :header [header viewer-id]
-                       :layout :unboxed}]))

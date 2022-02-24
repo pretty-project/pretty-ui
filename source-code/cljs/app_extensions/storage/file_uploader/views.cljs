@@ -1,17 +1,16 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.views
-    (:require [app-fruits.dom       :as dom]
-              [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.css       :as css]
-              [mid-fruits.io        :as io]
-              [mid-fruits.format    :as format]
-              [mid-fruits.math      :as math]
-              [mid-fruits.string    :as string]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [x.app-media.api      :as media]
-              [x.app-tools.api      :as tools]))
+    (:require [mid-fruits.css     :as css]
+              [mid-fruits.io      :as io]
+              [mid-fruits.format  :as format]
+              [mid-fruits.math    :as math]
+              [mid-fruits.string  :as string]
+              [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]
+              [x.app-media.api    :as media]))
 
 
 
@@ -43,7 +42,7 @@
 
 (defn- cancel-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id ]
+  [uploader-id]
   [elements/button ::cancel-upload-button
                    {:on-click [:storage.file-uploader/cancel-uploader! uploader-id]
                     :preset :cancel-button :indent :both :keypress {:key-code 27}}])
@@ -169,29 +168,3 @@
   [uploader-id]
   [:<> [file-list                uploader-id]
        [no-files-to-upload-label uploader-id]])
-
-
-
-;; -- Side-effect events ------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- open-file-selector!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id uploader-props]
-  (tools/append-temporary-component! [file-selector uploader-id uploader-props]
-                                    #(-> "storage--file-selector" dom/get-element-by-id .click)))
-
-(a/reg-fx :storage.file-uploader/open-file-selector! open-file-selector!)
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage.file-uploader/render-uploader!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ uploader-id]]
-      [:ui/add-popup! :storage.file-uploader/view
-                      {:body   [body   uploader-id]
-                       :header [header uploader-id]}]))

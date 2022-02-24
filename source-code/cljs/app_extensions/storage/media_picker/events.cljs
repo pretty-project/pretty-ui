@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-picker.events
     (:require [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]

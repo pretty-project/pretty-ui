@@ -30,7 +30,7 @@
                        {:method       :post
                         :on-success   [:boot-loader/restart-app!]
                         :on-failure   [:user/reg-login-attempt!]
-                        :source-path  [:login-box]
+                        :source-path  [:views :login-box/data-items]
                         :uri          "/user/authenticate"
                         :idle-timeout 3000}])
 

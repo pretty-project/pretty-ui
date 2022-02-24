@@ -1,7 +1,8 @@
 
-(ns x.app-environment.cookie-handler.sample
-    (:require [x.app-core.api        :as a]
-              [x.app-environment.api :as environment]))
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns x.app-environment.cookie-handler.sample)
 
 
 

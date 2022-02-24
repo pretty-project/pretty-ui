@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.directory-creator.dialogs
     (:require [app-plugins.value-editor.api]
               [mid-fruits.io        :as io]

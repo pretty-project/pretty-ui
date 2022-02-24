@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.21
-; Description:
-; Version: 2.0.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -175,15 +164,6 @@
   (if (cookie-name->system-cookie? cookie-name)
       (keyword (string/after-first-occurence cookie-name "-"))
       (keyword cookie-name)))
-
-(defn cookie-setting-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) setting-key
-  ;
-  ; @return (item-path vector)
-  [setting-key]
-  (db/path :environment/cookie-handler :cookie-settings setting-key))
 
 (defn cookie-name-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!

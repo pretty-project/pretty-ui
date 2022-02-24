@@ -1,6 +1,6 @@
 
 (ns app-extensions.storage.api
-    (:require [app-extensions.storage.capacity-handler]
+    (:require [app-extensions.storage.capacity-handler.subs]
               [app-extensions.storage.directory-creator.dialogs]
               [app-extensions.storage.directory-creator.effects]
               [app-extensions.storage.directory-creator.events]
@@ -11,6 +11,7 @@
               [app-extensions.storage.file-uploader.engine]
               [app-extensions.storage.file-uploader.events]
               [app-extensions.storage.file-uploader.queries]
+              [app-extensions.storage.file-uploader.side-effects]
               [app-extensions.storage.file-uploader.subs]
               [app-extensions.storage.file-uploader.views]
               [app-extensions.storage.media-browser.dialogs]

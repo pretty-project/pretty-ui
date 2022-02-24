@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.subs
     (:require [app-fruits.dom    :as dom]
               [mid-fruits.candy  :refer [param return]]
@@ -7,8 +10,8 @@
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
               [x.app-sync.api    :as sync]
-              [app-extensions.storage.capacity-handler     :as capacity-handler]
-              [app-extensions.storage.file-uploader.engine :as engine]))
+              [app-extensions.storage.capacity-handler.subs :as capacity-handler.subs]
+              [app-extensions.storage.file-uploader.engine  :as file-uploader.engine]))
 
 
 
@@ -54,14 +57,14 @@
 (defn capacity-limit-exceeded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (let [storage-free-capacity (r capacity-handler/get-free-capacity db)
+  (let [storage-free-capacity (r capacity-handler.subs/get-free-capacity db)
         upload-size           (get-in db [:storage :file-uploader/meta-items uploader-id :files-size])]
        (>= upload-size storage-free-capacity)))
 
 (defn max-upload-size-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (let [max-upload-size (r capacity-handler/get-max-upload-size db)
+  (let [max-upload-size (r capacity-handler.subs/get-max-upload-size db)
         upload-size     (get-in db [:storage :file-uploader/meta-items uploader-id :files-size])]
        (> upload-size max-upload-size)))
 
@@ -69,7 +72,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (letfn [(f [[uploader-id _]]
-             (let [request-id (engine/request-id uploader-id)]
+             (let [request-id (file-uploader.engine/request-id uploader-id)]
                   (r sync/request-active? db request-id)))]
          (some f (get-in db [:storage :file-uploader/meta-items]))))
 
@@ -82,7 +85,7 @@
 (defn get-uploader-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (let [request-id (engine/request-id uploader-id)]
+  (let [request-id (file-uploader.engine/request-id uploader-id)]
        (r sync/get-request-progress db request-id)))
 
 

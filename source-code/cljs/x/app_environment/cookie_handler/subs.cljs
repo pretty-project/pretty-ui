@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.21
-; Description:
-; Version: 2.0.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -17,7 +6,7 @@
     (:require [mid-fruits.map :as map]
               [x.app-core.api :as a :refer [r]]
               [x.app-db.api   :as db]
-              [x.app-environment.cookie-handler.engine :as engine]))
+              [x.app-environment.cookie-handler.engine :as cookie-handler.engine]))
 
 
 
@@ -65,7 +54,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (engine/cookie-setting-path :analytics-cookies-enabled?))))
+  (boolean (get-in db [:environment :cookie-handler/meta-items :analytics-cookies-enabled?])))
 
 (defn necessary-cookies-enabled?
   ; @usage
@@ -73,7 +62,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (engine/cookie-setting-path :necessary-cookies-enabled?))))
+  (boolean (get-in db [:environment :cookie-handler/meta-items :necessary-cookies-enabled?])))
 
 (defn user-experience-cookies-enabled?
   ; @usage
@@ -81,7 +70,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (engine/cookie-setting-path :user-experience-cookies-enabled?))))
+  (boolean (get-in db [:environment :cookie-handler/meta-items :user-experience-cookies-enabled?])))
 
 (defn get-cookie-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!

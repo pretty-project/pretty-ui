@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-browser.subs
     (:require [app-plugins.item-browser.subs]
               [x.app-core.api :as a :refer [r]]))

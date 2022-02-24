@@ -1,8 +1,11 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.directory-creator.effects
     (:require [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.directory-creator.events  :as events]
-              [app-extensions.storage.directory-creator.queries :as queries]))
+              [app-extensions.storage.directory-creator.events  :as directory-creator.events]
+              [app-extensions.storage.directory-creator.queries :as directory-creator.queries]))
 
 
 
@@ -27,7 +30,7 @@
   ;  [:storage.directory-creator/load-creator! {:destination-id "..."}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ creator-id creator-props]]
-      {:db (r events/store-creator-props! db creator-id creator-props)
+      {:db (r directory-creator.events/store-creator-props! db creator-id creator-props)
        :dispatch [:storage.directory-creator/render-dialog! creator-id]}))
 
 
@@ -40,5 +43,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id directory-name]]
       [:sync/send-query! :storage.directory-creator/create-directory!
-                         {:query      (r queries/get-create-directory-query db creator-id directory-name)
+                         {:query (r directory-creator.queries/get-create-directory-query db creator-id directory-name)
                           :on-success [:item-lister/reload-items! :storage :media]}]))

@@ -14,11 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :views.app-menu/render-menu!
+  :views/render-app-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r gestures/init-view-handler! db :app-views.app-menu/handler {:default-view-id :main})
-       :dispatch [:ui/add-popup! :app-views.app-menu/view
+      {:db (r gestures/init-view-handler! db :views.app-menu/handler {:default-view-id :main})
+       :dispatch [:ui/add-popup! :views.app-menu/view
                                  {:body   #'app-menu.views/body
                                   :header #'ui/close-popup-header
                                   :horizontal-align :left

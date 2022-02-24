@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.clients.client-lister.mutations
     (:require [mid-fruits.candy :refer [param return]]
               [mongo-db.api     :as mongo-db]

@@ -24,5 +24,5 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:router/add-route! :login-box/route
-                                       {:client-event   [:app-views.login-box/render-box!]
+                                       {:client-event   [:views/render-login-box!]
                                         :route-template "/login"}]})

@@ -26,7 +26,7 @@
                             {:disable-autofill? false
                              :min-width  :s
                              :label      :email-address
-                             :value-path [:login-box :email-address]
+                             :value-path [:views :login-box/data-items :email-address]
                              :disabled?  synchronizing?}]))
 
 (defn- password-field
@@ -36,13 +36,13 @@
        [elements/password-field ::password-field
                                 {:disable-autofill? false
                                  :min-width  :s
-                                 :value-path [:login-box :password]
+                                 :value-path [:views :login-box/data-items :password]
                                  :disabled?  synchronizing?}]))
 
 (defn- login-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [synchronizing? @(a/subscribe [:sync/listening-to-request? :user/authenticate!])]
+  (let [disabled? @(a/subscribe [:views.login-box/login-button-disabled?])]
        [elements/submit-button ::login-button
                                {:color     :primary
                                 :label     :login!
@@ -51,7 +51,7 @@
                                 :keypress  {:key-code 13 :required? true}
                                 :input-ids [::email-address-field ::password-field]
                                 :on-click  [:user/authenticate!]
-                                :disabled? synchronizing?}]))
+                                :disabled? disabled?}]))
 
 (defn- forgot-password-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

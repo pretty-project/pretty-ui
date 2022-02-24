@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-viewer.subs
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]))
@@ -31,4 +34,9 @@
   [db [_ viewer-id]]
   {:item-filename (r get-current-item-filename db viewer-id)})
 
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.media-viewer/get-current-item-props get-current-item-props)

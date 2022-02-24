@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.storage.media-browser.resolvers
     (:require [mid-fruits.candy :refer [param return]]
               [mongo-db.api     :as mongo-db]

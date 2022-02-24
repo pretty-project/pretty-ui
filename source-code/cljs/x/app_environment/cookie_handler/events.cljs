@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.21
-; Description:
-; Version: 2.0.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -19,7 +8,7 @@
               [mid-fruits.reader :as reader]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
-              [x.app-environment.cookie-handler.engine :as engine]))
+              [x.app-environment.cookie-handler.engine :as cookie-handler.engine]))
 
 
 
@@ -111,7 +100,7 @@
   [cofx _]
   (let [cookie-names (-> goog.net.cookies .getKeys vec)]
        (letfn [(f [cofx cookie-name]
-                  (if (engine/cookie-name->system-cookie? cookie-name)
+                  (if (cookie-handler.engine/cookie-name->system-cookie? cookie-name)
                       (r inject-system-cookie! cofx cookie-name)
                       (return                  cofx)))]
               (reduce f cofx cookie-names))))

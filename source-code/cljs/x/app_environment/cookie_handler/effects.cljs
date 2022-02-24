@@ -1,22 +1,11 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.21
-; Description:
-; Version: 2.0.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.effects
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
-              [x.app-environment.cookie-handler.subs :as subs]))
+              [x.app-environment.cookie-handler.subs :as cookie-handler.subs]))
 
 
 
@@ -67,7 +56,7 @@
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
       (let [cookie-props (cookie-props-prototype cookie-props)]
-           (if (r subs/set-cookie? db cookie-id cookie-props)
+           (if (r cookie-handler.subs/set-cookie? db cookie-id cookie-props)
                {:fx [:environment/store-browser-cookie! cookie-id cookie-props]}))))
 
 (a/reg-event-fx
@@ -106,7 +95,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r subs/necessary-cookies-enabled? db)
-          (let [cookie-settings (r subs/get-cookie-settings db)]
+          (let [cookie-settings (r cookie-handler.subs/get-cookie-settings db)]
                {:fx [:environment/store-browser-cookie! :cookie-settings
                                                         {:cookie-type :necessary :value cookie-settings}]}))))
 

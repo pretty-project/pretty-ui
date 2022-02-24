@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-picker.subs
     (:require [app-plugins.item-browser.subs]
               [mid-fruits.io        :as io]

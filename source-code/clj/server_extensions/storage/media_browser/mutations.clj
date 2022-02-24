@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.storage.media-browser.mutations
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.time   :as time]

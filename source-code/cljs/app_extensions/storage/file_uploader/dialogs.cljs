@@ -1,9 +1,12 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.dialogs
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
-              [app-extensions.storage.file-uploader.engine :as engine]))
+              [app-extensions.storage.file-uploader.engine :as file-uploader.engine]))
 
 
 
@@ -13,7 +16,7 @@
 (defn- abort-progress-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id         (engine/request-id uploader-id)
+  (let [request-id         (file-uploader.engine/request-id uploader-id)
         files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])]
@@ -26,7 +29,7 @@
   [uploader-id]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
   ; sokszoros változása ne kényszerítse a többi komponenst újra renderelődésre!
-  (let [request-id         (engine/request-id uploader-id)
+  (let [request-id         (file-uploader.engine/request-id uploader-id)
         uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
@@ -37,7 +40,7 @@
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id         (engine/request-id uploader-id)
+  (let [request-id         (file-uploader.engine/request-id uploader-id)
         files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
@@ -49,7 +52,7 @@
 (defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id     (engine/request-id uploader-id)
+  (let [request-id     (file-uploader.engine/request-id uploader-id)
         request-sent? @(a/subscribe [:sync/request-sent? request-id])]
        (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
                               [elements/row {:content [:<> [progress-label        uploader-id]

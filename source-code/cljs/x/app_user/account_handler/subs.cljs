@@ -123,8 +123,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:user/user-unidentified?]
-(a/reg-sub :user/user-unidentified? user-unidentified?)
+;  [:user/user-identified?]
+(a/reg-sub :user/user-identified? user-identified?)
 
 ; @usage
 ;  [:user/login-attempted?]

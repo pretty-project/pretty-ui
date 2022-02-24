@@ -1,7 +1,9 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.clients.client-lister.views
-    (:require [mid-fruits.candy  :refer [param return]]
-              [x.app-core.api    :as a :refer [r]]
+    (:require [x.app-core.api    :as a]
               [x.app-locales.api :as locales]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
@@ -48,13 +50,3 @@
   [item-lister/view :clients :client {:list-element #'client-item
                                       :item-actions [:delete :duplicate]
                                       :sortable? true}])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :clients.client-lister/render-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :clients.client-lister/view {:view #'view}])

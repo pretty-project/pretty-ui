@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.storage.directory-creator.mutations
     (:require [mongo-db.api :as mongo-db]
               [pathom.api   :as pathom]

@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.file-uploader.queries
     (:require [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]))

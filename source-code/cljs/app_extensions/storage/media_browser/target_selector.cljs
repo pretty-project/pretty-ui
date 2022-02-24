@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-browser.target-selector
     (:require [mid-fruits.candy   :refer [param return]]
               [x.app-core.api     :as a]

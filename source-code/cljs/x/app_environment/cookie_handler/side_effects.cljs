@@ -1,22 +1,11 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.21
-; Description:
-; Version: 2.0.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.side-effects
     (:require [goog.net.cookies]
               [x.app-core.api :as a]
-              [x.app-environment.cookie-handler.engine :as engine]))
+              [x.app-environment.cookie-handler.engine :as cookie-handler.engine]))
 
 
 
@@ -34,10 +23,10 @@
   ;   :same-site (string)
   ;   :value (*)}
   [cookie-id {:keys [max-age secure same-site value] :as cookie-props}]
-  (let [cookie-name (engine/cookie-id->cookie-name cookie-id cookie-props)
+  (let [cookie-name (cookie-handler.engine/cookie-id->cookie-name cookie-id cookie-props)
         cookie-body (str {:cookie-id cookie-id :value value})]
-       (try (.set goog.net.cookies cookie-name cookie-body #js{:domain   engine/COOKIE-DOMAIN
-                                                               :path     engine/COOKIE-PATH
+       (try (.set goog.net.cookies cookie-name cookie-body #js{:domain   cookie-handler.engine/COOKIE-DOMAIN
+                                                               :path     cookie-handler.engine/COOKIE-PATH
                                                                :maxAge   max-age
                                                                :sameSite same-site
                                                                :secure   secure})
@@ -49,8 +38,8 @@
   ; @param (keyword) cookie-id
   ; @param (map) cookie-props
   [cookie-id cookie-props]
-  (let [cookie-name (engine/cookie-id->cookie-name cookie-id cookie-props)]
-       (try (.remove goog.net.cookies cookie-name engine/COOKIE-PATH engine/COOKIE-DOMAIN)
+  (let [cookie-name (cookie-handler.engine/cookie-id->cookie-name cookie-id cookie-props)]
+       (try (.remove goog.net.cookies cookie-name cookie-handler.engine/COOKIE-PATH cookie-handler.engine/COOKIE-DOMAIN)
             (a/dispatch [:environment/cookie-removed cookie-id]))))
 
 (defn remove-browser-cookies!

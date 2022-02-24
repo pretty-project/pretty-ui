@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-picker.effects
     (:require [x.app-core.api :as a :refer [r]]
               [app-extensions.storage.media-picker.events :as events]

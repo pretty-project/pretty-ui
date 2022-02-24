@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.clients.client-editor.views
     (:require [mid-fruits.candy     :refer [param]]
               [mid-fruits.form      :as form]
@@ -193,14 +196,3 @@
   [surface-id]
   [item-editor/view :clients :client {:form-element #'client-form
                                       :item-actions [:delete :duplicate]}])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :clients.client-editor/render-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :clients.client-editor/view
-                    {:view #'view}])

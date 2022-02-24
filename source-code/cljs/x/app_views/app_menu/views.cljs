@@ -20,7 +20,7 @@
                    {:label  :back!
                     :indent :left
                     :preset :back-button
-                    :on-click [:gestures/change-view! :app-views.app-menu/handler :main]}])
+                    :on-click [:gestures/change-view! :views.app-menu/handler :main]}])
 
 
 
@@ -60,7 +60,7 @@
        [elements/button ::language-selector-button
                         {:indent :left
                          :preset :language-button
-                         :on-click  [:gestures/change-view! :app-views.app-menu/handler :language-selector]
+                         :on-click  [:gestures/change-view! :views.app-menu/handler :language-selector]
                          ;:disabled? (not app-multilingual?)}]))
                          :disabled? true}]))
 
@@ -84,7 +84,7 @@
   [elements/button ::more-options-button
                    {:indent :left
                     :preset :more-options-button
-                    :on-click [:gestures/change-view! :app-views.app-menu/handler :more-options]}])
+                    :on-click [:gestures/change-view! :views.app-menu/handler :more-options]}])
 
 (defn- about-app-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,7 +94,7 @@
                     :indent :left
                     :label  :about-app
                     :preset :default-button
-                    :on-click [:gestures/change-view! :app-views.app-menu/handler :about-app]}])
+                    :on-click [:gestures/change-view! :views.app-menu/handler :about-app]}])
 
 (defn- logout-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,7 +195,7 @@
 (defn- app-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(a/subscribe [:gestures/get-selected-view-id :app-views.app-menu/handler])]
+  (let [view-id @(a/subscribe [:gestures/get-selected-view-id :views.app-menu/handler])]
        (case view-id :about-app         [about-app]
                      :language-selector [language-selector]
                      :main              [main]

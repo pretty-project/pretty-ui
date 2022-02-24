@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.storage.engine
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.vector  :as vector]

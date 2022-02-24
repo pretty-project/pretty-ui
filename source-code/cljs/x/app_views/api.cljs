@@ -7,6 +7,7 @@
               [x.app-views.app-menu.views]
               [x.app-views.error-page]
               [x.app-views.login-box.effects]
+              [x.app-views.login-box.subs]
               [x.app-views.login-box.views]
               [x.app-views.no-internet-notification]
               [x.app-views.privacy-policy]

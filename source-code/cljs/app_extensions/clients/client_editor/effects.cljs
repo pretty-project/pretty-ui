@@ -1,6 +1,10 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.clients.client-editor.effects
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [x.app-core.api :as]
+              [app-extensions.clients.client-editor.views :as client-editor.views]))
 
 
 
@@ -11,3 +15,9 @@
   :clients.client-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:clients.client-editor/render-editor!])
+
+(a/reg-event-fx
+  :clients.client-editor/render-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/set-surface! :clients.client-editor/view
+                    {:view #'client-editor.views/view}])

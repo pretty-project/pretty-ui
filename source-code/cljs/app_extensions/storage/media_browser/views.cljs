@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.media-browser.views
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.css       :as css]
@@ -119,14 +122,3 @@
   [item-browser/view :storage :media {:list-element     #'media-item
                                       :item-actions     [:delete :duplicate]
                                       :new-item-options [:create-directory! :upload-files!]}])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  :storage.media-browser/render-browser!
-  [:ui/set-surface! :storage.media-browser/view
-                    {:view #'view}])

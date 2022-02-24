@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.02.22
-; Description:
-; Version: v0.9.6
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -72,7 +61,7 @@
   []
   [elements/icon-button ::menu-icon-button
                         {:preset :user-menu
-                         :on-click [:views.app-menu/render-menu!]}])
+                         :on-click [:views/render-app-menu!]}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
