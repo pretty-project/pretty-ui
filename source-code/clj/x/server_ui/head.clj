@@ -15,6 +15,7 @@
 
 (ns x.server-ui.head
     (:require [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.map      :as map]
               [mid-fruits.string   :as string]
               [mid-fruits.vector   :as vector]
               [server-fruits.http  :as http]
@@ -166,7 +167,7 @@
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build core-js css-paths]}]
+  [head request {:keys [app-build core-js css-paths] :as head-props}]
   (letfn [(include-css? [css-props] (or (-> css-props :core-js nil?)
                                         (-> css-props :core-js (= core-js))))
           (f [head {:keys [uri] :as css-props}]
@@ -220,12 +221,12 @@
   ;   :crawler-rules (string)
   ;   :selected-language (keyword)}
   [request head-props]
-  (merge @(a/subscribe [:core/get-app-config])
-          {:app-build         (a/app-build)
-           :core-js           (router/request->route-prop       request :core-js)
-           :crawler-rules     (environment/crawler-rules        request)
-           :selected-language (user/request->user-settings-item request :selected-language)}
-          (param head-props)))
+  (map/deep-merge @(a/subscribe [:core/get-app-config])
+                  {:app-build         (a/app-build)
+                   :core-js           (router/request->route-prop       request :core-js)
+                   :crawler-rules     (environment/crawler-rules        request)
+                   :selected-language (user/request->user-settings-item request :selected-language)}
+                  (param head-props)))
 
 
 
@@ -235,22 +236,13 @@
 (defn view
   ; @param (map) request
   ; @param (map)(opt) head-props
-  ;  {:app-build (string)(opt)
-  ;   :app-title (string)(opt)
-  ;   :author (string)(opt)
-  ;   :crawler-rules (string)(opt)
+  ;  {:app-title (string)(opt)
   ;   :css-paths (maps in vector)(opt)
   ;    [{:core-js (string)(opt)
   ;      :uri (string)}]
-  ;   :favicon-paths (maps in vector)(opt)
-  ;    [{:core-js (string)(opt)
-  ;      :size (string)
-  ;      :uri (string)}]
   ;   :meta-description (string)(opt)
   ;   :meta-keywords (string or strings in vector)(opt)
-  ;   :og-preview-path (string)(opt)
-  ;   :selected-language (keyword)(opt)
-  ;   :theme-color (string)(opt)
+  ;   :og-preview-path (string)(opt)}
   ;
   ; @usage
   ;  (ui/head {...} {...})

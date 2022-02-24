@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def ROUTES {:main
+(def ROUTES {:ui/main
              {:route-template "/"
               :get #(http/html-wrap {:body (ui/main %)})}
 

@@ -129,8 +129,7 @@
 (defn view
   ; @param (map) request
   ; @param (map)(opt) body-props
-  ;  {:app-build (string)(opt)
-  ;   :plugin-js-paths (maps in vector)
+  ;  {:plugin-js-paths (maps in vector)
   ;    [{:core-js (string)(opt)
   ;      :uri (string)}]
   ;   :shield (hiccup)(opt)}

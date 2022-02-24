@@ -27,7 +27,7 @@
   ; @param (hiccup) body
   ;
   ; @usage
-  ;  (ui/html (head) (body))
+  ;  (ui/html (ui/head) (ui/body))
   ;
   ; @usage
   ;  (ui/html [:head] [:body])

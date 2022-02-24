@@ -1,7 +1,5 @@
 
 {; Paths
- ; Abban az esetben, ha a "source-code/project-emulator" útvonal eltávolításra kerül, akkor
- ; a projektek deps.edn fájljából is törölni szükséges!
  :paths ["source-code/clj" "source-code/cljc" "source-code/cljs" "source-code/project-emulator" "resources"]
 
  ; Dependecies
