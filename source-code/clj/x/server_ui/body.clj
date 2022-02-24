@@ -91,6 +91,7 @@
   ;
   ; @param (map) request
   ; @param (map) body-props
+  ;  {:plugin-js-paths (maps in vector)(opt)}
   ;
   ; @return (map)
   ;  {:app-build (string)
@@ -98,12 +99,16 @@
   ;   :selected-theme (string)
   ;   :shield (hiccup)}
   [request body-props]
-  (merge @(a/subscribe [:core/get-app-config])
-          {:app-build      (a/app-build)
-           :core-js        (router/request->route-prop       request :core-js)
-           :selected-theme (user/request->user-settings-item request :selected-theme)
-           :shield         (app-shield (graphics/loading-animation))}
-          (param body-props)))
+  (let [app-config @(a/subscribe [:core/get-app-config])]
+       (merge app-config body-props
+              {:app-build      (a/app-build)
+               :core-js        (router/request->route-prop       request :core-js)
+               :selected-theme (user/request->user-settings-item request :selected-theme)
+               :shield         (app-shield (graphics/loading-animation))
+               ; Hozzáadja a {:plugin-js-paths [...]} paraméterként átadott útvonalakat
+               ; az x.app-config.edn fájlban beállított útvonalakhoz
+               :plugin-js-paths (vector/concat-items (:plugin-js-paths app-config)
+                                                     (:plugin-js-paths body-props))})))
 
 
 

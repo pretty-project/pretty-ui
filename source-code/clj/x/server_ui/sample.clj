@@ -19,9 +19,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; - Az x.server-ui.api névtér függvényeit útvanalanként eltérő beállításokkal is lehetséges használni
-; - A paraméterként átadott beállítások felülírják a rendszer alapbeállításait!
-;   Pl. a {:css-paths [...]} és {:plugin-js-paths [...]} beállítások felülírják az x.app-details.edn
-;   fájlban beállított .css és .js fájlok betöltését!
 (defn your-ui
   [request]
   (ui/html (ui/head request {:app-title "Your title"

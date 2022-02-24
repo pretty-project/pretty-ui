@@ -15,7 +15,6 @@
 
 (ns x.server-ui.head
     (:require [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.map      :as map]
               [mid-fruits.string   :as string]
               [mid-fruits.vector   :as vector]
               [server-fruits.http  :as http]
@@ -214,6 +213,7 @@
   ;
   ; @param (map) request
   ; @param (map) head-props
+  ;  {:css-paths (maps in vector)(opt)}
   ;
   ; @return (map)
   ;  {:app-build (string)
@@ -221,12 +221,16 @@
   ;   :crawler-rules (string)
   ;   :selected-language (keyword)}
   [request head-props]
-  (map/deep-merge @(a/subscribe [:core/get-app-config])
-                  {:app-build         (a/app-build)
-                   :core-js           (router/request->route-prop       request :core-js)
-                   :crawler-rules     (environment/crawler-rules        request)
-                   :selected-language (user/request->user-settings-item request :selected-language)}
-                  (param head-props)))
+  (let [app-config @(a/subscribe [:core/get-app-config])]
+       (merge app-config head-props
+              {:app-build         (a/app-build)
+               :core-js           (router/request->route-prop       request :core-js)
+               :crawler-rules     (environment/crawler-rules        request)
+               :selected-language (user/request->user-settings-item request :selected-language)
+               ; Hozzáadja a {:css-paths [...]} paraméterként átadott útvonalakat
+               ; az x.app-config.edn fájlban beállított útvonalakhoz
+               :css-paths (vector/concat-items (:css-paths app-config)
+                                               (:css-paths head-props))})))
 
 
 
