@@ -14,23 +14,26 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.api
-    (:require [x.app-ui.background]
+    (:require [x.app-ui.background.views]
               [x.app-ui.bubbles]
               [x.app-ui.element]
               [x.app-ui.engine]
+              [x.app-ui.header.subs]
+              [x.app-ui.header.views]
               [x.app-ui.popups]
               [x.app-ui.presets]
               [x.app-ui.shield]
               [x.app-ui.surface]
-              [x.app-ui.graphics     :as graphics]
-              [x.app-ui.header.api   :as header]
-              [x.app-ui.interface    :as interface]
-              [x.app-ui.progress-bar :as progress-bar]
-              [x.app-ui.renderer     :as renderer]
-              [x.app-ui.sounds       :as sounds]
-              [x.app-ui.structure    :as structure]
-              [x.app-ui.themes       :as themes]
-              [x.app-ui.title        :as title]
+              [x.app-ui.title.subs]
+              [x.app-ui.title.effects]
+              [x.app-ui.graphics        :as graphics]
+              [x.app-ui.header.events   :as header.events]
+              [x.app-ui.interface       :as interface]
+              [x.app-ui.progress-bar    :as progress-bar]
+              [x.app-ui.renderer        :as renderer]
+              [x.app-ui.sounds          :as sounds]
+              [x.app-ui.structure.views :as structure.views]
+              [x.app-ui.themes          :as themes]
               [x.app-ui.bubble-body-presets  :as bubble-body-presets]
               [x.app-ui.popup-header-presets :as popup-header-presets]))
 
@@ -47,8 +50,8 @@
 (def app-title         graphics/app-title)
 (def loading-animation graphics/loading-animation)
 
-; x.app-ui.header
-(def set-header-title! header/set-header-title!)
+; x.app-ui.header.events
+(def set-header-title! header.events/set-header-title!)
 
 ; x.app-ui.interface
 (def get-interface          interface/get-interface)
@@ -89,8 +92,8 @@
 ; x.app-ui.sounds
 (def play-sound! sounds/play-sound!)
 
-; x.app-ui.structure
-(def structure structure/view)
+; x.app-ui.structure.views
+(def structure structure.views/view)
 
 ; x.app-ui.themes
 (def get-selected-theme themes/get-selected-theme)

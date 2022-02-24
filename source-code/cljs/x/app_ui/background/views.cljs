@@ -13,7 +13,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.background)
+(ns x.app-ui.background.views)
 
 
 
@@ -39,7 +39,9 @@
                                 :view-box              "0 0 100 100"}
 ;                              [:polygon {:points "3,0 0,10 0,75 15,15 40,0"}
 ;                                         :style  {:fill FILL-COLOR}}]
-                               [:polygon {:points "0,10 0,75 10,100 30,100 10,70"
+                               [:polygon {:points "0,10 0,75 10,100 30,100 10,70 0,10 5,0 0,0"
                                           :style  {:fill FILL-COLOR}}]
-                               [:polygon {:points "95,92 100,90 100,50 80,80 75,100 92,100"
+                               [:polygon {:points "95,90 100,90 100,50 80,80 75,100 90,100"
+                                          :style  {:fill FILL-COLOR}}]
+                               [:polygon {:points "100,0 100,10 95,5 80,0"
                                           :style  {:fill FILL-COLOR}}]]])

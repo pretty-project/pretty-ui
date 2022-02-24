@@ -266,7 +266,8 @@
   (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
       ; XXX#5660
       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-      (if (r environment/key-pressed? db 16)
+      (if (and (r subs/items-selectable?   db extension-id item-namespace)
+               (r environment/key-pressed? db 16))
           (if-not (r subs/lister-disabled? db extension-id item-namespace)
                   {:db (r events/toggle-item-selection! db extension-id item-namespace item-dex)})
           (engine/item-clicked-event extension-id item-namespace item-dex item))))

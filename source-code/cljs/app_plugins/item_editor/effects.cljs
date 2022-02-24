@@ -100,14 +100,25 @@
       ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
       ; annak törlésének visszavonása esemény esetleges megtörténtekor.
       (if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
-              {:db (r events/store-local-changes! db extension-id item-namespace)}
+              {:db (r events/store-local-changes! db extension-id item-namespace)})))
+
+              ; BUG#4055
+              ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
+              ;   tartalmaz, akkor új elem létrehozása után a szerkesztő elhagyásakor abban az esetben is
+              ;   megjelenítenne a changes-discarded értesítés, ha nem történt szerkesztés, mivel
+              ;   az {:initial-value ...} tulajdonság módosítja az üres adatot (az új elemet).
+              ; - Ha az item-editor plugin olyan felületen jelenik meg, ahol tabok (fülek) vannak,
+              ;   akkor egy másik tabra (fülre) kattintva az {:component-did-unmount ...} esemény
+              ;   által meghívott [:item-editor/unload-editor! ...] esemény megtörténése miatt megjelenne
+              ;   a changes-discarded értesítés, abban az esetben is ha a szerkesztő nem lett elhagyva.
+
               ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
               ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
               ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
               ; esemény visszavonásának esetleges megtörténtekor.
-              (if (r subs/item-changed? db extension-id item-namespace)
-                  {:db (r events/store-local-changes! db extension-id item-namespace)
-                   :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]}))))
+              ;(if (r subs/item-changed? db extension-id item-namespace)
+              ;    {:db (r events/store-local-changes! db extension-id item-namespace)
+              ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
 
 (a/reg-event-fx
   :item-editor/request-item!

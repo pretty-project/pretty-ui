@@ -3,37 +3,20 @@
 ;; ----------------------------------------------------------------------------
 
 ; Author: bithandshake
-; Created: 2021.06.09
+; Created: 2022.02.23
 ; Description:
-; Version: v0.8.0
-; Compatibility: x4.5.7
+; Version: v0.8.8
+; Compatibility: x4.6.2
 
 
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.title
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-ui.header.api  :as header]))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-window-title-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (metamorphic-content) window-title
-  ;
-  ; @return (string)
-  [db [_ window-title]]
-  (if-let [window-title (r components/get-metamorphic-value db window-title)]
-          (let [app-title (r a/get-app-config-item db :app-title)]
-               (str window-title " - " app-title))
-          (r a/get-app-config-item db :app-title)))
+(ns x.app-ui.title.effects
+    (:require [x.app-core.api         :as a :refer [r]]
+              [x.app-ui.header.events :as header.events]
+              [x.app-ui.title.subs    :as subs]))
 
 
 
@@ -55,7 +38,7 @@
   ; @usage
   ;  [:ui/set-window-title! "My title"]
   (fn [{:keys [db]} [_ window-title]]
-      (let [window-title (r get-window-title-value db window-title)]
+      (let [window-title (r subs/get-window-title-value db window-title)]
            {:fx [:environment/set-window-title! window-title]})))
 
 (a/reg-event-fx
@@ -65,6 +48,6 @@
   ; @usage
   ;  [:ui/set-title! "My title"]
   (fn [{:keys [db]} [_ title]]
-      (let [window-title (r get-window-title-value db title)]
-           {:db (r header/set-header-title! db title)
+      (let [window-title (r subs/get-window-title-value db title)]
+           {:db (r header.events/set-header-title! db title)
             :fx [:environment/set-window-title! window-title]})))

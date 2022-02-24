@@ -14,7 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.api
-    (:require [x.app-views.app-menu.api]
+    (:require [x.app-views.app-menu.effects]
+              [x.app-views.app-menu.views]
               [x.app-views.error-page]
               [x.app-views.login-box]
               [x.app-views.no-internet-notification]

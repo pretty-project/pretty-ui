@@ -28,7 +28,7 @@
   :views.app-menu/render-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (r gestures/init-view-handler! db :app-views.app-menu/handler {:default-view-id :main})
+      {:db (r gestures/init-view-handler! db :app-views.app-menu/handler {:default-view-id :main})
        :dispatch [:ui/add-popup! :app-views.app-menu/view
                                  {:body   #'views/body
                                   :header #'ui/close-popup-header
