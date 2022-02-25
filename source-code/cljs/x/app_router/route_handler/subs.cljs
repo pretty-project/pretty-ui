@@ -11,7 +11,8 @@
               [x.app-core.api      :as a :refer [r]]
               [x.app-router.engine :as engine]
               [x.app-user.api      :as user]
-              [x.mid-router.route-handler.subs :as route-handler.subs]))
+              [x.app-router.route-handler.engine :as route-handler.engine]
+              [x.mid-router.route-handler.subs   :as route-handler.subs]))
 
 
 
@@ -294,8 +295,7 @@
   ; @return (boolean)
   [db [_ route-string]]
   (let [current-route-string (r get-current-route-string db)]
-       (boolean (and (param RELOAD-SAME-PATH?)
-                     (= route-string current-route-string)))))
+       (and route-handler.engine/RELOAD-SAME-PATH? (= route-string current-route-string))))
 
 (defn- get-history
   ; WARNING! NON-PUBLIC! DO NOT USE!

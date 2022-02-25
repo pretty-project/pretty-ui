@@ -4,7 +4,8 @@
 
 (ns x.app-router.route-handler.side-effects
     (:require [accountant.core :as accountant.core]
-              [x.app-core.api  :as a]))
+              [x.app-core.api  :as a]
+              [x.app-router.route-handler.engine :as route-handler.engine]))
 
 
 
@@ -14,7 +15,7 @@
 (defn- configure-navigation!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (accountant.core/configure-navigation! ACCOUNTANT-CONFIG))
+  (accountant.core/configure-navigation! route-handler.engine/ACCOUNTANT-CONFIG))
 
 (defn- navigate!
   ; WARNING! NON-PUBLIC! DO NOT USE!

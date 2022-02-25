@@ -6,7 +6,8 @@
     (:require [mid-fruits.vector   :as vector]
               [x.app-core.api      :as a :refer [r]]
               [x.app-db.api        :as db]
-              [x.app-router.route-handler.engine :as route-handler.engine]))
+              [x.app-router.route-handler.engine :as route-handler.engine]
+              [x.app-router.route-handler.subs   :as route-handler.subs]))
 
 
 
@@ -36,7 +37,7 @@
   ;
   ; @return (map)
   [db _]
-  (let [client-routes (r get-client-routes db)]
+  (let [client-routes (r route-handler.subs/get-client-routes db)]
        ; A szerverről érkezett client-routes útvonalak magasabb prioritásúak,
        ; mint a DEFAULT-ROUTES útvonalak.
        ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni
