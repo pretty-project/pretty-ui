@@ -90,5 +90,4 @@
 (def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
 
 ; x.server-core.transfer-handler
-(def reg-transfer!          transfer-handler/reg-transfer!)
-(def download-transfer-data transfer-handler/download-transfer-data)
+(def reg-transfer! transfer-handler/reg-transfer!)

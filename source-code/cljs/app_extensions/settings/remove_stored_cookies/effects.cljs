@@ -5,7 +5,7 @@
 (ns app-extensions.settings.remove-stored-cookies.effects
     (:require [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]
-              [app-extension.settings.remove-stored-cookies.views :as remove-stored-cookies.views]))
+              [app-extensions.settings.remove-stored-cookies.views :as remove-stored-cookies.views]))
 
 
 

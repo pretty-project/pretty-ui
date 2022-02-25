@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.settings.view-selector.effects
-    (:require [x.app-core.api :as a]
+    (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]
               [app-extensions.settings.view-selector.views :as view-selector.views]))
 

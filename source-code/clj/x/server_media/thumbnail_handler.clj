@@ -17,6 +17,7 @@
     (:require [server-fruits.http    :as http]
               [server-fruits.image   :as image]
               [server-fruits.io      :as io]
+              [x.server-core.api     :as a]
               [x.server-media.engine :as engine]))
 
 
@@ -91,3 +92,14 @@
            (let [filepath (engine/filename->media-thumbnail-filepath DEFAULT-THUMBNAIL-FILENAME)]
                 (http/media-wrap {:body      (io/file                filepath)
                                   :mime-type (io/filepath->mime-type filepath)})))))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-server-init [:router/add-route! :media/download-thumbnail
+                                       {:route-template "/media/thumbnails/:filename"
+                                        :get {:handler download-thumbnail}}]})

@@ -97,7 +97,7 @@
                         {:initial-value true
                          :indent        :none
                          :label         :analytics-cookies
-                         :value-path (environment/cookie-setting-path :analytics-cookies-enabled?)
+                         :value-path [:environment :cookie-handler/meta-items :analytics-cookies-enabled?]
                          :on-check   [:environment/cookie-settings-changed]
                          :on-uncheck [:environment/cookie-settings-changed]}]
        ; Remove stored cookies

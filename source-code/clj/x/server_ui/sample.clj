@@ -1,7 +1,11 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.server-ui.sample
     (:require [server-fruits.http :as http]
-              [x.server-ui.api]))
+              [x.server-core.api  :as a]
+              [x.server-ui.api    :as ui]))
 
 
 
@@ -18,7 +22,8 @@
 ;; -- HTML, HEAD és BODY elemek használata egyéni beállításokkal --------------
 ;; ----------------------------------------------------------------------------
 
-; - Az x.server-ui.api névtér függvényeit útvanalanként eltérő beállításokkal is lehetséges használni
+; Az x.server-ui.api névtér függvényeit útvanalanként eltérő beállításokkal is lehetséges használni
+; Pl. az egyes útvonalak kiszolgálása eltérő meta-adatokkal és egyéb beállításokkal történhet
 (defn your-ui
   [request]
   (ui/html (ui/head request {:app-title "Your title"

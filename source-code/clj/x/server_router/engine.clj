@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.2.8
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -17,8 +6,7 @@
     (:require [mid-fruits.candy    :refer [param return]]
               [mid-fruits.string   :as string]
               [mid-fruits.vector   :as vector]
-              [x.mid-router.engine :as engine]
-              [x.server-core.api   :as a]))
+              [x.mid-router.engine :as engine]))
 
 
 
@@ -50,8 +38,7 @@
   ;
   ; @return (boolean)
   [destructed-routes [route-template _]]
-  (boolean (some #(= (first %) route-template)
-                  (param destructed-routes))))
+  (boolean (some #(= (first %) route-template) destructed-routes)))
 
 (defn route-template-parts-ordered?
   ; WARNING! NON-PUBLIC! DO NOT USE!

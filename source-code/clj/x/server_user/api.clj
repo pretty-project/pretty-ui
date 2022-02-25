@@ -5,17 +5,19 @@
 (ns x.server-user.api
     (:require [x.server-user.installer.lifecycles]
               [x.server-user.installer.side-effects]
+              [x.server-user.account-handler.lifecycles]
+              [x.server-user.account-handler.routes]
               [x.server-user.account-handler.transfer]
               [x.server-user.profile-handler.transfer]
+              [x.server-user.settings-handler.lifecycles]
+              [x.server-user.settings-handler.routes]
               [x.server-user.settings-handler.transfer]
               [x.server-user.user-handler.engine]
               [x.server-user.account-handler.engine    :as account-handler.engine]
-              [x.server-user.account-handler.routes    :as account-handler.routes]
               [x.server-user.engine                    :as engine]
               [x.server-user.profile-handler.engine    :as profile-handler.engine]
               [x.server-user.session-handler.engine    :as session-handler.engine]
               [x.server-user.settings-handler.engine   :as settings-handler.engine]
-              [x.server-user.settings-handler.routes   :as settings-handler.routes]
               [x.server-user.user-handler.side-effects :as user-handler.side-effects]))
 
 
@@ -29,10 +31,6 @@
 (def request->user-account        account-handler.engine/request->user-account)
 (def request->user-public-account account-handler.engine/request->user-public-account)
 (def request->authenticated?      account-handler.engine/request->authenticated?)
-
-; x.server-user.account-handler.routes
-(def authenticate account-handler.routes/authenticate)
-(def logout       account-handler.routes/logout)
 
 ; x.server-user.engine
 (def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
@@ -49,9 +47,6 @@
 ; x.server-user.settings-handler.engine
 (def request->user-settings      settings-handler.engine/request->user-settings)
 (def request->user-settings-item settings-handler.engine/request->user-settings-item)
-
-; x.server-user.settings-handler.routes
-(def upload-user-settings-item! settings-handler.routes/upload-user-settings-item!)
 
 ; x.server-user.user-handler.side-effects
 (def add-user! user-handler.side-effects/add-user!)

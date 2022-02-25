@@ -63,7 +63,7 @@
             form-data    (r file-uploader.subs/get-form-data                   db uploader-id)
             validator-f #(r file-uploader.queries/upload-files-response-valid? db uploader-id %)]
            {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
-                         [:sync/send-query! (engine/request-id uploader-id)
+                         [:sync/send-query! (file-uploader.engine/request-id uploader-id)
                                             {:body       (dom/merge-to-form-data! form-data {:query query})
                                              :on-success [:storage.file-uploader/progress-successed uploader-id]
                                              :on-failure [:storage.file-uploader/progress-failured  uploader-id]

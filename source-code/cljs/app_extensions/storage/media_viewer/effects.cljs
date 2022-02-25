@@ -54,6 +54,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ viewer-id]]
       [:ui/add-popup! :storage.media-viewer/view
-                      {:body   [media-views.views/body   viewer-id]
-                       :header [media-views.views/header viewer-id]
+                      {:body   [media-viewer.views/body   viewer-id]
+                       :header [media-viewer.views/header viewer-id]
                        :layout :unboxed}]))

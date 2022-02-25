@@ -8,9 +8,9 @@
               [pathom.api         :as pathom]
               [server-fruits.io   :as io]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation      :as pathom.co :refer [defmutation]]
-              [server-extensions.storage.capacity-handler :as capacity-handler]
-              [server-extensions.storage.engine           :as engine]))
+              [com.wsscode.pathom3.connect.operation             :as pathom.co :refer [defmutation]]
+              [server-extensions.storage.capacity-handler.engine :as capacity-handler.engine]
+              [server-extensions.storage.engine                  :as engine]))
 
 
 
@@ -96,7 +96,7 @@
   [{:keys [request] :as env} {:keys [destination-id] :as mutation-props}]
   (let [content-size (request->content-size request)
         files-data   (request->files-data   request)]
-       (if (capacity-handler/capacity-limit-exceeded? content-size)
+       (if (capacity-handler.engine/capacity-limit-exceeded? content-size)
            (return :capacity-limit-exceeded)
            (when-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
                      ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást ...

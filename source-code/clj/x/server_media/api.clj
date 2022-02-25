@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.api
-    (:require [x.server-media.download-handler  :as download-handler]
+    (:require [x.server-media.download-handler]
               [x.server-media.engine            :as engine]
               [x.server-media.temporary-handler :as temporary-handler]
               [x.server-media.thumbnail-handler :as thumbnail-handler]))
@@ -23,9 +23,6 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; x.server-media/download-handler
-(def download-file download-handler/download-file)
 
 ; x.server-media.engine
 (def allowed-extensions                 engine/allowed-extensions)
@@ -43,5 +40,4 @@
 (def download-temporary-file temporary-handler/download-temporary-file)
 
 ; x.server-media.thumbnail-handler
-(def download-thumbnail  thumbnail-handler/download-thumbnail)
 (def generate-thumbnail! thumbnail-handler/generate-thumbnail!)

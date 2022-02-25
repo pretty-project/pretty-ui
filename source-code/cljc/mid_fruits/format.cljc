@@ -1,14 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.04.27
-; Description:
-; Version: v0.5.6
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -40,7 +30,7 @@
   ;  "4 200.5"
   ;
   ; @return (string)
-  [n]  
+  [n]
   (let [; base:        az n string első (kizárólag) számjegyekből álló blokkja
         ; group-count: a base string hány darab három karakteres blokkra osztható
         ; offset:      a base string három karakteres blokkokra osztása után hány karakter marad ki (a base string elején)

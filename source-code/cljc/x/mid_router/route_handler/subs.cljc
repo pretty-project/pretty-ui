@@ -1,28 +1,15 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.12.17
-; Description:
-; Version: v0.4.4
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-router.route-handler
-    (:require [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.string   :as string]
-              [mid-fruits.uri      :as uri]
-              [x.mid-core.api      :as a :refer [r]]
-              [x.mid-router.engine :as engine]))
+(ns x.mid-router.route-handler.subs
+    (:require [mid-fruits.string :as string]
+              [mid-fruits.uri    :as uri]
+              [x.mid-core.api    :as a :refer [r]]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-app-home
@@ -36,10 +23,6 @@
   (let [app-home (r a/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))
 
-; @usage
-;  [:router/get-app-home]
-(a/reg-sub :router/get-app-home get-app-home)
-
 (defn get-resolved-uri
   ; @param (route-string) uri
   ;
@@ -52,3 +35,12 @@
   [db [_ uri]]
   (let [app-home (r get-app-home db)]
        (string/replace-part uri #"/@app-home" app-home)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:router/get-app-home]
+(a/reg-sub :router/get-app-home get-app-home)

@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.transfer-handler
-    (:require [server-fruits.http          :as http]
-              [x.server-core.engine        :as engine]
-              [x.server-core.event-handler :as event-handler]))
+    (:require [server-fruits.http              :as http]
+              [x.server-core.engine            :as engine]
+              [x.server-core.event-handler     :as event-handler]
+              [x.server-core.lifecycle-handler :as lifecycle-handler]))
 
 
 
@@ -81,3 +82,14 @@
   ; @return (map)
   [request]
   (http/map-wrap {:body (download-transfer-data-f request)}))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(lifecycle-handler/reg-lifecycles!
+  ::lifecycles
+  {:on-server-init [:router/add-route! :core/transfer-data
+                                       {:route-template "/synchronize-app"
+                                        :get {:handler download-transfer-data}}]})

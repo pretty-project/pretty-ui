@@ -22,6 +22,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.server-environment.crawler-handler
-(def download-robots-txt  crawler-handler/download-robots-txt)
-(def download-sitemap-xml crawler-handler/download-sitemap-xml)
-(def crawler-rules        crawler-handler/crawler-rules)
+(def crawler-rules crawler-handler/crawler-rules)

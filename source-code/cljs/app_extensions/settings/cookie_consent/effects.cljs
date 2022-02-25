@@ -5,6 +5,7 @@
 (ns app-extensions.settings.cookie-consent.effects
     (:require [x.app-core.api :as a :refer [r]]
               [app-extensions.settings.cookie-settings.views :as cookie-settings.views]
+              [app-extensions.settings.cookie-consent.subs   :as cookie-consent.subs]
               [app-extensions.settings.cookie-consent.views  :as cookie-consent.views]))
 
 

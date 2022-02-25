@@ -10,7 +10,7 @@
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.css-handler.engine]
               [x.app-environment.cookie-handler.subs      :as cookie-handler.subs]
-              [x.app-environment.css-handler.side-effects :as css-handler].side-effects
+              [x.app-environment.css-handler.side-effects :as css-handler.side-effects]
               [x.app-environment.element-handler          :as element-handler]
               [x.app-environment.event-handler            :as event-handler]
               [x.app-environment.keypress-handler         :as keypress-handler]

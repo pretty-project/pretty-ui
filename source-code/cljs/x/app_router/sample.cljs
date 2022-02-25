@@ -1,7 +1,42 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.app-router.sample
     (:require [x.app-core.api   :as a]
               [x.app-router.api :as router]))
+
+
+
+;; -- Names -------------------------------------------------------------------
+;; -- XXX#3387 ----------------------------------------------------------------
+
+; @name route-string
+;  "/products/big-green-bong?type=hit#order"
+;
+; @name route-path
+;  "/products/big-green-bong"
+;
+; @name route-template
+;  "/products/:product-id"
+;
+; @name route-tail
+;  "type=hit#order"
+;
+; @name route-query-string
+;  "type=hit"
+;
+; @name route-query-params
+;  {"type" "hit"}
+;
+; @name route-fragment
+;  "order"
+;
+; @name client-event
+;  [:products/render!]
+;
+; @name route-id
+;  :products/route
 
 
 

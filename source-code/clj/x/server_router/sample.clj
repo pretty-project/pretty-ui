@@ -1,7 +1,87 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.server-router.sample
     (:require [server-fruits.http :as http]
               [x.server-core.api  :as a]))
+
+
+
+;; -- WARNING -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Az x4.4.6 verzió óta a szerver nem küldi el a kliens számára az útvonalak
+; szerver-oldali beállításait.
+;
+; Bizonyos esetekben szükséges lehet a kliens-oldalon megállapítani, hogy egy
+; új útvonalat konfliktus nélkül képes-e hozzáadni a rendszerhez.
+; Pl.: új aloldal létrehozásakor
+; Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
+; hogy az megválaszolja, hogy konfliktus nélkül hozzáadható-e az új útvonal.
+
+
+
+;; -- Names -------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @name route-data
+;  A Reitit router számára egy kételemű vektorban adódnak át az egyes útvonalak:
+;  Pl.:
+;  ["/my-route" {:get #(my-handler %)}]
+;
+; @name route-template
+;  Pl.:
+;  "/my-route/:my-item-id"
+;
+; @name route-props
+;  Pl.:
+;  {:get            #(my-handler %)
+;   :post           {...}
+;   :core-js        "app.js"
+;   :client-event   [:do-something-on-client!]
+;   :server-event   [:do-something-on-server!]
+;   :restricted?    true
+;   :route-template "/my-route"}
+;
+; @name structured-routes
+;  Az útvonalak és azok adatai route-id - route-props kulcs-érték párokként
+;  tárolódnak a szerver-oldali Re-Frame adatbázisban:
+;  Pl.:
+;  {:my-route   {:route-template "/my-route"
+;                :get {...}}
+;   :your-route {:route-template "/your-route"
+;                :post {...}}}
+;
+; @name destructed-routes
+;  Az applikáció indításakor a Reitit router számára egy vektorba struktúrálva
+;  adódnak át a :get és/vagy :post tulajdonsággal rendelkező útvonalak és azok adatai:
+;  Pl.:
+; [["/my-route"   {:get #(my-handler %)}]
+;  ["/your-route" {:post {...}}]]
+;
+; @name ordered-routes
+;  A vektorba struktúrált útvonalak a route-template értékük szerint abc sorrendbe
+;  rendezve kerülnek átadásra a Reitit router számára úgy, hogy a path-param
+;  változók nevei magasabb értékűnek számítanak – így azok a vektor későbbi elemei,
+;  hogy a Reitit router ne kezelje őket konfliktusként:
+;  Pl.:
+;  [["/my-route"   ...]
+;   ["/our-route"  ...]
+;   ["/our-route/your-page"]
+;   ["/our-route/:my-param"   ...]
+;   ["/our-route/:your-param" ...]
+;   ["/your-route" ...]]
+;
+; @name {:restricted? true}
+;  Az egyes {:restricted? true} tulajdonságú útvonalak kiszolgálása, a {:client-event ...}
+;  és a {:server-event ...} események megtörténése a felhasználó azonosításhoz kötött.
+;
+; @name client-routes
+;  Az egyes útvonalak kliens-oldali tulajdonságai
+;
+; @name server-routes
+;  Az egyes útvonalak szerver-oldali tulajdonságai
 
 
 

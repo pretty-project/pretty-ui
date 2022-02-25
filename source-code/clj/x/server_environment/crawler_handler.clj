@@ -104,3 +104,15 @@
   (if (user/request->authenticated? request)
       (return "noindex, nofollow, noarchive, nosnippet")
       (return "index, follow, noarchive, max-snippet:200, max-image-preview:large")))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-server-init [:router/add-routes! {:environment/robots.txt  {:route-template "/robots.txt"
+                                                                   :get {:handler download-robots-txt}}
+                                         :environment/sitemap.xml {:route-template "/sitemap.xml"
+                                                                   :get {:handler download-sitemap-xml}}}]})

@@ -94,7 +94,7 @@
   :environment/store-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if (r subs/necessary-cookies-enabled? db)
+      (if (r cookie-handler.subs/necessary-cookies-enabled? db)
           (let [cookie-settings (r cookie-handler.subs/get-cookie-settings db)]
                {:fx [:environment/store-browser-cookie! :cookie-settings
                                                         {:cookie-type :necessary :value cookie-settings}]}))))

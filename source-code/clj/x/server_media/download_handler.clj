@@ -16,6 +16,7 @@
 (ns x.server-media.download-handler
     (:require [server-fruits.http    :as http]
               [server-fruits.io      :as io]
+              [x.server-core.api     :as a]
               [x.server-media.engine :as engine]))
 
 
@@ -40,3 +41,14 @@
            (http/media-wrap {:body      (io/file                filepath)
                              :mime-type (io/filepath->mime-type filepath)})
            (http/error-wrap {:error-message :file-not-found :status 404}))))
+
+
+
+;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-server-init [:router/add-route! :media/download-file
+                                       {:route-template "/media/storage/:filename"
+                                        :get {:handler download-file}}]})
