@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.clients.client-lister.views
-    (:require [x.app-core.api    :as a]
-              [x.app-locales.api :as locales]
+    (:require [x.app-core.api     :as a]
+              [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
+              [x.app-locales.api  :as locales]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
 
@@ -42,8 +44,8 @@
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ _ client-item]
-  [elements/toggle {:on-click [:clients.client-lister/item-clicked client-item]
+  [_ _ item-dex client-item]
+  [elements/toggle {:on-click [:clients.client-lister/item-clicked item-dex client-item]
                     :content  [client-item-structure client-item]
                     :hover-color :highlight}])
 
@@ -55,6 +57,9 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-lister/view :clients :client {:list-element #'client-item
-                                      :item-actions [:delete :duplicate]
-                                      :sortable? true}])
+  (let [description @(a/subscribe [:item-lister/get-description :clients :client])]
+       [layouts/layout-a :surface-id {:header [item-lister/header :clients :client {}]
+                                      :body   [item-lister/body   :clients :client {:list-element #'client-item
+                                                                                    :item-actions [:delete :duplicate]
+                                                                                    :sortable? true}]
+                                      :description description}]))

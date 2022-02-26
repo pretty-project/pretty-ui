@@ -5,6 +5,7 @@
 (ns app-extensions.settings.view-selector.views
     (:require [x.app-core.api                :as a]
               [x.app-elements.api            :as elements]
+              [x.app-layouts.api             :as layouts]
               [app-plugins.view-selector.api :as view-selector]
               [app-extensions.settings.appearance-settings.views   :rename {body appearance-settings}]
               [app-extensions.settings.notification-settings.views :rename {body notification-settings}]
@@ -32,12 +33,12 @@
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [extension-id]
+  [surface-id]
   (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings])]
-       (case view-id :personal      [personal-settings     extension-id]
-                     :privacy       [privacy-settings      extension-id]
-                     :notifications [notification-settings extension-id]
-                     :appearance    [appearance-settings   extension-id])))
+       (case view-id :personal      [personal-settings     surface-id]
+                     :privacy       [privacy-settings      surface-id]
+                     :notifications [notification-settings surface-id]
+                     :appearance    [appearance-settings   surface-id])))
 
 
 
@@ -64,6 +65,6 @@
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  [view-selector/view :settings {:body   #'body
-                                 :header #'header}])
+  [surface-id]
+  [layouts/layout-a surface-id {:header #'header
+                                :body   #'body}])

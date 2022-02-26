@@ -31,6 +31,15 @@
            {:fx [:environment/set-window-title! window-title]})))
 
 (a/reg-event-fx
+  :ui/restore-default-title!
+  ; @usage
+  ;  [:ui/restore-default-title!]
+  (fn [{:keys [db]} _]
+      (let [window-title (r a/get-app-config-item db :app-title)]
+           {:db (r header.events/remove-header-title! db)
+            :fx [:environment/set-window-title! window-title]})))
+
+(a/reg-event-fx
   :ui/set-title!
   ; @param (metamorphic-content) title
   ;

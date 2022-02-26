@@ -5,7 +5,9 @@
 (ns x.app-views.api
     (:require [x.app-views.app-menu.effects]
               [x.app-views.app-menu.views]
-              [x.app-views.error-page]
+              [x.app-views.error-page.effects]
+              [x.app-views.error-page.engine]
+              [x.app-views.error-page.views]
               [x.app-views.login-box.effects]
               [x.app-views.login-box.subs]
               [x.app-views.login-box.views]

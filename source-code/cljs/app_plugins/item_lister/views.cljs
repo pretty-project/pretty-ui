@@ -500,21 +500,6 @@
                                           :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
                                           :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}])))
 
-(defn list-item-toggle
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;  {:list-element (metamorphic-content)}
-  ; @param (integer) item-dex
-  ; @param (map) item
-  [extension-id item-namespace {:keys [list-element]} item-dex item]
-  [elements/toggle {:on-click       [:item-lister/item-clicked       extension-id item-namespace item-dex item]
-                    :on-right-click [:item-lister/item-right-clicked extension-id item-namespace item-dex item]
-                    :content [list-element extension-id item-namespace item-dex item]
-                    :hover-color :highlight}])
-
 (defn list-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -596,9 +581,6 @@
   ;  {:item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :list-element (metamorphic-content)
-  ;   :on-click (metamorphic-event)(opt)
-  ;   :on-load (metamorphic-event)(opt)
-  ;   :on-right-click (metamorphic-event)(opt)
   ;   :prefilter (map)(opt)
   ;   :sortable? (boolean)(opt)
   ;    Default: false}

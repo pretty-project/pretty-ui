@@ -1,11 +1,4 @@
 
-#
-
- - [:my-extension.my-type-LISTER/item-clicked ...] az esemény neve az item-browser plugin
-   használatakor
-
-
-
 # XXX#3286
 - Az item-browser plugin jelenlegi indítása az [:item-lister/load-lister! ...] esemény meghívásával
   kezdődik, ami meghívja a [:my-extension.my-type-browser/load-browser! ...] eseményt, ami kirendereli

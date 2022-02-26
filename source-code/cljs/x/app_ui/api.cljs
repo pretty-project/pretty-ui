@@ -51,7 +51,8 @@
 (def loading-animation graphics/loading-animation)
 
 ; x.app-ui.header.events
-(def set-header-title! header.events/set-header-title!)
+(def set-header-title!    header.events/set-header-title!)
+(def remove-header-title! header.events/remove-header-title!)
 
 ; x.app-ui.interface
 (def get-interface          interface/get-interface)

@@ -8,11 +8,11 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:view-selector/initialize-selector! :settings
-                                                        {:allowed-view-ids [:personal :privacy :appearance :notifications]
-                                                         :default-view-id   :personal}]})
+  {:on-server-boot [:view-selector/init-selector! :settings
+                                                  {:allowed-view-ids [:personal :privacy :appearance :notifications]
+                                                   :default-view-id   :personal}]})

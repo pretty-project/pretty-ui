@@ -5,7 +5,6 @@
 (ns app-plugins.item-lister.effects
     (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]
-              [x.app-environment.api           :as environment]
               [app-plugins.item-lister.engine  :as engine]
               [app-plugins.item-lister.events  :as events]
               [app-plugins.item-lister.queries :as queries]

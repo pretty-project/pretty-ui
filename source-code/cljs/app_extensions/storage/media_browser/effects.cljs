@@ -138,21 +138,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-lister/item-clicked
+  :storage.media-browser/item-clicked
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ _ {:keys [id mime-type] :as media-item}]]
-      (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
-                                          (if (r media-browser.subs/media-browser-mode? db)
-                                              [:storage.media-browser/render-file-menu! media-item]
-                                              [:storage.media-picker/file-clicked       media-item]))))
-
-(a/reg-event-fx
-  :storage.media-lister/item-right-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ _ {:keys [mime-type] :as media-item}]]
-      (if (r media-browser.subs/media-browser-mode? db)
-          (case mime-type "storage/directory" [:storage.media-browser/render-directory-menu! media-item]
-                                              [:storage.media-browser/render-file-menu!      media-item]))))
+  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as media-item}]]
+      (if (r item-browser/toggle-item-selection? db :storage :media item-dex)
+          {:db (r item-browser/toggle-item-selection! db :storage :media item-dex)}
+          (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
+                                              [:storage.media-browser/render-file-menu! media-item]))))
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!

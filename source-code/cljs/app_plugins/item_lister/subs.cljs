@@ -9,6 +9,7 @@
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
+              [x.app-environment.api :as environment]
               [x.app-router.api      :as router]
               [x.app-sync.api        :as sync]
               [app-plugins.item-lister.engine :as engine]
@@ -272,8 +273,8 @@
   ; @return (map)
   ;  {:$and (maps in vector)}
   [db [_ extension-id item-namespace]]
-  (let [active-filter (r subs/get-meta-item db extension-id item-namespace :active-filter)
-            prefilter (r subs/get-meta-item db extension-id item-namespace     :prefilter)]
+  (let [active-filter (r get-meta-item db extension-id item-namespace :active-filter)
+            prefilter (r get-meta-item db extension-id item-namespace     :prefilter)]
        (cond-> {} active-filter (update :$and vector/conj-item active-filter)
                       prefilter (update :$and vector/conj-item     prefilter))))
 
@@ -506,9 +507,9 @@
   [db [_ extension-id item-namespace item-dex]]
   (and ; XXX#5660
        ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-            (r subs/items-selectable?   db extension-id item-namespace)
+            (r items-selectable?        db extension-id item-namespace)
             (r environment/key-pressed? db 16)
-       (not (r subs/lister-disabled?    db extension-id item-namespace))))
+       (not (r lister-disabled?         db extension-id item-namespace))))
 
 
 

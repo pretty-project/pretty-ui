@@ -4,7 +4,6 @@
               [sente.api]
               [server-extensions.clients.api]
               [server-extensions.home-screen.api]
-              [server-extensions.products.api]
               [server-extensions.settings.api]
               [server-extensions.storage.api]
               [server-extensions.trader.api]

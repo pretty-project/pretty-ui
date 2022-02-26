@@ -97,12 +97,16 @@
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ _ {:keys [mime-type] :as media-item}]
+  [_ _ _ {:keys [id mime-type] :as media-item}]
   (let [file-selected?   @(a/subscribe [:storage.media-picker/file-selected?   media-item])
         file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
-       (case mime-type "storage/directory" [directory-item media-item {:icon :navigate_next}]
-                                           [file-item      media-item (if file-selectable? {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}
-                                                                                           {:disabled? true})])))
+       (case mime-type "storage/directory" [elements/toggle {:content  [directory-item media-item {:icon :navigate_next}]
+                                                             :on-click [:item-browser/browse-item! :storage :media id]
+                                                             :hover-color :highlight}]
+                                           (if file-selectable? [elements/toggle {:content  [file-item media-item {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}]
+                                                                                  :on-click [:storage.media-picker/file-clicked media-item]
+                                                                                  :hover-color :highlight}]
+                                                                [file-item media-item {:disabled? true}]))))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -164,7 +168,9 @@
    [element (a/id) picker-props])
 
   ([picker-id picker-props]
-   [media-picker picker-id (assoc picker-props :extensions ["pdf"])]))
+   [media-picker picker-id picker-props]))
+
+
 
    ; Legyen disabled? állapota is!
    ; Mutassa a thumbnail-eket, ha van meg a fájlneveket!

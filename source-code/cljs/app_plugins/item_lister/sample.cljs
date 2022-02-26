@@ -185,7 +185,7 @@
 ;  címének, ezért szükséges azt hozzáadni a szótárhoz!
 ; - Ha az order-by-options beállításban használtál egyedi értékeket, akkor ne felejtsd el
 ;   hozzáadni a megfelelő szótári szavakat!
-;   Pl. a :my-order/ascending értékhez tartozó kifejezés:
+;   Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:my-extension          {:en "My extension" :hu "Kiegészítőm"}

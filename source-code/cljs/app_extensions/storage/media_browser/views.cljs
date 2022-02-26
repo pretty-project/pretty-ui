@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-browser.views
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.css       :as css]
+    (:require [mid-fruits.css       :as css]
               [mid-fruits.format    :as format]
               [mid-fruits.io        :as io]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-elements.api   :as elements]
+              [x.app-layouts.api    :as layouts]
               [x.app-media.api      :as media]
               [app-plugins.item-browser.api :as item-browser]))
 
@@ -67,8 +67,9 @@
 
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item item-props]
-  [:div.storage--media-item [directory-item-header  media-item item-props]
+  [media-item {:keys [disabled?] :as item-props}]
+  [:div.storage--media-item {:data-disabled (boolean disabled?)}
+                            [directory-item-header  media-item item-props]
                             [directory-item-details media-item item-props]
                             [directory-item-icon    media-item item-props]])
 
@@ -100,16 +101,23 @@
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item item-props]
-  [:div.storage--media-item [file-item-header  media-item item-props]
+  [media-item {:keys [disabled?] :as item-props}]
+  [:div.storage--media-item {:data-disabled (boolean disabled?)}
+                            [file-item-header  media-item item-props]
                             [file-item-details media-item item-props]
                             [file-item-icon    media-item item-props]])
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ _ {:keys [mime-type] :as media-item}]
-  (case mime-type "storage/directory" [directory-item media-item {:icon :navigate_next}]
-                                      [file-item      media-item {:icon :more_vert}]))
+  [_ _ item-dex {:keys [id mime-type] :as media-item}]
+  (case mime-type "storage/directory" [elements/toggle {:content        [directory-item media-item {:icon :navigate_next}]
+                                                        :on-click       [:storage.media-browser/item-clicked item-dex media-item]
+                                                        :on-right-click [:storage.media-browser/render-directory-menu! media-item]
+                                                        :hover-color :highlight}]
+                                      [elements/toggle {:content        [file-item media-item {:icon :more_vert}]
+                                                        :on-click       [:storage.media-browser/item-clicked item-dex media-item]
+                                                        :on-right-click [:storage.media-browser/render-file-menu! media-item]
+                                                        :hover-color :highlight}]))
 
 
 
@@ -119,6 +127,8 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [item-browser/view :storage :media {:list-element     #'media-item
-                                      :item-actions     [:delete :duplicate]
-                                      :new-item-options [:create-directory! :upload-files!]}])
+  (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
+       [layouts/layout-a surface-id {:header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
+                                     :body   [item-browser/body   :storage :media {:item-actions     [:delete :duplicate]
+                                                                                   :list-element     #'media-item}]
+                                     :description description}]))

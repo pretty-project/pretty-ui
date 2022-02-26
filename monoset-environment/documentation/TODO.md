@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- a pluginok :item-actions tulajdonsága hol a header-ön van hol a body-n egységesíteni kell
+
 - pluginok error-mode-ját teszteni kell
 
 - A szerver kezelje a 404 képernyőt, ne a kliens! Ne kelljen a 404-hez letölteni az appot

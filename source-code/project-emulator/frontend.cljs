@@ -3,7 +3,6 @@
     (:require ;[sente.api]
               [app-extensions.clients.api]
               [app-extensions.home-screen.api]
-              [app-extensions.products.api]
               [app-extensions.settings.api]
               [app-extensions.storage.api]
               [app-extensions.trader.api]

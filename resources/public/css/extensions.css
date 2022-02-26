@@ -64,6 +64,9 @@
   align-items: center;
   display: flex }
 
+.storage--media-item[data-disabled="true"] {
+  opacity: .5 }
+
 .storage--media-item--icon {
   position: absolute;
   right: 12px;
