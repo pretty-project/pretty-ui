@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- pluginok error-mode-ját teszteni kell
+
 - A szerver kezelje a 404 képernyőt, ne a kliens! Ne kelljen a 404-hez letölteni az appot
 
 - A ; @return (component) és (hiccup) nem szükséges a view komponensek leírásába!

@@ -47,21 +47,6 @@
 
 
 
-;; -- Error components --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn error-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [_ _]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
-       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
-
-
-
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -112,6 +97,16 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [_ _]
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
+
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -129,40 +124,6 @@
   ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element
   ;                                             :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
-  [item-lister/body extension-id item-namespace body-props])
-
-
-
-;; -- View components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn view
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) view-props
-  ;  {:new-item-options (vector)(opt)
-  ;   :list-element (component)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
-  ;   :prefilter (map)(opt)
-  ;   :sortable? (boolean)(opt)
-  ;    Default: false}
-  ;
-  ; @usage
-  ;  [item-browser/view :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
-  ;  [item-browser/view :my-extension :my-type {:list-element     #'my-list-element
-  ;                                             :new-item-options [:add-my-type! :add-your-type!]
-  ;                                             :prefilter        {:my-type/color "red"}}]
-  [extension-id item-namespace view-props]
-  (let [description @(a/subscribe [:item-browser/get-description extension-id item-namespace])]
-       (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
-               ; If error-mode is enabled ...
-               [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
-                                               :header [header     extension-id item-namespace view-props]}]
-               ; If error-mode is NOT enabled ...
-               [layouts/layout-a extension-id {:body   [body   extension-id item-namespace view-props]
-                                               :header [header extension-id item-namespace view-props]
-                                               :description description}])))
+  (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+          [error-body       extension-id item-namespace]
+          [item-lister/body extension-id item-namespace body-props]))

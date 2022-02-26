@@ -23,4 +23,3 @@
 ; app-plugins.view-selector.views
 (def body   views/body)
 (def header views/header)
-(def view   views/view)

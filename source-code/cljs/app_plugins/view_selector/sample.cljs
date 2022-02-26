@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.sample
-    (:require [x.app-core.api :as a]
-              [x.app-ui.api   :as ui]
+    (:require [x.app-core.api    :as a]
+              [x.app-layouts.api :as layouts]
+              [x.app-ui.api      :as ui]
               [app-plugins.view-selector.api :as view-selector]))
 
 
@@ -38,14 +39,7 @@
 
 
 
-;; -- Example A ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A view-selector plugint header és body komponensre felbontva is lehetséges használni
-
-
-
-;; -- Example B ---------------------------------------------------------------
+;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn my-header
@@ -62,8 +56,8 @@
 
 (defn my-view
   [surface-id]
-  [view-selector/view {:body   #'my-body
-                       :header #'my-header}])
+  [:<> [my-header surface-id]
+       [my-body   surface-id]])
 
 (a/reg-event-fx
   :my-extension.view-selector/render-selector!
@@ -78,3 +72,13 @@
   (fn [{:keys [db]} _]
       (if-not (r ui/element-rendered? db :surface :my-extension.view-selector/view)
               [:my-extension.view-selector/render-selector!])))
+
+
+
+;; -- A plugin használata "Layout A" felületen --------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn your-view
+  [surface-id]
+  [layouts/layout-a surface-id {:header [:div "Your header"]
+                                :body   [:div "Your body"]}])

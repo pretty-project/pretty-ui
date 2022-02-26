@@ -1,4 +1,13 @@
 
+# x4.6.3
+
+- Az item-lister plugin ezentúl nem tesz a listaelemek köré toggle element-et
+
+- Az item-lister, item-browser, item-editor pluginokat ezentúl csak body és header komponensekre
+  felbontva lehet használni
+
+
+
 # x4.6.2
 
 - [:item-lister/inititialize-lister! ...] esemény neve ezentúl [:item-lister/init-lister! ...]

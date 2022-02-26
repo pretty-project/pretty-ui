@@ -5,6 +5,7 @@
 (ns app-plugins.item-lister.sample
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
+              [x.app-layouts.api  :as layouts]
               [app-plugins.item-editor.api :as item-editor]
               [app-plugins.item-lister.api :as item-lister]))
 
@@ -128,18 +129,10 @@
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-header
-  [surface-id]
-  [item-lister/header :my-extension :my-type {}])
-
-(defn my-body
-  [surface-id]
-  [item-lister/body :my-extension :my-type {:list-element [:div "My item"]}])
-
 (defn my-view
   [surface-id]
-  [:<> [my-header  surface-id]
-       [my-body    surface-id]])
+  [:<> [item-lister/header :my-extension :my-type {}]
+       [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]])
 
 (a/reg-event-fx
   :my-extension.my-type-lister/render-lister!
@@ -151,6 +144,18 @@
 (a/reg-event-fx
   :my-extension.my-type-lister/load-lister!
   [:my-extension.my-type-lister/render-lister!])
+
+
+
+;; -- Plugin használata "Layout A" felületeen ---------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn your-view
+  [surface-id]
+  (let [description @(a/subscribe [:item-lister/get-description :my-extension :my-type])]
+       [layouts/layout-a surface-id {:header [item-lister/header :my-extension :my-type {}]
+                                     :body   [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]
+                                     :description description}]))
 
 
 

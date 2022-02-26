@@ -217,22 +217,6 @@
 
 
 
-;; -- Error components --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn error-body
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [item-editor/error-body :my-extension :my-type]
-  [_ _]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
-       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
-
-
-
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -264,12 +248,13 @@
                                  :end-content   [menu-end-buttons   extension-id item-namespace]}])
 
 (defn header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:menu (metamorphic-content)(opt)}
+  ;  {:item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
+  ;    TODO ...
+  ;   :menu (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-editor/header :my-extension :my-type {...}]
@@ -286,6 +271,28 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;  {:form-element (metamorphic-content)}
+  [extension-id item-namespace {:keys [form-element]}]
+  [components/stated (engine/component-id extension-id item-namespace :body)
+                {:render-f   form-element
+                 :destructor [:item-editor/unload-editor! extension-id item-namespace]}])
+
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [_ _]
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
+
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -298,39 +305,7 @@
   ; @usage
   ;  (defn my-form-element [] [:div ...])
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
-  [extension-id item-namespace {:keys [form-element]}]
-  [components/stated (engine/component-id extension-id item-namespace :body)
-                     {:render-f   form-element
-                      :destructor [:item-editor/unload-editor! extension-id item-namespace]}])
-
-
-
-;; -- View components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn view
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) view-props
-  ;  {:form-element (metamorphic-content)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
-  ;    TODO ...
-  ;   :menu (metamorphic-content)(opt)}
-  ;
-  ; @usage
-  ;  [item-editor/view :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  (defn my-form-element [] [:div ...])
-  ;  (defn my-menu         [] [:div ...])
-  ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element
-  ;                                            :menu         #'my-menu}]
-  [extension-id item-namespace view-props]
-  (let [description @(a/subscribe [:item-editor/get-description extension-id item-namespace])]
-       (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
-               [layouts/layout-a extension-id {:body   [error-body extension-id item-namespace]
-                                               :header [header     extension-id item-namespace view-props]}]
-               [layouts/layout-a extension-id {:description description
-                                               :body   [body   extension-id item-namespace view-props]
-                                               :header [header extension-id item-namespace view-props]}])))
+  [extension-id item-namespace body-props]
+  (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
+          [error-body     extension-id item-namespace]
+          [body-structure extension-id item-namespace body-props]))

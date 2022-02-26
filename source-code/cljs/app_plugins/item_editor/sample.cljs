@@ -47,19 +47,31 @@
 
 
 
+;; -- A plugin használata "Layout A" felületen --------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn your-view
+  [surface-id]
+  (let [description @(a/subscribe [:item-editor/get-description :your-extension :your-type])]
+       [layouts/layout-a surface-id {:header [item-editor/header :your-extension :your-type {}]
+                                     :body   [item-editor/body   :your-extension :your-type {:form-element [:div "Your form"]}]
+                                     :description description}]))
+
+
+
 ;; -- A :form-id tulajdonság használata ---------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; - A {:form-id ...} tulajdonság használatával ...
-(defn your-type-form
+(defn our-type-form
   []
-  [elements/text-field ::your-sample-field
-                       {:form-id    (item-editor/form-id :your-extension :your-type)
-                        :value-path [:my-extension :item-editor/data-items :your-key]}])
+  [elements/text-field ::our-sample-field
+                       {:form-id    (item-editor/form-id :our-extension :our-type)
+                        :value-path [:our-extension :item-editor/data-items :our-key]}])
 
-(defn your-view
+(defn our-view
   [surface-id]
-  [item-editor/view :your-extension :your-type {:form-element #'your-type-form}])
+  [item-editor/view :our-extension :our-type {:form-element #'our-type-form}])
 
 
 

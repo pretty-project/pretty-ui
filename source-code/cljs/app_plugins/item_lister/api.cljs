@@ -6,10 +6,10 @@
     (:require [app-plugins.item-lister.dialogs]
               [app-plugins.item-lister.effects]
               [app-plugins.item-lister.queries]
-              [app-plugins.item-lister.engine    :as engine]
-              [app-plugins.item-lister.events    :as events]
-              [app-plugins.item-lister.subs.subs :as subs]
-              [app-plugins.item-lister.views     :as views]))
+              [app-plugins.item-lister.engine :as engine]
+              [app-plugins.item-lister.events :as events]
+              [app-plugins.item-lister.subs   :as subs]
+              [app-plugins.item-lister.views  :as views]))
 
 
 
@@ -33,4 +33,3 @@
 (def sort-items-button          views/sort-items-button)
 (def header                     views/header)
 (def body                       views/body)
-(def view                       views/view)

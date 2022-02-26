@@ -36,4 +36,3 @@
 (def error-body         views/error-body)
 (def header             views/header)
 (def body               views/body)
-(def view               views/view)

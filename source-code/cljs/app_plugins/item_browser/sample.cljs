@@ -32,7 +32,8 @@
 
 (defn my-view
   [surface-id]
-  [item-browser/view :my-extension :my-type {:list-element [:div "My item"]}])
+  [:<> [item-browser/header :my-extension :my-type]
+       [item-browser/body   :my-extension :my-type {:list-element [:div "My item"]}]])
 
 (a/reg-event-fx
   :my-extension.my-type-browser/render-browser!
