@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.6.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -28,7 +17,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.subs
-(def get-description app-plugins.item-lister.subs/get-description)
+(def get-description        app-plugins.item-lister.subs/get-description)
+(def toggle-item-selection? app-plugins.item-lister.subs/toggle-item-selection?)
 
 ; mid-plugins.item-browser.subs
 (def get-browser-props subs/get-browser-props)

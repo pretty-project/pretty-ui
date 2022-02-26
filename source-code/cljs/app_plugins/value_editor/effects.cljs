@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.17
-; Description:
-; Version: v0.9.6
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -18,7 +7,8 @@
               [x.app-core.api   :as a :refer [r]]
               [app-plugins.value-editor.engine :as engine]
               [app-plugins.value-editor.events :as events]
-              [app-plugins.value-editor.subs   :as subs]))
+              [app-plugins.value-editor.subs   :as subs]
+              [app-plugins.value-editor.views  :as views]))
 
 
 
@@ -107,3 +97,18 @@
       {:db (r events/save-value! db extension-id editor-id)
        :dispatch-n [(r subs/get-on-save-event db extension-id editor-id)
                     [:ui/close-popup! (engine/view-id extension-id editor-id)]]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx :value-editor/render-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  (fn [_ [_ extension-id editor-id]]
+      [:ui/add-popup! (engine/view-id extension-id editor-id)
+                      {:body   [views/body   extension-id editor-id];
+                       :header [views/header extension-id editor-id]}]))

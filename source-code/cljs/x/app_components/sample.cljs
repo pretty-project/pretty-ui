@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.app-components.sample
     (:require [x.app-components.api :as components]))
 
@@ -7,11 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; Ha a {:content ...} tulajdonságon kívül más beállítás nem kerül átadásra a content
+; komponens számára, akkor a {:content ...} tulajdonság rövidített formában is átadható
 (defn my-content-a
   []
-  [:<> ; Ha a {:content ...} tulajdonságon kívül más beállítás nem kerül átadásra a content
-       ; komponens számára, akkor a {:content ...} tulajdonság rövidített formában is átadható:
-       [components/content {:content :username}]
+  [:<> [components/content {:content :username}]
        [components/content           :username]])
 
 (defn my-content-b
@@ -40,10 +43,10 @@
   [components/content {:content    [my-component :my-component]
                        :subscriber [:get-my-component-props]}])
 
+; A base-props térkép a my-component komponens component-props paraméterként átadott térképének
+; alapját adja (merge)
 (defn my-content-e
-  [components/content {; A base-props térkép a my-component komponens component-props paraméterként
-                       ; átadott térképének alapját adja (merge).
-                       :base-props {:my-key "My value"}
+  [components/content {:base-props {:my-key "My value"}
                        :content    [my-component :my-component]
                        :subscriber [:get-my-component-props]}])
 
@@ -78,12 +81,12 @@
                       :render-f    #'your-component
                       :subscriber  [:get-your-component-props]}])
 
+; Az initial-props térkép tartalma a komponens React-fába történő csatolása után elérhető lesz
+; a Re-Frame adatbázisban a [:your-path] útvonalon.
 (defn your-stated-d
   []
   [components/stated :your-component
-                     {; Az initial-props térkép tartalma a komponens React-fába történő csatolása
-                      ; után elérhető lesz a Re-Frame adatbázisban a [:your-path] útvonalon.
-                      :initial-props      {}
+                     {:initial-props      {}
                       :initial-props-path [:your-path]
                       :render-f           #'your-component
                       :subscriber         [:get-your-component-props]}])

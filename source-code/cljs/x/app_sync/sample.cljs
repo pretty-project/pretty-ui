@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.app-sync.sample
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api :as a :refer [r]]
@@ -19,11 +22,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A {:validator-f ...} tulajdonságként átadott függvény paraméterként megkapja a szerver válaszát,
+; és ha a függvény visszatérési értéke boolean típusként kiértékelve false érték, akkor az {:on-failure [...]}
+; tulajdonságként átadott esemény történik meg (abban az esetben is ha a szerver válasza egyébként ezt nem indolkolná)
 (a/reg-event-fx
   :send-my-validated-request!
-  ; A {:validator-f ...} tulajdonságként átadott függvény paraméterként megkapja a szerver válaszát,
-  ; és ha a függvény visszatérési értéke boolean típusként kiértékelve false érték, akkor az {:on-failure [...]}
-  ; tulajdonságként átadott esemény történik meg (abban az esetben is ha a szerver válasza egyébként ezt nem indolkolná)
   [:sync/send-request! :my-validated-request
                        {:uri "/my-uri"
                         :on-success []

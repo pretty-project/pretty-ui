@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.23
-; Description:
-; Version: v0.5.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -61,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-browser/initialize-browser!
+  :item-browser/init-browser!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
@@ -82,11 +71,11 @@
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-browser/initialize-browser! :my-extension :my-type {:root-item-id "my-item"
-  ;                                                             :search-keys  [:name :email-address]}]
+  ;  [:item-browser/init-browser! :my-extension :my-type {:root-item-id "my-item"
+  ;                                                       :search-keys  [:name :email-address]}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [browser-props (browser-props-prototype extension-id item-namespace browser-props)]
-           {:db (r events/initialize-browser! db extension-id item-namespace browser-props)
+           {:db (r events/init-browser! db extension-id item-namespace browser-props)
             :dispatch-n [[:item-browser/reg-transfer-browser-props! extension-id item-namespace browser-props]
                          [:item-browser/reg-transfer-lister-props!  extension-id item-namespace browser-props]
                          [:item-browser/add-route!                  extension-id item-namespace browser-props]

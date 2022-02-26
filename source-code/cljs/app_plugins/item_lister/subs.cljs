@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.8.4
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -506,6 +495,20 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (return false))
+
+(defn toggle-item-selection?
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-item-selection? db :my-extension :my-type 42)
+  [db [_ extension-id item-namespace item-dex]]
+  (and ; XXX#5660
+       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
+            (r subs/items-selectable?   db extension-id item-namespace)
+            (r environment/key-pressed? db 16)
+       (not (r subs/lister-disabled?    db extension-id item-namespace))))
 
 
 

@@ -577,7 +577,7 @@
         sortable-item-order (r get-sortable-item-order db sortable-id)
         updated-item-order  (vector/move-item sortable-item-order origin-item-dex target-item-dex)]
               ; Update sortable-items vector
-       (-> db (db/apply! [event-id value-path vector/move-item origin-item-dex target-item-dex])
+       (-> db (db/apply-item! [event-id value-path vector/move-item origin-item-dex target-item-dex])
               ; Store updated-item-order
               (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)
                                       (param updated-item-order)]))))
@@ -595,7 +595,7 @@
         sortable-item-order (r get-sortable-item-order db sortable-id)
         sortable-item-count (r get-sortable-item-count db sortable-id)
         sortable-item-id    (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
-      (-> db (db/apply!    [event-id value-path vector/conj-item sortable-item])
+      (-> db (db/apply-item! [event-id value-path vector/conj-item sortable-item])
              ; XXX#6511
              ; Abban az esetben, ha a még nem történt elem-mozgatás, akkor az :updated-item-order
              ; még nem elérhető a Re-Frame adatbázisban, ezért szükséges a get-sortable-item-order
@@ -635,7 +635,7 @@
         sortable-item-order (r get-sortable-item-order db sortable-id)
         sortable-item-count (r get-sortable-item-count db sortable-id)
         sortable-item-id    (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
-      (-> db (db/apply!    [event-id value-path vector/inject-item sortable-item target-dex])
+      (-> db (db/apply-item! [event-id value-path vector/inject-item sortable-item target-dex])
              ; XXX#6511
              (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
                            (vector/inject-item sortable-item-order sortable-item-id target-dex)))))
@@ -655,7 +655,7 @@
   [db [event-id sortable-id sortable-item-dex]]
   (let [value-path          (r get-sortable-prop        db sortable-id :value-path)
         sortable-item-order (r get-sortable-item-order  db sortable-id)]
-      (-> db (db/apply!    [event-id value-path vector/remove-nth-item sortable-item-dex])
+      (-> db (db/apply-item! [event-id value-path vector/remove-nth-item sortable-item-dex])
              ; XXX#6511
              (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
                            (vector/remove-nth-item sortable-item-order sortable-item-dex)))))

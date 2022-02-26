@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-plugins.item-lister.sample
     (:require [mid-fruits.candy  :refer [param return]]
               [mongo-db.api      :as mongo-db]
@@ -17,7 +20,7 @@
 
 
 
-;; -- Resolvers ---------------------------------------------------------------
+;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- get-my-type-items-f
@@ -48,7 +51,7 @@
 
 
 
-;; -- Mutations ---------------------------------------------------------------
+;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
 (defmutation undo-delete-my-type-items!
@@ -93,7 +96,7 @@
 
 
 
-;; -- Handlers ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
@@ -104,21 +107,26 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- A plugin beállítása alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
+; - Az [:item-lister/init-lister! ...] esemény hozzáadja a "/@app-home/my-extension" útvonalat
+;   a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
+; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
 (a/reg-lifecycles!
   ::lifecycles
-  ; - Az [:item-lister/initialize-lister! ...] esemény hozzáadja a "/@app-home/my-extension" útvonalat
-  ;   a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
-  ; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
-  {:on-server-boot [:item-lister/initialize-lister! :my-extension :my-type]})
+  {:on-server-boot [:item-lister/init-lister! :my-extension :my-type]})
 
+
+
+;; -- A plugin beállítása -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A dokumentumoknak tartalmazniuk kell legalább egyet a {:search-keys [...]} tulajdonságként
+; átadott vektorban felsorolt kulcsok közül!
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:item-lister/initialize-lister! :my-extension :my-type
-                                                    {:download-limit 10
-                                                     :order-by-options ORDER-BY-OPTIONS
-                                                     ; A dokumentumoknak tartalmazniuk kell legalább egyet
-                                                     ; az itt felsorolt kulcsok közül!
-                                                     :search-keys [:my-key]}]})
+  {:on-server-boot [:item-lister/init-lister! :my-extension :my-type
+                                              {:download-limit 10
+                                               :order-by-options ORDER-BY-OPTIONS
+                                               :search-keys [:my-key]}]})

@@ -1,26 +1,15 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.5.0
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.api
     (:require [app-plugins.item-lister.dialogs]
               [app-plugins.item-lister.effects]
-              [app-plugins.item-lister.events]
               [app-plugins.item-lister.queries]
-              [app-plugins.item-lister.subs]
-              [app-plugins.item-lister.engine :as engine]
-              [app-plugins.item-lister.views  :as views]))
+              [app-plugins.item-lister.engine    :as engine]
+              [app-plugins.item-lister.events    :as events]
+              [app-plugins.item-lister.subs.subs :as subs]
+              [app-plugins.item-lister.views     :as views]))
 
 
 
@@ -29,6 +18,12 @@
 
 ; app-plugins.item-lister.engine
 (def request-id engine/request-id)
+
+; app-plugins.item-lister.events
+(def toggle-item-selection! events/toggle-item-selection!)
+
+; app-plugins.item-lister.subs
+(def toggle-item-selection? subs/toggle-item-selection?)
 
 ; app-plugins.item-lister.views
 (def search-block               views/search-block)

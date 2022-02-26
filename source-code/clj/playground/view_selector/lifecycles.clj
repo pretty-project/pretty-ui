@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.lifecycles
+(ns playground.view-selector.lifecycles
     (:require [x.server-core.api :as a]))
 
 

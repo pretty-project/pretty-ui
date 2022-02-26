@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.01.27
-; Description:
-; Version: v0.4.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -33,8 +22,6 @@
   ; @usage
   ;  (defn my-body [extension-id] [:div ...])
   ;  [view-selector/body :my-extension {:body #'my-body}]
-  ;
-  ; @return (component)
   [extension-id {:keys [body]}]
   [body extension-id])
 
@@ -54,8 +41,6 @@
   ; @usage
   ;  (defn my-header [extension-id] [:div ...])
   ;  [view-selector/header :my-extension {:header #'my-header}]
-  ;
-  ; @return (component)
   [extension-id {:keys [header]}]
   [header extension-id])
 
@@ -78,8 +63,6 @@
   ;  (defn my-body   [extension-id] [:div ...])
   ;  [view-selector/view :my-extension {:body   #'my-body
   ;                                     :header #'my-header}]
-  ;
-  ; @return (component)
   [extension-id view-props]
   (if (:header view-props) [layouts/layout-a extension-id {:body   [body   extension-id view-props]
                                                            :header [header extension-id view-props]}]

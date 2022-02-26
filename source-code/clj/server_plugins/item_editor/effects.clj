@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.12.18
-; Description:
-; Version: v0.7.0
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -43,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-editor/initialize-editor!
+  :item-editor/init-editor!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
@@ -52,16 +41,16 @@
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;
   ; @usage
-  ;  [:item-editor/initialize-editor! :my-extension :my-type]
+  ;  [:item-editor/init-editor! :my-extension :my-type]
   ;
   ; @usage
-  ;  [:item-editor/initialize-editor! :my-extension :my-type {...}]
+  ;  [:item-editor/init-editor! :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  [:item-editor/initialize-editor! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
+  ;  [:item-editor/init-editor! :my-extension :my-type {:suggestion-keys [:color :city ...]}]
   (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
       (let [editor-props (editor-props-prototype extension-id item-namespace editor-props)]
-           {:db (r events/initialize-editor! db extension-id item-namespace editor-props)
+           {:db (r events/init-editor! db extension-id item-namespace editor-props)
             :dispatch-n [[:item-editor/reg-transfer-editor-props! extension-id item-namespace editor-props]
                          [:item-editor/add-route!                 extension-id item-namespace editor-props]]})))
 

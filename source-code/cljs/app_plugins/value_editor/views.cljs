@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.22
-; Description:
-; Version: v1.1.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -50,8 +39,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   (let [disable-save-button? @(a/subscribe [:value-editor/disable-save-button? extension-id editor-id])
         save-button-label    @(a/subscribe [:value-editor/get-meta-item        extension-id editor-id :save-button-label])]
@@ -65,8 +52,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   [elements/button ::cancel-button
                    {:keypress {:key-code 27 :required? true} :preset :cancel-button
@@ -77,8 +62,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   [elements/horizontal-polarity ::header
                                 {:start-content [cancel-button extension-id editor-id]
@@ -94,8 +77,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   (if-let [helper @(a/subscribe [:value-editor/get-meta-item extension-id editor-id :helper])]
           [:<> [elements/horizontal-separator {:size :l}]
@@ -106,8 +87,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   (let [field-props (editor-props->field-props extension-id editor-id)]
        [elements/text-field :value-editor/editor-field field-props]))
@@ -117,25 +96,8 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  ;
-  ; @return (component)
   [extension-id editor-id]
   [:<> [elements/horizontal-separator {:size :l}]
        [editor-field  extension-id editor-id]
        [editor-helper extension-id editor-id]
        [elements/horizontal-separator {:size :l}]])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx :value-editor/render-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  (fn [_ [_ extension-id editor-id]]
-      [:ui/add-popup! (engine/view-id extension-id editor-id)
-                      {:body   [body   extension-id editor-id];
-                       :header [header extension-id editor-id]}]))

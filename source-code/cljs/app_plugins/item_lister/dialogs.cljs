@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.12.07
-; Description:
-; Version: v0.7.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -30,8 +19,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
-  ;
-  ; @return (component)
   [extension-id item-namespace item-ids]
   (let [undo-event [:item-lister/undo-delete-items! extension-id item-namespace item-ids]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-deleted)
@@ -44,8 +31,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
-  ;
-  ; @return (component)
   [extension-id item-namespace copy-ids]
   (let [undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace copy-ids]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-duplicated)
@@ -54,7 +39,7 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx

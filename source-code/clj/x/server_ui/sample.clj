@@ -19,7 +19,7 @@
 
 
 
-;; -- HTML, HEAD és BODY elemek használata egyéni beállításokkal --------------
+;; -- HTML, HEAD és BODY elemek használata ------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Az x.server-ui.api névtér függvényeit útvanalanként eltérő beállításokkal is lehetséges használni

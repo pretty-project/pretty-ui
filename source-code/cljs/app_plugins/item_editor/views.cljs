@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.9.0
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -34,8 +23,6 @@
   ;
   ; @usage
   ;  [item-editor/delete-item-button :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
         error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
@@ -50,8 +37,6 @@
   ;
   ; @usage
   ;  [item-editor/copy-item-button :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
         error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
@@ -66,8 +51,6 @@
   ;
   ; @usage
   ;  [item-editor/save-item-button :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
         error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])
@@ -87,8 +70,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [new-item-label (engine/new-item-label extension-id item-namespace)]
        [elements/label ::new-item-label
@@ -101,8 +82,6 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:name (metamorphic-content)}
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [name]}]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [elements/label ::named-item-label
@@ -114,8 +93,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [unnamed-item-label (engine/unnamed-item-label extension-id item-namespace)]
        [elements/label ::unnamed-item-label
@@ -129,8 +106,6 @@
   ;
   ; @usage
   ;  [item-editor/item-label :my-extension :my-type {...}]
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [name] :as element-props}]
   (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
        (cond (string/nonempty? name)      [named-item-label   extension-id item-namespace element-props]
@@ -147,8 +122,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [elements/button ::add-colors-button
@@ -163,8 +136,6 @@
   ; @param (keyword) item-namespace
   ; @param (map) element-props
   ;  {:colors (strings in vector)}
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [colors]}]
   (reduce (fn [selected-colors color]
               (conj selected-colors [:div.item-editor--selected-color {:style {:background-color color}}]))
@@ -177,8 +148,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) element-props
-  ;
-  ; @return (component)
   [extension-id item-namespace element-props]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [elements/toggle ::selected-colors-button
@@ -196,8 +165,6 @@
   ;
   ; @usage
   ;  [item-editor/color-selector :my-extension :my-type {...}]
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [colors] :as element-props}]
   [elements/row ::color-selector
                 {:horizontal-align :center
@@ -213,8 +180,6 @@
   ;
   ; @usage
   ;  [item-editor/color-stamp :my-extension :my-type {...}]
-  ;
-  ; @return (component)
   [_ _ {:keys [colors]}]
   (if (vector/nonempty? colors)
       (reduce (fn [color-stamp color]
@@ -234,8 +199,6 @@
   ;
   ; @usage
   ;  [item-editor/input-group-header :my-extension :my-type {...}]
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [label]}]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [layouts/input-group-header {:label label :color (if editor-disabled? :highlight :default)}]))
@@ -246,8 +209,6 @@
   ;
   ; @usage
   ;  [item-editor/description-field :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [elements/multiline-field ::description-field
@@ -265,8 +226,6 @@
   ;
   ; @usage
   ;  [item-editor/error-body :my-extension :my-type]
-  ;
-  ; @return (component)
   [_ _]
   [:<> [elements/horizontal-separator {:size :xxl}]
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
@@ -282,8 +241,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
        (if-not new-item? [:<> [delete-item-button extension-id item-namespace]
@@ -294,8 +251,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   [save-item-button extension-id item-namespace])
 
@@ -304,8 +259,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   [elements/horizontal-polarity {:start-content [menu-start-buttons extension-id item-namespace]
                                  :end-content   [menu-end-buttons   extension-id item-namespace]}])
@@ -324,8 +277,6 @@
   ; @usage
   ;  (defn my-menu [] [:div ...])
   ;  [item-editor/header :my-extension :my-type {:menu #'my-menu}]
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [menu]}]
   (if menu [menu]
            [menu-mode-header extension-id item-namespace]))
@@ -347,8 +298,6 @@
   ; @usage
   ;  (defn my-form-element [] [:div ...])
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
-  ;
-  ; @return (component)
   [extension-id item-namespace {:keys [form-element]}]
   [components/stated (engine/component-id extension-id item-namespace :body)
                      {:render-f   form-element
@@ -377,8 +326,6 @@
   ;  (defn my-menu         [] [:div ...])
   ;  [item-editor/view :my-extension :my-type {:form-element #'my-form-element
   ;                                            :menu         #'my-menu}]
-  ;
-  ; @return (component)
   [extension-id item-namespace view-props]
   (let [description @(a/subscribe [:item-editor/get-description extension-id item-namespace])]
        (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]

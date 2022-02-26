@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns x.app-core.sample
     (:require [app-fruits.window :as window]
               [x.app-core.api    :as a [:refer] r]))
@@ -8,10 +11,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A Re-Frame adatbázisba külső forrásból adatokat mellékhatás események használatával tudsz beolvasni.
 (defn import-my-uri!
   [_]
-  ; Külső forrásból a Re-Frame adatbázisba adatokat mellékhatás események használatával
-  ; tudsz beolvasni.
   (let [uri (window/get-uri)]
        (a/dispatch [:db/set-item! [:uri] uri])))
 

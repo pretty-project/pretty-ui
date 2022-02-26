@@ -171,18 +171,18 @@
 (defn- decrease-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  [icon-button {:icon "remove" :label "Dec" :on-click [:db/apply! current-path dec]}])
+  [icon-button {:icon "remove" :label "Dec" :on-click [:db/apply-item! current-path dec]}])
 
 (defn- increase-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-path]}]
-  [icon-button {:icon "add" :label "Inc" :on-click [:db/apply! current-path inc]}])
+  [icon-button {:icon "add" :label "Inc" :on-click [:db/apply-item! current-path inc]}])
 
 (defn- swap-boolean-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [current-item current-path]}]
-  (if current-item [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/apply! current-path not]}]
-                   [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/apply! current-path not]}]))
+  (if current-item [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/toggle-item! current-path]}]
+                   [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/toggle-item! current-path]}]))
 
 (defn- toggle-original-view-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -193,7 +193,7 @@
 (defn- edit-string-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [edit-string?]}]
-  (let [toggle-event [:db/apply! (db/path :database-browser/settings :edit-string?) not]]
+  (let [toggle-event [:db/toggle-item! (db/path :database-browser/settings :edit-string?)]]
        (if edit-string? [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
                         [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
 

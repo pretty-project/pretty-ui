@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v1.3.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -249,36 +238,3 @@
                                     {:on-success [:item-lister/reload-items! extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
                                      :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace copy-ids)}]}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-lister/item-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ; @param (map) item
-  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
-      ; XXX#5660
-      ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-      (if (and (r subs/items-selectable?   db extension-id item-namespace)
-               (r environment/key-pressed? db 16))
-          (if-not (r subs/lister-disabled? db extension-id item-namespace)
-                  {:db (r events/toggle-item-selection! db extension-id item-namespace item-dex)})
-          (engine/item-clicked-event extension-id item-namespace item-dex item))))
-
-(a/reg-event-fx
-  :item-lister/item-right-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ; @param (map) item
-  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
-      (engine/item-right-clicked-event extension-id item-namespace item-dex item)))

@@ -66,7 +66,7 @@
                                         ; If name points to a module (directory) ...
                                     (if (map? (get namespace-index name))
                                         (let [expanded? (get-in meta [path :expanded?])]
-                                             [:<> [:div {:on-click #(a/dispatch [:db/apply! [:docs :meta path :expanded?] not])
+                                             [:<> [:div {:on-click #(a/dispatch [:db/toggle-item! [:docs :meta path :expanded?]])
                                                          :style {:opacity ".6"}}
                                                         (str name)]
                                                   (if expanded? [namespace-tree surface-id view-props (get namespace-index name) path])])

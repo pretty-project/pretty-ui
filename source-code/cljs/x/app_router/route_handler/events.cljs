@@ -52,4 +52,4 @@
   ;
   ; @return (map)
   [db [_ route-id]]
-  (r db/apply! db [:router :route-handler/meta-items :history] vector/conj-item route-id))
+  (r db/apply-item! db [:router :route-handler/meta-items :history] vector/conj-item route-id))

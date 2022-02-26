@@ -1,6 +1,8 @@
 
 # x4.6.2
 
+- Új x.%-db.api függvény és esemény: db/toggle-item! & [:db/toggle-item! ...]
+
 - Az x.app-config.edn fájlban felsorolt css, favicon és js fájlok kiszolgálása ezentúl a {:core-js "..."}
   tulajdonság használatával egy meghatározott core-js (pl. "app.js", "site.js" ...) fájlhoz köthetők
 

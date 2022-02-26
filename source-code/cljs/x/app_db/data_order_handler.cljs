@@ -66,7 +66,7 @@
   ; @usage
   ;  (r db/remove-data-item-id! db :my-partition :my-item-id)
   [db [_ partition-id data-item-id]]
-  (r engine/apply! db [partition-id :data-order] vector/remove-item data-item-id))
+  (r engine/apply-item! db [partition-id :data-order] vector/remove-item data-item-id))
 
 ; @usage
 ;  [:db/remove-data-item-id! db :my-partition :my-item-id]

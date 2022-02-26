@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.12.13
-; Description:
-; Version: v0.5.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -41,8 +30,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id _]
   [elements/color-picker ::color-picker
                          {:initial-options COLORS
@@ -59,8 +46,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
-  ;
-  ; @return (component)
   [extension-id item-namespace item-id]
   (let [undo-event [:item-editor/undo-delete! extension-id item-namespace item-id]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-deleted)
@@ -73,8 +58,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
-  ;
-  ; @return (component)
   [extension-id item-namespace item-id]
   (let [undo-event [:item-editor/undo-discard! extension-id item-namespace item-id]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :changes-discarded)
@@ -87,8 +70,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) copy-id
-  ;
-  ; @return (component)
   [extension-id item-namespace copy-id]
   (let [edit-event [:item-editor/edit-item! extension-id item-namespace copy-id]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-duplicated)
@@ -97,7 +78,7 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx

@@ -169,7 +169,7 @@
 (def remove-item-n!       engine/remove-item-n!)
 (def inc-item-n!          engine/inc-item-n!)
 (def dec-item-n!          engine/dec-item-n!)
-(def apply!               engine/apply!)
+(def apply-item!          engine/apply-item!)
 (def distribute-items!    engine/distribute-items!)
 
 ; x.app-db.id-handler

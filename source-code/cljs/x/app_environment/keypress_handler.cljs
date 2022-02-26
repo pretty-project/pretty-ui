@@ -462,7 +462,7 @@
   ; @param (integer) key-code
   (fn [{:keys [db]} [_ key-code]]
       {; Store key-code to pressed-keys vector
-       :db (r db/apply! db (db/meta-item-path :environment/keypress-events :pressed-keys)
+       :db (r db/apply-item! db (db/meta-item-path :environment/keypress-events :pressed-keys)
               vector/conj-item-once key-code)
        ; Dispatch keydown events
        :dispatch-n (r get-on-keydown-events db key-code)}))
@@ -474,7 +474,7 @@
   ; @param (integer) key-code
   (fn [{:keys [db]} [_ key-code]]
       {; Remove key-code from pressed-keys vector
-       :db (r db/apply! db (db/meta-item-path :environment/keypress-events :pressed-keys)
+       :db (r db/apply-item! db (db/meta-item-path :environment/keypress-events :pressed-keys)
               vector/remove-item key-code)
        ; Dispatch keyup events
        :dispatch-n (r get-on-keyup-events db key-code)}))

@@ -42,7 +42,7 @@
 (def remove-item-n!       engine/remove-item-n!)
 (def inc-item-n!          engine/inc-item-n!)
 (def dec-item-n!          engine/dec-item-n!)
-(def apply!               engine/apply!)
+(def apply-item!          engine/apply-item!)
 (def distribute-items!    engine/distribute-items!)
 
 
@@ -108,8 +108,8 @@
 (a/reg-event-db :db/dec-item-n! dec-item-n!)
 
 ; @usage
-;  [:db/apply! [:my-item] merge {}]
-(a/reg-event-db :db/apply! apply!)
+;  [:db/apply-item! [:my-item] merge {}]
+(a/reg-event-db :db/apply-item! apply-item!)
 
 ; @usage
 ;  [:db/distribute-items! {:apple "red" :banana "yellow" :item {:nested-item "Nested value"}}

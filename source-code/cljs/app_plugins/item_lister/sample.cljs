@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-plugins.item-lister.sample
     (:require [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
@@ -7,13 +10,13 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- A plugin elindítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; Az item-lister plugin elindítható ...
 (a/reg-event-fx
   :load-my-item-lister!
   (fn [_ _]
-      ; Az item-lister plugin elindítható ...
       ; ... az [:my-extension.my-type-lister/load-lister! ...] esemény meghívásával.
       [:my-extension.my-type-lister/load-lister! :my-extension :my-type]
       ; ... az "/@app-home/my-extension" útvonal használatával.
@@ -21,42 +24,138 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- "Új elem létrehozása" útvonal használata  -------------------------------
 ;; ----------------------------------------------------------------------------
 
+
+
+;; -- "Új elem létrehozása" opciók használata  --------------------------------
+;; ----------------------------------------------------------------------------
+
+; A [:my-extension.my-type-lister/add-new-item! ...] esemény használatához szükséges beállítanod
+; a {:new-item-options [...]} beállítást!
 (a/reg-event-fx
   :my-extension.my-type-lister/add-new-item!
-  ; Ha nem használsz {:new-item-options [...]} beállítást, akkor az [:my-extension.my-type-lister/add-new-item! ...]
-  ; eseményt NEM szükséges létrehoznod!
   (fn [_ [_ selected-option]]
       (case selected-option :add-my-type!   [:do-something!]
                             :add-your-type! [:do-something-else!])))
 
+
+
+;; -- Listaelemek szűrése eseménnyel ------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
 (a/reg-event-fx
   :my-extension.my-type-lister/use-filter!
-  ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
   (fn [_ [_ filter-pattern]]
       [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
 
-(a/reg-event-fx
-  :my-extension.my-type-lister/reload-items!
-  ; Az [:item-lister/reload-items! ...] esemény újra letölti az összes elemet az aktuális
-  ; beállításokkal. Így lehetséges az szerveren tárolt adatokat aktualizálni a kliens-oldalon.
-  [:item-lister/reload-items! :my-extension :my-type])
-
-(a/reg-event-fx
-  :my-extension.my-type-lister/item-clicked
-  (fn [cofx [_ item-dex item]]
-      [:do-something!]))
 
 
-
-;; -- Example A ---------------------------------------------------------------
+;; -- Szűrők használata -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-list-element
+(defn my-filters
+  [surface-id]
+  [elements/menu-bar {:menu-items [{:label "My filter" :on-click [:my-extension.my-type-lister/use-filter! {}]}]}])
+
+(defn my-view-with-filters
+  [surface-id]
+  [:<> [my-filters surface-id]
+       [item-lister/header :my-extension :my-type {}]
+       [item-lister/body   :my-extension :my-type {}]])
+
+
+
+;; -- Listaelemek megjelenítése előszűréssel ----------------------------------
+;; ----------------------------------------------------------------------------
+
+; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
+; a szerver-oldali kollekció elemeiből csak az előszűrésnek megfelelő elemek jelenjenek meg.
+(defn my-filtered-body
+  [surface-id][]
+  [item-lister/body :my-extension :my-type {:list-element [:div "My item"]
+                                            :prefilter    {:my-type/color "red"}}])
+
+
+
+;; -- Listaelemek frissítése a kollekció változása után -----------------------
+;; ----------------------------------------------------------------------------
+
+; Az [:item-lister/reload-items! ...] esemény újra letölti az összes elemet az aktuális
+; beállításokkal. Így lehetséges az szerveren tárolt adatokat aktualizálni a kliens-oldalon.
+(a/reg-event-fx
+  :my-extension.my-type-lister/reload-items!
+  [:item-lister/reload-items! :my-extension :my-type])
+
+
+
+;; -- Több listaelem kijelölése a SHIFT billentyű használatával ---------------
+;; ----------------------------------------------------------------------------
+
+(defn my-selectable-list-element
   [extension-id item-namespace item-dex item]
-  [:div "My item"])
+  [elements/toggle {:content  [:div "My item"]
+                    :on-click [:my-list-element-clicked extension-id item-namespace item-dex item]}])
+
+; Ha a listaelemek kijelölhetők és a kattintás pillanatában a SHIFT billenytű lenyomott
+; állapotban volt, akkor a toggle-item-selection? függvény visszatérési értéke TRUE
+(a/reg-event-fx
+  :my-list-element-clicked
+  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
+      (if (r item-lister/toggle-item-selection? db extension-id item-namespace item-dex)
+          {:db (r item-lister/toggle-item-selection! db extension-id item-namespace item-dex)}
+          [:do-something!])))
+
+
+
+;; -- Kontextus-menü használata a listaelemeken -------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn my-contextual-list-element
+  [extension-id item-namespace item-dex item]
+  [elements/toggle {:content        [:div "My item"]
+                    :on-click       [:do-something!]
+                    :on-right-click [:render-my-context-menu!]}])
+
+(a/reg-event-fx
+  :render-my-context-menu!
+  [:ui/add-popup! :my-context-menu {:body [:div "My context menu"]}])
+
+
+
+;; -- A plugin használata alapbeállításokkal ----------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn my-header
+  [surface-id]
+  [item-lister/header :my-extension :my-type {}])
+
+(defn my-body
+  [surface-id]
+  [item-lister/body :my-extension :my-type {:list-element [:div "My item"]}])
+
+(defn my-view
+  [surface-id]
+  [:<> [my-header  surface-id]
+       [my-body    surface-id]])
+
+(a/reg-event-fx
+  :my-extension.my-type-lister/render-lister!
+  [:ui/set-surface! :my-extension.my-type-lister/view
+                    {:view #'my-view}])
+
+; Az [:item-lister/load-lister! ...] esemény a [:my-extension.my-type-lister/load-lister!]
+; esemény meghívásával fejezi be a plugin elindítását ...
+(a/reg-event-fx
+  :my-extension.my-type-lister/load-lister!
+  [:my-extension.my-type-lister/render-lister!])
+
+
+
+;; -- Egyedi menü használata --------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; - A header komponens számára átadott {:menu #'...} tulajdonság beállításával lehetséges
 ;   egyedi menüt használni.
@@ -67,72 +166,22 @@
   [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace header-props]
                           [item-lister/toggle-select-button extension-id item-namespace header-props]}])
 
-(defn my-filters
-  [surface-id]
-  [elements/menu-bar {:menu-items [{:label "My filter"
-                                    :on-click [:my-extension.my-type-lister/use-filter! {}]}]}])
-
-(defn my-header
+(defn my-header-with-my-menu
   [surface-id]
   [item-lister/header :my-extension :my-type {:menu #'my-menu}])
 
-(defn my-body
-  [surface-id]
-  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
-                                            ; A {:prefilter {...}} tulajdonság használatával beállíthatod,
-                                            ; hogy a listázóban a szerver-oldali kollekció elemeiből
-                                            ; az előszűrésnek megfelelő elemek jelenjenek meg.
-                                            :prefilter {:my-type/color "red"}}])
-
-; Az item-lister plugint header és body komponensre felbontva is lehetséges használni
-(defn my-view
-  [surface-id]
-  [:<> [my-filters surface-id]
-       [my-header  surface-id]
-       [my-body    surface-id]])
-
-(a/reg-event-fx
-  :my-extension.my-type-lister/render-lister!
-  [:ui/set-surface! :my-extension.my-type-lister/view
-                    {:view #'my-view}])
-
-(a/reg-event-fx
-  :my-extension.my-type-lister/load-lister!
-  [:my-extension.my-type-lister/render-lister!])
 
 
-
-;; -- Example B ---------------------------------------------------------------
+;; -- Kifejezések hozzáadaása a szótárhoz -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn your-list-element
-  [extension-id item-namespace item-dex item]
-  [:div "Your item"])
-
-; Az item-lister plugin view komponense megjeleníti a header és a body komponenseket.
-(defn your-view
-  [surface-id]
-  [item-lister/view :your-extension :your-type {:list-element     #'your-list-element
-                                                :new-item-options [:add-my-type! :add-your-type!]}])
-
-(a/reg-event-fx
-  :your-extension.your-type-lister/render-lister!
-  [:ui/set-surface! :your-extension.your-type-lister/view
-                    {:view #'your-view}])
-
-(a/reg-event-fx
-  :your-extension.your-type-lister/load-lister!
-  [:your-extension.your-type-lister/render-lister!])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
+; - Ha az item-lister plugin {:routed? true :route-title nil} beállítással van használva,
+;   akkor az útvonal betöltésekor a plugin a :my-extension kifejezést beállítja az applikáció
+;  címének, ezért szükséges azt hozzáadni a szótárhoz!
+; - Ha az order-by-options beállításban használtál egyedi értékeket, akkor ne felejtsd el
+;   hozzáadni a megfelelő szótári szavakat!
+;   Pl. a :my-order/ascending értékhez tartozó kifejezés:
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:my-extension {:en "My extension" :hu "Kiegészítőm"}
-                                         ; Ha az order-by-options beállításban használtál egyedi értékeket,
-                                         ; akkor ne felejtsd el hozzáadni a megfelelő szótári szavakat!
-                                         ; Pl. a :my-order/ascending értékhez tartozó kifejezés:
-                                         :by-my-order-ascending {:en "..." :hu "..."}}]})
+  {:on-app-boot [:dictionary/add-terms! {:my-extension          {:en "My extension" :hu "Kiegészítőm"}
+                                         :by-my-order-ascending {:en "..."          :hu "..."}}]})

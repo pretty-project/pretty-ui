@@ -277,16 +277,16 @@
   [db [_ & item-paths]]
   (reduce #(assoc-in %1 %2 (dec (get-in db %2))) db item-paths))
 
-(defn apply!
+(defn apply-item!
   ; @param (item-path vector) item-path
   ; @param (function) f
   ; @param (list of *) params
   ;
   ; @usage
-  ;  (r db/apply! db [:my-item] not)
+  ;  (r db/apply-item! db [:my-item] not)
   ;
   ; @usage
-  ;  (r db/apply! db [:my-item] vector/conj-item :apple)
+  ;  (r db/apply-item! db [:my-item] vector/conj-item :apple)
   ;
   ; @return (map)
   [db [_ item-path f & params]]

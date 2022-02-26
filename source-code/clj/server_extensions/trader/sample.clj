@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns server-extensions.trader.sample
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.format :as format]

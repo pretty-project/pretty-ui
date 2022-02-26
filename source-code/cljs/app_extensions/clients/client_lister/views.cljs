@@ -33,11 +33,19 @@
   [:div.clients--client-item--details [client-item-primary-details   client-item]
                                       [client-item-secondary-details client-item]])
 
-(defn- client-item
+
+(defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ _ client-item]
+  [client-item]
   [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
                              [client-item-details client-item]])
+
+(defn client-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_ _ _ client-item]
+  [elements/toggle {:on-click [:clients.client-lister/item-clicked client-item]
+                    :content  [client-item-structure client-item]
+                    :hover-color :highlight}])
 
 
 

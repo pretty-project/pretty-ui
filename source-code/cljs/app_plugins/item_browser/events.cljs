@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.5.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -27,9 +16,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.events
-(def set-error-mode! app-plugins.item-lister.events/set-error-mode!)
-(def use-filter!     app-plugins.item-lister.events/use-filter!)
-(def load-lister!    app-plugins.item-lister.events/load-lister!)
+(def set-error-mode!        app-plugins.item-lister.events/set-error-mode!)
+(def use-filter!            app-plugins.item-lister.events/use-filter!)
+(def load-lister!           app-plugins.item-lister.events/load-lister!)
+(def toggle-item-selection! app-plugins.item-lister.events/toggle-item-selection!)
 
 
 

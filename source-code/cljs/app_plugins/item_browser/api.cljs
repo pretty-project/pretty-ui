@@ -1,24 +1,13 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.3.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.api
     (:require [app-plugins.item-browser.dialogs]
               [app-plugins.item-browser.effects]
-              [app-plugins.item-browser.events]
               [app-plugins.item-browser.queries]
               [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-browser.events :as events]
               [app-plugins.item-browser.subs   :as subs]
               [app-plugins.item-browser.views  :as views]))
 
@@ -42,8 +31,12 @@
 (def browser-uri engine/browser-uri)
 (def request-id  engine/request-id)
 
+; app-plugins.item-browser.events
+(def toggle-item-selection! events/toggle-item-selection!)
+
 ; app-plugins.item-editor.subs
-(def get-current-item-id subs/get-current-item-id)
+(def get-current-item-id    subs/get-current-item-id)
+(def toggle-item-selection? subs/toggle-item-selection?)
 
 ; app-plugins.item-browser.views
 (def go-home-button views/go-home-button)

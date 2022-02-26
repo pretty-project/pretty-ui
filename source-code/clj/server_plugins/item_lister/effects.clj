@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.23
-; Description:
-; Version: v0.6.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -65,7 +54,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/initialize-lister!
+  :item-lister/init-lister!
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) lister-props
@@ -81,16 +70,16 @@
   ;    Default: DEFAULT-SEARCH-KEYS}
   ;
   ; @usage
-  ;  [:item-lister/initialize-lister! :my-extension :my-type]
+  ;  [:item-lister/init-lister! :my-extension :my-type]
   ;
   ; @usage
-  ;  [:item-lister/initialize-lister! :my-extension :my-type {...}]
+  ;  [:item-lister/init-lister! :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  [:item-lister/initialize-lister! :my-extension :my-type {:search-keys [:name :email-address]}]
+  ;  [:item-lister/init-lister! :my-extension :my-type {:search-keys [:name :email-address]}]
   (fn [{:keys [db]} [_ extension-id item-namespace lister-props]]
       (let [lister-props (lister-props-prototype extension-id item-namespace lister-props)]
-           {:db (r events/initialize-lister! db extension-id item-namespace lister-props)
+           {:db (r events/init-lister! db extension-id item-namespace lister-props)
             :dispatch-n [[:item-lister/reg-transfer-lister-props! extension-id item-namespace lister-props]
                          [:item-lister/add-route!                 extension-id item-namespace lister-props]]})))
 

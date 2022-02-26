@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v1.3.8
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -162,14 +151,12 @@
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
 (defn toggle-item-selection!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r events/toggle-item-selection! :my-extension :my-type 0)
+  ;  (r item-lister/toggle-item-selection! :my-extension :my-type 42)
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]

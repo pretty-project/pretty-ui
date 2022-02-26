@@ -175,7 +175,7 @@
   (fn [{:keys [db]} [_ input-id]]
     (let [value-path (r element/get-element-prop db input-id :value-path)]
          (if (r input-decreasable? db input-id)
-             {:db (r db/apply! db value-path dec)}))))
+             {:db (r db/apply-item! db value-path dec)}))))
 
 (a/reg-event-fx
   :elements/input-increased
@@ -185,4 +185,4 @@
   (fn [{:keys [db]} [_ input-id]]
       (let [value-path (r element/get-element-prop db input-id :value-path)]
            (if (r input-increasable? db input-id)
-               {:db (r db/apply! db value-path inc)}))))
+               {:db (r db/apply-item! db value-path inc)}))))

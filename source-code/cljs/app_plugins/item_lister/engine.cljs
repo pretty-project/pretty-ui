@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.5.8
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -38,8 +27,6 @@
 (def component-id             engine/component-id)
 (def dialog-id                engine/dialog-id)
 (def load-extension-event     engine/load-extension-event)
-(def item-clicked-event       engine/item-clicked-event)
-(def item-right-clicked-event engine/item-right-clicked-event)
 
 
 

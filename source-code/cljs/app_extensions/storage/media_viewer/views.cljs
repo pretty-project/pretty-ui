@@ -34,7 +34,7 @@
   []
   (let [state @(a/subscribe [:get-my-state])]
        [:div {:style {:color "white"}}
-             [:div [:button {:on-click #(a/dispatch [:db/apply! [:my-state] not])}
+             [:div [:button {:on-click #(a/dispatch [:db/apply-item! [:my-state] not])}
                             "toggle"]
                    (str state)]]))
 

@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.23
-; Description:
-; Version: v0.5.6
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -274,43 +263,3 @@
                                (name item-namespace) "-lister")
                           "load-lister!")]
        [event-id]))
-
-(defn item-clicked-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ; @param (map) item
-  ;
-  ; @example
-  ;  (engine/item-clicked-event :my-namespace :my-type 0 {...})
-  ;  =>
-  ;  [:my-namespace.my-type-lister/item-clicked 0 {...}]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace item-dex item]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-lister")
-                          "item-clicked")]
-       [event-id item-dex item]))
-
-(defn item-right-clicked-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ; @param (map) item
-  ;
-  ; @example
-  ;  (engine/item-right-clicked-event :my-namespace :my-type 0 {...})
-  ;  =>
-  ;  [:my-namespace.my-type-lister/item-right-clicked 0 {...}]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace item-dex item]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-lister")
-                          "item-right-clicked")]
-       [event-id item-dex item]))

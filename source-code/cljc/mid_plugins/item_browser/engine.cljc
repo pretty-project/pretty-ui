@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.23
-; Description:
-; Version: v0.5.4
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -275,7 +264,7 @@
   (keyword (str (name extension-id)  "."
                 (name item-namespace) "-browser")
            (str (name action-id)      "-dialog")))
-           
+
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -292,22 +281,4 @@
   (let [event-id (keyword (str (name extension-id)   "."
                                (name item-namespace) "-browser")
                           (str "load-browser!"))]
-       [event-id]))
-
-(defn item-clicked-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/item-clicked-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension.my-type-browser/item-clicked]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-browser")
-                          "item-clicked")]
        [event-id]))

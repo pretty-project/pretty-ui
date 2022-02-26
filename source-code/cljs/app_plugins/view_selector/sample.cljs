@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-plugins.view-selector.sample
     (:require [x.app-core.api :as a]
               [x.app-ui.api   :as ui]
@@ -6,13 +9,13 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- A plugin elindítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A view-selector plugin elindítható ...
 (a/reg-event-fx
   :load-my-view-selector!
   (fn [_ _]
-      ; A view-selector plugin elindítható ...
       ; ... a [:view-selector/load-selector! ...] esemény meghívásával.
       [:view-selector/load-selector! :my-extension]
       ; ... a [:view-selector/go-to! ...] esemény meghívásával.
@@ -66,12 +69,12 @@
   :my-extension.view-selector/render-selector!
   [:ui/set-surface! {:view #'my-view}])
 
+; A view-selector plugin az egyes útvonalak használatakor minden alkalommal újra betöltődik,
+; és betöltődéskor meghívja a [:my-extension.view-selector/load-selector! ...] eseményt.
+; A felesleges renderelések elkerülése érdekében ellenőrizd le, hogy már megtörtént-e
+; a renderelés!
 (a/reg-event-fx
   :my-extension.view-selector/load-selector!
   (fn [{:keys [db]} _]
-      ; A view-selector plugin az egyes útvonalak használatakor minden alkalommal újra betöltődik,
-      ; és betöltődéskor meghívja a [:my-extension.view-selector/load-selector! ...] eseményt.
-      ; A felesleges renderelések elkerülése érdekében ellenőrizd le, hogy már megtörtént-e
-      ; a renderelés!
       (if-not (r ui/element-rendered? db :surface :my-extension.view-selector/view)
               [:my-extension.view-selector/render-selector!])))

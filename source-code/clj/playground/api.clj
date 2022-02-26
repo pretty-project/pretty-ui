@@ -3,4 +3,4 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.api
-    (:require [playground.lifecycles]))
+    (:require [playground.view-selector.lifecycles]))

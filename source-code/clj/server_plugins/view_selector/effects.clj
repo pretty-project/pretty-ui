@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.23
-; Description:
-; Version: v0.5.0
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -43,7 +32,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :view-selector/initialize-selector!
+  :view-selector/init-selector!
   ; @param (keyword) extension-id
   ; @param (map) selector-props
   ;  {:allowed-view-ids (keywords in vector)(opt)
@@ -55,14 +44,14 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  [:view-selector/initialize-selector! :my-extension]
+  ;  [:view-selector/init-selector! :my-extension]
   ;
   ; @usage
-  ;  [:view-selector/initialize-selector! :my-extension {:default-view-id :my-view}]
+  ;  [:view-selector/init-selector! :my-extension {:default-view-id :my-view}]
   ;
   ; @usage
-  ;  [:view-selector/initialize-selector! :my-extension {:default-view-id  :my-view
-  ;                                                      :allowed-view-ids [:my-view :your-view :our-view]}]
+  ;  [:view-selector/init-selector! :my-extension {:default-view-id  :my-view
+  ;                                                :allowed-view-ids [:my-view :your-view :our-view]}]
   (fn [_ [_ extension-id selector-props]]
       (let [selector-props (selector-props-prototype extension-id selector-props)]
            {:dispatch-n [[:view-selector/reg-transfer-selector-props! extension-id selector-props]

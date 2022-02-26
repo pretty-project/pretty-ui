@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v0.7.2
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -34,8 +23,6 @@
   ;
   ; @usage
   ;  [item-browser/go-home-button :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])
         at-home?    @(a/subscribe [:item-browser/at-home?   extension-id item-namespace])]
@@ -51,8 +38,6 @@
   ;
   ; @usage
   ;  [item-browser/go-up-button :my-extension :my-type]
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [at-home? @(a/subscribe [:item-browser/at-home? extension-id item-namespace])]
        [elements/button ::go-up-button
@@ -70,8 +55,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [_ _]
   [:<> [elements/horizontal-separator {:size :xxl}]
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
@@ -87,8 +70,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group
@@ -106,8 +87,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @return (component)
   [extension-id item-namespace]
   (let [menu-mode? @(a/subscribe [:item-lister/menu-mode? extension-id item-namespace])]
        [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
@@ -124,8 +103,6 @@
   ;
   ; @example
   ;  [item-browser/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
-  ;
-  ; @return (component)
   [extension-id item-namespace header-props]
   (let [header-props (assoc header-props :menu #'menu-mode-header)]
        [item-lister/header extension-id item-namespace header-props]))
@@ -151,8 +128,6 @@
   ;  (defn my-list-element [extension-id item-namespace item-dex item] [:div ...])
   ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element
   ;                                             :prefilter    {:my-type/color "red"}}]
-  ;
-  ; @return (component)
   [extension-id item-namespace body-props]
   [item-lister/body extension-id item-namespace body-props])
 
@@ -181,8 +156,6 @@
   ;  [item-browser/view :my-extension :my-type {:list-element     #'my-list-element
   ;                                             :new-item-options [:add-my-type! :add-your-type!]
   ;                                             :prefilter        {:my-type/color "red"}}]
-  ;
-  ; @return (component)
   [extension-id item-namespace view-props]
   (let [description @(a/subscribe [:item-browser/get-description extension-id item-namespace])]
        (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
