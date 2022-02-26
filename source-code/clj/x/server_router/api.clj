@@ -24,6 +24,7 @@
 
 ; x.server-router.route-handler.engine
 (def request->route-prop route-handler.engine/request->route-prop)
+(def request->core-js    route-handler.engine/request->core-js)
 
 ; x.server-router.route-handler.events
 (def add-routes! route-handler.events/add-routes!)

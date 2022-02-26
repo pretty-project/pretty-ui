@@ -94,8 +94,8 @@ button.x-card:focus,
 .x-counter--increase-button:focus,
 .x-directory--body:active,
 .x-directory--body:focus,
-.x-element--adornment-button:active,
-.x-element--adornment-button:focus,
+.x-element--button-adornment:active,
+.x-element--button-adornment:focus,
 .x-expandable--header:active,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
@@ -176,8 +176,8 @@ button.x-card:focus,
 
 /***** User select *****/
 
-.x-element--adornment-button,
-.x-element--adornment-icon,
+.x-element--button-adornment,
+.x-element--static-adornment,
 .x-element--sticker-button,
 .x-element--sticker-icon,
 .x-anchor,
@@ -265,8 +265,8 @@ button.x-card:focus,
 .x-icon[data-icon-family="material-icons-filled"],
 .x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
-.x-element--adornment-button[data-icon-family="material-icons-filled"],
-.x-element--adornment-icon[data-icon-family="material-icons-filled"],
+.x-element--button-adornment[data-icon-family="material-icons-filled"],
+.x-element--static-adornment[data-icon-family="material-icons-filled"],
 .x-element--sticker-button[data-icon-family="material-icons-filled"],
 .x-element--sticker-icon[data-icon-family="material-icons-filled"] {
   font-style: normal;
@@ -287,10 +287,10 @@ button.x-card:focus,
 .x-icon[data-icon-family="material-icons-outlined"],
 .x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
-.x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-button,
-.x-label[data-icon-family="material-icons-outlined"] .x-element--adornment-icon,
-.x-label[data-icon-family="material-icons-outlined"] .x-element--sticker-button,
-.x-label[data-icon-family="material-icons-outlined"] .x-element--sticker-icon {
+.x-element--button-adornment[data-icon-family="material-icons-outlined"],
+.x-element--static-adornment[data-icon-family="material-icons-outlined"],
+.x-element--sticker-button[data-icon-family="material-icons-outlined"],
+.x-element--sticker-icon[data-icon-family="material-icons-outlined"] {
   font-style: normal;
   font-family: 'Material Icons Outlined';
   font-weight: normal;
@@ -1301,13 +1301,22 @@ button.x-card:focus,
   padding-right: 4px;
   right: 0 }
 
-.x-element--adornment-button,
-.x-element--adornment-icon {
-  font-size: var( --icon-size-xs );
+.x-element--button-adornment,
+.x-element--static-adornment {
   height: 24px;
   line-height: 24px;
   text-align: center;
   width: 24px }
+
+.x-element--button-adornment:not([data-icon-family]),
+.x-element--static-adornment:not([data-icon-family]) {
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-xxs ) }
+
+.x-element--button-adornment[data-icon-family],
+.x-element--static-adornment[data-icon-family] {
+  font-size: var( --icon-size-xs ) }
 
 /***** Element adornments *****/
 

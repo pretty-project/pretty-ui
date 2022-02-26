@@ -10,7 +10,9 @@
               [server-extensions.trader.api]
               [x.boot-loader]
               [shadow.cljs.devtools.server :as server]
-              [shadow.cljs.devtools.api    :as shadow])
+              [shadow.cljs.devtools.api    :as shadow]
+              ; DEBUG
+              [playground.api])
     (:gen-class))
 
 

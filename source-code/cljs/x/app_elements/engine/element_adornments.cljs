@@ -29,11 +29,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) adornment-props
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:icon-family (keyword)}
-  [adornment-props]
-  (merge {:icon-family :material-icons-filled}
+  [{:keys [icon] :as adornment-props}]
+  (merge (if icon {:icon-family :material-icons-filled})
          (param adornment-props)))
 
 
@@ -41,16 +42,17 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- element-adornment-button
+(defn- button-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; @param (map) adornment-props
-  ;  {:icon (keyword)
+  ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
+  ;   :label (string)(opt)
   ;   :on-click (metamorphic-event)
   ;   :tab-indexed? (boolean)(opt)
   ;    False érték esetén az adornment gomb nem indexelődik tabolható elemként.
@@ -58,35 +60,36 @@
   ;   :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (hiccup)
-  [element-id _ {:keys [icon icon-family on-click tab-indexed? tooltip]}]
-  [:button.x-element--adornment-button
-     ; BUG#2105
-     ;  A *-field elemhez adott element-adornment-button gombon történő on-mouse-down esemény
-     ;  a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
-     ;  felület React-fából történő lecsatolását okozná.
-    (merge {:on-mouse-down #(do (.preventDefault %))
-            :on-mouse-up   #(do (a/dispatch on-click)
-                                (environment/blur-element!))
-            :title            (components/content {:content tooltip})
-            :data-icon-family (param icon-family)}
-           (if (false? tab-indexed?) {:tab-index "-1"}))
-    (param icon)])
+  [element-id _ {:keys [icon icon-family label on-click tab-indexed? tooltip]}]
+  (let [; BUG#2105
+        ;  A *-field elemhez adott element-adornment-button gombon történő on-mouse-down esemény
+        ;  a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
+        ;  felület React-fából történő lecsatolását okozná.
+        button-attributes (merge {:on-mouse-down #(do (.preventDefault %))
+                                  :on-mouse-up   #(do (a/dispatch on-click)
+                                                      (environment/blur-element!))
+                                  :title            (components/content tooltip)}
+                                 (if (false? tab-indexed?) {:tab-index "-1"})
+                                 (if icon {:data-icon-family icon-family}))]
+       (cond icon  [:button.x-element--button-adornment button-attributes icon]
+             label [:button.x-element--button-adornment button-attributes label])))
 
-(defn- element-adornment-icon
+(defn- static-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ; @param (map) adornment-props
-  ;  {:icon (keyword)
+  ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
-  ;    Default: :material-icons-filled}
+  ;    Default: :material-icons-filled
+  ;   :label (string)(opt)}
   ;
   ; @return (hiccup)
-  [_ _ {:keys [icon icon-family]}]
-  [:i.x-element--adornment-icon {:data-icon-family icon-family}
-                                (param icon)])
+  [_ _ {:keys [icon icon-family label]}]
+  (cond icon  [:i.x-element--static-adornment {:data-icon-family icon-family} icon]
+        label [:i.x-element--static-adornment label]))
 
 (defn- element-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,8 +101,8 @@
   ;
   ; @return (component)
   [element-id element-props {:keys [on-click] :as adornment-props}]
-  (if on-click [element-adornment-button element-id element-props adornment-props]
-               [element-adornment-icon   element-id element-props adornment-props]))
+  (if on-click [button-adornment element-id element-props adornment-props]
+               [static-adornment element-id element-props adornment-props]))
 
 (defn- element-end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!

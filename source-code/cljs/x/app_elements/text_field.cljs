@@ -229,6 +229,8 @@
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled
+  ;       Only w/ {:end-adornments [{:icon ...}]}
+  ;      :label (string)(opt)
   ;      :on-click (metamorphic-event)(opt)
   ;      :tab-indexed? (boolean)(opt)
   ;       Default: true
@@ -272,10 +274,12 @@
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :start-adornments (maps in vector)(opt)
-  ;    [{:icon (keyword)
+  ;    [{:icon (keyword)(opt)
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled
+  ;       Only w/ {:start-adornments [{:icon ...}]}
+  ;      :label (string)(opt)
   ;      :on-click (metamorphic-event)
   ;      :tab-indexed? (boolean)(opt)
   ;       Default: true

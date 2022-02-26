@@ -13,6 +13,9 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (string)
+(def DEFAULT-CORE-JS "app.js")
+
 ; @constant (keywords in vector)
 (def CLIENT-ROUTE-KEYS [:client-event :core-js :on-leave-event :restricted? :route-parent :route-template])
 
@@ -33,7 +36,7 @@
   ;
   ; @return (*)
   ;  Először az útvonalak szerver-oldali, majd a kliens-oldali tulajdonságain végigiterálva keres
-  ;  a route-path értékével összeilleszthető {:route-template ...} tulajdonságú útvonalat,
+  ;  a route-path értékével összeilleszthető {:route-template "..."} tulajdonságú útvonalat,
   ;  ami rendelkezik a prop-key tulajdonságként átadott tulajdonsággal.
   [request prop-key]
   (let [route-path (http/request->route-path request)]
@@ -41,6 +44,20 @@
                   (if (uri/path->match-template? route-path route-template) (get route-props prop-key)))]
               (or (some f @(a/subscribe [:router/get-server-routes]))
                   (some f @(a/subscribe [:router/get-client-routes]))))))
+
+(defn request->core-js
+  ; @param (map) request
+  ;
+  ; @usage
+  ;  (router/request->core-js {...})
+  ;
+  ; @return (string)
+  ;  Ha a request->route-prop függvény az útvonalak szerver-oldali és kliens-oldali tulajdonságai
+  ;  között sem talált az aktuális útvonallal összeilleszthető {:route-template "..."} tulajdonságú
+  ;  útvonalat, aminek a {:core-js "..."} tulajdonságával visszatérhetne (404, nem található útvonal),
+  ;  akkor a visszatérési érték az útvonalak hozzáadásakor is használt DEFAULT-CORE-JS alapbeállítás.
+  [request]
+  (or (request->route-prop request :core-js) DEFAULT-CORE-JS))
 
 (defn route-authenticator
   ; WARNING! NON-PUBLIC! DO NOT USE!

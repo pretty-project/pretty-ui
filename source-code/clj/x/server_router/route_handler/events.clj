@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.events
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :as map]
-              [mid-fruits.vector  :as vector]
-              [x.server-core.api  :as a :refer [r]]
-              [x.server-router.engine     :as engine]
+    (:require [mid-fruits.candy       :refer [param return]]
+              [mid-fruits.map         :as map]
+              [mid-fruits.vector      :as vector]
+              [x.server-core.api      :as a :refer [r]]
+              [x.server-router.engine :as engine]
               [x.server-router.route-handler.engine :as route-handler.engine]
               [x.server-router.route-handler.subs   :as route-handler.subs]))
 
@@ -16,7 +16,7 @@
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- handler-prototype
+(defn handler-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (function or map) handler
@@ -31,7 +31,7 @@
                   (cond (fn?  handler) (return {:handler handler})
                         (map? handler) (return handler))))
 
-(defn- route-props-prototype
+(defn route-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) route-props
@@ -44,7 +44,7 @@
   ;   :core-js (string)
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
-  (merge {:core-js "app.js"}
+  (merge {:core-js route-handler.engine/DEFAULT-CORE-JS}
          (param route-props)
          (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
          (if post {:post (handler-prototype post {:restricted? restricted?})})))
@@ -54,7 +54,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- store-server-route-props!
+(defn store-server-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -69,7 +69,7 @@
                    (select-keys route-props route-handler.engine/SERVER-ROUTE-KEYS))
       (return   db)))
 
-(defn- store-client-route-props!
+(defn store-client-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -84,7 +84,7 @@
                    (select-keys route-props route-handler.engine/CLIENT-ROUTE-KEYS))
       (return   db)))
 
-(defn- add-route-to-sitemap!
+(defn add-route-to-sitemap!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -95,7 +95,7 @@
   [db [_ _ {:keys [route-template]}]]
   (update-in db [:router :sitemap-handler/data-items] vector/conj-item route-template))
 
-(defn- store-route-props!
+(defn store-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -115,7 +115,7 @@
   ;   :get (function or map)(opt)
   ;   :post (function or map)(opt)
   ;   :core-js (string)(opt)
-  ;    Default: "app.js"
+  ;    Default: route-handler.engine/DEFAULT-CORE-JS
   ;   :restricted? (boolean)(opt)
   ;    Default: false
   ;   :route-parent (string)(opt)

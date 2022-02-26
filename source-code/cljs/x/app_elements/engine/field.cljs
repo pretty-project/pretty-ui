@@ -79,7 +79,7 @@
    ; A mező kiürítése az ESC billentyű lenyomásával is vezérelhető, ezért nem szükséges indexelni.
    ; XXX#6054
    ; Az indexelt adornment gombok a TAB billentyűvel való mezők közötti váltást nehezítik!
-   ; A specifikusan billentyűvel is vezérelt adornment gombokon ezért célszerű az indexelést kikapcsolni.
+   ; A billentyűvel is vezérelt adornment gombokon ezért célszerű az indexelést kikapcsolni.
    :tab-indexed? false
    :tooltip :empty-field!})
 

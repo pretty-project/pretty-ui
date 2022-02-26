@@ -224,7 +224,7 @@
   (let [app-config @(a/subscribe [:core/get-app-config])]
        (merge app-config head-props
               {:app-build         (a/app-build)
-               :core-js           (router/request->route-prop       request :core-js)
+               :core-js           (router/request->core-js          request)
                :crawler-rules     (environment/crawler-rules        request)
                :selected-language (user/request->user-settings-item request :selected-language)
                ; Hozzáadja a {:css-paths [...]} paraméterként átadott útvonalakat

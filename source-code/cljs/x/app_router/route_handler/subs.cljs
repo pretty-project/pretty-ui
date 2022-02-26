@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.subs
-    (:require
-              [mid-fruits.candy    :refer [param return]]
+    (:require [mid-fruits.candy    :refer [param return]]
               [mid-fruits.uri      :as uri]
               [mid-fruits.vector   :as vector]
               [reitit.frontend     :as reitit.frontend]
@@ -37,7 +36,7 @@
   [db [_ route-string]]
   (if-let [debug-mode (r a/get-debug-mode db)]
           (uri/uri<-query-param route-string debug-mode)
-          (param                route-string)))
+          (return               route-string)))
 
 
 
@@ -109,7 +108,7 @@
   ;
   ; @return (boolean)
   [db [_ route-id]]
-  (let [route-restricted? [:router :route-handler/client-routes route-id :restricted?]]
+  (let [route-restricted? (get-in db [:router :route-handler/client-routes route-id :restricted?])]
        (boolean route-restricted?)))
 
 (defn- require-authentication?

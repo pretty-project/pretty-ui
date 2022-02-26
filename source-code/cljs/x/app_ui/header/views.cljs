@@ -51,7 +51,8 @@
        [elements/icon-button ::dev-tools-icon-button
                              {:icon   :auto_fix_high
                               :preset :default
-                              :on-click [:developer/render-developer-tools!]}]))
+                              :on-click [:developer/render-developer-tools!]
+                              :keypress {:key-code 77}}]))
                              ;:label db-write-count
 
 (defn- header-menu-icon-button
@@ -93,4 +94,7 @@
   []
   (if-let [render-header? @(a/subscribe [:ui/render-header?])]
           [:div#x-app-header {:data-nosnippet true}
-                             [:div#x-app-header--body [header-label-bar]]]))
+                             [:div#x-app-header--body [header-label-bar]]]
+          (if-let [debug-mode? @(a/subscribe [:core/debug-mode-detected?])]
+                  [:div {:style {:position :fixed :bottom 0 :right 0}}
+                        [header-dev-tools-icon-button]])))

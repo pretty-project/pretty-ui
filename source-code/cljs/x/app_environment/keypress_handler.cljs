@@ -432,7 +432,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r db/set-item! db (db/meta-item-path :environment/keypress-events :active?) true)
-       :fx [:environment/add-keypress-listeners! ]}))
+       :fx [:environment/add-keypress-listeners!]}))
 
 (a/reg-event-fx
   :environment/deactivate-keypress-handler!

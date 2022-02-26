@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.views
+(ns playground.view-selector.views
     (:require [app-fruits.dom        :as dom]
               [app-fruits.reagent    :as reagent :refer [ratom]]
               [mid-fruits.candy      :refer [param return]]
@@ -76,9 +76,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs :layout :fit :selectable? false}]
-       [tools/infinite-loader :playground-loader {:on-viewport #(println "Playground infinite loader in viewport again!")}]
+       [tools/infinite-loader :playground {:on-viewport #(println "Playground infinite loader in viewport again!")}]
        [elements/button ::reload-infinite-loader-button
-                        {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :playground-loader]
+                        {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :playground]
                          :variant :transparent :color :secondary :layout :fit}]])
 
 (defn- anchors
@@ -133,11 +133,11 @@
 
 (defn- card-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [elements/card-group ::card-group
-                       {:cards [{:content "Card #1" :on-click [:developer/test!]}
-                                {:content "Card #2" :on-click [:developer/test!]}
-                                {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}]}])
+  [])
+  ;[elements/card-group ::card-group
+  ;                     {:cards [{:content "Card #1" :on-click [:developer/test!]}
+  ;                              {:content "Card #2" :on-click [:developer/test!]}
+  ;                              {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}])
 
 (defn- chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,7 +214,8 @@
        [elements/password-field ::password-field-w-adornments
                                 {:label "Password-field w/ adornments" :emptiable? true
                                  :placeholder "Placeholder"
-                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]}]
+                                 :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}
+                                                    {:label "Ft" :on-click []}]}]
        [elements/multiline-field ::multiline-field
                                  {:label "Multiline-field" :placeholder "Placeholder"}]
        [elements/digit-field {}]

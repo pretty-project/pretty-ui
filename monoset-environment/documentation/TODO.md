@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- A szerver kezelje a 404 képernyőt, ne a kliens! Ne kelljen a 404-hez letölteni az appot
+
 - A ; @return (component) és (hiccup) nem szükséges a view komponensek leírásába!
 
 - Ha a szerver-oldalon müködik a dispatch-later, akkor leválthatja a dispatch-tick-et

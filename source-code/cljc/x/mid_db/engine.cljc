@@ -124,6 +124,16 @@
   [_ _]
   (return {}))
 
+(defn toggle-item!
+  ; @param (item-path vector) item-path
+  ;
+  ; @usage
+  ;  (r db/toggle-item! [:my-item])
+  ;
+  ; @return (map)
+  [db [_ item-path]]
+  (update-in db item-path not))
+
 (defn copy-item!
   ; @param (item-path vector) from-item-path
   ; @param (item-path vector) to-item-path

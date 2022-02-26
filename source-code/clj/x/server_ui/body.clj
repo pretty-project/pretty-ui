@@ -102,7 +102,7 @@
   (let [app-config @(a/subscribe [:core/get-app-config])]
        (merge app-config body-props
               {:app-build      (a/app-build)
-               :core-js        (router/request->route-prop       request :core-js)
+               :core-js        (router/request->core-js          request)
                :selected-theme (user/request->user-settings-item request :selected-theme)
                :shield         (app-shield (graphics/loading-animation))
                ; Hozzáadja a {:plugin-js-paths [...]} paraméterként átadott útvonalakat

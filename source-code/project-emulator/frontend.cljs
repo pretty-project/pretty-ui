@@ -8,7 +8,7 @@
               [app-extensions.storage.api]
               [app-extensions.trader.api]
               [x.boot-loader]
-              ; TEMP
+              ; DEBUG
               [playground.api]))
 
 

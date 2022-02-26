@@ -83,7 +83,7 @@
   ;
   ; Az x.app-core.debug-handler és az x.app-core.event-handler körkörös függvőségben volna, ha ...
   [db]
-  (boolean (if-let [debug-mode (get-in db [:core/debug-handler :meta-items :debug-mode])]
+  (boolean (if-let [debug-mode (get-in db [:core :debug-handler/meta-items :debug-mode])]
                    (= "pineapple-juice" debug-mode))))
 
 ; @constant (?)

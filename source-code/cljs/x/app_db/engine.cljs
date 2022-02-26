@@ -32,6 +32,7 @@
 (def get-item-count       engine/get-item-count)
 (def get-applied-item     engine/get-applied-item)
 (def empty-db!            engine/empty-db!)
+(def toggle-item!         engine/toggle-item!)
 (def copy-item!           engine/copy-item!)
 (def move-item!           engine/move-item!)
 (def set-item!            engine/set-item!)
@@ -69,6 +70,10 @@
 ; @usage
 ;  [:db/empty-db!]
 (a/reg-event-db :db/empty-db! empty-db!)
+
+; @usage
+;  [:db/toggle-item! [:my-item]]
+(a/reg-event-db :db/toggle-item! toggle-item!)
 
 ; @usage
 ;  [:db/move-item! [:move-from] [:move-to]]

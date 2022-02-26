@@ -28,7 +28,7 @@
                            ; Make history
                            (r route-handler.events/reg-to-history!      % route-id))
             :dispatch-n [; Dispatch on-leave-event if ...
-                         (if-let [on-leave-event [:router :route-handler/client-routes previous-route-id :on-leave-event]]
+                         (if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
                                  (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
                          ; Render login screen if ...
                          (if (r route-handler.subs/require-authentication? db route-id)
@@ -37,7 +37,7 @@
                          (if (r route-handler.subs/require-authentication? db route-id)
                              [:boot-loader/set-restart-target! route-string])
                          ; Dispatch client-event if ...
-                         (if-let [client-event [:router :route-handler/client-routes previous-route-id :client-event]]
+                         (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
                                  (if-not (r route-handler.subs/require-authentication? db route-id) client-event))]})))
 
 (a/reg-event-fx
