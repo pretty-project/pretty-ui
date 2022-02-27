@@ -99,12 +99,13 @@
        (if (capacity-handler.engine/capacity-limit-exceeded? content-size)
            (return :capacity-limit-exceeded)
            (when-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
-                     ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást ...
-                     (engine/update-path-directories! env {:media/content-size content-size} +)
                      (let [destination-path (get  destination-item :media/path)
-                           file-path        (conj destination-path {:media/id destination-id})]
+                           item-path        (conj destination-path {:media/id destination-id})]
+                          ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást,
+                          ; így az egyszerre történő feltöltések nem léphetik át a megengedett tárhely-kapacitást ...
+                          (engine/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
                           (letfn [(f [result _ file-data]
-                                     (let [file-data (assoc file-data :file-path file-path)]
+                                     (let [file-data (assoc file-data :file-path item-path)]
                                           (conj result (upload-file-f env mutation-props file-data))))]
                                  (reduce-kv f [] files-data)))))))
 

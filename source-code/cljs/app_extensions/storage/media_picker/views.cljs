@@ -130,15 +130,16 @@
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [indent label]}]
-  (if label [elements/label {:content label :min-height :s :indent indent}]))
+  [_ {:keys [disabled? indent label]}]
+  (if label [elements/label {:content label :min-height :s :disabled? disabled? :indent indent}]))
 
 (defn media-picker-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [picker-id {:keys [indent] :as picker-props}]
+  [picker-id {:keys [disabled? indent] :as picker-props}]
   [elements/toggle {:content  [n-items-selected-label picker-id]
                     :on-click [:storage.media-picker/load-picker! picker-id picker-props]
-                    :indent   indent}])
+                    :disabled? disabled?
+                    :indent    indent}])
 
 (defn media-picker
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -149,7 +150,9 @@
 (defn element
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
-  ;  {:extensions (strings in vector)(opt)
+  ;  {:disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :extensions (strings in vector)(opt)
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none
@@ -169,11 +172,6 @@
 
   ([picker-id picker-props]
    [media-picker picker-id picker-props]))
-
-
-
-   ; Legyen disabled? állapota is!
-   ; Mutassa a thumbnail-eket, ha van meg a fájlneveket!
 
 
 

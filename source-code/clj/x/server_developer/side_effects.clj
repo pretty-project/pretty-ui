@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.04.14
-; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.6
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-developer.engine
+(ns x.server-developer.side-effects
     (:require [mid-fruits.pretty :as pretty]
               [x.server-core.api :as a]))
 

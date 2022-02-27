@@ -23,7 +23,7 @@
 ;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-my-type-items-f
+(defn- get-items-f
   ; @param (map) env
   ; @param (map) resolver-props
   ;
@@ -38,60 +38,60 @@
         ; A keresési feltételeknek megfelelő dokumentumok száma
         :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)}))
 
-(defresolver get-my-type-items
+(defresolver get-items
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:my-extension/get-my-type-items (map)
+             ;  {:my-extension.my-type-lister/get-items (map)
              ;    {:document-count (integer)
              ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
-             {:my-extension/get-my-type-items (get-my-type-items-f env resolver-props)})
+             {:my-extension.my-type-lister/get-items (get-items-f env resolver-props)})
 
 
 
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-my-type-items!
+(defmutation undo-delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
              ;  {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
-             {::pathom.co/op-name 'my-extension/undo-delete-my-type-items!}
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
              (return []))
 
-(defmutation delete-my-type-items!
+(defmutation delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-ids (strings in vector)}
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension/delete-my-type-items!}
+             {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
              (return []))
 
-(defmutation undo-duplicate-my-type-items!
+(defmutation undo-duplicate-items!
              ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-ids (strings in vector)}
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension/undo-duplicate-my-type-items!}
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
              (return []))
 
-(defmutation duplicate-my-type-items!
+(defmutation duplicate-items!
              ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-ids (strings in vector)}
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension/duplicate-my-type-items!}
+             {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
              (return []))
 
 
@@ -100,8 +100,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [get-my-type-items delete-my-type-items!    undo-delete-my-type-items!
-                                 duplicate-my-type-items! undo-duplicate-my-type-items!])
+(def HANDLERS [delete-items! duplicate-items! get-items undo-delete-items! undo-duplicate-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

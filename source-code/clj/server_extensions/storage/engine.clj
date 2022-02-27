@@ -50,14 +50,14 @@
 (defn attach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ directory-id {:media/keys [id] :as media-item}]
-  (letfn [(attach-f [document] (update document :media/items vector/conj-item {:media/id id}))]
-         (mongo-db/apply-document! "storage" directory-id attach-f)))
+  (letfn [(f [document] (update document :media/items vector/conj-item {:media/id id}))]
+         (mongo-db/apply-document! "storage" directory-id f)))
 
 (defn detach-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ directory-id {:media/keys [id] :as media-item}]
-  (letfn [(detach-f [document] (update document :media/items vector/remove-item {:media/id id}))]
-         (mongo-db/apply-document! "storage" directory-id detach-f)))
+  (letfn [(f [document] (update document :media/items vector/remove-item {:media/id id}))]
+         (mongo-db/apply-document! "storage" directory-id f)))
 
 (defn item-attached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +116,7 @@
 
 (defn remove-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:media/keys [id] :as media-item}]
+  [_ {:media/keys [id] :as media-item}]
   (mongo-db/remove-document! "storage" id))
 
 

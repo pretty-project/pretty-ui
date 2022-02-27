@@ -34,7 +34,7 @@
 (defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (when-let [{:keys [filename] :as file-item} (engine/get-item env item-id)]
+  (when-let [{:media/keys [filename] :as file-item} (engine/get-item env item-id)]
             (engine/remove-item! env file-item)
             (engine/delete-file! filename)))
 
@@ -68,7 +68,7 @@
   [env {:keys [item-id parent-id] :as mutation-props}]
   (when-let [media-item (engine/get-item env item-id)]
             (time/set-timeout! PERMANENT-DELETE-AFTER #(delete-item-f env mutation-props))
-            (engine/update-path-directories! env           media-item)
+            (engine/update-path-directories! env           media-item -)
             (engine/detach-item!             env parent-id media-item)
             (return item-id)))
 
@@ -100,12 +100,18 @@
 
 (defn undo-delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-id parent-id] :as mutation-props}])
+  [env {:keys [item-id parent-id] :as mutation-props}]
+  (println (str))
+  (when-let [media-item (engine/get-item env item-id)]
+            (engine/update-path-directories! env           media-item +)
+            (engine/attach-item!             env parent-id media-item)
+            (return media-item)))
 
 (defn undo-delete-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-ids parent-id]}]
-  (letfn [(f [result item-id])]
+  (letfn [(f [result item-id]
+             (conj result (undo-delete-item-f env {:item-id item-id :parent-id parent-id})))]
          (reduce f [] item-ids)))
 
 (defmutation undo-delete-item!
@@ -117,10 +123,10 @@
 
 (defmutation undo-delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env {:keys [item-ids]}]
+             [env {:keys [items]}]
              {::pathom.co/op-name 'storage.media-lister/undo-delete-items!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
-                  (undo-delete-items-f env {:item-ids item-ids :parent-id parent-id})))
+             (let [parent-id (item-browser/item->parent-id :storage :media (first items))]
+                  (undo-delete-items-f env {:items items :parent-id parent-id})))
 
 
 

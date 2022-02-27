@@ -17,7 +17,7 @@
 ;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-my-type-item-f
+(defn- get-item-f
   ; @param (map) env
   ; @param (map) resolver-props
   ;
@@ -26,56 +26,59 @@
   (let [item-id (pathom/env->param env :item-id)]
        (mongo-db/get-document-by-id "my-collection" item-id)))
 
-(defresolver get-my-type-item
+(defresolver get-item
              ; @param (map) env
              ; @param (map) resolver-props
-             ;  {:my-type/id (string)}
+             ;  {:item-id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-extension/get-my-type-item (namespaced map)}
+             ;  {:my-extension.my-type-editor/get-item (namespaced map)}
              [env resolver-props]
-             {:my-extension/get-my-type-item (get-my-type-item-f env resolver-props)})
+             {:my-extension.my-type-editor/get-item (get-item-f env resolver-props)})
 
 
 
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-my-type-item!
+(defmutation undo-delete-item!
              ; @param (map) env
-             ; @param (namespaced map) my-type-item
+             ; @param (map) mutation-props
+             ;  {:item (namespaced map)}
              ;
              ; @return (namespaced map)
-             [env my-type-item]
-             {::pathom.co/op-name 'my-extension/undo-delete-my-type-item!}
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-extension.my-type-editor/undo-delete-item!}
              (return {}))
 
-(defmutation save-my-type-item!
+(defmutation save-item!
              ; @param (map) env
-             ; @param (namespaced map) my-type-item
+             ; @param (map) mutation-props
+             ;  {:item (namespaced map)}
              ;
              ; @return (namespaced map)
-             [env my-type-item]
-             {::pathom.co/op-name 'my-extension/save-my-type-item!}
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-extension.my-type-editor/save-item!}
              (return {}))
 
-(defmutation delete-my-type-item!
+(defmutation delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
              ;  {:item-id (string)}
              ;
              ; @return (string)
              [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension/delete-my-type-item!}
+             {::pathom.co/op-name 'my-extension.my-type-editor/delete-item!}
              (return ""))
 
-(defmutation duplicate-my-type-item!
+(defmutation duplicate-item!
              ; @param (map) env
-             ; @param (namespaced map) copy-item
+             ; @param (map) mutation-props
+             ;  {:item (namespaced map)}
              ;
              ; @return (namespaced map)
-             [env copy-item]
-             {::pathom.co/op-name 'my-extension/duplicate-my-type-item!}
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-extension.my-type-editor/duplicate-item!}
              ; Az item-editor plugin az elem aktuális (nem feltétlenül az elmentett) változatát
              ; küldi el a szerver számára.
              (return {}))
@@ -86,8 +89,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-my-type-item! duplicate-my-type-item! get-my-type-item
-               save-my-type-item!   undo-delete-my-type-item!])
+(def HANDLERS [delete-item! duplicate-item! get-item save-item! undo-delete-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
 

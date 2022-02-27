@@ -1,6 +1,15 @@
 
 # x4.6.3
 
+- Az item-editor plugin itt felsorolt mutation függvényei ezentúl nem a dokumentumot kapják
+  meg a mutation-props térkép helyett, hanem egy térképet, amiben az :item kulcsszó alatt
+  található a dokumentum
+  - my-extension.my-type-editor/duplicate-item!   {...} -> {:item {...}}
+  - my-extension.my-type-editor/undo-delete-item! {...} -> {:item {...}}
+  - my-extension.my-type-editor/save-item!        {...} -> {:item {...}}
+
+- A szerver-oldali debug eszközöket ezentúl a /developer-tools útvonalon lehet elérni
+
 - Az item-lister plugin ezentúl nem tesz a listaelemek köré toggle element-et
 
 - Az item-lister, item-browser, item-editor pluginokat ezentúl csak body és header komponensekre

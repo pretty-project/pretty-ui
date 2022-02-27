@@ -15,15 +15,15 @@
 
 (defmutation undo-delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [_ client-item]
+             [_ {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/undo-delete-item!}
-             (mongo-db/insert-document! "clients" client-item))
+             (mongo-db/insert-document! "clients" item))
 
 (defmutation save-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [{:keys [request]} client-item]
+             [{:keys [request]} {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/save-item!}
-             (mongo-db/save-document! "clients" client-item
+             (mongo-db/save-document! "clients" item
                                       {:prototype-f #(mongo-db/updated-document-prototype request :client %)}))
 
 (defmutation delete-item!
@@ -34,10 +34,10 @@
 
 (defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [{:keys [request] :as env} {:client/keys [id] :as copy-item}]
+             [{:keys [request] :as env} {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/duplicate-item!}
-             (mongo-db/duplicate-document! "clients" id
-                                           {:changes copy-item
+             (mongo-db/duplicate-document! "clients" (:id item)
+                                           {:changes item
                                             :prototype-f #(mongo-db/duplicated-document-prototype request :client %)}))
 
 

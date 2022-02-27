@@ -1,24 +1,14 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.01.07
-; Description:
-; Version: v0.4.0
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-developer.re-frame-browser
+(ns x.server-developer.re-frame-browser.views
     (:require [mid-fruits.map     :as map]
               [mid-fruits.reader  :as reader]
               [mid-fruits.vector  :as vector]
               [server-fruits.http :as http]
-              [x.server-core.api  :as a]))
+              [x.server-core.api  :as a]
+              [x.server-developer.re-frame-browser.styles :as re-frame-browser.styles]))
 
 
 
@@ -55,33 +45,10 @@
              (string? current-item) (str "\"" current-item "\"")
              :else                  (str      current-item))))
 
-(defn- print-re-frame-browser
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [path] :as browser-props}]
-  (str "<html>"
-       "<body>"
-       "<pre style=\"white-space: normal\">"
-       (re-frame-browser browser-props)
-       "</pre>"
-       "</body>"
-       "</html>"))
-
-(defn- download-re-frame-browser
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [query-params]}]
   (let [db          @(a/subscribe [:db/get-db])
         path         (reader/string->mixed (get query-params "path" "[]"))
         current-item (get-in db path)]
-       (http/html-wrap {:body (print-re-frame-browser {:current-item current-item :path path})})))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot {:dispatch-if [(= (System/getenv "DEVELOPER") "true")
-                                  [:router/add-route! :developer/re-frame-browser-route
-                                                      {:route-template "/developer/re-frame-browser"
-                                                       :get (fn [request] (download-re-frame-browser request))}]]}})
+       (re-frame-browser {:current-item current-item :path path})))

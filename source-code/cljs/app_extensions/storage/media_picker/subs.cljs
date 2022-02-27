@@ -4,6 +4,7 @@
 
 (ns app-extensions.storage.media-picker.subs
     (:require [app-plugins.item-browser.subs]
+              [mid-fruits.candy     :refer [param return]]
               [mid-fruits.io        :as io]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]
@@ -48,9 +49,10 @@
 (defn file-selectable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ {:keys [mime-type]}]]
-  (let [extension  (io/mime-type->extension mime-type)
-        extensions (get-in db [:storage :media-picker/meta-items :extensions])]
-       (vector/contains-item? extensions extension)))
+  (if-let [extensions (get-in db [:storage :media-picker/meta-items :extensions])]
+          (let [extension (io/mime-type->extension mime-type)]
+               (vector/contains-item? extensions extension))
+          (return true)))
 
 (defn save-selected-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!

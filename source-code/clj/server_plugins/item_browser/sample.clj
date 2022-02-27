@@ -3,8 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.sample
-    (:require [x.server-core.api :as a]
-              [server-plugins.item-browser.api :as item-browser]))
+    (:require [mongo-db.api      :as mongo-db]
+              [pathom.api        :as pathom]
+              [x.server-core.api :as a]
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [server-plugins.item-browser.api       :as item-browser]))
 
 
 
@@ -18,6 +21,61 @@
                       :my-type/name  "My document"
                       :my-type/path  [{:my-type/id "..."} {:my-type/id "..."}]
                       :my-type/items [{:my-type/id "..."}]})
+
+
+
+;; -- A plugin használatához szükséges resolver függvények --------------------
+;; ----------------------------------------------------------------------------
+
+(defn- get-item-f
+  ; @param (map) env
+  ; @param (map) resolver-props
+  ;
+  ; @return (namespaced map)
+  [env _]
+  (let [item-id (pathom/env->param env :item-id)]
+       (mongo-db/get-document-by-id "my-collection" item-id)))
+
+; Az item-browser plugin az egyes elemek böngészésekor, a böngészett elem adatait is letölti ...
+(defresolver get-item
+             ; @param (map) env
+             ; @param (map) resolver-props
+             ;  {:my-type/id (string)}
+             ;
+             ; @return (namespaced map)
+             ;  {:my-extension.my-type-browser/get-item (namespaced map)}
+             [env resolver-props]
+             {:my-extension.my-type-browser/get-item (get-item-f env resolver-props)})
+
+; - Az item-browser és az item-lister plugin használatakor a get-items resolver megegyezik,
+;   ezért annak dokumentációját az item-lister plugin leírásában keresd!
+; - Mivel az item-browser plugin nem rendelkezik saját listázóval és az item-lister pluginra épül,
+;   ezért az item-browser pluginhoz szükséges get-items resolvert :my-extension.my-type-lister/get-items
+;   azonosítóval szükséges létrehozni!
+(defresolver get-items
+             ; @param (map) env
+             ; @param (map) resolver-props
+             ;
+             ; @return (namespaced map)
+             ;  {:my-extension.my-type-lister/get-items (map)
+             ;    {:document-count (integer)
+             ;     :documents (namespaced maps in vector)}}
+             [env resolver-props]
+             {:my-extension.my-type-lister/get-items (fn [env resolver-props])})
+
+
+
+;; -- A plugin használatához szükséges mutation függvények --------------------
+;; ----------------------------------------------------------------------------
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (functions in vector)
+(def HANDLERS [])
+
+(pathom/reg-handlers! ::handlers HANDLERS)
 
 
 

@@ -44,7 +44,7 @@
   [db [_ extension-id item-namespace]]
   (let [mutation-name (engine/mutation-name          extension-id item-namespace :save)
         exported-item (r subs/export-current-item db extension-id item-namespace)]
-       [:debug `(~(symbol mutation-name) ~exported-item)]))
+       [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
 
 (defn get-delete-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +69,7 @@
   [db [_ extension-id item-namespace item-id]]
   (let [mutation-name (engine/mutation-name         extension-id item-namespace :undo-delete)
         backup-item   (r subs/export-backup-item db extension-id item-namespace item-id)]
-       [:debug `(~(symbol mutation-name) ~backup-item)]))
+       [:debug `(~(symbol mutation-name) ~{:item backup-item})]))
 
 (defn get-duplicate-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +84,7 @@
   ; tartalmazó – aktuális változatát.
   (let [mutation-name (engine/mutation-name       extension-id item-namespace :duplicate)
         exported-item (r subs/export-copy-item db extension-id item-namespace)]
-       [:debug `(~(symbol mutation-name) ~exported-item)]))
+       [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
 
 
 

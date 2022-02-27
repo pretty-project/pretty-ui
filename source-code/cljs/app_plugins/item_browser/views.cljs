@@ -24,11 +24,12 @@
   ; @usage
   ;  [item-browser/go-home-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])
-        at-home?    @(a/subscribe [:item-browser/at-home?   extension-id item-namespace])]
+  (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? extension-id item-namespace])
+        error-mode?       @(a/subscribe [:item-lister/error-mode?        extension-id item-namespace])
+        at-home?          @(a/subscribe [:item-browser/at-home?          extension-id item-namespace])]
        [elements/button ::go-home-button
                         ; A go-home-button gomb az item-lister plugin {:error-mode? true} állapotában is használható!
-                        {:disabled? (and at-home? (not error-mode?))
+                        {:disabled? (or browser-disabled? (and at-home? (not error-mode?)))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
 
@@ -39,9 +40,10 @@
   ; @usage
   ;  [item-browser/go-up-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [at-home? @(a/subscribe [:item-browser/at-home? extension-id item-namespace])]
+  (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? extension-id item-namespace])
+        at-home?          @(a/subscribe [:item-browser/at-home? extension-id item-namespace])]
        [elements/button ::go-up-button
-                        {:disabled? at-home?
+                        {:disabled? (or browser-disabled? at-home?)
                          :on-click  [:item-browser/go-up! extension-id item-namespace]
                          :preset    :back-icon-button}]))
 

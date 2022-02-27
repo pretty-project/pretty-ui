@@ -1,12 +1,12 @@
 
-(ns x.server-developer.docs
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [server-fruits.http :as http]
-              [server-fruits.io   :as io]
-              [x.server-core.api  :as a]
-              [x.server-user.api  :as user]))
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns x.server-developer.docs.engine
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]
+              [server-fruits.io  :as io]))
 
 
 
@@ -90,35 +90,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- read-namespaces
+(defn read-namespaces
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [directory-path]
-  (let [file-list (io/all-file-list directory-path)]
-       (reduce #(let [extension (io/filepath->extension %2)]
-                     (if (vector/contains-item? ALLOWED-EXTENSIONS extension)
-                         (let [file-content (io/read-file %2)]
-                              (assoc-in %1 [%2 :docs] (file-content->docs file-content)))
-                         (return %1)))
-                (param {})
-                (param file-list))))
-
-(defn- download-docs
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [request]
-  (if (user/request->authenticated? request)
-      (http/map-wrap {:body (read-namespaces ROOT-DIRECTORY-PATH)})))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot {:dispatch-n [[:router/add-route! :docs/download-route
-                                                     {:route-template "/docs/download-docs"
-                                                      :get            #(download-docs %)}]
-                                 [:router/add-route! :docs/route
-                                                     {:route-template "/@app-home/docs"
-                                                      :client-event   [:developer/load-docs!]
-                                                      :restricted?    true}]]}})
+  (letfn [(f [result filepath]
+             (let [extension (io/filepath->extension filepath)]
+                  (if (vector/contains-item? ALLOWED-EXTENSIONS extension)
+                      (let [file-content (io/read-file filepath)]
+                           (assoc-in result [filepath :docs] (file-content->docs file-content)))
+                      (return result))))]
+         (let [file-list (io/all-file-list directory-path)]
+              (reduce f {} file-list))))

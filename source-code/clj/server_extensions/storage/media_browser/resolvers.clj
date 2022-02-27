@@ -17,7 +17,7 @@
 
 (defn get-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env response-props]
+  [env resolver-props]
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [media-item (mongo-db/get-document-by-id "storage" item-id)]
                (if-let [capacity-details (capacity-handler.engine/get-capacity-details)]

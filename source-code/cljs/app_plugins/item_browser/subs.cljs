@@ -18,6 +18,7 @@
 
 ; app-plugins.item-lister.subs
 (def get-description        app-plugins.item-lister.subs/get-description)
+(def lister-disabled?       app-plugins.item-lister.subs/lister-disabled?)
 (def toggle-item-selection? app-plugins.item-lister.subs/toggle-item-selection?)
 
 ; mid-plugins.item-browser.subs
@@ -85,6 +86,16 @@
         item-path       (get-in db [extension-id :item-browser/data-items current-item-id path-key])]
        (vec item-path)))
 
+(defn browser-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r lister-disabled? db extension-id item-namespace))
+
 (defn at-home?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -134,6 +145,13 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-browser/browser-disabled? :my-extension :my-type]
+(a/reg-sub :item-browser/browser-disabled? browser-disabled?)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
