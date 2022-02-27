@@ -20,15 +20,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
   (if (string/nonempty? collection-name)
-      (let [button-style (mongo-db-browser.styles/button-style)]
-           (str "<a style=\""button-style"\" href=\"?\">Back to collections</a>"))))
+      (let [menu-button-style (mongo-db-browser.styles/menu-button-style)]
+           (str "<a style=\""menu-button-style"\" href=\"?\">Back to collections</a>"))))
 
 (defn- empty-collection-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
   (if (string/nonempty? collection-name)
-      (let [button-style (mongo-db-browser.styles/button-style {:warning? true})]
-           (str "<a style=\""button-style"\" href=\"?empty-collection="collection-name"\">Empty collection</a>"))))
+      (let [menu-button-style (mongo-db-browser.styles/menu-button-style {:warning? true})]
+           (str "<a style=\""menu-button-style"\" href=\"?empty-collection="collection-name"\">Empty collection</a>"))))
 
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,6 +49,7 @@
             "<div style=\"position: absolute; display: flex; justify-content: right; top: 12px; right: 12px\">"
             "<a style=\""button-style"\" href=\"?collection-name="collection-name"&remove-document="document-id"\">Remove document</a>"
             "</div>"
+            "<div style=\"position: absolute; display: flex; top: 48px; right: 24px; color: #aaa\">"collection-name" | "document-dex"</div>"
             "<pre>" (pretty/mixed->string document) "</pre>"
             "</div>")))
 
@@ -62,9 +63,10 @@
 (defn- db
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [collection-names (mongo-db/get-collection-names)]
-       (reduce #(str %1 (str "<div><a href=\"?collection-name="%2"\">"%2"</a></div>"))
-               "<br/>" collection-names)))
+  (let [collection-names        (mongo-db/get-collection-names)
+        collection-button-style (mongo-db-browser.styles/collection-button-style)]
+       (reduce #(str %1 (str "<div><a style=\""collection-button-style"\" href=\"?collection-name="%2"\">"%2"</a></div>"))
+               "" (sort collection-names))))
 
 (defn- refresh-page
   ; WARNING! NON-PUBLIC! DO NOT USE!

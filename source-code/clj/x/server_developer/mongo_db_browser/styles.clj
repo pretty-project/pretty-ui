@@ -13,7 +13,7 @@
   []
   (str "display: flex; background-color: #d5c1ef; position: absolute; top: 0; left: 0"))
 
-(defn button-style
+(defn menu-button-style
   [& [{:keys [warning?]}]]
   (str "text-decoration: none; padding: 0 16px; line-height: 32px; display: flex;"
        "border-radius: 16px; margin: 8px; color: #222 !important; "
@@ -25,6 +25,11 @@
   (str "color: #111 !important; text-decoration: none; background-color: #ff98f2; border-radius: 12px;"
        "line-height: 24px; display: flex;"
        "padding: 0 16px; font-size: 12px"))
+
+(defn collection-button-style
+  []
+  (str "color: #222 !important; padding: 8px; display: block; margin: 4px; background: #d0d0d0;"
+       "text-decoration: none; width: 240px; border-radius: 4px"))
 
 (defn document-style
   [& [{:keys [document-dex]}]]
