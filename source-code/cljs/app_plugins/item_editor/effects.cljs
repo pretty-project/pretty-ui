@@ -7,7 +7,8 @@
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.events  :as events]
               [app-plugins.item-editor.queries :as queries]
-              [app-plugins.item-editor.subs    :as subs]))
+              [app-plugins.item-editor.subs    :as subs]
+              [app-plugins.item-editor.views   :as views]))
 
 
 
@@ -84,12 +85,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; Az elem sikeres törlése után az item-editor plugin elhagyásakor az elem utolsó
-      ; állapotáról másolat készül, ami alapján lehetséges visszaállítani az elemet
-      ; annak törlésének visszavonása esemény esetleges megtörténtekor.
-      (if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
-              {:db (r events/store-local-changes! db extension-id item-namespace)})))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]))
 
               ; BUG#4055
               ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
@@ -100,11 +96,23 @@
               ;   akkor egy másik tabra (fülre) kattintva az {:component-did-unmount ...} esemény
               ;   által meghívott [:item-editor/unload-editor! ...] esemény megtörténése miatt megjelenne
               ;   a changes-discarded értesítés, abban az esetben is ha a szerkesztő nem lett elhagyva.
+              ; - A backup-current-item! DB függvény is foglalkozik a törlés visszavonhatóságával!
+              ;
+              ; HA A CHANGES-DISCARDED VISSZAÁLLÍTÁSRA KERÜL:
+              ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
+              ;   kirenderelni changes-discarded-dialog párbeszédablakot.
+              ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
+              ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
+              ;   párbeszédablakot.
+              ; - Ezt szükséges visszatenni az item-deleted eseménybe:
+              ;   (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true)
+              ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-delete? true} beállítást
 
               ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
               ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
               ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
               ; esemény visszavonásának esetleges megtörténtekor.
+              ;(if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
               ;(if (r subs/item-changed? db extension-id item-namespace)
               ;    {:db (r events/store-local-changes! db extension-id item-namespace)
               ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
@@ -268,3 +276,20 @@
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
       {:db (r events/set-recovery-mode! db extension-id item-namespace)
        :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-editor/render-color-picker-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [_ [_ extension-id item-namespace]]
+      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
+                      {:body [views/color-picker-dialog-body extension-id item-namespace]
+                      ;:header #'ui/close-popup-header
+                       :min-width :none}]))

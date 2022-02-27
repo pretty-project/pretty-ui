@@ -100,26 +100,25 @@
 
 (defn undo-delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-id parent-id] :as mutation-props}]
-  (println (str))
-  (when-let [media-item (engine/get-item env item-id)]
+  [env {:keys [item parent-id] :as mutation-props}]
+  (when-let [media-item (engine/get-item env (:media/id item))]
             (engine/update-path-directories! env           media-item +)
             (engine/attach-item!             env parent-id media-item)
             (return media-item)))
 
 (defn undo-delete-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-ids parent-id]}]
-  (letfn [(f [result item-id]
-             (conj result (undo-delete-item-f env {:item-id item-id :parent-id parent-id})))]
-         (reduce f [] item-ids)))
+  [env {:keys [items parent-id]}]
+  (letfn [(f [result item]
+             (conj result (undo-delete-item-f env {:item item :parent-id parent-id})))]
+         (reduce f [] items)))
 
 (defmutation undo-delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env {:keys [item-id]}]
+             [env {:keys [item]}]
              {::pathom.co/op-name 'storage.media-lister/undo-delete-item!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media item-id)]
-                  (undo-delete-item-f env {:item-id item-id :parent-id parent-id})))
+             (let [parent-id (item-browser/item->parent-id :storage :media item)]
+                  (undo-delete-item-f env {:item item :parent-id parent-id})))
 
 (defmutation undo-delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!

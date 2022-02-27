@@ -15,8 +15,6 @@
 (def editor-uri            engine/editor-uri)
 (def form-id               engine/form-id)
 (def request-id            engine/request-id)
-(def data-item-path        engine/data-item-path)
-(def meta-item-path        engine/meta-item-path)
 (def item-id->new-item?    engine/item-id->new-item?)
 (def item-id->editor-title engine/item-id->editor-title)
 (def new-item-label        engine/new-item-label)
@@ -31,6 +29,17 @@
 (def component-id          engine/component-id)
 (def dialog-id             engine/dialog-id)
 (def load-extension-event engine/load-extension-event)
+
+
+
+;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (strings in vector)
+(def COLORS ["var( --soft-blue )"
+             "var( --soft-purple )"
+             "var( --soft-green )"
+             "var( --soft-red )"])
 
 
 

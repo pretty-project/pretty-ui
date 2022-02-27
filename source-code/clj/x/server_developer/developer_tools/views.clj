@@ -20,10 +20,12 @@
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (str "<div style=\""developer-tools.styles/menu-bar-style"\">"
-       "<a style=\""developer-tools.styles/menu-item-style"\" href=\"/developer-tools/re-frame-browser\">Re-Frame browser</a>"
-       "<a style=\""developer-tools.styles/menu-item-style"\" href=\"/developer-tools/mongo-db-browser\">MongoDB browser</a>"
-       "</div>"))
+  (let [menu-bar-style  (developer-tools.styles/menu-bar-style)
+        menu-item-style (developer-tools.styles/menu-item-style)]
+       (str "<div style=\""menu-bar-style"\">"
+            "<a style=\""menu-item-style"\" href=\"/developer-tools/re-frame-browser\">Re-Frame browser</a>"
+            "<a style=\""menu-item-style"\" href=\"/developer-tools/mongo-db-browser\">MongoDB browser</a>"
+            "</div>")))
 
 (defn- developer-tools
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -35,11 +37,12 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (str "<html>"
-       "<body style=\""developer-tools.styles/body-style"\">"
-       "<pre style=\"white-space: normal\">"
-       (menu-bar        request)
-       (developer-tools request)
-       "</pre>"
-       "</body>"
-       "</html>"))
+  (let [body-style (developer-tools.styles/body-style)]
+       (str "<html>"
+            "<body style=\""body-style"\">"
+            "<pre style=\"white-space: normal\">"
+            (menu-bar        request)
+            (developer-tools request)
+            "</pre>"
+            "</body>"
+            "</html>")))

@@ -123,3 +123,15 @@
       [:ui/add-popup! :storage.file-uploader/view
                       {:body   [file-uploader.views/body   uploader-id]
                        :header [file-uploader.views/header uploader-id]}]))
+
+                       
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage.file-uploader/render-progress-notification!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/blow-bubble! :storage.file-uploader/progress-notification
+                    {:body #'file-uploader.views/progress-notification-body
+                     :autopop? false :user-close? false}])

@@ -13,8 +13,6 @@
 ; mid-plugins.item-browser.engine
 (def browser-uri             engine/browser-uri)
 (def request-id              engine/request-id)
-(def data-item-path          engine/data-item-path)
-(def meta-item-path          engine/meta-item-path)
 (def mutation-name           engine/mutation-name)
 (def resolver-id             engine/resolver-id)
 (def collection-name         engine/collection-name)

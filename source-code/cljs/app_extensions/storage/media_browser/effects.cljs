@@ -5,6 +5,7 @@
 (ns app-extensions.storage.media-browser.effects
     (:require [app-fruits.window :as window]
               [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.io     :as io]
               [x.app-core.api    :as a :refer [r]]
               [x.app-media.api   :as media]
               [x.app-router.api  :as router]
@@ -151,3 +152,50 @@
   :storage.media-browser/render-browser!
   [:ui/set-surface! :storage.media-browser/view
                     {:view #'media-browser.views/view}])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage.media-browser/render-rename-directory-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ {:keys [alias] :as directory-item}]]
+      [:value-editor/load-editor! :storage :file-name
+                                  {:label :directory-name :save-button-label :rename! :initial-value alias
+                                   :on-save   [:storage.media-browser/update-item-alias! directory-item]
+                                   :validator {:f io/directory-name-valid?
+                                               :invalid-message :invalid-directory-name
+                                               :pre-validate?   true}}]))
+
+(a/reg-event-fx
+  :storage.media-browser/render-rename-file-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ {:keys [alias] :as file-item}]]
+      [:value-editor/load-editor! :storage :file-name
+                                  {:label :file-name :save-button-label :rename! :initial-value alias
+                                   :on-save   [:storage.media-browser/update-item-alias! file-item]
+                                   :validator {:f io/filename-valid?
+                                               :invalid-message :invalid-file-name
+                                               :pre-validate?   true}}]))
+
+(a/reg-event-fx
+  :storage.media-browser/render-directory-menu!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ directory-item]]
+      [:ui/add-popup! :storage.media-browser/media-menu
+                      {:body   [media-browser.views/directory-menu-body directory-item]
+                       :header [media-browser.views/media-menu-header   directory-item]
+                       :horizontal-align :left
+                       :min-width        :xs}]))
+
+(a/reg-event-fx
+  :storage.media-browser/render-file-menu!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ file-item]]
+      [:ui/add-popup! :storage.media-browser/media-menu
+                      {:body   [media-browser.views/file-menu-body    file-item]
+                       :header [media-browser.views/media-menu-header file-item]
+                       :horizontal-align :left
+                       :min-width        :xs}]))

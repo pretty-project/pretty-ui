@@ -12,7 +12,86 @@
               [x.app-elements.api   :as elements]
               [x.app-layouts.api    :as layouts]
               [x.app-media.api      :as media]
+              [x.app-ui.api         :as ui]
               [app-plugins.item-browser.api :as item-browser]))
+
+
+
+;; -- Item-menu components ----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn media-menu-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [alias] :as media-item}]
+  [elements/label {:color :muted :indent :left :content alias :font-size :xs}])
+
+(defn media-menu-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [media-item]
+  [elements/horizontal-polarity {:start-content [media-menu-label media-item]
+                                 :end-content   [ui/popup-close-icon-button :storage.media-browser/media-menu {}]}])
+
+
+
+;; -- Directory-item menu components ------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn directory-menu-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [directory-item]
+  [:<> [elements/button ::open-directory-button
+                        {:preset :default-button :icon :folder :indent :left :label :open!
+                         :icon-family :material-icons-outlined
+                         :on-click [:storage.media-browser/open-directory! directory-item]}]
+       [elements/button ::copy-directory-link-button
+                        {:preset :default-button :icon :content_paste :indent :left :label :copy-link!
+                         :on-click [:storage.media-browser/copy-directory-link! directory-item]}]
+       [elements/button ::move-directory-button
+                        {:preset :default-button :icon :drive_file_move :indent :left :label :move!
+                         :icon-family :material-icons-outlined
+                         :on-click [:storage.media-browser/move-directory! directory-item]}]
+       [elements/button ::duplicate-directory-button
+                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
+                         :on-click [:storage.media-browser/duplicate-directory! directory-item]}]
+       [elements/button ::rename-directory-button
+                        {:preset :default-button :icon :edit :indent :left :label :rename!
+                         :on-click [:storage.media-browser/rename-directory! directory-item]}]
+       [elements/button ::delete-directory-button
+                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!
+                         :on-click [:storage.media-browser/delete-item! directory-item]}]])
+
+
+
+;; -- File-item menu components -----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn file-menu-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [mime-type] :as file-item}]
+  [:<> (if (or (io/mime-type->image? mime-type)
+               (= mime-type "application/pdf"))
+           [elements/button ::preview-file-button
+                            {:preset :default-button :icon :preview :indent :left :label :file-preview
+                             :on-click [:storage.media-browser/preview-file! file-item]}])
+       [elements/button ::download-file-button
+                        {:preset :default-button :icon :cloud_download :indent :left :label :download!
+                         :on-click [:storage.media-browser/download-file! file-item]}]
+       [elements/button ::copy-file-link-button
+                        {:preset :default-button :icon :content_paste :indent :left :label :copy-link!
+                         :on-click [:storage.media-browser/copy-file-link! file-item]}]
+       [elements/button ::move-file-button
+                        {:preset :default-button :icon :drive_file_move :indent :left :label :move!
+                         :icon-family :material-icons-outlined
+                         :on-click [:storage.media-browser/move-file! file-item]}]
+       [elements/button ::duplicate-file-button
+                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
+                         :on-click [:storage.media-browser/duplicate-file! file-item]}]
+       [elements/button ::rename-file-button
+                        {:preset :default-button :icon :edit :indent :left :label :rename!
+                         :on-click [:storage.media-browser/rename-file! file-item]}]
+       [elements/button ::delete-file-button
+                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!
+                         :on-click [:storage.media-browser/delete-item! file-item]}]])
 
 
 

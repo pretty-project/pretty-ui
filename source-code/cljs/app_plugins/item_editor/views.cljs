@@ -190,6 +190,21 @@
 
 
 
+;; -- Color-picker components -------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn color-picker-dialog-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id _]
+  [elements/color-picker ::color-picker
+                         {:initial-options engine/COLORS
+                          :value-path [extension-id :item-editor/data-items :colors]}])
+
+
+
 ;; -- Input components --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

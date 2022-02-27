@@ -11,32 +11,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (strings in vector)
-(def COLORS ["var( --soft-blue )"
-             "var( --soft-purple )"
-             "var( --soft-green )"
-             "var( --soft-red )"])
-
-
-
-;; -- Popup components --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn color-picker-dialog-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id _]
-  [elements/color-picker ::color-picker
-                         {:initial-options COLORS
-                          :value-path [extension-id :item-editor/data-items :colors]}])
-
-
-
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -80,18 +54,6 @@
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-editor/render-color-picker-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [_ [_ extension-id item-namespace]]
-      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
-                      {:body   [color-picker-dialog-body extension-id item-namespace]
-                      ;:header #'ui/close-popup-header
-                       :min-width :none}]))
 
 (a/reg-event-fx
   :item-editor/render-undo-delete-dialog!

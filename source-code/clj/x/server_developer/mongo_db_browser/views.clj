@@ -20,34 +20,43 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
   (if (string/nonempty? collection-name)
-      (str "<a style=\""mongo-db-browser.styles/button-style"\" href=\"?\">Back to collections</a>")))
+      (let [button-style (mongo-db-browser.styles/button-style)]
+           (str "<a style=\""button-style"\" href=\"?\">Back to collections</a>"))))
 
 (defn- empty-collection-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
   (if (string/nonempty? collection-name)
-      (str "<a style=\""mongo-db-browser.styles/danger-button-style"\" href=\"?empty-collection="collection-name"\">Empty collection!</a>")))
+      (let [button-style (mongo-db-browser.styles/button-style {:warning? true})]
+           (str "<a style=\""button-style"\" href=\"?empty-collection="collection-name"\">Empty collection</a>"))))
 
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [browser-props]
-  (str "<div style=\""mongo-db-browser.styles/button-wrapper-style"\">"
-       (up-button               browser-props)
-       (empty-collection-button browser-props)
-       "</div>"))
+  (let [menu-bar-style (mongo-db-browser.styles/menu-bar-style)]
+       (str "<div style=\""menu-bar-style"\">"
+            (up-button               browser-props)
+            (empty-collection-button browser-props)
+            "</div>")))
 
 (defn- document
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [collection-name]} document]
-  (let [document-id (db/document->document-id document)]
-       (str "<br/><div><a href=\"?collection-name="collection-name"&remove-document="document-id"\">[ Remove document! ]</a></div>"
-            "<pre>" (pretty/mixed->string document) "</pre>")))
+  [{:keys [collection-name]} document-dex document]
+  (let [document-id    (db/document->document-id document)
+        document-style (mongo-db-browser.styles/document-style {:document-dex document-dex})
+        button-style   (mongo-db-browser.styles/remove-button-style)]
+       (str "<div style=\""document-style"; position: relative\">"
+            "<div style=\"position: absolute; display: flex; justify-content: right; top: 12px; right: 12px\">"
+            "<a style=\""button-style"\" href=\"?collection-name="collection-name"&remove-document="document-id"\">Remove document</a>"
+            "</div>"
+            "<pre>" (pretty/mixed->string document) "</pre>"
+            "</div>")))
 
 (defn- collection
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name] :as browser-props}]
   (let [all-documents (mongo-db/get-all-documents collection-name)]
-       (reduce #(str %1 (document browser-props %2))
+       (reduce-kv #(str %1 (document browser-props %2 %3))
                "" all-documents)))
 
 (defn- db

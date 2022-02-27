@@ -40,7 +40,6 @@
              (dissoc-in % [extension-id :item-editor/meta-items :item-id])
              (dissoc-in % [extension-id :item-editor/meta-items :data-received?])
              (dissoc-in % [extension-id :item-editor/meta-items :error-mode?])
-             (dissoc-in % [extension-id :item-editor/meta-items :item-deleted?])
              ; Ha az item-editor plugin {:recovery-mode? true} állapotban indul, de az elem
              ; visszaállítása már megtörtént, akkor kilép a {:recovery-mode? true} állapotból,
              ; mert az már nem érvényes!
@@ -156,14 +155,10 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id _]]
-  ; XXX#5610
-  ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
-  ;   kirenderelni changes-discarded-dialog párbeszédablakot.
-  ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
-  ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
-  ;   párbeszédablakot.
-  (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true))
+  [db [_ extension-id item-namespace]]
+  ; Az elem sikeres törlése után az elem utolsó állapotáról másolat készül, ami alapján lehetséges
+  ; visszaállítani az elemet annak törlésének visszavonása esemény esetleges megtörténtekor.
+  (r store-local-changes! db extension-id item-namespace))
 
 (defn store-downloaded-suggestions!
   ; WARNING! NON-PUBLIC! DO NOT USE!

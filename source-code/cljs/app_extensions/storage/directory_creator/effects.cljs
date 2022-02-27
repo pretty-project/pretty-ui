@@ -3,11 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.directory-creator.effects
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [app-plugins.value-editor.api]
+              [mid-fruits.io        :as io]
+              [x.app-core.api       :as a :refer [r]]
+              [x.app-dictionary.api :as dictionary]
               [app-extensions.storage.directory-creator.events  :as directory-creator.events]
               [app-extensions.storage.directory-creator.queries :as directory-creator.queries]))
 
-
+              
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,3 +48,20 @@
       [:sync/send-query! :storage.directory-creator/create-directory!
                          {:query (r directory-creator.queries/get-create-directory-query db creator-id directory-name)
                           :on-success [:item-lister/reload-items! :storage :media]}]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage.directory-creator/render-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ creator-id]]
+      [:value-editor/load-editor! :storage :directory-name
+                                  {:label :directory-name :save-button-label :create!
+                                   :initial-value (r dictionary/look-up db :new-directory)
+                                   :on-save       [:storage.directory-creator/create-directory! creator-id]
+                                   :validator {:f io/directory-name-valid?
+                                               :invalid-message :invalid-directory-name
+                                               :pre-validate?   true}}]))

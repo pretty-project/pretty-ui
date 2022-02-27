@@ -14,8 +14,8 @@
 ;; -- Példa dokumentum --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - A dokumentoknak tartalmazniuk kell a {:label-key ...} tulajdonságként átadott kulcsot!
-; - A dokumentoknak tartalmazniuk kell a {:path-key ...} tulajdonságként átadott kulcsot!
+; - A böngészhető dokumentoknak tartalmazniuk kell a  {:label-key ...} tulajdonságként átadott kulcsot!
+; - A böngészhető dokumentoknak tartalmazniuk kell a  {:path-key  ...} tulajdonságként átadott kulcsot!
 ; - A böngészhető dokumentoknak tartalmazniuk kell az {:items-key ...} tulajdonságként átadott kulcsot!
 (def SAMPLE-DOCUMENT {:my-type/id    "..."
                       :my-type/name  "My document"
