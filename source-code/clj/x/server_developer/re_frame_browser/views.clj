@@ -19,15 +19,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [path]}]
   (if (vector/nonempty? path)
-      (let [parent-path (vector/pop-last-item path)]
-           (str "<div><a href=\"?path=" parent-path "\">..</a></div>"))
-      (str "<div>..</div>")))
+      (let [parent-path       (vector/pop-last-item path)
+            menu-button-style (re-frame-browser.styles/menu-button-style)]
+           (str "<div><a style=\""menu-button-style"\" href=\"?path=" parent-path "\">..</a></div>"))
+      (let [menu-button-style (re-frame-browser.styles/menu-button-style {:disabled? true})]
+           (str "<div style=\""menu-button-style"\">..</div>"))))
+
+(defn- home-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [path]}]
+  (if (vector/nonempty? path)
+      (let [menu-button-style (re-frame-browser.styles/menu-button-style)]
+           (str "<div><a style=\""menu-button-style"\" href=\"?path=[]\">/</a></div>"))
+      (let [menu-button-style (re-frame-browser.styles/menu-button-style {:disabled? true})]
+           (str "<div style=\""menu-button-style"\">/</div>"))))
+
+(defn- menu-bar
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [browser-props]
+  (let [menu-bar-style (re-frame-browser.styles/menu-bar-style)]
+       (str "<div style=\""menu-bar-style"\">"
+            (up-button   browser-props)
+            (home-button browser-props)
+            "</div>")))
 
 (defn- map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [path]} k v]
-  (let [target-path (conj path k)]
-       (str "<div><a href=\"?path=" target-path "\">" k "</a></div>")))
+  (let [target-path    (conj path k)
+        map-item-style (re-frame-browser.styles/map-item-style)]
+       (str "<div><a style=\""map-item-style"\" href=\"?path=" target-path "\">" k "</a></div>")))
 
 (defn- map-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -39,11 +60,11 @@
 (defn- re-frame-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [current-item] :as browser-props}]
-  (str (up-button browser-props)
+  (str (menu-bar browser-props)
        (cond (map?    current-item) (map-items browser-props)
-             (nil?    current-item) (str "nil")
-             (string? current-item) (str "\"" current-item "\"")
-             :else                  (str      current-item))))
+             (nil?    current-item) (str "<div style=\"padding: 8px\">nil</div>")
+             (string? current-item) (str "<div style=\"padding: 8px\">\"" current-item "\"</div>")
+             :else                  (str "<div style=\"padding: 8px\">"   current-item "</div>"))))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

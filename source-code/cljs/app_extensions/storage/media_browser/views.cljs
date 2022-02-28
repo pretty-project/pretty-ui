@@ -52,7 +52,7 @@
                          :on-click [:storage.media-browser/move-directory! directory-item]}]
        [elements/button ::duplicate-directory-button
                         {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
-                         :on-click [:storage.media-browser/duplicate-directory! directory-item]}]
+                         :on-click [:storage.media-browser/duplicate-item! directory-item]}]
        [elements/button ::rename-directory-button
                         {:preset :default-button :icon :edit :indent :left :label :rename!
                          :on-click [:storage.media-browser/rename-directory! directory-item]}]
@@ -85,7 +85,7 @@
                          :on-click [:storage.media-browser/move-file! file-item]}]
        [elements/button ::duplicate-file-button
                         {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
-                         :on-click [:storage.media-browser/duplicate-file! file-item]}]
+                         :on-click [:storage.media-browser/duplicate-item! file-item]}]
        [elements/button ::rename-file-button
                         {:preset :default-button :icon :edit :indent :left :label :rename!
                          :on-click [:storage.media-browser/rename-file! file-item]}]

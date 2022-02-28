@@ -5,11 +5,12 @@
 (ns app-plugins.item-editor.effects
     (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]
-              [app-plugins.item-editor.engine  :as engine]
-              [app-plugins.item-editor.events  :as events]
-              [app-plugins.item-editor.queries :as queries]
-              [app-plugins.item-editor.subs    :as subs]
-              [app-plugins.item-editor.views   :as views]))
+              [app-plugins.item-editor.engine     :as engine]
+              [app-plugins.item-editor.events     :as events]
+              [app-plugins.item-editor.queries    :as queries]
+              [app-plugins.item-editor.subs       :as subs]
+              [app-plugins.item-editor.validators :as validators]
+              [app-plugins.item-editor.views      :as views]))
 
 
 
@@ -125,15 +126,16 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
-                          ; XXX#4057
-                          ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
-                          ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
-                          :on-stalled   [:item-editor/receive-item!   extension-id item-namespace]
-                          :on-failure   [:item-editor/set-error-mode! extension-id item-namespace]
-                          :query        (r queries/get-request-item-query       db extension-id item-namespace)
-                          :validator-f #(r queries/request-item-response-valid? db extension-id item-namespace %)}]))
+      (let [query        (r queries/get-request-item-query          db extension-id item-namespace)
+            validator-f #(r validators/request-item-response-valid? db extension-id item-namespace %)]
+           [:sync/send-query! (engine/request-id extension-id item-namespace)
+                              {:display-progress? true
+                               ; XXX#4057
+                               ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
+                               ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
+                               :on-stalled [:item-editor/receive-item!   extension-id item-namespace]
+                               :on-failure [:item-editor/set-error-mode! extension-id item-namespace]
+                               :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-editor/load-item!
@@ -171,11 +173,13 @@
       ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
       ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
       ;   pontatlan visszaálltást okozhat!
-      {:db (r events/save-item! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/go-up! extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
-                                     :query      (r queries/get-save-item-query db extension-id item-namespace)}]}))
+      (let [query        (r queries/get-save-item-query          db extension-id item-namespace)
+            validator-f #(r validators/save-item-response-valid? db extension-id item-namespace %)]
+           {:db (r events/save-item! db extension-id item-namespace)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-editor/go-up! extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
+                                          :query query :validator-f validator-f}]})))
 
 
 
@@ -190,11 +194,13 @@
   ; @usage
   ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/item-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                                     :query      (r queries/get-delete-item-query db extension-id item-namespace)}]}))
+      (let [query        (r queries/get-delete-item-query          db extension-id item-namespace)
+            validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-editor/item-deleted extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-editor/item-deleted
@@ -215,11 +221,13 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/delete-undid extension-id item-namespace item-id]
-                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
-                                     :query      (r queries/get-undo-delete-item-query db extension-id item-namespace item-id)}]}))
+      (let [query        (r queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+            validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-editor/delete-undid extension-id item-namespace item-id]
+                                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-editor/delete-item-undid
@@ -245,11 +253,13 @@
   ; @usage
   ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:display-progress? true
-                          :on-success [:item-editor/item-duplicated extension-id item-namespace]
-                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
-                          :query      (r queries/get-duplicate-item-query db extension-id item-namespace)}]))
+      (let [query        (r queries/get-duplicate-item-query          db extension-id item-namespace)
+            validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
+           [:sync/send-query! (engine/request-id extension-id item-namespace)
+                              {:display-progress? true
+                               :on-success   [:item-editor/item-duplicated extension-id item-namespace]
+                               :on-failure   [:ui/blow-bubble! {:body :failed-to-copy}]
+                               :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-editor/item-duplicated

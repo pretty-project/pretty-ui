@@ -34,6 +34,7 @@
   vagy akármivel tölti le az elemeket
 - Az item-handler letöltés kezelője nem foglalkozhat a downloaded-suggestions eltárolásával az item-editor
   dokumentum megérkezésekor, mert nincs köze hozzá
+- Hogyan tárolja egyszerre az item-browser a letöltött dokumentumokat és az egy darab letöltött dokumentumot?
 
 
 

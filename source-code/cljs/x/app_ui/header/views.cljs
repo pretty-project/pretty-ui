@@ -14,8 +14,6 @@
 
 (defn- header-apps-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   (let [at-home? @(a/subscribe [:router/at-home?])]
        [elements/icon-button ::apps-icon-button
@@ -26,8 +24,6 @@
 
 (defn- header-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [elements/icon-button ::up-icon-button
                         {:preset :back
@@ -35,8 +31,6 @@
 
 (defn- header-back-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [elements/icon-button ::back-icon-button
                         {:preset :back
@@ -44,8 +38,6 @@
 
 (defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   (let [db-write-count @(a/subscribe [:developer/get-db-write-count])]
        [elements/icon-button ::dev-tools-icon-button
@@ -57,8 +49,6 @@
 
 (defn- header-menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [elements/icon-button ::menu-icon-button
                         {:preset :user-menu
@@ -66,16 +56,12 @@
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   (let [header-title @(a/subscribe [:ui/get-header-title])]
        [:div#x-app-header--title (components/content {:content header-title})]))
 
 (defn- header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   (let [debug-mode?  @(a/subscribe [:core/debug-mode-detected?])
         header-title @(a/subscribe [:ui/get-header-title])
@@ -89,8 +75,6 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   (if-let [render-header? @(a/subscribe [:ui/render-header?])]
           [:div#x-app-header {:data-nosnippet true}

@@ -5,10 +5,11 @@
 (ns app-plugins.item-lister.effects
     (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]
-              [app-plugins.item-lister.engine  :as engine]
-              [app-plugins.item-lister.events  :as events]
-              [app-plugins.item-lister.queries :as queries]
-              [app-plugins.item-lister.subs    :as subs]))
+              [app-plugins.item-lister.engine     :as engine]
+              [app-plugins.item-lister.events     :as events]
+              [app-plugins.item-lister.queries    :as queries]
+              [app-plugins.item-lister.subs       :as subs]
+              [app-plugins.item-lister.validators :as validators]))
 
 
 
@@ -63,14 +64,15 @@
       ;   értéke 20, akkor az esemény az 1. - 60. elemeket kéri le a szerverről.
       (let [; A {:reload-mode? true} beállítás a query elkészítéséhez szükséges, utána nincs szükség
             ; rá, hogy érvényben maradjon, ezért nincs eltárolva!
-            db (r events/toggle-reload-mode! db extension-id item-namespace)]
+            db           (r events/toggle-reload-mode!               db extension-id item-namespace)
+            query        (r queries/get-request-items-query          db extension-id item-namespace)
+            validator-f #(r validators/request-items-response-valid? db extension-id item-namespace %)]
            [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true
                                ; XXX#4057
-                               :on-stalled   [:item-lister/receive-reloaded-items! extension-id item-namespace]
-                               :on-failure   [:item-lister/set-error-mode!         extension-id item-namespace]
-                               :query        (r queries/get-request-items-query       db extension-id item-namespace)
-                               :validator-f #(r queries/request-items-response-valid? db extension-id item-namespace %)}])))
+                               :on-stalled [:item-lister/receive-reloaded-items! extension-id item-namespace]
+                               :on-failure [:item-lister/set-error-mode!         extension-id item-namespace]
+                               :query query :validator-f validator-f}])))
 
 
 
@@ -122,18 +124,19 @@
       (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
           ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
           (r subs/request-items? db extension-id item-namespace)
-          [:sync/send-query! (engine/request-id extension-id item-namespace)
-                             {:display-progress? true
-                              ; XXX#4057
-                              ; A letöltött dokumentumok on-success helyett on-stalled időpontban
-                              ; kerülnek tárolásra a Re-Frame adatbázisba, így elkerülhető,
-                              ; hogy a request idle-timeout ideje alatt az újonnan letöltött
-                              ; dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
-                              ; felirat még megjelenik a lista végén.
-                              :on-stalled   [:item-lister/receive-items!  extension-id item-namespace]
-                              :on-failure   [:item-lister/set-error-mode! extension-id item-namespace]
-                              :query        (r queries/get-request-items-query       db extension-id item-namespace)
-                              :validator-f #(r queries/request-items-response-valid? db extension-id item-namespace %)}])))
+          (let [query        (r queries/get-request-items-query          db extension-id item-namespace)
+                validator-f #(r validators/request-items-response-valid? db extension-id item-namespace %)]
+               [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                  {:display-progress? true
+                                   ; XXX#4057
+                                   ; A letöltött dokumentumok on-success helyett on-stalled időpontban
+                                   ; kerülnek tárolásra a Re-Frame adatbázisba, így elkerülhető,
+                                   ; hogy a request idle-timeout ideje alatt az újonnan letöltött
+                                   ; dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
+                                   ; felirat még megjelenik a lista végén.
+                                   :on-stalled [:item-lister/receive-items!  extension-id item-namespace]
+                                   :on-failure [:item-lister/set-error-mode! extension-id item-namespace]
+                                   :query query :validator-f validator-f}]))))
 
 (a/reg-event-fx
   :item-lister/receive-items!
@@ -161,11 +164,14 @@
   ; @usage
   ;  [:item-lister/delete-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r events/delete-selected-items! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-lister/items-deleted extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                                     :query      (r queries/get-delete-selected-items-query db extension-id item-namespace)}]}))
+      (let [item-ids     (r subs/get-selected-item-ids              db extension-id item-namespace)
+            query        (r queries/get-delete-items-query          db extension-id item-namespace item-ids)
+            validator-f #(r validators/delete-items-response-valid? db extension-id item-namespace %)]
+           {:db (r events/delete-selected-items! db extension-id item-namespace)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-lister/items-deleted extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-lister/items-deleted
@@ -187,11 +193,13 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-lister/reload-items! extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
-                                     :query      (r queries/get-undo-delete-items-query db extension-id item-namespace item-ids)}]}))
+      (let [query        (r queries/get-undo-delete-items-query          db extension-id item-namespace item-ids)
+            validator-f #(r validators/undo-delete-items-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-lister/reload-items! extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
+                                          :query query :validator-f validator-f}]})))
 
 
 
@@ -206,11 +214,14 @@
   ; @usage
   ;  [:item-lister/duplicate-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-lister/items-duplicated extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
-                                     :query      (r queries/get-duplicate-selected-items-query db extension-id item-namespace)}]}))
+      (let [item-ids     (r subs/get-selected-item-ids                 db extension-id item-namespace)
+            query        (r queries/get-duplicate-items-query          db extension-id item-namespace item-ids)
+            validator-f #(r validators/duplicate-items-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-lister/items-duplicated extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-lister/items-duplicated
@@ -232,8 +243,10 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
   (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-lister/reload-items! extension-id item-namespace]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
-                                     :query      (r queries/get-undo-duplicate-items-query db extension-id item-namespace copy-ids)}]}))
+      (let [query        (r queries/get-undo-duplicate-items-query          db extension-id item-namespace copy-ids)
+            validator-f #(r validators/undo-duplicate-items-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-lister/reload-items! extension-id item-namespace]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
+                                          :query query :validator-f validator-f}]})))

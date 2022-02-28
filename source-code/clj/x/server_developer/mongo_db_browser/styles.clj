@@ -29,7 +29,7 @@
 (defn collection-button-style
   []
   (str "color: #222 !important; padding: 8px; display: block; margin: 4px; background: #d0d0d0;"
-       "text-decoration: none; width: 240px; border-radius: 4px"))
+       "text-decoration: none; width: 360px; border-radius: 4px"))
 
 (defn document-style
   [& [{:keys [document-dex]}]]

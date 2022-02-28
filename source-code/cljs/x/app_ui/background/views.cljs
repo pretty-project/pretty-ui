@@ -20,8 +20,6 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [:div#x-app-background [:svg {:style {:width "100%" :height "100%"}
                                 :preserve-aspect-ratio "none"

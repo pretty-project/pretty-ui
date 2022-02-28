@@ -134,6 +134,18 @@
   (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
        (db/document->namespaced-document backup-item item-namespace)))
 
+(defn export-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace item-id]]
+  (let [item (r get-item db extension-id item-namespace item-id)]
+       (db/document->namespaced-document item item-namespace)))
+
 (defn at-home?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

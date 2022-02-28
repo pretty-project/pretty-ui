@@ -52,16 +52,16 @@
         resolver-props (r get-request-items-resolver-props db extension-id item-namespace)]
        [:debug `(~resolver-id ~resolver-props)]))
 
-(defn get-delete-selected-items-query
+(defn get-delete-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
   ;
   ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (let [mutation-name (engine/mutation-name            extension-id item-namespace :delete)
-        item-ids      (r subs/get-selected-item-ids db extension-id item-namespace)]
+  [db [_ extension-id item-namespace item-ids]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)]
        [:debug `(~(symbol mutation-name) ~{:item-ids item-ids})]))
 
 (defn get-undo-delete-items-mutation-props
@@ -90,16 +90,16 @@
         mutation-props (r get-undo-delete-items-mutation-props db extension-id item-namespace item-ids)]
        [:debug `(~(symbol mutation-name) ~mutation-props)]))
 
-(defn get-duplicate-selected-items-query
+(defn get-duplicate-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (strings in vector) item-ids
   ;
   ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (let [mutation-name (engine/mutation-name            extension-id item-namespace :duplicate)
-        item-ids      (r subs/get-selected-item-ids db extension-id item-namespace)]
+  [db [_ extension-id item-namespace item-ids]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-ids item-ids})]))
 
 (defn get-undo-duplicate-items-query
@@ -113,23 +113,3 @@
   [db [_ extension-id item-namespace copy-ids]]
   (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-ids copy-ids})]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request-items-response-valid?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) server-response
-  ;
-  ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
-        document-count (get-in server-response [resolver-id :document-count])
-        documents      (get-in server-response [resolver-id :documents])]
-       (and (integer? document-count)
-            (vector?  documents))))

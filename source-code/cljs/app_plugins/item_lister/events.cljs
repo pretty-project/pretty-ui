@@ -253,7 +253,7 @@
   [db [_ extension-id item-namespace]]
   (as-> db % (r backup-selected-items!  % extension-id item-namespace)
              (r disable-selected-items! % extension-id item-namespace)
-             (r ui/fake-random-process! %)))
+             (r ui/fake-process!        % 15)))
 
 (defn use-filter!
   ; WARNING! NON-PUBLIC! DO NOT USE!

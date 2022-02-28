@@ -150,8 +150,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (as-> db % (r backup-item!            % extension-id item-namespace item-id)
-             (r ui/fake-random-process! %)))
+  (as-> db % (r backup-item!     % extension-id item-namespace item-id)
+             (r ui/fake-process! % 15)))
 
 
 

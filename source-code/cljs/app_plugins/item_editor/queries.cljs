@@ -5,7 +5,6 @@
 (ns app-plugins.item-editor.queries
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]))
 
@@ -67,6 +66,8 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-id]]
+  ; A törlés művelet visszavonásához szükséges a szerver számára elküldeni az elem másolatát,
+  ; mivel feltételezhető, hogy az elem már nem elérhető a szerveren.
   (let [mutation-name (engine/mutation-name         extension-id item-namespace :undo-delete)
         backup-item   (r subs/export-backup-item db extension-id item-namespace item-id)]
        [:debug `(~(symbol mutation-name) ~{:item backup-item})]))
@@ -85,26 +86,3 @@
   (let [mutation-name (engine/mutation-name       extension-id item-namespace :duplicate)
         exported-item (r subs/export-copy-item db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request-item-response-valid?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) server-response
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
-        document    (get server-response resolver-id)
-        suggestions (get server-response :item-editor/get-item-suggestions)]
-       (and (or (map? suggestions)
-                (not (r subs/download-suggestions? db extension-id item-namespace)))
-            (or (db/document->document-namespaced? document)
-                (not (r subs/download-item?        db extension-id item-namespace))))))

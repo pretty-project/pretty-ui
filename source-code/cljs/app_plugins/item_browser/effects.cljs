@@ -6,10 +6,11 @@
 (ns app-plugins.item-browser.effects
     (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]
-              [app-plugins.item-browser.engine  :as engine]
-              [app-plugins.item-browser.events  :as events]
-              [app-plugins.item-browser.queries :as queries]
-              [app-plugins.item-browser.subs    :as subs]))
+              [app-plugins.item-browser.engine     :as engine]
+              [app-plugins.item-browser.events     :as events]
+              [app-plugins.item-browser.queries    :as queries]
+              [app-plugins.item-browser.subs       :as subs]
+              [app-plugins.item-browser.validators :as validators]))
 
 
 
@@ -125,11 +126,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      [:sync/send-query! (engine/request-id extension-id item-namespace)
-                         {:on-failure   [:item-browser/set-error-mode! extension-id item-namespace]
-                          :on-success   [:item-browser/receive-item!   extension-id item-namespace]
-                          :query        (r queries/get-request-item-query       db extension-id item-namespace)
-                          :validator-f #(r queries/request-item-response-valid? db extension-id item-namespace %)}]))
+      (let [query        (r queries/get-request-item-query          db extension-id item-namespace)
+            validator-f #(r validators/request-item-response-valid? db extension-id item-namespace %)]
+           [:sync/send-query! (engine/request-id extension-id item-namespace)
+                              {:on-failure [:item-browser/set-error-mode! extension-id item-namespace]
+                               :on-success [:item-browser/receive-item!   extension-id item-namespace]
+                               :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-browser/receive-item!
@@ -153,10 +155,12 @@
 (a/reg-event-fx
   :item-browser/update-item!
   (fn [{:keys [db]} [_ extension-id item-namespace]]))
-      ;[:sync/send-query! :storage.media-browser/update-item!
-      ;                   {:on-success [:item-lister/reload-items! :storage :media]
-      ;                    :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
-      ;                    :query (r queries/get-update-item-alias-query db media-item item-alias)]]))
+      ;(let [query        (r queries/get-update-item-alias-query db media-item item-alias)
+      ;      validator-f #()]))
+           ;[:sync/send-query! :storage.media-browser/update-item!
+           ;                   {:on-success [:item-lister/reload-items! :storage :media]
+           ;                    :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
+           ;                    :query query :validator-f validator-f
 
 
 
@@ -172,11 +176,13 @@
   ; @usage
   ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r events/delete-item! db extension-id item-namespace item-id)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-browser/item-deleted extension-id item-namespace item-id]
-                                     :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
-                                     :query      (r queries/get-delete-item-query db extension-id item-namespace item-id)}]}))
+      (let [query        (r queries/get-delete-item-query          db extension-id item-namespace item-id)
+            validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
+           {:db (r events/delete-item! db extension-id item-namespace item-id)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-browser/item-deleted extension-id item-namespace item-id]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-browser/item-deleted
@@ -198,11 +204,13 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r ui/fake-random-process! db)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-browser/delete-item-undid extension-id item-namespace item-id]
-                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
-                                     :query      (r queries/get-undo-delete-item-query db extension-id item-namespace item-id)}]}))
+      (let [query        (r queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+            validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-browser/delete-item-undid extension-id item-namespace item-id]
+                                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-browser/delete-item-undid
@@ -227,7 +235,14 @@
   ;
   ; @usage
   ;  [:item-browser/duplicate-item! :my-extension :my-type "my-item"]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]))
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      (let [query        (r queries/get-duplicate-item-query          db extension-id item-namespace item-id)
+            validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-browser/item-duplicated extension-id item-namespace item-id]
+                                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
+                                          :query query :validator-f validator-f}]})))
 
 
 

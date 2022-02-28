@@ -10,6 +10,7 @@
               [x.app-tools.file-saver.engine]
               [x.app-tools.file-saver.side-effects]
               [x.app-tools.file-saver.views]
+              [x.app-tools.image-loader.engine]
               [x.app-tools.infinite-loader.effects]
               [x.app-tools.infinite-loader.engine]
               [x.app-tools.infinite-loader.subs]
@@ -18,8 +19,8 @@
               [x.app-tools.scheduler.events]
               [x.app-tools.scheduler.subs]
               [x.app-tools.clipboard.side-effects     :as clipboard.side-effects]
-              [x.app-tools.image-loader               :as image-loader]
-              [x.app-tools.image-preloader            :as image-preloader]
+              [x.app-tools.image-loader.views         :as image-loader.views]
+              [x.app-tools.image-preloader.views      :as image-preloader.views]
               [x.app-tools.infinite-loader.events     :as infinite-loader.events]
               [x.app-tools.infinite-loader.views      :as infinite-loader.views]
               [x.app-tools.temporary-component.engine :as temporary-component.engine]))
@@ -32,11 +33,11 @@
 ; x.app-tools.clipboard.side-effects
 (def copy-to-clipboard! clipboard.side-effects/copy-to-clipboard!)
 
-; x.app-tools.image-loader
-(def image-loader image-loader/component)
+; x.app-tools.image-loader.views
+(def image-loader image-loader.views/component)
 
-; x.app-tools.image-preloader
-(def image-preloader image-preloader/component)
+; x.app-tools.image-preloader.views
+(def image-preloader image-preloader.views/component)
 
 ; x.app-tools.infinite-loader.events
 (def pause-infinite-loader!  infinite-loader.events/pause-infinite-loader!)

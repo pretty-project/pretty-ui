@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.01.20
-; Description:
-; Version: v0.7.0
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -22,18 +11,21 @@
               [x.app-ui.header.views]
               [x.app-ui.popups]
               [x.app-ui.presets]
+              [x.app-ui.progress-bar.effects]
+              [x.app-ui.progress-bar.subs]
+              [x.app-ui.progress-bar.views]
               [x.app-ui.shield]
               [x.app-ui.surface]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
-              [x.app-ui.graphics        :as graphics]
-              [x.app-ui.header.events   :as header.events]
-              [x.app-ui.interface       :as interface]
-              [x.app-ui.progress-bar    :as progress-bar]
-              [x.app-ui.renderer        :as renderer]
-              [x.app-ui.sounds          :as sounds]
-              [x.app-ui.structure.views :as structure.views]
-              [x.app-ui.themes          :as themes]
+              [x.app-ui.graphics             :as graphics]
+              [x.app-ui.header.events        :as header.events]
+              [x.app-ui.interface            :as interface]
+              [x.app-ui.progress-bar.events  :as progress-bar.events]
+              [x.app-ui.renderer             :as renderer]
+              [x.app-ui.sounds               :as sounds]
+              [x.app-ui.structure.views      :as structure.views]
+              [x.app-ui.themes               :as themes]
               [x.app-ui.bubble-body-presets  :as bubble-body-presets]
               [x.app-ui.popup-header-presets :as popup-header-presets]))
 
@@ -73,12 +65,11 @@
 (def go-up-popup-header            popup-header-presets/go-up-popup-header)
 (def go-back-popup-header          popup-header-presets/go-back-popup-header)
 
-; x.app-ui.progress-bar
-(def listen-to-process!         progress-bar/listen-to-process!)
-(def stop-listening-to-process! progress-bar/stop-listening-to-process!)
-(def fake-process!              progress-bar/fake-process!)
-(def fake-random-process!       progress-bar/fake-random-process!)
-(def stop-faking-process!       progress-bar/stop-faking-process!)
+; x.app-ui.progress-bar.events
+(def listen-to-process!         progress-bar.events/listen-to-process!)
+(def stop-listening-to-process! progress-bar.events/stop-listening-to-process!)
+(def fake-process!              progress-bar.events/fake-process!)
+(def stop-faking-process!       progress-bar.events/stop-faking-process!)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

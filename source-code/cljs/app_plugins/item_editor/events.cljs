@@ -90,8 +90,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (as-> db % (r backup-current-item!    % extension-id item-namespace)
-             (r ui/fake-random-process! %)))
+  (as-> db % (r backup-current-item! % extension-id item-namespace)
+             (r ui/fake-process!     % 15)))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!

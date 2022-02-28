@@ -5,11 +5,12 @@
 (ns app-extensions.storage.file-uploader.effects
     (:require [app-fruits.dom :as dom]
               [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.file-uploader.engine  :as file-uploader.engine]
-              [app-extensions.storage.file-uploader.events  :as file-uploader.events]
-              [app-extensions.storage.file-uploader.queries :as file-uploader.queries]
-              [app-extensions.storage.file-uploader.subs    :as file-uploader.subs]
-              [app-extensions.storage.file-uploader.views   :as file-uploader.views]))
+              [app-extensions.storage.file-uploader.engine     :as file-uploader.engine]
+              [app-extensions.storage.file-uploader.events     :as file-uploader.events]
+              [app-extensions.storage.file-uploader.queries    :as file-uploader.queries]
+              [app-extensions.storage.file-uploader.validators :as file-uploader.validators]
+              [app-extensions.storage.file-uploader.subs       :as file-uploader.subs]
+              [app-extensions.storage.file-uploader.views      :as file-uploader.views]))
 
 
 
@@ -59,9 +60,9 @@
   :storage.file-uploader/start-progress!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      (let [query        (r file-uploader.queries/get-upload-files-query       db uploader-id)
-            form-data    (r file-uploader.subs/get-form-data                   db uploader-id)
-            validator-f #(r file-uploader.queries/upload-files-response-valid? db uploader-id %)]
+      (let [query        (r file-uploader.queries/get-upload-files-query          db uploader-id)
+            form-data    (r file-uploader.subs/get-form-data                      db uploader-id)
+            validator-f #(r file-uploader.validators/upload-files-response-valid? db uploader-id %)]
            {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
                          [:sync/send-query! (file-uploader.engine/request-id uploader-id)
                                             {:body       (dom/merge-to-form-data! form-data {:query query})
@@ -124,7 +125,7 @@
                       {:body   [file-uploader.views/body   uploader-id]
                        :header [file-uploader.views/header uploader-id]}]))
 
-                       
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
