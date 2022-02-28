@@ -9,6 +9,7 @@
               [app-plugins.item-editor.subs   :as subs]))
 
 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -37,7 +38,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :save)
+        document      (get server-response (symbol mutation-name))]))
+      ;(db/document->document-namespaced? document)))
 
 (defn delete-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +51,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]])
 
 (defn undo-delete-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,7 +61,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]])
 
 (defn duplicate-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,4 +71,4 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]])

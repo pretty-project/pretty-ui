@@ -26,7 +26,7 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-downloaded-items
@@ -121,6 +121,84 @@
            (return   all-item-count)
            (return   0))))
 
+(defn all-items-downloaded?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [       all-item-count (r        get-all-item-count db extension-id item-namespace)
+        downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)]
+       ; XXX#0791
+       ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
+       ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
+       ;   akkor ne próbáljon további feltételezett elemeket letölteni.
+       ; - XXX#0499
+       ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
+       ;   függvény visszatérési értéke nem tekinthető mérvadónak!
+       ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
+       (>= downloaded-item-count all-item-count)))
+
+(defn no-items-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [received-count (r get-meta-item db extension-id item-namespace :received-count)]
+       (= received-count 0)))
+
+(defn download-more-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (and ; XXX#0499
+       ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
+       ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
+       (or (not (r items-received?       db extension-id item-namespace))
+           (not (r all-items-downloaded? db extension-id item-namespace)))
+       ; BUG#7009
+       (not (r no-items-received? db extension-id item-namespace))))
+
+(defn request-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (and ; BUG#4506
+       ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
+       ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
+       ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
+       ; Ezért szükséges vizsgálni a synchronizing? függvény kimenetét, hogy ha már elindult
+       ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
+            (r download-more-items? db extension-id item-namespace)
+       (not (r synchronizing?       db extension-id item-namespace))))
+
+(defn downloading-items?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  ; A kiválasztott elemeken végzett műveletek is {:synchronizing? true} állapotba hozzák
+  ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
+  ; az elemeken végzett műveletek szinkronizációval.
+  (and (r download-more-items? db extension-id item-namespace)
+       (r synchronizing?       db extension-id item-namespace)))
+
 (defn lister-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -133,6 +211,144 @@
         synchronizing?  (r synchronizing?  db extension-id item-namespace)]
        ; XXX#3219
        (or synchronizing? (not items-received?))))
+
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [route-id (r router/get-current-route-id db)]
+       (= route-id (engine/route-id extension-id item-namespace))))
+
+(defn items-selectable?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [item-actions (r get-meta-item db extension-id item-namespace :item-actions)]
+       (vector/nonempty? item-actions)))
+
+(defn items-sortable?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :sortable?))
+
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r route-handled? db extension-id item-namespace))
+
+(defn get-description
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (let [downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)
+        all-item-count        (r get-all-item-count        db extension-id item-namespace)
+        items-received?       (r items-received?           db extension-id item-namespace)]
+       (if items-received? (components/content {:content      :npn-items-downloaded
+                                                :replacements [downloaded-item-count all-item-count]}))))
+
+(defn get-item-actions
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (keywords in vector)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :item-actions))
+
+(defn get-new-item-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (vector)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :new-item-options))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn error-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :error-mode?))
+
+(defn menu-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [reorder-mode? (r get-meta-item db extension-id item-namespace :reorder-mode?)
+        search-mode?  (r get-meta-item db extension-id item-namespace :search-mode?)]
+       (nor reorder-mode? search-mode?)))
+
+(defn reorder-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :reorder-mode?))
+
+(defn search-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :search-mode?))
+
+(defn select-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :select-mode?))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-disabled-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,6 +374,11 @@
   [db [_ extension-id item-namespace item-dex]]
   (let [disabled-items (r get-disabled-items db extension-id item-namespace)]
        (vector/contains-item? disabled-items item-dex)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-selected-item-dexes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -244,25 +465,24 @@
   (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
        (-> selected-item-dexes vector/nonempty? not)))
 
-(defn all-items-downloaded?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn toggle-item-selection?
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (integer) item-dex
   ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [       all-item-count (r        get-all-item-count db extension-id item-namespace)
-        downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)]
-       ; XXX#0791
-       ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
-       ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
-       ;   akkor ne próbáljon további feltételezett elemeket letölteni.
-       ; - XXX#0499
-       ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
-       ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-       ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
-       (>= downloaded-item-count all-item-count)))
+  ; @usage
+  ;  (r item-lister/toggle-item-selection? db :my-extension :my-type 42)
+  [db [_ extension-id item-namespace item-dex]]
+  (and ; XXX#5660
+       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
+            (r items-selectable?        db extension-id item-namespace)
+            (r environment/key-pressed? db 16)
+       (not (r lister-disabled?         db extension-id item-namespace))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-filter-pattern
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -289,63 +509,10 @@
   (let [search-term (r get-meta-item db extension-id item-namespace :search-term)]
        (str search-term)))
 
-(defn no-items-received?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [received-count (r get-meta-item db extension-id item-namespace :received-count)]
-       (= received-count 0)))
 
-(defn download-more-items?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (and ; XXX#0499
-       ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
-       ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-       (or (not (r items-received?       db extension-id item-namespace))
-           (not (r all-items-downloaded? db extension-id item-namespace)))
-       ; BUG#7009
-       (not (r no-items-received? db extension-id item-namespace))))
 
-(defn request-items?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (and ; BUG#4506
-       ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
-       ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
-       ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
-       ; Ezért szükséges vizsgálni a synchronizing? függvény kimenetét, hogy ha már elindult
-       ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
-            (r download-more-items? db extension-id item-namespace)
-       (not (r synchronizing?       db extension-id item-namespace))))
-
-(defn downloading-items?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  ; A kiválasztott elemeken végzett műveletek is {:synchronizing? true} állapotba hozzák
-  ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
-  ; az elemeken végzett műveletek szinkronizációval.
-  (and (r download-more-items? db extension-id item-namespace)
-       (r synchronizing?       db extension-id item-namespace)))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn export-backup-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -359,133 +526,10 @@
   (vector/->items item-ids #(let [backup-item (get-in db [extension-id :item-lister/backup-items %])]
                                  (db/document->namespaced-document backup-item item-namespace))))
 
-(defn route-handled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [route-id (r router/get-current-route-id db)]
-       (= route-id (engine/route-id extension-id item-namespace))))
 
-(defn items-selectable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [item-actions (r get-meta-item db extension-id item-namespace :item-actions)]
-       (vector/nonempty? item-actions)))
 
-(defn items-sortable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :sortable?))
-
-(defn set-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r route-handled? db extension-id item-namespace))
-
-(defn get-description
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]]
-  (let [downloaded-item-count (r get-downloaded-item-count db extension-id item-namespace)
-        all-item-count        (r get-all-item-count        db extension-id item-namespace)
-        items-received?       (r items-received?           db extension-id item-namespace)]
-       (if items-received? (components/content {:content      :npn-items-downloaded
-                                                :replacements [downloaded-item-count all-item-count]}))))
-
-(defn get-item-actions
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (keywords in vector)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :item-actions))
-
-(defn get-new-item-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :new-item-options))
-
-(defn error-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :error-mode?))
-
-(defn menu-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [reorder-mode? (r get-meta-item db extension-id item-namespace :reorder-mode?)
-        search-mode?  (r get-meta-item db extension-id item-namespace :search-mode?)]
-       (nor reorder-mode? search-mode?)))
-
-(defn reorder-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :reorder-mode?))
-
-(defn search-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :search-mode?))
-
-(defn select-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :select-mode?))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn order-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -496,20 +540,6 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (return false))
-
-(defn toggle-item-selection?
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (integer) item-dex
-  ;
-  ; @usage
-  ;  (r item-lister/toggle-item-selection? db :my-extension :my-type 42)
-  [db [_ extension-id item-namespace item-dex]]
-  (and ; XXX#5660
-       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-            (r items-selectable?        db extension-id item-namespace)
-            (r environment/key-pressed? db 16)
-       (not (r lister-disabled?         db extension-id item-namespace))))
 
 
 

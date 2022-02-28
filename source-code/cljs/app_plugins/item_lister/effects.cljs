@@ -212,9 +212,21 @@
             validator-f #(r validators/undo-delete-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-lister/reload-items! extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-delete}]
+                                         {:on-success [:item-lister/reload-items!            extension-id item-namespace]
+                                          :on-failure [:item-lister/undo-delete-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-lister/undo-delete-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha a kijelölt elemek törlésének visszavonása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      {:dispatch-n [[:ui/simulate-process!]
+                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
 
 
@@ -234,8 +246,8 @@
             validator-f #(r validators/duplicate-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-lister/items-duplicated extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-duplicate}]
+                                         {:on-success [:item-lister/items-duplicated       extension-id item-namespace]
+                                          :on-failure [:item-lister/duplicate-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -251,6 +263,18 @@
                          [:item-lister/reload-items!                   extension-id item-namespace]]})))
 
 (a/reg-event-fx
+  :item-lister/duplicate-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha a kijelölt elemek duplikálása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      {:dispatch-n [[:ui/simulate-process!]
+                    [:ui/blow-bubble! {:body :failed-to-copy}]]}))
+
+(a/reg-event-fx
   :item-lister/undo-duplicate-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -262,6 +286,18 @@
             validator-f #(r validators/undo-duplicate-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-lister/reload-items! extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]
+                                         {:on-success [:item-lister/reload-items!               extension-id item-namespace]
+                                          :on-failure [:item-lister/undo-duplicate-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-lister/undo-duplicate-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      {:dispatch-n [[:ui/simulate-process!]
+                    [:ui/blow-bubble! {:body :failed-to-undo-copy}]]}))

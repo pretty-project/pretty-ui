@@ -5,8 +5,7 @@
 (ns app-plugins.item-lister.validators
     (:require [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
-              [app-plugins.item-lister.engine :as engine]
-              [app-plugins.item-lister.subs   :as subs]))
+              [app-plugins.item-lister.engine :as engine]))
 
 
 
@@ -36,11 +35,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name       (engine/mutation-name              extension-id item-namespace :delete)
-        selected-item-count (r subs/get-selected-item-count db extension-id item-namespace)
-        deleted-item-ids    (get server-response (symbol mutation-name))]
-       (vector/count? deleted-item-ids selected-item-count)))
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name    (engine/mutation-name extension-id item-namespace :delete)
+        deleted-item-ids (get server-response (symbol mutation-name))]
+       (vector/nonempty? deleted-item-ids)))
 
 (defn undo-delete-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,7 +48,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name   (engine/mutation-name extension-id item-namespace :undo-delete)
+        recovered-items (get server-response (symbol mutation-name))]
+       (vector/nonempty? recovered-items)))
 
 (defn duplicate-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,7 +61,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name    (engine/mutation-name extension-id item-namespace :duplicate)
+        duplicated-items (get server-response (symbol mutation-name))]
+       (vector/nonempty? duplicated-items)))
 
 (defn undo-duplicate-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -70,4 +74,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name    (engine/mutation-name extension-id item-namespace :undo-duplicate)
+        deleted-item-ids (get server-response (symbol mutation-name))]
+       (vector/nonempty? deleted-item-ids)))

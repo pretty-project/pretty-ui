@@ -69,7 +69,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @example
   ;  (engine/mutation-name :my-extension :my-type :delete)
@@ -77,10 +77,10 @@
   ;  "my-extension.my-type-browser/delete-item!"
   ;
   ; @return (string)
-  [extension-id item-namespace action-id]
+  [extension-id item-namespace action-key]
   (str (name extension-id)   "."
        (name item-namespace) "-browser/"
-       (name action-id)      "-item!"))
+       (name action-key)     "-item!"))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -222,7 +222,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :item-deleted)
@@ -230,10 +230,10 @@
   ;  :my-extension.my-type-browser/item-deleted-dialog
   ;
   ; @return (namespaced keyword)
-  [extension-id item-namespace action-id]
+  [extension-id item-namespace action-key]
   (keyword (str (name extension-id)  "."
                 (name item-namespace) "-browser")
-           (str (name action-id)      "-dialog")))
+           (str (name action-key)     "-dialog")))
 
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

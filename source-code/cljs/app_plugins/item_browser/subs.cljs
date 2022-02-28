@@ -29,7 +29,7 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-current-item-id
@@ -63,6 +63,12 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :root-item-id))
 
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,16 +94,6 @@
         item-path       (get-in db [extension-id :item-browser/data-items current-item-id path-key])]
        (vec item-path)))
 
-(defn browser-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r lister-disabled? db extension-id item-namespace))
-
 (defn get-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -111,29 +107,6 @@
          (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
               (some f downloaded-items))))
 
-(defn get-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (get-in db [extension-id :item-browser/backup-items item-id]))
-
-(defn export-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [db [_ extension-id item-namespace item-id]]
-  (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
-       (db/document->namespaced-document backup-item item-namespace)))
-
 (defn export-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -145,6 +118,21 @@
   [db [_ extension-id item-namespace item-id]]
   (let [item (r get-item db extension-id item-namespace item-id)]
        (db/document->namespaced-document item item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn browser-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r lister-disabled? db extension-id item-namespace))
 
 (defn at-home?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -196,6 +184,41 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (get-in db [extension-id :item-browser/backup-items item-id]))
+
+(defn export-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace item-id]]
+  (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
+       (db/document->namespaced-document backup-item item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-browser/get-item-label :my-extension :my-type]
+(a/reg-sub :item-browser/get-item-label get-item-label)
+
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
 ;
@@ -216,10 +239,3 @@
 ; @usage
 ;  [:item-browser/get-description :my-extension :my-type]
 (a/reg-sub :item-browser/get-description get-description)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-browser/get-item-label :my-extension :my-type]
-(a/reg-sub :item-browser/get-item-label get-item-label)

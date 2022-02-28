@@ -12,8 +12,21 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reset-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ extension-id editor-id]]
+  ; A value-editor plugin minden elindulásakor kitörli a default-edit-path útvonalon található
+  ; értéket, így az előző szerkesztésből esetlegesen megmaradt érték törlésre kerül.
+  (let [default-edit-path (engine/default-edit-path extension-id editor-id)]
+       (dissoc-in db default-edit-path)))
 
 (defn store-editor-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,19 +71,6 @@
                   (return db))
           (return db)))
 
-(defn reset-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ extension-id editor-id]]
-  ; A value-editor plugin minden elindulásakor kitörli a default-edit-path útvonalon található
-  ; értéket, így az előző szerkesztésből esetlegesen megmaradt érték törlésre kerül.
-  (let [default-edit-path (engine/default-edit-path extension-id editor-id)]
-       (dissoc-in db default-edit-path)))
-
 (defn load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -84,6 +84,11 @@
              (r store-editor-props! % extension-id editor-id editor-props)
              (r use-initial-value!  % extension-id editor-id)
              (r use-original-value! % extension-id editor-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn save-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!

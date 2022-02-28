@@ -155,7 +155,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @example
   ;  (engine/mutation-name :my-extension :my-type :add)
@@ -163,17 +163,17 @@
   ;  "my-extension.my-type-editor/add-item!"
   ;
   ; @return (string)
-  [extension-id item-namespace action-id]
+  [extension-id item-namespace action-key]
   (str (name extension-id)   "."
        (name item-namespace) "-editor/"
-       (name action-id)      "-item!"))
+       (name action-key)     "-item!"))
 
 (defn resolver-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @example
   ;  (engine/resolver-id :my-extension :my-type :get)
@@ -181,10 +181,10 @@
   ;  :my-extension.my-type-editor/get-item
   ;
   ; @return (keyword)
-  [extension-id item-namespace action-id]
+  [extension-id item-namespace action-key]
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-editor")
-           (str (name action-id)      "-item")))
+           (str (name action-key)     "-item")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -292,7 +292,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @example
   ;  (engine/dialog-id :my-extension :my-type :color-picker)
@@ -305,10 +305,10 @@
   ;  :my-extension.my-type-editor/item-deleted-dialog
   ;
   ; @return (namespaced keyword)
-  [extension-id item-namespace action-id]
+  [extension-id item-namespace action-key]
   (keyword (str (name extension-id)  "."
                 (name item-namespace) "-editor")
-           (str (name action-id)      "-dialog")))
+           (str (name action-key)     "-dialog")))
 
 (defn load-extension-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

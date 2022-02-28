@@ -692,15 +692,15 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @usage
   ;  (r renderer/get-render-log db :bubbles :my-bubble :render-requested-at)
   ;
   ; @return (ms)
-  [db [_ renderer-id element-id action-id]]
+  [db [_ renderer-id element-id action-key]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (get-in db (db/meta-item-path partition-id :render-log element-id action-id))))
+       (get-in db (db/meta-item-path partition-id :render-log element-id action-key))))
 
 
 
@@ -712,15 +712,15 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (keyword) element-id
-  ; @param (keyword) action-id
+  ; @param (keyword) action-key
   ;
   ; @usage
   ;  (r update-render-log! db :bubbles :my-bubble :render-requested-at)
   ;
   ; @return (map)
-  [db [_ renderer-id element-id action-id]]
+  [db [_ renderer-id element-id action-key]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :render-log element-id action-id)
+       (assoc-in db (db/meta-item-path partition-id :render-log element-id action-key)
                     (time/elapsed))))
 
 (defn- reserve-renderer!

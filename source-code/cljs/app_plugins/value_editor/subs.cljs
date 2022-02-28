@@ -8,8 +8,18 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-editor-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ extension-id editor-id]]
+  (get-in db [extension-id :value-editor/meta-items editor-id]))
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,27 +99,17 @@
                     (and (r get-meta-item         db extension-id editor-id :required?)
                          (r elements/field-empty? db :value-editor/editor-field))))))
 
-(defn get-editor-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ extension-id editor-id]]
-  (get-in db [extension-id :value-editor/meta-items editor-id]))
-
-
+ 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :value-editor/get-editor-props get-editor-props)
 
 ; @usage
 ;  [:value-editor/get-editor-value :my-extension :my-editor]
 (a/reg-sub :value-editor/get-editor-value get-editor-value)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :value-editor/get-editor-props get-editor-props)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :value-editor/get-meta-item get-meta-item)

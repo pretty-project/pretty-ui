@@ -26,19 +26,8 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-current-item-id
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-current-item-id db :my-extension :my-type)
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :item-id))
+;; ----------------------------------------------------------------------------
 
 (defn get-data-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,6 +56,22 @@
   [db [_ extension-id _ item-key]]
   (get-in db [extension-id :item-editor/data-items item-key]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-current-item-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-current-item-id db :my-extension :my-type)
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :item-id))
+
 (defn get-derived-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -76,6 +81,43 @@
   ; @return (string)
   [db [_ extension-id _]]
   (r router/get-current-route-path-param db :item-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn synchronizing?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [request-id (engine/request-id extension-id item-namespace)]
+       (r sync/listening-to-request? db request-id)))
+
+(defn error-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :error-mode?))
+
+(defn new-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [current-item-id (r get-current-item-id db extension-id item-namespace)]
+       (engine/item-id->new-item? extension-id item-namespace current-item-id)))
 
 (defn editing-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,6 +136,27 @@
   (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
        (= item-id derived-item-id)))
 
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [route-id (r router/get-current-route-id db)]
+       (= route-id (engine/route-id extension-id item-namespace))))
+
+(defn set-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (r route-handled? db extension-id item-namespace))
+
 (defn get-editor-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -104,6 +167,35 @@
   [db [_ extension-id item-namespace]]
   (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
        (engine/item-id->editor-title extension-id item-namespace derived-item-id)))
+
+(defn get-description
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (if-not (r new-item? db extension-id item-namespace)
+          (let [modified-at        (r get-data-value db extension-id item-namespace :modified-at)
+                actual-modified-at (r activities/get-actual-timestamp db modified-at)]
+               (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
+
+(defn form-completed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [form-id (engine/form-id extension-id item-namespace)]
+       (r elements/form-completed? db form-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,37 +229,10 @@
   (let [current-item (r get-current-item db extension-id item-namespace)]
        (db/document->namespaced-document current-item item-namespace)))
 
-(defn synchronizing?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [request-id (engine/request-id extension-id item-namespace)]
-       (r sync/listening-to-request? db request-id)))
 
-(defn error-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :error-mode?))
 
-(defn new-item?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id item-namespace)]
-       (engine/item-id->new-item? extension-id item-namespace current-item-id)))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn download-suggestions?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -220,6 +285,11 @@
                         ; az adatok letöltése!
                         (or synchronizing? (not data-received?))))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-backup-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -267,7 +337,6 @@
         local-changes   (r get-local-changes   db extension-id item-namespace)]
        (merge backup-item local-changes)))
 
-
 (defn item-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -280,51 +349,6 @@
         current-item    (r get-current-item    db extension-id item-namespace)
         backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
        (not= current-item backup-item)))
-
-(defn route-handled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [route-id (r router/get-current-route-id db)]
-       (= route-id (engine/route-id extension-id item-namespace))))
-
-(defn set-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r route-handled? db extension-id item-namespace))
-
-(defn get-description
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (if-not (r new-item? db extension-id item-namespace)
-          (let [modified-at        (r get-data-value db extension-id item-namespace :modified-at)
-                actual-modified-at (r activities/get-actual-timestamp db modified-at)]
-               (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
-
-(defn form-completed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [form-id (engine/form-id extension-id item-namespace)]
-       (r elements/form-completed? db form-id)))
 
 
 
