@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-handler.api
-    (:require [mid-plugins.item-editor.engine :as engine]))
+    (:require [mid-plugins.item-editor.subs]
+              [mid-plugins.item-editor.engine :as engine]))
 
 
 

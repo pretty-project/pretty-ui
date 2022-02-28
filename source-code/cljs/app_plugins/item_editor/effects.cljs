@@ -4,6 +4,7 @@
 
 (ns app-plugins.item-editor.effects
     (:require [x.app-core.api :as a :refer [r]]
+              [x.app-ui.api   :as ui]
               [app-plugins.item-editor.engine  :as engine]
               [app-plugins.item-editor.events  :as events]
               [app-plugins.item-editor.queries :as queries]
@@ -189,36 +190,11 @@
   ; @usage
   ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r events/delete-item! db extension-id item-namespace)
+      {:db (r ui/fake-random-process! db)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                     {:on-success [:item-editor/item-deleted extension-id item-namespace]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
                                      :query      (r queries/get-delete-item-query db extension-id item-namespace)}]}))
-
-(a/reg-event-fx
-  :item-editor/undo-delete!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r events/undo-delete! db extension-id item-namespace)
-       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                    {:on-success [:item-editor/delete-undid extension-id item-namespace item-id]
-                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
-                                     :query      (r queries/get-undo-delete-query db extension-id item-namespace item-id)}]}))
-
-(a/reg-event-fx
-  :item-editor/delete-undid
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r events/set-recovery-mode! db extension-id item-namespace)
-       :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
 
 (a/reg-event-fx
   :item-editor/item-deleted
@@ -228,8 +204,33 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r events/item-deleted db extension-id item-namespace)
-       :dispatch-n [[:item-editor/go-up!                     extension-id item-namespace]
-                    [:item-editor/render-undo-delete-dialog! extension-id item-namespace]]}))
+       :dispatch-n [[:item-editor/go-up!                      extension-id item-namespace]
+                    [:item-editor/render-item-deleted-dialog! extension-id item-namespace]]}))
+
+(a/reg-event-fx
+  :item-editor/undo-delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      {:db (r ui/fake-random-process! db)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-editor/delete-undid extension-id item-namespace item-id]
+                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                     :query      (r queries/get-undo-delete-item-query db extension-id item-namespace item-id)}]}))
+
+(a/reg-event-fx
+  :item-editor/delete-item-undid
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      {:db (r events/set-recovery-mode! db extension-id item-namespace)
+       :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
 
 
 
@@ -259,7 +260,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
-           [:item-editor/render-edit-copy-dialog! extension-id item-namespace copy-id])))
+           [:item-editor/render-item-duplicated-dialog! extension-id item-namespace copy-id])))
 
 
 
@@ -267,7 +268,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-editor/undo-discard!
+  :item-editor/undo-discard-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

@@ -172,7 +172,7 @@
   ; @usage
   ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      {:db (r ui/fake-random-process! db)
+      {:db (r events/delete-item! db extension-id item-namespace item-id)
        :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                     {:on-success [:item-browser/item-deleted extension-id item-namespace item-id]
                                      :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
@@ -189,6 +189,30 @@
   (fn [{:keys []} [_ extension-id item-namespace item-id _]]
       {:dispatch-n [[:item-browser/render-item-deleted-dialog! extension-id item-namespace item-id]
                     [:item-browser/reload-items!               extension-id item-namespace]]}))
+
+(a/reg-event-fx
+  :item-browser/undo-delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      {:db (r ui/fake-random-process! db)
+       :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                    {:on-success [:item-browser/delete-item-undid extension-id item-namespace item-id]
+                                     :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                     :query      (r queries/get-undo-delete-item-query db extension-id item-namespace item-id)}]}))
+
+(a/reg-event-fx
+  :item-browser/delete-item-undid
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      [:item-browser/reload-items! extension-id item-namespace]))
 
 
 

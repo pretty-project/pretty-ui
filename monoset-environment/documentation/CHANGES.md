@@ -19,9 +19,9 @@
 
 # x4.6.2
 
-- [:item-lister/inititialize-lister! ...] esemény neve ezentúl [:item-lister/init-lister! ...]
-- [:item-editor/inititialize-editor! ...] esemény neve ezentúl [:item-editor/init-editor! ...]
-- [:item-browser/inititialize-browser! ...] esemény neve ezentúl [:item-browser/init-browser! ...]
+- [:item-lister/inititialize-lister! ...]     esemény neve ezentúl [:item-lister/init-lister! ...]
+- [:item-editor/inititialize-editor! ...]     esemény neve ezentúl [:item-editor/init-editor! ...]
+- [:item-browser/inititialize-browser! ...]   esemény neve ezentúl [:item-browser/init-browser! ...]
 - [:view-selector/inititialize-selector! ...] esemény neve ezentúl [:view-selector/init-selector! ...]
 
 - A db/apply! függvény neve ezentúl db/apply-item!

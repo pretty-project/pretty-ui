@@ -14,14 +14,14 @@
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn undo-delete-dialog-body
+(defn undo-delete-item-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   [extension-id item-namespace item-id]
-  (let [undo-event [:item-editor/undo-delete! extension-id item-namespace item-id]]
+  (let [undo-event [:item-editor/undo-delete-item! extension-id item-namespace item-id]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-deleted)
                                      {:label :item-deleted
                                       :primary-button {:on-click undo-event :label :recover!}}]))
@@ -33,7 +33,7 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   [extension-id item-namespace item-id]
-  (let [undo-event [:item-editor/undo-discard! extension-id item-namespace item-id]]
+  (let [undo-event [:item-editor/undo-discard-changes! extension-id item-namespace item-id]]
        [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :changes-discarded)
                                      {:label :unsaved-changes-discarded
                                       :primary-button {:on-click undo-event :label :restore!}}]))
@@ -56,7 +56,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-editor/render-undo-delete-dialog!
+  :item-editor/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -64,7 +64,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
-                             {:body       [undo-delete-dialog-body           extension-id item-namespace current-item-id]
+                             {:body       [undo-delete-item-dialog-body      extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
@@ -80,7 +80,7 @@
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
-  :item-editor/render-edit-copy-dialog!
+  :item-editor/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

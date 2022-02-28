@@ -9,7 +9,8 @@
               [x.app-core.api     :as a]
               [x.app-elements.api :as elements]
               [x.app-media.api    :as media]
-              [app-plugins.item-browser.api :as item-browser]))
+              [app-plugins.item-browser.api :as item-browser]
+              [app-extensions.storage.media-browser.views :as media-browser.views]))
 
 
 
@@ -17,8 +18,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-extensions.storage.media-browser.views
-(def directory-item app-extensions.storage.media-browser.views/directory-item)
-(def file-item      app-extensions.storage.media-browser.views/file-item)
+(def directory-item media-browser.views/directory-item)
+(def file-item      media-browser.views/file-item)
 
 ; app-plugins.item-browser.views
 (def menu-mode-header   app-plugins.item-browser.views/menu-mode-header)

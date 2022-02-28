@@ -31,4 +31,10 @@
   [db [_ extension-id item-namespace item-key]]
   (get-in db [extension-id :item-editor/meta-items item-key]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :item-editor/get-meta-item get-meta-item)

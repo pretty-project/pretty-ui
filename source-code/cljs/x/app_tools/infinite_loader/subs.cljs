@@ -2,32 +2,24 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.view-selector.subs
-    (:require [x.mid-core.api :as a]))
+(ns x.app-tools.infinite-loader.subs
+    (:require [x.app-core.api :as a]))
 
 
 
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-selector-props
+(defn- infinite-observer-hidden?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) loader-id
   ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (get-in db [extension-id :view-selector/meta-items]))
-
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ extension-id item-key]]
-  (get-in db [extension-id :view-selector/meta-items item-key]))
+  ; @return (boolean)
+  [db [_ loader-id]]
+  (let [visible? (get-in db [:tools :infinite-loader/data-items loader-id :observer-visible?])]
+      ;(= visible? nil) = (= visible? true)
+       (= visible? false)))
 
 
 
@@ -35,4 +27,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :view-selector/get-meta-item get-meta-item)
+(a/reg-sub :tools/infinite-observer-hidden? infinite-observer-hidden?)

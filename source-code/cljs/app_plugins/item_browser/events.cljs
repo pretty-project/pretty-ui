@@ -7,6 +7,7 @@
               [mid-fruits.map :refer [dissoc-in]]
               [x.app-core.api :as a :refer [r]]
               [x.app-db.api   :as db]
+              [x.app-ui.api   :as ui]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-browser.subs   :as subs]))
 
@@ -35,6 +36,18 @@
   ; @return (map)
   [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :error-mode?]))
+
+(defn backup-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (let [backup-item (r subs/get-item db extension-id item-namespace item-id)]
+       (assoc-in db [extension-id :item-browser/backup-items item-id] backup-item)))
 
 (defn derive-current-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -127,6 +140,18 @@
   (as-> db % (r reset-browser!         % extension-id item-namespace)
              (r store-current-item-id! % extension-id item-namespace browser-props)
              (r load-lister!           % extension-id item-namespace)))
+
+(defn delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (as-> db % (r backup-item!            % extension-id item-namespace item-id)
+             (r ui/fake-random-process! %)))
 
 
 

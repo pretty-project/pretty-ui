@@ -35,7 +35,6 @@
   [:div.clients--client-item--details [client-item-primary-details   client-item]
                                       [client-item-secondary-details client-item]])
 
-
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [client-item]

@@ -116,7 +116,7 @@
 (defmutation undo-delete-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item]}]
-             {::pathom.co/op-name 'storage.media-lister/undo-delete-item!}
+             {::pathom.co/op-name 'storage.media-browser/undo-delete-item!}
              (let [parent-id (item-browser/item->parent-id :storage :media item)]
                   (undo-delete-item-f env {:item item :parent-id parent-id})))
 

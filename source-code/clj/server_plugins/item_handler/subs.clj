@@ -2,14 +2,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-extensions.storage.engine
-    (:require [x.app-core.api :as a :refer [r]]
-              [mid-extensions.storage.engine :as engine]))
+(ns server-plugins.item-handler.subs
+    (:require [mid-plugins.item-handler.subs :as subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-extensions.storage.engine
-(def ROOT-DIRECTORY-ID engine/ROOT-DIRECTORY-ID)
+; mid-plugins.item-handler.subs
+(def get-lister-props subs/get-lister-props)
+(def get-meta-item    subs/get-meta-item)

@@ -93,26 +93,6 @@
   (as-> db % (r backup-current-item!    % extension-id item-namespace)
              (r ui/fake-random-process! %)))
 
-(defn delete-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ _ _]]
-  (r ui/fake-random-process! db))
-
-(defn undo-delete!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ _ _]]
-  (r ui/fake-random-process! db))
-
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

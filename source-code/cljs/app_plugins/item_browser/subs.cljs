@@ -7,6 +7,7 @@
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
               [x.app-core.api     :as a :refer [r]]
+              [x.app-db.api       :as db]
               [x.app-router.api   :as router]
               [app-plugins.item-browser.engine :as engine]
               [mid-plugins.item-browser.subs   :as subs]))
@@ -17,6 +18,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-lister.subs
+(def get-downloaded-items   app-plugins.item-lister.subs/get-downloaded-items)
 (def get-description        app-plugins.item-lister.subs/get-description)
 (def lister-disabled?       app-plugins.item-lister.subs/lister-disabled?)
 (def toggle-item-selection? app-plugins.item-lister.subs/toggle-item-selection?)
@@ -95,6 +97,42 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (r lister-disabled? db extension-id item-namespace))
+
+(defn get-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (letfn [(f [{:keys [id] :as item}] (if (= id item-id) item))]
+         (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
+              (some f downloaded-items))))
+
+(defn get-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (get-in db [extension-id :item-browser/backup-items item-id]))
+
+(defn export-backup-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [db [_ extension-id item-namespace item-id]]
+  (let [backup-item (r get-backup-item db extension-id item-namespace item-id)]
+       (db/document->namespaced-document backup-item item-namespace)))
 
 (defn at-home?
   ; WARNING! NON-PUBLIC! DO NOT USE!

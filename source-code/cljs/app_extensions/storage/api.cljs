@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns app-extensions.storage.api
     (:require [app-extensions.storage.capacity-handler.subs]
               [app-extensions.storage.directory-creator.effects]

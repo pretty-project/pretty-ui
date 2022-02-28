@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-handler.api
-    (:require [server-plugins.item-handler.engine :as engine]))
+    (:require [server-plugins.item-handler.subs]
+              [server-plugins.item-handler.engine :as engine]))
 
 
 
