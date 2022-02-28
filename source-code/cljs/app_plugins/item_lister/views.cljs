@@ -94,7 +94,7 @@
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
        [elements/icon-button :item-lister/unselect-all-items-button
                              {:icon :check_box :preset :default :disabled? lister-disabled?
-                              :on-click [:item-lister/unselect-all-items! extension-id item-namespace]}]))
+                              :on-click [:item-lister/reset-selections! extension-id item-namespace]}]))
 
 (defn unselect-some-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,7 +105,7 @@
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
        [elements/icon-button :item-lister/unselect-some-items-button
                              {:icon :indeterminate_check_box :preset :default :disabled? lister-disabled?
-                              :on-click [:item-lister/unselect-all-items! extension-id item-namespace]}]))
+                              :on-click [:item-lister/reset-selections! extension-id item-namespace]}]))
 
 (defn select-all-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

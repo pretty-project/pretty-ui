@@ -15,6 +15,6 @@
   :ui/simulate-process!
   ; @usage
   ;  [:ui/simulate-process!]
-  (fn [{:keys [db]} [_ timeout]]
+  (fn [{:keys [db]} _]
       {:db (r progress-bar.events/fake-process! db 100)
        :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}]}))

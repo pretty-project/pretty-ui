@@ -13,7 +13,7 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn toggle-search-mode!
@@ -47,6 +47,16 @@
   [db [_ extension-id _]]
   (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
 
+(defn toggle-reload-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id _]]
+  (update-in db [extension-id :item-lister/meta-items :reload-mode?] not))
+
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -56,6 +66,11 @@
   ; @return (map)
   [db [_ extension-id _]]
   (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn reset-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,6 +117,11 @@
   [db [_ extension-id _]]
   (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn set-default-order-by!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -118,15 +138,26 @@
   (let [order-by-options (r subs/get-meta-item db extension-id item-namespace :order-by-options)]
        (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options))))
 
-(defn toggle-reload-mode!
+(defn load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id _]]
-  (update-in db [extension-id :item-lister/meta-items :reload-mode?] not))
+  [db [_ extension-id item-namespace]]
+  ; Az item-lister plugin ...
+  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
+  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
+  (as-> db % (r reset-lister!         % extension-id item-namespace)
+             (r reset-downloads!      % extension-id item-namespace)
+             (r reset-search!         % extension-id item-namespace)
+             (r set-default-order-by! % extension-id item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -139,16 +170,6 @@
   (let [downloaded-items (r subs/get-downloaded-items db extension-id item-namespace)
         item-selections  (vector/dex-range downloaded-items)]
        (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
-
-(defn unselect-all-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
 
 (defn toggle-item-selection!
   ; @param (keyword) extension-id
@@ -165,6 +186,11 @@
              (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
       (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
              (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn disable-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -217,6 +243,11 @@
   (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)]
        (r disable-items! db extension-id item-namespace selected-item-dexes)))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn backup-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -243,6 +274,11 @@
   [db [_ extension-id item-namespace item-ids]]
   (update-in db [extension-id :item-lister/backup-items] map/remove-items item-ids))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn delete-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -254,6 +290,22 @@
   (as-> db % (r backup-selected-items!  % extension-id item-namespace)
              (r disable-selected-items! % extension-id item-namespace)
              (r ui/fake-process!        % 15)))
+
+(defn delete-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (as-> db % (r reset-selections! % extension-id item-namespace)
+             (r enable-all-items! % extension-id item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn use-filter!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -267,6 +319,11 @@
   (as-> db % (r reset-downloads!  % extension-id item-namespace)
              (r reset-selections! % extension-id item-namespace)
              (assoc-in % [extension-id :item-lister/meta-items :active-filter] filter-pattern)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn items-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -370,44 +427,10 @@
              (r enable-all-items! % extension-id item-namespace)
              (r reset-selections! % extension-id item-namespace)))
 
-(defn load-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  ; Az item-lister plugin ...
-  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
-  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (as-> db % (r reset-lister!         % extension-id item-namespace)
-             (r reset-downloads!      % extension-id item-namespace)
-             (r reset-search!         % extension-id item-namespace)
-             (r set-default-order-by! % extension-id item-namespace)))
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/receive-reloaded-items! receive-reloaded-items!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/select-all-items! select-all-items!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/unselect-all-items! unselect-all-items!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/toggle-reorder-mode! toggle-reorder-mode!)
@@ -417,3 +440,21 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/reset-selections! reset-selections!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/select-all-items! select-all-items!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/receive-reloaded-items! receive-reloaded-items!)

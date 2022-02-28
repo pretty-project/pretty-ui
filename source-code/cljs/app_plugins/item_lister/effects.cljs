@@ -169,8 +169,8 @@
             validator-f #(r validators/delete-items-response-valid? db extension-id item-namespace %)]
            {:db (r events/delete-selected-items! db extension-id item-namespace)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-lister/items-deleted extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                         {:on-success [:item-lister/items-deleted       extension-id item-namespace]
+                                          :on-failure [:item-lister/delete-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -184,6 +184,21 @@
       (let [item-ids (engine/server-response->deleted-item-ids extension-id item-namespace server-response)]
            {:dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
                          [:item-lister/reload-items!                extension-id item-namespace]]})))
+
+(a/reg-event-fx
+  :item-lister/delete-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha a kijelölt elemek törlése sikertelen volt ...
+      ; ... megszűnteti a kijelöléseket
+      ; ... engedélyezi az ideiglenesen letiltott elemeket
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      {:db (r events/delete-items-failed db extension-id item-namespace)
+       :dispatch-n [[:ui/simulate-process!]
+                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
 (a/reg-event-fx
   :item-lister/undo-delete-items!
