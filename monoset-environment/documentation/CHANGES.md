@@ -1,6 +1,8 @@
 
 # x4.6.3
 
+- Az x.boot-loader névtér ezentúl x.boot-loader.api néven érhető el
+
 - Az item-editor plugin itt felsorolt mutation függvényei ezentúl nem a dokumentumot kapják
   meg a mutation-props térkép helyett, hanem egy térképet, amiben az :item kulcsszó alatt
   található a dokumentum

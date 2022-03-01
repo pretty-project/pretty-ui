@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.sample
-    (:require [mongo-db.api      :as mongo-db]
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [x.server-core.api :as a]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
@@ -14,9 +15,10 @@
 ;; -- Példa dokumentum --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - A böngészhető dokumentoknak tartalmazniuk kell a  {:label-key ...} tulajdonságként átadott kulcsot!
-; - A böngészhető dokumentoknak tartalmazniuk kell a  {:path-key  ...} tulajdonságként átadott kulcsot!
-; - A böngészhető dokumentoknak tartalmazniuk kell az {:items-key ...} tulajdonságként átadott kulcsot!
+; A böngészhető dokumentoknak tartalmazniuk kell ...
+; ... a  {:label-key ...} tulajdonságként átadott kulcsot!
+; ... a  {:path-key  ...} tulajdonságként átadott kulcsot!
+; ... az {:items-key ...} tulajdonságként átadott kulcsot!
 (def SAMPLE-DOCUMENT {:my-type/id    "..."
                       :my-type/name  "My document"
                       :my-type/path  [{:my-type/id "..."} {:my-type/id "..."}]
@@ -67,6 +69,97 @@
 
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
+
+(defmutation delete-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
+             (return []))
+
+(defmutation undo-delete-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env {:keys [items]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
+             (return []))
+
+(defmutation duplicate-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
+             (return []))
+
+(defmutation undo-duplicate-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
+             (return []))
+
+(defmutation delete-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (strings in vector)}
+             ;
+             ; @return (string)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-extension.my-type-browser/delete-item!}
+             (return ""))
+
+(defmutation undo-delete-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item (namespaced map)}
+             ;
+             ; @return (namespaced map)
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-extension.my-type-browser/undo-delete-item!}
+             (return {}))
+
+(defmutation duplicate-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (string)}
+             ;
+             ; @return (namespaced map)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-extension.my-type-browser/duplicate-item!}
+             (return {}))
+
+(defmutation undo-duplicate-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (string)}
+             ;
+             ; @return (string)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-extension.my-type-browser/undo-duplicate-item!}
+             (return ""))
+
+(defmutation update-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {?}
+             ;
+             ; @return (?)
+             [env {:keys [?]}]
+             {::pathom.co/op-name 'my-extension.my-type-browser/update-item!}
+             (return ?))
+
 
 
 ;; ----------------------------------------------------------------------------

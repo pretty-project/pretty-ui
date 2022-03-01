@@ -54,16 +54,6 @@
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-items!
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:items (namespaced maps in vector)}
-             ;
-             ; @return (namespaced maps in vector)
-             [env {:keys [items]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
-             (return []))
-
 (defmutation delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -74,15 +64,15 @@
              {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
              (return []))
 
-(defmutation undo-duplicate-items!
+(defmutation undo-delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
+             ;  {:items (namespaced maps in vector)}
              ;
-             ; @return (strings in vector)
-             [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
-             (return []))
+             ; @return (namespaced maps in vector)
+             [env {:keys [items]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
+             (return [])
 
 (defmutation duplicate-items!
              ; @param (map) env
@@ -92,6 +82,16 @@
              ; @return (namespaced maps in vector)
              [env {:keys [item-ids]}]
              {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
+             (return [])))
+
+(defmutation undo-duplicate-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-ids (strings in vector)}
+             ;
+             ; @return (strings in vector)
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
              (return []))
 
 

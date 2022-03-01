@@ -6,7 +6,7 @@
               [app-extensions.settings.api]
               [app-extensions.storage.api]
               [app-extensions.trader.api]
-              [x.boot-loader]
+              [x.boot-loader.api]
               ; DEBUG
               [playground.api]))
 
@@ -32,5 +32,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn start-app!  [] (x.boot-loader/start-app!  #'app))
-(defn render-app! [] (x.boot-loader/render-app! #'app))
+(defn start-app!  [] (x.boot-loader.api/start-app!  #'app))
+(defn render-app! [] (x.boot-loader.api/render-app! #'app))

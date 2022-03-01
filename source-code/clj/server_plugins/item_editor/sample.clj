@@ -41,6 +41,16 @@
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
+(defmutation delete-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (string)}
+             ;
+             ; @return (string)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-extension.my-type-editor/delete-item!}
+             (return ""))
+
 (defmutation undo-delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -60,16 +70,6 @@
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-extension.my-type-editor/save-item!}
              (return {}))
-
-(defmutation delete-item!
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:item-id (string)}
-             ;
-             ; @return (string)
-             [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension.my-type-editor/delete-item!}
-             (return ""))
 
 (defmutation duplicate-item!
              ; @param (map) env
