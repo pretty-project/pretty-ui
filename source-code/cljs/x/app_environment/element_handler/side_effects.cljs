@@ -1,88 +1,10 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.12.22
-; Description:
-; Version: v1.2.6
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-environment.element-handler
-    (:require [app-fruits.dom   :as dom]
-              [mid-fruits.candy :refer [param return]]
-              [mid-fruits.css   :as css]
-              [x.app-core.api   :as a]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn element-disabled?
-  ; @param (string) element-id
-  ;
-  ; @usage
-  ;  (environment/element-disabled? "my-element")
-  ;
-  ; @return (boolean)
-  [element-id]
-  (boolean (if-let [element (dom/get-element-by-id element-id)]
-                   (dom/element-disabled? element))))
-
-(defn element-enabled?
-  ; @param (string) element-id
-  ;
-  ; @usage
-  ;  (environment/element-enabled? "my-element")
-  ;
-  ; @return (boolean)
-  [element-id]
-  (boolean (if-let [element (dom/get-element-by-id element-id)]
-                   (dom/element-enabled? element))))
-
-
-
-;; -- Animated actions effect events ------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :environment/remove-element-animated!
-  ; @param (integer) timeout
-  ; @param (string) element-id
-  ;
-  ; @usage
-  ;  [:environment/remove-element-animated! 500 "my-element"]
-  (fn [_ [_ timeout element-id]]
-      {:fx             [:environment/set-element-attribute! element-id "data-animation" "hide"]
-       :dispatch-later [{:ms timeout :fx [:environment/remove-element! element-id]}]}))
-
-(a/reg-event-fx
-  :environment/hide-element-animated!
-  ; @param (integer) timeout
-  ; @param (string) element-id
-  ;
-  ; @usage
-  ;  [:environment/hide-element-animated! 500 "my-element"]
-  (fn [_ [_ timeout element-id]]
-      {:fx             [:environment/set-element-attribute! element-id "data-animation" "hide"]
-       :dispatch-later [{:ms timeout :fx [:environment/set-element-style-value!  element-id "display" "none"]}
-                        {:ms timeout :fx [:environment/remove-element-attribute! element-id "data-animation"]}]}))
-
-(a/reg-event-fx
-  :environment/reveal-element-animated!
-  ; @param (string) element-id
-  ;
-  ; @usage
-  ;  [:environment/reveal-element-animated! "my-element"]
-  (fn [_ [_ element-id]]
-      {:fx-n [[:environment/set-element-style-value! element-id "display"        "block"]
-              [:environment/set-element-attribute!   element-id "data-animation" "reveal"]]}))
+(ns x.app-environment.element-handler.side-effects
+    (:require [app-fruits.dom :as dom]
+              [x.app-core.api :as a]))
 
 
 

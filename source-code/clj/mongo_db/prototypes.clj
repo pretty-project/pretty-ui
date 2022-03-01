@@ -32,13 +32,13 @@
   ;  (mongo-db/added-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
-  ;  {:namespace/added-at (object)
+  ;  {:namespace/added-at (string)
   ;   :namespace/added-by (map)
-  ;   :namespace/modified-at (object)
+  ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)}
   [request document-namespace updated-item]
   (let [namespace (name document-namespace)
-        timestamp (time/timestamp-object)
+        timestamp (time/timestamp-string)
         user-link (request->user-link request)]
        (merge (param updated-item)
               {(keyword namespace "added-at")    timestamp
@@ -55,13 +55,13 @@
   ;  (mongo-db/updated-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
-  ;  {:namespace/added-at (object)
+  ;  {:namespace/added-at (string)
   ;   :namespace/added-by (map)
-  ;   :namespace/modified-at (object)
+  ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)}
   [request document-namespace updated-item]
   (let [namespace (name document-namespace)
-        timestamp (time/timestamp-object)
+        timestamp (time/timestamp-string)
         user-link (request->user-link request)]
        (merge {(keyword namespace "added-at") timestamp
                (keyword namespace "added-by") user-link}
@@ -73,21 +73,20 @@
   ; @param (map) request
   ; @param (keyword) document-namespace
   ; @param (namespaced map) duplicated-item
-  ;  {:namespace/id (string)}
   ;
   ; @usage
   ;  (mongo-db/updated-document-prototype {} :my-namespace {...})
   ;
   ; @return (namespaced map)
-  ;  {:namespace/added-at (object)
+  ;  {:namespace/added-at (string)
   ;   :namespace/added-by (map)
-  ;   :namespace/modified-at (object)
+  ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)}
   [request document-namespace duplicated-item]
   (let [namespace (name document-namespace)
-        timestamp (time/timestamp-object)
+        timestamp (time/timestamp-string)
         user-link (request->user-link request)]
-       (merge (dissoc duplicated-item (keyword namespace "id"))
+       (merge (param duplicated-item)
               {(keyword namespace "added-at")    timestamp
                (keyword namespace "added-by")    user-link
                (keyword namespace "modified-at") timestamp

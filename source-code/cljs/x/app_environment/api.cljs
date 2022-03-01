@@ -8,17 +8,19 @@
               [x.app-environment.cookie-handler.engine]
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
+              [x.app-environment.element-handler.effects]
               [x.app-environment.css-handler.engine]
-              [x.app-environment.cookie-handler.subs      :as cookie-handler.subs]
-              [x.app-environment.css-handler.side-effects :as css-handler.side-effects]
-              [x.app-environment.element-handler          :as element-handler]
-              [x.app-environment.event-handler            :as event-handler]
-              [x.app-environment.keypress-handler         :as keypress-handler]
-              [x.app-environment.mouse-handler            :as mouse-handler]
-              [x.app-environment.scroll-handler           :as scroll-handler]
-              [x.app-environment.touch-handler            :as touch-handler]
-              [x.app-environment.viewport-handler         :as viewport-handler]
-              [x.app-environment.window-handler           :as window-handler]))
+              [x.app-environment.cookie-handler.subs          :as cookie-handler.subs]
+              [x.app-environment.css-handler.side-effects     :as css-handler.side-effects]
+              [x.app-environment.element-handler.engine       :as element-handler.engine]
+              [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
+              [x.app-environment.event-handler                :as event-handler]
+              [x.app-environment.keypress-handler             :as keypress-handler]
+              [x.app-environment.mouse-handler                :as mouse-handler]
+              [x.app-environment.scroll-handler               :as scroll-handler]
+              [x.app-environment.touch-handler                :as touch-handler]
+              [x.app-environment.viewport-handler             :as viewport-handler]
+              [x.app-environment.window-handler               :as window-handler]))
 
 
 
@@ -39,25 +41,27 @@
 (def add-css!          css-handler.side-effects/add-css!)
 (def remove-css!       css-handler.side-effects/remove-css!)
 
-; x.app-environment.element-handler
-(def element-disabled?           element-handler/element-disabled?)
-(def element-enabled?            element-handler/element-enabled?)
-(def focus-element!              element-handler/focus-element!)
-(def blur-element!               element-handler/blur-element!)
-(def add-element-class!          element-handler/add-element-class!)
-(def remove-element-class!       element-handler/remove-element-class!)
-(def set-element-style!          element-handler/set-element-style!)
-(def remove-element-style!       element-handler/remove-element-style!)
-(def set-element-style-value!    element-handler/set-element-style-value!)
-(def remove-element-style-value! element-handler/remove-element-style-value!)
-(def set-element-attribute!      element-handler/set-element-attribute!)
-(def remove-element-attribute!   element-handler/remove-element-attribute!)
-(def empty-element!              element-handler/empty-element!)
-(def remove-element!             element-handler/remove-element!)
-(def reveal-element!             element-handler/reveal-element!)
-(def hide-element!               element-handler/hide-element!)
-(def mark-element-masspoint-orientation!   element-handler/mark-element-masspoint-orientation!)
-(def unmark-element-masspoint-orientation! element-handler/unmark-element-masspoint-orientation!)
+; x.app-environment.element-handler.engine
+(def element-disabled? element-handler.engine/element-disabled?)
+(def element-enabled?  element-handler.engine/element-enabled?)
+
+; x.app-environment.element-handler.side-effects
+(def focus-element!                        element-handler.side-effects/focus-element!)
+(def blur-element!                         element-handler.side-effects/blur-element!)
+(def add-element-class!                    element-handler.side-effects/add-element-class!)
+(def remove-element-class!                 element-handler.side-effects/remove-element-class!)
+(def set-element-style!                    element-handler.side-effects/set-element-style!)
+(def remove-element-style!                 element-handler.side-effects/remove-element-style!)
+(def set-element-style-value!              element-handler.side-effects/set-element-style-value!)
+(def remove-element-style-value!           element-handler.side-effects/remove-element-style-value!)
+(def set-element-attribute!                element-handler.side-effects/set-element-attribute!)
+(def remove-element-attribute!             element-handler.side-effects/remove-element-attribute!)
+(def empty-element!                        element-handler.side-effects/empty-element!)
+(def remove-element!                       element-handler.side-effects/remove-element!)
+(def reveal-element!                       element-handler.side-effects/reveal-element!)
+(def hide-element!                         element-handler.side-effects/hide-element!)
+(def mark-element-masspoint-orientation!   element-handler.side-effects/mark-element-masspoint-orientation!)
+(def unmark-element-masspoint-orientation! element-handler.side-effects/unmark-element-masspoint-orientation!)
 
 ; x.app-environment.event-handler
 (def add-event-listener!    event-handler/add-event-listener!)

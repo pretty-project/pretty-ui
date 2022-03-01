@@ -26,7 +26,7 @@
     (:require [app-fruits.dom :as dom]
               [x.app-core.api :as a :refer [r]]
               [x.app-db.api   :as db]
-              [x.app-environment.element-handler :as element-handler]))
+              [x.app-environment.element-handler.side-effects :as element-handler.side-effects]))
 
 
 
@@ -58,7 +58,7 @@
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
        (if (not= @SCROLLED-TO-TOP? scrolled-to-top?)
            ; If scrolled-to-top? changed ...
-           (do (element-handler/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)
+           (do (element-handler.side-effects/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)
                (reset! SCROLLED-TO-TOP? scrolled-to-top?)))))
               ;(a/dispatch-sync [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])
 
@@ -128,7 +128,7 @@
   [_]
   (let [scrolled-to-top? (<= (dom/get-scroll-y) SCROLLED-TO-TOP-THRESHOLD)]
        (reset! SCROLLED-TO-TOP? scrolled-to-top?)
-       (element-handler/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)))
+       (element-handler.side-effects/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)))
       ;(a/dispatch [:db/set-item! [:environment/sroll-data :scrolled-to-top?] scrolled-to-top?])
 
 (a/reg-fx :environment/initialize-scroll-handler! initialize-scroll-handler!)

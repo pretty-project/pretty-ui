@@ -296,16 +296,18 @@
   ;                               :namespace/your-string   "your-value"
   ;                               :namespace/our-timestamp "2020-04-20T16:20:00.000Z"})
   ;  =>
-  ;  {"namespace/my-keyword"    "*:my-value"
+  ;  {"_id"                     #<ObjectId MyObjectId>
+  ;   "namespace/my-keyword"    "*:my-value"
   ;   "namespace/your-string"   "your-value"
   ;   "namespace/our-timestamp" #<DateTime 2020-04-20T16:20:00.123Z>}
   ;
   ; @return (namespaced map)
   [document]
-  ; 1. A dokumentum :namespace/id tulajdonságának eltávolítása
+  ; 1. A dokumentum :namespace/id tulajdonságának átnevezése :_id tulajdonságra
+  ;    A dokumentum string típusú azonosítójának átalakítása objektum típusra
   ; 2. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
   ; 3. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-  (try (-> document engine/dissoc-id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
+  (try (-> document engine/id->_id json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
        (catch Exception e (println (str e "\n" {:document document})))))
 
 (defn duplicate-output

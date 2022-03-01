@@ -153,8 +153,7 @@
 (defn duplicate-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
-                                                     {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
+  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
             (if (= destination-id parent-id)
                 (engine/attach-item! env destination-id copy-item))
             (engine/update-path-directories! env copy-item +)
@@ -167,8 +166,7 @@
 (defn duplicate-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id
-                                                     {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
+  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
             (when (= destination-id parent-id)
                   (engine/attach-item!             env destination-id copy-item)
                   (engine/update-path-directories! env                copy-item))
@@ -183,30 +181,32 @@
 
 (defn duplicate-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-id] :as mutation-props}]
+  [env {:keys [item-id parent-id]}]
   (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
-          (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
-                                              (duplicate-file-f      env mutation-props))))
+          (case mime-type "storage/directory" (duplicate-directory-f env {:item-id item-id :parent-id parent-id :destination-id parent-id})
+                                              (duplicate-file-f      env {:item-id item-id :parent-id parent-id :destination-id parent-id}))))
 
 (defn duplicate-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [env {:keys [item-ids]}]
-  (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
-       (letfn [(f [result item-id]
-                  (conj result (duplicate-item-f env {:item-id item-id :destination-id parent-id :parent-id parent-id})))]
-              (reduce f [] item-ids))))
-
-(defmutation duplicate-items!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env mutation-props]
-             {::pathom.co/op-name 'storage.media-lister/duplicate-items!}
-             (duplicate-items-f env mutation-props))
+  [env {:keys [item-ids parent-id]}]
+  (letfn [(f [result item-id]
+             (conj result (duplicate-item-f env {:item-id item-id :parent-id parent-id})))]
+         (reduce f [] item-ids)))
 
 (defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env {:keys [item-id]}]
+             [env {:keys [item]}]
              {::pathom.co/op-name 'storage.media-browser/duplicate-item!}
-             (duplicate-items-f env {:item-ids [item-id]}))
+             (let [item-id   (get item :media/id)
+                   parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+                  (duplicate-item-f env {:item-id item-id :parent-id parent-id})))
+
+(defmutation duplicate-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item-ids]}]
+             {::pathom.co/op-name 'storage.media-lister/duplicate-items!}
+             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+                  (duplicate-items-f env {:item-ids item-ids :parent-id parent-id})))
 
 
 
@@ -216,8 +216,7 @@
 (defn update-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request]} media-item]
-  (mongo-db/save-document! "storage" media-item
-                           {:prototype-f #(mongo-db/updated-document-prototype request :media %)}))
+  (mongo-db/save-document! "storage" media-item {:prototype-f #(mongo-db/updated-document-prototype request :media %)}))
 
 (defmutation update-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!

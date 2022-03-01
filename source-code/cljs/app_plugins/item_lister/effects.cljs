@@ -191,13 +191,15 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
       ; Ha a kijelölt elemek törlése sikertelen volt ...
       ; ... megszűnteti a kijelöléseket
       ; ... engedélyezi az ideiglenesen letiltott elemeket
       ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
       {:db (r events/delete-items-failed db extension-id item-namespace)
-       :dispatch-n [[:ui/simulate-process!]
+       :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
 (a/reg-event-fx
@@ -222,10 +224,12 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
       ; Ha a kijelölt elemek törlésének visszavonása sikertelen volt ...
       ; ... befejezi progress-bar elemen kijelzett folyamatot
-      {:dispatch-n [[:ui/simulate-process!]
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
 
@@ -268,10 +272,12 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
       ; Ha a kijelölt elemek duplikálása sikertelen volt ...
       ; ... befejezi progress-bar elemen kijelzett folyamatot
-      {:dispatch-n [[:ui/simulate-process!]
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-copy}]]}))
 
 (a/reg-event-fx
@@ -296,8 +302,10 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
       ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
       ; ... befejezi progress-bar elemen kijelzett folyamatot
-      {:dispatch-n [[:ui/simulate-process!]
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-copy}]]}))

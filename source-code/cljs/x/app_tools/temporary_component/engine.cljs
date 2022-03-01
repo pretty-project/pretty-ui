@@ -62,11 +62,17 @@
   ;  (tools/append-temporary-component! [my-button] click-my-button!)
   ;
   ; @return (component)
-  [component & [render-callback]]
-  (remove-temporary-container!)
-  (create-temporary-container!)
-  (let [temporary-container (dom/get-element-by-id "x-temporary-component")]
-       (reagent/render component temporary-container render-callback)))
+  ([component]
+   (remove-temporary-container!)
+   (create-temporary-container!)
+   (let [temporary-container (dom/get-element-by-id "x-temporary-component")]
+        (reagent/render component temporary-container)))
+
+  ([component render-callback]
+   (remove-temporary-container!)
+   (create-temporary-container!)
+   (let [temporary-container (dom/get-element-by-id "x-temporary-component")]
+        (reagent/render component temporary-container render-callback))))
 
 (defn remove-temporary-component!
   ; @usage

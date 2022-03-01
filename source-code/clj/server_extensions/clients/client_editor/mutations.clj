@@ -36,7 +36,7 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [{:keys [request] :as env} {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/duplicate-item!}
-             (mongo-db/duplicate-document! "clients" (:id item)
+             (mongo-db/duplicate-document! "clients" (:client/id item)
                                            {:changes item
                                             :prototype-f #(mongo-db/duplicated-document-prototype request :client %)}))
 

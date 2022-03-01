@@ -11,6 +11,10 @@
               [x.app-views.login-box.effects]
               [x.app-views.login-box.subs]
               [x.app-views.login-box.views]
-              [x.app-views.no-internet-notification]
-              [x.app-views.privacy-policy]
-              [x.app-views.terms-of-service]))
+              [x.app-views.no-internet-notification.effects]
+              [x.app-views.no-internet-notification.lifecycles]
+              [x.app-views.no-internet-notification.views]
+              [x.app-views.privacy-policy.effects]
+              [x.app-views.privacy-policy.views]
+              [x.app-views.terms-of-service.effects]
+              [x.app-views.terms-of-service.views]))

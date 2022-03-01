@@ -173,8 +173,8 @@
    (insert-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (as-> document % (checking/insert-input %)
-                                      (preparing/insert-input collection-name % options)
+   (if-let [document (as-> document % (checking/insert-input   %)
+                                      (preparing/insert-input  collection-name % options)
                                       (adaptation/insert-input %))]
            (if-let [result (insert-and-return! collection-name document)]
                    (adaptation/insert-output result)))))

@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.validators
-    (:require [x.app-db.api :as db]
+    (:require [mid-fruits.string :as string]
+              [x.app-db.api      :as db]
               [app-plugins.item-browser.engine :as engine]))
 
 
@@ -32,7 +33,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)
+        document-id   (get server-response (symbol mutation-name))]
+       (string/nonempty? document-id)))
 
 (defn undo-delete-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -42,7 +46,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-delete)
+        document      (get server-response (symbol mutation-name))]
+       (db/document->document-namespaced? document)))
 
 (defn duplicate-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,7 +59,10 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :duplicate)
+        document      (get server-response (symbol mutation-name))]
+       (db/document->document-namespaced? document)))
 
 (defn undo-duplicate-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!

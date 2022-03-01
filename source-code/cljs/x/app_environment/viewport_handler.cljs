@@ -18,7 +18,7 @@
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]
               [x.app-db.api      :as db]
-              [x.app-environment.element-handler :as element-handler]))
+              [x.app-environment.element-handler.side-effects :as element-handler.side-effects]))
 
 
 
@@ -180,7 +180,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [viewport-profile (dom/get-viewport-profile)]
-       (element-handler/set-element-attribute! "x-body-container" "data-viewport-profile" (name viewport-profile))))
+       (element-handler.side-effects/set-element-attribute! "x-body-container" "data-viewport-profile" (name viewport-profile))))
 
 (a/reg-fx :environment/detect-viewport-profile! detect-viewport-profile!)
 

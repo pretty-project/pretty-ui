@@ -81,6 +81,23 @@
   []
   (str (ObjectId.)))
 
+(defn assoc-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) n
+  ;
+  ; @example
+  ;  (engine/assoc-id {:namespace/my-key "my-value"})
+  ;  =>
+  ;  {:namespace/id "MyObjectId" :namespace/my-key "my-value"}
+  ;
+  ; @return (map)
+  [n]
+  (if-let [namespace (db/document->namespace n)]
+          (let [document-id (generate-id)]
+               (assoc n (keyword/add-namespace namespace :id) document-id :x :x))
+          (return n)))
+
 (defn dissoc-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,7 +105,7 @@
   ;  {:namespace/id (string)(opt)}
   ;
   ; @example
-  ;  (engine/id->_id {:namespace/id "MyObjectId" :namespace/my-key "my-value"})
+  ;  (engine/dissoc-id {:namespace/id "MyObjectId" :namespace/my-key "my-value"})
   ;  =>
   ;  {:namespace/my-key "my-value"}
   ;

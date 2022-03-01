@@ -79,7 +79,7 @@
              ; @return (namespaced map)
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-extension.my-type-editor/duplicate-item!}
-             ; Az item-editor plugin az elem aktuális (nem feltétlenül az elmentett) változatát
+             ; Az item-editor plugin az elem AKTUÁLIS (nem feltétlenül az elmentett) változatát
              ; küldi el a szerver számára.
              (return {}))
 

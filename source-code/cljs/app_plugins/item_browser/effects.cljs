@@ -180,8 +180,8 @@
             validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r events/delete-item! db extension-id item-namespace item-id)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-browser/item-deleted extension-id item-namespace item-id]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                         {:on-success [:item-browser/item-deleted       extension-id item-namespace item-id]
+                                          :on-failure [:item-browser/delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -197,6 +197,20 @@
                     [:item-browser/reload-items!               extension-id item-namespace]]}))
 
 (a/reg-event-fx
+  :item-browser/delete-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem törlése sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
+
+(a/reg-event-fx
   :item-browser/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -208,8 +222,8 @@
             validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-browser/delete-item-undid extension-id item-namespace item-id]
-                                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                         {:on-success [:item-browser/delete-item-undid       extension-id item-namespace]
+                                          :on-failure [:item-browser/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -218,9 +232,23 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
+  ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace _]]
       [:item-browser/reload-items! extension-id item-namespace]))
+
+(a/reg-event-fx
+  :item-browser/undo-delete-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem törlésének visszaállítása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}))
 
 
 
@@ -240,9 +268,32 @@
             validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-browser/item-duplicated extension-id item-namespace item-id]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-copy}]
+                                         {:on-success [:item-browser/item-duplicated       extension-id item-namespace]
+                                          :on-failure [:item-browser/duplicate-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-browser/item-duplicated
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      [:item-browser/reload-items! extension-id item-namespace]))
+
+(a/reg-event-fx
+  :item-browser/duplicate-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha az elem duplikálása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-copy}]]}))
 
 
 

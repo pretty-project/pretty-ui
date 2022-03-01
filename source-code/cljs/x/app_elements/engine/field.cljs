@@ -466,7 +466,7 @@
   (let [field-value (str value)]
        (r input/set-input-value! db field-id field-value)))
 
-(defn ->field-blurred
+(defn field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -478,7 +478,7 @@
              (r input/mark-input-as-visited!                     % field-id)
              (r surface/hide-surface!                            % field-id)))
 
-(defn ->field-focused
+(defn field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -503,7 +503,7 @@
               {:dispatch-n (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
                                 [on-focus-event [:elements/reg-field-keypress-events! field-id]])
                :db (as-> db % (r input/init-input! % field-id)
-                              (r ->field-focused   % field-id))}
+                              (r field-focused     % field-id))}
               {:db (r input/init-input! db field-id)})))
 
 (a/reg-event-fx
@@ -558,7 +558,7 @@
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
       (let [on-blur-event (r element/get-element-prop db field-id :on-blur)]
-           {:db (r ->field-blurred db field-id)
+           {:db (r field-blurred db field-id)
             :dispatch-n [on-blur-event [:elements/remove-field-keypress-events! field-id]]})))
                          ; WARNING#9055
                          ; x4.3.9
@@ -574,7 +574,7 @@
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
-           {:db (r ->field-focused db field-id)
+           {:db (r field-focused db field-id)
             :dispatch-n [on-focus-event [:elements/reg-field-keypress-events! field-id]]})))
                          ; WARNING#9055
                          ; [:elements/reg-change-listener?! field-id]

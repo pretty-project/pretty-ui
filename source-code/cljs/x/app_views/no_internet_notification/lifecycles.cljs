@@ -2,14 +2,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-router.route-handler.transfer
-    (:require [x.server-core.api :as a]))
+(ns x.app-views.no-internet-notification.lifecycles
+    (:require [x.app-core.api :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-transfer! :router/transfer-client-routes!
-                 {:data-f      (fn [_] (a/subscribed [:router/get-client-routes]))
-                  :target-path [:router :route-handler/client-routes]})
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-browser-offline [:views/blow-no-internet-bubble?!]
+   :on-app-launch      [:views/blow-no-internet-bubble?!]
+   :on-browser-online  [:ui/pop-bubble! ::notification]})

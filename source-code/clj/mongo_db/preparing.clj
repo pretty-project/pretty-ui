@@ -3,6 +3,7 @@
     (:require [mid-fruits.candy    :refer [param return]]
               [mid-fruits.gestures :as gestures]
               [mid-fruits.keyword  :as keyword]
+              [mongo-db.engine     :as engine]
               [mongo-db.errors     :as errors]
               [mongo-db.reader     :as reader]
               [x.server-db.api     :as db]))
@@ -187,8 +188,13 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document {:keys [changes label-key ordered? prototype-f] :as options}]
-  (try (as-> document % (if-not changes     % (changed-duplicate-input collection-name % options))
-                        (if-not label-key   % (labeled-duplicate-input collection-name % options))
-                        (if-not ordered?    % (ordered-duplicate-input collection-name %))
+  (try (as-> document % (if-not changes   % (changed-duplicate-input collection-name % options))
+                        (if-not label-key % (labeled-duplicate-input collection-name % options))
+                        (if-not ordered?  % (ordered-duplicate-input collection-name %))
+                        ; - A dokumentum a changes térképpel való összefésülés után kapja meg a másolat azonosítóját,
+                        ;   így nem okoz hibát, ha a changes térkép tartalmazza az eredeti azonosítót
+                        ; - A dokumentum a prototípus függvény alkalmazása előtt megkapja a másolat azonosítóját,
+                        ;   így az már elérhető a prototípus függvény számára
+                        (engine/assoc-id %)
                         (if-not prototype-f % (prototype-f %)))
        (catch Exception e (println (str e "\n" {:collection-name collection-name :document document :options options})))))

@@ -177,9 +177,23 @@
             validator-f #(r validators/save-item-response-valid? db extension-id item-namespace %)]
            {:db (r events/save-item! db extension-id item-namespace)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-editor/go-up! extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-save}]
+                                         {:on-success [:item-editor/go-up!           extension-id item-namespace]
+                                          :on-failure [:item-editor/save-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-editor/save-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem mentése sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-save}]]}))
 
 
 
@@ -198,8 +212,8 @@
             validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-editor/item-deleted extension-id item-namespace]
-                                          :on-failure [:ui/blow-bubble! {:body :failed-to-delete}]
+                                         {:on-success [:item-editor/item-deleted       extension-id item-namespace]
+                                          :on-failure [:item-editor/delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -214,6 +228,20 @@
                     [:item-editor/render-item-deleted-dialog! extension-id item-namespace]]}))
 
 (a/reg-event-fx
+  :item-editor/delete-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem törlése sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
+
+(a/reg-event-fx
   :item-editor/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -225,8 +253,8 @@
             validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-editor/delete-undid extension-id item-namespace item-id]
-                                          :on-failure [:ui/blow-bubble! {:body {:content :failed-to-undo-delete}}]
+                                         {:on-success [:item-editor/delete-undid            extension-id item-namespace item-id]
+                                          :on-failure [:item-editor/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -236,9 +264,24 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (string) item-id
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
       {:db (r events/set-recovery-mode! db extension-id item-namespace)
        :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
+
+(a/reg-event-fx
+  :item-editor/undo-delete-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem törlésének visszaállítása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}))
 
 
 
@@ -257,8 +300,8 @@
             validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
            [:sync/send-query! (engine/request-id extension-id item-namespace)
                               {:display-progress? true
-                               :on-success   [:item-editor/item-duplicated extension-id item-namespace]
-                               :on-failure   [:ui/blow-bubble! {:body :failed-to-copy}]
+                               :on-success [:item-editor/item-duplicated       extension-id item-namespace]
+                               :on-failure [:item-editor/duplicate-item-failed extension-id item-namespace]
                                :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
@@ -271,6 +314,18 @@
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
       (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
            [:item-editor/render-item-duplicated-dialog! extension-id item-namespace copy-id])))
+
+(a/reg-event-fx
+  :item-editor/duplicate-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha az elem duplikálása sikertelen volt ...
+      ; ... megjelenít egy értesítést
+      [:ui/blow-bubble! {:body :failed-to-copy}]))
 
 
 

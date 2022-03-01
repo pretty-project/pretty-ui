@@ -18,7 +18,7 @@
               [mid-fruits.candy :refer [param]]
               [x.app-core.api   :as a :refer [r]]
               [x.app-db.api     :as db]
-              [x.app-environment.element-handler :as element-handler]))
+              [x.app-environment.element-handler.side-effects :as element-handler.side-effects]))
 
 
 
@@ -42,7 +42,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [% (dom/touch-events-api-detected?)]
-       (element-handler/set-element-attribute! "x-body-container" "data-touch-detected"                   %)
+       (element-handler.side-effects/set-element-attribute! "x-body-container" "data-touch-detected"                   %)
        (a/dispatch [:db/set-item! (db/meta-item-path :environment/touch-data :touch-events-api.detected?) %])))
 
 (a/reg-fx :environment/detect-touch-events-api! detect-touch-events-api!)
