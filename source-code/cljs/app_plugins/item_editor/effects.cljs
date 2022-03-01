@@ -156,11 +156,10 @@
 
 (a/reg-event-fx
   :item-editor/save-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/save-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
       ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
@@ -202,11 +201,10 @@
 
 (a/reg-event-fx
   :item-editor/delete-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r queries/get-delete-item-query          db extension-id item-namespace)
             validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
@@ -290,11 +288,10 @@
 
 (a/reg-event-fx
   :item-editor/duplicate-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r queries/get-duplicate-item-query          db extension-id item-namespace)
             validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]

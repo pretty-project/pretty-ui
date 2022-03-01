@@ -16,6 +16,9 @@
            :hour
            {:en "Hour"
             :hu "Óra"}
+           :millisecond
+           {:en "Millisecond"
+            :hu "Milliszekundum"}
            :minute
            {:en "Minute"
             :hu "Perc"}
@@ -31,6 +34,9 @@
            :today
            {:en "Today"
             :hu "Ma"}
+           :tomorrow
+           {:en "Tomorrow"
+            :hu "Holnap"}
            :unit-price
            {:en "Unit price"
             :hu "Egységár"}
@@ -42,4 +48,7 @@
             :hu "Tömeg"}
            :year
            {:en "Year"
-            :hu "Év"}})
+            :hu "Év"}
+           :yesterday
+           {:en "Yesterday"
+            :hu "Tegnap"}})

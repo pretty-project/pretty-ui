@@ -16,16 +16,16 @@
            :change-pin!
            {:en "Change PIN"
             :hu "PIN megváltoztatása"}
-           :change-profile-picture
+           :change-profile-picture!
            {:en "Change profile picture"
             :hu "Profilkép megváltoztatása"}
-           :change-username
+           :change-username!
            {:en "Change username"
             :hu "Felhasználónév módosítása"}
            :clear-user-data!
            {:en "Clear user data"
             :hu "Felhasználó adatainak törlése"}
-           :continue-as
+           :continue-as!
            {:en "Continue as "
             :hu "Folytatás, mint "}
            :create-account!
@@ -55,6 +55,9 @@
            :login!
            {:en "Login"
             :hu "Bejelentkezés"}
+           :login-failed
+           {:en "Logoin failed!"
+            :hu "Sikertelen bejelentkezés!"}
            :logout!
            {:en "Logout"
             :hu "Kijelentkezés"}

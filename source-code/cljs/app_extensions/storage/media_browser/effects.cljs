@@ -36,6 +36,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :storage.media-browser/update-item-alias!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ {:keys [id]} alias]]
+      [:item-browser/update-item! :storage :media id {:alias alias}]))
+
+(a/reg-event-fx
   :storage.media-browser/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ selected-option]]
@@ -136,16 +142,16 @@
           (case mime-type "storage/directory" [:item-browser/browse-item! :storage :media id]
                                               [:storage.media-browser/render-file-menu! media-item]))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-browser!
   [:ui/set-surface! :storage.media-browser/view
                     {:view #'media-browser.views/view}])
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :storage.media-browser/render-rename-item-dialog!

@@ -17,80 +17,16 @@
     (:require [x.mid-dictionary.extension-books :refer [EXTENSION-BOOKS]]
 
               ; TEMP
+              [x.mid-dictionary.books.actions       :as books.actions]
+              [x.mid-dictionary.books.appearance    :as books.appearance]
+              [x.mid-dictionary.books.locales       :as books.locales]
               [x.mid-dictionary.books.media         :as books.media]
               [x.mid-dictionary.books.notifications :as books.notifications]
               [x.mid-dictionary.books.social-media  :as books.social-media]
+              [x.mid-dictionary.books.sync          :as books.sync]
               [x.mid-dictionary.books.units         :as books.units]
-              [x.mid-dictionary.books.user          :as books.user]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A)
-;  Az "_" -ra végződő azonosítójú kifejezések a billentyű-kódjukat is tartalmazzák.
-;  Pl.: :app-menu_ => "App menu (m)"
-;
-; Books:
-;  Appearance
-;  Application
-;  Contacts
-;  Database
-;  Edit
-;  Errors
-;  Extensions
-;  Law
-;  Locales
-;  Media
-;  Notifications
-;  Order
-;  Social media
-;  Units
-;  User
-
-
-
-;; -- Appearance -------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def appearance
-     {:add-color!
-      {:en "Add color"
-       :hu "Szín hozzáadása"}
-      :appearance
-      {:en "Appearance"
-       :hu "Kinézet"}
-      :change-colors!
-      {:en "Change colors"
-       :hu "Színek módosítása"}
-      :dark-theme
-      {:en "Dark theme"
-       :hu "Sötét téma"}
-      :fullscreen-mode
-      {:en "Fullscreen mode"
-       :hu "Teljes képernyő"}
-      :light-theme
-      {:en "Light theme"
-       :hu "Világos téma"}
-      :list-view
-      {:en "List items"
-       :hu "Lista"}
-      :select-color!
-      {:en "Select color"
-       :hu "Szín kiválasztása"}
-      :select-theme!
-      {:en "Select theme"
-       :hu "Téma kiválasztása"}
-      :selected-theme
-      {:en "Selected theme"
-       :hu "Kiválasztott téma"}
-      :thumbnail-view
-      {:en "Thumbnails"
-       :hu "Bélyegképek"}
-      :zoom-mode
-      {:en "Zoom mode"
-       :hu "Nagy nézet"}})
+              [x.mid-dictionary.books.user          :as books.user]
+              [x.mid-dictionary.books.view          :as books.view]))
 
 
 
@@ -101,12 +37,7 @@
      {:invalid-name
       {:en "Invalid name!"
        :hu "Nem megfelelő név!"}
-      :download!
-      {:en "Download"
-       :hu "Letöltés"}
-      :download-selected-items!
-      {:en "Download selected items"
-       :hu "Kijelölt elemek letöltése"}
+
       :last-modified
       {:en "Last modified"
        :hu "Utoljára módosítva"}
@@ -116,41 +47,25 @@
       :size-n
       {:en "Size: %"
        :hu "Méret: %"}
-      :uploaded-at
-      {:en "Uploaded at: "
-       :hu "Feltöltve: "}
+      :failed-to-update
+      {:en "Failed to update"
+       :hu "Sikertelen változtatás"}
 
 
-      :abort!
-      {:en "Abort"
-       :hu "Megszakítás"}
-      :aborted
-      {:en "Aborted"
-       :hu "Megszakítva"}
+
+
       :about-app
       {:en "About app"
        :hu "Az alkalmazás névjegye"}
-      :accept!
-      {:en "Accept"
-       :hu "Rendben"}
+
       :active
       {:en "Active"
        :hu "Aktív"}
-      :add-to-favorites!
-      {:en "Add to favorites"
-       :hu "Kedvencekhez adás"}
-      :added-to-favorites
-      {:en "Added to favorites"
-       :hu "Hozzáadva a kedvencekhez"}
+
       :app-menu
       {:en "App menu"
        :hu "Alkalmazás menü"}
-      :app-menu_
-      {:en "App menu (m)"
-       :hu "Alkalmazás menü (m)"}
-      :back!
-      {:en "Back"
-       :hu "Vissza"}
+
       :back-to-home!
       {:en "Back to home"
        :hu "Vissza a főoldalra"}
@@ -160,27 +75,16 @@
       :browser
       {:en "Browser"
        :hu "Böngésző"}
-      :cancel!
-      {:en "Cancel"
-       :hu "Mégsem"}
+
       :category
       {:en "Category"
        :hu "Kategória"}
       :categories
       {:en "Categories"
        :hu "Kategóriák"}
-      :close!
-      {:en "Close"
-       :hu "Bezárás"}
-      :close!_
-      {:en "Close (esc)"
-       :hu "Bezárás (esc)"}
-      :collapse!
-      {:en "Hide"
-       :hu "Elrejt"}
-      :communication-error
-      {:en "Commnication error"
-       :hu "Kommunikációs hiba"}
+
+
+
       :control-panel
       {:en "Control panel"
        :hu "Vezérlőpult"}
@@ -208,18 +112,7 @@
       :do-not-show-again!
       {:en "Do not show again"
        :hu "Ne mutassa többet"}
-      :done!
-      {:en "Done"
-       :hu "Kész"}
-      :downloading-items...
-      {:en "Downloading items ..."
-       :hu "Elemek letöltése ..."}
-      :exit!
-      {:en "Exit"
-       :hu "Kilépés"}
-      :expand!
-      {:en "Expand"
-       :hu "Lenyit"}
+
       :extensions
       {:en "Extensions"
        :hu "Eszközök"}
@@ -247,12 +140,7 @@
       :help-center
       {:en "Help center"
        :hu "Súgó központ"}
-      :hide!
-      {:en "Hide"
-       :hu "Elrejt"}
-      :home-page_
-      {:en "Home (h)"
-       :hu "Kezdőlap (h)"}
+
       :home-page
       {:en "Home"
        :hu "Kezdőlap"}
@@ -265,9 +153,7 @@
       :less-options
       {:en "Less options"
        :hu "Kevesebb lehetőség"}
-      :load!
-      {:en "Load"
-       :hu "Betöltés"}
+
       :loading
       {:en "Loading"
        :hu "Betöltés"}
@@ -304,15 +190,11 @@
       :need-help?
       {:en "Need help?"
        :hu "Súgó"}
-      :network-error
-      {:en "Network error"
-       :hu "Hálózati hiba"}
+
       :n-items
       {:en "% items"
        :hu "% elem"}
-      :n-items-downloaded
-      {:en "% item(s) downloaded"
-       :hu "% elem letöltve"}
+
       :n-items-selected
       {:en "% item(s) selected"
        :hu "% elem kiválasztva"}
@@ -334,15 +216,9 @@
       :no
       {:en "No"
        :hu "Nem"}
-      :no-internet-connection
-      {:en "No internet connection"
-       :hu "Nincs internet kapcsolat"}
-      :npn-items-downloaded
-      {:en "%1 / %2 item(s) downloaded"
-       :hu "%1 / %2 elem letöltve"}
-      :open!
-      {:en "Open"
-       :hu "Megnyitás"}
+
+
+
       :packages
       {:en "Packages"
        :hu "Csomagok"}
@@ -352,9 +228,7 @@
       :preferences
       {:en "Preferences"
        :hu "Tulajdonságok"}
-      :preparing-to-download...
-      {:en "Preparing to download ..."
-       :hu "Letöltés előkészítése ..."}
+
       :preview
       {:en "Preview"
        :hu "Előnézet"}
@@ -364,9 +238,7 @@
       :properties
       {:en "Properties"
        :hu "Tulajdonságok"}
-      :refresh!
-      {:en "Refresh"
-       :hu "Frissítés"}
+      
       :removed-from-favorites
       {:en "Removed from favorites"
        :hu "Eltávolítva a kedvencek közül"}
@@ -406,12 +278,7 @@
       :submit!
       {:en "Submit"
        :hu "Tovább"}
-      :synchronization-error
-      {:en "Synchronization error"
-       :hu "Szinkronizációs probléma"}
-      :synchronization-pending
-      {:en "Synchronization pending"
-       :hu "Szinkronizáció folyamatban"}
+
       :title
       {:en "Title"
        :hu "Cím"}
@@ -421,12 +288,7 @@
       :unkown
       {:en "Unkown"
        :hu "Ismeretlen"}
-      :upload!
-      {:en "Upload"
-       :hu "Feltöltés"}
-      :uploading
-      {:en "Uploading"
-       :hu "Feltöltés folyamatban"}
+
       :version
       {:en "Version"
        :hu "Verziószám"}
@@ -939,46 +801,6 @@
 
 
 
-;; -- Locales -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def locales
-     {:language
-      {:en "Language"
-       :hu "Nyelv"}
-      :languages
-      {:en "Languages"
-       :hu "Nyelvek"}
-      :save-in-all-languages
-      {:en "Save in all languages"
-       :hu "Mentés minden nyelven"}
-      :en
-      {:en "English"
-       :hu "English"}
-      :en-gb
-      {:en "English - GB"
-       :hu "English - GB"}
-      :en-us
-      {:en "English - US"
-       :hu "English - US"}
-      :fr-fr
-      {:en "Français"
-       :hu "Français"}
-      :de-de
-      {:en "Deutsch"
-       :hu "Deutsch"}
-      :hu
-      {:en "Magyar"
-       :hu "Magyar"}
-      :it-it
-      {:en "Italiano"
-       :hu "Italiano"}
-      :ro
-      {:en "Română"
-       :hu "Română"}})
-
-
-
 
 ;; -- Order --------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -1059,12 +881,12 @@
 
 
 
-
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOKS (merge appearance
+(def BOOKS (merge books.actions/BOOK
+                  books.appearance/BOOK
                   application
                   contacts
                   database
@@ -1073,11 +895,12 @@
                   errors
                   law
                   locale
-                  locales
+                  books.locales/BOOK
                   books.media/BOOK
                   books.notifications/BOOK
                   order-by
                   books.social-media/BOOK
+                  books.sync/BOOK
                   books.units/BOOK
                   books.user/BOOK
                   EXTENSION-BOOKS))

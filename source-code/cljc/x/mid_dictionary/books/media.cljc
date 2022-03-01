@@ -13,9 +13,24 @@
 (def BOOK {:create-directory!
            {:en "Create directory"
             :hu "Mappa létrehozása"}
+           :delete-directory?
+           {:en "Are you sure you want to delete this directory?"
+            :hu "Biztos vagy benne, hogy szeretnéd törölni ezt a mappát?"}
+           :delete-file?
+           {:en "Are you sure you want to delete this file?"
+            :hu "Biztos vagy benne, hogy szeretnéd törölni ezt a fájlt?"}
+           :deleting-files-and-directories-is-not-reversible
+           {:en "Deleting files and directories is not reversible!"
+            :hu "A fájlok és mappák törlése nem visszavonható!"}
+           :directory-does-not-exists
+           {:en "This is not the directory you are looking for"
+            :hu "A mappa nem található!"}
            :directory-name
            {:en "Directory name"
             :hu "Mappa neve"}
+           :download-file!
+           {:en "Download file"
+            :hu "Fájl letöltése"}
            :download-image!
            {:en "Download image"
             :hu "Kép letöltése"}
@@ -25,15 +40,6 @@
            :empty-directory
            {:en "Empty directory"
             :hu "Üres mappa"}
-           :filename
-           {:en "Filename"
-            :hu "Fájlnév"}
-           :filesize
-           {:en "Filesize"
-            :hu "Fájlméret"}
-           :files-uploaded
-           {:en "Files uploaded"
-            :hu "Sikeres fájlfeltöltés"}
            :file-upload-failure
            {:en "File upload failure"
             :hu "Sikertelen fájlfeltöltés"}
@@ -43,6 +49,21 @@
            :file-not-found
            {:en "File not found"
             :hu "A fájl nem található"}
+           :filename
+           {:en "Filename"
+            :hu "Fájlnév"}
+           :files-uploaded
+           {:en "Files uploaded"
+            :hu "Sikeres fájlfeltöltés"}
+           :filesize
+           {:en "Filesize"
+            :hu "Fájlméret"}
+           :free-n-space
+           {:en "Free %1 %2 space!"
+            :hu "Szabadíts fel %1 %2 szabad helyet!"}
+           :image-gallery
+           {:en "Image gallery"
+            :hu "Képgaléria"}
            :new-directory
            {:en "New directory"
             :hu "Új mappa"}
@@ -52,6 +73,12 @@
            :save-file?
            {:en "Are you sure you want to save this file to device?"
             :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}
+           :select-the-files-you-would-like-to-attach
+           {:en "Select the files you would like to attach!"
+            :hu "Válaszd ki a csatolni kívánt fájlokat!"}
+           :there-is-not-enough-space
+           {:en "There is not enough space available to complete this operation"
+            :hu "Nincs elegendő hely a művelet befejezéséhez"}
            :thumbnail
            {:en "Thumbnail"
             :hu "Bélyegkép"}

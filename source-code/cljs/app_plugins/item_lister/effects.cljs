@@ -158,11 +158,10 @@
 
 (a/reg-event-fx
   :item-lister/delete-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/delete-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [item-ids     (r subs/get-selected-item-ids              db extension-id item-namespace)
             query        (r queries/get-delete-items-query          db extension-id item-namespace item-ids)
@@ -239,11 +238,10 @@
 
 (a/reg-event-fx
   :item-lister/duplicate-selected-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-lister/duplicate-selected-items! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [item-ids     (r subs/get-selected-item-ids                 db extension-id item-namespace)
             query        (r queries/get-duplicate-items-query          db extension-id item-namespace item-ids)

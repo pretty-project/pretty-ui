@@ -154,13 +154,52 @@
 
 (a/reg-event-fx
   :item-browser/update-item!
-  (fn [{:keys [db]} [_ extension-id item-namespace]]))
-      ;(let [query        (r queries/get-update-item-alias-query db media-item item-alias)
-      ;      validator-f #()]))
-           ;[:sync/send-query! :storage.media-browser/update-item!
-           ;                   {:on-success [:item-lister/reload-items! :storage :media]
-           ;                    :on-failure [:ui/blow-bubble! {:body :failed-to-rename}]
-           ;                    :query query :validator-f validator-f
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ; @param (map) changes
+  ;
+  ; @usage
+  ;  [:item-browser/update-item! :my-extension :my-type "my-item" {...}]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id changes]]
+      ; - Az [:item-browser/update-item! ...] esemény a changes paraméterként átadott változásokat
+      ;   azonnal végrahajta az elemen
+      ; - Ha az elem szerver-oldali változatának felülírása sikertelen volt, akkor a kliens-oldali
+      ;   változat a tárolt biztonsági mentésből helyreállítódik
+      ; - Egy időben egy változtatást lehetséges az elemen végrehajtani, mert egy darab biztonsági
+      ;   mentéssel nem lehetséges az időben átfedésbe kerülő változtatásokat kezelni, ezért a szerver
+      ;   válaszának megérkezéséig az elem {:disabled? true} állapotban van
+      (let [db           (r events/update-item!                    db extension-id item-namespace item-id changes)
+            query        (r queries/get-update-item-query          db extension-id item-namespace item-id)
+            validator-f #(r validators/update-item-response-valid? db extension-id item-namespace %)]
+           {:db db :dispatch [:sync/send-query! :storage.media-browser/update-item!
+                                                {:display-progress? true
+                                                 :on-success [:item-browser/item-updated       extension-id item-namespace item-id]
+                                                 :on-failure [:item-browser/update-item-failed extension-id item-namespace item-id]
+                                                 :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-browser/item-updated
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
+      {:db (r events/item-updated db extension-id item-namespace item-id)}))
+       
+(a/reg-event-fx
+  :item-browser/update-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
+      {:db (r events/update-item-failed db extension-id item-namespace item-id)
+       :dispatch [:ui/blow-bubble! {:body :failed-to-update}]}))
 
 
 
@@ -181,7 +220,7 @@
            {:db (r events/delete-item! db extension-id item-namespace item-id)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
                                          {:on-success [:item-browser/item-deleted       extension-id item-namespace item-id]
-                                          :on-failure [:item-browser/delete-item-failed extension-id item-namespace]
+                                          :on-failure [:item-browser/delete-item-failed extension-id item-namespace item-id]
                                           :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
@@ -202,12 +241,15 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (string) item-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
       ; Ha az elem törlése sikertelen volt ...
+      ; ... engedélyezi az ideiglenesen letiltott elemet
       ; ... befejezi progress-bar elemen kijelzett folyamatot
       ; ... megjelenít egy értesítést
-      {:dispatch-n [[:ui/end-fake-process!]
+      {:db (r events/delete-item-failed db extension-id item-namespace item-id)
+       :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
 (a/reg-event-fx

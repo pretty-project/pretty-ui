@@ -234,14 +234,14 @@
 
 (defn update-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [request]} media-item]
-  (mongo-db/save-document! "storage" media-item {:prototype-f #(mongo-db/updated-document-prototype request :media %)}))
+  [{:keys [request]} {:keys [item]}]
+  (mongo-db/save-document! "storage" item {:prototype-f #(mongo-db/updated-document-prototype request :media %)}))
 
 (defmutation update-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env media-item]
+             [env mutation-props]
              {::pathom.co/op-name 'storage.media-browser/update-item!}
-             (update-item-f env media-item))
+             (update-item-f env mutation-props))
 
 
 

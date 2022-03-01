@@ -76,3 +76,16 @@
   (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
+
+(defn update-item-response-valid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @return (boolean)
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :update)
+        document      (get server-response (symbol mutation-name))]
+       (db/document->document-namespaced? document)))

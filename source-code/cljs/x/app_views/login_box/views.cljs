@@ -100,7 +100,7 @@
        [elements/button ::continue-as-button
                         {:keypress {:key-code 13}
                          :on-click [:router/go-home!]
-                         :label    :continue-as
+                         :label    :continue-as!
                          :layout   :row
                          :suffix   user-name
                          :variant  :filled}]))

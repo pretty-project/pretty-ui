@@ -6,6 +6,7 @@
     (:require [app-plugins.item-lister.subs]
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.loop    :refer [some-indexed]]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-router.api   :as router]
@@ -65,7 +66,6 @@
 
 
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -106,6 +106,19 @@
   (letfn [(f [{:keys [id] :as item}] (if (= id item-id) item))]
          (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
               (some f downloaded-items))))
+
+(defn get-item-dex
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (integer)
+  [db [_ extension-id item-namespace item-id]]
+  (letfn [(f [item-dex {:keys [id]}] (if (= id item-id) item-dex))]
+         (let [downloaded-items (r get-downloaded-items db extension-id item-namespace)]
+              (some-indexed f downloaded-items))))
 
 (defn export-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

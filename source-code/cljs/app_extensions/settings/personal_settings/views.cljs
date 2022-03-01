@@ -16,7 +16,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::change-profile-picture-button
-                   {:label     :change-profile-picture
+                   {:label     :change-profile-picture!
                     :preset    :default-button
                     :font-size :xs}])
 
