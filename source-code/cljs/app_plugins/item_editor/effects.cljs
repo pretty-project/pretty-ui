@@ -325,7 +325,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace _]]
       ; Ha az elem duplikálása sikertelen volt ...
       ; ... megjelenít egy értesítést
-      [:ui/blow-bubble! {:body :failed-to-copy}]))
+      [:ui/blow-bubble! {:body :failed-to-duplicate}]))
 
 
 

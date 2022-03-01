@@ -278,7 +278,7 @@
       ; ... befejezi progress-bar elemen kijelzett folyamatot
       ; ... megjelenít egy értesítést
       {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-copy}]]}))
+                    [:ui/blow-bubble! {:body :failed-to-duplicate}]]}))
 
 (a/reg-event-fx
   :item-lister/undo-duplicate-items!
@@ -308,4 +308,4 @@
       ; ... befejezi progress-bar elemen kijelzett folyamatot
       ; ... megjelenít egy értesítést
       {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-undo-copy}]]}))
+                    [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))

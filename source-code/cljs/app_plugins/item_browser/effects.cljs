@@ -279,8 +279,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace _]]
-      [:item-browser/reload-items! extension-id item-namespace]))
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
+           {:dispatch-n [[:item-browser/reload-items!                  extension-id item-namespace]
+                         [:item-browser/render-item-duplicated-dialog! extension-id item-namespace copy-id]]})))
 
 (a/reg-event-fx
   :item-browser/duplicate-item-failed
@@ -293,7 +295,37 @@
       ; ... befejezi progress-bar elemen kijelzett folyamatot
       ; ... megjelenít egy értesítést
       {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-copy}]]}))
+                    [:ui/blow-bubble! {:body :failed-to-duplicate}]]}))
+
+(a/reg-event-fx
+  :item-browser/undo-duplicate-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (strings) copy-id
+  (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
+      (let [query        (r queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-ids)
+            validator-f #(r validators/undo-duplicate-item-response-valid? db extension-id item-namespace %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+                                         {:on-success [:item-browser/reload-items!              extension-id item-namespace]
+                                          :on-failure [:item-browser/undo-duplicate-item-failed extension-id item-namespace]
+                                          :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-browser/undo-duplicate-item-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
+      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... megjelenít egy értesítést
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))
 
 
 

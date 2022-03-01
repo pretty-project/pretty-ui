@@ -616,7 +616,7 @@
        :hu "Elem törölve"}
       :item-duplicated
       {:en "Item duplicated"
-       :hu "Elem másolva"}
+       :hu "Elem duplikálva"}
       :item-does-not-exists
       {:en "This item does not exists"
        :hu "Ez az elem még nem létezik"}
@@ -783,6 +783,9 @@
       :failed-to-delete
       {:en "Failed to delete"
        :hu "Sikertelen törlés"}
+      :failed-to-duplicate
+      {:en "Failed to duplicate"
+       :hu "Sikertelen duplikálás"}
       :failed-to-rename
       {:en "Failed to rename"
        :hu "Sikertelen átnevezés"}
@@ -795,6 +798,9 @@
       :failed-to-undo-delete
       {:en "Failed to undo delete"
        :hu "A törlés visszavonása sikertelen"}
+      :failed-to-undo-duplicate
+      {:en "Failed to undo duplicate"
+       :hu "A duplikálás visszavonása sikertelen"}
       :no-internet-connection
       {:en "No internet connection"
        :hu "Nincs internet kapcsolat"}

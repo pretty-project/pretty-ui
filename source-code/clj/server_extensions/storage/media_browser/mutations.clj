@@ -210,6 +210,40 @@
 
 
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn undo-duplicate-item-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env {:keys [item parent-id] :as mutation-props}])
+  ;(when-let [media-item (engine/get-item env (:media/id item))]
+  ;          (engine/update-path-directories! env           media-item +)
+  ;          (engine/attach-item!             env parent-id media-item)
+  ;          (return media-item)}])
+
+(defn undo-duplicate-items-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [env {:keys [items parent-id]}])
+  ;(letfn [(f [result item]
+  ;           (conj result (undo-delete-item-f env {:item item :parent-id parent-id}))
+  ;       (reduce f [] items)}])
+
+(defmutation undo-duplicate-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'storage.media-browser/undo-duplicate-item!})
+             ;(let [parent-id (item-browser/item->parent-id :storage :media item)]
+              ;    (undo-delete-item-f env {:item item :parent-id parent-id})})
+
+(defmutation undo-duplicate-items!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [env {:keys [items]}]
+             {::pathom.co/op-name 'storage.media-lister/undo-duplicate-items!})
+             ;(let [parent-id (item-browser/item->parent-id :storage :media (first items))]
+              ;    (undo-delete-items-f env {:items items :parent-id parent-id})})
+
+
+
 ;; -- Update item(s) mutations ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -231,6 +265,6 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [delete-item! delete-items! duplicate-item! duplicate-items! undo-delete-item!
-               undo-delete-items! update-item!])
+               undo-delete-items! undo-duplicate-item! undo-duplicate-items! update-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

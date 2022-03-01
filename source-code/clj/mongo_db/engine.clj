@@ -95,7 +95,7 @@
   [n]
   (if-let [namespace (db/document->namespace n)]
           (let [document-id (generate-id)]
-               (assoc n (keyword/add-namespace namespace :id) document-id :x :x))
+               (assoc n (keyword/add-namespace namespace :id) document-id))
           (return n)))
 
 (defn dissoc-id
