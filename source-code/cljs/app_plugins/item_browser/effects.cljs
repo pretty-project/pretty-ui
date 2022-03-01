@@ -304,8 +304,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (strings) copy-id
-  (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
-      (let [query        (r queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-ids)
+  (fn [{:keys [db]} [_ extension-id item-namespace copy-id]]
+      (let [query        (r queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-id)
             validator-f #(r validators/undo-duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)

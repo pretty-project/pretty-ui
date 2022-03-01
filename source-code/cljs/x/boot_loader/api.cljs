@@ -27,4 +27,4 @@
 
 ; x.boot-loader.side-effects
 (def start-app!  side-effects/start-app!)
-(def render-app! side-effects/render-app)
+(def render-app! side-effects/render-app!)

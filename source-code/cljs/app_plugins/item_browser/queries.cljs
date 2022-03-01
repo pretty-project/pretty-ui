@@ -71,10 +71,9 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
+  ; @param (string) copy-id
   ;
   ; @return (vector)
-  [db [_ extension-id item-namespace item-id]]
-  (let [mutation-name (engine/mutation-name         extension-id item-namespace :undo-duplicate)
-        backup-item   (r subs/export-backup-item db extension-id item-namespace item-id)]
-       [:debug `(~(symbol mutation-name) ~{:item backup-item})]))
+  [db [_ extension-id item-namespace copy-id]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
+       [:debug `(~(symbol mutation-name) ~{:item-id copy-id})]))

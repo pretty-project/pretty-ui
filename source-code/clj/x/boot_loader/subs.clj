@@ -9,7 +9,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-server-props
+(defn get-server-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)

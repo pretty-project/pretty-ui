@@ -72,4 +72,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]])
+  [_ [_ extension-id item-namespace server-response]]
+  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)
+        document-id   (get server-response (symbol mutation-name))]
+       (string/nonempty? document-id)))

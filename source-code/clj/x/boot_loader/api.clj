@@ -8,6 +8,9 @@
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-views.api]
+              [x.boot-loader.effects]
+              [x.boot-loader.events]
+              [x.boot-loader.subs]
               [x.boot-loader.side-effects :as side-effects]))
 
 

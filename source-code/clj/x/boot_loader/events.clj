@@ -17,12 +17,11 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- store-server-props!
+(defn store-server-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
   ;
   ; @return (map)
   [db [_ server-props]]
-  ; A szerver indítási paramétereinek eltárolása
-  (assoc-in db [:boot-loader :server-handler/meta-items]))
+  (assoc-in db [:boot-loader :server-handler/meta-items] server-props))

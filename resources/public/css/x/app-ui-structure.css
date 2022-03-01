@@ -167,7 +167,7 @@
   right: 0;
   width: 420px;
   /* BUG#4376 */
-  z-index: 998 }
+  z-index: 997 }
 
 [data-viewport-profile="xxs"] #x-app-bubbles,
 [data-viewport-profile="xs"]  #x-app-bubbles,
@@ -295,8 +295,8 @@
 #x-app-popups {
   /* BUG#4376
    * Egyes külső pluginok (pl.: FullCalendar) elemei rendelkezhetnek {z-index: ...} tulajdonsággal,
-   * ami szükségessé teszi az #x-app-popups elem kiemelését! */
-  z-index: 997 }
+   * ami szükségessé teszi az applikáció egyes elemeinek kiemelését! */
+  z-index: 996 }
 
 /*** Popup ***/
 
@@ -473,7 +473,7 @@
   top: 0;
   width: 100%;
   /* BUG#4376 */
-  z-index: 999 }
+  z-index: 998 }
 
 #x-app-progress-bar--process-progress {
   background-color: var( --border-color-primary );
@@ -497,7 +497,10 @@
   left: 0;
   position: fixed;
   top: 0;
-  width: 100% }
+  width: 100%;
+
+  /* BUG#4376 */
+  z-index: 999 }
 
 /*** App shield wrapper ***/
 

@@ -70,6 +70,7 @@
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
+; Sikeres törlés esetén a kitörölt elemek azonosítóival szükséges visszatérni!
 (defmutation delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -80,6 +81,7 @@
              {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
              (return []))
 
+; Sikeres visszavonás esetén a visszaállított dokumentumokkal szükséges visszatérni!
 (defmutation undo-delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -90,6 +92,7 @@
              {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
              (return []))
 
+; Sikeres duplikálás esetén a létrehozott dokumentumokkal szükséges visszatérni!
 (defmutation duplicate-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -100,6 +103,7 @@
              {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
              (return []))
 
+; Sikeres visszavonás esetén a kitörölt elemek azonosítóival szükséges visszatérni!
 (defmutation undo-duplicate-items!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -110,6 +114,7 @@
              {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
              (return []))
 
+; Sikeres törlés esetén a kitörölt elem azonosítójával szükséges visszatérni!
 (defmutation delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -120,6 +125,7 @@
              {::pathom.co/op-name 'my-extension.my-type-browser/delete-item!}
              (return ""))
 
+; Sikeres visszavonás esetén a visszaállított dokumentummal szükséges visszatérni!
 (defmutation undo-delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -130,6 +136,7 @@
              {::pathom.co/op-name 'my-extension.my-type-browser/undo-delete-item!}
              (return {}))
 
+; Sikeres duplikálás esetén a létrehozott dokumentummal szükséges visszatérni!
 (defmutation duplicate-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -140,6 +147,7 @@
              {::pathom.co/op-name 'my-extension.my-type-browser/duplicate-item!}
              (return {}))
 
+; Sikeres visszavonás esetén a kitörölt elem azonosítójával szükséges visszatérni!
 (defmutation undo-duplicate-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -150,15 +158,16 @@
              {::pathom.co/op-name 'my-extension.my-type-browser/undo-duplicate-item!}
              (return ""))
 
+; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
 (defmutation update-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {?}
+             ;  {:item (namespaced map)}
              ;
-             ; @return (?)
-             [env {:keys [?]}]
+             ; @return (namespaced map)
+             [env {:keys [item]}]
              {::pathom.co/op-name 'my-extension.my-type-browser/update-item!}
-             (return ?))
+             (return {}))
 
 
 

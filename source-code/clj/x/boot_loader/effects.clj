@@ -28,8 +28,9 @@
   ; @param (map) server-props
   (fn [{:keys [db]} [_ server-props]]
       (println details/app-codename "starting server ...")
-      {:db (r events/store-server-props! db server-props)
-       :dispatch-tick [{:tick 500 :dispatch [:boot-loader/initialize-server!]}]
+      {; A szerver indítási paramétereinek eltárolása
+       :db (r events/store-server-props! db server-props)
+       :dispatch-tick [{:tick 500 :dispatch [:boot-loader/init-server!]}]
        :fx-n          [[:core/import-lifecycles!]
                        [:core/import-app-build!]
                        [:core/config-server!]]}))

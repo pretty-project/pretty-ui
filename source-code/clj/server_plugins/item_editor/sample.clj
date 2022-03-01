@@ -41,6 +41,7 @@
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
 
+; Sikeres törlés esetén a kitörölt elem azonosítójával szükséges visszatérni!
 (defmutation delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -51,6 +52,7 @@
              {::pathom.co/op-name 'my-extension.my-type-editor/delete-item!}
              (return ""))
 
+; Sikeres visszavonás esetén a visszaállított dokumentummal szükséges visszatérni!
 (defmutation undo-delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -61,6 +63,7 @@
              {::pathom.co/op-name 'my-extension.my-type-editor/undo-delete-item!}
              (return {}))
 
+; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
 (defmutation save-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -71,6 +74,8 @@
              {::pathom.co/op-name 'my-extension.my-type-editor/save-item!}
              (return {}))
 
+; - Az item-editor plugin az elem AKTUÁLIS (nem feltétlenül az elmentett) változatát küldi el a szerver számára.
+; - Sikeres duplikálás esetén a létrehozott dokumentummal szükséges visszatérni!
 (defmutation duplicate-item!
              ; @param (map) env
              ; @param (map) mutation-props
@@ -79,8 +84,6 @@
              ; @return (namespaced map)
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-extension.my-type-editor/duplicate-item!}
-             ; Az item-editor plugin az elem AKTUÁLIS (nem feltétlenül az elmentett) változatát
-             ; küldi el a szerver számára.
              (return {}))
 
 

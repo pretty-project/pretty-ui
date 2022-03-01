@@ -5,7 +5,10 @@
 (ns x.app-core.api
     (:require [x.app-core.debug-handler.engine]
               [x.app-core.debug-handler.side-effects]
-              [x.app-core.error-handler]
+              [x.app-core.error-handler.effects]
+              [x.app-core.error-handler.engine]
+              [x.app-core.error-handler.side-effects]
+              [x.app-core.error-handler.subs]
               [x.app-core.build-handler        :as build-handler]
               [x.app-core.cache-handler        :as cache-handler]
               [x.app-core.config-handler       :as config-handler]
