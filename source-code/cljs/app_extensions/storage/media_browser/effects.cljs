@@ -47,15 +47,29 @@
   :storage.media-browser/delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [id]}]]
-      {:dispatch-n [;[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     [:item-browser/delete-item! :storage :media id]]}))
 
 (a/reg-event-fx
   :storage.media-browser/duplicate-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [id]}]]
-      {:dispatch-n [;[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                     [:item-browser/duplicate-item! :storage :media id]]}))
+
+(a/reg-event-fx
+  :storage.media-browser/rename-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ media-item]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:storage.media-browser/render-rename-item-dialog! media-item]]}))
+
+(a/reg-event-fx
+  :storage.media-browser/move-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ media-item]]
+      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                    [:storage.media-browser/render-target-selector!]]}))
 
 
 
@@ -78,13 +92,6 @@
             uri-base      (window/get-uri-base)]
            {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                          [:tools/copy-to-clipboard! (str uri-base directory-uri)]]})))
-
-(a/reg-event-fx
-  :storage.media-browser/rename-directory!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ directory-item]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:storage.media-browser/render-rename-directory-dialog! directory-item]]}))
 
 
 
@@ -115,20 +122,6 @@
            {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                          [:tools/copy-to-clipboard! (str uri-base file-uri)]]})))
 
-(a/reg-event-fx
-  :storage.media-browser/rename-file!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ file-item]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:storage.media-browser/render-rename-file-dialog! file-item]]}))
-
-(a/reg-event-fx
-  :storage.media-browser/move-file!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ file-item]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:storage.media-browser/render-target-selector!]]}))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -155,25 +148,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-browser/render-rename-directory-dialog!
+  :storage.media-browser/render-rename-item-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [alias] :as directory-item}]]
-      [:value-editor/load-editor! :storage :file-name
-                                  {:label :directory-name :save-button-label :rename! :initial-value alias
-                                   :on-save   [:storage.media-browser/update-item-alias! directory-item]
-                                   :validator {:f io/directory-name-valid?
-                                               :invalid-message :invalid-directory-name
-                                               :pre-validate?   true}}]))
-
-(a/reg-event-fx
-  :storage.media-browser/render-rename-file-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [alias] :as file-item}]]
-      [:value-editor/load-editor! :storage :file-name
-                                  {:label :file-name :save-button-label :rename! :initial-value alias
-                                   :on-save   [:storage.media-browser/update-item-alias! file-item]
+  (fn [_ [_ {:keys [alias] :as media-item}]]
+      [:value-editor/load-editor! :storage :item-alias
+                                  {:label :name :save-button-label :rename! :initial-value alias
+                                   :on-save   [:storage.media-browser/update-item-alias! media-item]
                                    :validator {:f io/filename-valid?
-                                               :invalid-message :invalid-file-name
+                                               :invalid-message :invalid-name
                                                :pre-validate?   true}}]))
 
 (a/reg-event-fx

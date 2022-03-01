@@ -14,7 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-dictionary.books
-    (:require [x.mid-dictionary.extension-books :refer [EXTENSION-BOOKS]]))
+    (:require [x.mid-dictionary.extension-books :refer [EXTENSION-BOOKS]]
+
+              ; TEMP
+              [x.mid-dictionary.books.media         :as books.media]
+              [x.mid-dictionary.books.notifications :as books.notifications]
+              [x.mid-dictionary.books.social-media  :as books.social-media]
+              [x.mid-dictionary.books.units         :as books.units]
+              [x.mid-dictionary.books.user          :as books.user]))
 
 
 
@@ -91,7 +98,30 @@
 ;; ----------------------------------------------------------------------------
 
 (def application
-     {:abort!
+     {:invalid-name
+      {:en "Invalid name!"
+       :hu "Nem megfelelő név!"}
+      :download!
+      {:en "Download"
+       :hu "Letöltés"}
+      :download-selected-items!
+      {:en "Download selected items"
+       :hu "Kijelölt elemek letöltése"}
+      :last-modified
+      {:en "Last modified"
+       :hu "Utoljára módosítva"}
+      :last-modified-at-n
+      {:en "Last modified at: %"
+       :hu "Utoljára módosítva: %"}
+      :size-n
+      {:en "Size: %"
+       :hu "Méret: %"}
+      :uploaded-at
+      {:en "Uploaded at: "
+       :hu "Feltöltve: "}
+
+
+      :abort!
       {:en "Abort"
        :hu "Megszakítás"}
       :aborted
@@ -949,202 +979,6 @@
 
 
 
-;; -- Media -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def media
-     {:add-or-remove-files!
-      {:en "Add or remove files"
-       :hu "Fájlok hozzáadása vagy eltávolítása"}
-      :attach-file!
-      {:en "Attach a file"
-       :hu "Fájl hozzáadása"}
-      :attach-selected-files!
-      {:en "Attach selected files"
-       :hu "Kiválasztott fájlok csatolása"}
-      :content-size
-      {:en "Content size"
-       :hu "Tartalom"}
-      :create-directory!
-      {:en "Create directory"
-       :hu "Mappa létrehozása"}
-      :create-new-directory!
-      {:en "Create new directory"
-       :hu "Új mappa létrehozása"}
-      :delete-directory!
-      {:en "Delete directory"
-       :hu "Mappa törlése"}
-      :delete-file!
-      {:en "Delete file"
-       :hu "Fájl törlése"}
-      :delete-directory?
-      {:en "Are you sure you want to delete this directory?"
-       :hu "Biztos vagy benne, hogy szeretnéd törölni ezt a mappát?"}
-      :delete-file?
-      {:en "Are you sure you want to delete this file?"
-       :hu "Biztos vagy benne, hogy szeretnéd törölni ezt a fájlt?"}
-      :deleting-files-and-directories-is-not-reversible
-      {:en "Deleting files and directories is not reversible!"
-       :hu "A fájlok és mappák törlése nem visszavonható!"}
-      :directory-created
-      {:en "Directory created"
-       :hu "Mappa létrehozva"}
-      :directory-does-not-exists
-      {:en "This is not the directory you are looking for"
-       :hu "A mappa nem található!"}
-      :directory-name
-      {:en "Directory name"
-       :hu "Mappa neve"}
-      :download!
-      {:en "Download"
-       :hu "Letöltés"}
-      :download-image!
-      {:en "Download image"
-       :hu "Kép letöltése"}
-      :download-selected-items!
-      {:en "Download selected items"
-       :hu "Kijelölt elemek letöltése"}
-      :drop-files-here-to-upload
-      {:en "Drop files here to upload!"
-       :hu "Húzd ide a fájlokat, amiket fel szeretnél tölteni!"}
-      :empty-directory
-      {:en "Empty directory"
-       :hu "Üres mappa"}
-      :filename
-      {:en "Filename"
-       :hu "Fájlnév"}
-      :filesize
-      {:en "Filesize"
-       :hu "Fájlméret"}
-      :files-uploaded
-      {:en "Files uploaded"
-       :hu "Sikeres fájlfeltöltés"}
-      :file-upload-failure
-      {:en "File upload failure"
-       :hu "Sikertelen fájlfeltöltés"}
-      :file-uploading-in-progress
-      {:en "File uploading in progress"
-       :hu "Fájlfeltöltés folyamatban"}
-      :file-manager
-      {:en "File manager"
-       :hu "Fájlkezelő"}
-      :file-not-found
-      {:en "File not found"
-       :hu "A fájl nem található"}
-      :file-uploader
-      {:en "File uploader"
-       :hu "Fájlfeltöltő"}
-      :free-some-space
-      {:en "Free % space!"
-       :hu "Szabadítson fel %1 %2 szabad helyet!"}
-      :image-gallery
-      {:en "Image gallery"
-       :hu "Képgaléria"}
-      :invalid-directory-name
-      {:en "Invalid name!"
-       :hu "Nem megfelelő név!"}
-      :invalid-filename
-      {:en "Invalid filename!"
-       :hu "Nem megfelelő fájlnév!"}
-      :last-modified
-      {:en "Last modified"
-       :hu "Utoljára módosítva"}
-      :last-modified-at-n
-      {:en "Last modified at: %"
-       :hu "Utoljára módosítva: %"}
-      :new-directory
-      {:en "New directory"
-       :hu "Új mappa"}
-      :no-files-selected
-      {:en "No files selected"
-       :hu "Nincsenek kiválaszott fájlok"}
-      :remove-file!
-      {:en "Remove file"
-       :hu "Fájl eltávolítása"}
-      :rename-directory!
-      {:en "Rename directory"
-       :hu "Mappa átnevezése"}
-      :rename-file!
-      {:en "Rename file"
-       :hu "Fájl átnevezése"}
-      :save-file?
-      {:en "Are you sure you want to save this file to device?"
-       :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}
-      :select-the-files-you-would-like-to-attach
-      {:en "Select the files you would like to attach!"
-       :hu "Válaszd ki a csatolni kívánt fájlokat!"}
-      :share-image
-      {:en "Share image"
-       :hu "Kép megosztása"}
-      :size-n
-      {:en "Size: %"
-       :hu "Méret: %"}
-      :there-is-not-enough-space
-      {:en "There is not enough space available to complete this operation"
-       :hu "Nincs elegendő hely a művelet befejezéséhez"}
-      :thumbnail
-      {:en "Thumbnail"
-       :hu "Bélyegkép"}
-      :thumbnails
-      {:en "Thumbnails"
-       :hu "Bélyegképek"}
-      :untitled-directory
-      {:en "Untitled directory"
-       :hu "Névtelen mappa"}
-      :upload-file!
-      {:en "Upload file"
-       :hu "Fájl feltöltése"}
-      :upload-files!
-      {:en "Upload files"
-       :hu "Fájlok feltöltése"}
-      :upload-files-from-device!
-      {:en "Upload files from device"
-       :hu "Fájlok feltöltése az eszközről"}
-      :uploaded-at
-      {:en "Uploaded at: "
-       :hu "Feltöltve: "}
-      :uploaded-files
-      {:en "Uploaded files"
-       :hu "Feltöltött fájlok"}
-      :uploaded-images
-      {:en "Uploaded images"
-       :hu "Feltöltött képek"}
-      :uploading-file-count
-      {:en "Uploading file count"
-       :hu "Feltöltésre váró fájlok száma"}
-      :uploading-files-size
-      {:en "Uploading files size"
-       :hu "Feltöltésre váró fájlok mérete"}
-      :uploading-n-files...
-      {:en "Uploading % files ..."
-       :hu "% fájl feltöltése ..."}
-      :uploading-n-files-in-progress...
-      {:en "Uploading % file(s) in progress ..."
-       :hu "% fájl feltöltése folyamatban ..."}})
-
-
-
-;; -- Notifications -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def notifications
-    {:notifications
-     {:en "Notifications"
-      :hu "Értesítések"}
-     :notification-bubbles
-     {:en "Notification bubbles"
-      :hu "Értesítési buborékok"}
-     :notification-messages
-     {:en "Notification messages"
-      :hu "Értesítési üzenetek"}
-     :notification-sounds
-     {:en "Notification sounds"
-      :hu "Hangjelzések"}
-     :warning-bubbles
-     {:en "Warning bubbles"
-      :hu "Figyelmeztető buborékok"}})
-
-
 
 ;; -- Order --------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -1223,210 +1057,6 @@
 
 
 
-;; -- Social media ------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def social-media
-     {:awwwards-link
-      {:en "Awwwards link"
-       :hu "Awwwards hivatkozás"}
-      :behance-link
-      {:en "Behance link"
-       :hu "Behance hivatkozás"}
-      :facebook-link
-      {:en "Facebook link"
-       :hu "Facebook hivatkozás"}
-      :instagram-link
-      {:en "Instagram link"
-       :hu "Instagram hivatkozás"}
-      :linkedin-link
-      {:en "Linkedin link"
-       :hu "Linkedin hivatkozás"}
-      :pinterest-link
-      {:en "Pinterest link"
-       :hu "Pinterest hivatkozás"}
-      :reddit-link
-      {:en "Reddit link"
-       :hu "Reddit hivatkozás"}
-      :snapchat-link
-      {:en "Snapchat link"
-       :hu "Snapchat hivatkozás"}
-      :social-media
-      {:en "Social media"
-       :hu "Közösségi média"}
-      :social-media-link
-      {:en "Social media link"
-       :hu "Közösségi média hivatkozás"}
-      :social-media-links
-      {:en "Social media links"
-       :hu "Közösségi média hivatkozások"}
-      :skype-link
-      {:en "Skype link"
-       :hu "Skype hivatkozás"}
-      :tiktok-link
-      {:en "TikTok link"
-       :hu "TikTok hivatkozás"}
-      :twitter-link
-      {:en "Twitter link"
-       :hu "Twitter hivatkozás"}
-      :viber-link
-      {:en "Viber link"
-       :hu "Viber hivatkozás"}
-      :vimeo-link
-      {:en "Vimeo link"
-       :hu "Vimeo hivatkozás"}
-      :whatsapp-link
-      {:en "WhatsApp link"
-       :hu "WhatsApp hivatkozás"}
-      :youtube-link
-      {:en "Youtube link"
-       :hu "Youtube hivatkozás"}})
-
-
-
-;; -- Units -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def units
-     {:day
-      {:en "Day"
-       :hu "Nap"}
-      :hour
-      {:en "Hour"
-       :hu "Óra"}
-      :minute
-      {:en "Minute"
-       :hu "Perc"}
-      :month
-      {:en "Month"
-       :hu "Hónap"}
-      :piece
-      {:en "Piece"
-       :hu "Darab"}
-      :second
-      {:en "Second"
-       :hu "Másodperc"}
-      :today
-      {:en "Today"
-       :hu "Ma"}
-      :unit-price
-      {:en "Unit price"
-       :hu "Egységár"}
-      :unit-quantity
-      {:en "Unit quantity"
-       :hu "Mennyiségi egység"}
-      :weight
-      {:en "Weight"
-       :hu "Tömeg"}
-      :year
-      {:en "Year"
-       :hu "Év"}})
-
-
-
-;; -- User --------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(def user
-     {:change-password!
-      {:en "Change password"
-       :hu "Jelszó megváltoztatása"}
-      :change-pin!
-      {:en "Change PIN"
-       :hu "PIN megváltoztatása"}
-      :change-profile-picture
-      {:en "Change profile picture"
-       :hu "Profilkép megváltoztatása"}
-      :change-username
-      {:en "Change username"
-       :hu "Felhasználónév módosítása"}
-      :clear-user-data!
-      {:en "Clear user data"
-       :hu "Felhasználó adatainak törlése"}
-      :continue-as
-      {:en "Continue as "
-       :hu "Folytatás, mint "}
-      :create-account!
-      {:en "Create account"
-       :hu "Regisztráció"}
-      :delete-account!
-      {:en "Delete account"
-       :hu "Fiók törlése"}
-      :delete-user-account!
-      {:en "Delete user account"
-       :hu "Felhasználói fiók törlése"}
-      :forgot-password
-      {:en "Forgot password"
-       :hu "Elfelejtettem a jelszavam"}
-      :hide-password!
-      {:en "Hide password"
-       :hu "Jelszó elrejtése"}
-      :incorrect-email-address-or-password
-      {:en "Incorrect email address or password"
-       :hu "Hibás email cím vagy jelszó"}
-      :invalid-email-address
-      {:en "Invalid email address"
-       :hu "Érvénytelen email cím"}
-      :invalid-phone-number
-      {:en "Invalid phone number"
-       :hu "Érvénytelen telefonszám"}
-      :login!
-      {:en "Login"
-       :hu "Bejelentkezés"}
-      :logout!
-      {:en "Logout"
-       :hu "Kijelentkezés"}
-      :logout-failed
-      {:en "Logout failed!"
-       :hu "Sikertelen kijelentkezés!"}
-      :my-profile
-      {:en "My profile"
-       :hu "Profilom"}
-      :new-password
-      {:en "New password"
-       :hu "Új jelszó"}
-      :new-password-again
-      {:en "New password again"
-       :hu "Új jelszó mégegyszer"}
-      :new-pin
-      {:en "New PIN"
-       :hu "Új PIN"}
-      :new-pin-again
-      {:en "New PIN again"
-       :hu "Új PIN mégegyszer"}
-      :old-password
-      {:en "Old password"
-       :hu "Régi jelszó"}
-      :old-pin
-      {:en "Old PIN"
-       :hu "Régi PIN"}
-      :password
-      {:en "Password"
-       :hu "Jelszó"}
-      :password-is-too-weak
-      {:en "Password is too weak"
-       :hu "Túl gyenge jelszó"}
-      :permission-denied
-      {:en "Permission denied!"
-       :hu "Hozzáférés megtagadva!"}
-      :pin
-      {:en "PIN"
-       :hu "PIN"}
-      :registered-at-n
-      {:en "registered at: %"
-       :hu "Regisztráció ideje: %"}
-      :show-password!
-      {:en "Show password"
-       :hu "Jelszó mutatása"}
-      :signed-in-as
-      {:en "Signed in as "
-       :hu "Bejelentkezve, mint "}
-      :username
-      {:en "Username"
-       :hu "Felhasználónév"}
-      :valid-password-rules
-      {:en "Password must contain at least 6 characters, both uppercase and lowercase letters, and a number!"
-       :hu "A jelszó legyen legalább 6 karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}})
 
 
 
@@ -1444,10 +1074,10 @@
                   law
                   locale
                   locales
-                  media
-                  notifications
+                  books.media/BOOK
+                  books.notifications/BOOK
                   order-by
-                  social-media
-                  units
-                  user
+                  books.social-media/BOOK
+                  books.units/BOOK
+                  books.user/BOOK
                   EXTENSION-BOOKS))
