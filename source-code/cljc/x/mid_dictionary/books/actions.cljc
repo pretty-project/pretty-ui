@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.appearance)
+(ns x.mid-dictionary.books.actions)
 
 
 
@@ -82,6 +82,9 @@
            :refreshed
            {:en "Refreshed"
             :hu "Frissítve"}
+           :search!
+           {:en "Search"
+            :hu "Keresés"}
            :share!
            {:en "Share"
             :hu "Megosztás"}
