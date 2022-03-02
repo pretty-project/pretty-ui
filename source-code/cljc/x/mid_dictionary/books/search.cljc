@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.sync)
+(ns x.mid-dictionary.books.search)
 
 
 
@@ -10,9 +10,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:synchronization-error
-           {:en "Synchronization error"
-            :hu "Szinkronizációs probléma"}
-           :synchronization-pending
-           {:en "Synchronization pending"
-            :hu "Szinkronizáció folyamatban"}})
+(def BOOK {:no-items-found
+           {:en ""
+            :hu "Nincs találat"}
+           :search!
+           {:en "Search"
+            :hu "Keresés"}
+           :search
+           {:en "Search"
+            :hu "Keresés"}})

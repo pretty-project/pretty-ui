@@ -1,30 +1,26 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.10.17
-; Description:
-; Version: v0.1.8
-; Compatibility: x4.3.5
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.api
-    (:require [x.app-dictionary.engine :as engine]))
+    (:require [x.app-dictionary.term-handler.lifecycles]
+              [x.app-dictionary.term-handler.engine :as term-handler.engine]
+              [x.app-dictionary.term-handler.subs   :as term-handler.subs]
+              [x.mid-dictionary.term-handler.events :as term-handler.events]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app.dictionary.engine
-(def get-term     engine/get-term)
-(def term-exists? engine/term-exists?)
-(def look-up      engine/look-up)
-(def looked-up    engine/looked-up)
-(def add-term!    engine/add-term!)
-(def add-terms!   engine/add-terms!)
+; x.app.dictionary.term-handler.engine
+(def looked-up term-handler.engine/looked-up)
+
+; x.app.dictionary.term-handler.subs
+(def get-term     term-handler.subs/get-term)
+(def term-exists? term-handler.subs/term-exists?)
+(def look-up      term-handler.subs/look-up)
+
+; x.mid.dictionary.term-handler.events
+(def add-term!  term-handler.events/add-term!)
+(def add-terms! term-handler.events/add-terms!)

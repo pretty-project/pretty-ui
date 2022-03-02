@@ -9,7 +9,11 @@
               [x.app-ui.engine]
               [x.app-ui.header.subs]
               [x.app-ui.header.views]
-              [x.app-ui.popups]
+              [x.app-ui.popups.effects]
+              [x.app-ui.popups.engine]
+              [x.app-ui.popups.events]
+              [x.app-ui.popups.subs]
+              [x.app-ui.popups.views]
               [x.app-ui.presets]
               [x.app-ui.progress-bar.effects]
               [x.app-ui.progress-bar.subs]
@@ -27,7 +31,7 @@
               [x.app-ui.structure.views      :as structure.views]
               [x.app-ui.themes               :as themes]
               [x.app-ui.bubble-body-presets  :as bubble-body-presets]
-              [x.app-ui.popup-header-presets :as popup-header-presets]))
+              [x.app-ui.popups.views         :as popups.views]))
 
 
 
@@ -51,19 +55,19 @@
 (def application-interface? interface/application-interface?)
 (def website-interface?     interface/website-interface?)
 
-; x.app-ui.popup-header-presets
-(def popup-accept-button           popup-header-presets/popup-accept-button)
-(def popup-cancel-button           popup-header-presets/popup-cancel-button)
-(def popup-go-up-icon-button       popup-header-presets/popup-go-up-icon-button)
-(def popup-go-back-icon-button     popup-header-presets/popup-go-back-icon-button)
-(def popup-close-icon-button       popup-header-presets/popup-close-icon-button)
-(def popup-placeholder-icon-button popup-header-presets/popup-label)
-(def popup-label                   popup-header-presets/popup-label)
-(def accept-popup-header           popup-header-presets/accept-popup-header)
-(def cancel-popup-header           popup-header-presets/cancel-popup-header)
-(def close-popup-header            popup-header-presets/close-popup-header)
-(def go-up-popup-header            popup-header-presets/go-up-popup-header)
-(def go-back-popup-header          popup-header-presets/go-back-popup-header)
+; x.app-ui.popups.views
+(def popup-accept-button           popups.views/popup-accept-button)
+(def popup-cancel-button           popups.views/popup-cancel-button)
+(def popup-go-up-icon-button       popups.views/popup-go-up-icon-button)
+(def popup-go-back-icon-button     popups.views/popup-go-back-icon-button)
+(def popup-close-icon-button       popups.views/popup-close-icon-button)
+(def popup-placeholder-icon-button popups.views/popup-label)
+(def popup-label                   popups.views/popup-label)
+(def accept-popup-header           popups.views/accept-popup-header)
+(def cancel-popup-header           popups.views/cancel-popup-header)
+(def close-popup-header            popups.views/close-popup-header)
+(def go-up-popup-header            popups.views/go-up-popup-header)
+(def go-back-popup-header          popups.views/go-back-popup-header)
 
 ; x.app-ui.progress-bar.events
 (def listen-to-process!         progress-bar.events/listen-to-process!)

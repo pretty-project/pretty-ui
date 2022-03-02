@@ -31,12 +31,12 @@
 
 
 /***** App popups *****/
-/*** Sliding boxed popup structure on XXS, XS, S viewport ***/
+/*** Sliding flip popup structure on XXS, XS, S viewport ***/
 
-/* Boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"] [data-layout="boxed"] .x-app-popups--element--structure,
-[data-viewport-profile="xs"]  [data-layout="boxed"] .x-app-popups--element--structure,
-[data-viewport-profile="s"]   [data-layout="boxed"] .x-app-popups--element--structure {
+/* Flip popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"] [data-layout="flip"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="flip"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="flip"] .x-app-popups--element--structure {
 
   /* BUG#4701
    * Késleltetés nélkül nem minden esetben látszódott a lejátszódó animáció
@@ -47,22 +47,22 @@
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }
 
-/* Show boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure,
-[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure,
-[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="reveal"] .x-app-popups--element--structure {
+/* Show flip popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"] [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure {
   animation-name: x-slide-in-btt }
 
-/* Hide boxed popup structure on XXS, XS, S viewport */
-[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure,
-[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure,
-[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--structure {
+/* Hide flip popup structure on XXS, XS, S viewport */
+[data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
+[data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
+[data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure {
   animation-name: x-slide-out-ttb }
 
-/* Boxed popup cover on XXS, XS, S viewport */
-[data-viewport-profile="xxs"] [data-layout="boxed"] .x-app-popups--element--cover,
-[data-viewport-profile="xs"]  [data-layout="boxed"] .x-app-popups--element--cover,
-[data-viewport-profile="s"]   [data-layout="boxed"] .x-app-popups--element--cover {
+/* Flip popup cover on XXS, XS, S viewport */
+[data-viewport-profile="xxs"] [data-layout="flip"] .x-app-popups--element--cover,
+[data-viewport-profile="xs"]  [data-layout="flip"] .x-app-popups--element--cover,
+[data-viewport-profile="s"]   [data-layout="flip"] .x-app-popups--element--cover {
 
   /* BUG#4701
   animation-delay: .25s */
@@ -78,13 +78,13 @@
 [data-viewport-profile="s"]   [data-animation="reveal"] .x-app-popups--element--cover {
   animation-name: x-reveal }
 
-/* Hide boxed popup cover on XXS, XS, S viewport */
-[data-viewport-profile="xxs"] [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover,
-[data-viewport-profile="xs"]  [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover,
-[data-viewport-profile="s"]   [data-layout="boxed"][data-animation="hide"] .x-app-popups--element--cover {
+/* Hide flip popup cover on XXS, XS, S viewport */
+[data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
+[data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
+[data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover {
   animation-name: x-hide }
 
-/*** Sliding boxed popup structure on XXS, XS, S viewport ***/
+/*** Sliding flip popup structure on XXS, XS, S viewport ***/
 
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/
 

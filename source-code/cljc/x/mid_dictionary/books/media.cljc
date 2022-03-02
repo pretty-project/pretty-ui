@@ -64,6 +64,9 @@
            :image-gallery
            {:en "Image gallery"
             :hu "Képgaléria"}
+           :invalid-name
+            {:en "Invalid name!"
+             :hu "Nem megfelelő név!"}
            :new-directory
            {:en "New directory"
             :hu "Új mappa"}

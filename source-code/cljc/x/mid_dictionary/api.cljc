@@ -1,28 +1,20 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.08.01
-; Description:
-; Version: v0.1.6
-; Compatibility: x4.3.5
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-dictionary.api
-    (:require [x.mid-dictionary.engine :as engine]))
+    (:require [x.mid-dictionary.term-handler.events :as term-handler.events]
+              [x.mid-dictionary.term-handler.subs   :as term-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-dictionary.engine
-(def get-term     engine/get-term)
-(def term-exists? engine/term-exists?)
-(def add-term!    engine/add-term!)
-(def add-terms!   engine/add-terms!)
+; x.mid-dictionary.term-handler.events
+(def add-term!  term-handler.events/add-term!)
+(def add-terms! term-handler.events/add-terms!)
+
+; x.mid-dictionary.term-handler.subs
+(def get-term     term-handler.subs/get-term)
+(def term-exists? term-handler.subs/term-exists?)

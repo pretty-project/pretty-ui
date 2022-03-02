@@ -1,30 +1,29 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.17
-; Description:
-; Version: v0.2.0
-; Compatibility: x4.4.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.api
-    (:require [x.server-dictionary.engine :as engine]))
+    (:require [x.server-dictionary.term-handler.effects]
+              [x.server-dictionary.term-handler.lifecycles]
+              [x.server-dictionary.term-handler.side-effects]
+              [x.server-dictionary.term-handler.transfer]
+              [x.mid-dictionary.term-handler.events    :as term-handler.events]
+              [x.server-dictionary.term-handler.engine :as term-handler.engine]
+              [x.server-dictionary.term-handler.subs   :as term-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-dictionary.engine
-(def get-term     engine/get-term)
-(def term-exists? engine/term-exists?)
-(def look-up      engine/look-up)
-(def looked-up    engine/looked-up)
-(def add-term!    engine/add-term!)
-(def add-terms!   engine/add-terms!)
+; x.mid-dictionary.term-handler.events
+(def add-term!  term-handler.events/add-term!)
+(def add-terms! term-handler.events/add-terms!)
+
+; x.server-dictionary.term-handler.engine
+(def looked-up term-handler.engine/looked-up)
+
+; x.server-dictionary.term-handler.subs
+(def get-term     term-handler.subs/get-term)
+(def term-exists? term-handler.subs/term-exists?)
+(def look-up      term-handler.subs/look-up)

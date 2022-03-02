@@ -2,17 +2,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.sync)
+(ns x.server-dictionary.term-handler.lifecycles
+    (:require [x.server-core.api :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def BOOK {:synchronization-error
-           {:en "Synchronization error"
-            :hu "Szinkronizációs probléma"}
-           :synchronization-pending
-           {:en "Synchronization pending"
-            :hu "Szinkronizáció folyamatban"}})
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-server-init [:dictionary/init-dictionary!]})

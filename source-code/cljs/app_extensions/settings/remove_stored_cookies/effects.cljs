@@ -16,7 +16,7 @@
   :settings/remove-stored-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [message (r dictionary/look-up db :just-a-moment)]
+      (let [message (r dictionary/look-up db :just-a-moment...)]
            {:dispatch-later [{:ms   0 :dispatch [:ui/set-shield! {:content message}]}
                              {:ms  50 :dispatch [:environment/remove-cookies!]}
                              {:ms 500 :dispatch [:boot-loader/refresh-app!]}]})))
