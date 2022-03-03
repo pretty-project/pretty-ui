@@ -114,7 +114,10 @@
 ;; -- A plugin beállítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
+; értesülhet a kollekció változásairól
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-editor/init-editor! :my-extension :my-type
-                                              {:suggestion-keys [:city :address]}]})
+                                              {:collection-name "my-extension"
+                                               :suggestion-keys [:city :address]}]})

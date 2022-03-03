@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-extensions.storage.capacity-handler.engine
+(ns server-extensions.storage.capacity-handler.side-effects
     (:require [mongo-db.api      :as mongo-db]
               [x.server-core.api :as a]
               [server-extensions.storage.engine :as engine]))

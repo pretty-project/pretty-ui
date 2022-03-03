@@ -6,9 +6,9 @@
     (:require [mid-fruits.candy :refer [param return]]
               [mongo-db.api     :as mongo-db]
               [pathom.api       :as pathom]
-              [com.wsscode.pathom3.connect.operation             :refer [defresolver]]
-              [server-extensions.storage.capacity-handler.engine :as capacity-handler.engine]
-              [server-plugins.item-browser.api                   :as item-browser]))
+              [com.wsscode.pathom3.connect.operation                   :refer [defresolver]]
+              [server-extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
+              [server-plugins.item-browser.api                         :as item-browser]))
 
 
 
@@ -20,7 +20,7 @@
   [env resolver-props]
   (let [item-id (pathom/env->param env :item-id)]
        (if-let [media-item (mongo-db/get-document-by-id "storage" item-id)]
-               (if-let [capacity-details (capacity-handler.engine/get-capacity-details)]
+               (if-let [capacity-details (capacity-handler.side-effects/get-capacity-details)]
                        (merge media-item capacity-details)))))
 
 (defresolver get-item

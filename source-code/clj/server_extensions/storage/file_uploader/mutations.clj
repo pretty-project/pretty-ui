@@ -8,9 +8,10 @@
               [pathom.api         :as pathom]
               [server-fruits.io   :as io]
               [x.server-media.api :as media]
-              [com.wsscode.pathom3.connect.operation             :as pathom.co :refer [defmutation]]
-              [server-extensions.storage.capacity-handler.engine :as capacity-handler.engine]
-              [server-extensions.storage.engine                  :as engine]))
+              [com.wsscode.pathom3.connect.operation                   :as pathom.co :refer [defmutation]]
+              [server-extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
+              [server-extensions.storage.engine                        :as engine]
+              [server-extensions.storage.side-effects                  :as side-effects]))
 
 
 
@@ -83,8 +84,8 @@
   (let [file-item (file-item-prototype file-data)
         filename  (get file-item :media/filename)
         filepath  (media/filename->media-storage-filepath filename)]
-       (if (engine/attach-item! env destination-id file-item)
-           (when-let [file-item (engine/insert-item! env file-item)]
+       (if (side-effects/attach-item! env destination-id file-item)
+           (when-let [file-item (side-effects/insert-item! env file-item)]
                      ; Copy the temporary file to storage, and delete the temporary file
                      (io/copy-file!   tempfile filepath)
                      (io/delete-file! tempfile)
@@ -96,14 +97,14 @@
   [{:keys [request] :as env} {:keys [destination-id] :as mutation-props}]
   (let [content-size (request->content-size request)
         files-data   (request->files-data   request)]
-       (if (capacity-handler.engine/capacity-limit-exceeded? content-size)
+       (if (capacity-handler.side-effects/capacity-limit-exceeded? content-size)
            (return :capacity-limit-exceeded)
            (when-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
                      (let [destination-path (get  destination-item :media/path)
                            item-path        (conj destination-path {:media/id destination-id})]
                           ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást,
                           ; így az egyszerre történő feltöltések nem léphetik át a megengedett tárhely-kapacitást ...
-                          (engine/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
+                          (side-effects/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
                           (letfn [(f [result _ file-data]
                                      (let [file-data (assoc file-data :file-path item-path)]
                                           (conj result (upload-file-f env mutation-props file-data))))]

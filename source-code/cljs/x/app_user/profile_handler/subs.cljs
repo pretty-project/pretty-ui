@@ -44,7 +44,7 @@
   ;
   ; @return (string)
   [db _]
-  (r get-user-profile-item db :first-name))
+  (get-in db [:user :profile-handler/data-items :first-name]))
 
 (defn get-user-last-name
   ; @usage
@@ -52,7 +52,7 @@
   ;
   ; @return (string)
   [db _]
-  (r get-user-profile-item db :last-name))
+  (get-in db [:user :profile-handler/data-items :last-name]))
 
 (defn get-user-name
   ; @usage
@@ -69,7 +69,7 @@
   ;
   ; @return (string)
   [db _]
-  (r get-user-profile-item db :phone-number))
+  (get-in db [:user :profile-handler/data-items :phone-number]))
 
 (defn get-user-profile-picture
   ; @usage
@@ -91,10 +91,6 @@
 ; @usage
 ;  [:user/get-user-profile-item :email-address]
 (a/reg-sub :user/get-user-profile-item get-user-profile-item)
-
-; @usage
-;  [:user/get-user-email-address]
-(a/reg-sub :user/get-user-email-address get-user-email-address)
 
 ; @usage
 ;  [:user/get-user-first-name]

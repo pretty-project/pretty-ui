@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.installer.lifecycles
-    (:require [x.server-core.api  :as a]))
+    (:require [x.server-core.api :as a]))
 
 
 

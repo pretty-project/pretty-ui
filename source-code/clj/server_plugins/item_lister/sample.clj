@@ -127,11 +127,14 @@
 ;; -- A plugin beállítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A dokumentumoknak tartalmazniuk kell legalább egyet a {:search-keys [...]} tulajdonságként
-; átadott vektorban felsorolt kulcsok közül!
+; - A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
+;   értesülhet a kollekció változásairól
+; - A dokumentumoknak tartalmazniuk kell legalább egyet a {:search-keys [...]} tulajdonságként
+;   átadott vektorban felsorolt kulcsok közül!
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-lister/init-lister! :my-extension :my-type
-                                              {:download-limit 10
+                                              {:collection-name  "my-extension"
+                                               :download-limit   10
                                                :order-by-options ORDER-BY-OPTIONS
-                                               :search-keys [:my-key]}]})
+                                               :search-keys      [:my-key]}]})

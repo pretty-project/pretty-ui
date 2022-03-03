@@ -10,10 +10,9 @@
               [x.app-media.api   :as media]
               [x.app-router.api  :as router]
               [x.app-ui.api      :as ui]
-              [app-extensions.storage.media-browser.queries :as media-browser.queries]
-              [app-extensions.storage.media-browser.subs    :as media-browser.subs]
-              [app-extensions.storage.media-browser.views   :as media-browser.views]
-              [app-plugins.item-browser.api                 :as item-browser]))
+              [app-extensions.storage.media-browser.subs  :as media-browser.subs]
+              [app-extensions.storage.media-browser.views :as media-browser.views]
+              [app-plugins.item-browser.api               :as item-browser]))
 
 
 

@@ -123,6 +123,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
+;  [:user/get-user-email-address]
+(a/reg-sub :user/get-user-email-address get-user-email-address)
+
+; @usage
 ;  [:user/user-identified?]
 (a/reg-sub :user/user-identified? user-identified?)
 

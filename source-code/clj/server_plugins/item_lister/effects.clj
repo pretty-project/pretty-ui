@@ -35,7 +35,8 @@
   ; @param (map) lister-props
   ;
   ; @return (map)
-  ;  {:download-limit (integer)
+  ;  {:collection-name (string)
+  ;   :download-limit (integer)
   ;   :order-by-options (namespaced keywords in vector)
   ;   :route-title (metamorphic-content)
   ;   :routed? (boolean)
@@ -44,7 +45,8 @@
   (merge {:download-limit   DEFAULT-DOWNLOAD-LIMIT
           :order-by-options DEFAULT-ORDER-BY-OPTIONS
           :search-keys      DEFAULT-SEARCH-KEYS
-          :route-title      extension-id
+          :route-title      (param extension-id)
+          :collection-name  (name  extension-id)
           :routed?          true}
          (param lister-props)))
 
@@ -58,7 +60,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) lister-props
-  ;  {:download-limit (integer)(opt)
+  ;  {:collection-name (string)(opt)
+  ;    Default: (name extension-id)
+  ;   :download-limit (integer)(opt)
   ;    Default: DEFAULT-DOWNLOAD-LIMIT
   ;   :route-title (metamorphic-content)(opt)
   ;    Default: extension-id

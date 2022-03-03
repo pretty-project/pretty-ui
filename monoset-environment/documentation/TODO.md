@@ -13,6 +13,16 @@
 
 
 # x4.6.0
+; - A megfelelő hely:
+;   [:plugins :item-browser/data-items :my-browser {...}]
+;   [:plugins :item-browser/meta-items :my-browser {...}]
+;   (ez ahhoz is kell, hogy amikor az item-browser megkapja a szervertöl, hogy megváltozott az xy
+;   kollekció, akkor végig megy a browserer adatain és megnézi, hogy ki van rá feliratkozva)
+;   És amugy is ez a természetes helye
+; - Az item-editor pedig kaphat {:value-path [...]} tulajdonságot vagy inkább document-path vagy ...
+
+
+
 - az elementek min-width tulajdonságara lehet hogy nincs többé szükség, ha a form-ok
   wrapper-jei határozzák meg az inputok szélességét,
 

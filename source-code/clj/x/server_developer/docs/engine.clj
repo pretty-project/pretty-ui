@@ -5,8 +5,7 @@
 (ns x.server-developer.docs.engine
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]
-              [server-fruits.io  :as io]))
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -24,44 +23,44 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- file-content->namespace
+(defn file-content->namespace
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "(ns ")
                    (string/before-first-occurence "\n")
                    (string/not-ends-with!         ")")))
 
-(defn- file-content->author
+(defn file-content->author
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "; Author: ")
                    (string/before-first-occurence "\n")))
 
-(defn- file-content->created
+(defn file-content->created
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "; Created: ")
                    (string/before-first-occurence "\n")))
 
-(defn- file-content->description
+(defn file-content->description
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "; Description: ")
                    (string/before-first-occurence "\n")))
 
-(defn- file-content->version
+(defn file-content->version
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "; Version: ")
                    (string/before-first-occurence "\n")))
 
-(defn- file-content->compatibility
+(defn file-content->compatibility
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (-> file-content (string/after-first-occurence  "; Compatibility: ")
                    (string/before-first-occurence "\n")))
 
-(defn- file-content->functions
+(defn file-content->functions
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   (second (loop [x [file-content nil]]
@@ -74,7 +73,7 @@
                          (recur [rest (vector/conj-item (second x) function-name)]))
                     (return x)))))
 
-(defn- file-content->docs
+(defn file-content->docs
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [file-content]
   {:namespace     (file-content->namespace     file-content)
@@ -84,20 +83,3 @@
    :version       (file-content->version       file-content)
    :compatibility (file-content->compatibility file-content)
    :functions     (file-content->functions     file-content)})
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn read-namespaces
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [directory-path]
-  (letfn [(f [result filepath]
-             (let [extension (io/filepath->extension filepath)]
-                  (if (vector/contains-item? ALLOWED-EXTENSIONS extension)
-                      (let [file-content (io/read-file filepath)]
-                           (assoc-in result [filepath :docs] (file-content->docs file-content)))
-                      (return result))))]
-         (let [file-list (io/all-file-list directory-path)]
-              (reduce f {} file-list))))

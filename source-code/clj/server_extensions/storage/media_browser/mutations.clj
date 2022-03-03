@@ -9,9 +9,10 @@
               [mongo-db.api      :as mongo-db]
               [pathom.api        :as pathom]
               [server-fruits.io  :as io]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
-              [server-extensions.storage.engine      :as engine]
-              [server-plugins.item-browser.api       :as item-browser]))
+              [com.wsscode.pathom3.connect.operation  :as pathom.co :refer [defmutation]]
+              [server-extensions.storage.engine       :as engine]
+              [server-extensions.storage.side-effects :as side-effects]
+              [server-plugins.item-browser.api        :as item-browser]))
 
 
 
@@ -34,18 +35,18 @@
 (defn delete-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (when-let [{:media/keys [filename] :as file-item} (engine/get-item env item-id)]
-            (engine/remove-item! env file-item)
-            (engine/delete-file! filename)))
+  (when-let [{:media/keys [filename] :as file-item} (side-effects/get-item env item-id)]
+            (side-effects/remove-item! env file-item)
+            (side-effects/delete-file! filename)))
 
 (defn delete-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (when-let [directory-item (engine/get-item env item-id)]
-            (engine/remove-item! env directory-item)
+  (when-let [directory-item (side-effects/get-item env item-id)]
+            (side-effects/remove-item! env directory-item)
             (let [items (get directory-item :media/items)]
                  (doseq [{:media/keys [id]} items]
-                        (if-let [{:media/keys [mime-type]} (engine/get-item env id)]
+                        (if-let [{:media/keys [mime-type]} (side-effects/get-item env id)]
                                 (let [mutation-props {:item-id id :parent-id item-id}]
                                      (case mime-type "storage/directory" (delete-directory-f env mutation-props)
                                                                          (delete-file-f      env mutation-props))))))))
@@ -53,8 +54,8 @@
 (defn delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (if-not (engine/item-attached? env parent-id {:media/id item-id})
-          (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
+  (if-not (side-effects/item-attached? env parent-id {:media/id item-id})
+          (if-let [{:media/keys [mime-type]} (side-effects/get-item env item-id)]
                   (case mime-type "storage/directory" (delete-directory-f env mutation-props)
                                                       (delete-file-f      env mutation-props)))))
 
@@ -66,10 +67,10 @@
 (defn delete-item-temporary-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
-  (when-let [media-item (engine/get-item env item-id)]
+  (when-let [media-item (side-effects/get-item env item-id)]
             (time/set-timeout! PERMANENT-DELETE-AFTER #(delete-item-f env mutation-props))
-            (engine/update-path-directories! env           media-item -)
-            (engine/detach-item!             env parent-id media-item)
+            (side-effects/update-path-directories! env           media-item -)
+            (side-effects/detach-item!             env parent-id media-item)
             (return item-id)))
 
 (defn delete-items-temporary-f
@@ -101,9 +102,9 @@
 (defn undo-delete-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item parent-id] :as mutation-props}]
-  (when-let [media-item (engine/get-item env (:media/id item))]
-            (engine/update-path-directories! env           media-item +)
-            (engine/attach-item!             env parent-id media-item)
+  (when-let [media-item (side-effects/get-item env (:media/id item))]
+            (side-effects/update-path-directories! env           media-item +)
+            (side-effects/attach-item!             env parent-id media-item)
             (return media-item)))
 
 (defn undo-delete-items-f
@@ -155,12 +156,12 @@
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
             (if (= destination-id parent-id)
-                (engine/attach-item! env destination-id copy-item))
-            (engine/update-path-directories! env copy-item +)
+                (side-effects/attach-item! env destination-id copy-item))
+            (side-effects/update-path-directories! env copy-item +)
             (if-let [source-item (mongo-db/get-document-by-id "storage" item-id)]
                     (let [source-filename (get source-item :media/filename)
                           copy-filename   (get copy-item   :media/filename)]
-                         (engine/duplicate-file! source-filename copy-filename)
+                         (side-effects/duplicate-file! source-filename copy-filename)
                          (return copy-item)))))
 
 (defn duplicate-directory-f
@@ -168,11 +169,11 @@
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
   (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
             (when (= destination-id parent-id)
-                  (engine/attach-item!             env destination-id copy-item)
-                  (engine/update-path-directories! env                copy-item))
+                  (side-effects/attach-item!             env destination-id copy-item)
+                  (side-effects/update-path-directories! env                copy-item))
             (let [items (get copy-item :media/items)]
                  (doseq [{:media/keys [id]} items]
-                        (if-let [{:media/keys [mime-type]} (engine/get-item env id)]
+                        (if-let [{:media/keys [mime-type]} (side-effects/get-item env id)]
                                 (let [destination-id (:id copy-item)
                                       mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
                                      (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
@@ -182,7 +183,7 @@
 (defn duplicate-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id]}]
-  (if-let [{:media/keys [mime-type]} (engine/get-item env item-id)]
+  (if-let [{:media/keys [mime-type]} (side-effects/get-item env item-id)]
           (case mime-type "storage/directory" (duplicate-directory-f env {:item-id item-id :parent-id parent-id :destination-id parent-id})
                                               (duplicate-file-f      env {:item-id item-id :parent-id parent-id :destination-id parent-id}))))
 

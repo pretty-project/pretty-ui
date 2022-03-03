@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-dictionary.term-handler.engine
+(ns x.app-dictionary.term-handler.side-effects
     (:require [x.app-core.api :as a]))
 
 

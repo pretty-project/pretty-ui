@@ -21,7 +21,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-style-elements
+(defn get-style-elements
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
@@ -30,7 +30,7 @@
   [head-element]
   (vec (array-seq (.querySelectorAll head-element "[type=\"text/css\"]"))))
 
-(defn- source-exists?
+(defn source-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
@@ -44,7 +44,7 @@
                          #(let [href (.-href %1)]
                                (string/ends-with? href filepath))))
 
-(defn- create-link-element!
+(defn create-link-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) filepath
@@ -55,7 +55,7 @@
                               (set! (.-rel  %) "stylesheet"))
        (return link-element)))
 
-(defn- insert-link-element-as-first!
+(defn insert-link-element-as-first!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
@@ -63,7 +63,7 @@
   [head-element link-element]
   (dom/insert-as-first-of-query-selected! head-element link-element "[type=\"text/css\"]"))
 
-(defn- insert-link-element-as-last!
+(defn insert-link-element-as-last!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
@@ -71,7 +71,7 @@
   [head-element link-element]
   (dom/insert-as-last-of-query-selected! head-element link-element "[type=\"text/css\"]"))
 
-(defn- insert-link-element!
+(defn insert-link-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
@@ -82,7 +82,7 @@
   (if as-first? (insert-link-element-as-first! head-element link-element)
                 (insert-link-element-as-last!  head-element link-element)))
 
-(defn- filename->external-css-uri
+(defn filename->external-css-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) filename

@@ -53,7 +53,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
       (let [db (r media-picker.events/toggle-file-selection! db file-item)]
-           {:db db :dispatch-if [(r subs/save-selected-items? db file-item)
+           {:db db :dispatch-if [(r media-picker.subs/save-selected-items? db file-item)
                                  [:storage.media-picker/save-selected-items!]]})))
 
 

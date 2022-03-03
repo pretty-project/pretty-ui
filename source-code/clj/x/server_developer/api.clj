@@ -14,4 +14,5 @@
               [x.server-developer.docs.engine]
               [x.server-developer.docs.lifecycles]
               [x.server-developer.docs.routes]
+              [x.server-developer.docs.side-effects]
               [x.server-developer.side-effects]))

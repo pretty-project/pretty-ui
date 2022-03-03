@@ -12,7 +12,6 @@
               [x.app-environment.css-handler.engine]
               [x.app-environment.cookie-handler.subs          :as cookie-handler.subs]
               [x.app-environment.css-handler.side-effects     :as css-handler.side-effects]
-              [x.app-environment.element-handler.engine       :as element-handler.engine]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.event-handler                :as event-handler]
               [x.app-environment.keypress-handler             :as keypress-handler]
@@ -41,11 +40,9 @@
 (def add-css!          css-handler.side-effects/add-css!)
 (def remove-css!       css-handler.side-effects/remove-css!)
 
-; x.app-environment.element-handler.engine
-(def element-disabled? element-handler.engine/element-disabled?)
-(def element-enabled?  element-handler.engine/element-enabled?)
-
 ; x.app-environment.element-handler.side-effects
+(def element-disabled?                     element-handler.side-effects/element-disabled?)
+(def element-enabled?                      element-handler.side-effects/element-enabled?)
 (def focus-element!                        element-handler.side-effects/focus-element!)
 (def blur-element!                         element-handler.side-effects/blur-element!)
 (def add-element-class!                    element-handler.side-effects/add-element-class!)

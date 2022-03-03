@@ -199,10 +199,13 @@
 ;; -- A plugin beállítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
+; értesülhet a kollekció változásairól
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-browser/init-browser! :my-extension :my-type
                                                 {:items-key :items
                                                  :label-key :name
                                                  :path-key  :path
-                                                 :root-item-id "my-item"}]})
+                                                 :collection-name "my-extension"
+                                                 :root-item-id    "my-item"}]})

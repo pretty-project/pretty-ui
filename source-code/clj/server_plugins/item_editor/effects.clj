@@ -21,9 +21,11 @@
   ; @param (map)(opt) editor-props
   ;
   ; @return (map)
-  ;  {:routed? (boolean)}
-  [_ _ editor-props]
-  (merge {:routed? true}
+  ;  {:collection-name (string)
+  ;   :routed? (boolean)}
+  [extension-id _ editor-props]
+  (merge {:collection-name (name extension-id)
+          :routed? true}
          (param editor-props)))
 
 
@@ -36,7 +38,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) editor-props
-  ;  {:routed? (boolean)(opt)
+  ;  {:collection-name (string)(opt)
+  ;    Default: (name extension-id)
+  ;   :routed? (boolean)(opt)
   ;    Default: true
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;

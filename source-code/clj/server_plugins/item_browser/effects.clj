@@ -54,7 +54,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:download-limit (integer)(opt)
+  ;  {:collection-name (string)(opt)
+  ;    Default: (name extension-id)
+  ;   :download-limit (integer)(opt)
   ;    Default: item-lister/DEFAULT-DOWNLOAD-LIMIT
   ;   :items-key (keyword)(opt)
   ;    Default: DEFAULT-ITEMS-KEY

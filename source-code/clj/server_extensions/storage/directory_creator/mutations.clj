@@ -5,8 +5,8 @@
 (ns server-extensions.storage.directory-creator.mutations
     (:require [mongo-db.api :as mongo-db]
               [pathom.api   :as pathom]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
-              [server-extensions.storage.engine      :as engine]))
+              [com.wsscode.pathom3.connect.operation  :as pathom.co :refer [defmutation]]
+              [server-extensions.storage.side-effects :as side-effects]))
 
 
 
@@ -22,9 +22,9 @@
                 directory-item {:media/alias alias :media/content-size 0 :media/description ""
                                 :media/items []    :media/path directory-path
                                 :media/mime-type "storage/directory"}]
-               (when-let [directory-item (engine/insert-item! env directory-item)]
-                         (engine/attach-item!             env destination-id directory-item)
-                         (engine/update-path-directories! env directory-item +)))))
+               (when-let [directory-item (side-effects/insert-item! env directory-item)]
+                         (side-effects/attach-item!             env destination-id directory-item)
+                         (side-effects/update-path-directories! env directory-item +)))))
 
 (defmutation create-directory!
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -4,17 +4,17 @@
 
 (ns x.app-dictionary.api
     (:require [x.app-dictionary.term-handler.lifecycles]
-              [x.app-dictionary.term-handler.engine :as term-handler.engine]
-              [x.app-dictionary.term-handler.subs   :as term-handler.subs]
-              [x.mid-dictionary.term-handler.events :as term-handler.events]))
+              [x.app-dictionary.term-handler.side-effects :as term-handler.side-effects]
+              [x.app-dictionary.term-handler.subs         :as term-handler.subs]
+              [x.mid-dictionary.term-handler.events       :as term-handler.events]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app.dictionary.term-handler.engine
-(def looked-up term-handler.engine/looked-up)
+; x.app.dictionary.term-handler.side-effects
+(def looked-up term-handler.side-effects/looked-up)
 
 ; x.app.dictionary.term-handler.subs
 (def get-term     term-handler.subs/get-term)

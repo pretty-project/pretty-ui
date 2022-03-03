@@ -1,12 +1,15 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns logger.api
-    (:require [logger.engine :as engine]))
+    (:require [logger.side-effects :as side-effects]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; logger.engine
-(def init!  engine/init!)
-(def write! engine/write!)
+; logger.side-effects
+(def init!  side-effects/init!)
+(def write! side-effects/write!)

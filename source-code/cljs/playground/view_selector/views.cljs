@@ -215,7 +215,7 @@
                                 {:label "Password-field w/ adornments" :emptiable? true
                                  :placeholder "Placeholder"
                                  :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}
-                                                    {:label "Ft" :on-click []}]}]
+                                                    {:label "Ft/m2" :on-click []}]}]
        [elements/multiline-field ::multiline-field
                                  {:label "Multiline-field" :placeholder "Placeholder"}]
        [elements/digit-field {}]
