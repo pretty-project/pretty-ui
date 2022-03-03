@@ -80,8 +80,6 @@
   ;   :modifier (function)(opt)
   ;   :render-f (function)
   ;   :subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (component)
   [element-id {:keys [destructor element-props initial-props initializer modifier render-f subscriber]
                :as context-props}]
   (let [initial-props      (element-props->initial-props element-props)

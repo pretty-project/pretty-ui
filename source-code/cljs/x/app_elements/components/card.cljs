@@ -38,8 +38,6 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [card-id {:keys [content]}]
   [:div.x-card--body [components/content card-id content]])
 
@@ -49,8 +47,6 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (hiccup)
   [card-id {:keys [on-click] :as card-props}]
   [:button.x-card (engine/element-attributes card-id card-props
                                              {:on-click    #(a/dispatch on-click)
@@ -63,8 +59,6 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;
-  ; @return (hiccup)
   [card-id card-props]
   [:div.x-card (engine/element-attributes card-id card-props)
                [card-content              card-id card-props]
@@ -77,8 +71,6 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (hiccup)
   [card-id {:keys [on-click] :as card-props}]
   (cond (some? on-click) [button-card card-id card-props]
         (nil?  on-click) [static-card card-id card-props]))
@@ -123,8 +115,6 @@
   ;
   ; @usage
   ;  [elements/card :my-card {...}]
-  ;
-  ; @return (component)
   ([card-props]
    [element (a/id) card-props])
 

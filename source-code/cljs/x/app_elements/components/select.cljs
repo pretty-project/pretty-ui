@@ -186,8 +186,6 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) options-props
-  ;
-  ; @return (component)
   [popup-id _]
   [button {:preset   :close-icon-button
            :on-click [:ui/close-popup! popup-id]}])
@@ -197,8 +195,6 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) options-props
-  ;
-  ; @return (component)
   [_ {:keys [options-label]}]
   [label {:content options-label}])
 
@@ -207,8 +203,6 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) options-props
-  ;
-  ; @return (component)
   [popup-id options-props]
   [horizontal-polarity ::select-options-label-header
                        {:middle-content [select-options-label popup-id options-props]}])
@@ -218,8 +212,6 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) options-props
-  ;
-  ; @return (component)
   [popup-id options-props]
   [horizontal-polarity ::select-options-cancel-header
                        {:end-content [select-options-close-button popup-id options-props]}])
@@ -229,8 +221,6 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) options-props
-  ;
-  ; @return (component)
   [popup-id {:keys [options-label user-cancel?] :as options-props}]
   (cond (some?   options-label) [select-options-label-header  popup-id options-props]
         (boolean user-cancel?)  [select-options-cancel-header popup-id options-props]))
@@ -243,8 +233,6 @@
   ;  {:get-label-f (function)
   ;   :options-id (keyword)}
   ; @param (*) option
-  ;
-  ; @return (hiccup)
   [popup-id {:keys [get-label-f options-id] :as options-props} option]
   (let [option-label (get-label-f option)]
        [:button.x-select--option (engine/selectable-option-attributes options-id options-props option)
@@ -256,8 +244,6 @@
   ; @param (keyword) popup-id
   ; @param (map) options-props
   ;  {:options (vector)}
-  ;
-  ; @return (hiccup)
   [popup-id {:keys [options] :as options-props}]
   (letfn [(f [options option] (conj options [select-option popup-id options-props option]))]
          (reduce f [:div.x-select--options] options)))
@@ -268,8 +254,6 @@
   ; @param (keyword) popup-id
   ; @param (map) options-props
   ;  {:options (vector)}
-  ;
-  ; @return (component)
   [_ {:keys [no-options-label]}]
   [:div.x-select--no-options-label [components/content no-options-label]])
 
@@ -279,8 +263,6 @@
   ; @param (keyword) popup-id
   ; @param (map) options-props
   ;  {:options (vector)}
-  ;
-  ; @return (component)
   [popup-id {:keys [options] :as options-props}]
   (if (vector/nonempty? options)
       [select-options   popup-id options-props]
@@ -292,8 +274,6 @@
   ; @param (keyword) popup-id
   ; @param (map) options-props
   ;  {:options-id (keyword)}
-  ;
-  ; @return (component)
   [popup-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
                          {:element-props options-props
@@ -310,8 +290,6 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;
-  ; @return (hiccup)
   [_ _]
   [:i.x-select--button-icon SELECT-BUTTON-ICON])
 
@@ -320,8 +298,6 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;
-  ; @return (hiccup)
   [_ select-props]
   (let [button-label (select-props->select-button-label select-props)]
        [:div.x-select--button-label [components/content button-label]]))
@@ -331,8 +307,6 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;
-  ; @return (hiccup)
   [select-id select-props]
   [:button.x-select--button-body (engine/clickable-body-attributes select-id select-props)
                                  [select-button-label              select-id select-props]
@@ -343,8 +317,6 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;
-  ; @return (hiccup)
   [select-id select-props]
   [:div.x-select--button [select-button-body    select-id select-props]
                          [engine/element-helper select-id select-props]])
@@ -356,8 +328,6 @@
   ; @param (map) select-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   (if label [:div.x-select--label [components/content label]
                                   (if required? [:span.x-input--label-asterisk "*"])]))
@@ -367,8 +337,6 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;
-  ; @return (hiccup)
   [select-id select-props]
   [:div.x-select (engine/element-attributes select-id select-props)
                  [select-label              select-id select-props]
@@ -380,8 +348,6 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {:as-button? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [select-id {:keys [as-button?] :as select-props}]
   (if as-button? ; If {:as-button? true} ...
                  (let [button-props (as-> select-props % (engine/apply-preset button/BUTTON-PROPS-PRESETS %)
@@ -445,8 +411,6 @@
   ;                    :layout     :icon-button
   ;                    :options-path [:my-options]
   ;                    :value-path   [:my-selected-option]}]
-  ;
-  ; @return (hiccup)
   ([select-props]
    [element (a/id) select-props])
 

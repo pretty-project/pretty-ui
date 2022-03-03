@@ -58,8 +58,6 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {:resetable? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [counter-id {:keys [resetable?] :as counter-props}]
   (if resetable? [:button.x-counter--reset-button (engine/countable-reset-attributes counter-id counter-props)]))
 
@@ -70,8 +68,6 @@
   ; @param (map) counter-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   (if label [:div.x-counter--label [components/content label]
                                    (if required? [:span.x-input--label-asterisk "*"])]))
@@ -82,8 +78,6 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [counter-id counter-props]
   [:button.x-counter--increase-button (engine/countable-increase-attributes counter-id counter-props)])
 
@@ -93,8 +87,6 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [counter-id counter-props]
   [:button.x-counter--decrease-button (engine/countable-decrease-attributes counter-id counter-props)])
 
@@ -104,8 +96,6 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {:value (integer)}
-  ;
-  ; @return (hiccup)
   [counter-id {:keys [value] :as counter-props}]
   [:div.x-counter--body [counter-decrease-button counter-id counter-props]
                         [:div.x-counter--value value]
@@ -118,8 +108,6 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;
-  ; @return (hiccup)
   [counter-id counter-props]
   [:div.x-counter (engine/element-attributes counter-id counter-props)
                   [counter-body              counter-id counter-props]
@@ -158,8 +146,6 @@
   ;
   ; @usage
   ;  [elements/counter :my-counter {...}]
-  ;
-  ; @return (component)
   ([counter-props]
    [element (a/id) counter-props])
 

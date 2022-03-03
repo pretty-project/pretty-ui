@@ -164,8 +164,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (hiccup)
   [group-id group-props]
   (let [chip-group-props (group-props->chip-group-props group-id group-props)]
        [:div.x-multi-combo-box--chip-group [chip-group chip-group-props]]))
@@ -175,8 +173,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (component)
   [group-id group-props]
   [components/subscriber group-id
                          {:base-props group-props
@@ -188,8 +184,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (hiccup)
   [group-id group-props]
   (let [field-id    (group-id->field-id    group-id)
         field-props (field-props-prototype group-id group-props)]
@@ -200,8 +194,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (component)
   [group-id group-props]
   [:div.x-multi-combo-box (engine/element-attributes   group-id group-props)
                           [multi-combo-box-chip-group  group-id group-props]
@@ -266,8 +258,6 @@
   ;
   ; @usage
   ;  [elements/multi-combo-box :my-multi-combo-box {...}]
-  ;
-  ; @return (component)
   ([group-props]
    [element (a/id) group-props])
 

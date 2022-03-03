@@ -48,8 +48,6 @@
   ; @param (map) label-props
   ;  {:icon (keyword)
   ;   :icon-family (keyword)}
-  ;
-  ; @return (hiccup or nil)
   [_ {:keys [icon icon-family]}]
   [:i.x-label--icon {:data-icon-family icon-family}
                     (param icon)])
@@ -60,8 +58,6 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [content]}]
   [:div.x-label--body [components/content content]])
 
@@ -71,8 +67,6 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ;  {:icon (keyword)}
-  ;
-  ; @return (hiccup)
   [label-id {:keys [icon] :as label-props}]
   [:div.x-label (engine/element-attributes label-id label-props)
                 (if icon [label-icon label-id label-props])
@@ -120,8 +114,6 @@
   ;
   ; @usage
   ;  [elements/label :my-label {...}]
-  ;
-  ; @return (component)
   ([label-props]
    [element (a/id) label-props])
 

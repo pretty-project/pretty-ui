@@ -80,8 +80,6 @@
   ; @param (map) group-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-checkbox-group--label [components/content label]
                                 (if required? [:span.x-input--label-asterisk "*"])])
@@ -92,8 +90,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ; @param (*) option
-  ;
-  ; @return (hiccup)
   [group-id {:keys [get-label-f] :as group-props} option]
   (let [option-label (get-label-f option)]
        [:button.x-checkbox-group--option (engine/collectable-option-attributes group-id group-props option)
@@ -106,8 +102,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:options (vector)}
-  ;
-  ; @return (hiccup)
   [group-id {:keys [options] :as group-props}]
   (reduce #(conj %1 [checkbox-group-option group-id group-props %2])
            [:div.x-checkbox-group--options]
@@ -118,8 +112,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (component)
   [group-id {:keys [] :as group-props}]
   (if false [:button.x-checkbox-group--check-all-options-button]))
               ;(engine/...-attributes group-id group-props)
@@ -129,8 +121,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (hiccup)
   [group-id group-props]
   [:div.x-checkbox-group--header [checkbox-group-check-all-options-button group-id group-props]
                                  [checkbox-group-label                    group-id group-props]])
@@ -140,8 +130,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (hiccup)
   [group-id group-props]
   [:div.x-checkbox-group (engine/element-attributes group-id group-props)
                          (str group-props)
@@ -186,8 +174,6 @@
   ;
   ; @usage
   ;  [elements/checkbox-group :my-checkbox-group {...}]
-  ;
-  ; @return (component)
   ([group-props]
    [element (a/id) group-props])
 

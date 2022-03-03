@@ -21,23 +21,27 @@
 ;; ----------------------------------------------------------------------------
 
 (defn app-logo
-  ; @return (hiccup)
+  ; @usage
+  ;  [ui/app-logo]
   []
   [:div.x-app-logo])
 
 (defn mt-logo
-  ; @return (hiccup)
+  ; @usage
+  ;  [ui/mt-logo]
   []
   [:div.x-mt-logo])
 
 (defn app-title
   ; @param (string) title
   ;
-  ; @return (hiccup)
+  ; @usage
+  ;  [ui/app-title]
   [title]
   [:div.x-app-title title])
 
 (defn loading-animation
-  ; @return (hiccup)
+  ; @usage
+  ;  [ui/loading-animation]
   []
   [:div.x-loading-animation "Loading"])

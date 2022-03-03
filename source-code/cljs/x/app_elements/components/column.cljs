@@ -39,8 +39,6 @@
   ; @param (keyword) column-id
   ; @param (map) column-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [column-id {:keys [content]}]
   [:div.x-column--body [components/content column-id content]])
 
@@ -49,8 +47,6 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ;
-  ; @return (hiccup)
   [column-id column-props]
   [:div.x-column (engine/flexible-attributes column-id column-props)
                  [column-body                column-id column-props]])
@@ -78,8 +74,6 @@
   ;
   ; @usage
   ;  [elements/column :my-column {...}]
-  ;
-  ; @return (component)
   ([column-props]
    [element (a/id) column-props])
 

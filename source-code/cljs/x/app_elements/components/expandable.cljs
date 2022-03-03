@@ -58,8 +58,6 @@
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
   ;  {:expanded? (boolean)}
-  ;
-  ; @return (hiccup)
   [expandable-id {:keys [expanded?]}]
   (if (nonfalse? expanded?)
       [:i.x-expandable--expand-icon :expand_less]
@@ -71,8 +69,6 @@
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [icon]}]
   (if icon [:i.x-expandable--icon icon]))
 
@@ -82,8 +78,6 @@
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   (if label [:div.x-expandable--label [components/content label]]))
 
@@ -92,8 +86,6 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;
-  ; @return (hiccup)
   [expandable-id expandable-props]
   [:button.x-expandable--header {:on-click    #(a/dispatch [:elements/toggle-element-expansion! expandable-id])
                                  :on-mouse-up #(environment/blur-element!)}
@@ -108,8 +100,6 @@
   ; @param (map) expandable-props
   ;  {:content (metamorphic-content)(opt)
   ;   :expanded? (boolean)}
-  ;
-  ; @return (hiccup)
   [expandable-id {:keys [content expanded?]}]
   (if expanded? [:div.x-expandable--body [components/content expandable-id content]]))
 
@@ -118,8 +108,6 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;
-  ; @return (hiccup)
   [expandable-id expandable-props]
   [:div.x-expandable (engine/element-attributes expandable-id expandable-props)
                      [expandable-header         expandable-id expandable-props]
@@ -149,8 +137,6 @@
   ;
   ; @usage
   ;  [elements/expandable :my-expandable {...}]
-  ;
-  ; @return (component)
   ([expandable-props]
    [element (a/id) expandable-props])
 

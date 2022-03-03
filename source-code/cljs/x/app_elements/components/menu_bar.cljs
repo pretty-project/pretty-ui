@@ -89,8 +89,6 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (hiccup)
   [_ _ {:keys [icon]}]
   (if icon [:div.x-menu-bar--menu-item--icon icon]))
 
@@ -101,8 +99,6 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ _ {:keys [label]}]
   (if label [:div.x-menu-bar--menu-item--label [components/content label]]))
 
@@ -112,8 +108,6 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;
-  ; @return (hiccup)
   [bar-id bar-props item-props]
   [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                                  [menu-item-icon       bar-id bar-props item-props]
@@ -126,8 +120,6 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;
-  ; @return (hiccup)
   [bar-id bar-props item-props]
   [:a.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                             [menu-item-icon       bar-id bar-props item-props]
@@ -141,8 +133,6 @@
   ; @param (map) item-props
   ;  {:href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (hiccup)
   [bar-id bar-props {:keys [href on-click] :as item-props}]
   (cond (some? href)     [anchor-item bar-id bar-props item-props]
         (some? on-click) [button-item bar-id bar-props item-props]))
@@ -153,8 +143,6 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ;  {:menu-items (maps in vector)}
-  ;
-  ; @return (hiccup)
   [bar-id {:keys [menu-items] :as bar-props}]
   ; XXX#5406
   ; A {:orientation :horizontal} menük esetén az overflow-x: scroll tulajdonság
@@ -170,8 +158,6 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;
-  ; @return (hiccup)
   [bar-id bar-props]
   [:div.x-menu-bar (menu-bar-attributes bar-id bar-props)
                    [menu-items          bar-id bar-props]])
@@ -220,8 +206,6 @@
   ;
   ; @usage
   ;  [elements/menu-bar :my-menu-bar {...}]
-  ;
-  ; @return (component)
   ([bar-props]
    [element (a/id) bar-props])
 

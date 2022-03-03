@@ -103,8 +103,6 @@
   ;                           :initial-props    {...}
   ;                           :modifier         my-modifier
   ;                           :subscribed-props {...}}]
-  ;
-  ; @return (component)
   ([context-props]
    [component (a/id) context-props])
 

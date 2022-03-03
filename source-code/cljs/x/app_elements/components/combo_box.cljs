@@ -130,8 +130,6 @@
   ; @param (map) field-props
   ;  {:get-label-f (function)}
   ; @param (map) option
-  ;
-  ; @return (hiccup)
   [_ {:keys [get-label-f]} option]
   (let [option-label (get-label-f option)]
        [:div.x-combo-box--option-label [components/content option-label]]))
@@ -147,8 +145,6 @@
   ;  {:option (*)
   ;   :selected? (boolean)}
   ; @param (integer) option-dex
-  ;
-  ; @return (hiccup)
   [field-id {:keys [option-component select-option-event] :as field-props}
             {:keys [highlighted? option selected?]} option-dex]
   (let [select-option-event (field-props->select-option-event field-id field-props option)]
@@ -172,8 +168,6 @@
   ;  {:rendered-options (maps in vector)
   ;   [{:option (*)
   ;     :selected? (boolean)}]}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [rendered-options] :as field-props}]
   (reduce-indexed (fn [rendered-options option-dex option-data]
                       (conj rendered-options
@@ -188,8 +182,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:no-options-label (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [no-options-label]}]
   [:div.x-combo-box--no-options-label ; BUG#2105
                                       {:on-mouse-down #(.preventDefault %)
@@ -202,8 +194,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:value (*)}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [value]}]            ; BUG#2105
   [:button.x-combo-box--extender-button {:on-mouse-down #(.preventDefault %)
                                          :on-mouse-up   #(a/dispatch [:elements/add-option! field-id value])}
@@ -215,8 +205,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (component)
   [field-id field-props]
   [:div.x-combo-box--surface (if (engine/field-props->render-options?  field-props)
                                  [combo-box-options           field-id field-props])
@@ -230,26 +218,11 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (component)
   [field-id field-props]
   [components/subscriber field-id
                          {:base-props field-props
                           :render-f   #'combo-box-surface-structure
                           :subscriber [:elements/get-combo-box-surface-props field-id]}])
-
-(defn field-props<-surface
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {:surface (metamorphic-content)(opt)
-  ;
-  ; @return (map)
-  ;  {:surface (metamorphic-content)
-  [field-id {:keys [surface] :as field-props}]
-  (if surface (return field-props)
-              (assoc  field-props :surface [combo-box-surface field-id field-props])))
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -319,18 +292,19 @@
   ;  [elements/combo-box {:get-label-f  #(get % :name)
   ;                       :options-path [:my-options]
   ;                       :value-path   [:my-value]}]]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (as-> field-props % (field-props-prototype                       field-id %)
-                                         (components.text-field/field-props-prototype field-id %)
-                                         (field-props<-surface                        field-id %))]
-        [engine/stated-element field-id
-                               {:element-props field-props
-                                :modifier      field-props-modifier
-                                :render-f      #'text-field
-                                :initializer   [:elements/init-selectable!    field-id]
-                                :subscriber    [:elements/get-combo-box-props field-id]}])))
+   (letfn [(field-props<-surface [field-id {:keys [surface] :as field-props}]
+                                 (if surface (return field-props)
+                                             (assoc  field-props :surface [combo-box-surface field-id field-props])))]
+          (let [field-props (as-> field-props % (field-props-prototype                       field-id %)
+                                                (components.text-field/field-props-prototype field-id %)
+                                                (field-props<-surface                        field-id %))]
+               [engine/stated-element field-id
+                                      {:element-props field-props
+                                       :modifier      field-props-modifier
+                                       :render-f      #'text-field
+                                       :initializer   [:elements/init-selectable!    field-id]
+                                       :subscriber    [:elements/get-combo-box-props field-id]}]))))

@@ -62,8 +62,6 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; @param (string) option
-  ;
-  ; @return (hiccup)
   [picker-id picker-props option]
   [:button.x-color-picker--option (engine/collectable-option-attributes picker-id picker-props option)
     [:div.x-color-picker--option--color {:style {:background-color option}}]])
@@ -74,8 +72,6 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ;  {:options (strings in vector)}
-  ;
-  ; @return (hiccup)
   [picker-id {:keys [options] :as picker-props}]
   (reduce (fn [color-list option]
               (conj color-list [color-picker-option picker-id picker-props option]))
@@ -87,8 +83,6 @@
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ;
-  ; @return (hiccup)
   [picker-id picker-props]
   [:div.x-color-picker--reset-button])
 
@@ -99,8 +93,6 @@
   ; @param (map) picker-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   (if label [:div.x-color-picker--label [components/content label]
                                         (if required? [:span.x-input--label-asterisk "*"])]))
@@ -110,8 +102,6 @@
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ;
-  ; @return (hiccup)
   [picker-id picker-props]
   [:div.x-color-picker--header
     [color-picker-reset-button picker-id picker-props]
@@ -122,8 +112,6 @@
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ;
-  ; @return (hiccup)
   [picker-id picker-props]
   [:div.x-color-picker (engine/element-attributes picker-id picker-props)
                        [color-picker-header       picker-id picker-props]
@@ -164,8 +152,6 @@
   ;
   ; @usage
   ;  [elements/color-picker {:initial-options ["red" "green" "blue"]}]
-  ;
-  ; @return (component)
   ([picker-props]
    [element (a/id) picker-props])
 

@@ -135,8 +135,6 @@
   ;                       :rows [["My data #1" 30 50]
   ;                              ["My data #2" 10 90]
   ;                              ["My data #3" 20 75]]
-  ;
-  ; @return (component)
   ([table-props]
    [element (a/id) table-props])
 

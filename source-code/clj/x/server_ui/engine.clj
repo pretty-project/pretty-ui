@@ -27,8 +27,6 @@
   ;
   ; @usage
   ;  (ui/include-js {:uri "/my-script.js"})
-  ;
-  ; @return (hiccup)
   [{:keys [uri]}]
   [:script {:type "text/javascript" :src uri}])
 
@@ -39,8 +37,6 @@
   ;
   ; @usage
   ;  (ui/include-css {:uri "/my-style.css"})
-  ;
-  ; @return (hiccup)
   [{:keys [on-load uri]}]
   [:link {:type "text/css" :href uri :rel "stylesheet" :on-load on-load}])
 
@@ -52,8 +48,6 @@
   ; @usage
   ;  (ui/include-favicon {:uri  "/my-favicon.ico"
   ;                       :size "16x16"})
-  ;
-  ; @return (hiccup)
   [{:keys [uri size]}]
   [:link {:rel "icon" :type "image/png" :href uri :sizes size}])
 
@@ -69,7 +63,5 @@
   ;  (ui/include-font {:uri "/my-style.css"})
   ;  =>
   ;  [:style {:type "text/css"} "@import url('/my-style.css')"]
-  ;
-  ; @return (hiccup)
   [{:keys [uri]}]
   [:style {:type "text/css"} (str "@import " (css/url uri))])

@@ -60,8 +60,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   (if label [:div.x-date-field--label [components/content label]]))
 
@@ -70,8 +68,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:input.x-date-field--input (engine/field-body-attributes field-id field-props)])
 
@@ -80,8 +76,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:label.x-date-field (engine/element-attributes field-id field-props)
                        [date-field-label          field-id field-props]
@@ -116,8 +110,6 @@
   ;
   ; @usage
   ;  [elements/date-field :my-date-field {...}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

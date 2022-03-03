@@ -112,8 +112,6 @@
   ; @param (map) field-props
   ;  {:surface (metamorphic-content)(opt)
   ;   :surface-visible? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [surface surface-visible?]}]
   (if (and surface surface-visible?)
       [:div.x-text-field--surface [components/content field-id surface]]))
@@ -125,8 +123,6 @@
   ; @param (map) field-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   (if label [:div.x-text-field--label [components/content label]
                                       (if required? [:span.x-input--label-asterisk "*"])]))
@@ -137,8 +133,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:placeholder (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [placeholder] :as field-props}]
   (if (engine/field-props->render-field-placeholder? field-props)
       [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id field-props)
@@ -150,8 +144,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:value (string)}
-  ;
-  ; @return (hiccup)
   [field-id {:keys [value] :as field-props}]
   [:input.x-text-field--input (engine/field-body-attributes field-id field-props)])
 
@@ -161,8 +153,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:invalid-message (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [invalid-message]}]
   (if invalid-message [:div.x-text-field--invalid-message [components/content invalid-message]]))
 
@@ -171,8 +161,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:div.x-text-field--input-container
     [text-field-input                field-id field-props]
@@ -186,8 +174,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   ; XXX#8094
   ; A text-field komponensbe helyezett placeholder komponensre kattintva az input elem fókuszt kap,
@@ -322,8 +308,6 @@
   ;
   ; @usage
   ; [elements/text-field {:modifier #(string/starts-with! % "/")}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

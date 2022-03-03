@@ -115,8 +115,6 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [renderer :surface {:element               #'surface-element
                       :max-elements-rendered 1

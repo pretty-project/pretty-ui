@@ -41,8 +41,6 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [row-id {:keys [content]}]
   [:div.x-row--body [components/content row-id content]])
 
@@ -52,8 +50,6 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [row-id row-props]
   [:div.x-row (engine/flexible-attributes row-id row-props)
               [row-body                   row-id row-props]])
@@ -81,8 +77,6 @@
   ;
   ; @usage
   ;  [elements/row :my-row {...}]
-  ;
-  ; @return (component)
   ([row-props]
    [element (a/id) row-props])
 

@@ -53,8 +53,6 @@
   ;    Default: :material-icons-filled
   ;   :on-click (metamorphic-event)
   ;   :tooltip (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [element-id _ {:keys [icon icon-family on-click tooltip]}]
   [:button.x-element--sticker-button {:on-click        #(a/dispatch on-click)
                                       :on-mouse-up     #(environment/blur-element!)
@@ -73,8 +71,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled}
-  ;
-  ; @return (hiccup)
   [_ _ {:keys [disabled? icon icon-family]}]
   [:i.x-element--sticker-icon (if disabled? {:data-disabled true
                                              :data-icon-family (param icon-family)}
@@ -89,8 +85,6 @@
   ; @param (map) sticker-props
   ;  {:disabled? (boolean)(opt)
   ;   :on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (component)
   [element-id element-props {:keys [disabled? on-click] :as sticker-props}]
   (if (and (some? on-click)
            (not   disabled?))
@@ -103,8 +97,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:stickers (maps in vector)(opt)}
-  ;
-  ; @return (hiccup)
   [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
       (reduce (fn [%1 %2] (let [%2 (sticker-props-prototype %2)]

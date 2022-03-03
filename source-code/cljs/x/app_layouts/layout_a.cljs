@@ -52,8 +52,6 @@
   ;   :disabled? (boolean)(opt)
   ;   :header (map)(opt)
   ;   :min-width (keyword)}
-  ;
-  ; @return (component)
   [layout-id {:keys [body header] :as layout-props}]
   [:div.x-body-a (engine/layout-body-attributes layout-id layout-props)
                  [:div.x-body-a--content-structure
@@ -75,8 +73,6 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   ;  {:description (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
   [layout-id {:keys [description] :as layout-props}]
   [:<> (if description [:div.x-description-a (components/content {:content description})]
                        [:div.x-description-a--placeholder])
@@ -103,8 +99,6 @@
   ;
   ; @usage
   ;  [layouts/layout-a :my-layout {...}]
-  ;
-  ; @return (component)
   ([layout-props]
    [layout (a/id) layout-props])
 

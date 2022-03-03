@@ -65,8 +65,6 @@
   ;
   ; @usage
   ;  [elements/submit-button :my-submit-button {...}]
-  ;
-  ; @return (component)
   ([button-props]
    [element (a/id) button-props])
 

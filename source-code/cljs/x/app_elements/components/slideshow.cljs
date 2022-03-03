@@ -77,8 +77,6 @@
   ; @param (map) slideshow-props
   ;  {:prev-step (map)
   ;    {:image-uri (string)}}
-  ;
-  ; @return (hiccup)
   [slideshow-id {:keys [prev-step]}]
   [:div.x-slideshow--prev-step {:style {:background-image (css/url (:image-uri prev-step))}}])
 
@@ -89,8 +87,6 @@
   ; @param (map) slideshow-props
   ;  {:current-step (map)
   ;    {:image-uri (string)}}
-  ;
-  ; @return (hiccup)
   [slideshow-id {:keys [current-step]}]
   [:div.x-slideshow--current-step {:style {:background-image (css/url (:image-uri current-step))}}])
 
@@ -101,8 +97,6 @@
   ; @param (map) slideshow-props
   ;  {:current-step (map)
   ;    {:image-uri (string)}}
-  ;
-  ; @return (hiccup)
   [slideshow-id {:keys [current-step]}]
   [:div.x-slideshow--temp-step {:style {:background-image (css/url (:image-uri current-step))}}])
 
@@ -113,8 +107,6 @@
   ; @param (map) slideshow-props
   ;  {:next-step (map)
   ;    {:image-uri (string)}}
-  ;
-  ; @return (hiccup)
   [slideshow-id {:keys [next-step]}]
   [:div.x-slideshow--next-step {:style {:background-image (css/url (:image-uri next-step))}}])
 
@@ -123,8 +115,6 @@
   ;
   ; @param (keyword) slideshow-id
   ; @param (map) slideshow-props
-  ;
-  ; @return (hiccup)
   [slideshow-id slideshow-props]
   [:div.x-slideshow--steps [slideshow-prev-step    slideshow-id slideshow-props]
                            [slideshow-current-step slideshow-id slideshow-props]
@@ -136,8 +126,6 @@
   ;
   ; @param (keyword) slideshow-id
   ; @param (map) slideshow-props
-  ;
-  ; @return (hiccup)
   [slideshow-id slideshow-props]
   [:div.x-slideshow--controls [:button.x-slideshow--controls--go-bwd
                                 {:on-click    #(a/dispatch [:gestures/step-backward! slideshow-id])
@@ -151,8 +139,6 @@
   ;
   ; @param (keyword) slideshow-id
   ; @param (map) slideshow-props
-  ;
-  ; @return (hiccup)
   [slideshow-id slideshow-props]
   [:div.x-slideshow
     (engine/steppable-attributes slideshow-id slideshow-props)
@@ -194,8 +180,6 @@
   ;
   ; @usage
   ;  [elements/slideshow :my-slideshow {...}]
-  ;
-  ; @return (component)
   ([slideshow-props]
    [element (a/id) slideshow-props])
 

@@ -86,8 +86,6 @@
   ;  {:color (keyword)
   ;   :sub (integer)
   ;   :value (integer)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [diameter strength total-value] :as diagram-props} {:keys [color sum value]}]
   (let [x  (/ diameter 2)
         y  (/ diameter 2)
@@ -112,8 +110,6 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ;  {:sections (maps in vector)}
-  ;
-  ; @return (hiccup)
   [diagram-id {:keys [sections] :as diagram-props}]
   (reduce (fn [circle-diagram-sections section-props]
               (conj circle-diagram-sections [circle-diagram-section diagram-id diagram-props section-props]))
@@ -125,8 +121,6 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ;  {:diameter (px)}
-  ;
-  ; @return (hiccup)
   [diagram-id {:keys [diameter] :as diagram-props}]
   [:div.x-circle-diagram--svg {:style {:height (css/px diameter)
                                        :width  (css/px diameter)}}
@@ -139,8 +133,6 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   (if label [:div.x-circle-diagram--label]))
 
@@ -149,8 +141,6 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;
-  ; @return (hiccup)
   [diagram-id diagram-props]
   [:div.x-circle-diagram (engine/element-attributes diagram-id diagram-props)
                          [circle-diagram-label      diagram-id diagram-props]
@@ -183,8 +173,6 @@
   ;
   ; @usage
   ;  [elements/circle-diagram :my-circle-diagram {...}]
-  ;
-  ; @return (component)
   ([diagram-props]
    [element (a/id) diagram-props])
 

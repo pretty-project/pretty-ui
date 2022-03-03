@@ -42,8 +42,6 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [text-id {:keys [content] :as text-props}]
   [:div.x-text (engine/element-attributes text-id text-props)
                [:div.x-text--body [components/content text-id content]]])
@@ -84,8 +82,6 @@
   ;
   ; @usage
   ;  [elements/text :my-text {...}]
-  ;
-  ; @return (component)
   ([text-props]
    [element (a/id) text-props])
 

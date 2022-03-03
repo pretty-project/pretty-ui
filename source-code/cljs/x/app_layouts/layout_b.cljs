@@ -49,8 +49,6 @@
   ; @param (map) card-props
   ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ _ {:keys [icon label]}]
   ; Ha a label értéke hosszú, és a kártya jobb széléig ér, akkor szükséges az {:indent :right} beállítás
   [elements/label {:content label :icon icon :indent :right}])
@@ -64,8 +62,6 @@
   ;  {:badge-color (keyword)(opt)
   ;   :min-width (keyword)(opt)
   ;   :on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (component)
   [layout-id layout-props {:keys [badge-color min-width on-click] :as card-props}]
   [elements/card {:content [card-label layout-id layout-props card-props]
                   :horizontal-align :left :on-click on-click :badge-color badge-color
@@ -77,8 +73,6 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   ;  {:cards (maps in vector)}
-  ;
-  ; @return (component)
   [layout-id {:keys [cards] :as layout-props}]
   (reduce (fn [card-list card-props]
               (conj card-list [card layout-id layout-props card-props]))
@@ -90,8 +84,6 @@
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;
-  ; @return (component)
   [layout-id layout-props]
   [:div.x-body-b (engine/layout-body-attributes layout-id layout-props)
                  [card-list layout-id layout-props]])
@@ -101,8 +93,6 @@
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;
-  ; @return (component)
   [layout-id layout-props]
   [layout-body layout-id layout-props])
 
@@ -131,8 +121,6 @@
   ;
   ; @usage
   ;  [layouts/layout-b :my-layout {...}]
-  ;
-  ; @return (component)
   ([layout-props]
    [layout (a/id) layout-props])
 

@@ -29,8 +29,6 @@
   ; @param (map) header-props
   ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [icon label]}]
   [elements/label ::header-label
                   {:content label :icon icon :color :muted :font-size :m :font-weight :extra-bold :layout :fit}])
@@ -40,8 +38,6 @@
   ;
   ; @param (keyword)(opt) header-id
   ; @param (map) header-props
-  ;
-  ; @return (hiccup)
   [header-id header-props]
   [:div.x-header-a [header-label header-id header-props]])
 
@@ -50,8 +46,6 @@
   ; @param (map) header-props
   ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (component)
   ([header-props]
    [header (a/id) header-props])
 

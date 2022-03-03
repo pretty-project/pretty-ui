@@ -60,8 +60,6 @@
   ; @param (map) label-props
   ;  {:color (keyword)(opt)
   ;   :content (metamorphic-content)}
-  ;
-  ; @return (component)
   ([label-props]
    [input-group-label (a/id) label-props])
 
@@ -75,8 +73,6 @@
   ; @param (map) header-props
   ;  {:color (keyword)(opt)
   ;   :label (metamorphic-content)}
-  ;
-  ; @return (component)
   ([header-props]
    [input-group-header (a/id) header-props])
 

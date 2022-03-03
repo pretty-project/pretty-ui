@@ -45,8 +45,6 @@
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ;  {:view (map)}
-  ;
-  ; @return (hiccup)
   [surface-id {:keys [view]}]
   [:div.x-app-surface--element--view
     [components/content surface-id view]])
@@ -56,8 +54,6 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) surface-props
-  ;
-  ; @return (hiccup)
   [surface-id surface-props]
   [:div (surface-attributes surface-id surface-props)
         [surface-view       surface-id surface-props]])

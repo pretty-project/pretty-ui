@@ -40,8 +40,6 @@
   ;
   ; @usage
   ;  [elements/horizontal-separator :my-horizontal-separator {...}]
-  ;
-  ; @return (component)
   ([separator-props]
    [element (a/id) separator-props])
 

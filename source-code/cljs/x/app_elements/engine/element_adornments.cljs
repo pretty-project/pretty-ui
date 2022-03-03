@@ -58,8 +58,6 @@
   ;    False érték esetén az adornment gomb nem indexelődik tabolható elemként.
   ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [element-id _ {:keys [icon icon-family label on-click tab-indexed? tooltip]}]
   (let [; BUG#2105
         ;  A *-field elemhez adott element-adornment-button gombon történő on-mouse-down esemény
@@ -85,8 +83,6 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;   :label (string)(opt)}
-  ;
-  ; @return (hiccup)
   [_ _ {:keys [icon icon-family label]}]
   (cond icon  [:i.x-element--static-adornment {:data-icon-family icon-family} icon]
         label [:i.x-element--static-adornment label]))
@@ -98,8 +94,6 @@
   ; @param (map) element-props
   ; @param (map) adornment-props
   ;  {:on-click (metamorphic-event)(opt)}
-  ;
-  ; @return (component)
   [element-id element-props {:keys [on-click] :as adornment-props}]
   (if on-click [button-adornment element-id element-props adornment-props]
                [static-adornment element-id element-props adornment-props]))
@@ -110,8 +104,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:end-adornments (maps in vector)(opt)}
-  ;
-  ; @return (hiccup)
   [element-id {:keys [end-adornments] :as element-props}]
   (if (vector/nonempty? end-adornments)
       (reduce (fn [%1 %2] (let [%2 (adornment-props-prototype %2)]
@@ -124,8 +116,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:start-adornments (maps in vector)(opt)}
-  ;
-  ; @return (hiccup)
   [element-id {:keys [start-adornments] :as element-props}]
   (if (vector/nonempty? start-adornments)
       (reduce (fn [%1 %2] (let [%2 (adornment-props-prototype %2)]

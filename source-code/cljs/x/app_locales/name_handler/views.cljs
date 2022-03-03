@@ -17,8 +17,6 @@
   ;
   ; @usage
   ;  [locales/name-order "First" "Last" :reversed]
-  ;
-  ; @return (component)
   [first-name last-name name-order]
   (case name-order :reversed [:<> last-name  first-name]
                              [:<> first-name last-name]))

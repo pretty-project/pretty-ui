@@ -55,8 +55,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:textarea.x-text-field--textarea (engine/field-body-attributes field-id field-props)])
 
@@ -65,8 +63,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:div.x-text-field--input-container [multiline-field-textarea field-id field-props]
                                       [text-field-placeholder   field-id field-props]])
@@ -76,8 +72,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:label.x-text-field (engine/element-attributes          field-id field-props)
                        [text-field-label                   field-id field-props]
@@ -165,8 +159,6 @@
   ;  (defn get-invalid-message [value] "Invalid value")
   ;  [elements/multiline-field {:validator {:f                 valid?
   ;                                         :inavlid-message-f get-invalid-message}}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

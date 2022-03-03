@@ -42,8 +42,6 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [icon]}]
   (if icon [:i.x-chip--icon icon]))
 
@@ -53,8 +51,6 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ;  {:label (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   [:div.x-chip--label [components/content label]])
 
@@ -65,8 +61,6 @@
   ; @param (map) chip-props
   ;  {:delete-button-icon (keyword)
   ;   :on-delete (metamorphic-event)(opt)}
-  ;
-  ; @return (hiccup)
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
   (if on-delete [:button.x-chip--delete-button (engine/deletable-body-attributes chip-id chip-props)
                                                [:i.x-chip--delete-button-icon delete-button-icon]]))
@@ -76,8 +70,6 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;
-  ; @return (hiccup)
   [chip-id chip-props]
   [:div.x-chip--body [chip-icon          chip-id chip-props]
                      [chip-label         chip-id chip-props]
@@ -88,8 +80,6 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;
-  ; @return (hiccup)
   [chip-id chip-props]
   [:div.x-chip (engine/element-attributes chip-id chip-props)
                [chip-body                 chip-id chip-props]])
@@ -128,8 +118,6 @@
   ;
   ; @usage
   ;  [elements/chip :my-chip {...}]
-  ;
-  ; @return (component)
   ([chip-props]
    [element (a/id) chip-props])
 

@@ -38,8 +38,6 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   ;  {:icon (keyword)}
-  ;
-  ; @return (hiccup)
   [icon-id {:keys [icon] :as icon-props}]
   [:i.x-icon (engine/element-attributes icon-id icon-props)
              (param icon)])
@@ -74,8 +72,6 @@
   ;
   ; @usage
   ;  [elements/icon :my-icon {...}]
-  ;
-  ; @return (hiccup)
   ([icon-props]
    [element (a/id) icon-props])
 

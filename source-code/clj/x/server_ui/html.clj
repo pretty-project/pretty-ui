@@ -31,8 +31,6 @@
   ;
   ; @usage
   ;  (ui/html [:head] [:body])
-  ;
-  ; @return (hiccup)
   [head body]
   (html5 {:id    "x-document-element"
           ; XXX#7659

@@ -98,8 +98,6 @@
   ;
   ; @usage
   ;  [elements/password-field :my-password-field {...}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

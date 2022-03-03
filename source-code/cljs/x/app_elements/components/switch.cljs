@@ -58,8 +58,6 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ;  {:secondary-label (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [secondary-label]}]
   [:div.x-switch--secondary-label [components/content secondary-label]])
 
@@ -68,8 +66,6 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;
-  ; @return (hiccup)
   [switch-id switch-props]
   [:button.x-switch--secondary-body (engine/checkable-secondary-body-attributes switch-id switch-props)
                                     [switch-secondary-label                     switch-id switch-props]])
@@ -81,8 +77,6 @@
   ; @param (map) switch-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-switch--primary-label [components/content label]
                                 (if required? [:span.x-input--label-asterisk "*"])])
@@ -92,8 +86,6 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;
-  ; @return (hiccup)
   [switch-id switch-props]
   [:button.x-switch--primary-body (engine/checkable-primary-body-attributes switch-id switch-props)
                                   [:div.x-switch--track [:div.x-switch--thumb]]
@@ -106,8 +98,6 @@
   ; @param (map) switch-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-switch--label [components/content label]
                         (if required? [:span.x-input--label-asterisk "*"])])
@@ -117,8 +107,6 @@
   ;
   ; (keyword) switch-id
   ; @param (map) switch-props
-  ;
-  ; @return (hiccup)
   [switch-id switch-props]
   [:button.x-switch--body (engine/checkable-body-attributes switch-id switch-props)
                           [:div.x-switch--track [:div.x-switch--thumb]]
@@ -130,8 +118,6 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ;  {:secondary-label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [switch-id {:keys [secondary-label] :as switch-props}]
   [:div.x-switch (engine/checkable-attributes switch-id switch-props)
                  (if secondary-label [:div {:style {:display :flex}}
@@ -177,8 +163,6 @@
   ;
   ; @usage
   ;  [elements/switch :my-switch {...}]
-  ;
-  ; @return (component)
   ([switch-props]
    [element (a/id) switch-props])
 

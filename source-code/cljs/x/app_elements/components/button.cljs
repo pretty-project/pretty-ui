@@ -67,8 +67,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [content]}]
   ; XXX#0523
   (if content [:div.x-button--label [components/content content]]))
@@ -79,8 +77,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (component or nil)
   [_ {:keys [icon]}]
   [:i.x-button--icon icon])
 
@@ -90,8 +86,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
-  ;
-  ; @return (hiccup)
   [button-id {:keys [icon] :as button-props}]
   [:button.x-button--body (engine/clickable-body-attributes button-id button-props)
                           (if icon [button-icon button-id button-props])
@@ -104,8 +98,6 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;
-  ; @return (hiccup)
   [button-id button-props]
   [:div.x-button (engine/element-attributes   button-id button-props)
                  [button-body                 button-id button-props]
@@ -116,8 +108,6 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;
-  ; @return (component)
   [button-id button-props]
   [engine/stated-element button-id
                          {:render-f      #'button
@@ -188,8 +178,6 @@
   ;
   ; @usage
   ;  [elements/button {:keypress {:key-code 13} :on-click [:do-something!]}]
-  ;
-  ; @return (hiccup)
   ([button-props]
    [element (a/id) button-props])
 

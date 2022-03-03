@@ -35,8 +35,6 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   ;  {:content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [toggle-id {:keys [content] :as toggle-props}]
   [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
                           [components/content               toggle-id content]])
@@ -46,8 +44,6 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ;
-  ; @return (hiccup)
   [toggle-id toggle-props]
   [:div.x-toggle (engine/element-attributes toggle-id toggle-props)
                  [toggle-body               toggle-id toggle-props]])
@@ -76,8 +72,6 @@
   ;
   ; @usage
   ;  [elements/toggle :my-toggle {...}]
-  ;
-  ; @return (component)
   ([toggle-props]
    [element (a/id) toggle-props])
 

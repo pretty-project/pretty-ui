@@ -27,16 +27,12 @@
   ;
   ; @param (keyword)(opt) body-id
   ; @param (map) body-props
-  ;
-  ; @return (hiccup)
   [body-id body-props]
   [:div.x-body-a])
 
 (defn body
   ; @param (keyword)(opt) body-id
   ; @param (map) body-props
-  ;
-  ; @return (component)
   ([body-props]
    [body (a/id) body-props])
 

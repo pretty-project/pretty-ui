@@ -29,8 +29,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:helper (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [helper]}]
   (if helper [:div.x-element--helper [components/content {:content helper}]]))
 
@@ -40,8 +38,6 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:info-tooltip (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [info-tooltip]}]
   (if info-tooltip [:div.x-element--info-tooltip
                      [:i.x-element--info-tooltip--icon :info_outline]

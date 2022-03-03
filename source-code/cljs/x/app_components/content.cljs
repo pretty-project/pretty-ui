@@ -96,8 +96,6 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;   :content (function)}
-  ;
-  ; @return (component)
   [component-id {:keys [base-props content]}]
   [transmitter component-id {:base-props base-props
                              :render-f   content}])
@@ -110,8 +108,6 @@
   ;  {:base-props (map)(opt)
   ;   :content (function)
   ;   :subscriber (subscription-vector)}
-  ;
-  ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
   (let [subscribed-props (a/subscribe subscriber)]
        (fn [_ {:keys [base-props content]}]
@@ -125,8 +121,6 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (component)
   [component-id {:keys [subscriber] :as context-props}]
   (if subscriber [subscribed-render-fn-content component-id context-props]
                  [static-render-fn-content     component-id context-props]))
@@ -137,8 +131,6 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:content (component, keyword or string)}
-  ;
-  ; @return (component or string)
   [component-id {:keys [content] :as context-props}]
   (cond (keyword? content) (dictionary-content component-id context-props)
         (string?  content) (string-content     component-id context-props)
@@ -210,8 +202,6 @@
   ;  (defn my-component [component-id component-props])
   ;  [components/content {:content    [my-component :my-component]
   ;                       :subscriber [:get-my-component-props]}]
-  ;
-  ; @return (component or string)
   ([context-props]
    (component (a/id) context-props))
 

@@ -85,8 +85,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:input.x-digit-field--input {:type "text"
                                 :id (engine/element-id->target-id field-id)
@@ -98,8 +96,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (engine/element-id->target-id field-id)))
                                                                   ; prevent selecting
@@ -113,8 +109,6 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (hiccup)
   [field-id field-props]
   [:div.x-digit-field (engine/element-attributes field-id field-props)
                       [digit-field-input         field-id field-props]
@@ -135,8 +129,6 @@
   ;
   ; @usage
   ;  [elements/digit-field :my-digit-field {...}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

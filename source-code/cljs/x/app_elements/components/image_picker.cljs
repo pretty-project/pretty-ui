@@ -51,8 +51,6 @@
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ;
-  ; @return (hiccup)
   [picker-id picker-props]
   [:div.x-image-picker])
 
@@ -66,8 +64,6 @@
   ;
   ; @usage
   ;  [elements/image-picker :my-image-picker {...}]
-  ;
-  ; @return (component)
   ([picker-props]
    [element (a/id) picker-props])
 

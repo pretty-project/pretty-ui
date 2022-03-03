@@ -38,8 +38,6 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;
-  ; @return (hiccup)
   [diagram-id diagram-props]
   [:div.x-point-diagram
     {:style {:width "500px" :height "300px"}}
@@ -69,8 +67,6 @@
   ;
   ; @usage
   ;  [elements/point-diagram :my-point-diagram {...}]
-  ;
-  ; @return (component)
   ([diagram-props]
    [element (a/id) diagram-props])
 

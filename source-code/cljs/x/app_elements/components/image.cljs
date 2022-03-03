@@ -73,8 +73,6 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ;
-  ; @return (hiccup)
   [image-id image-props]
   (let [image-attributes (image-attributes image-id image-props)]
        [:img.x-image (engine/element-attributes image-id image-props image-attributes)]))
@@ -102,8 +100,6 @@
   ;
   ; @usage
   ;  [elements/image :my-image {...}]
-  ;
-  ; @return (hiccup)
   ([image-props]
    [element (a/id) image-props])
 

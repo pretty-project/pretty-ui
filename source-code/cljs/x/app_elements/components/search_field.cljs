@@ -95,8 +95,6 @@
   ;
   ; @usage
   ;  [elements/search-field :my-search-field {...}]
-  ;
-  ; @return (component)
   ([field-props]
    [element (a/id) field-props])
 

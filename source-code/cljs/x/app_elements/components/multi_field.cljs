@@ -203,8 +203,6 @@
   ; @param (map) group-props
   ;  {:placeholder (metamorphic-content)(opt)}
   ; @param (integer) field-dex
-  ;
-  ; @return (hiccup)
   [group-id {:keys [placeholder] :as group-props} field-dex]
   [:div.x-multi-field--text-field
     {:key (field-dex->react-key group-id group-props field-dex)}
@@ -221,8 +219,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:group-value (vector)}
-  ;
-  ; @return (hiccup)
   [group-id {:keys [group-value] :as group-props}]
   (reduce-indexed (fn [wrapper field-dex _]
                       (conj wrapper [multi-field-text-field group-id group-props field-dex]))
@@ -253,8 +249,6 @@
   ;
   ; @usage
   ;  [elements/multi-field :my-multi-field {...}]
-  ;
-  ; @return (component)
   ([group-props]
    [element (a/id) group-props])
 

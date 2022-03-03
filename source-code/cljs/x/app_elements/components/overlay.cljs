@@ -35,8 +35,6 @@
   ; @param (keyword) overlay-id
   ; @param (map) overlay-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [overlay-id {:keys [content] :as overlay-props}]
   [:div.x-overlay (engine/element-attributes overlay-id overlay-props)
                   [components/content overlay-id content]])
@@ -55,8 +53,6 @@
   ;
   ; @usage
   ;  [elements/overlay :my-overlay {...}]
-  ;
-  ; @return (component)
   ([overlay-props]
    [element (a/id) overlay-props])
 

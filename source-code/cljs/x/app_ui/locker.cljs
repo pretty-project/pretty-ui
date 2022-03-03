@@ -27,8 +27,6 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [:div#x-app-locker
    ; TODO ...

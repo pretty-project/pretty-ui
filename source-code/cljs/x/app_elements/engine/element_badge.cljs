@@ -29,8 +29,6 @@
   ; @param (map) element-props
   ;  {:badge-color (keyword)(opt)
   ;   :badge-content (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [badge-color badge-content]}]
   ; A {:badge-content ...} tulajdonság használható, a {:badge-color ...} tulajdonság meghatározása
   ; nélkül is!

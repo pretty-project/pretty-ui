@@ -124,8 +124,6 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   ; @param (*) cell-content
-  ;
-  ; @return (hiccup)
   [table-id table-props cell-content cell-index]
   [:td.x-table--body-cell (table-props->row-cell-attributes table-props cell-index)
                           [components/content cell-content]])
@@ -138,8 +136,6 @@
   ;  {:columns (maps in vector)(opt)}
   ; @param (vector) row-data
   ; @param (integer) row-dex
-  ;
-  ; @return (hiccup)
   [table-id {:keys [columns] :as table-props} row-data row-dex]
   (let [row-data (vector/count! row-data (count columns))]
        (reduce-indexed #(conj %1 [table-row-cell table-id table-props %3 %2])
@@ -152,8 +148,6 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   ;  {:rows (vectors in vector)(opt)}
-  ;
-  ; @return (hiccup)
   [table-id {:keys [rows] :as table-props}]
   (reduce-indexed #(conj %1 [table-row table-id table-props %3 %2])
                    [:tbody.x-table--body]
@@ -166,8 +160,6 @@
   ; @param (map) table-props
   ; @param (map) column-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ _ {:keys [label]}]
   (if label [:div.x-table--header-cell--label [components/content label]]))
 
@@ -178,8 +170,6 @@
   ; @param (map) table-props
   ; @param (map) column-props
   ; @param (integer) cell-dex
-  ;
-  ; @return (hiccup)
   [table-id table-props column-props cell-dex]
   [:th.x-table--header-cell (table-props->header-cell-attributes table-props column-props cell-dex)
                             [table-header-cell-label    table-id table-props column-props]])
@@ -190,8 +180,6 @@
   ; @param (keyword) table-id
   ; @param (map) table-props
   ;  {:columns (maps in vector)}
-  ;
-  ; @return (hiccup)
   [table-id {:keys [columns] :as table-props}]
   (reduce-indexed #(conj %1 [table-header-cell table-id table-props %3 %2])
                    [:tr.x-table--header-row]
@@ -202,8 +190,6 @@
   ;
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ;
-  ; @return (hiccup)
   [table-id table-props]
   [:thead.x-table--header [table-header-row table-id table-props]])
 
@@ -212,8 +198,6 @@
   ;
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ;
-  ; @return (hiccup)
   [table-id {:keys [label]}]
   (if label [:div.x-table--label [components/content label]]))
 
@@ -222,8 +206,6 @@
   ;
   ; @param (keyword) table-id
   ; @param (map) table-props
-  ;
-  ; @return (hiccup)
   [table-id table-props]
   [:<> [table-label table-id table-props]
        [:table.x-table (engine/table-attributes table-id table-props)
@@ -302,8 +284,6 @@
   ;  [elements/table {:columns 2
   ;                   :rows [["1.40" "4.20"]
   ;                          ["0.40" "3.20"]]]}]
-  ;
-  ; @return (component)
   ([table-props]
    [element (a/id) table-props])
 

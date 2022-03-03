@@ -21,8 +21,6 @@
   ; @usage
   ;  (defn- ui-structure [] [:div ...])
   ;  [app #'ui-structure]
-  ;
-  ; @return (component or hiccup)
   [ui-structure]
   [ui-structure])
  ;[:div#your-app [ui-structure]]

@@ -34,8 +34,6 @@
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   ;  {:start-content (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ {:keys [start-content]}]
   (if start-content [:div.x-vertical-polarity--start-content [components/content start-content]]
                     [:div.x-vertical-polarity--placeholder]))
@@ -46,8 +44,6 @@
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   ;  {:middle-content (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ {:keys [middle-content]}]
   (if middle-content [:div.x-vertical-polarity--middle-content [components/content middle-content]]
                      [:div.x-vertical-polarity--placeholder]))
@@ -58,8 +54,6 @@
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   ;  {:end-content (metamorphic-content)}
-  ;
-  ; @return (component)
   [_ {:keys [end-content orientation]}]
   (if end-content [:div.x-vertical-polarity--end-content [components/content end-content]]
                   [:div.x-vertical-polarity--placeholder]))
@@ -69,8 +63,6 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;
-  ; @return (hiccup)
   [polarity-id polarity-props]
   [:div.x-vertical-polarity (engine/element-attributes polarity-id polarity-props)
                             [start-content             polarity-id polarity-props]
@@ -98,8 +90,6 @@
   ; @usage
   ;  [elements/vertical-polarity {:start-content [:<> [elements/label {:content "My label"}]
   ;                                                   [elements/label {:content "My label"}]]}]
-  ;
-  ; @return (component)
   ([polarity-props]
    [element (a/id) polarity-props])
 

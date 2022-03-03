@@ -58,8 +58,6 @@
   ;
   ; @param (keyword) line-id
   ; @param (map) line-props
-  ;
-  ; @return (hiccup)
   [line-id line-props]
   [:div.x-horizontal-line (engine/element-attributes line-id line-props)
                           [:div.x-horizontal-line--body (line-body-attributes line-id line-props)]])
@@ -83,8 +81,6 @@
   ;
   ; @usage
   ;  [elements/horizontal-line :my-horizontal-line {...}]
-  ;
-  ; @return (component)
   ([line-props]
    [element (a/id) line-props])
 

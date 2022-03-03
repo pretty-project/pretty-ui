@@ -1125,8 +1125,6 @@
   ; @param (map) element-props
   ;  {:destructor (metamorphic-event)(opt)
   ;   :initializer (metamorphic-event)(opt)}
-  ;
-  ; @return (component)
   [element element-id {:keys [destructor initializer] :as element-props}]
   [components/stated element-id {:component   [element element-id element-props]
                                  :destructor  destructor
@@ -1138,8 +1136,6 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   ;  {:attributes (map)(opt)}
-  ;
-  ; @return (hiccup)
   [renderer-id {:keys [attributes]}]
   (let [wrapper-attributes (assoc attributes :id (a/dom-value renderer-id))]
        [:div wrapper-attributes]))
@@ -1153,8 +1149,6 @@
   ; @param (map) renderer-state
   ;  {:element-order (keywords in vector)
   ;   :elements (map)}
-  ;
-  ; @return (hiccup)
   [renderer-id {:keys [element] :as renderer-props} {:keys [element-order elements]}]
   (letfn [(f [wrapper element-id]
              (let [element-props (get elements element-id)]
@@ -1168,8 +1162,6 @@
   ; @param (map) renderer-props
   ; @param (map) renderer-state
   ;  {:element-order (keywords in vector)}
-  ;
-  ; @return (hiccup)
   [renderer-id renderer-props {:keys [element-order] :as renderer-state}]
   (if (vector/nonempty? element-order)
       [elements renderer-id renderer-props renderer-state]))
@@ -1191,8 +1183,6 @@
   ;    Default: false
   ;   :rerender-same? (boolean)(opt)
   ;    Default: false}
-  ;
-  ; @return (component)
   [renderer-id renderer-props]
   (let [dom-id         (engine/renderer-id->dom-id renderer-id)
         renderer-props (renderer-props-prototype   renderer-props)]

@@ -84,8 +84,6 @@
   ; @param (map) diagram-props
   ; @param (map) section-props
   ;  {:label (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
        [:div.x-line-diagram--section {:data-color    (param color)
@@ -98,8 +96,6 @@
   ; @param (map) diagram-props
   ;  {:sections (maps in vector)
   ;   :strength (px)}
-  ;
-  ; @return (hiccup)
   [diagram-id {:keys [sections strength] :as diagram-props}]
   (reduce (fn [line-diagram-sections section-props]
               (let [section-props (section-props-prototype section-props)]
@@ -113,8 +109,6 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;
-  ; @return (hiccup)
   [diagram-id diagram-props]
   [:div.x-line-diagram (engine/element-attributes diagram-id diagram-props)
                        [line-diagram-sections     diagram-id diagram-props]])
@@ -146,8 +140,6 @@
   ;
   ; @usage
   ;  [elements/line-diagram :my-line-diagram {...}]
-  ;
-  ; @return (component)
   ([diagram-props]
    [element (a/id) diagram-props])
 

@@ -305,8 +305,6 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;
-  ; @return (component)
   [component-id context-props]
   [transmitter component-id context-props])
 
@@ -316,8 +314,6 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:subscriber (subscription-vector)(opt)}
-  ;
-  ; @return (component)
   [component-id context-props]
   (if (:subscriber context-props) [subscriber     component-id context-props]
                                   [non-subscriber component-id context-props]))
@@ -327,8 +323,6 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;
-  ; @return (component)
   [component-id context-props]
   (let [mount-id (a/id)]
        (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
@@ -373,8 +367,6 @@
   ;  (defn my-component [component-id component-props])
   ;  [components/stated {:component  [my-component :my-component]
   ;                      :subscriber [:get-my-component-props]}]
-  ;
-  ; @return (component)
   ([context-props]
    [component (a/id) context-props])
 

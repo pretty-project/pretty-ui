@@ -37,8 +37,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:cards (maps in vector)}
-  ;
-  ; @return (hiccup)
   [group-id {:keys [cards] :as group-props}]
   (reduce #(conj %1 [card %2])
            [:div.x-card-group (engine/element-attributes group-id group-props)
@@ -68,8 +66,6 @@
   ;
   ; @usage
   ;  [elements/card-group :my-card-group {...}]
-  ;
-  ; @return (component)
   ([group-props]
    [element (a/id) group-props])
 

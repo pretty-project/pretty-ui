@@ -52,8 +52,6 @@
   ;
   ; @usage
   ;  [ui/state-changed-bubble-body :my-bubble {...}]
-  ;
-  ; @return (component)
   [bubble-id {:keys [label primary-button]}]
   [:<> (if label          [elements/label  {:content label}])
        (if primary-button [elements/button (primary-button-props-prototype bubble-id primary-button)])])

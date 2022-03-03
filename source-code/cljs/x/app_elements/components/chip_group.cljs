@@ -69,8 +69,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:no-chips-label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [no-chips-label]}]
   (if no-chips-label [:div.x-chip-group--no-chips-label [components/content no-chips-label]]))
 
@@ -80,8 +78,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:chips (* in vector)}
-  ;
-  ; @return (hiccup)
   [group-id {:keys [chips] :as group-props}]
   (if (vector/nonempty? chips)
       (reduce-indexed #(let [chip-props (group-props->chip-props group-id group-props %3 %2)
@@ -97,8 +93,6 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   (if label [:div.x-chip-group--label [components/content label]]))
 
@@ -107,8 +101,6 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;
-  ; @return (hiccup)
   [group-id group-props]
   [:div.x-chip-group (engine/element-attributes group-id group-props)
                      [chip-group-label          group-id group-props]
@@ -147,8 +139,6 @@
   ;  [elements/chip-group {:chips [{:label "Chip #1"}
   ;                                {:label "Chip #2"}]
   ;                        :on-delete [:delete-my-chip! :my-param]}]
-  ;
-  ; @return (component)
   ([group-props]
    [element (a/id) group-props])
 

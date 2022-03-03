@@ -68,8 +68,6 @@
   ;
   ; @usage
   ;  [elements/vertical-line :my-vertical-line {...}]
-  ;
-  ; @return (component)
   ([line-props]
    [element (a/id) line-props])
 

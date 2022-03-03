@@ -39,8 +39,6 @@
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [anchor-id {:keys [content] :as anchor-props}]
   [:a.x-anchor--body (engine/clickable-body-attributes anchor-id anchor-props)
                      [components/content content]])
@@ -50,8 +48,6 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
-  ;
-  ; @return (hiccup)
   [anchor-id anchor-props]
   ; Az anchor elemet azért szükséges felosztani anchor és anchor-body komponensekre,
   ; hogy a disabled állapotot megfelelően lehessen alkalmazni.
@@ -95,8 +91,6 @@
   ;
   ; @usage
   ;  [elements/anchor :my-anchor {...}]
-  ;
-  ; @return (component)
   ([anchor-props]
    [element (a/id) anchor-props])
 

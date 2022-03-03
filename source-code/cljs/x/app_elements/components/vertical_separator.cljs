@@ -40,8 +40,6 @@
   ;
   ; @usage
   ;  [elements/vertical-separator :my-vertical-separator {...}]
-  ;
-  ; @return (component)
   ([separator-props]
    [element (a/id) separator-props])
 

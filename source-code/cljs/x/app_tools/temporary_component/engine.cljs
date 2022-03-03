@@ -60,8 +60,6 @@
   ;  (defn my-button [] [:a {:href "foo/bar"}])
   ;  (defn click-my-button! [] ...)
   ;  (tools/append-temporary-component! [my-button] click-my-button!)
-  ;
-  ; @return (component)
   ([component]
    (remove-temporary-container!)
    (create-temporary-container!)

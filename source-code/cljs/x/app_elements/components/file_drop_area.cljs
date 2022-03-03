@@ -40,8 +40,6 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   ;  {:label (metamorphic-content)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label]}]
   (if label [:div.x-file-drop-area--label [components/content label]]))
 
@@ -50,8 +48,6 @@
   ;
   ; @param (keyword) area-id
   ; @param (map) area-props
-  ;
-  ; @return (hiccup)
   [area-id area-props]
   [:button.x-file-drop-area--body (engine/clickable-body-attributes area-id area-props)
                                   [:i.x-file-drop-area--icon :cloud_upload]
@@ -62,8 +58,6 @@
   ;
   ; @param (keyword) area-id
   ; @param (map) area-props
-  ;
-  ; @return (hiccup)
   [area-id area-props]
   [:div.x-file-drop-area (engine/element-attributes   area-id area-props)
                          [file-drop-area-body         area-id area-props]
@@ -91,8 +85,6 @@
   ;
   ; @usage
   ;  [elements/file-drop-area :my-file-drop-area {...}]
-  ;
-  ; @return (component)
   ([area-props]
    [element (a/id) area-props])
 

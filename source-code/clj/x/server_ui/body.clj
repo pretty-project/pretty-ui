@@ -122,8 +122,6 @@
   ; @param (map) body-props
   ;  {:selected-theme (string)
   ;   :shield (hiccup)(opt)}
-  ;
-  ; @return (hiccup)
   [request {:keys [selected-theme shield]}]
   [:body#x-body-container {:data-theme selected-theme}
                           (let [csrf-token (force *anti-forgery-token*)]
@@ -141,8 +139,6 @@
   ;
   ; @usage
   ;  (ui/body {...} {:shield [:div#x-app-shield "My loading screen"]})
-  ;
-  ; @return (hiccup)
   ([request]
    (view request {}))
 

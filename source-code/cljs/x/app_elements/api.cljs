@@ -3,55 +3,55 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.api
-    (:require [x.app-elements.components.anchor               :as anchor]
-              [x.app-elements.components.blank                :as blank]
-              [x.app-elements.components.button               :as button]
-              [x.app-elements.components.card                 :as card]
-              [x.app-elements.components.card-group           :as card-group]
-              [x.app-elements.components.checkbox             :as checkbox]
-              [x.app-elements.components.checkbox-group       :as checkbox-group]
-              [x.app-elements.components.chip-group           :as chip-group]
-              [x.app-elements.components.chip                 :as chip]
-              [x.app-elements.components.circle-diagram       :as circle-diagram]
-              [x.app-elements.components.color-picker         :as color-picker]
-              [x.app-elements.components.column               :as column]
-              [x.app-elements.components.combo-box            :as combo-box]
-              [x.app-elements.components.counter              :as counter]
-              [x.app-elements.components.data-table           :as data-table]
-              [x.app-elements.components.date-field           :as date-field]
-              [x.app-elements.components.digit-field          :as digit-field]
-              [x.app-elements.components.engine.api           :as engine]
-              [x.app-elements.components.expandable           :as expandable]
-              [x.app-elements.components.file-drop-area       :as file-drop-area]
-              [x.app-elements.components.horizontal-line      :as horizontal-line]
-              [x.app-elements.components.horizontal-polarity  :as horizontal-polarity]
-              [x.app-elements.components.horizontal-separator :as horizontal-separator]
-              [x.app-elements.components.icon                 :as icon]
-              [x.app-elements.components.icon-button          :as icon-button]
-              [x.app-elements.components.image                :as image]
-              [x.app-elements.components.label                :as label]
-              [x.app-elements.components.line-diagram         :as line-diagram]
-              [x.app-elements.components.menu-bar             :as menu-bar]
-              [x.app-elements.components.multiline-field      :as multiline-field]
-              [x.app-elements.components.multi-combo-box      :as multi-combo-box]
-              [x.app-elements.components.multi-field          :as multi-field]
-              [x.app-elements.components.overlay              :as overlay]
-              [x.app-elements.components.password-field       :as password-field]
-              [x.app-elements.components.point-diagram        :as point-diagram]
-              [x.app-elements.components.radio-button         :as radio-button]
-              [x.app-elements.components.row                  :as row]
-              [x.app-elements.components.search-field         :as search-field]
-              [x.app-elements.components.select               :as select]
-              [x.app-elements.components.slideshow            :as slideshow]
-              [x.app-elements.components.submit-button        :as submit-button]
-              [x.app-elements.components.switch               :as switch]
-              [x.app-elements.components.table                :as table]
-              [x.app-elements.components.text                 :as text]
-              [x.app-elements.components.text-field           :as text-field]
-              [x.app-elements.components.toggle               :as toggle]
-              [x.app-elements.components.vertical-line        :as vertical-line]
-              [x.app-elements.components.vertical-polarity    :as vertical-polarity]
-              [x.app-elements.components.vertical-separator   :as vertical-separator]))
+    (:require [x.app-elements.components.anchor               :as components.anchor]
+              [x.app-elements.components.blank                :as components.blank]
+              [x.app-elements.components.button               :as components.button]
+              [x.app-elements.components.card                 :as components.card]
+              [x.app-elements.components.card-group           :as components.card-group]
+              [x.app-elements.components.checkbox             :as components.checkbox]
+              [x.app-elements.components.checkbox-group       :as components.checkbox-group]
+              [x.app-elements.components.chip-group           :as components.chip-group]
+              [x.app-elements.components.chip                 :as components.chip]
+              [x.app-elements.components.circle-diagram       :as components.circle-diagram]
+              [x.app-elements.components.color-picker         :as components.color-picker]
+              [x.app-elements.components.column               :as components.column]
+              [x.app-elements.components.combo-box            :as components.combo-box]
+              [x.app-elements.components.counter              :as components.counter]
+              [x.app-elements.components.data-table           :as components.data-table]
+              [x.app-elements.components.date-field           :as components.date-field]
+              [x.app-elements.components.digit-field          :as components.digit-field]
+              [x.app-elements.components.expandable           :as components.expandable]
+              [x.app-elements.components.file-drop-area       :as components.file-drop-area]
+              [x.app-elements.components.horizontal-line      :as components.horizontal-line]
+              [x.app-elements.components.horizontal-polarity  :as components.horizontal-polarity]
+              [x.app-elements.components.horizontal-separator :as components.horizontal-separator]
+              [x.app-elements.components.icon                 :as components.icon]
+              [x.app-elements.components.icon-button          :as components.icon-button]
+              [x.app-elements.components.image                :as components.image]
+              [x.app-elements.components.label                :as components.label]
+              [x.app-elements.components.line-diagram         :as components.line-diagram]
+              [x.app-elements.components.menu-bar             :as components.menu-bar]
+              [x.app-elements.components.multiline-field      :as components.multiline-field]
+              [x.app-elements.components.multi-combo-box      :as components.multi-combo-box]
+              [x.app-elements.components.multi-field          :as components.multi-field]
+              [x.app-elements.components.overlay              :as components.overlay]
+              [x.app-elements.components.password-field       :as components.password-field]
+              [x.app-elements.components.point-diagram        :as components.point-diagram]
+              [x.app-elements.components.radio-button         :as components.radio-button]
+              [x.app-elements.components.row                  :as components.row]
+              [x.app-elements.components.search-field         :as components.search-field]
+              [x.app-elements.components.select               :as components.select]
+              [x.app-elements.components.slideshow            :as components.slideshow]
+              [x.app-elements.components.submit-button        :as components.submit-button]
+              [x.app-elements.components.switch               :as components.switch]
+              [x.app-elements.components.table                :as components.table]
+              [x.app-elements.components.text                 :as components.text]
+              [x.app-elements.components.text-field           :as components.text-field]
+              [x.app-elements.components.toggle               :as components.toggle]
+              [x.app-elements.components.vertical-line        :as components.vertical-line]
+              [x.app-elements.components.vertical-polarity    :as components.vertical-polarity]
+              [x.app-elements.components.vertical-separator   :as components.vertical-separator]
+              [x.app-elements.engine.api                      :as engine]))
 
 
 
@@ -128,52 +128,52 @@
 (def update-element-prop!   engine/update-element-prop!)
 (def remove-element-prop!   engine/remove-element-prop!)
 
-; x.app-elements.*
-(def anchor               anchor/element)
-(def blank                blank/element)
-(def button               button/element)
-(def card                 card/element)
-(def card-group           card-group/element)
-(def checkbox             checkbox/element)
-(def checkbox-group       checkbox-group/element)
-(def chip-group           chip-group/element)
-(def chip                 chip/element)
-(def circle-diagram       circle-diagram/element)
-(def color-picker         color-picker/element)
-(def column               column/element)
-(def combo-box            combo-box/element)
-(def counter              counter/element)
-(def data-table           data-table/element)
-(def date-field           date-field/element)
-(def digit-field          digit-field/element)
-(def expandable           expandable/element)
-(def file-drop-area       file-drop-area/element)
-(def horizontal-line      horizontal-line/element)
-(def horizontal-polarity  horizontal-polarity/element)
-(def horizontal-separator horizontal-separator/element)
-(def icon                 icon/element)
-(def icon-button          icon-button/element)
-(def image                image/element)
-(def label                label/element)
-(def line-diagram         line-diagram/element)
-(def menu-bar             menu-bar/element)
-(def multi-combo-box      multi-combo-box/element)
-(def multi-field          multi-field/element)
-(def multiline-field      multiline-field/element)
-(def overlay              overlay/element)
-(def password-field       password-field/element)
-(def point-diagram        point-diagram/element)
-(def radio-button         radio-button/element)
-(def row                  row/element)
-(def search-field         search-field/element)
-(def select               select/element)
-(def slideshow            slideshow/element)
-(def submit-button        submit-button/element)
-(def switch               switch/element)
-(def table                table/element)
-(def text                 text/element)
-(def text-field           text-field/element)
-(def toggle               toggle/element)
-(def vertical-line        vertical-line/element)
-(def vertical-polarity    vertical-polarity/element)
-(def vertical-separator   vertical-separator/element)
+; x.app-elements.components.*
+(def anchor               components.anchor/element)
+(def blank                components.blank/element)
+(def button               components.button/element)
+(def card                 components.card/element)
+(def card-group           components.card-group/element)
+(def checkbox             components.checkbox/element)
+(def checkbox-group       components.checkbox-group/element)
+(def chip-group           components.chip-group/element)
+(def chip                 components.chip/element)
+(def circle-diagram       components.circle-diagram/element)
+(def color-picker         components.color-picker/element)
+(def column               components.column/element)
+(def combo-box            components.combo-box/element)
+(def counter              components.counter/element)
+(def data-table           components.data-table/element)
+(def date-field           components.date-field/element)
+(def digit-field          components.digit-field/element)
+(def expandable           components.expandable/element)
+(def file-drop-area       components.file-drop-area/element)
+(def horizontal-line      components.horizontal-line/element)
+(def horizontal-polarity  components.horizontal-polarity/element)
+(def horizontal-separator components.horizontal-separator/element)
+(def icon                 components.icon/element)
+(def icon-button          components.icon-button/element)
+(def image                components.image/element)
+(def label                components.label/element)
+(def line-diagram         components.line-diagram/element)
+(def menu-bar             components.menu-bar/element)
+(def multi-combo-box      components.multi-combo-box/element)
+(def multi-field          components.multi-field/element)
+(def multiline-field      components.multiline-field/element)
+(def overlay              components.overlay/element)
+(def password-field       components.password-field/element)
+(def point-diagram        components.point-diagram/element)
+(def radio-button         components.radio-button/element)
+(def row                  components.row/element)
+(def search-field         components.search-field/element)
+(def select               components.select/element)
+(def slideshow            components.slideshow/element)
+(def submit-button        components.submit-button/element)
+(def switch               components.switch/element)
+(def table                components.table/element)
+(def text                 components.text/element)
+(def text-field           components.text-field/element)
+(def toggle               components.toggle/element)
+(def vertical-line        components.vertical-line/element)
+(def vertical-polarity    components.vertical-polarity/element)
+(def vertical-separator   components.vertical-separator/element)

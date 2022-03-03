@@ -212,8 +212,6 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ;  {:user-close? (boolean)(opt)}
-  ;
-  ; @return (component)
   [bubble-id {:keys [user-close?]}]
   (if user-close? [elements/button {:on-click [:ui/pop-bubble! bubble-id]
                                     :preset   :close-icon-button}]))
@@ -224,8 +222,6 @@
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ;  {:body (map)}
-  ;
-  ; @return (hiccup)
   [bubble-id {:keys [body]}]
   [:div.x-app-bubbles--element--body [components/content bubble-id body]])
 
@@ -234,8 +230,6 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ;
-  ; @return (hiccup)
   [bubble-id bubble-props]
   [:div (bubble-attributes   bubble-id bubble-props)
         [bubble-body         bubble-id bubble-props]
@@ -243,8 +237,6 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (component)
   []
   [renderer :bubbles {:element               #'bubble-element
                       :max-elements-rendered MAX-BUBBLES-RENDERED

@@ -34,8 +34,6 @@
   ; @param (keyword) blank-id
   ; @param (map) blank-props
   ;  {:content (metamorphic-content)}
-  ;
-  ; @return (hiccup)
   [blank-id {:keys [content] :as blank-props}]
   [:div.x-blank (engine/element-attributes blank-id blank-props)
                 [components/content        blank-id content]
@@ -66,8 +64,6 @@
   ; @usage
   ;  (defn my-component [_ _])
   ;  [elements/blank {:content #'my-component}]
-  ;
-  ; @return (component)
   ([blank-props]
    [element (a/id) blank-props])
 

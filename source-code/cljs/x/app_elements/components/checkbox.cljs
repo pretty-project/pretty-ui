@@ -39,8 +39,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
-  ;
-  ; @return (map)
   [db [_ checkbox-id]]
   (merge (r engine/get-element-props   db checkbox-id)
          (r engine/get-checkable-props db checkbox-id)))
@@ -59,8 +57,6 @@
   ; @param (map) checkbox-props
   ;  {:label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   (if label [:div.x-checkbox--label [components/content label]
                                     (if required? [:span.x-input--label-asterisk "*"])]))
@@ -70,8 +66,6 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;
-  ; @return (hiccup)
   [checkbox-id checkbox-props]
   [:button.x-checkbox--body (engine/checkable-body-attributes checkbox-id checkbox-props)
                             [:div.x-checkbox--button]
@@ -82,8 +76,6 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;
-  ; @return (hiccup)
   [checkbox-id checkbox-props]
   [:div.x-checkbox (engine/checkable-attributes checkbox-id checkbox-props)
                    [checkbox-body               checkbox-id checkbox-props]
@@ -123,8 +115,6 @@
   ;
   ; @usage
   ;  [elements/checkbox :my-checkbox {...}]
-  ;
-  ; @return (component)
   ([checkbox-props]
    [element (a/id) checkbox-props])
 

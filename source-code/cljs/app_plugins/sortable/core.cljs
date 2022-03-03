@@ -707,8 +707,6 @@
 
 (defn drag-overlay-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (hiccup)
   []
   ; A drag-overlay-element komponens eredeti felhasználási módja, hogy az aktív
   ; elem másolatát kirendereli, amíg az aktív elem a rendezés ideje alatt nem látható.
@@ -728,8 +726,6 @@
   ;   :sortable-id (keyword)
   ;   :sortable-item (*)
   ;   :sortable-item-id (string)}
-  ;
-  ; @return (hiccup)
   [{:keys [common-props element render-dex sortable-id sortable-item sortable-item-id]}]
   (let [sortable-element-data       (sortable-item-id->sortable-element-data            sortable-item-id)
         sortable-element-attributes (sortable-element-data->sortable-element-attributes sortable-element-data)
@@ -745,8 +741,6 @@
   ; @param (map) view-props
   ; @param (string) sortable-item-id
   ; @param (integer) render-dex
-  ;
-  ; @return (hiccup)
   [sortable-id view-props sortable-item-id render-dex]
   (let [sortable-element-props (view-props->sortable-element-props sortable-id view-props sortable-item-id render-dex)]
        [:f> sortable-element sortable-element-props]))
@@ -757,8 +751,6 @@
   ; @param (keyword) sortable-id
   ; @param (map) view-props
   ;  {:sortable-item-order (strings in vector)}
-  ;
-  ; @return (hiccup)
   [sortable-id {:keys [sortable-item-order] :as view-props}]
   (letfn [(f [sortable-elements render-dex sortable-item-id]
              ; BUG#9084
@@ -785,8 +777,6 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) view-props
-  ;
-  ; @return (component)
   [sortable-id view-props]
   [dnd-context (view-props->dnd-context-props sortable-id view-props)
                [sortable-context (view-props->sortable-context-props sortable-id view-props)
@@ -798,8 +788,6 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) view-props
-  ;
-  ; @return (component)
   [sortable-id view-props]
   (if (view-props->render-sortable-items? view-props)
       [:f> sortable-structure sortable-id view-props]))
@@ -833,8 +821,6 @@
   ;  [sortable :my-sortable {:common-props {...}
   ;                          :element      #'my-element
   ;                          :value-path   [:my-items]}]
-  ;
-  ; @return (component)
   ([sortable-props]
    [sortable (a/id) sortable-props])
 

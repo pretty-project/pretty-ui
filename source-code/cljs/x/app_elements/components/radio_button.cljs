@@ -65,8 +65,6 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  ;
-  ; @return (hiccup)
   [_ {:keys [label required?]}]
   [:div.x-radio-button--label [components/content label]
                               (if required? [:span.x-input--label-asterisk "*"])])
@@ -77,8 +75,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; @param (*) option
-  ;
-  ; @return (hiccup)
   [button-id {:keys [get-label-f] :as button-props} option]
   (let [option-label (get-label-f option)]
        [:button.x-radio-button--option (engine/selectable-option-attributes button-id button-props option)
@@ -91,8 +87,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:options (vector)}
-  ;
-  ; @return (hiccup)
   [button-id {:keys [options] :as button-props}]
   (reduce #(conj %1 [radio-button-option button-id button-props %2])
            [:div.x-radio-button--options]
@@ -104,8 +98,6 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:unselectable? (boolean)(opt)}
-  ;
-  ; @return (component)
   [button-id {:keys [unselectable?] :as button-props}]
   (if unselectable? [:button.x-radio-button--unselect-button (engine/selectable-unselect-attributes button-id button-props)]))
 
@@ -114,8 +106,6 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;
-  ; @return (hiccup)
   [button-id button-props]
   [:div.x-radio-button--header [radio-button-unselect-button button-id button-props]
                                [radio-button-label           button-id button-props]])
@@ -125,8 +115,6 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;
-  ; @return (hiccup)
   [button-id button-props]
   [:div.x-radio-button (engine/selectable-attributes button-id button-props)
                        [radio-button-header          button-id button-props]
@@ -174,8 +162,6 @@
   ;
   ; @usage
   ;  [elements/radio-button :my-radio-button {...}]
-  ;
-  ; @return (component)
   ([button-props]
    [element (a/id) button-props])
 
