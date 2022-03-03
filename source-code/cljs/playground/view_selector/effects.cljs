@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.view-selector.effects
-    (:require [x.app-core.api   :as a]
-              [playground.view-selector.views :as view-selector.views]))
+    (:require [playground.view-selector.views :as view-selector.views]
+              [x.app-core.api                 :as a]))
 
 
 

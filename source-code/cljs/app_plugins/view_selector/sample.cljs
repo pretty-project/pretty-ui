@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.sample
-    (:require [x.app-core.api    :as a]
-              [x.app-layouts.api :as layouts]
-              [x.app-ui.api      :as ui]
-              [app-plugins.view-selector.api :as view-selector]))
+    (:require [app-plugins.view-selector.api :as view-selector]
+              [x.app-core.api                :as a]
+              [x.app-layouts.api             :as layouts]
+              [x.app-ui.api                  :as ui]))
 
 
 

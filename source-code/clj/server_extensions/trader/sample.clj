@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.trader.sample
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.format :as format]
-              [x.server-core.api :as a]
+    (:require [mid-fruits.candy                  :refer [param return]]
+              [mid-fruits.format                 :as format]
               [server-extensions.trader.klines   :as klines]
-              [server-extensions.trader.patterns :as patterns]))
+              [server-extensions.trader.patterns :as patterns]
+              [x.server-core.api                 :as a]))
 
 
 

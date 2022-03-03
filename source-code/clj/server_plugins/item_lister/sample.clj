@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.sample
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mongo-db.api      :as mongo-db]
-              [pathom.api        :as pathom]
-              [x.server-core.api :as a]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [server-plugins.item-lister.api        :as item-lister]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]
+              [server-plugins.item-lister.api        :as item-lister]
+              [x.server-core.api                     :as a]))
 
 
 

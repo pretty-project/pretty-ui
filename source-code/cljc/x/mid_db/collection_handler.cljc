@@ -1,4 +1,4 @@
-
+       
 ;; -- Header ------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.collection-handler
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
-              [mid-fruits.vector  :as vector]
+    (:require [mid-fruits.candy          :refer [param return]]
+              [mid-fruits.keyword        :as keyword]
+              [mid-fruits.map            :as map]
+              [mid-fruits.vector         :as vector]
               [x.mid-db.document-handler :as document-handler]))
 
 

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.term-handler.subs
-    (:require [mid-fruits.string :as string]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-locales.api :as locales]
+    (:require [mid-fruits.string                  :as string]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-locales.api                  :as locales]
               [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
 
 

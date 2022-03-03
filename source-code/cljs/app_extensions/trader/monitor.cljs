@@ -1,22 +1,22 @@
 
 (ns app-extensions.trader.monitor
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.css       :as css]
-              [mid-fruits.format    :as format]
-              [mid-fruits.keyword   :as keyword]
-              [mid-fruits.loop      :refer [reduce-indexed]]
-              [mid-fruits.map       :as map :refer [dissoc-in]]
-              [mid-fruits.math      :as math]
-              [mid-fruits.random    :as random]
-              [mid-fruits.time      :as time]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [app-fruits.react-transition  :as react-transition]
-              [app-extensions.trader.engine :as engine]
+    (:require [app-extensions.trader.engine :as engine]
               [app-extensions.trader.styles :as styles]
-              [app-extensions.trader.sync   :as sync]))
+              [app-extensions.trader.sync   :as sync]
+              [app-fruits.react-transition  :as react-transition]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.css               :as css]
+              [mid-fruits.format            :as format]
+              [mid-fruits.keyword           :as keyword]
+              [mid-fruits.loop              :refer [reduce-indexed]]
+              [mid-fruits.map               :as map :refer [dissoc-in]]
+              [mid-fruits.math              :as math]
+              [mid-fruits.random            :as random]
+              [mid-fruits.time              :as time]
+              [mid-fruits.vector            :as vector]
+              [x.app-components.api         :as components]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]))
 
 
 

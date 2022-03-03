@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.effects
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [app-plugins.value-editor.engine :as engine]
+    (:require [app-plugins.value-editor.engine :as engine]
               [app-plugins.value-editor.events :as events]
               [app-plugins.value-editor.subs   :as subs]
-              [app-plugins.value-editor.views  :as views]))
+              [app-plugins.value-editor.views  :as views]
+              [mid-fruits.candy                :refer [param return]]
+              [x.app-core.api                  :as a :refer [r]]))
 
 
 

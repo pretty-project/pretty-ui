@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.clients.client-editor.effects
-    (:require [x.app-core.api :as a]
-              [app-extensions.clients.client-editor.views :as client-editor.views]))
+    (:require [app-extensions.clients.client-editor.views :as client-editor.views]
+              [x.app-core.api                             :as a]))
 
 
 

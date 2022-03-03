@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-developer.re-frame-browser.views
-    (:require [mid-fruits.map     :as map]
-              [mid-fruits.reader  :as reader]
-              [mid-fruits.vector  :as vector]
-              [server-fruits.http :as http]
-              [x.server-core.api  :as a]
+    (:require [mid-fruits.map                             :as map]
+              [mid-fruits.reader                          :as reader]
+              [mid-fruits.vector                          :as vector]
+              [server-fruits.http                         :as http]
+              [x.server-core.api                          :as a]
               [x.server-developer.re-frame-browser.styles :as re-frame-browser.styles]))
 
 

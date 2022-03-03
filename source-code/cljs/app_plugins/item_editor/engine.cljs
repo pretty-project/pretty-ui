@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.engine
-    (:require [mid-fruits.keyword :as keyword]
+    (:require [mid-fruits.keyword             :as keyword]
               [mid-plugins.item-editor.engine :as engine]))
 
 

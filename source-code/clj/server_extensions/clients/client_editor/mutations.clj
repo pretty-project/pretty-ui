@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-editor.mutations
-    (:require [mid-fruits.candy :refer [param return]]
-              [mongo-db.api     :as mongo-db]
-              [pathom.api       :as pathom]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]))
 
 
 

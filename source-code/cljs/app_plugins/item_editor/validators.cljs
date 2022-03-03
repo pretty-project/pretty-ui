@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.validators
-    (:require [mid-fruits.string :as string]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.subs   :as subs]))
+    (:require [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.subs   :as subs]
+              [mid-fruits.string              :as string]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-db.api                   :as db]))
 
 
 

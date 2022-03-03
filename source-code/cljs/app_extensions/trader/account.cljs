@@ -1,13 +1,14 @@
 
 (ns app-extensions.trader.account
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :refer [dissoc-in]]
-              [mid-fruits.string    :as string]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [app-extensions.trader.styles :as styles]
-              [app-extensions.trader.sync   :as sync]))
+    (:require [app-extensions.trader.styles :as styles]
+              [app-extensions.trader.sync   :as sync]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.map               :refer [dissoc-in]]
+              [mid-fruits.string            :as string]
+              [x.app-components.api         :as components]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]))
+
 
 
 

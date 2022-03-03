@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.input
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :refer [dissoc-in]]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-locales.api  :as locales]
+    (:require [mid-fruits.candy              :refer [param return]]
+              [mid-fruits.map                :refer [dissoc-in]]
+              [mid-fruits.vector             :as vector]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-db.api                  :as db]
+              [x.app-locales.api             :as locales]
               [x.app-elements.engine.element :as element]))
 
 

@@ -1,12 +1,12 @@
 
 (ns server-extensions.trader.listener
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
-              [mongo-db.api      :as mongo-db]
-              [pathom.api        :as pathom]
-              [x.server-core.api :as a]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [server-extensions.trader.engine       :as engine]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.string                     :as string]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]
+              [server-extensions.trader.engine       :as engine]
+              [x.server-core.api                     :as a]))
 
 
 

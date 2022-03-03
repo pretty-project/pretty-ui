@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler.side-effects
-    (:require [x.app-details :as details]
+    (:require [x.app-details                      :as details]
               [x.server-core.event-handler        :as event-handler]
               [x.server-core.error-handler.engine :as error-handler.engine]))
 

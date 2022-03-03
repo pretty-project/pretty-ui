@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-picker.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.media-picker.events :as media-picker.events]
+    (:require [app-extensions.storage.media-picker.events :as media-picker.events]
               [app-extensions.storage.media-picker.subs   :as media-picker.subs]
-              [app-extensions.storage.media-picker.views  :as media-picker.views]))
+              [app-extensions.storage.media-picker.views  :as media-picker.views]
+              [x.app-core.api                             :as a :refer [r]]))
 
 
 

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.settings.cookie-settings.effects
-    (:require [x.app-core.api :as a]
-              [app-extensions.settings.cookie-settings.views :as cookie-settings.views]))
+    (:require [app-extensions.settings.cookie-settings.views :as cookie-settings.views]
+              [x.app-core.api                                :as a]))
 
 
 

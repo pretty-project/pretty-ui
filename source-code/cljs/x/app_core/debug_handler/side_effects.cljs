@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.debug-handler.side-effects
-    (:require [app-fruits.window :as window]
-              [mid-fruits.uri    :as uri]
+    (:require [app-fruits.window               :as window]
+              [mid-fruits.uri                  :as uri]
               [x.app-core.debug-handler.engine :as engine]
               [x.app-core.event-handler        :as event-handler :refer [r]]))
 

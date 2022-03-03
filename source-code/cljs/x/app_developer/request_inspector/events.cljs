@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.request-inspector.events
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a :refer [r]]
+    (:require [mid-fruits.map                         :refer [dissoc-in]]
+              [x.app-core.api                         :as a :refer [r]]
               [x.app-developer.request-inspector.subs :as request-inspector.subs]))
 
 

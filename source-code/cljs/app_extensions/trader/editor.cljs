@@ -1,15 +1,15 @@
 
 (ns app-extensions.trader.editor
-    (:require [app-fruits.dom       :as dom]
-              [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.time      :as time]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [x.app-router.api     :as router]
-              [app-extensions.trader.listener :as listener]
+    (:require [app-extensions.trader.listener :as listener]
               [app-extensions.trader.styles   :as styles]
-              [app-extensions.trader.sync     :as sync]))
+              [app-extensions.trader.sync     :as sync]
+              [app-fruits.dom                 :as dom]
+              [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.time                :as time]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-elements.api             :as elements]
+              [x.app-router.api               :as router]))
 
 
 

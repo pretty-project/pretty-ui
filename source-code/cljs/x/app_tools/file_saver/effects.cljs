@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.file-saver.effects
-    (:require [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a]
+    (:require [mid-fruits.candy              :refer [param]]
+              [x.app-core.api                :as a]
               [x.app-tools.file-saver.engine :as file-saver.engine]
               [x.app-tools.file-saver.views  :as file-saver.views]))
 
@@ -24,7 +24,7 @@
   (merge {:filename file-saver.engine/DEFAULT-FILENAME}
          (param saver-props)))
 
-  
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

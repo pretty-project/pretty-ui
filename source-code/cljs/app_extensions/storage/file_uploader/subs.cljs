@@ -3,15 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.file-uploader.subs
-    (:require [app-fruits.dom    :as dom]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-sync.api    :as sync]
-              [app-extensions.storage.capacity-handler.subs :as capacity-handler.subs]
-              [app-extensions.storage.file-uploader.engine  :as file-uploader.engine]))
+    (:require [app-extensions.storage.capacity-handler.subs :as capacity-handler.subs]
+              [app-extensions.storage.file-uploader.engine  :as file-uploader.engine]
+              [app-fruits.dom                               :as dom]
+              [mid-fruits.candy                             :refer [param return]]
+              [mid-fruits.map                               :as map]
+              [mid-fruits.vector                            :as vector]
+              [x.app-core.api                               :as a :refer [r]]
+              [x.app-db.api                                 :as db]
+              [x.app-sync.api                               :as sync]))
 
 
 

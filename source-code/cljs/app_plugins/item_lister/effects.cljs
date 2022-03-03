@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [x.app-ui.api   :as ui]
-              [app-plugins.item-lister.engine     :as engine]
+    (:require [app-plugins.item-lister.engine     :as engine]
               [app-plugins.item-lister.events     :as events]
               [app-plugins.item-lister.queries    :as queries]
               [app-plugins.item-lister.subs       :as subs]
-              [app-plugins.item-lister.validators :as validators]))
+              [app-plugins.item-lister.validators :as validators]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-ui.api                       :as ui]))
 
 
 

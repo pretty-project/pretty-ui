@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-editor.resolvers
-    (:require [mid-fruits.candy :refer [param return]]
-              [mongo-db.api     :as mongo-db]
-              [pathom.api       :as pathom]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]))
 
 
 

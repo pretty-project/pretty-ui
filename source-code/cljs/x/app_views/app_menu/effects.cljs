@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.app-menu.effects
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-gestures.api :as gestures]
-              [x.app-ui.api       :as ui]
+    (:require [x.app-core.api             :as a :refer [r]]
+              [x.app-gestures.api         :as gestures]
+              [x.app-ui.api               :as ui]
               [x.app-views.app-menu.views :as app-menu.views]))
 
 

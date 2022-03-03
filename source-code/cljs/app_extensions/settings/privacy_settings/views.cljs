@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.settings.privacy-settings.views
-    (:require [x.app-elements.api :as elements]
-              [app-extensions.settings.cookie-settings.views :rename {body cookie-settings}]))
+    (:require [app-extensions.settings.cookie-settings.views :rename {body cookie-settings}]
+              [x.app-elements.api                            :as elements]))
 
 
 

@@ -1,11 +1,11 @@
 
 (ns server-extensions.trader.position
-    (:require [clj-http.client   :as client]
-              [mid-fruits.candy  :refer [param return]]
-              [pathom.api        :as pathom]
-              [x.server-core.api :as a]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [server-extensions.trader.engine       :as engine]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [clj-http.client                       :as client]
+              [mid-fruits.candy                      :refer [param return]]
+              [pathom.api                            :as pathom]
+              [server-extensions.trader.engine       :as engine]
+              [x.server-core.api                     :as a]))
 
 
 

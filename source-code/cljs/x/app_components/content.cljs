@@ -14,13 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content
-    (:require [app-fruits.reagent   :refer [component?]]
-              [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.hiccup    :refer [hiccup?]]
-              [mid-fruits.string    :as string]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-dictionary.api :as dictionary]
-              [x.app-components.transmitter :rename {component transmitter}]))
+    (:require [app-fruits.reagent           :refer [component?]]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.hiccup            :refer [hiccup?]]
+              [mid-fruits.string            :as string]
+              [x.app-components.transmitter :rename {component transmitter}]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-dictionary.api         :as dictionary]))
 
 
 

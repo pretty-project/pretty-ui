@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.events
-    (:require [x.server-core.api :as a :refer [r]]
-              [mid-plugins.item-browser.events    :as events]
-              [server-plugins.item-browser.engine :as engine]))
+    (:require [mid-plugins.item-browser.events    :as events]
+              [server-plugins.item-browser.engine :as engine]
+              [x.server-core.api                  :as a :refer [r]]))
 
 
 

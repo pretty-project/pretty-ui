@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.views
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
-              [x.app-tools.api      :as tools]
-              [app-fruits.react-transition     :as react-transition]
+    (:require [app-fruits.react-transition     :as react-transition]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-lister.api     :as item-lister]))
+              [app-plugins.item-lister.api     :as item-lister]
+              [x.app-components.api            :as components]
+              [x.app-core.api                  :as a]
+              [x.app-elements.api              :as elements]
+              [x.app-layouts.api               :as layouts]
+              [x.app-tools.api                 :as tools]))
 
 
 

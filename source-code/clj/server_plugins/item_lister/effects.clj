@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.effects
-    (:require [mid-fruits.candy  :refer [param return]]
-              [x.server-core.api :as a :refer [r]]
+    (:require [mid-fruits.candy                  :refer [param return]]
               [server-plugins.item-lister.events :as events]
-              [server-plugins.item-lister.engine :as engine]))
+              [server-plugins.item-lister.engine :as engine]
+              [x.server-core.api                 :as a :refer [r]]))
 
 
 

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.no-internet-notification.effects
-    (:require [x.app-core.api        :as a :refer [r]]
-              [x.app-environment.api :as environment]
-              [x.app-ui.api          :as ui]
+    (:require [x.app-core.api                             :as a :refer [r]]
+              [x.app-environment.api                      :as environment]
+              [x.app-ui.api                               :as ui]
               [x.app-views.no-internet-notification.views :as no-internet-notification.views]))
 
 

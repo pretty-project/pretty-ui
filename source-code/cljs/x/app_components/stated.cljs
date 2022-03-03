@@ -14,13 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.stated
-    (:require [app-fruits.reagent  :as reagent]
-              [mid-fruits.candy    :refer [param return]]
-              [mid-fruits.map      :refer [dissoc-in]]
-              [x.app-core.api      :as a :refer [r]]
+    (:require [app-fruits.reagent           :as reagent]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.map               :refer [dissoc-in]]
               [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
-              [x.app-components.transmitter :rename {component transmitter}]))
+              [x.app-components.transmitter :rename {component transmitter}]
+              [x.app-core.api               :as a :refer [r]]))
 
 
 

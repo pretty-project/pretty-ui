@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.settings.view-selector.views
-    (:require [x.app-core.api                :as a]
-              [x.app-elements.api            :as elements]
-              [x.app-layouts.api             :as layouts]
-              [app-plugins.view-selector.api :as view-selector]
-              [app-extensions.settings.appearance-settings.views   :rename {body appearance-settings}]
+    (:require [app-extensions.settings.appearance-settings.views   :rename {body appearance-settings}]
               [app-extensions.settings.notification-settings.views :rename {body notification-settings}]
               [app-extensions.settings.personal-settings.views     :rename {body personal-settings}]
-              [app-extensions.settings.privacy-settings.views      :rename {body privacy-settings}]))
+              [app-extensions.settings.privacy-settings.views      :rename {body privacy-settings}]
+              [app-plugins.view-selector.api                       :as view-selector]
+              [x.app-core.api                                      :as a]
+              [x.app-elements.api                                  :as elements]
+              [x.app-layouts.api                                   :as layouts]))
 
 
 

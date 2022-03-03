@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.infinite-loader.effects
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api                     :as a :refer [r]]
               [x.app-tools.infinite-loader.events :as infinite-loader.events]))
 
 

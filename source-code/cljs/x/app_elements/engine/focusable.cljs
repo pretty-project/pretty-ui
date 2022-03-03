@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.focusable
-    (:require [x.app-core.api        :as a]
-              [x.app-environment.api :as environment]
+    (:require [x.app-core.api                   :as a]
+              [x.app-environment.api            :as environment]
               [x.app-elements.engine.targetable :as targetable]))
 
 

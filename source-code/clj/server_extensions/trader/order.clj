@@ -1,9 +1,9 @@
 
 (ns server-extensions.trader.order
-    (:require [clj-http.client   :as client]
-              [mid-fruits.candy  :refer [param return]]
-              [x.server-core.api :as a]
-              [server-extensions.trader.engine :as engine]))
+    (:require [clj-http.client                 :as client]
+              [mid-fruits.candy                :refer [param return]]
+              [server-extensions.trader.engine :as engine]
+              [x.server-core.api               :as a]))
 
 
 

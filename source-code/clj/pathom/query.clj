@@ -1,13 +1,13 @@
 
 (ns pathom.query
-    (:require [pathom.env         :as env]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.reader  :as reader]
-              [pathom.register    :as register]
-              [server-fruits.http :as http]
-              [com.wsscode.pathom3.connect.operation :as pathom.co]
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co]
               [com.wsscode.pathom3.interface.eql     :as pathom.eql]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [com.wsscode.pathom3.connect.operation :refer [defresolver]]
+              [pathom.env                            :as env]
+              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.reader                     :as reader]
+              [pathom.register                       :as register]
+              [server-fruits.http                    :as http]))
 
 
 

@@ -1,14 +1,14 @@
 
 (ns x.app-developer.developer-tools
-    (:require [x.app-components.api :as components]
-              [x.app-core.api      :as a :refer [r]]
-              [x.app-db.api        :as db]
-              [x.app-elements.api  :as elements]
-              [x.app-gestures.api  :as gestures]
-              [x.app-ui.api        :as ui]
+    (:require [x.app-components.api                     :as components]
+              [x.app-core.api                          :as a :refer [r]]
+              [x.app-db.api                            :as db]
               [x.app-developer.database-browser        :rename {body database-browser}]
               [x.app-developer.request-inspector.views :rename {body request-inspector}]
-              [x.app-developer.route-browser           :rename {body route-browser}]))
+              [x.app-developer.route-browser           :rename {body route-browser}]
+              [x.app-elements.api                      :as elements]
+              [x.app-gestures.api                      :as gestures]
+              [x.app-ui.api                            :as ui]))
 
 
 

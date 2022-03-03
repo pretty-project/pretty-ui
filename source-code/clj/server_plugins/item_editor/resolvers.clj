@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-editor.resolvers
-    (:require [mid-fruits.string  :as string]
-              [mid-fruits.keyword :as keyword]
-              [mongo-db.api       :as mongo-db]
-              [pathom.api         :as pathom]
-              [x.server-db.api    :as db]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]
-              [server-plugins.item-editor.engine     :as engine]))
+    (:require [com.wsscode.pathom3.connect.operation :refer [defresolver]]
+              [mid-fruits.string                     :as string]
+              [mid-fruits.keyword                    :as keyword]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]
+              [server-plugins.item-editor.engine     :as engine]
+              [x.server-db.api                       :as db]))
 
 
 

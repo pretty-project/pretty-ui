@@ -3,10 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.queries
-    (:require [mid-fruits.candy  :refer [param return]]
-              [x.app-core.api    :as a :refer [r]]
-              [app-plugins.item-lister.engine :as engine]
-              [app-plugins.item-lister.subs   :as subs]))
+    (:require [app-plugins.item-lister.engine :as engine]
+              [app-plugins.item-lister.subs   :as subs]
+              [mid-fruits.candy               :refer [param return]]
+              [x.app-core.api                 :as a :refer [r]]))
+
 
 
 

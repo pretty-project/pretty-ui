@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-developer.mongo-db-browser.views
-    (:require [mid-fruits.pretty  :as pretty]
-              [mid-fruits.string  :as string]
-              [mongo-db.api       :as mongo-db]
-              [server-fruits.http :as http]
-              [x.server-core.api  :as a]
-              [x.server-db.api    :as db]
+    (:require [mid-fruits.pretty                          :as pretty]
+              [mid-fruits.string                          :as string]
+              [mongo-db.api                               :as mongo-db]
+              [server-fruits.http                         :as http]
+              [x.server-core.api                          :as a]
+              [x.server-db.api                            :as db]
               [x.server-developer.mongo-db-browser.styles :as mongo-db-browser.styles]))
 
 

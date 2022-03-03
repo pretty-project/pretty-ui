@@ -1,9 +1,9 @@
 
 (ns mid-extensions.trader.klines
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.loop    :refer [some-indexed]]
-              [mid-extensions.trader.engine :as engine]))
+    (:require [mid-extensions.trader.engine :as engine]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.keyword           :as keyword]
+              [mid-fruits.loop              :refer [some-indexed]]))
 
 
 

@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.subs
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
-              [x.server-core.api :as a :refer [r]]
-              [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
+    (:require [mid-fruits.candy                   :refer [param return]]
+              [mid-fruits.string                  :as string]
+              [x.mid-dictionary.term-handler.subs :as term-handler.subs]
+              [x.server-core.api                  :as a :refer [r]]))
 
 
 

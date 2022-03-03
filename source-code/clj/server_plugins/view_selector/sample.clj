@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.view-selector.sample
-    (:require [x.server-core.api :as a]
-              [server-plugins.view-selector.api :as view-selector]))
+    (:require [server-plugins.view-selector.api :as view-selector]
+              [x.server-core.api                :as a]))
 
 
 

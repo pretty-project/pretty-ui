@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.clipboard.side-effects
-    (:require [x.app-core.api               :as a]
-              [x.app-tools.clipboard.engine :as clipboard.engine]
-              [x.app-tools.clipboard.views  :as clipboard.views]
+    (:require [x.app-core.api                         :as a]
+              [x.app-tools.clipboard.engine           :as clipboard.engine]
+              [x.app-tools.clipboard.views            :as clipboard.views]
               [x.app-tools.temporary-component.engine :refer [append-temporary-component! remove-temporary-component!]]))
 
 

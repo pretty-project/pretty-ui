@@ -4,12 +4,12 @@
 
 (ns app-plugins.item-browser.events
     (:require [app-plugins.item-lister.events]
-              [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a :refer [r]]
-              [x.app-db.api   :as db]
-              [x.app-ui.api   :as ui]
               [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.subs   :as subs]))
+              [app-plugins.item-browser.subs   :as subs]
+              [mid-fruits.map                  :refer [dissoc-in]]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-db.api                    :as db]
+              [x.app-ui.api                    :as ui]))
 
 
 

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.validators
-    (:require [mid-fruits.string :as string]
-              [x.app-db.api      :as db]
-              [app-plugins.item-browser.engine :as engine]))
+    (:require [app-plugins.item-browser.engine :as engine]
+              [mid-fruits.string               :as string]
+              [x.app-db.api                    :as db]))
 
 
 

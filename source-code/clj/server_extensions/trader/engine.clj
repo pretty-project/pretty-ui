@@ -1,15 +1,15 @@
 
 (ns server-extensions.trader.engine
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.json    :as json]
-              [mid-fruits.loop    :refer [reduce-indexed]]
-              [mid-fruits.map     :as map]
-              [mid-fruits.reader  :as reader]
-              [mid-fruits.string  :as string]
-              [mid-fruits.time    :as time]
-              [mid-fruits.vector  :as vector]
-              [server-fruits.hash :as hash]
-              [mid-extensions.trader.engine :as engine]))
+    (:require [mid-extensions.trader.engine :as engine]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.json              :as json]
+              [mid-fruits.loop              :refer [reduce-indexed]]
+              [mid-fruits.map               :as map]
+              [mid-fruits.reader            :as reader]
+              [mid-fruits.string            :as string]
+              [mid-fruits.time              :as time]
+              [mid-fruits.vector            :as vector]
+              [server-fruits.hash           :as hash]))
 
 
 

@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [x.app-ui.api   :as ui]
-              [app-plugins.item-editor.engine     :as engine]
+    (:require [app-plugins.item-editor.engine     :as engine]
               [app-plugins.item-editor.events     :as events]
               [app-plugins.item-editor.queries    :as queries]
               [app-plugins.item-editor.subs       :as subs]
               [app-plugins.item-editor.validators :as validators]
-              [app-plugins.item-editor.views      :as views]))
+              [app-plugins.item-editor.views      :as views]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-ui.api                       :as ui]))
 
 
 

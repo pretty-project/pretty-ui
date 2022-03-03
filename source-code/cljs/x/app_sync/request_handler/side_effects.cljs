@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.side-effects
-   (:require [app-fruits.http :as http]
-             [x.app-core.api  :as a]
+   (:require [app-fruits.http                   :as http]
+             [x.app-core.api                    :as a]
              [x.app-sync.request-handler.engine :as request-handler.engine]))
 
 

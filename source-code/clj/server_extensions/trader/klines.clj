@@ -1,14 +1,14 @@
 
 (ns server-extensions.trader.klines
-    (:require [clj-http.client   :as client]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.reader :as reader]
-              [mid-fruits.time   :as time]
-              [mid-fruits.vector :as vector]
-              [x.server-core.api :as a]
+    (:require [clj-http.client                 :as client]
               [mid-extensions.trader.klines    :as klines]
-              [server-extensions.trader.engine :as engine]))
+              [mid-fruits.candy                :refer [param return]]
+              [mid-fruits.map                  :as map]
+              [mid-fruits.reader               :as reader]
+              [mid-fruits.time                 :as time]
+              [mid-fruits.vector               :as vector]
+              [server-extensions.trader.engine :as engine]
+              [x.server-core.api               :as a]))
 
 
 

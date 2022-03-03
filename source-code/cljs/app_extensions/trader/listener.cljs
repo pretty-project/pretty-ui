@@ -1,12 +1,12 @@
 
 (ns app-extensions.trader.listener
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [app-extensions.trader.engine :as engine]
+    (:require [app-extensions.trader.engine :as engine]
               [app-extensions.trader.styles :as styles]
-              [app-extensions.trader.sync   :as sync]))
+              [app-extensions.trader.sync   :as sync]
+              [mid-fruits.candy             :refer [param return]]
+              [x.app-components.api         :as components]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]))
 
 
 

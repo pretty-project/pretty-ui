@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.file-uploader.side-effects
-    (:require [app-fruits.dom  :as dom]
-              [x.app-core.api  :as a]
-              [x.app-tools.api :as tools]
-              [app-extensions.storage.file-uploader.views :as file-uploader.views]))
+    (:require [app-extensions.storage.file-uploader.views :as file-uploader.views]
+              [app-fruits.dom                             :as dom]
+              [x.app-core.api                             :as a]
+              [x.app-tools.api                            :as tools]))
 
 
 

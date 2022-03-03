@@ -3,17 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-browser.views
-    (:require [mid-fruits.css       :as css]
-              [mid-fruits.format    :as format]
-              [mid-fruits.io        :as io]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
-              [x.app-media.api      :as media]
-              [x.app-ui.api         :as ui]
-              [app-plugins.item-browser.api :as item-browser]))
+    (:require [app-plugins.item-browser.api :as item-browser]
+              [mid-fruits.css               :as css]
+              [mid-fruits.format            :as format]
+              [mid-fruits.io                :as io]
+              [mid-fruits.vector            :as vector]
+              [x.app-components.api         :as components]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]
+              [x.app-layouts.api            :as layouts]
+              [x.app-media.api              :as media]
+              [x.app-ui.api                 :as ui]))
 
 
 

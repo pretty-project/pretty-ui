@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.name-handler.subs
-    (:require [mid-fruits.string :as string]
-              [x.app-core.api    :as a :refer [r]]
+    (:require [mid-fruits.string                   :as string]
+              [x.app-core.api                      :as a :refer [r]]
               [x.app-locales.language-handler.subs :as language-handler.subs]
               [x.app-locales.name-handler.engine   :as engine]))
 

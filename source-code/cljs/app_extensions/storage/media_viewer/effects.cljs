@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-viewer.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.media-viewer.events  :as media-viewer.events]
+    (:require [app-extensions.storage.media-viewer.events  :as media-viewer.events]
               [app-extensions.storage.media-viewer.queries :as media-viewer.queries]
-              [app-extensions.storage.media-viewer.views   :as media-viewer.views]))
+              [app-extensions.storage.media-viewer.views   :as media-viewer.views]
+              [x.app-core.api                              :as a :refer [r]]))
 
 
 

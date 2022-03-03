@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.side-effects
-    (:require [server-fruits.io  :as io]
-              [x.server-core.api :as a]
+    (:require [server-fruits.io                        :as io]
+              [x.server-core.api                       :as a]
               [x.server-dictionary.term-handler.engine :as term-handler.engine]))
 
 

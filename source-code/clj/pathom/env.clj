@@ -1,8 +1,8 @@
 
 (ns pathom.env
-    (:require [mid-fruits.candy :refer [param return]]
-              [com.wsscode.pathom3.connect.indexes   :as pathom.ci]
-              [com.wsscode.pathom3.connect.operation :as pathom.co]))
+    (:require [com.wsscode.pathom3.connect.indexes   :as pathom.ci]
+              [com.wsscode.pathom3.connect.operation :as pathom.co]
+              [mid-fruits.candy                      :refer [param return]]))
 
 
 

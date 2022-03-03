@@ -1,17 +1,17 @@
 
 (ns app-extensions.trader.controls
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [x.app-gestures.api   :as gestures]
-              [app-extensions.trader.account  :as account]
+    (:require [app-extensions.trader.account  :as account]
               [app-extensions.trader.engine   :as engine]
               [app-extensions.trader.log      :as log]
               [app-extensions.trader.position :as position]
               [app-extensions.trader.settings :as settings]
               [app-extensions.trader.styles   :as styles]
-              [app-extensions.trader.sync     :as sync]))
+              [app-extensions.trader.sync     :as sync]
+              [mid-fruits.candy               :refer [param return]]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-elements.api             :as elements]
+              [x.app-gestures.api             :as gestures]))
 
 
 

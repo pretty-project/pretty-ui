@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.transfer-handler
-    (:require [mid-fruits.map :as map]
+    (:require [mid-fruits.map           :as map]
               [x.app-core.event-handler :as event-handler :refer [r]]))
 
 

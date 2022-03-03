@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler
-    (:require [app-fruits.dom    :as dom]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
+    (:require [app-fruits.dom                                 :as dom]
+              [mid-fruits.vector                              :as vector]
+              [x.app-core.api                                 :as a :refer [r]]
+              [x.app-db.api                                   :as db]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]))
 
 

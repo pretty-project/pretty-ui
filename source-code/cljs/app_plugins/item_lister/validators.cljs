@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.validators
-    (:require [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [app-plugins.item-lister.engine :as engine]))
+    (:require [app-plugins.item-lister.engine :as engine]
+              [mid-fruits.vector              :as vector]
+              [x.app-core.api                 :as a :refer [r]]))
 
 
 

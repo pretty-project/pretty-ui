@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.process-handler
-    (:require [mid-fruits.map :refer [dissoc-in]]
+    (:require [mid-fruits.map           :refer [dissoc-in]]
               [x.app-core.event-handler :as event-handler :refer [r]]))
 
 

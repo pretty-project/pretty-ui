@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.effects
-    (:require [x.server-core.api :as a]
-              [x.mid-dictionary.books :refer [BOOKS]]))
+    (:require [x.mid-dictionary.books :refer [BOOKS]]
+              [x.server-core.api      :as a]))
 
 
 

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.sample
-    (:require [x.app-core.api :as a]
-              [app-plugins.value-editor.api :as value-editor]))
+    (:require [app-plugins.value-editor.api :as value-editor]
+              [x.app-core.api               :as a]))
 
 
 

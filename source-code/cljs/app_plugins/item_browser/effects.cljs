@@ -4,13 +4,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [x.app-ui.api   :as ui]
-              [app-plugins.item-browser.engine     :as engine]
+    (:require [app-plugins.item-browser.engine     :as engine]
               [app-plugins.item-browser.events     :as events]
               [app-plugins.item-browser.queries    :as queries]
               [app-plugins.item-browser.subs       :as subs]
-              [app-plugins.item-browser.validators :as validators]))
+              [app-plugins.item-browser.validators :as validators]
+              [x.app-core.api                      :as a :refer [r]]
+              [x.app-ui.api                        :as ui]))
 
 
 
@@ -188,7 +188,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
       {:db (r events/item-updated db extension-id item-namespace item-id)}))
-       
+
 (a/reg-event-fx
   :item-browser/update-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

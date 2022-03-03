@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.privacy-policy.effects
-    (:require [x.app-core.api :as a]
+    (:require [x.app-core.api                   :as a]
               [x.app-views.privacy-policy.views :as privacy-policy.views]))
 
 

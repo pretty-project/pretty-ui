@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.file-saver.side-effects
-    (:require [x.app-core.api :as a]
-              [x.app-tools.file-saver.engine :as file-saver.engine]
-              [x.app-tools.file-saver.views  :as file-saver.views]
+    (:require [x.app-core.api                         :as a]
+              [x.app-tools.file-saver.engine          :as file-saver.engine]
+              [x.app-tools.file-saver.views           :as file-saver.views]
               [x.app-tools.temporary-component.engine :refer [append-temporary-component! remove-temporary-component!]]))
 
 

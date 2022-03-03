@@ -4,11 +4,11 @@
 
 (ns app-extensions.storage.directory-creator.effects
     (:require [app-plugins.value-editor.api]
-              [mid-fruits.io        :as io]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-dictionary.api :as dictionary]
               [app-extensions.storage.directory-creator.events  :as directory-creator.events]
-              [app-extensions.storage.directory-creator.queries :as directory-creator.queries]))
+              [app-extensions.storage.directory-creator.queries :as directory-creator.queries]
+              [mid-fruits.io                                    :as io]
+              [x.app-core.api                                   :as a :refer [r]]
+              [x.app-dictionary.api                             :as dictionary]))
 
               
 

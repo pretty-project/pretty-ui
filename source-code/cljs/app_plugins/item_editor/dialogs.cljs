@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.dialogs
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [x.app-ui.api       :as ui]
-              [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.subs   :as subs]))
+    (:require [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.subs   :as subs]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-elements.api             :as elements]
+              [x.app-ui.api                   :as ui]))
 
 
 

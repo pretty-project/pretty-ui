@@ -1,13 +1,13 @@
 
 (ns app-extensions.trader.main
-    (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [app-extensions.trader.account  :as account]
+    (:require [app-extensions.trader.account  :as account]
               [app-extensions.trader.controls :as controls]
               [app-extensions.trader.listener :as listener]
               [app-extensions.trader.monitor  :as monitor]
               [app-extensions.trader.styles   :as styles]
-              [app-extensions.trader.wallet   :as wallet]))
+              [app-extensions.trader.wallet   :as wallet]
+              [x.app-core.api                 :as a]
+              [x.app-elements.api             :as elements]))
 
 
 

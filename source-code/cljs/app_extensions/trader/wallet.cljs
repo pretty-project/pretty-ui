@@ -1,12 +1,12 @@
 
 (ns app-extensions.trader.wallet
-    (:require [mid-fruits.time      :as time]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]
-              [app-extensions.trader.account :as account]
+    (:require [app-extensions.trader.account :as account]
               [app-extensions.trader.styles  :as styles]
-              [app-extensions.trader.sync    :as sync]))
+              [app-extensions.trader.sync    :as sync]
+              [mid-fruits.time               :as time]
+              [x.app-components.api          :as components]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-elements.api            :as elements]))
 
 
 

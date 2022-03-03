@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-bar.effects
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api               :as a :refer [r]]
               [x.app-ui.progress-bar.events :as progress-bar.events]))
 
 

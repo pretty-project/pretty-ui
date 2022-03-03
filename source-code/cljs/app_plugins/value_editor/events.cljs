@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.events
-    (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.map   :refer [dissoc-in]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-db.api     :as db]
-              [app-plugins.value-editor.engine :as engine]
-              [app-plugins.value-editor.subs   :as subs]))
+    (:require [app-plugins.value-editor.engine :as engine]
+              [app-plugins.value-editor.subs   :as subs]
+              [mid-fruits.candy                :refer [param return]]
+              [mid-fruits.map                  :refer [dissoc-in]]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-db.api                    :as db]))
 
 
 

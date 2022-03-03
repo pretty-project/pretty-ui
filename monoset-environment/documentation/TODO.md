@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- A hosszu require-ök ne kerüljenek a lista végére
+
 ; - A megfelelő hely:
 ;   [:plugins :item-browser/data-items :my-browser {...}]
 ;   [:plugins :item-browser/meta-items :my-browser {...}]

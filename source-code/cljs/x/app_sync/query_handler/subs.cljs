@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.query-handler.subs
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api                   :as a :refer [r]]
               [x.app-sync.response-handler.subs :as response-handler.subs]))
 
 

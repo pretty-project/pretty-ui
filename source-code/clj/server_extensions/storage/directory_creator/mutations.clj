@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.directory-creator.mutations
-    (:require [mongo-db.api :as mongo-db]
-              [pathom.api   :as pathom]
-              [com.wsscode.pathom3.connect.operation  :as pathom.co :refer [defmutation]]
+    (:require [com.wsscode.pathom3.connect.operation  :as pathom.co :refer [defmutation]]
+              [mongo-db.api                           :as mongo-db]
+              [pathom.api                             :as pathom]
               [server-extensions.storage.side-effects :as side-effects]))
 
 

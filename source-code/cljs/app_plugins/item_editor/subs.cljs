@@ -3,17 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.subs
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.vector    :as vector]
-              [x.app-activities.api :as activities]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
-              [x.app-elements.api   :as elements]
-              [x.app-router.api     :as router]
-              [x.app-sync.api       :as sync]
-              [app-plugins.item-editor.engine :as engine]
-              [mid-plugins.item-editor.subs   :as subs]))
+    (:require [app-plugins.item-editor.engine :as engine]
+              [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.vector              :as vector]
+              [mid-plugins.item-editor.subs   :as subs]
+              [x.app-activities.api           :as activities]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-db.api                   :as db]
+              [x.app-elements.api             :as elements]
+              [x.app-router.api               :as router]
+              [x.app-sync.api                 :as sync]))
 
 
 

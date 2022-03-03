@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.events
-    (:require [x.server-core.api :as a :refer [r]]
-              [mid-plugins.item-lister.events :as events]))
+    (:require [mid-plugins.item-lister.events :as events]
+              [x.server-core.api              :as a :refer [r]]))
 
 
 

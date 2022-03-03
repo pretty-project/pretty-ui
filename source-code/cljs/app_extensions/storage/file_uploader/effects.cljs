@@ -3,15 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.file-uploader.effects
-    (:require [app-fruits.dom :as dom]
-              [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.file-uploader.engine       :as file-uploader.engine]
+    (:require [app-extensions.storage.file-uploader.engine       :as file-uploader.engine]
               [app-extensions.storage.file-uploader.events       :as file-uploader.events]
               [app-extensions.storage.file-uploader.queries      :as file-uploader.queries]
               [app-extensions.storage.file-uploader.side-effects :as file-uploader.side-effects]
               [app-extensions.storage.file-uploader.validators   :as file-uploader.validators]
               [app-extensions.storage.file-uploader.subs         :as file-uploader.subs]
-              [app-extensions.storage.file-uploader.views        :as file-uploader.views]))
+              [app-extensions.storage.file-uploader.views        :as file-uploader.views]
+              [app-fruits.dom                                    :as dom]
+              [x.app-core.api                                    :as a :refer [r]]))
 
 
 

@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-user.api
-    (:require [x.mid-user.engine :as engine]
+    (:require [x.mid-user.engine                 :as engine]
               [x.mid-user.profile-handler.engine :as profile-handler.engine]))
 
 

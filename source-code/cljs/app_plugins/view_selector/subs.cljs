@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.subs
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-router.api  :as router]
-              [app-plugins.view-selector.engine :as engine]
-              [mid-plugins.view-selector.subs   :as subs]))
+    (:require [app-plugins.view-selector.engine :as engine]
+              [mid-fruits.candy                 :refer [param return]]
+              [mid-fruits.vector                :as vector]
+              [mid-plugins.view-selector.subs   :as subs]
+              [x.app-core.api                   :as a :refer [r]]
+              [x.app-router.api                 :as router]))
 
 
 

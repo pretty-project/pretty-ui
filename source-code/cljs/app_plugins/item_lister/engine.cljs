@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.engine
-    (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.vector  :as vector]
+    (:require [mid-fruits.keyword             :as keyword]
+              [mid-fruits.vector              :as vector]
               [mid-plugins.item-lister.engine :as engine]))
 
 

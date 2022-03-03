@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.clients.client-lister.effects
-    (:require [x.app-core.api              :as a :refer [r]]
-              [app-plugins.item-editor.api :as item-editor]
-              [app-plugins.item-lister.api :as item-lister]
-              [app-extensions.clients.client-lister.views :as client-lister.views]))
+    (:require [app-extensions.clients.client-lister.views :as client-lister.views]
+              [x.app-core.api                             :as a :refer [r]]
+              [app-plugins.item-editor.api                :as item-editor]
+              [app-plugins.item-lister.api                :as item-lister]))
 
 
 

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns pathom.sample
-    (:require [pathom.api :as pathom]
-              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]))
+    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [pathom.api                            :as pathom]))
 
 
 

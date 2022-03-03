@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-locales.name-handler.engine
-    (:require [x.server-user.api :as user]
+    (:require [x.server-user.api                 :as user]
               [x.mid-locales.name-handler.engine :as engine]))
 
 

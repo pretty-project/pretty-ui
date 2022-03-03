@@ -1,12 +1,12 @@
 
 (ns server-extensions.trader.market
-    (:require [clj-http.client   :as client]
-              [mid-fruits.candy  :refer [param return]]
-              [x.server-core.api :as a :refer [r]]
+    (:require [clj-http.client                   :as client]
+              [mid-fruits.candy                  :refer [param return]]
               [server-extensions.trader.account  :as account]
               [server-extensions.trader.engine   :as engine]
               [server-extensions.trader.klines   :as klines]
-              [server-extensions.trader.settings :as settings]))
+              [server-extensions.trader.settings :as settings]
+              [x.server-core.api                 :as a :refer [r]]))
 
 
 

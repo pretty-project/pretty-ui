@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.dialogs
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-ui.api     :as ui]
-              [app-plugins.item-browser.engine :as engine]))
+    (:require [app-plugins.item-browser.engine :as engine]
+              [mid-fruits.candy                :refer [param return]]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-ui.api                    :as ui]))
 
 
 

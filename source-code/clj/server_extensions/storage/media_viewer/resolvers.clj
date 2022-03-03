@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.media-viewer.resolvers
-    (:require [mid-fruits.candy :refer [param return]]
-              [mongo-db.api     :as mongo-db]
-              [pathom.api       :as pathom]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+    (:require [com.wsscode.pathom3.connect.operation :refer [defresolver]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]))
 
 
 

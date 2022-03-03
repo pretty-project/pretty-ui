@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.subs
-    (:require [x.server-core.api      :as a :refer [r]]
-              [x.server-router.engine :as engine]
-              [x.server-user.api      :as user]
-              [x.mid-router.route-handler.subs :as route-handler.subs]))
+    (:require [x.mid-router.route-handler.subs :as route-handler.subs]
+              [x.server-core.api               :as a :refer [r]]
+              [x.server-router.engine          :as engine]
+              [x.server-user.api               :as user]))
 
 
 

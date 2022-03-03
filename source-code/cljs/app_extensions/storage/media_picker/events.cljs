@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-picker.events
-    (:require [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-ui.api      :as ui]
-              [x.app-media.api   :as media]
-              [app-extensions.storage.engine            :as engine]
-              [app-extensions.storage.media-picker.subs :as media-picker.subs]))
+    (:require [app-extensions.storage.engine            :as engine]
+              [app-extensions.storage.media-picker.subs :as media-picker.subs]
+              [mid-fruits.vector                        :as vector]
+              [x.app-core.api                           :as a :refer [r]]
+              [x.app-ui.api                             :as ui]
+              [x.app-media.api                          :as media]))
 
 
 

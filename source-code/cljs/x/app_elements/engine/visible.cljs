@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.visible
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :refer [dissoc-in]]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
+    (:require [mid-fruits.candy              :refer [param return]]
+              [mid-fruits.map                :refer [dissoc-in]]
+              [mid-fruits.vector             :as vector]
+              [x.app-components.api          :as components]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-db.api                  :as db]
               [x.app-elements.engine.element :as element]))
 
 

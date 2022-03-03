@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.dialogs
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [x.app-ui.api     :as ui]
-              [app-plugins.item-lister.engine :as engine]))
+    (:require [app-plugins.item-lister.engine :as engine]
+              [mid-fruits.candy               :refer [param return]]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-ui.api                   :as ui]))
 
 
 

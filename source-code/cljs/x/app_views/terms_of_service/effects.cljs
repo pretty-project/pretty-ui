@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.terms-of-service.effects
-    (:require [x.app-core.api :as a]
+    (:require [x.app-core.api                     :as a]
               [x.app-views.terms-of-service.views :as terms-of-service.views]))
 
 

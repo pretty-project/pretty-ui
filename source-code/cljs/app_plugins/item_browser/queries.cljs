@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-browser.queries
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.subs   :as subs]))
+    (:require [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-browser.subs   :as subs]
+              [x.app-core.api                  :as a :refer [r]]))
 
 
 

@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.views
-    (:require [mid-fruits.candy     :refer [param]]
-              [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
-              [app-plugins.item-editor.engine :as engine]))
+    (:require [app-plugins.item-editor.engine :as engine]
+              [mid-fruits.candy               :refer [param]]
+              [mid-fruits.string              :as string]
+              [mid-fruits.vector              :as vector]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a]
+              [x.app-elements.api             :as elements]
+              [x.app-layouts.api              :as layouts]))
 
 
 

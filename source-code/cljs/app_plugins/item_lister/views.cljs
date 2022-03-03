@@ -3,16 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.views
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.logical   :refer [nor]]
-              [mid-fruits.vector    :as vector]
-              [x.app-core.api       :as a]
-              [x.app-components.api :as components]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.api    :as layouts]
-              [x.app-tools.api      :as tools]
-              [app-fruits.react-transition    :as react-transition]
-              [app-plugins.item-lister.engine :as engine]))
+    (:require [app-fruits.react-transition    :as react-transition]
+              [app-plugins.item-lister.engine :as engine]
+              [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.logical             :refer [nor]]
+              [mid-fruits.vector              :as vector]
+              [x.app-core.api                 :as a]
+              [x.app-components.api           :as components]
+              [x.app-elements.api             :as elements]
+              [x.app-layouts.api              :as layouts]
+              [x.app-tools.api                :as tools]))
              ;[app-plugins.sortable.core      :refer [sortable]]
 
 

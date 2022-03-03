@@ -14,9 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.data-order-handler
-    (:require [mid-fruits.map    :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [x.mid-core.api    :refer [r]]
+    (:require [mid-fruits.map             :refer [dissoc-in]]
+              [mid-fruits.vector          :as vector]
+              [x.mid-core.api             :refer [r]]
               [x.mid-db.partition-handler :as partition-handler]))
 
 

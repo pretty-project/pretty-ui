@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.sample
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]
-              [app-plugins.item-editor.api :as item-editor]))
+    (:require [app-plugins.item-editor.api :as item-editor]
+              [x.app-components.api        :as components]
+              [x.app-core.api              :as a]
+              [x.app-elements.api          :as elements]))
 
 
 

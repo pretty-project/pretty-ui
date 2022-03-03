@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.view-selector.effects
-    (:require [mid-fruits.candy  :refer [param return]]
-              [x.server-core.api :as a :refer [r]]
-              [server-plugins.view-selector.engine :as engine]))
+    (:require [mid-fruits.candy                    :refer [param return]]
+              [server-plugins.view-selector.engine :as engine]
+              [x.server-core.api                   :as a :refer [r]]))
 
 
 

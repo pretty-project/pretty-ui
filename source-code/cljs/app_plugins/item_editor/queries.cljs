@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.queries
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
-              [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.subs   :as subs]))
+    (:require [app-plugins.item-editor.engine :as engine]
+              [app-plugins.item-editor.subs   :as subs]
+              [mid-fruits.candy               :refer [param return]]
+              [x.app-core.api                 :as a :refer [r]]))
 
 
 

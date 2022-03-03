@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-viewer.queries
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-extensions.storage.media-viewer.subs :as media-viewer.subs]))
+    (:require [app-extensions.storage.media-viewer.subs :as media-viewer.subs]
+              [x.app-core.api                           :as a :refer [r]]))
 
 
 

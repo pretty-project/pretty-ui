@@ -1,13 +1,13 @@
 
 (ns server-extensions.trader.monitor
-    (:require [mid-fruits.candy   :refer [param return]]
-              [pathom.api         :as pathom]
-              [x.server-core.api  :as a]
+    (:require [com.wsscode.pathom3.connect.operation :refer [defresolver]]
+              [mid-fruits.candy                      :refer [param return]]
+              [pathom.api                            :as pathom]
               [server-extensions.trader.account      :as account]
               [server-extensions.trader.engine       :as engine]
               [server-extensions.trader.klines       :as klines]
               [server-extensions.trader.settings     :as settings]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]))
+              [x.server-core.api                     :as a]))
 
 
 

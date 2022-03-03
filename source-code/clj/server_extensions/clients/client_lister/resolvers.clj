@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-lister.resolvers
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mongo-db.api         :as mongo-db]
-              [pathom.api           :as pathom]
-              [x.server-locales.api :as locales]
-              [com.wsscode.pathom3.connect.operation :refer [defresolver]]
-              [server-plugins.item-lister.api        :as item-lister]))
+    (:require [com.wsscode.pathom3.connect.operation :refer [defresolver]]
+              [mid-fruits.candy                      :refer [param return]]
+              [mongo-db.api                          :as mongo-db]
+              [pathom.api                            :as pathom]
+              [server-plugins.item-lister.api        :as item-lister]
+              [x.server-locales.api                  :as locales]))
 
 
 

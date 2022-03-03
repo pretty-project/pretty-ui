@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.subscriber
-    (:require [x.app-core.api :as a]
-              [x.app-components.transmitter :rename {component transmitter}]))
+    (:require [x.app-components.transmitter :rename {component transmitter}]
+              [x.app-core.api               :as a]))
 
 
 

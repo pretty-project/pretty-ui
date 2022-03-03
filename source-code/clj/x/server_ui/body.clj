@@ -14,16 +14,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
-              [x.server-core.api    :as a :refer [cache-control-uri]]
-              [x.server-router.api  :as router]
-              [x.server-ui.engine   :refer [include-js]]
-              [x.server-ui.graphics :as graphics]
-              [x.server-ui.shield   :refer [view] :rename {view app-shield}]
-              [x.server-user.api    :as user]
-              [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
+    (:require [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.string            :as string]
+              [mid-fruits.vector            :as vector]
+              [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
+              [x.server-core.api            :as a :refer [cache-control-uri]]
+              [x.server-router.api          :as router]
+              [x.server-ui.engine           :refer [include-js]]
+              [x.server-ui.graphics         :as graphics]
+              [x.server-ui.shield           :refer [view] :rename {view app-shield}]
+              [x.server-user.api            :as user]))
 
 
 

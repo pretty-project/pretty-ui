@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.value-editor.views
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [app-plugins.value-editor.engine :as engine]))
+    (:require [app-plugins.value-editor.engine :as engine]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-elements.api              :as elements]))
 
 
 

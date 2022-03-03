@@ -1,11 +1,11 @@
 
 (ns app-extensions.trader.sync
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.map     :as map :refer [dissoc-in]]
-              [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]
-              [app-extensions.trader.styles :as styles]))
+    (:require [app-extensions.trader.styles :as styles]
+              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.map               :as map :refer [dissoc-in]]
+              [mid-fruits.vector            :as vector]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]))
 
 
 

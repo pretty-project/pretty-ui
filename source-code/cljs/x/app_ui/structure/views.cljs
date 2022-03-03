@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.structure.views
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api              :as a :refer [r]]
               [x.app-ui.background.views   :rename {view app-background}]
               [x.app-ui.bubbles            :rename {view app-bubbles}]
               [x.app-ui.header.views       :rename {view app-header}]

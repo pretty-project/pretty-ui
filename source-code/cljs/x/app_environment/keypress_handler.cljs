@@ -14,11 +14,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
+    (:require [mid-fruits.candy                :refer [param return]]
+              [mid-fruits.map                  :as map :refer [dissoc-in]]
+              [mid-fruits.vector               :as vector]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-db.api                    :as db]
               [x.app-environment.event-handler :as event-handler]))
 
 

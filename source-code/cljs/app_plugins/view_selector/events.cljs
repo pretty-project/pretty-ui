@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.events
-    (:require [x.app-core.api :as a :refer [r]]
-              [app-plugins.view-selector.engine :as engine]
-              [app-plugins.view-selector.subs   :as subs]))
+    (:require [app-plugins.view-selector.engine :as engine]
+              [app-plugins.view-selector.subs   :as subs]
+              [x.app-core.api                   :as a :refer [r]]))
 
 
 

@@ -4,13 +4,13 @@
 
 (ns app-extensions.storage.media-picker.views
     (:require [app-plugins.item-browser.views]
-              [mid-fruits.css     :as css]
-              [mid-fruits.keyword :as keyword]
-              [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-media.api    :as media]
-              [app-plugins.item-browser.api :as item-browser]
-              [app-extensions.storage.media-browser.views :as media-browser.views]))
+              [app-extensions.storage.media-browser.views :as media-browser.views]
+              [app-plugins.item-browser.api               :as item-browser]
+              [mid-fruits.css                             :as css]
+              [mid-fruits.keyword                         :as keyword]
+              [x.app-core.api                             :as a]
+              [x.app-elements.api                         :as elements]
+              [x.app-media.api                            :as media]))
 
 
 

@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.events
-    (:require [mid-fruits.map    :as map :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-ui.api      :as ui]
-              [app-plugins.item-lister.engine :as engine]
-              [app-plugins.item-lister.subs   :as subs]))
+    (:require [app-plugins.item-lister.engine :as engine]
+              [app-plugins.item-lister.subs   :as subs]
+              [mid-fruits.map                 :as map :refer [dissoc-in]]
+              [mid-fruits.vector              :as vector]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-db.api                   :as db]
+              [x.app-ui.api                   :as ui]))
 
 
 

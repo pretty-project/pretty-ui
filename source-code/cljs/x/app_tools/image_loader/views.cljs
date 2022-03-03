@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.image-loader.views
-    (:require [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a]
+    (:require [mid-fruits.candy                :refer [param]]
+              [x.app-core.api                  :as a]
               [x.app-tools.image-loader.engine :as image-loader.engine]))
 
 

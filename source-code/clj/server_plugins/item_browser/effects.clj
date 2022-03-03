@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.effects
-    (:require [x.server-core.api :as a :refer [r]]
-              [server-plugins.item-browser.engine :as engine]
+    (:require [server-plugins.item-browser.engine :as engine]
               [server-plugins.item-browser.events :as events]
-              [server-plugins.item-lister.effects :refer [lister-props-prototype]]))
+              [server-plugins.item-lister.effects :refer [lister-props-prototype]]
+              [x.server-core.api                  :as a :refer [r]]))
 
 
 

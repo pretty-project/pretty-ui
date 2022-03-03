@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.query-handler.effects
-    (:require [mid-fruits.candy  :refer [param]]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a]
+    (:require [mid-fruits.candy                :refer [param]]
+              [mid-fruits.vector               :as vector]
+              [x.app-core.api                  :as a]
               [x.app-sync.query-handler.engine :as query-handler.engine]))
 
 

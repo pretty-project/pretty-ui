@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.clients.client-lister.views
-    (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]
-              [x.app-layouts.api  :as layouts]
-              [x.app-locales.api  :as locales]
-              [app-plugins.item-editor.api :as item-editor]
-              [app-plugins.item-lister.api :as item-lister]))
+    (:require [app-plugins.item-editor.api :as item-editor]
+              [app-plugins.item-lister.api :as item-lister]
+              [x.app-core.api              :as a]
+              [x.app-elements.api          :as elements]
+              [x.app-layouts.api           :as layouts]
+              [x.app-locales.api           :as locales]))
 
 
 

@@ -3,16 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-browser.effects
-    (:require [app-fruits.window :as window]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.io     :as io]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-media.api   :as media]
-              [x.app-router.api  :as router]
-              [x.app-ui.api      :as ui]
-              [app-extensions.storage.media-browser.subs  :as media-browser.subs]
+    (:require [app-extensions.storage.media-browser.subs  :as media-browser.subs]
+              [app-fruits.window                          :as window]
               [app-extensions.storage.media-browser.views :as media-browser.views]
-              [app-plugins.item-browser.api               :as item-browser]))
+              [app-plugins.item-browser.api               :as item-browser]
+              [mid-fruits.candy                           :refer [param return]]
+              [mid-fruits.io                              :as io]
+              [x.app-core.api                             :as a :refer [r]]
+              [x.app-media.api                            :as media]
+              [x.app-router.api                           :as router]
+              [x.app-ui.api                               :as ui]))
 
 
 

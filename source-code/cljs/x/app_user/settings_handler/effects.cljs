@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.settings-handler.effects
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [x.app-core.api                     :as a :refer [r]]
               [x.app-user.settings-handler.events :as settings-handler.events]))
 
 
