@@ -99,8 +99,8 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (as-> field-props % (field-props-prototype            field-id %)
-                                         (text-field/field-props-prototype field-id %))]
+   (let [field-props (as-> field-props % (field-props-prototype                       field-id %)
+                                         (components.text-field/field-props-prototype field-id %))]
         [engine/stated-element field-id
                                {:render-f      #'text-field
                                 :element-props field-props

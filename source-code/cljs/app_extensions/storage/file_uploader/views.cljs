@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.file-uploader.views
-    (:require [app-extensions.storage.file-uploader.engine :as file-uploader.engine]))
+    (:require [app-extensions.storage.file-uploader.engine :as file-uploader.engine]
               [mid-fruits.css                              :as css]
               [mid-fruits.io                               :as io]
               [mid-fruits.format                           :as format]
@@ -11,7 +11,7 @@
               [mid-fruits.string                           :as string]
               [x.app-core.api                              :as a]
               [x.app-elements.api                          :as elements]
-              [x.app-media.api                             :as media]
+              [x.app-media.api                             :as media]))
 
 
 

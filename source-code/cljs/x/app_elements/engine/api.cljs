@@ -39,8 +39,7 @@
               [x.app-elements.engine.steppable          :as steppable]
               [x.app-elements.engine.surface            :as surface]
               [x.app-elements.engine.table              :as table]
-              [x.app-elements.engine.targetable         :as targetable]
-              [x.app-elements.engine.visible            :as visible]))
+              [x.app-elements.engine.targetable         :as targetable]))
 
 
 
@@ -169,9 +168,3 @@
 
 ; x.app-elements.engine.targetable
 (def element-id->target-id targetable/element-id->target-id)
-
-; x.app-elements.engine.visible
-(def on-hide-function                visible/on-hide-function)
-(def on-show-function                visible/on-show-function)
-(def visible-items->first-content-id visible/visible-items->first-content-id)
-(def get-visible-props               visible/get-visible-props)
