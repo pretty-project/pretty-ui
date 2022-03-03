@@ -166,24 +166,8 @@
   ;
   ; @usage
   ;  [storage/media-picker :my-picker {...}]
-  ;
-  ; @return (component)
   ([picker-props]
    [element (a/id) picker-props])
 
   ([picker-id picker-props]
    [media-picker picker-id picker-props]))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage.media-picker/render-picker!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ picker-id]]
-      [:ui/add-popup! :storage.media-picker/view
-                      {:body   [body   picker-id]
-                       :header [header picker-id]
-                       :stretch-orientation :vertical}]))

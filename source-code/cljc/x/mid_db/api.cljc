@@ -16,7 +16,6 @@
 (ns x.mid-db.api
     (:require [x.mid-db.backup-handler       :as backup-handler]
               [x.mid-db.collection-handler   :as collection-handler]
-              [x.mid-db.data-history-handler :as data-history-handler]
               [x.mid-db.data-order-handler   :as data-order-handler]
               [x.mid-db.data-range-handler   :as data-range-handler]
               [x.mid-db.document-handler     :as document-handler]
@@ -60,14 +59,6 @@
 (def document-exists?                       collection-handler/document-exists?)
 (def explode-collection                     collection-handler/explode-collection)
 (def get-specified-values                   collection-handler/get-specified-values)
-
-; x.mid-db.data-history-handler
-(def get-partition-history      data-history-handler/get-partition-history)
-(def get-data-history           data-history-handler/get-data-history)
-(def get-last-data-history-item data-history-handler/get-last-data-history-item)
-(def get-data-history-result    data-history-handler/get-data-history-result)
-(def clear-data-history!        data-history-handler/clear-data-history!)
-(def update-data-history!       data-history-handler/update-data-history!)
 
 ; x.mid-db.data-order-handler
 (def data-item-last?          data-order-handler/data-item-last?)

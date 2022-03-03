@@ -6,9 +6,9 @@
               [x.app-elements.api  :as elements]
               [x.app-gestures.api  :as gestures]
               [x.app-ui.api        :as ui]
-              [x.app-developer.database-browser :rename {body database-browser}]
-              [x.app-developer.request-browser  :rename {body request-browser}]
-              [x.app-developer.route-browser    :rename {body route-browser}]))
+              [x.app-developer.database-browser        :rename {body database-browser}]
+              [x.app-developer.request-inspector.views :rename {body request-inspector}]
+              [x.app-developer.route-browser           :rename {body route-browser}]))
 
 
 
@@ -30,8 +30,8 @@
     :on-click [:gestures/change-view! ::handler :database-browser]
     :active?  (= view-id :database-browser)}
    {:label    "Requests"
-    :on-click [:gestures/change-view! ::handler :request-browser]
-    :active?  (= view-id :request-browser)}
+    :on-click [:gestures/change-view! ::handler :request-inspector]
+    :active?  (= view-id :request-inspector)}
    {:label    "Routes"
     :on-click [:gestures/change-view! ::handler :route-browser]
     :active?  (= view-id :route-browser)}])
@@ -94,9 +94,9 @@
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
-  (case view-id :database-browser [database-browser]
-                :request-browser  [request-browser]
-                :route-browser    [route-browser]))
+  (case view-id :database-browser  [database-browser]
+                :request-inspector [request-inspector]
+                :route-browser     [route-browser]))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!

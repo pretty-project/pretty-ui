@@ -49,7 +49,8 @@
        [elements/button ::move-directory-button
                         {:preset :default-button :icon :drive_file_move :indent :left :label :move!
                          :icon-family :material-icons-outlined
-                         :on-click [:storage.media-browser/move-item! directory-item]}]
+                         :on-click [:storage.media-browser/move-item! directory-item]
+                         :disabled? true}]
        [elements/button ::duplicate-directory-button
                         {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
                          :on-click [:storage.media-browser/duplicate-item! directory-item]}]
@@ -82,7 +83,8 @@
        [elements/button ::move-file-button
                         {:preset :default-button :icon :drive_file_move :indent :left :label :move!
                          :icon-family :material-icons-outlined
-                         :on-click [:storage.media-browser/move-item! file-item]}]
+                         :on-click [:storage.media-browser/move-item! file-item]
+                         :disabled? true}]
        [elements/button ::duplicate-file-button
                         {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
                          :on-click [:storage.media-browser/duplicate-item! file-item]}]

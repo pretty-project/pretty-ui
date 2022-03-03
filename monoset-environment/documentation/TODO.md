@@ -13,6 +13,12 @@
 
 
 # x4.6.0
+- az elementek min-width tulajdonságara lehet hogy nincs többé szükség, ha a form-ok
+  wrapper-jei határozzák meg az inputok szélességét,
+
+- és minden element olyan magas amielny magas, és van indent-left, indent-right, indent-top, indent-bottom
+  mindenhez
+
 - a pluginok :item-actions tulajdonsága hol a header-ön van hol a body-n egységesíteni kell
 
 - pluginok error-mode-ját teszteni kell

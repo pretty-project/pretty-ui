@@ -1,39 +1,19 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.06.09
-; Description:
-; Version: v0.6.2
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.query-handler
+(ns x.app-sync.query-handler.effects
     (:require [mid-fruits.candy  :refer [param]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-db.api      :as db]
-              [x.app-sync.response-handler :as response-handler]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def DEFAULT-URI "/query")
+              [x.app-core.api    :as a]
+              [x.app-sync.query-handler.engine :as query-handler.engine]))
 
 
 
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- query-props-prototype
+(defn query-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) query-props
@@ -44,39 +24,10 @@
   ;   :query (vector)
   ;   :uri (string)}
   [{:keys [query] :as query-props}]
-  (merge {:uri DEFAULT-URI}
+  (merge {:uri query-handler.engine/DEFAULT-URI}
          (param query-props)
          (if query {:params {:query query}})
          {:method :post}))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-query-response
-  ; @param (keyword) query-id
-  ;
-  ; @usage
-  ;  (r sync/get-query-response db :my-query)
-  ;
-  ; @return (map)
-  [db [_ query-id]]
-  (r response-handler/get-request-response db query-id))
-
-(defn get-query-answer
-  ; @param (keyword) query-id
-  ; @param (*) query-question
-  ;
-  ; @example
-  ;  (r sync/get-query-answer db :my-query :all-users)
-  ;  =>
-  ;  [{...} {...}]
-  ;
-  ; @return (*)
-  [db [_ query-id query-question]]
-  (let [query-response (r get-query-response db query-id)]
-       (get query-response query-question)))
 
 
 

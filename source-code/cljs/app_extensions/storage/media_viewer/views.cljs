@@ -24,20 +24,6 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-my-state
-  [db _]
-  {:ref (random-uuid)})
-
-(a/reg-sub :get-my-state get-my-state)
-
-(defn a
-  []
-  (let [state @(a/subscribe [:get-my-state])]
-       [:div {:style {:color "white"}}
-             [:div [:button {:on-click #(a/dispatch [:db/apply-item! [:my-state] not])}
-                            "toggle"]
-                   (str state)]]))
-
 (defn- pdf-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
@@ -50,9 +36,8 @@
   [viewer-id]
   (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
        [:div.storage--media-viewer--image-item
-         ;[:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
-         ;[:img.storage--media-viewer--image {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
-         [a]]))
+         [:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
+         [:img.storage--media-viewer--image {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
 
 (defn- media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,8 +70,6 @@
   ;
   ; @usage
   ;  [storage/media-viewer :my-viewer {:directory-id "my-directory"}]
-  ;
-  ; @return (component)
   ([viewer-props]
    [element (a/id) viewer-props])
 

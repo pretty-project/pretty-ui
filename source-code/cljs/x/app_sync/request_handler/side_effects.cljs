@@ -1,29 +1,11 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.10.13
-; Description:
-; Version: v1.2.8
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.engine
+(ns x.app-sync.request-handler.side-effects
    (:require [app-fruits.http :as http]
-             [x.app-core.api  :as a]))
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-(def REFERENCES (atom {}))
+             [x.app-core.api  :as a]
+             [x.app-sync.request-handler.engine :as request-handler.engine]))
 
 
 
@@ -76,25 +58,33 @@
   [request-id request-props]
   (let [request-props (request-props-prototype request-id request-props)
         reference     (http/send-request!      request-id request-props)]
-       (swap! REFERENCES assoc request-id reference)))
-
-(a/reg-fx :sync/send-request! send-request!)
+       (swap! request-handler.engine/REFERENCES assoc request-id reference)))
 
 (defn- abort-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   [request-id]
-  (let [reference (get @REFERENCES request-id)]
+  (let [reference (get @request-handler.engine/REFERENCES request-id)]
        (http/abort-request! reference)))
-
-(a/reg-fx :sync/abort-request! abort-request!)
 
 (defn- remove-reference!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   [request-id]
-  (swap! REFERENCES dissoc request-id))
+  (swap! request-handler.engine/REFERENCES dissoc request-id))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-fx :sync/send-request! send-request!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-fx :sync/abort-request! abort-request!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-fx :sync/remove-reference! remove-reference!)
