@@ -187,8 +187,7 @@
        [elements/multi-combo-box ::multi-combo-box
                                  {:label "Multi-combo-box"
                                   :get-label-f :x
-                                  :options-path (db/path ::stuff :initial-options)
-                                  :value-path [:x]}]
+                                  :options-path (db/path ::stuff :initial-options)}]
        [elements/date-field ::date-field
                             {:label "Date field" :value-path (db/path ::stuff :date)}]
        [elements/text-field ::text-field-w-surface

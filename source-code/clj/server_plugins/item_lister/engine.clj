@@ -6,6 +6,7 @@
     (:require [mid-fruits.candy               :refer [param return]]
               [mid-fruits.keyword             :as keyword]
               [mid-fruits.math                :as math]
+              [mid-fruits.string              :as string]
               [mid-fruits.vector              :as vector]
               [mid-plugins.item-lister.engine :as engine]
               [mongo-db.api                   :as mongo-db]
@@ -141,7 +142,8 @@
   [env _ item-namespace]
   (let [search-keys (pathom/env->param env :search-keys)
         search-term (pathom/env->param env :search-term)]
-       {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))}))
+       (if (string/nonempty? search-term)
+           {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))})))
 
 (defn env->pipeline-props
   ; @param (map) env

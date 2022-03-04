@@ -129,7 +129,8 @@
   ;   :surface-visible? (boolean)(opt)}
   [field-id {:keys [surface surface-visible?]}]
   (if (and surface surface-visible?)
-      [:div.x-text-field--surface [components/content field-id surface]]))
+      [:div.x-text-field--surface ;{:on-mouse-down #(.preventDefault %)}
+                                  [components/content field-id surface]]))
 
 (defn- text-field-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

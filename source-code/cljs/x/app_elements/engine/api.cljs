@@ -31,8 +31,7 @@
               [x.app-elements.engine.passfield          :as passfield]
               [x.app-elements.engine.selectable         :as selectable]
               [x.app-elements.engine.stated-element     :as stated-element]
-              [x.app-elements.engine.steppable          :as steppable]
-              [x.app-elements.engine.table              :as table]))
+              [x.app-elements.engine.steppable          :as steppable]))
 
 
 
@@ -138,6 +137,3 @@
 ; x.app-elements.engine.steppable
 (def steppable-attributes steppable/steppable-attributes)
 (def get-steppable-props  steppable/get-steppable-props)
-
-; x.app-elements.engine.table
-(def table-attributes table/table-attributes)
