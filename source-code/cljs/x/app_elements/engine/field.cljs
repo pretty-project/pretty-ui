@@ -14,17 +14,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.field
-    (:require [app-fruits.dom                   :as dom]
-              [mid-fruits.candy                 :refer [param return]]
-              [mid-fruits.css                   :as css]
-              [mid-fruits.string                :as string]
-              [mid-fruits.vector                :as vector]
-              [x.app-core.api                   :as a :refer [r]]
-              [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.input      :as input]
-              [x.app-elements.engine.surface    :as surface]
+    (:require [app-fruits.dom                            :as dom]
+              [mid-fruits.candy                          :refer [param return]]
+              [mid-fruits.css                            :as css]
+              [mid-fruits.string                         :as string]
+              [mid-fruits.vector                         :as vector]
+              [x.app-core.api                            :as a :refer [r]]
+              [x.app-elements.element-surface.events     :as element-surface.events]
+              [x.app-elements.engine.element             :as element]
+              [x.app-elements.engine.input               :as input]
               [x.app-elements.targetable-elements.engine :as targetable-elements.engine]
-              [x.app-environment.api            :as environment]))
+              [x.app-environment.api                     :as environment]))
 
 
 
@@ -476,7 +476,7 @@
   (as-> db % (r environment/enable-non-required-keypress-events! %)
              (r mark-field-as-blurred!                           % field-id)
              (r input/mark-input-as-visited!                     % field-id)
-             (r surface/hide-surface!                            % field-id)))
+             (r element-surface.events/hide-surface!             % field-id)))
 
 (defn field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!

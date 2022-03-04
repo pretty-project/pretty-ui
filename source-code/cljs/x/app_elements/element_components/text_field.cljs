@@ -8,6 +8,7 @@
               [mid-fruits.vector                     :as vector]
               [x.app-components.api                  :as components]
               [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.element-surface.subs   :as element-surface.subs]
               [x.app-elements.engine.api             :as engine]
               [x.app-elements.field-adornments.views :as field-adornments.views]))
 
@@ -104,9 +105,9 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-props db field-id)
-         (r engine/get-field-props   db field-id)
-         (r engine/get-surface-props db field-id)))
+  (merge (r engine/get-element-props               db field-id)
+         (r engine/get-field-props                 db field-id)
+         (r element-surface.subs/get-surface-props db field-id)))
 
 (a/reg-sub :elements/get-text-field-props get-text-field-props)
 

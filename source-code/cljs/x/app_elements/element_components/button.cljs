@@ -8,7 +8,8 @@
               [x.app-components.api                  :as components]
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.api             :as engine]
-              [x.app-elements.element-presets.button :as element-presets.button]))
+              [x.app-elements.element-presets.button :as element-presets.button]
+              [x.app-elements.element-presets.engine :as element-presets.engine]))
 
 
 
@@ -17,6 +18,9 @@
 
 ; x.app-elements.element-presets.button
 (def BUTTON-PROPS-PRESETS element-presets.button/BUTTON-PROPS-PRESETS)
+
+; x.app-elements.element-presets.engine
+(def apply-preset element-presets.engine/apply-preset)
 
 
 
@@ -183,7 +187,7 @@
    [element (a/id) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (apply-preset BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
                      [button         button-id button-props]))))

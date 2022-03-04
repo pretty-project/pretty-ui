@@ -7,12 +7,16 @@
               [x.app-components.api                       :as components]
               [x.app-core.api                             :as a :refer [r]]
               [x.app-elements.engine.api                  :as engine]
+              [x.app-elements.element-presets.engine      :as element-presets.engine]
               [x.app-elements.element-presets.icon-button :as element-presets.icon-button]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.app-elements.element-presets.engine
+(def apply-preset element-presets.engine/apply-preset)
 
 ; x.app-elements.element-presets.icon-button
 (def BUTTON-PROPS-PRESETS element-presets.icon-button/BUTTON-PROPS-PRESETS)
@@ -151,7 +155,7 @@
    [element (a/id) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (engine/apply-preset    BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (apply-preset BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
                      [icon-button    button-id button-props]))))
