@@ -35,8 +35,6 @@
    {:label    "Routes"
     :on-click [:gestures/change-view! ::handler :route-browser]
     :active?  (= view-id :route-browser)}])
-;   {:label "Docs"
-;    :on-click [:router/go-to! "/@app-home/docs"]
 
 
 

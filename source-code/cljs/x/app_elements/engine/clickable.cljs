@@ -19,8 +19,7 @@
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a :refer [r]]
               [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.focusable  :as focusable]
-              [x.app-elements.engine.targetable :as targetable]
+              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]
               [x.app-environment.api            :as environment]))
 
 
@@ -48,7 +47,7 @@
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click on-right-click tooltip]}]
-  (cond-> {:id (targetable/element-id->target-id element-id)}
+  (cond-> {:id (targetable-elements.engine/element-id->target-id element-id)}
           (boolean disabled?) (merge {:disabled     true
                                       :data-tooltip (components/content {:content tooltip})})
           (not     disabled?) (merge {:data-tooltip (components/content {:content tooltip})
@@ -113,7 +112,7 @@
   ;
   ; @param (keyword) element-id
   (fn [_ [_ element-id]]
-      (if (targetable/element-id->target-enabled? element-id)
+      (if (targetable-elements.engine/element-id->target-enabled? element-id)
           {:fx [:elements/focus-element! element-id]})))
 
 (a/reg-event-fx
@@ -123,5 +122,5 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       {:fx [:elements/blur-element! element-id]
-       :dispatch-if [(targetable/element-id->target-enabled? element-id)
+       :dispatch-if [(targetable-elements.engine/element-id->target-enabled? element-id)
                      (r element/get-element-prop db element-id :on-click)]}))

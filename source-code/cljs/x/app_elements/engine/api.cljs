@@ -19,16 +19,12 @@
               [x.app-elements.engine.collectable        :as collectable]
               [x.app-elements.engine.combo-box          :as combo-box]
               [x.app-elements.engine.countable          :as countable]
-              [x.app-elements.engine.deletable          :as deletable]
               [x.app-elements.engine.element            :as element]
-              [x.app-elements.engine.element-adornments :as element-adornments]
               [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.element-stickers   :as element-stickers]
               [x.app-elements.engine.expandable         :as expandable]
               [x.app-elements.engine.field              :as field]
-              [x.app-elements.engine.flexible           :as flexible]
-              [x.app-elements.engine.focusable          :as focusable]
               [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
               [x.app-elements.engine.input-group        :as input-group]
@@ -38,8 +34,7 @@
               [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]
               [x.app-elements.engine.surface            :as surface]
-              [x.app-elements.engine.table              :as table]
-              [x.app-elements.engine.targetable         :as targetable]))
+              [x.app-elements.engine.table              :as table]))
 
 
 
@@ -79,9 +74,6 @@
 ; x.app-elements.engine.clickable
 (def clickable-body-attributes clickable/clickable-body-attributes)
 
-; x.app-elements.engine.deletable
-(def deletable-body-attributes deletable/deletable-body-attributes)
-
 ; x.app-elements.engine.element
 (def element-id->extended-id               element/element-id->extended-id)
 (def element-props->render-element-header? element/element-props->render-element-header?)
@@ -91,10 +83,6 @@
 (def set-element-prop!                     element/set-element-prop!)
 (def update-element-prop!                  element/update-element-prop!)
 (def remove-element-prop!                  element/remove-element-prop!)
-
-; x.app-elements.engine.element-adornments
-(def element-end-adornments   element-adornments/element-end-adornments)
-(def element-start-adornments element-adornments/element-start-adornments)
 
 ; x.app-elements.engine.element-badge
 (def element-badge element-badge/element-badge)
@@ -119,9 +107,6 @@
 (def field-filled?                          field/field-filled?)
 (def get-field-value                        field/get-field-value)
 (def get-field-props                        field/get-field-props)
-
-; x.app-elements.engine.flexible
-(def flexible-attributes flexible/flexible-attributes)
 
 ; x.app-elements.engine.form
 (def inputs-passed?  form/inputs-passed?)
@@ -165,6 +150,3 @@
 
 ; x.app-elements.engine.table
 (def table-attributes table/table-attributes)
-
-; x.app-elements.engine.targetable
-(def element-id->target-id targetable/element-id->target-id)

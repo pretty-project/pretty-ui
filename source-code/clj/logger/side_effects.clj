@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns logger.side.effects
+(ns logger.side-effects
     (:require [mid-fruits.time  :as time]
               [server-fruits.io :as io]))
 

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.api
-    (:require [server-extensions.storage.capacity-handler.engine]
+    (:require [server-extensions.storage.capacity-handler.side-effects]
               [server-extensions.storage.directory-creator.mutations]
               [server-extensions.storage.engine]
               [server-extensions.storage.file-uploader.mutations]

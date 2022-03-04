@@ -20,7 +20,7 @@
              (let [extension (io/filepath->extension filepath)]
                   (if (vector/contains-item? docs.engine/ALLOWED-EXTENSIONS extension)
                       (let [file-content (io/read-file filepath)]
-                           (assoc-in result [filepath :docs] (file-content->docs file-content)))
+                           (assoc-in result [filepath :docs] (docs.engine/file-content->docs file-content)))
                       (return result))))]
          (let [file-list (io/all-file-list directory-path)]
               (reduce f {} file-list))))

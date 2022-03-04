@@ -12,7 +12,7 @@
               [x.server-developer.re-frame-browser.styles]
               [x.server-developer.re-frame-browser.views]
               [x.server-developer.docs.engine]
-              [x.server-developer.docs.lifecycles]
-              [x.server-developer.docs.routes]
               [x.server-developer.docs.side-effects]
+              [x.server-developer.docs.styles]
+              [x.server-developer.docs.views]
               [x.server-developer.side-effects]))

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-dictionary.side-effects
+(ns x.server-dictionary.term-handler.side-effects
     (:require [server-fruits.io                        :as io]
               [x.server-core.api                       :as a]
               [x.server-dictionary.term-handler.engine :as term-handler.engine]))

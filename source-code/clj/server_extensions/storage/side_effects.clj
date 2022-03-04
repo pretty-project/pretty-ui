@@ -3,9 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.side-effects
-    (:require [mid-fruits.vector  :as vector]
-              [mongo-db.api       :as mongo-db]
-              [x.server-media.api :as media]))
+    (:require [mid-fruits.candy                 :refer [param return]]
+              [mid-fruits.vector                :as vector]
+              [mongo-db.api                     :as mongo-db]
+              [server-extensions.storage.engine :as engine]
+              [x.server-media.api               :as media]))
 
 
 
@@ -92,7 +94,7 @@
 (defn delete-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [filename]
-  (if-not (= filename SAMPLE-FILE-FILENAME)
+  (if-not (= filename engine/SAMPLE-FILE-FILENAME)
           (media/delete-storage-file! filename))
   (media/delete-storage-thumbnail! filename))
 
