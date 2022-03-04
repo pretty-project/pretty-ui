@@ -80,12 +80,12 @@
   ;  {:chips (* in vector)}
   [group-id {:keys [chips] :as group-props}]
   (if (vector/nonempty? chips)
-      (reduce-indexed #(let [chip-props (group-props->chip-props group-id group-props %3 %2)
-                             chip-props (chip-props-prototype    chip-props)]
-                            (conj %1 [chip chip-props]))
-                       [:div.x-chip-group--chips]
-                       (param chips)))
-  [chip-group-no-chips-label group-id group-props])
+      (letfn [(f [chips chip-dex chip-props]
+                 (let [chip-props (group-props->chip-props group-id group-props chip-props chip-dex)
+                       chip-props (chip-props-prototype chip-props)]
+                      (conj chips [chip chip-props])))]
+             (reduce-indexed f [:div.x-chip-group--chips] chips))
+      [chip-group-no-chips-label group-id group-props]))
 
 (defn- chip-group-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

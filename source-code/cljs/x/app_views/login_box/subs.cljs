@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.login-box.subs
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
+    (:require [mid-fruits.string :as string]
               [x.app-core.api    :as a :refer [r]]
               [x.app-sync.api    :as sync]))
 
@@ -33,7 +32,7 @@
   ; ezért amíg az első valós on-mouse-down esemény nem történik meg, addig a mezők értéke nil,
   ; és ilyenkor úgy látszódik, mint ha ki lennének töltve a mezők és közben a login gomb disabled
   ; állapotban van ...
-  (return false))
+  (r sync/listening-to-request? db :user/authenticate!))
 
 
 

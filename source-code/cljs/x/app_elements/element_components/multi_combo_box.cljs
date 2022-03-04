@@ -56,9 +56,8 @@
   ;  [{:label (metamorphic-context)
   ;    :variant (keyword)}]
   [{:keys [get-label-f group-value]}]
-  (reduce (fn [result value]
-              (conj result {:label (get-label-f value)}))
-          [] group-value))
+  (letfn [(f [result value] (conj result {:label (get-label-f value)}))]
+         (reduce f [] group-value)))
 
 (defn- group-props->chip-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
