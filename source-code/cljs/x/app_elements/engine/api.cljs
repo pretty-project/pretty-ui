@@ -100,7 +100,6 @@
 (def reset-field-adornment-preset           field/reset-field-adornment-preset)
 (def field-props->render-field-placeholder? field/field-props->render-field-placeholder?)
 (def field-body-attributes                  field/field-body-attributes)
-(def field-placeholder-attributes           field/field-placeholder-attributes)
 (def field-empty?                           field/field-empty?)
 (def field-filled?                          field/field-filled?)
 (def get-field-value                        field/get-field-value)

@@ -208,6 +208,7 @@
                             {:label "Text-field w/ prevalidator" :emptiable? true
                              :placeholder "Placeholder"
                              :initial-value "x"
+                             :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}]
                              :validator {:f #(= % "x")
                                          :invalid-message "Type \"x\""
                                          :pre-validate? true}}]
@@ -215,6 +216,7 @@
                                 {:label "Password-field w/ adornments" :emptiable? true
                                  :placeholder "Placeholder"
                                  :start-adornments [{:icon :sentiment_very_satisfied :on-click [:developer/test!] :tooltip "Hello"}
+                                                    {:label "Ft/m2"}
                                                     {:label "Ft/m2" :on-click []}]}]
        [elements/multiline-field ::multiline-field
                                  {:label "Multiline-field" :placeholder "Placeholder"}]

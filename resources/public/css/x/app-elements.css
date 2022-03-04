@@ -10,11 +10,11 @@
 /***** Orientation profiles *****/
 /***** Size profiles *****/
 /***** Stretch profiles *****/
-/***** Element adornments *****/
 /***** Element badge *****/
 /***** Element info *****/
 /***** Element stickers *****/
 /***** Element indent *****/
+/***** Field adornments *****/
 /***** Elements ... *****/
 
 
@@ -94,8 +94,8 @@ button.x-card:focus,
 .x-counter--increase-button:focus,
 .x-directory--body:active,
 .x-directory--body:focus,
-.x-element--button-adornment:active,
-.x-element--button-adornment:focus,
+.x-field-adornments--button-adornment:active,
+.x-field-adornments--button-adornment:focus,
 .x-expandable--header:active,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
@@ -176,8 +176,8 @@ button.x-card:focus,
 
 /***** User select *****/
 
-.x-element--button-adornment,
-.x-element--static-adornment,
+.x-field-adornments--button-adornment,
+.x-field-adornments--static-adornment,
 .x-element--sticker-button,
 .x-element--sticker-icon,
 .x-anchor,
@@ -265,8 +265,8 @@ button.x-card:focus,
 .x-icon[data-icon-family="material-icons-filled"],
 .x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
-.x-element--button-adornment[data-icon-family="material-icons-filled"],
-.x-element--static-adornment[data-icon-family="material-icons-filled"],
+.x-field-adornments--button-adornment[data-icon-family="material-icons-filled"],
+.x-field-adornments--static-adornment[data-icon-family="material-icons-filled"],
 .x-element--sticker-button[data-icon-family="material-icons-filled"],
 .x-element--sticker-icon[data-icon-family="material-icons-filled"] {
   font-style: normal;
@@ -287,8 +287,8 @@ button.x-card:focus,
 .x-icon[data-icon-family="material-icons-outlined"],
 .x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
-.x-element--button-adornment[data-icon-family="material-icons-outlined"],
-.x-element--static-adornment[data-icon-family="material-icons-outlined"],
+.x-field-adornments--button-adornment[data-icon-family="material-icons-outlined"],
+.x-field-adornments--static-adornment[data-icon-family="material-icons-outlined"],
 .x-element--sticker-button[data-icon-family="material-icons-outlined"],
 .x-element--sticker-icon[data-icon-family="material-icons-outlined"] {
   font-style: normal;
@@ -1281,47 +1281,6 @@ button.x-card:focus,
 
 
 
-/***** Element adornments *****/
-
-.x-element--start-adornments,
-.x-element--end-adornments {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  top: 0 }
-
-.x-element--start-adornments {
-  left: 0;
-  padding-left: 4px }
-
-.x-element--end-adornments {
-  padding-right: 4px;
-  right: 0 }
-
-.x-element--button-adornment,
-.x-element--static-adornment {
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  width: 24px }
-
-.x-element--button-adornment:not([data-icon-family]),
-.x-element--static-adornment:not([data-icon-family]) {
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs ) }
-
-.x-element--button-adornment[data-icon-family],
-.x-element--static-adornment[data-icon-family] {
-  font-size: var( --icon-size-xs ) }
-
-/***** Element adornments *****/
-
-
-
 /***** Element badge *****/
 
 .x-element-badge {
@@ -1528,6 +1487,39 @@ body[data-viewport-profile="s"]
   margin-right: 12px }
 
 /***** Element indent *****/
+
+
+
+/***** Field adornments *****/
+
+.x-field-adornments {
+  display: flex;
+  padding: 0 4px }
+
+.x-field-adornments--placeholder {
+  cursor: text;
+  width: 8px }
+
+.x-field-adornments--button-adornment,
+.x-field-adornments--static-adornment {
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  min-width: 24px;
+  /* (24px - 18px) / 2 = 3px */
+  padding: 0 3px }
+
+.x-field-adornments--button-adornment:not([data-icon-family]),
+.x-field-adornments--static-adornment:not([data-icon-family]) {
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-xxs ) }
+
+.x-field-adornments--button-adornment[data-icon-family],
+.x-field-adornments--static-adornment[data-icon-family] {
+  font-size: 18px }
+
+/***** Field adornments *****/
 
 
 
@@ -3251,12 +3243,6 @@ body[data-viewport-profile="s"]
 /***** Text field *****/
 /*** Text field wrapper ***/
 
-.x-date-field,
-.x-text-field {
-  /* XXX#8094
-   * Az .x-text-field elem <label> HTML tag, amit szükséges block-level elemre beállítani! */
-  display: block }
-
 .x-date-field[data-layout="row"],
 .x-text-field[data-layout="row"] {
   /* XXX#0376 */
@@ -3264,20 +3250,47 @@ body[data-viewport-profile="s"]
 
 /*** Text field wrapper ***/
 
-/*** Field input ***/
+/*** Field input-container ***/
 
-.x-date-field--input,
-.x-text-field--input,
-.x-text-field--textarea {
+/* Az .x-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
+ * pl.: adornment ikonok, feliratok és gombok, placeholder elem ... */
+.x-text-field--input-container {
   background-color: var( --fill-color );
   border-color: var( --border-color-highlight );
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
+  display: flex;
+  justify-content: space-between }
+
+/*** Field input-container ***/
+
+/*** Field input ***/
+
+/* Az .x-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
+ * placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel. */
+.x-text-field--input-structure {
+  flex-grow: 1 }
+
+/* BUG#3418
+ * - A DOM-fában az .x-text-field--input (input) elem ELŐTT elhelyezett .x-text-field--placeholder (div)
+ *   elem valamiért az .x-text-field--input elem FELETT jelent meg ezért az .x-text-field--input elem
+ *   az .x-text-field--input-emphasize (div) elembe került és így a placeholder elem az input elem alatt jelenik meg.
+ *   Google Chrome 98.0.4758.80 
+ * - A BUG#3416 hiba miatt szükséges, hogy az .x-text-field--placeholder elem az .x-text-field--input
+ *   elem alatt jelenjen meg! */
+.x-text-field--input-emphasize {
+  height: 32px;
+  width: 100% }
+
+.x-date-field--input,
+.x-text-field--input,
+.x-text-field--textarea {
   color: var( --color );
   font-size: var( --font-size-s );
   line-height: 24px;
   letter-spacing: var( --letter-spacing-s );
+  -padding: 0 8px;
   width: 100% }
 
 .x-text-field--input,
@@ -3318,10 +3331,12 @@ body[data-viewport-profile="s"]
 
 /*** Field placeholder ***/
 
+/* BUG#3416 */
 .x-text-field--placeholder {
   color: var( --color-muted);
-  cursor: text;
+  -cursor: text;
   font-size: var( --font-size-xs );
+  left: 0;
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px;
   position: absolute;

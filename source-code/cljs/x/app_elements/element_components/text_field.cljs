@@ -3,14 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.text-field
-    (:require [mid-fruits.candy                      :as candy :refer [param return]]
-              [mid-fruits.string                     :as string]
-              [mid-fruits.vector                     :as vector]
-              [x.app-components.api                  :as components]
-              [x.app-core.api                        :as a :refer [r]]
-              [x.app-elements.element-surface.subs   :as element-surface.subs]
-              [x.app-elements.engine.api             :as engine]
-              [x.app-elements.field-adornments.views :as field-adornments.views]))
+    (:require [mid-fruits.candy                          :as candy :refer [param return]]
+              [mid-fruits.string                         :as string]
+              [mid-fruits.vector                         :as vector]
+              [x.app-components.api                      :as components]
+              [x.app-core.api                            :as a :refer [r]]
+              [x.app-elements.element-surface.subs       :as element-surface.subs]
+              [x.app-elements.engine.api                 :as engine]
+              [x.app-elements.field-adornments.views     :as field-adornments.views]
+              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]))
 
 
 
@@ -20,6 +21,9 @@
 ; x.app-elements.field-adornments.views
 (def field-start-adornments field-adornments.views/field-start-adornments)
 (def field-end-adornments   field-adornments.views/field-end-adornments)
+
+; x.app-elements.targetable-elements.engine
+(def element-id->target-id targetable-elements.engine/element-id->target-id)
 
 
 
@@ -134,9 +138,12 @@
   ; @param (map) field-props
   ;  {:label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  [_ {:keys [label required?]}]
-  (if label [:div.x-text-field--label [components/content label]
-                                      (if required? [:span.x-input--label-asterisk "*"])]))
+  [field-id {:keys [label required?]}]
+  ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
+  ; ... it is always the best idea to use an explicit label instead of an implicit label.
+  (if label [:label.x-text-field--label {:for (element-id->target-id field-id)}
+                                        [components/content label]
+                                        (if required? [:span.x-input--label-asterisk "*"])]))
 
 (defn- text-field-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,18 +152,42 @@
   ; @param (map) field-props
   ;  {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
+  ; BUG#3416
+  ; - A placeholder elem {:on-mouse-down #(focus-element! ...)} eseménye nem adta át a fókuszt
+  ;   az input elem számára, ezért a placeholder az input elem alatt kell, hogy megjelenjen
+  ;   Google Chrome 98.0.4758.80
+  ; - Az input elemek az on-mouse-down esemény hatására kapnak fókuszt
   (if (engine/field-props->render-field-placeholder? field-props)
-      [:div.x-text-field--placeholder (engine/field-placeholder-attributes field-id field-props)
-                                      [components/content placeholder]]))
+      [:div.x-text-field--placeholder [components/content placeholder]]))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:value (string)}
-  [field-id {:keys [value] :as field-props}]
+  [field-id field-props]
   [:input.x-text-field--input (engine/field-body-attributes field-id field-props)])
+
+(defn- text-field-input-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  [:div.x-text-field--input-structure [text-field-placeholder field-id field-props]
+                                      ; BUG#3418
+                                      [:div.x-text-field--input-emphasize [text-field-input field-id field-props]]])
+
+(defn- text-field-input-container
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  [:div.x-text-field--input-container [field-start-adornments     field-id field-props]
+                                      [text-field-input-structure field-id field-props]
+                                      [field-end-adornments       field-id field-props]
+                                      [text-field-surface         field-id field-props]])
 
 (defn- text-field-invalid-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,35 +198,18 @@
   [_ {:keys [invalid-message]}]
   (if invalid-message [:div.x-text-field--invalid-message [components/content invalid-message]]))
 
-(defn- text-field-input-container
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  [:div.x-text-field--input-container
-    [text-field-input       field-id field-props]
-    [text-field-placeholder field-id field-props]
-    [text-field-surface     field-id field-props]
-    [field-start-adornments field-id field-props]
-    [field-end-adornments   field-id field-props]])
-
 (defn- text-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; XXX#8094
-  ; A text-field komponensbe helyezett placeholder komponensre kattintva az input elem fókuszt kap,
-  ; mert egy közös [:label] HTML elemben vannak. Másképpen a placeholder komponens {:on-mouse-up ...}
-  ; eseményével kell fókuszt adni az inputnak.
-  [:label.x-text-field (engine/element-attributes   field-id field-props)
-                       [text-field-label            field-id field-props]
-                       [text-field-input-container  field-id field-props]
-                       [text-field-invalid-message  field-id field-props]
-                       [engine/element-helper       field-id field-props]
-                       [engine/element-info-tooltip field-id field-props]])
+  [:div.x-text-field (engine/element-attributes   field-id field-props)
+                     [text-field-label            field-id field-props]
+                     [text-field-input-container  field-id field-props]
+                     [text-field-invalid-message  field-id field-props]
+                     [engine/element-helper       field-id field-props]
+                     [engine/element-info-tooltip field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -235,8 +249,6 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
-  ;   :listen-to-change? (boolean)(constant)(opt)
-  ;    XXX#4880
   ;    Default: false
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)

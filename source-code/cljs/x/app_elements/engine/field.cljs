@@ -35,27 +35,15 @@
 (def FIELD-LINE-HEIGHT 24)
 
 ; @constant (px)
-(def ADORNMENT-WIDTH 24)
-
-; @constant (px)
-(def DEFAULT-FIELD-HORIZONTAL-PADDING 12)
-
-; @constant (px)
 (def FIELD-VERTICAL-PADDING 3)
-
-; @constant (px)
-(def ADORNMENTS-HORIZONTAL-PADDING 4)
 
 ; @constant (px)
 (def FIELD-BORDER-WIDTH 1)
 
 ; @constant (ms)
 ;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
-;(def TYPE-ENDED-AFTER 250) <- Nem mindenki programozó! :)
 (def TYPE-ENDED-AFTER 350)
-
-; @constant (px)
-(def CARET-OFFSET 4)
+;(def TYPE-ENDED-AFTER 250) <- Nem mindenki programozó! :)
 
 
 
@@ -135,32 +123,6 @@
         ; Reveal surface if ...
         (if surface (a/dispatch [:elements/show-surface! field-id]))))
 
-(defn field-props->start-adornments-padding
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:start-adornments (maps in vector)(opt)}
-  ;
-  ; @return (integer)
-  [{:keys [start-adornments]}]
-  (if (vector/nonempty? start-adornments)
-      (+ (* (count start-adornments) ADORNMENT-WIDTH)
-         (param ADORNMENTS-HORIZONTAL-PADDING))
-      (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
-
-(defn field-props->end-adornments-padding
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:end-adornments (maps in vector)(opt)}
-  ;
-  ; @return (integer)
-  [{:keys [end-adornments]}]
-  (if (vector/nonempty? end-adornments)
-      (+ (* (count end-adornments) ADORNMENT-WIDTH)
-         (param ADORNMENTS-HORIZONTAL-PADDING))
-      (return DEFAULT-FIELD-HORIZONTAL-PADDING)))
-
 (defn field-props->field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -181,7 +143,7 @@
   ; @return (integer)
   [{:keys [multiline? value]}]
   (if multiline? ; If field is multiline ...
-                 (let [line-count (inc (string/count-newlines value))]
+                 (let [line-count (-> value string/count-newlines inc)]
                       ; BUG#1481
                       ; A textarea element magassága minimum 2 sor magasságú kell legyen,
                       ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
@@ -208,36 +170,21 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:height (string)
-  ;   :paddingLeft (string)
-  ;   :paddingRight (string)}
+  ;  {:height (string)}
   [field-props]
-  {:height       (css/px (field-props->field-height             field-props))
-   :paddingLeft  (css/px (field-props->start-adornments-padding field-props))
-   :paddingRight (css/px (field-props->end-adornments-padding   field-props))})
-
-(defn field-props->placeholder-style
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ;  {:left (string)}
-  [field-props]
-  {:left (css/px (+ (field-props->start-adornments-padding field-props)
-                    (param CARET-OFFSET)))})
+  {:height (-> field-props field-props->field-height css/px)})
 
 (defn field-props->render-field-placeholder?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) field-props
   ;  {:field-empty? (boolean)
+  ;   :focused? (boolean)
   ;   :placeholder (metamorphic-content)}
   ;
   ; @return (boolean)
-  [{:keys [field-empty? placeholder]}]
-  (and (some?   placeholder)
-       (boolean field-empty?)))
+  [{:keys [field-empty? focused? placeholder]}]
+  (and placeholder field-empty? (not focused?)))
 
 (defn on-blur-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -336,17 +283,6 @@
           ; If field has surface ...
           (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
 
-(defn field-placeholder-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ;  {:style (map)}
-  [_ field-props]
-  {:style (field-props->placeholder-style field-props)})
-
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -406,17 +342,11 @@
           :field-changed? (r field-changed?  db field-id)
           :value          (r get-field-value db field-id)}
          ; 1.
-         ; Nem indokolt zöld színnel visszajelezni a required mezők sikeres kitöltését
-         ; (if (r input/input-required-success? db field-id)
-         ;     {:color :success}}
-         ; 2.
          (if (r input/input-value-invalid-warning? db field-id)
-             {:border-color :warning
-              :invalid-message (r input/get-input-invalid-message db field-id)})
-         ; 3.
+             {:border-color :warning :invalid-message (r input/get-input-invalid-message db field-id)})
+         ; 2.
          (if (r input/input-required-warning? db field-id)
-             {:border-color :warning
-              :invalid-message :please-fill-out-this-field})))
+             {:border-color :warning :invalid-message :please-fill-out-this-field})))
 
 
 
@@ -549,7 +479,7 @@
                       (let [on-empty    (r element/get-element-prop db field-id :on-empty)
                             field-value (r get-field-value          db field-id)]
                            {:db         (r empty-field-value!       db field-id)
-                            :dispatch (a/metamorphic-event<-params on-empty field-value)})))))
+                            :dispatch   (a/metamorphic-event<-params on-empty field-value)})))))
 
 (a/reg-event-fx
   :elements/field-blurred
@@ -560,12 +490,6 @@
       (let [on-blur-event (r element/get-element-prop db field-id :on-blur)]
            {:db (r field-blurred db field-id)
             :dispatch-n [on-blur-event [:elements/remove-field-keypress-events! field-id]]})))
-                         ; WARNING#9055
-                         ; x4.3.9
-                         ; Az :elements/resolve-change-listener?! eseményt nem sikerült
-                         ; DB függvényként értelmezve meghívni, mert az esemény olyan adatbázis
-                         ; műveleteket tartalmaz, amik nem léteznek az x.app-db.api modulban.
-                         ; [:elements/resolve-change-listener?! field-id]
 
 (a/reg-event-fx
   :elements/field-focused
@@ -576,5 +500,3 @@
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
            {:db (r field-focused db field-id)
             :dispatch-n [on-focus-event [:elements/reg-field-keypress-events! field-id]]})))
-                         ; WARNING#9055
-                         ; [:elements/reg-change-listener?! field-id]

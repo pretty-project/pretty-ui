@@ -3,11 +3,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.field-adornments.views
-    (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.vector     :as vector]
-              [x.app-components.api  :as components]
-              [x.app-core.api        :as a]
-              [x.app-environment.api :as environment]))
+    (:require [mid-fruits.candy                               :refer [param]]
+              [mid-fruits.vector                              :as vector]
+              [x.app-components.api                           :as components]
+              [x.app-core.api                                 :as a]
+              [x.app-elements.focusable-elements.side-effects :as focusable-elements.side-effects]
+              [x.app-environment.api                          :as environment]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.app-elements.focusable-elements.side-effects
+(def focus-element! x.app-elements.focusable-elements.side-effects/focus-element!)
 
 
 
@@ -34,8 +43,8 @@
 (defn button-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ; @param (map) adornment-props
   ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
@@ -47,9 +56,9 @@
   ;    False érték esetén az adornment gomb nem indexelődik tabolható elemként.
   ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
-  [element-id _ {:keys [icon icon-family label on-click tab-indexed? tooltip]}]
+  [field-id _ {:keys [icon icon-family label on-click tab-indexed? tooltip]}]
   (let [; BUG#2105
-        ;  A *-field elemhez adott element-adornment-button gombon történő on-mouse-down esemény
+        ;  A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
         ;  a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
         ;  felület React-fából történő lecsatolását okozná.
         button-attributes (merge {:on-mouse-down #(do (.preventDefault %))
@@ -58,14 +67,14 @@
                                   :title            (components/content tooltip)}
                                  (if (false? tab-indexed?) {:tab-index "-1"})
                                  (if icon {:data-icon-family icon-family}))]
-       (cond icon  [:button.x-element--button-adornment button-attributes icon]
-             label [:button.x-element--button-adornment button-attributes label])))
+       (cond icon  [:button.x-field-adornments--button-adornment button-attributes icon]
+             label [:button.x-field-adornments--button-adornment button-attributes label])))
 
 (defn static-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ; @param (map) adornment-props
   ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
@@ -73,40 +82,46 @@
   ;    Default: :material-icons-filled
   ;   :label (string)(opt)}
   [_ _ {:keys [icon icon-family label]}]
-  (cond icon  [:i.x-element--static-adornment {:data-icon-family icon-family} icon]
-        label [:i.x-element--static-adornment label]))
+  (cond icon  [:div.x-field-adornments--static-adornment {:data-icon-family icon-family} icon]
+        label [:div.x-field-adornments--static-adornment label]))
 
-(defn element-adornment
+(defn field-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ; @param (map) adornment-props
   ;  {:on-click (metamorphic-event)(opt)}
-  [element-id element-props {:keys [on-click] :as adornment-props}]
-  (if on-click [button-adornment element-id element-props adornment-props]
-               [static-adornment element-id element-props adornment-props]))
+  [field-id field-props {:keys [on-click] :as adornment-props}]
+  (if on-click [button-adornment field-id field-props adornment-props]
+               [static-adornment field-id field-props adornment-props]))
 
 (defn field-end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ;  {:end-adornments (maps in vector)(opt)}
-  [element-id {:keys [end-adornments] :as element-props}]
+  [field-id {:keys [end-adornments] :as field-props}]
   (if (vector/nonempty? end-adornments)
-      (reduce (fn [%1 %2] (let [%2 (adornment-props-prototype %2)]
-                               (conj %1 [element-adornment element-id element-props %2])))
-              [:div.x-element--end-adornments] end-adornments)))
+      (letfn [(f [adornments adornment-props]
+                 (let [adornment-props (adornment-props-prototype adornment-props)]
+                      (conj adornments [field-adornment field-id field-props adornment-props])))]
+             (reduce f [:div.x-field-adornments] end-adornments))
+      [:div.x-field-adornments--placeholder {:on-mouse-down #(.preventDefault %)
+                                             :on-mouse-up   #(focus-element! field-id)}]))
 
 (defn field-start-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ;  {:start-adornments (maps in vector)(opt)}
-  [element-id {:keys [start-adornments] :as element-props}]
+  [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
-      (reduce (fn [%1 %2] (let [%2 (adornment-props-prototype %2)]
-                               (conj %1 [element-adornment element-id element-props %2])))
-              [:div.x-element--start-adornments] start-adornments)))
+      (letfn [(f [adornments adornment-props]
+                 (let [adornment-props (adornment-props-prototype adornment-props)]
+                      (conj adornments [field-adornment field-id field-props adornment-props])))]
+             (reduce f [:div.x-field-adornments] start-adornments))
+      [:div.x-field-adornments--placeholder {:on-mouse-down #(.preventDefault %)
+                                             :on-mouse-up   #(focus-element! field-id)}]))

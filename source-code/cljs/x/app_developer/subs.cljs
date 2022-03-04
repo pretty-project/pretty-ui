@@ -1,5 +1,8 @@
 
-(ns x.app-developer.engine
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns x.app-developer.subs
     (:require [mid-fruits.candy :refer [param return]]
               [x.app-core.api   :as a]))
 
@@ -22,13 +25,10 @@
   (swap!   DB-WRITE-COUNT inc)
   (return @DB-WRITE-COUNT))
 
-(a/reg-sub :developer/get-db-write-count get-db-write-count)
 
 
-
-;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :developer/test!
-  [:ui/blow-bubble! {:content "It works!"}])
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :developer/get-db-write-count get-db-write-count)

@@ -103,9 +103,6 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
-  ;   :listen-to-change? (boolean)(constant)(opt)
-  ;    XXX#4880
-  ;    Default: false
   ;   :max-height (integer)(opt)
   ;    TODO ...
   ;    Max lines count
