@@ -330,6 +330,12 @@
        [elements/text {:content engine/LOREM-IPSUM :font-size :xxl :style {:max-width "720px"}}]
        [section-footer]])
 
+(defn debug-keypress-handler
+  []
+  (let [debug @(a/subscribe [:db/get-item [:environment/keypress-events]])]
+       [:div {:style {:position :fixed :right 0 :bottom 0 :background :white :z-index 999 :font-size :10px}}
+             [:pre (mid-fruits.pretty/mixed->string debug)]]))
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
@@ -364,3 +370,6 @@
        [elements/horizontal-separator {:size :xxl}]
        [card-group]
        [elements/horizontal-separator {:size :xxl}]])
+
+       ; DEBUG
+       ;[debug-keypress-handler]])

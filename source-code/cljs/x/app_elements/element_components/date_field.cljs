@@ -3,10 +3,28 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.date-field
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                             :refer [param]]
+              [x.app-components.api                         :as components]
+              [x.app-core.api                               :as a :refer [r]]
+              [x.app-elements.element-components.text-field :as element-components.text-field]
+              [x.app-elements.engine.api                    :as engine]
+              [x.app-elements.field-adornments.views        :as field-adornments.views]
+              [x.app-elements.targetable-elements.engine    :as targetable-elements.engine]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.app-elements.element-components.text-field
+(def text-field-label element-components.text-field/text-field-label)
+
+; x.app-elements.field-adornments.views
+(def field-start-adornments field-adornments.views/field-start-adornments)
+(def field-end-adornments   field-adornments.views/field-end-adornments)
+
+; x.app-elements.targetable-elements.engine
+(def element-id->target-id targetable-elements.engine/element-id->target-id)
 
 
 
@@ -54,16 +72,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- date-field-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [:div.x-date-field--label [components/content label]]))
-
-(defn- date-field-body
+(defn- date-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -71,15 +80,25 @@
   [field-id field-props]
   [:input.x-date-field--input (engine/field-body-attributes field-id field-props)])
 
+(defn- date-field-input-container
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  [:div.x-text-field--input-container [field-start-adornments field-id field-props]
+                                      [date-field-input       field-id field-props]
+                                      [field-end-adornments   field-id field-props]])
+
 (defn- date-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:label.x-date-field (engine/element-attributes field-id field-props)
-                       [date-field-label          field-id field-props]
-                       [date-field-body           field-id field-props]])
+  [:div.x-text-field (engine/element-attributes  field-id field-props)
+                     [text-field-label           field-id field-props]
+                     [date-field-input-container field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -116,7 +135,7 @@
   ([field-id field-props]
    (let [field-props (field-props-prototype field-id field-props)]
         [engine/stated-element field-id
-                               {:render-f      #'date-field
-                                :element-props field-props
+                               {:element-props field-props
+                                :render-f      #'date-field
                                 :initializer   [:elements/init-field!          field-id]
                                 :subscriber    [:elements/get-date-field-props field-id]}])))

@@ -230,8 +230,7 @@
   ;   :on-change (function)
   ;   :style (map)
   ;   :value (string)}
-  [field-id {:keys [auto-focus? disable-autofill? disabled? max-length name surface type value]
-             :as field-props}]
+  [field-id {:keys [auto-focus? disable-autofill? disabled? max-length name surface type value] :as field-props}]
           ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
           ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
           ; minden esetben elérhető.
@@ -444,8 +443,8 @@
   (fn [{:keys [db]} [_ field-id]]
       (let [emptiable? (r element/get-element-prop db field-id :emptiable?)
             on-enter   (r element/get-element-prop db field-id :on-enter)
-            on-enter-props  {:key-code 13 :required? true :on-keyup on-enter}
-            on-escape-props {:key-code 27 :required? true :on-keyup [:elements/empty-field! field-id]}]
+            on-enter-props  {:key-code 13 :required? true :on-keydown on-enter}
+            on-escape-props {:key-code 27 :required? true :on-keydown [:elements/empty-field! field-id]}]
            {:dispatch-cond [emptiable? [:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]
                             on-enter   [:environment/reg-keypress-event! ::on-enter-pressed  on-enter-props]]})))
 

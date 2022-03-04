@@ -91,9 +91,9 @@
   ; @return (map)
   [_ {:keys [field-empty?] :as field-props}]
   (letfn [(f [end-adornments {:keys [preset] :as end-adornment}]
-             (case preset :empty-field-adornment (return end-adornments)
-                          :reset-field-adornment (return end-adornments)
-                                                 (conj   end-adornments end-adornment)))]
+             (case preset :empty-field-adornment (conj end-adornments (assoc end-adornment :disabled? true))
+                          :reset-field-adornment (conj end-adornments (assoc end-adornment :disabled? true))
+                                                 (conj end-adornments end-adornment)))]
          (if-not field-empty? (return field-props)
                               (update field-props :end-adornments #(reduce f [] %))))) ; XXX#8073
 
@@ -152,9 +152,8 @@
   ; @param (map) field-props
   ;  {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
-  ; BUG#3416
   ; - A placeholder elem {:on-mouse-down #(focus-element! ...)} eseménye nem adta át a fókuszt
-  ;   az input elem számára, ezért a placeholder az input elem alatt kell, hogy megjelenjen
+  ;   az input elem számára, ezért a placeholder elem az input elem alatt kell, hogy megjelenjen
   ;   Google Chrome 98.0.4758.80
   ; - Az input elemek az on-mouse-down esemény hatására kapnak fókuszt
   (if (engine/field-props->render-field-placeholder? field-props)
@@ -174,8 +173,15 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
+  ; - XXX#3415
+  ;   Az .x-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
+  ;   placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel.
+  ; - BUG#3418
+  ;   A DOM-fában az .x-text-field--input (input) elem ELŐTT elhelyezett .x-text-field--placeholder (div)
+  ;   elem valamiért az .x-text-field--input elem FELETT jelent meg ezért az .x-text-field--input elem
+  ;   az .x-text-field--input-emphasize (div) elembe került, így a placeholder elem az input elem alatt jelenik meg.
+  ;   Google Chrome 98.0.4758.80
   [:div.x-text-field--input-structure [text-field-placeholder field-id field-props]
-                                      ; BUG#3418
                                       [:div.x-text-field--input-emphasize [text-field-input field-id field-props]]])
 
 (defn- text-field-input-container
@@ -225,7 +231,9 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :end-adornments (maps in vector)(opt)
-  ;    [{:icon (keyword)
+  ;    [{:disabled? (boolean)(opt)
+  ;       Default: false
+  ;      :icon (keyword)
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled
@@ -272,7 +280,9 @@
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;   :start-adornments (maps in vector)(opt)
-  ;    [{:icon (keyword)(opt)
+  ;    [{:disabled? (boolean)(opt)
+  ;       Default: false
+  ;      :icon (keyword)(opt)
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled

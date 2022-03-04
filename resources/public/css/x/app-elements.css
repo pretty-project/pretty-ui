@@ -193,7 +193,6 @@ button.x-card:focus,
 .x-clickable,
 .x-combo-box--no-options-label,
 .x-counter--label,
-.x-date-field--label,
 .x-directory--icon,
 .x-directory--label,
 .x-directory--content-size,
@@ -1099,7 +1098,6 @@ button.x-card:focus,
 /*** XXS ***/
 
 .x-card[data-min-width="xxs"],
-.x-date-field[data-min-width="xxs"],
 .x-select[data-min-width="xxs"],
 .x-text-field[data-min-width="xxs"] {
   min-width: var( --element-min-width-xxs ) }
@@ -1123,7 +1121,6 @@ button.x-card:focus,
 /*** XS ***/
 
 .x-card[data-min-width="xs"],
-.x-date-field[data-min-width="xs"],
 .x-select[data-min-width="xs"],
 .x-text-field[data-min-width="xs"] {
   min-width: var( --element-min-width-xs ) }
@@ -1147,7 +1144,6 @@ button.x-card:focus,
 /*** S ***/
 
 .x-card[data-min-width="s"],
-.x-date-field[data-min-width="s"],
 .x-select[data-min-width="s"],
 .x-text-field[data-min-width="s"] {
   min-width: var( --element-min-width-s ) }
@@ -1171,7 +1167,6 @@ button.x-card:focus,
 /*** M ***/
 
 .x-card[data-min-width="m"],
-.x-date-field[data-min-width="m"],
 .x-select[data-min-width="m"],
 .x-text-field[data-min-width="m"] {
   min-width: var( --element-min-width-m ) }
@@ -1195,7 +1190,6 @@ button.x-card:focus,
 /*** L ***/
 
 .x-card[data-min-width="l"],
-.x-date-field[data-min-width="l"],
 .x-select[data-min-width="l"],
 .x-text-field[data-min-width="l"] {
   min-width: var( --element-min-width-l ) }
@@ -1219,7 +1213,6 @@ button.x-card:focus,
 /*** XL ***/
 
 .x-card[data-min-width="xl"],
-.x-date-field[data-min-width="xl"],
 .x-select[data-min-width="xl"],
 .x-text-field[data-min-width="xl"] {
   min-width: var( --element-min-width-xl ) }
@@ -1243,7 +1236,6 @@ button.x-card:focus,
 /*** XXL ***/
 
 .x-card[data-min-width="xxl"],
-.x-date-field[data-min-width="xxl"],
 .x-select[data-min-width="xxl"],
 .x-text-field[data-min-width="xxl"] {
   min-width: var( --element-min-width-xxl ) }
@@ -1499,6 +1491,10 @@ body[data-viewport-profile="s"]
 .x-field-adornments--placeholder {
   cursor: text;
   width: 8px }
+
+.x-field-adornments--button-adornment[data-disabled="true"] {
+  cursor: default;
+  opacity: .5 }
 
 .x-field-adornments--button-adornment,
 .x-field-adornments--static-adornment {
@@ -3243,7 +3239,6 @@ body[data-viewport-profile="s"]
 /***** Text field *****/
 /*** Text field wrapper ***/
 
-.x-date-field[data-layout="row"],
 .x-text-field[data-layout="row"] {
   /* XXX#0376 */
   padding: 8px 0 }
@@ -3267,21 +3262,15 @@ body[data-viewport-profile="s"]
 
 /*** Field input ***/
 
-/* Az .x-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
- * placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel. */
 .x-text-field--input-structure {
   flex-grow: 1 }
 
-/* BUG#3418
- * - A DOM-fában az .x-text-field--input (input) elem ELŐTT elhelyezett .x-text-field--placeholder (div)
- *   elem valamiért az .x-text-field--input elem FELETT jelent meg ezért az .x-text-field--input elem
- *   az .x-text-field--input-emphasize (div) elembe került és így a placeholder elem az input elem alatt jelenik meg.
- *   Google Chrome 98.0.4758.80 
- * - A BUG#3416 hiba miatt szükséges, hogy az .x-text-field--placeholder elem az .x-text-field--input
- *   elem alatt jelenjen meg! */
 .x-text-field--input-emphasize {
-  height: 32px;
+  height: 100%;
   width: 100% }
+
+.x-date-field--input {
+  cursor: text }  
 
 .x-date-field--input,
 .x-text-field--input,
@@ -3290,11 +3279,7 @@ body[data-viewport-profile="s"]
   font-size: var( --font-size-s );
   line-height: 24px;
   letter-spacing: var( --letter-spacing-s );
-  -padding: 0 8px;
   width: 100% }
-
-.x-text-field--input,
-.x-text-field--textarea {}
 
 .x-text-field--textarea {
   overflow: hidden;
@@ -3320,7 +3305,6 @@ body[data-viewport-profile="s"]
 
 /*** Field label ***/
 
-.x-date-field--label,
 .x-text-field--label {
   font-size: var( --font-size-s );
   font-weight: 500;
@@ -3331,16 +3315,14 @@ body[data-viewport-profile="s"]
 
 /*** Field placeholder ***/
 
-/* BUG#3416 */
 .x-text-field--placeholder {
   color: var( --color-muted);
-  -cursor: text;
   font-size: var( --font-size-xs );
   left: 0;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 24px;
+  line-height: 32px;
   position: absolute;
-  top: 4px }
+  top: 0 }
 
 /*** Field placeholder ***/
 

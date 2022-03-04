@@ -6,7 +6,8 @@
     (:require [mid-fruits.candy                             :as candy :refer [param]]
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.text-field :as element-components.text-field]
-              [x.app-elements.engine.api                    :as engine]))
+              [x.app-elements.engine.api                    :as engine]
+              [x.app-elements.field-adornments.views        :as field-adornments.views]))
 
 
 
@@ -17,6 +18,10 @@
 (def text-field-placeholder     element-components.text-field/text-field-placeholder)
 (def text-field-label           element-components.text-field/text-field-label)
 (def text-field-invalid-message element-components.text-field/text-field-invalid-message)
+
+; x.app-elements.field-adornments.views
+(def field-start-adornments field-adornments.views/field-start-adornments)
+(def field-end-adornments   field-adornments.views/field-end-adornments)
 
 
 
@@ -58,14 +63,32 @@
   [field-id field-props]
   [:textarea.x-text-field--textarea (engine/field-body-attributes field-id field-props)])
 
+(defn- multiline-field-textarea-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  ; - XXX#3415
+  ;   Az .x-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
+  ;   placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel.
+  ; - BUG#3418
+  ;   A DOM-fában az .x-text-field--input (input) elem ELŐTT elhelyezett .x-text-field--placeholder (div)
+  ;   elem valamiért az .x-text-field--input elem FELETT jelent meg ezért az .x-text-field--input elem
+  ;   az .x-text-field--input-emphasize (div) elembe került, így a placeholder elem az input elem alatt jelenik meg.
+  ;   Google Chrome 98.0.4758.80
+  [:div.x-text-field--input-structure [text-field-placeholder field-id field-props]
+                                      [:div.x-text-field--input-emphasize [multiline-field-textarea field-id field-props]]])
+
 (defn- multiline-field-textarea-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [multiline-field-textarea field-id field-props]
-                                      [text-field-placeholder   field-id field-props]])
+  [:div.x-text-field--input-container [field-start-adornments             field-id field-props]
+                                      [multiline-field-textarea-structure field-id field-props]
+                                      [field-end-adornments               field-id field-props]])
 
 (defn- multiline-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,12 +96,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:label.x-text-field (engine/element-attributes          field-id field-props)
-                       [text-field-label                   field-id field-props]
-                       [multiline-field-textarea-container field-id field-props]
-                       [text-field-invalid-message         field-id field-props]
-                       [engine/element-helper              field-id field-props]
-                       [engine/element-info-tooltip        field-id field-props]])
+  [:div.x-text-field (engine/element-attributes          field-id field-props)
+                     [text-field-label                   field-id field-props]
+                     [multiline-field-textarea-container field-id field-props]
+                     [text-field-invalid-message         field-id field-props]
+                     [engine/element-helper              field-id field-props]
+                     [engine/element-info-tooltip        field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
