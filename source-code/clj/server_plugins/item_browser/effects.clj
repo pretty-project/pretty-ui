@@ -5,7 +5,6 @@
 (ns server-plugins.item-browser.effects
     (:require [server-plugins.item-browser.engine :as engine]
               [server-plugins.item-browser.events :as events]
-              [server-plugins.item-lister.effects :refer [lister-props-prototype]]
               [x.server-core.api                  :as a :refer [r]]))
 
 
@@ -41,8 +40,8 @@
   (merge {:items-key DEFAULT-ITEMS-KEY
           :label-key DEFAULT-LABEL-KEY
           :path-key  DEFAULT-PATH-KEY
-          :routed?   true}
-         (lister-props-prototype extension-id item-namespace browser-props)))
+          :routed?   true}))
+         ;(lister-props-prototype extension-id item-namespace browser-props)))
 
 
 

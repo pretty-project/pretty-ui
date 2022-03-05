@@ -19,7 +19,7 @@
 ; app-plugins.item-lister.events
 (def set-error-mode!        app-plugins.item-lister.events/set-error-mode!)
 (def use-filter!            app-plugins.item-lister.events/use-filter!)
-(def load-lister!           app-plugins.item-lister.events/load-lister!)
+;(def load-lister!           app-plugins.item-lister.events/load-lister!)
 (def disable-items!         app-plugins.item-lister.events/disable-items!)
 (def enable-items!          app-plugins.item-lister.events/enable-items!)
 (def toggle-item-selection! app-plugins.item-lister.events/toggle-item-selection!)
@@ -104,8 +104,8 @@
   ; @return (map)
   [db [_ extension-id item-namespace browser-props]]
   (as-> db % (r reset-browser!         % extension-id item-namespace)
-             (r store-current-item-id! % extension-id item-namespace browser-props)
-             (r load-lister!           % extension-id item-namespace)))
+             (r store-current-item-id! % extension-id item-namespace browser-props)))
+             ;(r load-lister!           % extension-id item-namespace)))
 
 
 

@@ -27,7 +27,8 @@
 
 ; app-plugins.item-lister.views
 (def search-block               views/search-block)
-(def new-item-block             views/new-item-block)
+(def new-item-button            views/new-item-button)
+(def new-item-select            views/new-item-select)
 (def toggle-select-mode-button  views/toggle-select-mode-button)
 (def toggle-reorder-mode-button views/toggle-reorder-mode-button)
 (def sort-items-button          views/sort-items-button)

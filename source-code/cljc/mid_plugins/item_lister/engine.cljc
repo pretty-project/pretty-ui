@@ -97,71 +97,6 @@
   [extension-id _]
   (name extension-id))
 
-(defn new-item-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/new-item-uri :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension/new-my-type"
-  ;
-  ; @return (string)
-  [extension-id item-namespace]
-  (str "/@app-home/" (name extension-id)
-       "/new-"       (name item-namespace)))
-
-(defn transfer-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/transfer-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-lister/transfer-lister-props
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-lister")
-           "transfer-lister-props"))
-
-(defn route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-lister/route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-lister")
-           "route"))
-
-(defn route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-template :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension"
-  ;
-  ; @return (keyword)
-  [extension-id _]
-  (str "/@app-home/" (name extension-id)))
-
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -216,21 +151,3 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-lister")
            (str (name action-key)     "-dialog")))
-
-(defn load-extension-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/load-extension-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension.my-type-lister/load-lister!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-lister")
-                          "load-lister!")]
-       [event-id]))

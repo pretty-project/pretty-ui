@@ -57,9 +57,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :clients :client])]
-       [layouts/layout-a :surface-id {:header [item-lister/header :clients :client {}]
+       [layouts/layout-a :surface-id {:description description
+                                      :header [item-lister/header :clients :client {:new-item-route "/@app-home/clients/new-client"}]
                                       :body   [item-lister/body   :clients :client {:list-element #'client-item
                                                                                     :item-actions [:delete :duplicate]
-                                                                                    :sortable? true
-                                                                                    :title :clients}]
-                                      :description description}]))
+                                                                                    :search-keys  [:name   :email-address]
+                                                                                    :sortable? true}]}]))

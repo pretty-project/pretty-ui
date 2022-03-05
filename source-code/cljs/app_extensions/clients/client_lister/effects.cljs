@@ -16,7 +16,9 @@
 (a/reg-event-fx
   :clients.client-lister/load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:clients.client-lister/render-lister!])
+  {:dispatch-n [[:ui/set-title! :clients]
+                [:ui/set-route-parent! "/@app-home"]
+                [:clients.client-lister/render-lister!]]})
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!

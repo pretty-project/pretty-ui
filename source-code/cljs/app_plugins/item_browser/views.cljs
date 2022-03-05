@@ -62,7 +62,7 @@
     [:div.item-lister--header--menu-item-group
       [go-up-button                           extension-id item-namespace]
       [go-home-button                         extension-id item-namespace]
-      [item-lister/new-item-block             extension-id item-namespace]
+      ;[item-lister/new-item-block             extension-id item-namespace]
       [item-lister/sort-items-button          extension-id item-namespace]
       [item-lister/toggle-select-mode-button  extension-id item-namespace]
       [item-lister/toggle-reorder-mode-button extension-id item-namespace]]

@@ -138,32 +138,45 @@
   (let [order-by-options (r subs/get-meta-item db extension-id item-namespace :order-by-options)]
        (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options))))
 
-(defn load-lister!
+(defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) body-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
+  [db [_ extension-id item-namespace body-props]]
+  (r db/apply-item! db [extension-id :item-lister/meta-items] merge body-props))
+
+(defn init-body!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace body-props]]
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (as-> db % (r reset-lister!         % extension-id item-namespace)
+  (as-> db % (r store-body-props!     % extension-id item-namespace body-props) 
+             (r reset-lister!         % extension-id item-namespace)
              (r reset-downloads!      % extension-id item-namespace)
              (r reset-search!         % extension-id item-namespace)
              (r set-default-order-by! % extension-id item-namespace)))
 
-(defn init-lister!
+(defn init-header!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) lister-props
+  ; @param (map) header-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace lister-props]]
-  (r db/apply-item! db [extension-id :item-lister/meta-items] merge lister-props))
+  [db [_ extension-id item-namespace header-props]]
+  (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
 
 
 

@@ -8,24 +8,52 @@
               [app-plugins.item-lister.queries    :as queries]
               [app-plugins.item-lister.subs       :as subs]
               [app-plugins.item-lister.validators :as validators]
+              [mid-fruits.candy                   :refer [param]]
               [x.app-core.api                     :as a :refer [r]]
               [x.app-ui.api                       :as ui]))
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :item-lister/load-lister!
+(defn- body-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) body-props
   ;
-  ; @usage
-  ;  [:item-lister/load-lister! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r events/load-lister! db extension-id item-namespace)
-       :dispatch-n [(engine/load-extension-event extension-id item-namespace)]}))
+  ; @return (map)
+  ;  {:collection-name (string)
+  ;   :download-limit (integer)
+  ;   :order-by-options (namespaced keywords in vector)
+  ;   :routed? (boolean)
+  ;   :search-keys (keywords in vector)}
+  [extension-id _ body-props]
+  (merge {:download-limit   20
+          :order-by-options [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
+          :search-keys      [:name]
+          :collection-name  (name extension-id)}
+         (param body-props)))
+
+(defn- header-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (map)
+  ;  {}
+  [extension-id _ header-props]
+  (merge {}
+         (param header-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-lister/use-filter!
@@ -304,16 +332,27 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/init-lister!
+  :item-lister/init-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) lister-props
+  ; @param (map) body-props
   ;  {:ui-title (metamorphic-content)(opt)}
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title] :as lister-props}]]
-      {:db (r events/init-lister! db extension-id item-namespace lister-props)
-       :dispatch-n [(if ui-title [:ui/set-title! ui-title])
-                    ; XXX#5660
-                    ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
-                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]]}))
+  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title] :as body-props}]]
+      (let [body-props (body-props-prototype extension-id item-namespace body-props)]
+           {:db (r events/init-body! db extension-id item-namespace body-props)
+            :dispatch-n [(if ui-title [:ui/set-title! ui-title])
+                         ; XXX#5660
+                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
+                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]]})))
+
+(a/reg-event-fx
+  :item-lister/init-header!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  (fn [{:keys [db]} [_ extension-id item-namespace header-props]]
+      {:db (r events/init-header! db extension-id item-namespace header-props)}))

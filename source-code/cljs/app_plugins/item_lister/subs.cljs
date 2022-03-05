@@ -12,7 +12,6 @@
               [x.app-core.api                 :as a :refer [r]]
               [x.app-db.api                   :as db]
               [x.app-environment.api          :as environment]
-              [x.app-router.api               :as router]
               [x.app-sync.api                 :as sync]))
 
 
@@ -212,17 +211,6 @@
        ; XXX#3219
        (or synchronizing? (not items-received?))))
 
-(defn route-handled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [route-id (r router/get-current-route-id db)]
-       (= route-id (engine/route-id extension-id item-namespace))))
-
 (defn items-selectable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -277,6 +265,36 @@
   ; @return (vector)
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :new-item-options))
+
+(defn get-new-item-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (vector)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :new-item-route))
+
+(defn get-list-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :list-element))
+
+(defn get-menu-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :menu-element))
 
 
 
@@ -619,6 +637,27 @@
 ; @usage
 ;  [:item-lister/get-new-item-options :my-extension :my-type]
 (a/reg-sub :item-lister/get-new-item-options get-new-item-options)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-new-item-route :my-extension :my-type]
+(a/reg-sub :item-lister/get-new-item-route get-new-item-route)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-list-element :my-extension :my-type]
+(a/reg-sub :item-lister/get-list-element get-list-element)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-menu-element :my-extension :my-type]
+(a/reg-sub :item-lister/get-menu-element get-menu-element)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace

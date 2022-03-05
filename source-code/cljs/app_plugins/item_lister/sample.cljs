@@ -11,20 +11,6 @@
 
 
 
-;; -- A plugin elindítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az item-lister plugin elindítható ...
-(a/reg-event-fx
-  :load-my-item-lister!
-  (fn [_ _]
-      ; ... az [:my-extension.my-type-lister/load-lister! ...] esemény meghívásával.
-      [:my-extension.my-type-lister/load-lister! :my-extension :my-type]
-      ; ... az "/@app-home/my-extension" útvonal használatával.
-      [:router/go-to! "/@app-home/my-extension"]))
-
-
-
 ;; -- "Új elem létrehozása" útvonal használata  -------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -48,7 +34,7 @@
 
 ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
 (a/reg-event-fx
-  :my-extension.my-type-lister/use-filter!
+  :use-my-filter!
   (fn [_ [_ filter-pattern]]
       [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
 
@@ -58,12 +44,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-filters
-  [surface-id]
-  [elements/menu-bar {:menu-items [{:label "My filter" :on-click [:my-extension.my-type-lister/use-filter! {}]}]}])
+  []
+  (let [my-filter-event [:my-extension.my-type-lister/use-filter! :my-extension :my-type {}]]
+       [elements/menu-bar {:menu-items [{:label "My filter" :on-click my-filter-event}]}]))
 
 (defn my-view-with-filters
   [surface-id]
-  [:<> [my-filters surface-id]
+  [:<> [my-filters]
        [item-lister/header :my-extension :my-type {}]
        [item-lister/body   :my-extension :my-type {}]])
 
@@ -87,7 +74,7 @@
 ; Az [:item-lister/reload-items! ...] esemény újra letölti az összes elemet az aktuális
 ; beállításokkal. Így lehetséges az szerveren tárolt adatokat aktualizálni a kliens-oldalon.
 (a/reg-event-fx
-  :my-extension.my-type-lister/reload-items!
+  :reload-my-items!
   [:item-lister/reload-items! :my-extension :my-type])
 
 
@@ -134,17 +121,6 @@
   [:<> [item-lister/header :my-extension :my-type {}]
        [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]])
 
-(a/reg-event-fx
-  :my-extension.my-type-lister/render-lister!
-  [:ui/set-surface! :my-extension.my-type-lister/view
-                    {:view #'my-view}])
-
-; Az [:item-lister/load-lister! ...] esemény a [:my-extension.my-type-lister/load-lister!]
-; esemény meghívásával fejezi be a plugin elindítását ...
-(a/reg-event-fx
-  :my-extension.my-type-lister/load-lister!
-  [:my-extension.my-type-lister/render-lister!])
-
 
 
 ;; -- Plugin használata "Layout A" felületeen ---------------------------------
@@ -162,18 +138,18 @@
 ;; -- Egyedi menü használata --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - A header komponens számára átadott {:menu #'...} tulajdonság beállításával lehetséges
+; - A header komponens számára átadott {:menu-element #'...} tulajdonság beállításával lehetséges
 ;   egyedi menüt használni.
 ; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
 ;  tudsz a különbözű módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
-(defn my-menu
+(defn my-menu-element
   [extension-id item-namespace]
   [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace]
                           [item-lister/toggle-select-button extension-id item-namespace]}])
 
 (defn my-header-with-my-menu
   [surface-id]
-  [item-lister/header :my-extension :my-type {:menu #'my-menu}])
+  [item-lister/header :my-extension :my-type {:menu-element #'my-menu-element}])
 
 
 
