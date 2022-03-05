@@ -5,13 +5,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.digit-field
-    (:require [app-fruits.dom                            :as dom]
-              [mid-fruits.candy                          :refer [param]]
-              [mid-fruits.css                            :as css]
-              [mid-fruits.vector                         :as vector]
-              [x.app-core.api                            :as a :refer [r]]
-              [x.app-elements.engine.api                 :as engine]
-              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]))
+    (:require [app-fruits.dom                       :as dom]
+              [mid-fruits.candy                     :refer [param]]
+              [mid-fruits.css                       :as css]
+              [mid-fruits.vector                    :as vector]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.target-handler.engine :as target-handler.engine]))
 
 
 
@@ -23,14 +23,6 @@
 
 ; @constant (px)
 (def DIGIT-GAP 12)
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.targetable-elements.engine
-(def element-id->target-id x.app-elements.targetable-elements.engine/element-id->target-id)
 
 
 
@@ -96,7 +88,7 @@
   ; @param (map) field-props
   [field-id field-props]
   [:input.x-digit-field--input {:type "text"
-                                :id (element-id->target-id field-id)
+                                :id (target-handler.engine/element-id->target-id field-id)
                                 :on-change #(let [v (dom/event->value %)]
                                                  (a/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
 
@@ -106,7 +98,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (element-id->target-id field-id)))
+  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.engine/element-id->target-id field-id)))
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
                                                                  (mid-fruits.string/get-nth-character (:value field-props) %2)]))

@@ -7,7 +7,7 @@
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.text-field :as element-components.text-field]
               [x.app-elements.engine.api                    :as engine]
-              [x.app-elements.field-adornments.views        :as field-adornments.views]))
+              [x.app-elements.adornment-handler.views       :as adornment-handler.views]))
 
 
 
@@ -18,10 +18,6 @@
 (def text-field-placeholder     element-components.text-field/text-field-placeholder)
 (def text-field-label           element-components.text-field/text-field-label)
 (def text-field-invalid-message element-components.text-field/text-field-invalid-message)
-
-; x.app-elements.field-adornments.views
-(def field-start-adornments field-adornments.views/field-start-adornments)
-(def field-end-adornments   field-adornments.views/field-end-adornments)
 
 
 
@@ -86,9 +82,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [field-start-adornments             field-id field-props]
-                                      [multiline-field-textarea-structure field-id field-props]
-                                      [field-end-adornments               field-id field-props]])
+  [:div.x-text-field--input-container [adornment-handler.views/field-start-adornments field-id field-props]
+                                      [multiline-field-textarea-structure             field-id field-props]
+                                      [adornment-handler.views/field-end-adornments   field-id field-props]])
 
 (defn- multiline-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

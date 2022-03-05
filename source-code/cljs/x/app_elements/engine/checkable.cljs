@@ -14,14 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.checkable
-    (:require [mid-fruits.candy                 :refer [param]]
-              [mid-fruits.map                   :as map]
-              [x.app-core.api                   :as a :refer [r]]
-              [x.app-db.api                     :as db]
-              [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.input      :as input]
-              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]
-              [x.app-environment.api            :as environment]))
+    (:require [mid-fruits.candy                     :refer [param]]
+              [mid-fruits.map                       :as map]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-db.api                         :as db]
+              [x.app-elements.engine.element        :as element]
+              [x.app-elements.engine.input          :as input]
+              [x.app-elements.target-handler.engine :as target-handler.engine]
+              [x.app-environment.api                :as environment]))
 
 
 
@@ -79,7 +79,7 @@
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
   [input-id {:keys [checked? disabled?]}]
-  (cond-> {:id (targetable-elements.engine/element-id->target-id input-id)}
+  (cond-> {:id (target-handler.engine/element-id->target-id input-id)}
           (boolean disabled?) (merge {:disabled true})
           (boolean checked?)  (merge {:on-click     (on-uncheck-function input-id)
                                       :on-mouse-up #(environment/blur-element!)})

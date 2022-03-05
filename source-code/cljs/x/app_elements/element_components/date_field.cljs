@@ -8,8 +8,7 @@
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.text-field :as element-components.text-field]
               [x.app-elements.engine.api                    :as engine]
-              [x.app-elements.field-adornments.views        :as field-adornments.views]
-              [x.app-elements.targetable-elements.engine    :as targetable-elements.engine]))
+              [x.app-elements.adornment-handler.views       :as adornment-handler.views]))
 
 
 
@@ -18,13 +17,6 @@
 
 ; x.app-elements.element-components.text-field
 (def text-field-label element-components.text-field/text-field-label)
-
-; x.app-elements.field-adornments.views
-(def field-start-adornments field-adornments.views/field-start-adornments)
-(def field-end-adornments   field-adornments.views/field-end-adornments)
-
-; x.app-elements.targetable-elements.engine
-(def element-id->target-id targetable-elements.engine/element-id->target-id)
 
 
 
@@ -86,9 +78,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [field-start-adornments field-id field-props]
-                                      [date-field-input       field-id field-props]
-                                      [field-end-adornments   field-id field-props]])
+  [:div.x-text-field--input-container [adornment-handler.views/field-start-adornments field-id field-props]
+                                      [date-field-input                               field-id field-props]
+                                      [adornment-handler.views/field-end-adornments   field-id field-props]])
 
 (defn- date-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

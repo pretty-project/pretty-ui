@@ -14,17 +14,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.field
-    (:require [app-fruits.dom                            :as dom]
-              [mid-fruits.candy                          :refer [param return]]
-              [mid-fruits.css                            :as css]
-              [mid-fruits.string                         :as string]
-              [mid-fruits.vector                         :as vector]
-              [x.app-core.api                            :as a :refer [r]]
-              [x.app-elements.element-surface.events     :as element-surface.events]
-              [x.app-elements.engine.element             :as element]
-              [x.app-elements.engine.input               :as input]
-              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]
-              [x.app-environment.api                     :as environment]))
+    (:require [app-fruits.dom                        :as dom]
+              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.css                        :as css]
+              [mid-fruits.string                     :as string]
+              [mid-fruits.vector                     :as vector]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.surface-handler.events :as surface-handler.events]
+              [x.app-elements.engine.element         :as element]
+              [x.app-elements.engine.input           :as input]
+              [x.app-elements.target-handler.engine  :as target-handler.engine]
+              [x.app-environment.api                 :as environment]))
 
 
 
@@ -238,7 +238,7 @@
           ; tulajdonságuk függvénye volt. A {:disabled? true} állapotban levő field elemek
           ; nem voltak azonosíthatók target-id használatával. Az x4.4.9 verzióban ez a feltétel
           ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
-  (cond-> {:id (targetable-elements.engine/element-id->target-id field-id)}
+  (cond-> {:id (target-handler.engine/element-id->target-id field-id)}
           ; If field is disabled ...
           (boolean disabled?) (merge {:disabled true
                                       :type     type
@@ -405,7 +405,7 @@
   (as-> db % (r environment/enable-non-required-keypress-events! %)
              (r mark-field-as-blurred!                           % field-id)
              (r input/mark-input-as-visited!                     % field-id)
-             (r element-surface.events/hide-surface!             % field-id)))
+             (r surface-handler.events/hide-surface!             % field-id)))
 
 (defn field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -465,7 +465,7 @@
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
-      (if-let [input-enabled? (targetable-elements.engine/element-id->target-enabled? field-id)]
+      (if-let [input-enabled? (target-handler.engine/element-id->target-enabled? field-id)]
               ; Az [:elements/empty-field! ...] esemény kizárólag abban az esetben törli a mező
               ; tartalmát, ha az input elem nincs disabled="true" állapotban, így elkerülhető
               ; a következő hiba:

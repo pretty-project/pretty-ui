@@ -3,27 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.text-field
-    (:require [mid-fruits.candy                          :as candy :refer [param return]]
-              [mid-fruits.string                         :as string]
-              [mid-fruits.vector                         :as vector]
-              [x.app-components.api                      :as components]
-              [x.app-core.api                            :as a :refer [r]]
-              [x.app-elements.element-surface.subs       :as element-surface.subs]
-              [x.app-elements.engine.api                 :as engine]
-              [x.app-elements.field-adornments.views     :as field-adornments.views]
-              [x.app-elements.targetable-elements.engine :as targetable-elements.engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.field-adornments.views
-(def field-start-adornments field-adornments.views/field-start-adornments)
-(def field-end-adornments   field-adornments.views/field-end-adornments)
-
-; x.app-elements.targetable-elements.engine
-(def element-id->target-id targetable-elements.engine/element-id->target-id)
+    (:require [mid-fruits.candy                       :as candy :refer [param return]]
+              [mid-fruits.string                      :as string]
+              [mid-fruits.vector                      :as vector]
+              [x.app-components.api                   :as components]
+              [x.app-core.api                         :as a :refer [r]]
+              [x.app-elements.surface-handler.subs    :as surface-handler.subs]
+              [x.app-elements.engine.api              :as engine]
+              [x.app-elements.adornment-handler.views :as adornment-handler.views]
+              [x.app-elements.target-handler.engine   :as target-handler.engine]))
 
 
 
@@ -111,7 +99,7 @@
   [db [_ field-id]]
   (merge (r engine/get-element-props               db field-id)
          (r engine/get-field-props                 db field-id)
-         (r element-surface.subs/get-surface-props db field-id)))
+         (r surface-handler.subs/get-surface-props db field-id)))
 
 (a/reg-sub :elements/get-text-field-props get-text-field-props)
 
@@ -142,7 +130,7 @@
   [field-id {:keys [label required?]}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  (if label [:label.x-text-field--label {:for (element-id->target-id field-id)}
+  (if label [:label.x-text-field--label {:for (target-handler.engine/element-id->target-id field-id)}
                                         [components/content label]
                                         (if required? [:span.x-input--label-asterisk "*"])]))
 
@@ -191,10 +179,10 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [field-start-adornments     field-id field-props]
-                                      [text-field-input-structure field-id field-props]
-                                      [field-end-adornments       field-id field-props]
-                                      [text-field-surface         field-id field-props]])
+  [:div.x-text-field--input-container [adornment-handler.views/field-start-adornments field-id field-props]
+                                      [text-field-input-structure                     field-id field-props]
+                                      [adornment-handler.views/field-end-adornments   field-id field-props]
+                                      [text-field-surface                             field-id field-props]])
 
 (defn- text-field-invalid-message
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -3,19 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.chip
-    (:require [mid-fruits.candy                         :refer [param]]
-              [x.app-components.api                     :as components]
-              [x.app-core.api                           :as a :refer [r]]
-              [x.app-elements.deletable-elements.engine :as deletable-elements.engine]
-              [x.app-elements.engine.api                :as engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.deletable-elements.engine
-(def deletable-body-attributes x.app-elements.deletable-elements.engine/deletable-body-attributes)
+    (:require [mid-fruits.candy                     :refer [param]]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.delete-handler.engine :as delete-handler.engine]
+              [x.app-elements.engine.api            :as engine]))
 
 
 
@@ -71,8 +63,9 @@
   ;  {:delete-button-icon (keyword)
   ;   :on-delete (metamorphic-event)(opt)}
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
-  (if on-delete [:button.x-chip--delete-button (deletable-body-attributes     chip-id chip-props)
-                                               [:i.x-chip--delete-button-icon delete-button-icon]]))
+  (if on-delete (let [body-attributes (delete-handler.engine/deletable-body-attributes chip-id chip-props)]
+                     [:button.x-chip--delete-button body-attributes
+                                                    [:i.x-chip--delete-button-icon delete-button-icon]])))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

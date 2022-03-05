@@ -53,7 +53,7 @@
   ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
-  (let [adornment-attributes (adornment-handler.engine/button-adornment-attributes field-id field-props adornment-props) icon]
+  (let [adornment-attributes (adornment-handler.engine/button-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:button.x-field-adornments--button-adornment adornment-attributes icon]
              label [:button.x-field-adornments--button-adornment adornment-attributes label])))
 

@@ -19,8 +19,8 @@
               [mid-fruits.string                     :as string]
               [mid-fruits.vector                     :as vector]
               [x.app-core.api                        :as a :refer [r]]
-              [x.app-elements.element-surface.events :as element-surface.events]
-              [x.app-elements.element-surface.subs   :as element-surface.subs]
+              [x.app-elements.surface-handler.events :as surface-handler.events]
+              [x.app-elements.surface-handler.subs   :as surface-handler.subs]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.engine.field           :as field]
               [x.app-elements.engine.input           :as input]
@@ -371,8 +371,8 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (cond (r element-surface.subs/surface-hidden? db field-id)
-        (r element-surface.events/show-surface! db field-id)
+  (cond (r surface-handler.subs/surface-hidden? db field-id)
+        (r surface-handler.events/show-surface! db field-id)
         (r any-combo-box-option-rendered?       db field-id)
         (let [rendered-options       (r get-combo-box-rendered-options db field-id)
               highlighted-option-dex (r get-highlighted-option-dex     db field-id)
@@ -389,8 +389,8 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (cond (r element-surface.subs/surface-hidden? db field-id)
-        (r element-surface.events/show-surface! db field-id)
+  (cond (r surface-handler.subs/surface-hidden? db field-id)
+        (r surface-handler.events/show-surface! db field-id)
         (r any-combo-box-option-rendered?       db field-id)
         (let [highlighted-option-dex (r get-highlighted-option-dex db field-id)
               highlighted-option-dex (or highlighted-option-dex -1)
@@ -411,9 +411,9 @@
   (if (r any-option-highlighted? db field-id)
       (as-> db % (r use-highlighted-combo-box-option!    % field-id)
                  (r discard-option-highlighter!          % field-id)
-                 (r element-surface.events/hide-surface! % field-id))
+                 (r surface-handler.events/hide-surface! % field-id))
       (as-> db % (r discard-option-highlighter!          % field-id)
-                 (r element-surface.events/hide-surface! % field-id))))
+                 (r surface-handler.events/hide-surface! % field-id))))
 
 (a/reg-event-db :elements/enter-combo-box! enter-combo-box!)
 
@@ -427,9 +427,9 @@
   (if (r any-option-highlighted? db field-id)
       (as-> db % (r use-highlighted-multi-combo-box-option! % field-id)
                  (r discard-option-highlighter!             % field-id)
-                 (r element-surface.events/hide-surface!    % field-id))
+                 (r surface-handler.events/hide-surface!    % field-id))
       (as-> db % (r discard-option-highlighter!             % field-id)
-                 (r element-surface.events/hide-surface!    % field-id))))
+                 (r surface-handler.events/hide-surface!    % field-id))))
 
 (a/reg-event-db :elements/enter-multi-combo-box! enter-multi-combo-box!)
 
@@ -442,7 +442,7 @@
   [db [_ field-id]]
   (if-let [highlighted-option (r get-highlighted-option db field-id)]
           (r discard-option-highlighter!          db field-id)
-          (r element-surface.events/hide-surface! db field-id)))
+          (r surface-handler.events/hide-surface! db field-id)))
 
 (a/reg-event-db :elements/escape-combo-box! escape-combo-box!)
 
