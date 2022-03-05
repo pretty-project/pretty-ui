@@ -16,7 +16,6 @@
 (ns x.app-elements.engine.api
     (:require [x.app-elements.engine.checkable          :as checkable]
               [x.app-elements.engine.clickable          :as clickable]
-              [x.app-elements.engine.collectable        :as collectable]
               [x.app-elements.engine.combo-box          :as combo-box]
               [x.app-elements.engine.countable          :as countable]
               [x.app-elements.engine.element            :as element]
@@ -41,15 +40,6 @@
 (def checkable-primary-body-attributes   checkable/checkable-primary-body-attributes)
 (def checkable-secondary-body-attributes checkable/checkable-secondary-body-attributes)
 (def get-checkable-props                 checkable/get-checkable-props)
-
-; x.app-elements.engine.collectable
-(def collectable-attributes        collectable/collectable-attributes)
-(def collectable-option-attributes collectable/collectable-option-attributes)
-(def get-collected-value           collectable/get-collected-value)
-(def option-collected?             collectable/option-collected?)
-(def collectable-collected?        collectable/collectable-collected?)
-(def collectable-noncollected?     collectable/collectable-noncollected?)
-(def get-collectable-props         collectable/get-collectable-props)
 
 ; x.app-elements.engine.combo-box
 (def field-props->render-option?    combo-box/field-props->render-option?)

@@ -5,11 +5,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.checkbox-group
-    (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.vector                     :as vector]
+              [x.app-components.api                  :as components]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.collect-handler.engine :as collect-handler.engine]
+              [x.app-elements.collect-handler.subs   :as collect-handler.subs]
+              [x.app-elements.engine.api             :as engine]))
 
 
 
@@ -63,8 +65,8 @@
   ;
   ; @return (map)
   [db [_ group-id]]
-  (merge (r engine/get-element-props     db group-id)
-         (r engine/get-collectable-props db group-id)))
+  (merge (r engine/get-element-props                   db group-id)
+         (r collect-handler.subs/get-collectable-props db group-id)))
 
 (a/reg-sub :elements/get-checkbox-group-props get-checkbox-group-props)
 
@@ -91,8 +93,9 @@
   ; @param (map) group-props
   ; @param (*) option
   [group-id {:keys [get-label-f] :as group-props} option]
-  (let [option-label (get-label-f option)]
-       [:button.x-checkbox-group--option (engine/collectable-option-attributes group-id group-props option)
+  (let [option-label      (get-label-f option)
+        option-attributes (collect-handler.engine/collectable-option-attributes group-id group-props option)]
+       [:button.x-checkbox-group--option option-attributes
                                          [:div.x-checkbox-group--option-button]
                                          [:div.x-checkbox-group--option-label [components/content option-label]]]))
 

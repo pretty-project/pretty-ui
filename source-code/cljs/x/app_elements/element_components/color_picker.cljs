@@ -3,11 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.color-picker
-    (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.vector                     :as vector]
+              [x.app-components.api                  :as components]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.collect-handler.engine :as collect-handler.engine]
+              [x.app-elements.collect-handler.subs   :as collect-handler.subs]
+              [x.app-elements.engine.api             :as engine]))
 
 
 
@@ -46,8 +48,8 @@
   ;
   ; @return (map)
   [db [_ picker-id]]
-  (merge (r engine/get-element-props     db picker-id)
-         (r engine/get-collectable-props db picker-id)))
+  (merge (r engine/get-element-props                   db picker-id)
+         (r collect-handler.subs/get-collectable-props db picker-id)))
 
 (a/reg-sub :elements/get-color-picker-props get-color-picker-props)
 
@@ -63,8 +65,9 @@
   ; @param (map) picker-props
   ; @param (string) option
   [picker-id picker-props option]
-  [:button.x-color-picker--option (engine/collectable-option-attributes picker-id picker-props option)
-    [:div.x-color-picker--option--color {:style {:background-color option}}]])
+  (let [option-attributes (collect-handler.engine/collectable-option-attributes picker-id picker-props option)]
+       [:button.x-color-picker--option option-attributes
+         [:div.x-color-picker--option--color {:style {:background-color option}}]]))
 
 (defn- color-picker-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
