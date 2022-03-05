@@ -7,7 +7,6 @@
               [mid-fruits.candy               :refer [param return]]
               [mid-fruits.logical             :refer [nor]]
               [mid-fruits.vector              :as vector]
-              [mid-plugins.item-lister.subs   :as subs]
               [x.app-components.api           :as components]
               [x.app-core.api                 :as a :refer [r]]
               [x.app-db.api                   :as db]
@@ -16,18 +15,45 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-plugins.item-lister.subs
-(def get-lister-props subs/get-lister-props)
-(def get-meta-item    subs/get-meta-item)
+(defn get-lister-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id _]]
+  (get-in db [extension-id :item-lister/meta-items]))
 
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @return (*)
+  [db [_ extension-id item-namespace item-key]]
+  (get-in db [extension-id :item-lister/meta-items item-key]))
 
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
+(defn get-inherited-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  ; Az item-lister plugin ...
+  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
+  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési és rendezési beállításokkal,
+  ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet a legutóbbi kereséséhez!
+  (let [lister-props (r get-lister-props db extension-id item-namespace)]
+       (select-keys lister-props [:order-by :search-term])))
+       
 (defn get-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -553,6 +579,13 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-lister/get-meta-item :my-extension :my-type :my-item]
+(a/reg-sub :item-lister/get-meta-item get-meta-item)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace

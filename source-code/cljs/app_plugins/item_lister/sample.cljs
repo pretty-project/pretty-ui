@@ -62,7 +62,7 @@
 ; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
 ; a szerver-oldali kollekció elemeiből csak az előszűrésnek megfelelő elemek jelenjenek meg.
 (defn my-filtered-body
-  [surface-id][]
+  [surface-id]
   [item-lister/body :my-extension :my-type {:list-element [:div "My item"]
                                             :prefilter    {:my-type/color "red"}}])
 

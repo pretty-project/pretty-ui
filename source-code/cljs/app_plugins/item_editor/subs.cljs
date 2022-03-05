@@ -5,6 +5,7 @@
 (ns app-plugins.item-editor.subs
     (:require [app-plugins.item-editor.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
               [mid-plugins.item-editor.subs   :as subs]
               [x.app-activities.api           :as activities]
@@ -12,7 +13,6 @@
               [x.app-core.api                 :as a :refer [r]]
               [x.app-db.api                   :as db]
               [x.app-elements.api             :as elements]
-              [x.app-router.api               :as router]
               [x.app-sync.api                 :as sync]))
 
 
@@ -72,16 +72,6 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :item-id))
 
-(defn get-derived-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id _]]
-  (r router/get-current-route-path-param db :item-id))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -116,10 +106,20 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id item-namespace)]
-       (engine/item-id->new-item? extension-id item-namespace current-item-id)))
+  (r get-meta-item db extension-id item-namespace :new-item?))
 
-(defn editing-item?
+(defn get-parent-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (if-let [parent-route (r get-meta-item db extension-id item-namespace :parent-route)]
+          (uri/valid-path parent-route)))
+
+(defn get-item-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -128,15 +128,10 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace item-id]]
-  ; - Az editing-item? függvény az item-id azonosítót a derived-item-id azonosítóval összehasonlítva
-  ;   állapítja meg, hogy az item-id azonosítójú elem szerkesztés alatt áll-e.
-  ; - A get-current-item-id függvény visszatérési értéke, csak abban az esetben felhasználható,
-  ;   amikor az item-editor plugin van betöltve, annak kilépése után az adatbázisban maradt item-id
-  ;   érték nem felhasználható!
-  (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
-       (= item-id derived-item-id)))
+  (if-let [parent-route (r get-parent-route db extension-id item-namespace)]
+          (str parent-route  "/" item-id)))
 
-(defn route-handled?
+(defn set-auto-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -144,8 +139,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [route-id (r router/get-current-route-id db)]
-       (= route-id (engine/route-id extension-id item-namespace))))
+  (r get-meta-item db extension-id item-namespace :auto-title?))
 
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,8 +149,9 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
-  (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
-       (engine/item-id->auto-title extension-id item-namespace derived-item-id)))
+  (if-let [new-item? (r get-meta-item db extension-id item-namespace :new-item?)]
+          (engine/add-item-label  extension-id item-namespace)
+          (engine/edit-item-label extension-id item-namespace)))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -170,6 +165,26 @@
           (let [modified-at        (r get-data-value db extension-id item-namespace :modified-at)
                 actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
+
+(defn get-form-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :form-element))
+
+(defn get-menu-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :menu-element))
 
 (defn form-completed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -372,6 +387,20 @@
 ; @usage
 ;  [:item-editor/error-mode? :my-extension :my-type]
 (a/reg-sub :item-editor/error-mode? error-mode?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/get-form-element :my-extension :my-type]
+(a/reg-sub :item-editor/get-form-element get-form-element)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/get-menu-element :my-extension :my-type]
+(a/reg-sub :item-editor/get-menu-element get-menu-element)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace

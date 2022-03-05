@@ -262,24 +262,34 @@
   [elements/horizontal-polarity {:start-content [menu-start-buttons extension-id item-namespace]
                                  :end-content   [menu-end-buttons   extension-id item-namespace]}])
 
+(defn- header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id item-namespace]
+  (if-let [menu-element @(a/subscribe [:item-editor/get-menu-element extension-id item-namespace])]
+          [menu-element     extension-id item-namespace]
+          [menu-mode-header extension-id item-namespace]))
+
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
   ;  {:item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
-  ;    TODO ...
-  ;   :menu (metamorphic-content)(opt)}
+  ;    [:delete, :duplicate, :save]
+  ;   :menu-element (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-editor/header :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-menu [] [:div ...])
-  ;  [item-editor/header :my-extension :my-type {:menu #'my-menu}]
-  [extension-id item-namespace {:keys [menu]}]
-  (if menu [menu]
-           [menu-mode-header extension-id item-namespace]))
+  ;  (defn my-menu-element [extension-id item-namespace] [:div ...])
+  ;  [item-editor/header :my-extension :my-type {:menu #'my-menu-element}]
+  [extension-id item-namespace header-props]
+  [components/stated (engine/component-id extension-id item-namespace :header)
+                     {:component   [header-structure          extension-id item-namespace]
+                      :initializer [:item-editor/init-header! extension-id item-namespace header-props]}])
 
 
 
@@ -299,19 +309,24 @@
 (defn body-structure
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;  {:form-element (metamorphic-content)}
-  [extension-id item-namespace {:keys [form-element]}]
+  [extension-id item-namespace]
   (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
-          [error-body   extension-id item-namespace]
-          [form-element extension-id item-namespace]))
+          [error-body extension-id item-namespace]
+          (if-let [form-element @(a/subscribe [:item-editor/get-form-element extension-id item-namespace])]
+                  [form-element extension-id item-namespace])))
 
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:form-element (metamorphic-content)
-  ;   :ui-title (keyword or metamorphic-content)(opt) :auto}
+  ;  {:auto-title? (boolean)(opt)
+  ;    Default: false
+  ;   :form-element (metamorphic-content)
+  ;   :item-id (string)
+  ;   :new-item? (boolean)(opt)
+  ;    Default: false
+  ;   :parent-route (string)(opt)
+  ;   :suggestion-keys (keywords in vector)(opt)}
   ;
   ; @usage
   ;  [item-editor/body :my-extension :my-type {...}]
@@ -320,9 +335,7 @@
   ;  (defn my-form-element [extension-id item-namespace] [:div ...])
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
   [extension-id item-namespace body-props]
-  (let [state-props (dissoc      body-props  :form-element)
-        body-props  (select-keys body-props [:form-element])]
-       [components/stated (engine/component-id extension-id item-namespace :body)
-                          {:component   [body-structure              extension-id item-namespace body-props]
-                           :destructor  [:item-editor/unload-editor! extension-id item-namespace]
-                           :initializer [:item-editor/init-editor!   extension-id item-namespace state-props]}]))
+  [components/stated (engine/component-id extension-id item-namespace :body)
+                     {:component   [body-structure              extension-id item-namespace]
+                      :destructor  [:item-editor/unload-editor! extension-id item-namespace]
+                      :initializer [:item-editor/init-body!     extension-id item-namespace body-props]}])

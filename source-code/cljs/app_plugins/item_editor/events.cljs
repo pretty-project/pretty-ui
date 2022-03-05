@@ -59,7 +59,6 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (as-> db % (dissoc-in % [extension-id :item-editor/data-items])
-             (dissoc-in % [extension-id :item-editor/meta-items :item-id])
              (dissoc-in % [extension-id :item-editor/meta-items :data-received?])
              (dissoc-in % [extension-id :item-editor/meta-items :error-mode?])
              ; Ha az item-editor plugin {:recovery-mode? true} állapotban indul, de az elem
@@ -76,54 +75,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-derived-item-id!
+(defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (map) body-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [derived-item-id (r subs/get-derived-item-id db extension-id item-namespace)]
-       (assoc-in db [extension-id :item-editor/meta-items :item-id] derived-item-id)))
+  [db [_ extension-id item-namespace body-props]]
+  (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
 
-(defn set-current-item-id!
+(defn init-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
+  ; @param (map) body-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (assoc-in db [extension-id :item-editor/meta-items :item-id] item-id))
+  [db [_ extension-id item-namespace body-props]]
+  (as-> db % (r reset-editor!     % extension-id item-namespace)
+             (r store-body-props! % extension-id item-namespace body-props)))
 
-(defn store-current-item-id!
+(defn init-header!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;  {:item-id (string)(opt)}
+  ; @param (map) header-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace {:keys [item-id]}]]
-  (if (r subs/route-handled?    db extension-id item-namespace)
-      (r store-derived-item-id! db extension-id item-namespace)
-      (r   set-current-item-id! db extension-id item-namespace item-id)))
-
-(defn load-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;  {:item-id (string)(opt)}
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace editor-props]]
-  (as-> db % (r reset-editor!           % extension-id item-namespace)
-             (r store-current-item-id!  % extension-id item-namespace editor-props)))
+  [db [_ extension-id item-namespace header-props]]
+  (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
 
 
 
@@ -172,14 +156,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  ; Az egyes elemek törlésének vagy az elem nem mentett változtatásainak elvetésének lehetősége
-  ; megszűnésekor a visszaállításhoz szükséges másolatok szükségtelenné válnak és törlődnek.
-  (if-not (r subs/editing-item? db extension-id item-namespace item-id)
-          ; Ha clean-recovery-data! függvény lefutásának pillanatában ismételten az item-id
-          ; azonosítójú elem van megnyitva a szerkesztőben, akkor a másolatok eltávolítása szükségtelen!
-          (-> db (dissoc-in [extension-id :item-editor/backup-items  item-id])
-                 (dissoc-in [extension-id :item-editor/local-changes item-id]))
-          (return db)))
+  (return db))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -392,8 +392,8 @@
   ;  [item-lister/header :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-menu [extension-id item-namespace] [:div ...])
-  ;  [item-lister/header :my-extension :my-type {:menu #'my-menu}}]
+  ;  (defn my-menu-element [extension-id item-namespace] [:div ...])
+  ;  [item-lister/header :my-extension :my-type {:menu #'my-menu-element}}]
   [extension-id item-namespace header-props]
   [components/stated (engine/component-id extension-id item-namespace :header)
                      {:component   [header-structure          extension-id item-namespace]

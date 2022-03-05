@@ -76,7 +76,7 @@
 ;; -- Private helpers ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn item-id->new-item?
+(defn add-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -84,41 +84,29 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (engine/item-id->new-item? :my-extension :my-type "new-my-type")
-  ;  =>
-  ; true
-  ;
-  ; @example
-  ;  (engine/item-id->new-item? :my-extension :my-type "my-item")
-  ;  =>
-  ; false
-  ;
-  ; @return (boolean)
-  [_ item-namespace item-id]
-  (= item-id (str "new-" (name item-namespace))))
-
-(defn item-id->auto-title
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @example
-  ;  (engine/item-id->auto-title :my-extension :my-type "new-my-type")
+  ;  (engine/add-item-label :my-extension :my-type)
   ;  =>
   ;  :add-my-type
   ;
+  ; @return (metamorphic-content)
+  [extension-id item-namespace item-id]
+  (keyword (str "add-" (name item-namespace))))
+
+(defn edit-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
   ; @example
-  ;  (engine/item-id->auto-title :my-extension :my-type "my-item")
+  ;  (engine/edit-item-label :my-extension :my-type)
   ;  =>
   ;  :edit-my-type
   ;
   ; @return (metamorphic-content)
   [extension-id item-namespace item-id]
-  (if (item-id->new-item? extension-id item-namespace item-id)
-      (keyword/join "add-"  item-namespace)
-      (keyword/join "edit-" item-namespace)))
+  (keyword (str "edit-" (name item-namespace))))
 
 (defn new-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -201,71 +189,6 @@
   [extension-id _]
   (name extension-id))
 
-(defn transfer-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/transfer-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-editor/transfer-editor-props
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-editor")
-           "transfer-editor-props"))
-
-(defn route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-editor/route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)  "."
-                (name item-namespace) "-editor")
-           "route"))
-
-(defn route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-template :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension/:item-id"
-  ;
-  ; @return (string)
-  [extension-id _]
-  (str "/@app-home/" (name extension-id)
-       "/:item-id"))
-
-(defn parent-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/parent-uri :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension"
-  ;
-  ; @return (string)
-  [extension-id _]
-  (str "/@app-home/" (name extension-id)))
-
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -309,21 +232,3 @@
   (keyword (str (name extension-id)  "."
                 (name item-namespace) "-editor")
            (str (name action-key)     "-dialog")))
-
-(defn load-extension-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/load-extension-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension.my-type-editor/load-editor!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-editor")
-                          "load-editor!")]
-       [event-id]))

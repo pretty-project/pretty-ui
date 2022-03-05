@@ -123,9 +123,10 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ;
-  ; XXX#5660
-  [:environment/remove-keypress-listener! :item-lister/keypress-listener])
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r events/unload-lister! db extension-id item-namespace)
+       :dispatch-n [; XXX#5660
+                    [:environment/remove-keypress-listener! :item-lister/keypress-listener]]}))
 
 
 

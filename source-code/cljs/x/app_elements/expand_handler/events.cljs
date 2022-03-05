@@ -37,9 +37,9 @@
   ;
   ; @return (map)
   [db [_ element-id]]
-  (if (r expandable-elements.subs/element-expanded? db element-id)
-      (r compress-element!                          db element-id)
-      (r expand-element!                            db element-id)))
+  (if (r expand-handler.subs/element-expanded? db element-id)
+      (r compress-element!                     db element-id)
+      (r expand-element!                       db element-id)))
 
 
 

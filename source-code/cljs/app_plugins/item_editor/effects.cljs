@@ -9,68 +9,27 @@
               [app-plugins.item-editor.subs       :as subs]
               [app-plugins.item-editor.validators :as validators]
               [app-plugins.item-editor.views      :as views]
+              [mid-fruits.candy                   :refer [param]]
               [x.app-core.api                     :as a :refer [r]]
               [x.app-ui.api                       :as ui]))
 
 
 
+;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :item-editor/load-editor!
+(defn body-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) editor-props
-  ;  {:item-id (string)(opt)}
+  ; @param (map) body-props
   ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type]
-  ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace editor-props]]
-      (let [; Az events/load-editor! függvény által meghívott events/reset-editor! függvény
-            ; lépteti ki az item-editor plugint a {:recovery-mode? true} állapotból,
-            ; ami miatt szükséges az events/load-editor! függvényt a subs/download-data? függvény
-            ; lefutása előtt meghívni!
-            db (r events/load-editor! db extension-id item-namespace editor-props)]
-           {:db db :dispatch-n [(if (r subs/download-data? db extension-id item-namespace)
-                                    [:item-editor/request-item! extension-id item-namespace]
-                                    [:item-editor/load-item!    extension-id item-namespace])
-                                (engine/load-extension-event extension-id item-namespace)]})))
-
-(a/reg-event-fx
-  :item-editor/edit-item!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      ; Ha az item-editor plugin útvonala létezik, akkor az [:item-editor/edit-item! ...] esemény
-      ; az útvonalra irányít, abban az esetben is, ha az NEM az aktuális útvonal, mert
-      ; az [:item-editor/edit-item! ...] esemény meghívása a legtöbb esetben NEM az item-editor
-      ; plugin használata közben történik!
-      (if (r subs/get-meta-item db extension-id item-namespace :routed?)
-          (let [editor-uri (engine/editor-uri extension-id item-namespace item-id)]
-               [:router/go-to! editor-uri])
-          [:item-editor/load-editor! extension-id item-namespace {:item-id item-id}])))
-
-(a/reg-event-fx
-  :item-editor/go-up!
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [:item-editor/go-up! :my-extension :my-type]
-  (fn [_ [_ extension-id item-namespace]]
-      (let [parent-uri (engine/parent-uri extension-id item-namespace)]
-           [:router/go-to! parent-uri])))
+  ; @return (map)
+  ;  {:collection-name (string)}
+  [extension-id _ editor-props]
+  (merge {:collection-name (name extension-id)}
+         (param editor-props)))
 
 
 
@@ -173,9 +132,20 @@
             validator-f #(r validators/save-item-response-valid? db extension-id item-namespace %)]
            {:db (r events/save-item! db extension-id item-namespace)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-editor/go-up!           extension-id item-namespace]
+                                         {:on-success [:item-editor/item-saved       extension-id item-namespace]
                                           :on-failure [:item-editor/save-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-editor/item-saved
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ extension-id item-namespace _]]
+      (if-let [route-parent (r subs/get-parent-route db extension-id item-namespace)]
+              [:router/go-to! route-parent])))
 
 (a/reg-event-fx
   :item-editor/save-item-failed
@@ -220,8 +190,10 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r events/item-deleted db extension-id item-namespace)
-       :dispatch-n [[:item-editor/go-up!                      extension-id item-namespace]
-                    [:item-editor/render-item-deleted-dialog! extension-id item-namespace]]}))
+       :dispatch-n [[:item-editor/render-item-deleted-dialog! extension-id item-namespace]
+                    (if-let [parent-route (r subs/get-parent-route db extension-id item-namespace)]
+                            [:router/go-to! parent-route]
+                            [:ui/end-fake-process!])]}))
 
 (a/reg-event-fx
   :item-editor/delete-item-failed
@@ -263,7 +235,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
       {:db (r events/set-recovery-mode! db extension-id item-namespace)
-       :dispatch [:item-editor/edit-item! extension-id item-namespace item-id]}))
+       :dispatch [(if-let [item-route (r subs/get-item-route db extension-id item-namespace item-id)]
+                          [:router/go-to! item-route])]}))
 
 (a/reg-event-fx
   :item-editor/undo-delete-item-failed
@@ -362,14 +335,35 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-editor/init-editor!
+  :item-editor/init-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
-  ;  {:ui-title (keyword or metamorphic-content)(opt)}
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title]}]]
-      (if ui-title (case ui-title :auto (if-let [auto-title (r subs/get-auto-title db extension-id item-namespace)]
-                                                [:ui/set-title! auto-title])
-                                        [:ui/set-title! ui-title]))))
+  ; @param (map) body-props
+  ;  {:auto-title? (boolean)(opt)}
+  (fn [{:keys [db]} [_ extension-id item-namespace body-props]]
+      ; - Az events/init-body! függvény által meghívott events/reset-editor! függvény lépteti ki az item-editor
+      ;   plugint a {:recovery-mode? true} állapotból, ami miatt szükséges az events/init-body! függvényt
+      ;   a subs/download-data? függvény lefutása előtt meghívni!
+      ; - Az events/init-body! függvény által meghívott events/store-body-props! függvény tárolja el
+      ;   az {:auto-title? ...} beállítást, ami miatt szükséges az events/init-body! függvényt
+      ;   a subs/set-auto-title? függvény lefutása előtt meghívni!
+      (let [body-props (body-props-prototype extension-id item-namespace body-props)
+            db         (r events/init-body! db extension-id item-namespace body-props)]
+           {:db db :dispatch-n [(if (r subs/set-auto-title? db extension-id item-namespace)
+                                    (if-let [auto-title (r subs/get-auto-title db extension-id item-namespace)]
+                                            [:ui/set-title! auto-title]))
+                                (if (r subs/download-data? db extension-id item-namespace)
+                                    [:item-editor/request-item! extension-id item-namespace]
+                                    [:item-editor/load-item!    extension-id item-namespace])]})))
+
+(a/reg-event-fx
+  :item-editor/init-header!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  (fn [{:keys [db]} [_ extension-id item-namespace header-props]]
+      {:db (r events/init-header! db extension-id item-namespace header-props)}))

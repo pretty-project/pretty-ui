@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.collect-handler.events
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [x.app-core.api                   :as a :refer [r]]
+              [x.app-elements.engine.selectable :as selectable]))
 
 
 

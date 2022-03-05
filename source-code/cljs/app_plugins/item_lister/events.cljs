@@ -5,6 +5,7 @@
 (ns app-plugins.item-lister.events
     (:require [app-plugins.item-lister.engine :as engine]
               [app-plugins.item-lister.subs   :as subs]
+              [mid-fruits.candy               :refer [param return]]
               [mid-fruits.map                 :as map :refer [dissoc-in]]
               [mid-fruits.vector              :as vector]
               [x.app-core.api                 :as a :refer [r]]
@@ -79,10 +80,10 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id _]]
-  (-> db (dissoc-in [extension-id :item-lister/meta-items :error-mode?])
-         (dissoc-in [extension-id :item-lister/meta-items :select-mode?])
-         (dissoc-in [extension-id :item-lister/meta-items :selected-items])))
+  [db [_ extension-id item-namespace]]
+  (let [inherited-props (r subs/get-inherited-props db extension-id item-namespace)]
+       (-> db (dissoc-in [extension-id :item-lister/meta-items])
+              (assoc-in  [extension-id :item-lister/meta-items] inherited-props))))
 
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,13 +131,15 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; Az item-lister plugin betöltésekor beállítja az order-by-options vektor első elemét
-  ; order-by beállításként, mert ha még nem volt a felhasználó által kiválasztva order-by
-  ; érték, akkor ...
+  ; - Az item-lister plugin betöltésekor ha az {:order-by ...} beállítás nem elérhető, akkor beállítja
+  ;   az order-by-options vektor első elemét order-by beállításként.
+  ; - Ha még nem volt a felhasználó által kiválasztva order-by érték, akkor ...
   ; ... a sort-items-select kirenderelésekor nem lenne a select-options felsorolásban aktív listaelem!
   ; ... az elemek letöltésekor a szerver nem kapná meg az order-by értékét!
-  (let [order-by-options (r subs/get-meta-item db extension-id item-namespace :order-by-options)]
-       (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options))))
+  (if-let [order-by (r subs/get-meta-item db extension-id item-namespace :order-by)]
+          (return db)
+          (let [order-by-options (r subs/get-meta-item db extension-id item-namespace :order-by-options)]
+               (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options)))))
 
 (defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,13 +161,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace body-props]]
-  ; Az item-lister plugin ...
-  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
-  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt beállításokkal.
-  (as-> db % (r store-body-props!     % extension-id item-namespace body-props) 
-             (r reset-lister!         % extension-id item-namespace)
-             (r reset-downloads!      % extension-id item-namespace)
-             (r reset-search!         % extension-id item-namespace)
+  (as-> db % (r store-body-props!     % extension-id item-namespace body-props)
              (r set-default-order-by! % extension-id item-namespace)))
 
 (defn init-header!
@@ -177,6 +174,19 @@
   ; @return (map)
   [db [_ extension-id item-namespace header-props]]
   (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
+
+(defn unload-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace header-props]]
+  ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
+  ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
+  (as-> db % (r reset-lister!    % extension-id item-namespace)
+             (r reset-downloads! % extension-id item-namespace)))
 
 
 

@@ -7,16 +7,7 @@
               [mid-fruits.candy                      :refer [param return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [server-plugins.item-lister.api        :as item-lister]
               [x.server-core.api                     :as a]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (namespaced keywords in vector)
-(def ORDER-BY-OPTIONS [:modified-at/descending :modified-at/ascending :name/ascending :name/descending])
 
 
 
@@ -109,32 +100,3 @@
 (def HANDLERS [delete-items! duplicate-items! get-items undo-delete-items! undo-duplicate-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- A plugin beállítása alapbeállításokkal ----------------------------------
-;; ----------------------------------------------------------------------------
-
-; - Az [:item-lister/init-lister! ...] esemény hozzáadja a "/@app-home/my-extension" útvonalat
-;   a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon az item-lister plugin.
-; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-lister/init-lister! :my-extension :my-type]})
-
-
-
-;; -- A plugin beállítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; - A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
-;   értesülhet a kollekció változásairól
-; - A dokumentumoknak tartalmazniuk kell legalább egyet a {:search-keys [...]} tulajdonságként
-;   átadott vektorban felsorolt kulcsok közül!
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-lister/init-lister! :my-extension :my-type
-                                              {:collection-name  "my-extension"
-                                               :download-limit   10
-                                               :order-by-options ORDER-BY-OPTIONS
-                                               :search-keys      [:my-key]}]})

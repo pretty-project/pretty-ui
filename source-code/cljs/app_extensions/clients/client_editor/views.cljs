@@ -169,7 +169,7 @@
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   [:<> ; Color and name
        [client-label]
        [client-colors]
@@ -194,8 +194,12 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-editor/get-description :clients :client])]
-       [layouts/layout-a surface-id {:header [item-editor/header :clients :client {:item-actions [:delete :duplicate]}]
+  (let [description @(a/subscribe [:item-editor/get-description :clients :client])
+        item-id     @(a/subscribe [:router/get-current-route-path-param :client-id])
+        new-client? @(a/subscribe [:router/current-route-path-param?    :client-id "new-client"])]
+       [layouts/layout-a surface-id {:description description
+                                     :header [item-editor/header :clients :client {:item-actions [:delete :duplicate :save]}]
                                      :body   [item-editor/body   :clients :client {:form-element #'client-form
-                                                                                   :title :auto}]
-                                     :description description}]))
+                                                                                   :auto-title? true :suggestion-keys [:city]
+                                                                                   :item-id item-id :new-item? new-client?
+                                                                                   :parent-route "/@app-home/clients"}]}]))

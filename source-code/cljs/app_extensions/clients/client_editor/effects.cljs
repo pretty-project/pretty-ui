@@ -14,7 +14,8 @@
 (a/reg-event-fx
   :clients.client-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:clients.client-editor/render-editor!])
+  {:dispatch-n [[:ui/set-route-parent! "/@app-home/clients"]
+                [:clients.client-editor/render-editor!]]})
 
 (a/reg-event-fx
   :clients.client-editor/render-editor!

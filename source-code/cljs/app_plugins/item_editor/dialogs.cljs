@@ -14,7 +14,7 @@
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn undo-delete-item-dialog-body
+(defn item-deleted-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -64,7 +64,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
            [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
-                             {:body       [undo-delete-item-dialog-body      extension-id item-namespace current-item-id]
+                             {:body       [item-deleted-dialog-body          extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
 (a/reg-event-fx
