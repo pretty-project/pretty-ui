@@ -7,7 +7,6 @@
               [mid-fruits.candy               :refer [param return]]
               [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
-              [mid-plugins.item-editor.subs   :as subs]
               [x.app-activities.api           :as activities]
               [x.app-components.api           :as components]
               [x.app-core.api                 :as a :refer [r]]
@@ -17,17 +16,29 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid-plugins.item-editor.subs
-(def get-editor-props subs/get-editor-props)
-(def get-meta-item    subs/get-meta-item)
-
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-editor-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id _]]
+  (get-in db [extension-id :item-editor/meta-items]))
+
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @return (*)
+  [db [_ extension-id item-namespace item-key]]
+  (get-in db [extension-id :item-editor/meta-items item-key]))
 
 (defn get-data-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -364,6 +375,13 @@
 ; @param (keyword) item-namespace
 ;
 ; @usage
+;  [:item-editor/get-meta-item :my-extension :my-type :my-item]
+(a/reg-sub :item-editor/get-meta-item get-meta-item)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
 ;  [:item-editor/get-data-item :my-extension :my-type]
 (a/reg-sub :item-editor/get-data-item get-data-item)
 
@@ -422,3 +440,11 @@
 ; @usage
 ;  [:item-editor/new-item? :my-extension :my-type]
 (a/reg-sub :item-editor/new-item? new-item?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+; @param (string) item-id
+;
+; @usage
+;  [:item-editor/get-item-route :my-extension :my-type "my-item"]
+(a/reg-sub :item-editor/get-item-route get-item-route)

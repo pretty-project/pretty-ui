@@ -182,7 +182,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace header-props]]
+  [db [_ extension-id item-namespace]]
   ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
   ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
   (as-> db % (r reset-lister!    % extension-id item-namespace)

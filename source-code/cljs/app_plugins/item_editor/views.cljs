@@ -339,3 +339,6 @@
                      {:component   [body-structure              extension-id item-namespace]
                       :destructor  [:item-editor/unload-editor! extension-id item-namespace]
                       :initializer [:item-editor/init-body!     extension-id item-namespace body-props]}])
+                      ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
+                      ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
+                      ;:updater     [:item-editor/init-body!     extension-id item-namespace body-props]}])

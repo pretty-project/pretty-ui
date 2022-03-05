@@ -42,37 +42,38 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r events/unload-editor! db extension-id item-namespace)}))
 
-              ; BUG#4055
-              ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
-              ;   tartalmaz, akkor új elem létrehozása után a szerkesztő elhagyásakor abban az esetben is
-              ;   megjelenítenne a changes-discarded értesítés, ha nem történt szerkesztés, mivel
-              ;   az {:initial-value ...} tulajdonság módosítja az üres adatot (az új elemet).
-              ; - Ha az item-editor plugin olyan felületen jelenik meg, ahol tabok (fülek) vannak,
-              ;   akkor egy másik tabra (fülre) kattintva az {:component-did-unmount ...} esemény
-              ;   által meghívott [:item-editor/unload-editor! ...] esemény megtörténése miatt megjelenne
-              ;   a changes-discarded értesítés, abban az esetben is ha a szerkesztő nem lett elhagyva.
-              ; - A backup-current-item! DB függvény is foglalkozik a törlés visszavonhatóságával!
-              ;
-              ; HA A CHANGES-DISCARDED VISSZAÁLLÍTÁSRA KERÜL:
-              ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
-              ;   kirenderelni changes-discarded-dialog párbeszédablakot.
-              ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
-              ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
-              ;   párbeszédablakot.
-              ; - Ezt szükséges visszatenni az item-deleted eseménybe:
-              ;   (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true)
-              ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-delete? true} beállítást
+      ; BUG#4055
+      ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
+      ;   tartalmaz, akkor új elem létrehozása után a szerkesztő elhagyásakor abban az esetben is
+      ;   megjelenítenne a changes-discarded értesítés, ha nem történt szerkesztés, mivel
+      ;   az {:initial-value ...} tulajdonság módosítja az üres adatot (az új elemet).
+      ; - Ha az item-editor plugin olyan felületen jelenik meg, ahol tabok (fülek) vannak,
+      ;   akkor egy másik tabra (fülre) kattintva az {:component-did-unmount ...} esemény
+      ;   által meghívott [:item-editor/unload-editor! ...] esemény megtörténése miatt megjelenne
+      ;   a changes-discarded értesítés, abban az esetben is ha a szerkesztő nem lett elhagyva.
+      ; - A backup-current-item! DB függvény is foglalkozik a törlés visszavonhatóságával!
+      ;
+      ; HA A CHANGES-DISCARDED VISSZAÁLLÍTÁSRA KERÜL:
+      ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
+      ;   kirenderelni changes-discarded-dialog párbeszédablakot.
+      ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
+      ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
+      ;   párbeszédablakot.
+      ; - Ezt szükséges visszatenni az item-deleted eseménybe:
+      ;   (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true)
+      ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-delete? true} beállítást
 
-              ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
-              ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
-              ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
-              ; esemény visszavonásának esetleges megtörténtekor.
-              ;(if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
-              ;(if (r subs/item-changed? db extension-id item-namespace)
-              ;    {:db (r events/store-local-changes! db extension-id item-namespace)
-              ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
+      ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
+      ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
+      ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
+      ; esemény visszavonásának esetleges megtörténtekor.
+      ;(if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
+      ;(if (r subs/item-changed? db extension-id item-namespace)
+      ;    {:db (r events/store-local-changes! db extension-id item-namespace)
+      ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
 
 (a/reg-event-fx
   :item-editor/request-item!
@@ -145,7 +146,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace _]]
       (if-let [route-parent (r subs/get-parent-route db extension-id item-namespace)]
-              [:router/go-to! route-parent])))
+              [:router/go-to! route-parent]
+              [:ui/end-fake-process!])))
 
 (a/reg-event-fx
   :item-editor/save-item-failed
@@ -221,7 +223,7 @@
             validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
-                                         {:on-success [:item-editor/delete-undid            extension-id item-namespace item-id]
+                                         {:on-success [:item-editor/delete-item-undid       extension-id item-namespace item-id]
                                           :on-failure [:item-editor/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
 
@@ -235,8 +237,9 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace item-id _]]
       {:db (r events/set-recovery-mode! db extension-id item-namespace)
-       :dispatch [(if-let [item-route (r subs/get-item-route db extension-id item-namespace item-id)]
-                          [:router/go-to! item-route])]}))
+       :dispatch-n [(if-let [item-route (r subs/get-item-route db extension-id item-namespace item-id)]
+                            [:router/go-to! item-route]
+                            [:ui/end-fake-process!])]}))
 
 (a/reg-event-fx
   :item-editor/undo-delete-item-failed

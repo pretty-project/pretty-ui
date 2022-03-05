@@ -279,8 +279,8 @@
       ;   a Re-Frame adatbázisban, kevés értelme van a [:components/component-updated ...]
       ;   eseményt alkalmazni.
       ; - A reagent komponensek paramétereinek megváltozásakor a Re-Frame adatbázisba írás
-      ;   rontja az applikáció teljesítményét!
-      {:db (r engine/set-component-prop! db component-id :status :updated)
+      ;   negatívan befolyásolja az applikáció teljesítményét!
+      {;:db (r engine/set-component-prop! db component-id :status :updated)
        :dispatch updater}))
 
 (a/reg-event-fx
@@ -327,7 +327,7 @@
   (let [mount-id (a/id)]
        (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
-                           ;:component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
+                            :component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
                             :component-will-unmount #(a/dispatch [:components/component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 

@@ -13,6 +13,13 @@
 
 
 # x4.6.0
+- Az item-editor duplikálás -> majd másolat szerkesztése átirányit az uj route-ra de nem
+  történik ujratöltés
+
+- Az item-editor elem törlése utáni visszaállítás után már nincsenek ez editor beállításai a db-ben
+  ami alapján összerakná a visszaállított elem útvonalát amire irányítania kéne
+
+
 - Lehessen route-parent-et és header-title egy eseményben állítani,  a kevesebb írás miatt
 
 - A hosszu require-ök ne kerüljenek a lista végére

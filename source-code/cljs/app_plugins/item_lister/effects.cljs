@@ -28,13 +28,12 @@
   ;  {:collection-name (string)
   ;   :download-limit (integer)
   ;   :order-by-options (namespaced keywords in vector)
-  ;   :routed? (boolean)
   ;   :search-keys (keywords in vector)}
   [extension-id _ body-props]
-  (merge {:download-limit   20
+  (merge {:collection-name  (name extension-id)
+          :download-limit   20
           :order-by-options [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
-          :search-keys      [:name]
-          :collection-name  (name extension-id)}
+          :search-keys      [:name]}
          (param body-props)))
 
 (defn- header-props-prototype

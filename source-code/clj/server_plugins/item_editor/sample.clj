@@ -8,7 +8,6 @@
               [mid-fruits.string                     :as string]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [server-plugins.item-editor.api        :as item-editor]
               [x.server-core.api                     :as a]
               [x.server-db.api                       :as db]))
 
@@ -95,29 +94,3 @@
 (def HANDLERS [delete-item! duplicate-item! get-item save-item! undo-delete-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- A plugin beállítása alapbeállításokkal ----------------------------------
-;; ----------------------------------------------------------------------------
-
-; - Az [:item-editor/init-editor! ...] esemény hozzáadja a "/@app-home/my-extension/:my-type-id"
-;   útvonalat a rendszerhez, amely útvonal használatával betöltődik a kliens-oldalon
-;   az item-editor plugin.
-; - A {:routed? false} beállítás használatával nem adja hozzá az útvonalat.
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-editor/init-editor! :my-extension :my-type]})
-
-
-
-;; -- A plugin beállítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
-; értesülhet a kollekció változásairól
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-editor/init-editor! :my-extension :my-type
-                                              {:collection-name "my-extension"
-                                               :suggestion-keys [:city :address]}]})

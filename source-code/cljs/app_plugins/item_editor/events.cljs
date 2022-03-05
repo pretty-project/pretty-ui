@@ -58,17 +58,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (as-> db % (dissoc-in % [extension-id :item-editor/data-items])
-             (dissoc-in % [extension-id :item-editor/meta-items :data-received?])
-             (dissoc-in % [extension-id :item-editor/meta-items :error-mode?])
-             ; Ha az item-editor plugin {:recovery-mode? true} állapotban indul, de az elem
-             ; visszaállítása már megtörtént, akkor kilép a {:recovery-mode? true} állapotból,
-             ; mert az már nem érvényes!
-             (if (and (r subs/get-meta-item db extension-id item-namespace :recovery-mode?)
-                      (r subs/get-meta-item db extension-id item-namespace :item-recovered?))
-                 (-> % (dissoc-in [extension-id :item-editor/meta-items :recovery-mode?])
-                       (dissoc-in [extension-id :item-editor/meta-items :item-recovered?]))
-                 (return %))))
+  (-> db (dissoc-in [extension-id :item-editor/data-items])
+         (dissoc-in [extension-id :item-editor/meta-items])))
 
 
 
@@ -108,6 +99,18 @@
   ; @return (map)
   [db [_ extension-id item-namespace header-props]]
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
+
+(defn unload-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  ; Az item-editor plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
+  ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
+  (r reset-editor! db extension-id item-namespace))
 
 
 
