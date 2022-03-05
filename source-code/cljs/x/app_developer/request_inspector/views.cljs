@@ -27,7 +27,7 @@
 (defn- response-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-response @(a/subscribe [:developer/get-request-props])]
+  (let [request-response @(a/subscribe [:developer/get-request-response])]
        [:div {}
              [:div {:style {:font-weight "600" :line-height "32px"}}
                    (str "Server response:")]
