@@ -116,7 +116,8 @@
   ;  {:list-element (metamorphic-content)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
-  ;   :prefilter (map)(opt)}
+  ;   :prefilter (map)(opt)
+  ;   :ui-title (keyword or metamorphic-content)(opt) :auto}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]

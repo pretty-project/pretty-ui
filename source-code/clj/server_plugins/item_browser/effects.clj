@@ -67,8 +67,8 @@
   ;   :path-key (keyword)(opt)
   ;    Default: DEFAULT-PATH-KEY
   ;   :root-item-id (string)(opt)
-  ;   :routed? (boolean)(opt)
-  ;    Default: true
+  ;   :route-base (string)(opt)
+  ;    Default: "/@app-home"
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: item-lister/DEFAULT-SEARCH-KEYS}
   ;

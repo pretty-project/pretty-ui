@@ -75,7 +75,7 @@
 
 
 
-;; -- {:ui-title :auto} beállítás használata -------------------------------------
+;; -- {:ui-title :auto} beállítás használata ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; Ha az item-editor plugin {:ui-title :auto} beállítással van használva, akkor a szerkesztő betöltésekor

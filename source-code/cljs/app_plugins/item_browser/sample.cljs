@@ -49,3 +49,8 @@
   (fn [{:keys [db]} _]
       (if-not (r ui/element-rendered? db :surface :my-extension.my-type-browser/view)
               [:my-extension.my-type-browser/render-browser!])))
+
+
+
+;; -- {:ui-title :auto} beállítás használata ----------------------------------
+;; ----------------------------------------------------------------------------
