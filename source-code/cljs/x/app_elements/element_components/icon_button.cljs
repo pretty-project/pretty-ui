@@ -3,23 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.icon-button
-    (:require [mid-fruits.candy                           :refer [param return]]
-              [x.app-components.api                       :as components]
-              [x.app-core.api                             :as a :refer [r]]
-              [x.app-elements.engine.api                  :as engine]
-              [x.app-elements.element-presets.engine      :as element-presets.engine]
-              [x.app-elements.element-presets.icon-button :as element-presets.icon-button]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.element-presets.engine
-(def apply-preset element-presets.engine/apply-preset)
-
-; x.app-elements.element-presets.icon-button
-(def BUTTON-PROPS-PRESETS element-presets.icon-button/BUTTON-PROPS-PRESETS)
+    (:require [mid-fruits.candy                          :refer [param return]]
+              [x.app-components.api                      :as components]
+              [x.app-core.api                            :as a :refer [r]]
+              [x.app-elements.badge-handler.views        :as badge-handler.views]
+              [x.app-elements.engine.api                 :as engine]
+              [x.app-elements.preset-handler.engine      :as preset-handler.engine]
+              [x.app-elements.preset-handler.icon-button :as preset-handler.icon-button]))
 
 
 
@@ -75,10 +65,10 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props)
-                               [icon-button-icon                 button-id button-props]
-                               [icon-button-label                button-id button-props]
-                               [engine/element-badge             button-id button-props]])
+  [:button.x-icon-button--body (engine/clickable-body-attributes  button-id button-props)
+                               [icon-button-icon                  button-id button-props]
+                               [icon-button-label                 button-id button-props]
+                               [badge-handler.views/element-badge button-id button-props]])
 
 (defn- icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,7 +145,7 @@
    [element (a/id) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (apply-preset BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (preset-handler.engine/apply-preset preset-handler.icon-button/BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
                      [icon-button    button-id button-props]))))

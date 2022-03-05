@@ -8,8 +8,7 @@
               [mid-fruits.keyword                    :as keyword]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [server-plugins.item-editor.engine     :as engine]
-              [x.server-db.api                       :as db]))
+              [server-plugins.item-editor.engine     :as engine]))
 
 
 
@@ -25,9 +24,8 @@
         item-namespace  (pathom/env->param env :item-namespace)
         suggestion-keys (pathom/env->param env :suggestion-keys)
         collection-name (engine/collection-name      extension-id item-namespace)
-        all-documents   (mongo-db/get-all-documents  collection-name)
         suggestion-keys (keyword/add-items-namespace item-namespace suggestion-keys)]
-       (db/get-specified-values all-documents suggestion-keys string/nonempty?)))
+       (mongo-db/get-specified-values collection-name suggestion-keys string/nonempty?)))
 
 
 

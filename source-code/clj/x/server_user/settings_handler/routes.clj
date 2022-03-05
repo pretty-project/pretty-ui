@@ -29,8 +29,8 @@
             namespaced-item-key (keyword/add-namespace :user-settings item-key)
             default-value       (get settings-handler.engine/ANONYMOUS-USER-SETTINGS namespaced-item-key)]
            (if (= item-value default-value)
-               (local-db/update-document! "user_settings" user-id dissoc item-key)
-               (local-db/update-document! "user_settings" user-id assoc  item-key item-value))
+               (local-db/apply-document! "user_settings" user-id dissoc item-key)
+               (local-db/apply-document! "user_settings" user-id assoc  item-key item-value))
            (http/text-wrap {:body "Uploaded"}))
       ; If user is NOT authenticated ...
       (http/error-wrap {:error-message :permission-denied :status 401})))

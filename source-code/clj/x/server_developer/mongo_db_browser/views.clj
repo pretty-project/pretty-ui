@@ -56,7 +56,7 @@
 (defn- collection
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name] :as browser-props}]
-  (let [all-documents (mongo-db/get-all-documents collection-name)]
+  (let [all-documents (mongo-db/get-collection collection-name)]
        (reduce-kv #(str %1 (document browser-props %2 %3))
                "" all-documents)))
 

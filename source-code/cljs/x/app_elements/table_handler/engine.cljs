@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.table-elements.engine
+(ns x.app-elements.table-handler.engine
     (:require [x.app-elements.engine.element :as element]))
 
 

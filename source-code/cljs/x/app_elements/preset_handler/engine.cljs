@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-presets.engine
+(ns x.app-elements.preset-handler.engine
     (:require [mid-fruits.candy :refer [param return]]))
 
 
@@ -19,7 +19,7 @@
   ;   :preset (keyword)(opt)}
   ;
   ; @usage
-  ;  (element-presets.engine/apply-preset {:preset-name {...}}
+  ;  (preset-handler.engine/apply-preset {:preset-name {...}}
   ;                                       {:preset :preset-name ...})
   ;
   ; @return (map)

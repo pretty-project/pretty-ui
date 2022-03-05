@@ -7,15 +7,7 @@
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]
-              [x.app-elements.flexible-elements.engine :as flexible-elements.engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.flexible-elements.engine
-(def flexible-attributes x.app-elements.flexible-elements.engine/flexible-attributes)
+              [x.app-elements.flex-handler.engine :as flex-handler.engine]))
 
 
 
@@ -60,8 +52,8 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id row-props]
-  [:div.x-row (flexible-attributes row-id row-props)
-              [row-body            row-id row-props]])
+  [:div.x-row (flex-handler.engine/flexible-attributes row-id row-props)
+              [row-body                                row-id row-props]])
 
 (defn element
   ; @param (keyword)(opt) row-id

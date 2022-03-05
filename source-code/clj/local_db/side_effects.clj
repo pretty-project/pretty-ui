@@ -25,36 +25,36 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn collection-id->max-filesize-reached?
-  ; @param (string) collection-id
+(defn collection-name->max-filesize-reached?
+  ; @param (string) collection-name
   ;
   ; @return (boolean)
-  [collection-id]
-  (let [filepath (engine/collection-id->filepath collection-id)]
+  [collection-name]
+  (let [filepath (engine/collection-name->filepath collection-name)]
        (io/max-filesize-reached? filepath engine/MAX-FILESIZE)))
 
-(defn collection-id->collection-exists?
-  ; @param (string) collection-id
+(defn collection-name->collection-exists?
+  ; @param (string) collection-name
   ;
   ; @return (boolean)
-  [collection-id]
-  (let [filepath (engine/collection-id->filepath collection-id)]
+  [collection-name]
+  (let [filepath (engine/collection-name->filepath collection-name)]
        (io/file-exists? filepath)))
 
-(defn collection-id->collection-writable?
-  ; @param (string) collection-id
+(defn collection-name->collection-writable?
+  ; @param (string) collection-name
   ;
   ; @return (boolean)
-  [collection-id]
-  (and (-> collection-id collection-id->collection-exists?)
-       (-> collection-id collection-id->max-filesize-reached? not)))
+  [collection-name]
+  (and (-> collection-name collection-name->collection-exists?)
+       (-> collection-name collection-name->max-filesize-reached? not)))
 
-(defn collection-id->collection-readable?
-  ; @param (string) collection-id
+(defn collection-name->collection-readable?
+  ; @param (string) collection-name
   ;
   ; @return (boolean)
-  [collection-id]
-  (let [filepath (engine/collection-id->filepath collection-id)]
+  [collection-name]
+  (let [filepath (engine/collection-name->filepath collection-name)]
        (io/file-exists? filepath)))
 
 
@@ -63,7 +63,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-collection
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ;
   ; @example
   ;  (local-db/get-collection "my-collection")
@@ -71,21 +71,21 @@
   ;  [{...} {...} {...}]
   ;
   ; @return (vector)
-  [collection-id]
-  (if (collection-id->collection-exists? collection-id)
-      (-> collection-id engine/collection-id->filepath io/read-edn-file)))
+  [collection-name]
+  (if (collection-name->collection-exists? collection-name)
+      (-> collection-name engine/collection-name->filepath io/read-edn-file)))
 
 (defn set-collection!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (maps in vector) collection
   ;
   ; @usage
   ;  (local-db/set-collection! "my-collection" [{...} {...} {...}])
   ;
   ; @return (nil)
-  [collection-id collection]
-  (if (collection-id->collection-writable? collection-id)
-      (let [filepath (engine/collection-id->filepath collection-id)]
+  [collection-name collection]
+  (if (collection-name->collection-writable? collection-name)
+      (let [filepath (engine/collection-name->filepath collection-name)]
            (io/write-edn-file! filepath collection {:abc? true}))))
 
 
@@ -94,31 +94,31 @@
 ;; ----------------------------------------------------------------------------
 
 (defn filter-documents
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (function) filter-f
   ;
   ; @usage
   ;  (local-db/filter-documents "my-collection" #(= :value (:key %1)))
   ;
   ; @return (maps in vector)
-  [collection-id filter-f]
-  (let [collection (get-collection collection-id)]
+  [collection-name filter-f]
+  (let [collection (get-collection collection-name)]
        (db/filter-documents collection filter-f)))
 
 (defn filter-document
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (function) filter-f
   ;
   ; @usage
   ;  (local-db/filter-document "my-collection" #(= :value (:key %1)))
   ;
   ; @return (map)
-  [collection-id filter-f]
-  (let [collection (get-collection collection-id)]
+  [collection-name filter-f]
+  (let [collection (get-collection collection-name)]
        (db/filter-document collection filter-f)))
 
 (defn match-documents
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (map) pattern
   ;
   ; @example
@@ -127,12 +127,12 @@
   ;  [{:foo "bar" :baz "boo"}]
   ;
   ; @return (maps in vector)
-  [collection-id pattern]
-  (let [collection (get-collection collection-id)]
+  [collection-name pattern]
+  (let [collection (get-collection collection-name)]
        (db/match-documents collection pattern)))
 
 (defn match-document
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (keyword) pattern
   ;
   ; @example
@@ -141,100 +141,100 @@
   ;  {:foo "bar" :baz "boo"}
   ;
   ; @return (map)
-  [collection-id pattern]
-  (let [collection (get-collection collection-id)]
+  [collection-name pattern]
+  (let [collection (get-collection collection-name)]
        (db/match-document collection pattern)))
 
 (defn get-documents-kv
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (keyword) item-key
   ; @param (*) item-value
   ;
   ; @return (maps in vector)
-  [collection-id item-key item-value]
-  (let [collection (get-collection collection-id)]
+  [collection-name item-key item-value]
+  (let [collection (get-collection collection-name)]
        (db/get-documents-kv collection item-key item-value)))
 
 (defn get-document-kv
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (keyword) item-key
   ; @param (*) item-value
   ;
   ; @return (map)
-  [collection-id item-key item-value]
-  (let [collection (get-collection collection-id)]
+  [collection-name item-key item-value]
+  (let [collection (get-collection collection-name)]
        (db/get-document-kv collection item-key item-value)))
 
 (defn get-documents
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (strings in vector) document-ids
   ;
   ; @return (maps in vector)
-  [collection-id document-ids]
-  (let [collection (get-collection collection-id)]
+  [collection-name document-ids]
+  (let [collection (get-collection collection-name)]
        (db/get-documents collection document-ids)))
 
 (defn get-document
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ;
   ; @return (map)
-  [collection-id document-id]
-  (let [collection (get-collection collection-id)]
+  [collection-name document-id]
+  (let [collection (get-collection collection-name)]
        (db/get-document collection document-id)))
 
 (defn get-document-item
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  ([collection-id document-id item-key]
-   (let [collection (get-collection collection-id)]
+  ([collection-name document-id item-key]
+   (let [collection (get-collection collection-name)]
         (db/get-document-item collection document-id item-key))))
 
 (defn add-document!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (map) document
   ;
   ; @return (nil)
-  [collection-id document]
-  (let [collection (get-collection collection-id)
+  [collection-name document]
+  (let [collection (get-collection collection-name)
         document   (time/unparse-date-time document)]
-       (set-collection! collection-id (db/add-document collection document))))
+       (set-collection! collection-name (db/add-document collection document))))
 
 (defn remove-documents!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (strings in vector) document-ids
   ;
   ; @return (nil)
-  [collection-id document-ids]
-  (let [collection (get-collection collection-id)]
-       (set-collection! collection-id (db/remove-documents collection document-ids))))
+  [collection-name document-ids]
+  (let [collection (get-collection collection-name)]
+       (set-collection! collection-name (db/remove-documents collection document-ids))))
 
 (defn remove-document!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ;
   ; @return (nil)
-  [collection-id document-id]
-  (let [collection (get-collection collection-id)]
-       (set-collection! collection-id (db/remove-document collection document-id))))
+  [collection-name document-id]
+  (let [collection (get-collection collection-name)]
+       (set-collection! collection-name (db/remove-document collection document-id))))
 
 (defn set-document!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (map) document
   ;
   ; @return (nil)
-  [collection-id document-id document]
-  (let [collection (get-collection collection-id)
+  [collection-name document-id document]
+  (let [collection (get-collection collection-name)
         document   (time/unparse-date-time document)]
-       (set-collection! collection-id (-> collection (db/remove-document document-id)
-                                                     (db/add-document    document)))))
+       (set-collection! collection-name (-> collection (db/remove-document document-id)
+                                                       (db/add-document    document)))))
 
 (defn apply-document!
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ; @param (function) f
   ; @param (list of *)(opt) params
@@ -247,24 +247,24 @@
   ;                            (fn [document] (assoc document :foo "bar")))
   ;
   ; @return (nil)
-  [collection-id document-id f & params]
+  [collection-name document-id f & params]
   ; XXX#8075
   ; Az x4.4.1 verzióig az apply-document! függvény a db/apply-document függvény
   ; alkalmazásával volt megvalósítva, amely nem tette lehetővé a params listában
   ; átadott anoním függvényekben lévő dátum objektumok string típussá alakítását.
-  (let [collection       (get-collection  collection-id)
+  (let [collection       (get-collection  collection-name)
         document         (db/get-document collection document-id)
         params           (cons document params)
         updated-document (apply f params)
         updated-document (time/unparse-date-time updated-document)]
-       (set-collection! collection-id (-> collection (db/remove-document document-id)
-                                                     (db/add-document    updated-document)))))
+       (set-collection! collection-name (-> collection (db/remove-document document-id)
+                                                       (db/add-document    updated-document)))))
 
 (defn document-exists?
-  ; @param (string) collection-id
+  ; @param (string) collection-name
   ; @param (string) document-id
   ;
   ; @return (boolean)
-  [collection-id document-id]
-  (let [collection (get-collection collection-id)]
+  [collection-name document-id]
+  (let [collection (get-collection collection-name)]
        (db/document-exists? collection document-id)))

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.visible-elements.engine)
+(ns x.app-elements.content-handler.engine)
 
 
 
@@ -16,7 +16,7 @@
   ;  [{:content-id (keyword)}]
   ;
   ; @example
-  ;  (visible-elements.engine/visible-items->first-content-id [{:foo1 :bar1} {:foo2 :bar2 :content-id :baz2}])
+  ;  (content-handler.engine/visible-items->first-content-id [{:foo1 :bar1} {:foo2 :bar2 :content-id :baz2}])
   ;  =>
   ;  :baz2
   ;

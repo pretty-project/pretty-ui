@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.flexible-elements.engine
+(ns x.app-elements.flex-handler.engine
     (:require [x.app-elements.engine.element :as element]))
 
 

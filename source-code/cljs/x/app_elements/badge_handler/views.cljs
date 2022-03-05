@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.19
-; Description:
-; Version: v0.3.4
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.engine.element-badge
+(ns x.app-elements.badge-handler.views
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a]))
 

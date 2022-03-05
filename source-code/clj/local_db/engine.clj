@@ -22,16 +22,16 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn collection-id-valid?
-  ; @param (*) collection-id
+(defn collection-name-valid?
+  ; @param (*) collection-name
   ;
   ; @return (boolean)
-  [collection-id]
-  (string/nonempty? collection-id))
+  [collection-name]
+  (string/nonempty? collection-name))
 
-(defn collection-id->filepath
-  ; @param (string) collection-id
+(defn collection-name->filepath
+  ; @param (string) collection-name
   ;
   ; @return (string)
-  [collection-id]
-  (str LOCAL-DB-PATH collection-id ".edn"))
+  [collection-name]
+  (str LOCAL-DB-PATH collection-name ".edn"))

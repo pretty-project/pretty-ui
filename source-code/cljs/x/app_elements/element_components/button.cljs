@@ -3,24 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.button
-    (:require [mid-fruits.candy                      :refer [param return]]
-              [mid-fruits.map                        :as map]
-              [x.app-components.api                  :as components]
-              [x.app-core.api                        :as a :refer [r]]
-              [x.app-elements.engine.api             :as engine]
-              [x.app-elements.element-presets.button :as element-presets.button]
-              [x.app-elements.element-presets.engine :as element-presets.engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.element-presets.button
-(def BUTTON-PROPS-PRESETS element-presets.button/BUTTON-PROPS-PRESETS)
-
-; x.app-elements.element-presets.engine
-(def apply-preset element-presets.engine/apply-preset)
+    (:require [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.map                       :as map]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.badge-handler.views   :as badge-handler.views]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.preset-handler.button :as preset-handler.button]
+              [x.app-elements.preset-handler.engine :as preset-handler.engine]))
 
 
 
@@ -96,7 +86,7 @@
                           (if icon [button-icon button-id button-props])
                           [button-label button-id button-props]
                           (if icon [:div.x-button--icon-placeholder])
-                          [engine/element-badge button-id button-props]])
+                          [badge-handler.views/element-badge button-id button-props]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,7 +177,7 @@
    [element (a/id) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (apply-preset BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (preset-handler.engine/apply-preset preset-handler.button/BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
                      [button         button-id button-props]))))

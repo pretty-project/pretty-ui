@@ -3,11 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.card
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [mid-fruits.candy                     :refer [param]]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a]
+              [x.app-elements.badge-handler.views   :as badge-handler.views]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.sticker-handler.views :as sticker-handler.views]
+              [x.app-environment.api                :as environment]))
 
 
 
@@ -51,8 +53,8 @@
   [:button.x-card (engine/element-attributes card-id card-props
                                              {:on-click    #(a/dispatch on-click)
                                               :on-mouse-up #(environment/blur-element!)})
-                  [card-content         card-id card-props]
-                  [engine/element-badge card-id card-props]])
+                  [card-content                      card-id card-props]
+                  [badge-handler.views/element-badge card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,10 +62,10 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   [card-id card-props]
-  [:div.x-card (engine/element-attributes card-id card-props)
-               [card-content              card-id card-props]
-               [engine/element-badge      card-id card-props]
-               [engine/element-stickers   card-id card-props]])
+  [:div.x-card (engine/element-attributes              card-id card-props)
+               [card-content                           card-id card-props]
+               [badge-handler.views/element-badge      card-id card-props]
+               [sticker-handler.views/element-stickers card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

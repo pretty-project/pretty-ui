@@ -3,12 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.menu-bar
-    (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-environment.api     :as environment]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                   :refer [param return]]
+              [mid-fruits.vector                  :as vector]
+              [x.app-components.api               :as components]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-environment.api              :as environment]
+              [x.app-elements.badge-handler.views :as badge-handler.views]
+              [x.app-elements.engine.api          :as engine]))
 
 
 
@@ -109,10 +110,10 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   [bar-id bar-props item-props]
-  [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
-                                 [menu-item-icon       bar-id bar-props item-props]
-                                 [menu-item-label      bar-id bar-props item-props]
-                                 [engine/element-badge bar-id item-props]])
+  [:button.x-menu-bar--menu-item (menu-item-attributes              bar-id bar-props item-props)
+                                 [menu-item-icon                    bar-id bar-props item-props]
+                                 [menu-item-label                   bar-id bar-props item-props]
+                                 [badge-handler.views/element-badge bar-id           item-props]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

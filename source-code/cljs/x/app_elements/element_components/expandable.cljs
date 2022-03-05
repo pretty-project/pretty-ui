@@ -3,12 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.expandable
-    (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.logical        :refer [nonfalse?]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-environment.api     :as environment]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                   :refer [param]]
+              [mid-fruits.logical                 :refer [nonfalse?]]
+              [x.app-components.api               :as components]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-environment.api              :as environment]
+              [x.app-elements.engine.api          :as engine]
+              [x.app-elements.expand-handler.subs :as expand-handler.subs]))
 
 
 
@@ -42,8 +43,8 @@
   ;
   ; @return (map)
   [db [_ expandable-id]]
-  (merge (r engine/get-element-props    db expandable-id)
-         (r engine/get-expandable-props db expandable-id)))
+  (merge (r engine/get-element-props                 db expandable-id)
+         (r expand-handler.subs/get-expandable-props db expandable-id)))
 
 (a/reg-sub :elements/get-expandable-props get-expandable-props)
 

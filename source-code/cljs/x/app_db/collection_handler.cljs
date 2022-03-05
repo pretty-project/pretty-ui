@@ -41,5 +41,3 @@
 (def remove-documents                       collection-handler/remove-documents)
 (def apply-document                         collection-handler/apply-document)
 (def document-exists?                       collection-handler/document-exists?)
-(def explode-collection                     collection-handler/explode-collection)
-(def get-specified-values                   collection-handler/get-specified-values)

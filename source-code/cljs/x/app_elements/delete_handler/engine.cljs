@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.deletable-elements.engine
+(ns x.app-elements.delete-handler.engine
     (:require [mid-fruits.candy      :refer [param]]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a]

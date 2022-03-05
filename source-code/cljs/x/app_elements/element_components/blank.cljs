@@ -3,10 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.blank
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy                     :refer [param]]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.sticker-handler.views :as sticker-handler.views]))
 
 
 
@@ -35,9 +36,9 @@
   ; @param (map) blank-props
   ;  {:content (metamorphic-content)}
   [blank-id {:keys [content] :as blank-props}]
-  [:div.x-blank (engine/element-attributes blank-id blank-props)
-                [components/content        blank-id content]
-                [engine/element-stickers   blank-id blank-props]])
+  [:div.x-blank (engine/element-attributes              blank-id blank-props)
+                [components/content                     blank-id content]
+                [sticker-handler.views/element-stickers blank-id blank-props]])
 
 (defn element
   ; @param (keyword)(opt) blank-id

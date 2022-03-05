@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.28
-; Description:
-; Version: v0.2.6
-; Compatibility: x4.6.0
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.engine.element-stickers
+(ns x.app-elements.sticker-handler.views
     (:require [mid-fruits.candy      :refer [param]]
               [mid-fruits.vector     :as vector]
               [x.app-components.api  :as components]
@@ -56,7 +45,7 @@
   [element-id _ {:keys [icon icon-family on-click tooltip]}]
   [:button.x-element--sticker-button {:on-click        #(a/dispatch on-click)
                                       :on-mouse-up     #(environment/blur-element!)
-                                      :title            (components/content {:content tooltip})
+                                      :title            (components/content tooltip)
                                       :data-icon-family (param icon-family)}
                                      (param icon)])
 
@@ -73,8 +62,8 @@
   ;    Default: :material-icons-filled}
   [_ _ {:keys [disabled? icon icon-family]}]
   [:i.x-element--sticker-icon (if disabled? {:data-disabled true
-                                             :data-icon-family (param icon-family)}
-                                            {:data-icon-family (param icon-family)})
+                                             :data-icon-family icon-family}
+                                            {:data-icon-family icon-family})
                               (param icon)])
 
 (defn- element-sticker
@@ -99,6 +88,7 @@
   ;  {:stickers (maps in vector)(opt)}
   [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
-      (reduce (fn [%1 %2] (let [%2 (sticker-props-prototype %2)]
-                               (conj %1 [element-sticker element-id element-props %2])))
-              [:div.x-element--stickers] stickers)))
+      (letfn [(f [stickers sticker-props]
+                 (let [sticker-props (sticker-props-prototype sticker-props)]
+                      (conj stickers [element-sticker element-id element-props sticker-props])))]
+             (reduce f [:div.x-element--stickers] stickers))))

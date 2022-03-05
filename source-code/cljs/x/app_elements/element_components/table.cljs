@@ -3,22 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.table
-    (:require [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.css            :as css]
-              [mid-fruits.loop           :refer [reduce-indexed]]
-              [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]
-              [x.app-elements.table-elements.engine :as table-elements.engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.table-elements.engine
-(def table-attributes x.app-elements.table-elements.engine/table-attributes)
+    (:require [mid-fruits.candy                    :refer [param return]]
+              [mid-fruits.css                      :as css]
+              [mid-fruits.loop                     :refer [reduce-indexed]]
+              [mid-fruits.vector                   :as vector]
+              [x.app-components.api                :as components]
+              [x.app-core.api                      :as a :refer [r]]
+              [x.app-elements.engine.api           :as engine]
+              [x.app-elements.table-handler.engine :as table-handler.engine]))
 
 
 
@@ -217,9 +209,9 @@
   ; @param (map) table-props
   [table-id table-props]
   [:<> [table-label table-id table-props]
-       [:table.x-table (table-attributes table-id table-props)
-                       [table-header     table-id table-props]
-                       [table-rows       table-id table-props]]])
+       [:table.x-table (table-handler.engine/table-attributes table-id table-props)
+                       [table-header                          table-id table-props]
+                       [table-rows                            table-id table-props]]])
 
 (defn element
   ; @param (keyword)(opt) table-id

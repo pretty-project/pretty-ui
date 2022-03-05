@@ -151,9 +151,9 @@
   ;
   ; @return (string)
   [collection-name document {:keys [label-key]}]
-  (let [all-documents       (reader/get-all-documents collection-name)
+  (let [collection          (reader/get-collection collection-name)
         document-label      (get  document label-key)
-        all-document-labels (mapv label-key all-documents)
+        all-document-labels (mapv label-key collection)
         copy-label (gestures/item-label->copy-label document-label all-document-labels)]
        (assoc document label-key copy-label)))
 

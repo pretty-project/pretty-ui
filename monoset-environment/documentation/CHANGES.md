@@ -1,4 +1,8 @@
 
+# x4.6.4
+
+- A mongo-db.api/get-all-documents függvény ezentúl get-collection néven érhető el
+
 # x4.6.3
 
 - Az x.boot-loader névtér ezentúl x.boot-loader.api néven érhető el

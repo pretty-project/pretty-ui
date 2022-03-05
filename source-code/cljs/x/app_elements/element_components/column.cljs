@@ -3,19 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.column
-    (:require [mid-fruits.candy                        :refer [param]]
-              [x.app-components.api                    :as components]
-              [x.app-core.api                          :as a]
-              [x.app-elements.engine.api               :as engine]
-              [x.app-elements.flexible-elements.engine :as flexible-elements.engine]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.flexible-elements.engine
-(def flexible-attributes x.app-elements.flexible-elements.engine/flexible-attributes)
+    (:require [mid-fruits.candy                   :refer [param]]
+              [x.app-components.api               :as components]
+              [x.app-core.api                     :as a]
+              [x.app-elements.engine.api          :as engine]
+              [x.app-elements.flex-handler.engine :as flex-handler.engine]))
 
 
 
@@ -57,8 +49,8 @@
   ; @param (keyword) column-id
   ; @param (map) column-props
   [column-id column-props]
-  [:div.x-column (flexible-attributes column-id column-props)
-                 [column-body         column-id column-props]])
+  [:div.x-column (flex-handler.engine/flexible-attributes column-id column-props)
+                 [column-body                             column-id column-props]])
 
 (defn element
   ; @param (keyword)(opt) column-id

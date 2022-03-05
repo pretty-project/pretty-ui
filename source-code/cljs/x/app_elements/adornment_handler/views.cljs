@@ -2,22 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.field-adornments.views
-    (:require [mid-fruits.candy                       :refer [param]]
-              [mid-fruits.vector                      :as vector]
-              [x.app-components.api                   :as components]
-              [x.app-core.api                         :as a]
-              [x.app-elements.field-adornments.engine :as field-adornments.engine]
-              [x.app-environment.api                  :as environment]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.field-adornments.engine
-(def button-adornment-attributes      x.app-elements.field-adornments.engine/button-adornment-attributes)
-(def adornment-placeholder-attributes x.app-elements.field-adornments.engine/adornment-placeholder-attributes)
+(ns x.app-elements.adornment-handler.views
+    (:require [mid-fruits.candy                        :refer [param]]
+              [mid-fruits.vector                       :as vector]
+              [x.app-components.api                    :as components]
+              [x.app-core.api                          :as a]
+              [x.app-elements.adornment-handler.engine :as adornment-handler.engine]
+              [x.app-environment.api                   :as environment]))
 
 
 
@@ -62,8 +53,9 @@
   ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
-  (cond icon  [:button.x-field-adornments--button-adornment (button-adornment-attributes field-id field-props adornment-props) icon]
-        label [:button.x-field-adornments--button-adornment (button-adornment-attributes field-id field-props adornment-props) label]))
+  (let [adornment-attributes (adornment-handler.engine/button-adornment-attributes field-id field-props adornment-props) icon]
+       (cond icon  [:button.x-field-adornments--button-adornment adornment-attributes icon]
+             label [:button.x-field-adornments--button-adornment adornment-attributes label])))
 
 (defn static-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,7 +95,8 @@
                  (let [adornment-props (adornment-props-prototype adornment-props)]
                       (conj adornments [field-adornment field-id field-props adornment-props])))]
              (reduce f [:div.x-field-adornments] end-adornments))
-      [:div.x-field-adornments--placeholder (adornment-placeholder-attributes field-id field-props)]))
+      (let [placeholder-attributes (adornment-handler.engine/adornment-placeholder-attributes field-id field-props)]
+           [:div.x-field-adornments--placeholder placeholder-attributes])))
 
 (defn field-start-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,4 +110,5 @@
                  (let [adornment-props (adornment-props-prototype adornment-props)]
                       (conj adornments [field-adornment field-id field-props adornment-props])))]
              (reduce f [:div.x-field-adornments] start-adornments))
-      [:div.x-field-adornments--placeholder (adornment-placeholder-attributes field-id field-props)]))
+      (let [placeholder-attributes (adornment-handler.engine/adornment-placeholder-attributes field-id field-props)]
+           [:div.x-field-adornments--placeholder placeholder-attributes])))

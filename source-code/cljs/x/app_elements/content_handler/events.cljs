@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.visible-elements.events
+(ns x.app-elements.content-handler.events
     (:require [mid-fruits.map :refer [dissoc-in]]
               [x.app-core.api :as a]))
 
@@ -19,7 +19,7 @@
   ;
   ; @return (map)
   [db [_ surface-id content-id]]
-  (assoc-in db [:elements :visible-elements/data-items surface-id :selected-content-id] content-id))
+  (assoc-in db [:elements :content-handler/data-items surface-id :selected-content-id] content-id))
 
 (defn- remove-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,7 +28,7 @@
   ;
   ; @return (map)
   [db [_ surface-id]]
-  (dissoc-in db [:elements :visible-elements/data-items surface-id :selected-content-id]))
+  (dissoc-in db [:elements :content-handler/data-items surface-id :selected-content-id]))
 
 
 

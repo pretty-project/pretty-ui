@@ -105,8 +105,8 @@
   ;
   ; @return (keyword)
   [collection-name]
-  (let [all-documents  (find-maps collection-name {})
-        first-document (first     all-documents)]
+  (let [collection     (find-maps collection-name {})
+        first-document (first     collection)]
        (db/document->namespace first-document)))
 
 (defn get-all-document-count
@@ -148,13 +148,13 @@
   (if-let [query (-> query checking/find-query adaptation/find-query)]
           (count-documents-by-query collection-name query)))
 
-(defn get-all-documents
+(defn get-collection
   ; @param (string) collection-name
   ; @param (namespaced map)(opt) projection
   ;
   ; @example
-  ;  (mongo-db/get-all-documents "my_collection" {:namespace/my-keyword  0
-  ;                                               :namespace/your-string 1})
+  ;  (mongo-db/get-collection "my_collection" {:namespace/my-keyword  0
+  ;                                            :namespace/your-string 1})
   ;  =>
   ;  [{:namespace/my-keyword  :my-value
   ;    :namespace/your-string "Your value"
@@ -163,13 +163,13 @@
   ; @return (maps in vector)
   ;  [{:namespace/id (string)}]
   ([collection-name]
-   (if-let [all-documents (find-maps collection-name {})]
-           (vector/->items all-documents #(adaptation/find-output %))))
+   (if-let [collection (find-maps collection-name {})]
+           (vector/->items collection #(adaptation/find-output %))))
 
   ([collection-name projection]
    (if-let [projection (adaptation/find-projection projection)]
-           (if-let [all-documents (find-maps collection-name {} projection)]
-                   (vector/->items all-documents #(adaptation/find-output %))))))
+           (if-let [collection (find-maps collection-name {} projection)]
+                   (vector/->items collection #(adaptation/find-output %))))))
 
 (defn get-documents-by-query
   ; @param (string) collection-name
@@ -298,3 +298,35 @@
   (if-let [documents (aggregation/process collection-name pipeline)]
           (count  documents)
           (return 0)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-specified-values
+  ; @param (string) collection-name
+  ; @param (keywords in vector) specified-keys
+  ; @param (function)(opt) test-f
+  ;  Default: some?
+  ;
+  ; @example
+  ;  (mongo-db/get-specified-values "my-collection" [:my-key :your-key] string?)
+  ;  =>
+  ;  {:my-key   ["..." "..."]
+  ;   :your-key ["..." "..."]}
+  ;
+  ; @return (map)
+  ([collection-name specified-keys]
+   (get-specified-values collection-name specified-keys some?))
+
+  ([collection-name specified-keys test-f]
+   (letfn [(f [result document]
+              (letfn [(f [result k]
+                         (let [v (get document k)]
+                              (if (test-f v)
+                                  (update result k vector/conj-item-once v)
+                                  (return result))))]
+                     (reduce f result specified-keys)))]
+          (let [collection (get-collection collection-name)]
+               (reduce f {} collection)))))

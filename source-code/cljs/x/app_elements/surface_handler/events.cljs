@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-surface.events
+(ns x.app-elements.surface-handler.events
     (:require [mid-fruits.candy                    :refer [param return]]
               [x.app-core.api                      :as a :refer [r]]
-              [x.app-elements.element-surface.subs :as element-surface.subs]
+              [x.app-elements.surface-handler.subs :as surface-handler.subs]
               [x.app-elements.engine.element       :as element]))
 
 
@@ -20,7 +20,7 @@
   ;
   ; @return (map)
   [db [_ element-id]]
-  (if (r element-surface.subs/surface-visible? db element-id)
+  (if (r surface-handler.subs/surface-visible? db element-id)
       (as-> db % (r element/set-element-prop!    % element-id :surface-visible? false)
                  (r element/remove-element-prop! % element-id :surface-props))
       (return db)))

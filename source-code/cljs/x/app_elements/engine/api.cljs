@@ -20,10 +20,7 @@
               [x.app-elements.engine.combo-box          :as combo-box]
               [x.app-elements.engine.countable          :as countable]
               [x.app-elements.engine.element            :as element]
-              [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
-              [x.app-elements.engine.element-stickers   :as element-stickers]
-              [x.app-elements.engine.expandable         :as expandable]
               [x.app-elements.engine.field              :as field]
               [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
@@ -81,18 +78,9 @@
 (def update-element-prop!                  element/update-element-prop!)
 (def remove-element-prop!                  element/remove-element-prop!)
 
-; x.app-elements.engine.element-badge
-(def element-badge element-badge/element-badge)
-
 ; x.app-elements.engine.element-info
 (def element-helper       element-info/element-helper)
 (def element-info-tooltip element-info/element-info-tooltip)
-
-; x.app-elements.engine.element-stickers
-(def element-stickers element-stickers/element-stickers)
-
-; x.app-elements.engine.expandable
-(def get-expandable-props expandable/get-expandable-props)
 
 ; x.app-elements.engine.field
 (def empty-field-adornment-preset           field/empty-field-adornment-preset)

@@ -2,19 +2,11 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.field-adornments.engine
-    (:require [x.app-components.api                           :as components]
-              [x.app-core.api                                 :as a]
-              [x.app-elements.focusable-elements.side-effects :as focusable-elements.side-effects]
-              [x.app-environment.api                          :as environment]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.focusable-elements.side-effects
-(def focus-element! x.app-elements.focusable-elements.side-effects/focus-element!)
+(ns x.app-elements.adornment-handler.engine
+    (:require [x.app-components.api                      :as components]
+              [x.app-core.api                            :as a]
+              [x.app-elements.focus-handler.side-effects :as focus-handler.side-effects]
+              [x.app-environment.api                     :as environment]))
 
 
 
@@ -63,4 +55,4 @@
   ;  {}
   [field-id _]
   {:on-mouse-down #(.preventDefault %)
-   :on-mouse-up   #(focus-element! field-id)})
+   :on-mouse-up   #(focus-handler.side-effects/focus-element! field-id)})

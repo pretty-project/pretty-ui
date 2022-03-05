@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-surface.subs
+(ns x.app-elements.expand-handler.subs
     (:require [x.app-core.api                :as a :refer [r]]
               [x.app-elements.engine.element :as element]))
 
@@ -11,32 +11,22 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-visible?
+(defn element-expanded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ;
   ; @return (boolean)
   [db [_ element-id]]
-  (r element/get-element-prop db element-id :surface-visible?))
+  (let [element-expanded? (r element/get-element-prop db element-id :expanded?)]
+       (boolean element-expanded?)))
 
-(defn surface-hidden?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (boolean)
-  [db [_ element-id]]
-  (let [surface-visible? (r surface-visible? db element-id)]
-       (not surface-visible?)))
-
-(defn get-surface-props
+(defn get-expandable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ;
   ; @return (map)
-  ;  {:surface-visible? (boolean)}
+  ;  {:expanded? (boolean)}
   [db [_ element-id]]
-  (if-let [surface-visible? (r surface-visible? db element-id)]
-          {:surface-visible? surface-visible?}))
+  {:expanded? (r element-expanded? db element-id)})

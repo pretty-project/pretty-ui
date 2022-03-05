@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.targetable-elements.engine
+(ns x.app-elements.target-handler.engine
     (:require [mid-fruits.candy      :refer [param]]
               [x.app-core.api        :as a]
               [x.app-environment.api :as environment]))
@@ -21,7 +21,7 @@
   ; @param (keyword) element-id
   ;
   ; @example
-  ;  (targetable/element-id->target-id :my-namespace/my-element)
+  ;  (target-handler.engine/element-id->target-id :my-namespace/my-element)
   ;  =>
   ;  "my-namespace--my-element--target"
   ;

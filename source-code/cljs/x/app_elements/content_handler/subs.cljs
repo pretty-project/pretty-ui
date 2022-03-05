@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.visible-elements.subs
+(ns x.app-elements.content-handler.subs
     (:require [x.app-core.api :refer [r]]))
 
 
@@ -17,7 +17,7 @@
   ;
   ; @return (keyword)
   [db [_ surface-id]]
-  (get-in db [:elements :visible-elements/data-items surface-id :selected-content-id]))
+  (get-in db [:elements :content-handler/data-items surface-id :selected-content-id]))
 
 (defn content-visible?
   ; WARNING! NON-PUBLIC! DO NOT USE!
