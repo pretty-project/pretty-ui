@@ -6,6 +6,7 @@
     (:require [local-db.api         :as local-db]
               [mid-fruits.candy     :refer [param return]]
               [server-fruits.http   :as http]
+              [x.server-db.api      :as db]
               [x.server-user.engine :as engine]))
 
 
@@ -69,8 +70,8 @@
   ;
   ; @return (namespaced map)
   [user-account-id]
-  (local-db/get-document "user_accounts" user-account-id
-                         {:additional-namespace :user-account}))
+  (let [user-account (local-db/get-document "user_accounts" user-account-id)]
+       (db/document->namespaced-document user-account :user-account)))
 
 (defn user-account->user-public-account
   ; @param (map) user-account

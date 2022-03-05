@@ -8,7 +8,8 @@
               [mid-fruits.keyword                :as keyword]
               [server-fruits.http                :as http]
               [x.mid-user.profile-handler.engine :as profile-handler.engine]
-              [x.server-core.api                 :as a]))
+              [x.server-core.api                 :as a]
+              [x.server-db.api                   :as db]))
 
 
 
@@ -45,8 +46,8 @@
   ;
   ; @return (map)
   [user-account-id]
-  (local-db/get-document "user_profiles" user-account-id
-                         {:additional-namespace :user-profile}))
+  (let [user-profile (local-db/get-document "user_profiles" user-account-id)]
+       (db/document->namespaced-document user-profile :user-profile)))
 
 (defn request->user-profile
   ; @param (map) request

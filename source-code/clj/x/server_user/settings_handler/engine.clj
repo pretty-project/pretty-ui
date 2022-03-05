@@ -7,7 +7,8 @@
               [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
-              [server-fruits.http :as http]))
+              [server-fruits.http :as http]
+              [x.server-db.api    :as db]))
 
 
 
@@ -41,9 +42,10 @@
   ;
   ; @return (namespaced map)
   [user-account-id]
-  ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
-  (merge ANONYMOUS-USER-SETTINGS (local-db/get-document "user_settings" user-account-id
-                                                        {:additional-namespace :user-settings})))
+  (let [user-settings (local-db/get-document "user_settings" user-account-id)
+        user-settings (db/document->namespaced-document user-settings :user-settings)]
+       ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
+       (merge ANONYMOUS-USER-SETTINGS user-settings)))
 
 (defn request->user-settings
   ; @param (map) request

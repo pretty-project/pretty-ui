@@ -372,7 +372,7 @@
   [module-id _]
   [elements/select {:label "Period count"
                     :min-width :xxs
-                    :initial-options [20 40 60 80 100 120 140 160 180 200]
+                    :initial-options [20 40 60 80 100 120 140 160 180 200 240]
                     :on-select  [:trader/monitor-settings-changed]
                     :value-path [:trader :monitor :settings :limit]}])
 

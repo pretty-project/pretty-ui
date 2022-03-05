@@ -101,20 +101,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING#6070
-; Előfordul, hogy az api-testnet.bybit.com szerver hibás kline-data adatot küld,
-; ahol az egyes periódusok értékei (high, low, close, open) az előző periódusok
-; értékeivel megegyeznek!
-; Pl.: https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=3&limit=200&from=1641303290
-;
-; - Lehetséges, hogy a testnet hálózaton ezek valós adatok?
-; - A testnet hálózat saját árfolyammal rendelkezik?
-
-; https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
-; https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=5&limit=20&from=1639222495
 (defn kline-data-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) uri-props
   ;  {:from (s)(opt)
   ;   :interval (string)
@@ -127,6 +114,9 @@
   ;   :use-mainnet? (boolean)(opt)
   ;    Default: false}
   ;
+  ; @usage
+  ;  (bybit/kline-data-uri {...})
+  ;
   ; @return (string)
   [{:keys [from interval limit symbol use-mainnet?]}]
   (let [query-from (or from (query-from interval limit))
@@ -138,11 +128,12 @@
                     "&from="     query-from)))
 
 (defn kline-data-uri-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) uri-props
   ;  {:interval (string)
   ;   :limit (integer)}
+  ;
+  ; @usage
+  ;  (bybit/kline-data-uri-list {...})
   ;
   ; @return (strings in vector)
   [{:keys [interval] :as uri-props}]
@@ -323,10 +314,8 @@
   ;
   ; @return (string)
   [n]
-  (-> n (json/unkeywordize-keys)
-        (str)
-        (string/replace-part #"\" " "\":")
-        (string/replace-part #", "  ",")))
+  (-> n json/unkeywordize-keys str (string/replace-part #"\" " "\":")
+                                   (string/replace-part #", "  ",")))
 
 (defn POST-header-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
