@@ -583,7 +583,8 @@
   ;   :list-element (metamorphic-content)
   ;   :prefilter (map)(opt)
   ;   :sortable? (boolean)(opt)
-  ;    Default: false}
+  ;    Default: false
+  ;   :ui-title (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-lister/body :my-extension :my-type {...}]
@@ -598,4 +599,4 @@
        [components/stated (engine/component-id extension-id item-namespace :body)
                           {:component   [body-structure              extension-id item-namespace body-props]
                            :destructor  [:item-lister/unload-lister! extension-id item-namespace]
-                           :initializer [:db/apply-item! [extension-id :item-lister/meta-items] merge state-props]}]))
+                           :initializer [:item-lister/init-lister!   extension-id item-namespace state-props]}]))

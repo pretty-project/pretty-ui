@@ -27,7 +27,6 @@
                       {:route-template "/@app-home/trader/:route-id"
                        :client-event   [:trader/load-router!]
                        :restricted?    true
-                       :route-parent   "/@app-home/trader"
                        :on-leave-event [:trader/->route-leaved]}])
 
 (a/reg-event-fx

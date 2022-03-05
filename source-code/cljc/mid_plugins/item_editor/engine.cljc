@@ -97,7 +97,7 @@
   [_ item-namespace item-id]
   (= item-id (str "new-" (name item-namespace))))
 
-(defn item-id->editor-title
+(defn item-id->auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -105,14 +105,14 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (engine/item-id->editor-title :my-extension :my-type "new-my-type")
+  ;  (engine/item-id->auto-title :my-extension :my-type "new-my-type")
   ;  =>
-  ; :add-my-type
+  ;  :add-my-type
   ;
   ; @example
-  ;  (engine/item-id->editor-title :my-extension :my-type "my-item")
+  ;  (engine/item-id->auto-title :my-extension :my-type "my-item")
   ;  =>
-  ; :edit-my-type
+  ;  :edit-my-type
   ;
   ; @return (metamorphic-content)
   [extension-id item-namespace item-id]

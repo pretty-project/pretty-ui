@@ -20,7 +20,7 @@
   ;
   ; @return (map)
   [db [_ header-title]]
-  (assoc-in db (db/path :ui/header :header-title) header-title))
+  (assoc-in db [:ui :header/meta-items :header-title] header-title))
 
 (defn remove-header-title!
   ; @param (metamorphic-content) header-title
@@ -30,7 +30,20 @@
   ;
   ; @return (map)
   [db [_ header-title]]
-  (dissoc-in db (db/path :ui/header :header-title)))
+  (dissoc-in db [:ui :header/meta-items :header-title]))
+
+(defn set-route-parent!
+  ; @param (string) route-parent
+  ;
+  ; @usage
+  ;  (r ui/set-route-parent! "/my-route")
+  ;
+  ; @usage
+  ;  (r ui/set-route-parent! "/@app-home")
+  ;
+  ; @return (map)
+  [db [_ route-parent]]
+  (assoc-in db [:ui :header/meta-items :route-parent] route-parent))
 
 
 
@@ -44,3 +57,10 @@
 ; @usage
 ;  [:ui/remove-header-title!]
 (a/reg-event-db :ui/remove-header-title! remove-header-title!)
+
+; @usage
+;  [:ui/set-route-parent! "/my-route"]
+;
+; @usage
+;  [:ui/set-route-parent! "/@app-home"]
+(a/reg-event-db :ui/set-route-parent! set-route-parent!)

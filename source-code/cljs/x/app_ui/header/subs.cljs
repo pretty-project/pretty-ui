@@ -17,7 +17,7 @@
   ;
   ; @return (metamorphic-content)
   [db _]
-  (get-in db (db/path :ui/header :header-title)))
+  (get-in db [:ui :header/meta-items :header-title]))
 
 (defn render-header?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -25,6 +25,13 @@
   ; @return (boolean)
   [db _]
   (r interface/application-interface? db))
+
+(defn get-route-parent
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (get-in db [:ui :header/meta-items :route-parent]))
 
 
 
@@ -36,3 +43,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :ui/render-header? render-header?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :ui/get-route-parent get-route-parent)

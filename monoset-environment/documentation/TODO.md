@@ -13,6 +13,8 @@
 
 
 # x4.6.0
+- Lehessen route-parent-et és header-title egy eseményben állítani,  a kevesebb írás miatt
+
 - A hosszu require-ök ne kerüljenek a lista végére
 
 ; - A megfelelő hely:

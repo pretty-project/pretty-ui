@@ -156,27 +156,6 @@
 
 
 
-;; -- {:route-parent "..."} beállítás használata ------------------------------
-;; ----------------------------------------------------------------------------
-
-; - A {:route-parent "/..."} tulajdonságként átadott útvonalat tekinti a kliens-oldali útvonal-kezelő
-;   a hozzáadott útvonal szűlőjének
-; - A {:route-parent "/..."} tulajdonság használatával az applikáció-módban futó kliens-oldali
-;   UI felületen a felső [app-header] komponensen a [go-home] gomb helyén a [go-back] gomb
-;   jelenik meg, amelyre kattintva az útvonal-kezelő a {:route-parent "/..."} tulajdonságként
-;   átadott útvonalra irányít át.
-; - Webhely-módban futó kliens-oldali UI felületen nem okoz változást a {:route-parent "/..."}
-;   tulajdonság használata.
-; - A [:router/go-up!] kliens-oldali esemény meghívása a {:route-parent "/..."} tulajdonságként
-;   átadott útvonalra irányít át.
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:router/add-route! {:client-event   [:render-my-view!]
-                                        :route-template "/my-route/:my-item-id"
-                                        :route-parent   "/my-route"}]})
-
-
-
 ;; -- {:core-js "..."} beállítás használata -----------------------------------
 ;; ----------------------------------------------------------------------------
 

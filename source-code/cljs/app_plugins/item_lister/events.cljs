@@ -154,6 +154,17 @@
              (r reset-search!         % extension-id item-namespace)
              (r set-default-order-by! % extension-id item-namespace)))
 
+(defn init-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace lister-props]]
+  (r db/apply-item! db [extension-id :item-lister/meta-items] merge lister-props))
+
 
 
 ;; ----------------------------------------------------------------------------

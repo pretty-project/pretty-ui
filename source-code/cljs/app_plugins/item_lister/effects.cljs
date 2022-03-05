@@ -24,18 +24,8 @@
   ; @usage
   ;  [:item-lister/load-lister! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [route-title (r subs/get-meta-item db extension-id item-namespace :route-title)]
-           {:db (r events/load-lister! db extension-id item-namespace)
-            :dispatch-n [; XXX#5660
-                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
-                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]
-                         ; XXX#3237
-                         ; Ha az item-lister plugin az "/@app-home/my-extension" útvonalon van elindítva,
-                         ; akkor feltételezi, hogy a UI-surface az item-lister plugint jeleníti meg, ezért
-                         ; beállítja a header-title és window-title feliratokat.
-                         (if (r subs/set-title? db extension-id item-namespace)
-                             [:ui/set-title! route-title])
-                         (engine/load-extension-event extension-id item-namespace)]})))
+      {:db (r events/load-lister! db extension-id item-namespace)
+       :dispatch-n [(engine/load-extension-event extension-id item-namespace)]}))
 
 (a/reg-event-fx
   :item-lister/use-filter!
@@ -307,3 +297,23 @@
       ; ... megjelenít egy értesítést
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/init-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ;  {:ui-title (metamorphic-content)(opt)}
+  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title] :as lister-props}]]
+      {:db (r events/init-lister! db extension-id item-namespace lister-props)
+       :dispatch-n [(if ui-title [:ui/set-title! ui-title])
+                    ; XXX#5660
+                    ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
+                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]]}))

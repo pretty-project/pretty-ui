@@ -196,5 +196,6 @@
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :clients :client])]
        [layouts/layout-a surface-id {:header [item-editor/header :clients :client {:item-actions [:delete :duplicate]}]
-                                     :body   [item-editor/body   :clients :client {:form-element #'client-form}]
+                                     :body   [item-editor/body   :clients :client {:form-element #'client-form
+                                                                                   :title :auto}]
                                      :description description}]))

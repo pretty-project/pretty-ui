@@ -85,7 +85,6 @@
   ;  {:routed? (boolean)}
   (fn [_ [_ extension-id item-namespace {:keys [routed?]}]]
       (if routed? [:router/add-route! (engine/route-id extension-id item-namespace)
-                                      {:route-template (engine/route-template        extension-id item-namespace)
-                                       :route-parent   (engine/parent-uri            extension-id item-namespace)
-                                       :client-event   [:item-editor/load-editor!    extension-id item-namespace]
+                                      {:route-template (engine/route-template     extension-id item-namespace)
+                                       :client-event   [:item-editor/load-editor! extension-id item-namespace]
                                        :restricted?    true}])))

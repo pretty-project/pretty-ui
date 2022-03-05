@@ -55,14 +55,6 @@
   {:fx [:router/navigate-back!]})
 
 (a/reg-event-fx
-  :router/go-up!
-  ; @usage
-  ;  [:router/go-up!]
-  (fn [{:keys [db]} _]
-      (let [route-parent (r route-handler.subs/get-current-route-parent db)]
-           [:router/go-to! route-parent])))
-
-(a/reg-event-fx
   :router/go-to!
   ; @param (string) route-string
   ;

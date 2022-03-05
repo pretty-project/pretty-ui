@@ -147,17 +147,7 @@
   (let [route-id (r router/get-current-route-id db)]
        (= route-id (engine/route-id extension-id item-namespace))))
 
-(defn set-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r route-handled? db extension-id item-namespace))
-
-(defn get-editor-title
+(defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -166,7 +156,7 @@
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
   (let [derived-item-id (r get-derived-item-id db extension-id item-namespace)]
-       (engine/item-id->editor-title extension-id item-namespace derived-item-id)))
+       (engine/item-id->auto-title extension-id item-namespace derived-item-id)))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

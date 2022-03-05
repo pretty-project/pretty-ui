@@ -286,18 +286,6 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;  {:form-element (metamorphic-content)}
-  [extension-id item-namespace {:keys [form-element]}]
-  [components/stated (engine/component-id extension-id item-namespace :body)
-                {:render-f   form-element
-                 :destructor [:item-editor/unload-editor! extension-id item-namespace]}])
-
 (defn error-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -308,19 +296,33 @@
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 
-(defn body
+(defn body-structure
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:form-element (metamorphic-content)}
+  [extension-id item-namespace {:keys [form-element]}]
+  (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
+          [error-body   extension-id item-namespace]
+          [form-element extension-id item-namespace]))
+
+(defn body
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;  {:form-element (metamorphic-content)
+  ;   :ui-title (keyword or metamorphic-content)(opt) :auto}
   ;
   ; @usage
   ;  [item-editor/body :my-extension :my-type {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [] [:div ...])
+  ;  (defn my-form-element [extension-id item-namespace] [:div ...])
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
   [extension-id item-namespace body-props]
-  (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
-          [error-body     extension-id item-namespace]
-          [body-structure extension-id item-namespace body-props]))
+  (let [state-props (dissoc      body-props  :form-element)
+        body-props  (select-keys body-props [:form-element])]
+       [components/stated (engine/component-id extension-id item-namespace :body)
+                          {:component   [body-structure              extension-id item-namespace body-props]
+                           :destructor  [:item-editor/unload-editor! extension-id item-namespace]
+                           :initializer [:item-editor/init-editor!   extension-id item-namespace state-props]}]))

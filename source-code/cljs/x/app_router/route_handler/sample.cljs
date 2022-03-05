@@ -68,17 +68,6 @@
 
 
 
-;; -- :route-parent beállítás használata --------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A [:router/go-up!] esemény meghívásával a kliens-oldali útvonal-kezelő
-; az aktuális útvonal {:route-parent "/..."} tulajdonságaként beállított útvonalra irányít át.
-(a/reg-event-fx
-  :go-my-parent!
-  [:router/go-up!])
-
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

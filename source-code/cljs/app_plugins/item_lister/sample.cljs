@@ -167,9 +167,9 @@
 ; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
 ;  tudsz a különbözű módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
 (defn my-menu
-  [extension-id item-namespace header-props]
-  [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace header-props]
-                          [item-lister/toggle-select-button extension-id item-namespace header-props]}])
+  [extension-id item-namespace]
+  [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace]
+                          [item-lister/toggle-select-button extension-id item-namespace]}])
 
 (defn my-header-with-my-menu
   [surface-id]
@@ -180,13 +180,9 @@
 ;; -- Kifejezések hozzáadaása a szótárhoz -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - Ha az item-lister plugin {:routed? true :route-title nil} beállítással van használva,
-;   akkor az útvonal betöltésekor a plugin a :my-extension kifejezést beállítja az applikáció
-;  címének, ezért szükséges azt hozzáadni a szótárhoz!
-; - Ha az order-by-options beállításban használtál egyedi értékeket, akkor ne felejtsd el
-;   hozzáadni a megfelelő szótári szavakat!
-;   Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
+; Ha az order-by-options beállításban használtál egyedi értékeket, akkor ne felejtsd el
+; hozzáadni a megfelelő szótári szavakat!
+; Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:my-extension          {:en "My extension" :hu "Kiegészítőm"}
-                                         :by-my-order-ascending {:en "..."          :hu "..."}}]})
+  {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})

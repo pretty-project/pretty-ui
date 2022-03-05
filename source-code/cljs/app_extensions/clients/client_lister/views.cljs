@@ -60,5 +60,6 @@
        [layouts/layout-a :surface-id {:header [item-lister/header :clients :client {}]
                                       :body   [item-lister/body   :clients :client {:list-element #'client-item
                                                                                     :item-actions [:delete :duplicate]
-                                                                                    :sortable? true}]
+                                                                                    :sortable? true
+                                                                                    :title :clients}]
                                       :description description}]))

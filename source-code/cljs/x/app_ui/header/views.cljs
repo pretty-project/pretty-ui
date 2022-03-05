@@ -12,29 +12,33 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header-apps-icon-button
+(defn header-go-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [at-home? @(a/subscribe [:router/at-home?])]
-       [elements/icon-button ::apps-icon-button
-                             {:preset :apps
-                             ;:badge-color (if-not at-home? :secondary)
-                              :on-click    [:router/go-home!]
-                              :disabled? at-home?}]))
+  [elements/icon-button ::go-home-icon-button
+                        {:preset :apps :on-click [:router/go-home!]}])
+                        ;:badge-color :secondary
 
-(defn- header-up-icon-button
+(defn header-go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/icon-button ::up-icon-button
-                        {:preset :back
-                         :on-click [:router/go-up!]}])
+  (if-let [route-parent @(a/subscribe [:ui/get-route-parent])]
+          (case route-parent "/@app-home" [header-go-home-icon-button]
+                                          [elements/icon-button ::go-up-icon-button
+                                                                {:preset :back :on-click [:router/go-to! route-parent]}])))
 
-(defn- header-back-icon-button
+(defn header-at-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/icon-button ::back-icon-button
-                        {:preset :back
-                         :on-click [:router/go-back!]}])
+  [elements/icon-button ::at-home-icon-button
+                        {:preset :apps :disabled? true}])
+
+(defn- header-navigation-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [at-home? @(a/subscribe [:router/at-home?])]
+          [header-at-home-icon-button]
+          [header-go-up-icon-button]))
 
 (defn- header-dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -64,10 +68,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [debug-mode?  @(a/subscribe [:core/debug-mode-detected?])
-        header-title @(a/subscribe [:ui/get-header-title])
-        route-parent @(a/subscribe [:router/get-current-route-parent])]
-       [:<> [:div.x-app-header--block (if route-parent     [header-up-icon-button]
-                                                           [header-apps-icon-button])]
+        header-title @(a/subscribe [:ui/get-header-title])]
+       [:<> [:div.x-app-header--block [header-navigation-icon-button]]
             [:div.x-app-header--block (if header-title     [header-label])]
             [:div.x-app-header--block (if debug-mode? [:<> [header-dev-tools-icon-button]
                                                            [header-menu-icon-button]]

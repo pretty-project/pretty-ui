@@ -16,7 +16,7 @@
 (def form-id               engine/form-id)
 (def request-id            engine/request-id)
 (def item-id->new-item?    engine/item-id->new-item?)
-(def item-id->editor-title engine/item-id->editor-title)
+(def item-id->auto-title   engine/item-id->auto-title)
 (def new-item-label        engine/new-item-label)
 (def unnamed-item-label    engine/unnamed-item-label)
 (def mutation-name         engine/mutation-name)

@@ -1,7 +1,23 @@
 
 # x4.6.4
 
+- Az útvonalak {:route-parent "..."} beállítása ezentúl nem elérhető, helyette a kliens-oldali
+  [:ui/set-route-parent! "..."] esemény használatával lehet beállítani a header navigációs gombjának
+  viselkedését
+
 - A mongo-db.api/get-all-documents függvény ezentúl get-collection néven érhető el
+
+- Ha az item-lister plugin használatakor szeretnél az applikáció title-jét beállítani, akkor
+  azt ezentúl az item-lister/body komponens {:ui-title ...} tulajdonságának beálíltásával teheted meg
+
+- Ha az item-editor plugin használatakor szeretnél az applikáció title-jét beállítani, akkor
+  azt ezentúl az item-editor/body komponens {:ui-title ...} tulajdonságának beálíltásával teheted meg
+  (Használd a {:ui-title :auto} beállítást!)
+
+- Ezentúl nem kötelező az item-lister plugin használatához a :my-extension kifejezést hozzáadni a szótárhoz
+- Ezentúl nem kötelező az item-editor plugin használatához a :edit-my-type és :add-my-type kifejezéseket hozzáadni a szótárhoz
+
+
 
 # x4.6.3
 

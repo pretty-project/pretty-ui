@@ -64,7 +64,7 @@
 
 ; - A {:form-id ...} tulajdonság használatával ...
 (defn our-type-form
-  []
+  [extension-id item-namespace]
   [elements/text-field ::our-sample-field
                        {:form-id    (item-editor/form-id :our-extension :our-type)
                         :value-path [:our-extension :item-editor/data-items :our-key]}])
@@ -75,10 +75,10 @@
 
 
 
-;; -- Kifejezések hozzáadása a szótárhoz --------------------------------------
+;; -- {:ui-title :auto} beállítás használata -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az item-editor plugin {:routed? true} beállítással van használva, akkor az útvonal betöltésekor
+; Ha az item-editor plugin {:ui-title :auto} beállítással van használva, akkor a szerkesztő betöltésekor
 ; a plugin a megfelelő kifejezést beállítja az applikáció címének, ezért szükséges azt hozzáadni a szótárhoz!
 (a/reg-lifecycles!
   ::lifecycles

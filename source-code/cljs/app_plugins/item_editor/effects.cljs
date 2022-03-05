@@ -37,12 +37,8 @@
             ; lépteti ki az item-editor plugint a {:recovery-mode? true} állapotból,
             ; ami miatt szükséges az events/load-editor! függvényt a subs/download-data? függvény
             ; lefutása előtt meghívni!
-            db           (r events/load-editor!   db extension-id item-namespace editor-props)
-            editor-title (r subs/get-editor-title db extension-id item-namespace)]
-           {:db db :dispatch-n [; XXX#3237
-                                (if (r subs/set-title? db extension-id item-namespace)
-                                    [:ui/set-title! editor-title])
-                                (if (r subs/download-data? db extension-id item-namespace)
+            db (r events/load-editor! db extension-id item-namespace editor-props)]
+           {:db db :dispatch-n [(if (r subs/download-data? db extension-id item-namespace)
                                     [:item-editor/request-item! extension-id item-namespace]
                                     [:item-editor/load-item!    extension-id item-namespace])
                                 (engine/load-extension-event extension-id item-namespace)]})))
@@ -156,10 +152,11 @@
 
 (a/reg-event-fx
   :item-editor/save-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-editor/save-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
       ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
@@ -201,10 +198,11 @@
 
 (a/reg-event-fx
   :item-editor/delete-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r queries/get-delete-item-query          db extension-id item-namespace)
             validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
@@ -288,10 +286,11 @@
 
 (a/reg-event-fx
   :item-editor/duplicate-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r queries/get-duplicate-item-query          db extension-id item-namespace)
             validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
@@ -356,3 +355,21 @@
                       {:body [views/color-picker-dialog-body extension-id item-namespace]
                       ;:header #'ui/close-popup-header
                        :min-width :none}]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-editor/init-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  ;  {:ui-title (keyword or metamorphic-content)(opt)}
+  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title]}]]
+      (if ui-title (case ui-title :auto (if-let [auto-title (r subs/get-auto-title db extension-id item-namespace)]
+                                                [:ui/set-title! auto-title])
+                                        [:ui/set-title! ui-title]))))
