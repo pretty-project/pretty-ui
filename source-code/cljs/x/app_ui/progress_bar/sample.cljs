@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.sample
+(ns x.app-ui.progress-bar.sample
     (:require [x.app-core.api :as a :refer [r]]
               [x.app-ui.api   :as ui]))
 
@@ -12,8 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; Ha a viewport felső részén megjelenő progress-bar sávon szeretnéd egy request,
-; vagy bármilyen core/process folyamat állapotát megjeleníteni, akkor
-; azt a [:ui/listen-to-process! ...] esemény meghívásával állíthatod be.
+; vagy bármilyen core/process folyamat állapotát megjeleníteni,
+; akkor azt a [:ui/listen-to-process! ...] esemény meghívásával állíthatod be.
 (a/reg-event-fx
   :listen-to-my-request!
   (fn [{:keys [db]} _]

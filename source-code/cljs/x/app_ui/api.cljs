@@ -9,6 +9,7 @@
               [x.app-ui.engine]
               [x.app-ui.header.subs]
               [x.app-ui.header.views]
+              [x.app-ui.locker.views]
               [x.app-ui.popups.effects]
               [x.app-ui.popups.engine]
               [x.app-ui.popups.events]
@@ -19,9 +20,15 @@
               [x.app-ui.progress-bar.subs]
               [x.app-ui.progress-bar.views]
               [x.app-ui.shield]
+              [x.app-ui.sounds.engine]
+              [x.app-ui.sounds.subs]
+              [x.app-ui.sounds.views]
               [x.app-ui.surface.effects]
               [x.app-ui.surface.engine]
               [x.app-ui.surface.views]
+              [x.app-ui.themes.effects]
+              [x.app-ui.themes.events]
+              [x.app-ui.themes.lifecycles]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
               [x.app-ui.graphics.views       :as graphics.views]
@@ -29,9 +36,9 @@
               [x.app-ui.interface            :as interface]
               [x.app-ui.progress-bar.events  :as progress-bar.events]
               [x.app-ui.renderer             :as renderer]
-              [x.app-ui.sounds               :as sounds]
+              [x.app-ui.sounds.side-effects  :as sounds.side-effects]
               [x.app-ui.structure.views      :as structure.views]
-              [x.app-ui.themes               :as themes]
+              [x.app-ui.themes.subs          :as themes.subs]
               [x.app-ui.bubble-body-presets  :as bubble-body-presets]
               [x.app-ui.popups.views         :as popups.views]))
 
@@ -87,11 +94,11 @@
 (def no-visible-elements?   renderer/no-visible-elements?)
 (def set-element-prop!      renderer/set-element-prop!)
 
-; x.app-ui.sounds
-(def play-sound! sounds/play-sound!)
+; x.app-ui.sounds.side-effects
+(def play-sound! sounds.side-effects/play-sound!)
 
 ; x.app-ui.structure.views
 (def structure structure.views/view)
 
-; x.app-ui.themes
-(def get-selected-theme themes/get-selected-theme)
+; x.app-ui.themes.subs
+(def get-selected-theme themes.subs/get-selected-theme)
