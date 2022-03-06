@@ -91,12 +91,12 @@
 (a/reg-event-fx
   :storage.media-browser/copy-directory-link!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ {:keys [id]}]]
-      (let [directory-uri (item-browser/browser-uri :storage :media id)
-            directory-uri (r router/get-resolved-uri db directory-uri)
-            uri-base      (window/get-uri-base)]
-           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                         [:tools/copy-to-clipboard! (str uri-base directory-uri)]]})))
+  (fn [{:keys [db]} [_ {:keys [id]}]]))
+;      (let [directory-uri (item-browser/browser-uri :storage :media id)
+;            directory-uri (r router/get-resolved-uri db directory-uri)
+;            uri-base      (window/get-uri-base)
+;           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+;                         [:tools/copy-to-clipboard! (str uri-base directory-uri)]}]]))
 
 
 

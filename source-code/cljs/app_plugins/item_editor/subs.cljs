@@ -373,6 +373,7 @@
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
+; @param (keyword) item-key
 ;
 ; @usage
 ;  [:item-editor/get-meta-item :my-extension :my-type :my-item]

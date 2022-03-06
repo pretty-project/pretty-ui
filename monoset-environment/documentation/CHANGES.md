@@ -10,9 +10,13 @@
 - Ezentúl nem kötelező az item-lister plugin használatához a :my-extension kifejezést hozzáadni a szótárhoz
 - Ezentúl nem kötelező az item-editor plugin használatához a :edit-my-type és :add-my-type kifejezéseket hozzáadni a szótárhoz
 
-- Az [:item-lister/init-lister ...] esemény nem elérhető ezentúl!
+- Az [:item-lister/init-lister! ...] esemény nem elérhető ezentúl!
   A plugin beállításait a kliens-oldali reagent komponens számára kell átadnod!
-  Az [:item-lister/init-lister ...] esemény meghívása helyett add hozzá az útvonalat!
+  Az [:item-lister/init-lister! ...] esemény meghívása helyett add hozzá az útvonalat!
+
+- Az [:item-editor/init-editor! ...] esemény nem elérhető ezentúl!
+  A plugin beállításait a kliens-oldali reagent komponens számára kell átadnod!
+  Az [:item-editor/init-editor! ...] esemény meghívása helyett add hozzá az útvonalat!
 
 
 

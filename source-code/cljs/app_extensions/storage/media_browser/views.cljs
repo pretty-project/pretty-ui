@@ -209,7 +209,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
-       [layouts/layout-a surface-id {:header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
+       [layouts/layout-a surface-id {:description description
+                                     :header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
                                      :body   [item-browser/body   :storage :media {:item-actions     [:delete :duplicate]
-                                                                                   :list-element     #'media-item}]
-                                     :description description}]))
+                                                                                   :label-key :alias :search-keys [:alias]
+                                                                                   :list-element     #'media-item}]}]))

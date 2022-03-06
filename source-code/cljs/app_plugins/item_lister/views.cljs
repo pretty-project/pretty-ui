@@ -17,6 +17,30 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- body-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  ;  {:collection-name (string)
+  ;   :download-limit (integer)
+  ;   :order-by-options (namespaced keywords in vector)
+  ;   :search-keys (keywords in vector)}
+  [extension-id _ body-props]
+  (merge {:collection-name  (name extension-id)
+          :download-limit   20
+          :order-by-options [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
+          :search-keys      [:name]}
+         (param body-props)))
+
+
+
 ;; -- Search-mode header components -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -583,7 +607,8 @@
   ;  [item-lister/body :my-extension :my-type {:list-element #'my-list-element
   ;                                            :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
-  [components/stated (engine/component-id extension-id item-namespace :body)
-                     {:component   [body-structure              extension-id item-namespace]
-                      :destructor  [:item-lister/unload-lister! extension-id item-namespace]
-                      :initializer [:item-lister/init-body!     extension-id item-namespace body-props]}])
+  (let [body-props (body-props-prototype extension-id item-namespace body-props)]
+       [components/stated (engine/component-id extension-id item-namespace :body)
+                          {:component   [body-structure              extension-id item-namespace]
+                           :destructor  [:item-lister/unload-lister! extension-id item-namespace]
+                           :initializer [:item-lister/init-body!     extension-id item-namespace body-props]}]))

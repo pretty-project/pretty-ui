@@ -10,7 +10,7 @@
               [server-plugins.item-browser.api       :as item-browser]
               [x.server-core.api                     :as a]))
 
-              
+
 
 ;; -- Példa dokumentum --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -178,34 +178,3 @@
 (def HANDLERS [])
 
 (pathom/reg-handlers! ::handlers HANDLERS)
-
-
-
-;; -- A plugin beállítása alapbeállításokkal ----------------------------------
-;; ----------------------------------------------------------------------------
-
-; - Az item-browser plugin az item-lister plugint alkalmazza az elemek listázához,
-;   a browser-props térképben található beállítások egy része az item-lister plugin beállításához
-;   szükséges és leírásukat annak dokumentációjában találod!
-; - Az [:item-browser/init-browser! ...] esemény {:routed? true} beállítással használva,
-;   hozzáadja a "/@app-home/my-extension" és "/@app-home/my-extension/:my-type-id" útvonalakat
-;   a rendszerhez, amely útvonalak használatával betöltődik a kliens-oldalon az item-browser plugin.
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-browser/init-browser! :my-extension :my-type]})
-
-
-
-;; -- A plugin beállítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A {:collection-name "..."} tulajdonság használatával a plugin kliens-oldali kezelője
-; értesülhet a kollekció változásairól
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:item-browser/init-browser! :my-extension :my-type
-                                                {:items-key :items
-                                                 :label-key :name
-                                                 :path-key  :path
-                                                 :collection-name "my-extension"
-                                                 :root-item-id    "my-item"}]})

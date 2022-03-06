@@ -6,11 +6,36 @@
     (:require [app-fruits.react-transition     :as react-transition]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-lister.api     :as item-lister]
+              [mid-fruits.candy                :refer [param]]
               [x.app-components.api            :as components]
               [x.app-core.api                  :as a]
               [x.app-elements.api              :as elements]
               [x.app-layouts.api               :as layouts]
               [x.app-tools.api                 :as tools]))
+
+
+
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  ;  {:collection-name (string)
+  ;   :items-key (keyword)
+  ;   :label-key (keyword)
+  ;   :path-key (keyword)}
+  [extension-id _ body-props]
+  (merge {:collection-name (name extension-id)
+          :items-key :items
+          :label-key :name
+          :path-key  :path}
+         (param body-props)))
 
 
 
@@ -83,15 +108,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item-options (vector)(opt)}
+  ;  {:new-item-route (string)(opt)
+  ;   :new-item-options (vector)(opt)}
   ;
-  ; @example
-  ;  [item-browser/header :my-extension :my-type]
-  ;
-  ; @example
-  ;  [item-browser/header :my-extension :my-type {:new-item-options [:add-my-type! :add-your-type!]}]
+  ; @usage
+  ;  [item-browser/header :my-extension :my-type {...}]
   [extension-id item-namespace header-props]
-  (let [header-props (assoc header-props :menu #'menu-mode-header)]
+  (let [header-props (assoc header-props :menu-element #'menu-mode-header)]
        [item-lister/header extension-id item-namespace header-props]))
 
 
@@ -113,11 +136,26 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map)(opt) body-props
-  ;  {:list-element (metamorphic-content)
+  ;  {:auto-title? (boolean)(opt)
+  ;    Default: false
+  ;   :download-limit (integer)(opt)
+  ;    Default: 20
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
+  ;   :items-key (keyword)(opt)
+  ;    Default: :items
+  ;   :label-key (keyword)(opt)
+  ;    Default: :name
+  ;   :list-element (metamorphic-content)
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
+  ;   :order-by-options (namespaced keywords in vector)(opt)
+  ;    Default: [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
+  ;   :path-key (keyword)(opt)
+  ;    Default: :path
   ;   :prefilter (map)(opt)
-  ;   :ui-title (keyword or metamorphic-content)(opt) :auto}
+  ;   :search-keys (keywords in vector)(opt)
+  ;    Default: [:name]}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]
@@ -127,6 +165,7 @@
   ;  [item-browser/body :my-extension :my-type {:list-element #'my-list-element
   ;                                             :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
-  (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
-          [error-body       extension-id item-namespace]
-          [item-lister/body extension-id item-namespace body-props]))
+  (let [body-props (body-props-prototype extension-id item-namespace body-props)]
+       (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+               [error-body       extension-id item-namespace]
+               [item-lister/body extension-id item-namespace body-props])))

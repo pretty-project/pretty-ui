@@ -8,46 +8,8 @@
               [app-plugins.item-lister.queries    :as queries]
               [app-plugins.item-lister.subs       :as subs]
               [app-plugins.item-lister.validators :as validators]
-              [mid-fruits.candy                   :refer [param]]
               [x.app-core.api                     :as a :refer [r]]
               [x.app-ui.api                       :as ui]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- body-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  ;  {:collection-name (string)
-  ;   :download-limit (integer)
-  ;   :order-by-options (namespaced keywords in vector)
-  ;   :search-keys (keywords in vector)}
-  [extension-id _ body-props]
-  (merge {:collection-name  (name extension-id)
-          :download-limit   20
-          :order-by-options [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
-          :search-keys      [:name]}
-         (param body-props)))
-
-(defn- header-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;
-  ; @return (map)
-  ;  {}
-  [extension-id _ header-props]
-  (merge {}
-         (param header-props)))
 
 
 
@@ -340,12 +302,11 @@
   ; @param (map) body-props
   ;  {:ui-title (metamorphic-content)(opt)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title] :as body-props}]]
-      (let [body-props (body-props-prototype extension-id item-namespace body-props)]
-           {:db (r events/init-body! db extension-id item-namespace body-props)
-            :dispatch-n [(if ui-title [:ui/set-title! ui-title])
-                         ; XXX#5660
-                         ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
-                         [:environment/reg-keypress-listener! :item-lister/keypress-listener]]})))
+      {:db (r events/init-body! db extension-id item-namespace body-props)
+       :dispatch-n [(if ui-title [:ui/set-title! ui-title])
+                    ; XXX#5660
+                    ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
+                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]]}))
 
 (a/reg-event-fx
   :item-lister/init-header!

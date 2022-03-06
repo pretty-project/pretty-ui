@@ -75,14 +75,12 @@
 
 
 
-;; -- {:ui-title :auto} beállítás használata ----------------------------------
+;; -- Az {:auto-title? true} beállítás használata -----------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az item-editor plugin {:ui-title :auto} beállítással van használva, akkor a szerkesztő betöltésekor
-; a plugin a megfelelő kifejezést beállítja az applikáció címének, ezért szükséges azt hozzáadni a szótárhoz!
+; Ha az item-editor plugin {:auto-title? true} beállítással van használva, akkor a szerkesztő betöltésekor
+; a plugin a megfelelő kifejezést beállítja az applikáció címének, ezért szükséges azokat hozzáadni a szótárhoz!
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:add-my-type {:en "Add my type"
-                                                       :hu "Típusom hozzáadása"}
-                                         :edit-my-type {:en "Edit my type"
-                                                        :hu "Típusom szerkesztése"}}]})
+  {:on-app-boot [:dictionary/add-terms! {:add-my-type  {:en "Add my type"  :hu "Típusom hozzáadása"}
+                                         :edit-my-type {:en "Edit my type" :hu "Típusom szerkesztése"}}]})

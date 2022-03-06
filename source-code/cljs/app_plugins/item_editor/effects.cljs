@@ -9,27 +9,8 @@
               [app-plugins.item-editor.subs       :as subs]
               [app-plugins.item-editor.validators :as validators]
               [app-plugins.item-editor.views      :as views]
-              [mid-fruits.candy                   :refer [param]]
               [x.app-core.api                     :as a :refer [r]]
               [x.app-ui.api                       :as ui]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn body-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  ;  {:collection-name (string)}
-  [extension-id _ editor-props]
-  (merge {:collection-name (name extension-id)}
-         (param editor-props)))
 
 
 
@@ -352,8 +333,7 @@
       ; - Az events/init-body! függvény által meghívott events/store-body-props! függvény tárolja el
       ;   az {:auto-title? ...} beállítást, ami miatt szükséges az events/init-body! függvényt
       ;   a subs/set-auto-title? függvény lefutása előtt meghívni!
-      (let [body-props (body-props-prototype extension-id item-namespace body-props)
-            db         (r events/init-body! db extension-id item-namespace body-props)]
+      (let [db (r events/init-body! db extension-id item-namespace body-props)]
            {:db db :dispatch-n [(if (r subs/set-auto-title? db extension-id item-namespace)
                                     (if-let [auto-title (r subs/get-auto-title db extension-id item-namespace)]
                                             [:ui/set-title! auto-title]))

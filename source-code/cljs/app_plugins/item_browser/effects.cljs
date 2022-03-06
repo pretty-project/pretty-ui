@@ -37,7 +37,7 @@
        :dispatch-n [; XXX#5660
                     [:environment/reg-keypress-listener! :item-browser/keypress-listener]
                     [:item-browser/request-item! extension-id item-namespace]
-                    (engine/load-extension-event extension-id item-namespace)
+                    ;(engine/load-extension-event extension-id item-namespace)
                     ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
                     ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
                     ; komponens a viewport területén volt, akkor szükséges az infinite-loader
@@ -64,8 +64,8 @@
       ;   Pl.: A plugin popup elemen való megjelenítése, útvonalak használata nélkül ...
       (if (r subs/route-handled? db extension-id item-namespace)
           ; If handled by route ...
-          (let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
-               [:router/go-to! browser-uri])
+          ;(let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
+          ;     [:router/go-to! browser-uri])
           ; If NOT handled by route ...
           [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}])))
 

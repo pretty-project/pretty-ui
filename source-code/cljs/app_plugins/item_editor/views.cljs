@@ -14,6 +14,24 @@
 
 
 
+;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  ;  {:collection-name (string)}
+  [extension-id _ body-props]
+  (merge {:collection-name (name extension-id)}
+         (param body-props)))
+
+
+
 ;; -- Action components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -335,10 +353,11 @@
   ;  (defn my-form-element [extension-id item-namespace] [:div ...])
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
   [extension-id item-namespace body-props]
-  [components/stated (engine/component-id extension-id item-namespace :body)
-                     {:component   [body-structure              extension-id item-namespace]
-                      :destructor  [:item-editor/unload-editor! extension-id item-namespace]
-                      :initializer [:item-editor/init-body!     extension-id item-namespace body-props]}])
-                      ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
-                      ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
-                      ;:updater     [:item-editor/init-body!     extension-id item-namespace body-props]}])
+  (let [body-props (body-props-prototype extension-id item-namespace body-props)]
+       [components/stated (engine/component-id extension-id item-namespace :body)
+                          {:component   [body-structure              extension-id item-namespace]
+                           :destructor  [:item-editor/unload-editor! extension-id item-namespace]
+                           :initializer [:item-editor/init-body!     extension-id item-namespace body-props]}]))
+                           ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
+                           ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
+                           ;:updater     [:item-editor/init-body!     extension-id item-namespace body-props]}])

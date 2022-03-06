@@ -53,7 +53,7 @@
   ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet a legutóbbi kereséséhez!
   (let [lister-props (r get-lister-props db extension-id item-namespace)]
        (select-keys lister-props [:order-by :search-term])))
-       
+
 (defn get-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -582,6 +582,7 @@
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
+; @param (keyword) item-key
 ;
 ; @usage
 ;  [:item-lister/get-meta-item :my-extension :my-type :my-item]

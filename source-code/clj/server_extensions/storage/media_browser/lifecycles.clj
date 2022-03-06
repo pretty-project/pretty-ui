@@ -4,7 +4,6 @@
 
 (ns server-extensions.storage.media-browser.lifecycles
     (:require [server-extensions.storage.engine :as engine]
-              [server-plugins.item-browser.api  :as item-browser]
               [x.server-core.api                :as a]))
 
 
@@ -14,8 +13,11 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:item-browser/init-browser! :storage :media
-                                                {:root-item-id engine/ROOT-DIRECTORY-ID
-                                                 :label-key    :alias
-                                                 :path-key     :path
-                                                 :search-keys  [:alias]}]})
+  {:on-server-boot {:dispatch-n [[:router/add-route! :storage.media-browser/route
+                                                     {:route-template "/@app-home/storage"
+                                                      :client-event [:storage.media-browser/load-browser!]
+                                                      :restricted? true}]
+                                 [:router/add-route! :storage.media-browser/extended-route
+                                                     {:route-template "/@app-home/storage/:media-id"
+                                                      :client-event [:storage.media-browser/load-browser!]
+                                                      :restricted? true}]]}})

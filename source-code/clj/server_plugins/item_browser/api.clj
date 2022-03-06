@@ -3,10 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-browser.api
-    (:require [server-plugins.item-browser.events]
-              [server-plugins.item-browser.effects]
-              [server-plugins.item-browser.subs]
-              [server-plugins.item-browser.engine :as engine]))
+    (:require [server-plugins.item-browser.engine :as engine]))
 
 
 
@@ -14,7 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-lister.engine
-(def browser-uri          engine/browser-uri)
 (def request-id           engine/request-id)
 (def env->item-links      engine/env->item-links)
 (def env->sort-pattern    engine/env->sort-pattern)

@@ -26,24 +26,6 @@
 ;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn browser-uri
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string)(opt) item-id
-  ;
-  ; @example
-  ;  (item-browser/browser-uri :my-extension :my-type "my-item")
-  ;  =>
-  ;  "/@app-home/my-extension/my-item"
-  ;
-  ; @return (string)
-  ([extension-id _]
-   (str "/@app-home/" (name extension-id)))
-
-  ([extension-id _ item-id]
-   (str "/@app-home/" (name  extension-id)
-        "/"           (param item-id))))
-
 (defn request-id
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -114,90 +96,6 @@
   [extension-id _]
   (name extension-id))
 
-(defn transfer-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) plugin-key
-  ;
-  ; @example
-  ;  (engine/transfer-id :my-extension :my-type :browser)
-  ;  =>
-  ;  :my-extension.my-type-browser/transfer-browser-props
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace plugin-key]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           (str                       "transfer-"
-                (name plugin-key)     "-props")))
-
-(defn route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-browser/route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           "route"))
-
-(defn extended-route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/extended-route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-browser/extended-route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           "extended-route"))
-
-(defn route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/route-template :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension"
-  ;
-  ; @return (string)
-  [extension-id _]
-  (str "/@app-home/" (name extension-id)))
-
-(defn extended-route-template
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/extended-route-template :my-extension :my-type)
-  ;  =>
-  ;  "/@app-home/my-extension/:item-id"
-  ;
-  ; @return (string)
-  [extension-id _]
-  (str "/@app-home/" (name extension-id)
-       "/:item-id"))
-
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -234,21 +132,3 @@
   (keyword (str (name extension-id)  "."
                 (name item-namespace) "-browser")
            (str (name action-key)     "-dialog")))
-
-(defn load-extension-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/load-extension-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension.my-type-browser/load-browser!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-browser")
-                          (str "load-browser!"))]
-       [event-id]))
