@@ -1,21 +1,10 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.09
-; Description:
-; Version: v0.3.6
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.shield
-    (:require [x.mid-ui.api      :as ui]
-              [x.server-core.api :as a]))
+(ns x.server-ui.shield.views
+    (:require [x.server-ui.graphics.views :as graphics.views]
+              [x.server-core.api          :as a]))
 
 
 
@@ -26,11 +15,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (*) content
-  ;
-  ; @return (vector)
   [content]
   (let [title @(a/subscribe [:core/get-app-config-item :app-title])]
        [:div#x-app-shield {:data-nosnippet "true"}
-                          [:div#x-app-shield--header (ui/app-logo)
-                                                     (ui/app-title title)]
+                          [:div#x-app-shield--header (graphics.views/app-logo)
+                                                     (graphics.views/app-title title)]
                           [:div#x-app-shield--content content]]))

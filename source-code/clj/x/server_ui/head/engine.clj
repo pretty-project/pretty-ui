@@ -1,29 +1,15 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.09
-; Description:
-; Version: v1.2.8
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.head
-    (:require [mid-fruits.candy         :refer [param return]]
-              [mid-fruits.string        :as string]
-              [mid-fruits.vector        :as vector]
-              [server-fruits.http       :as http]
-              [x.app-details            :as details]
-              [x.server-core.api        :as a :refer [cache-control-uri]]
-              [x.server-environment.api :as environment]
-              [x.server-router.api      :as router]
-              [x.server-user.api        :as user]
-              [x.server-ui.engine       :refer [include-css include-favicon include-font]]))
+(ns x.server-ui.head.engine
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.string  :as string]
+              [mid-fruits.vector  :as vector]
+              [server-fruits.http :as http]
+              [x.app-details      :as details]
+              [x.server-core.api  :as a :refer [cache-control-uri]]
+              [x.server-ui.engine :refer [include-css include-favicon include-font]]))
 
 
 
@@ -58,7 +44,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- meta-keywords->formatted-meta-keywords
+(defn meta-keywords->formatted-meta-keywords
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string or strings in vector) meta-keywords
@@ -79,7 +65,7 @@
       (return      meta-keywords)
       (string/join meta-keywords ", ")))
 
-(defn- head<-crawler-settings
+(defn head<-crawler-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (hiccup) head
@@ -96,7 +82,7 @@
                                   [:meta {:content meta-description :name "description"}]
                                   [:meta {:content meta-keywords    :name "keywords"}]])))
 
-(defn- head<-browser-settings
+(defn head<-browser-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (hiccup) head
@@ -117,7 +103,7 @@
                              [:meta {:content theme-color                                  :name "theme-color"}]
                              [:meta {:content selected-language                            :http-equiv "content-language"}]]))
 
-(defn- head<-legal-information
+(defn head<-legal-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (hiccup) head
@@ -131,7 +117,7 @@
                              [:meta {:content details/copyright-information :name "copyright"}]
                              [:meta {:content details/app-version           :name "version"}]]))
 
-(defn- head<-og-properties
+(defn head<-og-properties
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; The Open Graph protocol
@@ -153,7 +139,7 @@
                                   [:meta {:content og-preview-path  :property "og:image"}]
                                   [:meta {:content og-url           :property "og:url"}]])))
 
-(defn- head<-css-includes
+(defn head<-css-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (hiccup) head
@@ -178,7 +164,7 @@
          (let [css-paths (vector/concat-items css-paths SYSTEM-CSS-PATHS)]
               (reduce f head css-paths))))
 
-(defn- head<-favicon-includes
+(defn head<-favicon-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (hiccup) head
@@ -202,63 +188,3 @@
                       (conj   head (include-favicon favicon-props))
                       (return head))))]
          (reduce f head favicon-paths)))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- head-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ; @param (map) head-props
-  ;  {:css-paths (maps in vector)(opt)}
-  ;
-  ; @return (map)
-  ;  {:app-build (string)
-  ;   :core-js (string)
-  ;   :crawler-rules (string)
-  ;   :selected-language (keyword)}
-  [request head-props]
-  (let [app-config @(a/subscribe [:core/get-app-config])]
-       (merge app-config head-props
-              {:app-build         (a/app-build)
-               :core-js           (router/request->core-js          request)
-               :crawler-rules     (environment/crawler-rules        request)
-               :selected-language (user/request->user-settings-item request :selected-language)
-               ; Hozzáadja a {:css-paths [...]} paraméterként átadott útvonalakat
-               ; az x.app-config.edn fájlban beállított útvonalakhoz
-               :css-paths (vector/concat-items (:css-paths app-config)
-                                               (:css-paths head-props))})))
-
-
-
-;; -- Components --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn view
-  ; @param (map) request
-  ; @param (map)(opt) head-props
-  ;  {:app-title (string)(opt)
-  ;   :css-paths (maps in vector)(opt)
-  ;    [{:core-js (string)(opt)
-  ;      :uri (string)}]
-  ;   :meta-description (string)(opt)
-  ;   :meta-keywords (string or strings in vector)(opt)
-  ;   :og-preview-path (string)(opt)}
-  ;
-  ; @usage
-  ;  (ui/head {...} {...})
-  ([request]
-   (view request {}))
-
-  ([request head-props]
-   (let [head-props (head-props-prototype request head-props)]
-        (-> [:head#x-head]
-            (head<-legal-information request head-props)
-            (head<-browser-settings  request head-props)
-            (head<-crawler-settings  request head-props)
-            (head<-og-properties     request head-props)
-            (head<-css-includes      request head-props)
-            (head<-favicon-includes  request head-props)))))

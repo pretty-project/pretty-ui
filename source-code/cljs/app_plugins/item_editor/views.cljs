@@ -260,8 +260,8 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-       (if-not new-item? [:<> [delete-item-button extension-id item-namespace]
-                              [copy-item-button   extension-id item-namespace]])))
+       [:<>                   [save-item-button extension-id item-namespace]
+            (if-not new-item? [copy-item-button extension-id item-namespace])]))
 
 (defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -269,7 +269,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  [save-item-button extension-id item-namespace])
+  (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
+       (if-not new-item? [delete-item-button extension-id item-namespace])))
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -361,3 +362,11 @@
                            ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
                            ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
                            ;:updater     [:item-editor/init-body!     extension-id item-namespace body-props]}])
+
+
+
+;
+;  :component-did-update              ;; the name of a lifecycle function
+;          (fn [this old-argv]        ;; reagent provides you the entire "argv", not just the "props"
+;            (let [new-argv (rest (reagent/argv this))]
+;              (do-something new-argv old-argv)]))

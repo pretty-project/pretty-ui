@@ -11,7 +11,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-window-title-value
+(defn get-window-title-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (metamorphic-content) window-title

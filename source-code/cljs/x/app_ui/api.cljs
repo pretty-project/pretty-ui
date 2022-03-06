@@ -24,7 +24,7 @@
               [x.app-ui.surface.views]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
-              [x.app-ui.graphics             :as graphics]
+              [x.app-ui.graphics.views       :as graphics.views]
               [x.app-ui.header.events        :as header.events]
               [x.app-ui.interface            :as interface]
               [x.app-ui.progress-bar.events  :as progress-bar.events]
@@ -43,10 +43,10 @@
 ; x.app-ui.bubble-body-presets
 (def state-changed-bubble-body bubble-body-presets/state-changed-bubble-body)
 
-; x.app-ui.graphics
-(def app-logo          graphics/app-logo)
-(def app-title         graphics/app-title)
-(def loading-animation graphics/loading-animation)
+; x.app-ui.graphics.views
+(def app-logo          graphics.views/app-logo)
+(def app-title         graphics.views/app-title)
+(def loading-animation graphics.views/loading-animation)
 
 ; x.app-ui.header.events
 (def set-header-title!    header.events/set-header-title!)

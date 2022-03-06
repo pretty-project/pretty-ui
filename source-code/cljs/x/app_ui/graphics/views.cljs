@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-ui.api
+(ns x.app-ui.graphics.views
     (:require [x.mid-ui.graphics.views :as graphics.views]))
 
 

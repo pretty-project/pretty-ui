@@ -1,21 +1,10 @@
 
 ; WARNING! UNDER DEVELOPMENT! DO NOT USE!
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.12.30
-; Description:
-; Version: v0.2.4
-; Compatibility:
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-tools.pdf
+(ns x.server-tools.pdf.engine
     (:require [clj-pdf.core       :as pdf]
               [mid-fruits.random  :as random]
               [server-fruits.http :as http]
