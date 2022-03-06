@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.views
-    (:require [app-plugins.item-editor.engine :as engine]
+    (:require [app-fruits.reagent             :as reagent]
+              [app-plugins.item-editor.engine :as engine]
               [mid-fruits.candy               :refer [param]]
               [mid-fruits.string              :as string]
               [mid-fruits.vector              :as vector]
-              [x.app-components.api           :as components]
               [x.app-core.api                 :as a]
               [x.app-elements.api             :as elements]
               [x.app-layouts.api              :as layouts]))
@@ -306,9 +306,9 @@
   ;  (defn my-menu-element [extension-id item-namespace] [:div ...])
   ;  [item-editor/header :my-extension :my-type {:menu #'my-menu-element}]
   [extension-id item-namespace header-props]
-  [components/stated (engine/component-id extension-id item-namespace :header)
-                     {:component   [header-structure          extension-id item-namespace]
-                      :initializer [:item-editor/init-header! extension-id item-namespace header-props]}])
+  (reagent/lifecycles (engine/component-id extension-id item-namespace :header)
+                      {:reagent-render      (fn []             [header-structure          extension-id item-namespace])
+                       :component-did-mount (fn [] (a/dispatch [:item-editor/init-header! extension-id item-namespace header-props]))}))
 
 
 
@@ -326,6 +326,8 @@
        [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 
 (defn body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
@@ -355,18 +357,10 @@
   ;  [item-editor/body :my-extension :my-type {:form-element #'my-form-element}]
   [extension-id item-namespace body-props]
   (let [body-props (body-props-prototype extension-id item-namespace body-props)]
-       [components/stated (engine/component-id extension-id item-namespace :body)
-                          {:component   [body-structure              extension-id item-namespace]
-                           :destructor  [:item-editor/unload-editor! extension-id item-namespace]
-                           :initializer [:item-editor/init-body!     extension-id item-namespace body-props]}]))
+       (reagent/lifecycles (engine/component-id extension-id item-namespace :body)
+                          {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
+                           :component-will-unmount (fn [] (a/dispatch [:item-editor/unload-editor! extension-id item-namespace]))
+                           :component-did-mount    (fn [] (a/dispatch [:item-editor/init-body!     extension-id item-namespace body-props]))
+                           :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
                            ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
                            ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
-                           ;:updater     [:item-editor/init-body!     extension-id item-namespace body-props]}])
-
-
-
-;
-;  :component-did-update              ;; the name of a lifecycle function
-;          (fn [this old-argv]        ;; reagent provides you the entire "argv", not just the "props"
-;            (let [new-argv (rest (reagent/argv this))]
-;              (do-something new-argv old-argv)]))

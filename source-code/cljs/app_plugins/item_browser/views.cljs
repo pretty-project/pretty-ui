@@ -123,16 +123,6 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn error-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [_ _]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
-       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
-
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -167,6 +157,4 @@
   ;                                             :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
   (let [body-props (body-props-prototype extension-id item-namespace body-props)]
-       (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
-               [error-body       extension-id item-namespace]
-               [item-lister/body extension-id item-namespace body-props])))
+       [item-lister/body extension-id item-namespace body-props]))

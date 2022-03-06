@@ -89,5 +89,5 @@
   ; @param (map) request
   ;
   ; @return (map)
-  [request]
-  (media/download-temporary-file request))
+  [request])
+  ;(media/download-temporary-file request))

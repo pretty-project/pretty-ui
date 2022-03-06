@@ -33,4 +33,4 @@
 (def duplicate-storage-thumbnail! file-handler.side-effects/duplicate-storage-thumbnail!)
 
 ; x.server-media.thumbnail-handler.side-effects
-(def generate-thumbnail! thumbnail-handler/generate-thumbnail!)
+(def generate-thumbnail! thumbnail-handler.side-effects/generate-thumbnail!)

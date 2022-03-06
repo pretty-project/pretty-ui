@@ -9,27 +9,31 @@
               [x.app-core.error-handler.engine]
               [x.app-core.error-handler.side-effects]
               [x.app-core.error-handler.subs]
-              [x.app-core.build-handler        :as build-handler]
-              [x.app-core.cache-handler        :as cache-handler]
-              [x.app-core.config-handler       :as config-handler]
-              [x.app-core.connection-handler   :as connection-handler]
-              [x.app-core.debug-handler.events :as debug-handler.events]
-              [x.app-core.debug-handler.subs   :as debug-handler.subs]
-              [x.app-core.engine               :as engine]
-              [x.app-core.event-handler        :as event-handler]
-              [x.app-core.lifecycle-handler    :as lifecycle-handler]
-              [x.app-core.login-handler        :as login-handler]
-              [x.app-core.print-handler        :as print-handler]
-              [x.app-core.process-handler      :as process-handler]
-              [x.app-core.transfer-handler     :as transfer-handler]))
+              [x.app-core.build-handler.side-effects :as build-handler.side-effects]
+              [x.app-core.build-handler.subs         :as build-handler.subs]
+              [x.app-core.cache-handler              :as cache-handler]
+              [x.app-core.config-handler             :as config-handler]
+              [x.app-core.connection-handler         :as connection-handler]
+              [x.app-core.debug-handler.events       :as debug-handler.events]
+              [x.app-core.debug-handler.subs         :as debug-handler.subs]
+              [x.app-core.engine                     :as engine]
+              [x.app-core.event-handler              :as event-handler]
+              [x.app-core.lifecycle-handler          :as lifecycle-handler]
+              [x.app-core.login-handler              :as login-handler]
+              [x.app-core.print-handler              :as print-handler]
+              [x.app-core.process-handler            :as process-handler]
+              [x.app-core.transfer-handler           :as transfer-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-core.build-handler
-(def app-build build-handler/app-build)
+; x.app-core.build-handler.side-effects
+(def app-build build-handler.side-effects/app-build)
+
+; x.app-core.build-handler.subs
+(def get-app-build build-handler.subs/get-app-build)
 
 ; x.app-core.cache-handler
 (def cache-control-uri cache-handler/cache-control-uri)

@@ -28,8 +28,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @name stated
-;  A stated komponens a Reagent életciklusait valósítja meg a {:render-f ...}
-;  tulajdonságként átadott komponensként meghívott render-függvény számára számára.
+; - A stated komponens a Reagent életciklusait valósítja meg a {:render-f ...}
+;   tulajdonságként átadott komponensként meghívott render-függvény számára.
+; + A Shadow CLJS általi újrarendereléskor megakadályozza az életciklusok megtörténését.
 ;
 ; @name destructor
 ;  - A {:destructor ...} tulajdonságként átadott Re-Frame esemény a komponens
@@ -86,8 +87,8 @@
 ;  A remounting esemény egy egymás után megtörténő unmount majd egy mount eseményekből áll.
 ;
 ; @description
-;  A stated komponens első verzióiban a remounting felismerése úgy működött, hogy
-;  az unmount esemény időbeni eltolásával az a (re)mount esemény után történt meg,
+;  A stated komponens első verzióiban a Shadow CLJS remounting felismerése úgy működött,
+;  hogy az unmount esemény időbeni eltolásával az a (re)mount esemény után történt meg,
 ;  így meg lehetett vizsgálni, hogy ha egy mounted komponensen (re)mount esemény
 ;  történik majd az ahhoz tartozó – eredetileg a (re)mount esemény előtt megtörténő –
 ;  unmount esemény történik, akkor az remounting eseménypárnak számít.
@@ -327,7 +328,13 @@
   (let [mount-id (a/id)]
        (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
-                            :component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
+                            ;:component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
+                            ;:component-did-update (fn [this _] ;(println (str "dd")))
+                            ;                          (let [new  (reagent.core/argv this)]
+                            ;                               (println (str new)))
+                            ;          (fn [this old-argv]        ;; reagent provides you the entire "argv", not just the "props"
+                            ;            (let [new-argv (rest (reagent/argv this))]
+                            ;              (do-something new-argv old-argv)]))
                             :component-will-unmount #(a/dispatch [:components/component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 

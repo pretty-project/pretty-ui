@@ -25,6 +25,9 @@
            :please-check-back-soon...
            {:en "Please check back soon ..."
             :hu "Kérlek nézz vissza később ..."}
+           :the-content-you-opened-may-be-broken
+           {:en "The content you want to open may be broken or removed"
+            :hu "Előfordulhat, hogy a tartalom sérült vagy már nem elérhető"}
            :the-link-you-followed-may-be-broken
            ; Always place a comma before or when it begins an independent clause!
            {:en "The link you followed may be broken, or the page may have been removed"

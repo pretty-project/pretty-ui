@@ -3,31 +3,36 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.api
-    (:require [x.server-core.database-handler]
+    (:require [x.server-core.build-handler.engine]
+              [x.server-core.build-handler.transfer]
+              [x.server-core.database-handler]
               [x.server-core.error-handler.engine]
               [x.server-core.error-handler.side-effects]
               [x.server-core.middleware-handler]
               [x.server-core.resource-handler]
               [x.server-core.router-handler]
               [x.server-core.server-handler]
-              [x.server-core.build-handler        :as build-handler]
-              [x.server-core.cache-handler        :as cache-handler]
-              [x.server-core.config-handler       :as config-handler]
-              [x.server-core.debug-handler.engine :as debug-handler.engine]
-              [x.server-core.engine               :as engine]
-              [x.server-core.event-handler        :as event-handler]
-              [x.server-core.lifecycle-handler    :as lifecycle-handler]
-              [x.server-core.transfer-handler     :as transfer-handler]))
+              [x.server-core.build-handler.side-effects :as build-handler.side-effects]
+              [x.server-core.build-handler.subs         :as build-handler.subs]
+              [x.server-core.cache-handler              :as cache-handler]
+              [x.server-core.config-handler             :as config-handler]
+              [x.server-core.debug-handler.engine       :as debug-handler.engine]
+              [x.server-core.engine                     :as engine]
+              [x.server-core.event-handler              :as event-handler]
+              [x.server-core.lifecycle-handler          :as lifecycle-handler]
+              [x.server-core.transfer-handler           :as transfer-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-core.build-handler
-(def app-build     build-handler/app-build)
-(def ->app-built   build-handler/->app-built)
-(def get-app-build build-handler/get-app-build)
+; x.server-core.build-handler.side-effects
+(def app-build   build-handler.side-effects/app-build)
+(def ->app-built build-handler.side-effects/->app-built)
+
+; x.server-core.build-handler.subs
+(def get-app-build build-handler.subs/get-app-build)
 
 ; x.server-core.cache-handler
 (def request->app-cached? cache-handler/request->app-cached?)

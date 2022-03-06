@@ -2,16 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-plugins.item-handler.engine
-    (:require [mid-plugins.item-handler.engine :as engine]))
+(ns x.app-core.build-handler.subs
+    (:require [x.mid-core.build-handler.subs :as build-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-plugins.item-handler.engine
-(def request-id    engine/request-id)
-(def mutation-name engine/mutation-name)
-(def resolver-id   engine/resolver-id)
-(def dialog-id     engine/dialog-id)
+; x.mid-core.build-handler.subs
+(def get-app-build build-handler.subs/get-app-build)

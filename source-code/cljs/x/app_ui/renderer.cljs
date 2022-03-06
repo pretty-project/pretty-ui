@@ -14,13 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.renderer
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.time      :as time]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
-              [x.app-ui.engine      :as engine]))
+    (:require [app-fruits.reagent :as reagent]
+              [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.time    :as time]
+              [mid-fruits.vector  :as vector]
+              [x.app-core.api     :as a :refer [r]]
+              [x.app-db.api       :as db]
+              [x.app-ui.engine    :as engine]))
 
 
 
@@ -191,18 +191,17 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-renderer-state
+(defn get-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
   ;
-  ; @return (map)
+  ; @return (keywords in vector)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       {:elements      (r db/get-data-items db partition-id)
-        :element-order (r db/get-data-order db partition-id)}))
+       (r db/get-data-order db partition-id)))
 
-(a/reg-sub :ui/get-renderer-state get-renderer-state)
+(a/reg-sub :ui/get-element-order get-element-order)
 
 (defn get-rendered-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -388,6 +387,8 @@
   [db [_ renderer-id element-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (get-in db (db/path partition-id element-id))))
+
+(a/reg-sub :ui/get-element-props get-element-props)
 
 (defn get-element-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1120,15 +1121,15 @@
 (defn- stated-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (component) element
+  ; @param (keyword) renderer-id
+  ; @param (map) renderer-props
   ; @param (keyword) element-id
-  ; @param (map) element-props
-  ;  {:destructor (metamorphic-event)(opt)
-  ;   :initializer (metamorphic-event)(opt)}
-  [element element-id {:keys [destructor initializer] :as element-props}]
-  [components/stated element-id {:component   [element element-id element-props]
-                                 :destructor  destructor
-                                 :initializer initializer}])
+  [renderer-id {:keys [element]} element-id]
+  (let [element-props @(a/subscribe [:ui/get-element-props renderer-id element-id])]
+       (reagent/lifecycles (engine/renderer-id->dom-id renderer-id)
+                           {:reagent-render         (fn [] [element element-id element-props])
+                            :component-will-unmount (fn [] (a/dispatch (:destructor  element-props)))
+                            :component-did-mount    (fn [] (a/dispatch (:initializer element-props)))})))
 
 (defn- wrapper
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1137,7 +1138,8 @@
   ; @param (map) renderer-props
   ;  {:attributes (map)(opt)}
   [renderer-id {:keys [attributes]}]
-  (let [wrapper-attributes (assoc attributes :id (a/dom-value renderer-id))]
+  (let [dom-id (engine/renderer-id->dom-id renderer-id)
+        wrapper-attributes (assoc attributes :id (a/dom-value dom-id))]
        [:div wrapper-attributes]))
 
 (defn- elements
@@ -1145,26 +1147,22 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
-  ;  {:element (component)}
-  ; @param (map) renderer-state
-  ;  {:element-order (keywords in vector)
-  ;   :elements (map)}
-  [renderer-id {:keys [element] :as renderer-props} {:keys [element-order elements]}]
+  [renderer-id renderer-props]
   (letfn [(f [wrapper element-id]
              (let [element-props (get elements element-id)]
-                  (conj wrapper ^{:key element-id} [stated-element element element-id element-props])))]
-         (reduce f (wrapper renderer-id renderer-props) element-order)))
+                  (conj wrapper ^{:key element-id} [stated-element renderer-id renderer-props element-id])))]
+         (let [element-order @(a/subscribe [:ui/get-element-order renderer-id])]
+              (reduce f (wrapper renderer-id renderer-props) element-order))))
 
 (defn renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
-  ; @param (map) renderer-state
-  ;  {:element-order (keywords in vector)}
-  [renderer-id renderer-props {:keys [element-order] :as renderer-state}]
-  (if (vector/nonempty? element-order)
-      [elements renderer-id renderer-props renderer-state]))
+  [renderer-id renderer-props]
+  (let [element-order @(a/subscribe [:ui/get-element-order renderer-id])]
+       (if (vector/nonempty? element-order)
+           [elements renderer-id renderer-props])))
 
 (defn component
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -1184,10 +1182,8 @@
   ;   :rerender-same? (boolean)(opt)
   ;    Default: false}
   [renderer-id renderer-props]
-  (let [dom-id         (engine/renderer-id->dom-id renderer-id)
-        renderer-props (renderer-props-prototype   renderer-props)]
-       [components/stated dom-id
-                          {:component    [renderer dom-id renderer-props]
-                           :destructor   [:ui/destruct-renderer! renderer-id renderer-props]
-                           :initializer  [:ui/init-renderer!     renderer-id renderer-props]
-                           :subscriber   [:ui/get-renderer-state renderer-id]}]))
+  (let [renderer-props (renderer-props-prototype renderer-props)]
+       (reagent/lifecycles (engine/renderer-id->dom-id renderer-id)
+                           {:reagent-render         (fn []             [renderer               renderer-id renderer-props])
+                            :component-will-unmount (fn [] (a/dispatch [:ui/destruct-renderer! renderer-id renderer-props]))
+                            :component-did-mount    (fn [] (a/dispatch [:ui/init-renderer!     renderer-id renderer-props]))})))

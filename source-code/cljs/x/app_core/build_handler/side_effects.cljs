@@ -2,14 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-plugins.item-handler.subs
-    (:require [mid-plugins.item-handler.subs :as subs]))
+(ns x.app-core.build-handler.side-effects
+    (:require [x.mid-core.build-handler.side-effects :as build-handler.side-effects]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-plugins.item-handler.subs
-(def get-lister-props subs/get-lister-props)
-(def get-meta-item    subs/get-meta-item)
+; x.mid-core.build-handler.side-effects
+(def app-build build-handler.side-effects/app-build)

@@ -82,5 +82,5 @@
           [:div#x-app-header {:data-nosnippet true}
                              [:div#x-app-header--body [header-label-bar]]]
           (if-let [debug-mode? @(a/subscribe [:core/debug-mode-detected?])]
-                  [:div {:style {:position :fixed :bottom 0 :right 0}}
+                  [:div {:style {:position :fixed :bottom 0 :right 0 :z-index 999 :color :pink}}
                         [header-dev-tools-icon-button]])))

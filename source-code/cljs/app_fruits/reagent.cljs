@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-fruits.reagent
-    (:require [reagent.core :as core]
-              [reagent.dom  :as dom]))
+    (:require [reagent.core :as reagent.core]
+              [reagent.dom  :as reagent.dom]))
 
 
 
@@ -12,12 +12,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; reagent.core
-(def adapt-react-class core/adapt-react-class)
-(def as-element        core/as-element)
-(def ratom             core/atom)
+(def adapt-react-class reagent.core/adapt-react-class)
+(def as-element        reagent.core/as-element)
+(def ratom             reagent.core/atom)
 
 ; reagent.dom
-(def render dom/render)
+(def render reagent.dom/render)
 
 
 
@@ -54,10 +54,46 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn arguments
+  ; @param (?) this
+  ;
+  ; @return (?)
+  [this]
+  (-> this reagent.core/argv rest))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @atom (map)
+(defonce MOUNTED-COMPONENTS (atom {}))
+
+(defn unmount-f
+  ; @param (keyword or string) component-id
+  ; @param (map) lifecycles
+  ;  {:component-will-unmount (function)(opt)}
+  ; @param (string) mount-id
+  [component-id {:keys [component-will-unmount]} mount-id]
+  (if (= mount-id (get @MOUNTED-COMPONENTS component-id))
+      (do (if component-will-unmount (component-will-unmount))
+          (swap! MOUNTED-COMPONENTS dissoc component-id))))
+
 (defn lifecycles
+  ; @param (keyword or string)(opt) component-id
   ; @param (map) lifecyles
   ;  {...}
   ;
   ; @return (map)
-  [lifecyles]
-  (core/create-class lifecyles))
+  ([lifecyles]
+   (reagent.core/create-class lifecyles))
+
+  ([component-id {:keys [component-did-mount component-did-update reagent-render] :as lifecycles}]
+   (let [mount-id (random-uuid)]
+        (reagent.core/create-class {:reagent-render reagent-render
+                                    :component-will-unmount (fn [] (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))
+                                    :component-did-mount    (fn [] (if-let [mounted-as (get @MOUNTED-COMPONENTS component-id)]
+                                                                           "component-already-mounted"
+                                                                           (if component-did-mount (component-did-mount)))
+                                                                   (swap! MOUNTED-COMPONENTS assoc component-id mount-id))
+                                    :component-did-update component-did-update}))))

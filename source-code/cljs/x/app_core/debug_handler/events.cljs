@@ -10,7 +10,7 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- set-debug-mode!
+(defn set-debug-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) debug-mode

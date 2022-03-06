@@ -1,33 +1,24 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.08
-; Description:
-; Version: v0.6.0
-; Compatibility: x4.6.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.api
-    (:require [x.mid-core.debug-handler.engine]
-              [x.mid-core.build-handler  :as build-handler]
-              [x.mid-core.cache-handler  :as cache-handler]
-              [x.mid-core.config-handler :as config-handler]
-              [x.mid-core.engine         :as engine]
-              [x.mid-core.event-handler  :as event-handler]))
+    (:require [x.mid-core.build-handler.events]
+              [x.mid-core.build-handler.subs]
+              [x.mid-core.debug-handler.engine]
+              [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
+              [x.mid-core.cache-handler              :as cache-handler]
+              [x.mid-core.config-handler             :as config-handler]
+              [x.mid-core.engine                     :as engine]
+              [x.mid-core.event-handler              :as event-handler]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.build-handler
-(def app-build build-handler/app-build)
+; x.mid-core.build-handler.side-effects
+(def app-build build-handler.side-effects/app-build)
 
 ; x.mid-core.cache-handler
 (def cache-control-uri cache-handler/cache-control-uri)
