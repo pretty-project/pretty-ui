@@ -1,25 +1,16 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.01.01
-; Description:
-; Version: v0.2.6
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-environment.api
-    (:require [x.server-environment.crawler-handler :as crawler-handler]))
+    (:require [x.server-environment.crawler-handler.lifecycles]
+              [x.server-environment.crawler-handler.routes]
+              [x.server-environment.crawler-handler.engine :as crawler-handler.engine]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-environment.crawler-handler
-(def crawler-rules crawler-handler/crawler-rules)
+; x.server-environment.crawler-handler.engine
+(def crawler-rules crawler-handler.engine/crawler-rules)

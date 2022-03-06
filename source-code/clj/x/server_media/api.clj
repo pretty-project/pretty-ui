@@ -1,23 +1,17 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.08.08
-; Description:
-; Version: v0.5.2
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.api
-    (:require [x.server-media.download-handler]
-              [x.server-media.engine            :as engine]
-              [x.server-media.temporary-handler :as temporary-handler]
-              [x.server-media.thumbnail-handler :as thumbnail-handler]))
+    (:require [x.server-media.download-handler.lifecycles]
+              [x.server-media.download-handler.routes]
+              [x.server-media.temporary-handler.routes]
+              [x.server-media.thumbnail-handler.engine]
+              [x.server-media.thumbnail-handler.lifecycles]
+              [x.server-media.thumbnail-handler.routes]
+              [x.server-media.engine                         :as engine]
+              [x.server-media.file-handler.side-effects      :as file-handler.side-effects]
+              [x.server-media.thumbnail-handler.side-effects :as thumbnail-handler.side-effects]))
 
 
 
@@ -31,13 +25,12 @@
 (def filename->media-storage-filepath   engine/filename->media-storage-filepath)
 (def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
 (def filename->temporary-filepath       engine/filename->temporary-filepath)
-(def delete-storage-file!               engine/delete-storage-file!)
-(def delete-storage-thumbnail!          engine/delete-storage-thumbnail!)
-(def duplicate-storage-file!            engine/duplicate-storage-file!)
-(def duplicate-storage-thumbnail!       engine/duplicate-storage-thumbnail!)
 
-; x.server-media.temporary-handler
-(def download-temporary-file temporary-handler/download-temporary-file)
+; x.server-media.file-handler.side-effects
+(def delete-storage-file!         file-handler.side-effects/delete-storage-file!)
+(def delete-storage-thumbnail!    file-handler.side-effects/delete-storage-thumbnail!)
+(def duplicate-storage-file!      file-handler.side-effects/duplicate-storage-file!)
+(def duplicate-storage-thumbnail! file-handler.side-effects/duplicate-storage-thumbnail!)
 
-; x.server-media.thumbnail-handler
+; x.server-media.thumbnail-handler.side-effects
 (def generate-thumbnail! thumbnail-handler/generate-thumbnail!)

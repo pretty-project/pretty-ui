@@ -1,22 +1,10 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.05.11
-; Description:
-; Version: v0.2.6
-; Compatibility: x4.3.4
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-media.download-handler
+(ns x.server-media.download-handler.routes
     (:require [server-fruits.http    :as http]
               [server-fruits.io      :as io]
-              [x.server-core.api     :as a]
               [x.server-media.engine :as engine]))
 
 
@@ -41,14 +29,3 @@
            (http/media-wrap {:body      (io/file                filepath)
                              :mime-type (io/filepath->mime-type filepath)})
            (http/error-wrap {:error-message :file-not-found :status 404}))))
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-init [:router/add-route! :media/download-file
-                                       {:route-template "/media/storage/:filename"
-                                        :get {:handler download-file}}]})

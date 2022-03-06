@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.12.30
-; Description:
-; Version: v0.3.2
-; Compatibility: x3.9.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-media.temporary-handler
+(ns x.server-media.temporary-handler.routes
     (:require [server-fruits.http    :as http]
               [server-fruits.io      :as io]
               [x.server-media.engine :as engine]))
