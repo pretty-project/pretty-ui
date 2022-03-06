@@ -14,11 +14,11 @@
 (a/reg-event-fx
   :clients.client-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-route-parent! "/@app-home/clients"]
-                [:clients.client-editor/render-editor!]]})
+  [:clients.client-editor/render-editor!])
 
 (a/reg-event-fx
   :clients.client-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! :clients.client-editor/view
-                    {:view #'client-editor.views/view}])
+                    {:route-parent "/@app-home/clients"
+                     :view #'client-editor.views/view}])

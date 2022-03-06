@@ -240,8 +240,8 @@
   ;  [item-lister/new-item-select :my-extension :my-type]
   [extension-id item-namespace]
   (if-let [new-item-options @(a/subscribe [:item-lister/get-new-item-options extension-id item-namespace])]
-          (let [error-mode?      @(a/subscribe [:item-lister/error-mode?          extension-id item-namespace])
-                lister-disabled? @(a/subscribe [:item-lister/lister-disabled?     extension-id item-namespace])]
+          (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
+                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
                [elements/select :item-lister/new-item-select
                                 {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
                                  :initial-options new-item-options

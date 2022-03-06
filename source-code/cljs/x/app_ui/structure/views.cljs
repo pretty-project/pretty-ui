@@ -10,7 +10,7 @@
               [x.app-ui.locker             :rename {view app-locker}]
               [x.app-ui.popups.views       :rename {view app-popups}]
               [x.app-ui.progress-bar.views :rename {view progress-bar}]
-              [x.app-ui.surface            :rename {view app-surface}]))
+              [x.app-ui.surface.views      :rename {view app-surface}]))
 
 
 

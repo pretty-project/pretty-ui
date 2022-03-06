@@ -16,9 +16,7 @@
 (a/reg-event-fx
   :clients.client-lister/load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-title! :clients]
-                [:ui/set-route-parent! "/@app-home"]
-                [:clients.client-lister/render-lister!]]})
+  [:clients.client-lister/render-lister!])
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -32,4 +30,6 @@
 (a/reg-event-fx
   :clients.client-lister/render-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :clients.client-lister/view {:view #'client-lister.views/view}])
+  [:ui/set-surface! :clients.client-lister/view
+                    {:route-parent "/@app-home" :title :clients
+                     :view #'client-lister.views/view}])

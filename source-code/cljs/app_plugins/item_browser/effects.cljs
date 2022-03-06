@@ -53,7 +53,7 @@
   ;
   ; @usage
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]))
       ; - Az [:item-browser/browse-item! ...] esemény nem vizsglja, hogy az item-browser plugin
       ;   útvonala létezik-e.
       ; - Ha az aktuális útvonal az item-browser plugin útvonala, akkor átirányít a böngészendő
@@ -62,12 +62,12 @@
       ;   nélkül indítja el az item-browser plugint, ezért lehetséges a plugint útvonalak
       ;   használata nélkül is elindítani, akkor is ha az item-browser plugin útvonalai léteznek.
       ;   Pl.: A plugin popup elemen való megjelenítése, útvonalak használata nélkül ...
-      (if (r subs/route-handled? db extension-id item-namespace)
+;      (if (r subs/route-handled? db extension-id item-namespace)
           ; If handled by route ...
           ;(let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
           ;     [:router/go-to! browser-uri])
           ; If NOT handled by route ...
-          [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}])))
+;          [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}]]))
 
 (a/reg-event-fx
   :item-browser/reload-items!
@@ -140,12 +140,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [db (r events/receive-item! db extension-id item-namespace server-response)]
-           (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]
-                   {:db db :dispatch-if [(r subs/set-title? db extension-id item-namespace)
-                                         [:ui/set-title! item-label]]}
-                   {:db db}))))
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]))
+;      (let [db (r events/receive-item! db extension-id item-namespace server-response)]
+;           (if-let [item-label (r subs/get-item-label db extension-id item-namespace)]
+;                   {:db db :dispatch-if [(r subs/set-title? db extension-id item-namespace)
+;                                         [:ui/set-title! item-label]]
+;                   {:db db}]))
 
 
 

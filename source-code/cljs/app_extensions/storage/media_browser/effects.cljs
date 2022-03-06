@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-browser.effects
-    (:require [app-extensions.storage.media-browser.subs  :as media-browser.subs]
-              [app-fruits.window                          :as window]
+    (:require [app-fruits.window                          :as window]
               [app-extensions.storage.media-browser.views :as media-browser.views]
               [app-plugins.item-browser.api               :as item-browser]
               [mid-fruits.candy                           :refer [param return]]
@@ -23,11 +22,8 @@
   :storage.media-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if (r media-browser.subs/media-browser-mode? db) ; XXX#7157
-          (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
-                  [:storage.media-browser/render-browser!])
-          (if-not (r ui/element-rendered? db :popups :storage.media-picker/view)
-                  [:storage.media-picker/render-picker!]))))
+      (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
+              [:storage.media-browser/render-browser!])))
 
 
 
@@ -150,7 +146,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-browser!
   [:ui/set-surface! :storage.media-browser/view
-                    {:view #'media-browser.views/view}])
+                    {:title :storage :route-parent "/@app-home"
+                     :view #'media-browser.views/view}])
 
 (a/reg-event-fx
   :storage.media-browser/render-rename-item-dialog!

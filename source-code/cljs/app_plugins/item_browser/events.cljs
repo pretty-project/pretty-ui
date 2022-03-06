@@ -87,12 +87,12 @@
   ;  {:item-id (string)(opt)}}
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace browser-props]]
-  (if (r subs/route-handled?     db extension-id item-namespace)
-      (r derive-current-item-id! db extension-id item-namespace)
-      (if-let [item-id (get browser-props :item-id)]
-              (r set-current-item-id! db extension-id item-namespace item-id)
-              (r use-root-item-id!    db extension-id item-namespace))))
+  [db [_ extension-id item-namespace browser-props]])
+;  (if (r subs/route-handled?     db extension-id item-namespace)
+;      (r derive-current-item-id! db extension-id item-namespace)
+;      (if-let [item-id (get browser-props :item-id)]
+;              (r set-current-item-id! db extension-id item-namespace item-id)
+;              (r use-root-item-id!    db extension-id item-namespace)]])
 
 (defn load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!

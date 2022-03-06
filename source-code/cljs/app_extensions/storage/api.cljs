@@ -16,7 +16,6 @@
               [app-extensions.storage.file-uploader.subs]
               [app-extensions.storage.file-uploader.views]
               [app-extensions.storage.media-browser.effects]
-              [app-extensions.storage.media-browser.subs]
               [app-extensions.storage.media-browser.target-selector]
               [app-extensions.storage.media-browser.views]
               [app-extensions.storage.media-picker.effects]
