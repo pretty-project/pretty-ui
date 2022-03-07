@@ -4,11 +4,16 @@
 
 (ns x.app-ui.api
     (:require [x.app-ui.background.views]
-              [x.app-ui.bubbles]
+              [x.app-ui.bubbles.effects]
+              [x.app-ui.bubbles.engine]
+              [x.app-ui.bubbles.subs]
               [x.app-ui.element]
               [x.app-ui.engine]
               [x.app-ui.header.subs]
               [x.app-ui.header.views]
+              [x.app-ui.interface.effects]
+              [x.app-ui.interface.events]
+              [x.app-ui.interface.lifecycles]
               [x.app-ui.locker.views]
               [x.app-ui.popups.effects]
               [x.app-ui.popups.engine]
@@ -31,24 +36,24 @@
               [x.app-ui.themes.lifecycles]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
-              [x.app-ui.graphics.views       :as graphics.views]
-              [x.app-ui.header.events        :as header.events]
-              [x.app-ui.interface            :as interface]
-              [x.app-ui.progress-bar.events  :as progress-bar.events]
-              [x.app-ui.renderer             :as renderer]
-              [x.app-ui.sounds.side-effects  :as sounds.side-effects]
-              [x.app-ui.structure.views      :as structure.views]
-              [x.app-ui.themes.subs          :as themes.subs]
-              [x.app-ui.bubble-body-presets  :as bubble-body-presets]
-              [x.app-ui.popups.views         :as popups.views]))
+              [x.app-ui.bubbles.views       :as bubbles.views]
+              [x.app-ui.graphics.views      :as graphics.views]
+              [x.app-ui.header.events       :as header.events]
+              [x.app-ui.interface.subs      :as interface.subs]
+              [x.app-ui.progress-bar.events :as progress-bar.events]
+              [x.app-ui.renderer            :as renderer]
+              [x.app-ui.sounds.side-effects :as sounds.side-effects]
+              [x.app-ui.structure.views     :as structure.views]
+              [x.app-ui.themes.subs         :as themes.subs]
+              [x.app-ui.popups.views        :as popups.views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-ui.bubble-body-presets
-(def state-changed-bubble-body bubble-body-presets/state-changed-bubble-body)
+; x.app-ui.bubbles.views
+(def state-changed-bubble-body bubbles.views/state-changed-bubble-body)
 
 ; x.app-ui.graphics.views
 (def app-logo          graphics.views/app-logo)
@@ -59,10 +64,10 @@
 (def set-header-title!    header.events/set-header-title!)
 (def remove-header-title! header.events/remove-header-title!)
 
-; x.app-ui.interface
-(def get-interface          interface/get-interface)
-(def application-interface? interface/application-interface?)
-(def website-interface?     interface/website-interface?)
+; x.app-ui.interface.subs
+(def get-interface          interface.subs/get-interface)
+(def application-interface? interface.subs/application-interface?)
+(def website-interface?     interface.subs/website-interface?)
 
 ; x.app-ui.popups.views
 (def popup-accept-button           popups.views/popup-accept-button)

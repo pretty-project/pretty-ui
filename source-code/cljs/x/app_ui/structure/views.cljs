@@ -5,7 +5,7 @@
 (ns x.app-ui.structure.views
     (:require [x.app-core.api              :as a :refer [r]]
               [x.app-ui.background.views   :rename {view app-background}]
-              [x.app-ui.bubbles            :rename {view app-bubbles}]
+              [x.app-ui.bubbles.views      :rename {view app-bubbles}]
               [x.app-ui.header.views       :rename {view app-header}]
               [x.app-ui.locker.views       :rename {view app-locker}]
               [x.app-ui.popups.views       :rename {view app-popups}]

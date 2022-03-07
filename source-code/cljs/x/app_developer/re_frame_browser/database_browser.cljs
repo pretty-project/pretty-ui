@@ -16,10 +16,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (keywords in vector)
+(def HIDDEN-ITEMS [:core :developer :dictionary :elements :environment :locales :router :sync :tools :user :ui])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- map-item-hidden?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [n {:keys [root-level?]}]
-  (and root-level? (-> n namespace some?)))
+  (or (and root-level? (-> n namespace some?))
+      (vector/contains-item? HIDDEN-ITEMS n)))
 
 (defn- render-map-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!

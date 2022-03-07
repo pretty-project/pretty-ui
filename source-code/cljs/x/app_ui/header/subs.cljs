@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.header.subs
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-db.api       :as db]
-              [x.app-ui.interface :as interface]))
+    (:require [x.app-core.api          :as a :refer [r]]
+              [x.app-db.api            :as db]
+              [x.app-ui.interface.subs :as interface.subs]))
 
 
 
@@ -24,7 +24,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (r interface/application-interface? db))
+  (r interface.subs/application-interface? db))
 
 (defn get-route-parent
   ; WARNING! NON-PUBLIC! DO NOT USE!

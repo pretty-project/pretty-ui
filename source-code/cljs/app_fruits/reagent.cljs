@@ -81,12 +81,12 @@
 
 (defn lifecycles
   ; @param (keyword or string)(opt) component-id
-  ; @param (map) lifecyles
+  ; @param (map) lifecycles
   ;  {...}
   ;
   ; @return (map)
-  ([lifecyles]
-   (reagent.core/create-class lifecyles))
+  ([lifecycles]
+   (reagent.core/create-class lifecycles))
 
   ([component-id {:keys [component-did-mount component-did-update reagent-render] :as lifecycles}]
    (let [mount-id (random-uuid)]

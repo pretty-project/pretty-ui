@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.effects
-    (:require [mid-fruits.candy                  :refer [param]]
+    (:require [mid-fruits.candy                  :refer [param return]]
               [mid-fruits.uri                    :as uri]
               [server-plugins.item-lister.engine :as engine]
               [x.server-core.api                 :as a :refer [r]]))
@@ -20,9 +20,11 @@
   ;  {:base-route (string)}
   ;
   ; @return (map)
-  ;  {:base-route (string)}
+  ;  {:base-route (string)
+  ;   :title (metamorphic-content)}
   [extension-id item-namespace {:keys [base-route] :as lister-props}]
-  (merge {:base-route (uri/valid-path base-route)}
+  (merge {:base-route (uri/valid-path base-route)
+          :title extension-id}
          (param lister-props)))
 
 
@@ -36,7 +38,9 @@
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
   ;  {:base-route (string)
-  ;   :on-load (metamorphic-event)}
+  ;   :on-load (metamorphic-event)
+  ;   :title (metamorphic-content)
+  ;    Default: extension-id}
   ;
   ; @usage
   ;  [:item-lister/init-lister! :my-extension :my-type {...}]

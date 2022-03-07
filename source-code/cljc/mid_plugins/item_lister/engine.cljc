@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-lister.engine
-    (:require [mid-fruits.keyword :as keyword]
+    (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.keyword :as keyword]
               [mid-fruits.vector  :as vector]))
 
 
