@@ -10,8 +10,7 @@
               [mid-fruits.loop                 :refer [some-indexed]]
               [x.app-core.api                  :as a :refer [r]]
               [x.app-db.api                    :as db]
-              [x.app-router.api                :as router]
-              [x.mid-plugins.item-browser.subs :as subs]))
+              [x.app-router.api                :as router]))
 
 
 
@@ -24,14 +23,10 @@
 (def lister-disabled?       app-plugins.item-lister.subs/lister-disabled?)
 (def toggle-item-selection? app-plugins.item-lister.subs/toggle-item-selection?)
 
-; mid-plugins.item-browser.subs
-(def get-browser-props subs/get-browser-props)
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

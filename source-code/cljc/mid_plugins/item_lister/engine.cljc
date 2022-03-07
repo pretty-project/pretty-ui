@@ -114,6 +114,40 @@
                 (name item-namespace) "-lister")
            "transfer-lister-props"))
 
+(defn route-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/route-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension.my-type-lister/route
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-lister")
+           "route"))
+
+(defn route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) lister-props
+  ;  {:base-route (string)}
+  ;
+  ; @example
+  ;  (engine/route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  =>
+  ;  "/@app-home/my-extension"
+  ;
+  ; @return (string)
+  [_ _ {:keys [base-route]}]
+  (return base-route))
+
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -123,12 +157,12 @@
   ; @example
   ;  (engine/add-new-item-event :my-extension :my-type)
   ;  =>
-  ;  [:my-extension.my-type-browser/add-new-item!]
+  ;  [:my-extension.my-type-lister/add-new-item!]
   ;
   ; @return (event-vector)
   [extension-id item-namespace]
   (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-browser")
+                               (name item-namespace) "-lister")
                           "add-new-item!")]
        [event-id]))
 

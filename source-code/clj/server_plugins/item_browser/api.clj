@@ -4,8 +4,6 @@
 
 (ns server-plugins.item-browser.api
     (:require [server-plugins.item-browser.effects]
-              [server-plugins.item-browser.events]
-              [server-plugins.item-browser.subs]
               [server-plugins.item-browser.engine :as engine]))
 
 

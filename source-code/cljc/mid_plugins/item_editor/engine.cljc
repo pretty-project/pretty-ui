@@ -206,6 +206,40 @@
                 (name item-namespace) "-editor")
            "transfer-editor-props"))
 
+(defn route-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (engine/route-id :my-extension :my-type)
+  ;  =>
+  ;  :my-extension.my-type-editor/route
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace]
+  (keyword (str (name extension-id)   "."
+                (name item-namespace) "-editor")
+           "route"))
+
+(defn route-template
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  ;  {:base-route (string)}
+  ;
+  ; @example
+  ;  (engine/extended-route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  =>
+  ;  "/@app-home/my-extension/:item-id"
+  ;
+  ; @return (string)
+  [_ _ {:keys [base-route]}]
+  (str base-route "/:item-id"))
+
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
