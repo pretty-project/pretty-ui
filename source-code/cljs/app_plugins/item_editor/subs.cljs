@@ -12,22 +12,21 @@
               [x.app-core.api                 :as a :refer [r]]
               [x.app-db.api                   :as db]
               [x.app-elements.api             :as elements]
-              [x.app-sync.api                 :as sync]))
+              [x.app-sync.api                 :as sync]
+              [x.mid-plugins.item-editor.subs :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-editor.subs
+(def get-editor-props subs/get-editor-props)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-editor-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (get-in db [extension-id :item-editor/meta-items]))
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

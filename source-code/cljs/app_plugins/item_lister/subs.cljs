@@ -11,7 +11,16 @@
               [x.app-core.api                 :as a :refer [r]]
               [x.app-db.api                   :as db]
               [x.app-environment.api          :as environment]
-              [x.app-sync.api                 :as sync]))
+              [x.app-sync.api                 :as sync]
+              [x.mid-plugins.item-lister.subs :as subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid-plugins.item-lister.subs
+(def get-lister-props subs/get-lister-props)
 
 
 

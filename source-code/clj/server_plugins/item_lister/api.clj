@@ -3,7 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-lister.api
-    (:require [server-plugins.item-lister.engine :as engine]))
+    (:require [server-plugins.item-lister.effects]
+              [server-plugins.item-lister.events]
+              [server-plugins.item-lister.subs]
+              [server-plugins.item-lister.engine :as engine]))
 
 
 

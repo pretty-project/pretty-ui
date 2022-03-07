@@ -21,19 +21,9 @@
 (def mutation-name   engine/mutation-name)
 (def resolver-id     engine/resolver-id)
 (def collection-name engine/collection-name)
+(def transfer-id     engine/transfer-id)
 (def component-id    engine/component-id)
 (def dialog-id       engine/dialog-id)
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (keywords in vector)
-(def BROWSER-PROPS-KEYS [:label :label-key :path-key :root-item-id :routed?])
-
-; @constant (keywords in vector)
-(def LISTER-PROPS-KEYS [:download-limit :label :order-by :order-by-options :search-keys])
 
 
 

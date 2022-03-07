@@ -21,5 +21,6 @@
 (def mutation-name      engine/mutation-name)
 (def resolver-id        engine/resolver-id)
 (def collection-name    engine/collection-name)
+(def transfer-id        engine/transfer-id)
 (def component-id       engine/component-id)
 (def dialog-id          engine/dialog-id)

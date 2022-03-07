@@ -3,7 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-plugins.item-editor.api
-    (:require [server-plugins.item-editor.engine    :as engine]
+    (:require [server-plugins.item-editor.effects]
+              [server-plugins.item-editor.events]
+              [server-plugins.item-editor.subs]
+              [server-plugins.item-editor.engine    :as engine]
               [server-plugins.item-editor.resolvers :as resolvers]))
 
 
