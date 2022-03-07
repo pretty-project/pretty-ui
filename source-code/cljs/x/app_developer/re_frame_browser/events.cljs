@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.re-frame-browser.events
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a]))
+    (:require [mid-fruits.map                        :refer [dissoc-in]]
+              [mid-fruits.vector                     :as vector]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-developer.re-frame-browser.subs :as re-frame-browser.subs]))
 
 
 
@@ -51,16 +53,16 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :database-browser/go-to! go-to!)
+(a/reg-event-db :re-frame-browser/go-to! go-to!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :database-browser/go-up! go-up!)
+(a/reg-event-db :re-frame-browser/go-up! go-up!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :database-browser/toggle-subscription! toggle-subscription!)
+(a/reg-event-db :re-frame-browser/toggle-subscription! toggle-subscription!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :database-browser/toggle-visibility! toggle-visibility!)
+(a/reg-event-db :re-frame-browser/toggle-visibility! toggle-visibility!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :database-browser/toggle-data-view! toggle-data-view!)
+(a/reg-event-db :re-frame-browser/toggle-data-view! toggle-data-view!)

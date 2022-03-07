@@ -3,16 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.re-frame-browser.views
-    (:require [mid-fruits.candy     :refer [param return]]
-              [mid-fruits.map       :as map :refer [dissoc-in]]
-              [mid-fruits.mixed     :as mixed]
-              [mid-fruits.pretty    :as pretty]
-              [mid-fruits.string    :as string]
-              [mid-fruits.vector    :as vector]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-db.api         :as db]
-              [x.app-elements.api   :as elements]))
+    (:require [mid-fruits.candy                        :refer [param return]]
+              [mid-fruits.map                          :as map]
+              [mid-fruits.pretty                       :as pretty]
+              [mid-fruits.string                       :as string]
+              [mid-fruits.vector                       :as vector]
+              [x.app-core.api                          :as a]
+              [x.app-elements.api                      :as elements]
+              [x.app-developer.re-frame-browser.engine :as re-frame-browser.engine]))
 
 
 
@@ -53,38 +51,38 @@
 (defn item-type-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div.x-re-frame-browser--header--item-type {:style {:opacity ".5" :padding-right "12px"}}
-                                              (str "(" item-type ")")])
+  [:div {:style {:opacity ".5" :padding-right "12px"}}
+        (str "(" item-type ")")])
 
 (defn item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])
         root-level?  @(a/subscribe [:re-frame-browser/root-level?])]
-       [:div.x-re-frame-browser--header--item-label {:style {:font-weight "500" :font-size "16px"}}
-                                                    (if root-level? (str "Re-Frame DB")
-                                                                    (last current-path))]))
+       [:div {:style {:font-weight "500" :font-size "16px"}}
+             (if root-level? (str "Re-Frame DB")
+                             (last current-path))]))
 
 (defn label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div.x-re-frame-browser--label-bar {:style {:display "flex"}}
-                                      [item-type-label item-type]
-                                      [item-label]])
+  [:div {:style {:display "flex"}}
+        [item-type-label item-type]
+        [item-label]])
 
 (defn breadcrumbs
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-       [:div.x-re-frame-browser--header--current-path {:style {:font-weight "500" :font-size "12px" :opacity ".5"}}
-                                                      (string/join current-path " / ")]))
+       [:div {:style {:font-weight "500" :font-size "12px" :opacity ".5"}}
+             (string/join current-path " / ")]))
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div.x-re-frame-browser--header {:style {:margin-bottom "12px"}}
-                                   [label-bar item-type]
-                                   [breadcrumbs]])
+  [:div {:style {:margin-bottom "12px"}}
+        [label-bar item-type]
+        [breadcrumbs]])
 
 
 
@@ -189,7 +187,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [& tools]
   (letfn [(f [%1 %2] (conj %1 [%2]))]
-         (reduce f [:div.x-re-frame-browser--toolbar {:style {:display "flex" :margin-bottom "12px"}}] tools)))
+         (reduce f [:div {:style {:display "flex" :margin-bottom "12px"}}] tools)))
 
 
 
@@ -198,79 +196,78 @@
 
 (defn map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-path] :as body-props} map-key]
-  [:div.x-clickable {:on-click #(a/dispatch [:re-frame-browser/navigate! (vector/conj-item current-path map-key)])
-                     :style (if (map-item-hidden? map-key body-props) {:opacity ".65"})}
-                    (if (string? map-key)
-                        (string/quotes map-key)
-                        (str           map-key))])
+  [map-key]
+  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+       [:div.x-clickable {:on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])}
+                         (if (string? map-key)
+                             (string/quotes map-key)
+                             (str           map-key))]))
 
 (defn map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item show-original?] :as body-props}]
-  (let [map-keys (vector/abc-items (map/get-keys current-item))]
-       [:div.x-re-frame-browser--map-item
-         [header          body-id body-props "map"]
-         [toolbar         body-id body-props go-home-button go-up-button remove-item-button
-                                             toggle-original-view-button toggle-visibility-button]
-         [horizontal-line body-id body-props]
-         (if (empty? current-item) "Empty")
-         (reduce #(if (render-map-item? %2 body-props)
-                      (conj             %1 [map-key body-id body-props %2])
-                      (return           %1))
-                  [:div.x-re-frame-browser--map-item--keys]
-                  (param map-keys))
-         (if show-original? [:pre.x-re-frame-browser--map-item--original-view
-                               {:style {:margin-top "24px" :font-size "12px"}}
-                               (pretty/mixed->string current-item)])]))
+  []
+  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])
+        root-level?  @(a/subscribe [:re-frame-browser/root-level?])
+        show-hidden? @(a/subscribe [:re-frame-browser/get-meta-item :show-hidden?])
+        map-keys      (-> current-item map/get-keys vector/abc-items)]
+       [:div [header "map"]
+             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button toggle-visibility-button]
+             [horizontal-line]
+             (if (empty? current-item) "Empty")
+             (letfn [(f [%1 %2] (if (or show-hidden? (-> %2 re-frame-browser.engine/map-item-hidden? not)
+                                                     (not root-level?))
+                                    (conj   %1 [map-key %2])
+                                    (return %1)))]
+                    (reduce f [:div] map-keys))
+             (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
+                     [:pre {:style {:margin-top "24px" :font-size "12px"}}
+                           (pretty/mixed->string current-item)])]))
 
 (defn vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item show-original?] :as body-props}]
-  [:div.x-re-frame-browser--vector-item
-    [header          body-id body-props "vector"]
-    [toolbar         body-id body-props go-home-button go-up-button remove-item-button
-                                        toggle-original-view-button]
-    [horizontal-line body-id body-props]
-    (if (empty? current-item) "Empty")
-    (reduce #(conj %1 [:div (cond (nil?    %2) (str "nil")
-                                  (string? %2) (string/quotes %2)
-                                  :else        (str           %2))])
-             [:div.x-re-frame-browser--vector-item--items]
-             (param current-item))
-    (if show-original? [:pre.x-re-frame-browser--map-item--original-view
-                          {:style {:margin-top "24px" :font-size "12px"}}
-                          (pretty/mixed->string current-item)])])
+  []
+  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+       [:div [header "vector"]
+             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button]
+             [horizontal-line]
+             (if (empty? current-item) "Empty")
+             (letfn [(f [%1 %2] (conj %1 [:div (cond (nil?    %2) (str "nil")
+                                                     (string? %2) (string/quotes %2)
+                                                     :else        (str           %2))]))]
+                    (reduce f [:div] current-item))
+             (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
+                     [:pre {:style {:margin-top "24px" :font-size "12px"}}
+                           (pretty/mixed->string current-item)])]))
 
 (defn boolean-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item current-path] :as body-props}]
-  [:div.x-re-frame-browser--boolean-item
-    [header          body-id body-props "boolean"]
-    [toolbar         body-id body-props go-home-button go-up-button remove-item-button swap-boolean-button]
-    [horizontal-line body-id body-props]
-    [:div.x-re-frame-browser--item (str current-item)]])
+  []
+  [:div [header "boolean"]
+        [toolbar go-home-button go-up-button remove-item-button swap-boolean-button]
+        [horizontal-line]
+        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+             [:div (str current-item)])])
 
 (defn integer-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item] :as body-props}]
-  [:div.x-re-frame-browser--integer-item
-    [header          body-id body-props "integer"]
-    [toolbar         body-id body-props go-home-button go-up-button remove-item-button
-                                        decrease-integer-button increase-integer-button]
-    [horizontal-line body-id body-props]
-    [:div.x-re-frame-browser--item (str current-item)]])
+  []
+  [:div [header "integer"]
+        [toolbar go-home-button go-up-button remove-item-button decrease-integer-button increase-integer-button]
+        [horizontal-line]
+        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+             [:div (str current-item)])])
 
 (defn string-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [body-id {:keys [current-item current-path edit-string?] :as body-props}]
-  [:div.x-re-frame-browser--string-item
-    [header          body-id body-props "string"]
-    [toolbar         body-id body-props go-home-button go-up-button remove-item-button
-                                        edit-string-button]
-    [horizontal-line body-id body-props]
-    (if edit-string? [elements/text-field {:value-path current-path}]
-                     [:div.x-re-frame-browser--item (string/quotes current-item)])])
+  []
+  [:div [header "string"]
+        [toolbar go-home-button go-up-button remove-item-button edit-string-button]
+        [horizontal-line]
+        (if-let [edit-string? @(a/subscribe [:re-frame-browser/get-meta-item :edit-string?])]
+                (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+                     [elements/text-field {:value-path current-path}])
+                (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+                     [:div (string/quotes current-item)]))])
 
 (defn keyword-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -322,7 +319,8 @@
   [:div [header "subscription-vector"]
         [toolbar go-home-button go-up-button remove-item-button toggle-subscription-button]
         [horizontal-line]
-        [:div (str current-item)]
+        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+             [:div (str current-item)])
         (if-let [subscribe? @(a/subscribe [:re-frame-browser/get-meta-item :subscribe?])]
                 [subscribed-value])])
 
@@ -332,7 +330,8 @@
   [:div [header "unknown"]
         [toolbar go-home-button go-up-button remove-item-button]
         [horizontal-line]
-        [:div (str current-item)]])
+        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+             [:div (str current-item)])])
 
 
 

@@ -27,7 +27,7 @@
 ;; -- Debug subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-debug-route-string
+(defn get-debug-route-string
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -48,7 +48,7 @@
   [db _]
   (get-in db [:router :route-handler/client-routes]))
 
-(defn- get-router-routes
+(defn get-router-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (vector)
@@ -56,7 +56,7 @@
   (let [client-routes (r get-client-routes db)]
        (engine/routes->router-routes client-routes)))
 
-(defn- get-router
+(defn get-router
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (?)
@@ -64,7 +64,7 @@
   (let [router-routes (r get-router-routes db)]
        (reitit.frontend/router router-routes)))
 
-(defn- get-route-match
+(defn get-route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-template
@@ -75,7 +75,7 @@
   (let [router (r get-router db)]
        (reitit.frontend/match-by-path router route-template)))
 
-(defn- route-template-exists?
+(defn route-template-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -101,7 +101,7 @@
   (let [route-props (get-in db [:router :route-handler/client-routes route-id])]
        (some? route-props)))
 
-(defn- route-restricted?
+(defn route-restricted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -111,7 +111,7 @@
   (let [route-restricted? (get-in db [:router :route-handler/client-routes route-id :restricted?])]
        (boolean route-restricted?)))
 
-(defn- require-authentication?
+(defn require-authentication?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -126,7 +126,7 @@
 ;; -- Match subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- match-route-id
+(defn match-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -267,7 +267,7 @@
         current-route-path (r get-current-route-path db)]
        (= current-route-path app-home)))
 
-(defn- route-id-changed?
+(defn route-id-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -277,7 +277,7 @@
   (let [current-route-id (r get-current-route-id db)]
        (not= route-id current-route-id)))
 
-(defn- reload-same-path?
+(defn reload-same-path?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -287,14 +287,14 @@
   (let [current-route-string (r get-current-route-string db)]
        (and route-handler.engine/RELOAD-SAME-PATH? (= route-string current-route-string))))
 
-(defn- get-history
+(defn get-history
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (keywords in vector)
   [db _]
   (get-in db [:router :route-handler/meta-items :history]))
 
-(defn- get-previous-route-id
+(defn get-previous-route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (keyword)
@@ -320,6 +320,9 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :router/get-client-routes get-client-routes)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :router/route-template-exists? route-template-exists?)
