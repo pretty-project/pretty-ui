@@ -11,16 +11,23 @@
 
 
 
-;; -- "Új elem létrehozása" útvonal használata  -------------------------------
+;; -- "Új elem létrehozása" esemény használata  -------------------------------
 ;; ----------------------------------------------------------------------------
+
+; Az item-lister/header komponens {:new-item-event [...]} tulajdonságának használatával
+; a komponens menü elemei között megjelenik az "Új elem hozzáadása" gomb, aminek megnyomására
+; megtörténik a {:new-item-event [...]} tulajdonságként átadott esemény.
 
 
 
 ;; -- "Új elem létrehozása" opciók használata  --------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A [:my-extension.my-type-lister/add-new-item! ...] esemény használatához szükséges beállítanod
-; a {:new-item-options [...]} beállítást!
+; - Az item-lister/header komponens {:new-item-options [...]} tulajdonságának használatával
+;   a komponens menü elemei között megjelenik az "Új elem hozzáadása" gomb, aminek megnyomására
+;   megjelenik egy párbeszédablak a {:new-item-options [...]} tulajdonságként átadott vektor elemeivel
+; - Az egyes elemek kiválasztásakor megtörténik a [:my-extension.my-type-lister/add-new-item! ...]
+;   esemény, ami utolsó paraméterként megkapja a kiválasztott értéket.
 (a/reg-event-fx
   :my-extension.my-type-lister/add-new-item!
   (fn [_ [_ selected-option]]
@@ -130,7 +137,7 @@
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :my-extension :my-type])]
        [layouts/layout-a surface-id {:header [item-lister/header :my-extension :my-type {}]
-                                     :body   [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]
+                                     :body   [item-lister/body   :my-extension :my-type {:list-element   [:div "My item"]}]
                                      :description description}]))
 
 

@@ -300,13 +300,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:ui-title (metamorphic-content)(opt)}
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [ui-title] :as body-props}]]
+  (fn [{:keys [db]} [_ extension-id item-namespace body-props]]
       {:db (r events/init-body! db extension-id item-namespace body-props)
-       :dispatch-n [(if ui-title [:ui/set-title! ui-title])
-                    ; XXX#5660
-                    ; Az :item-lister/keypress-listener biztosítja, hogy a keypress-handler aktív legyen.
-                    [:environment/reg-keypress-listener! :item-lister/keypress-listener]]}))
+       ; XXX#5660
+       ; Az :item-lister/keypress-listener figyelő biztosítja, hogy a keypress-handler aktív legyen.
+       :dispatch [:environment/reg-keypress-listener! :item-lister/keypress-listener]}))
 
 (a/reg-event-fx
   :item-lister/init-header!
@@ -317,3 +315,22 @@
   ; @param (map) header-props
   (fn [{:keys [db]} [_ extension-id item-namespace header-props]]
       {:db (r events/init-header! db extension-id item-namespace header-props)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/load-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [parent-route (r subs/get-parent-route db extension-id item-namespace)
+            route-title  (r subs/get-meta-item    db extension-id item-namespace :route-title)
+            on-load      (r subs/get-meta-item    db extension-id item-namespace :on-load)]
+           {:db (as-> db % (if-not route-title  % (r ui/set-header-title! % route-title))
+                           (if-not parent-route % (r ui/set-parent-route! % parent-route)))
+            :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))

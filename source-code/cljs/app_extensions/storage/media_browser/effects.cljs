@@ -146,8 +146,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-browser!
   [:ui/set-surface! :storage.media-browser/view
-                    {:title :storage :route-parent "/@app-home"
-                     :view #'media-browser.views/view}])
+                    {:view #'media-browser.views/view}])
 
 (a/reg-event-fx
   :storage.media-browser/render-rename-item-dialog!

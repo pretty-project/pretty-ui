@@ -26,12 +26,12 @@
   [db _]
   (r interface.subs/application-interface? db))
 
-(defn get-route-parent
+(defn get-parent-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (string)
   [db _]
-  (get-in db [:ui :header/meta-items :route-parent]))
+  (get-in db [:ui :header/meta-items :parent-route]))
 
 
 
@@ -45,4 +45,4 @@
 (a/reg-sub :ui/render-header? render-header?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/get-route-parent get-route-parent)
+(a/reg-sub :ui/get-parent-route get-parent-route)

@@ -58,7 +58,7 @@
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :clients :client])]
        [layouts/layout-a :surface-id {:description description
-                                      :header [item-lister/header :clients :client {:new-item-route "/@app-home/clients/new-client"}]
+                                      :header [item-lister/header :clients :client {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
                                       :body   [item-lister/body   :clients :client {:list-element #'client-item
                                                                                     :item-actions [:delete :duplicate]
                                                                                     :search-keys  [:name   :email-address]

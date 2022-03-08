@@ -20,5 +20,4 @@
   :clients.client-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! :clients.client-editor/view
-                    {:route-parent "/@app-home/clients"
-                     :view #'client-editor.views/view}])
+                    {:view #'client-editor.views/view}])

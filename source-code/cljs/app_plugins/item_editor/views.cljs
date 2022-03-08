@@ -344,7 +344,7 @@
   ;    Default: false
   ;   :form-element (metamorphic-content)
   ;   :item-id (string)
-  ;   :new-item? (boolean)(opt)
+  ;   :new-item-id (string)(opt)
   ;    Default: false
   ;   :parent-route (string)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)}

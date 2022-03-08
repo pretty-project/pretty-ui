@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-editor.lifecycles
-    (:require [x.server-core.api :as a]))
+    (:require [server-plugins.item-editor.api]
+              [x.server-core.api :as a]))
 
 
 
@@ -12,7 +13,6 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:router/add-route! :clients.client-editor/route
-                                       {:route-template "/@app-home/clients/:client-id"
-                                        :client-event   [:clients.client-editor/load-editor!]
-                                        :restricted?    true}]})
+  {:on-server-boot [:item-editor/init-editor! :clients :client
+                                              {:base-route "/@app-home/clients"
+                                               :on-load    [:clients.client-editor/load-editor!]}]})

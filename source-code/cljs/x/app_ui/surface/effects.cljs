@@ -3,10 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.effects
-    (:require [mid-fruits.candy       :refer [param]]
-              [x.app-core.api         :as a :refer [r]]
-              [x.app-ui.header.events :as header.events]
-              [x.app-ui.renderer      :as renderer]))
+    (:require [mid-fruits.candy  :refer [param]]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-ui.renderer :as renderer]))
 
 
 
@@ -71,8 +70,6 @@
   ;   :initializer (metamorphic-event)(opt)
   ;   :reveal-animated? (boolean)(opt)
   ;    Default: false
-  ;   :route-parent (string)(opt)
-  ;   :title (metamorphic-content)(opt)
   ;   :trim-content? (boolean)(opt)
   ;    A surface felületéről az X tengelyen túlméretes tartalom elrejtése.
   ;    Default: false
@@ -94,9 +91,6 @@
   ;  (defn my-view [surface-id] [:div "My surface"])
   ;  [:ui/set-surface! {:view {:content #'my-view}}]
   [a/event-vector<-id]
-  (fn [{:keys [db]} [_ surface-id {:keys [route-parent title] :as surface-props}]]
+  (fn [{:keys [db]} [_ surface-id surface-props]]
       (let [surface-props (surface-props-prototype surface-props)]
-           {:db (as-> db % (if-not title        % (r header.events/set-header-title! % title))
-                           (if-not route-parent % (r header.events/set-route-parent! % route-parent)))
-            :dispatch-n [(if title [:ui/set-window-title! title])
-                         [:ui/render-surface! surface-id surface-props]]})))
+           [:ui/render-surface! surface-id surface-props])))

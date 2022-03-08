@@ -21,10 +21,10 @@
   ;
   ; @return (map)
   ;  {:base-route (string)
-  ;   :title (metamorphic-content)}
+  ;   :route-title (metamorphic-content)}
   [extension-id item-namespace {:keys [base-route] :as lister-props}]
   (merge {:base-route (uri/valid-path base-route)
-          :title extension-id}
+          :route-title extension-id}
          (param lister-props)))
 
 
@@ -39,7 +39,7 @@
   ; @param (map) lister-props
   ;  {:base-route (string)
   ;   :on-load (metamorphic-event)
-  ;   :title (metamorphic-content)
+  ;   :route-title (metamorphic-content)(opt)
   ;    Default: extension-id}
   ;
   ; @usage

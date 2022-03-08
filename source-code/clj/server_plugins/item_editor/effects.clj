@@ -21,10 +21,10 @@
   ;
   ; @return (map)
   ;  {:base-route (string)
-  ;   :title (keyword)}
+  ;   :route-title (keyword)}
   [extension-id item-namespace {:keys [base-route] :as editor-props}]
   (merge {:base-route (uri/valid-path base-route)
-          :title :auto}
+          :route-title :auto}
          (param editor-props)))
 
 
@@ -39,7 +39,7 @@
   ; @param (map) editor-props
   ;  {:base-route (string)
   ;   :on-load (metamorphic-event)
-  ;   :title (keyword or metamorphic-content) :auto}
+  ;   :route-title (keyword or metamorphic-content)(opt) :auto}
   ;
   ; @usage
   ;  [:item-editor/init-editor! :my-extension :my-type {...}]

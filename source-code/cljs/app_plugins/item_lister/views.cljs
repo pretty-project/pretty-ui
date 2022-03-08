@@ -224,13 +224,13 @@
   ; @usage
   ;  [item-lister/new-item-button :my-extension :my-type]
   [extension-id item-namespace]
-  (if-let [new-item-route @(a/subscribe [:item-lister/get-new-item-route extension-id item-namespace])]
+  (if-let [new-item-event @(a/subscribe [:item-lister/get-new-item-event extension-id item-namespace])]
           (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
                 lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
                [elements/icon-button :item-lister/new-item-button
                                      {:icon :add_circle :preset :primary :tooltip :add-new!
                                       :disabled? (or error-mode? lister-disabled?)
-                                      :on-click  [:router/go-to! new-item-route]}])))
+                                      :on-click  new-item-event}])))
 
 (defn new-item-select
   ; @param (keyword) extension-id
@@ -409,7 +409,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) header-props
   ;  {:menu-element (metamorphic-content)(opt)
-  ;   :new-item-route (string)(opt)
+  ;   :new-item-event (metamorphic-event)(opt)
   ;   :new-item-options (vector)(opt)}
   ;
   ; @usage

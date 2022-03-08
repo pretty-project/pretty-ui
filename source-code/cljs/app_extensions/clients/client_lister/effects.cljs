@@ -31,5 +31,4 @@
   :clients.client-lister/render-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/set-surface! :clients.client-lister/view
-                    {:route-parent "/@app-home" :title :clients
-                     :view #'client-lister.views/view}])
+                    {:view #'client-lister.views/view}])

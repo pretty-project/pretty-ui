@@ -32,18 +32,18 @@
   [db [_ header-title]]
   (dissoc-in db [:ui :header/meta-items :header-title]))
 
-(defn set-route-parent!
-  ; @param (string) route-parent
+(defn set-parent-route!
+  ; @param (string) parent-route
   ;
   ; @usage
-  ;  (r ui/set-route-parent! "/my-route")
+  ;  (r ui/set-parent-route! "/my-route")
   ;
   ; @usage
-  ;  (r ui/set-route-parent! "/@app-home")
+  ;  (r ui/set-parent-route! "/@app-home")
   ;
   ; @return (map)
-  [db [_ route-parent]]
-  (assoc-in db [:ui :header/meta-items :route-parent] route-parent))
+  [db [_ parent-route]]
+  (assoc-in db [:ui :header/meta-items :parent-route] parent-route))
 
 
 
@@ -59,8 +59,8 @@
 (a/reg-event-db :ui/remove-header-title! remove-header-title!)
 
 ; @usage
-;  [:ui/set-route-parent! "/my-route"]
+;  [:ui/set-parent-route! "/my-route"]
 ;
 ; @usage
-;  [:ui/set-route-parent! "/@app-home"]
-(a/reg-event-db :ui/set-route-parent! set-route-parent!)
+;  [:ui/set-parent-route! "/@app-home"]
+(a/reg-event-db :ui/set-parent-route! set-parent-route!)

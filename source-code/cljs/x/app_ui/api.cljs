@@ -63,6 +63,7 @@
 ; x.app-ui.header.events
 (def set-header-title!    header.events/set-header-title!)
 (def remove-header-title! header.events/remove-header-title!)
+(def set-parent-route!    header.events/set-parent-route!)
 
 ; x.app-ui.interface.subs
 (def get-interface          interface.subs/get-interface)

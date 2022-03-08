@@ -36,6 +36,29 @@
            ; 2.
            (string/starts-with!   "/")))
 
+(defn uri->parent-uri
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (uri/uri->parent-uri "/scooby/doo")
+  ;  =>
+  ;  "/scooby"
+  ;
+  ; @example
+  ;  (uri/uri->parent-uri "/scooby")
+  ;  =>
+  ;  "/"
+  ;
+  ; @example
+  ;  (uri/uri->parent-uri "/")
+  ;  =>
+  ;  "/"
+  ;
+  ; @return (string)
+  [uri]
+  (-> uri (string/before-last-occurence "/")
+          (string/starts-with!          "/")))
+
 (defn uri->protocol
   ; @param (string) uri
   ;

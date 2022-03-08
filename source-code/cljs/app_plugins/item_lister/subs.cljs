@@ -6,6 +6,7 @@
     (:require [app-plugins.item-lister.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
               [mid-fruits.logical             :refer [nor]]
+              [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
               [x.app-components.api           :as components]
               [x.app-core.api                 :as a :refer [r]]
@@ -49,10 +50,13 @@
   [db [_ extension-id item-namespace]]
   ; Az item-lister plugin ...
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
-  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési és rendezési beállításokkal,
-  ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet a legutóbbi kereséséhez!
+  ; ... a további betöltődésekkor ...
+  ;     ... letölti az elemeket a legutóbb használt keresési és rendezési beállításokkal, így a felhasználó
+  ;         az egyes elemek megtekintése/szerkesztése/... után visszatérhet a legutóbbi kereséséhez!
+  ;     ... megőrzi a plugin szerver-oldalról érkezett beállításait.
   (let [lister-props (r get-lister-props db extension-id item-namespace)]
-       (select-keys lister-props [:order-by :search-term])))
+       (select-keys lister-props [:base-route :on-load :route-title ; <- szerver-oldalról érkezett beállítások
+                                  :order-by :search-term])))        ; <- keresési és rendezési beállítások
 
 (defn get-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -292,15 +296,15 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :new-item-options))
 
-(defn get-new-item-route
+(defn get-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (vector)
+  ; @return (metamorphic-event)
   [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :new-item-route))
+  (r get-meta-item db extension-id item-namespace :new-item-event))
 
 (defn get-list-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -321,6 +325,17 @@
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :menu-element))
+
+(defn get-parent-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (if-let [base-route (r get-meta-item db extension-id item-namespace :base-route)]
+          (uri/uri->parent-uri base-route)))
 
 
 
@@ -676,8 +691,8 @@
 ; @param (keyword) item-namespace
 ;
 ; @usage
-;  [:item-lister/get-new-item-route :my-extension :my-type]
-(a/reg-sub :item-lister/get-new-item-route get-new-item-route)
+;  [:item-lister/get-new-item-event :my-extension :my-type]
+(a/reg-sub :item-lister/get-new-item-event get-new-item-event)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
