@@ -5,6 +5,7 @@
 (ns mid-plugins.item-lister.engine
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.uri     :as uri]
               [mid-fruits.vector  :as vector]))
 
 
@@ -137,17 +138,17 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) lister-props
-  ;  {:base-route (string)}
+  ; @param (map) editor-props
+  ;  {:route-template (string)}
   ;
   ; @example
-  ;  (engine/route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  (engine/route-template :my-extension :my-type {:route-template "/@app-home/my-extension"})
   ;  =>
   ;  "/@app-home/my-extension"
   ;
-  ; @return (string)
-  [_ _ {:keys [base-route]}]
-  (return base-route))
+  ; @return (keyword)
+  [extension-id item-namespace {:keys [route-template]}]
+  (uri/valid-path route-template))
 
 (defn add-new-item-event
   ; WARNING! NON-PUBLIC! DO NOT USE!

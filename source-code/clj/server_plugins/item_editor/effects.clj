@@ -4,7 +4,6 @@
 
 (ns server-plugins.item-editor.effects
     (:require [mid-fruits.candy                  :refer [param return]]
-              [mid-fruits.uri                    :as uri]
               [server-plugins.item-editor.engine :as engine]
               [x.server-core.api                 :as a :refer [r]]))
 
@@ -17,14 +16,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) editor-props
-  ;  {:base-route (string)}
   ;
   ; @return (map)
   ;  {:base-route (string)
+  ;   :route-template (string)
   ;   :route-title (keyword)}
-  [extension-id item-namespace {:keys [base-route] :as editor-props}]
-  (merge {:base-route (uri/valid-path base-route)
-          :route-title :auto}
+  [extension-id item-namespace editor-props]
+  (merge {:base-route     (engine/base-route     extension-id item-namespace editor-props)
+          :route-template (engine/route-template extension-id item-namespace editor-props)
+          :route-title    (param :auto)}
          (param editor-props)))
 
 
@@ -37,8 +37,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  ;  {:base-route (string)
-  ;   :on-load (metamorphic-event)
+  ;  {:on-load (metamorphic-event)
+  ;   :route-template (string)
+  ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (keyword or metamorphic-content)(opt) :auto}
   ;
   ; @usage
@@ -72,8 +73,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  (fn [_ [_ extension-id item-namespace editor-props]]
+  ;  {:route-template (string)}
+  (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
       [:router/add-route! (engine/route-id extension-id item-namespace)
-                          {:route-template (engine/route-template     extension-id item-namespace editor-props)
-                           :client-event   [:item-editor/load-editor! extension-id item-namespace]
+                          {:client-event   [:item-editor/load-editor! extension-id item-namespace]
+                           :route-template route-template
                            :restricted?    true}]))

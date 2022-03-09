@@ -55,8 +55,8 @@
   ;         az egyes elemek megtekintése/szerkesztése/... után visszatérhet a legutóbbi kereséséhez!
   ;     ... megőrzi a plugin szerver-oldalról érkezett beállításait.
   (let [lister-props (r get-lister-props db extension-id item-namespace)]
-       (select-keys lister-props [:base-route :on-load :route-title ; <- szerver-oldalról érkezett beállítások
-                                  :order-by :search-term])))        ; <- keresési és rendezési beállítások
+       (select-keys lister-props [:on-load :route-template :route-title ; <- szerver-oldalról érkezett beállítások
+                                  :order-by :search-term])))            ; <- keresési és rendezési beállítások
 
 (defn get-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -325,17 +325,6 @@
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :menu-element))
-
-(defn get-parent-route
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (if-let [base-route (r get-meta-item db extension-id item-namespace :base-route)]
-          (uri/uri->parent-uri base-route)))
 
 
 

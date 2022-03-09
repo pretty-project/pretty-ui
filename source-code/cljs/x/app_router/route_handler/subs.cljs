@@ -252,6 +252,15 @@
   (let [current-route-string (r get-current-route-string db)]
        (uri/uri->fragment current-route-string)))
 
+(defn get-current-route-parent
+  ; @usage
+  ;  (r router/get-current-route-parent db)
+  ;
+  ; @return (string)
+  [db _]
+  (let [current-route-string (r get-current-route-string db)]
+       (uri/uri->parent-uri current-route-string)))
+
 
 
 ;; -- Handle subscriptions ----------------------------------------------------
@@ -370,6 +379,10 @@
 ; @usage
 ;  [:router/get-current-route-fragment]
 (a/reg-sub :router/get-current-route-fragment get-current-route-fragment)
+
+; @usage
+;  [:router/get-current-route-parent]
+(a/reg-sub :router/get-current-route-parent get-current-route-parent)
 
 ; @usage
 ;  [:router/at-home?]

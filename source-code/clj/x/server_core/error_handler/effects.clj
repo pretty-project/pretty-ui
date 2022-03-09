@@ -2,10 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.error-handler.effects
-    (:require [x.app-core.error-handler.subs :as error-handler.subs]
-              [x.app-core.event-handler      :as event-handler :refer [r]]
-              [x.app-core.load-handler       :as load-handler]))
+(ns x.server-core.error-handler.effects
+    (:require [x.server-core.event-handler        :as event-handler]
+              [x.server-core.error-handler.engine :as error-handler.engine]))
 
 
 
@@ -34,9 +33,6 @@
   ;  [:core/error-catched {:error "An error occured ..."
   ;                        :cofx  {...}}]
   [event-handler/event-vector<-id]
-  (fn [{:keys [db]} [_ error-id {:keys [cofx] :as error-props}]]
-      (let [error-message (r error-handler.subs/get-error-message db error-id error-props)
-            catched-event (event-handler/cofx->event-vector cofx)]
-           {:db       (r load-handler/stop-synchronizing! db)
-            :fx       [:core/print-error! error-message catched-event]
-            :dispatch [:ui/set-shield! {:content error-message}]})))
+  (fn [{:keys [db]} [_ error-id {:keys [cofx error]}]]
+      (let [catched-event (event-handler/cofx->event-vector cofx)]
+           {:fx [:core/print-error! error]})))

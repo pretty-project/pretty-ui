@@ -4,7 +4,6 @@
 
 (ns server-plugins.item-lister.effects
     (:require [mid-fruits.candy                  :refer [param return]]
-              [mid-fruits.uri                    :as uri]
               [server-plugins.item-lister.engine :as engine]
               [x.server-core.api                 :as a :refer [r]]))
 
@@ -17,14 +16,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) lister-props
-  ;  {:base-route (string)}
   ;
   ; @return (map)
-  ;  {:base-route (string)
+  ;  {:route-template (string)
   ;   :route-title (metamorphic-content)}
-  [extension-id item-namespace {:keys [base-route] :as lister-props}]
-  (merge {:base-route (uri/valid-path base-route)
-          :route-title extension-id}
+  [extension-id item-namespace lister-props]
+  (merge {:route-template (engine/route-template extension-id item-namespace lister-props)
+          :route-title    (param                 extension-id)}
          (param lister-props)))
 
 
@@ -37,8 +35,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
-  ;  {:base-route (string)
-  ;   :on-load (metamorphic-event)
+  ;  {:on-load (metamorphic-event)
+  ;   :route-template (string)
   ;   :route-title (metamorphic-content)(opt)
   ;    Default: extension-id}
   ;
@@ -73,8 +71,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
-  (fn [_ [_ extension-id item-namespace lister-props]]
+  ;  {:route-template (string)}
+  (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
       [:router/add-route! (engine/route-id extension-id item-namespace)
-                          {:route-template (engine/route-template     extension-id item-namespace lister-props)
-                           :client-event   [:item-lister/load-lister! extension-id item-namespace]
+                          {:client-event   [:item-lister/load-lister! extension-id item-namespace]
+                           :route-template route-template
                            :restricted?    true}]))

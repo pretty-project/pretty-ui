@@ -13,6 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :developer/test!
+  ; @usage
+  ;  [:developer/test!]
+  [:ui/blow-bubble! {:body "It works!"}])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :developer/render-developer-tools!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]

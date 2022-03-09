@@ -22,10 +22,12 @@
 (defn header-go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [parent-route @(a/subscribe [:ui/get-parent-route])]
-          (case parent-route "/@app-home" [header-go-home-icon-button]
-                                          [elements/icon-button ::go-up-icon-button
-                                                                {:preset :back :on-click [:router/go-to! parent-route]}])))
+  (let [app-home     @(a/subscribe [:router/get-app-home])
+        parent-route @(a/subscribe [:router/get-current-route-parent])]
+       (if (= app-home parent-route)
+           [header-go-home-icon-button]
+           [elements/icon-button ::go-up-icon-button
+                                 {:preset :back :on-click [:router/go-to! parent-route]}])))
 
 (defn header-at-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -36,14 +36,17 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
+
   ; - A {:recovery-mode? true} beállítással elindítitott item-editor plugin visszaállítja az elem
   ;   eltárolt változtatásait
   ; - A {:recovery-mode? true} állapot beállításakor szükséges az item-editor utolsó használatakor
   ;   esetlegesen beállított {:item-recovered? true} beállítást törölni, hogy a reset-editor! függvény
   ;   ne léptesse ki a plugint a {:recovery-mode? true} állapotból, ha az utolsó betöltés is
   ;   {:recovery-mode? true} állapotban történt ...
-  (-> db (assoc-in  [extension-id :item-editor/meta-items :recovery-mode?] true)
-         (dissoc-in [extension-id :item-editor/meta-items :item-recovered?])))
+
+  (-> db (assoc-in  [extension-id :item-editor/meta-items :recovery-mode?] true)))
+
+         ;(dissoc-in [extension-id :item-editor/meta-items :item-recovered?])))
 
 
 
@@ -58,8 +61,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (-> db (dissoc-in [extension-id :item-editor/data-items])
-         (dissoc-in [extension-id :item-editor/meta-items])))
+  (let [inherited-props (r subs/get-inherited-props db extension-id item-namespace)]
+       (-> db (dissoc-in [extension-id :item-editor/data-items])
+              (dissoc-in [extension-id :item-editor/meta-items])
+              (assoc-in  [extension-id :item-editor/meta-items] inherited-props))))
 
 
 
@@ -77,18 +82,6 @@
   [db [_ extension-id item-namespace body-props]]
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
 
-(defn init-body!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace body-props]]
-  (as-> db % (r reset-editor!     % extension-id item-namespace)
-             (r store-body-props! % extension-id item-namespace body-props)))
-
 (defn init-header!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,7 +93,18 @@
   [db [_ extension-id item-namespace header-props]]
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
 
-(defn unload-editor!
+(defn init-body!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace body-props]]
+  (r store-body-props! db extension-id item-namespace body-props))
+
+(defn destruct-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

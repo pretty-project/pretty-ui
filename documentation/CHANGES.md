@@ -1,8 +1,8 @@
 
 # x4.6.5
 
-- A [:ui/set-route-parent! ...] esemény ezentúl [:ui/set-parent-route! ...] néven elérhető
-  (a pluginok szerver-oldali inicializálásakor átadott {:base-route ...} tulajdonság alapján automatikusan beállítódik)
+- A [:ui/set-route-parent! ...] esemény ezentúl nem elérhető
+  (az app-header navigációs gombja az aktuális útvonal alapján automatikusan beállítja magát)
 
 - Az item-lister plugin {:new-item-route ...} tulajdonsága helyett ezentúl {:new-item-event ...} tulajdonság használható
 

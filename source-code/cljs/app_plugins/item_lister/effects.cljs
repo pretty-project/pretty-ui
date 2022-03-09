@@ -78,17 +78,6 @@
       {:db (r events/reset-downloads! db extension-id item-namespace)
        :dispatch [:tools/reload-infinite-loader! extension-id]}))
 
-(a/reg-event-fx
-  :item-lister/unload-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r events/unload-lister! db extension-id item-namespace)
-       :dispatch-n [; XXX#5660
-                    [:environment/remove-keypress-listener! :item-lister/keypress-listener]]}))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -316,6 +305,17 @@
   (fn [{:keys [db]} [_ extension-id item-namespace header-props]]
       {:db (r events/init-header! db extension-id item-namespace header-props)}))
 
+(a/reg-event-fx
+  :item-lister/destruct-body!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r events/destruct-body! db extension-id item-namespace)
+       :dispatch-n [; XXX#5660
+                    [:environment/remove-keypress-listener! :item-lister/keypress-listener]]}))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -328,9 +328,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [parent-route (r subs/get-parent-route db extension-id item-namespace)
-            route-title  (r subs/get-meta-item    db extension-id item-namespace :route-title)
-            on-load      (r subs/get-meta-item    db extension-id item-namespace :on-load)]
-           {:db (as-> db % (if-not route-title  % (r ui/set-header-title! % route-title))
-                           (if-not parent-route % (r ui/set-parent-route! % parent-route)))
+      (let [route-title (r subs/get-meta-item db extension-id item-namespace :route-title)
+            on-load     (r subs/get-meta-item db extension-id item-namespace :on-load)]
+           {:db (if-not route-title db (r ui/set-header-title! db route-title))
             :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))

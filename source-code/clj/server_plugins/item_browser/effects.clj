@@ -4,7 +4,6 @@
 
 (ns server-plugins.item-browser.effects
     (:require [mid-fruits.candy                   :refer [param return]]
-              [mid-fruits.uri                     :as uri]
               [server-plugins.item-browser.engine :as engine]
               [x.server-core.api                  :as a :refer [r]]))
 
@@ -17,14 +16,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) browser-props
-  ;  {:base-route (string)}
   ;
   ; @return (map)
   ;  {:base-route (string)
+  ;   :route-template (string)
   ;   :route-title (keyword)}
-  [extension-id item-namespace {:keys [base-route] :as browser-props}]
-  (merge {:base-route (uri/valid-path base-route)
-          :route-title :auto}
+  [extension-id item-namespace browser-props]
+  (merge {:base-route     (engine/base-route     extension-id item-namespace browser-props)
+          :route-template (engine/route-template extension-id item-namespace browser-props)
+          :route-title    (param :auto)}
          (param browser-props)))
 
 
@@ -39,6 +39,8 @@
   ; @param (map) browser-props
   ;  {:base-route (string)
   ;   :on-load (metamorphic-event)
+  ;   :route-template (string)
+  ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (keyword or metamorphic-content)(opt) :auto}
   ;
   ; @usage
@@ -73,10 +75,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  (fn [_ [_ extension-id item-namespace browser-props]]
+  ;  {:base-route (string)}
+  (fn [_ [_ extension-id item-namespace {:keys [base-route]}]]
       [:router/add-route! (engine/route-id extension-id item-namespace)
-                          {:route-template (engine/route-template       extension-id item-namespace browser-props)
-                           :client-event   [:item-browser/load-browser! extension-id item-namespace]
+                          {:client-event   [:item-browser/load-browser! extension-id item-namespace]
+                           :route-template base-route
                            :restricted?    true}]))
 
 (a/reg-event-fx
@@ -86,8 +89,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  (fn [_ [_ extension-id item-namespace browser-props]]
+  ;  {:route-template (string)}
+  (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
       [:router/add-route! (engine/extended-route-id extension-id item-namespace)
-                          {:route-template (engine/extended-route-template extension-id item-namespace browser-props)
-                           :client-event   [:item-browser/load-browser!    extension-id item-namespace]
+                          {:client-event   [:item-browser/load-browser! extension-id item-namespace]
+                           :route-template route-template
                            :restricted?    true}]))

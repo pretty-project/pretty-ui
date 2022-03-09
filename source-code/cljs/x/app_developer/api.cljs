@@ -6,8 +6,6 @@
     (:require [x.app-developer.developer-tools.effects]
               [x.app-developer.developer-tools.subs]
               [x.app-developer.developer-tools.views]
-              [x.app-developer.effects]
-              [x.app-developer.subs]
               [x.app-developer.request-inspector.events]
               [x.app-developer.request-inspector.subs]
               [x.app-developer.request-inspector.views]

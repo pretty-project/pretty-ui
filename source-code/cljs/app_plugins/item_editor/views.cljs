@@ -312,6 +312,29 @@
 
 
 
+;; -- Indicator components ----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn downloading-item-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id item-namespace]
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold
+                   :content :downloading...}])
+
+(defn downloading-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id item-namespace]
+  [elements/row {:content [downloading-item-label extension-id item-namespace]
+                 :horizontal-align :center}])
+
+
+
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -333,20 +356,19 @@
   [extension-id item-namespace]
   (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
           [error-body extension-id item-namespace]
-          (if-let [form-element @(a/subscribe [:item-editor/get-form-element extension-id item-namespace])]
-                  [form-element extension-id item-namespace])))
+          (if-let [data-received? @(a/subscribe [:item-editor/data-received? extension-id item-namespace])]
+                  (if-let [form-element @(a/subscribe [:item-editor/get-form-element extension-id item-namespace])]
+                          [form-element extension-id item-namespace])
+                  [downloading-item extension-id item-namespace])))
 
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;    Default: false
-  ;   :form-element (metamorphic-content)
+  ;  {:form-element (metamorphic-content)
   ;   :item-id (string)
   ;   :new-item-id (string)(opt)
   ;    Default: false
-  ;   :parent-route (string)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)}
   ;
   ; @usage
@@ -358,9 +380,9 @@
   [extension-id item-namespace body-props]
   (let [body-props (body-props-prototype extension-id item-namespace body-props)]
        (reagent/lifecycles (engine/component-id extension-id item-namespace :body)
-                          {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
-                           :component-will-unmount (fn [] (a/dispatch [:item-editor/unload-editor! extension-id item-namespace]))
-                           :component-did-mount    (fn [] (a/dispatch [:item-editor/init-body!     extension-id item-namespace body-props]))
-                           :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
-                           ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
-                           ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
+                           {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
+                            :component-will-unmount (fn [] (a/dispatch [:item-editor/destruct-body! extension-id item-namespace]))
+                            :component-did-mount    (fn [] (a/dispatch [:item-editor/init-body!     extension-id item-namespace body-props]))
+                            :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
+                            ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
+                            ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!

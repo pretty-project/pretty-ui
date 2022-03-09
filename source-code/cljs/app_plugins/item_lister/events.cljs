@@ -152,6 +152,17 @@
   [db [_ extension-id item-namespace body-props]]
   (r db/apply-item! db [extension-id :item-lister/meta-items] merge body-props))
 
+(defn init-header!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) header-props
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace header-props]]
+  (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
+
 (defn init-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -164,18 +175,7 @@
   (as-> db % (r store-body-props!     % extension-id item-namespace body-props)
              (r set-default-order-by! % extension-id item-namespace)))
 
-(defn init-header!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace header-props]]
-  (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
-
-(defn unload-lister!
+(defn destruct-body!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

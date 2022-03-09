@@ -5,6 +5,8 @@
 (ns mid-plugins.item-editor.engine
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.string  :as string]
+              [mid-fruits.uri     :as uri]
               [mid-fruits.vector  :as vector]))
 
 
@@ -229,16 +231,34 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  ;  {:base-route (string)}
+  ;  {:route-template (string)}
   ;
   ; @example
-  ;  (engine/extended-route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  (engine/route-template :my-extension :my-type {:route-template "/@app-home/my-extension/:item-id"})
   ;  =>
   ;  "/@app-home/my-extension/:item-id"
   ;
-  ; @return (string)
-  [_ _ {:keys [base-route]}]
-  (str base-route "/:item-id"))
+  ; @return (keyword)
+  [extension-id item-namespace {:keys [route-template]}]
+  (uri/valid-path route-template))
+
+(defn base-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) editor-props
+  ;  {:route-template (string)}
+  ;
+  ; @example
+  ;  (engine/base-route :my-extension :my-type {:route-template "/@app-home/my-extension/:item-id"})
+  ;  =>
+  ;  "/@app-home/my-extension"
+  ;
+  ; @return (keyword)
+  [extension-id item-namespace {:keys [route-template]}]
+  (-> route-template (string/not-ends-with! "/:item-id")
+                     (uri/valid-path)))
 
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

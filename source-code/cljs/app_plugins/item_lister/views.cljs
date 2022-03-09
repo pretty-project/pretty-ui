@@ -4,12 +4,12 @@
 
 (ns app-plugins.item-lister.views
     (:require [app-fruits.react-transition    :as react-transition]
+              [app-fruits.reagent             :as reagent]
               [app-plugins.item-lister.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
               [mid-fruits.logical             :refer [nor]]
               [mid-fruits.vector              :as vector]
               [x.app-core.api                 :as a]
-              [x.app-components.api           :as components]
               [x.app-elements.api             :as elements]
               [x.app-layouts.api              :as layouts]
               [x.app-tools.api                :as tools]))
@@ -419,9 +419,9 @@
   ;  (defn my-menu-element [extension-id item-namespace] [:div ...])
   ;  [item-lister/header :my-extension :my-type {:menu #'my-menu-element}}]
   [extension-id item-namespace header-props]
-  [components/stated (engine/component-id extension-id item-namespace :header)
-                     {:component   [header-structure          extension-id item-namespace]
-                      :initializer [:item-lister/init-header! extension-id item-namespace header-props]}])
+  (reagent/lifecycles (engine/component-id extension-id item-namespace :header)
+                      {:reagent-render      (fn []             [header-structure          extension-id item-namespace])
+                       :component-did-mount (fn [] (a/dispatch [:item-lister/init-header! extension-id item-namespace header-props]))}))
 
 
 
@@ -620,7 +620,7 @@
   ;                                            :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
   (let [body-props (body-props-prototype extension-id item-namespace body-props)]
-       [components/stated (engine/component-id extension-id item-namespace :body)
-                          {:component   [body-structure              extension-id item-namespace]
-                           :destructor  [:item-lister/unload-lister! extension-id item-namespace]
-                           :initializer [:item-lister/init-body!     extension-id item-namespace body-props]}]))
+       (reagent/lifecycles (engine/component-id extension-id item-namespace :body)
+                           {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
+                            :component-did-mount    (fn [] (a/dispatch [:item-lister/init-body!     extension-id item-namespace body-props]))
+                            :component-will-unmount (fn [] (a/dispatch [:item-lister/destruct-body! extension-id item-namespace]))})))

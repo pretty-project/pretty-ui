@@ -12,12 +12,19 @@
 ;; -- Side-effect events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn error-catched
+(defn print-warning!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) error-props
-  [error-props]
-  (println details/app-codename error-handler.engine/DEFAULT-SERVER-ERROR))
+  ; @param (list of strings) warning-message
+  [& warning-message])
+  ;(.warn js/console (reduce #(str %1 "\n" %2) nil warning-message)))
+
+(defn print-error!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (list of strings) error-message
+  [& error-message])
+  ;(.error js/console (reduce #(str %1 "\n" %2) nil error-message)))
 
 
 
@@ -25,4 +32,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/error-catched error-catched)
+(event-handler/reg-fx :core/print-warning! print-warning!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(event-handler/reg-fx :core/print-error! print-error!)

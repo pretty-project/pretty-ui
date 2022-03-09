@@ -19,6 +19,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-editor-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id _]]
+  (get-in db [extension-id :item-editor/meta-items]))
+
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,6 +67,18 @@
   [db [_ extension-id _ item-key]]
   (get-in db [extension-id :item-editor/data-items item-key]))
 
+(defn get-inherited-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  ; Az item-editor plugin megőrzi a plugin szerver-oldalról érkezett beállításait.
+  (let [editor-props (r get-editor-props db extension-id item-namespace)]
+       (select-keys editor-props [:base-route :on-load :route-template :route-title]))) ; <- szerver-oldalról érkezett beállítások
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -77,6 +99,17 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn data-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [data-received? (r get-meta-item db extension-id item-namespace :data-received?)]
+       (boolean data-received?)))
 
 (defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,18 +140,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :new-item?))
-
-(defn get-parent-route
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (if-let [parent-route (r get-meta-item db extension-id item-namespace :parent-route)]
-          (uri/valid-path parent-route)))
+  (= (r get-current-item-id db extension-id item-namespace)
+     (r get-meta-item       db extension-id item-namespace :new-item-id)))
 
 (defn get-item-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,8 +152,8 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace item-id]]
-  (if-let [parent-route (r get-parent-route db extension-id item-namespace)]
-          (str parent-route  "/" item-id)))
+  (if-let [base-route (r get-meta-item db extension-id item-namespace :base-route)]
+          (str base-route "/" item-id)))
 
 (defn set-auto-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,7 +165,7 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :auto-title?))
 
-(defn get-auto-title
+(defn get-auto-title_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -153,6 +176,26 @@
   (if-let [new-item? (r get-meta-item db extension-id item-namespace :new-item?)]
           (engine/add-item-label  extension-id item-namespace)
           (engine/edit-item-label extension-id item-namespace)))
+
+(defn get-route-title
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]]
+  (let [route-title (r get-meta-item db extension-id item-namespace :route-title)]
+       (case route-title :auto nil route-title)))
+
+(defn get-auto-title
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (metamorphic-content)
+  [db [_ extension-id item-namespace]])
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -382,6 +425,13 @@
 ; @usage
 ;  [:item-editor/get-data-value :my-extension :my-type]
 (a/reg-sub :item-editor/get-data-value get-data-value)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/data-received? :my-extension :my-type]
+(a/reg-sub :item-editor/data-received? data-received?)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace
