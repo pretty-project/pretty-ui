@@ -149,7 +149,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [item-ids (engine/server-response->deleted-item-ids extension-id item-namespace server-response)]
+      (let [item-ids (r subs/get-deleted-item-ids db extension-id item-namespace server-response)]
            {:dispatch-n [[:item-lister/render-items-deleted-dialog! extension-id item-namespace item-ids]
                          [:item-lister/reload-items!                extension-id item-namespace]]})))
 
@@ -229,7 +229,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [copy-ids (engine/server-response->duplicated-item-ids extension-id item-namespace server-response)]
+      (let [copy-ids (r subs/get-duplicated-item-ids db extension-id item-namespace server-response)]
            {:dispatch-n [[:item-lister/render-items-duplicated-dialog! extension-id item-namespace copy-ids]
                          [:item-lister/reload-items!                   extension-id item-namespace]]})))
 

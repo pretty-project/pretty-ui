@@ -10,7 +10,6 @@
 
 
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -49,7 +48,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [resolver-id    (engine/resolver-id                    extension-id item-namespace :get)
+  (let [resolver-id    (r subs/get-resolver-id             db extension-id item-namespace :get)
         resolver-props (r get-request-items-resolver-props db extension-id item-namespace)]
        [:debug `(~resolver-id ~resolver-props)]))
 
@@ -62,7 +61,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-ids]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :delete)]
        [:debug `(~(symbol mutation-name) ~{:item-ids item-ids})]))
 
 (defn get-undo-delete-items-mutation-props
@@ -87,7 +86,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-ids]]
-  (let [mutation-name  (engine/mutation-name                      extension-id item-namespace :undo-delete)
+  (let [mutation-name  (r subs/get-mutation-name               db extension-id item-namespace :undo-delete)
         mutation-props (r get-undo-delete-items-mutation-props db extension-id item-namespace item-ids)]
        [:debug `(~(symbol mutation-name) ~mutation-props)]))
 
@@ -100,7 +99,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-ids]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :duplicate)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-ids item-ids})]))
 
 (defn get-undo-duplicate-items-query
@@ -112,5 +111,5 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace copy-ids]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :undo-duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-ids copy-ids})]))

@@ -5,6 +5,7 @@
 (ns app-plugins.item-editor.subs
     (:require [app-plugins.item-editor.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.keyword             :as keyword]
               [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
               [x.app-activities.api           :as activities]
@@ -28,6 +29,18 @@
   ; @return (map)
   [db [_ extension-id _]]
   (get-in db [extension-id :item-editor/meta-items]))
+
+(defn get-inherited-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  ; Az item-editor plugin megőrzi a plugin szerver-oldalról érkezett beállításait.
+  (let [editor-props (r get-editor-props db extension-id item-namespace)]
+       (select-keys editor-props [:base-route :on-load :route-template :route-title]))) ; <- szerver-oldalról érkezett beállítások
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,17 +80,46 @@
   [db [_ extension-id _ item-key]]
   (get-in db [extension-id :item-editor/data-items item-key]))
 
-(defn get-inherited-props
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (keyword) action-key
   ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  ; Az item-editor plugin megőrzi a plugin szerver-oldalról érkezett beállításait.
-  (let [editor-props (r get-editor-props db extension-id item-namespace)]
-       (select-keys editor-props [:base-route :on-load :route-template :route-title]))) ; <- szerver-oldalról érkezett beállítások
+  ; @example
+  ;  (r get-resolver-id db :my-extension :my-type :delete)
+  ;  =>
+  ;  "my-handler/delete-item!"
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace action-key]]
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (str (name handler-key) "/"
+            (name action-key)  "-item!")))
+
+(defn get-resolver-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-key
+  ;
+  ; @example
+  ;  (r get-resolver-id db :my-extension :my-type :get)
+  ;  =>
+  ;  :my-handler/get-item
+  ;
+  ; @return (keyword)
+  [db [_ extension-id item-namespace action-key]]
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (keyword      (name handler-key)
+                (str (name action-key) "-item"))))
 
 
 
@@ -94,6 +136,19 @@
   ; @return (string)
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :item-id))
+
+(defn get-item-route
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-editor/get-item-route db :my-extension :item-namespace "my-item")
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace item-id]]
+  (if-let [base-route (r get-meta-item db extension-id item-namespace :base-route)]
+          (str base-route "/" item-id)))
 
 
 
@@ -142,18 +197,6 @@
   [db [_ extension-id item-namespace]]
   (= (r get-current-item-id db extension-id item-namespace)
      (r get-meta-item       db extension-id item-namespace :new-item-id)))
-
-(defn get-item-route
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace item-id]]
-  (if-let [base-route (r get-meta-item db extension-id item-namespace :base-route)]
-          (str base-route "/" item-id)))
 
 (defn set-auto-title?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -398,6 +441,29 @@
         current-item    (r get-current-item    db extension-id item-namespace)
         backup-item     (r get-backup-item     db extension-id item-namespace current-item-id)]
        (not= current-item backup-item)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-copy-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r subs//server-response->copy-id :my-extension :my-type {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace server-response]]
+  (let [item-id-key   (keyword/add-namespace item-namespace :id)
+        mutation-name (r get-mutation-name db extension-id item-namespace :duplicate)]
+       (get-in server-response [(symbol mutation-name) item-id-key])))
 
 
 

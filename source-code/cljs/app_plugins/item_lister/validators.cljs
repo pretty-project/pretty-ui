@@ -4,6 +4,7 @@
 
 (ns app-plugins.item-lister.validators
     (:require [app-plugins.item-lister.engine :as engine]
+              [app-plugins.item-lister.subs   :as subs]
               [mid-fruits.vector              :as vector]
               [x.app-core.api                 :as a :refer [r]]))
 
@@ -20,8 +21,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [resolver-id    (engine/resolver-id extension-id item-namespace :get)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id    (r subs/get-resolver-id db extension-id item-namespace :get)
         document-count (get-in server-response [resolver-id :document-count])
         documents      (get-in server-response [resolver-id :documents])]
        (and (integer? document-count)
@@ -35,8 +36,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (engine/mutation-name extension-id item-namespace :delete)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name    (r subs/get-mutation-name db extension-id item-namespace :delete)
         deleted-item-ids (get server-response (symbol mutation-name))]
        (vector/nonempty? deleted-item-ids)))
 
@@ -49,7 +50,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name   (engine/mutation-name extension-id item-namespace :undo-delete)
+  (let [mutation-name   (r subs/get-mutation-name db extension-id item-namespace :undo-delete)
         recovered-items (get server-response (symbol mutation-name))]
        (vector/nonempty? recovered-items)))
 
@@ -62,7 +63,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (engine/mutation-name extension-id item-namespace :duplicate)
+  (let [mutation-name    (r subs/get-mutation-name db extension-id item-namespace :duplicate)
         duplicated-items (get server-response (symbol mutation-name))]
        (vector/nonempty? duplicated-items)))
 
@@ -75,6 +76,6 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (engine/mutation-name extension-id item-namespace :undo-duplicate)
+  (let [mutation-name    (r subs/get-mutation-name db extension-id item-namespace :undo-duplicate)
         deleted-item-ids (get server-response (symbol mutation-name))]
        (vector/nonempty? deleted-item-ids)))

@@ -131,6 +131,7 @@
   ;    Default: false
   ;   :download-limit (integer)(opt)
   ;    Default: 20
+  ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :items-key (keyword)(opt)

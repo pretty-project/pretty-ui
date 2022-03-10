@@ -600,6 +600,7 @@
   ; @param (map) body-props
   ;  {:download-limit (integer)(opt)
   ;    Default: 20
+  ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :list-element (metamorphic-content)

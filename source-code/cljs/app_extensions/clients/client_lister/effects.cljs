@@ -24,8 +24,8 @@
   (fn [{:keys [db]} [_ item-dex {:keys [id]}]]
       (if (r item-lister/toggle-item-selection? db :clients :client item-dex)
           {:db (r item-lister/toggle-item-selection! db :clients :client item-dex)}
-          (let [client-uri (item-editor/editor-uri :clients :client id)]
-               [:router/go-to! client-uri]))))
+          (let [item-route (r item-editor/get-item-route db :clients :client id)]
+               [:router/go-to! item-route]))))
 
 (a/reg-event-fx
   :clients.client-lister/render-lister!

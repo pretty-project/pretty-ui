@@ -366,6 +366,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:form-element (metamorphic-content)
+  ;   :handler-key (keyword)
   ;   :item-id (string)
   ;   :new-item-id (string)(opt)
   ;    Default: false
@@ -384,5 +385,6 @@
                             :component-will-unmount (fn [] (a/dispatch [:item-editor/destruct-body! extension-id item-namespace]))
                             :component-did-mount    (fn [] (a/dispatch [:item-editor/init-body!     extension-id item-namespace body-props]))
                             :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
+
                             ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
                             ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!

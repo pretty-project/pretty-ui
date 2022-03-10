@@ -226,7 +226,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [copy-id (engine/server-response->copy-id extension-id item-namespace server-response)]
+      (let [copy-id (r subs/get-copy-id db extension-id item-namespace server-response)]
            [:item-editor/render-item-duplicated-dialog! extension-id item-namespace copy-id])))
 
 (a/reg-event-fx

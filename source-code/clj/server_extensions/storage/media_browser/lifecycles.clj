@@ -15,5 +15,5 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-browser/init-browser! :storage :media
-                                                {:base-route "/@app-home/storage"
-                                                 :on-load    [:storage.media-browser/load-browser!]}]})
+                                                {:on-load [:storage.media-browser/load-browser!]
+                                                 :route-template "/@app-home/storage/:item-id"}]})

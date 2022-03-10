@@ -23,7 +23,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id (r subs/get-resolver-id db extension-id item-namespace :get)
         document    (get server-response resolver-id)
         suggestions (get server-response :item-editor/get-item-suggestions)]
        (and (or (map? suggestions)
@@ -39,8 +39,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :save)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :save)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 
@@ -52,8 +52,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :delete)
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
 
@@ -65,8 +65,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-delete)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :undo-delete)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 
@@ -78,7 +78,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :duplicate)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :duplicate)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))

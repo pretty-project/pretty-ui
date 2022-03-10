@@ -77,7 +77,7 @@
   ; @param (map) browser-props
   ;  {:base-route (string)}
   (fn [_ [_ extension-id item-namespace {:keys [base-route]}]]
-      [:router/add-route! (engine/route-id extension-id item-namespace)
+      [:router/add-route! (engine/route-id extension-id item-namespace :base)
                           {:client-event   [:item-browser/load-browser! extension-id item-namespace]
                            :route-template base-route
                            :restricted?    true}]))
@@ -91,7 +91,7 @@
   ; @param (map) browser-props
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-route! (engine/extended-route-id extension-id item-namespace)
+      [:router/add-route! (engine/route-id extension-id item-namespace :extended)
                           {:client-event   [:item-browser/load-browser! extension-id item-namespace]
                            :route-template route-template
                            :restricted?    true}]))

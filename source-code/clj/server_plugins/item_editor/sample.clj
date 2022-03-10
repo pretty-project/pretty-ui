@@ -31,9 +31,9 @@
              ;  {:item-id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-extension.my-type-editor/get-item (namespaced map)}
+             ;  {:my-handler/get-item (namespaced map)}
              [env resolver-props]
-             {:my-extension.my-type-editor/get-item (get-item-f env resolver-props)})
+             {:my-handler/get-item (get-item-f env resolver-props)})
 
 
 
@@ -48,7 +48,7 @@
              ;
              ; @return (string)
              [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension.my-type-editor/delete-item!}
+             {::pathom.co/op-name 'my-handler/delete-item!}
              (return ""))
 
 ; Sikeres visszavonás esetén a visszaállított dokumentummal szükséges visszatérni!
@@ -59,7 +59,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
-             {::pathom.co/op-name 'my-extension.my-type-editor/undo-delete-item!}
+             {::pathom.co/op-name 'my-handler/undo-delete-item!}
              (return {}))
 
 ; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
@@ -70,7 +70,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
-             {::pathom.co/op-name 'my-extension.my-type-editor/save-item!}
+             {::pathom.co/op-name 'my-handler/save-item!}
              (return {}))
 
 ; - Az item-editor plugin az elem AKTUÁLIS (nem feltétlenül az elmentett) változatát küldi el a szerver számára.
@@ -82,7 +82,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
-             {::pathom.co/op-name 'my-extension.my-type-editor/duplicate-item!}
+             {::pathom.co/op-name 'my-handler/duplicate-item!}
              (return {}))
 
 

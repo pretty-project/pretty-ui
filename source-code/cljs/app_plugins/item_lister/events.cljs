@@ -380,7 +380,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id (r subs/get-resolver-id db extension-id item-namespace :get)
         documents   (get-in server-response [resolver-id :documents])
         ; XXX#3907
         ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
@@ -399,7 +399,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id    (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id    (r subs/get-resolver-id db extension-id item-namespace :get)
         document-count (get-in server-response [resolver-id :document-count])
         documents      (get-in server-response [resolver-id :documents])
         received-count (count documents)]
@@ -436,7 +436,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id (r subs/get-resolver-id db extension-id item-namespace :get)
         documents   (get-in server-response [resolver-id :documents])
         ; XXX#3907
         documents (db/collection->non-namespaced-collection documents)]

@@ -60,6 +60,7 @@
        [layouts/layout-a :surface-id {:description description
                                       :header [item-lister/header :clients :client {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
                                       :body   [item-lister/body   :clients :client {:list-element #'client-item
+                                                                                    :handler-key :clients.client-lister
                                                                                     :item-actions [:delete :duplicate]
                                                                                     :search-keys  [:name   :email-address]
                                                                                     :sortable? true}]}]))

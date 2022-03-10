@@ -45,25 +45,22 @@
              ;  {:my-type/id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-extension.my-type-browser/get-item (namespaced map)}
+             ;  {:my-handler/get-item (namespaced map)}
              [env resolver-props]
-             {:my-extension.my-type-browser/get-item (get-item-f env resolver-props)})
+             {:my-handler/get-item (get-item-f env resolver-props)})
 
-; - Az item-browser és az item-lister plugin használatakor a get-items resolver megegyezik,
-;   ezért annak dokumentációját az item-lister plugin leírásában keresd!
-; - Mivel az item-browser plugin nem rendelkezik saját listázóval és az item-lister pluginra épül,
-;   ezért az item-browser pluginhoz szükséges get-items resolvert :my-extension.my-type-lister/get-items
-;   azonosítóval szükséges létrehozni!
+; Az item-browser és az item-lister plugin használatakor a get-items resolver megegyezik,
+; ezért annak dokumentációját az item-lister plugin leírásában keresd!
 (defresolver get-items
              ; @param (map) env
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:my-extension.my-type-lister/get-items (map)
+             ;  {:my-handler/get-items (map)
              ;    {:document-count (integer)
              ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
-             {:my-extension.my-type-lister/get-items (fn [env resolver-props])})
+             {:my-handler/get-items (fn [env resolver-props])})
 
 
 
@@ -78,7 +75,7 @@
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
+             {::pathom.co/op-name 'my-handler/delete-items!}
              (return []))
 
 ; Sikeres visszavonás esetén a visszaállított dokumentumokkal szükséges visszatérni!
@@ -89,7 +86,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
+             {::pathom.co/op-name 'my-handler/undo-delete-items!}
              (return []))
 
 ; Sikeres duplikálás esetén a létrehozott dokumentumokkal szükséges visszatérni!
@@ -100,7 +97,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
+             {::pathom.co/op-name 'my-handler/duplicate-items!}
              (return []))
 
 ; Sikeres visszavonás esetén a kitörölt elemek azonosítóival szükséges visszatérni!
@@ -111,7 +108,7 @@
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
+             {::pathom.co/op-name 'my-handler/undo-duplicate-items!}
              (return []))
 
 ; Sikeres törlés esetén a kitörölt elem azonosítójával szükséges visszatérni!
@@ -122,7 +119,7 @@
              ;
              ; @return (string)
              [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension.my-type-browser/delete-item!}
+             {::pathom.co/op-name 'my-handler/delete-item!}
              (return ""))
 
 ; Sikeres visszavonás esetén a visszaállított dokumentummal szükséges visszatérni!
@@ -133,7 +130,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
-             {::pathom.co/op-name 'my-extension.my-type-browser/undo-delete-item!}
+             {::pathom.co/op-name 'my-handler/undo-delete-item!}
              (return {}))
 
 ; Sikeres duplikálás esetén a létrehozott dokumentummal szükséges visszatérni!
@@ -144,7 +141,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension.my-type-browser/duplicate-item!}
+             {::pathom.co/op-name 'my-handler/duplicate-item!}
              (return {}))
 
 ; Sikeres visszavonás esetén a kitörölt elem azonosítójával szükséges visszatérni!
@@ -155,7 +152,7 @@
              ;
              ; @return (string)
              [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-extension.my-type-browser/undo-duplicate-item!}
+             {::pathom.co/op-name 'my-handler/undo-duplicate-item!}
              (return ""))
 
 ; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
@@ -166,7 +163,7 @@
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
-             {::pathom.co/op-name 'my-extension.my-type-browser/update-item!}
+             {::pathom.co/op-name 'my-handler/update-item!}
              (return {}))
 
 

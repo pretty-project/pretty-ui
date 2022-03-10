@@ -48,42 +48,6 @@
 ;; -- Private helpers ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn mutation-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/mutation-name :my-extension :my-type :delete)
-  ;  =>
-  ;  "my-extension.my-type-lister/delete-items!"
-  ;
-  ; @return (string)
-  [extension-id item-namespace action-key]
-  (str (name extension-id)   "."
-       (name item-namespace) "-lister/"
-       (name action-key)     "-items!"))
-
-(defn resolver-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/resolver-id :my-extension :my-type :get)
-  ;  =>
-  ;  :my-extension.my-type-lister/get-items
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace action-key]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-lister")
-           (str (name action-key)     "-items")))
-
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

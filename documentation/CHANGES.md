@@ -1,6 +1,13 @@
 
 # x4.6.5
 
+- Az item-lister, item-editor és item-browser pluginok kliens-oldali body komponensénenek add át
+  a {:handler-key ...} tulajdonságot, amivel tudja azonosítani, hogy melyik resolver és mutation
+  függvényeket használja
+
+- Az (item-editor/editor-uri ...) függvény ezentúl nem elérhető, helyette az (r item-editor/get-item-route ...)
+  subscription függvény használatával készíthetsz útvonalatat az egyes elemkhez.
+
 - A [:ui/set-route-parent! ...] esemény ezentúl nem elérhető
   (az app-header navigációs gombja az aktuális útvonal alapján automatikusan beállítja magát)
 

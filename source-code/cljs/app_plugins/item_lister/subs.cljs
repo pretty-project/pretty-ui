@@ -5,6 +5,7 @@
 (ns app-plugins.item-lister.subs
     (:require [app-plugins.item-lister.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
+              [mid-fruits.keyword             :as keyword]
               [mid-fruits.logical             :refer [nor]]
               [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
@@ -29,17 +30,6 @@
   [db [_ extension-id _]]
   (get-in db [extension-id :item-lister/meta-items]))
 
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ extension-id item-namespace item-key]]
-  (get-in db [extension-id :item-lister/meta-items item-key]))
-
 (defn get-inherited-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,6 +47,63 @@
   (let [lister-props (r get-lister-props db extension-id item-namespace)]
        (select-keys lister-props [:on-load :route-template :route-title ; <- szerver-oldalról érkezett beállítások
                                   :order-by :search-term])))            ; <- keresési és rendezési beállítások
+
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) item-key
+  ;
+  ; @return (*)
+  [db [_ extension-id item-namespace item-key]]
+  (get-in db [extension-id :item-lister/meta-items item-key]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-mutation-name
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-key
+  ;
+  ; @example
+  ;  (r get-resolver-id db :my-extension :my-type :delete)
+  ;  =>
+  ;  "my-handler/delete-items!"
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace action-key]]
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (str (name handler-key) "/"
+            (name action-key)  "-items!")))
+
+(defn get-resolver-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (keyword) action-key
+  ;
+  ; @example
+  ;  (r get-resolver-id db :my-extension :my-type :get)
+  ;  =>
+  ;  :my-handler/get-items
+  ;
+  ; @return (keyword)
+  [db [_ extension-id item-namespace action-key]]
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (keyword      (name handler-key)
+                (str (name action-key) "-items"))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -578,6 +625,47 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (return false))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-deleted-item-ids
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r subs/server-response->deleted-item-ids :my-extension :my-type {my-handler/delete-items! ["my-item"]})
+  ;  =>
+  ;  ["my-item"]
+  ;
+  ; @return (strings in vector)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r get-mutation-name db extension-id item-namespace :delete)]
+       (get server-response (symbol mutation-name))))
+
+(defn get-duplicated-item-ids
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r subs//server-response->duplicated-item-ids :my-extension :my-type {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
+  ;  =>
+  ;  ["my-item"]
+  ;
+  ; @return (strings in vector)
+  [db [_ extension-id item-namespace server-response]]
+  (let [item-id-key   (keyword/add-namespace item-namespace :id)
+        mutation-name (r get-mutation-name db extension-id item-namespace :duplicate)
+        copy-items    (get server-response (symbol mutation-name))]
+       (vector/->items copy-items item-id-key)))
 
 
 

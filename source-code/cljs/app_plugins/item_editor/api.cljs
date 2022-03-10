@@ -17,12 +17,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; app-plugins.item-editor.engine
-(def editor-uri engine/editor-uri)
+(def value-path engine/value-path)
 (def form-id    engine/form-id)
 (def request-id engine/request-id)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)
+(def get-item-route      subs/get-item-route)
 
 ; app-plugins.item-editor.views
 (def delete-item-button views/delete-item-button)

@@ -121,7 +121,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id (r subs/get-resolver-id db extension-id item-namespace :get)
         document    (get server-response resolver-id)]
        ; XXX#3907
        ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja

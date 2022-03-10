@@ -4,7 +4,9 @@
 
 (ns app-plugins.item-browser.validators
     (:require [app-plugins.item-browser.engine :as engine]
+              [app-plugins.item-browser.subs   :as subs]
               [mid-fruits.string               :as string]
+              [x.app-core.api                  :as a :refer [r]]
               [x.app-db.api                    :as db]))
 
 
@@ -20,8 +22,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [resolver-id (engine/resolver-id extension-id item-namespace :get)
+  [db [_ extension-id item-namespace server-response]]
+  (let [resolver-id (r subs/get-resolver-id db extension-id item-namespace :get)
         document    (get server-response resolver-id)]
        (db/document->document-namespaced? document)))
 
@@ -33,8 +35,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :delete)
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
 
@@ -46,8 +48,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-delete)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :undo-delete)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 
@@ -59,8 +61,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :duplicate)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :duplicate)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 
@@ -72,8 +74,8 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :undo-duplicate)
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
 
@@ -85,7 +87,7 @@
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [_ [_ extension-id item-namespace server-response]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :update)
+  [db [_ extension-id item-namespace server-response]]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :update)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))

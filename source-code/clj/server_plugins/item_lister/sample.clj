@@ -7,6 +7,7 @@
               [mid-fruits.candy                      :refer [param return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
+              [server-plugins.item-lister.api        :as item-lister]
               [x.server-core.api                     :as a]))
 
 
@@ -36,11 +37,11 @@
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:my-extension.my-type-lister/get-items (map)
+             ;  {:my-handler/get-items (map)
              ;    {:document-count (integer)
              ;     :documents (namespaced maps in vector)}}
              [env resolver-props]
-             {:my-extension.my-type-lister/get-items (get-items-f env resolver-props)})
+             {:my-handler/get-items (get-items-f env resolver-props)})
 
 
 
@@ -55,7 +56,7 @@
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/delete-items!}
+             {::pathom.co/op-name 'my-handler/delete-items!}
              (return []))
 
 ; Sikeres visszavonás esetén a visszaállított dokumentumokkal szükséges visszatérni!
@@ -66,7 +67,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-delete-items!}
+             {::pathom.co/op-name 'my-handler/undo-delete-items!}
              (return []))
 
 ; Sikeres duplikálás esetén a létrehozott dokumentumokkal szükséges visszatérni!
@@ -77,7 +78,7 @@
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/duplicate-items!}
+             {::pathom.co/op-name 'my-handler/duplicate-items!}
              (return []))
 
 ; Sikeres visszavonás esetén a kitörölt elemek azonosítóival szükséges visszatérni!
@@ -88,7 +89,7 @@
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-extension.my-type-lister/undo-duplicate-items!}
+             {::pathom.co/op-name 'my-handler/undo-duplicate-items!}
              (return []))
 
 

@@ -23,7 +23,7 @@
   [db [_ extension-id item-namespace]]
   [:debug (if (r subs/download-item? db extension-id item-namespace)
               ; If download item ...
-              (let [resolver-id     (engine/resolver-id extension-id item-namespace :get)
+              (let [resolver-id     (r subs/get-resolver-id     db extension-id item-namespace :get)
                     current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
                   `(~resolver-id ~{:item-id current-item-id})))
           (if (r subs/download-suggestions? db extension-id item-namespace)
@@ -41,7 +41,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [mutation-name (engine/mutation-name          extension-id item-namespace :save)
+  (let [mutation-name (r subs/get-mutation-name   db extension-id item-namespace :save)
         exported-item (r subs/export-current-item db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
 
@@ -53,7 +53,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [mutation-name   (engine/mutation-name          extension-id item-namespace :delete)
+  (let [mutation-name   (r subs/get-mutation-name   db extension-id item-namespace :delete)
         current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item-id current-item-id})]))
 
@@ -68,7 +68,7 @@
   [db [_ extension-id item-namespace item-id]]
   ; A törlés művelet visszavonásához szükséges a szerver számára elküldeni az elem másolatát,
   ; mivel feltételezhető, hogy az elem már nem elérhető a szerveren.
-  (let [mutation-name (engine/mutation-name         extension-id item-namespace :undo-delete)
+  (let [mutation-name (r subs/get-mutation-name  db extension-id item-namespace :undo-delete)
         backup-item   (r subs/export-backup-item db extension-id item-namespace item-id)]
        [:debug `(~(symbol mutation-name) ~{:item backup-item})]))
 
@@ -83,6 +83,6 @@
   ; Duplikáláskor az elem AKTUÁLIS változatáról készül másolat a szerveren, amihez
   ; szükséges a szerver számára elküldeni az elem kliens-oldali – esetleges változtatásokat
   ; tartalmazó – aktuális változatát.
-  (let [mutation-name (engine/mutation-name       extension-id item-namespace :duplicate)
-        exported-item (r subs/export-copy-item db extension-id item-namespace)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :duplicate)
+        exported-item (r subs/export-copy-item  db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))

@@ -28,20 +28,19 @@
 ;; -- Public helpers ----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn editor-uri
+(defn value-path
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
+  ; @param (keyword) item-key
   ;
   ; @example
-  ;  (item-editor/editor-uri :my-extension :my-type "my-item")
+  ;  (item-editor/value-path :my-extension :my-type :my-item)
   ;  =>
-  ;  "/@app-home/my-extension/my-item"
+  ;  [:my-extension :item-editor/data-items :my-item]
   ;
-  ; @return (string)
-  [extension-id _ item-id]
-  (str "/@app-home/" (name  extension-id)
-       "/"           (param item-id)))
+  ; @return (item-path vector)
+  [extension-id _ item-key]
+  [extension-id :item-editor/data-items item-key])
 
 (defn form-id
   ; @param (keyword) extension-id
@@ -139,42 +138,6 @@
   ; @return (metamorphic-content)
   [_ item-namespace]
   (keyword (str "unnamed-" (name item-namespace))))
-
-(defn mutation-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/mutation-name :my-extension :my-type :add)
-  ;  =>
-  ;  "my-extension.my-type-editor/add-item!"
-  ;
-  ; @return (string)
-  [extension-id item-namespace action-key]
-  (str (name extension-id)   "."
-       (name item-namespace) "-editor/"
-       (name action-key)     "-item!"))
-
-(defn resolver-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/resolver-id :my-extension :my-type :get)
-  ;  =>
-  ;  :my-extension.my-type-editor/get-item
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace action-key]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-editor")
-           (str (name action-key)     "-item")))
 
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!

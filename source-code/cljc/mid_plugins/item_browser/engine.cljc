@@ -5,6 +5,8 @@
 (ns mid-plugins.item-browser.engine
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.string  :as string]
+              [mid-fruits.uri     :as uri]
               [mid-fruits.vector  :as vector]))
 
 
@@ -46,41 +48,6 @@
 ;; -- Private helpers ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn mutation-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/mutation-name :my-extension :my-type :delete)
-  ;  =>
-  ;  "my-extension.my-type-browser/delete-item!"
-  ;
-  ; @return (string)
-  [extension-id item-namespace action-key]
-  (str (name extension-id)   "."
-       (name item-namespace) "-browser/"
-       (name action-key)     "-item!"))
-
-(defn resolver-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/resolver-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-browser/get-item
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           "get-item"))
-
 (defn collection-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -118,68 +85,53 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  ; @param (keyword) route-key
   ;
   ; @example
-  ;  (engine/route-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-browser/route
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           "route"))
-
-(defn extended-route-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/extended-route-id :my-extension :my-type)
+  ;  (engine/route-id :my-extension :my-type :extended)
   ;  =>
   ;  :my-extension.my-type-browser/extended-route
   ;
   ; @return (keyword)
-  [extension-id item-namespace]
+  [extension-id item-namespace route-key]
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-browser")
-           "extended-route"))
+           (str (name route-key)      "-route")))
 
 (defn route-template
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;  {:base-route (string)}
+  ; @param (map) editor-props
+  ;  {:route-template (string)}
   ;
   ; @example
-  ;  (engine/route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  (engine/route-template :my-extension :my-type {:route-template "/@app-home/my-extension/:item-id"})
   ;  =>
-  ;  "/@app-home/my-extension"
+  ;  "/@app-home/my-extension/:item-id"
   ;
-  ; @return (string)
-  [_ _ {:keys [base-route]}]
-  (return base-route))
+  ; @return (keyword)
+  [extension-id item-namespace {:keys [route-template]}]
+  (uri/valid-path route-template))
 
-(defn extended-route-template
+(defn base-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) browser-props
-  ;  {:base-route (string)}
+  ; @param (map) editor-props
+  ;  {:route-template (string)}
   ;
   ; @example
-  ;  (engine/extended-route-template :my-extension :my-type {:base-route "/@app-home/my-extension"})
+  ;  (engine/base-route :my-extension :my-type {:route-template "/@app-home/my-extension/:item-id"})
   ;  =>
-  ;  "/@app-home/my-extension/:item-id"
+  ;  "/@app-home/my-extension"
   ;
-  ; @return (string)
-  [_ _ {:keys [base-route]}]
-  (str base-route "/:item-id"))
+  ; @return (keyword)
+  [extension-id item-namespace {:keys [route-template]}]
+  (-> route-template (string/not-ends-with! "/:item-id")
+                     (uri/valid-path)))
 
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

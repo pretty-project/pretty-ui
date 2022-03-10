@@ -20,7 +20,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  (let [resolver-id     (engine/resolver-id extension-id item-namespace :get)
+  (let [resolver-id     (r subs/get-resolver-id     db extension-id item-namespace :get)
         current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
        [:debug `(~resolver-id ~{:item-id current-item-id})]))
 
@@ -33,7 +33,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-id]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :delete)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :delete)]
        [:debug `(~(symbol mutation-name) ~{:item-id item-id})]))
 
 (defn get-undo-delete-item-query
@@ -45,7 +45,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-id]]
-  (let [mutation-name (engine/mutation-name         extension-id item-namespace :undo-delete)
+  (let [mutation-name (r subs/get-mutation-name  db extension-id item-namespace :undo-delete)
         backup-item   (r subs/export-backup-item db extension-id item-namespace item-id)]
        [:debug `(~(symbol mutation-name) ~{:item backup-item})]))
 
@@ -62,8 +62,8 @@
   ; helyett az elemet küldi el a szerver számára, hogy a két plugin mutation függvényei hasonló
   ; paraméterezéssel működjenek.
   ; (az item-browser plugin működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
-  (let [mutation-name (engine/mutation-name  extension-id item-namespace :duplicate)
-        exported-item (r subs/export-item db extension-id item-namespace item-id)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :duplicate)
+        exported-item (r subs/export-item       db extension-id item-namespace item-id)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
 
 (defn get-undo-duplicate-item-query
@@ -75,7 +75,7 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace copy-id]]
-  (let [mutation-name (engine/mutation-name extension-id item-namespace :undo-duplicate)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :undo-duplicate)]
        [:debug `(~(symbol mutation-name) ~{:item-id copy-id})]))
 
 (defn get-update-item-query
@@ -87,6 +87,6 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace item-id]]
-  (let [mutation-name (engine/mutation-name  extension-id item-namespace :update)
-        exported-item (r subs/export-item db extension-id item-namespace item-id)]
+  (let [mutation-name (r subs/get-mutation-name db extension-id item-namespace :update)
+        exported-item (r subs/export-item       db extension-id item-namespace item-id)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))
