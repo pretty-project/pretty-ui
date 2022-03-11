@@ -11,8 +11,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.item-editor.engine
-(def value-path engine/value-path)
-(def form-id            engine/form-id)
+(def value-path         engine/value-path)
 (def add-item-label     engine/add-item-label)
 (def edit-item-label    engine/edit-item-label)
 (def new-item-label     engine/new-item-label)

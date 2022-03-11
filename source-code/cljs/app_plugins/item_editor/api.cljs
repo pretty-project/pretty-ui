@@ -18,7 +18,6 @@
 
 ; app-plugins.item-editor.engine
 (def value-path engine/value-path)
-(def form-id    engine/form-id)
 
 ; app-plugins.item-editor.subs
 (def get-current-item-id subs/get-current-item-id)

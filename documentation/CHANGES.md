@@ -1,6 +1,13 @@
 
 # x4.6.5
 
+- Az item-editor plugin (form-id ...) függvénye ezentúl nem elérhető.
+  - Az input-ok {:form-id ...} tulajdonságát függvény nélkül lehet megadni.
+    Pl.: :entities.entity-editor/form
+    Pl.: ::form
+  - Az item-editor/body komponens számára is szükséges átadni ugyanazt a {:form-id ...} tulajdonságot,
+    ha használni szeretnéd a funkciót
+
 - Az item-lister, item-editor és item-browser pluginok kliens-oldali body komponensénenek add át
   a {:handler-key ...} tulajdonságot, amivel tudja azonosítani, hogy melyik resolver és mutation
   függvényeket használja

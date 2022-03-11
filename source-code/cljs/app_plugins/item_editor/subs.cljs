@@ -297,8 +297,9 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [form-id (engine/form-id extension-id item-namespace)]
-       (r elements/form-completed? db form-id)))
+  (if-let [form-id (r get-meta-item db extension-id item-namespace :form-id)]
+          (r elements/form-completed? db form-id)
+          (return true)))
 
 
 

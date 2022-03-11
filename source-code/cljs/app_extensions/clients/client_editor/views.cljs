@@ -94,7 +94,7 @@
                              ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
                              ;:modifier form/phone-number
                              :modifier #(string/starts-with! % "+")
-                             :form-id   (item-editor/form-id :clients :client)
+                             :form-id   :clients.client-editor/form
                              :disabled? editor-disabled?}]))
 
 (defn- client-email-address-field
@@ -105,7 +105,7 @@
                             {:label :email-address :required? true :min-width :s
                              :value-path [:clients :item-editor/data-items :email-address]
                              :validator {:f form/email-address? :invalid-message :invalid-email-address}
-                             :form-id   (item-editor/form-id :clients :client)
+                             :form-id   :clients.client-editor/form
                              :disabled? editor-disabled?}]))
 
 (defn- client-primary-contacts
@@ -124,7 +124,7 @@
        [elements/text-field ::last-name-field
                             {:label :last-name :required? true :min-width :s
                              :value-path [:clients :item-editor/data-items :last-name]
-                             :form-id    (item-editor/form-id :clients :client)
+                             :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
 (defn- client-first-name-field
@@ -134,7 +134,7 @@
        [elements/text-field ::first-name-field
                             {:label :first-name :required? true :min-width :s
                              :value-path [:clients :item-editor/data-items :first-name]
-                             :form-id    (item-editor/form-id :clients :client)
+                             :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
 (defn- client-name
@@ -198,6 +198,7 @@
        [layouts/layout-a surface-id {:description description
                                      :header [item-editor/header :clients :client {:item-actions [:delete :duplicate :save]}]
                                      :body   [item-editor/body   :clients :client {:form-element #'client-form
+                                                                                   :form-id :clients.client-editor/form
                                                                                    :handler-key :clients.client-editor
                                                                                    :suggestion-keys [:city]
                                                                                    :new-item-id "new-client"}]}]))

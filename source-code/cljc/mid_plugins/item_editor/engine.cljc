@@ -42,21 +42,6 @@
   [extension-id _ item-key]
   [extension-id :item-editor/data-items item-key])
 
-(defn form-id
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (item-editor/form-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-editor/form
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-editor")
-           "form"))
-
 
 
 ;; -- Private helpers ---------------------------------------------------------

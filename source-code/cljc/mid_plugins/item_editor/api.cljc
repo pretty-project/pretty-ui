@@ -13,4 +13,3 @@
 
 ; mid-plugins.item-editor.engine
 (def value-path engine/value-path)
-(def form-id    engine/form-id)
