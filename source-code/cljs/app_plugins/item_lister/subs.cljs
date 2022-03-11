@@ -64,6 +64,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-request-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @example
+  ;  (r get-request-id db :my-extension :my-type)
+  ;  =>
+  ;  :my-handler/synchronize-lister!
+  ;
+  ; @return (keyword)
+  [db [_ extension-id item-namespace]]
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (str (name handler-key) "/synchronize-lister!")))
+
 (defn get-mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -138,7 +154,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [request-id (engine/request-id extension-id item-namespace)]
+  (let [request-id (r get-request-id db extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
 (defn no-items-to-show?

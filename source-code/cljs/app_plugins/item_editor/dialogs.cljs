@@ -3,11 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.dialogs
-    (:require [app-plugins.item-editor.engine :as engine]
-              [app-plugins.item-editor.subs   :as subs]
-              [x.app-core.api                 :as a :refer [r]]
-              [x.app-elements.api             :as elements]
-              [x.app-ui.api                   :as ui]))
+    (:require [app-plugins.item-editor.subs :as subs]
+              [x.app-core.api               :as a :refer [r]]
+              [x.app-elements.api           :as elements]
+              [x.app-ui.api                 :as ui]))
 
 
 
@@ -22,7 +21,7 @@
   ; @param (string) item-id
   [extension-id item-namespace item-id]
   (let [undo-event [:item-editor/undo-delete-item! extension-id item-namespace item-id]]
-       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-deleted)
+       [ui/state-changed-bubble-body :plugins.item-editor/item-deleted-dialog
                                      {:label :item-deleted
                                       :primary-button {:on-click undo-event :label :recover!}}]))
 
@@ -34,7 +33,7 @@
   ; @param (string) item-id
   [extension-id item-namespace item-id]
   (let [undo-event [:item-editor/undo-discard-changes! extension-id item-namespace item-id]]
-       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :changes-discarded)
+       [ui/state-changed-bubble-body :plugins.item-editor/changes-discarded-dialog
                                      {:label :unsaved-changes-discarded
                                       :primary-button {:on-click undo-event :label :restore!}}]))
 
@@ -47,10 +46,10 @@
   [extension-id item-namespace copy-id]
   (if-let [item-route @(a/subscribe [:item-editor/get-item-route extension-id item-namespace copy-id])]
           (let [edit-event [:router/go-to! item-route]]
-               [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-duplicated)
+               [ui/state-changed-bubble-body :plugins.item-editor/item-duplicated-dialog
                                              {:label :item-duplicated
                                               :primary-button {:on-click edit-event :label :edit-copy!}}])
-          [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :item-duplicated)
+          [ui/state-changed-bubble-body :plugins.item-editor/item-duplicated-dialog
                                         {:label :item-duplicated}]))
 
 
@@ -66,7 +65,7 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
-           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-deleted)
+           [:ui/blow-bubble! :plugins.item-editor/item-deleted-dialog
                              {:body       [item-deleted-dialog-body          extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
@@ -78,7 +77,7 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [current-item-id (r subs/get-current-item-id db extension-id item-namespace)]
-           [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :changes-discarded)
+           [:ui/blow-bubble! :plugins.item-editor/changes-discarded-dialog
                              {:body       [changes-discarded-dialog-body     extension-id item-namespace current-item-id]
                               :destructor [:item-editor/clean-recovery-data! extension-id item-namespace current-item-id]}])))
 
@@ -90,5 +89,5 @@
   ; @param (keyword) item-namespace
   ; @param (string) copy-id
   (fn [_ [_ extension-id item-namespace copy-id]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :item-duplicated)
+      [:ui/blow-bubble! :plugins.item-editor/item-duplicated-dialog
                         {:body [item-duplicated-dialog-body extension-id item-namespace copy-id]}]))

@@ -24,12 +24,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; - Az item-lister/header komponens {:new-item-options [...]} tulajdonságának használatával
-;   a komponens menü elemei között megjelenik az "Új elem hozzáadása" gomb, aminek megnyomására
-;   megjelenik egy párbeszédablak a {:new-item-options [...]} tulajdonságként átadott vektor elemeivel
-; - Az egyes elemek kiválasztásakor megtörténik a [:my-extension.my-type-lister/add-new-item! ...]
+;   a komponens menü elemei között megjelenített "Új elem hozzáadása" gomb egy párbeszédablakot
+;   nyit meg a {:new-item-options [...]} tulajdonságként átadott vektor elemeivel
+; - Az egyes elemek kiválasztásakor megtörténik a {:new-item-event [...]} tulajdonságként átadott
 ;   esemény, ami utolsó paraméterként megkapja a kiválasztott értéket.
 (a/reg-event-fx
-  :my-extension.my-type-lister/add-new-item!
+  :add-my-new-item!
   (fn [_ [_ selected-option]]
       (case selected-option :add-my-type!   [:do-something!]
                             :add-your-type! [:do-something-else!])))

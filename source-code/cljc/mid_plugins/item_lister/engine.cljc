@@ -24,27 +24,6 @@
 
 
 
-;; -- Public helpers ----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request-id
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (item-lister/request-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-lister/synchronize-lister!
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace action-key]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-lister")
-           "synchronize-lister!"))
-
-
-
 ;; -- Private helpers ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -111,26 +90,8 @@
   ;  "/@app-home/my-extension"
   ;
   ; @return (keyword)
-  [extension-id item-namespace {:keys [route-template]}]
+  [_ _ {:keys [route-template]}]
   (uri/valid-path route-template))
-
-(defn add-new-item-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (engine/add-new-item-event :my-extension :my-type)
-  ;  =>
-  ;  [:my-extension.my-type-lister/add-new-item!]
-  ;
-  ; @return (event-vector)
-  [extension-id item-namespace]
-  (let [event-id (keyword (str (name extension-id)   "."
-                               (name item-namespace) "-lister")
-                          "add-new-item!")]
-       [event-id]))
 
 (defn component-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -150,21 +111,3 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-lister")
            (name component-key)))
-
-(defn dialog-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/dialog-id :my-extension :my-type :delete-items)
-  ;  =>
-  ;  :my-extension.my-type-lister/delete-items-dialog
-  ;
-  ; @return (namespaced keyword)
-  [extension-id item-namespace action-key]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-lister")
-           (str (name action-key)     "-dialog")))

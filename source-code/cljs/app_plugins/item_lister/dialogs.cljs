@@ -3,9 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-lister.dialogs
-    (:require [app-plugins.item-lister.engine :as engine]
-              [x.app-core.api                 :as a]
-              [x.app-ui.api                   :as ui]))
+    (:require [x.app-core.api :as a]
+              [x.app-ui.api   :as ui]))
 
 
 
@@ -20,7 +19,7 @@
   ; @param (strings in vector) item-ids
   [extension-id item-namespace item-ids]
   (let [undo-event [:item-lister/undo-delete-items! extension-id item-namespace item-ids]]
-       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-deleted)
+       [ui/state-changed-bubble-body :plugins.item-lister/items-deleted-dialog
                                      {:label {:content :n-items-deleted :replacements [(count item-ids)]}
                                       :primary-button {:on-click undo-event :label :recover!}}]))
 
@@ -32,7 +31,7 @@
   ; @param (strings in vector) copy-ids
   [extension-id item-namespace copy-ids]
   (let [undo-event [:item-lister/undo-duplicate-items! extension-id item-namespace copy-ids]]
-       [ui/state-changed-bubble-body (engine/dialog-id extension-id item-namespace :items-duplicated)
+       [ui/state-changed-bubble-body :plugins.item-lister/items-duplicated-dialog
                                      {:label {:content :n-items-duplicated :replacements [(count copy-ids)]}
                                       :primary-button {:on-click undo-event :label :undo!}}]))
 
@@ -49,7 +48,7 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
   (fn [_ [_ extension-id item-namespace item-ids]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-deleted)
+      [:ui/blow-bubble! :plugins.item-lister/items-deleted-dialog
                         {:body       [items-deleted-dialog-body        extension-id item-namespace item-ids]
                          :destructor [:item-lister/clean-backup-items! extension-id item-namespace item-ids]}]))
 
@@ -61,5 +60,5 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
   (fn [_ [_ extension-id item-namespace copy-ids]]
-      [:ui/blow-bubble! (engine/dialog-id extension-id item-namespace :items-duplicated)
+      [:ui/blow-bubble! :plugins.item-lister/items-duplicated-dialog
                         {:body [items-duplicated-dialog-body extension-id item-namespace copy-ids]}]))

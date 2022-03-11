@@ -224,29 +224,19 @@
   ; @usage
   ;  [item-lister/new-item-button :my-extension :my-type]
   [extension-id item-namespace]
-  (if-let [new-item-event @(a/subscribe [:item-lister/get-new-item-event extension-id item-namespace])]
-          (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
-                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
-               [elements/icon-button :item-lister/new-item-button
-                                     {:icon :add_circle :preset :primary :tooltip :add-new!
-                                      :disabled? (or error-mode? lister-disabled?)
-                                      :on-click  new-item-event}])))
-
-(defn new-item-select
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  [item-lister/new-item-select :my-extension :my-type]
-  [extension-id item-namespace]
-  (if-let [new-item-options @(a/subscribe [:item-lister/get-new-item-options extension-id item-namespace])]
-          (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
-                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
+  (let [error-mode?      @(a/subscribe [:item-lister/error-mode?        extension-id item-namespace])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
+        new-item-event   @(a/subscribe [:item-lister/get-new-item-event extension-id item-namespace])]
+       (if-let [new-item-options @(a/subscribe [:item-lister/get-new-item-options extension-id item-namespace])]
                [elements/select :item-lister/new-item-select
                                 {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
                                  :initial-options new-item-options
-                                 :disabled?       (or error-mode? lister-disabled?)
-                                 :on-select       (engine/add-new-item-event extension-id item-namespace)}])))
+                                 :on-select       new-item-event
+                                 :disabled?       (or error-mode? lister-disabled?)}]
+               [elements/icon-button :item-lister/new-item-button
+                                     {:icon :add_circle :preset :primary :tooltip :add-new!
+                                      :on-click  new-item-event
+                                      :disabled? (or error-mode? lister-disabled?)}])))
 
 (defn toggle-select-mode-button
   ; @param (keyword) extension-id
@@ -353,7 +343,6 @@
   [extension-id item-namespace]
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group [new-item-button            extension-id item-namespace]
-                                               [new-item-select            extension-id item-namespace]
                                                [sort-items-button          extension-id item-namespace]
                                                [toggle-select-mode-button  extension-id item-namespace]
                                                [toggle-reorder-mode-button extension-id item-namespace]]

@@ -12,7 +12,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; server-plugins.item-browser.engine
-(def request-id           engine/request-id)
 (def env->item-links      engine/env->item-links)
 (def env->sort-pattern    engine/env->sort-pattern)
 (def env->search-pattern  engine/env->search-pattern)

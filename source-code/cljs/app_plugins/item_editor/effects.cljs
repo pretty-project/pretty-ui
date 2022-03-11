@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.item-editor.effects
-    (:require [app-plugins.item-editor.engine     :as engine]
-              [app-plugins.item-editor.events     :as events]
+    (:require [app-plugins.item-editor.events     :as events]
               [app-plugins.item-editor.queries    :as queries]
               [app-plugins.item-editor.subs       :as subs]
               [app-plugins.item-editor.validators :as validators]
@@ -24,9 +23,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [query        (r queries/get-request-item-query          db extension-id item-namespace)
+      (let [request-id   (r subs/get-request-id                     db extension-id item-namespace)
+            query        (r queries/get-request-item-query          db extension-id item-namespace)
             validator-f #(r validators/request-item-response-valid? db extension-id item-namespace %)]
-           [:sync/send-query! (engine/request-id extension-id item-namespace)
+           [:sync/send-query! request-id
                               {:display-progress? true
                                ; XXX#4057
                                ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
@@ -71,10 +71,11 @@
       ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
       ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
       ;   pontatlan visszaálltást okozhat!
-      (let [query        (r queries/get-save-item-query          db extension-id item-namespace)
+      (let [request-id   (r subs/get-request-id                  db extension-id item-namespace)
+            query        (r queries/get-save-item-query          db extension-id item-namespace)
             validator-f #(r validators/save-item-response-valid? db extension-id item-namespace %)]
            {:db (r events/save-item! db extension-id item-namespace)
-            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+            :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-editor/item-saved       extension-id item-namespace]
                                           :on-failure [:item-editor/save-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -118,10 +119,11 @@
   ; @usage
   ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [query        (r queries/get-delete-item-query          db extension-id item-namespace)
+      (let [request-id   (r subs/get-request-id                    db extension-id item-namespace)
+            query        (r queries/get-delete-item-query          db extension-id item-namespace)
             validator-f #(r validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+            :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-editor/item-deleted       extension-id item-namespace]
                                           :on-failure [:item-editor/delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -161,10 +163,11 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [query        (r queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+      (let [request-id   (r subs/get-request-id                         db extension-id item-namespace)
+            query        (r queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (engine/request-id extension-id item-namespace)
+            :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-editor/delete-item-undid       extension-id item-namespace item-id]
                                           :on-failure [:item-editor/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -210,9 +213,10 @@
   ; @usage
   ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [query        (r queries/get-duplicate-item-query          db extension-id item-namespace)
+      (let [request-id   (r subs/get-request-id                       db extension-id item-namespace)
+            query        (r queries/get-duplicate-item-query          db extension-id item-namespace)
             validator-f #(r validators/duplicate-item-response-valid? db extension-id item-namespace %)]
-           [:sync/send-query! (engine/request-id extension-id item-namespace)
+           [:sync/send-query! request-id
                               {:display-progress? true
                                :on-success [:item-editor/item-duplicated       extension-id item-namespace]
                                :on-failure [:item-editor/duplicate-item-failed extension-id item-namespace]
@@ -269,7 +273,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [_ [_ extension-id item-namespace]]
-      [:ui/add-popup! (engine/dialog-id extension-id item-namespace :color-picker)
+      [:ui/add-popup! :plugins.item-editor/color-picker-dialog
                       {:body [views/color-picker-dialog-body extension-id item-namespace]
                       ;:header #'ui/close-popup-header
                        :min-width :none}]))

@@ -25,26 +25,6 @@
 
 
 
-;; -- Public helpers ----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request-id
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (item-browser/request-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-browser/synchronize-browser!
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           "synchronize-browser!"))
-
-
-
 ;; -- Private helpers ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -112,7 +92,7 @@
   ;  "/@app-home/my-extension/:item-id"
   ;
   ; @return (keyword)
-  [extension-id item-namespace {:keys [route-template]}]
+  [_ _ {:keys [route-template]}]
   (uri/valid-path route-template))
 
 (defn base-route
@@ -129,7 +109,7 @@
   ;  "/@app-home/my-extension"
   ;
   ; @return (keyword)
-  [extension-id item-namespace {:keys [route-template]}]
+  [_ _ {:keys [route-template]}]
   (-> route-template (string/not-ends-with! "/:item-id")
                      (uri/valid-path)))
 
@@ -151,21 +131,3 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-browser")
            (name component-key)))
-
-(defn dialog-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) action-key
-  ;
-  ; @example
-  ;  (engine/dialog-id :my-extension :my-type :item-deleted)
-  ;  =>
-  ;  :my-extension.my-type-browser/item-deleted-dialog
-  ;
-  ; @return (namespaced keyword)
-  [extension-id item-namespace action-key]
-  (keyword (str (name extension-id)  "."
-                (name item-namespace) "-browser")
-           (str (name action-key)     "-dialog")))

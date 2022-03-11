@@ -27,9 +27,6 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.item-browser.engine
-(def request-id engine/request-id)
-
 ; app-plugins.item-browser.events
 (def toggle-item-selection! events/toggle-item-selection!)
 

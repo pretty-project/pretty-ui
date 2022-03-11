@@ -16,9 +16,6 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.item-lister.engine
-(def request-id engine/request-id)
-
 ; app-plugins.item-lister.events
 (def toggle-item-selection! events/toggle-item-selection!)
 
@@ -28,7 +25,6 @@
 ; app-plugins.item-lister.views
 (def search-block               views/search-block)
 (def new-item-button            views/new-item-button)
-(def new-item-select            views/new-item-select)
 (def toggle-select-mode-button  views/toggle-select-mode-button)
 (def toggle-reorder-mode-button views/toggle-reorder-mode-button)
 (def sort-items-button          views/sort-items-button)
