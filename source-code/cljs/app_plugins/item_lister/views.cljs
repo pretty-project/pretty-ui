@@ -531,7 +531,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [_ _]
-  [:<> [elements/horizontal-separator {:size :xxl}]
+  [:<> ;[elements/horizontal-separator {:size :xxl}]
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-content-you-opened-may-be-broken :color :muted}]])
 

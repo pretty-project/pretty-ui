@@ -57,8 +57,9 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
-       (str (name handler-key) "/synchronize-browser!")))
+  ; XXX#3055
+  (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+          (keyword (name handler-key) "synchronize-browser!")))
 
 (defn get-mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!

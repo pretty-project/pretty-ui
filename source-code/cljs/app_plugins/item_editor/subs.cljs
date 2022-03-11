@@ -98,8 +98,9 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
-       (str (name handler-key) "/synchronize-editor!")))
+  ; XXX#3055
+  (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+          (keyword (name handler-key) "synchronize-editor!")))
 
 (defn get-mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,7 +183,7 @@
   (let [data-received? (r get-meta-item db extension-id item-namespace :data-received?)]
        (boolean data-received?)))
 
-(defn synchronizing?
+(defn editor-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -190,8 +191,9 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [request-id (r get-request-id db extension-id item-namespace)]
-       (r sync/listening-to-request? db request-id)))
+  ; XXX#3055
+  (if-let [request-id (r get-request-id db extension-id item-namespace)]
+          (r sync/listening-to-request? db request-id)))
 
 (defn error-mode?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -386,13 +388,13 @@
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
   (boolean (if-let [download-data? (r download-data? db extension-id item-namespace)]
-                   (let [data-received? (r get-meta-item  db extension-id item-namespace :data-received?)
-                         synchronizing? (r synchronizing? db extension-id item-namespace)]
+                   (let [data-received?        (r get-meta-item         db extension-id item-namespace :data-received?)
+                         editor-synchronizing? (r editor-synchronizing? db extension-id item-namespace)]
                         ; XXX#3219
                         ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
                         ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
                         ; az adatok letöltése!
-                        (or synchronizing? (not data-received?))))))
+                        (or editor-synchronizing? (not data-received?))))))
 
 
 

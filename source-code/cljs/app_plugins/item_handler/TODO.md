@@ -14,8 +14,6 @@
 
 
 # Problémák amire megoldást jelent
-- Az item-browser plugin az item-lister pluginnal közös resolver-t használ ezért a resolver elnevezése
-  a my-type-lister kifejezést tartalmazza my-type-browser helyett
 - Az item-browser egy elem törlése, duplikálása, stb műveletek szinte teljesen megegyeznek
   az item-editor hasonló műveleteivel, felesleges, hogy duplán létezzenek
 - Az item-lister get-items lekérése-e tartalmazza az :item-id kulcsot, amire az item-browsernek lenne szüksége,
@@ -28,7 +26,7 @@
 
 
 # Új problémák
-- A get-item-suggestions validálása sem történhet az item-handler pluginban
+- A get-item-suggestions validálása sem történhet az item-handler pluginban, mert tul specifikus
 - Az item-handler letöltés kezelője nem foglalkozhat az infinite-loader újratöltésével a dokumentumok
   megérkezése után, mert nincs köze hozzá, hogy egy-egy plugin infinite-loader-rel vagy pagination-nal,
   vagy akármivel tölti le az elemeket

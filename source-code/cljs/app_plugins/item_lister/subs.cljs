@@ -77,8 +77,11 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
-       (str (name handler-key) "/synchronize-lister!")))
+  ; XXX#3055
+  ; A komponensek [:item-lister/lister-synchronizing? ...] feliratkozása már azelőtt megpróbálja
+  ; kiolvasni a Re-Frame adatbázisból a handler-key értékét, mielőtt az eltárolásra kerülne ...
+  (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+          (keyword (name handler-key) "synchronize-lister!")))
 
 (defn get-mutation-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -146,7 +149,7 @@
   (let [items-received? (r get-meta-item db extension-id item-namespace :items-received?)]
        (boolean items-received?)))
 
-(defn synchronizing?
+(defn lister-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -154,8 +157,9 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [request-id (r get-request-id db extension-id item-namespace)]
-       (r sync/listening-to-request? db request-id)))
+  ; XXX#3055
+  (if-let [request-id (r get-request-id db extension-id item-namespace)]
+          (r sync/listening-to-request? db request-id)))
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -272,10 +276,10 @@
        ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
        ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
        ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
-       ; Ezért szükséges vizsgálni a synchronizing? függvény kimenetét, hogy ha már elindult
+       ; Ezért szükséges vizsgálni a lister-synchronizing? függvény kimenetét, hogy ha már elindult
        ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
-            (r download-more-items? db extension-id item-namespace)
-       (not (r synchronizing?       db extension-id item-namespace))))
+            (r download-more-items?  db extension-id item-namespace)
+       (not (r lister-synchronizing? db extension-id item-namespace))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -285,11 +289,11 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  ; A kiválasztott elemeken végzett műveletek is {:synchronizing? true} állapotba hozzák
+  ; A kiválasztott elemeken végzett műveletek is {:lister-synchronizing? true} állapotba hozzák
   ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
   ; az elemeken végzett műveletek szinkronizációval.
-  (and (r download-more-items? db extension-id item-namespace)
-       (r synchronizing?       db extension-id item-namespace)))
+  (and (r download-more-items?  db extension-id item-namespace)
+       (r lister-synchronizing? db extension-id item-namespace)))
 
 (defn lister-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -299,10 +303,10 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [items-received? (r items-received? db extension-id item-namespace)
-        synchronizing?  (r synchronizing?  db extension-id item-namespace)]
+  (let [items-received?       (r items-received?       db extension-id item-namespace)
+        lister-synchronizing? (r lister-synchronizing? db extension-id item-namespace)]
        ; XXX#3219
-       (or synchronizing? (not items-received?))))
+       (or lister-synchronizing? (not items-received?))))
 
 (defn items-selectable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
