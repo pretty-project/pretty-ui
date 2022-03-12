@@ -213,3 +213,7 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-editor")
            (name component-key)))
+
+  ;(keyword (namespace editor-id)
+  ;         (str (name editor-id) "-"
+  ;              (name component-key))))

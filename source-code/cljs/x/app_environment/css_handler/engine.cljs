@@ -3,18 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.css-handler.engine
-    (:require [app-fruits.dom    :as dom]
-              [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def EXTERNAL-CSS-URI-BASE "/css/x/")
+    (:require [app-fruits.dom                       :as dom]
+              [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.string                    :as string]
+              [mid-fruits.vector                    :as vector]
+              [x.app-environment.css-handler.config :as css-handler.config]))
 
 
 
@@ -89,4 +82,4 @@
   ;
   ; @return (string)
   [filename]
-  (str EXTERNAL-CSS-URI-BASE filename))
+  (str css-handler.config/EXTERNAL-CSS-URI-BASE filename))

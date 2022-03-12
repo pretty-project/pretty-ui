@@ -5,10 +5,10 @@
 (ns x.mid-core.api
     (:require [x.mid-core.build-handler.events]
               [x.mid-core.build-handler.subs]
-              [x.mid-core.debug-handler.engine]
+              [x.mid-core.config-handler.events]
               [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
-              [x.mid-core.cache-handler              :as cache-handler]
-              [x.mid-core.config-handler             :as config-handler]
+              [x.mid-core.cache-handler.engine       :as cache-handler.engine]
+              [x.mid-core.config-handler.subs        :as config-handler.subs]
               [x.mid-core.engine                     :as engine]
               [x.mid-core.event-handler              :as event-handler]))
 
@@ -20,16 +20,16 @@
 ; x.mid-core.build-handler.side-effects
 (def app-build build-handler.side-effects/app-build)
 
-; x.mid-core.cache-handler
-(def cache-control-uri cache-handler/cache-control-uri)
+; x.mid-core.cache-handler.engine
+(def cache-control-uri cache-handler.engine/cache-control-uri)
 
-; x.mid-core.config-handler
-(def get-app-config         config-handler/get-app-config)
-(def get-app-config-item    config-handler/get-app-config-item)
-(def get-server-config      config-handler/get-server-config)
-(def get-server-config-item config-handler/get-server-config-item)
-(def get-site-config        config-handler/get-site-config)
-(def get-site-config-item   config-handler/get-site-config-item)
+; x.mid-core.config-handler.subs
+(def get-app-config         config-handler.subs/get-app-config)
+(def get-app-config-item    config-handler.subs/get-app-config-item)
+(def get-server-config      config-handler.subs/get-server-config)
+(def get-server-config-item config-handler.subs/get-server-config-item)
+(def get-site-config        config-handler.subs/get-site-config)
+(def get-site-config-item   config-handler.subs/get-site-config-item)
 
 ; x.mid-core.engine
 (def dom-value     engine/dom-value)

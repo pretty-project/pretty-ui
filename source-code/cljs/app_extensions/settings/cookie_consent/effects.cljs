@@ -4,6 +4,7 @@
 
 (ns app-extensions.settings.cookie-consent.effects
     (:require [app-extensions.settings.cookie-settings.views :as cookie-settings.views]
+              [app-extensions.settings.cookie-consent.config :as cookie-consent.config]
               [app-extensions.settings.cookie-consent.subs   :as cookie-consent.subs]
               [app-extensions.settings.cookie-consent.views  :as cookie-consent.views]
               [x.app-core.api                                :as a :refer [r]]))
@@ -29,16 +30,6 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (ms)
-;  BUG#2457
-;  A cookie-consent popup nem renderelődhet ki a legelőször kirenderelt surface előtt!
-(def BOOT-RENDERING-DELAY 1000)
-
-
-
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -57,5 +48,5 @@
   (fn [{:keys [db]} _]
       {:dispatch-if [(r cookie-consent.subs/render-consent? db)
                      {; BUG#2457
-                      :dispatch-later [{:ms BOOT-RENDERING-DELAY
+                      :dispatch-later [{:ms cookie-consent.config/BOOT-RENDERING-DELAY
                                         :dispatch [:settings.cookie-consent/render-consent!]}]}]}))

@@ -3,9 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler.side-effects
-    (:require [x.app-details                      :as details]
-              [x.server-core.event-handler        :as event-handler]
-              [x.server-core.error-handler.engine :as error-handler.engine]))
+    (:require [x.app-details               :as details]
+              [x.server-core.event-handler :as event-handler]))
 
 
 
@@ -16,15 +15,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (list of strings) warning-message
-  [& warning-message])
-  ;(.warn js/console (reduce #(str %1 "\n" %2) nil warning-message)))
+  [& warning-message]
+  (println (reduce #(str %1 "\n" %2) nil warning-message)))
 
 (defn print-error!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (list of strings) error-message
-  [& error-message])
-  ;(.error js/console (reduce #(str %1 "\n" %2) nil error-message)))
+  [& error-message]
+  (println (reduce #(str %1 "\n" %2) nil error-message)))
 
 
 

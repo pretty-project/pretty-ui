@@ -3,33 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.engine
-    (:require [mid-fruits.map    :as map]
-              [mid-fruits.string :as string]
-              [x.app-core.api    :as a]
-              [x.app-db.api      :as db]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (nil)
-;  If Domain is unspecified, the attribute defaults to the same host that set the cookie, excluding subdomains.
-;  If Domain is specified, then subdomains are always included.
-(def COOKIE-DOMAIN nil)
-
-; @constant (string)
-(def COOKIE-PATH "/")
-
-; @constant (map)
-(def COOKIE-NAME-PREFIXES {:analytics       "xa"
-                           :necessary       "xn"
-                           :user-experience "xue"})
-
-; @constant (map)
-(def COOKIE-TYPES {"xa"  :analytics
-                   "xn"  :necessary
-                   "xue" :user-experience})
+    (:require [mid-fruits.map                          :as map]
+              [mid-fruits.string                       :as string]
+              [x.app-core.api                          :as a]
+              [x.app-environment.cookie-handler.config :as cookie-handler.config]))
 
 
 
@@ -43,7 +20,7 @@
   ;
   ; @return (string)
   [cookie-type]
-  (get COOKIE-NAME-PREFIXES cookie-type))
+  (get cookie-handler.config/COOKIE-NAME-PREFIXES cookie-type))
 
 (defn cookie-name-prefix->cookie-type
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,7 +29,7 @@
   ;
   ; @return (keyword)
   [cookie-name-prefix]
-  (get COOKIE-TYPES cookie-name-prefix))
+  (get cookie-handler.config/COOKIE-TYPES cookie-name-prefix))
 
 (defn cookie-id->cookie-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +76,7 @@
   ; @return (boolean)
   [cookie-name]
   (let [cookie-name-prefix (cookie-name->cookie-name-prefix cookie-name)
-        analytics-cookie-name-prefix (get COOKIE-NAME-PREFIXES :analytics)]
+        analytics-cookie-name-prefix (get cookie-handler.config/COOKIE-NAME-PREFIXES :analytics)]
        (= cookie-name-prefix analytics-cookie-name-prefix)))
 
 (defn cookie-name->necessary-cookie?
@@ -115,7 +92,7 @@
   ; @return (boolean)
   [cookie-name]
   (let [cookie-name-prefix (cookie-name->cookie-name-prefix cookie-name)
-        necessary-cookie-name-prefix (get COOKIE-NAME-PREFIXES :necessary)]
+        necessary-cookie-name-prefix (get cookie-handler.config/COOKIE-NAME-PREFIXES :necessary)]
        (= cookie-name-prefix necessary-cookie-name-prefix)))
 
 (defn cookie-name->user-experience-cookie?
@@ -131,7 +108,7 @@
   ; @return (boolean)
   [cookie-name]
   (let [cookie-name-prefix (cookie-name->cookie-name-prefix cookie-name)
-        user-experience-cookie-name-prefix (get COOKIE-NAME-PREFIXES :user-experience)]
+        user-experience-cookie-name-prefix (get cookie-handler.config/COOKIE-NAME-PREFIXES :user-experience)]
        (= cookie-name-prefix user-experience-cookie-name-prefix)))
 
 (defn cookie-name->system-cookie?
@@ -147,7 +124,7 @@
   ; @return (boolean)
   [cookie-name]
   (let [cookie-name-prefix (cookie-name->cookie-name-prefix cookie-name)]
-       (map/contains-value? COOKIE-NAME-PREFIXES cookie-name-prefix)))
+       (map/contains-value? cookie-handler.config/COOKIE-NAME-PREFIXES cookie-name-prefix)))
 
 (defn cookie-name->cookie-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

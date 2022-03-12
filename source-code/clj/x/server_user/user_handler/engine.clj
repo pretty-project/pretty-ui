@@ -8,7 +8,7 @@
               [server-fruits.hash                   :as hash]
               [x.server-db.api                      :as db]
               [x.server-user.engine                 :as engine]
-              [x.server-user.profile-handler.engine :as profile-handler.engine]))
+              [x.server-user.profile-handler.config :as profile-handler.config]))
 
 
 
@@ -36,8 +36,8 @@
   [{:keys [email-address first-name last-name password]}]
   (and (form/password?      password)
        (form/email-address? email-address)
-       (string/length?      first-name 1 profile-handler.engine/MAX-FIRST-NAME-LENGTH)
-       (string/length?      last-name  1 profile-handler.engine/MAX-FIRST-NAME-LENGTH)))
+       (string/length?      first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
+       (string/length?      last-name  1 profile-handler.config/MAX-FIRST-NAME-LENGTH)))
 
 (defn user-props->user-account
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,3 +1,5 @@
 
-(ns mid-extensions.storage.api
-    (:require [mid-extensions.storage.engine]))
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns mid-extensions.storage.api)

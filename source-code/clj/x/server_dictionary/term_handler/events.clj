@@ -11,6 +11,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-dictionary.term-handler.events
-;
-; Az x.mid-dictionary.term-handler.events névtér függvényei közvetlenül kapcsolódnak
-; az x.server-dictionary.api névtérhez
+(def add-term!  term-handler.events/add-term!)
+(def add-terms! term-handler.events/add-terms!)

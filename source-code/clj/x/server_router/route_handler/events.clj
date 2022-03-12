@@ -8,6 +8,7 @@
               [mid-fruits.vector                    :as vector]
               [x.server-core.api                    :as a :refer [r]]
               [x.server-router.engine               :as engine]
+              [x.server-router.route-handler.config :as route-handler.config]
               [x.server-router.route-handler.engine :as route-handler.engine]
               [x.server-router.route-handler.subs   :as route-handler.subs]))
 
@@ -44,7 +45,7 @@
   ;   :core-js (string)
   ;   :post (map)}
   [{:keys [get post restricted?] :as route-props}]
-  (merge {:core-js route-handler.engine/DEFAULT-CORE-JS}
+  (merge {:core-js route-handler.config/DEFAULT-CORE-JS}
          (param route-props)
          (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
          (if post {:post (handler-prototype post {:restricted? restricted?})})))
@@ -66,7 +67,7 @@
   [db [_ route-id {:keys [get post] :as route-props}]]
   (if (or get post)
       (assoc-in db [:router :route-handler/server-routes route-id]
-                   (select-keys route-props route-handler.engine/SERVER-ROUTE-KEYS))
+                   (select-keys route-props route-handler.config/SERVER-ROUTE-KEYS))
       (return   db)))
 
 (defn store-client-route-props!
@@ -81,7 +82,7 @@
   [db [_ route-id {:keys [client-event on-leave-event] :as route-props}]]
   (if (or client-event on-leave-event)
       (assoc-in db [:router :route-handler/client-routes route-id]
-                   (select-keys route-props route-handler.engine/CLIENT-ROUTE-KEYS))
+                   (select-keys route-props route-handler.config/CLIENT-ROUTE-KEYS))
       (return   db)))
 
 (defn add-route-to-sitemap!

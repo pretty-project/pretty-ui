@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.transfer-handler
-    (:require [server-fruits.http              :as http]
-              [x.server-core.engine            :as engine]
-              [x.server-core.event-handler     :as event-handler]
-              [x.server-core.lifecycle-handler :as lifecycle-handler]))
+    (:require [server-fruits.http                           :as http]
+              [x.server-core.engine                         :as engine]
+              [x.server-core.event-handler                  :as event-handler]
+              [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]))
 
 
 
@@ -88,7 +88,7 @@
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler/reg-lifecycles!
+(lifecycle-handler.side-effects/reg-lifecycles!
   ::lifecycles
   {:on-server-init [:router/add-route! :core/transfer-data
                                        {:route-template "/synchronize-app"

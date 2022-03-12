@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.side-effects
-   (:require [app-fruits.http                   :as http]
-             [x.app-core.api                    :as a]
-             [x.app-sync.request-handler.engine :as request-handler.engine]))
+   (:require [app-fruits.http                  :as http]
+             [x.app-core.api                   :as a]
+             [x.app-sync.request-handler.state :as request-handler.state]))
 
 
 
@@ -58,14 +58,14 @@
   [request-id request-props]
   (let [request-props (request-props-prototype request-id request-props)
         reference     (http/send-request!      request-id request-props)]
-       (swap! request-handler.engine/REFERENCES assoc request-id reference)))
+       (swap! request-handler.state/REFERENCES assoc request-id reference)))
 
 (defn- abort-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   [request-id]
-  (let [reference (get @request-handler.engine/REFERENCES request-id)]
+  (let [reference (get @request-handler.state/REFERENCES request-id)]
        (http/abort-request! reference)))
 
 (defn- remove-reference!
@@ -73,7 +73,7 @@
   ;
   ; @param (keyword) request-id
   [request-id]
-  (swap! request-handler.engine/REFERENCES dissoc request-id))
+  (swap! request-handler.state/REFERENCES dissoc request-id))
 
 
 

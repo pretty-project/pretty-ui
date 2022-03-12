@@ -3,35 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.profile-handler.engine
-    (:require [local-db.api                      :as local-db]
-              [mid-fruits.candy                  :refer [param return]]
-              [mid-fruits.keyword                :as keyword]
-              [server-fruits.http                :as http]
-              [x.mid-user.profile-handler.engine :as profile-handler.engine]
-              [x.server-core.api                 :as a]
-              [x.server-db.api                   :as db]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.mid-user.profile-handler.engine
-(def MAX-FIRST-NAME-LENGTH profile-handler.engine/MAX-FIRST-NAME-LENGTH)
-(def MAX-LAST-NAME-LENGTH  profile-handler.engine/MAX-LAST-NAME-LENGTH)
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (namespaced map)
-;  {:user-profile/birthday (string)
-;   :user-profile/first-name (string)
-;   :user-profile/last-name (string)}
-(def ANONYMOUS-USER-PROFILE {:user-profile/birthday   "1969-04-20"
-                             :user-profile/first-name "Guest"
-                             :user-profile/last-name  "User"})
+    (:require [local-db.api                         :as local-db]
+              [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.keyword                   :as keyword]
+              [server-fruits.http                   :as http]
+              [x.server-core.api                    :as a]
+              [x.server-db.api                      :as db]
+              [x.server-user.profile-handler.config :as profile-handler.config]))
 
 
 
@@ -59,7 +37,7 @@
   [request]
   (if-let [account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-profile account-id)
-          (return ANONYMOUS-USER-PROFILE)))
+          (return profile-handler.config/ANONYMOUS-USER-PROFILE)))
 
 (defn request->user-profile-item
   ; @param (map) request

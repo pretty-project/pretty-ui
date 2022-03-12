@@ -9,7 +9,7 @@
               [reitit.frontend                   :as reitit.frontend]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-router.engine               :as engine]
-              [x.app-router.route-handler.engine :as route-handler.engine]
+              [x.app-router.route-handler.config :as route-handler.config]
               [x.app-user.api                    :as user]
               [x.mid-router.route-handler.subs   :as route-handler.subs]))
 
@@ -294,7 +294,7 @@
   ; @return (boolean)
   [db [_ route-string]]
   (let [current-route-string (r get-current-route-string db)]
-       (and route-handler.engine/RELOAD-SAME-PATH? (= route-string current-route-string))))
+       (and route-handler.config/RELOAD-SAME-PATH? (= route-string current-route-string))))
 
 (defn get-history
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -3,35 +3,37 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.api
-    (:require [x.app-locales.country-list          :as country-list]
-              [x.app-locales.currency-handler      :as currency-handler]
-              [x.app-locales.name-handler.engine   :as name-handler.engine]
-              [x.app-locales.name-handler.subs     :as name-handler.subs]
-              [x.app-locales.name-handler.views    :as name-handler.views]
-              [x.app-locales.language-handler.subs :as language-handler.subs]))
+    (:require [x.app-locales.country-handler.config :as country-handler.config]
+              [x.app-locales.country-handler.engine :as country-handler.engine]
+              [x.app-locales.name-handler.config    :as name-handler.config]
+              [x.app-locales.name-handler.engine    :as name-handler.engine]
+              [x.app-locales.name-handler.subs      :as name-handler.subs]
+              [x.app-locales.name-handler.views     :as name-handler.views]
+              [x.app-locales.language-handler.subs  :as language-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-locales.country-list
-(def COUNTRY-NAMES        country-list/COUNTRY-NAMES)
-(def EU-COUNTRY-NAMES     country-list/EU-COUNTRY-NAMES)
-(def COUNTRY-LIST         country-list/COUNTRY-LIST)
-(def country-capital-city country-list/country-capital-city)
-(def country-currencies   country-list/country-currencies)
-(def country-currency     country-list/country-currency)
-(def country-languages    country-list/country-languages)
-(def country-language     country-list/country-language)
-(def country-name         country-list/country-name)
-(def country-native-name  country-list/country-native-name)
+; x.app-locales.country-handler.config
+(def COUNTRY-NAMES    country-handler.config/COUNTRY-NAMES)
+(def EU-COUNTRY-NAMES country-handler.config/EU-COUNTRY-NAMES)
+(def COUNTRY-LIST     country-handler.config/COUNTRY-LIST)
 
-; x.app-locales.currency-handler
-; ...
+; x.app-locales.country-handler.engine
+(def country-capital-city country-handler.engine/country-capital-city)
+(def country-currencies   country-handler.engine/country-currencies)
+(def country-currency     country-handler.engine/country-currency)
+(def country-languages    country-handler.engine/country-languages)
+(def country-language     country-handler.engine/country-language)
+(def country-name         country-handler.engine/country-name)
+(def country-native-name  country-handler.engine/country-native-name)
+
+; x.app-locales.name-handler.config
+(def NAME-ORDERS name-handler.config/NAME-ORDERS)
 
 ; x.app-locales.name-handler.engine
-(def NAME-ORDERS        name-handler.engine/NAME-ORDERS)
 (def name->ordered-name name-handler.engine/name->ordered-name)
 
 ; x.app-locales.name-handler.subs

@@ -131,3 +131,7 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-browser")
            (name component-key)))
+
+  ;(keyword (namespace browser-id)
+  ;         (str (name browser-id) "-"
+  ;              (name component-key))))

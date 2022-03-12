@@ -3,31 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.engine
-    (:require [local-db.api       :as local-db]
-              [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
-              [server-fruits.http :as http]
-              [x.server-db.api    :as db]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (namespaced map)
-;  {:user-settings/notification-bubbles-enabled? (boolean)
-;   :user-settings/notification-sounds-enabled (boolean)
-;   :user-settings/sending-error-reports? (boolean)
-;   :user-settings/selected-language (keyword)
-;   :user-settings/selected-theme (keyword)
-;   :user-settings/timezone-offset (?)}
-(def ANONYMOUS-USER-SETTINGS {:user-settings/notification-bubbles-enabled? true
-                              :user-settings/notification-sounds-enabled?  false
-                              :user-settings/sending-error-reports?        true
-                              :user-settings/selected-language             :en
-                              :user-settings/selected-theme                :light
-                              :user-settings/timezone-offset               0})
+    (:require [local-db.api                          :as local-db]
+              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.keyword                    :as keyword]
+              [mid-fruits.map                        :as map]
+              [server-fruits.http                    :as http]
+              [x.server-db.api                       :as db]
+              [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
 
@@ -45,7 +27,7 @@
   (let [user-settings (local-db/get-document "user_settings" user-account-id)
         user-settings (db/document->namespaced-document user-settings :user-settings)]
        ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
-       (merge ANONYMOUS-USER-SETTINGS user-settings)))
+       (merge settings-handler.config/ANONYMOUS-USER-SETTINGS user-settings)))
 
 (defn request->user-settings
   ; @param (map) request
@@ -57,7 +39,7 @@
   [request]
   (if-let [account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-settings account-id)
-          (return ANONYMOUS-USER-SETTINGS)))
+          (return settings-handler.config/ANONYMOUS-USER-SETTINGS)))
 
 (defn request->user-settings-item
   ; @param (map) request
@@ -82,7 +64,7 @@
   [request]
   (let [account-id            (http/request->session-param request :user-account/id)
         ; Alapértelmezett beállítások
-        default-user-settings (param ANONYMOUS-USER-SETTINGS)
+        default-user-settings (param settings-handler.config/ANONYMOUS-USER-SETTINGS)
         ; A felhasználó szerveren tárolt beállításai
         stored-user-settings  (local-db/get-document "user_settings" account-id)
         ; A felhasználó eszközéről érkezett beállítások

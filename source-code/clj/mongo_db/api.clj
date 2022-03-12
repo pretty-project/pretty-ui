@@ -1,8 +1,6 @@
 
 (ns mongo-db.api
-    (:require [mongo-db.adaptation]
-              [mongo-db.connection]
-              [mongo-db.preparing]
+    (:require [mongo-db.connection]
               [mongo-db.actions    :as actions]
               [mongo-db.engine     :as engine]
               [mongo-db.pipelines  :as pipelines]

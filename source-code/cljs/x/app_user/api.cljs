@@ -5,9 +5,9 @@
 (ns x.app-user.api
     (:require [x.app-user.account-handler.effects]
               [x.app-user.account-handler.events]
-              [x.app-user.profile-handler.engine]
               [x.app-user.account-handler.subs    :as account-handler.subs]
               [x.app-user.engine                  :as engine]
+              [x.app-user.profile-handler.config  :as profile-handler.config]
               [x.app-user.profile-handler.events  :as profile-handler.events]
               [x.app-user.profile-handler.subs    :as profile-handler.subs]
               [x.app-user.settings-handler.events :as settings-handler.events]
@@ -32,9 +32,11 @@
 (def client-locked?         account-handler.subs/client-locked?)
 
 ; x.app-user.engine
-(def DEFAULT-PROFILE-PICTURE-URL    engine/DEFAULT-PROFILE-PICTURE-URL)
 (def user-roles->user-identified?   engine/user-roles->user-identified?)
 (def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
+
+; x.app-user.profile-handler.config
+(def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)
 
 ; x.app-user.profile-handler.events
 (def set-user-profile-item! profile-handler.events/set-user-profile-item!)

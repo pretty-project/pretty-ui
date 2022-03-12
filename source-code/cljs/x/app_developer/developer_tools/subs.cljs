@@ -3,16 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.developer-tools.subs
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]))
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (integer)
-(def DB-WRITE-COUNT (atom 0))
+    (:require [mid-fruits.candy                      :refer [param return]]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-developer.developer-tools.state :as developer-tools.state]))
 
 
 
@@ -22,8 +15,8 @@
 (defn get-db-write-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (swap!   DB-WRITE-COUNT inc)
-  (return @DB-WRITE-COUNT))
+  (swap!   developer-tools.state/DB-WRITE-COUNT inc)
+  (return @developer-tools.state/DB-WRITE-COUNT))
 
 (defn print-events?
   ; WARNING! NON-PUBLIC! DO NOT USE!

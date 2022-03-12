@@ -3,9 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.api
-    (:require [x.app-router.engine]
-              [x.app-router.route-handler.effects]
-              [x.app-router.route-handler.engine]
+    (:require [x.app-router.route-handler.effects]
               [x.app-router.route-handler.events]
               [x.app-router.route-handler.lifecycles]
               [x.app-router.route-handler.side-effects]

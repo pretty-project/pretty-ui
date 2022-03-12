@@ -3,9 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.api
-    (:require [x.server-ui.body.engine]
-              [x.server-ui.head.engine]
-              [x.server-ui.body.views   :as body.views]
+    (:require [x.server-ui.body.views   :as body.views]
               [x.server-ui.engine       :as engine]
               [x.server-ui.head.views   :as head.views]
               [x.server-ui.html.views   :as html.views]

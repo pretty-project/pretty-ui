@@ -14,9 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.router-handler
-    (:require [reitit.ring                      :as reitit-ring]
-              [x.server-core.event-handler      :as event-handler]
-              [x.server-core.middleware-handler :refer [middleware]]))
+    (:require [reitit.ring                             :as reitit-ring]
+              [x.server-core.event-handler             :as event-handler]
+              [x.server-core.middleware-handler.engine :refer [middleware]]))
 
 
 

@@ -5,7 +5,7 @@
 (ns x.app-ui.bubbles.subs
     (:require [mid-fruits.time         :as time]
               [x.app-core.api          :as a :refer [r]]
-              [x.app-ui.bubbles.engine :as bubbles.engine]
+              [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.renderer       :as renderer]
               [x.app-user.api          :as user]))
 
@@ -30,7 +30,7 @@
   [db [_ bubble-id]]
   (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)]
        (> (time/elapsed)
-          (+ render-requested-at bubbles.engine/BUBBLE-LIFETIME))))
+          (+ render-requested-at bubbles.config/BUBBLE-LIFETIME))))
 
 (defn- get-bubble-lifetime-left
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -40,7 +40,7 @@
   ; @return (ms)
   [db [_ bubble-id]]
   (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)
-        bubble-pop-time     (+ render-requested-at bubbles.engine/BUBBLE-LIFETIME)]
+        bubble-pop-time     (+ render-requested-at bubbles.config/BUBBLE-LIFETIME)]
        (- bubble-pop-time (time/elapsed))))
 
 (defn- autopop-bubble?

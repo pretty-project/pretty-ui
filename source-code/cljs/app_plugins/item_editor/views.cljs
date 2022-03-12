@@ -4,6 +4,7 @@
 
 (ns app-plugins.item-editor.views
     (:require [app-fruits.reagent             :as reagent]
+              [app-plugins.item-editor.config :as config]
               [app-plugins.item-editor.engine :as engine]
               [mid-fruits.candy               :refer [param]]
               [mid-fruits.string              :as string]
@@ -218,7 +219,7 @@
   ; @param (keyword) item-namespace
   [extension-id _]
   [elements/color-picker ::color-picker
-                         {:initial-options engine/COLORS
+                         {:initial-options config/COLORS
                           :value-path [extension-id :item-editor/data-items :colors]}])
 
 

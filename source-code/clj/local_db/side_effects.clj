@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns local-db.side-effects
-    (:require [local-db.engine   :as engine]
+    (:require [local-db.config   :as config]
+              [local-db.engine   :as engine]
               [mid-fruits.time   :as time]
               [mid-fruits.vector :as vector]
               [server-fruits.io  :as io]
@@ -31,7 +32,7 @@
   ; @return (boolean)
   [collection-name]
   (let [filepath (engine/collection-name->filepath collection-name)]
-       (io/max-filesize-reached? filepath engine/MAX-FILESIZE)))
+       (io/max-filesize-reached? filepath config/MAX-FILESIZE)))
 
 (defn collection-name->collection-exists?
   ; @param (string) collection-name

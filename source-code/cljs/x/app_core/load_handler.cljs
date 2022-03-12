@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.load-handler
-    (:require [mid-fruits.candy             :refer [return]]
-              [mid-fruits.time              :as time]
-              [x.app-core.event-handler     :as event-handler :refer [r]]
-              [x.app-core.lifecycle-handler :as lifecycle-handler]))
+    (:require [mid-fruits.candy                          :refer [return]]
+              [mid-fruits.time                           :as time]
+              [x.app-core.event-handler                  :as event-handler :refer [r]]
+              [x.app-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]))
 
 
 
@@ -208,6 +208,6 @@
                       (r reg-load-started! %))
        :dispatch-later [{:ms LOAD-TIMEOUT :dispatch [:core/self-test!]}]}))
 
-(lifecycle-handler/reg-lifecycles!
+(lifecycle-handler.side-effects/reg-lifecycles!
   ::lifecycles
   {:on-app-init [:core/initialize-load-handler!]})

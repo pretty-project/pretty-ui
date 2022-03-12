@@ -22,14 +22,3 @@
 (def route-template     engine/route-template)
 (def base-route         engine/base-route)
 (def component-id       engine/component-id)
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (strings in vector)
-(def COLORS ["var( --soft-blue )"
-             "var( --soft-purple )"
-             "var( --soft-green )"
-             "var( --soft-red )"])

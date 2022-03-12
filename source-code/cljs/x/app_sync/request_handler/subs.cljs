@@ -4,7 +4,7 @@
 
 (ns x.app-sync.request-handler.subs
     (:require [x.app-core.api                    :as a :refer [r]]
-              [x.app-sync.request-handler.engine :as request-handler.engine]))
+              [x.app-sync.request-handler.config :as request-handler.config]))
 
 
 
@@ -194,7 +194,7 @@
   ; @return (integer)
   [db [_ request-id]]
   (get-in db [:sync :request-handler/data-items request-id :idle-timeout]
-             request-handler.engine/DEFAULT-IDLE-TIMEOUT))
+             request-handler.config/DEFAULT-IDLE-TIMEOUT))
 
 
 

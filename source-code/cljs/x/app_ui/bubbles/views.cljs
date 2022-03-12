@@ -7,6 +7,7 @@
               [x.app-components.api    :as components]
               [x.app-elements.api      :as elements]
               [x.app-ui.renderer       :rename {component renderer}]
+              [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.bubbles.engine :as bubbles.engine]))
 
 
@@ -86,6 +87,6 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [renderer :bubbles {:element               #'bubble-element
-                      :max-elements-rendered bubbles.engine/MAX-BUBBLES-RENDERED
+                      :max-elements-rendered bubbles.config/MAX-BUBBLES-RENDERED
                       :queue-behavior        :wait
                       :rerender-same?        false}])

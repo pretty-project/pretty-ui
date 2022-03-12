@@ -40,8 +40,8 @@
   ; @param (map) loader-props
   [loader-id loader-props]
   [:div (image-loader.engine/container-attributes loader-id loader-props)
-        [control-image loader-id loader-props]
-        [loading-icon  loader-id loader-props]])
+        [control-image                            loader-id loader-props]
+        [loading-icon                             loader-id loader-props]])
 
 (defn component
   ; @param (keyword)(opt) loader-id

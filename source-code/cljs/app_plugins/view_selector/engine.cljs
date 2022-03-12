@@ -11,7 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid-plugins.view-selector.engine
-(def DEFAULT-VIEW-ID         engine/DEFAULT-VIEW-ID)
 (def transfer-id             engine/transfer-id)
 (def route-id                engine/route-id)
 (def extended-route-id       engine/extended-route-id)

@@ -3,7 +3,7 @@
     (:require [mid-fruits.candy    :refer [param return]]
               [monger.core         :as mcr]
               [mongo-db.adaptation :as adaptation]
-              [mongo-db.engine     :as engine]
+              [mongo-db.config     :as config]
               [x.server-core.api   :as a]))
 
 
@@ -34,11 +34,11 @@
   ; @param (maps in vector) pipeline
   ; @param (map)(opt) options
   ;  {:locale (string)(opt)
-  ;    Default: engine/DEFAULT-LOCALE}
+  ;    Default: config/DEFAULT-LOCALE}
   ;
   ; @return (maps in vector)
   ([collection-name pipeline]
-   (process collection-name pipeline {:locale engine/DEFAULT-LOCALE}))
+   (process collection-name pipeline {:locale config/DEFAULT-LOCALE}))
 
   ([collection-name pipeline {:keys [locale]}]
    (if-let [db-object (command {:aggregate collection-name

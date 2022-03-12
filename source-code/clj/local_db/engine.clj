@@ -3,19 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns local-db.engine
-    (:require [mid-fruits.string :as string]
-              [server-fruits.io  :as io]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (B)
-(def MAX-FILESIZE (io/MB->B 10))
-
-; @constant (string)
-(def LOCAL-DB-PATH "monoset-environment/db/")
+    (:require [local-db.config   :as config]
+              [mid-fruits.string :as string]))
 
 
 
@@ -34,4 +23,4 @@
   ;
   ; @return (string)
   [collection-name]
-  (str LOCAL-DB-PATH collection-name ".edn"))
+  (str config/LOCAL-DB-PATH collection-name ".edn"))

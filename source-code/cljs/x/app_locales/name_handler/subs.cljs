@@ -6,7 +6,7 @@
     (:require [mid-fruits.string                   :as string]
               [x.app-core.api                      :as a :refer [r]]
               [x.app-locales.language-handler.subs :as language-handler.subs]
-              [x.app-locales.name-handler.engine   :as engine]))
+              [x.app-locales.name-handler.config   :as config]))
 
 
 
@@ -21,7 +21,7 @@
   ;  :normal, :reversed
   [db _]
   (let [selected-language (r language-handler.subs/get-selected-language db)]
-       (get engine/NAME-ORDERS selected-language :normal)))
+       (get config/NAME-ORDERS selected-language :normal)))
 
 (defn get-ordered-name
   ; @param (string) first-name

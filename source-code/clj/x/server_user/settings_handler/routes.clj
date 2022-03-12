@@ -7,7 +7,7 @@
               [mid-fruits.keyword                    :as keyword]
               [server-fruits.http                    :as http]
               [x.server-user.account-handler.engine  :as account-handler.engine]
-              [x.server-user.settings-handler.engine :as settings-handler.engine]))
+              [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
 
@@ -27,7 +27,7 @@
             item-key   (http/request->param         request :item-key)
             item-value (http/request->param         request :item-value)
             namespaced-item-key (keyword/add-namespace :user-settings item-key)
-            default-value       (get settings-handler.engine/ANONYMOUS-USER-SETTINGS namespaced-item-key)]
+            default-value       (get settings-handler.config/ANONYMOUS-USER-SETTINGS namespaced-item-key)]
            (if (= item-value default-value)
                (local-db/apply-document! "user_settings" user-id dissoc item-key)
                (local-db/apply-document! "user_settings" user-id assoc  item-key item-value))

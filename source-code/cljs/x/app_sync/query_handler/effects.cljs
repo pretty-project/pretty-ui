@@ -6,7 +6,7 @@
     (:require [mid-fruits.candy                :refer [param]]
               [mid-fruits.vector               :as vector]
               [x.app-core.api                  :as a]
-              [x.app-sync.query-handler.engine :as query-handler.engine]))
+              [x.app-sync.query-handler.config :as query-handler.config]))
 
 
 
@@ -24,7 +24,7 @@
   ;   :query (vector)
   ;   :uri (string)}
   [{:keys [query] :as query-props}]
-  (merge {:uri query-handler.engine/DEFAULT-URI}
+  (merge {:uri query-handler.config/DEFAULT-URI}
          (param query-props)
          (if query {:params {:query query}})
          {:method :post}))

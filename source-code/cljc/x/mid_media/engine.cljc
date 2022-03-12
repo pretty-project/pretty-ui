@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-media.engine
-    (:require [mid-fruits.io     :as io]
-              [mid-fruits.string :as string]))
+    (:require [mid-fruits.io      :as io]
+              [mid-fruits.string  :as string]
+              [x.mid-media.config :as config]))
 
 
 
@@ -22,32 +23,6 @@
 ;
 ; @name storage-filepath
 ;  "monoset-environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png"
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def THUMBNAIL-URI-BASE      "/media/thumbnails/")
-
-; @constant (string)
-(def STORAGE-URI-BASE        "/media/storage/")
-
-; @constant (string)
-(def THUMBNAIL-FILEPATH-BASE "monoset-environment/media/thumbnails/")
-
-; @constant (string)
-(def STORAGE-FILEPATH-BASE   "monoset-environment/media/storage/")
-
-; @constant (string)
-(def TEMPORARY-FILEPATH-BASE "monoset-environment/media/temp/")
-
-; @constant (integer)
-(def MAXIMUM-DIRECTORY-ITEM-COUNT 256)
-
-; @constant (px)
-(def DEFAULT-THUMBNAIL-SIZE 128)
 
 
 
@@ -74,7 +49,7 @@
   ;
   ; @return (string)
   [filename]
-  (str STORAGE-URI-BASE filename))
+  (str config/STORAGE-URI-BASE filename))
 
 (defn filename->media-thumbnail-uri
   ; @param (string) filename
@@ -86,7 +61,7 @@
   ;
   ; @return (string)
   [filename]
-  (str THUMBNAIL-URI-BASE filename))
+  (str config/THUMBNAIL-URI-BASE filename))
 
 (defn filename->media-storage-filepath
   ; @param (string) filename
@@ -98,7 +73,7 @@
   ;
   ; @return (string)
   [filename]
-  (str STORAGE-FILEPATH-BASE filename))
+  (str config/STORAGE-FILEPATH-BASE filename))
 
 (defn filename->media-thumbnail-filepath
   ; @param (string) filename
@@ -110,7 +85,7 @@
   ;
   ; @return (string)
   [filename]
-  (str THUMBNAIL-FILEPATH-BASE filename))
+  (str config/THUMBNAIL-FILEPATH-BASE filename))
 
 (defn filename->temporary-filepath
   ; @param (string) filename
@@ -122,4 +97,4 @@
   ;
   ; @return (string)
   [filename]
-  (str TEMPORARY-FILEPATH-BASE filename))
+  (str config/TEMPORARY-FILEPATH-BASE filename))

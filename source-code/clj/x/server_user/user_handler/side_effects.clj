@@ -5,7 +5,7 @@
 (ns x.server-user.user-handler.side-effects
     (:require [mongo-db.api                         :as mongo-db]
               [x.server-core.api                    :as a]
-              [x.server-user.account-handler.engine :as account-handler.engine]
+              [x.server-user.account-handler.config :as account-handler.config]
               [x.server-user.user-handler.engine    :as user-handler.engine]))
 
 
@@ -20,7 +20,7 @@
   ;
   ; @return (function)
   [namespace]
-  #(mongo-db/added-document-prototype {:session account-handler.engine/SYSTEM-ACCOUNT} namespace %))
+  #(mongo-db/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} namespace %))
 
 
 

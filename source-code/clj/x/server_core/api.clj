@@ -3,24 +3,28 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.api
-    (:require [x.server-core.build-handler.engine]
-              [x.server-core.build-handler.transfer]
-              [x.server-core.database-handler]
-              [x.server-core.error-handler.engine]
+    (:require [x.server-core.build-handler.transfer]
+              [x.server-core.config-handler.side-effects]
+              [x.server-core.config-handler.transfer]
+              [x.server-core.database-handler.effects]
               [x.server-core.error-handler.side-effects]
-              [x.server-core.middleware-handler]
-              [x.server-core.resource-handler]
+              [x.server-core.resource-handler.events]
+              [x.server-core.resource-handler.lifecycles]
+              [x.server-core.resource-handler.subs]
               [x.server-core.router-handler]
-              [x.server-core.server-handler]
-              [x.server-core.build-handler.side-effects :as build-handler.side-effects]
-              [x.server-core.build-handler.subs         :as build-handler.subs]
-              [x.server-core.cache-handler              :as cache-handler]
-              [x.server-core.config-handler             :as config-handler]
-              [x.server-core.debug-handler.engine       :as debug-handler.engine]
-              [x.server-core.engine                     :as engine]
-              [x.server-core.event-handler              :as event-handler]
-              [x.server-core.lifecycle-handler          :as lifecycle-handler]
-              [x.server-core.transfer-handler           :as transfer-handler]))
+              [x.server-core.server-handler.events]
+              [x.server-core.server-handler.side-effects]
+              [x.server-core.build-handler.side-effects     :as build-handler.side-effects]
+              [x.server-core.build-handler.subs             :as build-handler.subs]
+              [x.server-core.cache-handler.engine           :as cache-handler.engine]
+              [x.server-core.config-handler.config          :as config-handler.config]
+              [x.server-core.config-handler.subs            :as config-handler.subs]
+              [x.server-core.debug-handler.engine           :as debug-handler.engine]
+              [x.server-core.engine                         :as engine]
+              [x.server-core.event-handler                  :as event-handler]
+              [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
+              [x.server-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
+              [x.server-core.transfer-handler               :as transfer-handler]))
 
 
 
@@ -34,20 +38,22 @@
 ; x.server-core.build-handler.subs
 (def get-app-build build-handler.subs/get-app-build)
 
-; x.server-core.cache-handler
-(def request->app-cached? cache-handler/request->app-cached?)
-(def cache-control-uri    cache-handler/cache-control-uri)
+; x.server-core.cache-handler.engine
+(def request->app-cached? cache-handler.engine/request->app-cached?)
+(def cache-control-uri    cache-handler.engine/cache-control-uri)
 
-; x.server-core.config-handler
-(def APP-CONFIG-FILEPATH    config-handler/APP-CONFIG-FILEPATH)
-(def SITE-CONFIG-FILEPATH   config-handler/SITE-CONFIG-FILEPATH)
-(def SERVER-CONFIG-FILEPATH config-handler/SERVER-CONFIG-FILEPATH)
-(def get-app-config         config-handler/get-app-config)
-(def get-app-config-item    config-handler/get-app-config-item)
-(def get-server-config      config-handler/get-server-config)
-(def get-server-config-item config-handler/get-server-config-item)
-(def get-site-config        config-handler/get-site-config)
-(def get-site-config-item   config-handler/get-site-config-item)
+; x.server-core.config-handler.config
+(def APP-CONFIG-FILEPATH    config-handler.config/APP-CONFIG-FILEPATH)
+(def SITE-CONFIG-FILEPATH   config-handler.config/SITE-CONFIG-FILEPATH)
+(def SERVER-CONFIG-FILEPATH config-handler.config/SERVER-CONFIG-FILEPATH)
+
+; x.server-core.config-handler.subs
+(def get-app-config         config-handler.subs/get-app-config)
+(def get-app-config-item    config-handler.subs/get-app-config-item)
+(def get-server-config      config-handler.subs/get-server-config)
+(def get-server-config-item config-handler.subs/get-server-config-item)
+(def get-site-config        config-handler.subs/get-site-config)
+(def get-site-config-item   config-handler.subs/get-site-config-item)
 
 ; x.server-core.debug-handler.engine
 (def request->debug-mode debug-handler.engine/request->debug-mode)
@@ -91,9 +97,11 @@
 (def subscribed                 event-handler/subscribed)
 (def r                          event-handler/r)
 
-; x.server-core.lifecycle-handler
-(def get-period-events lifecycle-handler/get-period-events)
-(def reg-lifecycles!   lifecycle-handler/reg-lifecycles!)
+; x.server-core.lifecycle-handler.side-effects
+(def reg-lifecycles! lifecycle-handler.side-effects/reg-lifecycles!)
+
+; x.server-core.lifecycle-handler.subs
+(def get-period-events lifecycle-handler.subs/get-period-events)
 
 ; x.server-core.transfer-handler
 (def reg-transfer! transfer-handler/reg-transfer!)

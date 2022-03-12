@@ -3,16 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.temporary-component.engine
-    (:require [app-fruits.dom     :as dom]
-              [app-fruits.reagent :as reagent]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def ENVIRONMENT-ELEMENT-ID "x-app-ui-structure")
+    (:require [app-fruits.dom                         :as dom]
+              [app-fruits.reagent                     :as reagent]
+              [x.app-tools.temporary-component.config :as temporary-component.config]))
 
 
 
@@ -24,7 +17,7 @@
   ;
   ; @return (DOM-element)
   []
-  (dom/get-element-by-id ENVIRONMENT-ELEMENT-ID))
+  (dom/get-element-by-id temporary-component.config/ENVIRONMENT-ELEMENT-ID))
 
 (defn- create-temporary-container!
   ; WARNING! NON-PUBLIC! DO NOT USE!

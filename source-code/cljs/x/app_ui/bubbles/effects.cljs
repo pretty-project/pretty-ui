@@ -5,7 +5,7 @@
 (ns x.app-ui.bubbles.effects
     (:require [mid-fruits.candy        :refer [param]]
               [x.app-core.api          :as a :refer [r]]
-              [x.app-ui.bubbles.engine :as bubbles.engine]
+              [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.bubbles.subs   :as bubbles.subs]))
 
 
@@ -47,7 +47,7 @@
   ; @param (keyword) bubble-id
   (fn [{:keys [db]} [_ bubble-id]]
       {:dispatch-later [(if (r bubbles.subs/autopop-bubble? db bubble-id)
-                            {:ms bubbles.engine/BUBBLE-LIFETIME :dispatch [:ui/autopop-bubble?! bubble-id]})]}))
+                            {:ms bubbles.config/BUBBLE-LIFETIME :dispatch [:ui/autopop-bubble?! bubble-id]})]}))
 
 (a/reg-event-fx
   :ui/autopop-bubble?!

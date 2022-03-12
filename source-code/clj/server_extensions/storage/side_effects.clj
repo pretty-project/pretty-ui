@@ -6,7 +6,7 @@
     (:require [mid-fruits.candy                 :refer [param return]]
               [mid-fruits.vector                :as vector]
               [mongo-db.api                     :as mongo-db]
-              [server-extensions.storage.engine :as engine]
+              [server-extensions.storage.config :as config]
               [x.server-media.api               :as media]))
 
 
@@ -94,7 +94,7 @@
 (defn delete-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [filename]
-  (if-not (= filename engine/SAMPLE-FILE-FILENAME)
+  (if-not (= filename config/SAMPLE-FILE-FILENAME)
           (media/delete-storage-file! filename))
   (media/delete-storage-thumbnail! filename))
 

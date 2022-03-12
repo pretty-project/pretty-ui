@@ -4,11 +4,7 @@
 
 (ns x.server-media.api
     (:require [x.server-media.download-handler.lifecycles]
-              [x.server-media.download-handler.routes]
-              [x.server-media.temporary-handler.routes]
-              [x.server-media.thumbnail-handler.engine]
               [x.server-media.thumbnail-handler.lifecycles]
-              [x.server-media.thumbnail-handler.routes]
               [x.server-media.engine                         :as engine]
               [x.server-media.file-handler.side-effects      :as file-handler.side-effects]
               [x.server-media.thumbnail-handler.side-effects :as thumbnail-handler.side-effects]))

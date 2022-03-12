@@ -13,6 +13,15 @@
 
 
 # x4.6.0
+- Monoset struktura
+  - Monoset a különbözö külső könyvtárak kapjanak saját mappát
+    react.api, reagent.api, re-frame.api, sortable.api, full-calendar.api,
+  - Az app-core event-handler a re-frame.api-t használja
+  - A plugin-ok visszamehetnek az x-be x.app-plugins. ...
+    (az item-sorter is maradhat plugin, csak használja a sortable.api-t)
+
+- Ha az engine.cl* fájlokban már csak helper fuggvények maradnak, akkor átnevezhetők helpers.clj*
+
 - Az item-editor duplikálás -> majd másolat szerkesztése átirányit az uj route-ra de nem
   történik ujratöltés
 

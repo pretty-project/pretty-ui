@@ -7,7 +7,7 @@
               [mid-fruits.reader                 :as reader]
               [mid-fruits.time                   :as time]
               [x.app-core.api                    :as a :refer [r]]
-              [x.app-sync.request-handler.engine :as request-handler.engine]
+              [x.app-sync.request-handler.config :as request-handler.config]
               [x.app-sync.request-handler.events :as request-handler.events]
               [x.app-sync.request-handler.subs   :as request-handler.subs]
               [x.app-sync.response-handler.subs  :as response-handler.subs]))
@@ -48,7 +48,7 @@
           :handler-event          :sync/request-successed
           :progress-handler-event :core/set-process-progress!
           :response-action        :store
-          :timeout request-handler.engine/DEFAULT-REQUEST-TIMEOUT
+          :timeout request-handler.config/DEFAULT-REQUEST-TIMEOUT
           :sent-time (time/timestamp-string)}
          (r request-props<-source-data db request-props)))
 
@@ -150,7 +150,7 @@
       (if (r response-handler.subs/request-response-invalid? db request-id server-response-body)
           ; If request-response is invalid ...
           (let [invalid-server-response (r response-handler.subs/get-invalid-server-response db request-id server-response-body)]
-               {:fx       [:core/print-warning! request-handler.engine/INVALID-REQUEST-RESPONSE-ERROR request-id]
+               {:fx       [:core/print-warning! request-handler.config/INVALID-REQUEST-RESPONSE-ERROR request-id]
                 :dispatch [:sync/request-failured request-id invalid-server-response]})
           ; If request-response is valid ...
           (let [server-response (reader/string->mixed server-response-body)

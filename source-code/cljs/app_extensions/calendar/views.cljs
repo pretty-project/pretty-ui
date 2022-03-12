@@ -1,21 +1,10 @@
 
-(ns app-extensions.calendar.views
-    (:require [x.app-core.api :as a]))
+(ns app-extensions.calendar.views)
 
 
 
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn view
   [])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :calendar/render!
-  [:ui/set-surface! ::view
-                    {:view {:content #'view}}])

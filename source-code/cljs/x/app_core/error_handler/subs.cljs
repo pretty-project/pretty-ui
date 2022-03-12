@@ -5,7 +5,7 @@
 (ns x.app-core.error-handler.subs
     (:require [mid-fruits.candy                :refer [param return]]
               [x.app-core.debug-handler.subs   :as debug-handler.subs]
-              [x.app-core.error-handler.engine :as error-handler.engine]
+              [x.app-core.error-handler.config :as error-handler.config]
               [x.app-core.event-handler        :as event-handler :refer [r]]))
 
 
@@ -23,7 +23,7 @@
   ; @return (string)
   [_ [_ _ {:keys [error]}]]
   (if error (str error)
-            (str error-handler.engine/DEFAULT-APPLICATION-ERROR)))
+            (str error-handler.config/DEFAULT-APPLICATION-ERROR)))
 
 (defn get-error-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -35,4 +35,4 @@
   [db [_ error-id error-props]]
   (if (r debug-handler.subs/debug-mode-detected? db)
       (r get-developer-error-message             db error-id error-props)
-      (return error-handler.engine/DEFAULT-APPLICATION-ERROR)))
+      (return error-handler.config/DEFAULT-APPLICATION-ERROR)))

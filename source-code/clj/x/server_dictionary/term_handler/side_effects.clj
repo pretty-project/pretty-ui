@@ -5,7 +5,7 @@
 (ns x.server-dictionary.term-handler.side-effects
     (:require [server-fruits.io                        :as io]
               [x.server-core.api                       :as a]
-              [x.server-dictionary.term-handler.engine :as term-handler.engine]))
+              [x.server-dictionary.term-handler.config :as term-handler.config]))
 
 
 
@@ -37,7 +37,7 @@
 (defn- import-project-dictionary!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (a/dispatch [:dictionary/add-terms! (io/read-edn-file term-handler.engine/PROJECT-DICTIONARY-FILEPATH)]))
+  (a/dispatch [:dictionary/add-terms! (io/read-edn-file term-handler.config/PROJECT-DICTIONARY-FILEPATH)]))
 
 
 

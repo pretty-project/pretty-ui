@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.thumbnail-handler.side-effects
-    (:require [server-fruits.image   :as image]
-              [server-fruits.io      :as io]
-              [x.server-media.engine :as engine]))
+    (:require [server-fruits.image                     :as image]
+              [server-fruits.io                        :as io]
+              [x.server-media.engine                   :as engine]
+              [x.server-media.thumbnail-handler.config :as thumbnail-handler.config]))
 
 
 
@@ -31,7 +32,7 @@
   [filename]
   (let [filepath       (engine/filename->media-storage-filepath   filename)
         thumbnail-path (engine/filename->media-thumbnail-filepath filename)]
-       (image/generate-thumbnail! filepath thumbnail-path {:max-size engine/DEFAULT-THUMBNAIL-SIZE})))
+       (image/generate-thumbnail! filepath thumbnail-path {:max-size thumbnail-handler.config/DEFAULT-THUMBNAIL-SIZE})))
 
 (defn generate-pdf-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!

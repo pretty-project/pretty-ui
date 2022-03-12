@@ -371,3 +371,12 @@
             on-load     (r subs/get-meta-item db extension-id item-namespace :on-load)]
            {:db (if-not route-title db (r ui/set-header-title! db route-title))
             :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))
+
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  :item-editor/edit-item!
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]))

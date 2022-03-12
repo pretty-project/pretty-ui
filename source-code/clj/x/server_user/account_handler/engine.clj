@@ -3,37 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.account-handler.engine
-    (:require [local-db.api         :as local-db]
-              [mid-fruits.candy     :refer [param return]]
-              [server-fruits.http   :as http]
-              [x.server-db.api      :as db]
-              [x.server-user.engine :as engine]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (vector)
-;  A felhasználó account dokumentumának mely kulcsai kerülhetnek
-;  a HTTP Session térképbe.
-(def USER-PUBLIC-ACCOUNT-PROPS [:user-account/email-address :user-account/id :user-account/roles])
-
-; @constant (namespaced map)
-;  {:user-account/email-address (nil)
-;   :user-account/id (nil)
-;   :user-account/roles (strings in vector)}
-(def ANONYMOUS-USER-ACCOUNT {:user-account/email-address nil
-                             :user-account/id            nil
-                             :user-account/roles         []})
-
-; @constant (namespaced map)
-;  {:user-account/email-address (nil)
-;   :user-account/id (string)
-;   :user-account/roles (strings in vector)}
-(def SYSTEM-ACCOUNT {:user-account/email-address nil
-                     :user-account/id            "system"
-                     :user-account/roles         []})
+    (:require [local-db.api                         :as local-db]
+              [mid-fruits.candy                     :refer [param return]]
+              [server-fruits.http                   :as http]
+              [x.server-db.api                      :as db]
+              [x.server-user.engine                 :as engine]
+              [x.server-user.account-handler.config :as account-handler.config]))
 
 
 
@@ -78,7 +53,7 @@
   ;
   ; @return (namespaced map)
   [user-account]
-  (select-keys user-account USER-PUBLIC-ACCOUNT-PROPS))
+  (select-keys user-account account-handler.config/USER-PUBLIC-ACCOUNT-PROPS))
 
 (defn request->user-account
   ; @param (map) request
@@ -87,7 +62,7 @@
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-account user-account-id)
-          (return ANONYMOUS-USER-ACCOUNT)))
+          (return account-handler.config/ANONYMOUS-USER-ACCOUNT)))
 
 (defn request->user-public-account
   ; @param (map) request

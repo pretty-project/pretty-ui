@@ -3,18 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body.engine
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.vector  :as vector]
-              [x.server-core.api  :as a :refer [cache-control-uri]]
-              [x.server-ui.engine :refer [include-js]]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def CORE-JS-DIR "/js/core")
+    (:require [mid-fruits.candy        :refer [param return]]
+              [mid-fruits.vector       :as vector]
+              [x.server-core.api       :as a :refer [cache-control-uri]]
+              [x.server-ui.body.config :as body.config]
+              [x.server-ui.engine      :refer [include-js]]))
 
 
 
@@ -35,7 +28,7 @@
   ; @return (map)
   ;  {:uri (string)}
   [{:keys [core-js]}]
-  (let [core-js-uri (str CORE-JS-DIR "/" core-js)]
+  (let [core-js-uri (str body.config/CORE-JS-DIR "/" core-js)]
        {:uri core-js-uri}))
 
 (defn body<-js-includes

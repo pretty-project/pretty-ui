@@ -4,7 +4,6 @@
 
 (ns x.server-environment.api
     (:require [x.server-environment.crawler-handler.lifecycles]
-              [x.server-environment.crawler-handler.routes]
               [x.server-environment.crawler-handler.engine :as crawler-handler.engine]))
 
 

@@ -6,7 +6,7 @@
     (:require [mid-fruits.vector                 :as vector]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]
-              [x.app-router.route-handler.engine :as route-handler.engine]
+              [x.app-router.route-handler.config :as route-handler.config]
               [x.app-router.route-handler.subs   :as route-handler.subs]))
 
 
@@ -43,7 +43,7 @@
        ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni
        ; a kliens-oldali DEFAULT-ROUTES útvonalakat.
        (assoc-in db [:router :route-handler/client-routes]
-                    (merge route-handler.engine/DEFAULT-ROUTES client-routes))))
+                    (merge route-handler.config/DEFAULT-ROUTES client-routes))))
 
 (defn- reg-to-history!
   ; WARNING! NON-PUBLIC! DO NOT USE!

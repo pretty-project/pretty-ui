@@ -3,41 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head.engine
-    (:require [mid-fruits.candy   :refer [param return]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [server-fruits.http :as http]
-              [x.app-details      :as details]
-              [x.server-core.api  :as a :refer [cache-control-uri]]
-              [x.server-ui.engine :refer [include-css include-favicon include-font]]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (maps in vector)
-;  [{:core-js (string)(opt)
-;    :uri (string)}]
-(def SYSTEM-CSS-PATHS [{:uri "/css/x/app-fonts.css"}
-                       {:uri "/css/normalize.css"}
-                       {:uri "/css/x/animations.css"}
-                       {:uri "/css/x/app-ui-profiles.css"}
-                       {:uri "/css/x/app-ui-themes.css"}
-                       {:uri "/css/x/app-ui-structure.css"}
-                       {:uri "/css/x/app-ui-animations.css"}
-                       {:uri "/css/x/app-ui-graphics.css"}
-                       {:uri "/css/x/app-layouts.css"}
-                       {:uri "/css/x/app-elements.css"}
-                       {:uri "/css/x/app-views.css"}
-                       {:uri "/css/extensions.css"}
-                       {:uri "/css/plugins.css"}
-                       ; Using self hosted Font Awesome icons
-                       {:uri "/icons/fontawesome-free-5.15.1-web/css/all.min.css"}
-                       ; XXX#8857
-                       ; Using Material Icons via Google Web Fonts
-                       {:uri "https://fonts.googleapis.com/icon?family=Material+Icons"}
-                       {:uri "https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"}])
+    (:require [mid-fruits.candy        :refer [param return]]
+              [mid-fruits.string       :as string]
+              [mid-fruits.vector       :as vector]
+              [server-fruits.http      :as http]
+              [x.app-details           :as details]
+              [x.server-core.api       :as a :refer [cache-control-uri]]
+              [x.server-ui.engine      :refer [include-css include-favicon include-font]]
+              [x.server-ui.head.config :as head.config]))
 
 
 
@@ -161,7 +134,7 @@
                   (if (include-css? css-props)
                       (conj   head (include-css css-props))
                       (return head))))]
-         (let [css-paths (vector/concat-items css-paths SYSTEM-CSS-PATHS)]
+         (let [css-paths (vector/concat-items css-paths head.config/SYSTEM-CSS-PATHS)]
               (reduce f head css-paths))))
 
 (defn head<-favicon-includes

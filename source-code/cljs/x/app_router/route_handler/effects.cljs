@@ -6,7 +6,7 @@
     (:require [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]
               [x.app-router.engine               :as engine]
-              [x.app-router.route-handler.engine :as route-handler.engine]
+              [x.app-router.route-handler.config :as route-handler.config]
               [x.app-router.route-handler.events :as route-handler.events]
               [x.app-router.route-handler.subs   :as route-handler.subs]))
 
@@ -89,7 +89,7 @@
   :router/init-router!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]; Set default routes
-      {:db (as-> db % (r route-handler.events/set-default-routes! % route-handler.engine/DEFAULT-ROUTES)
+      {:db (as-> db % (r route-handler.events/set-default-routes! % route-handler.config/DEFAULT-ROUTES)
                       ; Store debug subscriber
                       (r db/set-item! % [:router :route-handler/meta-items :debug]
                                         [:router/get-router-data]))

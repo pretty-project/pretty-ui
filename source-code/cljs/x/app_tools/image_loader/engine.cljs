@@ -3,18 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.image-loader.engine
-    (:require [app-fruits.reagent :refer [ratom]]
-              [mid-fruits.candy   :refer [param]]
-              [mid-fruits.css     :as css]
-              [x.app-core.api     :as a]))
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-(defonce LOADERS (ratom {}))
+    (:require [mid-fruits.candy               :refer [param]]
+              [mid-fruits.css                 :as css]
+              [x.app-core.api                 :as a]
+              [x.app-tools.image-loader.state :as image-loader.state]))
 
 
 
@@ -26,7 +18,7 @@
   ;
   ; @param (keyword) loader-id
   [loader-id]
-  (swap! LOADERS assoc-in [loader-id :loaded?] true))
+  (swap! image-loader.state/LOADERS assoc-in [loader-id :loaded?] true))
 
 (defn image-loaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -35,7 +27,7 @@
   ;
   ; @return (boolean)
   [loader-id]
-  (boolean (get-in @LOADERS [loader-id :loaded?])))
+  (boolean (get-in @image-loader.state/LOADERS [loader-id :loaded?])))
 
 
 

@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler.effects
-    (:require [x.server-core.event-handler        :as event-handler]
-              [x.server-core.error-handler.engine :as error-handler.engine]))
+    (:require [x.server-core.event-handler :as event-handler]))
 
 
 

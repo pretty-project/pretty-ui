@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.profile-handler.subs
-    (:require [mid-fruits.string :as string]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-user.engine :as engine]))
+    (:require [mid-fruits.string                 :as string]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-user.profile-handler.config :as profile-handler.config]))
 
 
 
@@ -77,7 +77,7 @@
   ;
   ; @return (string)
   [db _]
-  (or nil engine/DEFAULT-PROFILE-PICTURE-URL))
+  (or nil profile-handler.config/DEFAULT-PROFILE-PICTURE-URL))
 
 
 

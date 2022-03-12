@@ -111,3 +111,7 @@
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-lister")
            (name component-key)))
+
+  ;(keyword (namespace lister-id)
+  ;         (str (name lister-id) "-"
+  ;              (name component-key))))

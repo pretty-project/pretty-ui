@@ -3,24 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.media-browser.mutations
-    (:require [com.wsscode.pathom3.connect.operation  :as pathom.co :refer [defmutation]]
-              [mid-fruits.candy                       :refer [param return]]
-              [mid-fruits.time                        :as time]
-              [mid-fruits.vector                      :as vector]
-              [mongo-db.api                           :as mongo-db]
-              [pathom.api                             :as pathom]
-              [server-extensions.storage.engine       :as engine]
-              [server-extensions.storage.side-effects :as side-effects]
-              [server-fruits.io                       :as io]
-              [server-plugins.item-browser.api        :as item-browser]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (ms)
-(def PERMANENT-DELETE-AFTER 60000)
+    (:require [com.wsscode.pathom3.connect.operation          :as pathom.co :refer [defmutation]]
+              [mid-fruits.candy                               :refer [param return]]
+              [mid-fruits.time                                :as time]
+              [mid-fruits.vector                              :as vector]
+              [mongo-db.api                                   :as mongo-db]
+              [pathom.api                                     :as pathom]
+              [server-extensions.storage.engine               :as engine]
+              [server-extensions.storage.media-browser.config :as media-browser.config]
+              [server-extensions.storage.side-effects         :as side-effects]
+              [server-fruits.io                               :as io]
+              [server-plugins.item-browser.api                :as item-browser]))
 
 
 
@@ -68,7 +61,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id] :as mutation-props}]
   (when-let [media-item (side-effects/get-item env item-id)]
-            (time/set-timeout! PERMANENT-DELETE-AFTER #(delete-item-f env mutation-props))
+            (time/set-timeout! media-browser.config/PERMANENT-DELETE-AFTER #(delete-item-f env mutation-props))
             (side-effects/update-path-directories! env           media-item -)
             (side-effects/detach-item!             env parent-id media-item)
             (return item-id)))
