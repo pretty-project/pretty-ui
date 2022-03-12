@@ -5,7 +5,6 @@
 (ns app-plugins.item-browser.api
     (:require [app-plugins.item-browser.dialogs]
               [app-plugins.item-browser.effects]
-              [app-plugins.item-browser.queries]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-browser.events :as events]
               [app-plugins.item-browser.subs   :as subs]

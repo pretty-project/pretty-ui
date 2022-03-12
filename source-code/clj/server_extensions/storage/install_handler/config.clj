@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-extensions.storage.installer.documents
+(ns server-extensions.storage.install-handler.config
     (:require [server-extensions.storage.config :as config]))
 
 

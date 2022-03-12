@@ -7,7 +7,8 @@
               [mid-fruits.form                              :as form]
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.text-field :as element-components.text-field :refer [text-field]]
-              [x.app-elements.engine.api                    :as engine]))
+              [x.app-elements.engine.api                    :as engine]
+              [x.app-elements.passfield-handler.subs        :as passfield-handler.subs]))
 
 
 
@@ -50,7 +51,7 @@
   ; @param (map)
   [db [_ field-id]]
   (merge (r element-components.text-field/get-text-field-props db field-id)
-         (r engine/get-passfield-props                         db field-id)))
+         (r passfield-handler.subs/get-passfield-props         db field-id)))
 
 (a/reg-sub :elements/get-password-field-props get-password-field-props)
 

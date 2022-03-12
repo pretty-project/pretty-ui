@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-plugins.view-selector.api
-    (:require [app-plugins.view-selector.engine]
-              [app-plugins.view-selector.effects]
+    (:require [app-plugins.view-selector.effects]
               [app-plugins.view-selector.events :as events]
               [app-plugins.view-selector.subs   :as subs]
               [app-plugins.view-selector.views  :as views]))

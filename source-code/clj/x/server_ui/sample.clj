@@ -40,9 +40,5 @@
 
 (a/reg-lifecycles!
  ::lifecycles
- {:on-server-init [:router/add-route! :my-ui
-                                      {:route-template "/my-ui"
-                                       :get #(http/html-wrap {:body (my-ui %)})}
-                                      :your-ui
-                                      {:route-template "/your-ui"
-                                       :get #(http/html-wrap {:body (your-ui %)})}]})
+ {:on-server-init [:router/add-routes! {:my-ui   {:route-template "/my-ui"   :get #(http/html-wrap {:body (my-ui %)})}
+                                        :your-ui {:route-template "/your-ui" :get #(http/html-wrap {:body (your-ui %)})}}]})

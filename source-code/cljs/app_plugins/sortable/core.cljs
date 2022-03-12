@@ -422,7 +422,7 @@
   ;
   ; @return (*)
   [db [_ sortable-id prop-key]]
-  (get-in db (db/path ::sortables sortable-id prop-key)))
+  (get-in db [:plugins :item-sorter/meta-items sortable-id prop-key]))
 
 ; @usage
 ;  [:sortable/get-sortable-prop :my-sortable :value-path]
@@ -433,7 +433,7 @@
   ;
   ; @return (vector)
   [db [_ sortable-id]]
-  (if-let [value-path (get-in db (db/path ::sortables sortable-id :value-path))]
+  (if-let [value-path (get-in db [:plugins :item-sorter/meta-items sortable-id :value-path])]
           (let [sortable-items (get-in db value-path)]
                (mixed/to-vector sortable-items))
           (return [])))
@@ -537,8 +537,7 @@
   ;
   ; @return (map)
   [db [_ sortable-id sortable-props]]
-  (assoc-in db (db/path ::sortables sortable-id)
-               (param sortable-props)))
+  (assoc-in db [:plugins :item-sorter/meta-items sortable-id] sortable-props))
 
 (defn- init-sortable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -559,7 +558,7 @@
   ;
   ; @return (map)
   [db [_ sortable-id]]
-  (dissoc-in db (db/path ::sortables sortable-id)))
+  (dissoc-in db [:plugins :item-sorter/meta-items sortable-id]))
 
 (a/reg-event-db :sortable/destruct-sortable! destruct-sortable!)
 
@@ -579,7 +578,7 @@
               ; Update sortable-items vector
        (-> db (db/apply-item! [event-id value-path vector/move-item origin-item-dex target-item-dex])
               ; Store updated-item-order
-              (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)
+              (db/set-item! [event-id [:plugins :item-sorter/meta-items sortable-id :updated-item-order]
                                       (param updated-item-order)]))))
 
 (defn add-sortable-item!
@@ -600,7 +599,7 @@
              ; Abban az esetben, ha a még nem történt elem-mozgatás, akkor az :updated-item-order
              ; még nem elérhető a Re-Frame adatbázisban, ezért szükséges a get-sortable-item-order
              ; függvény használatával olvasni az elemek sorrendjét.
-             (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
+             (db/set-item! [event-id [:plugins :item-sorter/meta-items sortable-id :updated-item-order]]
                            (vector/conj-item sortable-item-order sortable-item-id)))))
 
 ; @usage
@@ -637,7 +636,7 @@
         sortable-item-id    (sortable-item-dex->sortable-item-id sortable-id sortable-item-count)]
       (-> db (db/apply-item! [event-id value-path vector/inject-item sortable-item target-dex])
              ; XXX#6511
-             (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
+             (db/set-item! [event-id [:plugins :item-sorter/meta-items sortable-id :updated-item-order]]
                            (vector/inject-item sortable-item-order sortable-item-id target-dex)))))
 
 ; @usage
@@ -657,7 +656,7 @@
         sortable-item-order (r get-sortable-item-order  db sortable-id)]
       (-> db (db/apply-item! [event-id value-path vector/remove-nth-item sortable-item-dex])
              ; XXX#6511
-             (db/set-item! [event-id (db/path ::sortables sortable-id :updated-item-order)]
+             (db/set-item! [event-id [:plugins :item-sorter/meta-items sortable-id :updated-item-order]]
                            (vector/remove-nth-item sortable-item-order sortable-item-dex)))))
 
 ; @usage

@@ -5,7 +5,6 @@
 (ns app-plugins.item-lister.api
     (:require [app-plugins.item-lister.dialogs]
               [app-plugins.item-lister.effects]
-              [app-plugins.item-lister.queries]
               [app-plugins.item-lister.engine :as engine]
               [app-plugins.item-lister.events :as events]
               [app-plugins.item-lister.subs   :as subs]

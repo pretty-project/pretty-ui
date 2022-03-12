@@ -24,7 +24,6 @@
               [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
               [x.app-elements.engine.input-group        :as input-group]
-              [x.app-elements.engine.passfield          :as passfield]
               [x.app-elements.engine.selectable         :as selectable]
               [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]))
@@ -97,9 +96,6 @@
 
 ; x.app-elements.engine.input-group
 (def get-input-group-props input-group/get-input-group-props)
-
-; x.app-elements.engine.passfield
-(def get-passfield-props passfield/get-passfield-props)
 
 ; x.app-elements.engine.selectable
 (def on-select-function             selectable/on-select-function)

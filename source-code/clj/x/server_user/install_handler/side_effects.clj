@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.installer.side-effects
+(ns x.server-user.install-handler.side-effects
     (:require [mongo-db.api                            :as mongo-db]
               [x.server-core.api                       :as a]
               [x.server-user.user-handler.side-effects :as user-handler.side-effects]))

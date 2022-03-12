@@ -6,7 +6,6 @@
     (:require [app-plugins.item-editor.dialogs]
               [app-plugins.item-editor.effects]
               [app-plugins.item-editor.events]
-              [app-plugins.item-editor.queries]
               [app-plugins.item-editor.engine :as engine]
               [app-plugins.item-editor.subs   :as subs]
               [app-plugins.item-editor.views  :as views]))

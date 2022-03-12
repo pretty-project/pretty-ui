@@ -5,13 +5,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.digit-field
-    (:require [app-fruits.dom                       :as dom]
-              [mid-fruits.candy                     :refer [param]]
-              [mid-fruits.css                       :as css]
-              [mid-fruits.vector                    :as vector]
-              [x.app-core.api                       :as a :refer [r]]
-              [x.app-elements.engine.api            :as engine]
-              [x.app-elements.target-handler.engine :as target-handler.engine]))
+    (:require [app-fruits.dom                        :as dom]
+              [mid-fruits.candy                      :refer [param]]
+              [mid-fruits.css                        :as css]
+              [mid-fruits.vector                     :as vector]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.engine.api             :as engine]
+              [x.app-elements.passfield-handler.subs :as passfield-handler.subs]
+              [x.app-elements.target-handler.engine  :as target-handler.engine]))
 
 
 
@@ -70,9 +71,9 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-props   db field-id)
-         (r engine/get-field-props     db field-id)
-         (r engine/get-passfield-props db field-id)))
+  (merge (r engine/get-element-props                   db field-id)
+         (r engine/get-field-props                     db field-id)
+         (r passfield-handler.subs/get-passfield-props db field-id)))
 
 (a/reg-sub :elements/get-digit-field-props get-digit-field-props)
 

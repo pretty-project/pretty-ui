@@ -181,15 +181,15 @@
        [elements/combo-box ::combo-box
                            {:label "Combo-box"
                             :get-label-f  #(do (get % :x))
-                            :options-path (db/path ::stuff :initial-options)
+                            :options-path [:playground :stuff/meta-items :initial-options]
                             :initial-options [{:x "A"} {:x "B"}]
                             :initial-value {:x "B"}}]
        [elements/multi-combo-box ::multi-combo-box
                                  {:label "Multi-combo-box"
                                   :get-label-f :x
-                                  :options-path (db/path ::stuff :initial-options)}]
+                                  :options-path [:playground :stuff/meta-items :initial-options]}]
        [elements/date-field ::date-field
-                            {:label "Date field" :value-path (db/path ::stuff :date)}]
+                            {:label "Date field" :value-path [:playground :stuff/meta-items :date]}]
        [elements/text-field ::text-field-w-surface
                             {:label "Text-field w/ surface" :emptiable? true
                              :placeholder "Placeholder"
@@ -272,7 +272,7 @@
        [section-header {:label "Checkbox-group"}]
 ;      [elements/checkbox-group ::checkbox-group
 ;                               {:label "Checkbox-group"
-;                                :options-path (db/path ::stuff :stored-options)
+;                                :options-path [:playground :stuff/meta-items :stored-options]
 ;                                :get-label-f :x}]
        [section-footer]
        [section-header {:label "Radio-button"}]

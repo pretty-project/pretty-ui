@@ -5,6 +5,7 @@
 (ns app-plugins.item-lister.views
     (:require [app-fruits.react-transition    :as react-transition]
               [app-fruits.reagent             :as reagent]
+              [app-plugins.item-lister.config :as config]
               [app-plugins.item-lister.engine :as engine]
               [mid-fruits.candy               :refer [param return]]
               [mid-fruits.logical             :refer [nor]]
@@ -34,9 +35,9 @@
   ;   :search-keys (keywords in vector)}
   [extension-id _ body-props]
   (merge {:collection-name  (name extension-id)
-          :download-limit   20
-          :order-by-options [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
-          :search-keys      [:name]}
+          :download-limit   config/DEFAULT-DOWNLOAD-LIMIT
+          :order-by-options config/DEFAULT-ORDER-BY-OPTIONS
+          :search-keys      config/DEFAULT-SEARCH-KEYS}
          (param body-props)))
 
 
@@ -588,16 +589,16 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   ;  {:download-limit (integer)(opt)
-  ;    Default: 20
+  ;    Default: config/DEFAULT-DOWNLOAD-LIMIT
   ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :list-element (metamorphic-content)
   ;   :order-by-options (namespaced keywords in vector)(opt)
-  ;    Default: [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
+  ;    Default: config/DEFAULT-ORDER-BY-OPTIONS
   ;   :prefilter (map)(opt)
   ;   :search-keys (keywords in vector)(opt)
-  ;    Default: [:name]
+  ;    Default: config/DEFAULT-SEARCH-KEYS
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;

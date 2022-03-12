@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.sample
+(ns x.server-core.transfer-handler.sample
     (:require [x.server-core.api :as a]))
 
 

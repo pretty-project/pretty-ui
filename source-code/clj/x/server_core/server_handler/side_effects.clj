@@ -8,7 +8,7 @@
               [org.httpkit.server                  :refer [run-server]]
               [x.app-details                       :as details]
               [x.server-core.event-handler         :as event-handler]
-              [x.server-core.router-handler        :refer [ring-handler]]
+              [x.server-core.router-handler.engine :refer [ring-handler]]
               [x.server-core.server-handler.config :as server-handler.config]))
 
 

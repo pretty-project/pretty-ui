@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.api
-    (:require [x.server-user.installer.lifecycles]
-              [x.server-user.installer.side-effects]
-              [x.server-user.account-handler.lifecycles]
+    (:require [x.server-user.account-handler.lifecycles]
               [x.server-user.account-handler.transfer]
+              [x.server-user.install-handler.lifecycles]
+              [x.server-user.install-handler.side-effects]
               [x.server-user.profile-handler.transfer]
               [x.server-user.settings-handler.lifecycles]
               [x.server-user.settings-handler.transfer]

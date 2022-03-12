@@ -11,9 +11,9 @@
               [x.server-core.resource-handler.events]
               [x.server-core.resource-handler.lifecycles]
               [x.server-core.resource-handler.subs]
-              [x.server-core.router-handler]
               [x.server-core.server-handler.events]
               [x.server-core.server-handler.side-effects]
+              [x.server-core.transfer-handler.lifecycles]
               [x.server-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.server-core.build-handler.subs             :as build-handler.subs]
               [x.server-core.cache-handler.engine           :as cache-handler.engine]
@@ -24,7 +24,7 @@
               [x.server-core.event-handler                  :as event-handler]
               [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.server-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
-              [x.server-core.transfer-handler               :as transfer-handler]))
+              [x.server-core.transfer-handler.side-effects  :as transfer-handler.side-effects]))
 
 
 
@@ -103,5 +103,5 @@
 ; x.server-core.lifecycle-handler.subs
 (def get-period-events lifecycle-handler.subs/get-period-events)
 
-; x.server-core.transfer-handler
-(def reg-transfer! transfer-handler/reg-transfer!)
+; x.server-core.transfer-handler.side-effects
+(def reg-transfer! transfer-handler.side-effects/reg-transfer!)

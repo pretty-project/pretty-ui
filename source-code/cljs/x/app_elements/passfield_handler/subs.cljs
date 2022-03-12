@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.28
-; Description:
-; Version: v0.3.2
-; Compatibility: x4.4.8
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.engine.passfield
+(ns x.app-elements.passfield-handler.subs
     (:require [mid-fruits.candy              :refer [param]]
               [x.app-core.api                :as a :refer [r]]
               [x.app-elements.engine.element :as element]
@@ -98,20 +87,4 @@
   [db [_ field-id]]
   (merge (r field/get-field-props db field-id)
          {:end-adornments [(r get-visibility-toggle-props db field-id)]
-          :type           (r get-field-type db field-id)}))
-
-
-
-;; -- DB events ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn toggle-passphrase-visibility!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (map)
-  [db [_ field-id]]
-  (r element/update-element-prop! db field-id :passphrase-visible? not))
-
-(a/reg-event-db :elements/toggle-passphrase-visibility! toggle-passphrase-visibility!)
+          :type            (r get-field-type              db field-id)}))

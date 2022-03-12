@@ -4,6 +4,7 @@
 
 (ns app-plugins.item-browser.views
     (:require [app-fruits.react-transition     :as react-transition]
+              [app-plugins.item-browser.config :as config]
               [app-plugins.item-browser.engine :as engine]
               [app-plugins.item-lister.api     :as item-lister]
               [mid-fruits.candy                :refer [param]]
@@ -32,9 +33,9 @@
   ;   :path-key (keyword)}
   [extension-id _ body-props]
   (merge {:collection-name (name extension-id)
-          :items-key :items
-          :label-key :name
-          :path-key  :path}
+          :items-key config/DEFAULT-ITEMS-KEY
+          :label-key config/DEFAULT-LABEL-KEY
+          :path-key  config/DEFAULT-PATH-KEY}
          (param body-props)))
 
 
@@ -129,24 +130,24 @@
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;   :download-limit (integer)(opt)
-  ;    Default: 20
+  ;    Default: app-plugins.item-lister.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :items-key (keyword)(opt)
-  ;    Default: :items
+  ;    Default: config/DEFAULT-ITEMS-KEY
   ;   :label-key (keyword)(opt)
-  ;    Default: :name
+  ;    Default: config/DEFAULT-LABEL-KEY
   ;   :list-element (metamorphic-content)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :order-by-options (namespaced keywords in vector)(opt)
-  ;    Default: [:modified-at/descending :modified-at/ascending :name/ascending :name/descending]
+  ;    Default: app-plugins.item-lister.config/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)(opt)
-  ;    Default: :path
+  ;    Default: config/DEFAULT-PATH-KEY
   ;   :prefilter (map)(opt)
   ;   :search-keys (keywords in vector)(opt)
-  ;    Default: [:name]}
+  ;    Default: app-plugins.item-lister.config/DEFAULT-SEARCH-KEYS}
   ;
   ; @example
   ;  [item-browser/body :my-extension :my-type {...}]

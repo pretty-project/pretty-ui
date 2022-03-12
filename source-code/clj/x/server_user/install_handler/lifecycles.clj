@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-extensions.storage.installer.lifecycles
+(ns x.server-user.install-handler.lifecycles
     (:require [x.server-core.api :as a]))
 
 
@@ -12,4 +12,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-launch {:fx [:storage/check-install!]}})
+  {:on-server-launch {:fx [:user/check-install!]}})

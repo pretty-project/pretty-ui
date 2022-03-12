@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.04.24
-; Description:
-; Version: v1.0.6
-; Compatibility: x4.5.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.router-handler
+(ns x.server-core.router-handler.engine
     (:require [reitit.ring                             :as reitit-ring]
               [x.server-core.event-handler             :as event-handler]
               [x.server-core.middleware-handler.engine :refer [middleware]]))
