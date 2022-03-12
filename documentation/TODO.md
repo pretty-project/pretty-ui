@@ -13,6 +13,18 @@
 
 
 # x4.6.0
+- Elég mekülönböztetni egymástól az app/mid és server/mid névtereket
+  - Az app- és server- előtagok használata nem szükséges ha a mid meg van különböztetve
+  - A mid- prefix helyett legyen egy mid mappa inkább
+  - x.app-core   x.mid-core   x.server-core
+    x.core       mid.x.core   x.core
+  - app-extensions.storage    mid-extensions.storage   server-extensions.storage
+    extensions.storage        mid.extensions.storage   extensions.storage
+
+- A mid névterekbe nem is kell .api fájl ?
+
+- a -handler a modulok nevében már tul hosszu sokszor :(
+
 - @usage és @example sorokban nem szükséges a függvény neve előtt a névtér ha nem szerepel a függvény
   az api-ban
 
