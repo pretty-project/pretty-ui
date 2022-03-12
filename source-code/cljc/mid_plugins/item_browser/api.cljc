@@ -1,5 +1,5 @@
+
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-browser.api
-    (:require [mid-plugins.item-browser.engine]))
+(ns mid-plugins.item-browser.api)

@@ -13,6 +13,13 @@
 
 
 # x4.6.0
+- @usage és @example sorokban nem szükséges a függvény neve előtt a névtér ha nem szerepel a függvény
+  az api-ban
+
+- sok az :as a :refer [r] require, ahol nem kell az (a/... ...)
+
+- sok a :refer [param return] require ahol nem kell a (param ...)  
+
 - Monoset struktura
   - Monoset a különbözö külső könyvtárak kapjanak saját mappát
     react.api, reagent.api, re-frame.api, sortable.api, full-calendar.api,

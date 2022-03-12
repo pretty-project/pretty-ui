@@ -7,6 +7,24 @@
               [x.app-layouts.api :as layouts]))
 
 
+;; -- Header components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header
+  ; @param (keyword) extension-id
+  ; @param (map) header-props
+  ;  {:header (metamorphic-content)}
+  ;
+  ; @usage
+  ;  [view-selector/header :my-extension {...}]
+  ;
+  ; @usage
+  ;  (defn my-header [extension-id] [:div ...])
+  ;  [view-selector/header :my-extension {:header #'my-header}]
+  [extension-id {:keys [header]}]
+  [header extension-id])
+
+
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,21 +43,6 @@
   [extension-id {:keys [body]}]
   [body extension-id])
 
-
-
-;; -- Header components -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn header
-  ; @param (keyword) extension-id
-  ; @param (map) header-props
-  ;  {:header (metamorphic-content)}
-  ;
-  ; @usage
-  ;  [view-selector/header :my-extension {...}]
-  ;
-  ; @usage
-  ;  (defn my-header [extension-id] [:div ...])
-  ;  [view-selector/header :my-extension {:header #'my-header}]
-  [extension-id {:keys [header]}]
-  [header extension-id])
+  ;:allowed-view-ids (keywords in vector)(opt))
+  ;   :default-view-id (keyword)(opt)
+  ;    Default: DEFAULT-VIEW-ID

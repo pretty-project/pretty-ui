@@ -25,6 +25,26 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-selector-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ;
+  ; @return (map)
+  [db [_ extension-id]]
+  (get-in db [extension-id :view-selector/meta-items]))
+
+(defn get-meta-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-key
+  ;
+  ; @return (*)
+  [db [_ extension-id item-key]]
+  (get-in db [extension-id :view-selector/meta-items item-key]))
+
+
 (defn route-handled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

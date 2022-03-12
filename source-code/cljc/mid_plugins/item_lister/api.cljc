@@ -2,5 +2,4 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-plugins.item-lister.api
-    (:require [mid-plugins.item-lister.engine]))
+(ns mid-plugins.item-lister.api)

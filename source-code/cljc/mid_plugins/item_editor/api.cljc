@@ -3,13 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-plugins.item-editor.api
-    (:require [mid-plugins.item-editor.engine :as engine]))
-
+    (:require [mid-plugins.item-editor.editor-handler.engine :as editor-handler.engine]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid-plugins.item-editor.engine
-(def value-path engine/value-path)
+; mid-plugins.item-editor.editor-handler.engine
+(def value-path editor-handler.engine/value-path)

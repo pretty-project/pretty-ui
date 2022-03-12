@@ -320,20 +320,3 @@
       {:db (r events/destruct-body! db extension-id item-namespace)
        :dispatch-n [; XXX#5660
                     [:environment/remove-keypress-listener! :item-lister/keypress-listener]]}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-lister/load-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [route-title (r subs/get-meta-item db extension-id item-namespace :route-title)
-            on-load     (r subs/get-meta-item db extension-id item-namespace :on-load)]
-           {:db (if-not route-title db (r ui/set-header-title! db route-title))
-            :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))
