@@ -2,12 +2,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.item-lister.sample
-    (:require [app-plugins.item-editor.api :as item-editor]
-              [app-plugins.item-lister.api :as item-lister]
-              [x.app-core.api              :as a]
-              [x.app-elements.api          :as elements]
-              [x.app-layouts.api           :as layouts]))
+(ns plugins.item-lister.sample
+    (:require [plugins.item-editor.api :as item-editor]
+              [plugins.item-lister.api :as item-lister]
+              [x.app-core.api          :as a]
+              [x.app-elements.api      :as elements]
+              [x.app-layouts.api       :as layouts]))
 
 
 

@@ -9,11 +9,11 @@
               [mid-fruits.vector                              :as vector]
               [mongo-db.api                                   :as mongo-db]
               [pathom.api                                     :as pathom]
+              [plugins.item-browser.api                       :as item-browser]
               [server-extensions.storage.engine               :as engine]
               [server-extensions.storage.media-browser.config :as media-browser.config]
               [server-extensions.storage.side-effects         :as side-effects]
-              [server-fruits.io                               :as io]
-              [server-plugins.item-browser.api                :as item-browser]))
+              [server-fruits.io                               :as io]))
 
 
 

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.update-handler.views
+(ns plugins.item-browser.update.views
     (:require [x.app-ui.api :as ui]))
 
 

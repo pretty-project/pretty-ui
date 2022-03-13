@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.view-selector.transfer-handler.helpers)
+(ns mid.plugins.view-selector.transfer.helpers)
 
 
 
@@ -15,7 +15,7 @@
   ; @param (keyword) extension-id
   ;
   ; @example
-  ;  (transfer-id :my-extension)
+  ;  (transfer.helpers/transfer-id :my-extension)
   ;  =>
   ;  :my-extension.view-selector/transfer-selector-props
   ;

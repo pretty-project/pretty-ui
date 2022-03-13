@@ -1,6 +1,9 @@
 
 # x4.6.5
 
+- Az összes plugin nevéből kikerült az app- prefixum
+  app-plugins.item-xxx.api  =>  plugins.item-xxx.api
+
 - Az item-editor plugin (item-editor/form-id ...) függvénye ezentúl nem elérhető.
   - Az input-ok {:form-id ...} tulajdonságát függvény nélkül tudod megadni.
     Pl.: :entities.entity-editor/form

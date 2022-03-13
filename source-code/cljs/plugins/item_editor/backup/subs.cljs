@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.backup-handler.subs
-    (:require [plugins.item-editor.engine.subs :as engine.subs]
-              [x.app-core.api                  :refer [r]]
-              [x.app-db.api                    :as db]))
+(ns plugins.item-editor.backup.subs
+    (:require [plugins.item-editor.core.subs :as core.subs]
+              [x.app-core.api                :refer [r]]
+              [x.app-db.api                  :as db]))
 
 
 
@@ -43,7 +43,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)]
+  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
        (get-in db [extension-id :item-editor/local-changes current-item-id])))
 
 (defn get-recovered-item
@@ -54,9 +54,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)
-        backup-item     (r get-backup-item                 db extension-id item-namespace current-item-id)
-        local-changes   (r get-local-changes               db extension-id item-namespace)]
+  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+        backup-item     (r get-backup-item               db extension-id item-namespace current-item-id)
+        local-changes   (r get-local-changes             db extension-id item-namespace)]
        (merge backup-item local-changes)))
 
 (defn item-changed?
@@ -67,7 +67,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)
-        current-item    (r engine.subs/get-current-item    db extension-id item-namespace)
-        backup-item     (r get-backup-item                 db extension-id item-namespace current-item-id)]
+  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+        current-item    (r core.subs/get-current-item    db extension-id item-namespace)
+        backup-item     (r get-backup-item               db extension-id item-namespace current-item-id)]
        (not= current-item backup-item)))

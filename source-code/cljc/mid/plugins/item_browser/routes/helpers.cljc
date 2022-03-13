@@ -19,7 +19,7 @@
   ; @param (keyword) route-key
   ;
   ; @example
-  ;  (route-id :my-extension :my-type :extended)
+  ;  (routes.helpers/route-id :my-extension :my-type :extended)
   ;  =>
   ;  :my-extension.my-type-browser/extended-route
   ;

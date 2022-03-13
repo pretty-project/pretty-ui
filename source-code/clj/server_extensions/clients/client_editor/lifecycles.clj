@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-editor.lifecycles
-    (:require [server-plugins.item-editor.api]
+    (:require [plugins.item-editor.api]
               [x.server-core.api :as a]))
 
 

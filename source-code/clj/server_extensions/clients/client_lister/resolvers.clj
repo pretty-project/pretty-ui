@@ -7,7 +7,7 @@
               [mid-fruits.candy                      :refer [param return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [server-plugins.item-lister.api        :as item-lister]
+              [plugins.item-lister.api               :as item-lister]
               [x.server-locales.api                  :as locales]))
 
 

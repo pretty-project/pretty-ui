@@ -21,12 +21,10 @@
   - app-extensions.storage    mid-extensions.storage   server-extensions.storage
     extensions.storage        mid.extensions.storage   extensions.storage
 
-- A mid névterekbe nem is kell .api fájl ?
+- A mid névterekbe nem is kell .api fájl csak a mid-core.api van meghivva itt-ott, amit
+  levált majd a re-frame.api, utána törölhetők a mid-* .api fájlok
 
 - a -handler a modulok nevében már tul hosszu sokszor :(
-
-- @usage és @example sorokban nem szükséges a függvény neve előtt a névtér ha nem szerepel a függvény
-  az api-ban
 
 - sok az :as a :refer [r] require, ahol nem kell az (a/... ...)
 

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.view-selector.route-handler.helpers
+(ns mid.plugins.view-selector.routes.helpers
     (:require [mid-fruits.string :as string]
               [mid-fruits.uri    :as uri]))
 
@@ -18,7 +18,7 @@
   ; @param (keyword) route-key
   ;
   ; @example
-  ;  (route-id :my-extension :my-type :extended)
+  ;  (routes.helpers/route-id :my-extension :my-type :extended)
   ;  =>
   ;  :my-extension.view-selector/extended-route
   ;
@@ -35,7 +35,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (base-route :my-extension {:route-template "/@app-home/my-extension/:view-id"})
+  ;  (routes.helpers/base-route :my-extension {:route-template "/@app-home/my-extension/:view-id"})
   ;  =>
   ;  "/@app-home/my-extension"
   ;
@@ -52,7 +52,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (extended-route :my-extension {:route-template "/@app-home/my-extension/:view-id"})
+  ;  (routes.helpers/extended-route :my-extension {:route-template "/@app-home/my-extension/:view-id"})
   ;  =>
   ;  "/@app-home/my-extension/:view-id"
   ;

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.clients.client-lister.lifecycles
-    (:require [server-plugins.item-lister.api]
+    (:require [plugins.item-lister.api]
               [x.server-core.api :as a]))
 
 

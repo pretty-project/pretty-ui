@@ -3,15 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.clients.client-editor.views
-    (:require [app-plugins.item-editor.api :as item-editor]
-              [mid-fruits.candy            :refer [param]]
-              [mid-fruits.form             :as form]
-              [mid-fruits.string           :as string]
-              [x.app-components.api        :as components]
-              [x.app-core.api              :as a :refer [r]]
-              [x.app-elements.api          :as elements]
-              [x.app-layouts.api           :as layouts]
-              [x.app-locales.api           :as locales]))
+    (:require [mid-fruits.candy        :refer [param]]
+              [mid-fruits.form         :as form]
+              [mid-fruits.string       :as string]
+              [plugins.item-editor.api :as item-editor]
+              [x.app-components.api    :as components]
+              [x.app-core.api          :as a :refer [r]]
+              [x.app-elements.api      :as elements]
+              [x.app-layouts.api       :as layouts]
+              [x.app-locales.api       :as locales]))
 
 
 

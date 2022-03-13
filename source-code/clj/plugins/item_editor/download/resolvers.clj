@@ -30,14 +30,6 @@
              ;     :suggestion-keys (keywords in vector)}}
              ; @param (map) resolver-props
              ;
-             ; @example
-             ;  (item-editor/get-item-suggestions {:params {:extension-id    :my-extension
-             ;                                              :item-namespace  :my-type
-             ;                                              :suggestion-keys [:my-key :your-key]}})
-             ;  =>
-             ;  {:item-editor/get-item-suggestions {:my-type/my-key   ["..."]
-             ;                                      :my-type/your-key ["..." "..."]}}
-             ;
              ; @return (map)
              ;  {:item-editor/get-item-suggestions (map)
              [env resolver-props]

@@ -20,7 +20,7 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r get-resolver-id db :my-extension :my-type :delete)
+  ;  (r upda.subs/get-mutation-name db :my-extension :my-type :delete)
   ;  =>
   ;  "my-handler/delete-item!"
   ;

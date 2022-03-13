@@ -2,29 +2,11 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.view-selector.sample
-    (:require [app-plugins.view-selector.api :as view-selector]
-              [x.app-core.api                :as a]
-              [x.app-layouts.api             :as layouts]
-              [x.app-ui.api                  :as ui]))
-
-
-
-;; -- A plugin elindítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; A view-selector plugin elindítható ...
-(a/reg-event-fx
-  :load-my-view-selector!
-  (fn [_ _]
-      ; ... a [:view-selector/load-selector! ...] esemény meghívásával.
-      [:view-selector/load-selector! :my-extension]
-      ; ... a [:view-selector/go-to! ...] esemény meghívásával.
-      [:view-selector/go-to! :my-extension :my-view]
-      ; ... az "/@app-home/my-extension" útvonal használatával.
-      [:router/go-to! "/@app-home/my-extension"]
-      ; ... az "/@app-home/my-extension/my-view" útvonal használatával.
-      [:router/go-to! "/@app-home/my-extension/my-view"]))
+(ns plugins.view-selector.sample
+    (:require [plugins.view-selector.api :as view-selector]
+              [x.app-core.api            :as a]
+              [x.app-layouts.api         :as layouts]
+              [x.app-ui.api              :as ui]))
 
 
 

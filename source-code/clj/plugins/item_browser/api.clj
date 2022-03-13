@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.api
-    (:require [plugins.item-browser.engine.effects]
+    (:require [plugins.item-browser.core.effects]
               [plugins.item-browser.routes.effects]
               [plugins.item-browser.transfer.effects]
               [plugins.item-browser.download.helpers :as download.helpers]
@@ -16,7 +16,7 @@
 
 ; plugins.item-browser.download.helpers
 (def env->item-links      download.helpers/env->item-links)
-(def env->sort-pattern    download.engine/env->sort-pattern)
+(def env->sort-pattern    download.helpers/env->sort-pattern)
 (def env->search-pattern  download.helpers/env->search-pattern)
 (def env->pipeline-props  download.helpers/env->pipeline-props)
 (def env->get-pipeline    download.helpers/env->get-pipeline)

@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.helpers
-    (:require [mid-fruits.keyword                  :as keyword]
-              [mongo-db.api                        :as mongo-db]
-              [plugins.item-browser.engine.helpers :as engine.helpers]
-              [x.server-core.api                   :as a]))
+    (:require [mid-fruits.keyword                :as keyword]
+              [mongo-db.api                      :as mongo-db]
+              [plugins.item-browser.core.helpers :as core.helpers]
+              [x.server-core.api                 :as a]))
 
 
 
@@ -19,7 +19,7 @@
   ; @param (namespaced map) item
   ;
   ; @usage
-  ;  (item->path :my-extension :my-type {...})
+  ;  (item-browser/item->path :my-extension :my-type {...})
   ;
   ; @return (maps in vector)
   [extension-id item-namespace item]
@@ -32,7 +32,7 @@
   ; @param (namespaced map) item
   ;
   ; @usage
-  ;  (item->parent-link :my-extension :my-type {...})
+  ;  (item-browser/item->parent-link :my-extension :my-type {...})
   ;
   ; @return (namespaced map)
   [extension-id item-namespace item]
@@ -45,7 +45,7 @@
   ; @param (namespaced map) item
   ;
   ; @usage
-  ;  (item->parent-id :my-extension :my-type {...})
+  ;  (item-browser/item->parent-id :my-extension :my-type {...})
   ;
   ; @return (string)
   [extension-id item-namespace item]
@@ -63,11 +63,11 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (item-id->path :my-extension :my-type "my-item")
+  ;  (item-browser/item-id->path :my-extension :my-type "my-item")
   ;
   ; @return (maps in vector)
   [extension-id item-namespace item-id]
-  (let [collection-name (engine.helpers/collection-name extension-id item-namespace)
+  (let [collection-name (core.helpers/collection-name extension-id item-namespace)
         path-key       @(a/subscribe [:item-browser/get-meta-item extension-id item-namespace :path-key])]
        (if-let [item (mongo-db/get-document-by-id collection-name item-id)]
                (get item (keyword/add-namespace item-namespace path-key)))))
@@ -78,7 +78,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (item-id->parent-link :my-extension :my-type "my-item")
+  ;  (item-browser/item-id->parent-link :my-extension :my-type "my-item")
   ;
   ; @return (namespaced map)
   [extension-id item-namespace item-id]
@@ -91,7 +91,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (item-id->parent-id :my-extension :my-type "my-item")
+  ;  (item-browser/item-id->parent-id :my-extension :my-type "my-item")
   ;
   ; @return (string)
   [extension-id item-namespace item-id]

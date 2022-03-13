@@ -7,8 +7,8 @@
               [mid-fruits.candy                                        :refer [param return]]
               [mongo-db.api                                            :as mongo-db]
               [pathom.api                                              :as pathom]
-              [server-extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
-              [server-plugins.item-browser.api                         :as item-browser]))
+              [plugins.item-browser.api                                :as item-browser]
+              [server-extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]))
 
 
 

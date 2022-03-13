@@ -16,7 +16,7 @@
   ; @param (keyword) component-key
   ;
   ; @example
-  ;  (component-id :my-extension :view)
+  ;  (core.helpers/component-id :my-extension :view)
   ;  =>
   ;  :my-extension.view-selector/view
   ;

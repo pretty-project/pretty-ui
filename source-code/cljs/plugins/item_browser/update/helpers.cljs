@@ -2,4 +2,4 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.update-handler.engine)
+(ns plugins.item-browser.update.helpers)

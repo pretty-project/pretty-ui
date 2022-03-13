@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.media-browser.lifecycles
-    (:require [server-plugins.item-browser.api]
+    (:require [plugins.item-browser.api]
               [server-extensions.storage.engine :as engine]
               [x.server-core.api                :as a]))
 

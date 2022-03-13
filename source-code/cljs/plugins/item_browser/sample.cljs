@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.item-browser.sample
-    (:require [app-plugins.item-browser.api :as item-browser]
-              [x.app-core.api               :as a :refer [r]]
-              [x.app-ui.api                 :as ui]))
+(ns plugins.item-browser.sample
+    (:require [plugins.item-browser.api :as item-browser]
+              [x.app-core.api           :as a :refer [r]]
+              [x.app-ui.api             :as ui]))
 
 
 

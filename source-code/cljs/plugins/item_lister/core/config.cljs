@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.lister-handler.config)
+(ns plugins.item-lister.core.config)
 
 
 

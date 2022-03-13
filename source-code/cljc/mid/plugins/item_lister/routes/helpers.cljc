@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-lister.route-handler.helpers
+(ns mid.plugins.item-lister.routes.helpers
     (:require [mid-fruits.uri :as uri]))
 
 
@@ -17,7 +17,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (route-id :my-extension :my-type)
+  ;  (routes.helpers/route-id :my-extension :my-type)
   ;  =>
   ;  :my-extension.my-type-lister/route
   ;
@@ -36,7 +36,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (base-route :my-extension :my-type {:route-template "/@app-home/my-extension"})
+  ;  (routes.helpers/base-route :my-extension :my-type {:route-template "/@app-home/my-extension"})
   ;  =>
   ;  "/@app-home/my-extension"
   ;

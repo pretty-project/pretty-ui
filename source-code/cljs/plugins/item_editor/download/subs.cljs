@@ -20,7 +20,7 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r get-resolver-id db :my-extension :my-type :get)
+  ;  (r download.subs/get-resolver-id db :my-extension :my-type :get)
   ;  =>
   ;  :my-handler/get-item
   ;

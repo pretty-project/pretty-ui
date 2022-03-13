@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.subs
-    (:require [mid-fruits.candy                   :refer [return]]
-              [plugins.item-editor.engine.helpers :as engine.helpers]
-              [x.app-activities.api               :as activities]
-              [x.app-components.api               :as components]
-              [x.app-core.api                     :as a :refer [r]]
-              [x.app-db.api                       :as db]
-              [x.app-elements.api                 :as elements]
-              [x.app-sync.api                     :as sync]))
+    (:require [mid-fruits.candy                 :refer [return]]
+              [plugins.item-editor.core.helpers :as core.helpers]
+              [x.app-activities.api             :as activities]
+              [x.app-components.api             :as components]
+              [x.app-core.api                   :as a :refer [r]]
+              [x.app-db.api                     :as db]
+              [x.app-elements.api               :as elements]
+              [x.app-sync.api                   :as sync]))
 
 
 
@@ -68,7 +68,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r get-data-value :my-extension :my-type :modified-at)
+  ;  (r core.subs/get-data-value :my-extension :my-type :modified-at)
   ;
   ; @return (map)
   [db [_ extension-id _ item-key]]
@@ -95,22 +95,6 @@
   ; XXX#3055
   (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
           (keyword (name handler-key) "synchronize-editor!")))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-current-item-id
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @usage
-  ;  (r item-editor/get-current-item-id db :my-extension :my-type)
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :item-id))
 
 
 
@@ -169,8 +153,8 @@
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
   (if-let [new-item? (r get-meta-item db extension-id item-namespace :new-item?)]
-          (engine.helpers/add-item-label  extension-id item-namespace)
-          (engine.helpers/edit-item-label extension-id item-namespace)))
+          (core.helpers/add-item-label  extension-id item-namespace)
+          (core.helpers/edit-item-label extension-id item-namespace)))
 
 (defn get-route-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -242,6 +226,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn editor-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (boolean (if-let [download-data? (r download-data? db extension-id item-namespace)]
+                   (let [data-received?        (r get-meta-item         db extension-id item-namespace :data-received?)
+                         editor-synchronizing? (r editor-synchronizing? db extension-id item-namespace)]
+                        ; XXX#3219
+                        ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
+                        ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
+                        ; az adatok letöltése!
+                        (or editor-synchronizing? (not data-received?))))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-current-item-id
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @usage
+  ;  (r item-editor/get-current-item-id db :my-extension :my-type)
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (r get-meta-item db extension-id item-namespace :item-id))
+
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -273,28 +290,6 @@
   [db [_ extension-id item-namespace]]
   (let [current-item (r get-current-item db extension-id item-namespace)]
        (db/document->namespaced-document current-item item-namespace)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn editor-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (boolean (if-let [download-data? (r download-data? db extension-id item-namespace)]
-                   (let [data-received?        (r get-meta-item         db extension-id item-namespace :data-received?)
-                         editor-synchronizing? (r editor-synchronizing? db extension-id item-namespace)]
-                        ; XXX#3219
-                        ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
-                        ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-                        ; az adatok letöltése!
-                        (or editor-synchronizing? (not data-received?))))))
 
 
 

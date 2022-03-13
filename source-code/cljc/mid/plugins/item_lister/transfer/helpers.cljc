@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-lister.transfer-handler.helpers)
+(ns mid.plugins.item-lister.transfer.helpers)
 
 
 
@@ -16,7 +16,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (transfer-id :my-extension :my-type)
+  ;  (transfer.helpers/transfer-id :my-extension :my-type)
   ;  =>
   ;  :my-extension.my-type-lister/transfer-lister-props
   ;

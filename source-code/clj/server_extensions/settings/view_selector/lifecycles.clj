@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.settings.view-selector.lifecycles
-    (:require [server-plugins.view-selector.api]
+    (:require [plugins.view-selector.api]
               [x.server-core.api :as a]))
 
 

@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.effects
-    (:require [plugins.item-browser.update.events :as update.events]
+    (:require [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.update.events :as update.events]
               [plugins.item-browser.update.subs   :as update.subs]
               [plugins.item-browser.update.views  :as update.views]
               [x.app-core.api                     :as a]))
@@ -104,7 +105,7 @@
   ; @usage
   ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r engine.subs/get-request-id                    db extension-id item-namespace)
+      (let [request-id   (r core.subs/get-request-id                      db extension-id item-namespace)
             query        (r update.queries/get-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r events/delete-item! db extension-id item-namespace item-id)
@@ -138,7 +139,7 @@
       ; ... engedélyezi az ideiglenesen letiltott elemet
       ; ... befejezi progress-bar elemen kijelzett folyamatot
       ; ... megjelenít egy értesítést
-      {:db (r update-handler.events/delete-item-failed db extension-id item-namespace item-id)
+      {:db (r update.events/delete-item-failed db extension-id item-namespace item-id)
        :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
@@ -150,9 +151,9 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r browser-handler.subs/get-request-id                        db extension-id item-namespace)
-            query        (r update-handler.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
-            validator-f #(r update-handler.validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
+      (let [request-id   (r core.subs/get-request-id                           db extension-id item-namespace)
+            query        (r update.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+            validator-f #(r update.validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-browser/delete-item-undid       extension-id item-namespace]
@@ -197,9 +198,9 @@
   ; @usage
   ;  [:item-browser/duplicate-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r browser-handler.subs/get-request-id                      db extension-id item-namespace)
-            query        (r update-handler.queries/get-duplicate-item-query          db extension-id item-namespace item-id)
-            validator-f #(r update-handler.validators/duplicate-item-response-valid? db extension-id item-namespace %)]
+      (let [request-id   (r core.subs/get-request-id                         db extension-id item-namespace)
+            query        (r update.queries/get-duplicate-item-query          db extension-id item-namespace item-id)
+            validator-f #(r update.validators/duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-browser/item-duplicated       extension-id item-namespace]
@@ -214,7 +215,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
-      (let [copy-id (r update-handler.subs/get-copy-id db extension-id item-namespace server-response)]
+      (let [copy-id (r update.subs/get-copy-id db extension-id item-namespace server-response)]
            {:dispatch-n [[:item-browser/reload-items!                  extension-id item-namespace]
                          [:item-browser/render-item-duplicated-dialog! extension-id item-namespace copy-id]]})))
 
@@ -239,9 +240,9 @@
   ; @param (keyword) item-namespace
   ; @param (strings) copy-id
   (fn [{:keys [db]} [_ extension-id item-namespace copy-id]]
-      (let [request-id   (r browser-handler.subs/get-request-id                           db extension-id item-namespace)
-            query        (r update-handler.queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-id)
-            validator-f #(r update-handler.validators/undo-duplicate-item-response-valid? db extension-id item-namespace %)]
+      (let [request-id   (r core.subs/get-request-id                              db extension-id item-namespace)
+            query        (r update.queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-id)
+            validator-f #(r update.validators/undo-duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-browser/reload-items!              extension-id item-namespace]

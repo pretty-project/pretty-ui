@@ -32,29 +32,14 @@
   (let [derived-view-id (r subs/get-derived-view-id db extension-id)]
        (r set-current-view-id! db extension-id derived-view-id)))
 
-(defn store-current-view-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (map) selector-props
-  ;  {:view-id (keyword)(opt)}
-  ;
-  ; @return (map)
-  [db [_ extension-id {:keys [view-id]}]]
-  (if (r subs/route-handled? db extension-id)
-      (r store-derived-view-id! db extension-id)
-      (r   set-current-view-id! db extension-id view-id)))
-
 (defn load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
-  ; @param (map) selector-props
-  ;  {:view-id (keyword)(opt)}
   ;
   ; @return (map)
   [db [_ extension-id selector-props]]
-  (r store-current-view-id! db extension-id selector-props))
+  (r store-derived-view-id! db extension-id))
 
 (defn change-view!
   ; @param (keyword) extension-id
