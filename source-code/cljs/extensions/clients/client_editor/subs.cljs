@@ -8,10 +8,10 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-client-name
+(defn get-client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [first-name (get-in db [:clients :item-editor/data-items :first-name])

@@ -11,17 +11,17 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- bubbles-enabled-by-user?
+(defn bubbles-enabled-by-user?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (boolean)
   [db _]
   (r user/get-user-settings-item db :notification-bubbles-enabled?))
 
-(defn- bubble-lifetime-elapsed?
+(defn bubble-lifetime-elapsed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -32,7 +32,7 @@
        (> (time/elapsed)
           (+ render-requested-at bubbles.config/BUBBLE-LIFETIME))))
 
-(defn- get-bubble-lifetime-left
+(defn get-bubble-lifetime-left
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -43,7 +43,7 @@
         bubble-pop-time     (+ render-requested-at bubbles.config/BUBBLE-LIFETIME)]
        (- bubble-pop-time (time/elapsed))))
 
-(defn- autopop-bubble?
+(defn autopop-bubble?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id

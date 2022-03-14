@@ -3,16 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.events
-    (:require [mid-fruits.candy                        :refer [param return]]
-              [mid-fruits.map                          :refer [dissoc-in]]
-              [mid-fruits.reader                       :as reader]
-              [x.app-core.api                          :as a :refer [r]]
-              [x.app-db.api                            :as db]
-              [x.app-environment.cookie-handler.engine :as cookie-handler.engine]))
+    (:require [mid-fruits.candy                         :refer [param return]]
+              [mid-fruits.map                           :refer [dissoc-in]]
+              [mid-fruits.reader                        :as reader]
+              [x.app-core.api                           :as a :refer [r]]
+              [x.app-db.api                             :as db]
+              [x.app-environment.cookie-handler.helpers :as cookie-handler.helpers]))
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn store-cookie-value!
@@ -100,7 +100,7 @@
   [cofx _]
   (let [cookie-names (-> goog.net.cookies .getKeys vec)]
        (letfn [(f [cofx cookie-name]
-                  (if (cookie-handler.engine/cookie-name->system-cookie? cookie-name)
+                  (if (cookie-handler.helpers/cookie-name->system-cookie? cookie-name)
                       (r inject-system-cookie! cofx cookie-name)
                       (return                  cofx)))]
               (reduce f cofx cookie-names))))

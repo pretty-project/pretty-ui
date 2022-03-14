@@ -6,7 +6,7 @@
     (:require [org.httpkit.server                      :refer [run-server]]
               [x.app-details                           :as details]
               [x.server-core.event-handler             :as event-handler]
-              [x.server-core.router-handler.engine     :refer [ring-handler]]
+              [x.server-core.router-handler.helpers    :refer [ring-handler]]
               [x.server-core.server-handler.prototypes :as server-handler.prototypes]))
 
 

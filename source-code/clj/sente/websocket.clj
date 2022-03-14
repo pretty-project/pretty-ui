@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns sente.websocket
     (:require [taoensso.sente :as sente]
               [ring.middleware.anti-forgery            :refer [wrap-anti-forgery]]

@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head.views
-    (:require [x.server-ui.head.engine     :as head.engine]
+    (:require [x.server-ui.head.helpers    :as head.helpers]
               [x.server-ui.head.prototypes :as head.prototypes]))
 
 
 
-;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn view
@@ -30,9 +30,9 @@
   ([request head-props]
    (let [head-props (head.prototypes/head-props-prototype request head-props)]
         (-> [:head#x-head]
-            (head.engine/head<-legal-information request head-props)
-            (head.engine/head<-browser-settings  request head-props)
-            (head.engine/head<-crawler-settings  request head-props)
-            (head.engine/head<-og-properties     request head-props)
-            (head.engine/head<-css-includes      request head-props)
-            (head.engine/head<-favicon-includes  request head-props)))))
+            (head.helpers/head<-legal-information request head-props)
+            (head.helpers/head<-browser-settings  request head-props)
+            (head.helpers/head<-crawler-settings  request head-props)
+            (head.helpers/head<-og-properties     request head-props)
+            (head.helpers/head<-css-includes      request head-props)
+            (head.helpers/head<-favicon-includes  request head-props)))))

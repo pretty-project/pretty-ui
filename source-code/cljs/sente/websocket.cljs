@@ -1,4 +1,7 @@
 
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns sente.websocket
     (:require-macros [cljs.core.async.macros :as asyncm :refer (go go-loop)])
     (:require        [cljs.core.async        :as async  :refer (<! >! put! chan)]

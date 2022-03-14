@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.re-frame-browser.views
-    (:require [mid-fruits.candy                        :refer [param return]]
-              [mid-fruits.map                          :as map]
-              [mid-fruits.pretty                       :as pretty]
-              [mid-fruits.string                       :as string]
-              [mid-fruits.vector                       :as vector]
-              [x.app-core.api                          :as a]
-              [x.app-elements.api                      :as elements]
-              [x.app-developer.re-frame-browser.engine :as re-frame-browser.engine]))
+    (:require [mid-fruits.candy                         :refer [param return]]
+              [mid-fruits.map                           :as map]
+              [mid-fruits.pretty                        :as pretty]
+              [mid-fruits.string                        :as string]
+              [mid-fruits.vector                        :as vector]
+              [x.app-core.api                           :as a]
+              [x.app-elements.api                       :as elements]
+              [x.app-developer.re-frame-browser.helpers :as re-frame-browser.helpers]))
 
 
 
@@ -214,7 +214,7 @@
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button toggle-visibility-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
-             (letfn [(f [%1 %2] (if (or show-hidden? (-> %2 re-frame-browser.engine/map-item-hidden? not)
+             (letfn [(f [%1 %2] (if (or show-hidden? (-> %2 re-frame-browser.helpers/map-item-hidden? not)
                                                      (not root-level?))
                                     (conj   %1 [map-key %2])
                                     (return %1)))]

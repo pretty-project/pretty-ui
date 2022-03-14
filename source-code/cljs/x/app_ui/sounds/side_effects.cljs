@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.sounds.side-effects
-    (:require [app-fruits.dom         :as dom]
-              [x.app-core.api         :as a]
-              [x.app-ui.sounds.engine :as sounds.engine]))
+    (:require [app-fruits.dom          :as dom]
+              [x.app-core.api          :as a]
+              [x.app-ui.sounds.helpers :as sounds.helpers]))
 
 
 
-;; -- Side-effect events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn play-sound!
@@ -18,8 +18,8 @@
   ; @usage
   ;  (ui/play-sound! :my-sound)
   [sound-id]
-  (let [catalog-id      (sounds.engine/sound-id->catalog-id sound-id)
-        catalog-element (dom/get-element-by-id              catalog-id)]
+  (let [catalog-id      (sounds.helpers/sound-id->catalog-id sound-id)
+        catalog-element (dom/get-element-by-id               catalog-id)]
        (.play catalog-element)))
 
 

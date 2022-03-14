@@ -3,15 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.scheduler.effects
-    (:require [mid-fruits.time              :as time]
-              [x.app-core.api               :as a :refer [r]]
-              [x.app-tools.scheduler.engine :as scheduler.engine]
-              [x.app-tools.scheduler.events :as scheduler.events]
-              [x.app-tools.scheduler.subs   :as scheduler.subs]))
+    (:require [mid-fruits.time               :as time]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-tools.scheduler.events  :as scheduler.events]
+              [x.app-tools.scheduler.helpers :as scheduler.helpers]
+              [x.app-tools.scheduler.subs    :as scheduler.subs]))
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -39,7 +39,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [schedules (get-in db [:tools :scheduler/data-items])]
-           {:dispatch-n (scheduler.engine/schedules->actual-events schedules)})))
+           {:dispatch-n (scheduler.helpers/schedules->actual-events schedules)})))
 
 (a/reg-event-fx
   :tools/reg-schedule!

@@ -3,26 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.file-uploader.views
-    (:require [extensions.storage.file-uploader.engine :as file-uploader.engine]
-              [mid-fruits.css                          :as css]
-              [mid-fruits.io                           :as io]
-              [mid-fruits.format                       :as format]
-              [mid-fruits.math                         :as math]
-              [mid-fruits.string                       :as string]
-              [x.app-core.api                          :as a]
-              [x.app-elements.api                      :as elements]
-              [x.app-media.api                         :as media]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn uploader-props->allowed-extensions-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [allowed-extensions]}]
-  (let [allowed-extensions (or allowed-extensions (media/allowed-extensions))]
-       (str "." (string/join allowed-extensions ", ."))))
+    (:require [extensions.storage.file-uploader.helpers :as file-uploader.helpers]
+              [mid-fruits.css                           :as css]
+              [mid-fruits.io                            :as io]
+              [mid-fruits.format                        :as format]
+              [mid-fruits.math                          :as math]
+              [mid-fruits.string                        :as string]
+              [x.app-core.api                           :as a]
+              [x.app-elements.api                       :as elements]
+              [x.app-media.api                          :as media]))
 
 
 
@@ -33,7 +22,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id uploader-props]
   [:input#storage--file-selector {:multiple 1 :type "file"
-                                  :accept     (uploader-props->allowed-extensions-list uploader-props)
+                                  :accept (file-uploader.helpers/uploader-props->allowed-extensions-list uploader-props)
                                   :on-change #(a/dispatch [:storage.file-uploader/files-selected-to-upload uploader-id])}])
 
 
@@ -44,7 +33,7 @@
 (defn- abort-progress-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id         (file-uploader.engine/request-id uploader-id)
+  (let [request-id         (file-uploader.helpers/request-id uploader-id)
         files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])]
@@ -57,7 +46,7 @@
   [uploader-id]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
   ; sokszoros változása ne kényszerítse a többi komponenst újra renderelődésre!
-  (let [request-id         (file-uploader.engine/request-id uploader-id)
+  (let [request-id         (file-uploader.helpers/request-id uploader-id)
         uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
@@ -68,7 +57,7 @@
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id         (file-uploader.engine/request-id uploader-id)
+  (let [request-id         (file-uploader.helpers/request-id uploader-id)
         files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
@@ -80,7 +69,7 @@
 (defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  (let [request-id     (file-uploader.engine/request-id uploader-id)
+  (let [request-id     (file-uploader.helpers/request-id uploader-id)
         request-sent? @(a/subscribe [:sync/request-sent? request-id])]
        (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
                               [elements/row {:content [:<> [progress-label        uploader-id]
