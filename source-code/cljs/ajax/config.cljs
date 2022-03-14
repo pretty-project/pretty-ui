@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns ajax.config
-   (:require [app-fruits.dom :as dom]))
+    (:require [app-fruits.dom :as dom]))
 
 
 

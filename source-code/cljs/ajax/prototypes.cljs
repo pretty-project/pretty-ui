@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns ajax.prototypes
-   (:require [ajax.helpers :as helpers]
-             [ajax.state   :as state]))
+    (:require [ajax.helpers :as helpers]
+              [ajax.state   :as state]))
 
 
 

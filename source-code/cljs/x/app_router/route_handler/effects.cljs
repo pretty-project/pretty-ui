@@ -12,7 +12,7 @@
 
 
 
-;; -- Effect events -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -53,6 +53,14 @@
   ; @usage
   ;  [:router/go-back!]
   {:fx [:router/navigate-back!]})
+
+(a/reg-event-fx
+  :router/go-up!
+  ; @usage
+  ;  [:router/go-up!]
+  (fn [{:keys [db]} _]
+      (let [parent-route (r route-handler.subs/get-current-route-parent db)]
+           [:router/go-to! parent-route])))
 
 (a/reg-event-fx
   :router/go-to!

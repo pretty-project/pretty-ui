@@ -1,11 +1,11 @@
 
 (ns frontend
-    (:require ;[sente.api]
-              [app-extensions.clients.api]
-              [app-extensions.home-screen.api]
-              [app-extensions.settings.api]
-              [app-extensions.storage.api]
-              [app-extensions.trader.api]
+    (:require [extensions.clients.api]
+              [extensions.home-screen.api]
+              [extensions.settings.api]
+              [extensions.storage.api]
+              [extensions.trader.api]
+             ;[sente.api]
               [x.boot-loader.api]
               ; DEBUG
               [playground.api]))

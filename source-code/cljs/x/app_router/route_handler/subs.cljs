@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.subs
-    (:require [mid-fruits.candy                  :refer [param return]]
+    (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.uri                    :as uri]
               [mid-fruits.vector                 :as vector]
               [reitit.frontend                   :as reitit.frontend]
@@ -258,8 +258,10 @@
   ;
   ; @return (string)
   [db _]
-  (let [current-route-string (r get-current-route-string db)]
-       (uri/uri->parent-uri current-route-string)))
+  (if-let [temporary-parent (get-in db [:router :route-handler/meta-items :temporary-parent])]
+          (return temporary-parent)
+          (let [current-route-string (r get-current-route-string db)]
+               (uri/uri->parent-uri current-route-string))))
 
 
 

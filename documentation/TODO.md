@@ -13,6 +13,13 @@
 
 
 # x4.6.0
+- Beállítható temporary-parent, ami a kövi [:router/go-xxx! ...] eseménnyel törlődik
+  - Így megadhato, hogy a "/models/:model-id/types/:type-id" útvonal vissza gombja
+    a "/models/:model-id" útvonalra dobjon
+
+- Valahogy az item-editornak legyen valami default-ja, hogy pölö új típus hozzáadásakor
+  bekerüljön a dokumentumba a :type/model-id érték
+
 - Milyen hatással van a view-selector plugin-ra, hogy hamarabb feliratkozhatsz a selected-view-id
   értékére mint, ahogy a body komponens eltárolja a default-view-id értékét
 
