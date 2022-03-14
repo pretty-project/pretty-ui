@@ -14,8 +14,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.subs
-(def get-description  plugins.item-lister.core.subs/get-description)
-(def lister-disabled? plugins.item-lister.core.subs/lister-disabled?)
+(def get-description      plugins.item-lister.core.subs/get-description)
+(def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
+(def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
 
 
 

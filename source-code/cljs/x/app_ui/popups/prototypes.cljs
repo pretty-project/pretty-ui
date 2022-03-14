@@ -4,7 +4,7 @@
 
 (ns x.app-ui.popups.prototypes
     (:require [mid-fruits.candy     :refer [param]]
-              [x.app-core.api       :refer [r]]
+              [x.app-core.api       :as a :refer [r]]
               [x.app-ui.popups.subs :as popups.subs]))
 
 

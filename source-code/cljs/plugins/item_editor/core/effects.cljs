@@ -3,10 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.effects
-    (:require [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.core.events   :as core.events]
-              [plugins.item-editor.download.subs :as download.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [plugins.item-editor.core.subs   :as core.subs]
+              [plugins.item-editor.core.events :as core.events]
+              [x.app-core.api                  :as a :refer [r]]))
 
 
 
@@ -48,7 +47,7 @@
            {:db db :dispatch-n [(if (r core.subs/set-auto-title? db extension-id item-namespace)
                                     (if-let [auto-title (r core.subs/get-auto-title db extension-id item-namespace)]
                                             [:ui/set-title! auto-title]))
-                                (if (r download.subs/download-data? db extension-id item-namespace)
+                                (if (r core.subs/download-data? db extension-id item-namespace)
                                     [:item-editor/request-item! extension-id item-namespace]
                                     [:item-editor/load-item!    extension-id item-namespace])]})))
 

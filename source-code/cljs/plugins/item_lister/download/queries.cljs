@@ -27,13 +27,13 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
-  {:download-limit        (r core.subs/get-meta-item                 db extension-id item-namespace :download-limit)
-   :order-by              (r core.subs/get-meta-item                 db extension-id item-namespace :order-by)
-   :reload-items?         (r core.subs/get-meta-item                 db extension-id item-namespace :reload-mode?)
-   :search-keys           (r core.subs/get-meta-item                 db extension-id item-namespace :search-keys)
-   :filter-pattern        (r core.subs/get-filter-pattern            db extension-id item-namespace)
-   :search-term           (r core.subs/get-search-term               db extension-id item-namespace)
-   :downloaded-item-count (r download.subs/get-downloaded-item-count db extension-id item-namespace)
+  {:download-limit        (r core.subs/get-meta-item             db extension-id item-namespace :download-limit)
+   :order-by              (r core.subs/get-meta-item             db extension-id item-namespace :order-by)
+   :reload-items?         (r core.subs/get-meta-item             db extension-id item-namespace :reload-mode?)
+   :search-keys           (r core.subs/get-meta-item             db extension-id item-namespace :search-keys)
+   :downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)
+   :filter-pattern        (r core.subs/get-filter-pattern        db extension-id item-namespace)
+   :search-term           (r core.subs/get-search-term           db extension-id item-namespace)
 
    ; TEMP
    ; Az {:item-id ...} értéke az item-browser plugin számára szükséges!

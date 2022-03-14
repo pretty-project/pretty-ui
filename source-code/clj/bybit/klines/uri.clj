@@ -4,7 +4,7 @@
 
 (ns bybit.klines.uri
     (:require [bybit.klines.engine :as klines.engine]
-              [bybit.uri           :as uri]))
+              [bybit.uri.config    :as uri.config]))
 
 
 

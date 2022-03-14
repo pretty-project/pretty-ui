@@ -5,7 +5,7 @@
 (ns x.app-sync.request-handler.prototypes
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.time                   :as time]
-              [x.app-core.api                    :refer [r]]
+              [x.app-core.api                    :as a :refer [r]]
               [x.app-sync.request-handler.config :as request-handler.config]))
 
 

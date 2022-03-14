@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns bybit.response.engine
+(ns bybit.response.helpers
     (:require [mid-fruits.reader :as reader]
               [mid-fruits.string :as string]))
 

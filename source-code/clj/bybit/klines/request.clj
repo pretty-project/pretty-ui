@@ -39,7 +39,7 @@
   ; Az api.bybit.com szerver által elfogadott maximális limit érték 200, ezért az annál több
   ; periódust igénylő lekéréseket több részletben küldi el, majd ... dolgozza fel a válaszokat.
   (letfn [(f [result uri] (let [response   (-> uri clj-http.client/get)]))]
-;                                kline-list (-> response engine/GET-response->body :result)]
+;                                kline-list (-> response helpers/GET-response->body :result)]
 ;                               (-> result (update :kline-list vector/concat-items kline-list))))]
          (let [uri-list   (klines.uri/kline-data-uri-list request-props)
                kline-data {:symbol symbol :uri-list uri-list :time-now (time/epoch-s)}]

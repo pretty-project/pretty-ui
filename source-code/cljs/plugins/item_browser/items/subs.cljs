@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.items.subs
-    (:require [mid-fruits.loop                    :refer [some-indexed]]
-              [plugins.item-browser.download.subs :as download.subs]
-              [plugins.item-lister.items.subs     :as plugins.item-lister.items.subs]
-              [x.app-core.api                     :refer [r]]
-              [x.app-db.api                       :as db]))
+    (:require [mid-fruits.loop                :refer [some-indexed]]
+              [plugins.item-browser.core.subs :as core.subs]
+              [plugins.item-lister.items.subs :as plugins.item-lister.items.subs]
+              [x.app-core.api                 :refer [r]]
+              [x.app-db.api                   :as db]))
 
 
 
@@ -32,7 +32,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
   (letfn [(f [{:keys [id] :as item}] (if (= id item-id) item))]
-         (let [downloaded-items (r download.subs/get-downloaded-items db extension-id item-namespace)]
+         (let [downloaded-items (r core.subs/get-downloaded-items db extension-id item-namespace)]
               (some f downloaded-items))))
 
 (defn get-item-dex
@@ -45,7 +45,7 @@
   ; @return (integer)
   [db [_ extension-id item-namespace item-id]]
   (letfn [(f [item-dex {:keys [id]}] (if (= id item-id) item-dex))]
-         (let [downloaded-items (r download.subs/get-downloaded-items db extension-id item-namespace)]
+         (let [downloaded-items (r core.subs/get-downloaded-items db extension-id item-namespace)]
               (some-indexed f downloaded-items))))
 
 (defn export-item

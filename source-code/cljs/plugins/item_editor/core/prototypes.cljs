@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.views.prototypes
+(ns plugins.item-editor.core.prototypes
     (:require [mid-fruits.candy :refer [param]]))
 
 

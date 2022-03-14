@@ -29,8 +29,8 @@
   ;   megkülönböztetve kezelni és tárolni.
   ; - A gyors egymás utánban elvetett szerkesztett elemek elvetésének visszavonhatósága időbeni
   ;   átfedésbe kerülhet egymással, ...
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)
-        current-item    (r engine.subs/get-current-item    db extension-id item-namespace)]
+  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+        current-item    (r core.subs/get-current-item    db extension-id item-namespace)]
        (assoc-in db [extension-id :item-editor/backup-items current-item-id] current-item)))
 
 (defn store-local-changes!
@@ -41,9 +41,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)
-        current-item    (r engine.subs/get-current-item    db extension-id item-namespace)
-        backup-item     (r backup.subs/get-backup-item     db extension-id item-namespace current-item-id)
+  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+        current-item    (r core.subs/get-current-item    db extension-id item-namespace)
+        backup-item     (r backup.subs/get-backup-item   db extension-id item-namespace current-item-id)
         local-changes   (map/difference current-item backup-item)]
        (assoc-in db [extension-id :item-editor/local-changes current-item-id] local-changes)))
 
@@ -66,8 +66,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r engine.subs/get-current-item-id db extension-id item-namespace)
-        recovered-item  (r backup.subs/get-recovered-item  db extension-id item-namespace)]
+  (let [current-item-id (r core.subs/get-current-item-id  db extension-id item-namespace)
+        recovered-item  (r backup.subs/get-recovered-item db extension-id item-namespace)]
        (-> db (assoc-in  [extension-id :item-editor/data-items] recovered-item)
               (assoc-in  [extension-id :item-editor/meta-items :item-recovered?] true)
               (dissoc-in [extension-id :item-editor/local-changes current-item-id]))))

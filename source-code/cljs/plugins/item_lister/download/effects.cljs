@@ -56,7 +56,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
           ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
-          (r download.subs/request-items? db extension-id item-namespace)
+          (r core.subs/request-items? db extension-id item-namespace)
           (let [request-id   (r core.subs/get-request-id                          db extension-id item-namespace)
                 query        (r download.queries/get-request-items-query          db extension-id item-namespace)
                 validator-f #(r download.validators/request-items-response-valid? db extension-id item-namespace %)]

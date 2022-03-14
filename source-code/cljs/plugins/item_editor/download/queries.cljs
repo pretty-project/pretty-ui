@@ -20,12 +20,12 @@
   ;
   ; @return (vector)
   [db [_ extension-id item-namespace]]
-  [:debug (if (r download.subs/download-item? db extension-id item-namespace)
+  [:debug (if (r core.subs/download-item? db extension-id item-namespace)
               ; If download item ...
               (let [resolver-id     (r download.subs/get-resolver-id db extension-id item-namespace :get)
                     current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
                   `(~resolver-id ~{:item-id current-item-id})))
-          (if (r download.subs/download-suggestions? db extension-id item-namespace)
+          (if (r core.subs/download-suggestions? db extension-id item-namespace)
               ; If download suggestions ...
               (let [suggestion-keys (r core.subs/get-meta-item db extension-id item-namespace :suggestion-keys)]
                   `(:item-editor/get-item-suggestions {:suggestion-keys ~suggestion-keys

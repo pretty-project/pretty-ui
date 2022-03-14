@@ -3,19 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.subs
-    (:require [plugins.item-browser.core.subs    :as core.subs]
-              [plugins.item-lister.download.subs :as plugins.item-lister.download.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [plugins.item-browser.core.subs :as core.subs]
+              [x.app-core.api                 :refer [r]]))
 
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.item-lister.download.subs
-(def get-downloaded-items plugins.item-lister.download.subs/get-downloaded-items)
-
-
+ 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

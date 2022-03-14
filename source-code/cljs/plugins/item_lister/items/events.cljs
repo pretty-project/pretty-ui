@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.events
-    (:require [mid-fruits.map                    :refer [dissoc-in]]
-              [mid-fruits.vector                 :as vector]
-              [plugins.item-lister.download.subs :as download.subs]
-              [plugins.item-lister.items.subs    :as items.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [mid-fruits.map                 :refer [dissoc-in]]
+              [mid-fruits.vector              :as vector]
+              [plugins.item-lister.core.subs  :as core.subs]
+              [plugins.item-lister.items.subs :as items.subs]
+              [x.app-core.api                 :as a :refer [r]]))
 
 
 
@@ -37,7 +37,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [downloaded-items (r download.subs/get-downloaded-items db extension-id item-namespace)
+  (let [downloaded-items (r core.subs/get-downloaded-items db extension-id item-namespace)
         item-selections  (vector/dex-range downloaded-items)]
        (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
 

@@ -4,7 +4,7 @@
 
 (ns local-db.side-effects
     (:require [local-db.config   :as config]
-              [local-db.engine   :as engine]
+              [local-db.helpers  :as helpers]
               [mid-fruits.time   :as time]
               [mid-fruits.vector :as vector]
               [server-fruits.io  :as io]
@@ -31,7 +31,7 @@
   ;
   ; @return (boolean)
   [collection-name]
-  (let [filepath (engine/collection-name->filepath collection-name)]
+  (let [filepath (helpers/collection-name->filepath collection-name)]
        (io/max-filesize-reached? filepath config/MAX-FILESIZE)))
 
 (defn collection-name->collection-exists?
@@ -39,7 +39,7 @@
   ;
   ; @return (boolean)
   [collection-name]
-  (let [filepath (engine/collection-name->filepath collection-name)]
+  (let [filepath (helpers/collection-name->filepath collection-name)]
        (io/file-exists? filepath)))
 
 (defn collection-name->collection-writable?
@@ -55,7 +55,7 @@
   ;
   ; @return (boolean)
   [collection-name]
-  (let [filepath (engine/collection-name->filepath collection-name)]
+  (let [filepath (helpers/collection-name->filepath collection-name)]
        (io/file-exists? filepath)))
 
 
@@ -74,7 +74,7 @@
   ; @return (vector)
   [collection-name]
   (if (collection-name->collection-exists? collection-name)
-      (-> collection-name engine/collection-name->filepath io/read-edn-file)))
+      (-> collection-name helpers/collection-name->filepath io/read-edn-file)))
 
 (defn set-collection!
   ; @param (string) collection-name
@@ -86,7 +86,7 @@
   ; @return (nil)
   [collection-name collection]
   (if (collection-name->collection-writable? collection-name)
-      (let [filepath (engine/collection-name->filepath collection-name)]
+      (let [filepath (helpers/collection-name->filepath collection-name)]
            (io/write-edn-file! filepath collection {:abc? true}))))
 
 

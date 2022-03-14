@@ -3,12 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.subs
-    (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.vector                 :as vector]
-              [plugins.item-lister.core.subs     :as core.subs]
-              [plugins.item-lister.download.subs :as download.subs]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-environment.api             :as environment]))
+    (:require [mid-fruits.candy              :refer [return]]
+              [mid-fruits.vector             :as vector]
+              [plugins.item-lister.core.subs :as core.subs]
+              [x.app-core.api                :as a :refer [r]]
+              [x.app-environment.api         :as environment]))
 
 
 
@@ -103,8 +102,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [selected-items-count  (r get-selected-item-count                 db extension-id item-namespace)
-        downloaded-item-count (r download.subs/get-downloaded-item-count db extension-id item-namespace)]
+  (let [selected-items-count  (r get-selected-item-count             db extension-id item-namespace)
+        downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)]
        (and (not= downloaded-item-count 0)
             (= selected-items-count downloaded-item-count))))
 

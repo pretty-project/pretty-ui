@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.validators
-    (:require [plugins.item-editor.download.subs :as download.subs]
+    (:require [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.download.subs :as download.subs]
               [x.app-core.api                    :refer [r]]
               [x.app-db.api                      :as db]))
 
@@ -25,6 +26,6 @@
         document    (get server-response resolver-id)
         suggestions (get server-response :item-editor/get-item-suggestions)]
        (and (or (map? suggestions)
-                (not (r download.subs/download-suggestions? db extension-id item-namespace)))
+                (not (r core.subs/download-suggestions? db extension-id item-namespace)))
             (or (db/document->document-namespaced? document)
-                (not (r download.subs/download-item?        db extension-id item-namespace))))))
+                (not (r core.subs/download-item?        db extension-id item-namespace))))))

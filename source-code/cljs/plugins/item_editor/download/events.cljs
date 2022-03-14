@@ -63,12 +63,12 @@
   ;
   ; @return (map)
   [db [event-id extension-id item-namespace server-response]]
-  (cond-> db (r download.subs/download-item?        db extension-id item-namespace)
+  (cond-> db (r core.subs/download-item?            db extension-id item-namespace)
              (store-downloaded-item!         [event-id extension-id item-namespace server-response])
-             (r download.subs/download-suggestions? db extension-id item-namespace)
+             (r core.subs/download-suggestions?     db extension-id item-namespace)
              (store-downloaded-suggestions!  [event-id extension-id item-namespace server-response])
              (r core.subs/get-meta-item             db extension-id item-namespace :recovery-mode?)
-             (recover-item!                  [event-id extension-id item-namespace])
+             (backup.events/recover-item!    [event-id extension-id item-namespace])
              :data-received   (data-received [event-id extension-id item-namespace])))
 
 
