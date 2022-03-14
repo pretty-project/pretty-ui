@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-picker.views
-    (:require [app-plugins.item-browser.views]
-              [app-extensions.storage.media-browser.views :as media-browser.views]
-              [app-plugins.item-browser.api               :as item-browser]
+    (:require [app-extensions.storage.media-browser.views :as media-browser.views]
+              [plugins.item-browser.api                   :as item-browser]
+              [plugins.item-browser.core.views            :as plugins.item-browser.core.views]
+              [plugins.item-lister.core.views             :as plugins.item-lister.core.views]
               [mid-fruits.css                             :as css]
               [mid-fruits.keyword                         :as keyword]
               [x.app-core.api                             :as a]
@@ -21,9 +22,11 @@
 (def directory-item media-browser.views/directory-item)
 (def file-item      media-browser.views/file-item)
 
-; app-plugins.item-browser.views
-(def menu-mode-header   app-plugins.item-browser.views/menu-mode-header)
-(def search-mode-header app-plugins.item-lister.views/search-mode-header)
+; plugins.item-browser.core.views
+(def menu-mode-header   plugins.item-browser.core.views/menu-mode-header)
+
+; plugins.item-lister.core.views
+(def search-mode-header plugins.item-lister.core.views/search-mode-header)
 
 
 

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.value-editor.subs
+(ns plugins.value-editor.core.subs
     (:require [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]))
 

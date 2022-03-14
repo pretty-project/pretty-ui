@@ -2,27 +2,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.view-selector.subs
-    (:require [app-plugins.view-selector.config :as config]
-              [app-plugins.view-selector.engine :as engine]
-              [mid-fruits.candy                 :refer [param return]]
-              [mid-fruits.vector                :as vector]
-              [mid-plugins.view-selector.subs   :as subs]
-              [x.app-core.api                   :as a :refer [r]]
-              [x.app-router.api                 :as router]))
+(ns plugins.view-selector.core.subs
+    (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-router.api  :as router]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; mid-plugins.view-selector.subs
-(def get-selector-props subs/get-selector-props)
-(def get-meta-item      subs/get-meta-item)
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-selector-props
@@ -45,35 +33,9 @@
   (get-in db [extension-id :view-selector/meta-items item-key]))
 
 
-(defn route-handled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (boolean)
-  [db [_ extension-id]]
-  (let [route-id (r router/get-current-route-id db)]
-       (or (= route-id (engine/route-id          extension-id))
-           (= route-id (engine/extended-route-id extension-id)))))
 
-(defn route-exists?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (boolean)
-  [db [_ extension-id]]
-  (or (r router/route-exists? db (engine/route-id          extension-id))
-      (r router/route-exists? db (engine/extended-route-id extension-id))))
-
-(defn set-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (boolean)
-  [db [_ extension-id]]
-  (r route-handled? db extension-id))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-derived-view-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -81,13 +43,13 @@
   ; @param (keyword) extension-id
   ;
   ; @return (keyword)
-  ;  A view-id forrásából (route-path param) származó adat.
-  ;  A forrás hiánya esetén a default-view-id paraméter.
-  ;  A default-view-id paraméter hiánya esetén a config/DEFAULT-VIEW-ID konstans.
+  ;  A get-derived-view-id függvény visszatérési értéke
+  ;  1. A :view-id útvonal-paraméter
+  ;  2. A {:default-view-id ...} paraméter
   [db [_ extension-id]]
   (let [default-view-id (r get-meta-item db extension-id :default-view-id)]
        (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
-               (let [derived-view-id (keyword derived-view-id)
+               (let [derived-view-id  (keyword derived-view-id)
                      allowed-view-ids (r get-meta-item db extension-id :allowed-view-ids)]
                     (if (or (not (vector?          allowed-view-ids))
                             (vector/contains-item? allowed-view-ids derived-view-id))
@@ -95,8 +57,8 @@
                         ; or allowed-view-ids is in use & derived-view-id is allowed ...
                         (return derived-view-id)
                         ; If allowed-view-ids is in use & derived-view-id is NOT allowed ...
-                        (or default-view-id config/DEFAULT-VIEW-ID)))
-               (or default-view-id config/DEFAULT-VIEW-ID))))
+                        (return default-view-id)))
+               (return default-view-id))))
 
 (defn get-selected-view-id
   ; @param (keyword) extension-id

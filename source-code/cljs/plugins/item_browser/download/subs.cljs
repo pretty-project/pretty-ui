@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.subs
-    (:require [plugins.item-browser.cores.subs   :as cores.subs]
-              [plugins.item-lister.download.subs :as plugins.item-lister.download.subs]))
+    (:require [plugins.item-browser.core.subs    :as core.subs]
+              [plugins.item-lister.download.subs :as plugins.item-lister.download.subs]
+              [x.app-core.api                    :refer [r]]))
 
 
 

@@ -3,10 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.subs
-    (:require [mid-fruits.vector             :as vector]
-              [plugins.item-lister.core.subs :as core.subs]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-environment.api         :as environment]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.core.subs     :as core.subs]
+              [plugins.item-lister.download.subs :as download.subs]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-environment.api             :as environment]))
 
 
 

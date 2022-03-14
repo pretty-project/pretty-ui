@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.backup.events
-    (:require [plugins.item-browser.items.subs :as items.subs]))
+    (:require [plugins.item-browser.items.subs :as items.subs]
+              [x.app-core.api                  :refer [r]]))
 
 
 

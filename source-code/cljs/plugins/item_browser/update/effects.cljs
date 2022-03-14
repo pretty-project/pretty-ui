@@ -3,11 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.effects
-    (:require [plugins.item-browser.core.subs     :as core.subs]
-              [plugins.item-browser.update.events :as update.events]
-              [plugins.item-browser.update.subs   :as update.subs]
-              [plugins.item-browser.update.views  :as update.views]
-              [x.app-core.api                     :as a]))
+    (:require [plugins.item-browser.core.subs         :as core.subs]
+              [plugins.item-browser.update.events     :as update.events]
+              [plugins.item-browser.update.queries    :as update.queries]
+              [plugins.item-browser.update.subs       :as update.subs]
+              [plugins.item-browser.update.validators :as update.validators]
+              [plugins.item-browser.update.views      :as update.views]
+              [x.app-core.api                         :as a :refer [r]]
+              [x.app-ui.api                           :as ui]))
 
 
 
@@ -108,7 +111,7 @@
       (let [request-id   (r core.subs/get-request-id                      db extension-id item-namespace)
             query        (r update.queries/get-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/delete-item-response-valid? db extension-id item-namespace %)]
-           {:db (r events/delete-item! db extension-id item-namespace item-id)
+           {:db (r update.events/delete-item! db extension-id item-namespace item-id)
             :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-browser/item-deleted       extension-id item-namespace item-id]
                                           :on-failure [:item-browser/delete-item-failed extension-id item-namespace item-id]

@@ -5,7 +5,9 @@
 (ns plugins.item-lister.download.effects
     (:require [plugins.item-lister.core.events         :as core.events]
               [plugins.item-lister.core.subs           :as core.subs]
+              [plugins.item-lister.download.events     :as download.events]
               [plugins.item-lister.download.queries    :as download.queries]
+              [plugins.item-lister.download.subs       :as download.subs]
               [plugins.item-lister.download.validators :as download.validators]
               [x.app-core.api                          :as a :refer [r]]))
 

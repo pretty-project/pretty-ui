@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-picker.subs
-    (:require [app-plugins.item-browser.subs]
-              [mid-fruits.candy     :refer [param return]]
+    (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.io        :as io]
               [mid-fruits.vector    :as vector]
               [x.app-components.api :as components]

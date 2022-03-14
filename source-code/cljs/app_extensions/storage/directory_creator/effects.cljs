@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.directory-creator.effects
-    (:require [app-plugins.value-editor.api]
+    (:require [plugins.value-editor.api]
               [app-extensions.storage.directory-creator.events  :as directory-creator.events]
               [app-extensions.storage.directory-creator.queries :as directory-creator.queries]
               [mid-fruits.io                                    :as io]

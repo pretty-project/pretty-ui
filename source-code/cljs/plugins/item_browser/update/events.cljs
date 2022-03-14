@@ -3,11 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.events
-    (:require [plugins.item-browser.backup.subs  :as backup.subs]
-              [plugins.item-browser.items.events :as items.events]
-              [plugins.item-browser.items.subs   :as items.subs]
-              [x.app-core.api                    :refer [r]]
-              [x.app-ui.api                      :as ui]))
+    (:require [plugins.item-browser.backup.events :as backup.events]
+              [plugins.item-browser.backup.subs   :as backup.subs]
+              [plugins.item-browser.items.events  :as items.events]
+              [plugins.item-browser.items.subs    :as items.subs]
+              [x.app-core.api                     :refer [r]]
+              [x.app-ui.api                       :as ui]))
 
 
 
@@ -54,7 +55,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (as-> db % (r backup-item!               % extension-id item-namespace item-id)
+  (as-> db % (r backup.events/backup-item! % extension-id item-namespace item-id)
              (r items.events/disable-item! % extension-id item-namespace item-id)
              (r ui/fake-process!           % 15)))
 

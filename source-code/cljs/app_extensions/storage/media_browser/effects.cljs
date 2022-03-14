@@ -5,9 +5,9 @@
 (ns app-extensions.storage.media-browser.effects
     (:require [app-fruits.window                          :as window]
               [app-extensions.storage.media-browser.views :as media-browser.views]
-              [app-plugins.item-browser.api               :as item-browser]
               [mid-fruits.candy                           :refer [param return]]
               [mid-fruits.io                              :as io]
+              [plugins.item-browser.api                   :as item-browser]
               [x.app-core.api                             :as a :refer [r]]
               [x.app-media.api                            :as media]
               [x.app-router.api                           :as router]

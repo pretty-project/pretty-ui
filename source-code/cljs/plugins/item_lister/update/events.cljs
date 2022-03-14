@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.update.vents
+(ns plugins.item-lister.update.events
     (:require [plugins.item-lister.backup.events :as backup.events]
               [plugins.item-lister.items.events  :as items.events]
               [x.app-core.api                    :refer [r]]

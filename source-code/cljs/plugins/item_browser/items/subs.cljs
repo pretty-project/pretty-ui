@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.items.subs
-    (:require [plugins.item-browser.download.subs :as download.subs]
+    (:require [mid-fruits.loop                    :refer [some-indexed]]
+              [plugins.item-browser.download.subs :as download.subs]
               [plugins.item-lister.items.subs     :as plugins.item-lister.items.subs]
               [x.app-core.api                     :refer [r]]
               [x.app-db.api                       :as db]))

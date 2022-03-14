@@ -3,13 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.views
-    (:require [app-fruits.reagent                 :as reagent]
-              [plugins.item-editor.core.helpers   :as core.helpers]
-              [plugins.item-editor.engine.helpers :as engine.helpers]
-              [mid-fruits.string                  :as string]
-              [x.app-core.api                     :as a]
-              [x.app-elements.api                 :as elements]
-              [x.app-layouts.api                  :as layouts]))
+    (:require [app-fruits.reagent               :as reagent]
+              [plugins.item-editor.core.helpers :as core.helpers]
+              [mid-fruits.string                :as string]
+              [x.app-core.api                   :as a]
+              [x.app-elements.api               :as elements]
+              [x.app-layouts.api                :as layouts]))
 
 
 
@@ -70,7 +69,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [new-item-label (engine.helpers/new-item-label extension-id item-namespace)]
+  (let [new-item-label (core.helpers/new-item-label extension-id item-namespace)]
        [elements/label ::new-item-label
                        {:content new-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
@@ -93,7 +92,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [unnamed-item-label (engine.helpers/unnamed-item-label extension-id item-namespace)]
+  (let [unnamed-item-label (core.helpers/unnamed-item-label extension-id item-namespace)]
        [elements/label ::unnamed-item-label
                        {:content unnamed-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
@@ -197,8 +196,8 @@
   ;  [item-editor/header :my-extension :my-type {:menu #'my-menu-element}]
   [extension-id item-namespace header-props]
   (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :header)
-                      {:reagent-render      (fn []             [header-structure          extension-id item-namespace])
-                       :component-did-mount (fn [] (a/dispatch [:item-editor/init-header! extension-id item-namespace header-props]))}))
+                      {:reagent-render      (fn []             [header-structure              extension-id item-namespace])
+                       :component-did-mount (fn [] (a/dispatch [:item-editor/header-did-mount extension-id item-namespace header-props]))}))
 
 
 
@@ -271,9 +270,9 @@
   [extension-id item-namespace body-props]
   (let [body-props (body-props-prototype extension-id item-namespace body-props)]
        (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :body)
-                           {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
-                            :component-will-unmount (fn [] (a/dispatch [:item-editor/destruct-body! extension-id item-namespace]))
-                            :component-did-mount    (fn [] (a/dispatch [:item-editor/init-body!     extension-id item-namespace body-props]))
+                           {:reagent-render         (fn []             [body-structure                 extension-id item-namespace])
+                            :component-will-unmount (fn [] (a/dispatch [:item-editor/body-will-unmount extension-id item-namespace]))
+                            :component-did-mount    (fn [] (a/dispatch [:item-editor/body-did-mount    extension-id item-namespace body-props]))
                             :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
 
                             ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra

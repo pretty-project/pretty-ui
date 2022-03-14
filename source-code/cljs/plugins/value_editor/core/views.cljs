@@ -2,32 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.value-editor.views
-    (:require [app-plugins.value-editor.engine :as engine]
-              [x.app-core.api                  :as a :refer [r]]
-              [x.app-elements.api              :as elements]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn editor-props->field-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ;
-  ; @param (map)
-  ;  {:auto-focus? (boolean)
-  ;   :min-width (keyword)
-  ;   :value-path (item-path vector)}
-  [extension-id editor-id]
-  (let [editor-props @(a/subscribe [:value-editor/get-editor-props extension-id editor-id])]
-       (merge (select-keys editor-props [:initial-value :label :modifier :validator])
-              {:auto-focus? true
-               :min-width   :l
-               :value-path  (:edit-path editor-props)})))
+(ns plugins.value-editor.core.views
+    (:require [plugins.value-editor.core.helpers :as core.helpers]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-elements.api                :as elements]))
 
 
 
@@ -88,7 +66,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   [extension-id editor-id]
-  (let [field-props (editor-props->field-props extension-id editor-id)]
+  (let [field-props (core.helpers/editor-props->field-props extension-id editor-id)]
        [elements/text-field :value-editor/editor-field field-props]))
 
 (defn body

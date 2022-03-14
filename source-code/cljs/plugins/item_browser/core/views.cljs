@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.views
-    (:require [app-fruits.react-transition         :as react-transition]
-              [plugin.item-browser.core.prototypes :as core.prototypes]
-              [plugins.item-lister.api             :as item-lister]
-              [x.app-core.api                      :as a]
-              [x.app-elements.api                  :as elements]))
+    (:require [app-fruits.react-transition          :as react-transition]
+              [plugins.item-browser.core.prototypes :as core.prototypes]
+              [plugins.item-lister.api              :as item-lister]
+              [x.app-core.api                       :as a]
+              [x.app-elements.api                   :as elements]))
 
 
 

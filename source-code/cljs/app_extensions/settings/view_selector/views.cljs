@@ -7,7 +7,7 @@
               [app-extensions.settings.notification-settings.views :rename {body notification-settings}]
               [app-extensions.settings.personal-settings.views     :rename {body personal-settings}]
               [app-extensions.settings.privacy-settings.views      :rename {body privacy-settings}]
-              [app-plugins.view-selector.api                       :as view-selector]
+              [plugins.view-selector.api                           :as view-selector]
               [x.app-core.api                                      :as a]
               [x.app-elements.api                                  :as elements]
               [x.app-layouts.api                                   :as layouts]))

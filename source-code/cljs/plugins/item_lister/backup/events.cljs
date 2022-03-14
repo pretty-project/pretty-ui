@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.backup.events
-    (:require [mid-fruits.map                :as map]
-              [plugins.item-lister.core.subs :as core.subs]
-              [x.app-core.api                :refer [r]]))
+    (:require [mid-fruits.map                 :as map]
+              [plugins.item-lister.items.subs :as items.subs]
+              [x.app-core.api                 :refer [r]]))
 
 
 
@@ -20,7 +20,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [selected-item-dexes (r subs/get-selected-item-dexes db extension-id item-namespace)]
+  (let [selected-item-dexes (r items.subs/get-selected-item-dexes db extension-id item-namespace)]
        (letfn [(f [db item-dex]
                   (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
                         item    (get-in db [extension-id :item-lister/data-items item-dex])]

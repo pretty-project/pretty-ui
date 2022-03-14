@@ -13,6 +13,9 @@
 
 
 # x4.6.0
+- Milyen hatással van a view-selector plugin-ra, hogy hamarabb feliratkozhatsz a selected-view-id
+  értékére mint, ahogy a body komponens eltárolja a default-view-id értékét
+
 - Elég mekülönböztetni egymástól az app/mid és server/mid névtereket
   - Az app- és server- előtagok használata nem szükséges ha a mid meg van különböztetve
   - A mid- prefix helyett legyen egy mid mappa inkább

@@ -70,6 +70,8 @@
 (defonce MOUNTED-COMPONENTS (atom {}))
 
 (defn unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword or string) component-id
   ; @param (map) lifecycles
   ;  {:component-will-unmount (function)(opt)}

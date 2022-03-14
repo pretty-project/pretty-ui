@@ -4,9 +4,9 @@
 
 (ns app-extensions.clients.client-lister.effects
     (:require [app-extensions.clients.client-lister.views :as client-lister.views]
-              [x.app-core.api                             :as a :refer [r]]
-              [app-plugins.item-editor.api                :as item-editor]
-              [app-plugins.item-lister.api                :as item-lister]))
+              [plugins.item-editor.api                    :as item-editor]
+              [plugins.item-lister.api                    :as item-lister]
+              [x.app-core.api                             :as a :refer [r]]))
 
 
 

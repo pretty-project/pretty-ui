@@ -3,17 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.media-browser.views
-    (:require [app-plugins.item-browser.api :as item-browser]
-              [mid-fruits.css               :as css]
-              [mid-fruits.format            :as format]
-              [mid-fruits.io                :as io]
-              [mid-fruits.vector            :as vector]
-              [x.app-components.api         :as components]
-              [x.app-core.api               :as a :refer [r]]
-              [x.app-elements.api           :as elements]
-              [x.app-layouts.api            :as layouts]
-              [x.app-media.api              :as media]
-              [x.app-ui.api                 :as ui]))
+    (:require [mid-fruits.css           :as css]
+              [mid-fruits.format        :as format]
+              [mid-fruits.io            :as io]
+              [mid-fruits.vector        :as vector]
+              [plugins.item-browser.api :as item-browser]
+              [x.app-components.api     :as components]
+              [x.app-core.api           :as a :refer [r]]
+              [x.app-elements.api       :as elements]
+              [x.app-layouts.api        :as layouts]
+              [x.app-media.api          :as media]
+              [x.app-ui.api             :as ui]))
 
 
 
@@ -211,7 +211,7 @@
   (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
        [layouts/layout-a surface-id {:description description
                                      :header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
-                                     :body   [item-browser/body   :storage :media {:handler-key      :storage.media-browser 
+                                     :body   [item-browser/body   :storage :media {:handler-key      :storage.media-browser
                                                                                    :item-actions     [:delete :duplicate]
                                                                                    :label-key :alias :search-keys [:alias]
                                                                                    :list-element     #'media-item}]}]))

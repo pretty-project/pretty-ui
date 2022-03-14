@@ -4,10 +4,14 @@
 
 (ns plugins.item-lister.update.effects
     (:require [plugins.item-lister.core.subs         :as core.subs]
+              [plugins.item-lister.items.subs        :as items.subs]
+              [plugins.item-lister.update.events     :as update.events]
               [plugins.item-lister.update.queries    :as update.queries]
+              [plugins.item-lister.update.subs       :as update.subs]
               [plugins.item-lister.update.validators :as update.validators]
               [plugins.item-lister.update.views      :as update.views]
-              [x.app-core.api                        :as a :refer [r]]))
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-ui.api                          :as ui]))
 
 
 
@@ -49,11 +53,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [item-ids     (r selection.subs/get-selected-item-ids           db extension-id item-namespace)
+      (let [item-ids     (r items.subs/get-selected-item-ids               db extension-id item-namespace)
             request-id   (r core.subs/get-request-id                       db extension-id item-namespace)
             query        (r update.queries/get-delete-items-query          db extension-id item-namespace item-ids)
             validator-f #(r update.validators/delete-items-response-valid? db extension-id item-namespace %)]
-           {:db (r update.vents/delete-selected-items! db extension-id item-namespace)
+           {:db (r update.events/delete-selected-items! db extension-id item-namespace)
             :dispatch [:sync/send-query! request-id
                                          {:on-success [:item-lister/items-deleted       extension-id item-namespace]
                                           :on-failure [:item-lister/delete-items-failed extension-id item-namespace]
@@ -131,7 +135,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [item-ids     (r selection.subs/get-selected-item-ids              db extension-id item-namespace)
+      (let [item-ids     (r items.subs/get-selected-item-ids                  db extension-id item-namespace)
             request-id   (r core.subs/get-request-id                          db extension-id item-namespace)
             query        (r update.queries/get-duplicate-items-query          db extension-id item-namespace item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db extension-id item-namespace %)]

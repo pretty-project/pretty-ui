@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-extensions.storage.capacity-handler.subs
-    (:require [app-plugins.item-browser.api :as item-browser]
-              [x.app-core.api               :as a :refer [r]]))
+    (:require [plugins.item-browser.api :as item-browser]
+              [x.app-core.api           :as a :refer [r]]))
 
 
 

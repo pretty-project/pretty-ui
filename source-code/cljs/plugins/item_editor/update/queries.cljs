@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.item-editor.update.queries
+(ns plugins.item-editor.update.queries
     (:require [plugins.item-editor.backup.subs :as backup.subs]
               [plugins.item-editor.core.subs   :as core.subs]
               [plugins.item-editor.update.subs :as update.subs]

@@ -81,6 +81,37 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn items-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  ; XXX#0499
+  ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
+  ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
+  ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
+  (let [items-received? (r core.subs/get-meta-item db extension-id item-namespace :items-received?)]
+       (boolean items-received?)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn lister-synchronizing?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  (let [request-id (r get-request-id db extension-id item-namespace)]
+       (r sync/listening-to-request? db request-id)))
+
 (defn lister-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

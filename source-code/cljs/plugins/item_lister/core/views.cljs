@@ -3,15 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.views
-    (:require [app-fruits.react-transition      :as react-transition]
-              [app-fruits.reagent               :as reagent]
-              [mid-fruits.logical               :refer [nor]]
-              [mid-fruits.vector                :as vector]
-              [plugins.item-lister.core.helpers :as core.helpers]
-              [x.app-core.api                   :as a]
-              [x.app-elements.api               :as elements]
-              [x.app-tools.api                  :as tools]))
-             ;[plugins.item-sorter.api          :refer []]
+    (:require [app-fruits.react-transition         :as react-transition]
+              [app-fruits.reagent                  :as reagent]
+              [mid-fruits.logical                  :refer [nor]]
+              [mid-fruits.vector                   :as vector]
+              [plugins.item-lister.core.helpers    :as core.helpers]
+              [plugins.item-lister.core.prototypes :as core.prototypes]
+              [x.app-core.api                      :as a]
+              [x.app-elements.api                  :as elements]
+              [x.app-tools.api                     :as tools]))
+             ;[plugins.item-sorter.api             :refer []]
 
 
 

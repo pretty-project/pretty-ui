@@ -3,11 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.events
-    (:require [mid-fruits.candy              :refer [return]]
-              [mid-fruits.map                :refer [dissoc-in]]
-              [plugins.item-lister.core.subs :as core.subs]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-db.api                  :as db]))
+    (:require [mid-fruits.candy                    :refer [return]]
+              [mid-fruits.map                      :refer [dissoc-in]]
+              [plugins.item-lister.core.subs       :as core.subs]
+              [plugins.item-lister.download.events :as download.events]
+              [plugins.item-lister.items.events    :as items.events]
+              [x.app-core.api                      :as a :refer [r]]
+              [x.app-db.api                        :as db]))
 
 
 
@@ -120,6 +122,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn load-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  db)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -131,7 +148,7 @@
   [db [_ extension-id item-namespace body-props]]
   (r db/apply-item! db [extension-id :item-lister/meta-items] merge body-props))
 
-(defn init-header!
+(defn header-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -142,7 +159,7 @@
   [db [_ extension-id item-namespace header-props]]
   (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
 
-(defn init-body!
+(defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -154,7 +171,7 @@
   (as-> db % (r store-body-props!     % extension-id item-namespace body-props)
              (r set-default-order-by! % extension-id item-namespace)))
 
-(defn destruct-body!
+(defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -164,8 +181,8 @@
   [db [_ extension-id item-namespace]]
   ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
   ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
-  (as-> db % (r reset-lister!    % extension-id item-namespace)
-             (r reset-downloads! % extension-id item-namespace)))
+  (as-> db % (r reset-lister!                    % extension-id item-namespace)
+             (r download.events/reset-downloads! % extension-id item-namespace)))
 
 
 
@@ -181,8 +198,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace filter-pattern]]
-  (as-> db % (r reset-downloads!  % extension-id item-namespace)
-             (r reset-selections! % extension-id item-namespace)
+  (as-> db % (r download.events/reset-downloads! % extension-id item-namespace)
+             (r items.events/reset-selections!   % extension-id item-namespace)
              (assoc-in % [extension-id :item-lister/meta-items :active-filter] filter-pattern)))
 
 

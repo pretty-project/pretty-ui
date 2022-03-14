@@ -68,6 +68,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn load-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  db)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,7 +94,7 @@
   [db [_ extension-id item-namespace body-props]]
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
 
-(defn init-header!
+(defn header-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -90,7 +105,7 @@
   [db [_ extension-id item-namespace header-props]]
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
 
-(defn init-body!
+(defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -101,7 +116,7 @@
   [db [_ extension-id item-namespace body-props]]
   (r store-body-props! db extension-id item-namespace body-props))
 
-(defn destruct-body!
+(defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

@@ -2,23 +2,26 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.view-selector.api
-    (:require [app-plugins.view-selector.effects]
-              [app-plugins.view-selector.events :as events]
-              [app-plugins.view-selector.subs   :as subs]
-              [app-plugins.view-selector.views  :as views]))
+(ns plugins.view-selector.api
+    (:require [plugins.view-selector.core.effects]
+              [plugins.view-selector.core.events :as core.events]
+              [plugins.view-selector.core.subs   :as core.subs]
+              [plugins.view-selector.core.views  :as core.views]
+              [plugins.view-selector.routes.subs :as routes.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.view-selector.events
-(def change-view! events/change-view!)
+; plugins.view-selector.core.events
+(def change-view! core.events/change-view!)
 
-; app-plugins.view-selector.subs
-(def get-selected-view-id subs/get-selected-view-id)
+; plugins.view-selector.core.subs
+(def get-selected-view-id core.subs/get-selected-view-id)
 
-; app-plugins.view-selector.views
-(def body   views/body)
-(def header views/header)
+; plugins.view-selector.core.views
+(def view core.views/view)
+
+; plugins.view-selector.routes.subs
+(def get-view-route routes.subs/get-view-route)

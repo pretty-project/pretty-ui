@@ -14,15 +14,18 @@
               [plugins.item-editor.update.effects]
               [plugins.item-editor.update.events]
               [plugins.item-editor.update.subs]
-              [plugins.item-editor.core.subs      :as core.subs]
-              [plugins.item-editor.core.views     :as core.views]
-              [plugins.item-editor.engine.helpers :as engine.helpers]
-              [plugins.item-editor.routes.subs    :as routes.subs]))
+              [plugins.item-editor.core.helpers :as core.helpers]
+              [plugins.item-editor.core.subs    :as core.subs]
+              [plugins.item-editor.core.views   :as core.views]
+              [plugins.item-editor.routes.subs  :as routes.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; plugins.item-editor.core.helpers
+(def value-path core.helpers/value-path)
 
 ; plugins.item-editor.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
@@ -39,9 +42,6 @@
 (def error-body         views/error-body)
 (def header             views/header)
 (def body               views/body)
-
-; plugins.item-editor.engine.helpers
-(def value-path engine.helpers/value-path)
 
 ; plugins.item-editor.routes.subs
 (def get-item-route routes.subs/get-item-route)

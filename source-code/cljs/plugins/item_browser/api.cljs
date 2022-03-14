@@ -2,13 +2,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.item-browser.api
-    (:require [app-plugins.item-browser.dialogs]
-              [app-plugins.item-browser.effects]
-              [app-plugins.item-browser.engine :as engine]
-              [app-plugins.item-browser.events :as events]
-              [app-plugins.item-browser.subs   :as subs]
-              [app-plugins.item-browser.views  :as views]))
+(ns plugins.item-browser.api
+    (:require [plugins.item-browser.backup.events]
+              [plugins.item-browser.backup.subs]
+              [plugins.item-browser.core.effects]
+              [plugins.item-browser.core.events]
+              [plugins.item-browser.download.effects]
+              [plugins.item-browser.download.events]
+              [plugins.item-browser.download.subs]
+              [plugins.item-browser.update.effects]
+              [plugins.item-browser.update.events]
+              [plugins.item-browser.update.subs]
+              [plugins.item-browser.core.subs    :as core.subs]
+              [plugins.item-browser.core.views   :as core.views]
+              [plugins.item-browser.items.events :as items.events]
+              [plugins.item-browser.items.subs   :as items.subs]))
 
 
 
@@ -26,15 +34,17 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.item-browser.events
-(def toggle-item-selection! events/toggle-item-selection!)
+; plugins.item-browser.core.subs
+(def get-current-item-id core.subs/get-current-item-id)
 
-; app-plugins.item-editor.subs
-(def get-current-item-id    subs/get-current-item-id)
-(def toggle-item-selection? subs/toggle-item-selection?)
+; plugins.item-browser.core.views
+(def go-home-button core.views/go-home-button)
+(def go-up-button   core.views/go-up-button)
+(def header         core.views/header)
+(def body           core.views/body)
 
-; app-plugins.item-browser.views
-(def go-home-button views/go-home-button)
-(def go-up-button   views/go-up-button)
-(def header         views/header)
-(def body           views/body)
+; plugins.item-browser.items.events
+(def toggle-item-selection! items.events/toggle-item-selection!)
+
+; plugins.item-browser.items.subs
+(def toggle-item-selection? items.subs/toggle-item-selection?)

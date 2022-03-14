@@ -4,7 +4,8 @@
 
 (ns plugins.item-browser.items.events
     (:require [plugins.item-browser.items.subs  :as items.subs]
-              [plugins.item-lister.items.events :as plugins.item-lister.items.events]))
+              [plugins.item-lister.items.events :as plugins.item-lister.items.events]
+              [x.app-core.api                   :refer [r]]))
 
 
 

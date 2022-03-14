@@ -46,6 +46,8 @@
   [db [_ extension-id _]]
   (get-in db [extension-id :item-lister/data-items]))
 
+
+
 (defn items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,12 +56,11 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  ; XXX#0499
-  ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
-  ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
-  ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
-  (let [items-received? (r core.subs/get-meta-item db extension-id item-namespace :items-received?)]
-       (boolean items-received?)))
+  ; A core.subs névtérben is meghívott items-received? függvény körkörös függőséget alakít ki,
+  ; a core.subs és download.subs névterek között ...
+  (r core.subs/items-received? db extension-id item-namespace))
+
+
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,8 +160,8 @@
   (and ; XXX#0499
        ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
        ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-       (or (not (r items-received?       db extension-id item-namespace))
-           (not (r all-items-downloaded? db extension-id item-namespace)))
+       (or (not (r core.subs/items-received? db extension-id item-namespace))
+           (not (r all-items-downloaded?     db extension-id item-namespace)))
        ; BUG#7009
        (not (r no-items-received? db extension-id item-namespace))))
 
@@ -178,8 +179,8 @@
        ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
        ; Ezért szükséges vizsgálni a lister-synchronizing? függvény kimenetét, hogy ha már elindult
        ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
-            (r download-more-items?  db extension-id item-namespace)
-       (not (r lister-synchronizing? db extension-id item-namespace))))
+            (r download-more-items?            db extension-id item-namespace)
+       (not (r core.subs/lister-synchronizing? db extension-id item-namespace))))
 
 (defn downloading-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -192,8 +193,8 @@
   ; A kiválasztott elemeken végzett műveletek is {:lister-synchronizing? true} állapotba hozzák
   ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
   ; az elemeken végzett műveletek szinkronizációval.
-  (and (r download-more-items?  db extension-id item-namespace)
-       (r lister-synchronizing? db extension-id item-namespace)))
+  (and (r download-more-items?            db extension-id item-namespace)
+       (r core.subs/lister-synchronizing? db extension-id item-namespace)))
 
 
 

@@ -19,10 +19,10 @@
   ; @param (map) selector-props
   ;  {:base-route (string)}
   (fn [_ [_ extension-id {:keys [base-route]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id :base
+      [:router/add-route! (routes.helpers/route-id extension-id :base)
                           {:client-event   [:view-selector/load-selector! extension-id]
                            :route-template base-route
-                           :restricted?    true})]))
+                           :restricted?    true}]))
 
 (a/reg-event-fx
   :view-selector/add-extended-route!

@@ -2,15 +2,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.value-editor.api
-    (:require [app-plugins.value-editor.events]
-              [app-plugins.value-editor.effects]
-              [app-plugins.value-editor.subs :as subs]))
+(ns plugins.value-editor.api
+    (:require [plugins.value-editor.core.effects]
+              [plugins.value-editor.core.events]
+              [plugins.value-editor.core.subs :as core.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; app-plugins.value-editor.subs
-(def get-editor-value subs/get-editor-value)
+; plugins.value-editor.core.subs
+(def get-editor-value core.subs/get-editor-value)

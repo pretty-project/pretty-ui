@@ -164,6 +164,7 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
+  ; A {:route-title :auto} beállítás használatakor a get-route-title függvény visszatérési értéke nil ...
   (let [route-title (r get-meta-item db extension-id item-namespace :route-title)]
        (case route-title :auto nil route-title)))
 

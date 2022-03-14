@@ -2,20 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.value-editor.sample
-    (:require [app-plugins.value-editor.api :as value-editor]
-              [x.app-core.api               :as a]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-my-props
-  [db _]
-  {:my-value (r value-editor/get-editor-value db :my-editor)})
-
-(a/reg-sub :get-my-props get-my-props)
+(ns plugins.value-editor.sample
+    (:require [plugins.value-editor.api :as value-editor]
+              [x.app-core.api           :as a]))
 
 
 
