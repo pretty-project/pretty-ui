@@ -21,7 +21,7 @@
 (def get-selected-view-id core.subs/get-selected-view-id)
 
 ; plugins.view-selector.core.views
-(def view core.views/view)
+(def body core.views/body)
 
 ; plugins.view-selector.routes.subs
 (def get-view-route routes.subs/get-view-route)

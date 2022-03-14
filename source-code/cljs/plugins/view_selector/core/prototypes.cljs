@@ -11,13 +11,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view-props-prototype
+(defn body-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) view-props
+  ; @param (map) body-props
   ;
   ; @return (map)
   ;  {:default-view-id (keyword)}
-  [view-props]
+  [body-props]
   (merge {:default-view-id core.config/DEFAULT-VIEW-ID}
-         (param view-props)))
+         (param body-props)))

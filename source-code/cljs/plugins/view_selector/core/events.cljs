@@ -61,7 +61,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view-did-mount
+(defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -69,7 +69,8 @@
   ;
   ; @return (map)
   [db [_ extension-id view-props]]
-  (r db/apply-item! db [extension-id :view-selector/meta-items] merge view-props))
+  (as-> db % (r db/apply-item! % [extension-id :view-selector/meta-items] merge view-props)
+             (assoc-in % [extension-id :view-selector/meta-items :body-mounted?] true)))
 
 
 
@@ -77,4 +78,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :view-selector/view-did-mount view-did-mount)
+(a/reg-event-db :view-selector/body-did-mount body-did-mount)

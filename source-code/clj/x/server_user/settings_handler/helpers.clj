@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.settings-handler.engine
+(ns x.server-user.settings-handler.helpers
     (:require [local-db.api                          :as local-db]
               [mid-fruits.candy                      :refer [param return]]
               [mid-fruits.keyword                    :as keyword]

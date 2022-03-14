@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.engine.passfield-handler.events
+(ns x.app-elements.passfield-handler.events
     (:require [x.app-core.api                :as a :refer [r]]
               [x.app-elements.engine.element :as element]))
 

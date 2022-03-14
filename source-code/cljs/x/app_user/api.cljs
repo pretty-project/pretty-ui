@@ -6,7 +6,7 @@
     (:require [x.app-user.account-handler.effects]
               [x.app-user.account-handler.events]
               [x.app-user.account-handler.subs    :as account-handler.subs]
-              [x.app-user.engine                  :as engine]
+              [x.app-user.core.helpers            :as core.helpers]
               [x.app-user.profile-handler.config  :as profile-handler.config]
               [x.app-user.profile-handler.events  :as profile-handler.events]
               [x.app-user.profile-handler.subs    :as profile-handler.subs]
@@ -31,9 +31,9 @@
 (def login-attempted?       account-handler.subs/login-attempted?)
 (def client-locked?         account-handler.subs/client-locked?)
 
-; x.app-user.engine
-(def user-roles->user-identified?   engine/user-roles->user-identified?)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
+; x.app-user.core.helpers
+(def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
+(def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)
 
 ; x.app-user.profile-handler.config
 (def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)

@@ -3,17 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-media.api
-    (:require [x.mid-media.engine :as engine]))
+    (:require [x.mid-media.core.helpers :as core.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-media.engine
-(def allowed-extensions                 engine/allowed-extensions)
-(def filename->media-storage-uri        engine/filename->media-storage-uri)
-(def filename->media-thumbnail-uri      engine/filename->media-thumbnail-uri)
-(def filename->media-storage-filepath   engine/filename->media-storage-filepath)
-(def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
-(def filename->temporary-filepath       engine/filename->temporary-filepath)
+; x.mid-media.core.helpers
+(def allowed-extensions                 core.helpers/allowed-extensions)
+(def filename->media-storage-uri        core.helpers/filename->media-storage-uri)
+(def filename->media-thumbnail-uri      core.helpers/filename->media-thumbnail-uri)
+(def filename->media-storage-filepath   core.helpers/filename->media-storage-filepath)
+(def filename->media-thumbnail-filepath core.helpers/filename->media-thumbnail-filepath)
+(def filename->temporary-filepath       core.helpers/filename->temporary-filepath)

@@ -9,10 +9,10 @@
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- reg-login-attempt!
+(defn reg-login-attempt!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
@@ -20,7 +20,7 @@
   (assoc-in db [:user :account-handler/meta-items :login-attempted-at]
                (time/elapsed)))
 
-(defn- clear-login-attempt!
+(defn clear-login-attempt!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)

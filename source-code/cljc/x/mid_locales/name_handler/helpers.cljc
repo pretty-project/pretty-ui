@@ -2,18 +2,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.name-handler.engine
+(ns x.mid-locales.name-handler.helpers
     (:require [x.mid-locales.name-handler.config :as name-handler.config]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn name->ordered-name
   ; @param (string) first-name
   ; @param (string) last-name
   ; @param (keyword) locale-id
+  ;
+  ; @usage
+  ;  (locales/name->ordered-name "First name" "Last name" :en)
   ;
   ; @return (string)
   [first-name last-name locale-id]

@@ -6,7 +6,7 @@
 
 
 
-;; -- Styles ------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn menu-bar-style
@@ -25,3 +25,7 @@
   []
   (str "color: #222 !important; padding: 8px; display: block; margin: 4px; background: #d0d0d0;"
        "text-decoration: none; width: 360px; border-radius: 4px"))
+
+(defn item-preview-style
+  []
+  (str "color: #aac; font-size: 12px; line-height: 24px;"))

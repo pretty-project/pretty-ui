@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns ajax.helpers
-    (:require [app-fruits.math :as math]))
+    (:require [mid-fruits.math :as math]))
 
 
 

@@ -13,22 +13,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
-  ; @param (map) view-props
+  [extension-id]
+  ; BUG#9316
+  ; Ha a {:content ...} tulajdonságként átadott tartalom akkor jelenik meg, amikor elérhetővé
+  ; vált a Re-Frame adatbázisban, akkor a rajta megjelenített tartalom nem iratkozik fel
+  ; a view-selector plugin függvényeire, mielőtt a body komponens :component-did-mount életciklusa
+  ; elátrolná a paraméterként kapott tulajdonságait.
+  (if-let [content @(a/subscribe [:view-selector/get-meta-item extension-id :content])]
+          [content extension-id]))
+
+(defn body
+  ; @param (keyword) extension-id
+  ; @param (map) body-props
   ;  {:allowed-view-ids (keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :default-view-id (keyword)(opt)
   ;    Default: core.config/DEFAULT-VIEW-ID}
   ;
   ; @usage
-  ;  [view-selector/view :my-extension {...}]
+  ;  [view-selector/body :my-extension {...}]
   ;
   ; @usage
   ;  (defn my-content [extension-id] [:div ...])
-  ;  [view-selector/view :my-extension {:content #'my-content}]
-  [extension-id {:keys [content] :as view-props}]
-  (let [view-props (core.prototypes/view-props-prototype view-props)]
-       (reagent/lifecycles (core.helpers/component-id extension-id :view)
-                           {:reagent-render      (fn [] [content extension-id])
-                            :component-did-mount (fn [] (a/dispatch [:view-selector/view-did-mount extension-id view-props]))})))
+  ;  [view-selector/body :my-extension {:content #'my-content}]
+  [extension-id body-props]
+  (let [body-props (core.prototypes/body-props-prototype body-props)]
+       (reagent/lifecycles (core.helpers/component-id extension-id :body)
+                           {:reagent-render      (fn []             [body-structure                extension-id])
+                            :component-did-mount (fn [] (a/dispatch [:view-selector/body-did-mount extension-id body-props]))})))

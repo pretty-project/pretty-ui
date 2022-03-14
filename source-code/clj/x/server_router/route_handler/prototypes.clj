@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.prototypes
-    (:require [mid-fruits.candy                     :refer [param return]]
-              [x.server-router.route-handler.config :as route-handler.config]
-              [x.server-router.route-handler.engine :as route-handler.engine]))
+    (:require [mid-fruits.candy                      :refer [param return]]
+              [x.server-router.route-handler.config  :as route-handler.config]
+              [x.server-router.route-handler.helpers :as route-handler.helpers]))
 
 
 
@@ -22,8 +22,8 @@
   ; @return (map)
   ;  {:handler (function)}
   [handler {:keys [restricted?]}]
-  (if restricted? (cond (fn?  handler) (return {:handler (route-handler.engine/route-authenticator           handler)})
-                        (map? handler) (assoc   :handler (route-handler.engine/route-authenticator (:handler handler))))
+  (if restricted? (cond (fn?  handler) (return {:handler (route-handler.helpers/route-authenticator           handler)})
+                        (map? handler) (assoc   :handler (route-handler.helpers/route-authenticator (:handler handler))))
                   (cond (fn?  handler) (return {:handler handler})
                         (map? handler) (return handler))))
 

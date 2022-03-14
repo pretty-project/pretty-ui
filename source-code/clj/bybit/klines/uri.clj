@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns bybit.klines.uri
-    (:require [bybit.klines.engine :as klines.engine]
-              [bybit.uri.config    :as uri.config]))
+    (:require [bybit.klines.helpers :as klines.helpers]
+              [bybit.uri.config     :as uri.config]))
 
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (string)
   [{:keys [from interval limit symbol use-mainnet?]}]
-  (let [query-from (or from (klines.engine/query-from interval limit))
+  (let [query-from (or from (klines.helpers/query-from interval limit))
         address    (if use-mainnet? uri/PUBLIC-API-ADDRESS uri/PUBLIC-TEST-API-ADDRESS)]
        (str address "/kline/list"
                     "?symbol="   symbol
@@ -60,12 +60,12 @@
   (letfn [(f [uri-list {:keys [limit] :as uri-props} lap]
              (if (> limit 200)
                  ; If limit is greater than 200 ...
-                 (let [uri-props (merge uri-props {:limit 200 :from (klines.engine/query-from interval (* lap 200))})]
+                 (let [uri-props (merge uri-props {:limit 200 :from (klines.helpers/query-from interval (* lap 200))})]
                       (f (cons (kline-data-uri uri-props) uri-list)
                          (assoc uri-props :limit (- limit 200))
                          (inc lap)))
                  ; If limit is NOT greater than 200 ...
-                 (let [uri-props (merge uri-props {:limit limit :from (klines.engine/query-from interval (+ limit (* (dec lap) 200)))})]
+                 (let [uri-props (merge uri-props {:limit limit :from (klines.helpers/query-from interval (+ limit (* (dec lap) 200)))})]
                       (cons (kline-data-uri uri-props) uri-list))))]
          ; *
          (vec (f [] uri-props 1))))

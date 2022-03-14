@@ -126,6 +126,13 @@
   [db [_ extension-id item-namespace]]
   ; Az item-editor plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
   ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
+
+
+
+  ; EZT NEM OLDJA MEG A FELTÉTELES MEGJELNEÍTÉS? MÁRMINT KELL RESETELNI CSAK A LEÍRÁS NEM LESZ ÉRVÉNYES
+
+
+
   (r reset-editor! db extension-id item-namespace))
 
 

@@ -16,6 +16,8 @@
 - Beállítható temporary-parent, ami a kövi [:router/go-xxx! ...] eseménnyel törlődik
   - Így megadhato, hogy a "/models/:model-id/types/:type-id" útvonal vissza gombja
     a "/models/:model-id" útvonalra dobjon
+  - A view-selector load-selector eseménye is állítsa be hogy az "/@app-home/extension/:view-id"
+    ne az "/@app-home/extension" utvonalra vigyen vissza, hanem az "/@app-home" -ra
 
 - Valahogy az item-editornak legyen valami default-ja, hogy pölö új típus hozzáadásakor
   bekerüljön a dokumentumba a :type/model-id érték
@@ -33,6 +35,8 @@
 
 - A mid névterekbe nem is kell .api fájl csak a mid-core.api van meghivva itt-ott, amit
   levált majd a re-frame.api, utána törölhetők a mid-* .api fájlok
+  DE KELL az x-be biztosan kell, a mid térben is egymást használhatják a modulok nem mindig csak
+  pure helper fuggvények vannak
 
 - a -handler a modulok nevében már tul hosszu sokszor :(
 

@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-environment.crawler-handler.engine
+(ns x.server-environment.crawler-handler.helpers
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.time    :as time]
               [x.app-details      :as details]

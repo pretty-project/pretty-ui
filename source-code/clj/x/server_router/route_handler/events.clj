@@ -7,14 +7,14 @@
               [mid-fruits.map                           :as map]
               [mid-fruits.vector                        :as vector]
               [x.server-core.api                        :as a :refer [r]]
-              [x.server-router.engine                   :as engine]
               [x.server-router.route-handler.config     :as route-handler.config]
+              [x.server-router.route-handler.helpers    :as route-handler.helpers]
               [x.server-router.route-handler.prototypes :as route-handler.prototypes]
               [x.server-router.route-handler.subs       :as route-handler.subs]))
 
 
 
-;; -- DB events ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn store-server-route-props!
@@ -78,7 +78,7 @@
   ;   :get (function or map)(opt)
   ;   :post (function or map)(opt)
   ;   :core-js (string)(opt)
-  ;    Default: route-handler.engine/DEFAULT-CORE-JS
+  ;    Default: route-handler.config/DEFAULT-CORE-JS
   ;   :restricted? (boolean)(opt)
   ;    Default: false
   ;   :route-template (string)
@@ -104,10 +104,10 @@
   (let [route-props (route-handler.prototypes/route-props-prototype route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
-               (if (engine/variable-route-string? route-template)
+               (if (route-handler.helpers/variable-route-string? route-template)
                    ; If route-template is variable ...
                    (let [app-home       (r route-handler.subs/get-app-home db)
-                         route-template (engine/resolve-variable-route-string route-template app-home)
+                         route-template (route-handler.helpers/resolve-variable-route-string route-template app-home)
                          route-props    (assoc route-props :route-template route-template)]
                         (r store-route-props! db route-id route-props))
                    ; If route-template is static ...

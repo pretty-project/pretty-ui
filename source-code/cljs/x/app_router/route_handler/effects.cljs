@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.effects
-    (:require [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]
-              [x.app-router.engine               :as engine]
-              [x.app-router.route-handler.config :as route-handler.config]
-              [x.app-router.route-handler.events :as route-handler.events]
-              [x.app-router.route-handler.subs   :as route-handler.subs]))
+    (:require [x.app-core.api                     :as a :refer [r]]
+              [x.app-db.api                       :as db]
+              [x.app-router.route-handler.config  :as route-handler.config]
+              [x.app-router.route-handler.helpers :as route-handler.helpers]
+              [x.app-router.route-handler.events  :as route-handler.events]
+              [x.app-router.route-handler.subs    :as route-handler.subs]))
 
 
 
@@ -75,11 +75,11 @@
   ; @usage
   ;  [:router/go-to! "/@app-home/your-route"]
   (fn [{:keys [db]} [_ route-string]]
-      (if (engine/variable-route-string? route-string)
+      (if (route-handler.helpers/variable-route-string? route-string)
 
           ; If route-string is variable ...
           (let [app-home     (r route-handler.subs/get-app-home db)
-                route-string (engine/resolve-variable-route-string route-string app-home)
+                route-string (route-handler.helpers/resolve-variable-route-string route-string app-home)
                 ; Az applikáció az útvonalváltás után is debug módban marad
                 route-string (r route-handler.subs/get-debug-route-string db route-string)]
                (if (r route-handler.subs/reload-same-path? db route-string)

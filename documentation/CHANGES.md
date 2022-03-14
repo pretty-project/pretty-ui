@@ -1,8 +1,11 @@
 
 # x4.6.5
 
-- Az összes plugin nevéből kikerült az app- prefixum
+- Az összes plugin nevéből kikerült az app- és server- prefixum
   app-plugins.item-xxx.api  =>  plugins.item-xxx.api
+
+- Az összes extension nevéből kikerült az app- és server- prefixum
+  app-extensions.xxx  =>  extensions.xxx
 
 - Az item-editor plugin (item-editor/form-id ...) függvénye ezentúl nem elérhető.
   - Az input-ok {:form-id ...} tulajdonságát függvény nélkül tudod megadni.

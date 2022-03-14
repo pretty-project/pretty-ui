@@ -4,6 +4,7 @@
 
 (ns x.server-developer.re-frame-browser.views
     (:require [mid-fruits.map                             :as map]
+              [mid-fruits.pretty                          :as pretty]
               [mid-fruits.reader                          :as reader]
               [mid-fruits.vector                          :as vector]
               [server-fruits.http                         :as http]
@@ -60,11 +61,19 @@
 (defn- re-frame-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [current-item] :as browser-props}]
-  (str (menu-bar browser-props)
-       (cond (map?    current-item) (map-items browser-props)
-             (nil?    current-item) (str "<div style=\"padding: 8px\">nil</div>")
-             (string? current-item) (str "<div style=\"padding: 8px\">\"" current-item "\"</div>")
-             :else                  (str "<div style=\"padding: 8px\">"   current-item "</div>"))))
+  (let [item-preview-style (re-frame-browser.styles/item-preview-style)]
+       (str (menu-bar browser-props)
+            "<div style=\"display: flex\">"
+            "<div style=\"width: 50%\">"
+            (cond (map?    current-item) (map-items browser-props)
+                  (nil?    current-item) (str "<div style=\"padding: 8px\">nil</div>")
+                  (string? current-item) (str "<div style=\"padding: 8px\">\"" current-item "\"</div>")
+                  :else                  (str "<div style=\"padding: 8px\">"   current-item "</div>"))
+            "</div>"
+            "<div style\"width: 50%;\">"
+            "<pre style=\""item-preview-style"\">"(pretty/mixed->string current-item)"</pre>"
+            "</div>"
+            "</div>")))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

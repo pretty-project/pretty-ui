@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.views
-    (:require [x.app-components.api   :as components]
-              [x.app-core.api         :as a :refer [r]]
-              [x.app-elements.api     :as elements]
-              [x.app-environment.api  :as environment]
-              [x.app-ui.popups.engine :as popups.engine]
-              [x.app-ui.renderer      :rename {component renderer}]))
+    (:require [x.app-components.api    :as components]
+              [x.app-core.api          :as a :refer [r]]
+              [x.app-elements.api      :as elements]
+              [x.app-environment.api   :as environment]
+              [x.app-ui.popups.helpers :as popups.helpers]
+              [x.app-ui.renderer       :rename {component renderer}]))
 
 
 
@@ -208,7 +208,7 @@
   ; @param (map) popup-props
   ;  {:body (map)}
   [popup-id {:keys [body] :as popup-props}]
-  [:div.x-app-popups--element--body (popups.engine/popup-body-attributes popup-id popup-props)
+  [:div.x-app-popups--element--body (popups.helpers/popup-body-attributes popup-id popup-props)
                                     [components/content                  popup-id body]])
 
 
@@ -267,9 +267,9 @@
   ;  {:minimized? (boolean)(opt)}
   [popup-id {:keys [minimized?] :as popup-props}]
   [:<> [popup-maximize-button popup-id popup-props]
-       [:div (popups.engine/popup-attributes popup-id popup-props)
-             [popup-cover                    popup-id popup-props]
-             [popup-layout                   popup-id popup-props]]])
+       [:div (popups.helpers/popup-attributes popup-id popup-props)
+             [popup-cover                     popup-id popup-props]
+             [popup-layout                    popup-id popup-props]]])
 
 
 

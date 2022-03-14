@@ -13,6 +13,8 @@
               [x.app-elements.focus-handler.side-effects]
               [x.app-elements.surface-handler.events]
               [x.app-elements.surface-handler.subs]
+              [x.app-elements.passfield-handler.events]
+              [x.app-elements.passfield-handler.subs]
               [x.app-elements.element-components.anchor               :as element-components.anchor]
               [x.app-elements.element-components.blank                :as element-components.blank]
               [x.app-elements.element-components.button               :as element-components.button]

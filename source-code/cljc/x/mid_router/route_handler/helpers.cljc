@@ -2,19 +2,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-router.engine
+(ns x.mid-router.route-handler.helpers
     (:require [mid-fruits.string :as string]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn variable-route-string?
   ; @param (string) route-string
   ;
   ; @example
-  ;  (engine/variable-route-string? "/@app-home/your-route")
+  ;  (route-handler.helpers/variable-route-string? "/@app-home/your-route")
   ;  =>
   ;  true
   ;
@@ -27,7 +27,7 @@
   ; @param (string) app-home
   ;
   ; @example
-  ;  (engine/resolve-variable-route-string "/@app-home/your-route" "/my-app")
+  ;  (route-handler.helpers/resolve-variable-route-string "/@app-home/your-route" "/my-app")
   ;  =>
   ;  "/my-app/your-route"
   ;

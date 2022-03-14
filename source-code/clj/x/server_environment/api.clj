@@ -4,12 +4,12 @@
 
 (ns x.server-environment.api
     (:require [x.server-environment.crawler-handler.lifecycles]
-              [x.server-environment.crawler-handler.engine :as crawler-handler.engine]))
+              [x.server-environment.crawler-handler.helpers :as crawler-handler.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-environment.crawler-handler.engine
-(def crawler-rules crawler-handler.engine/crawler-rules)
+; x.server-environment.crawler-handler.helpers
+(def crawler-rules crawler-handler.helpers/crawler-rules)

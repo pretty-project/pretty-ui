@@ -14,5 +14,6 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:view-selector/init-selector! :settings
-                                                  {:allowed-view-ids [:personal :privacy :appearance :notifications]
-                                                   :default-view-id   :personal}]})
+                                                  {:on-load        [:settings.view-selector/load-selector!]
+                                                   :route-template "/@app-home/settings/:view-id"
+                                                   :route-title    :settings}]})

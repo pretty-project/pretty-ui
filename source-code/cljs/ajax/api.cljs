@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns ajax.api
-    (:require [ajax.helpers      :as helpers]
-              [http.side-effects :as side-effects]))
+    (:require [ajax.csrf]
+              [ajax.helpers      :as helpers]
+              [ajax.side-effects :as side-effects]))
 
 
 

@@ -43,22 +43,9 @@
   ; @param (keyword) extension-id
   ;
   ; @return (keyword)
-  ;  A get-derived-view-id függvény visszatérési értéke
-  ;  1. A :view-id útvonal-paraméter
-  ;  2. A {:default-view-id ...} paraméter
   [db [_ extension-id]]
-  (let [default-view-id (r get-meta-item db extension-id :default-view-id)]
-       (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
-               (let [derived-view-id  (keyword derived-view-id)
-                     allowed-view-ids (r get-meta-item db extension-id :allowed-view-ids)]
-                    (if (or (not (vector?          allowed-view-ids))
-                            (vector/contains-item? allowed-view-ids derived-view-id))
-                        ; If allowed-view-ids is NOT in use,
-                        ; or allowed-view-ids is in use & derived-view-id is allowed ...
-                        (return derived-view-id)
-                        ; If allowed-view-ids is in use & derived-view-id is NOT allowed ...
-                        (return default-view-id)))
-               (return default-view-id))))
+  (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
+          (keyword derived-view-id)))
 
 (defn get-selected-view-id
   ; @param (keyword) extension-id
@@ -68,12 +55,35 @@
   ;
   ; @return (keyword)
   [db [_ extension-id]]
-  (r get-meta-item db extension-id :view-id))
+  (let [selected-view-id (r get-meta-item db extension-id :view-id)
+        default-view-id  (r get-meta-item db extension-id :default-view-id)]
+       (if-let [allowed-view-ids (r get-meta-item db extension-id :allowed-view-ids)]
+               ; Ha az {:allowed-view-ids [...]} beállítás használatban van ...
+               (or ; ... és a selected-view-id megtalálható az allowed-view-ids vektorban,
+                   ;     akkor a visszatérési érték a selected-view-id.
+                   (some #(if (= % selected-view-id) %) allowed-view-ids)
+                   ; ... és a selected-view NEM található meg az allowed-view-ids vektorban,
+                   ;     akkor a visszatérési érték a default-view-id.
+                   (return default-view-id))
+               ; Ha az {:allowed-view-ids [...]} beállítás NINCS használatban ...
+               (or ; ... és a selected-view-id értéke NEM nil,
+                   ;     akkor a visszatérési érték a selected-view-id.
+                   (return selected-view-id)
+                   ; ... és a selected-view-id értéke nil,
+                   ;     akkor a visszatérési érték a default-view-id.
+                   (return default-view-id)))))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @param (keyword) extension-id
+; @param (keyword) item-key
+;
+; @usage
+;  [:view-selector/get-meta-item :my-extension :my-item]
+(a/reg-sub :view-selector/get-meta-item get-meta-item)
 
 ; @usage
 ;  [:view-selector/get-selected-view-id :my-extension]

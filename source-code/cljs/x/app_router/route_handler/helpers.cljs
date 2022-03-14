@@ -2,18 +2,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-router.engine
-    (:require [mid-fruits.candy    :refer [param return]]
-              [x.mid-router.engine :as engine]))
+(ns x.app-router.route-handler.helpers
+    (:require [mid-fruits.candy                   :refer [param return]]
+              [x.mid-router.route-handler.helpers :as route-handler.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-router.engine
-(def variable-route-string?        engine/variable-route-string?)
-(def resolve-variable-route-string engine/resolve-variable-route-string)
+; x.mid-router.route-handler.helpers
+(def variable-route-string?        route-handler.helpers/variable-route-string?)
+(def resolve-variable-route-string route-handler.helpers/resolve-variable-route-string)
 
 
 
@@ -26,8 +26,8 @@
   ; @param (map) routes
   ;
   ; @example
-  ;  (engine/routes->router-routes {:my-route   {:route-template "/my-route"}
-  ;                                 :your-route {:route-template "/my-app/your-route"}})
+  ;  (route-handler.helpers/routes->router-routes {:my-route   {:route-template "/my-route"}
+  ;                                                :your-route {:route-template "/my-app/your-route"}})
   ;  =>
   ;  [["/my-route"          :my-route]
   ;   ["/my-app/your-route" :your-route]]

@@ -2,10 +2,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-media.engine
-    (:require [mid-fruits.io      :as io]
-              [mid-fruits.string  :as string]
-              [x.mid-media.config :as config]))
+(ns x.mid-media.core.helpers
+    (:require [mid-fruits.io           :as io]
+              [mid-fruits.string       :as string]
+              [x.mid-media.core.config :as core.config]))
 
 
 
@@ -26,7 +26,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn allowed-extensions
@@ -49,7 +49,7 @@
   ;
   ; @return (string)
   [filename]
-  (str config/STORAGE-URI-BASE filename))
+  (str core.config/STORAGE-URI-BASE filename))
 
 (defn filename->media-thumbnail-uri
   ; @param (string) filename
@@ -61,7 +61,7 @@
   ;
   ; @return (string)
   [filename]
-  (str config/THUMBNAIL-URI-BASE filename))
+  (str core.config/THUMBNAIL-URI-BASE filename))
 
 (defn filename->media-storage-filepath
   ; @param (string) filename
@@ -73,7 +73,7 @@
   ;
   ; @return (string)
   [filename]
-  (str config/STORAGE-FILEPATH-BASE filename))
+  (str core.config/STORAGE-FILEPATH-BASE filename))
 
 (defn filename->media-thumbnail-filepath
   ; @param (string) filename
@@ -85,7 +85,7 @@
   ;
   ; @return (string)
   [filename]
-  (str config/THUMBNAIL-FILEPATH-BASE filename))
+  (str core.config/THUMBNAIL-FILEPATH-BASE filename))
 
 (defn filename->temporary-filepath
   ; @param (string) filename
@@ -97,4 +97,4 @@
   ;
   ; @return (string)
   [filename]
-  (str config/TEMPORARY-FILEPATH-BASE filename))
+  (str core.config/TEMPORARY-FILEPATH-BASE filename))

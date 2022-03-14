@@ -5,7 +5,7 @@
 (ns x.server-media.api
     (:require [x.server-media.download-handler.lifecycles]
               [x.server-media.thumbnail-handler.lifecycles]
-              [x.server-media.engine                         :as engine]
+              [x.server-media.core.helpers                   :as core.helpers]
               [x.server-media.file-handler.side-effects      :as file-handler.side-effects]
               [x.server-media.thumbnail-handler.side-effects :as thumbnail-handler.side-effects]))
 
@@ -14,13 +14,13 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.server-media.engine
-(def allowed-extensions                 engine/allowed-extensions)
-(def filename->media-storage-uri        engine/filename->media-storage-uri)
-(def filename->media-thumbnail-uri      engine/filename->media-thumbnail-uri)
-(def filename->media-storage-filepath   engine/filename->media-storage-filepath)
-(def filename->media-thumbnail-filepath engine/filename->media-thumbnail-filepath)
-(def filename->temporary-filepath       engine/filename->temporary-filepath)
+; x.server-media.core.helpers
+(def allowed-extensions                 core.helpers/allowed-extensions)
+(def filename->media-storage-uri        core.helpers/filename->media-storage-uri)
+(def filename->media-thumbnail-uri      core.helpers/filename->media-thumbnail-uri)
+(def filename->media-storage-filepath   core.helpers/filename->media-storage-filepath)
+(def filename->media-thumbnail-filepath core.helpers/filename->media-thumbnail-filepath)
+(def filename->temporary-filepath       core.helpers/filename->temporary-filepath)
 
 ; x.server-media.file-handler.side-effects
 (def delete-storage-file!         file-handler.side-effects/delete-storage-file!)

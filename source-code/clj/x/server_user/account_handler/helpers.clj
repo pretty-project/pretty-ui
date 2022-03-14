@@ -2,17 +2,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.account-handler.engine
+(ns x.server-user.account-handler.helpers
     (:require [local-db.api                         :as local-db]
               [mid-fruits.candy                     :refer [param return]]
               [server-fruits.http                   :as http]
               [x.server-db.api                      :as db]
-              [x.server-user.engine                 :as engine]
+              [x.server-user.core.helpers           :as core.helpers]
               [x.server-user.account-handler.config :as account-handler.config]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn request->authenticator-pattern
@@ -79,5 +79,5 @@
   [request]
   (let [account-id (http/request->session-param request :user-account/id)
         user-roles (http/request->session-param request :user-account/roles)]
-       (and (engine/user-roles->user-identified? user-roles)
+       (and (core.helpers/user-roles->user-identified? user-roles)
             (local-db/document-exists? "user_accounts" account-id))))

@@ -2,17 +2,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.user-handler.engine
+(ns x.server-user.user-handler.helpers
     (:require [mid-fruits.form                      :as form]
               [mid-fruits.string                    :as string]
               [server-fruits.hash                   :as hash]
               [x.server-db.api                      :as db]
-              [x.server-user.engine                 :as engine]
+              [x.server-user.core.helpers           :as core.helpers]
               [x.server-user.profile-handler.config :as profile-handler.config]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn user-props->user-account
@@ -58,7 +58,7 @@
    :user-account/permissions  {user-id "rw"}
    :user-account/roles        [user-id]
    :user-account/password     (hash/hmac-sha256 password email-address)
-   :user-account/pin          (engine/generate-pin)})
+   :user-account/pin          (core.helpers/generate-pin)})
 
 (defn user-props->user-profile
   ; WARNING! NON-PUBLIC! DO NOT USE!

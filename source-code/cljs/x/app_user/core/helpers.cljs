@@ -2,14 +2,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.engine
-    (:require [x.mid-user.engine :as engine]))
+(ns x.app-user.core.helpers
+    (:require [x.mid-user.core.helpers :as core.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.engine
-(def user-roles->user-identified?   engine/user-roles->user-identified?)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
+; x.mid-user.core.helpers
+(def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
+(def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)

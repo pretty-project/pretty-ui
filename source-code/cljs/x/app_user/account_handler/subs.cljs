@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler.subs
-    (:require [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-user.engine :as engine]))
+    (:require [mid-fruits.vector       :as vector]
+              [x.app-core.api          :as a :refer [r]]
+              [x.app-user.core.helpers :as core.helpers]))
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-user-id
@@ -80,7 +80,7 @@
   ; @return (boolean)
   [db _]
   (let [user-roles (r get-user-roles db)]
-       (engine/user-roles->user-identified? user-roles)))
+       (core.helpers/user-roles->user-identified? user-roles)))
 
 (defn user-unidentified?
   ; @usage
@@ -89,7 +89,7 @@
   ; @return (boolean)
   [db _]
   (let [user-roles (r get-user-roles db)]
-       (engine/user-roles->user-unidentified? user-roles)))
+       (core.helpers/user-roles->user-unidentified? user-roles)))
 
 (defn get-login-attempted-at
   ; @usage

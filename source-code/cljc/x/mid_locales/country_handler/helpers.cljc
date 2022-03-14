@@ -2,13 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.country-handler.engine
+(ns x.mid-locales.country-handler.helpers
     (:require [mid-fruits.string                    :as string]
               [x.mid-locales.country-handler.config :as country-handler.config]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn country-capital-city

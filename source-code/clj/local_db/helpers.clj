@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns local-db.engine
+(ns local-db.helpers
     (:require [local-db.config   :as config]
               [mid-fruits.string :as string]))
 

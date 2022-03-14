@@ -2,18 +2,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.engine
-    (:require [mid-fruits.random :as random]
-              [x.mid-user.engine :as engine]))
+(ns x.server-user.core.helpers
+    (:require [mid-fruits.random       :as random]
+              [x.mid-user.core.helpers :as core.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.engine
-(def user-roles->user-identified?   engine/user-roles->user-identified?)
-(def user-roles->user-unidentified? engine/user-roles->user-unidentified?)
+; x.mid-user.core.helpers
+(def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
+(def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)
 
 
 

@@ -1,28 +1,20 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.03.22
-; Description:
-; Version: v0.4.2
-; Compatibility: x4.5.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-user.engine
+(ns x.mid-user.core.helpers
     (:require [mid-fruits.vector :as vector]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn user-roles->user-identified?
   ; @param (vector) user-roles
+  ;
+  ; @usage
+  ;  (user/user-roles->user-identified? [...])
   ;
   ; @return (boolean)
   [user-roles]
@@ -30,6 +22,9 @@
 
 (defn user-roles->user-unidentified?
   ; @param (vector) user-roles
+  ;
+  ; @usage
+  ;  (user/user-roles->user-unidentified? [...])
   ;
   ; @return (boolean)
   [user-roles]

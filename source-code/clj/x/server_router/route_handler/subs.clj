@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.subs
-    (:require [x.mid-router.route-handler.subs :as route-handler.subs]
-              [x.server-core.api               :as a :refer [r]]
-              [x.server-router.engine          :as engine]
-              [x.server-user.api               :as user]))
+    (:require [x.mid-router.route-handler.subs       :as route-handler.subs]
+              [x.server-core.api                     :as a :refer [r]]
+              [x.server-router.route-handler.helpers :as route-handler.helpers]
+              [x.server-user.api                     :as user]))
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-sitemap-routes
@@ -64,7 +64,7 @@
   ;   [...]]
   [db _]
   (let [server-routes (r get-server-routes db)]
-       (engine/routes->destructed-routes server-routes)))
+       (route-handler.helpers/routes->destructed-routes server-routes)))
 
 (defn get-ordered-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +84,7 @@
   ;   [...]]
   [db _]
   (let [destructed-routes (r get-destructed-routes db)]
-       (engine/destructed-routes->ordered-routes destructed-routes)))
+       (route-handler.helpers/destructed-routes->ordered-routes destructed-routes)))
 
 
 

@@ -23,8 +23,8 @@
 (defn- user-profile-picture
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [user-profile-picture-url @(a/subscribe [:user/get-user-profile-picture-url])]
-       [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture-url)}}]))
+  (let [user-profile-picture @(a/subscribe [:user/get-user-profile-picture])]
+       [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture)}}]))
 
 (defn- user-profile-picture-block
   ; WARNING! NON-PUBLIC! DO NOT USE!

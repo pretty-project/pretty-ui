@@ -62,13 +62,13 @@
   ; @param (map) request-props
   ;
   ; @return (map)
-  ;  {:error-handler-f (function)
-  ;   :handler-f (function)
-  ;   :progress-handler-f (function)}
+  ;  {:error-handler (function)
+  ;   :handler (function)
+  ;   :progress-handler (function)}
   [request-id request-props]
-  {:error-handler-f    (error-handler-f    request-id request-props)
-   :handler-f          (handler-f          request-id request-props)
-   :progress-handler-f (progress-handler-f request-id request-props)})
+  {:error-handler    (error-handler-f    request-id request-props)
+   :handler          (handler-f          request-id request-props)
+   :progress-handler (progress-handler-f request-id request-props)})
 
 (defn GET-request-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

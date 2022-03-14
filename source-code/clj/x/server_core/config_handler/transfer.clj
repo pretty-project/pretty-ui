@@ -14,9 +14,9 @@
 (transfer-handler.side-effects/reg-transfer!
   :core/transfer-app-config!
   {:data-f      (fn [_] (event-handler/subscribed [:core/get-app-config]))
-   :target-path [:core/app-config :data-items]})
+   :target-path [:core :config-handler/app-config]})
 
 (transfer-handler.side-effects/reg-transfer!
   :core/transfer-site-config!
   {:data-f      (fn [_] (event-handler/subscribed [:core/get-site-config]))
-   :target-path [:core/site-config :data-items]})
+   :target-path [:core :config-handler/site-config]})

@@ -8,7 +8,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn route-id
@@ -41,7 +41,7 @@
   ;
   ; @return (string)
   [_ {:keys [route-template]}]
-  (-> route-template (string/not-ends-with! "/:item-id")
+  (-> route-template (string/not-ends-with! "/:view-id")
                      (uri/valid-path)))
 
 (defn extended-route

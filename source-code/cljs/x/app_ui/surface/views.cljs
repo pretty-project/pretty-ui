@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.views
-    (:require [x.app-components.api    :as components]
-              [x.app-ui.renderer       :rename {component renderer}]
-              [x.app-ui.surface.engine :as surface.engine]))
+    (:require [x.app-components.api     :as components]
+              [x.app-ui.renderer        :rename {component renderer}]
+              [x.app-ui.surface.helpers :as surface.helpers]))
 
 
 
@@ -27,8 +27,8 @@
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   [surface-id surface-props]
-  [:div (surface.engine/surface-attributes surface-id surface-props)
-        [surface-view                      surface-id surface-props]])
+  [:div (surface.helpers/surface-attributes surface-id surface-props)
+        [surface-view                       surface-id surface-props]])
 
 
 

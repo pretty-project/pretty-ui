@@ -2,4 +2,4 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-locales.currency-handler.engine)
+(ns x.app-locales.currency-handler.helpers)

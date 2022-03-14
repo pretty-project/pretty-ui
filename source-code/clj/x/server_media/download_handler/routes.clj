@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.download-handler.routes
-    (:require [server-fruits.http    :as http]
-              [server-fruits.io      :as io]
-              [x.server-media.engine :as engine]))
+    (:require [server-fruits.http          :as http]
+              [server-fruits.io            :as io]
+              [x.server-media.core.helpers :as core.helpers]))
 
 
 
@@ -23,8 +23,8 @@
   ;
   ; @return (map)
   [request]
-  (let [filename (http/request->path-param                request :filename)
-        filepath (engine/filename->media-storage-filepath filename)]
+  (let [filename (http/request->path-param request :filename)
+        filepath (core.helpers/filename->media-storage-filepath filename)]
        (if (io/file-exists? filepath)
            (http/media-wrap {:body      (io/file                filepath)
                              :mime-type (io/filepath->mime-type filepath)})

@@ -2,8 +2,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-locales.name-handler.engine
-    (:require [x.mid-locales.name-handler.engine    :as name-handler.engine]
+(ns x.server-locales.name-handler.helpers
+    (:require [x.mid-locales.name-handler.helpers   :as name-handler.helpers]
               [x.server-user.api                    :as user]
               [x.server-locales.name-handler.config :as name-handler.config]))
 
@@ -12,8 +12,8 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-locales.name-handler.engine
-(def name->ordered-name name-handler.engine/name->ordered-name)
+; x.mid-locales.name-handler.helpers
+(def name->ordered-name name-handler.helpers/name->ordered-name)
 
 
 

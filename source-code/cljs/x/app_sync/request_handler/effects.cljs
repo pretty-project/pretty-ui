@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.effects
-    (:require [mid-fruits.reader                     :as reader]
+    (:require [ajax.api]
+              [mid-fruits.reader                     :as reader]
               [x.app-core.api                        :as a :refer [r]]
               [x.app-sync.request-handler.config     :as request-handler.config]
               [x.app-sync.request-handler.events     :as request-handler.events]
