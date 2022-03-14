@@ -3,27 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.sticker-handler.views
-    (:require [mid-fruits.candy      :refer [param]]
-              [mid-fruits.vector     :as vector]
-              [x.app-components.api  :as components]
-              [x.app-core.api        :as a]
-              [x.app-environment.api :as environment]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- sticker-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) sticker-props
-  ;
-  ; @return (map)
-  ;  {:icon-family (keyword)}
-  [sticker-props]
-  (merge {:icon-family :material-icons-filled}
-         (param sticker-props)))
+    (:require [mid-fruits.candy                          :refer [param]]
+              [mid-fruits.vector                         :as vector]
+              [x.app-components.api                      :as components]
+              [x.app-core.api                            :as a]
+              [x.app-elements.sticker-handler.prototypes :as sticker-handler.prototypes]
+              [x.app-environment.api                     :as environment]))
 
 
 
@@ -89,6 +74,6 @@
   [element-id {:keys [stickers] :as element-props}]
   (if (vector/nonempty? stickers)
       (letfn [(f [stickers sticker-props]
-                 (let [sticker-props (sticker-props-prototype sticker-props)]
+                 (let [sticker-props (sticker-handler.prototypes/sticker-props-prototype sticker-props)]
                       (conj stickers [element-sticker element-id element-props sticker-props])))]
              (reduce f [:div.x-element--stickers] stickers))))

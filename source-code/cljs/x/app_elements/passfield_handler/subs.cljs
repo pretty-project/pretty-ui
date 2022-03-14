@@ -3,34 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.passfield-handler.subs
-    (:require [mid-fruits.candy              :refer [param]]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-elements.engine.element :as element]
-              [x.app-elements.engine.field   :as field]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn visibility-toggle-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-id
-  ; @param (map) toggle-props
-  ;
-  ; @return (map)
-  ;  {:icon (keyword)
-  ;    Default: :visibility
-  ;   :on-click (metamorphic-event)
-  ;    Default: [...]
-  ;   :tooltip (keyword)
-  ;    Default: :show-password!}
-  [field-id toggle-props]
-  (merge {:icon     :visibility
-          :on-click [:elements/toggle-passphrase-visibility! field-id]
-          :tooltip  :show-password!}
-         (param toggle-props)))
+    (:require [x.app-core.api                              :as a :refer [r]]
+              [x.app-elements.engine.element               :as element]
+              [x.app-elements.engine.field                 :as field]
+              [x.app-elements.passfield-handler.prototypes :as passfield-handler.prototypes]))
 
 
 
@@ -74,7 +50,8 @@
   ; @return (map)
   ;  {:icon (keyword)}
   [db [_ field-id]]
-  (visibility-toggle-props-prototype field-id {:icon (r get-visibility-toggle-icon db field-id)}))
+  (let [toggle-props {:icon (r get-visibility-toggle-icon db field-id)}]
+       (passfield-handler.prototypes/visibility-toggle-props-prototype field-id toggle-props)))
 
 (defn get-passfield-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

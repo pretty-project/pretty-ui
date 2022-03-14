@@ -3,52 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.events
-    (:require [mid-fruits.candy                     :refer [param return]]
-              [mid-fruits.map                       :as map]
-              [mid-fruits.vector                    :as vector]
-              [x.server-core.api                    :as a :refer [r]]
-              [x.server-router.engine               :as engine]
-              [x.server-router.route-handler.config :as route-handler.config]
-              [x.server-router.route-handler.engine :as route-handler.engine]
-              [x.server-router.route-handler.subs   :as route-handler.subs]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn handler-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (function or map) handler
-  ; @param (map) options
-  ;  {:restricted? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ;  {:handler (function)}
-  [handler {:keys [restricted?]}]
-  (if restricted? (cond (fn?  handler) (return {:handler (route-handler.engine/route-authenticator           handler)})
-                        (map? handler) (assoc   :handler (route-handler.engine/route-authenticator (:handler handler))))
-                  (cond (fn?  handler) (return {:handler handler})
-                        (map? handler) (return handler))))
-
-(defn route-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) route-props
-  ;  {:get (function or map)(opt)
-  ;   :post (function or map)(opt)
-  ;   :restricted? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ;  {:get (map)
-  ;   :core-js (string)
-  ;   :post (map)}
-  [{:keys [get post restricted?] :as route-props}]
-  (merge {:core-js route-handler.config/DEFAULT-CORE-JS}
-         (param route-props)
-         (if get  {:get  (handler-prototype get  {:restricted? restricted?})})
-         (if post {:post (handler-prototype post {:restricted? restricted?})})))
+    (:require [mid-fruits.candy                         :refer [param return]]
+              [mid-fruits.map                           :as map]
+              [mid-fruits.vector                        :as vector]
+              [x.server-core.api                        :as a :refer [r]]
+              [x.server-router.engine                   :as engine]
+              [x.server-router.route-handler.config     :as route-handler.config]
+              [x.server-router.route-handler.engine     :as route-handler.engine]
+              [x.server-router.route-handler.prototypes :as route-handler.prototypes]
+              [x.server-router.route-handler.subs       :as route-handler.subs]))
 
 
 
@@ -139,7 +102,7 @@
   ;
   ; @return (map)
   [db [_ route-id route-props]]
-  (let [route-props (route-props-prototype route-props)]
+  (let [route-props (route-handler.prototypes/route-props-prototype route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
                (if (engine/variable-route-string? route-template)

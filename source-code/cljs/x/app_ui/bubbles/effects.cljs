@@ -3,41 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.effects
-    (:require [mid-fruits.candy        :refer [param]]
-              [x.app-core.api          :as a :refer [r]]
-              [x.app-ui.bubbles.config :as bubbles.config]
-              [x.app-ui.bubbles.subs   :as bubbles.subs]))
+    (:require [x.app-core.api              :as a :refer [r]]
+              [x.app-ui.bubbles.config     :as bubbles.config]
+              [x.app-ui.bubbles.prototypes :as bubbles.prototypes]
+              [x.app-ui.bubbles.subs       :as bubbles.subs]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- bubble-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;
-  ; @return (map)
-  ;  {:autopop? (boolean)
-  ;   :hide-animated? (boolean)
-  ;   :initializer (metamorphic-event)
-  ;   :reveal-animated? (boolean)
-  ;   :update-animated? (boolean)
-  ;   :user-close? (boolean)}
-  [bubble-id bubble-props]
-  (merge {:autopop?    true
-          :initializer [:ui/initialize-bubble! bubble-id]
-          :user-close? true}
-         (param bubble-props)
-         {:hide-animated?   true
-          :reveal-animated? true
-          :update-animated? true}))
-
-
-
-;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -97,6 +70,6 @@
   ;  [:ui/blow-bubble! :my-bubble {...}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ bubble-id bubble-props]]
-      (let [bubble-props (bubble-props-prototype bubble-id bubble-props)]
+      (let [bubble-props (bubbles.prototypes/bubble-props-prototype bubble-id bubble-props)]
            {:dispatch-if [(r bubbles.subs/bubbles-enabled-by-user? db)
                           [:ui/request-rendering-element! :bubbles bubble-id bubble-props]]})))

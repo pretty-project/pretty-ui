@@ -3,46 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.effects
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-ui.popups.subs :as popups.subs]
-              [x.app-ui.renderer    :as renderer]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- popup-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;
-  ; @return (map)
-  ;  {:autopadding? (boolean)
-  ;   :hide-animated? (boolean)
-  ;   :horizontal-align (keyword)
-  ;   :layout (keyword)
-  ;   :min-width (keyword)
-  ;   :reveal-animated? (boolean)
-  ;   :update-animated? (boolean)
-  ;   :user-close? (boolean)}
-  [db [_ popup-id popup-props]]
-  (merge {:autopadding?     true
-          :hide-animated?   true
-          :horizontal-align :center
-          :layout           :boxed
-          :min-width        :m
-          :reveal-animated? true
-          :update-animated? false
-          :user-close?      true}
-         (param popup-props)
-         (if (r popups.subs/flip-layout-anyway? db popup-id popup-props)
-             {:layout :flip})
-         (if ; DEBUG
-             (r a/debug-mode-detected? db)
-             {:minimizable? true})))
+    (:require [mid-fruits.candy           :refer [param]]
+              [x.app-core.api             :as a :refer [r]]
+              [x.app-ui.popups.prototypes :as popups.prototypes]
+              [x.app-ui.renderer          :as renderer]))
 
 
 
@@ -98,7 +62,7 @@
   ;                   :header {:content #'my-header :subscriber [:get-my-header-props]}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ popup-id popup-props]]
-      (let [popup-props (r popup-props-prototype db popup-id popup-props)]
+      (let [popup-props (r popups.prototypes/popup-props-prototype db popup-id popup-props)]
            (if-let [render-exclusive? (get popup-props :render-exclusive?)]
                    [:ui/render-popup-exclusive! popup-id popup-props]
                    [:ui/render-popup!           popup-id popup-props]))))

@@ -3,54 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.effects
-    (:require [mid-fruits.candy                  :refer [param return]]
-              [mid-fruits.reader                 :as reader]
-              [mid-fruits.time                   :as time]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-sync.request-handler.config :as request-handler.config]
-              [x.app-sync.request-handler.events :as request-handler.events]
-              [x.app-sync.request-handler.subs   :as request-handler.subs]
-              [x.app-sync.response-handler.subs  :as response-handler.subs]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- request-props<-source-data
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; Ha a (POST) request tartalmazza a :source-path tulajdonságot, akkor
-  ; hozzáfűzi a request-hez paraméterként a :source-path Re-Frame adatbázis
-  ; útvonalon található adatot.
-  ;
-  ; @param (map) request-props
-  ;  {:source-path (item-path vector)(opt)}
-  ;
-  ; @return (map)
-  ;  {:params (map)
-  ;   {:source (*)}}
-  [db [_ {:keys [source-path] :as request-props}]]
-  (if source-path (assoc-in request-props [:params :source] (get-in db source-path))
-                  (return   request-props)))
-
-(defn- request-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request-props
-  ;
-  ; @return (map)
-  ;  {:response-action (keyword)
-  ;   :sent-time (object)
-  ;   :timeout (integer)}
-  [db [_ {:keys [response-action] :as request-props}]]
-  (merge {:error-handler-event    :sync/request-failured
-          :handler-event          :sync/request-successed
-          :progress-handler-event :core/set-process-progress!
-          :response-action        :store
-          :timeout request-handler.config/DEFAULT-REQUEST-TIMEOUT
-          :sent-time (time/timestamp-string)}
-         (r request-props<-source-data db request-props)))
+    (:require [mid-fruits.reader                     :as reader]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-sync.request-handler.config     :as request-handler.config]
+              [x.app-sync.request-handler.events     :as request-handler.events]
+              [x.app-sync.request-handler.prototypes :as request-handler.prototypes]
+              [x.app-sync.request-handler.subs       :as request-handler.subs]
+              [x.app-sync.response-handler.subs      :as response-handler.subs]))
 
 
 
@@ -65,7 +24,7 @@
   ;  [:sync/abort-request! :my-request]
   (fn [{:keys [db]} [_ request-id]]
       {:db (r request-handler.events/request-aborted db request-id)
-       :fx [:sync/abort-request! request-id]}))
+       :fx [:ajax/abort-request! request-id]}))
 
 (a/reg-event-fx
   :sync/send-request!
@@ -119,10 +78,10 @@
   ;  [:sync/send-request! :my-request {...}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ request-id request-props]]
-      (let [request-props (r request-props-prototype db request-props)]
+      (let [request-props (r request-handler.prototypes/request-props-prototype db request-props)]
            (if (r a/start-process? db request-id)
                {:db (r request-handler.events/send-request! db request-id request-props)
-                :fx       [:sync/send-request! request-id request-props]
+                :fx       [:ajax/send-request! request-id request-props]
                 :dispatch [:sync/request-sent  request-id]}))))
 
 
@@ -156,7 +115,6 @@
           (let [server-response (reader/string->mixed server-response-body)
                 request-props   (assoc (get-in db [:sync :request-handler/data-items request-id]) :request-successed? true)]
                {:db (r request-handler.events/request-successed db request-id server-response)
-                :fx [:sync/remove-reference! request-id]
                 :dispatch-n     [(r request-handler.subs/get-request-on-success-event   db request-id server-response)
                                  (r request-handler.subs/get-request-on-responsed-event db request-id server-response)]
                 :dispatch-if    [(r response-handler.subs/save-request-response?        db request-id)
@@ -179,7 +137,6 @@
   (fn [{:keys [db]} [_ request-id {:keys [status-text] :as server-response}]]
       (let [request-props (assoc (get-in db [:sync :request-handler/data-items request-id]) :request-failured? true)]
            {:db (r request-handler.events/request-failured db request-id server-response)
-            :fx [:sync/remove-reference! request-id]
             :dispatch-n     [(r request-handler.subs/get-request-on-failure-event   db request-id server-response)
                              (r request-handler.subs/get-request-on-responsed-event db request-id server-response)]
             :dispatch-later [{:ms (r request-handler.subs/get-request-idle-timeout db request-id)

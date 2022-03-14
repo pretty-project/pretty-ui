@@ -3,35 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.query-handler.effects
-    (:require [mid-fruits.candy                :refer [param]]
-              [mid-fruits.vector               :as vector]
-              [x.app-core.api                  :as a]
-              [x.app-sync.query-handler.config :as query-handler.config]))
+    (:require [mid-fruits.vector                   :as vector]
+              [x.app-core.api                      :as a]
+              [x.app-sync.query-handler.prototypes :as query-handler.prototypes]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn query-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) query-props
-  ;
-  ; @return (map)
-  ;  {:method (keyword)
-  ;   :params (map)
-  ;   :query (vector)
-  ;   :uri (string)}
-  [{:keys [query] :as query-props}]
-  (merge {:uri query-handler.config/DEFAULT-URI}
-         (param query-props)
-         (if query {:params {:query query}})
-         {:method :post}))
-
-
-
-;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -74,7 +52,7 @@
   ;  [:sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ query-id query-props]]
-      (let [query-props (query-props-prototype query-props)
+      (let [query-props (query-handler.prototypes/query-props-prototype query-props)
 
             ; BUG#5011
             ; A query vektorba feltételesen – if, when, ... függvény használatával –

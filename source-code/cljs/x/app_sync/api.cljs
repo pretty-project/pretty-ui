@@ -6,7 +6,6 @@
     (:require [x.app-sync.query-handler.effects]
               [x.app-sync.request-handler.effects]
               [x.app-sync.request-handler.events]
-              [x.app-sync.request-handler.side-effects]
               [x.app-sync.response-handler.effects]
               [x.app-sync.response-handler.events]
               [x.app-sync.query-handler.subs    :as query-handler.subs]

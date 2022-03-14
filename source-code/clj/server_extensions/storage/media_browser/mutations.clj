@@ -3,17 +3,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns server-extensions.storage.media-browser.mutations
-    (:require [com.wsscode.pathom3.connect.operation          :as pathom.co :refer [defmutation]]
-              [mid-fruits.candy                               :refer [param return]]
-              [mid-fruits.time                                :as time]
-              [mid-fruits.vector                              :as vector]
-              [mongo-db.api                                   :as mongo-db]
-              [pathom.api                                     :as pathom]
-              [plugins.item-browser.api                       :as item-browser]
-              [server-extensions.storage.engine               :as engine]
-              [server-extensions.storage.media-browser.config :as media-browser.config]
-              [server-extensions.storage.side-effects         :as side-effects]
-              [server-fruits.io                               :as io]))
+    (:require [com.wsscode.pathom3.connect.operation              :as pathom.co :refer [defmutation]]
+              [mid-fruits.candy                                   :refer [param return]]
+              [mid-fruits.time                                    :as time]
+              [mid-fruits.vector                                  :as vector]
+              [mongo-db.api                                       :as mongo-db]
+              [pathom.api                                         :as pathom]
+              [plugins.item-browser.api                           :as item-browser]
+              [server-extensions.storage.engine                   :as engine]
+              [server-extensions.storage.media-browser.config     :as media-browser.config]
+              [server-extensions.storage.media-browser.prototypes :as media-browser.prototypes]
+              [server-extensions.storage.side-effects             :as side-effects]
+              [server-fruits.io                                   :as io]))
 
 
 
@@ -147,31 +148,33 @@
 (defn duplicate-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-file-prototype env mutation-props %)})]
-            (if (= destination-id parent-id)
-                (side-effects/attach-item! env destination-id copy-item))
-            (side-effects/update-path-directories! env copy-item +)
-            (if-let [source-item (mongo-db/get-document-by-id "storage" item-id)]
-                    (let [source-filename (get source-item :media/filename)
-                          copy-filename   (get copy-item   :media/filename)]
-                         (side-effects/duplicate-file! source-filename copy-filename)
-                         (return copy-item)))))
+  (let [prototype-f #(media-browser.prototypes/duplicated-file-prototype env mutation-props %)]
+       (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f prototype-f})]
+                 (if (= destination-id parent-id)
+                     (side-effects/attach-item! env destination-id copy-item))
+                 (side-effects/update-path-directories! env copy-item +)
+                 (if-let [source-item (mongo-db/get-document-by-id "storage" item-id)]
+                         (let [source-filename (get source-item :media/filename)
+                               copy-filename   (get copy-item   :media/filename)]
+                              (side-effects/duplicate-file! source-filename copy-filename)
+                              (return copy-item))))))
 
 (defn duplicate-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f #(duplicated-directory-prototype env mutation-props %)})]
-            (when (= destination-id parent-id)
-                  (side-effects/attach-item!             env destination-id copy-item)
-                  (side-effects/update-path-directories! env                copy-item))
-            (let [items (get copy-item :media/items)]
-                 (doseq [{:media/keys [id]} items]
-                        (if-let [{:media/keys [mime-type]} (side-effects/get-item env id)]
-                                (let [destination-id (:id copy-item)
-                                      mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
-                                     (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
-                                                                         (duplicate-file-f      env mutation-props))
-                                     (return copy-item)))))))
+  (let [prototype-f #(media-browser.prototypes/duplicated-directory-prototype env mutation-props %)]
+       (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f prototype-f})]
+                 (when (= destination-id parent-id)
+                       (side-effects/attach-item!             env destination-id copy-item)
+                       (side-effects/update-path-directories! env                copy-item))
+                 (let [items (get copy-item :media/items)]
+                      (doseq [{:media/keys [id]} items]
+                             (if-let [{:media/keys [mime-type]} (side-effects/get-item env id)]
+                                     (let [destination-id (:id copy-item)
+                                           mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
+                                          (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
+                                                                              (duplicate-file-f      env mutation-props))
+                                          (return copy-item))))))))
 
 (defn duplicate-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!

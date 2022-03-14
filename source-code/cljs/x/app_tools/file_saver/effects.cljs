@@ -3,26 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.file-saver.effects
-    (:require [mid-fruits.candy              :refer [param]]
-              [x.app-core.api                :as a]
-              [x.app-tools.file-saver.config :as file-saver.config]
-              [x.app-tools.file-saver.views  :as file-saver.views]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- saver-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) saver-props
-  ;
-  ; @return (map)
-  ;  {:filename (string)}
-  [saver-props]
-  (merge {:filename file-saver.config/DEFAULT-FILENAME}
-         (param saver-props)))
+    (:require [x.app-core.api                    :as a]
+              [x.app-tools.file-saver.prototypes :as file-saver.prototypes]
+              [x.app-tools.file-saver.views      :as file-saver.views]))
 
 
 
@@ -55,7 +38,7 @@
   ;                      :filename "my-image.jpg"}]
   [a/event-vector<-id]
   (fn [_ [_ saver-id saver-props]]
-      (let [saver-props (saver-props-prototype saver-props)]
+      (let [saver-props (file-saver.prototypes/saver-props-prototype saver-props)]
            [:tools/render-save-file-dialog! saver-id saver-props])))
 
 

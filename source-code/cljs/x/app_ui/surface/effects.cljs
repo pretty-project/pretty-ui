@@ -3,38 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.effects
-    (:require [mid-fruits.candy  :refer [param]]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-ui.renderer :as renderer]))
+    (:require [x.app-core.api              :as a :refer [r]]
+              [x.app-ui.renderer           :as renderer]
+              [x.app-ui.surface.prototypes :as surface.prototypes]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- surface-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  ;
-  ; @return (map)
-  ;  {:hide-animated? (boolean)
-  ;   :horizontal-align (keyword)
-  ;   :reveal-animated? (boolean)
-  ;   :trim-content? (boolean)
-  ;   :update-animated? (boolean)}
-  [surface-props]
-  (merge {:hide-animated?   false
-          :reveal-animated? false
-          :trim-content?    false
-          :update-animated? false
-          :horizontal-align :center}
-         (param surface-props)))
-
-
-
-;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -92,5 +67,5 @@
   ;  [:ui/set-surface! {:view {:content #'my-view}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ surface-id surface-props]]
-      (let [surface-props (surface-props-prototype surface-props)]
+      (let [surface-props (surface.prototypes/surface-props-prototype surface-props)]
            [:ui/render-surface! surface-id surface-props])))

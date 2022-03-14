@@ -3,33 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.effects
-    (:require [mid-fruits.candy                      :refer [param return]]
-              [x.app-core.api                        :as a :refer [r]]
-              [x.app-environment.cookie-handler.subs :as cookie-handler.subs]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn cookie-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) cookie-id
-  ; @param (map) cookie-props
-  ;  {:cookie-type (keyword)(opt)
-  ;   :max-age (integer)(opt)}
-  ;
-  ; @return (map)
-  ;  {:cookie-type (keyword)
-  ;   :max-age (integer)
-  ;   :secure (boolean)}
-  [cookie-props]
-  (merge {:cookie-type :user-experience
-          :max-age     -1}
-         (param cookie-props)
-         {:secure    true
-          :same-site "strict"}))
+    (:require [x.app-core.api                              :as a :refer [r]]
+              [x.app-environment.cookie-handler.prototypes :as cookie-handler.prototypes]
+              [x.app-environment.cookie-handler.subs       :as cookie-handler.subs]))
 
 
 
@@ -55,7 +31,7 @@
   ;  [:environment/set-cookie! :my-cookie {...}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
-      (let [cookie-props (cookie-props-prototype cookie-props)]
+      (let [cookie-props (cookie-handler.prototypes/cookie-props-prototype cookie-props)]
            (if (r cookie-handler.subs/set-cookie? db cookie-id cookie-props)
                {:fx [:environment/store-browser-cookie! cookie-id cookie-props]}))))
 
@@ -73,7 +49,7 @@
   ; @usage
   ;  [:environment/remove-cookie! :my-cookie {:cookie-type :necessary}]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
-      (let [cookie-props (cookie-props-prototype cookie-props)]
+      (let [cookie-props (cookie-handler.prototypes/cookie-props-prototype cookie-props)]
            {:fx [:environment/remove-browser-cookie! cookie-id cookie-props]})))
 
 (a/reg-event-fx

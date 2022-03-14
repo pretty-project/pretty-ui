@@ -8,63 +8,11 @@
               [mongo-db.api                                            :as mongo-db]
               [pathom.api                                              :as pathom]
               [server-extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
-              [server-extensions.storage.engine                        :as engine]
+              [server-extensions.storage.file-uploader.helpers         :as file-uploader.helpers]
+              [server-extensions.storage.file-uploader.prototypes      :as file-uploader.prototypes]
               [server-extensions.storage.side-effects                  :as side-effects]
               [server-fruits.io                                        :as io]
               [x.server-media.api                                      :as media]))
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request->files-data
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;  {:params (map)
-  ;    {:query (string)}}
-  ;
-  ; @example
-  ;  (request->files-data {:params {"0" {:tempfile #object[java.io.File 0x4571e67a "/my-tempfile.tmp"}
-  ;                                 "1" {:tempfile #object[java.io.File 0x4571e67a "/your-tempfile.tmp"}
-  ;                                 :query [...]}})
-  ;  =>
-  ;  {"0" {:tempfile "/my-tempfile.tmp"}
-  ;   "1" {:tempfile "/your-tempfile.tmp"}}
-  ;
-  ; @return (map)
-  [{:keys [params]}]
-  (letfn [(f [files-data dex file-data] (assoc files-data dex (update file-data :tempfile str)))]
-         (reduce-kv f {} (dissoc params :query))))
-
-(defn request->content-size
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [params]}]
-  (letfn [(f [content-size _ {:keys [size]}] (+ content-size size))]
-         (reduce-kv f 0 (dissoc params :query))))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn file-item-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [file-path filename size]}]
-  ; - A fájlokkal ellentétben a mappák {:media/mime-type "..."} tulajdonsága nem állapítható meg a nevükből
-  ; - A fájlok {:media/mime-type "..."} tulajdonsága is eltárolásra kerül, hogy a mappákhoz hasonlóan
-  ;   a fájlok is rendelkezzenek {:media/mime-type "..."} tulajdonsággal
-  (let [file-id            (mongo-db/generate-id)
-        generated-filename (engine/file-id->filename file-id filename)
-        mime-type          (io/filename->mime-type   filename)]
-       {:media/alias     filename
-        :media/filename  generated-filename
-        :media/filesize  size
-        :media/id        file-id
-        :media/mime-type mime-type
-        :media/path      file-path
-        :media/description ""}))
 
 
 
@@ -81,7 +29,7 @@
   ;
   ; @return (namespaced map)
   [env {:keys [destination-id]} {:keys [tempfile] :as file-data}]
-  (let [file-item (file-item-prototype file-data)
+  (let [file-item (file-uploader.prototypes/file-item-prototype file-data)
         filename  (get file-item :media/filename)
         filepath  (media/filename->media-storage-filepath filename)]
        (if (side-effects/attach-item! env destination-id file-item)
@@ -95,8 +43,8 @@
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id] :as mutation-props}]
-  (let [content-size (request->content-size request)
-        files-data   (request->files-data   request)]
+  (let [content-size (file-uploader.helpers/request->content-size request)
+        files-data   (file-uploader.helpers/request->files-data   request)]
        (if (capacity-handler.side-effects/capacity-limit-exceeded? content-size)
            (return :capacity-limit-exceeded)
            (when-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
