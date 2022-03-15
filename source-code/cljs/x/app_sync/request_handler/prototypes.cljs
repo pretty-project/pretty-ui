@@ -21,7 +21,7 @@
   ; útvonalon található adatot.
   ;
   ; @param (map) request-props
-  ;  {:source-path (item-path vector)(opt)}
+  ;  {:source-path (vector)(opt)}
   ;
   ; @return (map)
   ;  {:params (map)

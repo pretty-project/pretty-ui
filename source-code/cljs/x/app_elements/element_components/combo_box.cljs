@@ -269,14 +269,14 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
   ;   :select-option-event (event-vector)(opt)
   ;    Default: [:elements/select-option!]
   ;   :style (map)(opt)
   ;   :surface (metamorphic-content)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/combo-box {...}]

@@ -92,7 +92,7 @@
   ;   :style (map)(opt)
   ;   :validate? (boolean)(opt)
   ;    Default: false
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/password-field {...}]

@@ -117,10 +117,10 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (item-path vector)}
+  ;  {:value-path (vector)}
   ; @param (integer) field-dex
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [group-id {:keys [input-count-increased?] :as group-props} field-dex]
   (and (boolean input-count-increased?)
        (field-dex->last-field? group-id group-props field-dex)))
@@ -130,10 +130,10 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (item-path vector)}
+  ;  {:value-path (vector)}
   ; @param (integer) field-dex
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [_ {:keys [value-path]} field-dex]
   (vector/conj-item value-path field-dex))
 
@@ -167,7 +167,7 @@
   ; @return (map)
   ;  {:disallow-empty-input-group? (boolean)
   ;   :max-input-count (integer)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [group-id group-props]
   (merge {:max-input-count 8
           :value-path      (engine/default-value-path group-id)}
@@ -242,7 +242,7 @@
   ;    Default: 8
   ;   :placeholder (metamorphic-content)(opt)
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/multi-field {...}]

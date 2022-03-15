@@ -34,7 +34,7 @@
   ;  =>
   ;  [:my-extension :item-editor/data-items :my-item]
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [extension-id _ item-key]
   [extension-id :item-editor/data-items item-key])
 

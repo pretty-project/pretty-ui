@@ -18,13 +18,13 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {:edit-original? (boolean)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @return (map)
-  ;  {:edit-path (item-path vector)
+  ;  {:edit-path (vector)
   ;   :required? (boolean)
   ;   :save-button-label (metamorphic-content)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [extension-id editor-id {:keys [edit-original? value-path] :as editor-props}]
   (merge {:required?          true
           :save-button-label :save!

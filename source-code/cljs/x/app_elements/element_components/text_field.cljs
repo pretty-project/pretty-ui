@@ -301,7 +301,7 @@
   ;      A mező kitöltése közben validálja annak értékét, még mielőtt a mező
   ;      {:visited? true} állapotba lépne.
   ;      Default: false}
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/text-field {...}]

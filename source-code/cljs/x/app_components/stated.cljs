@@ -121,7 +121,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:initial-props-path (item-path vector)(opt)}
+  ;  {:initial-props-path (vector)(opt)}
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props-path]}]]
@@ -192,7 +192,7 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   ;  {:initial-props (map)
-  ;   :initial-props-path (item-path vector)(opt)}
+  ;   :initial-props-path (vector)(opt)}
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props initial-props-path]}]]
@@ -204,7 +204,7 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:initial-props-path (item-path vector)(opt)}
+  ;  {:initial-props-path (vector)(opt)}
   ;
   ; @return (map)
   [db [_ component-id {:keys [initial-props-path]}]]
@@ -350,7 +350,7 @@
   ;    útvonalon tárolt értéket.
   ;   :initializer (metamorphic-event)(opt)
   ;   :initial-props (map)(opt)
-  ;   :initial-props-path (item-path vector)(opt)
+  ;   :initial-props-path (vector)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)(opt)
   ;    Only w/o {:component ...}

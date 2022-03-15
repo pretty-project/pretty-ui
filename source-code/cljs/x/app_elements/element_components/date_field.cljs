@@ -33,7 +33,7 @@
   ;  {:indent (keyword)
   ;   :name (keyword)
   ;   :type (keyword)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [field-id field-props]
   (merge {:indent     :none
           :type       :date
@@ -114,7 +114,7 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(opt)}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/date-field {...}]

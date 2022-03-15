@@ -62,10 +62,10 @@
   ;   :response-action (keyword)(opt)
   ;    :save (save to file), :store (store to db)
   ;    Default: :store
-  ;   :source-path (item-path vector)(opt)
+  ;   :source-path (vector)(opt)
   ;    Milyen Re-Frame adatbázis útvonalon tárolt adatot küldjön el paraméterként
   ;    Only w/ {:method :post}
-  ;   :target-path (item-path vector)(opt)
+  ;   :target-path (vector)(opt)
   ;    Milyen Re-Frame adatbázis útvonalra mentse el a szerver válaszát
   ;    Only w/ {:response-action :store}
   ;   :uri (string)

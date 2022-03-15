@@ -17,7 +17,7 @@
   :storage.media-picker/load-picker!
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
-  ;  {:value-path (item-path vector)}
+  ;  {:value-path (vector)}
   ;
   ; @usage
   ;  [:storage.media-picker/load-picker! {...}]

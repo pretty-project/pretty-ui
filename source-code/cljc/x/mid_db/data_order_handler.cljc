@@ -272,7 +272,7 @@
   ;
   ; @param (namespaced keyword) partition-id
   ; @param (keyword) data-item-id
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/copy-item-to-partition! db ::my-partition :my-item-id [:my-item])
@@ -288,7 +288,7 @@
   ;
   ; @param (namespaced keyword) partition-id
   ; @param (keyword) data-item-id
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/move-item-to-partition! db ::my-partition :my-item-id [:my-item])

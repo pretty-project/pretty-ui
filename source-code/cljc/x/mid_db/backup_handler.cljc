@@ -52,7 +52,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn item-path->backup-item-path
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @example
   ;  (db/item-path->backup-item-path [:my-item])
@@ -70,14 +70,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-backup-item
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (*)
   [db [_ item-path]]
   (get-in db (item-path->backup-item-path item-path)))
 
 (defn item-changed?
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (boolean)
   [db [_ item-path]]
@@ -85,7 +85,7 @@
         (r get-backup-item db item-path)))
 
 (defn item-unchanged?
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (boolean)
   [db [_ item-path]]
@@ -98,7 +98,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn store-backup-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -106,14 +106,14 @@
                (get-in db item-path)))
 
 (defn restore-backup-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (map)
   [db [_ item-path]]
   (assoc-in db item-path (r get-backup-item db item-path)))
 
 (defn remove-backup-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @return (map)
   [db [_ item-path]]

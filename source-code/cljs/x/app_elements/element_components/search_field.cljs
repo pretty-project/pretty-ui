@@ -88,7 +88,7 @@
   ;    Default: false
   ;   :style (map)(opt)
   ;   :surface (metamorphic-content)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/search-field {...}]

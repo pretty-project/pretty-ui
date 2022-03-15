@@ -25,8 +25,8 @@
   ; @return (map)
   ;  {:get-value-f (function)
   ;   :layout (keyword)
-  ;   :options-path (item-path vector)
-  ;   :value-path (item-path vector)}
+  ;   :options-path (vector)
+  ;   :value-path (vector)}
   [picker-id {:keys [] :as picker-props}]
   (merge {:layout       :fit
           :options-path (engine/default-options-path picker-id)
@@ -138,14 +138,14 @@
   ;    Default: :fit
   ;    TODO ...
   ;   :on-select (metamorphic-event)(opt)
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :required? (boolean)(opt)
   ;    Default: false
   ;   :resetable? (boolean)(opt)
   ;    Default: false
   ;    TODO ...
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(opt)}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/color-picker {...}]

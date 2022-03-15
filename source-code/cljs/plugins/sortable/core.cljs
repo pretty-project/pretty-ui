@@ -802,7 +802,7 @@
   ;    TODO ...
   ;   :on-order-change (metamorphic-event)(opt)
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @usage
   ;  [sortable {...}]

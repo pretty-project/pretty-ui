@@ -97,8 +97,8 @@
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
   ;   :no-options-selected-label (metamorphic-content)
-  ;   :options-path (item-path vector)
-  ;   :value-path (item-path vector)}
+  ;   :options-path (vector)
+  ;   :value-path (vector)}
   [group-id group-props]
   (merge {:get-label-f               return
           :get-value-f               return
@@ -246,11 +246,11 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/multi-combo-box {...}]

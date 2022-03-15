@@ -103,7 +103,7 @@
   ;  {:modifier (function)(opt)
   ;   :on-change (metamorphic-event)(opt)
   ;   :on-type-ended (event-vector)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @return (function)
   [field-id {:keys [modifier on-change on-type-ended surface value-path]}]

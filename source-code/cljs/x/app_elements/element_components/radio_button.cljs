@@ -25,8 +25,8 @@
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
-  ;   :options-path (item-path vector)
-  ;   :value-path (item-path vector)}
+  ;   :options-path (vector)
+  ;   :value-path (vector)}
   [button-id button-props]
   (merge {:border-color :primary
           :layout       :row
@@ -148,13 +148,13 @@
   ;    :fit, :row
   ;    Default: :row
   ;   :on-select (metamorphic-event)(constant)(opt)
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)
   ;   :unselectable? (boolean)(opt)
   ;    Default: false
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/radio-button

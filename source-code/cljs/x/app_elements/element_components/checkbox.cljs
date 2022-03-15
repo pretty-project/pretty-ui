@@ -108,7 +108,7 @@
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/checkbox {...}]

@@ -41,7 +41,7 @@
   ;
   ; @param (keyword) element-id
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [element-id]
   (db/path :elements/options element-id))
 
@@ -50,14 +50,14 @@
   ;
   ; @param (keyword) element-id
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [element-id]
   (db/path :elements/values element-id))
 
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (item-path vector) value-path
+  ; @param (vector) value-path
   ;
   ; @example
   ;  (input/value-path->vector-item? [:my-value])

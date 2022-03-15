@@ -25,14 +25,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn item-path->cofx-path
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @example
   ;  (db/item-path->cofx-path [:my-item])
   ;  =>
   ;  [:db :my-item]
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [item-path]
   (vector/cons-item item-path :db))
 
@@ -42,7 +42,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn subscribe-item
-  ; @param (item-path vector)
+  ; @param (vector)
   ;
   ; @usage
   ; (db/subscribe-item [:my-item])
@@ -52,7 +52,7 @@
   (-> [:db/get-item item-path] re-frame.core/subscribe))
 
 (defn subscribed-item
-  ; @param (item-path vector)
+  ; @param (vector)
   ;
   ; @usage
   ; (db/subscribed-item [:my-item])
@@ -72,7 +72,7 @@
   (return db))
 
 (defn get-item
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/get-item [:my-item])
@@ -82,7 +82,7 @@
   (get-in db item-path))
 
 (defn item-exists?
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/item-exists? [:my-item])
@@ -92,7 +92,7 @@
   (some? (r get-item db item-path)))
 
 (defn get-item-count
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/get-item-count [:my-item])
@@ -103,7 +103,7 @@
        (count item)))
 
 (defn get-applied-item
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ; @param (function) f
   ;
   ; @usage
@@ -125,7 +125,7 @@
   (return {}))
 
 (defn toggle-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/toggle-item! [:my-item])
@@ -135,8 +135,8 @@
   (update-in db item-path not))
 
 (defn copy-item!
-  ; @param (item-path vector) from-item-path
-  ; @param (item-path vector) to-item-path
+  ; @param (vector) from-item-path
+  ; @param (vector) to-item-path
   ;
   ; @usage
   ;  (r db/copy-item! [:move-from] [:move-to])
@@ -148,8 +148,8 @@
           (dissoc-in db to-item-path)))
 
 (defn move-item!
-  ; @param (item-path vector) from-item-path
-  ; @param (item-path vector) to-item-path
+  ; @param (vector) from-item-path
+  ; @param (vector) to-item-path
   ;
   ; @usage
   ;  (r db/move-item! [:move-from] [:move-to])
@@ -162,7 +162,7 @@
           (dissoc-in db to-item-path)))
 
 (defn set-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ; @param (*) item
   ;
   ; @usage
@@ -177,7 +177,7 @@
   ; Biztosítja, hogy az item-path Re-Frame adatbázis útvonalon tárolt
   ; érték egy vektorban kapjon helyet.
   ;
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;  Az item-path útvonal utolsó eleme integer típusú kell legyen!
   ; @param (*) item
   ;
@@ -223,7 +223,7 @@
                 (assoc-in db item-parent-path updated-item-parent)))))
 
 (defn remove-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;
   ; @usage
   ;  (r db/remove-item! [:my-item])
@@ -233,7 +233,7 @@
   (dissoc-in db item-path))
 
 (defn remove-vector-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ;  Az item-path útvonal utolsó eleme integer típusú kell legyen!
   ;
   ; @usage
@@ -278,7 +278,7 @@
   (reduce #(assoc-in %1 %2 (dec (get-in db %2))) db item-paths))
 
 (defn apply-item!
-  ; @param (item-path vector) item-path
+  ; @param (vector) item-path
   ; @param (function) f
   ; @param (list of *) params
   ;

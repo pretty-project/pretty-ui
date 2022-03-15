@@ -162,7 +162,7 @@
   ;    Default: :none
   ;   :multiple? (boolean)(opt)
   ;    Default: false
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @usage
   ;  [storage/media-picker {...}]

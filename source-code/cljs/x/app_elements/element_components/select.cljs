@@ -60,7 +60,7 @@
   ;  {:autoclear? (boolean)(opt)
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @return (map)
   [select-id {:keys [autoclear? on-popup-closed on-select value-path]}]
@@ -111,13 +111,13 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {:as-button? (boolean)(opt)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [select-id {:keys [as-button?] :as select-props}]
   (let ; BUG#1507
        ; Ha a select-button elem {:disabled? true} állapotban csatolódik a React-fába,
@@ -147,8 +147,8 @@
   ;   :no-options-label (metamorphic-content)
   ;   :on-select (metamorphic-event)
   ;   :options-id (keyword)
-  ;   :options-path (item-path vector)
-  ;   :value-path (item-path vector)}
+  ;   :options-path (vector)
+  ;   :value-path (vector)}
   [select-id {:keys [options-label] :as options-props}]
   (let [on-select (on-select-events select-id options-props)]
        (merge {:get-label-f      return
@@ -391,14 +391,14 @@
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(constant)(opt)
   ;   :options-label (metamorphic-content)(constant)(opt)
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)
   ;   :user-cancel? (boolean)(constant)(opt)
   ;    Default: false
   ;    Only w/o {:options-label ...}
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/select {...}]

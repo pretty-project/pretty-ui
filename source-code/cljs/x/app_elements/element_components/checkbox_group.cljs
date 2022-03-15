@@ -42,7 +42,7 @@
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
-  ;   :options-path (item-path vector)
+  ;   :options-path (vector)
   ;   :value-path (item-path-vector)}
   [group-id group-props]
   (merge {:border-color :primary
@@ -166,11 +166,11 @@
   ;    Default: :row
   ;   :on-check (metamorphic-event)(constant)(opt)
   ;   :on-uncheck (metamorphic-event)(constant)(opt)
-  ;   :options-path (item-path vector)(constant)(opt)
+  ;   :options-path (vector)(constant)(opt)
   ;   :required? (boolean)(constant)(opt)
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :value-path (item-path vector)(constant)(opt)}
+  ;   :value-path (vector)(constant)(opt)}
   ;
   ; @usage
   ;  [elements/checkbox-group {...}]

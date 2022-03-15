@@ -16,7 +16,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ;
-  ; @return (item-path vector)
+  ; @return (vector)
   [extension-id editor-id]
   [extension-id :value-editor/data-items editor-id])
 
@@ -50,7 +50,7 @@
   ; @param (map)
   ;  {:auto-focus? (boolean)
   ;   :min-width (keyword)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [extension-id editor-id]
   (let [editor-props @(a/subscribe [:value-editor/get-editor-props extension-id editor-id])]
        (merge (select-keys editor-props [:initial-value :label :modifier :validator])

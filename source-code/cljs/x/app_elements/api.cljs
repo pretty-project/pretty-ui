@@ -77,7 +77,7 @@
 ;  tulajdonságai elérhetetlenné válnak az elem számára.
 ;
 ; @name constant
-;  - Pl.: {:value-path (item-path vector)(constant)(opt)}
+;  - Pl.: {:value-path (vector)(constant)(opt)}
 ;    Az elemek azon tulajdonságai konstansak, amelyek a Re-Frame adatbázisba kerülnek az elem
 ;    React-fába való csatolásakor, ezért azokat a paraméterezés megváltoztatásával felülírni
 ;    nem lehetséges.

@@ -16,7 +16,7 @@
   ; @param (keyword)(opt) transfer-id
   ; @param (map) transfer-props
   ;  {:data-f (function)
-  ;   :target-path (item-path vector)(opt)}
+  ;   :target-path (vector)(opt)}
   ;
   ; @usage
   ;  (a/reg-transfer! {...})

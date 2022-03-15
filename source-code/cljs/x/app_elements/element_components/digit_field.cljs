@@ -53,7 +53,7 @@
   ;
   ; @return (map)
   ;  {:digit-count (integer)
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   [field-id field-props]
   (merge {:digit-count 4
           :value-path  (engine/default-value-path field-id)}
@@ -124,7 +124,7 @@
   ;   :indent (keyword)(opt)
   ;    :left, :right, :both, :none
   ;    Default: :none
-  ;   :value-path (item-path vector)}
+  ;   :value-path (vector)}
   ;
   ; @usage
   ;  [elements/digit-field {...}]

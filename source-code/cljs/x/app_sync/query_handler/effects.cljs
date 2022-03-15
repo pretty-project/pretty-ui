@@ -34,7 +34,7 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)
   ;    Only w/o {:body {...}}
-  ;   :target-path (item-path vector)(opt)
+  ;   :target-path (vector)(opt)
   ;   :uri (string)
   ;    Default: DEFAULT-URI
   ;   :validator-f (function)(opt)}

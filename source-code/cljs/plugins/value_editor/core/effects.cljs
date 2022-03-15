@@ -37,7 +37,7 @@
   ;   :validator (map)(opt)(constant)
   ;    {:f (function)
   ;     :invalid-message (metamorphic-content)}
-  ;   :value-path (item-path vector)(opt)}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [:value-editor/load-editor! :my-extension :my-editor {...}]
