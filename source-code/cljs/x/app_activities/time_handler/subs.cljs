@@ -1,26 +1,15 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.06
-; Description:
-; Version: v0.5.2
-; Compatibility: x4.6.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-activities.engine
+(ns x.app-activities.time-handler.subs
     (:require [mid-fruits.time      :as time]
               [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]))
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-actual-timestamp
@@ -44,10 +33,6 @@
            (str today-term ", " time))
       (time/timestamp-string->date timestamp :yyyymmdd)))
 
-; @usage
-;  [:activities/get-actual-timestamp "2020-04-20T16:20:00.123Z"]
-(a/reg-sub :activities/get-actual-timestamp get-actual-timestamp)
-
 (defn get-actual-elapsed-time
   ; @param (string) timestamp
   ;
@@ -64,6 +49,15 @@
   ; @return (string)
   [db [_ timestamp]])
   ; TODO ...
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:activities/get-actual-timestamp "2020-04-20T16:20:00.123Z"]
+(a/reg-sub :activities/get-actual-timestamp get-actual-timestamp)
 
 ; @usage
 ;  [:activities/get-actual-elapsed-time "2020-04-20T16:20:00.123Z"]

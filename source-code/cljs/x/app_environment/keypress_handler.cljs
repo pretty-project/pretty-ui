@@ -14,12 +14,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler
-    (:require [mid-fruits.candy                :refer [param return]]
-              [mid-fruits.map                  :as map :refer [dissoc-in]]
-              [mid-fruits.vector               :as vector]
-              [x.app-core.api                  :as a :refer [r]]
-              [x.app-db.api                    :as db]
-              [x.app-environment.event-handler :as event-handler]))
+    (:require [mid-fruits.candy                             :refer [param return]]
+              [mid-fruits.map                               :as map :refer [dissoc-in]]
+              [mid-fruits.vector                            :as vector]
+              [x.app-core.api                               :as a :refer [r]]
+              [x.app-db.api                                 :as db]
+              [x.app-environment.event-handler.side-effects :as event-handler.side-effects]))
 
 
 
@@ -366,16 +366,16 @@
 (defn- add-keypress-listeners!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (event-handler/add-event-listener! "keydown" KEYDOWN-LISTENER)
-  (event-handler/add-event-listener! "keyup"     KEYUP-LISTENER))
+  (event-handler.side-effects/add-event-listener! "keydown" KEYDOWN-LISTENER)
+  (event-handler.side-effects/add-event-listener! "keyup"     KEYUP-LISTENER))
 
 (a/reg-fx :environment/add-keypress-listeners! add-keypress-listeners!)
 
 (defn- remove-keypress-listeners!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (event-handler/remove-event-listener! "keydown" KEYDOWN-LISTENER)
-  (event-handler/remove-event-listener! "keyup"     KEYUP-LISTENER))
+  (event-handler.side-effects/remove-event-listener! "keydown" KEYDOWN-LISTENER)
+  (event-handler.side-effects/remove-event-listener! "keyup"     KEYUP-LISTENER))
 
 (a/reg-fx :environment/remove-keypress-listeners! remove-keypress-listeners!)
 

@@ -3,15 +3,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.api
-    (:require [x.app-environment.scroll-prohibitor]
-              [x.app-environment.cookie-handler.effects]
+    (:require [x.app-environment.cookie-handler.effects]
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.element-handler.effects]
+              [x.app-environment.scroll-prohibitor.effects]
+              [x.app-environment.scroll-prohibitor.events]
+              [x.app-environment.scroll-prohibitor.side-effects]
+              [x.app-environment.scroll-prohibitor.subs]
               [x.app-environment.cookie-handler.subs          :as cookie-handler.subs]
               [x.app-environment.css-handler.side-effects     :as css-handler.side-effects]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
-              [x.app-environment.event-handler                :as event-handler]
+              [x.app-environment.event-handler.side-effects   :as event-handler.side-effects]
               [x.app-environment.keypress-handler             :as keypress-handler]
               [x.app-environment.mouse-handler                :as mouse-handler]
               [x.app-environment.scroll-handler               :as scroll-handler]
@@ -58,10 +61,10 @@
 (def mark-element-masspoint-orientation!   element-handler.side-effects/mark-element-masspoint-orientation!)
 (def unmark-element-masspoint-orientation! element-handler.side-effects/unmark-element-masspoint-orientation!)
 
-; x.app-environment.event-handler
-(def add-event-listener!    event-handler/add-event-listener!)
-(def remove-event-listener! event-handler/remove-event-listener!)
-(def add-event!             event-handler/add-event!)
+; x.app-environment.event-handler.side-effects
+(def add-event-listener!    event-handler.side-effects/add-event-listener!)
+(def remove-event-listener! event-handler.side-effects/remove-event-listener!)
+(def add-event!             event-handler.side-effects/add-event!)
 
 ; x.app-environment.keypress-handler
 (def get-pressed-keys                      keypress-handler/get-pressed-keys)

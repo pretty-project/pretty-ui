@@ -29,7 +29,7 @@
    [component (a/id) preloader-props])
 
   ([preloader-id {:keys [uri]}]
-   (reagent/lifecycles {:component-will-mount           #(a/dispatch [:core/synchronize-loading! preloader-id])
-                        :reagent-render [:img {:on-load #(a/dispatch [:core/synchron-signal      preloader-id])
+   (reagent/lifecycles {:component-will-mount           #(a/dispatch [:core/start-synchron-signal! preloader-id])
+                        :reagent-render [:img {:on-load #(a/dispatch [:core/end-synchron-signal!   preloader-id])
                                                :src      (param uri)
                                                :style    {:display "none"}}]})))

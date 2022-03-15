@@ -15,5 +15,5 @@
   ::lifecycles
   {:on-server-boot [:view-selector/init-selector! :settings
                                                   {:on-load        [:settings.view-selector/load-selector!]
-                                                   :route-template "/@app-home/settings/:view-id"
-                                                   :route-title    :settings}]})
+                                                   :route-title    :settings
+                                                   :route-template "/@app-home/settings/:view-id"}]})

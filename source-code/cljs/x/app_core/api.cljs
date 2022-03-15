@@ -3,14 +3,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.api
-    (:require [x.app-core.debug-handler.side-effects]
+    (:require [x.app-core.connection-handler.effects]
+              [x.app-core.debug-handler.side-effects]
               [x.app-core.error-handler.effects]
               [x.app-core.error-handler.side-effects]
+              [x.app-core.load-handler.effects]
+              [x.app-core.load-handler.events]
+              [x.app-core.load-handler.lifecycles]
+              [x.app-core.load-handler.subs]
               [x.app-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.app-core.build-handler.subs             :as build-handler.subs]
               [x.app-core.cache-handler.helpers          :as cache-handler.helpers]
               [x.app-core.config-handler.subs            :as config-handler.subs]
-              [x.app-core.connection-handler             :as connection-handler]
               [x.app-core.debug-handler.events           :as debug-handler.events]
               [x.app-core.debug-handler.subs             :as debug-handler.subs]
               [x.app-core.engine                         :as engine]

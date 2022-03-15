@@ -8,14 +8,23 @@
 
 
 
+;; -- A kiválasztott nézet megváltoztatása (A) --------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn change-my-view!
+  [db _]
+  (r view-selector/change-view! db :my-extension :my-view))
+
+(a/reg-event-db :my-extension.view-selector/change-my-view! change-my-view!)
+
+
+
+;; -- A kiválasztott nézet megváltoztatása (B) --------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension.view-selector/change-my-view!
-  (fn [{:keys [db]} _]
-      {:db (r view-selector/change-view! db :my-extension :my-view)
-       :dispatch [:view-selector/change-view! :my-extension :my-view]}))
+  :my-extension.view-selector/change-your-view!
+  [:view-selector/change-view! :your-extension :your-view])
 
 
 
@@ -32,5 +41,5 @@
 (defn my-view
   [surface-id]
   [view-selector/view :my-extension {:allowed-view-ids [:my-view :your-view]
-                                     :content #'my-content
-                                     :default-view-id :my-view}])
+                                     :default-view-id :my-view
+                                     :content #'my-content}])

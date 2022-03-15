@@ -51,8 +51,8 @@
               [:core/detect-debug-mode!]]
        :dispatch-n [; 1. Let's start!
                     [:core/synchronize-app! app]
-                    ; 2. A load-handler várjon az XXX#5030 jelre!
-                    [:core/synchronize-loading! :boot-loader/build-app!]]}))
+                    ; 2. A load-handler várjon az :boot-loader/build-app! jelre!
+                    [:core/start-synchron-signal! :boot-loader/build-app!]]}))
 
 (a/reg-event-fx
   :boot-loader/init-app!
@@ -103,8 +103,7 @@
        [; 3. Az applikáció renderelése utáni események meghívása
         {:ms 100 :dispatch [:boot-loader/launch-app!]}
         ; 4. Curtains up!
-        ; XXX#5030
-        {:ms 500 :dispatch [:core/synchron-signal :boot-loader/build-app!]}]}))
+        {:ms 500 :dispatch [:core/end-synchron-signal! :boot-loader/build-app!]}]}))
 
 (a/reg-event-fx
   :boot-loader/launch-app!

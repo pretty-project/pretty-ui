@@ -1,25 +1,15 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.06
-; Description:
-; Version: v0.3.0
-; Compatibility: x4.4.4
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-activities.api
-    (:require [x.app-activities.engine :as engine]))
+    (:require [x.app-activities.time-handler.subs :as time-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-activities.engine
-(def get-actual-timestamp engine/get-actual-timestamp)
+; x.app-activities.time-handler.subs
+(def get-actual-timestamp    time-handler.subs/get-actual-timestamp)
+(def get-actual-elapsed-time time-handler.subs/get-actual-elapsed-time)
